@@ -104,8 +104,36 @@ the <code><a href="summary_rows.html">summary_rows()</a></code> function.</p>
 <p>A list object with the classes <code>cells_summary</code> and <code>location_cells</code>.</p>
     </div>
     <div class="section level2">
+    <h2 id="targeting-cells-with-columns-rows-and-groups">Targeting cells with <code>columns</code>, <code>rows</code>, and <code>groups</code><a class="anchor" aria-label="anchor" href="#targeting-cells-with-columns-rows-and-groups"></a></h2>
+    
+
+
+<p>Targeting of summary cells is done through the <code>groups</code>, <code>columns</code>, and
+<code>rows</code> arguments. By default <code>groups</code> is set to <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>, which means
+that all available groups will be considered. Providing the ID values (in
+quotes) of row groups in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> will serve to constrain the targeting to that
+subset of groups.</p>
+<p>The <code>columns</code> argument allows us to target a subset of summary
+cells contained in the resolved columns. We say resolved because aside from
+declaring column names in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> (with bare column names or names in quotes)
+we can use <strong>tidyselect</strong>-style expressions. This can be as basic as
+supplying a select helper like <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, or, providing a more complex
+incantation like</p>
+<p><code>where(~ is.numeric(.x) &amp;&amp; max(.x, na.rm = TRUE) &gt; 1E6)</code></p>
+<p>which targets numeric columns that have a maximum value of 100,000 (excluding
+<code>NA</code>s from consideration).</p>
+<p>Once the groups and columns are targeted, we may also target the <code>rows</code> of
+the summary. Summary cells in the stub will have ID values that can be used
+much like column names in the <code>columns</code>-targeting scenario. We can use
+simpler <strong>tidyselect</strong>-style expressions (the select helpers should work well
+here) and we can use quoted row identifiers in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>. It's also possible to
+use row indices (e.g., <code>c(3, 5, 6)</code>) that correspond to the row number of a
+summary row in a row group (numbering restarts with every row group).</p>
+    </div>
+    <div class="section level2">
     <h2 id="overview-of-location-helper-functions">Overview of Location Helper Functions<a class="anchor" aria-label="anchor" href="#overview-of-location-helper-functions"></a></h2>
     
+
 
 <p>Location helper functions can be used to target cells with virtually any
 function that has a <code>locations</code> argument. Here is a listing of all of the

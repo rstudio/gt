@@ -96,6 +96,7 @@ default in every <strong>gt</strong> table.</p>
     <h2 id="overview-of-location-helper-functions">Overview of Location Helper Functions<a class="anchor" aria-label="anchor" href="#overview-of-location-helper-functions"></a></h2>
     
 
+
 <p>Location helper functions can be used to target cells with virtually any
 function that has a <code>locations</code> argument. Here is a listing of all of the
 location helper functions, with locations corresponding roughly from top to
@@ -130,6 +131,20 @@ used with <code><a href="tab_footnote.html">tab_footnote()</a></code>).</p></li>
 that has a <code>locations</code> argument (e.g., <code><a href="tab_style.html">tab_style()</a></code>), multiple locations
 can be targeted by enclosing several <code>cells_*()</code> helper functions in a
 <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> (e.g., <code>list(cells_body(), cells_grand_summary())</code>).</p>
+    </div>
+    <div class="section level2">
+    <h2 id="targeting-columns-with-the-columns-argument">Targeting columns with the <code>columns</code> argument<a class="anchor" aria-label="anchor" href="#targeting-columns-with-the-columns-argument"></a></h2>
+    
+
+
+<p>The <code>columns</code> argument allows us to target a subset of columns contained in
+the table. We can declare column names in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> (with bare column names or
+names in quotes) or we can use <strong>tidyselect</strong>-style expressions. This can be
+as basic as supplying a select helper like <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, or, providing a
+more complex incantation like</p>
+<p><code>where(~ is.numeric(.x) &amp;&amp; max(.x, na.rm = TRUE) &gt; 1E6)</code></p>
+<p>which targets numeric columns that have a maximum value of 100,000 (excluding
+<code>NA</code>s from consideration).</p>
     </div>
     <div class="section level2">
     <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>

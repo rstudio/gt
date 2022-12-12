@@ -96,8 +96,22 @@ function.</p>
 <code>location_cells</code>.</p>
     </div>
     <div class="section level2">
+    <h2 id="targeting-grand-summary-stub-cells-with-rows">Targeting grand summary stub cells with <code>rows</code><a class="anchor" aria-label="anchor" href="#targeting-grand-summary-stub-cells-with-rows"></a></h2>
+    
+
+
+<p>Targeting the stub cells of a grand summary row is done through the <code>rows</code>
+argument. Grand summary cells in the stub will have ID values that can be
+used much like column names in the <code>columns</code>-targeting scenario. We can use
+simpler <strong>tidyselect</strong>-style expressions (the select helpers should work well
+here) and we can use quoted row identifiers in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>. It's also possible to
+use row indices (e.g., <code>c(3, 5, 6)</code>) that correspond to the row number of a
+grand summary row.</p>
+    </div>
+    <div class="section level2">
     <h2 id="overview-of-location-helper-functions">Overview of Location Helper Functions<a class="anchor" aria-label="anchor" href="#overview-of-location-helper-functions"></a></h2>
     
+
 
 <p>Location helper functions can be used to target cells with virtually any
 function that has a <code>locations</code> argument. Here is a listing of all of the

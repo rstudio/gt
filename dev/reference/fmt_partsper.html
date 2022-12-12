@@ -275,13 +275,8 @@ correspond to thousand, lakh, crore, and higher quantities.</p></dd>
 
 
 <dt>locale</dt>
-<dd><p>An optional locale ID that can be used for formatting the value
-according the locale's rules. Examples include <code>"en"</code> for English (United
-States) and <code>"fr"</code> for French (France). The use of a valid locale ID will
-override any values provided in <code>sep_mark</code> and <code>dec_mark</code>. We can use the
-<code><a href="info_locales.html">info_locales()</a></code> function as a useful reference for all of the locales that
-are supported. Any <code>locale</code> value provided here will override any global
-locale setting performed in <code><a href="gt.html">gt()</a></code>'s own <code>locale</code> argument.</p></dd>
+<dd><p>An optional locale ID that can be used for formatting values
+according to the locale's rules.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -291,14 +286,69 @@ locale setting performed in <code><a href="gt.html">gt()</a></code>'s own <code>
 <p>An object of class <code>gt_tbl</code>.</p>
     </div>
     <div class="section level2">
-    <h2 id="targeting-the-values-to-be-formatted">Targeting the values to be formatted<a class="anchor" aria-label="anchor" href="#targeting-the-values-to-be-formatted"></a></h2>
+    <h2 id="compatibility-of-formatting-function-with-data-values">Compatibility of formatting function with data values<a class="anchor" aria-label="anchor" href="#compatibility-of-formatting-function-with-data-values"></a></h2>
+    
+
+
+<p>The <code>fmt_partsper()</code> formatting function is compatible with body cells that
+are of the <code>"numeric"</code> or <code>"integer"</code> types. Any other types of body cells
+are ignored during formatting. This is to say that cells of incompatible data
+types may be targeted, but there will be no attempt to format them.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="targeting-cells-with-columns-and-rows">Targeting cells with <code>columns</code> and <code>rows</code><a class="anchor" aria-label="anchor" href="#targeting-cells-with-columns-and-rows"></a></h2>
     
 
 
 <p>Targeting of values is done through <code>columns</code> and additionally by <code>rows</code> (if
-nothing is provided for <code>rows</code> then entire columns are selected). Conditional
-formatting is possible by providing a conditional expression to the <code>rows</code>
-argument. See the <em>Arguments</em> section for more information on this.</p>
+nothing is provided for <code>rows</code> then entire columns are selected). The
+<code>columns</code> argument allows us to target a subset of cells contained in the
+resolved columns. We say resolved because aside from declaring column names
+in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> (with bare column names or names in quotes) we can use
+<strong>tidyselect</strong>-style expressions. This can be as basic as supplying a select
+helper like <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, or, providing a more complex incantation like</p>
+<p><code>where(~ is.numeric(.x) &amp;&amp; max(.x, na.rm = TRUE) &gt; 1E6)</code></p>
+<p>which targets numeric columns that have a maximum value of 100,000 (excluding
+<code>NA</code>s from consideration).</p>
+<p>By default all columns and rows are selected (with the <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>
+defaults). Cell values that are incompatible with a given formatting function
+will be skipped over, like <code>character</code> values and numeric <code>fmt_*()</code>
+functions. So it's safe to select all columns with a particular formatting
+function (only those values that can be formatted will be formatted), but,
+you may not want that. One strategy is to format the bulk of cell values with
+one formatting function and then constrain the columns for later passes with
+other types of formatting (the last formatting done to a cell is what you get
+in the final output).</p>
+<p>Once the columns are targeted, we may also target the <code>rows</code> within those
+columns. This can be done in a variety of ways. If a stub is present, then we
+potentially have row identifiers. Those can be used much like column names in
+the <code>columns</code>-targeting scenario. We can use simpler <strong>tidyselect</strong>-style
+expressions (the select helpers should work well here) and we can use quoted
+row identifiers in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>. It's also possible to use row indices (e.g.,
+<code>c(3, 5, 6)</code>) though these index values must correspond to the row numbers of
+the input data (the indices won't necessarily match those of rearranged rows
+if row groups are present). One more type of expression is possible, an
+expression that takes column values (can involve any of the available columns
+in the table) and returns a logical vector. This is nice if you want to base
+formatting on values in the column or another column, or, you'd like to use a
+more complex predicate expression.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="adapting-output-to-a-specific-locale">Adapting output to a specific <code>locale</code><a class="anchor" aria-label="anchor" href="#adapting-output-to-a-specific-locale"></a></h2>
+    
+
+
+<p>This formatting function can adapt outputs according to a provided <code>locale</code>
+value. Examples include <code>"en"</code> for English (United States) and <code>"fr"</code> for
+French (France). The use of a valid locale ID here means separator and
+decimal marks will be correct for the given locale. Should any values be
+provided in <code>sep_mark</code> or <code>dec_mark</code>, they will be overridden by the locale's
+preferred values.</p>
+<p>Note that a <code>locale</code> value provided here will override any global locale
+setting performed in <code><a href="gt.html">gt()</a></code>'s own <code>locale</code> argument (it is settable there as
+a value received by all other functions that have a <code>locale</code> argument). As a
+useful reference on which locales are supported, we can use the
+<code><a href="info_locales.html">info_locales()</a></code> function to view an info table.</p>
     </div>
     <div class="section level2">
     <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
@@ -325,7 +375,9 @@ format the <code>b</code> column as <em>per mille</em> values with <code>fmt_par
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>Other data formatting functions: 
+    <div class="dont-index"><p>The vector-formatting version of this function:
+<code><a href="vec_fmt_partsper.html">vec_fmt_partsper()</a></code>.</p>
+<p>Other data formatting functions: 
 <code><a href="data_color.html">data_color</a>()</code>,
 <code><a href="fmt_bytes.html">fmt_bytes</a>()</code>,
 <code><a href="fmt_currency.html">fmt_currency</a>()</code>,

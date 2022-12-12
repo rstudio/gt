@@ -99,8 +99,18 @@ specifying a <code>groupname_col</code> in <code><a href="gt.html">gt()</a></cod
 <code>location_cells</code>.</p>
     </div>
     <div class="section level2">
+    <h2 id="targeting-cells-with-groups">Targeting cells with <code>groups</code><a class="anchor" aria-label="anchor" href="#targeting-cells-with-groups"></a></h2>
+    
+
+
+<p>By default <code>groups</code> is set to <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>, which means that all available
+groups will be considered. Providing the ID values (in quotes) of row groups
+in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> will serve to constrain the targeting to that subset of groups.</p>
+    </div>
+    <div class="section level2">
     <h2 id="overview-of-location-helper-functions">Overview of Location Helper Functions<a class="anchor" aria-label="anchor" href="#overview-of-location-helper-functions"></a></h2>
     
+
 
 <p>Location helper functions can be used to target cells with virtually any
 function that has a <code>locations</code> argument. Here is a listing of all of the

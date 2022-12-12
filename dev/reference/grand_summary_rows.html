@@ -129,17 +129,18 @@ cells with no data outputs.</p></dd>
 
 
 <dt>formatter</dt>
-<dd><p>A formatter function name. These can be any of the <code>fmt_*()</code>
-functions available in the package (e.g., <code><a href="fmt_number.html">fmt_number()</a></code>, <code><a href="fmt_percent.html">fmt_percent()</a></code>,
-etc.), or a custom function using <code><a href="fmt.html">fmt()</a></code>. The options of a formatter can
-be accessed through <code>...</code>.</p></dd>
+<dd><p>Deprecated, please use <code>fmt</code> instead. This was previously
+used as a way to input a formatting function name, which could be any of
+the <code>fmt_*()</code> functions available in the package (e.g., <code><a href="fmt_number.html">fmt_number()</a></code>,
+<code><a href="fmt_percent.html">fmt_percent()</a></code>, etc.), or a custom function using <code><a href="fmt.html">fmt()</a></code>. The options of
+a formatter can be accessed through <code>...</code>.</p></dd>
 
 
 <dt>...</dt>
-<dd><p>Values passed to the <code>formatter</code> function, where the provided
-values are to be in the form of named vectors. For example, when using the
-default <code>formatter</code> function, <code><a href="fmt_number.html">fmt_number()</a></code>, options such as <code>decimals</code>,
-<code>use_seps</code>, and <code>locale</code> can be used.</p></dd>
+<dd><p>Deprecated (along with <code>formatter</code>) but otherwise used for
+argument values for a formatting function supplied in <code>formatter</code>. For
+example, if using <code>formatter = fmt_number</code>, options such as <code>decimals = 1</code>,
+<code>use_seps = FALSE</code>, and the like can be used here.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -147,6 +148,23 @@ default <code>formatter</code> function, <code><a href="fmt_number.html">fmt_num
     
 
 <p>An object of class <code>gt_tbl</code>.</p>
+    </div>
+    <div class="section level2">
+    <h2 id="using-columns-to-target-column-data-for-aggregation">Using <code>columns</code> to target column data for aggregation<a class="anchor" aria-label="anchor" href="#using-columns-to-target-column-data-for-aggregation"></a></h2>
+    
+
+
+<p>Targeting of column data for which aggregates should be generated is done
+through the <code>columns</code> argument. We can declare column names in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> (with
+bare column names or names in quotes) or we can use
+<strong>tidyselect</strong>-style expressions. This can be as basic as supplying a select
+helper like <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, or, providing a more complex incantation like</p>
+<p><code>where(~ is.numeric(.x) &amp;&amp; max(.x, na.rm = TRUE) &gt; 1E6)</code></p>
+<p>which targets numeric columns that have a maximum value of 100,000 (excluding
+<code>NA</code>s from consideration).</p>
+<p>By default all columns are selected (with the <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code> default). This
+default may be not what's needed unless all columns can undergo useful
+aggregation by expressions supplied in <code>fns</code>.</p>
     </div>
     <div class="section level2">
     <h2 id="aggregation-expressions-for-fns">Aggregation expressions for <code>fns</code><a class="anchor" aria-label="anchor" href="#aggregation-expressions-for-fns"></a></h2>
