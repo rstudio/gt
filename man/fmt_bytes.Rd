@@ -82,13 +82,8 @@ display a minus sign.}
 \item{incl_space}{An option for whether to include a space between the value
 and the units. The default of \code{TRUE} uses a space character for separation.}
 
-\item{locale}{An optional locale ID that can be used for formatting the value
-according the locale's rules. Examples include \code{"en"} for English (United
-States) and \code{"fr"} for French (France). The use of a valid locale ID will
-override any values provided in \code{sep_mark} and \code{dec_mark}. We can use the
-\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
-are supported. Any \code{locale} value provided here will override any global
-locale setting performed in \code{\link[=gt]{gt()}}'s own \code{locale} argument.}
+\item{locale}{An optional locale ID that can be used for formatting values
+according to the locale's rules.}
 }
 \value{
 An object of class \code{gt_tbl}.
