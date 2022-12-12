@@ -10,10 +10,9 @@
 #' @inheritParams fmt_number
 #' @param groups The groups to consider for generation of group-wise summary
 #'   rows. By default this is set to `everything()`, which means that all
-#'   available groups will obtain summary rows. Providing the names of row
-#'   groups in `c()` will create a group-wise summary and generate summary rows
-#'   for the specified groups. Setting this to `TRUE` indicates that all
-#'   available groups will receive group-wise summary rows.
+#'   available groups will obtain summary rows. Providing the ID values (in
+#'   quotes) of row groups in `c()` will generate summary rows for those
+#'   specified groups.
 #' @param columns The columns for which the summaries should be calculated. By
 #'   default, this is every column that has data cells (given by
 #'   `everything()`).
@@ -45,6 +44,23 @@
 #'   `use_seps = FALSE`, and the like can be used here.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @section Using `columns` to target column data for aggregation:
+#'
+#' Targeting of column data for which aggregates should be generated is done
+#' through the `columns` argument. We can declare column names in `c()` (with
+#' bare column names or names in quotes) or we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value of 100,000 (excluding
+#' `NA`s from consideration).
+#'
+#' By default all columns are selected (with the `everything()` default). This
+#' default may be not what's needed unless all columns can undergo useful
+#' aggregation by expressions supplied in `fns`.
 #'
 #' @section Aggregation expressions for `fns`:
 #'
@@ -398,6 +414,23 @@ summary_rows <- function(
 #' @inheritParams summary_rows
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @section Using `columns` to target column data for aggregation:
+#'
+#' Targeting of column data for which aggregates should be generated is done
+#' through the `columns` argument. We can declare column names in `c()` (with
+#' bare column names or names in quotes) or we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value of 100,000 (excluding
+#' `NA`s from consideration).
+#'
+#' By default all columns are selected (with the `everything()` default). This
+#' default may be not what's needed unless all columns can undergo useful
+#' aggregation by expressions supplied in `fns`.
 #'
 #' @section Aggregation expressions for `fns`:
 #'
