@@ -154,6 +154,9 @@ applied.
 }
 
 \seealso{
+The variant function intended for formatting \strong{gt} table data:
+\code{\link[=fmt_time]{fmt_time()}}.
+
 Other vector formatting functions: 
 \code{\link{vec_fmt_bytes}()},
 \code{\link{vec_fmt_currency}()},

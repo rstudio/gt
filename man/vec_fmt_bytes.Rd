@@ -167,6 +167,9 @@ argument. Note here that \code{NA} values won't have the pattern applied.
 }
 
 \seealso{
+The variant function intended for formatting \strong{gt} table data:
+\code{\link[=fmt_bytes]{fmt_bytes()}}.
+
 Other vector formatting functions: 
 \code{\link{vec_fmt_currency}()},
 \code{\link{vec_fmt_datetime}()},
