@@ -20,10 +20,9 @@ summary_rows(
 
 \item{groups}{The groups to consider for generation of group-wise summary
 rows. By default this is set to \code{everything()}, which means that all
-available groups will obtain summary rows. Providing the names of row
-groups in \code{c()} will create a group-wise summary and generate summary rows
-for the specified groups. Setting this to \code{TRUE} indicates that all
-available groups will receive group-wise summary rows.}
+available groups will obtain summary rows. Providing the ID values (in
+quotes) of row groups in \code{c()} will generate summary rows for those
+specified groups.}
 
 \item{columns}{The columns for which the summaries should be calculated. By
 default, this is every column that has data cells (given by
@@ -49,15 +48,16 @@ could contain a group-targeting expression (e.g.,
 \item{missing_text}{The text to be used in place of \code{NA} values in summary
 cells with no data outputs.}
 
-\item{formatter}{A formatter function name. These can be any of the \verb{fmt_*()}
-functions available in the package (e.g., \code{\link[=fmt_number]{fmt_number()}}, \code{\link[=fmt_percent]{fmt_percent()}},
-etc.), or a custom function using \code{\link[=fmt]{fmt()}}. The options of a formatter can
-be accessed through \code{...}.}
+\item{formatter}{Deprecated, please use \code{fmt} instead. This was previously
+used as a way to input a formatting function name, which could be any of
+the \verb{fmt_*()} functions available in the package (e.g., \code{\link[=fmt_number]{fmt_number()}},
+\code{\link[=fmt_percent]{fmt_percent()}}, etc.), or a custom function using \code{\link[=fmt]{fmt()}}. The options of
+a formatter can be accessed through \code{...}.}
 
-\item{...}{Values passed to the \code{formatter} function, where the provided
-values are to be in the form of named vectors. For example, when using the
-default \code{formatter} function, \code{\link[=fmt_number]{fmt_number()}}, options such as \code{decimals},
-\code{use_seps}, and \code{locale} can be used.}
+\item{...}{Deprecated (along with \code{formatter}) but otherwise used for
+argument values for a formatting function supplied in \code{formatter}. For
+example, if using \code{formatter = fmt_number}, options such as \code{decimals = 1},
+\code{use_seps = FALSE}, and the like can be used here.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -69,6 +69,25 @@ selected groups via expressions given to \code{fns}. You can selectively format
 the values in the resulting summary cells by use of formatting expressions in
 \code{fmt}.
 }
+\section{Using \code{columns} to target column data for aggregation}{
+
+
+Targeting of column data for which aggregates should be generated is done
+through the \code{columns} argument. We can declare column names in \code{c()} (with
+bare column names or names in quotes) or we can use
+\strong{tidyselect}-style expressions. This can be as basic as supplying a select
+helper like \code{starts_with()}, or, providing a more complex incantation like
+
+\code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
+
+which targets numeric columns that have a maximum value of 100,000 (excluding
+\code{NA}s from consideration).
+
+By default all columns are selected (with the \code{everything()} default). This
+default may be not what's needed unless all columns can undergo useful
+aggregation by expressions supplied in \code{fns}.
+}
+
 \section{Aggregation expressions for \code{fns}}{
 
 

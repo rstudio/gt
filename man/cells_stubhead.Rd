@@ -18,6 +18,7 @@ when applying a footnote with \code{\link[=tab_footnote]{tab_footnote()}} or add
 }
 \section{Overview of Location Helper Functions}{
 
+
 Location helper functions can be used to target cells with virtually any
 function that has a \code{locations} argument. Here is a listing of all of the
 location helper functions, with locations corresponding roughly from top to
