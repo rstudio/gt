@@ -1,6 +1,7 @@
 #' Format numeric values
 #'
 #' @description
+#'
 #' With numeric values in a **gt** table, we can perform number-based
 #' formatting so that the targeted values are rendered with a higher
 #' consideration for tabular presentation. Furthermore, there is finer control
@@ -101,6 +102,13 @@
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @section Compatibility of formatting function with data values:
+#'
+#' The `fmt_number()` formatting function is compatible with body cells that are
+#' of the `"numeric"` or `"integer"` types. Any other types of body cells are
+#' ignored during formatting. This is to say that cells of incompatible data
+#' types may be targeted, but there will be no attempt to format them.
+#'
 #' @section Targeting cells with `columns` and `rows`:
 #'
 #' Targeting of values is done through `columns` and additionally by `rows` (if
@@ -195,6 +203,12 @@
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-1
+#'
+#' @seealso The [fmt_integer()] function might be more useful if you really need
+#'   to format numeric values to appear as integers (i.e., no decimals will be
+#'   shown and input values are rounded as necessary). Need to do numeric
+#'   formatting on a vector? Take a look at the vector-formatting version of
+#'   this function: [vec_fmt_number()].
 #'
 #' @import rlang
 #' @export
@@ -335,6 +349,7 @@ fmt_number <- function(
 #' Format values as integers
 #'
 #' @description
+#'
 #' With numeric values in a **gt** table, we can perform number-based
 #' formatting so that the targeted values are always rendered as integer values.
 #' We can have fine control over integer formatting with the following options:
@@ -348,13 +363,6 @@ fmt_number <- function(
 #' values
 #' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
-#'
-#' @section Targeting the values to be formatted:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). Conditional
-#' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param suffixing An option to scale and apply suffixes to larger numbers
@@ -376,6 +384,13 @@ fmt_number <- function(
 #'   that any value provided to `scale_by` will be ignored.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @section Compatibility of formatting function with data values:
+#'
+#' The `fmt_integer()` formatting function is compatible with body cells that
+#' are of the `"numeric"` or `"integer"` types. Any other types of body cells
+#' are ignored during formatting. This is to say that cells of incompatible data
+#' types may be targeted, but there will be no attempt to format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -454,6 +469,11 @@ fmt_number <- function(
 #' @section Function ID:
 #' 3-2
 #'
+#' @seealso The [fmt_number()] function might be more of what you need if you'd
+#'   like decimal values in your outputs. Need to do integer-based formatting on
+#'   a vector? Take a look at the vector-formatting version of this function:
+#'   [vec_fmt_integer()].
+#'
 #' @import rlang
 #' @export
 fmt_integer <- function(
@@ -495,6 +515,7 @@ fmt_integer <- function(
 #' Format values to scientific notation
 #'
 #' @description
+#'
 #' With numeric values in a **gt** table, we can perform formatting so that the
 #' targeted values are rendered in scientific notation. Furthermore, there is
 #' fine control with the following options:
@@ -507,13 +528,6 @@ fmt_integer <- function(
 #' - locale-based formatting: providing a locale ID will result in
 #' formatting specific to the chosen locale
 #'
-#' @section Targeting the values to be formatted:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). Conditional
-#' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the *Arguments* section for more information on this.
-#'
 #' @inheritParams fmt_number
 #' @param scale_by A value to scale the input. The default is `1.0`. All numeric
 #'   values will be multiplied by this value first before undergoing formatting.
@@ -523,6 +537,13 @@ fmt_integer <- function(
 #'   display a minus sign.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @section Compatibility of formatting function with data values:
+#'
+#' The `fmt_scientific()` formatting function is compatible with body cells that
+#' are of the `"numeric"` or `"integer"` types. Any other types of body cells
+#' are ignored during formatting. This is to say that cells of incompatible data
+#' types may be targeted, but there will be no attempt to format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -608,6 +629,9 @@ fmt_integer <- function(
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-3
+#'
+#' @seealso The vector-formatting version of this function:
+#'   [vec_fmt_scientific()].
 #'
 #' @import rlang
 #' @export
@@ -749,6 +773,7 @@ fmt_scientific <- function(
 #' Format values to engineering notation
 #'
 #' @description
+#'
 #' With numeric values in a **gt** table, we can perform formatting so that the
 #' targeted values are rendered in engineering notation.
 #'
@@ -764,13 +789,6 @@ fmt_scientific <- function(
 #' - locale-based formatting: providing a locale ID will result in
 #' formatting specific to the chosen locale
 #'
-#' @section Targeting the values to be formatted:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). Conditional
-#' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the *Arguments* section for more information on this.
-#'
 #' @inheritParams fmt_number
 #' @param scale_by A value to scale the input. The default is `1.0`. All numeric
 #'   values will be multiplied by this value first before undergoing formatting.
@@ -780,6 +798,14 @@ fmt_scientific <- function(
 #'   display a minus sign.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @section Compatibility of formatting function with data values:
+#'
+#' The `fmt_engineering()` formatting function is compatible with body cells
+#' that are of the `"numeric"` or `"integer"` types. Any other types of body
+#' cells are ignored during formatting. This is to say that cells of
+#' incompatible data types may be targeted, but there will be no attempt to
+#' format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -853,6 +879,9 @@ fmt_scientific <- function(
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-4
+#'
+#' @seealso The vector-formatting version of this function:
+#'   [vec_fmt_engineering()].
 #'
 #' @export
 fmt_engineering <- function(
@@ -1154,6 +1183,7 @@ fmt_symbol <- function(
 #' Format values as a percentage
 #'
 #' @description
+#'
 #' With numeric values in a **gt** table, we can perform percentage-based
 #' formatting. It is assumed the input numeric values are proportional values
 #' and, in this case, the values will be automatically multiplied by `100`
@@ -1176,13 +1206,6 @@ fmt_symbol <- function(
 #' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
 #'
-#' @section Targeting the values to be formatted:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). Conditional
-#' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the *Arguments* section for more information on this.
-#'
 #' @inheritParams fmt_number
 #' @param scale_values Should the values be scaled through multiplication by
 #'   100? By default this is `TRUE` since the expectation is that normally
@@ -1194,6 +1217,13 @@ fmt_symbol <- function(
 #'   `right` (the default) or `left`.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @section Compatibility of formatting function with data values:
+#'
+#' The `fmt_percent()` formatting function is compatible with body cells that
+#' are of the `"numeric"` or `"integer"` types. Any other types of body cells
+#' are ignored during formatting. This is to say that cells of incompatible data
+#' types may be targeted, but there will be no attempt to format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -1275,6 +1305,8 @@ fmt_symbol <- function(
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-5
+#'
+#' @seealso The vector-formatting version of this function: [vec_fmt_percent()].
 #'
 #' @import rlang
 #' @export
@@ -1361,6 +1393,7 @@ fmt_percent <- function(
 #' Format values as parts-per quantities
 #'
 #' @description
+#'
 #' With numeric values in a **gt** table we can format the values so that they
 #' are rendered as *per mille*, *ppm*, *ppb*, etc., quantities. The following
 #' list of keywords (with associated naming and scaling factors) is available to
@@ -1391,13 +1424,6 @@ fmt_percent <- function(
 #' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
 #'
-#' @section Targeting the values to be formatted:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). Conditional
-#' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the *Arguments* section for more information on this.
-#'
 #' @inheritParams fmt_number
 #' @param to_units A keyword that signifies the desired output quantity. This
 #'   can be any from the following set: `"per-mille"`, `"per-myriad"`, `"pcm"`,
@@ -1417,6 +1443,13 @@ fmt_percent <- function(
 #'   either `TRUE` or `FALSE`.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @section Compatibility of formatting function with data values:
+#'
+#' The `fmt_partsper()` formatting function is compatible with body cells that
+#' are of the `"numeric"` or `"integer"` types. Any other types of body cells
+#' are ignored during formatting. This is to say that cells of incompatible data
+#' types may be targeted, but there will be no attempt to format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -1495,6 +1528,9 @@ fmt_percent <- function(
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-6
+#'
+#' @seealso The vector-formatting version of this function:
+#'   [vec_fmt_partsper()].
 #'
 #' @import rlang
 #' @export
@@ -1625,6 +1661,7 @@ fmt_partsper <- function(
 #' Format values as a mixed fractions
 #'
 #' @description
+#'
 #' With numeric values in a **gt** table, we can perform mixed-fraction-based
 #' formatting. There are several options for setting the accuracy of the
 #' fractions. Furthermore, there is an option for choosing a layout (i.e.,
@@ -1644,13 +1681,6 @@ fmt_partsper <- function(
 #' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
 #'
-#' @section Targeting the values to be formatted:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). Conditional
-#' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the *Arguments* section for more information on this.
-#'
 #' @inheritParams fmt_number
 #' @param accuracy The type of fractions to generate. This can either be one of
 #'   the keywords `"low"`, `"med"`, or `"high"` (to generate fractions with
@@ -1669,6 +1699,13 @@ fmt_partsper <- function(
 #'   that are typeset with raised/lowered numerals and a virgule.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @section Compatibility of formatting function with data values:
+#'
+#' The `fmt_fraction()` formatting function is compatible with body cells that
+#' are of the `"numeric"` or `"integer"` types. Any other types of body cells
+#' are ignored during formatting. This is to say that cells of incompatible data
+#' types may be targeted, but there will be no attempt to format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -1794,6 +1831,9 @@ fmt_partsper <- function(
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-7
+#'
+#' @seealso The vector-formatting version of this function:
+#'   [vec_fmt_fraction()].
 #'
 #' @import rlang
 #' @export
@@ -2154,6 +2194,7 @@ round_gt <- function(x, digits = 0) {
 #' Format values as currencies
 #'
 #' @description
+#'
 #' With numeric values in a **gt** table, we can perform currency-based
 #' formatting. This function supports both automatic formatting with a
 #' three-letter or numeric currency code. We can also specify a custom currency
@@ -2185,13 +2226,6 @@ round_gt <- function(x, digits = 0) {
 #' We can use the [info_currencies()] function for a useful reference on all of
 #' the possible inputs to the `currency` argument.
 #'
-#' @section Targeting the values to be formatted:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). Conditional
-#' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the *Arguments* section for more information on this.
-#'
 #' @inheritParams fmt_number
 #' @param currency The currency to use for the numeric value. This input can be
 #'   supplied as a 3-letter currency code (e.g., `"USD"` for U.S. Dollars,
@@ -2220,6 +2254,13 @@ round_gt <- function(x, digits = 0) {
 #'   and the currency symbol. The default is to not introduce a space character.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @section Compatibility of formatting function with data values:
+#'
+#' The `fmt_currency()` formatting function is compatible with body cells that
+#' are of the `"numeric"` or `"integer"` types. Any other types of body cells
+#' are ignored during formatting. This is to say that cells of incompatible data
+#' types may be targeted, but there will be no attempt to format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -2318,6 +2359,9 @@ round_gt <- function(x, digits = 0) {
 #' @section Function ID:
 #' 3-8
 #'
+#' @seealso The vector-formatting version of this function:
+#'   [vec_fmt_currency()].
+#'
 #' @import rlang
 #' @export
 fmt_currency <- function(
@@ -2410,21 +2454,22 @@ fmt_currency <- function(
 #' Format values as Roman numerals
 #'
 #' @description
+#'
 #' With numeric values in a **gt** table we can transform those to Roman
 #' numerals, rounding values as necessary.
-#'
-#' @section Targeting the values to be formatted:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). Conditional
-#' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param case Should Roman numerals should be rendered as uppercase (`"upper"`)
 #'   or lowercase (`"lower"`) letters? By default, this is set to `"upper"`.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @section Compatibility of formatting function with data values:
+#'
+#' The `fmt_roman()` formatting function is compatible with body cells that are
+#' of the `"numeric"` or `"integer"` types. Any other types of body cells are
+#' ignored during formatting. This is to say that cells of incompatible data
+#' types may be targeted, but there will be no attempt to format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -2483,6 +2528,8 @@ fmt_currency <- function(
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-9
+#'
+#' @seealso The vector-formatting version of this function: [vec_fmt_roman()].
 #'
 #' @import rlang
 #' @export
@@ -2571,6 +2618,7 @@ fmt_roman <- function(
 #' Format values as bytes
 #'
 #' @description
+#'
 #' With numeric values in a **gt** table, we can transform those to values of
 #' bytes with human readable units. The `fmt_bytes()` function allows for the
 #' formatting of byte sizes to either of two common representations: (1) with
@@ -2592,13 +2640,6 @@ fmt_roman <- function(
 #' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
 #'
-#' @section Targeting the values to be formatted:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). Conditional
-#' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the *Arguments* section for more information on this.
-#'
 #' @inheritParams fmt_number
 #' @param standard The way to express large byte sizes.
 #' @param decimals An option to specify the exact number of decimal places to
@@ -2611,6 +2652,13 @@ fmt_roman <- function(
 #'   display a minus sign.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @section Compatibility of formatting function with data values:
+#'
+#' The `fmt_bytes()` formatting function is compatible with body cells that are
+#' of the `"numeric"` or `"integer"` types. Any other types of body cells are
+#' ignored during formatting. This is to say that cells of incompatible data
+#' types may be targeted, but there will be no attempt to format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -2702,6 +2750,8 @@ fmt_roman <- function(
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-10
+#'
+#' @seealso The vector-formatting version of this function: [vec_fmt_bytes()].
 #'
 #' @import rlang
 #' @export
@@ -2832,17 +2882,65 @@ fmt_bytes <- function(
 #' Format values as dates
 #'
 #' @description
+#'
 #' Format input values to time values using one of 41 preset date styles. Input
 #' can be in the form of `POSIXt` (i.e., datetimes), the `Date` type, or
 #' `character` (must be in the ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or
 #' `YYYY-MM-DD`).
 #'
-#' @section Targeting the values to be formatted:
+#' @inheritParams fmt_number
+#' @param date_style The date style to use. By default this is `"iso"` which
+#'   corresponds to ISO 8601 date formatting. The other date styles can be
+#'   viewed using [info_date_style()].
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Compatibility of formatting function with data values:
+#'
+#' The `fmt_date()` formatting function is compatible with body cells that are
+#' of the `"Date"`, `"POSIXt"` or `"character"` types. Any other types of body
+#' cells are ignored during formatting. This is to say that cells of
+#' incompatible data types may be targeted, but there will be no attempt to
+#' format them.
+#'
+#' @section Targeting cells with `columns` and `rows`:
 #'
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). Conditional
-#' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the *Arguments* section for more information on this.
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to target a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value of 100,000 (excluding
+#' `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given formatting function
+#' will be skipped over, like `character` values and numeric `fmt_*()`
+#' functions. So it's safe to select all columns with a particular formatting
+#' function (only those values that can be formatted will be formatted), but,
+#' you may not want that. One strategy is to format the bulk of cell values with
+#' one formatting function and then constrain the columns for later passes with
+#' other types of formatting (the last formatting done to a cell is what you get
+#' in the final output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
+#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
+#' the input data (the indices won't necessarily match those of rearranged rows
+#' if row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector. This is nice if you want to base
+#' formatting on values in the column or another column, or, you'd like to use a
+#' more complex predicate expression.
 #'
 #' @section Formatting with the `date_style` argument:
 #'
@@ -2900,54 +2998,8 @@ fmt_bytes <- function(
 #' | 40 | `"d"`                 | `"29"`                  | flexible      |
 #' | 41 | `"Ed"`                | `"29 Tue"`              | flexible      |
 #'
-#' We can use the [info_date_style()] within the console to view a similar table
-#' of date styles with example output.
-#'
-#' @inheritParams fmt_number
-#' @param date_style The date style to use. By default this is `"iso"` which
-#'   corresponds to ISO 8601 date formatting. The other date styles can be
-#'   viewed using [info_date_style()].
-#'
-#' @return An object of class `gt_tbl`.
-#'
-#' @section Targeting cells with `columns` and `rows`:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). The
-#' `columns` argument allows us to target a subset of cells contained in the
-#' resolved columns. We say resolved because aside from declaring column names
-#' in `c()` (with bare column names or names in quotes) we can use
-#' **tidyselect**-style expressions. This can be as basic as supplying a select
-#' helper like `starts_with()`, or, providing a more complex incantation like
-#'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
-#'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
-#'
-#' By default all columns and rows are selected (with the `everything()`
-#' defaults). Cell values that are incompatible with a given formatting function
-#' will be skipped over, like `character` values and numeric `fmt_*()`
-#' functions. So it's safe to select all columns with a particular formatting
-#' function (only those values that can be formatted will be formatted), but,
-#' you may not want that. One strategy is to format the bulk of cell values with
-#' one formatting function and then constrain the columns for later passes with
-#' other types of formatting (the last formatting done to a cell is what you get
-#' in the final output).
-#'
-#' Once the columns are targeted, we may also target the `rows` within those
-#' columns. This can be done in a variety of ways. If a stub is present, then we
-#' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
-#' expressions (the select helpers should work well here) and we can use quoted
-#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
-#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
-#' the input data (the indices won't necessarily match those of rearranged rows
-#' if row groups are present). One more type of expression is possible, an
-#' expression that takes column values (can involve any of the available columns
-#' in the table) and returns a logical vector. This is nice if you want to base
-#' formatting on values in the column or another column, or, you'd like to use a
-#' more complex predicate expression.
+#' We can use the [info_date_style()] function within the console to view a
+#' similar table of date styles with example output.
 #'
 #' @section Adapting output to a specific `locale`:
 #'
@@ -3027,6 +3079,8 @@ fmt_bytes <- function(
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-11
+#'
+#' @seealso The vector-formatting version of this function: [vec_fmt_date()].
 #'
 #' @import rlang
 #' @export
@@ -3108,17 +3162,65 @@ fmt_date <- function(
 #' Format values as times
 #'
 #' @description
+#'
 #' Format input values to time values using one of 25 preset time styles. Input
 #' can be in the form of `POSIXt` (i.e., datetimes), `character` (must be in the
 #' ISO 8601 forms of `HH:MM:SS` or `YYYY-MM-DD HH:MM:SS`), or `Date` (which
 #' always results in the formatting of `00:00:00`).
 #'
-#' @section Targeting the values to be formatted:
+#' @inheritParams fmt_number
+#' @param time_style The time style to use. By default this is `"iso"` which
+#'   corresponds to how times are formatted within ISO 8601 datetime values. The
+#'   other time styles can be viewed using [info_time_style()].
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Compatibility of formatting function with data values:
+#'
+#' The `fmt_time()` formatting function is compatible with body cells that are
+#' of the `"Date"`, `"POSIXt"` or `"character"` types. Any other types of body
+#' cells are ignored during formatting. This is to say that cells of
+#' incompatible data types may be targeted, but there will be no attempt to
+#' format them.
+#'
+#' @section Targeting cells with `columns` and `rows`:
 #'
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). Conditional
-#' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the *Arguments* section for more information on this.
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to target a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value of 100,000 (excluding
+#' `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given formatting function
+#' will be skipped over, like `character` values and numeric `fmt_*()`
+#' functions. So it's safe to select all columns with a particular formatting
+#' function (only those values that can be formatted will be formatted), but,
+#' you may not want that. One strategy is to format the bulk of cell values with
+#' one formatting function and then constrain the columns for later passes with
+#' other types of formatting (the last formatting done to a cell is what you get
+#' in the final output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
+#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
+#' the input data (the indices won't necessarily match those of rearranged rows
+#' if row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector. This is nice if you want to base
+#' formatting on values in the column or another column, or, you'd like to use a
+#' more complex predicate expression.
 #'
 #' @section Formatting with the `time_style` argument:
 #'
@@ -3161,54 +3263,8 @@ fmt_date <- function(
 #' | 24 | `"hmv"`       | `"2:35 PM GMT+00:00"`           | flexible, 12h |
 #' | 25 | `"ms"`        | `"35:00"`                       | flexible      |
 #'
-#' We can use the [info_time_style()] within the console to view a similar table
-#' of time styles with example output.
-#'
-#' @inheritParams fmt_number
-#' @param time_style The time style to use. By default this is `"iso"` which
-#'   corresponds to how times are formatted within ISO 8601 datetime values. The
-#'   other time styles can be viewed using [info_time_style()].
-#'
-#' @return An object of class `gt_tbl`.
-#'
-#' @section Targeting cells with `columns` and `rows`:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). The
-#' `columns` argument allows us to target a subset of cells contained in the
-#' resolved columns. We say resolved because aside from declaring column names
-#' in `c()` (with bare column names or names in quotes) we can use
-#' **tidyselect**-style expressions. This can be as basic as supplying a select
-#' helper like `starts_with()`, or, providing a more complex incantation like
-#'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
-#'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
-#'
-#' By default all columns and rows are selected (with the `everything()`
-#' defaults). Cell values that are incompatible with a given formatting function
-#' will be skipped over, like `character` values and numeric `fmt_*()`
-#' functions. So it's safe to select all columns with a particular formatting
-#' function (only those values that can be formatted will be formatted), but,
-#' you may not want that. One strategy is to format the bulk of cell values with
-#' one formatting function and then constrain the columns for later passes with
-#' other types of formatting (the last formatting done to a cell is what you get
-#' in the final output).
-#'
-#' Once the columns are targeted, we may also target the `rows` within those
-#' columns. This can be done in a variety of ways. If a stub is present, then we
-#' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
-#' expressions (the select helpers should work well here) and we can use quoted
-#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
-#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
-#' the input data (the indices won't necessarily match those of rearranged rows
-#' if row groups are present). One more type of expression is possible, an
-#' expression that takes column values (can involve any of the available columns
-#' in the table) and returns a logical vector. This is nice if you want to base
-#' formatting on values in the column or another column, or, you'd like to use a
-#' more complex predicate expression.
+#' We can use the [info_time_style()] function within the console to view a
+#' similar table of time styles with example output.
 #'
 #' @section Adapting output to a specific `locale`:
 #'
@@ -3288,6 +3344,8 @@ fmt_date <- function(
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-12
+#'
+#' @seealso The vector-formatting version of this function: [vec_fmt_time()].
 #'
 #' @import rlang
 #' @export
@@ -3373,18 +3431,77 @@ fmt_time <- function(
 #' Format values as datetimes
 #'
 #' @description
+#'
 #' Format input values to datetime values using either presets for the date and
 #' time components or a formatting directive (this can either use a *CLDR*
-#' datetime pattern or `strptime` formatting). Input can be in the form of
-#' `POSIXt` (i.e., datetimes), the `Date` type, or `character` (must be in the
-#' ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or `YYYY-MM-DD`).
+#' datetime pattern or `strptime` formatting). The input values can be in the
+#' form of `POSIXct` (i.e., datetimes), the `Date` type, or `character` (must be
+#' in the ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or `YYYY-MM-DD`).
 #'
-#' @section Targeting the values to be formatted:
+#' @inheritParams fmt_number
+#' @inheritParams fmt_date
+#' @inheritParams fmt_time
+#' @param sep The separator string to use between the date and time components.
+#'   By default, this is a single space character (`" "`). Only used when not
+#'   specifying a `format` code.
+#' @param format An optional formatting string used for generating custom
+#'   dates/times. If used then the arguments governing preset styles
+#'   (`date_style` and `time_style`) will be ignored in favor of formatting via
+#'   the `format` string.
+#' @param tz The time zone for printing dates/times (i.e., the output). The
+#'   default of `NULL` will preserve the time zone of the input data in the
+#'   output. If providing a time zone, it must be one that is recognized by the
+#'   user's operating system (a vector of all valid `tz` values can be produced
+#'   with [OlsonNames()]).
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Compatibility of formatting function with data values:
+#'
+#' The `fmt_datetime()` formatting function is compatible with body cells that
+#' are of the `"Date"`, `"POSIXct"` or `"character"` types. Any other types of
+#' body cells are ignored during formatting. This is to say that cells of
+#' incompatible data types may be targeted, but there will be no attempt to
+#' format them.
+#'
+#' @section Targeting cells with `columns` and `rows`:
 #'
 #' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). Conditional
-#' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the *Arguments* section for more information on this.
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to target a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value of 100,000 (excluding
+#' `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given formatting function
+#' will be skipped over, like `character` values and numeric `fmt_*()`
+#' functions. So it's safe to select all columns with a particular formatting
+#' function (only those values that can be formatted will be formatted), but,
+#' you may not want that. One strategy is to format the bulk of cell values with
+#' one formatting function and then constrain the columns for later passes with
+#' other types of formatting (the last formatting done to a cell is what you get
+#' in the final output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
+#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
+#' the input data (the indices won't necessarily match those of rearranged rows
+#' if row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector. This is nice if you want to base
+#' formatting on values in the column or another column, or, you'd like to use a
+#' more complex predicate expression.
 #'
 #' @section Formatting with the `date_style` argument:
 #'
@@ -3442,8 +3559,8 @@ fmt_time <- function(
 #' | 40 | `"d"`                 | `"29"`                  | flexible      |
 #' | 41 | `"Ed"`                | `"29 Tue"`              | flexible      |
 #'
-#' We can use the [info_date_style()] within the console to view a similar table
-#' of date styles with example output.
+#' We can use the [info_date_style()] function within the console to view a
+#' similar table of date styles with example output.
 #'
 #' @section Formatting with the `time_style` argument:
 #'
@@ -3489,8 +3606,8 @@ fmt_time <- function(
 #' | 24 | `"hmv"`       | `"2:35 PM GMT+00:00"`           | flexible, 12h |
 #' | 25 | `"ms"`        | `"35:00"`                       | flexible      |
 #'
-#' We can use the [info_time_style()] within the console to view a similar table
-#' of time styles with example output.
+#' We can use the [info_time_style()] function within the console to view a
+#' similar table of time styles with example output.
 #'
 #' @section Formatting with a *CLDR* datetime pattern:
 #'
@@ -4017,63 +4134,6 @@ fmt_time <- function(
 #' - `"%F"` -> `"2015-06-08"` (the date in the ISO 8601 date format)
 #' - `"%%"` -> `"%"` (the literal "`%`" character, in case you need it)
 #'
-#' @inheritParams fmt_number
-#' @inheritParams fmt_date
-#' @inheritParams fmt_time
-#' @param sep The separator string to use between the date and time components.
-#'   By default, this is a single space character (`" "`). Only used when not
-#'   specifying a `format` code.
-#' @param format An optional formatting string used for generating custom
-#'   dates/times. If used then the arguments governing preset styles
-#'   (`date_style` and `time_style`) will be ignored in favor of formatting via
-#'   the `format` string.
-#' @param tz The time zone for printing dates/times (i.e., the output). The
-#'   default of `NULL` will preserve the time zone of the input data in the
-#'   output. If providing a time zone, it must be one that is recognized by the
-#'   user's operating system (a vector of all valid `tz` values can be produced
-#'   with [OlsonNames()]).
-#'
-#' @return An object of class `gt_tbl`.
-#'
-#' @section Targeting cells with `columns` and `rows`:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). The
-#' `columns` argument allows us to target a subset of cells contained in the
-#' resolved columns. We say resolved because aside from declaring column names
-#' in `c()` (with bare column names or names in quotes) we can use
-#' **tidyselect**-style expressions. This can be as basic as supplying a select
-#' helper like `starts_with()`, or, providing a more complex incantation like
-#'
-#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
-#'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
-#'
-#' By default all columns and rows are selected (with the `everything()`
-#' defaults). Cell values that are incompatible with a given formatting function
-#' will be skipped over, like `character` values and numeric `fmt_*()`
-#' functions. So it's safe to select all columns with a particular formatting
-#' function (only those values that can be formatted will be formatted), but,
-#' you may not want that. One strategy is to format the bulk of cell values with
-#' one formatting function and then constrain the columns for later passes with
-#' other types of formatting (the last formatting done to a cell is what you get
-#' in the final output).
-#'
-#' Once the columns are targeted, we may also target the `rows` within those
-#' columns. This can be done in a variety of ways. If a stub is present, then we
-#' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
-#' expressions (the select helpers should work well here) and we can use quoted
-#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
-#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
-#' the input data (the indices won't necessarily match those of rearranged rows
-#' if row groups are present). One more type of expression is possible, an
-#' expression that takes column values (can involve any of the available columns
-#' in the table) and returns a logical vector. This is nice if you want to base
-#' formatting on values in the column or another column, or, you'd like to use a
-#' more complex predicate expression.
-#'
 #' @section Adapting output to a specific `locale`:
 #'
 #' This formatting function can adapt outputs according to a provided `locale`
@@ -4156,6 +4216,9 @@ fmt_time <- function(
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-13
+#'
+#' @seealso The vector-formatting version of this function:
+#'   [vec_fmt_datetime()].
 #'
 #' @import rlang
 #' @export
@@ -4330,19 +4393,13 @@ fmt_datetime <- function(
 #' Format numeric or duration values as styled time duration strings
 #'
 #' @description
+#'
 #' Format input values to time duration values whether those input values are
 #' numbers or of the `difftime` class. We can specify which time units any
 #' numeric input values have (as weeks, days, hours, minutes, or seconds) and
 #' the output can be customized with a duration style (corresponding to narrow,
 #' wide, colon-separated, and ISO forms) and a choice of output units ranging
 #' from weeks to seconds.
-#'
-#' @section Targeting the values to be formatted:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). Conditional
-#' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the *Arguments* section for more information on this.
 #'
 #' @section Output units for the colon-separated duration style:
 #'
@@ -4405,6 +4462,14 @@ fmt_datetime <- function(
 #'   display a minus sign.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @section Compatibility of formatting function with data values:
+#'
+#' The `fmt_duration()` formatting function is compatible with body cells that
+#' are of the `"numeric"`, `"integer"`, or `"difftime"` types. Any other types
+#' of body cells are ignored during formatting. This is to say that cells of
+#' incompatible data types may be targeted, but there will be no attempt to
+#' format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -4491,6 +4556,9 @@ fmt_datetime <- function(
 #' @section Function ID:
 #' 3-14
 #'
+#' @seealso The vector-formatting version of this function:
+#'   [vec_fmt_duration()].
+#'
 #' @import rlang
 #' @export
 fmt_duration <- function(
@@ -4514,7 +4582,7 @@ fmt_duration <- function(
   stop_if_not_gt(data = data)
 
   # Declare formatting function compatibility
-  compat <- c("numeric", "difftime")
+  compat <- c("numeric", "integer", "difftime")
 
   # Ensure that arguments are matched
   duration_style <- rlang::arg_match(duration_style)
@@ -4834,6 +4902,10 @@ values_to_durations <- function(
     x <- as.numeric(x)
   }
 
+  if (inherits(x, "integer")) {
+    x <- as.numeric(x)
+  }
+
   # Should `in_units` be anything other than days then
   # convert all `x` values to days
   if (in_units != "days") {
@@ -5146,15 +5218,9 @@ extract_duration_pattern <- function(
 #' Format Markdown text
 #'
 #' @description
+#'
 #' Any Markdown-formatted text in the incoming cells will be transformed to the
 #' appropriate output type during render when using `fmt_markdown()`.
-#'
-#' @section Targeting the values to be formatted:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). Conditional
-#' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #'
@@ -5257,6 +5323,9 @@ extract_duration_pattern <- function(
 #' @section Function ID:
 #' 3-15
 #'
+#' @seealso The vector-formatting version of this function:
+#'   [vec_fmt_markdown()].
+#'
 #' @import rlang
 #' @export
 fmt_markdown <- function(
@@ -5305,18 +5374,12 @@ fmt_markdown <- function(
 #' Format by simply passing data through
 #'
 #' @description
+#'
 #' Format by passing data through no other transformation other than: (1)
 #' coercing to `character` (as all the `fmt_*()` functions do), and (2) applying
 #' text via the `pattern` argument (the default is to apply nothing). All of
 #' this is useful when don't want to modify the input data other than to
 #' decorate it within a pattern.
-#'
-#' @section Targeting the values to be formatted:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). Conditional
-#' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param escape An option to escape text according to the final output format
@@ -5483,10 +5546,10 @@ fmt_passthrough <- function(
   )
 }
 
-
 #' Set a column format with a formatter function
 #'
 #' @description
+#'
 #' The `fmt()` function provides a way to execute custom formatting
 #' functionality with raw data values in a way that can consider all output
 #' contexts.
@@ -5506,13 +5569,6 @@ fmt_passthrough <- function(
 #' latex = function(x) ..., default = function(x) ...)`. In this
 #' multiple-function case, we recommended including the `default` function as a
 #' fallback if all contexts aren't provided.
-#'
-#' @section Targeting the values to be formatted:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). Conditional
-#' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the *Arguments* section for more information on this.
 #'
 #' @inheritParams fmt_number
 #' @param fns Either a single formatting function or a named list of functions.
