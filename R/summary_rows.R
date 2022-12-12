@@ -34,14 +34,15 @@
 #'   *Formatting expressions for `fmt`* section.
 #' @param missing_text The text to be used in place of `NA` values in summary
 #'   cells with no data outputs.
-#' @param formatter A formatter function name. These can be any of the `fmt_*()`
-#'   functions available in the package (e.g., [fmt_number()], [fmt_percent()],
-#'   etc.), or a custom function using [fmt()]. The options of a formatter can
-#'   be accessed through `...`.
-#' @param ... Values passed to the `formatter` function, where the provided
-#'   values are to be in the form of named vectors. For example, when using the
-#'   default `formatter` function, [fmt_number()], options such as `decimals`,
-#'   `use_seps`, and `locale` can be used.
+#' @param formatter Deprecated, please use `fmt` instead. This was previously
+#'   used as a way to input a formatting function name, which could be any of
+#'   the `fmt_*()` functions available in the package (e.g., [fmt_number()],
+#'   [fmt_percent()], etc.), or a custom function using [fmt()]. The options of
+#'   a formatter can be accessed through `...`.
+#' @param ... Deprecated (along with `formatter`) but otherwise used for
+#'   argument values for a formatting function supplied in `formatter`. For
+#'   example, if using `formatter = fmt_number`, options such as `decimals = 1`,
+#'   `use_seps = FALSE`, and the like can be used here.
 #'
 #' @return An object of class `gt_tbl`.
 #'
