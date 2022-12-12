@@ -163,6 +163,9 @@
 #' @section Function ID:
 #' 14-1
 #'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_number()].
+#'
 #' @export
 vec_fmt_number <- function(
     x,
@@ -195,7 +198,7 @@ vec_fmt_number <- function(
   # Stop function if class of `x` is incompatible with the formatting
   if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
     cli::cli_abort(
-      "The `vec_fmt_number()` and `vec_fmt_integer()` functions can only be used with numeric vectors."
+      "The `vec_fmt_number()` function can only be used with numeric vectors."
     )
   }
 
@@ -315,6 +318,9 @@ vec_fmt_number <- function(
 #' @section Function ID:
 #' 14-2
 #'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_integer()].
+#'
 #' @export
 vec_fmt_integer <- function(
     x,
@@ -328,6 +334,13 @@ vec_fmt_integer <- function(
     locale = NULL,
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
+
+  # Stop function if class of `x` is incompatible with the formatting
+  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
+    cli::cli_abort(
+      "The `vec_fmt_integer()` function can only be used with numeric vectors."
+    )
+  }
 
   vec_fmt_number(
     x,
@@ -436,6 +449,9 @@ vec_fmt_integer <- function(
 #' @family vector formatting functions
 #' @section Function ID:
 #' 14-3
+#'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_scientific()].
 #'
 #' @export
 vec_fmt_scientific <- function(
@@ -574,6 +590,9 @@ vec_fmt_scientific <- function(
 #' @family vector formatting functions
 #' @section Function ID:
 #' 14-4
+#'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_engineering()].
 #'
 #' @export
 vec_fmt_engineering <- function(
@@ -733,6 +752,9 @@ vec_fmt_engineering <- function(
 #' @family vector formatting functions
 #' @section Function ID:
 #' 14-5
+#'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_percent()].
 #'
 #' @export
 vec_fmt_percent <- function(
@@ -917,6 +939,9 @@ vec_fmt_percent <- function(
 #' @section Function ID:
 #' 14-6
 #'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_partsper()].
+#'
 #' @export
 vec_fmt_partsper <- function(
     x,
@@ -1064,6 +1089,9 @@ vec_fmt_partsper <- function(
 #' @family vector formatting functions
 #' @section Function ID:
 #' 14-7
+#'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_fraction()].
 #'
 #' @export
 vec_fmt_fraction <- function(
@@ -1242,6 +1270,9 @@ vec_fmt_fraction <- function(
 #' @section Function ID:
 #' 14-8
 #'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_currency()].
+#'
 #' @export
 vec_fmt_currency <- function(
     x,
@@ -1365,6 +1396,9 @@ vec_fmt_currency <- function(
 #' @family vector formatting functions
 #' @section Function ID:
 #' 14-9
+#'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_roman()].
 #'
 #' @import rlang
 #' @export
@@ -1506,6 +1540,9 @@ vec_fmt_roman <- function(
 #' @family vector formatting functions
 #' @section Function ID:
 #' 14-10
+#'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_bytes()].
 #'
 #' @export
 vec_fmt_bytes <- function(
@@ -1702,6 +1739,9 @@ vec_fmt_bytes <- function(
 #' @section Function ID:
 #' 14-11
 #'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_date()].
+#'
 #' @export
 vec_fmt_date <- function(
     x,
@@ -1724,7 +1764,7 @@ vec_fmt_date <- function(
   # Stop function if class of `x` is incompatible with the formatting
   if (!vector_class_is_valid(x, valid_classes = c("Date", "POSIXt", "character"))) {
     cli::cli_abort(
-      "The `vec_fmt_date()` function can only be used with numeric vectors."
+      "The `vec_fmt_date()` function can only be used with Date, POSIXt, or character vectors."
     )
   }
 
@@ -1865,6 +1905,9 @@ vec_fmt_date <- function(
 #' @section Function ID:
 #' 14-12
 #'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_time()].
+#'
 #' @export
 vec_fmt_time <- function(
     x,
@@ -1887,7 +1930,7 @@ vec_fmt_time <- function(
   # Stop function if class of `x` is incompatible with the formatting
   if (!vector_class_is_valid(x, valid_classes = c("Date", "POSIXt", "character"))) {
     cli::cli_abort(
-      "The `vec_fmt_time()` function can only be used with numeric vectors."
+      "The `vec_fmt_time()` function can only be used with Date, POSIXt, or character vectors."
     )
   }
 
@@ -2684,6 +2727,9 @@ vec_fmt_time <- function(
 #' @section Function ID:
 #' 14-13
 #'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_datetime()].
+#'
 #' @export
 vec_fmt_datetime <- function(
     x,
@@ -2905,6 +2951,9 @@ vec_fmt_datetime <- function(
 #' @section Function ID:
 #' 14-14
 #'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_duration()].
+#'
 #' @export
 vec_fmt_duration <- function(
     x,
@@ -3007,6 +3056,9 @@ vec_fmt_duration <- function(
 #' @family vector formatting functions
 #' @section Function ID:
 #' 14-15
+#'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_markdown()].
 #'
 #' @export
 vec_fmt_markdown <- function(
