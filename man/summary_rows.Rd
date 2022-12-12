@@ -49,15 +49,16 @@ could contain a group-targeting expression (e.g.,
 \item{missing_text}{The text to be used in place of \code{NA} values in summary
 cells with no data outputs.}
 
-\item{formatter}{A formatter function name. These can be any of the \verb{fmt_*()}
-functions available in the package (e.g., \code{\link[=fmt_number]{fmt_number()}}, \code{\link[=fmt_percent]{fmt_percent()}},
-etc.), or a custom function using \code{\link[=fmt]{fmt()}}. The options of a formatter can
-be accessed through \code{...}.}
+\item{formatter}{Deprecated, please use \code{fmt} instead. This was previously
+used as a way to input a formatting function name, which could be any of
+the \verb{fmt_*()} functions available in the package (e.g., \code{\link[=fmt_number]{fmt_number()}},
+\code{\link[=fmt_percent]{fmt_percent()}}, etc.), or a custom function using \code{\link[=fmt]{fmt()}}. The options of
+a formatter can be accessed through \code{...}.}
 
-\item{...}{Values passed to the \code{formatter} function, where the provided
-values are to be in the form of named vectors. For example, when using the
-default \code{formatter} function, \code{\link[=fmt_number]{fmt_number()}}, options such as \code{decimals},
-\code{use_seps}, and \code{locale} can be used.}
+\item{...}{Deprecated (along with \code{formatter}) but otherwise used for
+argument values for a formatting function supplied in \code{formatter}. For
+example, if using \code{formatter = fmt_number}, options such as \code{decimals = 1},
+\code{use_seps = FALSE}, and the like can be used here.}
 }
 \value{
 An object of class \code{gt_tbl}.
