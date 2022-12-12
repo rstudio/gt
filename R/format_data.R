@@ -18,13 +18,6 @@
 #' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
 #'
-#' @section Targeting the values to be formatted:
-#'
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). Conditional
-#' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the *Arguments* section for more information on this.
-#'
 #' @param data A table object that is created using the [gt()] function.
 #' @param columns The columns to format. Can either be a series of column names
 #'   provided in [c()], a vector of column indices, or a helper function
@@ -103,15 +96,64 @@
 #'   (i.e., `sep_mark`) are separated by three digits. The alternative system,
 #'   the Indian numbering system (`"ind"`) uses grouping separators that
 #'   correspond to thousand, lakh, crore, and higher quantities.
-#' @param locale An optional locale ID that can be used for formatting the value
-#'   according the locale's rules. Examples include `"en"` for English (United
-#'   States) and `"fr"` for French (France). The use of a valid locale ID will
-#'   override any values provided in `sep_mark` and `dec_mark`. We can use the
-#'   [info_locales()] function as a useful reference for all of the locales that
-#'   are supported. Any `locale` value provided here will override any global
-#'   locale setting performed in [gt()]'s own `locale` argument.
+#' @param locale An optional locale ID that can be used for formatting values
+#'   according to the locale's rules.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @section Targeting cells with `columns` and `rows`:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to target a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value of 100,000 (excluding
+#' `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given formatting function
+#' will be skipped over, like `character` values and numeric `fmt_*()`
+#' functions. So it's safe to select all columns with a particular formatting
+#' function (only those values that can be formatted will be formatted), but,
+#' you may not want that. One strategy is to format the bulk of cell values with
+#' one formatting function and then constrain the columns for later passes with
+#' other types of formatting (the last formatting done to a cell is what you get
+#' in the final output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
+#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
+#' the input data (the indices won't necessarily match those of rearranged rows
+#' if row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector. This is nice if you want to base
+#' formatting on values in the column or another column, or, you'd like to use a
+#' more complex predicate expression.
+#'
+#' @section Adapting output to a specific `locale`:
+#'
+#' This formatting function can adapt outputs according to a provided `locale`
+#' value. Examples include `"en"` for English (United States) and `"fr"` for
+#' French (France). The use of a valid locale ID here means separator and
+#' decimal marks will be correct for the given locale. Should any values be
+#' provided in `sep_mark` and `dec_mark`, they will be overridden by the
+#' locale's preferred values.
+#'
+#' Note that a `locale` value provided here will override any global locale
+#' setting performed in [gt()]'s own `locale` argument (it is settable there as
+#' a value received by all other functions that have a `locale` argument). As a
+#' useful reference on which locales are supported, we can use the
+#' [info_locales()] function to view an info table.
 #'
 #' @section Examples:
 #'
@@ -132,8 +174,8 @@
 #' `r man_get_image_tag(file = "man_fmt_number_1.png")`
 #' }}
 #'
-#' Use [`countrypops`] to create a **gt** table. Format all numeric columns to
-#' use large-number suffixing with the `suffixing = TRUE` option.
+#' Use [`countrypops`] to create a **gt** table. Format all columns to use
+#' large-number suffixing with the `suffixing = TRUE` option.
 #'
 #' ```r
 #' countrypops %>%
@@ -143,11 +185,7 @@
 #'   tidyr::spread(year, population) %>%
 #'   dplyr::arrange(desc(`2015`)) %>%
 #'   gt(rowname_col = "country_code_3") %>%
-#'   fmt_number(
-#'     columns = 2:9,
-#'     decimals = 2,
-#'     suffixing = TRUE
-#'   )
+#'   fmt_number(suffixing = TRUE)
 #' ```
 #'
 #' \if{html}{\out{
