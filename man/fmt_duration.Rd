@@ -116,15 +116,6 @@ the output can be customized with a duration style (corresponding to narrow,
 wide, colon-separated, and ISO forms) and a choice of output units ranging
 from weeks to seconds.
 }
-\section{Targeting the values to be formatted}{
-
-
-Targeting of values is done through \code{columns} and additionally by \code{rows} (if
-nothing is provided for \code{rows} then entire columns are selected). Conditional
-formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the \emph{Arguments} section for more information on this.
-}
-
 \section{Output units for the colon-separated duration style}{
 
 
@@ -145,6 +136,16 @@ following combinations of output units are permitted:
 
 Any other specialized combinations will result in the default set being used,
 which is \code{c("days", "hours", "minutes", "seconds")}
+}
+
+\section{Compatibility of formatting function with data values}{
+
+
+The \code{fmt_duration()} formatting function is compatible with body cells that
+are of the \code{"numeric"}, \code{"integer"}, or \code{"difftime"} types. Any other types
+of body cells are ignored during formatting. This is to say that cells of
+incompatible data types may be targeted, but there will be no attempt to
+format them.
 }
 
 \section{Targeting cells with \code{columns} and \code{rows}}{
@@ -239,6 +240,9 @@ number of days since March 30, 2020.
 }
 
 \seealso{
+The vector-formatting version of this function:
+\code{\link[=vec_fmt_duration]{vec_fmt_duration()}}.
+
 Other data formatting functions: 
 \code{\link{data_color}()},
 \code{\link{fmt_bytes}()},

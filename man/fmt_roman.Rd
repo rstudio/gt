@@ -44,13 +44,13 @@ An object of class \code{gt_tbl}.
 With numeric values in a \strong{gt} table we can transform those to Roman
 numerals, rounding values as necessary.
 }
-\section{Targeting the values to be formatted}{
+\section{Compatibility of formatting function with data values}{
 
 
-Targeting of values is done through \code{columns} and additionally by \code{rows} (if
-nothing is provided for \code{rows} then entire columns are selected). Conditional
-formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the \emph{Arguments} section for more information on this.
+The \code{fmt_roman()} formatting function is compatible with body cells that are
+of the \code{"numeric"} or \code{"integer"} types. Any other types of body cells are
+ignored during formatting. This is to say that cells of incompatible data
+types may be targeted, but there will be no attempt to format them.
 }
 
 \section{Targeting cells with \code{columns} and \code{rows}}{
@@ -116,6 +116,8 @@ the \code{roman} column to appear as Roman numerals with \code{fmt_roman()}.
 }
 
 \seealso{
+The vector-formatting version of this function: \code{\link[=vec_fmt_roman]{vec_fmt_roman()}}.
+
 Other data formatting functions: 
 \code{\link{data_color}()},
 \code{\link{fmt_bytes}()},

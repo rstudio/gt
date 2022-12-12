@@ -141,6 +141,15 @@ values
 formatting specific to the chosen locale
 }
 }
+\section{Compatibility of formatting function with data values}{
+
+
+The \code{fmt_number()} formatting function is compatible with body cells that are
+of the \code{"numeric"} or \code{"integer"} types. Any other types of body cells are
+ignored during formatting. This is to say that cells of incompatible data
+types may be targeted, but there will be no attempt to format them.
+}
+
 \section{Targeting cells with \code{columns} and \code{rows}}{
 
 
@@ -242,6 +251,12 @@ large-number suffixing with the \code{suffixing = TRUE} option.
 }
 
 \seealso{
+The \code{\link[=fmt_integer]{fmt_integer()}} function might be more useful if you really need
+to format numeric values to appear as integers (i.e., no decimals will be
+shown and input values are rounded as necessary). Need to do numeric
+formatting on a vector? Take a look at the vector-formatting version of
+this function: \code{\link[=vec_fmt_number]{vec_fmt_number()}}.
+
 Other data formatting functions: 
 \code{\link{data_color}()},
 \code{\link{fmt_bytes}()},

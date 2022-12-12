@@ -109,13 +109,13 @@ values
 formatting specific to the chosen locale
 }
 }
-\section{Targeting the values to be formatted}{
+\section{Compatibility of formatting function with data values}{
 
 
-Targeting of values is done through \code{columns} and additionally by \code{rows} (if
-nothing is provided for \code{rows} then entire columns are selected). Conditional
-formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the \emph{Arguments} section for more information on this.
+The \code{fmt_integer()} formatting function is compatible with body cells that
+are of the \code{"numeric"} or \code{"integer"} types. Any other types of body cells
+are ignored during formatting. This is to say that cells of incompatible data
+types may be targeted, but there will be no attempt to format them.
 }
 
 \section{Targeting cells with \code{columns} and \code{rows}}{
@@ -202,6 +202,11 @@ values having no digit separators (with the \code{use_seps = FALSE} option).
 }
 
 \seealso{
+The \code{\link[=fmt_number]{fmt_number()}} function might be more of what you need if you'd
+like decimal values in your outputs. Need to do integer-based formatting on
+a vector? Take a look at the vector-formatting version of this function:
+\code{\link[=vec_fmt_integer]{vec_fmt_integer()}}.
+
 Other data formatting functions: 
 \code{\link{data_color}()},
 \code{\link{fmt_bytes}()},

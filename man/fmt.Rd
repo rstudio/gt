@@ -52,15 +52,6 @@ contexts. This can be in the form of \code{fns = list(html = function(x) ..., la
 multiple-function case, we recommended including the \code{default} function as a
 fallback if all contexts aren't provided.
 }
-\section{Targeting the values to be formatted}{
-
-
-Targeting of values is done through \code{columns} and additionally by \code{rows} (if
-nothing is provided for \code{rows} then entire columns are selected). Conditional
-formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the \emph{Arguments} section for more information on this.
-}
-
 \section{Targeting cells with \code{columns} and \code{rows}}{
 
 

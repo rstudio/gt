@@ -101,8 +101,8 @@ values (corresponding to an input date of \code{2000-02-29}).\tabular{llll}{
 }
 
 
-We can use the \code{\link[=info_date_style]{info_date_style()}} within the console to view a similar table
-of date styles with example output.
+We can use the \code{\link[=info_date_style]{info_date_style()}} function within the console to view a
+similar table of date styles with example output.
 }
 
 \section{Examples}{
