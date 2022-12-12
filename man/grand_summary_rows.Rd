@@ -63,6 +63,25 @@ groups). Multiple grand summary rows can be added via expressions given to
 \code{fns}. You can selectively format the values in the resulting grand summary
 cells by use of formatting expressions in \code{fmt}.
 }
+\section{Using \code{columns} to target column data for aggregation}{
+
+
+Targeting of column data for which aggregates should be generated is done
+through the \code{columns} argument. We can declare column names in \code{c()} (with
+bare column names or names in quotes) or we can use
+\strong{tidyselect}-style expressions. This can be as basic as supplying a select
+helper like \code{starts_with()}, or, providing a more complex incantation like
+
+\code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
+
+which targets numeric columns that have a maximum value of 100,000 (excluding
+\code{NA}s from consideration).
+
+By default all columns are selected (with the \code{everything()} default). This
+default may be not what's needed unless all columns can undergo useful
+aggregation by expressions supplied in \code{fns}.
+}
+
 \section{Aggregation expressions for \code{fns}}{
 
 

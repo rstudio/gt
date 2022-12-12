@@ -22,6 +22,7 @@ default in every \strong{gt} table.
 }
 \section{Overview of Location Helper Functions}{
 
+
 Location helper functions can be used to target cells with virtually any
 function that has a \code{locations} argument. Here is a listing of all of the
 location helper functions, with locations corresponding roughly from top to
@@ -60,6 +61,21 @@ When using any of the location helper functions with an appropriate function
 that has a \code{locations} argument (e.g., \code{\link[=tab_style]{tab_style()}}), multiple locations
 can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \code{list()} (e.g., \code{list(cells_body(), cells_grand_summary())}).
+}
+
+\section{Targeting columns with the \code{columns} argument}{
+
+
+The \code{columns} argument allows us to target a subset of columns contained in
+the table. We can declare column names in \code{c()} (with bare column names or
+names in quotes) or we can use \strong{tidyselect}-style expressions. This can be
+as basic as supplying a select helper like \code{starts_with()}, or, providing a
+more complex incantation like
+
+\code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
+
+which targets numeric columns that have a maximum value of 100,000 (excluding
+\code{NA}s from consideration).
 }
 
 \section{Examples}{
