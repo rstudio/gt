@@ -400,13 +400,24 @@ perform_col_merge <- function(data, context) {
       glue_src_na_data <- lapply(as.list(data_tbl[, columns]), FUN = is.na)
 
       glue_src_data <- as.list(body[, columns])
+
       glue_src_data <-
         lapply(
           seq_along(glue_src_data),
           FUN = function(x) {
-            glue_src_data[[x]][
-              glue_src_data[[x]] == "NA" & glue_src_na_data[[x]]
-            ] <- missing_val_token
+
+            # The source data having a character `"NA"` value means that
+            # the value should is probably be treated as missing (it wasn't
+            # modified by `sub_missing()`) but we also want to corroborate that
+            # with the original data values (checking for missingness there);
+            # For character and logical values, we do separate checks
+
+            source_data <- data_tbl[, columns][[x]]
+
+            missing_cond <- glue_src_data[[x]] == "NA" & glue_src_na_data[[x]]
+            missing_cond[is.na(missing_cond)] <- TRUE
+
+            glue_src_data[[x]][missing_cond] <- missing_val_token
             glue_src_data[[x]]
           }
         )

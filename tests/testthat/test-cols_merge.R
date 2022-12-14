@@ -23,7 +23,9 @@ tbl_na <-
   dplyr::tibble(
     a = 1:4,
     b = c(1, NA, 3,  NA),
-    c = c(1, 2,  NA, NA)
+    c = c(1, 2,  NA, NA),
+    d = c("1", "2", NA_character_, NA_character_),
+    e = c(TRUE, FALSE, NA, NA)
   )
 
 # Function to skip tests if Suggested packages not available on system
@@ -245,6 +247,44 @@ test_that("the secondary pattern language works well in `cols_merge()`", {
   expect_equal(
     (tbl_gt_7 %>% render_formats_test("html"))[["a"]],
     rep("X", 4)
+  )
+
+  tbl_gt_9 <-
+    tbl_gt %>%
+    cols_merge(columns = c(a, b, d), pattern = "{1}{2}<<{3}>>")
+
+  expect_equal(
+    (tbl_gt_9 %>% render_formats_test("html"))[["a"]],
+    c("111", "2NA2", "33", "4NA")
+  )
+
+  tbl_gt_10 <-
+    tbl_gt %>%
+    sub_missing(missing_text = "X") %>%
+    cols_merge(columns = c(a, b, d), pattern = "{1}{2}<<{3}>>")
+
+  expect_equal(
+    (tbl_gt_10 %>% render_formats_test("html"))[["a"]],
+    c("111", "2X2", "33X", "4XX")
+  )
+
+  tbl_gt_11 <-
+    tbl_gt %>%
+    cols_merge(columns = c(a, b, e), pattern = "{1}{2}<<{3}>>")
+
+  expect_equal(
+    (tbl_gt_11 %>% render_formats_test("html"))[["a"]],
+    c("11TRUE", "2NAFALSE", "33", "4NA")
+  )
+
+  tbl_gt_12 <-
+    tbl_gt %>%
+    sub_missing(missing_text = "X") %>%
+    cols_merge(columns = c(a, b, e), pattern = "{1}{2}<<{3}>>")
+
+  expect_equal(
+    (tbl_gt_12 %>% render_formats_test("html"))[["a"]],
+    c("11TRUE", "2XFALSE", "33X", "4XX")
   )
 })
 
