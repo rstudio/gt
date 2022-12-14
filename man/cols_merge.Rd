@@ -9,7 +9,7 @@ cols_merge(
   columns,
   hide_columns = columns[-1],
   rows = everything(),
-  pattern = paste0("{", seq_along(columns), "}", collapse = " ")
+  pattern = NULL
 )
 }
 \arguments{
@@ -35,10 +35,13 @@ We can also use a standalone predicate expression to filter down to the
 rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{pattern}{A formatting pattern that specifies the arrangement of the
-\code{column} values and any string literals. We need to use column numbers
-(corresponding to the position of columns provided in \code{columns}) within the
-pattern. Further details are provided in the \emph{How the \code{pattern} works}
-section.}
+\code{column} values and any string literals. The pattern uses numbers (within
+\code{{ }}) that correspond to the indices of columns provided in \code{columns}. If
+two columns are provided in \code{columns} and we would like to combine the cell
+data onto the first column, \code{"{1} {2}"} could be used. If a pattern isn't
+provided then a space-separated pattern that includes all \code{columns} will be
+generated automatically. Further details are provided in the \emph{How the
+\code{pattern} works} section.}
 }
 \value{
 An object of class \code{gt_tbl}.
