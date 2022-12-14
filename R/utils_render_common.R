@@ -66,8 +66,8 @@ render_formats <- function(data, context) {
   # Render input data to output data where formatting is specified
   for (fmt in formats)  {
 
-    # Determine if the formatter has a function relevant to the
-    # context; if not, use the `default` function (which should
+    # Determine if the formatting function has a function relevant to
+    # the context; if not, use the `default` function (which should
     # always be present)
     if (context %in% names(fmt$func)) {
       eval_func <- context
@@ -75,7 +75,7 @@ render_formats <- function(data, context) {
       eval_func <- "default"
     }
 
-    # Obtain compatibility information for the formatter function
+    # Obtain compatibility information for the formatting function
     compat <- fmt$compat
 
     # Get the rows to which the formatting should be constrained
@@ -392,6 +392,10 @@ perform_col_merge <- function(data, context) {
 
     if (type == "merge") {
 
+      #
+      # The `cols_merge()` formatting case
+      #
+
       mutated_column <- col_merge[[i]]$vars[1]
 
       columns <- col_merge[[i]][["vars"]]
@@ -447,8 +451,13 @@ perform_col_merge <- function(data, context) {
 
     } else if (type == "merge_n_pct") {
 
-      mutated_column <- col_merge[[i]]$vars[1]
-      second_column <- col_merge[[i]]$vars[2]
+      #
+      # The `cols_merge_n_pct()` formatting case
+      #
+
+      mutated_column <- col_merge[[i]][["vars"]][1]
+      second_column <- col_merge[[i]][["vars"]][2]
+      rows <- col_merge[[i]][["rows"]]
 
       # This is a fixed pattern
       pattern <- "{1} ({2})"
@@ -465,7 +474,8 @@ perform_col_merge <- function(data, context) {
       # An `NA` value in either column should exclude that row from
       # processing via `glue_gt()`
       rows_to_format_idx <- which(!(na_1_rows | na_2_rows))
-      rows_to_format_idx <- setdiff(rows_to_format_idx, zero_rows_idx)
+      rows_to_format_idx <- base::setdiff(rows_to_format_idx, zero_rows_idx)
+      rows_to_format_idx <- base::intersect(rows_to_format_idx, rows)
 
       body[rows_to_format_idx, mutated_column] <-
         as.character(
@@ -480,14 +490,18 @@ perform_col_merge <- function(data, context) {
 
     } else if (type == "merge_uncert" && length(col_merge[[i]]$vars) == 3) {
 
-      # Case where lower and upper certainties provided as input columns
+      #
+      # The `cols_merge_uncert()` case where lower and upper certainties
+      # were provided as input columns
+      #
 
-      mutated_column <- col_merge[[i]]$vars[1]
-      lu_column <- col_merge[[i]]$vars[2]
-      uu_column <- col_merge[[i]]$vars[3]
+      mutated_column <- col_merge[[i]][["vars"]][1]
+      lu_column <- col_merge[[i]][["vars"]][2]
+      uu_column <- col_merge[[i]][["vars"]][3]
+      rows <- col_merge[[i]][["rows"]]
 
-      pattern_equal <- col_merge[[i]]$pattern
-      sep <- col_merge[[i]]$sep
+      pattern_equal <- col_merge[[i]][["pattern"]]
+      sep <- col_merge[[i]][["sep"]]
 
       # Transform the separator text depending on specific
       # inputs and the `context`
@@ -528,8 +542,8 @@ perform_col_merge <- function(data, context) {
       na_lu_and_uu <- na_lu_rows & na_uu_rows
       lu_equals_uu <- data_tbl[[lu_column]] == data_tbl[[uu_column]] & !na_lu_or_uu
 
-      rows_to_format_equal <- which(!na_1_rows & lu_equals_uu)
-      rows_to_format_unequal <- which(!na_1_rows & !na_lu_and_uu & !lu_equals_uu)
+      rows_to_format_equal <- base::intersect(which(!na_1_rows & lu_equals_uu), rows)
+      rows_to_format_unequal <- base::intersect(which(!na_1_rows & !na_lu_and_uu & !lu_equals_uu), rows)
 
       body[rows_to_format_equal, mutated_column] <-
         as.character(
@@ -559,11 +573,17 @@ perform_col_merge <- function(data, context) {
 
     } else {
 
-      mutated_column <- col_merge[[i]]$vars[1]
-      second_column <- col_merge[[i]]$vars[2]
+      #
+      # The `cols_merge_range()` and `cols_merge_uncert()` (standard
+      # uncertainties) formatting cases
+      #
 
-      pattern <- col_merge[[i]]$pattern
-      sep <- col_merge[[i]]$sep
+      mutated_column <- col_merge[[i]][["vars"]][1]
+      second_column <- col_merge[[i]][["vars"]][2]
+      rows <- col_merge[[i]][["rows"]]
+
+      pattern <- col_merge[[i]][["pattern"]]
+      sep <- col_merge[[i]][["sep"]]
 
       # Transform the separator text depending on specific
       # inputs and the `context`
@@ -574,12 +594,11 @@ perform_col_merge <- function(data, context) {
       na_1_rows <- is.na(data_tbl[[mutated_column]])
       na_2_rows <- is.na(data_tbl[[second_column]])
 
-      rows_to_format <-
-        if (type == "merge_range") {
-          which(!(na_1_rows & na_2_rows))
-        } else if (type == "merge_uncert") {
-          which(!(na_1_rows | na_2_rows))
-        }
+      if (type == "merge_range") {
+        rows_to_format <- base::intersect(which(!(na_1_rows & na_2_rows)), rows)
+      } else if (type == "merge_uncert") {
+        rows_to_format <- base::intersect(which(!(na_1_rows | na_2_rows)), rows)
+      }
 
       body[rows_to_format, mutated_column] <-
         as.character(
