@@ -8,6 +8,7 @@ cols_merge(
   data,
   columns,
   hide_columns = columns[-1],
+  rows = everything(),
   pattern = paste0("{", seq_along(columns), "}", collapse = " ")
 )
 }
@@ -23,6 +24,15 @@ changed to \code{hidden} (via internal use of \code{\link[=cols_hide]{cols_hide(
 already hidden. This is convenient if the shared purpose of these specified
 columns is only to provide string input to the target column. To suppress
 any hiding of columns, \code{FALSE} can be used here.}
+
+\item{rows}{Rows that will participate in the merging process. Providing
+\code{\link[=everything]{everything()}} (the default) results in all rows in \code{columns} undergoing
+merging. Alternatively, we can supply a vector of row identifiers within
+\code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on selections.
+The select helper functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.
+We can also use a standalone predicate expression to filter down to the
+rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{pattern}{A formatting pattern that specifies the arrangement of the
 \code{column} values and any string literals. We need to use column numbers

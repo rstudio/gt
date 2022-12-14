@@ -4,7 +4,7 @@
 \alias{cols_merge_n_pct}
 \title{Merge two columns to combine counts and percentages}
 \usage{
-cols_merge_n_pct(data, col_n, col_pct, autohide = TRUE)
+cols_merge_n_pct(data, col_n, col_pct, rows = everything(), autohide = TRUE)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -14,6 +14,15 @@ cols_merge_n_pct(data, col_n, col_pct, autohide = TRUE)
 \item{col_pct}{A column that contains values for the percentage component.
 This column should be formatted such that percentages are displayed (e.g.,
 with \code{fmt_percent()}).}
+
+\item{rows}{Rows that will participate in the merging process. Providing
+\code{\link[=everything]{everything()}} (the default) results in all rows in \code{columns} undergoing
+merging. Alternatively, we can supply a vector of row identifiers within
+\code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on selections.
+The select helper functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.
+We can also use a standalone predicate expression to filter down to the
+rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{autohide}{An option to automatically hide the column specified as
 \code{col_pct}. Any columns with their state changed to hidden will behave
