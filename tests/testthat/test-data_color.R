@@ -1180,6 +1180,19 @@ test_that("Certain errors can be expected (and some things don't error)", {
   )
 })
 
+test_that("Certain warnings can be expected when using deprecated arguments", {
+
+  # Expect a warning if value is provided to `colors`
+  expect_warning(
+    exibble %>%
+      gt() %>%
+      data_color(
+        method = "numeric",
+        colors = c("red", "green")
+      )
+  )
+})
+
 test_that("The correct color values are obtained when using a color fn", {
 
   # Create a `tbl_html` object by using `data_color` with the
