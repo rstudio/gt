@@ -394,25 +394,27 @@ perform_col_merge <- function(data, context) {
 
       mutated_column <- col_merge[[i]]$vars[1]
 
-      columns <- col_merge[[i]]$vars
-      pattern <- col_merge[[i]]$pattern
+      columns <- col_merge[[i]][["vars"]]
+      rows <- col_merge[[i]][["rows"]]
+      pattern <- col_merge[[i]][["pattern"]]
 
-      glue_src_na_data <- lapply(as.list(data_tbl[, columns]), FUN = is.na)
+      glue_src_na_data <- lapply(as.list(data_tbl[rows, columns]), FUN = is.na)
 
-      glue_src_data <- as.list(body[, columns])
+      glue_src_data <- as.list(body[rows, columns])
 
       glue_src_data <-
         lapply(
           seq_along(glue_src_data),
           FUN = function(x) {
 
-            # The source data having a character `"NA"` value means that
-            # the value should is probably be treated as missing (it wasn't
-            # modified by `sub_missing()`) but we also want to corroborate that
-            # with the original data values (checking for missingness there);
-            # For character and logical values, we do separate checks
-
-            source_data <- data_tbl[, columns][[x]]
+            # The source data (and 'source data' here means data that's already
+            # been formatted and converted to `character`) having a character
+            # `"NA"` value signals that the value should *probably* be treated
+            # as missing (we are relatively certain it wasn't modified by
+            # `sub_missing()`, a case where we consider the value *not* to be
+            # missing because it was handled later) but we also want to
+            # corroborate that with the original data values (checking for true
+            # missing data there)
 
             missing_cond <- glue_src_data[[x]] == "NA" & glue_src_na_data[[x]]
             missing_cond[is.na(missing_cond)] <- TRUE
@@ -421,6 +423,7 @@ perform_col_merge <- function(data, context) {
             glue_src_data[[x]]
           }
         )
+
       glue_src_data <- stats::setNames(glue_src_data, seq_len(length(glue_src_data)))
 
       glued_cols <- as.character(glue_gt(glue_src_data, pattern))
