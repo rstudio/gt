@@ -443,7 +443,7 @@ perform_col_merge <- function(data, context) {
 
       glued_cols <- gsub(missing_val_token, "NA", glued_cols, fixed = TRUE)
 
-      body[, mutated_column] <- glued_cols
+      body[rows, mutated_column] <- glued_cols
 
     } else if (type == "merge_n_pct") {
 
