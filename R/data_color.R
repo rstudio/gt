@@ -557,9 +557,9 @@ data_color <- function(
     na_color <- "#808080"
   }
 
-  # Defuse any function supplied to `fn`; if function supplied to `colors`
-  # (previous argument for this purpose) then let that take precent and
-  # provide deprecation warning
+  # Defuse any function supplied to `fn`; if a function is supplied to `colors`
+  # (previous argument for this purpose) then let that take precedent and
+  # provide a deprecation warning
   if (!is.null(colors)) {
 
     fn <- rlang::enquo(colors)
@@ -572,14 +572,20 @@ data_color <- function(
       cli::cli_warn(c(
         "Since gt v0.9.0, the `colors` argument has been deprecated.",
         "*" = "Please use the `palette` argument to define a color palette."
-      ))
+      ),
+      .frequency = "regularly",
+      .frequency_id = "data_color_warning_palette"
+      )
 
     } else {
 
       cli::cli_warn(c(
         "Since gt v0.9.0, the `colors` argument has been deprecated.",
         "*" = "Please use the `fn` argument instead."
-      ))
+      ),
+      .frequency = "regularly",
+      .frequency_id = "data_color_warning_fn"
+      )
     }
 
   } else if (!is.null(fn)) {
