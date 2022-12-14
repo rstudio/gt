@@ -1446,10 +1446,13 @@ cols_unhide <- function(
 #'   We can also use a standalone predicate expression to filter down to the
 #'   rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #' @param pattern A formatting pattern that specifies the arrangement of the
-#'   `column` values and any string literals. We need to use column numbers
-#'   (corresponding to the position of columns provided in `columns`) within the
-#'   pattern. Further details are provided in the *How the `pattern` works*
-#'   section.
+#'   `column` values and any string literals. The pattern uses numbers (within
+#'   `{ }`) that correspond to the indices of columns provided in `columns`. If
+#'   two columns are provided in `columns` and we would like to combine the cell
+#'   data onto the first column, `"{1} {2}"` could be used. If a pattern isn't
+#'   provided then a space-separated pattern that includes all `columns` will be
+#'   generated automatically. Further details are provided in the *How the
+#'   `pattern` works* section.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -1565,7 +1568,7 @@ cols_merge <- function(
     columns,
     hide_columns = columns[-1],
     rows = everything(),
-    pattern = paste0("{", seq_along(columns), "}", collapse = " ")
+    pattern = NULL
 ) {
 
   # Perform input object validation
@@ -1578,6 +1581,11 @@ cols_merge <- function(
       data = data,
       excl_stub = FALSE
     )
+
+
+  if (is.null(pattern)) {
+    pattern <- paste0("{", seq_along(columns), "}", collapse = " ")
+  }
 
   # Resolve the rows supplied in the `rows` argument
   resolved_rows_idx <-
