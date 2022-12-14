@@ -173,6 +173,20 @@ test_that("the function `cols_merge()` works correctly", {
       cols_merge(columns = c(row, a)) %>%
       render_as_html()
   )
+
+  # Use `cols_merge()` with a vector of `rows` which limits the rows
+  # that participate in the merging process
+  gt_tbl_4 <-
+    mtcars_short %>%
+    gt() %>%
+    cols_merge(
+      columns = c(drat, wt),
+      rows = c(2, 4),
+      pattern = "{1} ({2})"
+    )
+
+  # Perform snapshot test
+  gt_tbl_4 %>% render_as_html() %>% expect_snapshot()
 })
 
 test_that("the secondary pattern language works well in `cols_merge()`", {
