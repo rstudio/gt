@@ -574,7 +574,7 @@ data_color <- function(
         "*" = "Please use the `palette` argument to define a color palette."
       ),
       .frequency = "regularly",
-      .frequency_id = "data_color_warning_palette"
+      .frequency_id = "data_color_colors_arg_palette"
       )
 
     } else {
@@ -584,7 +584,7 @@ data_color <- function(
         "*" = "Please use the `fn` argument instead."
       ),
       .frequency = "regularly",
-      .frequency_id = "data_color_warning_fn"
+      .frequency_id = "data_color_colors_arg_fn"
       )
     }
 
@@ -816,14 +816,12 @@ data_color <- function(
 
       if (!is.numeric(data_vals) && direction == "row") {
 
-        cli::cli_warn(c(
+        cli::cli_abort(c(
           "The \"numeric\" method with `direction == \"row\"` cannot be used
           when non-numeric columns are included.",
           "*" = "Either specify a collection of numeric columns or use the
           \"factor\" method."
         ))
-
-        return(data)
       }
 
       if (!is.numeric(data_vals)) next
