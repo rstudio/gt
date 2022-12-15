@@ -1574,9 +1574,13 @@ cols_merge <- function(
 
     if (length(base::setdiff(hide_columns, columns) > 0)) {
       cli::cli_warn(c(
-        "Only the columns supplied in `columns` will be hidden.",
-        "*" = "Use `cols_hide()` to hide any out of scope columns."
-      ))
+        "Only a subset of columns supplied in `columns` will be hidden.",
+        "*" = "Use an additional `cols_hide()` expression to hide any
+        out-of-scope columns."
+      ),
+      .frequency = "regularly",
+      .frequency_id = "cols_merge_hide_columns_scope"
+      )
     }
 
     if (length(hide_columns_from_supplied) > 0) {

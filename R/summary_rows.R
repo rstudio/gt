@@ -377,7 +377,10 @@ summary_rows <- function(
     cli::cli_warn(c(
       "Since gt v0.9.0, the `formatter` argument (and associated `...`) has been deprecated.",
       "*" = "Please use the `fmt` argument to provide formatting directives."
-    ))
+    ),
+    .frequency = "regularly",
+    .frequency_id = "summary_rows_formatter_arg_deprecated"
+    )
   }
 
   # With `fmt` input, normalize to list of formatting functions
