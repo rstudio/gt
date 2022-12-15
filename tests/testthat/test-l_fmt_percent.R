@@ -1,4 +1,4 @@
-test_that("the `fmt_percent()` function works correctly in the LaTeX context", {
+test_that("The `fmt_percent()` function works correctly in the LaTeX context", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric

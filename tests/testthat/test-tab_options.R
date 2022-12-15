@@ -68,7 +68,7 @@ selection_text <- function(html, selection) {
   rvest::html_text(rvest::html_nodes(html, selection))
 }
 
-test_that("the internal `opts_df` table can be correctly modified", {
+test_that("The internal `opts_df` table can be correctly modified", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -1440,7 +1440,7 @@ test_that("the internal `opts_df` table can be correctly modified", {
     expect_equal(c(" ", "  "))
 })
 
-test_that("the `opts_df` getter/setter functions properly", {
+test_that("The `opts_df` getter/setter functions properly", {
 
   # Obtain a local copy of the internal `_options` table
   dt_options_get(data = data) %>% expect_s3_class("tbl_df")
@@ -1459,7 +1459,7 @@ test_that("the `opts_df` getter/setter functions properly", {
     expect_equal("60%")
 })
 
-test_that("all column labels can be entirely hidden from view", {
+test_that("All column labels can be entirely hidden from view", {
 
   # Expect that the option `column_labels.hidden = TRUE` will
   # remove the expected node with the classes of `gt_col_heading`
@@ -1486,7 +1486,7 @@ test_that("all column labels can be entirely hidden from view", {
     4)
 })
 
-test_that("the row striping options work correctly", {
+test_that("The row striping options work correctly", {
 
   # Expect that the option `row.striping.include_stub = FALSE`
   # will result in no CSS class combinations of `gt_stub` and
@@ -1580,7 +1580,7 @@ test_that("the row striping options work correctly", {
   )
 })
 
-test_that("certain X11 color names are replaced in HTML tables", {
+test_that("Certain X11 color names are replaced in HTML tables", {
 
   # Here, the `gray85` color supplied to `heading.background.color`
   # is transformed to the #D9D9D9 color and it appears in the rule:
@@ -1793,7 +1793,7 @@ test_that("certain X11 color names are replaced in HTML tables", {
   )
 })
 
-test_that("vertical padding across several table parts can be applied", {
+test_that("Vertical padding across several table parts can be applied", {
 
   snap_padded_tbl <- function(padding_px) {
 

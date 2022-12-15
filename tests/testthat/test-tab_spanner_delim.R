@@ -7,7 +7,7 @@ check_suggests <- function() {
   skip_if_not_installed("xml2")
 }
 
-test_that("the `tab_spanner_delim()` function works correctly", {
+test_that("The `tab_spanner_delim()` function works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()

@@ -1,4 +1,4 @@
-test_that("all exported functions validate the incoming `data` object", {
+test_that("All exported functions validate the incoming `data` object", {
 
   regexp_stop <- "The object to `data` is not a `gt_tbl` object"
 
@@ -84,7 +84,7 @@ test_that("all exported functions validate the incoming `data` object", {
   expect_error(exibble %>% extract_cells(), regexp = regexp_stop)
 })
 
-test_that("certain `fmt_*()` functions stop if given incompatible column data", {
+test_that("Certain `fmt_*()` functions stop if given incompatible column data", {
 
   gt_tbl <- exibble %>% gt()
 

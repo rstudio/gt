@@ -28,7 +28,7 @@ time_tbl <-
 # `data_tbl` dataset
 tab_time <- gt(time_tbl)
 
-test_that("the `fmt_number()` function works with conditional `rows`", {
+test_that("The `fmt_number()` function works with conditional `rows`", {
 
   expect_equal(
     (tab %>%
@@ -50,7 +50,7 @@ test_that("the `fmt_number()` function works with conditional `rows`", {
     c("34.0000", "74", "23", "NA", "35", "NA", "NA"))
 })
 
-test_that("the `fmt_scientific()` function works with conditional `rows`", {
+test_that("The `fmt_scientific()` function works with conditional `rows`", {
 
   expect_equal(
     (tab %>%
@@ -83,7 +83,7 @@ test_that("the `fmt_scientific()` function works with conditional `rows`", {
   )
 })
 
-test_that("the `fmt_percent()` function works with conditional `rows`", {
+test_that("The `fmt_percent()` function works with conditional `rows`", {
 
   expect_equal(
     (tab %>%
@@ -110,7 +110,7 @@ test_that("the `fmt_percent()` function works with conditional `rows`", {
   )
 })
 
-test_that("the `fmt_currency()` function works with conditional `rows`", {
+test_that("The `fmt_currency()` function works with conditional `rows`", {
 
   expect_equal(
     (tab %>%
@@ -136,7 +136,7 @@ test_that("the `fmt_currency()` function works with conditional `rows`", {
   )
 })
 
-test_that("the `fmt_date()` function works with conditional `rows`", {
+test_that("The `fmt_date()` function works with conditional `rows`", {
 
   expect_equal(
     (tab_time %>%
@@ -159,7 +159,7 @@ test_that("the `fmt_date()` function works with conditional `rows`", {
   )
 })
 
-test_that("the `fmt_time()` function works with conditional `rows`", {
+test_that("The `fmt_time()` function works with conditional `rows`", {
 
   expect_equal(
     (tab_time %>%
@@ -182,7 +182,7 @@ test_that("the `fmt_time()` function works with conditional `rows`", {
   )
 })
 
-test_that("the `fmt_datetime()` function works with conditional `rows`", {
+test_that("The `fmt_datetime()` function works with conditional `rows`", {
 
   expect_equal(
     (tab_time %>%
@@ -209,7 +209,7 @@ test_that("the `fmt_datetime()` function works with conditional `rows`", {
   )
 })
 
-test_that("the `fmt_passthrough()` function works with conditional `rows`", {
+test_that("The `fmt_passthrough()` function works with conditional `rows`", {
 
   expect_equal(
     (tab_time %>%
@@ -232,7 +232,7 @@ test_that("the `fmt_passthrough()` function works with conditional `rows`", {
   )
 })
 
-test_that("the `sub_missing()` function works with conditional `rows`", {
+test_that("The `sub_missing()` function works with conditional `rows`", {
 
   expect_equal(
     (tab %>%
@@ -245,7 +245,7 @@ test_that("the `sub_missing()` function works with conditional `rows`", {
   )
 })
 
-test_that("the `fmt()` function works with conditional `rows`", {
+test_that("The `fmt()` function works with conditional `rows`", {
 
   expect_equal(
     (tab %>%

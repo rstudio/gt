@@ -9,7 +9,7 @@ selection_text <- function(html, selection) {
   rvest::html_text(rvest::html_nodes(html, selection))
 }
 
-test_that("a gt table object contains the correct components", {
+test_that("A gt table object contains the correct components", {
 
   # Create a `gt_tbl` object with `gt()`
   tab <- iris %>% gt()
@@ -40,7 +40,7 @@ test_that("a gt table object contains the correct components", {
   #expect_tab(tab, df = iris %>% dplyr::group_by(Species))
 })
 
-test_that("a gt table can be made to use the rownames of a data frame", {
+test_that("A gt table can be made to use the rownames of a data frame", {
 
   # Create a `gt_tbl` object with `gt()` and use the
   # data frame's row names as row names in the stub
@@ -63,7 +63,7 @@ test_that("a gt table can be made to use the rownames of a data frame", {
   )
 })
 
-test_that("a gt table can be made with the stub partially or fully populated", {
+test_that("A gt table can be made with the stub partially or fully populated", {
 
   # Create an input data frame with a `rowname` column
   # and a `value` column
@@ -120,7 +120,7 @@ test_that("a gt table can be made with the stub partially or fully populated", {
   )
 })
 
-test_that("a gt table can be made from a table with no rows", {
+test_that("A gt table can be made from a table with no rows", {
 
   # Create an input data frame based on the exibble
   # dataset, except with no rows
@@ -153,7 +153,7 @@ test_that("a gt table can be made from a table with no rows", {
   expect_tab(tab = tab, df = data_e %>% dplyr::group_by(group))
 })
 
-test_that("a gt table can use UTF-8 chars in any system locale", {
+test_that("A gt table can use UTF-8 chars in any system locale", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -236,7 +236,7 @@ test_that("a gt table can use UTF-8 chars in any system locale", {
   }
 })
 
-test_that("gt table can be made with grouped data -- one group", {
+test_that("A gt table can be made with grouped data -- one group", {
 
   # Use `dplyr::group_by()` to add a group to an
   # incoming table; create the gt object and build
@@ -308,7 +308,7 @@ test_that("gt table can be made with grouped data -- one group", {
     )
 })
 
-test_that("gt table can be made with grouped data - two groups", {
+test_that("A gt table can be made with grouped data - two groups", {
 
   # Use `dplyr::group_by()` to add two groups to an
   # incoming table; create the gt object and build
@@ -796,7 +796,6 @@ test_that("Escapable characters in rownames are handled correctly in each output
     fixed = TRUE
   )
 })
-
 
 test_that("Default locale settings are honored by formatting functions", {
 

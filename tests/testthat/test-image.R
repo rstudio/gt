@@ -1,6 +1,6 @@
 library(ggplot2)
 
-test_that("the `test_image()` function works correctly", {
+test_that("The `test_image()` function works correctly", {
 
   # Expect that the `test_image()` function returns paths for
   # either a PNG or SVG test image
@@ -8,7 +8,7 @@ test_that("the `test_image()` function works correctly", {
   test_image(type = "svg") %>% expect_match(".*/test_image.svg")
 })
 
-test_that("the `get_mime_type()` function works correctly", {
+test_that("The `get_mime_type()` function works correctly", {
 
   # Expect that the `get_mime_type()` function returns
   # a mime-type string for svg and jpg files
@@ -16,7 +16,7 @@ test_that("the `get_mime_type()` function works correctly", {
   get_mime_type(file = "file.jpg") %>% expect_equal("image/jpeg")
 })
 
-test_that("the `get_image_uri()` function works correctly", {
+test_that("The `get_image_uri()` function works correctly", {
 
   # Expect that the beginning of the PNG-based image URI has the
   # correct MIME and encoding types
@@ -41,7 +41,7 @@ test_that("the `get_image_uri()` function works correctly", {
   expect_snapshot(get_image_uri(file = test_image(type = "png")))
 })
 
-test_that("the `local_image()` function works correctly", {
+test_that("The `local_image()` function works correctly", {
 
   # Expect that the image tags generated for the included test image
   # are correctly formed
@@ -52,7 +52,7 @@ test_that("the `local_image()` function works correctly", {
   expect_snapshot(local_image(filename = rep(test_image(type = "png"), 2)))
 })
 
-test_that("the `web_image()` function works correctly", {
+test_that("The `web_image()` function works correctly", {
 
   # Expect that the image tag is correctly formed
   expect_equal(
@@ -88,7 +88,7 @@ test_that("the `web_image()` function works correctly", {
   )
 })
 
-test_that("the `ggplot_image()` function works correctly", {
+test_that("The `ggplot_image()` function works correctly", {
 
   skip_on_ci()
 
