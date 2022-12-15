@@ -8,7 +8,8 @@ cols_merge(
   data,
   columns,
   hide_columns = columns[-1],
-  pattern = paste0("{", seq_along(columns), "}", collapse = " ")
+  rows = everything(),
+  pattern = NULL
 )
 }
 \arguments{
@@ -24,11 +25,23 @@ already hidden. This is convenient if the shared purpose of these specified
 columns is only to provide string input to the target column. To suppress
 any hiding of columns, \code{FALSE} can be used here.}
 
+\item{rows}{Rows that will participate in the merging process. Providing
+\code{\link[=everything]{everything()}} (the default) results in all rows in \code{columns} undergoing
+merging. Alternatively, we can supply a vector of row identifiers within
+\code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on selections.
+The select helper functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.
+We can also use a standalone predicate expression to filter down to the
+rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+
 \item{pattern}{A formatting pattern that specifies the arrangement of the
-\code{column} values and any string literals. We need to use column numbers
-(corresponding to the position of columns provided in \code{columns}) within the
-pattern. Further details are provided in the \emph{How the \code{pattern} works}
-section.}
+\code{column} values and any string literals. The pattern uses numbers (within
+\code{{ }}) that correspond to the indices of columns provided in \code{columns}. If
+two columns are provided in \code{columns} and we would like to combine the cell
+data onto the first column, \code{"{1} {2}"} could be used. If a pattern isn't
+provided then a space-separated pattern that includes all \code{columns} will be
+generated automatically. Further details are provided in the \emph{How the
+\code{pattern} works} section.}
 }
 \value{
 An object of class \code{gt_tbl}.

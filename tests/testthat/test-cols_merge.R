@@ -23,7 +23,9 @@ tbl_na <-
   dplyr::tibble(
     a = 1:4,
     b = c(1, NA, 3,  NA),
-    c = c(1, 2,  NA, NA)
+    c = c(1, 2,  NA, NA),
+    d = c("1", "2", NA_character_, NA_character_),
+    e = c(TRUE, FALSE, NA, NA)
   )
 
 # Function to skip tests if Suggested packages not available on system
@@ -173,6 +175,20 @@ test_that("The function `cols_merge()` works correctly", {
       cols_merge(columns = c(row, a)) %>%
       render_as_html()
   )
+
+  # Use `cols_merge()` with a vector of `rows` which limits the rows
+  # that participate in the merging process
+  gt_tbl_4 <-
+    mtcars_short %>%
+    gt() %>%
+    cols_merge(
+      columns = c(drat, wt),
+      rows = c(2, 4),
+      pattern = "{1} ({2})"
+    )
+
+  # Perform snapshot test
+  gt_tbl_4 %>% render_as_html() %>% expect_snapshot()
 })
 
 test_that("The secondary pattern language works well in `cols_merge()`", {
@@ -247,6 +263,54 @@ test_that("The secondary pattern language works well in `cols_merge()`", {
   expect_equal(
     (tbl_gt_7 %>% render_formats_test("html"))[["a"]],
     rep("X", 4)
+  )
+
+  tbl_gt_9 <-
+    tbl_gt %>%
+    cols_merge(columns = c(a, b, d), pattern = "{1}{2}<<{3}>>")
+
+  expect_equal(
+    (tbl_gt_9 %>% render_formats_test("html"))[["a"]],
+    c("111", "2NA2", "33", "4NA")
+  )
+
+  tbl_gt_10 <-
+    tbl_gt %>%
+    sub_missing(missing_text = "X") %>%
+    cols_merge(columns = c(a, b, d), pattern = "{1}{2}<<{3}>>")
+
+  expect_equal(
+    (tbl_gt_10 %>% render_formats_test("html"))[["a"]],
+    c("111", "2X2", "33X", "4XX")
+  )
+
+  tbl_gt_11 <-
+    tbl_gt %>%
+    cols_merge(columns = c(a, b, e), pattern = "{1}{2}<<{3}>>")
+
+  expect_equal(
+    (tbl_gt_11 %>% render_formats_test("html"))[["a"]],
+    c("11TRUE", "2NAFALSE", "33", "4NA")
+  )
+
+  tbl_gt_12 <-
+    tbl_gt %>%
+    sub_missing(missing_text = "X") %>%
+    cols_merge(columns = c(a, b, e), pattern = "{1}{2}<<{3}>>")
+
+  expect_equal(
+    (tbl_gt_12 %>% render_formats_test("html"))[["a"]],
+    c("11TRUE", "2XFALSE", "33X", "4XX")
+  )
+
+  tbl_gt_13 <-
+    tbl_gt %>%
+    sub_missing(missing_text = "X") %>%
+    cols_merge(columns = c(a, b, e), rows = c(1, 3), pattern = "{1}{2}<<{3}>>")
+
+  expect_equal(
+    (tbl_gt_13 %>% render_formats_test("html"))[["a"]],
+    c("11TRUE", "2", "33X", "4")
   )
 })
 
@@ -389,6 +453,20 @@ test_that("The `cols_merge_uncert()` function works correctly", {
 
   # Perform snapshot test
   gt_tbl_1 %>% render_as_html() %>% expect_snapshot()
+
+  # Use `cols_merge_uncert()` with a vector of `rows` which limits the rows
+  # that participate in the merging process
+  gt_tbl_2 <-
+    tbl %>%
+    gt() %>%
+    cols_merge_uncert(
+      col_val = row,
+      col_uncert = a,
+      rows = c(2, 4)
+    )
+
+  # Perform snapshot test
+  gt_tbl_2 %>% render_as_html() %>% expect_snapshot()
 })
 
 test_that("The `cols_merge_uncert()` fn works nicely with different error bounds", {
@@ -448,6 +526,20 @@ test_that("The `cols_merge_uncert()` fn works nicely with different error bounds
       "32.0(+0.0, -0.1)", "34.0(+0.1, -NaN)", "NaN"
     )
   )
+
+  # Use `cols_merge_uncert()` with a vector of `rows` which limits the rows
+  # that participate in the merging process
+  gt_tbl_1 <-
+    tbl_uncert %>%
+    gt() %>%
+    cols_merge_uncert(
+      col_val = "value",
+      col_uncert = c("lu", "uu"),
+      rows = c(1, 4, 6:11)
+    )
+
+  # Perform snapshot test
+  gt_tbl_1 %>% render_as_html() %>% expect_snapshot()
 })
 
 test_that("The `cols_merge_range()` function works correctly", {
@@ -691,6 +783,19 @@ test_that("The `cols_merge_range()` function works correctly", {
 
   # Perform snapshot test
   gt_tbl_4 %>% render_as_html() %>% expect_snapshot()
+
+  # Use `cols_merge_range()` with a vector of `rows` which limits the rows
+  # that participate in the merging process
+  gt_tbl_5 <-
+    gt(tbl, rowname_col = "row") %>%
+    cols_merge_range(
+      col_begin = a,
+      col_end = b,
+      rows = c(2, 4)
+    )
+
+  # Perform snapshot test
+  gt_tbl_5 %>% render_as_html() %>% expect_snapshot()
 })
 
 test_that("The `cols_merge_n_pct()` function works correctly", {
@@ -771,4 +876,19 @@ test_that("The `cols_merge_n_pct()` function works correctly", {
 
   # Perform snapshot test
   gt_tbl_1 %>% render_as_html() %>% expect_snapshot()
+
+  # Use `cols_merge_n_pct()` with a vector of `rows` which limits the rows
+  # that participate in the merging process
+  gt_tbl_2 <-
+    tbl_n_pct %>%
+    gt() %>%
+    cols_merge_n_pct(
+      col_n = a,
+      col_pct = b,
+      rows = c(1, 4)
+    ) %>%
+    fmt_percent(columns = b, decimals = 1)
+
+  # Perform snapshot test
+  gt_tbl_2 %>% render_as_html() %>% expect_snapshot()
 })

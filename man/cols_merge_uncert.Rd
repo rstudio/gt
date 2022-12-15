@@ -4,7 +4,14 @@
 \alias{cols_merge_uncert}
 \title{Merge columns to a value-with-uncertainty column}
 \usage{
-cols_merge_uncert(data, col_val, col_uncert, sep = " +/- ", autohide = TRUE)
+cols_merge_uncert(
+  data,
+  col_val,
+  col_uncert,
+  rows = everything(),
+  sep = " +/- ",
+  autohide = TRUE
+)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -20,6 +27,15 @@ case two columns (representing lower and upper uncertainty values away from
 \code{col_val}, respectively) should be provided. Since we often don't want the
 uncertainty value columns in the output table, we can automatically hide
 any \code{col_uncert} columns through the \code{autohide} option.}
+
+\item{rows}{Rows that will participate in the merging process. Providing
+\code{\link[=everything]{everything()}} (the default) results in all rows in \code{columns} undergoing
+merging. Alternatively, we can supply a vector of row identifiers within
+\code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on selections.
+The select helper functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.
+We can also use a standalone predicate expression to filter down to the
+rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{sep}{The separator text that contains the uncertainty mark for a single
 uncertainty value. The default value of \code{" +/- "} indicates that an
