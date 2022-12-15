@@ -92,7 +92,8 @@ columns will be preserved upon merging.</p>
 <span>  <span class="va">data</span>,</span>
 <span>  <span class="va">columns</span>,</span>
 <span>  hide_columns <span class="op">=</span> <span class="va">columns</span><span class="op">[</span><span class="op">-</span><span class="fl">1</span><span class="op">]</span>,</span>
-<span>  pattern <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"{"</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_along</a></span><span class="op">(</span><span class="va">columns</span><span class="op">)</span>, <span class="st">"}"</span>, collapse <span class="op">=</span> <span class="st">" "</span><span class="op">)</span></span>
+<span>  rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  pattern <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -116,12 +117,26 @@ columns is only to provide string input to the target column. To suppress
 any hiding of columns, <code>FALSE</code> can be used here.</p></dd>
 
 
+<dt>rows</dt>
+<dd><p>Rows that will participate in the merging process. Providing
+<code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code> (the default) results in all rows in <code>columns</code> undergoing
+merging. Alternatively, we can supply a vector of row identifiers within
+<code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of row indices, or a helper function focused on selections.
+The select helper functions are: <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>,
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/one_of.html" class="external-link">one_of()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">num_range()</a></code>, and <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>.
+We can also use a standalone predicate expression to filter down to the
+rows we need (e.g., <code>[colname_1] &gt; 100 &amp; [colname_2] &lt; 50</code>).</p></dd>
+
+
 <dt>pattern</dt>
 <dd><p>A formatting pattern that specifies the arrangement of the
-<code>column</code> values and any string literals. We need to use column numbers
-(corresponding to the position of columns provided in <code>columns</code>) within the
-pattern. Further details are provided in the <em>How the <code>pattern</code> works</em>
-section.</p></dd>
+<code>column</code> values and any string literals. The pattern uses numbers (within
+<code><a href="https://rdrr.io/r/base/Paren.html" class="external-link">{ }</a></code>) that correspond to the indices of columns provided in <code>columns</code>. If
+two columns are provided in <code>columns</code> and we would like to combine the cell
+data onto the first column, <code>"{1} {2}"</code> could be used. If a pattern isn't
+provided then a space-separated pattern that includes all <code>columns</code> will be
+generated automatically. Further details are provided in the <em>How the
+<code>pattern</code> works</em> section.</p></dd>
 
 </dl></div>
     <div class="section level2">

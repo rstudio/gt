@@ -79,7 +79,7 @@ specified in <code>col_pct</code> is dropped from the output table.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cols_merge_n_pct</span><span class="op">(</span><span class="va">data</span>, <span class="va">col_n</span>, <span class="va">col_pct</span>, autohide <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cols_merge_n_pct</span><span class="op">(</span><span class="va">data</span>, <span class="va">col_n</span>, <span class="va">col_pct</span>, rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>, autohide <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -96,6 +96,17 @@ specified in <code>col_pct</code> is dropped from the output table.</p>
 <dd><p>A column that contains values for the percentage component.
 This column should be formatted such that percentages are displayed (e.g.,
 with <code><a href="fmt_percent.html">fmt_percent()</a></code>).</p></dd>
+
+
+<dt>rows</dt>
+<dd><p>Rows that will participate in the merging process. Providing
+<code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code> (the default) results in all rows in <code>columns</code> undergoing
+merging. Alternatively, we can supply a vector of row identifiers within
+<code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of row indices, or a helper function focused on selections.
+The select helper functions are: <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>,
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/one_of.html" class="external-link">one_of()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">num_range()</a></code>, and <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>.
+We can also use a standalone predicate expression to filter down to the
+rows we need (e.g., <code>[colname_1] &gt; 100 &amp; [colname_2] &lt; 50</code>).</p></dd>
 
 
 <dt>autohide</dt>
