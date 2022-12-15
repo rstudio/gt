@@ -1,5 +1,5 @@
 pandoc: 2.7.3
-pkgdown: 2.0.6
+pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
   case-study-gtcars: case-study-gtcars.html
@@ -7,7 +7,7 @@ articles:
   gt-clinicaltables: gt-clinicaltables.html
   gt-datasets: gt-datasets.html
   intro-creating-gt-tables: intro-creating-gt-tables.html
-last_built: 2022-12-12T22:55Z
+last_built: 2022-12-15T17:47Z
 urls:
   reference: https://gt.rstudio.com/reference
   article: https://gt.rstudio.com/articles
