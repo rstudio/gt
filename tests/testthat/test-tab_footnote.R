@@ -170,7 +170,7 @@ selection_text <- function(html, selection) {
   rvest::html_text(rvest::html_nodes(html, selection))
 }
 
-test_that("the `tab_footnote()` function works correctly", {
+test_that("The `tab_footnote()` function works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -675,7 +675,7 @@ test_that("the `tab_footnote()` function works correctly", {
     expect_equal(rep(as.character(1:4), 2))
 })
 
-test_that("the footnotes table is structured correctly", {
+test_that("The footnotes table is structured correctly", {
 
   # Extract `footnotes_resolved` and `list_of_summaries`
   footnotes_tbl <- dt_footnotes_get(data = data_3)
@@ -762,7 +762,7 @@ test_that("the footnotes table is structured correctly", {
     expect_equal("Open and Close Values2")
 })
 
-test_that("the `list_of_summaries` table is structured correctly", {
+test_that("The `list_of_summaries` table is structured correctly", {
 
   gtcars_built <-
     gtcars %>%
@@ -837,7 +837,7 @@ test_that("the `list_of_summaries` table is structured correctly", {
   )
 })
 
-test_that("footnotes with no location are rendered correctly", {
+test_that("Footnotes with no location are rendered correctly", {
 
   gt_tbl <- gt(data = exibble[1, ])
 

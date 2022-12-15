@@ -243,7 +243,7 @@ test_that("The `cols_width()` function stores values correctly", {
   )
 })
 
-test_that("the function `cols_width()` works correctly with a simple table", {
+test_that("The function `cols_width()` works correctly with a simple table", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -598,7 +598,7 @@ test_that("the function `cols_width()` works correctly with a simple table", {
   )
 })
 
-test_that("the function `cols_width()` works correctly with a complex table", {
+test_that("The function `cols_width()` works correctly with a complex table", {
 
   # Check that specific suggested packages are available
   check_suggests()

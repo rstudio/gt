@@ -32,7 +32,9 @@ check_suggests <- function() {
   skip_if_not_installed("xml2")
 }
 
-test_that("the function `cols_merge()` works correctly", {
+test_that("The function `cols_merge()` works correctly", {
+
+  local_options("rlib_warning_verbosity" = "verbose")
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -173,7 +175,7 @@ test_that("the function `cols_merge()` works correctly", {
   )
 })
 
-test_that("the secondary pattern language works well in `cols_merge()`", {
+test_that("The secondary pattern language works well in `cols_merge()`", {
 
   # Create a `tbl_html` object with `gt()`
   tbl_gt <- gt(tbl_na)
@@ -248,7 +250,7 @@ test_that("the secondary pattern language works well in `cols_merge()`", {
   )
 })
 
-test_that("the `cols_merge_uncert()` function works correctly", {
+test_that("The `cols_merge_uncert()` function works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -389,7 +391,7 @@ test_that("the `cols_merge_uncert()` function works correctly", {
   gt_tbl_1 %>% render_as_html() %>% expect_snapshot()
 })
 
-test_that("the `cols_merge_uncert()` fn works nicely with different error bounds", {
+test_that("The `cols_merge_uncert()` fn works nicely with different error bounds", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -448,7 +450,7 @@ test_that("the `cols_merge_uncert()` fn works nicely with different error bounds
   )
 })
 
-test_that("the `cols_merge_range()` function works correctly", {
+test_that("The `cols_merge_range()` function works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -691,7 +693,7 @@ test_that("the `cols_merge_range()` function works correctly", {
   gt_tbl_4 %>% render_as_html() %>% expect_snapshot()
 })
 
-test_that("the `cols_merge_n_pct()` function works correctly", {
+test_that("The `cols_merge_n_pct()` function works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()

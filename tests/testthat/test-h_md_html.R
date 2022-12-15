@@ -2,7 +2,7 @@ tab <-
   exibble %>%
   gt(rowname_col = "row", groupname_col = "group")
 
-test_that("the `tab_header()` function works with `md()`/`html()`", {
+test_that("The `tab_header()` function works with `md()`/`html()`", {
 
   # Expect the rendered title and subtitle to be
   # exactly as provided
@@ -37,7 +37,7 @@ test_that("the `tab_header()` function works with `md()`/`html()`", {
     expect_true()
 })
 
-test_that("the `tab_spanner()` function works with `md()`/`html()`", {
+test_that("The `tab_spanner()` function works with `md()`/`html()`", {
 
   # Expect the rendered spanner label to be
   # exactly as provided
@@ -73,7 +73,7 @@ test_that("the `tab_spanner()` function works with `md()`/`html()`", {
     expect_true()
 })
 
-test_that("the `cols_label()` function works with `md()`/`html()`", {
+test_that("The `cols_label()` function works with `md()`/`html()`", {
 
   # Expect the rendered column labels to be
   # exactly as provided
@@ -163,7 +163,7 @@ test_that("the `cols_label()` function works with `md()`/`html()`", {
     expect_true()
 })
 
-test_that("the `tab_footnote()` function works with `md()`/`html()`", {
+test_that("The `tab_footnote()` function works with `md()`/`html()`", {
 
   # Expect the rendered footnote to be
   # exactly as provided
@@ -199,7 +199,7 @@ test_that("the `tab_footnote()` function works with `md()`/`html()`", {
     expect_true()
 })
 
-test_that("the `tab_source_note()` function works with `md()`/`html()`", {
+test_that("The `tab_source_note()` function works with `md()`/`html()`", {
 
   # Expect the rendered source note to be
   # exactly as provided

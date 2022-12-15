@@ -1,4 +1,4 @@
-test_that("`as_raw_html()` produces the same table every time", {
+test_that("The `as_raw_html()` function produces the same table every time", {
 
   gt_html_1 <-
     gt(exibble) %>%

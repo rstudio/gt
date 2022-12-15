@@ -1,4 +1,4 @@
-test_that("the `fmt_integer()` function works correctly in the HTML context", {
+test_that("The `fmt_integer()` function works correctly in the HTML context", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
@@ -225,7 +225,7 @@ test_that("the `fmt_integer()` function works correctly in the HTML context", {
   )
 })
 
-test_that("the `fmt_integer()` function can scale/suffix larger numbers", {
+test_that("The `fmt_integer()` function can scale/suffix larger numbers", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
@@ -320,7 +320,7 @@ test_that("the `fmt_integer()` function can scale/suffix larger numbers", {
   )
 })
 
-test_that("rownames and groupnames aren't included in columns = TRUE", {
+test_that("Rownames and groupnames aren't included in `columns = TRUE`", {
 
   mtcars1 <- cbind(mtcars, chardata = row.names(mtcars))
 
@@ -351,7 +351,7 @@ test_that("rownames and groupnames aren't included in columns = TRUE", {
   )
 })
 
-test_that("the `fmt_integer()` fn can render in the Indian numbering system", {
+test_that("The `fmt_integer()` fn can render in the Indian numbering system", {
 
   # These numbers will be used in tests of formatting
   # values to the Indian numbering system

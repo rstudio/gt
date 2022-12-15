@@ -677,7 +677,10 @@ tab_row_group <- function(
     cli::cli_warn(c(
       "Since gt v0.3.0 the `group` argument has been deprecated.",
       "*" = "Use the `label` argument to specify the group label."
-    ))
+    ),
+    .frequency = "regularly",
+    .frequency_id = "tab_row_group_group_arg_deprecated"
+    )
   }
 
   # Warn user about `others_label` deprecation
@@ -693,7 +696,10 @@ tab_row_group <- function(
       "Since gt v0.3.0 the `others_label` argument has been deprecated.",
       "*" = "Use `tab_options(row_group.default_label = <label>)` to set
       this label."
-    ))
+    ),
+    .frequency = "regularly",
+    .frequency_id = "tab_row_group_others_label_arg_deprecated"
+    )
 
     if (missing(label) && missing(rows) && missing(id)) {
       return(data)

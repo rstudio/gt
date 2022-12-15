@@ -1,4 +1,4 @@
-test_that("the `fmt_passthrough()` function works correctly", {
+test_that("The `fmt_passthrough()` function works correctly", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric

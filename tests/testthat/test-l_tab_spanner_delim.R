@@ -1,7 +1,7 @@
 # Create a shortened version of `iris`
 iris_short <- iris[1:5, ]
 
-test_that("the `tab_spanner_delim()` function works correctly", {
+test_that("The `tab_spanner_delim()` function works correctly", {
 
   # Create a `tbl_latex` object with `gt()`; split the column
   # names into spanner headings and column labels

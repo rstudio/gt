@@ -1,4 +1,4 @@
-test_that("the `info_date_style()` function works correctly", {
+test_that("The `info_date_style()` function works correctly", {
 
   # Expect that the `info_date_style()` function produces an
   # information table with certain classes
@@ -14,7 +14,7 @@ test_that("the `info_date_style()` function works correctly", {
   )
 })
 
-test_that("the `info_time_style()` function works correctly", {
+test_that("The `info_time_style()` function works correctly", {
 
   # Expect that the `info_time_style()` function produces an
   # information table with certain classes
@@ -30,7 +30,7 @@ test_that("the `info_time_style()` function works correctly", {
   )
 })
 
-test_that("the `info_google_fonts()` function works correctly", {
+test_that("The `info_google_fonts()` function works correctly", {
 
   # Expect that the `info_google_fonts()` function produces an
   # information table with certain classes

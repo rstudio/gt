@@ -1144,6 +1144,17 @@ test_that("Certain errors can be expected (and some things don't error)", {
       )
   )
 
+  # Expect an error if using `direction = "row"` with a numeric method
+  # when there are non-numeric cells
+  expect_error(
+    exibble %>%
+      gt() %>%
+      data_color(
+        direction = "row",
+        method = "numeric"
+      )
+  )
+
   # Expect an error if using `direction = "row"` when specifying
   # `target_columns`
   expect_error(
@@ -1176,6 +1187,32 @@ test_that("Certain errors can be expected (and some things don't error)", {
       data_color(
         columns = c(num, currency),
         target_columns = c(row, group),
+      )
+  )
+})
+
+test_that("Certain warnings can be expected when using deprecated arguments", {
+
+  local_options("rlib_warning_verbosity" = "verbose")
+
+  # Expect a warning if a palette is provided to `colors`
+  expect_warning(
+    exibble %>%
+      gt() %>%
+      data_color(
+        method = "numeric",
+        colors = c("red", "green")
+      )
+  )
+
+  # Expect a warning if a function is provided to `colors`
+  expect_warning(
+    exibble %>%
+      gt() %>%
+      data_color(
+        columns = num,
+        method = "numeric",
+        colors = scales::col_numeric(palette = c("red", "green"), domain = c(0, 1E7))
       )
   )
 })

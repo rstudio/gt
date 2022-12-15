@@ -1,4 +1,4 @@
-test_that("a gt table contains the expected column spanner labels", {
+test_that("A gt table contains the expected column spanner labels", {
 
   skip_on_ci()
 

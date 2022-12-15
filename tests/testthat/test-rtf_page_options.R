@@ -1,6 +1,6 @@
 skip_on_os("linux")
 
-test_that("page options can used for RTF output", {
+test_that("Page options can used for RTF output", {
 
   # Create a one-row table for these tests
   exibble_min <- exibble[1, 1:4]

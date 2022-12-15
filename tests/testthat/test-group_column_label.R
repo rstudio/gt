@@ -122,7 +122,7 @@ exibble_test <- function(
   tbl
 }
 
-test_that("group labels as a column work well across many variations", {
+test_that("Group labels as a column work well across many variations", {
 
   # 1: No row groups or row labels (no stub)
   tbl_1 <-
