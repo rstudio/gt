@@ -1092,6 +1092,8 @@ test_that("Summary row labels are added in narrow and wide tables", {
 
 test_that("Multiple ways of expressing formatting work equivalently", {
 
+  local_options("rlib_warning_verbosity" = "verbose")
+
   expect_warning(
     gt_tbl_1 <-
       tbl %>%
@@ -2227,6 +2229,8 @@ test_that("The `normalize_summary_fns()` function works with a variety of inputs
 })
 
 test_that("The deprecated `formatter` arg and `...` still function properly", {
+
+  local_options("rlib_warning_verbosity" = "verbose")
 
   # Generate summary rows and use a formatting function in the deprecated
   # `formatter` arg; this yields a warning but works so long as `fmt = NULL`

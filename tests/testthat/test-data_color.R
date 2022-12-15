@@ -1193,6 +1193,8 @@ test_that("Certain errors can be expected (and some things don't error)", {
 
 test_that("Certain warnings can be expected when using deprecated arguments", {
 
+  local_options("rlib_warning_verbosity" = "verbose")
+
   # Expect a warning if a palette is provided to `colors`
   expect_warning(
     exibble %>%

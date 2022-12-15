@@ -34,6 +34,8 @@ check_suggests <- function() {
 
 test_that("the function `cols_merge()` works correctly", {
 
+  local_options("rlib_warning_verbosity" = "verbose")
+
   # Check that specific suggested packages are available
   check_suggests()
 

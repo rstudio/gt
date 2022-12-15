@@ -169,12 +169,15 @@ test_that("a gt table contains the expected source note", {
   # is available
   tbl_html %>%
     selection_text("[class='gt_sourcenote']") %>%
-    expect_equal(
-      c("Henderson and Velleman (1981).",
-        "This was in Motor Trend magazine, hence the `mt`."))
+    expect_equal(c(
+      "Henderson and Velleman (1981).",
+      "This was in Motor Trend magazine, hence the `mt`."
+    ))
 })
 
 test_that("row groups can be successfully generated with `tab_row_group()", {
+
+  local_options("rlib_warning_verbosity" = "verbose")
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -329,7 +332,11 @@ test_that("row groups can be successfully generated with `tab_row_group()", {
   expect_warning(
     gt_tbl <-
       gt(exibble, rowname_col = "row") %>%
-      tab_row_group(label = "group_prioritized", group = "group", rows = 1:3)
+      tab_row_group(
+        label = "group_prioritized",
+        group = "group",
+        rows = 1:3
+      )
   )
 
   # Expect that the label text specified in `label` was used over the
