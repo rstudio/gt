@@ -1,4 +1,4 @@
-test_that("the `fmt_scientific()` function works correctly", {
+test_that("The `fmt_scientific()` function works correctly", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
@@ -359,7 +359,7 @@ test_that("the `fmt_scientific()` function works correctly", {
   )
 })
 
-test_that("`fmt_scientific()` can handle extremely large and small values", {
+test_that("The `fmt_scientific()` fn can handle extremely large and small values", {
 
   # Create an input data frame with very
   # large and very small numbers (both

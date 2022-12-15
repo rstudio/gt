@@ -1,7 +1,7 @@
 # Create a shorter version of `mtcars`
 mtcars_short <- mtcars[1:5, ]
 
-test_that("a gt table contains the expected heading components", {
+test_that("A gt table contains the expected heading components", {
 
   # Create a `tbl_latex` object with `gt()`; this table contains a title
   tbl_latex <-
@@ -70,7 +70,7 @@ test_that("a gt table contains the expected heading components", {
     expect_snapshot()
 })
 
-test_that("a gt table contains the expected stubhead label", {
+test_that("A gt table contains the expected stubhead label", {
 
   # Create a `tbl_latex` object with `gt()`; this table
   # contains a stub and a stubhead caption
@@ -88,7 +88,7 @@ test_that("a gt table contains the expected stubhead label", {
     expect_true()
 })
 
-test_that("a gt table contains the expected column spanner labels", {
+test_that("A gt table contains the expected column spanner labels", {
 
   # Create a `tbl_latex` object with `gt()`; this table
   # contains the spanner heading `perimeter` over the
@@ -206,7 +206,7 @@ test_that("a gt table contains the expected column spanner labels", {
     expect_snapshot()
 })
 
-test_that("a gt table contains the expected source note", {
+test_that("A gt table contains the expected source note", {
 
   # Create a `tbl_latex` object with `gt()`; this table
   # contains a source note
@@ -241,7 +241,7 @@ test_that("a gt table contains the expected source note", {
     expect_snapshot()
 })
 
-test_that("a gt table contains the correct placement of row groups", {
+test_that("A gt table contains the correct placement of row groups", {
 
   # Create a `tbl_latex` object with `gt()`; this table
   # contains a row groups in a specified order

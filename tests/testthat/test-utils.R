@@ -6,7 +6,7 @@ rtf_with <- function(open, text, close = paste0(open, "0")) {
   paste0("\\", open, " ", text, "\\", close, " ")
 }
 
-test_that("basic markdown_to_rtf works", {
+test_that("Basic markdown_to_rtf works", {
 
   # list
   md_rtf(

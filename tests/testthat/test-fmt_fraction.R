@@ -1,4 +1,4 @@
-test_that("the `fmt_fraction()` function works correctly", {
+test_that("The `fmt_fraction()` function works correctly", {
 
   # Create an input data frame two columns: one
   # character-based and one that is numeric
@@ -427,7 +427,7 @@ test_that("the `fmt_fraction()` function works correctly", {
   )
 })
 
-test_that("the `fmt_fraction()` function produces reproducible results for HTML output", {
+test_that("The `fmt_fraction()` function produces reproducible results for HTML output", {
 
   # Define values
   range_0_1 <- c(0.0001, 0.001, 0.01, 0.1, 0.25, 0.4, 0.5, 0.6, 0.75, 0.9, 0.99, 0.999, 0.9999)
@@ -528,7 +528,7 @@ test_that("the `fmt_fraction()` function produces reproducible results for HTML 
   fraction_tbl_simplified %>% as_rtf() %>% expect_snapshot()
 })
 
-test_that("`fmt_fraction()` can render values in the Indian numbering system", {
+test_that("The `fmt_fraction()` fn can render values in the Indian numbering system", {
 
   # These numbers will be used in tests of formatting
   # values to the Indian numbering system

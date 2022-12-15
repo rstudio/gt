@@ -25,7 +25,7 @@ get_row_group_text <- function(tbl_html) {
     gsub("\n\\s+", "", .)
 }
 
-test_that("a gt table contains the expected heading components", {
+test_that("A gt table contains the expected heading components", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -113,7 +113,7 @@ test_that("a gt table contains the expected heading components", {
   )
 })
 
-test_that("a gt table contains the expected stubhead label", {
+test_that("A gt table contains the expected stubhead label", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -133,7 +133,7 @@ test_that("a gt table contains the expected stubhead label", {
     expect_equal("the mtcars")
 })
 
-test_that("a gt table contains the expected source note", {
+test_that("A gt table contains the expected source note", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -169,12 +169,15 @@ test_that("a gt table contains the expected source note", {
   # is available
   tbl_html %>%
     selection_text("[class='gt_sourcenote']") %>%
-    expect_equal(
-      c("Henderson and Velleman (1981).",
-        "This was in Motor Trend magazine, hence the `mt`."))
+    expect_equal(c(
+      "Henderson and Velleman (1981).",
+      "This was in Motor Trend magazine, hence the `mt`."
+    ))
 })
 
-test_that("row groups can be successfully generated with `tab_row_group()", {
+test_that("Row groups can be successfully generated with `tab_row_group()", {
+
+  local_options("rlib_warning_verbosity" = "verbose")
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -329,7 +332,11 @@ test_that("row groups can be successfully generated with `tab_row_group()", {
   expect_warning(
     gt_tbl <-
       gt(exibble, rowname_col = "row") %>%
-      tab_row_group(label = "group_prioritized", group = "group", rows = 1:3)
+      tab_row_group(
+        label = "group_prioritized",
+        group = "group",
+        rows = 1:3
+      )
   )
 
   # Expect that the label text specified in `label` was used over the
@@ -463,7 +470,7 @@ test_that("A default row group name can be modified with `tab_options()`", {
   )
 })
 
-test_that("a gt table's row group labels are HTML escaped", {
+test_that("A gt table's row group labels are HTML escaped", {
 
   # Create a `tbl_html` object with `gt()`; this table
   # contains a row group with characters that require
@@ -503,7 +510,7 @@ test_that("a gt table's row group labels are HTML escaped", {
     "x > 301")
 })
 
-test_that("a gt table contains custom styles at the correct locations", {
+test_that("A gt table contains custom styles at the correct locations", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -730,7 +737,7 @@ test_that("a gt table contains custom styles at the correct locations", {
     expect_equal("Subtitle")
 })
 
-test_that("columns can be hidden and then made visible", {
+test_that("Columns can be hidden and then made visible", {
 
   # Check that specific suggested packages are available
   check_suggests()
