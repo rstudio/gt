@@ -1202,7 +1202,6 @@ html_color <- function(colors, alpha = NULL) {
 
   # Stop function if there are any NA values in `colors`
   if (any(is.na(colors))) {
-
     cli::cli_abort("No values supplied in `colors` should be `NA`.")
   }
 
