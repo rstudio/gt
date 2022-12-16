@@ -248,6 +248,7 @@ summary_rows <- function(
     columns = everything(),
     fns = NULL,
     fmt = NULL,
+    side = c("bottom", "top"),
     missing_text = "---",
     formatter = NULL,
     ...
@@ -255,6 +256,9 @@ summary_rows <- function(
 
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  # Get the correct `side` value
+  side <- rlang::arg_match(side)
 
   # Collect all provided formatting options in a list
   formatter_options <- list(...)
@@ -392,6 +396,7 @@ summary_rows <- function(
       columns = columns,
       fns = summary_fns,
       fmt = fmt_fns,
+      side = side,
       missing_text = missing_text,
       formatter = formatter,
       formatter_options = formatter_options
