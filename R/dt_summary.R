@@ -430,17 +430,20 @@ dt_summary_build <- function(data, context) {
       group_summary_display_df <-
         dplyr::filter(summary_dfs_display, .data[[group_id_col_private]] == .env$group)
 
+      group_summary_display_df <-
+        dplyr::mutate(group_summary_display_df, `::side::` = side)
+
       summary_df_data_list <-
         c(
           summary_df_data_list,
           stats::setNames(list(group_summary_data_df), group)
         )
 
+      summary_df_display_list_i <-
+        stats::setNames(list(group_summary_display_df), group)
+
       summary_df_display_list <-
-        c(
-          summary_df_display_list,
-          stats::setNames(list(group_summary_display_df), group)
-        )
+        c(summary_df_display_list, summary_df_display_list_i)
     }
   }
 
@@ -481,5 +484,6 @@ dt_summary_build <- function(data, context) {
 
 grand_summary_col <- "::GRAND_SUMMARY"
 rowname_col_private <- "::rowname::"
+side_col_private <- "::side::"
 row_id_col_private <- "::row_id::"
 group_id_col_private <- "::group_id::"
