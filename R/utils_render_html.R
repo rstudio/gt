@@ -778,7 +778,6 @@ create_body_component_h <- function(data) {
   summaries_present <- dt_summary_exists(data = data)
   list_of_summaries <- dt_summary_df_get(data = data)
   groups_rows_df <- dt_groups_rows_get(data = data)
-
   styles_tbl <- dt_styles_get(data = data)
 
   # Get effective number of columns
@@ -1023,6 +1022,38 @@ create_body_component_h <- function(data) {
           }
         }
 
+        #
+        # Add groupwise summary rows (to top of group)
+        #
+
+        if (
+          summaries_present &&
+          i %in% groups_rows_df$row_start
+        ) {
+
+          group_id <-
+            groups_rows_df[
+              stats::na.omit(groups_rows_df$row_start == i),
+              "group_id",
+              drop = TRUE
+            ]
+
+          side <- summary_row_side(data = data, group_id)
+
+          if (!is.null(side) && side == "top") {
+
+            summary_section <-
+              summary_row_tags_i(
+                data = data,
+                group_id = group_id,
+                context = "html"
+              )
+
+            body_section <- append(body_section, summary_section)
+          }
+        }
+
+
         row_df <- output_df_row_as_vec(i = i)
 
         # Situation where we have two columns in the stub and the row isn't the
@@ -1123,7 +1154,7 @@ create_body_component_h <- function(data) {
         body_section <- append(body_section, list(body_row))
 
         #
-        # Add groupwise summary rows
+        # Add groupwise summary rows (to bottom of group)
         #
 
         if (
@@ -1138,14 +1169,19 @@ create_body_component_h <- function(data) {
               drop = TRUE
             ]
 
-          summary_section <-
-            summary_row_tags_i(
-              data = data,
-              group_id = group_id,
-              context = "html"
-            )
+          side <- summary_row_side(data = data, group_id)
 
-          body_section <- append(body_section, summary_section)
+          if (!is.null(side) && side == "bottom") {
+
+            summary_section <-
+              summary_row_tags_i(
+                data = data,
+                group_id = group_id,
+                context = "html"
+              )
+
+            body_section <- append(body_section, summary_section)
+          }
         }
 
         body_section
