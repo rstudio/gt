@@ -31,6 +31,8 @@
 #'   could contain a group-targeting expression (e.g.,
 #'   `"group_a" ~ fmt_number(.)`). More information on this can be found in the
 #'   *Formatting expressions for `fmt`* section.
+#' @param side Should the summary rows be placed at the `"bottom"` (the default)
+#'   or the `"top"` of the row group?
 #' @param missing_text The text to be used in place of `NA` values in summary
 #'   cells with no data outputs.
 #' @param formatter Deprecated, please use `fmt` instead. This was previously
