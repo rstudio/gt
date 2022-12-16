@@ -1,4 +1,4 @@
-# the `fmt_fraction()` function produces reproducible results for HTML output
+# The `fmt_fraction()` function produces reproducible results for HTML output
 
     Code
       .

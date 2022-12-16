@@ -1,4 +1,4 @@
-# vertical padding across several table parts can be applied
+# Vertical padding across several table parts can be applied
 
     Code
       .

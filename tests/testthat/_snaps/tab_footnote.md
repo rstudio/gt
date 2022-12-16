@@ -1,4 +1,4 @@
-# footnotes with no location are rendered correctly
+# Footnotes with no location are rendered correctly
 
     Code
       .

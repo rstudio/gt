@@ -1,4 +1,4 @@
-# page options can used for RTF output
+# Page options can used for RTF output
 
     Code
       .

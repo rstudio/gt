@@ -1,4 +1,4 @@
-# a gt table contains the expected heading components
+# A gt table contains the expected heading components
 
     Code
       .
@@ -26,7 +26,7 @@
     Output
       [1] "\\begin{longtable}{rrrrrrrrrrr}\n\\caption*{\n{\\large test title}\n} \\\\ \n\\toprule\nmpg & cyl & disp & hp & drat & wt & qsec & vs & am & gear & carb \\\\ \n\\midrule\n21.0 & 6 & 160 & 110 & 3.90 & 2.620 & 16.46 & 0 & 1 & 4 & 4 \\\\ \n21.0 & 6 & 160 & 110 & 3.90 & 2.875 & 17.02 & 0 & 1 & 4 & 4 \\\\ \n22.8 & 4 & 108 & 93 & 3.85 & 2.320 & 18.61 & 1 & 1 & 4 & 1 \\\\ \n21.4 & 6 & 258 & 110 & 3.08 & 3.215 & 19.44 & 1 & 0 & 3 & 1 \\\\ \n18.7 & 8 & 360 & 175 & 3.15 & 3.440 & 17.02 & 0 & 0 & 3 & 2 \\\\ \n\\bottomrule\n\\end{longtable}\n"
 
-# a gt table contains the expected column spanner labels
+# A gt table contains the expected column spanner labels
 
     Code
       .
@@ -68,7 +68,7 @@
     Output
       [1] "\\begin{longtable}{rrrrc}\n\\toprule\n\\multicolumn{2}{c}{Sepal} &  &  &  \\\\ \n\\cmidrule(lr){1-2}\nLength & Width & Petal.Length & Petal.Width & Species \\\\ \n\\midrule\n5.1 & 3.5 & 1.4 & 0.2 & setosa \\\\ \n\\bottomrule\n\\end{longtable}\n"
 
-# a gt table contains the expected source note
+# A gt table contains the expected source note
 
     Code
       .
@@ -82,7 +82,7 @@
     Output
       [1] "\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rrrrrrrrrrr}\n\\toprule\nmpg & cyl & disp & hp & drat & wt & qsec & vs & am & gear & carb \\\\ \n\\midrule\n21.0 & 6 & 160 & 110 & 3.90 & 2.620 & 16.46 & 0 & 1 & 4 & 4 \\\\ \n21.0 & 6 & 160 & 110 & 3.90 & 2.875 & 17.02 & 0 & 1 & 4 & 4 \\\\ \n22.8 & 4 & 108 & 93 & 3.85 & 2.320 & 18.61 & 1 & 1 & 4 & 1 \\\\ \n21.4 & 6 & 258 & 110 & 3.08 & 3.215 & 19.44 & 1 & 0 & 3 & 1 \\\\ \n18.7 & 8 & 360 & 175 & 3.15 & 3.440 & 17.02 & 0 & 0 & 3 & 2 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\emph{Henderson and Velleman} (1981).\\\\\nThis was in Motor Trend magazine, hence the `mt`.\\\\\n\\end{minipage}\n"
 
-# a gt table contains the correct placement of row groups
+# A gt table contains the correct placement of row groups
 
     Code
       .
