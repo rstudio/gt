@@ -71,7 +71,7 @@ dt_summary_build <- function(data, context) {
   summary_df_display_list <- list()
   summary_df_data_list <- list()
 
-  for (i in seq(summary_list)) {
+  for (i in seq_along(summary_list)) {
 
     summary_attrs <- summary_list[[i]]
 
@@ -451,8 +451,7 @@ dt_summary_build <- function(data, context) {
       dplyr::bind_rows
     )
 
-  for (i in seq(summary_df_display_list)) {
-
+  for (i in seq_along(summary_df_display_list)) {
     arrangement <-
       unique(summary_df_display_list[[i]][, rowname_col_private, drop = TRUE])
 
