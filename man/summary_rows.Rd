@@ -10,6 +10,7 @@ summary_rows(
   columns = everything(),
   fns = NULL,
   fmt = NULL,
+  side = c("bottom", "top"),
   missing_text = "---",
   formatter = NULL,
   ...
