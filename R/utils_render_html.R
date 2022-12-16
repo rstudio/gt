@@ -1431,6 +1431,22 @@ get_body_component_cell_matrix <- function(data) {
   body_matrix
 }
 
+summary_row_side <- function(data, group_id) {
+
+  # Check that `group_id` isn't NULL and that length is exactly 1
+  if (is.null(group_id) || length(group_id) != 1) {
+    cli::cli_abort("`group_id` cannot be `NULL` and must be of length 1.")
+  }
+
+  list_of_summaries <- dt_summary_df_get(data = data)
+
+  # Obtain the summary data table specific to the group ID and
+  # then get the "side" attribute value
+  summary_df <- list_of_summaries$summary_df_display_list[[group_id]]
+
+  unique(summary_df[["::side::"]])
+}
+
 summary_row_tags_i <- function(data, group_id, context) {
 
   # Check that `group_id` isn't NULL and that length is exactly 1
