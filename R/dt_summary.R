@@ -80,6 +80,7 @@ dt_summary_build <- function(data, context) {
     fns <- summary_attrs$fns
     fmt_exprs <- summary_attrs$fmt
     missing_text <- summary_attrs$missing_text
+    side <- summary_attrs$side
 
     # Resolve the `missing_text`
     missing_text <-
