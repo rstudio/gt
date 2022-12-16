@@ -798,8 +798,10 @@ create_body_component_h <- function(data) {
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
 
-  # Determine if there is a stub column in `stub_layout`
+  # Determine if there is a stub column in `stub_layout` and whether we
+  # have a two-column stub (with the group label on the left side)
   has_stub_column <- "rowname" %in% stub_layout
+  has_two_col_stub <- "group_label" %in% stub_layout
 
   # Get a matrix of all cells in the body (not including summary cells)
   cell_matrix <- get_body_component_cell_matrix(data = data)
@@ -815,24 +817,6 @@ create_body_component_h <- function(data) {
     )
 
   alignment_classes <- paste0("gt_", col_alignment)
-
-  # Define function to get a character vector of formatted cell
-  # data (this includes the stub, if it is present)
-  output_df_row_as_vec <- function(i) {
-    cell_matrix <- cell_matrix[i, ]
-
-    if ("group_label" %in% stub_layout) {
-
-      if (!(i %in% groups_rows_df$row_start)) {
-        cell_matrix <- cell_matrix[-1]
-      }
-      if (i %in% groups_rows_df$row_start) {
-        cell_matrix[1] <- groups_rows_df$group_label[groups_rows_df$row_start == i]
-      }
-    }
-
-    cell_matrix
-  }
 
   # Replace an NA group with an empty string
   if (any(is.na(groups_rows_df$group_label))) {
@@ -896,15 +880,13 @@ create_body_component_h <- function(data) {
 
         if (!is.null(group_id)) current_group_id <<- group_id
 
-        group_heading_row_at_i <- !is.null(group_id) && !("group_label" %in% stub_layout)
+        # Is there a group heading (dedicated row with a group label) at `i`?
+        group_heading_row_at_i <- !is.null(group_id) && !has_two_col_stub
 
         #
         # Create a group heading row
         #
-        if (
-          !is.null(group_id) &&
-          !("group_label" %in% stub_layout)
-        ) {
+        if (group_heading_row_at_i) {
 
           row_style <-
             dt_styles_pluck(
@@ -947,6 +929,10 @@ create_body_component_h <- function(data) {
             i = i
           )
 
+        # This condition determines whether we are on an every 'second' body
+        # row and, if so, we use `extra_classes_2` instead of `extra_classes_1`
+        # (the former may have the `"gt_striped"` CSS class, depending on
+        # whether the option for row striping was taken)
         extra_classes <- if (i %% 2 == 0) extra_classes_2 else extra_classes_1
 
         if (!is.null(indentation_stub) && indentation_stub != 0) {
@@ -972,58 +958,66 @@ create_body_component_h <- function(data) {
             n_cols = n_data_cols
           )
 
-        if ("group_label" %in% stub_layout) {
+        # Handle the layout case where there is a 'two-column stub', which
+        # is the row group label occupying a separate column to the LHS of
+        # the row labels (this column needs to have a correct rowspan value
+        # on the group)
+        #
+        # The first subcase of this is where `i` is the first row of
+        # this grouping of rows
+        if (has_two_col_stub && i %in% groups_rows_df$row_start) {
 
-          if (i %in% groups_rows_df$row_start) {
+          # Modify the `extra_classes` list to include a class for
+          # the row group column
+          extra_classes[[1]] <- "gt_stub_row_group"
 
-            # Modify the `extra_classes` list to include a class for
-            # the row group column
-            extra_classes[[1]] <- "gt_stub_row_group"
+          # Obtain a one-row table that contains the beginning and
+          # ending row index for the row group
+          row_limits <-
+            groups_rows_df %>%
+            dplyr::filter(row_start == i) %>%
+            dplyr::select(group_id, row_start, row_end)
 
-            # Obtain a one-row table that contains the beginning and
-            # ending row index for the row group
-            row_limits <-
-              groups_rows_df %>%
-              dplyr::filter(row_start == i) %>%
-              dplyr::select(group_id, row_start, row_end)
+          summary_rows_group_df <-
+            list_of_summaries[["summary_df_display_list"]][[row_limits$group_id]]
 
-            summary_rows_group_df <-
-              list_of_summaries[["summary_df_display_list"]][[row_limits$group_id]]
-
-            if (!is.null(summary_rows_group_df) && "rowname" %in% stub_layout) {
-              summary_row_count <- nrow(summary_rows_group_df)
-            } else {
-              summary_row_count <- 0L
-            }
-
-            # Modify the `row_span_vals` list such that the first
-            # element (the row group column) contains the number of rows to span
-            row_span_vals[[1]] <-
-              row_limits$row_end - row_limits$row_start + 1 + summary_row_count
-
-            # Process row group styles if there is an indication that some
-            # are present
-            row_group_style <-
-              dt_styles_pluck(
-                styles_tbl = styles_tbl,
-                locname = "row_groups",
-                grpname = group_id
-              )$html_style
-
-            # Add style of row group cell to vector
-            row_styles <- c(list(row_group_style), row_styles)
-
+          if (!is.null(summary_rows_group_df) && "rowname" %in% stub_layout) {
+            summary_row_count <- nrow(summary_rows_group_df)
           } else {
-
-            # Remove first element of `alignment_classes` vector
-            alignment_classes <- alignment_classes[-1]
-            row_span_vals[[1]] <- NULL
-            extra_classes[[1]] <- NULL
+            summary_row_count <- 0L
           }
+
+          # Modify the `row_span_vals` list such that the first
+          # element (the row group column) contains the number of rows to span
+          row_span_vals[[1]] <-
+            row_limits$row_end - row_limits$row_start + 1 + summary_row_count
+
+          # Process row group styles if there is an indication that some
+          # are present
+          row_group_style <-
+            dt_styles_pluck(
+              styles_tbl = styles_tbl,
+              locname = "row_groups",
+              grpname = group_id
+            )$html_style
+
+          # Add style of row group cell to vector
+          row_styles <- c(list(row_group_style), row_styles)
+        }
+
+        # The second subcase of this is where `i` is *not* the first row
+        # of this grouping of rows and we'd want the leftmost column with
+        # the group label to not have a rowspan attr or any special classes
+        if (has_two_col_stub && !(i %in% groups_rows_df$row_start)) {
+
+          # Remove first element of `alignment_classes` vector
+          alignment_classes <- alignment_classes[-1]
+          row_span_vals[[1]] <- NULL
+          extra_classes[[1]] <- NULL
         }
 
         #
-        # Add groupwise summary rows (to top of group)
+        # Get groupwise summary rows (for either top or bottom of group)
         #
 
         if (
@@ -1053,11 +1047,16 @@ create_body_component_h <- function(data) {
           }
         }
 
+        row_df <-
+          output_df_row_as_vec(
+            i = i,
+            cell_matrix = cell_matrix,
+            groups_rows_df = groups_rows_df,
+            has_two_col_stub = has_two_col_stub
+          )
 
-        row_df <- output_df_row_as_vec(i = i)
-
-        # Situation where we have two columns in the stub and the row isn't the
-        # first (the `row_df` vector will have one less element)
+        # Situation where we have two columns in the stub and the row label
+        # isn't the first (the `row_df` vector will have one less element)
         if (length(col_names_id) > length(row_df)) {
           col_names_id_i <- col_names_id[-(length(col_names_id) - length(row_df))]
         } else {
@@ -1106,8 +1105,10 @@ create_body_component_h <- function(data) {
                         paste0(
                           "td ",
                           "headers=\"",
-                          gsub("(^[[:space:]]*)|([[:space:]]*$)", "",
-                               paste(current_group_id, row_id, col_id)),
+                          gsub(
+                            "(^[[:space:]]*)|([[:space:]]*$)", "",
+                            paste(current_group_id, row_id, col_id)
+                          ),
                           "\""
                         )
                       },
@@ -1213,6 +1214,30 @@ create_body_component_h <- function(data) {
     class = "gt_table_body",
     body_rows
   )
+}
+
+# Define function to get a character vector of formatted cell
+# data (this includes the stub, if it is present)
+output_df_row_as_vec <- function(
+    i,
+    cell_matrix,
+    groups_rows_df,
+    has_two_col_stub
+) {
+
+  cell_matrix <- cell_matrix[i, ]
+
+  if (has_two_col_stub) {
+
+    if (!(i %in% groups_rows_df$row_start)) {
+      cell_matrix <- cell_matrix[-1]
+    }
+    if (i %in% groups_rows_df$row_start) {
+      cell_matrix[1] <- groups_rows_df$group_label[groups_rows_df$row_start == i]
+    }
+  }
+
+  cell_matrix
 }
 
 #' Create the table source note component (HTML)
