@@ -1,4 +1,4 @@
-# the `fmt_duration()` function will produce localized outputs
+# The `fmt_duration()` function will produce localized outputs
 
     Code
       .

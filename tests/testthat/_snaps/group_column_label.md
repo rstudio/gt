@@ -1,4 +1,4 @@
-# group labels as a column work well across many variations
+# Group labels as a column work well across many variations
 
     Code
       .
