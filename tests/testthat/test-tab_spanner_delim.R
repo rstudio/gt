@@ -707,11 +707,67 @@ test_that("`tab_spanner_delim()` won't overwrite any set column labels", {
   tbl_2 <-
     iris[1:5,] %>%
     gt() %>%
-    cols_label(Sepal.Width = md("Sepal.*W*idth")) %>%
-    tab_spanner_delim(".")
+    tab_spanner_delim(".") %>%
+    cols_label(Sepal.Width = md("Sepal.*W*idth"))
 
   expect_equal(
     tbl_1 %>% render_as_html(),
     tbl_2 %>% render_as_html()
+  )
+
+  tbl_3 <-
+    iris[1:5,] %>%
+    gt() %>%
+    cols_label(Sepal.Width = html("<em>Sepal.Width</em>")) %>%
+    tab_spanner_delim(".")
+
+  tbl_4 <-
+    iris[1:5,] %>%
+    gt() %>%
+    tab_spanner_delim(".") %>%
+    cols_label(Sepal.Width = html("<em>Sepal.Width</em>"))
+
+  expect_equal(
+    tbl_3 %>% render_as_html(),
+    tbl_4 %>% render_as_html()
+  )
+
+  data_tbl <-
+    dplyr::tibble(
+      A.B.C.D.E = 1,
+      A.B.C.D = 2,
+      A.B.C = 3,
+      A.B = 4,
+      A = 5
+    )
+
+  gt_tbl_first_1 <-
+    gt(data_tbl) %>%
+    cols_label(A.B.C.D.E = "ABCDE") %>%
+    tab_spanner_delim(delim = ".", split = "first")
+
+  gt_tbl_first_2 <-
+    gt(data_tbl) %>%
+    tab_spanner_delim(delim = ".", split = "first") %>%
+    cols_label(A.B.C.D.E = "ABCDE")
+
+  expect_equal(
+    gt_tbl_first_1 %>% render_as_html(),
+    gt_tbl_first_2 %>% render_as_html()
+  )
+
+  gt_tbl_last_1 <-
+    gt(data_tbl) %>%
+    cols_label(A.B.C.D.E = "ABCDE") %>%
+    tab_spanner_delim(delim = ".", split = "last")
+
+  gt_tbl_last_2 <-
+    gt(data_tbl) %>%
+    tab_spanner_delim(delim = ".", split = "last") %>%
+    cols_label(A.B.C.D.E = "ABCDE")
+
+  expect_equal(
+    gt_tbl_last_1 %>% render_as_html(),
+    gt_tbl_last_2 %>% render_as_html()
   )
 })
