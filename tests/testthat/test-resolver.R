@@ -1,4 +1,4 @@
-test_that("`resolve_cols_i()` and `resolve_cols_c()` both work", {
+test_that("The `resolve_cols_i()` and `resolve_cols_c()` fns both work", {
 
   all_cols <- setNames(seq_along(names(exibble)), names(exibble))
   no_cols <- setNames(integer(0), character(0))
@@ -33,7 +33,7 @@ test_that("`resolve_cols_i()` and `resolve_cols_c()` both work", {
   expect_resolve_cols(100L, no_cols, strict = FALSE)
 })
 
-test_that("`resolve_rows_l()` and `resolve_rows_i()` both work", {
+test_that("The `resolve_rows_l()` and `resolve_rows_i()` fns both work", {
 
   mtcars_gt <- gt(mtcars, rownames_to_stub = TRUE)
   iris_gt <- gt(iris, rownames_to_stub = TRUE)
@@ -162,7 +162,7 @@ test_that("`resolve_rows_l()` and `resolve_rows_i()` both work", {
 })
 
 
-test_that("`resolve_vector_l()` and `resolve_vector_i()` both work", {
+test_that("The `resolve_vector_l()` and `resolve_vector_i()` fns both work", {
 
   vector_x <- c(colnames(exibble), NA_character_, "", colnames(exibble)[1:2])
 

@@ -716,13 +716,14 @@ test_that("tables with summaries can be added to a word doc", {
     dplyr::select(-c(fctr, date, time, datetime)) %>%
     gt(rowname_col = "row", groupname_col = "group") %>%
     summary_rows(
-      groups = TRUE,
+      groups = everything(),
       columns = num,
       fns = list(
         avg = ~mean(., na.rm = TRUE),
         total = ~sum(., na.rm = TRUE),
         s.d. = ~sd(., na.rm = TRUE)
-      )
+      ),
+      fmt = list(~ fmt_number(.))
     )
 
   ## Add table to empty word document
@@ -771,20 +772,20 @@ test_that("tables with summaries can be added to a word doc", {
     list(
       "grp_a",
       c("row_1", "1.111e-01", "apricot", "49.950"),
-      c("row_2", "2.222e+00",  "banana", "17.950"),
+      c("row_2", "2.222e+00", "banana", "17.950"),
       c("row_3", "3.333e+01", "coconut", "1.390"),
-      c("row_4", "4.444e+02",  "durian", "65100.000"),
-      c("avg",    "120.02",       "—", "—"),
-      c("total",    "480.06",       "—", "—"),
-      c("s.d.",    "216.79",       "—", "—"),
+      c("row_4", "4.444e+02", "durian", "65100.000"),
+      c("avg", "120.02", "—", "—"),
+      c("total", "480.06", "—", "—"),
+      c("s.d.", "216.79", "—", "—"),
       "grp_b",
-      c("row_5",    "5.550e+03",         "NA", "1325.810"),
-      c("row_6",           "NA",        "fig", "13.255"),
-      c("row_7",    "7.770e+05", "grapefruit", "NA"),
-      c("row_8",    "8.880e+06",   "honeydew", "0.440"),
-      c("avg", "3,220,850.00",          "—", "—"),
-      c("total", "9,662,550.00",          "—", "—"),
-      c("s.d.", "4,916,123.25",          "—", "—")
+      c("row_5", "5.550e+03", "NA", "1325.810"),
+      c("row_6", "NA", "fig", "13.255"),
+      c("row_7", "7.770e+05", "grapefruit", "NA"),
+      c("row_8", "8.880e+06", "honeydew", "0.440"),
+      c("avg", "3,220,850.00", "—", "—"),
+      c("total", "9,662,550.00", "—", "—"),
+      c("s.d.", "4,916,123.25", "—", "—")
     )
   )
 })
@@ -1476,7 +1477,6 @@ test_that("tables with cell & text coloring can be added to a word doc - with so
       list("FFA500")
       )
   )
-
 })
 
 test_that("tables with cell & text coloring can be added to a word doc - with summaries (grand/group)", {
@@ -1488,13 +1488,14 @@ test_that("tables with cell & text coloring can be added to a word doc - with su
     dplyr::select(-c(fctr, date, time, datetime)) %>%
     gt(rowname_col = "row", groupname_col = "group") %>%
     summary_rows(
-      groups = TRUE,
+      groups = everything(),
       columns = num,
       fns = list(
         avg = ~mean(., na.rm = TRUE),
         total = ~sum(., na.rm = TRUE),
         s.d. = ~sd(., na.rm = TRUE)
-      )
+      ),
+      fmt = list(~ fmt_number(.))
     ) %>%
     grand_summary_rows(
       columns = num,
@@ -1502,7 +1503,8 @@ test_that("tables with cell & text coloring can be added to a word doc - with su
         avg = ~mean(., na.rm = TRUE),
         total = ~sum(., na.rm = TRUE),
         s.d. = ~sd(., na.rm = TRUE)
-      )
+      ),
+      fmt = list(~ fmt_number(.))
     ) %>%
     tab_style(
       style = cell_text(color = "orange"),

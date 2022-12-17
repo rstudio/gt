@@ -1,6 +1,7 @@
 #' Set the alignment of columns
 #'
 #' @description
+#'
 #' The individual alignments of columns (which includes the column labels and
 #' all of their data cells) can be modified. We have the option to align text to
 #' the `left`, the `center`, and the `right`. In a less explicit manner, we can
@@ -8,6 +9,7 @@
 #' the data type (with the `auto` option).
 #'
 #' @details
+#'
 #' When you create a **gt** table object using [gt()], automatic alignment of
 #' column labels and their data cells is performed. By default, left-alignment
 #' is applied to columns of class `character`, `Date`, or `POSIXct`;
@@ -147,6 +149,7 @@ determine_which_character_number <- function(
 #' Align all numeric values in a column along the decimal mark
 #'
 #' @description
+#'
 #' For numeric columns that contain values with decimal portions, it is
 #' sometimes useful to have them lined up along the decimal mark for easier
 #' readability. We can do this with `cols_align_decimal()` and provide any
@@ -359,6 +362,7 @@ align_to_char <- function(x, align_at = ".") {
 #' Set the widths of columns
 #'
 #' @description
+#'
 #' Manual specifications of column widths can be performed using the
 #' `cols_width()` function. We choose which columns get specific widths. This
 #' can be in units of pixels (easily set by use of the [px()] helper function),
@@ -368,6 +372,7 @@ align_to_char <- function(x, align_at = ".") {
 #' dimension.
 #'
 #' @details
+#'
 #' Column widths can be set as absolute or relative values (with px and
 #' percentage values). Those columns not specified are treated as having
 #' variable width. The sizing behavior for column widths depends on the
@@ -522,6 +527,7 @@ cols_width <- function(
 #' Relabel one or more columns
 #'
 #' @description
+#'
 #' Column labels can be modified from their default values (the names of the
 #' columns from the input table data). When you create a **gt** table object
 #' using [gt()], column names effectively become the column labels. While this
@@ -666,6 +672,7 @@ cols_label <- function(
 #' Relabel columns with a function
 #'
 #' @description
+#'
 #' Column labels can be modified from their default values (the names of the
 #' columns from the input table data). When you create a **gt** table object
 #' using [gt()], column names effectively become the column labels. While this
@@ -863,6 +870,7 @@ cols_label_with <- function(
 #' Move one or more columns
 #'
 #' @description
+#'
 #' On those occasions where you need to move columns this way or that way, we
 #' can make use of the `cols_move()` function. While it's true that the movement
 #' of columns can be done upstream of **gt**, it is much easier and less error
@@ -873,6 +881,7 @@ cols_label_with <- function(
 #' in the table.
 #'
 #' @details
+#'
 #' The columns supplied in `columns` must all exist in the table and none of
 #' them can be in the `after` argument. The `after` column must also exist and
 #' only one column should be provided here. If you need to place one or columns
@@ -983,6 +992,7 @@ cols_move <- function(
 #' Move one or more columns to the start
 #'
 #' @description
+#'
 #' We can easily move set of columns to the beginning of the column series and
 #' we only need to specify which `columns`. It's possible to do this upstream of
 #' **gt**, however, it is easier with this function and it presents less
@@ -991,6 +1001,7 @@ cols_move <- function(
 #' table).
 #'
 #' @details
+#'
 #' The columns supplied in `columns` must all exist in the table. If you need to
 #' place one or columns at the end of the column series, the
 #' [cols_move_to_end()] function should be used. More control is offered with
@@ -1089,6 +1100,7 @@ cols_move_to_start <- function(
 #' Move one or more columns to the end
 #'
 #' @description
+#'
 #' It's possible to move a set of columns to the end of the column series, we
 #' only need to specify which `columns` are to be moved. While this can be done
 #' upstream of **gt**, this function makes to process much easier and it's less
@@ -1096,6 +1108,7 @@ cols_move_to_start <- function(
 #' preserved (same with the ordering of all other columns in the table).
 #'
 #' @details
+#'
 #' The columns supplied in `columns` must all exist in the table. If you need to
 #' place one or columns at the start of the column series, the
 #' [cols_move_to_start()] function should be used. More control is offered with
@@ -1193,6 +1206,7 @@ cols_move_to_end <- function(
 #' Hide one or more columns
 #'
 #' @description
+#'
 #' The `cols_hide()` function allows us to hide one or more columns from
 #' appearing in the final output table. While it's possible and often desirable
 #' to omit columns from the input table data before introduction to the [gt()]
@@ -1201,6 +1215,7 @@ cols_move_to_end <- function(
 #' of those columns is not necessary.
 #'
 #' @details
+#'
 #' The hiding of columns is internally a rendering directive, so, all columns
 #' that are 'hidden' are still accessible and useful in any expression provided
 #' to a `rows` argument. Furthermore, the `cols_hide()` function (as with many
@@ -1304,6 +1319,7 @@ cols_hide <- function(
 #' Unhide one or more columns
 #'
 #' @description
+#'
 #' The `cols_unhide()` function allows us to take one or more hidden columns
 #' (usually made so via the [cols_hide()] function) and make them visible
 #' in the final output table. This may be important in cases where the user
@@ -1401,6 +1417,7 @@ cols_unhide <- function(
 #' Merge data from two or more columns to a single column
 #'
 #' @description
+#'
 #' This function takes input from two or more columns and allows the contents to
 #' be merged them into a single column, using a pattern that specifies the
 #' arrangement. We can specify which columns to merge together in the `columns`
@@ -1410,6 +1427,34 @@ cols_unhide <- function(
 #' There is the option to hide the non-target columns (i.e., second and
 #' subsequent columns given in `columns`). The formatting of values in different
 #' columns will be preserved upon merging.
+#'
+#' @inheritParams cols_align
+#' @param columns The columns that will participate in the merging process. The
+#'   first column name provided will be the target column (i.e., undergo
+#'   mutation) and the other columns will serve to provide input.
+#' @param hide_columns Any column names provided here will have their state
+#'   changed to `hidden` (via internal use of [cols_hide()] if they aren't
+#'   already hidden. This is convenient if the shared purpose of these specified
+#'   columns is only to provide string input to the target column. To suppress
+#'   any hiding of columns, `FALSE` can be used here.
+#' @param rows Rows that will participate in the merging process. Providing
+#'   [everything()] (the default) results in all rows in `columns` undergoing
+#'   merging. Alternatively, we can supply a vector of row identifiers within
+#'   [c()], a vector of row indices, or a helper function focused on selections.
+#'   The select helper functions are: [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
+#'   We can also use a standalone predicate expression to filter down to the
+#'   rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#' @param pattern A formatting pattern that specifies the arrangement of the
+#'   `column` values and any string literals. The pattern uses numbers (within
+#'   `{ }`) that correspond to the indices of columns provided in `columns`. If
+#'   two columns are provided in `columns` and we would like to combine the cell
+#'   data onto the first column, `"{1} {2}"` could be used. If a pattern isn't
+#'   provided then a space-separated pattern that includes all `columns` will be
+#'   generated automatically. Further details are provided in the *How the
+#'   `pattern` works* section.
+#'
+#' @return An object of class `gt_tbl`.
 #'
 #' @section How the `pattern` works:
 #'
@@ -1451,23 +1496,6 @@ cols_unhide <- function(
 #' similarly, where the non-target columns can be optionally hidden from the
 #' output table through the `autohide` option.
 #'
-#' @inheritParams cols_align
-#' @param columns The columns that will participate in the merging process. The
-#'   first column name provided will be the target column (i.e., undergo
-#'   mutation) and the other columns will serve to provide input.
-#' @param hide_columns Any column names provided here will have their state
-#'   changed to `hidden` (via internal use of [cols_hide()] if they aren't
-#'   already hidden. This is convenient if the shared purpose of these specified
-#'   columns is only to provide string input to the target column. To suppress
-#'   any hiding of columns, `FALSE` can be used here.
-#' @param pattern A formatting pattern that specifies the arrangement of the
-#'   `column` values and any string literals. We need to use column numbers
-#'   (corresponding to the position of columns provided in `columns`) within the
-#'   pattern. Further details are provided in the *How the `pattern` works*
-#'   section.
-#'
-#' @return An object of class `gt_tbl`.
-#'
 #' @section Examples:
 #'
 #' Use a portion of [`sp500`] to create a **gt** table. Use the `cols_merge()`
@@ -1497,7 +1525,6 @@ cols_unhide <- function(
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_cols_merge_1.png")`
 #' }}
-#'
 #'
 #' Use a portion of [`gtcars`] to create a **gt** table. Use the `cols_merge()`
 #' function to merge the `trq` & `trq_rpm` columns together, and, the `mpg_c` &
@@ -1540,7 +1567,8 @@ cols_merge <- function(
     data,
     columns,
     hide_columns = columns[-1],
-    pattern = paste0("{", seq_along(columns), "}", collapse = " ")
+    rows = everything(),
+    pattern = NULL
 ) {
 
   # Perform input object validation
@@ -1552,6 +1580,18 @@ cols_merge <- function(
       expr = {{ columns }},
       data = data,
       excl_stub = FALSE
+    )
+
+
+  if (is.null(pattern)) {
+    pattern <- paste0("{", seq_along(columns), "}", collapse = " ")
+  }
+
+  # Resolve the rows supplied in the `rows` argument
+  resolved_rows_idx <-
+    resolve_rows_i(
+      expr = {{ rows }},
+      data = data
     )
 
   # NOTE: It's important that `hide_columns` NOT be evaluated until after the
@@ -1574,9 +1614,13 @@ cols_merge <- function(
 
     if (length(base::setdiff(hide_columns, columns) > 0)) {
       cli::cli_warn(c(
-        "Only the columns supplied in `columns` will be hidden.",
-        "*" = "Use `cols_hide()` to hide any out of scope columns."
-      ))
+        "Only a subset of columns supplied in `columns` will be hidden.",
+        "*" = "Use an additional `cols_hide()` expression to hide any
+        out-of-scope columns."
+      ),
+      .frequency = "regularly",
+      .frequency_id = "cols_merge_hide_columns_scope"
+      )
     }
 
     if (length(hide_columns_from_supplied) > 0) {
@@ -1594,6 +1638,7 @@ cols_merge <- function(
     data = data,
     col_merge = dt_col_merge_entry(
       vars = columns,
+      rows = resolved_rows_idx,
       type = "merge",
       pattern = pattern
     )
@@ -1603,6 +1648,7 @@ cols_merge <- function(
 #' Merge columns to a value-with-uncertainty column
 #'
 #' @description
+#'
 #' The `cols_merge_uncert()` function is a specialized variant of the
 #' [cols_merge()] function. It takes as input a base value column (`col_val`)
 #' and either: (1) a single uncertainty column, or (2) two columns representing
@@ -1610,6 +1656,37 @@ cols_merge <- function(
 #' in a single column (that of `col_val`). What results is a column with values
 #' and associated uncertainties (e.g., `12.0 ± 0.1`), and any columns specified
 #' in `col_uncert` are hidden from appearing the output table.
+#'
+#' @inheritParams cols_align
+#' @param col_val A single column name that contains the base values. This is
+#'   the column where values will be mutated.
+#' @param col_uncert Either one or two column names that contain the uncertainty
+#'   values. The most common case involves supplying a single column with
+#'   uncertainties; these values will be combined with those in `col_val`. Less
+#'   commonly, lower and upper uncertainty bounds may be different. For that
+#'   case two columns (representing lower and upper uncertainty values away from
+#'   `col_val`, respectively) should be provided. Since we often don't want the
+#'   uncertainty value columns in the output table, we can automatically hide
+#'   any `col_uncert` columns through the `autohide` option.
+#' @param rows Rows that will participate in the merging process. Providing
+#'   [everything()] (the default) results in all rows in `columns` undergoing
+#'   merging. Alternatively, we can supply a vector of row identifiers within
+#'   [c()], a vector of row indices, or a helper function focused on selections.
+#'   The select helper functions are: [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
+#'   We can also use a standalone predicate expression to filter down to the
+#'   rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#' @param sep The separator text that contains the uncertainty mark for a single
+#'   uncertainty value. The default value of `" +/- "` indicates that an
+#'   appropriate plus/minus mark will be used depending on the output context.
+#'   Should you want this special symbol to be taken literally, it can be
+#'   supplied within the [I()] function.
+#' @param autohide An option to automatically hide any columns specified in
+#'   `col_uncert`. Any columns with their state changed to 'hidden' will behave
+#'   the same as before, they just won't be displayed in the finalized table.
+#'   By default, this is set to `TRUE`.
+#'
+#' @return An object of class `gt_tbl`.
 #'
 #' @section Comparison with other column-merging functions:
 #'
@@ -1633,29 +1710,6 @@ cols_merge <- function(
 #' [cols_merge_range()] and [cols_merge_n_pct()] functions. These functions
 #' operate similarly, where the non-target columns can be optionally hidden from
 #' the output table through the `hide_columns` or `autohide` options.
-#'
-#' @inheritParams cols_align
-#' @param col_val A single column name that contains the base values. This is
-#'   the column where values will be mutated.
-#' @param col_uncert Either one or two column names that contain the uncertainty
-#'   values. The most common case involves supplying a single column with
-#'   uncertainties; these values will be combined with those in `col_val`. Less
-#'   commonly, lower and upper uncertainty bounds may be different. For that
-#'   case two columns (representing lower and upper uncertainty values away from
-#'   `col_val`, respectively) should be provided. Since we often don't want the
-#'   uncertainty value columns in the output table, we can automatically hide
-#'   any `col_uncert` columns through the `autohide` option.
-#' @param sep The separator text that contains the uncertainty mark for a single
-#'   uncertainty value. The default value of `" +/- "` indicates that an
-#'   appropriate plus/minus mark will be used depending on the output context.
-#'   Should you want this special symbol to be taken literally, it can be
-#'   supplied within the [I()] function.
-#' @param autohide An option to automatically hide any columns specified in
-#'   `col_uncert`. Any columns with their state changed to 'hidden' will behave
-#'   the same as before, they just won't be displayed in the finalized table.
-#'   By default, this is set to `TRUE`.
-#'
-#' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
 #'
@@ -1694,6 +1748,7 @@ cols_merge_uncert <- function(
     data,
     col_val,
     col_uncert,
+    rows = everything(),
     sep = " +/- ",
     autohide = TRUE
 ) {
@@ -1709,12 +1764,20 @@ cols_merge_uncert <- function(
       sep = sep
     )
 
+  # Resolve the rows supplied in the `rows` argument
+  resolved_rows_idx <-
+    resolve_rows_i(
+      expr = {{ rows }},
+      data = data
+    )
+
   # Create an entry and add it to the `_col_merge` attribute
   data <-
     dt_col_merge_add(
       data = data,
       col_merge = dt_col_merge_entry(
         vars = resolved$columns,
+        rows = resolved_rows_idx,
         type = "merge_uncert",
         pattern = resolved$pattern,
         sep = sep
@@ -1742,12 +1805,35 @@ cols_merge_uncert <- function(
 #' Merge two columns to a value range column
 #'
 #' @description
+#'
 #' The `cols_merge_range()` function is a specialized variant of the
 #' [cols_merge()] function. It operates by taking a two columns that constitute
 #' a range of values (`col_begin` and `col_end`) and merges them into a single
 #' column. What results is a column containing both values separated by a long
 #' dash (e.g., `12.0 — 20.0`). The column specified in `col_end` is dropped from
 #' the output table.
+#'
+#' @inheritParams cols_align
+#' @param col_begin A column that contains values for the start of the range.
+#' @param col_end A column that contains values for the end of the range.
+#' @param rows Rows that will participate in the merging process. Providing
+#'   [everything()] (the default) results in all rows in `columns` undergoing
+#'   merging. Alternatively, we can supply a vector of row identifiers within
+#'   [c()], a vector of row indices, or a helper function focused on selections.
+#'   The select helper functions are: [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
+#'   We can also use a standalone predicate expression to filter down to the
+#'   rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#' @param sep The separator text that indicates the values are ranged. The
+#'   default value of `"--"` indicates that an en dash will be used for the
+#'   range separator. Using `"---"` will be taken to mean that an em dash should
+#'   be used. Should you want these special symbols to be taken literally, they
+#'   can be supplied within the base [I()] function.
+#' @param autohide An option to automatically hide the column specified as
+#'   `col_end`. Any columns with their state changed to hidden will behave
+#'   the same as before, they just won't be displayed in the finalized table.
+#'
+#' @return An object of class `gt_tbl`.
 #'
 #' @section Comparison with other column-merging functions:
 #'
@@ -1773,20 +1859,6 @@ cols_merge_uncert <- function(
 #' [cols_merge_uncert()] and [cols_merge_n_pct()] functions. These functions
 #' operate similarly, where the non-target columns can be optionally hidden from
 #' the output table through the `hide_columns` or `autohide` options.
-#'
-#' @inheritParams cols_align
-#' @param col_begin A column that contains values for the start of the range.
-#' @param col_end A column that contains values for the end of the range.
-#' @param sep The separator text that indicates the values are ranged. The
-#'   default value of `"--"` indicates that an en dash will be used for the
-#'   range separator. Using `"---"` will be taken to mean that an em dash should
-#'   be used. Should you want these special symbols to be taken literally, they
-#'   can be supplied within the base [I()] function.
-#' @param autohide An option to automatically hide the column specified as
-#'   `col_end`. Any columns with their state changed to hidden will behave
-#'   the same as before, they just won't be displayed in the finalized table.
-#'
-#' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
 #'
@@ -1821,6 +1893,7 @@ cols_merge_range <- function(
     data,
     col_begin,
     col_end,
+    rows = everything(),
     sep = "--",
     autohide = TRUE
 ) {
@@ -1836,12 +1909,20 @@ cols_merge_range <- function(
       sep = sep
     )
 
+  # Resolve the rows supplied in the `rows` argument
+  resolved_rows_idx <-
+    resolve_rows_i(
+      expr = {{ rows }},
+      data = data
+    )
+
   # Create an entry and add it to the `_col_merge` attribute
   data <-
     dt_col_merge_add(
       data = data,
       col_merge = dt_col_merge_entry(
         vars = resolved$columns,
+        rows = resolved_rows_idx,
         type = "merge_range",
         pattern = resolved$pattern,
         sep = sep
@@ -1896,12 +1977,32 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #' Merge two columns to combine counts and percentages
 #'
 #' @description
+#'
 #' The `cols_merge_n_pct()` function is a specialized variant of the
 #' [cols_merge()] function. It operates by taking two columns that constitute
 #' both a count (`col_n`) and a fraction of the total population (`col_pct`) and
 #' merges them into a single column. What results is a column containing both
 #' counts and their associated percentages (e.g., `12 (23.2%)`). The column
 #' specified in `col_pct` is dropped from the output table.
+#'
+#' @inheritParams cols_align
+#' @param col_n A column that contains values for the count component.
+#' @param col_pct A column that contains values for the percentage component.
+#'   This column should be formatted such that percentages are displayed (e.g.,
+#'   with `fmt_percent()`).
+#' @param rows Rows that will participate in the merging process. Providing
+#'   [everything()] (the default) results in all rows in `columns` undergoing
+#'   merging. Alternatively, we can supply a vector of row identifiers within
+#'   [c()], a vector of row indices, or a helper function focused on selections.
+#'   The select helper functions are: [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
+#'   We can also use a standalone predicate expression to filter down to the
+#'   rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#' @param autohide An option to automatically hide the column specified as
+#'   `col_pct`. Any columns with their state changed to hidden will behave
+#'   the same as before, they just won't be displayed in the finalized table.
+#'
+#' @return An object of class `gt_tbl`.
 #'
 #' @section Comparison with other column-merging functions:
 #'
@@ -1932,17 +2033,6 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #' [cols_merge_uncert()] and [cols_merge_range()] functions. These functions
 #' operate similarly, where the non-target columns can be optionally hidden from
 #' the output table through the `hide_columns` or `autohide` options.
-#'
-#' @inheritParams cols_align
-#' @param col_n A column that contains values for the count component.
-#' @param col_pct A column that contains values for the percentage component.
-#'   This column should be formatted such that percentages are displayed (e.g.,
-#'   with `fmt_percent()`).
-#' @param autohide An option to automatically hide the column specified as
-#'   `col_pct`. Any columns with their state changed to hidden will behave
-#'   the same as before, they just won't be displayed in the finalized table.
-#'
-#' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
 #'
@@ -1999,6 +2089,7 @@ cols_merge_n_pct <- function(
     data,
     col_n,
     col_pct,
+    rows = everything(),
     autohide = TRUE
 ) {
 
@@ -2013,12 +2104,20 @@ cols_merge_n_pct <- function(
       sep = ""
     )
 
+  # Resolve the rows supplied in the `rows` argument
+  resolved_rows_idx <-
+    resolve_rows_i(
+      expr = {{ rows }},
+      data = data
+    )
+
   # Create an entry and add it to the `_col_merge` attribute
   data <-
     dt_col_merge_add(
       data = data,
       col_merge = dt_col_merge_entry(
         vars = resolved$columns,
+        rows = resolved_rows_idx,
         type = "merge_n_pct",
         pattern = resolved$pattern,
         sep = ""

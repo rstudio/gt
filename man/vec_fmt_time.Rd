@@ -86,8 +86,8 @@ these represent 12- or 24-hour time.\tabular{llll}{
 }
 
 
-We can use the \code{\link[=info_time_style]{info_time_style()}} within the console to view a similar table
-of time styles with example output.
+We can use the \code{\link[=info_time_style]{info_time_style()}} function within the console to view a
+similar table of time styles with example output.
 }
 
 \section{Examples}{
@@ -154,6 +154,9 @@ applied.
 }
 
 \seealso{
+The variant function intended for formatting \strong{gt} table data:
+\code{\link[=fmt_time]{fmt_time()}}.
+
 Other vector formatting functions: 
 \code{\link{vec_fmt_bytes}()},
 \code{\link{vec_fmt_currency}()},

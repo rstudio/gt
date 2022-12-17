@@ -7,7 +7,7 @@ sp500 <-
     system.file("extdata", "sp500.csv", package = "gt"),
     stringsAsFactors = FALSE)
 
-test_that("the `cols_align()` function works correctly", {
+test_that("The `cols_align()` function works correctly", {
 
   # Create a `tbl_latex` object with `gt()`; the `mpg`,
   # `cyl`, and `drat` columns are aligned left

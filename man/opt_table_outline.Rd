@@ -36,15 +36,12 @@ Have an outline wrap around the entire table by using \code{opt_table_outline()}
   summary_rows(
     groups = "grp_a",
     columns = c(num, currency),
-    fns = list(
-      min = ~min(., na.rm = TRUE),
-      max = ~max(., na.rm = TRUE)
-    )) \%>\%
+    fns = c("min", "max")
+  ) \%>\%
   grand_summary_rows(
     columns = currency,
-    fns = list(
-      total = ~sum(., na.rm = TRUE)
-    )) \%>\%
+    fns = total ~ sum(., na.rm = TRUE)
+  ) \%>\%
   tab_source_note(source_note = "This is a source note.") \%>\%
   tab_footnote(
     footnote = "This is a footnote.",

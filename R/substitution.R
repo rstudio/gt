@@ -121,7 +121,10 @@ fmt_missing <- function(
     "Since gt v0.6.0 the `fmt_missing()` function is deprecated and will
     soon be removed.",
     "*" = "Use the `sub_missing()` function instead."
-  ))
+  ),
+  .frequency = "regularly",
+  .frequency_id = "fmt_missing_fn_deprecation"
+  )
 
   sub_missing(
     data = data,

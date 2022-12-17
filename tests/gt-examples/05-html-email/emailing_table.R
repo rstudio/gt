@@ -94,7 +94,6 @@ pizza_tab_email <-
     decimals = 0
   ) %>%
   summary_rows(
-    groups = TRUE,
     columns = "pies",
     fns = list(TOTAL = "sum"),
     formatter = fmt_number,
@@ -102,7 +101,6 @@ pizza_tab_email <-
     decimals = 0
   ) %>%
   summary_rows(
-    groups = TRUE,
     columns = "income",
     fns = list(TOTAL = "sum"),
     formatter = fmt_currency,

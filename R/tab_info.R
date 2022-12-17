@@ -197,7 +197,7 @@ tab_info <- function(data) {
         if (group_id %in% names(list_of_summaries$summary_df_data_list)) {
 
           group_summary_row_id <-
-            list_of_summaries$summary_df_data_list[[group_id]][["rowname"]]
+            names(list_of_summaries$summary_df_data_list[[group_id]][["rowname"]])
 
           group_summary_i <-
             dplyr::bind_rows(
@@ -233,7 +233,7 @@ tab_info <- function(data) {
     if (grand_summary_col %in% names(list_of_summaries$summary_df_data_list)) {
 
       grand_summary_row_id <-
-        list_of_summaries$summary_df_data_list[[grand_summary_col]][["rowname"]]
+        names(list_of_summaries$summary_df_data_list[[grand_summary_col]][["rowname"]])
 
       grand_summary <-
         dplyr::tibble(
@@ -252,6 +252,7 @@ tab_info <- function(data) {
         group_summary,
         grand_summary
       )
+
   } else {
     summaries <- empty_tbl
   }

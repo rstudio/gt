@@ -412,6 +412,54 @@ resolve_vector_i <- function(expr, vector, item_label = "item") {
   which(resolve_vector_l(expr = {{ expr }}, vector = vector, item_label = item_label))
 }
 
+resolve_groups <- function(expr, vector) {
+
+  quo <- rlang::enquo(expr)
+
+  resolved <-
+    tidyselect::with_vars(
+      vars = vector,
+      expr = rlang::eval_tidy(expr = quo, data = NULL)
+    )
+
+  if (length(resolved) == 1 && resolved == ":GRAND_SUMMARY:") {
+    return(":GRAND_SUMMARY:")
+  }
+
+  if (is.null(resolved)) {
+
+    # Provide deprecation warning
+    cli::cli_warn(c(
+      "Since gt v0.9.0, the `groups = NULL` option has been deprecated.",
+      "*" = "If this was intended for generation of grand summary rows, instead
+  use the `grand_summary_rows()` function."
+    ))
+
+    return(":GRAND_SUMMARY:")
+  }
+
+  if (length(resolved) < 1) {
+    return(NULL)
+  }
+
+  if (is.integer(resolved)) {
+    return(vector[resolved])
+  }
+
+  if (is.character(resolved)) {
+
+    resolved <- base::intersect(resolved, vector)
+
+    if (length(resolved) < 1) {
+      return(NULL)
+    }
+
+    return(resolved)
+  }
+
+  NULL
+}
+
 normalize_resolved <- function(
     resolved,
     item_names,

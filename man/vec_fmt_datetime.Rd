@@ -65,7 +65,7 @@ A character vector.
 Format values in a vector to datetime values using either presets for the
 date and time components or a formatting directive (this can either use a
 \emph{CLDR} datetime pattern or \code{strptime} formatting). Input can be in the form
-of \code{POSIXt} (i.e., datetimes), the \code{Date} type, or \code{character} (must be in
+of \code{POSIXct} (i.e., datetimes), the \code{Date} type, or \code{character} (must be in
 the ISO 8601 form of \verb{YYYY-MM-DD HH:MM:SS} or \code{YYYY-MM-DD}).
 }
 \section{Formatting with the \code{date_style} argument}{
@@ -125,8 +125,8 @@ values (corresponding to an input date of \code{2000-02-29}).\tabular{llll}{
 }
 
 
-We can use the \code{\link[=info_date_style]{info_date_style()}} within the console to view a similar table
-of date styles with example output.
+We can use the \code{\link[=info_date_style]{info_date_style()}} function within the console to view a
+similar table of date styles with example output.
 }
 
 \section{Formatting with the \code{time_style} argument}{
@@ -174,8 +174,8 @@ redundant or repeating information.\tabular{llll}{
 }
 
 
-We can use the \code{\link[=info_time_style]{info_time_style()}} within the console to view a similar table
-of time styles with example output.
+We can use the \code{\link[=info_time_style]{info_time_style()}} function within the console to view a
+similar table of time styles with example output.
 }
 
 \section{Formatting with a \emph{CLDR} datetime pattern}{
@@ -873,6 +873,9 @@ applied.
 }
 
 \seealso{
+The variant function intended for formatting \strong{gt} table data:
+\code{\link[=fmt_datetime]{fmt_datetime()}}.
+
 Other vector formatting functions: 
 \code{\link{vec_fmt_bytes}()},
 \code{\link{vec_fmt_currency}()},

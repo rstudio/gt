@@ -871,15 +871,14 @@ as_word_tbl_body <- function(
 #'     groupname_col = "week"
 #'   ) %>%
 #'   summary_rows(
-#'     groups = TRUE,
+#'     groups = everything(),
 #'     columns = c(open, high, low, close),
 #'     fns = list(
 #'       min = ~min(.),
 #'       max = ~max(.),
 #'       avg = ~mean(.)
 #'     ),
-#'     formatter = fmt_number,
-#'     use_seps = FALSE
+#      fmt = ~ fmt_number(.)
 #'   ) %>%
 #'   extract_summary()
 #'
@@ -893,7 +892,8 @@ as_word_tbl_body <- function(
 #' summary_extracted %>%
 #'   unlist(recursive = FALSE) %>%
 #'   dplyr::bind_rows() %>%
-#'   gt(groupname_col = "group_id")
+#'   gt(groupname_col = "group_id") %>%
+#'   cols_hide(columns = row_id)
 #' ```
 #'
 #' \if{html}{\out{
@@ -932,11 +932,20 @@ extract_summary <- function(data) {
       dt_summary_df_data_get(data = built_data),
       FUN = function(x) {
         lapply(x, function(y) {
-          dplyr::rename(
-            y,
-            rowname = dplyr::all_of(rowname_col_private),
-            group_id = dplyr::all_of(group_id_col_private)
-          )
+
+          y <-
+            dplyr::rename(
+              y,
+              group_id = dplyr::all_of(group_id_col_private),
+              row_id = dplyr::all_of(row_id_col_private),
+              rowname = dplyr::all_of(rowname_col_private)
+            )
+
+          flattened_rowname <- unname(unlist(y$rowname))
+
+          y[, ][["rowname"]] <- flattened_rowname
+
+          y
         })
       }
     )

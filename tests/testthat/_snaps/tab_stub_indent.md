@@ -1,4 +1,4 @@
-# a gt table can contain indentation in the stub
+# A gt table can contain indentation in the stub
 
     Code
       .

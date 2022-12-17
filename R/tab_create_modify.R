@@ -1,6 +1,7 @@
 #' Add a table header
 #'
 #' @description
+#'
 #' We can add a table header to the **gt** table with a title and even a
 #' subtitle. A table header is an optional table part that is positioned above
 #' the column labels. We have the flexibility to use Markdown formatting for the
@@ -63,6 +64,7 @@ tab_header <- function(
 #' Add a spanner column label
 #'
 #' @description
+#'
 #' Set a spanner column label by mapping it to columns already in the table.
 #' This label is placed above one or more column labels, spanning the width of
 #' those columns and column labels.
@@ -323,6 +325,7 @@ resolve_spanned_column_names <- function(
 #' Create column labels and spanners via delimited names
 #'
 #' @description
+#'
 #' This function will split selected delimited column names such that the first
 #' components (LHS) are promoted to being spanner column labels, and the
 #' secondary components (RHS) will become the column labels. Please note that
@@ -330,6 +333,7 @@ resolve_spanned_column_names <- function(
 #' input table data (which are unique by necessity).
 #'
 #' @details
+#'
 #' If we look to the column names in the `iris` dataset as an example of how
 #' `tab_spanner_delim()` might be useful, we find the names `Sepal.Length`,
 #' `Sepal.Width`, `Petal.Length`, `Petal.Width`. From this naming system, it's
@@ -390,6 +394,7 @@ tab_spanner_delim <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
+  # Ensure that arguments are matched
   split <- rlang::arg_match(split)
 
   # Get all of the columns in the dataset
@@ -562,12 +567,38 @@ tab_spanner_delim <- function(
 
   new_label_list <- stats::setNames(as.list(new_labels), colnames_spanners)
 
+  #
+  # Merge any column labels previously set by `cols_label()`
+  #
+
+  boxh <- dt_boxhead_get(data = data)
+
+  old_label_list <- as.list(boxh$column_label)
+  names(old_label_list) <- boxh$var
+
+  for (name in names(new_label_list)) {
+
+    if (!(name %in% names(old_label_list))) next
+
+    if (
+      !is.character(old_label_list[[name]]) ||
+      (
+        is.character(old_label_list[[name]]) &&
+        old_label_list[[name]] != name
+      )
+    ) {
+      new_label_list[[name]] <- old_label_list[[name]]
+    }
+  }
+
+  # Conclude by invoking `cols_label()` on the data
   cols_label(data, .list = new_label_list)
 }
 
 #' Add a row group to a **gt** table
 #'
 #' @description
+#'
 #' Create a row group with a collection of rows. This requires specification of
 #' the rows to be included, either by supplying row labels, row indices, or
 #' through use of a select helper function like [starts_with()]. To modify the
@@ -677,7 +708,10 @@ tab_row_group <- function(
     cli::cli_warn(c(
       "Since gt v0.3.0 the `group` argument has been deprecated.",
       "*" = "Use the `label` argument to specify the group label."
-    ))
+    ),
+    .frequency = "regularly",
+    .frequency_id = "tab_row_group_group_arg_deprecated"
+    )
   }
 
   # Warn user about `others_label` deprecation
@@ -693,7 +727,10 @@ tab_row_group <- function(
       "Since gt v0.3.0 the `others_label` argument has been deprecated.",
       "*" = "Use `tab_options(row_group.default_label = <label>)` to set
       this label."
-    ))
+    ),
+    .frequency = "regularly",
+    .frequency_id = "tab_row_group_others_label_arg_deprecated"
+    )
 
     if (missing(label) && missing(rows) && missing(id)) {
       return(data)
@@ -747,6 +784,7 @@ tab_row_group <- function(
 #' Add label text to the stubhead
 #'
 #' @description
+#'
 #' Add a label to the stubhead of a **gt** table. The stubhead is the lone
 #' element that is positioned left of the column labels, and above the stub. If
 #' a stub does not exist, then there is no stubhead (so no change will be made
@@ -798,6 +836,7 @@ tab_stubhead <- function(
 #' Control indentation of row labels in the stub
 #'
 #' @description
+#'
 #' Indentation of row labels is an effective way for establishing structure in a
 #' table stub. The `tab_stub_indent()` function allows for fine control over
 #' row label indentation through either explicit definition of an indentation
@@ -969,6 +1008,7 @@ tab_stub_indent <- function(
 #' Add a table footnote
 #'
 #' @description
+#'
 #' The `tab_footnote()` function can make it a painless process to add a
 #' footnote to a **gt** table. There are two components to a footnote: (1) a
 #' footnote mark that is attached to the targeted cell text, and (2) the
@@ -978,6 +1018,7 @@ tab_stub_indent <- function(
 #' functions (e.g., [cells_body()], [cells_column_labels()], etc.).
 #'
 #' @details
+#'
 #' The formatting of the footnotes can be controlled through the use of various
 #' parameters in the [tab_options()] function:
 #' - `footnotes.multiline`: a setting that determines whether footnotes each
@@ -1340,6 +1381,7 @@ set_footnote.cells_footnotes <- function(loc, data, footnote, placement) {
 #' Add a source note citation
 #'
 #' @description
+#'
 #' Add a source note to the footer part of the **gt** table. A source note is
 #' useful for citing the data included in the table. Several can be added to the
 #' footer, simply use multiple calls of `tab_source_note()` and they will be
@@ -1392,6 +1434,7 @@ tab_source_note <- function(
 #' Add a table caption
 #'
 #' @description
+#'
 #' Add a caption to a **gt** table, which is handled specially for a table
 #' within an R Markdown, Quarto, or **bookdown** context. The addition of
 #' captions makes tables cross-referencing across the containing document. The
@@ -1448,6 +1491,7 @@ tab_caption <- function(
 #' Add custom styles to one or more cells
 #'
 #' @description
+#'
 #' With the `tab_style()` function we can target specific cells and apply styles
 #' to them. This is best done in conjunction with the helper functions
 #' [cell_text()], [cell_fill()], and [cell_borders()]. At present this function
@@ -1940,6 +1984,7 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' Modify the table output options
 #'
 #' @description
+#'
 #' Modify the options available in a table. These options are named by the
 #' components, the subcomponents, and the element that can adjusted.
 #'

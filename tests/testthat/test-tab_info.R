@@ -31,14 +31,14 @@ exibble_minitest <- function(
     tbl <-
       tbl %>%
       summary_rows(
-        groups = TRUE,
+        groups = everything(),
         columns = c(num, currency),
         fns = list(
           min = ~min(., na.rm = TRUE),
           max = ~max(., na.rm = TRUE),
-          avg = ~mean(., na.rm = TRUE)),
-        formatter = fmt_number,
-        use_seps = FALSE
+          avg = ~mean(., na.rm = TRUE)
+        ),
+        fmt = list(~ fmt_number(., use_seps = FALSE))
       )
   }
 
@@ -51,16 +51,16 @@ exibble_minitest <- function(
         fns = list(
           min = ~min(., na.rm = TRUE),
           max = ~max(., na.rm = TRUE),
-          avg = ~mean(., na.rm = TRUE)),
-        formatter = fmt_number,
-        use_seps = FALSE
+          avg = ~mean(., na.rm = TRUE)
+        ),
+        fmt = list(~ fmt_number(., use_seps = FALSE))
       )
   }
 
   tbl
 }
 
-test_that("the `tab_info()` function generates a gt table from a gt table", {
+test_that("The `tab_info()` function generates a gt table from a gt table", {
 
   expect_true(
     exibble_minitest() %>% tab_info() %>% is_gt()
