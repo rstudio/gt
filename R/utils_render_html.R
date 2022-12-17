@@ -923,17 +923,17 @@ create_body_component_h <- function(data) {
         # Create a body row
         #
 
-        indentation_stub <-
-          dt_stub_indentation_at_position(
-            data = data,
-            i = i
-          )
-
         # This condition determines whether we are on an every 'second' body
         # row and, if so, we use `extra_classes_2` instead of `extra_classes_1`
         # (the former may have the `"gt_striped"` CSS class, depending on
         # whether the option for row striping was taken)
         extra_classes <- if (i %% 2 == 0) extra_classes_2 else extra_classes_1
+
+        indentation_stub <-
+          dt_stub_indentation_at_position(
+            data = data,
+            i = i
+          )
 
         if (!is.null(indentation_stub) && indentation_stub != 0) {
 
