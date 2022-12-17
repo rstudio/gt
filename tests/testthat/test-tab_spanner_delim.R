@@ -695,3 +695,23 @@ test_that("`tab_spanner_delim()` works with complex splits", {
     )
   )
 })
+
+test_that("`tab_spanner_delim()` won't overwrite any set column labels", {
+
+  tbl_1 <-
+    iris[1:5,] %>%
+    gt() %>%
+    cols_label(Sepal.Width = md("Sepal.*W*idth")) %>%
+    tab_spanner_delim(".")
+
+  tbl_2 <-
+    iris[1:5,] %>%
+    gt() %>%
+    cols_label(Sepal.Width = md("Sepal.*W*idth")) %>%
+    tab_spanner_delim(".")
+
+  expect_equal(
+    tbl_1 %>% render_as_html(),
+    tbl_2 %>% render_as_html()
+  )
+})
