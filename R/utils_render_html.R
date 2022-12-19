@@ -886,15 +886,21 @@ create_body_component_h <- function(data) {
         #
         # Create a group heading row
         #
+
+        # A group heading row occurs before a formal row `i` in that it really
+        # doesn't have an index number but we do anchor it to an `i` index and
+        # place it just before row `i`
+
         if (group_heading_row_at_i) {
 
-          row_style <-
+          row_style_row_groups_tbl <-
             dt_styles_pluck(
               styles_tbl = styles_tbl,
               locname = "row_groups",
               grpname = group_id
-            )$html_style
+            )
 
+          row_style_group_heading_row <- row_style_row_groups_tbl[["html_style"]]
 
           group_class <-
             if (group_label == "") {
@@ -909,7 +915,7 @@ create_body_component_h <- function(data) {
               htmltools::tags$th(
                 colspan = n_cols_total,
                 class = group_class,
-                style = row_style,
+                style = row_style_group_heading_row,
                 scope = ifelse(n_cols_total > 1, "colgroup", "col"),
                 id = group_label,
                 htmltools::HTML(group_label)
