@@ -9,6 +9,7 @@ grand_summary_rows(
   columns = everything(),
   fns = NULL,
   fmt = NULL,
+  side = c("bottom", "top"),
   missing_text = "---",
   formatter = NULL,
   ...
@@ -37,6 +38,9 @@ contain a formatting call (e.g.,
 could contain a group-targeting expression (e.g.,
 \code{"group_a" ~ fmt_number(.)}). More information on this can be found in the
 \emph{Formatting expressions for \code{fmt}} section.}
+
+\item{side}{Should the grand summary rows be placed at the \code{"bottom"} (the
+default) or the \code{"top"} of the table?}
 
 \item{missing_text}{The text to be used in place of \code{NA} values in summary
 cells with no data outputs.}
