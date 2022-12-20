@@ -1249,7 +1249,7 @@ create_body_component_h <- function(data) {
             summary_section[[1]] <-
               htmltools::HTML(gsub("^<tr>", paste0("<tr>", group_col_td), as.character(summary_section[[1]])))
           }
-          body_section <- append(summary_section, body_section)
+          body_section <- append(body_section, summary_section)
         }
 
         body_section <- append(body_section, list(body_row))
