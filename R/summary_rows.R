@@ -422,6 +422,8 @@ summary_rows <- function(
 #' cells by use of formatting expressions in `fmt`.
 #'
 #' @inheritParams summary_rows
+#' @param side Should the grand summary rows be placed at the `"bottom"` (the
+#'   default) or the `"top"` of the table?
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -601,6 +603,7 @@ grand_summary_rows <- function(
     columns = everything(),
     fns = NULL,
     fmt = NULL,
+    side = c("bottom", "top"),
     missing_text = "---",
     formatter = NULL,
     ...
@@ -609,12 +612,16 @@ grand_summary_rows <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
+  # Get the correct `side` value
+  side <- rlang::arg_match(side)
+
   summary_rows(
     data = data,
     groups = ":GRAND_SUMMARY:",
     columns = {{ columns }},
     fns = fns,
     fmt = fmt,
+    side = side,
     missing_text = missing_text,
     formatter = formatter,
     ...
