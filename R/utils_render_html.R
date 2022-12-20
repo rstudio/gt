@@ -1273,14 +1273,21 @@ create_body_component_h <- function(data) {
     grand_summary_col %in% names(list_of_summaries$summary_df_display_list)
   ) {
 
+    side <- summary_row_side(data = data, group_id = grand_summary_col)
+
     grand_summary_section <-
       summary_row_tags_i(
         data = data,
         group_id = grand_summary_col,
-        context = "html"
+        context = "html",
+        side_grand_summary = side
       )
 
-    body_rows <- c(body_rows, grand_summary_section)
+    if (side == "top") {
+      body_rows <- c(grand_summary_section, body_rows)
+    } else {
+      body_rows <- c(body_rows, grand_summary_section)
+    }
   }
 
   htmltools::tags$tbody(
@@ -1581,7 +1588,12 @@ summary_row_side <- function(data, group_id) {
   unique(summary_df[["::side::"]])
 }
 
-summary_row_tags_i <- function(data, group_id, context) {
+summary_row_tags_i <- function(
+    data,
+    group_id,
+    context,
+    side_grand_summary = "bottom"
+) {
 
   # Check that `group_id` isn't NULL and that length is exactly 1
   if (is.null(group_id) || length(group_id) != 1) {
@@ -1672,6 +1684,11 @@ summary_row_tags_i <- function(data, group_id, context) {
 
       summary_row_class <- "gt_grand_summary_row"
       first_row_class <- "gt_first_grand_summary_row"
+
+      if (side_grand_summary == "top") {
+        first_row_class <- "gt_grand_summary_row"
+        last_row_class <- "gt_last_grand_summary_row_top"
+      }
 
     } else {
 
