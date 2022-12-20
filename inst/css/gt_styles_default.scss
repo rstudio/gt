@@ -289,6 +289,16 @@
     border-top-color: $grand_summary_row_border_color; // grand_summary_row.border.color
   }
 
+  .gt_last_grand_summary_row_top {
+    padding-top: $grand_summary_row_padding; // grand_summary_row.padding
+    padding-bottom: $grand_summary_row_padding; // grand_summary_row.padding
+    padding-left: $grand_summary_row_padding_horizontal; // grand_summary_row.padding.horizontal
+    padding-right: $grand_summary_row_padding_horizontal; // grand_summary_row.padding.horizontal
+    border-bottom-style: $grand_summary_row_border_style; // grand_summary_row.border.style
+    border-bottom-width: $grand_summary_row_border_width; // grand_summary_row.border.width
+    border-bottom-color: $grand_summary_row_border_color; // grand_summary_row.border.color
+  }
+
   .gt_striped {
      background-color: $row_striping_background_color; // row.striping.background_color
   }
