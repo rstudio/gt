@@ -5546,6 +5546,149 @@ fmt_passthrough <- function(
   )
 }
 
+#' Automatically format column data according to their values
+#'
+#' Automatically format column data.
+#'
+#' @inheritParams fmt_number
+#' @param scope The scope of automatic formatting.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @family data formatting functions
+#' @section Function ID:
+#' 3-17
+#'
+#' @export
+fmt_auto <- function(
+    data,
+    columns = everything(),
+    rows = everything(),
+    scope = c("number", "date", "time", "datetime", "currency"),
+    locale = NULL
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  # Resolve the `locale` value here with the global locale value
+  locale <- resolve_locale(data = data, locale = locale)
+
+  currency_codes <- tolower(currencies[["curr_code"]])
+
+  resolved_columns <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data,
+      excl_stub = FALSE
+    )
+
+  vars_default <- dt_boxhead_get_vars_default(data = data)
+
+  # Get the intersection of the resolved columns and the default vars
+  columns_to_format <- base::intersect(vars_default, resolved_columns)
+
+  # Get the internal data table
+  data_tbl <- dt_data_get(data = data)
+
+  for (i in seq_along(columns_to_format)) {
+
+    col_name <- columns_to_format[i]
+
+    col_vec <- data_tbl[[columns_to_format[i]]]
+
+    if (
+      is.numeric(col_vec) &&
+      grepl(
+        paste0("(\\.|_)(", paste0(currency_codes, collapse = "|"), ")$"),
+        tolower(col_name)
+      )
+    ) {
+
+      currency <- toupper(sub(".*(?=.{3}$)", "", col_name, perl = TRUE))
+
+      data <-
+        fmt_currency(
+          data = data,
+          columns = columns_to_format[i],
+          rows = rows,
+          currency = currency,
+          locale = locale
+        )
+
+    } else if (is.integer(col_vec)) {
+
+      data <-
+        fmt_integer(
+          data = data,
+          columns = columns_to_format[i],
+          rows = rows,
+          locale = locale
+        )
+
+    } else if (is.numeric(col_vec)) {
+
+      col_vec_num_len <-
+        nchar(
+          vec_fmt_number(
+            col_vec,
+            decimals = 2,
+            drop_trailing_zeros = TRUE,
+            drop_trailing_dec_mark = FALSE
+          )
+        )
+
+      col_vec_sci_len <-
+        nchar(
+          vec_fmt_scientific(
+            col_vec,
+            decimals = 2
+          )
+        )
+
+      rows_num <- which(col_vec_num_len < col_vec_sci_len)
+      rows_sci <- which(col_vec_sci_len <= col_vec_num_len)
+
+      if (length(rows_num) > 0) {
+
+        data <-
+          fmt_number(
+            data = data,
+            columns = columns_to_format[i],
+            rows = rows_num,
+            drop_trailing_zeros = TRUE,
+            drop_trailing_dec_mark = FALSE,
+            locale = locale
+          )
+      }
+
+      if (length(rows_sci) > 0) {
+
+        data <-
+          fmt_scientific(
+            data = data,
+            columns = columns_to_format[i],
+            rows = rows_sci,
+            drop_trailing_zeros = FALSE,
+            locale = locale
+          )
+      }
+
+      if (length(rows_sci) > 0) {
+
+        data <-
+          cols_align_decimal(
+            data = data,
+            columns = columns_to_format[i],
+            locale = locale
+          )
+      }
+    }
+  }
+
+  data
+}
+
 #' Set a column format with a formatter function
 #'
 #' @description
@@ -5639,7 +5782,7 @@ fmt_passthrough <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-17
+#' 3-18
 #'
 #' @import rlang
 #' @export
