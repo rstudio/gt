@@ -567,6 +567,7 @@ gray cells for the missing values (we also removed the \code{"NA"} text with
 
 \seealso{
 Other data formatting functions: 
+\code{\link{fmt_auto}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
