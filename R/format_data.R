@@ -735,15 +735,14 @@ fmt_scientific <- function(
             replace_minus_mark = FALSE
           )
 
-        # # Determine which values don't require the (x 10^n)
-        # # for scientific foramtting since their order would be zero
+        # Determine which values don't require the (x 10^n)
+        # for scientific formatting since their order would be zero
         small_pos <- has_order_zero(x)
 
         # For any numbers that shouldn't have an exponent, remove
         # that portion from the character version
         x_str[small_pos] <-
-          split_scientific_notn(x_str[small_pos])$num %>%
-          replace_minus()
+          replace_minus(split_scientific_notn(x_str[small_pos])$num)
 
         # For any non-NA numbers that do have an exponent, format
         # those according to the output context
@@ -751,9 +750,9 @@ fmt_scientific <- function(
 
         x_str[!small_pos] <-
           paste0(
-            sci_parts$num %>% replace_minus(),
+            replace_minus(sci_parts$num),
             exp_marks[1],
-            sci_parts$exp %>% replace_minus(),
+            replace_minus(sci_parts$exp),
             exp_marks[2]
           )
 
@@ -5551,7 +5550,12 @@ fmt_passthrough <- function(
 #' Automatically format column data.
 #'
 #' @inheritParams fmt_number
-#' @param scope The scope of automatic formatting.
+#' @param scope The scope of automatic formatting. By default this includes
+#'   `"number"`-type values and `"currency"`-type values though the scope can be
+#'   reduced to a single type of value to format.
+#' @param lg_num_pref The preference toward either scientific notation for very
+#'   small and very large values (`"sci"`, the default option), or, suffixed
+#'   numbers (`"suf"`, for large values only).
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -5564,12 +5568,16 @@ fmt_auto <- function(
     data,
     columns = everything(),
     rows = everything(),
-    scope = c("number", "date", "time", "datetime", "currency"),
+    scope = c("number", "currency"),
+    lg_num_pref = c("sci", "suf"),
     locale = NULL
 ) {
 
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  # Ensure that arguments are matched
+  lg_num_pref <- rlang::arg_match(lg_num_pref)
 
   # Resolve the `locale` value here with the global locale value
   locale <- resolve_locale(data = data, locale = locale)
@@ -5599,14 +5607,22 @@ fmt_auto <- function(
 
     if (
       is.numeric(col_vec) &&
+      "currency" %in% scope &&
       grepl(
         paste0("(\\.|_)(", paste0(currency_codes, collapse = "|"), ")$"),
         tolower(col_name)
       )
     ) {
 
+      # Case where numeric values are inferred to be currency values
+      # since the column name contains a valid currency code after a
+      # period or underscore
+
+      # Obtain the currency code (which is known to exist and be valid)
+      # from the column name
       currency <- toupper(sub(".*(?=.{3}$)", "", col_name, perl = TRUE))
 
+      # Format all values in the selected column as currency values
       data <-
         fmt_currency(
           data = data,
@@ -5616,8 +5632,12 @@ fmt_auto <- function(
           locale = locale
         )
 
-    } else if (is.integer(col_vec)) {
+    } else if (is.integer(col_vec) && "number" %in% scope) {
 
+      # Case where column values are integer values because of
+      # the column class
+
+      # Format all values in the selected column as integer values
       data <-
         fmt_integer(
           data = data,
@@ -5626,43 +5646,112 @@ fmt_auto <- function(
           locale = locale
         )
 
-    } else if (is.numeric(col_vec)) {
+    } else if (is.numeric(col_vec) && "number" %in% scope) {
 
-      row_series <- seq_along(col_vec)
+      # Case where column values are numeric (and not integer values),
+      # known through inspection of the column class
 
-      rows_sci <-
-        which(
-          abs(col_vec) < 1E-3 & col_vec != 0 | abs(col_vec) > 1E5 & col_vec != 0
-        )
+      # Obtain the row series which is just a sequence of integers
+      # along `col_vec`
+      row_series_vec <- seq_along(col_vec)
 
-      rows_num <- base::setdiff(row_series, rows_sci)
+      # Conditions for numbers in `col_vec` to be good candidates for
+      # a scientific notation representation
+      rows_sci <- col_vec != 0 & (abs(col_vec) < 1E-3 | abs(col_vec) >= 1E6)
 
-      if (length(rows_num) > 0) {
+      # Conditions for numbers in `col_vec` to be suitable for a
+      # large-number-suffixing treatment (best in the millions to
+      # trillions range)
+      rows_suf <- abs(col_vec) >= 1E6 & col_vec < 1E15
 
+      if (lg_num_pref == "sci") {
+
+        # In the case where we prefer to have scientific notation
+        # for very small and very large numbers, we need to partition
+        # the `row_series_vec` into `rows_num` and `rows_sci` vectors
+        # of integers; these represent the rows to be formatted in
+        # the column by either `fmt_number()` or `fmt_scientific()`
+
+        # This is the vector of row indices that will be used
+        # for scientific notation formatting
+        rows_sci_vec <- which(rows_sci)
+
+        # The remainder of values in `row_series_vec` will undergo
+        # numeric formatting
+        rows_num_vec <- base::setdiff(row_series_vec, rows_sci_vec)
+
+        # Set `row_suf_vec` as a zero-length vector because the
+        # preference is to not have any suffixed numbers at all
+        rows_suf_vec <- integer(0)
+      }
+
+      if (lg_num_pref == "suf") {
+
+        # In the case where we would rather have suffixed numbers
+        # represent large values (in the millions to trillions range);
+        # we can't, however, rule out scientific notation for very large
+        # or very small values though
+
+        # This is the vector of row indices that will be used
+        # for scientific notation formatting
+        rows_sci_vec <- which(rows_sci & !rows_suf)
+
+        # If there's an overlapping range then preference is given
+        # to the suffixing form
+        rows_suf_vec <- which(rows_sci & rows_suf)
+
+        # The remainder of values in `row_series_vec` will undergo
+        # numeric formatting without large number suffixing
+        rows_num_vec <-
+          base::setdiff(row_series_vec, c(rows_sci_vec, rows_suf_vec))
+      }
+
+      if (length(rows_num_vec) > 0) {
+
+        # Format non-scientific, non-suffixed values with
+        # `fmt_number()`
         data <-
           fmt_number(
             data = data,
             columns = columns_to_format[i],
-            rows = rows_num,
+            rows = rows_num_vec,
             decimals = 3,
             drop_trailing_zeros = TRUE,
             locale = locale
           )
       }
 
-      if (length(rows_sci) > 0) {
+      if (length(rows_suf_vec) > 0) {
 
+        # Format values with large-number suffixes using
+        # `fmt_number(..., suffixing = TRUE)`
+        data <-
+          fmt_number(
+            data = data,
+            columns = columns_to_format[i],
+            rows = rows_suf_vec,
+            decimals = 3,
+            drop_trailing_zeros = TRUE,
+            suffixing = TRUE,
+            locale = locale
+          )
+      }
+
+      if (length(rows_sci_vec) > 0) {
+
+        # Format values with in scientific notation using
+        # `fmt_scientific()`
         data <-
           fmt_scientific(
             data = data,
             columns = columns_to_format[i],
-            rows = rows_sci,
+            rows = rows_sci_vec,
             decimals = 3,
             locale = locale
           )
       }
 
-      if (length(rows_sci) < 1) {
+      if (length(rows_sci_vec) < 1 && length(rows_suf_vec) < 1) {
 
         data <-
           cols_align_decimal(
