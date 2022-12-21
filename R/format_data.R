@@ -5628,26 +5628,14 @@ fmt_auto <- function(
 
     } else if (is.numeric(col_vec)) {
 
-      col_vec_num_len <-
-        nchar(
-          vec_fmt_number(
-            col_vec,
-            decimals = 2,
-            drop_trailing_zeros = TRUE,
-            drop_trailing_dec_mark = FALSE
-          )
+      row_series <- seq_along(col_vec)
+
+      rows_sci <-
+        which(
+          abs(col_vec) < 1E-3 & col_vec != 0 | abs(col_vec) > 1E5 & col_vec != 0
         )
 
-      col_vec_sci_len <-
-        nchar(
-          vec_fmt_scientific(
-            col_vec,
-            decimals = 2
-          )
-        )
-
-      rows_num <- which(col_vec_num_len < col_vec_sci_len)
-      rows_sci <- which(col_vec_sci_len <= col_vec_num_len)
+      rows_num <- base::setdiff(row_series, rows_sci)
 
       if (length(rows_num) > 0) {
 
@@ -5656,8 +5644,8 @@ fmt_auto <- function(
             data = data,
             columns = columns_to_format[i],
             rows = rows_num,
+            decimals = 3,
             drop_trailing_zeros = TRUE,
-            drop_trailing_dec_mark = FALSE,
             locale = locale
           )
       }
@@ -5669,12 +5657,12 @@ fmt_auto <- function(
             data = data,
             columns = columns_to_format[i],
             rows = rows_sci,
-            drop_trailing_zeros = FALSE,
+            decimals = 3,
             locale = locale
           )
       }
 
-      if (length(rows_sci) > 0) {
+      if (length(rows_sci) < 1) {
 
         data <-
           cols_align_decimal(
