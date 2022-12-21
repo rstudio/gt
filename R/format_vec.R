@@ -3097,7 +3097,7 @@ gt_one_col <- function(x) {
   gt(
     dplyr::tibble(x = x),
     auto_align = FALSE,
-    auto_format = FALSE,
+    # auto_fmt = FALSE,
     process_md = FALSE
   )
 }
