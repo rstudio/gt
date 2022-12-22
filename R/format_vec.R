@@ -205,7 +205,8 @@ vec_fmt_number <- function(
   render_as_vector(
     fmt_number(
       gt_one_col(x),
-      columns = "x", rows = everything(),
+      columns = "x",
+      rows = everything(),
       decimals = decimals,
       n_sigfig = n_sigfig,
       drop_trailing_zeros = drop_trailing_zeros,
@@ -487,7 +488,8 @@ vec_fmt_scientific <- function(
   render_as_vector(
     fmt_scientific(
       gt_one_col(x),
-      columns = "x", rows = everything(),
+      columns = "x",
+      rows = everything(),
       decimals = decimals,
       drop_trailing_zeros = drop_trailing_zeros,
       scale_by = scale_by,
@@ -628,7 +630,8 @@ vec_fmt_engineering <- function(
   render_as_vector(
     fmt_engineering(
       gt_one_col(x),
-      columns = "x", rows = everything(),
+      columns = "x",
+      rows = everything(),
       decimals = decimals,
       drop_trailing_zeros = drop_trailing_zeros,
       scale_by = scale_by,
@@ -795,7 +798,8 @@ vec_fmt_percent <- function(
   render_as_vector(
     fmt_percent(
       gt_one_col(x),
-      columns = "x", rows = everything(),
+      columns = "x",
+      rows = everything(),
       decimals = decimals,
       drop_trailing_zeros = drop_trailing_zeros,
       drop_trailing_dec_mark = drop_trailing_dec_mark,
@@ -984,7 +988,8 @@ vec_fmt_partsper <- function(
   render_as_vector(
     fmt_partsper(
       gt_one_col(x),
-      columns = "x", rows = everything(),
+      columns = "x",
+      rows = everything(),
       to_units = to_units,
       symbol = symbol,
       decimals = decimals,
@@ -1129,7 +1134,8 @@ vec_fmt_fraction <- function(
   render_as_vector(
     fmt_fraction(
       gt_one_col(x),
-      columns = "x", rows = everything(),
+      columns = "x",
+      rows = everything(),
       accuracy = accuracy,
       simplify = simplify,
       layout = layout,
@@ -1314,7 +1320,8 @@ vec_fmt_currency <- function(
   render_as_vector(
     fmt_currency(
       gt_one_col(x),
-      columns = "x", rows = everything(),
+      columns = "x",
+      rows = everything(),
       currency = currency,
       use_subunits = use_subunits,
       decimals = decimals,
@@ -1432,7 +1439,8 @@ vec_fmt_roman <- function(
   render_as_vector(
     fmt_roman(
       gt_one_col(x),
-      columns = "x", rows = everything(),
+      columns = "x",
+      rows = everything(),
       case = case,
       pattern = pattern
     ),
@@ -1585,7 +1593,8 @@ vec_fmt_bytes <- function(
   render_as_vector(
     fmt_bytes(
       gt_one_col(x),
-      columns = "x", rows = everything(),
+      columns = "x",
+      rows = everything(),
       standard = standard,
       decimals = decimals,
       n_sigfig = n_sigfig,
@@ -1771,7 +1780,8 @@ vec_fmt_date <- function(
   render_as_vector(
     fmt_date(
       gt_one_col(x),
-      columns = "x", rows = everything(),
+      columns = "x",
+      rows = everything(),
       date_style = date_style,
       pattern = pattern,
       locale = locale
@@ -1937,7 +1947,8 @@ vec_fmt_time <- function(
   render_as_vector(
     fmt_time(
       gt_one_col(x),
-      columns = "x", rows = everything(),
+      columns = "x",
+      rows = everything(),
       time_style = time_style,
       pattern = pattern,
       locale = locale
@@ -2763,7 +2774,8 @@ vec_fmt_datetime <- function(
   render_as_vector(
     fmt_datetime(
       gt_one_col(x),
-      columns = "x", rows = everything(),
+      columns = "x",
+      rows = everything(),
       date_style = date_style,
       time_style = time_style,
       sep = sep,
@@ -2993,7 +3005,8 @@ vec_fmt_duration <- function(
   render_as_vector(
     fmt_duration(
       gt_one_col(x),
-      columns = "x", rows = everything(),
+      columns = "x",
+      rows = everything(),
       input_units = input_units,
       output_units = output_units,
       duration_style = duration_style,
@@ -3080,7 +3093,8 @@ vec_fmt_markdown <- function(
     render_as_vector(
       fmt_markdown(
         gt_one_col(x),
-        columns = "x", rows = everything()
+        columns = "x",
+        rows = everything()
       ),
       output = output
     )
@@ -3094,12 +3108,7 @@ vec_fmt_markdown <- function(
 }
 
 gt_one_col <- function(x) {
-  gt(
-    dplyr::tibble(x = x),
-    auto_align = FALSE,
-    # auto_fmt = FALSE,
-    process_md = FALSE
-  )
+  gt(dplyr::tibble(x = x), auto_align = FALSE, process_md = FALSE)
 }
 
 stop_if_not_vector <- function(x) {
