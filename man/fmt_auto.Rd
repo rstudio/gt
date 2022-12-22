@@ -32,8 +32,8 @@ to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{scope}{The scope of automatic formatting. By default this includes
-\code{"numbers"}-type values and \code{"currency"}-type values though the scope can be
-reduced to a single type of value to format.}
+\code{"numbers"}-type values and \code{"currency"}-type values though the scope can
+be reduced to a single type of value to format.}
 
 \item{lg_num_pref}{The preference toward either scientific notation for very
 small and very large values (\code{"sci"}, the default option), or, suffixed
@@ -95,6 +95,40 @@ expression that takes column values (can involve any of the available columns
 in the table) and returns a logical vector. This is nice if you want to base
 formatting on values in the column or another column, or, you'd like to use a
 more complex predicate expression.
+}
+
+\section{Examples}{
+
+
+Use \code{\link{exibble}} to create a \strong{gt} table. Format the columns automatically
+with \code{fmt_auto()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+  gt() \%>\%
+  fmt_auto()
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_auto_1.png" alt="This image of a table was generated from the first code example in the `fmt_auto()` help file." style="width:100\%;">
+}}
+
+Let's now use \code{\link{countrypops}} to create another \strong{gt} table. Automatically
+format all columns with \code{fmt_auto()} but elect to use large-number suffixing
+instead of scientific notation with the \code{lg_num_pref = "suf"} option.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
+  dplyr::select(country_code_3, year, population) \%>\%
+  dplyr::filter(country_code_3 \%in\% c("CHN", "IND", "USA", "PAK", "IDN")) \%>\%
+  dplyr::filter(year > 1975 & year \%\% 5 == 0) \%>\%
+  tidyr::spread(year, population) \%>\%
+  dplyr::arrange(desc(`2015`)) \%>\%
+  gt(rowname_col = "country_code_3") \%>\%
+  fmt_auto(lg_num_pref = "suf")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_auto_2.png" alt="This image of a table was generated from the second code example in the `fmt_auto()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
