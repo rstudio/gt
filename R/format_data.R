@@ -5551,7 +5551,7 @@ fmt_passthrough <- function(
 #'
 #' @inheritParams fmt_number
 #' @param scope The scope of automatic formatting. By default this includes
-#'   `"number"`-type values and `"currency"`-type values though the scope can be
+#'   `"numbers"`-type values and `"currency"`-type values though the scope can be
 #'   reduced to a single type of value to format.
 #' @param lg_num_pref The preference toward either scientific notation for very
 #'   small and very large values (`"sci"`, the default option), or, suffixed
@@ -5568,7 +5568,7 @@ fmt_auto <- function(
     data,
     columns = everything(),
     rows = everything(),
-    scope = c("number", "currency"),
+    scope = c("numbers", "currency"),
     lg_num_pref = c("sci", "suf"),
     locale = NULL
 ) {
@@ -5638,7 +5638,7 @@ fmt_auto <- function(
           locale = locale
         )
 
-    } else if (is.numeric(col_vec) && "number" %in% scope) {
+    } else if (is.numeric(col_vec) && "numbers" %in% scope) {
 
       # Case where column values are numeric or integer values,
       # known through inspection of the column class
