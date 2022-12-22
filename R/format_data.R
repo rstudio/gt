@@ -5591,6 +5591,12 @@ fmt_auto <- function(
       excl_stub = FALSE
     )
 
+  resolved_rows_idx <-
+    resolve_rows_i(
+      expr = {{ rows }},
+      data = data
+    )
+
   vars_default <- dt_boxhead_get_vars_default(data = data)
 
   # Get the intersection of the resolved columns and the default vars
@@ -5632,28 +5638,21 @@ fmt_auto <- function(
           locale = locale
         )
 
-    } else if (is.integer(col_vec) && "number" %in% scope) {
-
-      # Case where column values are integer values because of
-      # the column class
-
-      # Format all values in the selected column as integer values
-      data <-
-        fmt_integer(
-          data = data,
-          columns = columns_to_format[i],
-          rows = rows,
-          locale = locale
-        )
-
     } else if (is.numeric(col_vec) && "number" %in% scope) {
 
-      # Case where column values are numeric (and not integer values),
+      # Case where column values are numeric or integer values,
       # known through inspection of the column class
 
-      # Obtain the row series which is just a sequence of integers
-      # along `col_vec`
-      row_series_vec <- seq_along(col_vec)
+      # Obtain the row series vector which actually just `resolved_rows_idx`
+      row_series_vec <- resolved_rows_idx
+
+      # Create a subset of `col_vec` which should only correspond to the
+      # resolved rows
+      col_vec <- col_vec[row_series_vec]
+
+      # Determine whether the column class is of the integer type or
+      # integer-like
+      is_integer_column <- is.integer(col_vec) || rlang::is_integerish(col_vec)
 
       # Conditions for numbers in `col_vec` to be good candidates for
       # a scientific notation representation
@@ -5674,7 +5673,7 @@ fmt_auto <- function(
 
         # This is the vector of row indices that will be used
         # for scientific notation formatting
-        rows_sci_vec <- which(rows_sci)
+        rows_sci_vec <- row_series_vec[rows_sci]
 
         # The remainder of values in `row_series_vec` will undergo
         # numeric formatting
@@ -5694,11 +5693,11 @@ fmt_auto <- function(
 
         # This is the vector of row indices that will be used
         # for scientific notation formatting
-        rows_sci_vec <- which(rows_sci & !rows_suf)
+        rows_sci_vec <- row_series_vec[rows_sci & !rows_suf]
 
         # If there's an overlapping range then preference is given
         # to the suffixing form
-        rows_suf_vec <- which(rows_sci & rows_suf)
+        rows_suf_vec <- row_series_vec[rows_sci & rows_suf]
 
         # The remainder of values in `row_series_vec` will undergo
         # numeric formatting without large number suffixing
@@ -5709,13 +5708,14 @@ fmt_auto <- function(
       if (length(rows_num_vec) > 0) {
 
         # Format non-scientific, non-suffixed values with
-        # `fmt_number()`
+        # `fmt_number()` if they aren't integer or integer-like
+
         data <-
           fmt_number(
             data = data,
             columns = columns_to_format[i],
             rows = rows_num_vec,
-            decimals = 3,
+            decimals = if (is_integer_column) 0 else 3,
             drop_trailing_zeros = TRUE,
             locale = locale
           )
@@ -5730,7 +5730,7 @@ fmt_auto <- function(
             data = data,
             columns = columns_to_format[i],
             rows = rows_suf_vec,
-            decimals = 3,
+            decimals = 1,
             drop_trailing_zeros = TRUE,
             suffixing = TRUE,
             locale = locale
@@ -5746,7 +5746,7 @@ fmt_auto <- function(
             data = data,
             columns = columns_to_format[i],
             rows = rows_sci_vec,
-            decimals = 3,
+            decimals = if (is_integer_column) 0 else 3,
             locale = locale
           )
       }
