@@ -8,7 +8,7 @@ fmt_auto(
   data,
   columns = everything(),
   rows = everything(),
-  scope = c("number", "currency"),
+  scope = c("numbers", "currency"),
   lg_num_pref = c("sci", "suf"),
   locale = NULL
 )
@@ -32,7 +32,7 @@ to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{scope}{The scope of automatic formatting. By default this includes
-\code{"number"}-type values and \code{"currency"}-type values though the scope can be
+\code{"numbers"}-type values and \code{"currency"}-type values though the scope can be
 reduced to a single type of value to format.}
 
 \item{lg_num_pref}{The preference toward either scientific notation for very
