@@ -5561,8 +5561,8 @@ fmt_passthrough <- function(
 #'
 #' @inheritParams fmt_number
 #' @param scope The scope of automatic formatting. By default this includes
-#'   `"numbers"`-type values and `"currency"`-type values though the scope can be
-#'   reduced to a single type of value to format.
+#'   `"numbers"`-type values and `"currency"`-type values though the scope can
+#'   be reduced to a single type of value to format.
 #' @param lg_num_pref The preference toward either scientific notation for very
 #'   small and very large values (`"sci"`, the default option), or, suffixed
 #'   numbers (`"suf"`, for large values only).
@@ -5607,6 +5607,40 @@ fmt_passthrough <- function(
 #' in the table) and returns a logical vector. This is nice if you want to base
 #' formatting on values in the column or another column, or, you'd like to use a
 #' more complex predicate expression.
+#'
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table. Format the columns automatically
+#' with `fmt_auto()`.
+#'
+#' ```r
+#' exibble %>%
+#'   gt() %>%
+#'   fmt_auto()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_auto_1.png")`
+#' }}
+#'
+#' Let's now use [`countrypops`] to create another **gt** table. Automatically
+#' format all columns with `fmt_auto()` but elect to use large-number suffixing
+#' instead of scientific notation with the `lg_num_pref = "suf"` option.
+#'
+#' ```r
+#' countrypops %>%
+#'   dplyr::select(country_code_3, year, population) %>%
+#'   dplyr::filter(country_code_3 %in% c("CHN", "IND", "USA", "PAK", "IDN")) %>%
+#'   dplyr::filter(year > 1975 & year %% 5 == 0) %>%
+#'   tidyr::spread(year, population) %>%
+#'   dplyr::arrange(desc(`2015`)) %>%
+#'   gt(rowname_col = "country_code_3") %>%
+#'   fmt_auto(lg_num_pref = "suf")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_auto_2.png")`
+#' }}
 #'
 #' @family data formatting functions
 #' @section Function ID:
@@ -5753,6 +5787,11 @@ fmt_auto <- function(
         rows_num_vec <-
           base::setdiff(row_series_vec, c(rows_sci_vec, rows_suf_vec))
       }
+
+      # Remove NA values from the different `vec` objects
+      rows_sci_vec <- rows_sci_vec[!is.na(rows_sci_vec)]
+      rows_suf_vec <- rows_suf_vec[!is.na(rows_suf_vec)]
+      rows_num_vec <- rows_num_vec[!is.na(rows_num_vec)]
 
       if (length(rows_num_vec) > 0) {
 
