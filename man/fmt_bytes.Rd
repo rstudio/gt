@@ -221,6 +221,7 @@ The vector-formatting version of this function: \code{\link[=vec_fmt_bytes]{vec_
 
 Other data formatting functions: 
 \code{\link{data_color}()},
+\code{\link{fmt_auto}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},

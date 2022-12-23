@@ -735,15 +735,14 @@ fmt_scientific <- function(
             replace_minus_mark = FALSE
           )
 
-        # # Determine which values don't require the (x 10^n)
-        # # for scientific foramtting since their order would be zero
+        # Determine which values don't require the (x 10^n)
+        # for scientific formatting since their order would be zero
         small_pos <- has_order_zero(x)
 
         # For any numbers that shouldn't have an exponent, remove
         # that portion from the character version
         x_str[small_pos] <-
-          split_scientific_notn(x_str[small_pos])$num %>%
-          replace_minus()
+          replace_minus(split_scientific_notn(x_str[small_pos])$num)
 
         # For any non-NA numbers that do have an exponent, format
         # those according to the output context
@@ -751,9 +750,9 @@ fmt_scientific <- function(
 
         x_str[!small_pos] <-
           paste0(
-            sci_parts$num %>% replace_minus(),
+            replace_minus(sci_parts$num),
             exp_marks[1],
-            sci_parts$exp %>% replace_minus(),
+            replace_minus(sci_parts$exp),
             exp_marks[2]
           )
 
@@ -5546,6 +5545,315 @@ fmt_passthrough <- function(
   )
 }
 
+#' Automatically format column data according to their values
+#'
+#' @description
+#'
+#' The `fmt_auto()` function will automatic applying formatting of various types
+#' in a way that best suits the data table provided. The function will attempt
+#' format numbers such that they are condensed to an optimal width, either with
+#' scientific notation or large number suffixing. Currency values are detected
+#' by currency codes embedded in the column name and formatted in the correct
+#' way. Although the functionality here is comprehensive it's still possible to
+#' reduce the scope of automatic formatting with the `scope` argument and also
+#' by choosing a subset of columns and rows to which the formatting will be
+#' applied.
+#'
+#' @inheritParams fmt_number
+#' @param scope The scope of automatic formatting. By default this includes
+#'   `"numbers"`-type values and `"currency"`-type values though the scope can
+#'   be reduced to a single type of value to format.
+#' @param lg_num_pref The preference toward either scientific notation for very
+#'   small and very large values (`"sci"`, the default option), or, suffixed
+#'   numbers (`"suf"`, for large values only).
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Targeting cells with `columns` and `rows`:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to target a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value of 100,000 (excluding
+#' `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given formatting function
+#' will be skipped over, like `character` values and numeric `fmt_*()`
+#' functions. So it's safe to select all columns with a particular formatting
+#' function (only those values that can be formatted will be formatted), but,
+#' you may not want that. One strategy is to format the bulk of cell values with
+#' one formatting function and then constrain the columns for later passes with
+#' other types of formatting (the last formatting done to a cell is what you get
+#' in the final output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
+#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
+#' the input data (the indices won't necessarily match those of rearranged rows
+#' if row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector. This is nice if you want to base
+#' formatting on values in the column or another column, or, you'd like to use a
+#' more complex predicate expression.
+#'
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table. Format the columns automatically
+#' with `fmt_auto()`.
+#'
+#' ```r
+#' exibble %>%
+#'   gt() %>%
+#'   fmt_auto()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_auto_1.png")`
+#' }}
+#'
+#' Let's now use [`countrypops`] to create another **gt** table. Automatically
+#' format all columns with `fmt_auto()` but elect to use large-number suffixing
+#' instead of scientific notation with the `lg_num_pref = "suf"` option.
+#'
+#' ```r
+#' countrypops %>%
+#'   dplyr::select(country_code_3, year, population) %>%
+#'   dplyr::filter(country_code_3 %in% c("CHN", "IND", "USA", "PAK", "IDN")) %>%
+#'   dplyr::filter(year > 1975 & year %% 5 == 0) %>%
+#'   tidyr::spread(year, population) %>%
+#'   dplyr::arrange(desc(`2015`)) %>%
+#'   gt(rowname_col = "country_code_3") %>%
+#'   fmt_auto(lg_num_pref = "suf")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_auto_2.png")`
+#' }}
+#'
+#' @family data formatting functions
+#' @section Function ID:
+#' 3-17
+#'
+#' @export
+fmt_auto <- function(
+    data,
+    columns = everything(),
+    rows = everything(),
+    scope = c("numbers", "currency"),
+    lg_num_pref = c("sci", "suf"),
+    locale = NULL
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  # Ensure that arguments are matched
+  lg_num_pref <- rlang::arg_match(lg_num_pref)
+
+  # Resolve the `locale` value here with the global locale value
+  locale <- resolve_locale(data = data, locale = locale)
+
+  currency_codes <- tolower(currencies[["curr_code"]])
+
+  resolved_columns <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data,
+      excl_stub = FALSE
+    )
+
+  resolved_rows_idx <-
+    resolve_rows_i(
+      expr = {{ rows }},
+      data = data
+    )
+
+  vars_default <- dt_boxhead_get_vars_default(data = data)
+
+  # Get the intersection of the resolved columns and the default vars
+  columns_to_format <- base::intersect(vars_default, resolved_columns)
+
+  # Get the internal data table
+  data_tbl <- dt_data_get(data = data)
+
+  for (i in seq_along(columns_to_format)) {
+
+    col_name <- columns_to_format[i]
+
+    col_vec <- data_tbl[[columns_to_format[i]]]
+
+    if (
+      is.numeric(col_vec) &&
+      "currency" %in% scope &&
+      grepl(
+        paste0("(\\.|_)(", paste0(currency_codes, collapse = "|"), ")$"),
+        tolower(col_name)
+      )
+    ) {
+
+      # Case where numeric values are inferred to be currency values
+      # since the column name contains a valid currency code after a
+      # period or underscore
+
+      # Obtain the currency code (which is known to exist and be valid)
+      # from the column name
+      currency <- toupper(sub(".*(?=.{3}$)", "", col_name, perl = TRUE))
+
+      # Format all values in the selected column as currency values
+      data <-
+        fmt_currency(
+          data = data,
+          columns = columns_to_format[i],
+          rows = rows,
+          currency = currency,
+          locale = locale
+        )
+
+    } else if (is.numeric(col_vec) && "numbers" %in% scope) {
+
+      # Case where column values are numeric or integer values,
+      # known through inspection of the column class
+
+      # Obtain the row series vector which actually just `resolved_rows_idx`
+      row_series_vec <- resolved_rows_idx
+
+      # Create a subset of `col_vec` which should only correspond to the
+      # resolved rows
+      col_vec <- col_vec[row_series_vec]
+
+      # Determine whether the column class is of the integer type or
+      # integer-like
+      is_integer_column <- is.integer(col_vec) || rlang::is_integerish(col_vec)
+
+      # Conditions for numbers in `col_vec` to be good candidates for
+      # a scientific notation representation
+      rows_sci <- col_vec != 0 & (abs(col_vec) < 1E-3 | abs(col_vec) >= 1E6)
+
+      # Conditions for numbers in `col_vec` to be suitable for a
+      # large-number-suffixing treatment (best in the millions to
+      # trillions range)
+      rows_suf <- abs(col_vec) >= 1E6 & col_vec < 1E15
+
+      if (lg_num_pref == "sci") {
+
+        # In the case where we prefer to have scientific notation
+        # for very small and very large numbers, we need to partition
+        # the `row_series_vec` into `rows_num` and `rows_sci` vectors
+        # of integers; these represent the rows to be formatted in
+        # the column by either `fmt_number()` or `fmt_scientific()`
+
+        # This is the vector of row indices that will be used
+        # for scientific notation formatting
+        rows_sci_vec <- row_series_vec[rows_sci]
+
+        # The remainder of values in `row_series_vec` will undergo
+        # numeric formatting
+        rows_num_vec <- base::setdiff(row_series_vec, rows_sci_vec)
+
+        # Set `row_suf_vec` as a zero-length vector because the
+        # preference is to not have any suffixed numbers at all
+        rows_suf_vec <- integer(0)
+      }
+
+      if (lg_num_pref == "suf") {
+
+        # In the case where we would rather have suffixed numbers
+        # represent large values (in the millions to trillions range);
+        # we can't, however, rule out scientific notation for very large
+        # or very small values though
+
+        # This is the vector of row indices that will be used
+        # for scientific notation formatting
+        rows_sci_vec <- row_series_vec[rows_sci & !rows_suf]
+
+        # If there's an overlapping range then preference is given
+        # to the suffixing form
+        rows_suf_vec <- row_series_vec[rows_sci & rows_suf]
+
+        # The remainder of values in `row_series_vec` will undergo
+        # numeric formatting without large number suffixing
+        rows_num_vec <-
+          base::setdiff(row_series_vec, c(rows_sci_vec, rows_suf_vec))
+      }
+
+      # Remove NA values from the different `vec` objects
+      rows_sci_vec <- rows_sci_vec[!is.na(rows_sci_vec)]
+      rows_suf_vec <- rows_suf_vec[!is.na(rows_suf_vec)]
+      rows_num_vec <- rows_num_vec[!is.na(rows_num_vec)]
+
+      if (length(rows_num_vec) > 0) {
+
+        # Format non-scientific, non-suffixed values with
+        # `fmt_number()` if they aren't integer or integer-like
+
+        data <-
+          fmt_number(
+            data = data,
+            columns = columns_to_format[i],
+            rows = rows_num_vec,
+            decimals = if (is_integer_column) 0 else 3,
+            drop_trailing_zeros = TRUE,
+            locale = locale
+          )
+      }
+
+      if (length(rows_suf_vec) > 0) {
+
+        # Format values with large-number suffixes using
+        # `fmt_number(..., suffixing = TRUE)`
+        data <-
+          fmt_number(
+            data = data,
+            columns = columns_to_format[i],
+            rows = rows_suf_vec,
+            decimals = 1,
+            drop_trailing_zeros = TRUE,
+            suffixing = TRUE,
+            locale = locale
+          )
+      }
+
+      if (length(rows_sci_vec) > 0) {
+
+        # Format values with in scientific notation using
+        # `fmt_scientific()`
+        data <-
+          fmt_scientific(
+            data = data,
+            columns = columns_to_format[i],
+            rows = rows_sci_vec,
+            decimals = if (is_integer_column) 0 else 3,
+            locale = locale
+          )
+      }
+
+      if (length(rows_sci_vec) < 1 && length(rows_suf_vec) < 1) {
+
+        data <-
+          cols_align_decimal(
+            data = data,
+            columns = columns_to_format[i],
+            locale = locale
+          )
+      }
+    }
+  }
+
+  data
+}
+
 #' Set a column format with a formatter function
 #'
 #' @description
@@ -5639,7 +5947,7 @@ fmt_passthrough <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-17
+#' 3-18
 #'
 #' @import rlang
 #' @export
