@@ -244,7 +244,7 @@ test_that("The `fmt_scientific()` function works correctly", {
   expect_equal(
     (tab %>%
        fmt_scientific(
-         columns = num_1, decimals = 3, force_sign = TRUE) %>%
+         columns = num_1, decimals = 3, force_sign_m = TRUE) %>%
        render_formats_test("html"))[["num_1"]],
     c(
       paste0("+1.836 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
@@ -261,7 +261,7 @@ test_that("The `fmt_scientific()` function works correctly", {
   expect_equal(
     (tab %>%
        fmt_scientific(
-         columns = num_1, pattern = "*{x}*", force_sign = TRUE) %>%
+         columns = num_1, pattern = "*{x}*", force_sign_m = TRUE) %>%
        render_formats_test("html"))[["num_1"]],
     c(
       paste0("*+1.84 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>*"),

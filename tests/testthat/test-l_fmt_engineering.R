@@ -169,7 +169,7 @@ test_that("The `fmt_engineering()` function works correctly in the LaTeX context
   expect_equal(
     (tab %>%
        fmt_engineering(
-         columns = "num", decimals = 3, force_sign = TRUE) %>%
+         columns = "num", decimals = 3, force_sign_m = TRUE) %>%
        render_formats_test("latex"))[["num"]],
     c(
       "$+82.030 \\times 10^{30}$", "$+829.300 \\times 10^{18}$",
@@ -191,7 +191,7 @@ test_that("The `fmt_engineering()` function works correctly in the LaTeX context
   expect_equal(
     (tab %>%
        fmt_engineering(
-         columns = "num", pattern = "*{x}*", force_sign = TRUE) %>%
+         columns = "num", pattern = "*{x}*", force_sign_m = TRUE) %>%
        render_formats_test("latex"))[["num"]],
     c(
       "*$+82.03 \\times 10^{30}$*", "*$+829.30 \\times 10^{18}$*",

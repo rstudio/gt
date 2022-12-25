@@ -285,7 +285,7 @@ test_that("The `fmt_engineering()` function works correctly", {
   expect_equal(
     (tab %>%
        fmt_engineering(
-         columns = "num", decimals = 3, force_sign = TRUE) %>%
+         columns = "num", decimals = 3, force_sign_m = TRUE) %>%
        render_formats_test("html"))[["num"]],
     c(
       paste0("+82.030 ", "\U000D7", " 10<sup style='font-size: 65%;'>30</sup>"),
@@ -323,7 +323,7 @@ test_that("The `fmt_engineering()` function works correctly", {
   expect_equal(
     (tab %>%
        fmt_engineering(
-         columns = "num", pattern = "*{x}*", force_sign = TRUE) %>%
+         columns = "num", pattern = "*{x}*", force_sign_m = TRUE) %>%
        render_formats_test("html"))[["num"]],
     c(
       paste0("*+82.03 ", "\U000D7", " 10<sup style='font-size: 65%;'>30</sup>*"),
