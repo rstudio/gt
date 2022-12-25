@@ -9,10 +9,12 @@ vec_fmt_scientific(
   decimals = 2,
   drop_trailing_zeros = FALSE,
   scale_by = 1,
+  exp_style = "x10n",
   pattern = "{x}",
   sep_mark = ",",
   dec_mark = ".",
-  force_sign = FALSE,
+  force_sign_m = FALSE,
+  force_sign_n = FALSE,
   locale = NULL,
   output = c("auto", "plain", "html", "latex", "rtf", "word")
 )
@@ -41,10 +43,12 @@ of \verb{1,000}).}
 \code{dec_mark = ","} with \code{0.152} would result in a formatted value of
 \verb{0,152}).}
 
-\item{force_sign}{Should the positive sign be shown for positive values
-(effectively showing a sign for all values except zero)? If so, use \code{TRUE}
-for this option. The default is \code{FALSE}, where only negative numbers will
-display a minus sign.}
+\item{force_sign_m, force_sign_n}{Should the plus sign be shown for positive
+values of the mantissa (first component) or the exponent? This would
+effectively show a sign for all values except zero on either of those
+numeric components of the notation. If so, use \code{TRUE} for either one of
+these options. The default for both is \code{FALSE}, where only negative numbers
+will display a sign.}
 
 \item{locale}{An optional locale ID that can be used for formatting the value
 according the locale's rules. Examples include \code{"en"} for English (United
