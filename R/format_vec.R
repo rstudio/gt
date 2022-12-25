@@ -381,10 +381,12 @@ vec_fmt_integer <- function(
 #' @inheritParams vec_fmt_number
 #' @param scale_by A value to scale the input. The default is `1.0`. All numeric
 #'   values will be multiplied by this value first before undergoing formatting.
-#' @param force_sign Should the positive sign be shown for positive values
-#'   (effectively showing a sign for all values except zero)? If so, use `TRUE`
-#'   for this option. The default is `FALSE`, where only negative numbers will
-#'   display a minus sign.
+#' @param force_sign_m,force_sign_n Should the plus sign be shown for positive
+#'   values of the mantissa (first component) or the exponent? This would
+#'   effectively show a sign for all values except zero on either of those
+#'   numeric components of the notation. If so, use `TRUE` for either one of
+#'   these options. The default for both is `FALSE`, where only negative numbers
+#'   will display a sign.
 #'
 #' @return A character vector.
 #'
@@ -460,10 +462,12 @@ vec_fmt_scientific <- function(
     decimals = 2,
     drop_trailing_zeros = FALSE,
     scale_by = 1.0,
+    exp_style = "x10n",
     pattern = "{x}",
     sep_mark = ",",
     dec_mark = ".",
-    force_sign = FALSE,
+    force_sign_m = FALSE,
+    force_sign_n = FALSE,
     locale = NULL,
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
@@ -493,10 +497,12 @@ vec_fmt_scientific <- function(
       decimals = decimals,
       drop_trailing_zeros = drop_trailing_zeros,
       scale_by = scale_by,
+      exp_style = exp_style,
       pattern = pattern,
       sep_mark = sep_mark,
       dec_mark = dec_mark,
-      force_sign = force_sign,
+      force_sign_m = force_sign_m,
+      force_sign_n = force_sign_n,
       locale = locale
     ),
     output = output
@@ -523,10 +529,15 @@ vec_fmt_scientific <- function(
 #' @inheritParams vec_fmt_number
 #' @param scale_by A value to scale the input. The default is `1.0`. All numeric
 #'   values will be multiplied by this value first before undergoing formatting.
-#' @param force_sign Should the positive sign be shown for positive values
-#'   (effectively showing a sign for all values except zero)? If so, use `TRUE`
-#'   for this option. The default is `FALSE`, where only negative numbers will
-#'   display a minus sign.
+#' @param exp_style Style of formatting to use for the engineering notation
+#'   formatting. By default this is `"x10n"` but other options include `"e"`,
+#'   `"E"`, `"slash"`, and `"starslash"`.
+#' @param force_sign_m,force_sign_n Should the plus sign be shown for positive
+#'   values of the mantissa (first component) or the exponent? This would
+#'   effectively show a sign for all values except zero on either of those
+#'   numeric components of the notation. If so, use `TRUE` for either one of
+#'   these options. The default for both is `FALSE`, where only negative numbers
+#'   will display a sign.
 #'
 #' @return A character vector.
 #'
@@ -602,10 +613,12 @@ vec_fmt_engineering <- function(
     decimals = 2,
     drop_trailing_zeros = FALSE,
     scale_by = 1.0,
+    exp_style = "x10n",
     pattern = "{x}",
     sep_mark = ",",
     dec_mark = ".",
-    force_sign = FALSE,
+    force_sign_m = FALSE,
+    force_sign_n = FALSE,
     locale = NULL,
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
@@ -635,10 +648,12 @@ vec_fmt_engineering <- function(
       decimals = decimals,
       drop_trailing_zeros = drop_trailing_zeros,
       scale_by = scale_by,
+      exp_style = exp_style,
       pattern = pattern,
       sep_mark = sep_mark,
       dec_mark = dec_mark,
-      force_sign = force_sign,
+      force_sign_m = force_sign_m,
+      force_sign_n = force_sign_n,
       locale = locale
     ),
     output = output

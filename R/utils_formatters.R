@@ -633,6 +633,30 @@ context_exp_marks <- function(context) {
   )
 }
 
+context_exp_str <- function(context, exp_style) {
+
+  exp_str <- "E"
+
+  if (exp_style == "low-ten") {
+
+    exp_str <-
+      switch(
+        context,
+        html = c("<sub style='font-size: 65%;'>10</sub>"),
+        latex = c("{}_10"),
+        rtf = c("{\\sub 10}"),
+        word = c("10^"),
+        "E"
+      )
+  }
+
+  if (exp_style %in% c(letters, LETTERS)) {
+    exp_str <- exp_style
+  }
+
+  exp_str
+}
+
 
 #' Obtain the contextually correct symbol string
 #'
