@@ -365,9 +365,12 @@ create_body_component_l <- function(data) {
       n_rows = n_rows
     )
 
-  grand_summary_rows <- create_grand_summary_rows_l(data = data)
+  grand_summary_side <- summary_row_side(data = data, group_id = grand_summary_col)
+
+  grand_summary_rows <- create_grand_summary_rows_l(data = data, side = grand_summary_side)
 
   paste0(
+    if (!is.null(grand_summary_side) && grand_summary_side == "top") grand_summary_rows,
     paste0(
       if (!("group_label" %in% stub_layout)) {
 
@@ -392,7 +395,7 @@ create_body_component_l <- function(data) {
       },
       collapse = ""
     ),
-    grand_summary_rows,
+    if (!is.null(grand_summary_side) && grand_summary_side == "bottom") grand_summary_rows,
     collapse = ""
   )
 }
@@ -632,7 +635,7 @@ create_summary_rows_l <- function(
   )
 }
 
-create_grand_summary_rows_l <- function(data) {
+create_grand_summary_rows_l <- function(data, side) {
 
   list_of_summaries <- dt_summary_df_get(data = data)
 
@@ -684,7 +687,13 @@ create_grand_summary_rows_l <- function(data) {
       collapse = ""
     )
 
-  paste0(grand_summary_h_border, grand_summary_rows)
+  if (side == "bottom") {
+    grand_summary_rows <- paste0(grand_summary_h_border, grand_summary_rows)
+  } else {
+    grand_summary_rows <- paste0(grand_summary_rows, grand_summary_h_border)
+  }
+
+  grand_summary_rows
 }
 
 # Define horizontal border line types for
