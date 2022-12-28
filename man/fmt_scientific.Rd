@@ -11,10 +11,12 @@ fmt_scientific(
   decimals = 2,
   drop_trailing_zeros = FALSE,
   scale_by = 1,
+  exp_style = "x10n",
   pattern = "{x}",
   sep_mark = ",",
   dec_mark = ".",
-  force_sign = FALSE,
+  force_sign_m = FALSE,
+  force_sign_n = FALSE,
   locale = NULL
 )
 }
@@ -45,6 +47,12 @@ trailing zeros (those redundant zeros after the decimal mark).}
 \item{scale_by}{A value to scale the input. The default is \code{1.0}. All numeric
 values will be multiplied by this value first before undergoing formatting.}
 
+\item{exp_style}{Style of formatting to use for the scientific notation
+formatting. By default this is \code{"x10n"} but other options include using
+a single letter (e.g., \code{"e"}, \code{"E"}, etc.), a letter followed by a \code{"1"} to
+signal a minimum digit width of one, or \code{"low-ten"} for using a stylized
+\code{"10"} marker.}
+
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other
 characters are taken to be string literals.}
@@ -55,10 +63,12 @@ of \verb{1,000}).}
 
 \item{dec_mark}{The character to use as a decimal mark (e.g., using \code{dec_mark = ","} with \code{0.152} would result in a formatted value of \verb{0,152}).}
 
-\item{force_sign}{Should the positive sign be shown for positive values
-(effectively showing a sign for all values except zero)? If so, use \code{TRUE}
-for this option. The default is \code{FALSE}, where only negative numbers will
-display a minus sign.}
+\item{force_sign_m, force_sign_n}{Should the plus sign be shown for positive
+values of the mantissa (first component) or the exponent? This would
+effectively show a sign for all values except zero on either of those
+numeric components of the notation. If so, use \code{TRUE} for either one of
+these options. The default for both is \code{FALSE}, where only negative numbers
+will display a sign.}
 
 \item{locale}{An optional locale ID that can be used for formatting values
 according to the locale's rules.}
@@ -68,8 +78,17 @@ An object of class \code{gt_tbl}.
 }
 \description{
 With numeric values in a \strong{gt} table, we can perform formatting so that the
-targeted values are rendered in scientific notation. Furthermore, there is
-fine control with the following options:
+targeted values are rendered in scientific notation, where extremely large or
+very small numbers can be expressed in a more practical fashion. Here,
+numbers are written in the form of a mantissa (\code{m}) and an exponent (\code{n})
+with the construction \emph{m} x 10^\emph{n} or \emph{m}E\emph{n}. The mantissa component is a
+number between \code{1} and \code{10}. For instance, \verb{2.5 x 10^9} can be used to
+represent the value 2,500,000,000 in scientific notation. In a similar way,
+0.00000012 can be expressed as \verb{1.2 x 10^-7}. Due to its ability to describe
+numbers more succinctly and its ease of calculation, scientific notation is
+widely employed in scientific and technical domains.
+
+We have fine control over the formatting task, with the following options:
 \itemize{
 \item decimals: choice of the number of decimal places, option to drop
 trailing zeros, and a choice of the decimal symbol

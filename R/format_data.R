@@ -517,8 +517,17 @@ fmt_integer <- function(
 #' @description
 #'
 #' With numeric values in a **gt** table, we can perform formatting so that the
-#' targeted values are rendered in scientific notation. Furthermore, there is
-#' fine control with the following options:
+#' targeted values are rendered in scientific notation, where extremely large or
+#' very small numbers can be expressed in a more practical fashion. Here,
+#' numbers are written in the form of a mantissa (`m`) and an exponent (`n`)
+#' with the construction *m* x 10^*n* or *m*E*n*. The mantissa component is a
+#' number between `1` and `10`. For instance, `2.5 x 10^9` can be used to
+#' represent the value 2,500,000,000 in scientific notation. In a similar way,
+#' 0.00000012 can be expressed as `1.2 x 10^-7`. Due to its ability to describe
+#' numbers more succinctly and its ease of calculation, scientific notation is
+#' widely employed in scientific and technical domains.
+#'
+#' We have fine control over the formatting task, with the following options:
 #'
 #' - decimals: choice of the number of decimal places, option to drop
 #' trailing zeros, and a choice of the decimal symbol
@@ -531,10 +540,17 @@ fmt_integer <- function(
 #' @inheritParams fmt_number
 #' @param scale_by A value to scale the input. The default is `1.0`. All numeric
 #'   values will be multiplied by this value first before undergoing formatting.
-#' @param force_sign Should the positive sign be shown for positive values
-#'   (effectively showing a sign for all values except zero)? If so, use `TRUE`
-#'   for this option. The default is `FALSE`, where only negative numbers will
-#'   display a minus sign.
+#' @param exp_style Style of formatting to use for the scientific notation
+#'   formatting. By default this is `"x10n"` but other options include using
+#'   a single letter (e.g., `"e"`, `"E"`, etc.), a letter followed by a `"1"` to
+#'   signal a minimum digit width of one, or `"low-ten"` for using a stylized
+#'   `"10"` marker.
+#' @param force_sign_m,force_sign_n Should the plus sign be shown for positive
+#'   values of the mantissa (first component) or the exponent? This would
+#'   effectively show a sign for all values except zero on either of those
+#'   numeric components of the notation. If so, use `TRUE` for either one of
+#'   these options. The default for both is `FALSE`, where only negative numbers
+#'   will display a sign.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -642,10 +658,12 @@ fmt_scientific <- function(
     decimals = 2,
     drop_trailing_zeros = FALSE,
     scale_by = 1.0,
+    exp_style = "x10n",
     pattern = "{x}",
     sep_mark = ",",
     dec_mark = ".",
-    force_sign = FALSE,
+    force_sign_m = FALSE,
+    force_sign_n = FALSE,
     locale = NULL
 ) {
 
@@ -700,12 +718,12 @@ fmt_scientific <- function(
       format_fn = function(x, context) {
 
         # Define the marks by context
-        exp_marks <- context_exp_marks(context)
-        minus_mark <- context_minus_mark(context)
+        exp_marks <- context_exp_marks(context = context)
+        minus_mark <- context_minus_mark(context = context)
 
         # Define the `replace_minus()` function
         replace_minus <- function(x) {
-          x %>% tidy_gsub("-", minus_mark, fixed = TRUE)
+           tidy_gsub(x, "-", minus_mark, fixed = TRUE)
         }
 
         # Create the `suffix_df` object
@@ -735,29 +753,116 @@ fmt_scientific <- function(
             replace_minus_mark = FALSE
           )
 
-        # Determine which values don't require the (x 10^n)
-        # for scientific formatting since their order would be zero
-        small_pos <- has_order_zero(x)
+        if (exp_style == "x10n") {
 
-        # For any numbers that shouldn't have an exponent, remove
-        # that portion from the character version
-        x_str[small_pos] <-
-          replace_minus(split_scientific_notn(x_str[small_pos])$num)
+          # Determine which values don't require the (x 10^n)
+          # for scientific formatting since their order would be zero
+          small_pos <- has_order_zero(x)
 
-        # For any non-NA numbers that do have an exponent, format
-        # those according to the output context
-        sci_parts <- split_scientific_notn(x_str[!small_pos])
+          # For any numbers that shouldn't have an exponent, remove
+          # that portion from the character version
+          x_str[small_pos] <-
+            replace_minus(split_scientific_notn(x_str = x_str[small_pos])$num)
 
-        x_str[!small_pos] <-
-          paste0(
-            replace_minus(sci_parts$num),
-            exp_marks[1],
-            replace_minus(sci_parts$exp),
-            exp_marks[2]
-          )
+          # For any non-NA numbers that do have an exponent, format
+          # those according to the output context
+          sci_parts <- split_scientific_notn(x_str = x_str[!small_pos])
+
+          m_part <- sci_parts[["num"]]
+          n_part <- sci_parts[["exp"]]
+
+          if (force_sign_n) {
+
+            n_part <-
+              vapply(
+                n_part,
+                FUN.VALUE = character(1),
+                USE.NAMES = FALSE,
+                FUN = function(x) {
+                  if (x > 0) gsub("^", "+", x) else as.character(x)
+                }
+              )
+          }
+
+          m_part <- replace_minus(m_part)
+          n_part <- replace_minus(n_part)
+
+          x_str[!small_pos] <-
+            paste0(m_part, exp_marks[1], n_part, exp_marks[2])
+
+        } else {
+
+          exp_str <- context_exp_str(exp_style = exp_style, context = context)
+
+          if (grepl("^[a-zA-Z]{1}1$", exp_style)) {
+            n_min_width <- 1
+          } else {
+            n_min_width <- 2
+          }
+
+          # The `n_part` will be extracted here and it must be padded to
+          # the defined minimum number of decimal places
+          n_part <-
+            vapply(
+              x_str,
+              FUN.VALUE = character(1),
+              USE.NAMES = FALSE,
+              FUN = function(x) {
+
+                if (!grepl("e(\\+|-)[0-9]{2,}", x)) return("")
+
+                x <- unlist(strsplit(x, "e"))[2]
+
+                if (grepl("-", x)) {
+                  x <- gsub("-", "", x)
+                  x <- formatC(as.numeric(x), width = n_min_width, flag = "0")
+                  x <- paste0("-", x)
+                } else {
+                  x <- formatC(as.numeric(x), width = n_min_width, flag = "0")
+                }
+
+                x
+              }
+            )
+
+          # Generate `x_str_left` using `x_str` here
+          x_str_left <-
+            vapply(
+              x_str,
+              FUN.VALUE = character(1),
+              USE.NAMES = FALSE,
+              FUN = function(x) {
+                if (!grepl("e(\\+|-)[0-9]{2,}", x)) return("")
+                unlist(strsplit(x, "e"))[1]
+              }
+            )
+
+          if (force_sign_n) {
+
+            n_part <-
+              vapply(
+                seq_along(n_part),
+                FUN.VALUE = character(1),
+                USE.NAMES = FALSE,
+                FUN = function(i) {
+                  if (!grepl("-", n_part[i])) {
+                    out <- gsub("^", "+", n_part[i])
+                  } else {
+                    out <- n_part[i]
+                  }
+                  out
+                }
+              )
+          }
+
+          x_str[!is.infinite(x)] <-
+            paste0(x_str_left[!is.infinite(x)], exp_str, replace_minus(n_part[!is.infinite(x)]))
+
+          x_str <- replace_minus(x_str)
+        }
 
         # Force a positive sign on certain values if the option is taken
-        if (force_sign) {
+        if (force_sign_m) {
 
           positive_x <- !is.na(x) & x > 0
           x_str[positive_x] <- paste_left(x_str[positive_x], x_left = "+")
@@ -774,14 +879,18 @@ fmt_scientific <- function(
 #' @description
 #'
 #' With numeric values in a **gt** table, we can perform formatting so that the
-#' targeted values are rendered in engineering notation.
+#' targeted values are rendered in engineering notation, where numbers are
+#' written in the form of a mantissa (`m`) and an exponent (`n`). When combined
+#' the construction is either of the form *m* x 10^*n* or *m*E*n*. The mantissa
+#' is a number between `1` and `1000` and the exponent is a multiple of `3`. For
+#' example, the number 0.0000345 can be written in engineering notation as
+#' `34.50 x 10^-6`. This notation helps to simplify calculations and make it
+#' easier to compare numbers that are on very different scales.
 #'
-#' With this function, there is fine control over the formatted values with the
-#' following options:
+#' We have fine control over the formatting task, with the following options:
 #'
 #' - decimals: choice of the number of decimal places, option to drop
 #' trailing zeros, and a choice of the decimal symbol
-#' - digit grouping separators: choice of separator symbol
 #' - scaling: we can choose to scale targeted values by a multiplier value
 #' - pattern: option to use a text pattern for decoration of the formatted
 #' values
@@ -791,10 +900,17 @@ fmt_scientific <- function(
 #' @inheritParams fmt_number
 #' @param scale_by A value to scale the input. The default is `1.0`. All numeric
 #'   values will be multiplied by this value first before undergoing formatting.
-#' @param force_sign Should the positive sign be shown for positive values
-#'   (effectively showing a sign for all values except zero)? If so, use `TRUE`
-#'   for this option. The default is `FALSE`, where only negative numbers will
-#'   display a minus sign.
+#' @param exp_style Style of formatting to use for the engineering notation
+#'   formatting. By default this is `"x10n"` but other options include using
+#'   a single letter (e.g., `"e"`, `"E"`, etc.), a letter followed by a `"1"` to
+#'   signal a minimum digit width of one, or `"low-ten"` for using a stylized
+#'   `"10"` marker.
+#' @param force_sign_m,force_sign_n Should the plus sign be shown for positive
+#'   values of the mantissa (first component) or the exponent? This would
+#'   effectively show a sign for all values except zero on either of those
+#'   numeric components of the notation. If so, use `TRUE` for either one of
+#'   these options. The default for both is `FALSE`, where only negative numbers
+#'   will display a sign.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -890,10 +1006,12 @@ fmt_engineering <- function(
     decimals = 2,
     drop_trailing_zeros = FALSE,
     scale_by = 1.0,
+    exp_style = "x10n",
     pattern = "{x}",
     sep_mark = ",",
     dec_mark = ".",
-    force_sign = FALSE,
+    force_sign_m = FALSE,
+    force_sign_n = FALSE,
     locale = NULL
 ) {
 
@@ -946,13 +1064,14 @@ fmt_engineering <- function(
     fns = num_fmt_factory_multi(
       pattern = pattern,
       format_fn = function(x, context) {
+
         # Define the marks by context
-        exp_marks <- context_exp_marks(context)
-        minus_mark <- context_minus_mark(context)
+        exp_marks <- context_exp_marks(context = context)
+        minus_mark <- context_minus_mark(context = context)
 
         # Define the `replace_minus()` function
         replace_minus <- function(x) {
-          x %>% tidy_gsub("-", minus_mark, fixed = TRUE)
+          tidy_gsub(x, "-", minus_mark, fixed = TRUE)
         }
 
         # Create the `suffix_df` object
@@ -998,26 +1117,98 @@ fmt_engineering <- function(
             drop_trailing_dec_mark = FALSE,
             format = "f",
             replace_minus_mark = FALSE
-          ) %>%
-          replace_minus()
-
-        # Generate the RHS of the formatted value (i.e., the `x 10^(n * 3)`)
-        x_str_right <-
-          paste0(
-            exp_marks[1],
-            as.character(power_3) %>% replace_minus(),
-            exp_marks[2]
           )
 
-        # Replace elements from `x_str_right` where exponent values
-        # are zero with empty strings
-        x_str_right[power_3 == 0] <- ""
+        x_str_left <- replace_minus(x_str_left)
 
-        # Paste the LHS and RHS components to generate the formatted values
-        x_str <- paste0(x_str_left, x_str_right)
+        n_part <-
+          vapply(
+            power_3,
+            FUN.VALUE = character(1),
+            USE.NAMES = FALSE,
+            FUN = function(x) {
+              if (x > 0 && force_sign_n) {
+                out <- gsub("^", "+", x)
+              } else {
+                out <- as.character(x)
+              }
+              out
+            }
+          )
+
+        if (exp_style == "x10n") {
+
+          # Generate the RHS of the formatted value (i.e., the `x 10^(n * 3)`)
+          x_str_right <-
+            paste0(
+              exp_marks[1],
+              replace_minus(n_part),
+              exp_marks[2]
+            )
+
+          # Replace elements from `x_str_right` where exponent values
+          # are zero with empty strings
+          x_str_right[power_3 == 0] <- ""
+
+          # Paste the LHS and RHS components to generate the formatted values
+          x_str <- paste0(x_str_left, x_str_right)
+
+        } else {
+
+          exp_str <- context_exp_str(exp_style = exp_style, context = context)
+
+          if (grepl("^[a-zA-Z]{1}1$", exp_style)) {
+            n_min_width <- 1
+          } else {
+            n_min_width <- 2
+          }
+
+          # `power_3` must be padded to two decimal places
+          n_part <-
+            vapply(
+              power_3,
+              FUN.VALUE = character(1),
+              USE.NAMES = FALSE,
+              FUN = function(x) {
+                if (grepl("-", x)) {
+                  x <- gsub("-", "", x)
+                  x <- formatC(as.numeric(x), width = n_min_width, flag = "0")
+                  x <- paste0("-", x)
+                } else {
+                  x <- formatC(as.numeric(x), width = n_min_width, flag = "0")
+                }
+                x
+              }
+            )
+
+          if (force_sign_n) {
+
+            n_part <-
+              vapply(
+                seq_along(n_part),
+                FUN.VALUE = character(1),
+                USE.NAMES = FALSE,
+                FUN = function(i) {
+                  if (power_3[i] >= 0) {
+                    out <- gsub("^", "+", n_part[i])
+                  } else {
+                    out <- n_part[i]
+                  }
+                  out
+                }
+              )
+          }
+
+          x_str[!is.infinite(x)] <-
+            paste0(x_str_left[!is.infinite(x)], exp_str, replace_minus(n_part[!is.infinite(x)]))
+
+          x_str[is.infinite(x)] <- as.character(x[is.infinite(x)])
+
+          x_str <- replace_minus(x_str)
+        }
 
         # Force a positive sign on certain values if the option is taken
-        if (force_sign) {
+        if (force_sign_m) {
 
           positive_x <- !is.na(x) & x > 0
           x_str[positive_x] <- paste_left(x_str[positive_x], x_left = "+")

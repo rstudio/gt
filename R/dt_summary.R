@@ -361,7 +361,7 @@ dt_summary_build <- function(data, context) {
 
             # Ensure that the expression is reconstructed as a formula and then
             # transformed to a closure
-            format_fn_grp <- rlang::as_closure(as.formula(paste0("~", format_fn_grp)))
+            format_fn_grp <- rlang::as_closure(stats::as.formula(paste0("~", format_fn_grp)))
 
             # Perform the formatting on this gt table with closure
             summary_dfs_display_gt <- format_fn_grp(summary_dfs_display_gt)

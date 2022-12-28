@@ -833,7 +833,7 @@ test_that("The `vec_fmt_scientific()` function works", {
       )
     )
 
-  vec_fmt_scientific(vec_num_4_m, force_sign = TRUE, output = "plain") %>%
+  vec_fmt_scientific(vec_num_4_m, force_sign_m = TRUE, output = "plain") %>%
     expect_equal(
       c(
         "-2.50 \U000D7 10^6", "-2.00 \U000D7 10^6",
@@ -845,7 +845,7 @@ test_that("The `vec_fmt_scientific()` function works", {
       )
     )
 
-  vec_fmt_scientific(vec_num_4_m, force_sign = TRUE, output = "html") %>%
+  vec_fmt_scientific(vec_num_4_m, force_sign_m = TRUE, output = "html") %>%
     expect_equal(
       c(
         paste0("\U02212", "2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
@@ -863,7 +863,7 @@ test_that("The `vec_fmt_scientific()` function works", {
       )
     )
 
-  vec_fmt_scientific(vec_num_4_m, force_sign = TRUE, output = "latex") %>%
+  vec_fmt_scientific(vec_num_4_m, force_sign_m = TRUE, output = "latex") %>%
     expect_equal(
       c(
         "$-2.50 \\times 10^{6}$", "$-2.00 \\times 10^{6}$", "$-1.50 \\times 10^{6}$",
@@ -873,7 +873,7 @@ test_that("The `vec_fmt_scientific()` function works", {
       )
     )
 
-  vec_fmt_scientific(vec_num_4_m, force_sign = TRUE, output = "rtf") %>%
+  vec_fmt_scientific(vec_num_4_m, force_sign_m = TRUE, output = "rtf") %>%
     expect_equal(
       c(
         "-2.50 \\'d7 10{\\super 6}", "-2.00 \\'d7 10{\\super 6}", "-1.50 \\'d7 10{\\super 6}",
@@ -1192,7 +1192,7 @@ test_that("The `vec_fmt_engineering()` function works", {
       )
     )
 
-  vec_fmt_engineering(vec_num_4, force_sign = TRUE, output = "plain") %>%
+  vec_fmt_engineering(vec_num_4, force_sign_m = TRUE, output = "plain") %>%
     expect_equal(
       c(
         "-2.50 \U000D7 10^6", "-2.00 \U000D7 10^6",
@@ -1204,7 +1204,7 @@ test_that("The `vec_fmt_engineering()` function works", {
       )
     )
 
-  vec_fmt_engineering(vec_num_4, force_sign = TRUE, output = "html") %>%
+  vec_fmt_engineering(vec_num_4, force_sign_m = TRUE, output = "html") %>%
     expect_equal(
       c(
         paste0("\U02212", "2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
@@ -1222,7 +1222,7 @@ test_that("The `vec_fmt_engineering()` function works", {
       )
     )
 
-  vec_fmt_engineering(vec_num_4, force_sign = TRUE, output = "latex") %>%
+  vec_fmt_engineering(vec_num_4, force_sign_m = TRUE, output = "latex") %>%
     expect_equal(
       c(
         "$-2.50 \\times 10^{6}$", "$-2.00 \\times 10^{6}$",
@@ -1233,7 +1233,7 @@ test_that("The `vec_fmt_engineering()` function works", {
       )
     )
 
-  vec_fmt_engineering(vec_num_4, force_sign = TRUE, output = "rtf") %>%
+  vec_fmt_engineering(vec_num_4, force_sign_m = TRUE, output = "rtf") %>%
     expect_equal(
       c(
         "-2.50 \\'d7 10{\\super 6}", "-2.00 \\'d7 10{\\super 6}",

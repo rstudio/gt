@@ -377,7 +377,7 @@ summary_rows <- function(
 
     formatter_formula <- paste0("~ ", formatter_name, "(", fmt_args, ")")
 
-    fmt <- list(as.formula(formatter_formula))
+    fmt <- list(stats::as.formula(formatter_formula))
 
     # Provide deprecation warning
     cli::cli_warn(c(
