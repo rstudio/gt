@@ -366,9 +366,18 @@ vec_fmt_integer <- function(
 #'
 #' @description
 #'
-#' With numeric values in a vector, we can perform formatting so that the input
-#' values are rendered into scientific notation within the output character
-#' vector. The following major options are available:
+#' With numeric values in a vector, we can perform formatting so that the
+#' targeted values are rendered in scientific notation, where extremely large or
+#' very small numbers can be expressed in a more practical fashion. Here,
+#' numbers are written in the form of a mantissa (`m`) and an exponent (`n`)
+#' with the construction *m* x 10^*n* or *m*E*n*. The mantissa component is a
+#' number between `1` and `10`. For instance, `2.5 x 10^9` can be used to
+#' represent the value 2,500,000,000 in scientific notation. In a similar way,
+#' 0.00000012 can be expressed as `1.2 x 10^-7`. Due to its ability to describe
+#' numbers more succinctly and its ease of calculation, scientific notation is
+#' widely employed in scientific and technical domains.
+#'
+#' We have fine control over the formatting task, with the following options:
 #'
 #' - decimals: choice of the number of decimal places, option to drop
 #' trailing zeros, and a choice of the decimal symbol
@@ -381,10 +390,17 @@ vec_fmt_integer <- function(
 #' @inheritParams vec_fmt_number
 #' @param scale_by A value to scale the input. The default is `1.0`. All numeric
 #'   values will be multiplied by this value first before undergoing formatting.
-#' @param force_sign Should the positive sign be shown for positive values
-#'   (effectively showing a sign for all values except zero)? If so, use `TRUE`
-#'   for this option. The default is `FALSE`, where only negative numbers will
-#'   display a minus sign.
+#' @param exp_style Style of formatting to use for the scientific notation
+#'   formatting. By default this is `"x10n"` but other options include using
+#'   a single letter (e.g., `"e"`, `"E"`, etc.), a letter followed by a `"1"` to
+#'   signal a minimum digit width of one, or `"low-ten"` for using a stylized
+#'   `"10"` marker.
+#' @param force_sign_m,force_sign_n Should the plus sign be shown for positive
+#'   values of the mantissa (first component) or the exponent? This would
+#'   effectively show a sign for all values except zero on either of those
+#'   numeric components of the notation. If so, use `TRUE` for either one of
+#'   these options. The default for both is `FALSE`, where only negative numbers
+#'   will display a sign.
 #'
 #' @return A character vector.
 #'
@@ -460,10 +476,12 @@ vec_fmt_scientific <- function(
     decimals = 2,
     drop_trailing_zeros = FALSE,
     scale_by = 1.0,
+    exp_style = "x10n",
     pattern = "{x}",
     sep_mark = ",",
     dec_mark = ".",
-    force_sign = FALSE,
+    force_sign_m = FALSE,
+    force_sign_n = FALSE,
     locale = NULL,
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
@@ -493,10 +511,12 @@ vec_fmt_scientific <- function(
       decimals = decimals,
       drop_trailing_zeros = drop_trailing_zeros,
       scale_by = scale_by,
+      exp_style = exp_style,
       pattern = pattern,
       sep_mark = sep_mark,
       dec_mark = dec_mark,
-      force_sign = force_sign,
+      force_sign_m = force_sign_m,
+      force_sign_n = force_sign_n,
       locale = locale
     ),
     output = output
@@ -507,13 +527,19 @@ vec_fmt_scientific <- function(
 #'
 #' @description
 #'
-#' With numeric values in a vector, we can perform formatting so that the input
-#' values are rendered into engineering notation within the output character
-#' vector. The following major options are available:
+#' With numeric values in a vector, we can perform formatting so that the
+#' targeted values are rendered in engineering notation, where numbers are
+#' written in the form of a mantissa (`m`) and an exponent (`n`). When combined
+#' the construction is either of the form *m* x 10^*n* or *m*E*n*. The mantissa
+#' is a number between `1` and `1000` and the exponent is a multiple of `3`. For
+#' example, the number 0.0000345 can be written in engineering notation as
+#' `34.50 x 10^-6`. This notation helps to simplify calculations and make it
+#' easier to compare numbers that are on very different scales.
+#'
+#' We have fine control over the formatting task, with the following options:
 #'
 #' - decimals: choice of the number of decimal places, option to drop
 #' trailing zeros, and a choice of the decimal symbol
-#' - digit grouping separators: choice of separator symbol
 #' - scaling: we can choose to scale targeted values by a multiplier value
 #' - pattern: option to use a text pattern for decoration of the formatted
 #' values
@@ -523,10 +549,17 @@ vec_fmt_scientific <- function(
 #' @inheritParams vec_fmt_number
 #' @param scale_by A value to scale the input. The default is `1.0`. All numeric
 #'   values will be multiplied by this value first before undergoing formatting.
-#' @param force_sign Should the positive sign be shown for positive values
-#'   (effectively showing a sign for all values except zero)? If so, use `TRUE`
-#'   for this option. The default is `FALSE`, where only negative numbers will
-#'   display a minus sign.
+#' @param exp_style Style of formatting to use for the engineering notation
+#'   formatting. By default this is `"x10n"` but other options include using
+#'   a single letter (e.g., `"e"`, `"E"`, etc.), a letter followed by a `"1"` to
+#'   signal a minimum digit width of one, or `"low-ten"` for using a stylized
+#'   `"10"` marker.
+#' @param force_sign_m,force_sign_n Should the plus sign be shown for positive
+#'   values of the mantissa (first component) or the exponent? This would
+#'   effectively show a sign for all values except zero on either of those
+#'   numeric components of the notation. If so, use `TRUE` for either one of
+#'   these options. The default for both is `FALSE`, where only negative numbers
+#'   will display a sign.
 #'
 #' @return A character vector.
 #'
@@ -602,10 +635,12 @@ vec_fmt_engineering <- function(
     decimals = 2,
     drop_trailing_zeros = FALSE,
     scale_by = 1.0,
+    exp_style = "x10n",
     pattern = "{x}",
     sep_mark = ",",
     dec_mark = ".",
-    force_sign = FALSE,
+    force_sign_m = FALSE,
+    force_sign_n = FALSE,
     locale = NULL,
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
@@ -635,10 +670,12 @@ vec_fmt_engineering <- function(
       decimals = decimals,
       drop_trailing_zeros = drop_trailing_zeros,
       scale_by = scale_by,
+      exp_style = exp_style,
       pattern = pattern,
       sep_mark = sep_mark,
       dec_mark = dec_mark,
-      force_sign = force_sign,
+      force_sign_m = force_sign_m,
+      force_sign_n = force_sign_n,
       locale = locale
     ),
     output = output
