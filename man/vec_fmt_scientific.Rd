@@ -72,9 +72,18 @@ or \code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the
 A character vector.
 }
 \description{
-With numeric values in a vector, we can perform formatting so that the input
-values are rendered into scientific notation within the output character
-vector. The following major options are available:
+With numeric values in a vector, we can perform formatting so that the
+targeted values are rendered in scientific notation, where extremely large or
+very small numbers can be expressed in a more practical fashion. Here,
+numbers are written in the form of a mantissa (\code{m}) and an exponent (\code{n})
+with the construction \emph{m} x 10^\emph{n} or \emph{m}E\emph{n}. The mantissa component is a
+number between \code{1} and \code{10}. For instance, \verb{2.5 x 10^9} can be used to
+represent the value 2,500,000,000 in scientific notation. In a similar way,
+0.00000012 can be expressed as \verb{1.2 x 10^-7}. Due to its ability to describe
+numbers more succinctly and its ease of calculation, scientific notation is
+widely employed in scientific and technical domains.
+
+We have fine control over the formatting task, with the following options:
 \itemize{
 \item decimals: choice of the number of decimal places, option to drop
 trailing zeros, and a choice of the decimal symbol

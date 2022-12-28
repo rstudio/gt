@@ -633,6 +633,12 @@ context_exp_marks <- function(context) {
   )
 }
 
+#' Obtain the contextually correct string for scientific or engineering notation
+#' where the default style (`"x10n"`) is not used.
+#'
+#' @param context The output context.
+#' @param exp_style The style of formatting to use for the exponential notation.
+#' @noRd
 context_exp_str <- function(context, exp_style) {
 
   # Set default value for `exp_str`
@@ -661,7 +667,6 @@ context_exp_str <- function(context, exp_style) {
 
   exp_str
 }
-
 
 #' Obtain the contextually correct symbol string
 #'

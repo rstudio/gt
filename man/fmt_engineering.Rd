@@ -47,7 +47,7 @@ trailing zeros (those redundant zeros after the decimal mark).}
 \item{scale_by}{A value to scale the input. The default is \code{1.0}. All numeric
 values will be multiplied by this value first before undergoing formatting.}
 
-\item{exp_style}{Style of formatting to use for the scientific notation
+\item{exp_style}{Style of formatting to use for the engineering notation
 formatting. By default this is \code{"x10n"} but other options include using
 a single letter (e.g., \code{"e"}, \code{"E"}, etc.), a letter followed by a \code{"1"} to
 signal a minimum digit width of one, or \code{"low-ten"} for using a stylized
@@ -79,11 +79,12 @@ An object of class \code{gt_tbl}.
 \description{
 With numeric values in a \strong{gt} table, we can perform formatting so that the
 targeted values are rendered in engineering notation, where numbers are
-written in the form of a mantissa and an exponent. The mantissa is a number
-between 1 and 1000 and the exponent is a multiple of 3. For example, the
-number 0.00000345 can be written in engineering notation as 3.45 x 10^-6.
-This notation helps to simplify calculations and make it easier to compare
-numbers that are on very different scales.
+written in the form of a mantissa (\code{m}) and an exponent (\code{n}). When combined
+the construction is either of the form \emph{m} x 10^\emph{n} or \emph{m}E\emph{n}. The mantissa
+is a number between \code{1} and \code{1000} and the exponent is a multiple of \code{3}. For
+example, the number 0.0000345 can be written in engineering notation as
+\verb{34.50 x 10^-6}. This notation helps to simplify calculations and make it
+easier to compare numbers that are on very different scales.
 
 We have fine control over the formatting task, with the following options:
 \itemize{

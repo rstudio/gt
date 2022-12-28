@@ -31,7 +31,7 @@ trailing zeros (those redundant zeros after the decimal mark).}
 \item{scale_by}{A value to scale the input. The default is \code{1.0}. All numeric
 values will be multiplied by this value first before undergoing formatting.}
 
-\item{exp_style}{Style of formatting to use for the scientific notation
+\item{exp_style}{Style of formatting to use for the engineering notation
 formatting. By default this is \code{"x10n"} but other options include using
 a single letter (e.g., \code{"e"}, \code{"E"}, etc.), a letter followed by a \code{"1"} to
 signal a minimum digit width of one, or \code{"low-ten"} for using a stylized
@@ -72,13 +72,19 @@ or \code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the
 A character vector.
 }
 \description{
-With numeric values in a vector, we can perform formatting so that the input
-values are rendered into engineering notation within the output character
-vector. The following major options are available:
+With numeric values in a vector, we can perform formatting so that the
+targeted values are rendered in engineering notation, where numbers are
+written in the form of a mantissa (\code{m}) and an exponent (\code{n}). When combined
+the construction is either of the form \emph{m} x 10^\emph{n} or \emph{m}E\emph{n}. The mantissa
+is a number between \code{1} and \code{1000} and the exponent is a multiple of \code{3}. For
+example, the number 0.0000345 can be written in engineering notation as
+\verb{34.50 x 10^-6}. This notation helps to simplify calculations and make it
+easier to compare numbers that are on very different scales.
+
+We have fine control over the formatting task, with the following options:
 \itemize{
 \item decimals: choice of the number of decimal places, option to drop
 trailing zeros, and a choice of the decimal symbol
-\item digit grouping separators: choice of separator symbol
 \item scaling: we can choose to scale targeted values by a multiplier value
 \item pattern: option to use a text pattern for decoration of the formatted
 values
