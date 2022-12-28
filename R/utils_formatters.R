@@ -635,8 +635,11 @@ context_exp_marks <- function(context) {
 
 context_exp_str <- function(context, exp_style) {
 
+  # Set default value for `exp_str`
   exp_str <- "E"
 
+  # For the 'low-ten' style, a different `exp_str` value will be obtained
+  # depending on the `context`
   if (exp_style == "low-ten") {
 
     exp_str <-
@@ -650,8 +653,10 @@ context_exp_str <- function(context, exp_style) {
       )
   }
 
-  if (exp_style %in% c(letters, LETTERS)) {
-    exp_str <- exp_style
+  # If there is a single letter (or a letter and a '1') then
+  # used that letter as the `exp_str` value
+  if (grepl("^[a-zA-Z]{1}1?$", exp_style)) {
+    exp_str <- substr(exp_style, 1, 1)
   }
 
   exp_str
