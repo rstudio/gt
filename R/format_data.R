@@ -791,13 +791,72 @@ fmt_scientific <- function(
 
         } else {
 
-          if (!force_sign_n) {
-            x_str <- gsub("+", "", x_str, fixed = TRUE)
-          }
-
           exp_str <- context_exp_str(exp_style = exp_style, context = context)
 
-          x_str <- gsub("e", exp_str, x_str, fixed = TRUE)
+          if (grepl("^[a-zA-Z]{1}1$", exp_style)) {
+            n_min_width <- 1
+          } else {
+            n_min_width <- 2
+          }
+
+          # The `n_part` will be extracted here and it must be padded to
+          # the defined minimum number of decimal places
+          n_part <-
+            vapply(
+              x_str,
+              FUN.VALUE = character(1),
+              USE.NAMES = FALSE,
+              FUN = function(x) {
+
+                if (!grepl("e(\\+|-)[0-9]{2,}", x)) return("")
+
+                x <- unlist(strsplit(x, "e"))[2]
+
+                if (grepl("-", x)) {
+                  x <- gsub("-", "", x)
+                  x <- formatC(as.numeric(x), width = n_min_width, flag = "0")
+                  x <- paste0("-", x)
+                } else {
+                  x <- formatC(as.numeric(x), width = n_min_width, flag = "0")
+                }
+
+                x
+              }
+            )
+
+          # Generate `x_str_left` using `x_str` here
+          x_str_left <-
+            vapply(
+              x_str,
+              FUN.VALUE = character(1),
+              USE.NAMES = FALSE,
+              FUN = function(x) {
+                if (!grepl("e(\\+|-)[0-9]{2,}", x)) return("")
+                unlist(strsplit(x, "e"))[1]
+              }
+            )
+
+          if (force_sign_n) {
+
+            n_part <-
+              vapply(
+                seq_along(n_part),
+                FUN.VALUE = character(1),
+                USE.NAMES = FALSE,
+                FUN = function(i) {
+                  if (!grepl("-", n_part[i])) {
+                    out <- gsub("^", "+", n_part[i])
+                  } else {
+                    out <- n_part[i]
+                  }
+                  out
+                }
+              )
+          }
+
+          x_str[!is.infinite(x)] <-
+            paste0(x_str_left[!is.infinite(x)], exp_str, replace_minus(n_part[!is.infinite(x)]))
+
           x_str <- replace_minus(x_str)
         }
 
@@ -1096,6 +1155,12 @@ fmt_engineering <- function(
 
           exp_str <- context_exp_str(exp_style = exp_style, context = context)
 
+          if (grepl("^[a-zA-Z]{1}1$", exp_style)) {
+            n_min_width <- 1
+          } else {
+            n_min_width <- 2
+          }
+
           # `power_3` must be padded to two decimal places
           n_part <-
             vapply(
@@ -1105,10 +1170,10 @@ fmt_engineering <- function(
               FUN = function(x) {
                 if (grepl("-", x)) {
                   x <- gsub("-", "", x)
-                  x <- formatC(as.numeric(x), width = 2, flag = "0")
+                  x <- formatC(as.numeric(x), width = n_min_width, flag = "0")
                   x <- paste0("-", x)
                 } else {
-                  x <- formatC(as.numeric(x), width = 2, flag = "0")
+                  x <- formatC(as.numeric(x), width = n_min_width, flag = "0")
                 }
                 x
               }
@@ -1132,7 +1197,11 @@ fmt_engineering <- function(
               )
           }
 
-          x_str <- paste0(x_str_left, exp_str, replace_minus(n_part))
+          x_str[!is.infinite(x)] <-
+            paste0(x_str_left[!is.infinite(x)], exp_str, replace_minus(n_part[!is.infinite(x)]))
+
+          x_str[is.infinite(x)] <- as.character(x[is.infinite(x)])
+
           x_str <- replace_minus(x_str)
         }
 
