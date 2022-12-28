@@ -356,6 +356,168 @@ test_that("The `fmt_engineering()` function works correctly", {
     )
   )
 
+  # Create a gt table with a mix of small and large numbers, both
+  # positive and negative
+  tab_2 <-
+    dplyr::tibble(
+      num = c(-3.49E13, -3453, -0.000234, 0, 0.00007534, 82794, 7.16E14)
+    ) %>%
+    gt()
+
+  # Format the `num` column and force the sign on the 'm' part of the
+  # notation; extract in the default context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_engineering(columns = "num", force_sign_m = TRUE) %>%
+       render_formats_test("default"))[["num"]],
+    c(
+      "-34.90 × 10^12", "-3.45 × 10^3", "-234.00 × 10^-6", "0.00",
+      "+75.34 × 10^-6", "+82.79 × 10^3", "+716.00 × 10^12"
+    )
+  )
+
+  # Format the `num` column and force the sign on the 'm' part of the
+  # notation; extract in the HTML context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_engineering(columns = "num", force_sign_m = TRUE) %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "−34.90 \U000D7 10<sup style='font-size: 65%;'>12</sup>",
+      "−3.45 \U000D7 10<sup style='font-size: 65%;'>3</sup>",
+      "−234.00 \U000D7 10<sup style='font-size: 65%;'>−6</sup>",
+      "0.00",
+      "+75.34 \U000D7 10<sup style='font-size: 65%;'>−6</sup>",
+      "+82.79 \U000D7 10<sup style='font-size: 65%;'>3</sup>",
+      "+716.00 \U000D7 10<sup style='font-size: 65%;'>12</sup>"
+    )
+  )
+
+  # Format the `num` column and force the sign on the 'n' part of the
+  # notation; extract in the default context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_engineering(columns = "num", force_sign_n = TRUE) %>%
+       render_formats_test("default"))[["num"]],
+    c(
+      "-34.90 \U000D7 10^+12", "-3.45 \U000D7 10^+3", "-234.00 \U000D7 10^-6", "0.00",
+      "75.34 \U000D7 10^-6", "82.79 \U000D7 10^+3", "716.00 \U000D7 10^+12"
+    )
+  )
+
+  # Format the `num` column and force the sign on the 'n' part of the
+  # notation; extract in the HTML context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_engineering(columns = "num", force_sign_n = TRUE) %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "−34.90 \U000D7 10<sup style='font-size: 65%;'>+12</sup>",
+      "−3.45 \U000D7 10<sup style='font-size: 65%;'>+3</sup>",
+      "−234.00 \U000D7 10<sup style='font-size: 65%;'>−6</sup>",
+      "0.00",
+      "75.34 \U000D7 10<sup style='font-size: 65%;'>−6</sup>",
+      "82.79 \U000D7 10<sup style='font-size: 65%;'>+3</sup>",
+      "716.00 \U000D7 10<sup style='font-size: 65%;'>+12</sup>"
+    )
+  )
+
+  # Format the `num` column and force the sign on the 'm' and 'n' parts of the
+  # notation; extract in the default context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_engineering(columns = "num", force_sign_m = TRUE, force_sign_n = TRUE) %>%
+       render_formats_test("default"))[["num"]],
+    c(
+      "-34.90 \U000D7 10^+12", "-3.45 \U000D7 10^+3", "-234.00 \U000D7 10^-6", "0.00",
+      "+75.34 \U000D7 10^-6", "+82.79 \U000D7 10^+3", "+716.00 \U000D7 10^+12"
+    )
+  )
+
+  # Format the `num` column and force the sign on the 'm' and 'n' parts of the
+  # notation; extract in the HTML context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_engineering(columns = "num", force_sign_m = TRUE, force_sign_n = TRUE) %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "−34.90 \U000D7 10<sup style='font-size: 65%;'>+12</sup>",
+      "−3.45 \U000D7 10<sup style='font-size: 65%;'>+3</sup>",
+      "−234.00 \U000D7 10<sup style='font-size: 65%;'>−6</sup>",
+      "0.00",
+      "+75.34 \U000D7 10<sup style='font-size: 65%;'>−6</sup>",
+      "+82.79 \U000D7 10<sup style='font-size: 65%;'>+3</sup>",
+      "+716.00 \U000D7 10<sup style='font-size: 65%;'>+12</sup>"
+    )
+  )
+
+  # Format the `num` column and force the sign on the 'm' and 'n' parts of the
+  # notation and choose a exponent style of `"E"`; extract in the default
+  # context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_engineering(columns = "num", exp_style = "E", force_sign_m = TRUE, force_sign_n = TRUE) %>%
+       render_formats_test("default"))[["num"]],
+    c(
+      "-34.90E+12", "-3.45E+03", "-234.00E-06", "0.00E+00", "+75.34E-06",
+      "+82.79E+03", "+716.00E+12"
+    )
+  )
+
+  # Format the `num` column and force the sign on the 'm' and 'n' parts of the
+  # notation and choose a exponent style of `"E"`; extract in the HTML
+  # context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_engineering(columns = "num", exp_style = "E", force_sign_m = TRUE, force_sign_n = TRUE) %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "−34.90E+12", "−3.45E+03", "−234.00E−06", "0.00E+00",
+      "+75.34E−06", "+82.79E+03", "+716.00E+12"
+    )
+  )
+
+  # Format the `num` column and choose a exponent style of `"E"`; extract in
+  # the default context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_engineering(columns = "num", exp_style = "E") %>%
+       render_formats_test("default"))[["num"]],
+    c(
+      "-34.90E12", "-3.45E03", "-234.00E-06", "0.00E00", "75.34E-06",
+      "82.79E03", "716.00E12"
+    )
+  )
+
+  # Format the `num` column and choose a exponent style of `"low-ten"`; extract
+  # in the default context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_engineering(columns = "num", exp_style = "low-ten") %>%
+       render_formats_test("default"))[["num"]],
+    c(
+      "-34.90E12", "-3.45E03", "-234.00E-06", "0.00E00", "75.34E-06",
+      "82.79E03", "716.00E12"
+    )
+  )
+
+  # Format the `num` column and choose a exponent style of `"low-ten"`; extract
+  # in the HTML context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_engineering(columns = "num", exp_style = "low-ten") %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "−34.90<sub style='font−size: 65%;'>10</sub>12",
+      "−3.45<sub style='font−size: 65%;'>10</sub>03",
+      "−234.00<sub style='font−size: 65%;'>10</sub>−06",
+      "0.00<sub style='font−size: 65%;'>10</sub>00",
+      "75.34<sub style='font−size: 65%;'>10</sub>−06",
+      "82.79<sub style='font−size: 65%;'>10</sub>03",
+      "716.00<sub style='font−size: 65%;'>10</sub>12"
+    )
+  )
+
   # Format the `num` column to 2 decimal places, apply the `en_US`
   # locale and use all other defaults
   expect_equal(
