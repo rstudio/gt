@@ -47,9 +47,11 @@ trailing zeros (those redundant zeros after the decimal mark).}
 \item{scale_by}{A value to scale the input. The default is \code{1.0}. All numeric
 values will be multiplied by this value first before undergoing formatting.}
 
-\item{exp_style}{Style of formatting to use for the engineering notation
-formatting. By default this is \code{"x10n"} but other options include \code{"e"},
-\code{"E"}, \code{"slash"}, and \code{"starslash"}.}
+\item{exp_style}{Style of formatting to use for the scientific notation
+formatting. By default this is \code{"x10n"} but other options include using
+a single letter (e.g., \code{"e"}, \code{"E"}, etc.), a letter followed by a \code{"1"} to
+signal a minimum digit width of one, or \code{"low-ten"} for using a stylized
+\code{"10"} marker.}
 
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other

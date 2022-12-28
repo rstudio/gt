@@ -540,8 +540,10 @@ fmt_integer <- function(
 #' @param scale_by A value to scale the input. The default is `1.0`. All numeric
 #'   values will be multiplied by this value first before undergoing formatting.
 #' @param exp_style Style of formatting to use for the scientific notation
-#'   formatting. By default this is `"x10n"` but other options include `"e"`,
-#'   `"E"`, `"slash"`, and `"starslash"`.
+#'   formatting. By default this is `"x10n"` but other options include using
+#'   a single letter (e.g., `"e"`, `"E"`, etc.), a letter followed by a `"1"` to
+#'   signal a minimum digit width of one, or `"low-ten"` for using a stylized
+#'   `"10"` marker.
 #' @param force_sign_m,force_sign_n Should the plus sign be shown for positive
 #'   values of the mantissa (first component) or the exponent? This would
 #'   effectively show a sign for all values except zero on either of those
@@ -837,9 +839,11 @@ fmt_scientific <- function(
 #' @inheritParams fmt_number
 #' @param scale_by A value to scale the input. The default is `1.0`. All numeric
 #'   values will be multiplied by this value first before undergoing formatting.
-#' @param exp_style Style of formatting to use for the engineering notation
-#'   formatting. By default this is `"x10n"` but other options include `"e"`,
-#'   `"E"`, `"slash"`, and `"starslash"`.
+#' @param exp_style Style of formatting to use for the scientific notation
+#'   formatting. By default this is `"x10n"` but other options include using
+#'   a single letter (e.g., `"e"`, `"E"`, etc.), a letter followed by a `"1"` to
+#'   signal a minimum digit width of one, or `"low-ten"` for using a stylized
+#'   `"10"` marker.
 #' @param force_sign_m,force_sign_n Should the plus sign be shown for positive
 #'   values of the mantissa (first component) or the exponent? This would
 #'   effectively show a sign for all values except zero on either of those
