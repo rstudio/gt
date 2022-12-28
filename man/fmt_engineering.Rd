@@ -76,14 +76,17 @@ An object of class \code{gt_tbl}.
 }
 \description{
 With numeric values in a \strong{gt} table, we can perform formatting so that the
-targeted values are rendered in engineering notation.
+targeted values are rendered in engineering notation, where numbers are
+written in the form of a mantissa and an exponent. The mantissa is a number
+between 1 and 1000 and the exponent is a multiple of 3. For example, the
+number 0.00000345 can be written in engineering notation as 3.45 x 10^-6.
+This notation helps to simplify calculations and make it easier to compare
+numbers that are on very different scales.
 
-With this function, there is fine control over the formatted values with the
-following options:
+We have fine control over the formatting task, with the following options:
 \itemize{
 \item decimals: choice of the number of decimal places, option to drop
 trailing zeros, and a choice of the decimal symbol
-\item digit grouping separators: choice of separator symbol
 \item scaling: we can choose to scale targeted values by a multiplier value
 \item pattern: option to use a text pattern for decoration of the formatted
 values
