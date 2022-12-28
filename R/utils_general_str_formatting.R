@@ -525,7 +525,7 @@ regexec_gt <- function(pattern, text, perl = FALSE) {
 
   if (is.factor(text) && length(levels(text)) < length(text)) {
 
-    out <- gregexec_knitr(pattern, c(levels(text), NA_character_), perl)
+    out <- regexec_gt(pattern, c(levels(text), NA_character_), perl)
     outna <- out[length(out)]
     out <- out[text]
     out[is.na(text)] <- outna
