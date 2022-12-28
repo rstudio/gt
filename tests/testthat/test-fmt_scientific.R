@@ -139,8 +139,7 @@ test_that("The `fmt_scientific()` function works correctly", {
   # compare to expected values
   expect_equal(
     (tab %>%
-       fmt_scientific(columns = "num_1", decimals = 2,
-                      sep_mark = ".", dec_mark = ",") %>%
+       fmt_scientific(columns = "num_1", decimals = 2, sep_mark = ".", dec_mark = ",") %>%
        render_formats_test("html"))[["num_1"]],
     c(
       paste0("1,84 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
@@ -158,8 +157,7 @@ test_that("The `fmt_scientific()` function works correctly", {
   # compare to expected values
   expect_equal(
     (tab %>%
-       fmt_scientific(columns = "num_1", decimals = 2,
-                      sep_mark = ".", dec_mark = ",") %>%
+       fmt_scientific(columns = "num_1", decimals = 2, sep_mark = ".", dec_mark = ",") %>%
        render_formats_test("default"))[["num_1"]],
     c(
       "1,84 \U000D7 10^3",
@@ -203,6 +201,168 @@ test_that("The `fmt_scientific()` function works correctly", {
       "2.2320 \U000D7 10^-3",
       "0.0000",
       "-2.3240 \U000D7 10^-2"
+    )
+  )
+
+  # Create a gt table with a mix of small and large numbers, both
+  # positive and negative
+  tab_2 <-
+    dplyr::tibble(
+      num = c(-3.49E13, -3453, -0.000234, 0, 0.00007534, 82794, 7.16E14)
+    ) %>%
+    gt()
+
+  # Format the `num` column and force the sign on the 'm' part of the
+  # notation; extract in the default context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_scientific(columns = "num", force_sign_m = TRUE) %>%
+       render_formats_test("default"))[["num"]],
+    c(
+      "-3.49 \U000D7 10^13", "-3.45 \U000D7 10^3", "-2.34 \U000D7 10^-4", "0.00",
+      "+7.53 \U000D7 10^-5", "+8.28 \U000D7 10^4", "+7.16 \U000D7 10^14"
+    )
+  )
+
+  # Format the `num` column and force the sign on the 'm' part of the
+  # notation; extract in the HTML context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_scientific(columns = "num", force_sign_m = TRUE) %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "−3.49 \U000D7 10<sup style='font-size: 65%;'>13</sup>",
+      "−3.45 \U000D7 10<sup style='font-size: 65%;'>3</sup>",
+      "−2.34 \U000D7 10<sup style='font-size: 65%;'>−4</sup>",
+      "0.00",
+      "+7.53 \U000D7 10<sup style='font-size: 65%;'>−5</sup>",
+      "+8.28 \U000D7 10<sup style='font-size: 65%;'>4</sup>",
+      "+7.16 \U000D7 10<sup style='font-size: 65%;'>14</sup>"
+    )
+  )
+
+  # Format the `num` column and force the sign on the 'n' part of the
+  # notation; extract in the default context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_scientific(columns = "num", force_sign_n = TRUE) %>%
+       render_formats_test("default"))[["num"]],
+    c(
+      "-3.49 \U000D7 10^+13", "-3.45 \U000D7 10^+3", "-2.34 \U000D7 10^-4", "0.00",
+      "7.53 \U000D7 10^-5", "8.28 \U000D7 10^+4", "7.16 \U000D7 10^+14"
+    )
+  )
+
+  # Format the `num` column and force the sign on the 'n' part of the
+  # notation; extract in the HTML context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_scientific(columns = "num", force_sign_n = TRUE) %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "−3.49 \U000D7 10<sup style='font-size: 65%;'>+13</sup>",
+      "−3.45 \U000D7 10<sup style='font-size: 65%;'>+3</sup>",
+      "−2.34 \U000D7 10<sup style='font-size: 65%;'>−4</sup>",
+      "0.00",
+      "7.53 \U000D7 10<sup style='font-size: 65%;'>−5</sup>",
+      "8.28 \U000D7 10<sup style='font-size: 65%;'>+4</sup>",
+      "7.16 \U000D7 10<sup style='font-size: 65%;'>+14</sup>"
+    )
+  )
+
+  # Format the `num` column and force the sign on the 'm' and 'n' parts of the
+  # notation; extract in the default context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_scientific(columns = "num", force_sign_m = TRUE, force_sign_n = TRUE) %>%
+       render_formats_test("default"))[["num"]],
+    c(
+      "-3.49 \U000D7 10^+13", "-3.45 \U000D7 10^+3", "-2.34 \U000D7 10^-4", "0.00",
+      "+7.53 \U000D7 10^-5", "+8.28 \U000D7 10^+4", "+7.16 \U000D7 10^+14"
+    )
+  )
+
+  # Format the `num` column and force the sign on the 'm' and 'n' parts of the
+  # notation; extract in the HTML context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_scientific(columns = "num", force_sign_m = TRUE, force_sign_n = TRUE) %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "−3.49 \U000D7 10<sup style='font-size: 65%;'>+13</sup>",
+      "−3.45 \U000D7 10<sup style='font-size: 65%;'>+3</sup>",
+      "−2.34 \U000D7 10<sup style='font-size: 65%;'>−4</sup>",
+      "0.00",
+      "+7.53 \U000D7 10<sup style='font-size: 65%;'>−5</sup>",
+      "+8.28 \U000D7 10<sup style='font-size: 65%;'>+4</sup>",
+      "+7.16 \U000D7 10<sup style='font-size: 65%;'>+14</sup>"
+    )
+  )
+
+  # Format the `num` column and force the sign on the 'm' and 'n' parts of the
+  # notation and choose a exponent style of `"E"`; extract in the default
+  # context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_scientific(columns = "num", exp_style = "E", force_sign_m = TRUE, force_sign_n = TRUE) %>%
+       render_formats_test("default"))[["num"]],
+    c(
+      "-3.49E+13", "-3.45E+03", "-2.34E-04", "0.00E+00",
+      "+7.53E-05", "+8.28E+04", "+7.16E+14"
+    )
+  )
+
+  # Format the `num` column and force the sign on the 'm' and 'n' parts of the
+  # notation and choose a exponent style of `"E"`; extract in the HTML
+  # context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_scientific(columns = "num", exp_style = "E", force_sign_m = TRUE, force_sign_n = TRUE) %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "−3.49E+13", "−3.45E+03", "−2.34E−04", "0.00E+00",
+      "+7.53E−05", "+8.28E+04", "+7.16E+14"
+    )
+  )
+
+  # Format the `num` column and choose a exponent style of `"E"`; extract in
+  # the default context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_scientific(columns = "num", exp_style = "E") %>%
+       render_formats_test("default"))[["num"]],
+    c(
+      "-3.49E13", "-3.45E03", "-2.34E-04", "0.00E00", "7.53E-05",
+      "8.28E04", "7.16E14"
+    )
+  )
+
+  # Format the `num` column and choose a exponent style of `"low-ten"`; extract
+  # in the default context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_scientific(columns = "num", exp_style = "low-ten") %>%
+       render_formats_test("default"))[["num"]],
+    c(
+      "-3.49E13", "-3.45E03", "-2.34E-04", "0.00E00", "7.53E-05",
+      "8.28E04", "7.16E14"
+    )
+  )
+
+  # Format the `num` column and choose a exponent style of `"low-ten"`; extract
+  # in the HTML context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_scientific(columns = "num", exp_style = "low-ten") %>%
+       render_formats_test("html"))[["num"]],
+    c(
+      "−3.49<sub style='font−size: 65%;'>10</sub>13",
+      "−3.45<sub style='font−size: 65%;'>10</sub>03",
+      "−2.34<sub style='font−size: 65%;'>10</sub>−04",
+      "0.00<sub style='font−size: 65%;'>10</sub>00",
+      "7.53<sub style='font−size: 65%;'>10</sub>−05",
+      "8.28<sub style='font−size: 65%;'>10</sub>04",
+      "7.16<sub style='font−size: 65%;'>10</sub>14"
     )
   )
 
