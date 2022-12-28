@@ -797,10 +797,6 @@ fmt_scientific <- function(
 
           x_str <- gsub("e", exp_str, x_str, fixed = TRUE)
           x_str <- replace_minus(x_str)
-
-          if (exp_style == "low-ten") {
-            x_str <- gsub("+", "", x_str, fixed = TRUE)
-          }
         }
 
         # Force a positive sign on certain values if the option is taken
@@ -821,14 +817,17 @@ fmt_scientific <- function(
 #' @description
 #'
 #' With numeric values in a **gt** table, we can perform formatting so that the
-#' targeted values are rendered in engineering notation.
+#' targeted values are rendered in engineering notation, where numbers are
+#' written in the form of a mantissa and an exponent. The mantissa is a number
+#' between 1 and 1000 and the exponent is a multiple of 3. For example, the
+#' number 0.00000345 can be written in engineering notation as 3.45 x 10^-6.
+#' This notation helps to simplify calculations and make it easier to compare
+#' numbers that are on very different scales.
 #'
-#' With this function, there is fine control over the formatted values with the
-#' following options:
+#' We have fine control over the formatting task, with the following options:
 #'
 #' - decimals: choice of the number of decimal places, option to drop
 #' trailing zeros, and a choice of the decimal symbol
-#' - digit grouping separators: choice of separator symbol
 #' - scaling: we can choose to scale targeted values by a multiplier value
 #' - pattern: option to use a text pattern for decoration of the formatted
 #' values
@@ -1039,10 +1038,6 @@ fmt_engineering <- function(
         # RHS 10^`power_level` values (i.e., `<LHS> x 10^(n * 3)`)
         x <- x / 10^(power_3)
 
-        # TODO: Ensure that `power_3` values are formatted and padded to
-        # width of 2 with leading zero
-
-
         # With the scaled values for the LHS, format these according
         # to the options set by the user
         x_str_left <-
@@ -1061,18 +1056,20 @@ fmt_engineering <- function(
 
         x_str_left <- replace_minus(x_str_left)
 
-        if (force_sign_n) {
-
-          power_3 <-
-            vapply(
-              power_3,
-              FUN.VALUE = character(1),
-              USE.NAMES = FALSE,
-              FUN = function(x) {
-                if (x > 0) gsub("^", "+", x) else as.character(x)
+        n_part <-
+          vapply(
+            power_3,
+            FUN.VALUE = character(1),
+            USE.NAMES = FALSE,
+            FUN = function(x) {
+              if (x > 0 && force_sign_n) {
+                out <- gsub("^", "+", x)
+              } else {
+                out <- as.character(x)
               }
-            )
-        }
+              out
+            }
+          )
 
         if (exp_style == "x10n") {
 
@@ -1080,7 +1077,7 @@ fmt_engineering <- function(
           x_str_right <-
             paste0(
               exp_marks[1],
-              replace_minus(power_3),
+              replace_minus(n_part),
               exp_marks[2]
             )
 
@@ -1095,15 +1092,44 @@ fmt_engineering <- function(
 
           exp_str <- context_exp_str(exp_style = exp_style, context = context)
 
-          # TODO: `power_3` must be padded to two decimal places
+          # `power_3` must be padded to two decimal places
+          n_part <-
+            vapply(
+              power_3,
+              FUN.VALUE = character(1),
+              USE.NAMES = FALSE,
+              FUN = function(x) {
+                if (grepl("-", x)) {
+                  x <- gsub("-", "", x)
+                  x <- formatC(as.numeric(x), width = 2, flag = "0")
+                  x <- paste0("-", x)
+                } else {
+                  x <- formatC(as.numeric(x), width = 2, flag = "0")
+                }
+                x
+              }
+            )
 
-          if (exp_style == "low-ten") {
-            power_3 <- gsub("+", "", power_3, fixed = TRUE)
+          if (force_sign_n) {
+
+            n_part <-
+              vapply(
+                seq_along(n_part),
+                FUN.VALUE = character(1),
+                USE.NAMES = FALSE,
+                FUN = function(i) {
+                  if (power_3[i] >= 0) {
+                    out <- gsub("^", "+", n_part[i])
+                  } else {
+                    out <- n_part[i]
+                  }
+                  out
+                }
+              )
           }
 
-          x_str <- paste0(x_str_left, exp_str, replace_minus(power_3))
+          x_str <- paste0(x_str_left, exp_str, replace_minus(n_part))
           x_str <- replace_minus(x_str)
-
         }
 
         # Force a positive sign on certain values if the option is taken
