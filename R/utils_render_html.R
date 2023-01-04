@@ -1035,10 +1035,9 @@ create_body_component_h <- function(data) {
         ) {
 
           summary_section <-
-            summary_row_tags_i(
+            summary_rows_for_group_h(
               data = data,
-              group_id = group_id,
-              context = "html"
+              group_id = group_id
             )
 
         } else {
@@ -1276,10 +1275,9 @@ create_body_component_h <- function(data) {
     side <- summary_row_side(data = data, group_id = grand_summary_col)
 
     grand_summary_section <-
-      summary_row_tags_i(
+      summary_rows_for_group_h(
         data = data,
         group_id = grand_summary_col,
-        context = "html",
         side_grand_summary = side
       )
 
@@ -1526,10 +1524,9 @@ create_footnotes_component_h <- function(data) {
   )
 }
 
-summary_row_tags_i <- function(
+summary_rows_for_group_h <- function(
     data,
     group_id,
-    context,
     side_grand_summary = "bottom"
 ) {
 
@@ -1682,7 +1679,7 @@ summary_row_tags_i <- function(
                 x <- x[[1]]
 
                 if (inherits(x, "from_markdown")) {
-                  x <- process_text(x, context = context)
+                  x <- process_text(x, context = "html")
                 }
 
                 sprintf(
