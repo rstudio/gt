@@ -364,13 +364,6 @@ create_body_component_l <- function(data) {
       )
   }
 
-  summary_rows <-
-    create_summary_rows_l(
-      data = data,
-      groups_rows_df = groups_rows_df,
-      n_rows = n_rows
-    )
-
   current_group_id <- character(0)
 
   # TODO: Make this work for summary rows
@@ -576,11 +569,8 @@ summary_rows_for_group_l <- function(
       lapply(
         row_splits_summary,
         function(x) {
-
           x <- c("", x)
-
           x[1:2] <- paste0("\\multicolumn{1}{l|}{", x[1:2], "}")
-
           x
         }
       )
