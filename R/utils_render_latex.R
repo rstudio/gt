@@ -446,7 +446,8 @@ create_body_component_l <- function(data) {
           summary_section <-
             summary_rows_for_group_l(
               data = data,
-              group_id = group_id
+              group_id = group_id,
+              side_group_summary = group_summary_row_side
             )
 
         } else {
@@ -512,6 +513,7 @@ create_body_component_l <- function(data) {
 summary_rows_for_group_l <- function(
     data,
     group_id,
+    side_group_summary = "bottom",
     side_grand_summary = "bottom"
 ) {
 
@@ -586,19 +588,24 @@ summary_rows_for_group_l <- function(
       collapse = ""
     )
 
-  summary_rows <-
-    paste0(
-      if ("group_label" %in% stub_layout && stub_is_2 & summary_row_type != "grand") {
-        paste0(
-          "\\cmidrule(l{-0.05em}r){2-",
-          ncol(summary_df) + 1,
-          "}"
-        )
-      },
-      summary_rows
-    )
+  if (summary_row_type != "grand") {
+
+    summary_rows <-
+      paste0(
+        if (side_group_summary == "top") summary_rows,
+        if ("group_label" %in% stub_layout && stub_is_2) {
+          paste0(
+            "\\cmidrule(l{-0.05em}r){2-",
+            ncol(summary_df) + 1,
+            "}"
+          )
+        },
+        if (side_group_summary == "bottom") summary_rows
+      )
+  }
 
   if (summary_row_type == "grand") {
+
     if (side_grand_summary == "top") {
       summary_rows <- paste0(summary_rows, grand_summary_h_border)
     } else {
