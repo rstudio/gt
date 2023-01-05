@@ -366,8 +366,7 @@ create_body_component_l <- function(data) {
 
   current_group_id <- character(0)
 
-  # TODO: Make this work for summary rows
-  body_rows_ext <-
+  body_rows <-
     lapply(
       seq_len(n_rows),
       function(i) {
@@ -480,7 +479,7 @@ create_body_component_l <- function(data) {
       }
     )
 
-  body_rows_ext <- unlist(body_rows_ext)
+  body_rows <- unlist(body_rows)
 
   #
   # Add grand summary rows
@@ -501,13 +500,13 @@ create_body_component_l <- function(data) {
       )
 
     if (side == "top") {
-      body_rows_ext <- c(grand_summary_section, body_rows_ext)
+      body_rows <- c(grand_summary_section, body_rows)
     } else {
-      body_rows_ext <- c(body_rows_ext, grand_summary_section)
+      body_rows <- c(body_rows, grand_summary_section)
     }
   }
 
-  paste(body_rows_ext, collapse = "")
+  paste(body_rows, collapse = "")
 }
 
 summary_rows_for_group_l <- function(
