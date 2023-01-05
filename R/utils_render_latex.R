@@ -597,7 +597,7 @@ summary_rows_for_group_l <- function(
           paste0(
             "\\cmidrule(l{-0.05em}r){2-",
             ncol(summary_df) + 1,
-            "}"
+            "}\n"
           )
         },
         if (side_group_summary == "bottom") summary_rows
