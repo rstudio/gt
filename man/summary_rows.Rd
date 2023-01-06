@@ -10,6 +10,7 @@ summary_rows(
   columns = everything(),
   fns = NULL,
   fmt = NULL,
+  side = c("bottom", "top"),
   missing_text = "---",
   formatter = NULL,
   ...
@@ -44,6 +45,9 @@ contain a formatting call (e.g.,
 could contain a group-targeting expression (e.g.,
 \code{"group_a" ~ fmt_number(.)}). More information on this can be found in the
 \emph{Formatting expressions for \code{fmt}} section.}
+
+\item{side}{Should the summary rows be placed at the \code{"bottom"} (the default)
+or the \code{"top"} of the row group?}
 
 \item{missing_text}{The text to be used in place of \code{NA} values in summary
 cells with no data outputs.}
@@ -273,6 +277,53 @@ is a week number) with the \code{summary_rows()} function.
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_summary_rows_1.png" alt="This image of a table was generated from the first code example in the `summary_rows()` help file." style="width:100\%;">
+}}
+
+Using the \code{\link{countrypops}} dataset, let's process that a bit before giving it
+to \strong{gt}. We can create a summary rows with totals that appear at the top of
+each row group (with \code{side = "top"}). We can define the aggregation with a
+list that contains parameters for the summary row label (\code{md("**ALL**")}),
+the shared ID value of those rows across groups (\code{"totals"}), and the
+aggregation function (expressed as \code{"sum"}, which \strong{gt} recognizes as the
+\code{sum()} function). To top it all off, we'll add background fills to the
+summary rows with \code{\link[=tab_style]{tab_style()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
+  dplyr::filter(
+    country_code_2 \%in\% c("BR", "RU", "IN", "CN", "FR", "DE", "IT", "GB")
+  ) \%>\%
+  dplyr::filter(year \%\% 10 == 0) \%>\%
+  dplyr::select(country_name, year, population) \%>\%
+  tidyr::pivot_wider(names_from = year, values_from = population) \%>\%
+  gt(rowname_col = "country_name") \%>\%
+  tab_row_group(
+    label = md("*BRIC*"),
+    rows = c("Brazil", "Russian Federation", "India", "China"),
+    id = "bric"
+  ) \%>\%
+  tab_row_group(
+    label = md("*Big Four*"),
+    rows = c("France", "Germany", "Italy", "United Kingdom"),
+    id = "big4"
+  ) \%>\%
+  row_group_order(groups = c("bric", "big4")) \%>\%
+  tab_stub_indent(rows = everything()) \%>\%
+  tab_header(title = "Populations of the BRIC and Big Four Countries") \%>\%
+  tab_spanner(columns = everything(), label = "Year") \%>\%
+  fmt_number(n_sigfig = 3, suffixing = TRUE) \%>\%
+  summary_rows(
+    fns =  list(label = md("**ALL**"), id = "totals", fn = "sum"),
+    fmt = ~ fmt_number(., n_sigfig = 3, suffixing = TRUE),
+    side = "top"
+  ) \%>\%
+  tab_style(
+    locations = cells_summary(),
+    style = cell_fill(color = "lightblue" \%>\% adjust_luminance(steps = +1))
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_summary_rows_2.png" alt="This image of a table was generated from the second code example in the `summary_rows()` help file." style="width:100\%;">
 }}
 }
 

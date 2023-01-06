@@ -1550,8 +1550,7 @@ create_body_component_rtf <- function(data) {
     # Add groupwise summary rows
     #
 
-    if (summaries_present &&
-        i %in% groups_rows_df$row_end) {
+    if (summaries_present && i %in% groups_rows_df$row_end) {
 
       group_id <-
         groups_rows_df[
@@ -1617,16 +1616,15 @@ create_body_component_rtf <- function(data) {
               }
             )
 
-          row_list_body <-
-            c(
-              row_list_body,
-              rtf_tbl_row(
-                cell_list,
-                page_body_width = page_body_width,
-                widths = col_widths,
-                height = 0
-              )
+          row_list_summary <-
+            rtf_tbl_row(
+              cell_list,
+              page_body_width = page_body_width,
+              widths = col_widths,
+              height = 0
             )
+
+          row_list_body <- c(row_list_body, row_list_summary)
         }
       }
     }
@@ -1636,8 +1634,10 @@ create_body_component_rtf <- function(data) {
   # Add grand summary rows
   #
 
-  if (summaries_present &&
-      grand_summary_col %in% names(list_of_summaries$summary_df_display_list)) {
+  if (
+    summaries_present &&
+    grand_summary_col %in% names(list_of_summaries$summary_df_display_list)
+  ) {
 
     grand_summary_df <-
       dplyr::select(
@@ -1658,6 +1658,7 @@ create_body_component_rtf <- function(data) {
         merge_keys_cells <- c(1, 2, rep(0, length(grand_summary_row) - 2))
       }
 
+      # Generate a cell list containing grand summary rows
       cell_list <-
         lapply(
           seq_len(n_cols), FUN = function(x) {
@@ -1682,24 +1683,21 @@ create_body_component_rtf <- function(data) {
           }
         )
 
-      row_list_body <-
-        c(
-          row_list_body,
-          rtf_tbl_row(
-            cell_list,
-            page_body_width = page_body_width,
-            widths = col_widths,
-            height = 0#,
-            # borders = list(
-            #   rtf_border(
-            #     "top",
-            #     style = ifelse(j == 1, "db", "s"),
-            #     color = table_body_hlines_color,
-            #     width = ifelse(j == 1, 50, 10)
-            #   )
-            # )
-          )
+      side <- summary_row_side(data = data, group_id = grand_summary_col)
+
+      row_list_grand_summary <-
+        rtf_tbl_row(
+          cell_list,
+          page_body_width = page_body_width,
+          widths = col_widths,
+          height = 0
         )
+
+      if (side == "top") {
+        row_list_body <- c(row_list_grand_summary, row_list_body)
+      } else {
+        row_list_body <- c(row_list_body, row_list_grand_summary)
+      }
     }
   }
 

@@ -52,8 +52,8 @@ test_that("The `summary_rows()` function can make group-wise summaries", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "fmt", "missing_text",
-        "formatter", "formatter_options"
+        "groups", "columns", "fns", "fmt", "side",
+        "missing_text", "formatter", "formatter_options"
       )
     )
 
@@ -254,8 +254,8 @@ test_that("The `summary_rows()` function can make group-wise summaries", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "fmt", "missing_text",
-        "formatter", "formatter_options"
+        "groups", "columns", "fns", "fmt", "side",
+        "missing_text", "formatter", "formatter_options"
       )
     )
 
@@ -263,8 +263,8 @@ test_that("The `summary_rows()` function can make group-wise summaries", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "fmt", "missing_text",
-        "formatter", "formatter_options"
+        "groups", "columns", "fns", "fmt", "side",
+        "missing_text", "formatter", "formatter_options"
       )
     )
 
@@ -346,8 +346,8 @@ test_that("The `summary_rows()` function can make group-wise summaries", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "fmt", "missing_text",
-        "formatter", "formatter_options"
+        "groups", "columns", "fns", "fmt", "side",
+        "missing_text", "formatter", "formatter_options"
       )
     )
 
@@ -355,8 +355,8 @@ test_that("The `summary_rows()` function can make group-wise summaries", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "fmt", "missing_text",
-        "formatter", "formatter_options"
+        "groups", "columns", "fns", "fmt", "side",
+        "missing_text", "formatter", "formatter_options"
       )
     )
 
@@ -426,8 +426,8 @@ test_that("Grand summaries can be generated with `grand_summary_rows()`", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "fmt", "missing_text",
-        "formatter", "formatter_options"
+        "groups", "columns", "fns", "fmt", "side",
+        "missing_text", "formatter", "formatter_options"
       )
     )
 
@@ -492,8 +492,8 @@ test_that("Grand summaries can be generated with `grand_summary_rows()`", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "fmt", "missing_text",
-        "formatter", "formatter_options"
+        "groups", "columns", "fns", "fmt", "side",
+        "missing_text", "formatter", "formatter_options"
       )
     )
 
@@ -501,8 +501,8 @@ test_that("Grand summaries can be generated with `grand_summary_rows()`", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "fmt", "missing_text",
-        "formatter", "formatter_options"
+        "groups", "columns", "fns", "fmt", "side",
+        "missing_text", "formatter", "formatter_options"
       )
     )
 
@@ -579,8 +579,8 @@ test_that("Grand summaries can be generated with `grand_summary_rows()`", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "fmt", "missing_text",
-        "formatter", "formatter_options"
+        "groups", "columns", "fns", "fmt", "side",
+        "missing_text", "formatter", "formatter_options"
       )
     )
 
@@ -588,8 +588,8 @@ test_that("Grand summaries can be generated with `grand_summary_rows()`", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "fmt", "missing_text",
-        "formatter", "formatter_options"
+        "groups", "columns", "fns", "fmt", "side",
+        "missing_text", "formatter", "formatter_options"
       )
     )
 
@@ -696,6 +696,155 @@ test_that("Using `groups = NULL` in `summary_rows()` is a deprecated option", {
     summary_tbl_1 %>% render_as_html(),
     summary_tbl_2 %>% render_as_html()
   )
+})
+
+test_that("Summary rows can be added to the top of any group", {
+
+  # Create summary rows for the first group only and place the summary
+  # at the top of the group
+  summary_tbl_1 <-
+    tbl %>%
+    summary_rows(
+      groups = "W02",
+      fns = list(
+        "min",
+        "max",
+        list(label = "avg", fn = "mean")
+      ),
+      fmt = ~ fmt_number(., use_seps = FALSE),
+      side = "top"
+    )
+
+  # Take snapshots of `summary_tbl_1`
+  summary_tbl_1 %>% render_as_html() %>% expect_snapshot()
+  summary_tbl_1 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  # summary_tbl_1 %>% as_rtf() %>% expect_snapshot()
+
+  # Create summary rows for the first group only, place the summary
+  # at the top of the group, and place the group label into it's own
+  # column in the LHS of stub
+  summary_tbl_2 <-
+    tbl %>%
+    summary_rows(
+      groups = "W02",
+      fns = list(
+        "min",
+        "max",
+        list(label = "avg", fn = "mean")
+      ),
+      fmt = ~ fmt_number(., use_seps = FALSE),
+      side = "top"
+    ) %>%
+    tab_options(row_group.as_column = TRUE)
+
+  # Take snapshots of `summary_tbl_2`
+  summary_tbl_2 %>% render_as_html() %>% expect_snapshot()
+  summary_tbl_2 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  # summary_tbl_2 %>% as_rtf() %>% expect_snapshot()
+
+  # Create summary rows for the first and second groups in separate calls such
+  # that the placement is at the top in the first group and at the bottom in
+  # the second
+  summary_tbl_3 <-
+    tbl %>%
+    summary_rows(
+      groups = "W02",
+      fns = list(
+        "min",
+        "max",
+        list(label = "avg", fn = "mean")
+      ),
+      fmt = ~ fmt_number(., use_seps = FALSE),
+      side = "top"
+    ) %>%
+    summary_rows(
+      groups = "W03",
+      fns = list(
+        "min",
+        "max",
+        list(label = "avg", fn = "mean")
+      ),
+      fmt = ~ fmt_number(., use_seps = FALSE),
+      side = "bottom"
+    )
+
+  # Take snapshots of `summary_tbl_3`
+  summary_tbl_3 %>% render_as_html() %>% expect_snapshot()
+  summary_tbl_3 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  # summary_tbl_3 %>% as_rtf() %>% expect_snapshot()
+
+  # Create summary rows for the first and second groups in separate calls such
+  # that the placement is at the top in the first group and at the bottom in
+  # the second; place the group label into it's own column in the LHS of stub
+  summary_tbl_4 <-
+    tbl %>%
+    summary_rows(
+      groups = "W02",
+      fns = list(
+        "min",
+        "max",
+        list(label = "avg", fn = "mean")
+      ),
+      fmt = ~ fmt_number(., use_seps = FALSE),
+      side = "top"
+    ) %>%
+    summary_rows(
+      groups = "W03",
+      fns = list(
+        "min",
+        "max",
+        list(label = "avg", fn = "mean")
+      ),
+      fmt = ~ fmt_number(., use_seps = FALSE),
+      side = "bottom"
+    ) %>%
+    tab_options(row_group.as_column = TRUE)
+
+  # Take snapshots of `summary_tbl_4`
+  summary_tbl_4 %>% render_as_html() %>% expect_snapshot()
+  summary_tbl_4 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  # summary_tbl_4 %>% as_rtf() %>% expect_snapshot()
+})
+
+test_that("Grand summary rows can be added to the top of a table", {
+
+  # Create grand summary rows and place them at the top of the table
+  summary_tbl_1 <-
+    tbl %>%
+    grand_summary_rows(
+      fns = list(
+        "min",
+        "max",
+        list(label = "avg", fn = "mean")
+      ),
+      fmt = ~ fmt_number(., use_seps = FALSE),
+      side = "top"
+    )
+
+  # Take snapshots of `summary_tbl_1`
+  summary_tbl_1 %>% render_as_html() %>% expect_snapshot()
+  summary_tbl_1 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  # summary_tbl_1 %>% as_rtf() %>% expect_snapshot()
+
+  # Create grand summary rows and place them at the top of the table; put
+  # the group label into it's own column in the LHS of stub
+  summary_tbl_2 <-
+    tbl %>%
+    grand_summary_rows(
+      fns = list(
+        "min",
+        "max",
+        list(label = "avg", fn = "mean")
+      ),
+      fmt = ~ fmt_number(., use_seps = FALSE),
+      side = "top"
+    ) %>%
+    tab_options(row_group.as_column = TRUE)
+
+  # Take snapshots of `summary_tbl_2`
+  summary_tbl_2 %>% render_as_html() %>% expect_snapshot()
+  summary_tbl_2 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  # summary_tbl_2 %>% as_rtf() %>% expect_snapshot()
 })
 
 test_that("The ordering of groups shouldn't affect group/grand summary calcs", {
@@ -1795,8 +1944,8 @@ test_that("Creating summary rows works for hidden columns", {
     names() %>%
     expect_equal(
       c(
-        "groups", "columns", "fns", "fmt", "missing_text",
-        "formatter", "formatter_options"
+        "groups", "columns", "fns", "fmt", "side",
+        "missing_text", "formatter", "formatter_options"
       )
     )
 

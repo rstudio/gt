@@ -71,7 +71,7 @@ dt_summary_build <- function(data, context) {
   summary_df_display_list <- list()
   summary_df_data_list <- list()
 
-  for (i in seq(summary_list)) {
+  for (i in seq_along(summary_list)) {
 
     summary_attrs <- summary_list[[i]]
 
@@ -80,6 +80,7 @@ dt_summary_build <- function(data, context) {
     fns <- summary_attrs$fns
     fmt_exprs <- summary_attrs$fmt
     missing_text <- summary_attrs$missing_text
+    side <- summary_attrs$side
 
     # Resolve the `missing_text`
     missing_text <-
@@ -429,17 +430,20 @@ dt_summary_build <- function(data, context) {
       group_summary_display_df <-
         dplyr::filter(summary_dfs_display, .data[[group_id_col_private]] == .env$group)
 
+      group_summary_display_df <-
+        dplyr::mutate(group_summary_display_df, `::side::` = side)
+
       summary_df_data_list <-
         c(
           summary_df_data_list,
           stats::setNames(list(group_summary_data_df), group)
         )
 
+      summary_df_display_list_i <-
+        stats::setNames(list(group_summary_display_df), group)
+
       summary_df_display_list <-
-        c(
-          summary_df_display_list,
-          stats::setNames(list(group_summary_display_df), group)
-        )
+        c(summary_df_display_list, summary_df_display_list_i)
     }
   }
 
@@ -451,8 +455,7 @@ dt_summary_build <- function(data, context) {
       dplyr::bind_rows
     )
 
-  for (i in seq(summary_df_display_list)) {
-
+  for (i in seq_along(summary_df_display_list)) {
     arrangement <-
       unique(summary_df_display_list[[i]][, rowname_col_private, drop = TRUE])
 
@@ -481,5 +484,6 @@ dt_summary_build <- function(data, context) {
 
 grand_summary_col <- "::GRAND_SUMMARY"
 rowname_col_private <- "::rowname::"
+side_col_private <- "::side::"
 row_id_col_private <- "::row_id::"
 group_id_col_private <- "::group_id::"
