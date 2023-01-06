@@ -717,7 +717,7 @@ test_that("Summary rows can be added to the top of any group", {
 
   # Take snapshots of `summary_tbl_1`
   summary_tbl_1 %>% render_as_html() %>% expect_snapshot()
-  # summary_tbl_1 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  summary_tbl_1 %>% as_latex() %>% as.character() %>% expect_snapshot()
   # summary_tbl_1 %>% as_rtf() %>% expect_snapshot()
 
   # Create summary rows for the first group only, place the summary
@@ -739,7 +739,7 @@ test_that("Summary rows can be added to the top of any group", {
 
   # Take snapshots of `summary_tbl_2`
   summary_tbl_2 %>% render_as_html() %>% expect_snapshot()
-  # summary_tbl_2 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  summary_tbl_2 %>% as_latex() %>% as.character() %>% expect_snapshot()
   # summary_tbl_2 %>% as_rtf() %>% expect_snapshot()
 
   # Create summary rows for the first and second groups in separate calls such
@@ -770,7 +770,7 @@ test_that("Summary rows can be added to the top of any group", {
 
   # Take snapshots of `summary_tbl_3`
   summary_tbl_3 %>% render_as_html() %>% expect_snapshot()
-  # summary_tbl_3 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  summary_tbl_3 %>% as_latex() %>% as.character() %>% expect_snapshot()
   # summary_tbl_3 %>% as_rtf() %>% expect_snapshot()
 
   # Create summary rows for the first and second groups in separate calls such
@@ -802,7 +802,7 @@ test_that("Summary rows can be added to the top of any group", {
 
   # Take snapshots of `summary_tbl_4`
   summary_tbl_4 %>% render_as_html() %>% expect_snapshot()
-  # summary_tbl_4 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  summary_tbl_4 %>% as_latex() %>% as.character() %>% expect_snapshot()
   # summary_tbl_4 %>% as_rtf() %>% expect_snapshot()
 })
 
@@ -823,7 +823,7 @@ test_that("Grand summary rows can be added to the top of a table", {
 
   # Take snapshots of `summary_tbl_1`
   summary_tbl_1 %>% render_as_html() %>% expect_snapshot()
-  # summary_tbl_1 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  summary_tbl_1 %>% as_latex() %>% as.character() %>% expect_snapshot()
   # summary_tbl_1 %>% as_rtf() %>% expect_snapshot()
 
   # Create grand summary rows and place them at the top of the table; put
@@ -843,7 +843,7 @@ test_that("Grand summary rows can be added to the top of a table", {
 
   # Take snapshots of `summary_tbl_2`
   summary_tbl_2 %>% render_as_html() %>% expect_snapshot()
-  # summary_tbl_2 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  summary_tbl_2 %>% as_latex() %>% as.character() %>% expect_snapshot()
   # summary_tbl_2 %>% as_rtf() %>% expect_snapshot()
 })
 
