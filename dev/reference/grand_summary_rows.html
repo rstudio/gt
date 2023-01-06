@@ -84,6 +84,7 @@ cells by use of formatting expressions in <code>fmt</code>.</p>
 <span>  columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  fns <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  fmt <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  side <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bottom"</span>, <span class="st">"top"</span><span class="op">)</span>,</span>
 <span>  missing_text <span class="op">=</span> <span class="st">"---"</span>,</span>
 <span>  formatter <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -121,6 +122,11 @@ contain a formatting call (e.g.,
 could contain a group-targeting expression (e.g.,
 <code>"group_a" ~ fmt_number(.)</code>). More information on this can be found in the
 <em>Formatting expressions for <code>fmt</code></em> section.</p></dd>
+
+
+<dt>side</dt>
+<dd><p>Should the grand summary rows be placed at the <code>"bottom"</code> (the
+default) or the <code>"top"</code> of the table?</p></dd>
 
 
 <dt>missing_text</dt>
@@ -317,6 +323,33 @@ summary rows <code>min</code>, <code>max</code>, and <code>avg</code> for the ta
 <span>    fmt <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span><span class="va">.</span>, use_seps <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_grand_summary_rows_1.png" alt="This image of a table was generated from the first code example in the `grand_summary_rows()` help file." style="width:100%;"></p>
+<p>Let's take the <code><a href="countrypops.html">countrypops</a></code> dataset and process that a bit before handing
+it off to <strong>gt</strong>. We can create a single grand summary row with totals that
+appears at the top of the table body (with <code>side = "top"</code>). We can define the
+aggregation with a list that contains parameters for the grand summary row
+label (<code>"TOTALS"</code>), the ID value of that row (<code>"totals"</code>), and the
+aggregation function (expressed as <code>"sum"</code>, which <strong>gt</strong> recognizes as the
+<code><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum()</a></code> function). Finally, we'll add a background fill to the grand summary
+row with <code><a href="tab_style.html">tab_style()</a></code>.</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">countrypops</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">country_code_2</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"BE"</span>, <span class="st">"NU"</span>, <span class="st">"LU"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html" class="external-link">%%</a></span> <span class="fl">10</span> <span class="op">==</span> <span class="fl">0</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">country_name</span>, <span class="va">year</span>, <span class="va">population</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">year</span>, values_from <span class="op">=</span> <span class="va">population</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"country_name"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/tab_header.html">tab_header</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Populations of the Benelux Countries"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/tab_spanner.html">tab_spanner</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>, label <span class="op">=</span> <span class="st">"Year"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/fmt_integer.html">fmt_integer</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/grand_summary_rows.html">grand_summary_rows</a></span><span class="op">(</span></span>
+<span>    fns <span class="op">=</span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"TOTALS"</span>, id <span class="op">=</span> <span class="st">"totals"</span>, fn <span class="op">=</span> <span class="st">"sum"</span><span class="op">)</span>,</span>
+<span>    fmt <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/fmt_integer.html">fmt_integer</a></span><span class="op">(</span><span class="va">.</span><span class="op">)</span>,</span>
+<span>    side <span class="op">=</span> <span class="st">"top"</span></span>
+<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_grand_summary.html">cells_grand_summary</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_fill.html">cell_fill</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"lightblue"</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/adjust_luminance.html">adjust_luminance</a></span><span class="op">(</span>steps <span class="op">=</span> <span class="op">+</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_grand_summary_rows_2.png" alt="This image of a table was generated from the second code example in the `grand_summary_rows()` help file." style="width:100%;"></p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
