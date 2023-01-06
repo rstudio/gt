@@ -476,6 +476,27 @@ create_body_component_l <- function(data) {
           body_section <- append(body_section, summary_section)
         }
 
+        # In a very particular case, we need to hoist the group label to the
+        # first row of summary labels (at the top of a row group where there
+        # is a two-column stub)
+        if (
+          has_stub_column &&
+          has_two_col_stub &&
+          group_row_start == i &&
+          !is.null(summary_section) &&
+          group_summary_row_side == "top" &&
+          length(body_section) > 1
+        ) {
+
+          body_row_idx <- length(body_section)
+          summary_idx <- body_row_idx - 1
+
+          group_name_fragment <- gsub("(^.*? & ).*", "\\1", body_section[[body_row_idx]])
+          body_section[[summary_idx]] <- sub("^.*? & ", "", body_section[[summary_idx]])
+          body_section[[summary_idx]] <- paste0(group_name_fragment, body_section[[summary_idx]])
+          body_section[[body_row_idx]] <- sub("^.*? & ", " & ", body_section[[body_row_idx]])
+        }
+
         body_section
       }
     )
