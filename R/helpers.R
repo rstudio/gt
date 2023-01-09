@@ -19,9 +19,9 @@
 #' helper to use Markdown formatting.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(currency, char) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(currency, char) |>
+#'   gt() |>
 #'   tab_header(title = md("Using *Markdown*"))
 #' ```
 #'
@@ -63,9 +63,9 @@ md <- function(text) {
 #' `html()` helper to use HTML formatting.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(currency, char) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(currency, char) |>
+#'   gt() |>
 #'   tab_header(title = html("<em>HTML</em>"))
 #' ```
 #'
@@ -119,8 +119,8 @@ is_rtf <- function(x) {
 #' font size for the column labels.
 #'
 #' ```r
-#' exibble %>%
-#'   gt() %>%
+#' exibble |>
+#'   gt() |>
 #'   tab_style(
 #'     style = cell_text(size = px(20)),
 #'     locations = cells_column_labels()
@@ -170,8 +170,8 @@ px <- function(x) {
 #' the font size for the column labels.
 #'
 #' ```r
-#' exibble %>%
-#'   gt() %>%
+#' exibble |>
+#'   gt() |>
 #'   tab_style(
 #'     style = cell_text(size = pct(75)),
 #'     locations = cells_column_labels()
@@ -226,9 +226,9 @@ pct <- function(x) {
 #' column here with the `stub()` select helper.
 #'
 #' ```r
-#' tbl %>%
-#'   gt(rowname_col = "row", groupname_col = "group") %>%
-#'   fmt_roman(columns = stub()) %>%
+#' tbl |>
+#'   gt(rowname_col = "row", groupname_col = "group") |>
+#'   fmt_roman(columns = stub()) |>
 #'   tab_options(row_group.as_column = TRUE)
 #' ```
 #'
@@ -310,11 +310,11 @@ stub <- function() {
 #' `locations`).
 #'
 #' ```r
-#' sp500 %>%
-#'   dplyr::filter(date >= "2015-01-05" & date <="2015-01-10") %>%
-#'   dplyr::select(-c(adj_close, volume, high, low)) %>%
-#'   gt() %>%
-#'   tab_header(title = "S&P 500") %>%
+#' sp500 |>
+#'   dplyr::filter(date >= "2015-01-05" & date <="2015-01-10") |>
+#'   dplyr::select(-c(adj_close, volume, high, low)) |>
+#'   gt() |>
+#'   tab_header(title = "S&P 500") |>
 #'   tab_footnote(
 #'     footnote = "All values in USD.",
 #'     locations = cells_title(groups = "title")
@@ -416,13 +416,13 @@ cells_title <- function(groups = c("title", "subtitle")) {
 #' [tab_stubhead()] and then style it with [tab_style()] and `cells_stubhead()`.
 #'
 #' ```r
-#' pizzaplace %>%
-#'   dplyr::mutate(month = as.numeric(substr(date, 6, 7))) %>%
-#'   dplyr::group_by(month, type) %>%
-#'   dplyr::summarize(sold = dplyr::n(), .groups = "drop") %>%
-#'   dplyr::filter(month %in% 1:2) %>%
-#'   gt(rowname_col = "type") %>%
-#'   tab_stubhead(label = "type") %>%
+#' pizzaplace |>
+#'   dplyr::mutate(month = as.numeric(substr(date, 6, 7))) |>
+#'   dplyr::group_by(month, type) |>
+#'   dplyr::summarize(sold = dplyr::n(), .groups = "drop") |>
+#'   dplyr::filter(month %in% 1:2) |>
+#'   gt(rowname_col = "type") |>
+#'   tab_stubhead(label = "type") |>
 #'   tab_style(
 #'     style = cell_fill(color = "lightblue"),
 #'     locations = cells_stubhead()
@@ -512,14 +512,14 @@ cells_stubhead <- function() {
 #' `cells_column_spanners()` to make the spanner label text bold.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(-fctr, -currency, -group) %>%
-#'   gt(rowname_col = "row") %>%
+#' exibble |>
+#'   dplyr::select(-fctr, -currency, -group) |>
+#'   gt(rowname_col = "row") |>
 #'   tab_spanner(
 #'     label = "dates and times",
-#'     id = "dt",
-#'     columns = c(date, time, datetime)
-#'   ) %>%
+#'     columns = c(date, time, datetime),
+#'     id = "dt"
+#'   ) |>
 #'   tab_style(
 #'     style = cell_text(weight = "bold"),
 #'     locations = cells_column_spanners(spanners = "dt")
@@ -624,19 +624,19 @@ cells_column_spanners <- function(spanners = everything()) {
 #' [tab_footnote()] and `cells_column_labels()` in `locations`.
 #'
 #' ```r
-#' sza %>%
+#' sza |>
 #'   dplyr::filter(
 #'     latitude == 20 & month == "jan" &
 #'       !is.na(sza)
-#'   ) %>%
-#'   dplyr::select(-latitude, -month) %>%
-#'   gt() %>%
+#'   ) |>
+#'   dplyr::select(-latitude, -month) |>
+#'   gt() |>
 #'   tab_footnote(
 #'     footnote = "True solar time.",
 #'     locations = cells_column_labels(
 #'       columns = tst
 #'     )
-#'   ) %>%
+#'   ) |>
 #'   tab_footnote(
 #'     footnote = "Solar zenith angle.",
 #'     locations = cells_column_labels(
@@ -740,16 +740,16 @@ cells_column_labels <- function(columns = everything()) {
 #' `cells_row_groups()` in `locations`.
 #'
 #' ```r
-#' pizzaplace %>%
-#'   dplyr::filter(name %in% c("soppressata", "peppr_salami")) %>%
-#'   dplyr::group_by(name, size) %>%
-#'   dplyr::summarize(`Pizzas Sold` = dplyr::n(), .groups = "drop") %>%
-#'   gt(rowname_col = "size", groupname_col = "name") %>%
+#' pizzaplace |>
+#'   dplyr::filter(name %in% c("soppressata", "peppr_salami")) |>
+#'   dplyr::group_by(name, size) |>
+#'   dplyr::summarize(`Pizzas Sold` = dplyr::n(), .groups = "drop") |>
+#'   gt(rowname_col = "size", groupname_col = "name") |>
 #'   summary_rows(
 #'     columns = `Pizzas Sold`,
 #'     fns = list(label = "TOTAL", fn = "sum"),
 #'     fmt = ~ fmt_integer(.)
-#'   ) %>%
+#'   ) |>
 #'   tab_footnote(
 #'     footnote = "The Pepper-Salami.",
 #'     cells_row_groups(groups = "peppr_salami")
@@ -863,13 +863,13 @@ cells_group <- function(groups = everything()) {
 #' table stub with [tab_style()], using `cells_stub()` in `locations`.
 #'
 #' ```r
-#' sza %>%
-#'   dplyr::filter(latitude == 20 & tst <= "1000") %>%
-#'   dplyr::select(-latitude) %>%
-#'   dplyr::filter(!is.na(sza)) %>%
-#'   tidyr::spread(key = "tst", value = sza) %>%
-#'   gt(rowname_col = "month") %>%
-#'   sub_missing(missing_text = "") %>%
+#' sza |>
+#'   dplyr::filter(latitude == 20 & tst <= "1000") |>
+#'   dplyr::select(-latitude) |>
+#'   dplyr::filter(!is.na(sza)) |>
+#'   tidyr::spread(key = "tst", value = sza) |>
+#'   gt(rowname_col = "month") |>
+#'   sub_missing(missing_text = "") |>
 #'   tab_style(
 #'     style = list(
 #'       cell_fill(color = "darkblue"),
@@ -993,17 +993,17 @@ cells_stub <- function(rows = everything()) {
 #' (`rows = hp == max(hp)` will target a single row in the `hp` column).
 #'
 #' ```r
-#' gtcars %>%
-#'   dplyr::filter(ctry_origin == "United Kingdom") %>%
-#'   dplyr::select(mfr, model, year, hp) %>%
-#'   gt() %>%
+#' gtcars |>
+#'   dplyr::filter(ctry_origin == "United Kingdom") |>
+#'   dplyr::select(mfr, model, year, hp) |>
+#'   gt() |>
 #'   tab_footnote(
 #'     footnote = "Highest horsepower.",
 #'     locations = cells_body(
 #'       columns = hp,
 #'       rows = hp == max(hp)
 #'     )
-#'   ) %>%
+#'   ) |>
 #'   opt_footnote_marks(marks = c("*", "+"))
 #' ```
 #'
@@ -1129,24 +1129,24 @@ cells_body <- function(
 #' data cells with with [tab_style()], using `cells_summary()` in `locations`.
 #'
 #' ```r
-#' countrypops %>%
-#'   dplyr::filter(country_name == "Japan", year < 1970) %>%
-#'   dplyr::select(-contains("country")) %>%
-#'   dplyr::mutate(decade = paste0(substr(year, 1, 3), "0s")) %>%
+#' countrypops |>
+#'   dplyr::filter(country_name == "Japan", year < 1970) |>
+#'   dplyr::select(-contains("country")) |>
+#'   dplyr::mutate(decade = paste0(substr(year, 1, 3), "0s")) |>
 #'   gt(
 #'     rowname_col = "year",
 #'     groupname_col = "decade"
-#'   ) %>%
+#'   ) |>
 #'   fmt_number(
 #'     columns = population,
 #'     decimals = 0
-#'   ) %>%
+#'   ) |>
 #'   summary_rows(
 #'     groups = "1960s",
 #'     columns = population,
 #'     fns = list("min", "max"),
 #'     fmt = ~ fmt_integer(.)
-#'   ) %>%
+#'   ) |>
 #'   tab_style(
 #'     style = list(
 #'       cell_text(style = "italic"),
@@ -1157,7 +1157,7 @@ cells_body <- function(
 #'       columns = population,
 #'       rows = 1
 #'     )
-#'   ) %>%
+#'   ) |>
 #'   tab_style(
 #'     style = list(
 #'       cell_text(style = "italic"),
@@ -1292,19 +1292,19 @@ cells_summary <- function(
 #' summary cell with with [tab_style()] and `cells_grand_summary()`.
 #'
 #' ```r
-#' countrypops %>%
-#'   dplyr::filter(country_name == "Spain", year < 1970) %>%
-#'   dplyr::select(-contains("country")) %>%
-#'   gt(rowname_col = "year") %>%
+#' countrypops |>
+#'   dplyr::filter(country_name == "Spain", year < 1970) |>
+#'   dplyr::select(-contains("country")) |>
+#'   gt(rowname_col = "year") |>
 #'   fmt_number(
 #'     columns = population,
 #'     decimals = 0
-#'   ) %>%
+#'   ) |>
 #'   grand_summary_rows(
 #'     columns = population,
 #'     fns = change ~ max(.) - min(.),
 #'     fmt = ~ fmt_integer(.)
-#'   ) %>%
+#'   ) |>
 #'   tab_style(
 #'     style = list(
 #'       cell_text(style = "italic"),
@@ -1427,21 +1427,21 @@ cells_grand_summary <- function(
 #' data stub cells with [tab_style()] and `cells_stub_summary()`.
 #'
 #' ```r
-#' countrypops %>%
-#'   dplyr::filter(country_name == "Japan", year < 1970) %>%
-#'   dplyr::select(-contains("country")) %>%
-#'   dplyr::mutate(decade = paste0(substr(year, 1, 3), "0s")) %>%
+#' countrypops |>
+#'   dplyr::filter(country_name == "Japan", year < 1970) |>
+#'   dplyr::select(-contains("country")) |>
+#'   dplyr::mutate(decade = paste0(substr(year, 1, 3), "0s")) |>
 #'   gt(
 #'     rowname_col = "year",
 #'     groupname_col = "decade"
-#'   ) %>%
-#'   fmt_integer(columns = population) %>%
+#'   ) |>
+#'   fmt_integer(columns = population) |>
 #'   summary_rows(
 #'     groups = "1960s",
 #'     columns = population,
 #'     fns = list("min", "max"),
 #'     fmt = ~ fmt_integer(.)
-#'   ) %>%
+#'   ) |>
 #'   tab_style(
 #'     style = list(
 #'       cell_text(
@@ -1564,19 +1564,19 @@ cells_stub_summary <- function(
 #' `cells_stub_grand_summary()` functions.
 #'
 #' ```r
-#' countrypops %>%
-#'   dplyr::filter(country_name == "Spain", year < 1970) %>%
-#'   dplyr::select(-contains("country")) %>%
-#'   gt(rowname_col = "year") %>%
+#' countrypops |>
+#'   dplyr::filter(country_name == "Spain", year < 1970) |>
+#'   dplyr::select(-contains("country")) |>
+#'   gt(rowname_col = "year") |>
 #'   fmt_number(
 #'     columns = population,
 #'     decimals = 0
-#'   ) %>%
+#'   ) |>
 #'   grand_summary_rows(
 #'     columns = population,
 #'     fns = list(change = ~max(.) - min(.)),
 #'     fmt = ~ fmt_integer(.)
-#'   ) %>%
+#'   ) |>
 #'   tab_style(
 #'     style = cell_text(weight = "bold", transform = "uppercase"),
 #'     locations = cells_stub_grand_summary(rows = "change")
@@ -1668,26 +1668,24 @@ cells_stub_grand_summary <- function(rows = everything()) {
 #' `data_color()` function, add a footnote and also style the footnotes section.
 #'
 #' ```r
-#' sza %>%
+#' sza |>
 #'   dplyr::filter(
 #'     latitude == 20 &
 #'       month == "jan" &
 #'       !is.na(sza)
-#'   ) %>%
-#'   dplyr::select(-latitude, -month) %>%
-#'   gt() %>%
+#'   ) |>
+#'   dplyr::select(-latitude, -month) |>
+#'   gt() |>
 #'   data_color(
 #'     columns = sza,
-#'     colors = scales::col_numeric(
-#'       palette = c("white", "yellow", "navyblue"),
-#'       domain = c(0, 90)
-#'     )
-#'   ) %>%
+#'     palette = c("white", "yellow", "navyblue"),
+#'     domain = c(0, 90)
+#'   ) |>
 #'   tab_footnote(
 #'     footnote = "Color indicates height of sun.",
 #'     locations = cells_column_labels(columns = sza)
-#'   ) %>%
-#'   tab_options(table.width = px(320)) %>%
+#'   ) |>
+#'   tab_options(table.width = px(320)) |>
 #'   tab_style(
 #'     style = list(
 #'       cell_text(size = "smaller"),
@@ -1779,11 +1777,11 @@ cells_footnotes <- function() {
 #' source notes section.
 #'
 #' ```r
-#' gtcars %>%
-#'   dplyr::select(mfr, model, msrp) %>%
-#'   dplyr::slice(1:5) %>%
-#'   gt() %>%
-#'   tab_source_note(source_note = "From edmunds.com") %>%
+#' gtcars |>
+#'   dplyr::select(mfr, model, msrp) |>
+#'   dplyr::slice(1:5) |>
+#'   gt() |>
+#'   tab_source_note(source_note = "From edmunds.com") |>
 #'   tab_style(
 #'     style = cell_text(
 #'       color = "#A9A9A9",
@@ -1851,8 +1849,8 @@ cells_source_notes <- function() {
 #' have currency values in guilder (a defunct Dutch currency).
 #'
 #' ```r
-#' exibble %>%
-#'   gt() %>%
+#' exibble |>
+#'   gt() |>
 #'   fmt_currency(
 #'     columns = currency,
 #'     currency = currency(
@@ -1966,20 +1964,20 @@ currency <- function(
 #' the `cell_text()` helper function.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(num, currency) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(num, currency) |>
+#'   gt() |>
 #'   fmt_number(
 #'     columns = c(num, currency),
 #'     decimals = 1
-#'   ) %>%
+#'   ) |>
 #'   tab_style(
 #'     style = cell_text(weight = "bold"),
 #'     locations = cells_body(
 #'       columns = num,
 #'       rows = num >= 5000
 #'     )
-#'   ) %>%
+#'   ) |>
 #'   tab_style(
 #'     style = cell_text(style = "italic"),
 #'     locations = cells_body(
@@ -2142,20 +2140,20 @@ cell_style_to_html.cell_text <- function(style) {
 #' the `cell_fill()` helper function.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(num, currency) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(num, currency) |>
+#'   gt() |>
 #'   fmt_number(
 #'     columns = c(num, currency),
 #'     decimals = 1
-#'   ) %>%
+#'   ) |>
 #'   tab_style(
 #'     style = cell_fill(color = "lightblue"),
 #'     locations = cells_body(
 #'       columns = num,
 #'       rows = num >= 5000
 #'     )
-#'   ) %>%
+#'   ) |>
 #'   tab_style(
 #'     style = cell_fill(color = "gray85"),
 #'     locations = cells_body(
@@ -2236,9 +2234,8 @@ cell_style_to_html.cell_fill <- function(style) {
 #' [tab_style()] and `cell_borders()`.
 #'
 #' ```r
-#' exibble %>%
-#'   gt() %>%
-#'   tab_options(row.striping.include_table_body = FALSE) %>%
+#' exibble |>
+#'   gt() |>
 #'   tab_style(
 #'     style = cell_borders(
 #'       sides = c("top", "bottom"),
@@ -2262,8 +2259,8 @@ cell_style_to_html.cell_fill <- function(style) {
 #' `list()`s.
 #'
 #' ```r
-#' exibble %>%
-#'   gt() %>%
+#' exibble |>
+#'   gt() |>
 #'   tab_style(
 #'     style = list(
 #'       cell_borders(
@@ -2451,30 +2448,30 @@ cell_style_structure <- function(name, obj, subclass = name) {
 #' step higher).
 #'
 #' ```r
-#' pal_darker  <- pal %>% adjust_luminance(-1.0)
-#' pal_lighter <- pal %>% adjust_luminance(+1.0)
+#' pal_darker  <- pal |> adjust_luminance(-1.0)
+#' pal_lighter <- pal |> adjust_luminance(+1.0)
 #' ```
 #'
 #' Create a tibble and make a **gt** table from it. Color each column in order
 #' of increasingly darker palettes (with [data_color()]).
 #'
 #' ```r
-#' dplyr::tibble(a = 1:8, b = 1:8, c = 1:8) %>%
-#'   gt() %>%
+#' dplyr::tibble(a = 1:8, b = 1:8, c = 1:8) |>
+#'   gt() |>
 #'   data_color(
 #'     columns = a,
 #'     colors = scales::col_numeric(
 #'       palette = pal_lighter,
 #'       domain = c(1, 8)
 #'     )
-#'   ) %>%
+#'   ) |>
 #'   data_color(
 #'     columns = b,
 #'     colors = scales::col_numeric(
 #'       palette = pal,
 #'       domain = c(1, 8)
 #'     )
-#'   ) %>%
+#'   ) |>
 #'   data_color(
 #'     columns = c,
 #'     colors = scales::col_numeric(
@@ -2645,7 +2642,7 @@ escape_latex <- function(text) {
 #' \begin{document}
 #'
 #' <<results='asis', echo=FALSE>>=
-#' exibble %>% gt()
+#' gt(exibble)
 #'  @
 #'
 #' \end{document}
@@ -2701,10 +2698,10 @@ gt_latex_dependencies <- function() {
 #' the webfont is not accessible).
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(char, time) %>%
-#'   gt() %>%
-#'   sub_missing() %>%
+#' exibble |>
+#'   dplyr::select(char, time) |>
+#'   gt() |>
+#'   sub_missing() |>
 #'   tab_style(
 #'     style = cell_text(
 #'       font = c(
@@ -2727,17 +2724,17 @@ gt_latex_dependencies <- function() {
 #' catchall `"Serif"` group).
 #'
 #' ```r
-#' sp500 %>%
-#'   dplyr::slice(1:10) %>%
-#'   dplyr::select(-volume, -adj_close) %>%
-#'   gt() %>%
+#' sp500 |>
+#'   dplyr::slice(1:10) |>
+#'   dplyr::select(-volume, -adj_close) |>
+#'   gt() |>
 #'   fmt_currency(
 #'     columns = 2:5,
 #'     rows = 1,
 #'     currency = "USD",
 #'     use_seps = FALSE
-#'   ) %>%
-#'   tab_options(table.font.size = px(20)) %>%
+#'   ) |>
+#'   tab_options(table.font.size = px(20)) |>
 #'   opt_table_font(
 #'     font = list(
 #'       google_font(name = "Merriweather"),
@@ -2799,9 +2796,9 @@ google_font <- function(name) {
 #' the `default_fonts()` set).
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(char, time) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(char, time) |>
+#'   gt() |>
 #'   tab_style(
 #'     style = cell_text(
 #'       font = c(
