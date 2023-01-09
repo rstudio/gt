@@ -131,8 +131,8 @@ gt_preview <- function(
   if (isTRUE(incl_rownums)) {
 
     gt_tbl <-
-      gt_tbl %>%
       tab_style(
+        gt_tbl,
         style = cell_text(font = "Courier"),
         locations = cells_stub()
       )
