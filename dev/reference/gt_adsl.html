@@ -91,8 +91,8 @@ thus not treated, the rest of the study population was randomized with a
 dataset entails subject level demographics such as age, age group, sex,
 ethnicity and body mass index (BMI) at baseline, as well as an event
 flag, indicating whether the subject experienced a specific event
-throughout the course of the study or not.
-Although the data was intentionally created to mimic a typical clinical
+throughout the course of the study or not.</p>
+<p>Although the data was intentionally created to mimic a typical clinical
 trial dataset following the CDISC format, it might not strictly comply
 with CDISC ADaM rules. The intent is to showcase the workflow for clinical
 table creation rather than creating a fully CDISC-compliant ADaM dataset.</p>
@@ -114,8 +114,23 @@ version.</p></dd>
 
 <dt>TRTA, TRTAN</dt>
 <dd><p>The study intervention and its numeric version, which
-is either <code>Placebo</code> (<code>1</code>), <code>Drug 1</code> (<code>2</code>) or <code> (`3`, missing for screen failures).} \item{ITTFL}{Intent-to-Treat (ITT) population flag, where `Y` indicates a subject belongs to the ITT population and `N` indicates a subject is not in the ITT population.} \item{RANDFL}{Randomization flag, where `Y` indicates a subject was randomized to receive either `Placebo` or `Drug 1` and `N` indicates a subject was not randomized at all.} \item{SCRFREAS}{The reason for screen failure. This is either missing (</code>)
-for non-screen failure subjects or indicates the reason for screen failure</p></dd>
+is either <code>"Placebo"</code> (<code>1</code>), <code>"Drug 1"</code> (<code>2</code>) or <code>NA</code> (<code>3</code>), missing for
+screen failures).</p></dd>
+
+<dt>ITTFL</dt>
+<dd><p>Intent-to-Treat (ITT) population flag, where <code>"Y"</code> indicates
+a subject belongs to the ITT population and <code>"N"</code> indicates a subject
+is not in the ITT population.</p></dd>
+
+<dt>RANDFL</dt>
+<dd><p>Randomization flag, where <code>"Y"</code> indicates a subject was
+randomized to receive either <code>"Placebo"</code> or <code>"Drug 1"</code> and <code>"N"</code> indicates
+a subject was not randomized at all.</p></dd>
+
+<dt>SCRFREAS</dt>
+<dd><p>The reason for screen failure. This is either missing
+(<code>""</code>) for non-screen failure subjects or indicates the reason for screen
+failure</p></dd>
 
 <dt>AGE</dt>
 <dd><p>The age of a subject at baseline in years.</p></dd>
@@ -125,20 +140,20 @@ for non-screen failure subjects or indicates the reason for screen failure</p></
 younger than 40 years at baseline or older.</p></dd>
 
 <dt>SEX</dt>
-<dd><p>Sex of a subject. Can be either <code>Male</code>, <code>Female</code> or
-<code>Undifferentiated</code>.</p></dd>
+<dd><p>Sex of a subject. Can be either <code>"Male"</code>, <code>"Female"</code> or
+<code>"Undifferentiated"</code>.</p></dd>
 
 <dt>ETHNIC</dt>
-<dd><p>Ethnicity of a subject. Can be either <code>Hispanic or Latino</code>,
-<code>Not Hispanic or Latino</code> or missing (``).</p></dd>
+<dd><p>Ethnicity of a subject. Can be either <code>"Hispanic or Latino"</code>,
+<code>"Not Hispanic or Latino"</code> or missing (<code>""</code>).</p></dd>
 
 <dt>BLBMI</dt>
 <dd><p>Body Mass Index (BMI) of a subject at baseline in kg/m2.</p></dd>
 
 <dt>EVNTFL</dt>
 <dd><p>Event Flag. Indicates whether the subject experienced a
-specific event during the course of the study or not. Can be either <code>Y</code>,
-if the subject had the event, or `N`</p></dd>
+specific event during the course of the study or not. Can be either <code>"Y"</code>,
+if the subject had the event, or <code>"N"</code></p></dd>
 
 
 </dl></div>
@@ -179,7 +194,8 @@ if the subject had the event, or `N`</p></dd>
 <code><a href="gtcars.html">gtcars</a></code>,
 <code><a href="pizzaplace.html">pizzaplace</a></code>,
 <code><a href="sp500.html">sp500</a></code>,
-<code><a href="sza.html">sza</a></code></p></div>
+<code><a href="sza.html">sza</a></code>,
+<code><a href="towny.html">towny</a></code></p></div>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
