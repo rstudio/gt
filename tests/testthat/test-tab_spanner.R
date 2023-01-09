@@ -15,7 +15,7 @@ selection_text <- function(html, selection) {
   rvest::html_text(rvest::html_nodes(html, selection))
 }
 
-test_that("a gt table contains the expected spanner column labels", {
+test_that("A gt table contains the expected spanner column labels", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -254,7 +254,7 @@ test_that("`tab_spanner()` works even when columns are forcibly moved", {
     )
 })
 
-test_that("the `dt_spanners_print_matrix()` util function works well", {
+test_that("The `dt_spanners_print_matrix()` util function works well", {
 
   # Expect that a table with no spanners declared will generate
   # a spanner matrix that only has column names

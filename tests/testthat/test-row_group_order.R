@@ -27,7 +27,7 @@ selection_value <- function(html, key) {
   rvest::html_attr(rvest::html_nodes(html, selection), key)
 }
 
-test_that("the `row_group_order()` function works correctly", {
+test_that("The `row_group_order()` function works correctly", {
 
   # Create a `tbl_html` that arranges the groups by the
   # latter calendar date first
@@ -57,14 +57,14 @@ test_that("the `row_group_order()` function works correctly", {
   )
 })
 
-test_that("styling at various locations is kept when using `row_group_order()`", {
+test_that("Styling at various locations is kept when using `row_group_order()`", {
 
   # Generate a summary table from `tbl`
   summary_tbl <-
     tbl %>%
     gt(rowname_col = "rows", groupname_col = "dates") %>%
     summary_rows(
-      groups = TRUE,
+      groups = everything(),
       columns = everything(),
       fns = list("sum")
     ) %>%

@@ -12,6 +12,7 @@
 ^README\.Rmd$
 ^README\.md$
 ^LICENSE\.md$
+^CITATION\.cff$
 vignettes
 man/figures/
 tests/gt-examples
@@ -20,10 +21,13 @@ tests/testthat/_snaps
 tests/testthat/test-as_raw_html.R
 tests/testthat/test-as_word.R
 tests/testthat/test-cols_align_decimal.R
+tests/testthat/test-cols_label.R
+tests/testthat/test-cols_label_with.R
 tests/testthat/test-cols_merge.R
 tests/testthat/test-cols_width_rtf.R
 tests/testthat/test-data_color.R
 tests/testthat/test-extract_cells.R
+tests/testthat/test-fmt_auto.R
 tests/testthat/test-fmt_bytes.R
 tests/testthat/test-fmt_currency.R
 tests/testthat/test-fmt_datetime.R
@@ -59,4 +63,3 @@ tests/testthat/test-tab_spanner_delim.R
 tests/testthat/test-tab_stub_indent.R
 tests/testthat/test-table_parts.R
 tests/testthat/test-vec_fmt.R
-^CITATION\.cff$

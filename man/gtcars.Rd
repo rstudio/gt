@@ -7,25 +7,25 @@
 \format{
 A tibble with 47 rows and 15 variables:
 \describe{
-\item{mfr}{The name of the car manufacturer}
-\item{model}{The car's model name}
-\item{year}{The car's model year}
-\item{trim}{A short description of the car model's trim}
+\item{mfr}{The name of the car manufacturer.}
+\item{model}{The car's model name.}
+\item{year}{The car's model year.}
+\item{trim}{A short description of the car model's trim.}
 \item{bdy_style}{An identifier of the car's body style, which is either
-\code{coupe}, \code{convertible}, \code{sedan}, or \code{hatchback}}
-\item{hp, hp_rpm}{The car's horsepower and the associated RPM level}
-\item{trq, trq_rpm}{The car's torque and the associated RPM level}
+\code{"coupe"}, \code{"convertible"}, \code{"sedan"}, or \code{"hatchback"}.}
+\item{hp, hp_rpm}{The car's horsepower and the associated RPM level.}
+\item{trq, trq_rpm}{The car's torque and the associated RPM level.}
 \item{mpg_c, mpg_h}{The miles per gallon fuel efficiency rating for city
-and highway driving}
-\item{drivetrain}{The car's drivetrain which, for this dataset is either
-\code{rwd} (Rear Wheel Drive) or \code{awd} (All Wheel Drive)}
-\item{trsmn}{The codified transmission type, where the number part is
-the number of gears; the car could have automatic transmission
-(\code{a}), manual transmission (\code{m}), an option to switch between
-both types (\code{am}), or, direct drive (\code{dd})}
+and highway driving.}
+\item{drivetrain}{The car's drivetrain which, for this dataset, is either
+\code{"rwd"} (Rear Wheel Drive) or \code{"awd"} (All Wheel Drive).}
+\item{trsmn}{An encoding of the transmission type, where the number part is
+the number of gears. The car could have automatic transmission (\code{"a"}),
+manual transmission (\code{"m"}), an option to switch between both types
+(\code{"am"}), or, direct drive (\code{"dd"})}
 \item{ctry_origin}{The country name for where the vehicle manufacturer
-is headquartered}
-\item{msrp}{Manufacturer's suggested retail price in U.S. dollars (USD)}
+is headquartered.}
+\item{msrp}{Manufacturer's suggested retail price in U.S. dollars (USD).}
 }
 }
 \usage{
@@ -82,9 +82,11 @@ Here is a glimpse at the data available in \code{gtcars}.
 Other datasets: 
 \code{\link{countrypops}},
 \code{\link{exibble}},
+\code{\link{gt_adsl}},
 \code{\link{pizzaplace}},
 \code{\link{sp500}},
-\code{\link{sza}}
+\code{\link{sza}},
+\code{\link{towny}}
 }
 \concept{datasets}
 \keyword{datasets}

@@ -350,12 +350,13 @@ get_alignment_at_body_cell <- function(
   # Return the value of the last `text-align` property, if present
   if (!is.null(cell_style) && grepl("text-align", cell_style)) {
 
-    m <- gregexec("(?:^|;)\\s*text-align\\s*:\\s*([\\w-]+)\\s*(!important)?", cell_style, perl = TRUE)
+    m <- regexec_gt("(?:^|;)\\s*text-align\\s*:\\s*([\\w-]+)\\s*(!important)?", cell_style, perl = TRUE)
+
     cell_style_match_mat <- regmatches(cell_style, m)[[1]]
 
     is_important <- grepl("!important", cell_style_match_mat[1, ], fixed = TRUE)
 
-    # Pick last !important, or if no !important, then last anything
+    # Pick last '!important', or if no '!important', then last anything
     if (any(is_important)) {
       cell_alignment <- cell_style_match_mat[2, max(which(is_important))]
     } else {

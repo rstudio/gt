@@ -1,4 +1,4 @@
-test_that("the `row_group_order()` function works correctly", {
+test_that("The `row_group_order()` function works correctly", {
 
   # Create a table with group names, rownames, and four columns of values
   tbl <-

@@ -80,7 +80,7 @@ statements has no effect.
 
 \section{Function ID}{
 
-4-8
+4-9
 }
 
 \seealso{
@@ -89,6 +89,7 @@ statements has no effect.
 Other column modification functions: 
 \code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
+\code{\link{cols_label_with}()},
 \code{\link{cols_label}()},
 \code{\link{cols_merge_n_pct}()},
 \code{\link{cols_merge_range}()},

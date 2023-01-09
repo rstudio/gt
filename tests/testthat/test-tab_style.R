@@ -36,7 +36,7 @@ data <-
       ~mean(., na.rm = TRUE),
       ~sum(., na.rm = TRUE))
   ) %>%
-  summary_rows(
+  grand_summary_rows(
     columns = c(hp, wt),
     fns = list(
       ~mean(., na.rm = TRUE),
@@ -60,7 +60,7 @@ selection_text <- function(html, selection) {
   rvest::html_text(rvest::html_nodes(html, selection))
 }
 
-test_that("a gt table can store the correct style statements", {
+test_that("A gt table can store the correct style statements", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -423,7 +423,7 @@ test_that("a gt table can store the correct style statements", {
   expect_warning(data %>% tab_row_group(others_label = "Others1"))
 })
 
-test_that("using fonts in `cell_text()` works", {
+test_that("Using fonts in `cell_text()` works", {
 
   # Prepare a small gt table for all tests
   tbl <- exibble %>% dplyr::select(char, time) %>% gt()
@@ -553,7 +553,7 @@ test_that("using fonts in `cell_text()` works", {
   )
 })
 
-test_that("setting white-space options in `cell_text()` works", {
+test_that("Setting white-space options in `cell_text()` works", {
 
   tbl_ws <-
     dplyr::tibble(
@@ -574,7 +574,7 @@ test_that("setting white-space options in `cell_text()` works", {
     )
 })
 
-test_that("hiding columns that have styles does not result in errors/warnings", {
+test_that("Hiding columns that have styles does not result in errors/warnings", {
 
   expect_error(
     regexp = NA,

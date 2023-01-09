@@ -1,6 +1,6 @@
 # gt (development version)
 
-* The new function `cols_hide_missing()` can hide columns where all values are missing, i.e. columns where every value is `NA`.
+* A new function, `cols_label_with()`, is added for relabeling columns with functions. It allows for renaming functions to applied to arbitrary sets of columns, using `tidyselect`. It's like `rename_with()` for your **gt** table, but doesn't need unique names for labeling.
 
 # gt 0.8.0
 

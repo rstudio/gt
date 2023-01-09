@@ -43,7 +43,7 @@
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-17
+#' 3-19
 #'
 #' @import rlang
 #' @export
@@ -121,7 +121,10 @@ fmt_missing <- function(
     "Since gt v0.6.0 the `fmt_missing()` function is deprecated and will
     soon be removed.",
     "*" = "Use the `sub_missing()` function instead."
-  ))
+  ),
+  .frequency = "regularly",
+  .frequency_id = "fmt_missing_fn_deprecation"
+  )
 
   sub_missing(
     data = data,
@@ -177,7 +180,7 @@ fmt_missing <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-18
+#' 3-20
 #'
 #' @import rlang
 #' @export
@@ -308,7 +311,7 @@ sub_zero <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-19
+#' 3-21
 #'
 #' @import rlang
 #' @export
@@ -508,7 +511,7 @@ sub_small_vals <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-20
+#' 3-22
 #'
 #' @import rlang
 #' @export
@@ -741,7 +744,7 @@ check_sub_fn_sign <- function(sign) {
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-21
+#' 3-23
 #'
 #' @import rlang
 #' @export

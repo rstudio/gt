@@ -22,7 +22,16 @@ specifying a \code{groupname_col} in \code{\link[=gt]{gt()}}, by introducing gro
 (by way of \code{\link[dplyr:group_by]{dplyr::group_by()}}), or, by specifying groups with the
 \code{\link[=tab_row_group]{tab_row_group()}} function.
 }
+\section{Targeting cells with \code{groups}}{
+
+
+By default \code{groups} is set to \code{everything()}, which means that all available
+groups will be considered. Providing the ID values (in quotes) of row groups
+in \code{c()} will serve to constrain the targeting to that subset of groups.
+}
+
 \section{Overview of Location Helper Functions}{
+
 
 Location helper functions can be used to target cells with virtually any
 function that has a \code{locations} argument. Here is a listing of all of the
@@ -78,12 +87,9 @@ with the \code{\link[=summary_rows]{summary_rows()}} function and then add a foo
   dplyr::summarize(`Pizzas Sold` = dplyr::n(), .groups = "drop") \%>\%
   gt(rowname_col = "size", groupname_col = "name") \%>\%
   summary_rows(
-    groups = TRUE,
     columns = `Pizzas Sold`,
-    fns = list(TOTAL = "sum"),
-    formatter = fmt_number,
-    decimals = 0,
-    use_seps = TRUE
+    fns = list(label = "TOTAL", fn = "sum"),
+    fmt = ~ fmt_integer(.)
   ) \%>\%
   tab_footnote(
     footnote = "The Pepper-Salami.",

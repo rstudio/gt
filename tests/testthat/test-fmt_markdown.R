@@ -1,4 +1,4 @@
-test_that("the `fmt_markdown()` function works correctly", {
+test_that("The `fmt_markdown()` function works correctly", {
 
   # Create a few Markdown-based text snippets
   text_1a <- "

@@ -1,4 +1,4 @@
-test_that("the `sub_missing()` function works correctly", {
+test_that("The `sub_missing()` function works correctly", {
 
   # Create an input table with two columns, both numeric
   data_tbl <-
@@ -269,7 +269,7 @@ test_that("the `sub_missing()` function works correctly", {
   )
 })
 
-test_that("the `sub_zero()` function works correctly", {
+test_that("The `sub_zero()` function works correctly", {
 
   # Create an input data frame with two columns: one numeric, one character
   data_tbl <-
@@ -368,7 +368,7 @@ test_that("the `sub_zero()` function works correctly", {
   )
 })
 
-test_that("the `sub_small_vals()` function works correctly", {
+test_that("The `sub_small_vals()` function works correctly", {
 
   # Create an input table with three columns
   data_tbl <-
@@ -573,7 +573,7 @@ test_that("the `sub_small_vals()` function works correctly", {
   expect_error(tab %>% sub_small_vals(columns = "num_1", sign = "?"))
 })
 
-test_that("the `sub_large_vals()` function works correctly", {
+test_that("The `sub_large_vals()` function works correctly", {
 
   # Create an input table with three columns
   data_tbl <-
@@ -760,7 +760,7 @@ test_that("the `sub_large_vals()` function works correctly", {
   expect_error(tab %>% sub_large_vals(columns = "num_1", sign = "?"))
 })
 
-test_that("the `sub_values()` function works correctly", {
+test_that("The `sub_values()` function works correctly", {
 
   # Create an input table with three columns
   data_tbl <-

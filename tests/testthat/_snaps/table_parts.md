@@ -1,4 +1,4 @@
-# a gt table contains the expected heading components
+# A gt table contains the expected heading components
 
     Code
       .

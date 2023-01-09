@@ -1,7 +1,7 @@
 # Create a shortened version of `mtcars`
 mtcars_short <- mtcars[1:5, ]
 
-test_that("the `cols_move()` function works correctly", {
+test_that("The `cols_move()` function works correctly", {
 
   # Create a `tbl_latex` object with `gt()`; the `mpg`,
   # `cyl`, and `drat` columns placed after `drat`
@@ -46,7 +46,7 @@ test_that("the `cols_move()` function works correctly", {
     expect_true()
 })
 
-test_that("the `cols_move_to_start()` function works correctly", {
+test_that("The `cols_move_to_start()` function works correctly", {
 
   # Create a `tbl_latex` object with `gt()`; the `gear`,
   # and `carb` columns placed at the start
@@ -77,7 +77,7 @@ test_that("the `cols_move_to_start()` function works correctly", {
     expect_true()
 })
 
-test_that("the `cols_move_to_end()` function works correctly", {
+test_that("The `cols_move_to_end()` function works correctly", {
 
   # Create a `tbl_latex` object with `gt()`; the `gear`,
   # and `carb` columns placed at the end

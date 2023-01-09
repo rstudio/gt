@@ -6,15 +6,17 @@
 \usage{
 fmt_scientific(
   data,
-  columns,
+  columns = everything(),
   rows = everything(),
   decimals = 2,
   drop_trailing_zeros = FALSE,
   scale_by = 1,
+  exp_style = "x10n",
   pattern = "{x}",
   sep_mark = ",",
   dec_mark = ".",
-  force_sign = FALSE,
+  force_sign_m = FALSE,
+  force_sign_n = FALSE,
   locale = NULL
 )
 }
@@ -45,6 +47,12 @@ trailing zeros (those redundant zeros after the decimal mark).}
 \item{scale_by}{A value to scale the input. The default is \code{1.0}. All numeric
 values will be multiplied by this value first before undergoing formatting.}
 
+\item{exp_style}{Style of formatting to use for the scientific notation
+formatting. By default this is \code{"x10n"} but other options include using
+a single letter (e.g., \code{"e"}, \code{"E"}, etc.), a letter followed by a \code{"1"} to
+signal a minimum digit width of one, or \code{"low-ten"} for using a stylized
+\code{"10"} marker.}
+
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other
 characters are taken to be string literals.}
@@ -55,26 +63,32 @@ of \verb{1,000}).}
 
 \item{dec_mark}{The character to use as a decimal mark (e.g., using \code{dec_mark = ","} with \code{0.152} would result in a formatted value of \verb{0,152}).}
 
-\item{force_sign}{Should the positive sign be shown for positive values
-(effectively showing a sign for all values except zero)? If so, use \code{TRUE}
-for this option. The default is \code{FALSE}, where only negative numbers will
-display a minus sign.}
+\item{force_sign_m, force_sign_n}{Should the plus sign be shown for positive
+values of the mantissa (first component) or the exponent? This would
+effectively show a sign for all values except zero on either of those
+numeric components of the notation. If so, use \code{TRUE} for either one of
+these options. The default for both is \code{FALSE}, where only negative numbers
+will display a sign.}
 
-\item{locale}{An optional locale ID that can be used for formatting the value
-according the locale's rules. Examples include \code{"en"} for English (United
-States) and \code{"fr"} for French (France). The use of a valid locale ID will
-override any values provided in \code{sep_mark} and \code{dec_mark}. We can use the
-\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
-are supported. Any \code{locale} value provided here will override any global
-locale setting performed in \code{\link[=gt]{gt()}}'s own \code{locale} argument.}
+\item{locale}{An optional locale ID that can be used for formatting values
+according to the locale's rules.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
 With numeric values in a \strong{gt} table, we can perform formatting so that the
-targeted values are rendered in scientific notation. Furthermore, there is
-fine control with the following options:
+targeted values are rendered in scientific notation, where extremely large or
+very small numbers can be expressed in a more practical fashion. Here,
+numbers are written in the form of a mantissa (\code{m}) and an exponent (\code{n})
+with the construction \emph{m} x 10^\emph{n} or \emph{m}E\emph{n}. The mantissa component is a
+number between \code{1} and \code{10}. For instance, \verb{2.5 x 10^9} can be used to
+represent the value 2,500,000,000 in scientific notation. In a similar way,
+0.00000012 can be expressed as \verb{1.2 x 10^-7}. Due to its ability to describe
+numbers more succinctly and its ease of calculation, scientific notation is
+widely employed in scientific and technical domains.
+
+We have fine control over the formatting task, with the following options:
 \itemize{
 \item decimals: choice of the number of decimal places, option to drop
 trailing zeros, and a choice of the decimal symbol
@@ -85,13 +99,71 @@ values
 formatting specific to the chosen locale
 }
 }
-\section{Targeting the values to be formatted}{
+\section{Compatibility of formatting function with data values}{
+
+
+The \code{fmt_scientific()} formatting function is compatible with body cells that
+are of the \code{"numeric"} or \code{"integer"} types. Any other types of body cells
+are ignored during formatting. This is to say that cells of incompatible data
+types may be targeted, but there will be no attempt to format them.
+}
+
+\section{Targeting cells with \code{columns} and \code{rows}}{
 
 
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
-nothing is provided for \code{rows} then entire columns are selected). Conditional
-formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the \emph{Arguments} section for more information on this.
+nothing is provided for \code{rows} then entire columns are selected). The
+\code{columns} argument allows us to target a subset of cells contained in the
+resolved columns. We say resolved because aside from declaring column names
+in \code{c()} (with bare column names or names in quotes) we can use
+\strong{tidyselect}-style expressions. This can be as basic as supplying a select
+helper like \code{starts_with()}, or, providing a more complex incantation like
+
+\code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
+
+which targets numeric columns that have a maximum value of 100,000 (excluding
+\code{NA}s from consideration).
+
+By default all columns and rows are selected (with the \code{everything()}
+defaults). Cell values that are incompatible with a given formatting function
+will be skipped over, like \code{character} values and numeric \verb{fmt_*()}
+functions. So it's safe to select all columns with a particular formatting
+function (only those values that can be formatted will be formatted), but,
+you may not want that. One strategy is to format the bulk of cell values with
+one formatting function and then constrain the columns for later passes with
+other types of formatting (the last formatting done to a cell is what you get
+in the final output).
+
+Once the columns are targeted, we may also target the \code{rows} within those
+columns. This can be done in a variety of ways. If a stub is present, then we
+potentially have row identifiers. Those can be used much like column names in
+the \code{columns}-targeting scenario. We can use simpler \strong{tidyselect}-style
+expressions (the select helpers should work well here) and we can use quoted
+row identifiers in \code{c()}. It's also possible to use row indices (e.g.,
+\code{c(3, 5, 6)}) though these index values must correspond to the row numbers of
+the input data (the indices won't necessarily match those of rearranged rows
+if row groups are present). One more type of expression is possible, an
+expression that takes column values (can involve any of the available columns
+in the table) and returns a logical vector. This is nice if you want to base
+formatting on values in the column or another column, or, you'd like to use a
+more complex predicate expression.
+}
+
+\section{Adapting output to a specific \code{locale}}{
+
+
+This formatting function can adapt outputs according to a provided \code{locale}
+value. Examples include \code{"en"} for English (United States) and \code{"fr"} for
+French (France). The use of a valid locale ID here means separator and
+decimal marks will be correct for the given locale. Should any values be
+provided in \code{sep_mark} or \code{dec_mark}, they will be overridden by the locale's
+preferred values.
+
+Note that a \code{locale} value provided here will override any global locale
+setting performed in \code{\link[=gt]{gt()}}'s own \code{locale} argument (it is settable there as
+a value received by all other functions that have a \code{locale} argument). As a
+useful reference on which locales are supported, we can use the
+\code{\link[=info_locales]{info_locales()}} function to view an info table.
 }
 
 \section{Examples}{
@@ -128,8 +200,12 @@ partially numeric  and partially in scientific notation (using the
 }
 
 \seealso{
+The vector-formatting version of this function:
+\code{\link[=vec_fmt_scientific]{vec_fmt_scientific()}}.
+
 Other data formatting functions: 
 \code{\link{data_color}()},
+\code{\link{fmt_auto}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},

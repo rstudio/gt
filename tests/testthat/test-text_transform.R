@@ -18,7 +18,7 @@ selection_text <- function(html, selection) {
   rvest::html_text(rvest::html_nodes(html, selection))
 }
 
-test_that("the `text_transform()` function works correctly", {
+test_that("The `text_transform()` function works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()

@@ -1,4 +1,4 @@
-test_that("the `fmt_integer()` function works correctly in the LaTeX context", {
+test_that("The `fmt_integer()` function works correctly in the LaTeX context", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
@@ -184,7 +184,7 @@ test_that("the `fmt_integer()` function works correctly in the LaTeX context", {
   )
 })
 
-test_that("the `fmt_integer()` function can scale/suffix larger numbers", {
+test_that("The `fmt_integer()` function can scale/suffix larger numbers", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric

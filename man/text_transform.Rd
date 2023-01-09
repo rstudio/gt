@@ -57,12 +57,13 @@ vector of column values from the \code{num} column.
 
 \section{Function ID}{
 
-3-22
+3-24
 }
 
 \seealso{
 Other data formatting functions: 
 \code{\link{data_color}()},
+\code{\link{fmt_auto}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},

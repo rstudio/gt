@@ -139,7 +139,8 @@ NULL
 
 gt_default_options <- list(
   gt.row_group.sep = " - ",
-  gt.html_tag_check = TRUE
+  gt.html_tag_check = TRUE,
+  gt.strict_column_fmt = FALSE
 )
 
 # R 3.5 and earlier have a bug on Windows where if x is latin1 or unknown and
@@ -157,7 +158,11 @@ utf8_aware_sub <- NULL
   toset <- !(names(gt_default_options) %in% names(op))
   if (any(toset)) options(gt_default_options[toset])
 
-  utf8_aware_sub <<- identical("UTF-8", Encoding(sub(".", "\u00B1", ".", fixed = TRUE)))
+  utf8_aware_sub <<-
+    identical(
+      "UTF-8",
+      Encoding(sub(".", "\u00B1", ".", fixed = TRUE))
+    )
 
   invisible()
 }

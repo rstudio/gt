@@ -73,12 +73,13 @@ columns will be given replacement text with two calls of \code{sub_missing()}.
 
 \section{Function ID}{
 
-3-17
+3-19
 }
 
 \seealso{
 Other data formatting functions: 
 \code{\link{data_color}()},
+\code{\link{fmt_auto}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},

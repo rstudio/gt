@@ -6,7 +6,7 @@
 \usage{
 fmt_partsper(
   data,
-  columns,
+  columns = everything(),
   rows = everything(),
   to_units = c("per-mille", "per-myriad", "pcm", "ppm", "ppb", "ppt", "ppq"),
   symbol = "auto",
@@ -99,13 +99,8 @@ international numbering system (\code{"intl"}) whereby grouping separators
 the Indian numbering system (\code{"ind"}) uses grouping separators that
 correspond to thousand, lakh, crore, and higher quantities.}
 
-\item{locale}{An optional locale ID that can be used for formatting the value
-according the locale's rules. Examples include \code{"en"} for English (United
-States) and \code{"fr"} for French (France). The use of a valid locale ID will
-override any values provided in \code{sep_mark} and \code{dec_mark}. We can use the
-\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
-are supported. Any \code{locale} value provided here will override any global
-locale setting performed in \code{\link[=gt]{gt()}}'s own \code{locale} argument.}
+\item{locale}{An optional locale ID that can be used for formatting values
+according to the locale's rules.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -143,13 +138,71 @@ values
 formatting specific to the chosen locale
 }
 }
-\section{Targeting the values to be formatted}{
+\section{Compatibility of formatting function with data values}{
+
+
+The \code{fmt_partsper()} formatting function is compatible with body cells that
+are of the \code{"numeric"} or \code{"integer"} types. Any other types of body cells
+are ignored during formatting. This is to say that cells of incompatible data
+types may be targeted, but there will be no attempt to format them.
+}
+
+\section{Targeting cells with \code{columns} and \code{rows}}{
 
 
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
-nothing is provided for \code{rows} then entire columns are selected). Conditional
-formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the \emph{Arguments} section for more information on this.
+nothing is provided for \code{rows} then entire columns are selected). The
+\code{columns} argument allows us to target a subset of cells contained in the
+resolved columns. We say resolved because aside from declaring column names
+in \code{c()} (with bare column names or names in quotes) we can use
+\strong{tidyselect}-style expressions. This can be as basic as supplying a select
+helper like \code{starts_with()}, or, providing a more complex incantation like
+
+\code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
+
+which targets numeric columns that have a maximum value of 100,000 (excluding
+\code{NA}s from consideration).
+
+By default all columns and rows are selected (with the \code{everything()}
+defaults). Cell values that are incompatible with a given formatting function
+will be skipped over, like \code{character} values and numeric \verb{fmt_*()}
+functions. So it's safe to select all columns with a particular formatting
+function (only those values that can be formatted will be formatted), but,
+you may not want that. One strategy is to format the bulk of cell values with
+one formatting function and then constrain the columns for later passes with
+other types of formatting (the last formatting done to a cell is what you get
+in the final output).
+
+Once the columns are targeted, we may also target the \code{rows} within those
+columns. This can be done in a variety of ways. If a stub is present, then we
+potentially have row identifiers. Those can be used much like column names in
+the \code{columns}-targeting scenario. We can use simpler \strong{tidyselect}-style
+expressions (the select helpers should work well here) and we can use quoted
+row identifiers in \code{c()}. It's also possible to use row indices (e.g.,
+\code{c(3, 5, 6)}) though these index values must correspond to the row numbers of
+the input data (the indices won't necessarily match those of rearranged rows
+if row groups are present). One more type of expression is possible, an
+expression that takes column values (can involve any of the available columns
+in the table) and returns a logical vector. This is nice if you want to base
+formatting on values in the column or another column, or, you'd like to use a
+more complex predicate expression.
+}
+
+\section{Adapting output to a specific \code{locale}}{
+
+
+This formatting function can adapt outputs according to a provided \code{locale}
+value. Examples include \code{"en"} for English (United States) and \code{"fr"} for
+French (France). The use of a valid locale ID here means separator and
+decimal marks will be correct for the given locale. Should any values be
+provided in \code{sep_mark} or \code{dec_mark}, they will be overridden by the locale's
+preferred values.
+
+Note that a \code{locale} value provided here will override any global locale
+setting performed in \code{\link[=gt]{gt()}}'s own \code{locale} argument (it is settable there as
+a value received by all other functions that have a \code{locale} argument). As a
+useful reference on which locales are supported, we can use the
+\code{\link[=info_locales]{info_locales()}} function to view an info table.
 }
 
 \section{Examples}{
@@ -179,8 +232,12 @@ format the \code{b} column as \emph{per mille} values with \code{fmt_partsper()}
 }
 
 \seealso{
+The vector-formatting version of this function:
+\code{\link[=vec_fmt_partsper]{vec_fmt_partsper()}}.
+
 Other data formatting functions: 
 \code{\link{data_color}()},
+\code{\link{fmt_auto}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},

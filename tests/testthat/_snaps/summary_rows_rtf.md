@@ -2144,7 +2144,7 @@
       \intbl {\f0 {\f0\fs20 358.36}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7800
-      \intbl {\f0 {\f0\fs20 424.20}}\cell
+      \intbl {\f0 {\f0\fs20 424.2}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
       \intbl {\f0 {\f0\fs20 \'97}}\cell
@@ -2436,7 +2436,7 @@
       \intbl {\f0 {\f0\fs20 358.36}}\cell
       
       \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7800
-      \intbl {\f0 {\f0\fs20 424.20}}\cell
+      \intbl {\f0 {\f0\fs20 424.2}}\cell
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
       \intbl {\f0 {\f0\fs20 \'97}}\cell

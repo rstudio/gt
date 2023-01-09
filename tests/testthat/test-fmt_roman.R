@@ -1,4 +1,4 @@
-test_that("the `fmt_roman()` function works correctly", {
+test_that("The `fmt_roman()` function works correctly", {
 
   # Create an input data frame two columns: one
   # character-based and one that is numeric

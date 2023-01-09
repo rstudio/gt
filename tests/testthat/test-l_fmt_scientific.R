@@ -1,4 +1,4 @@
-test_that("the `fmt_scientific()` function works correctly", {
+test_that("The `fmt_scientific()` function works correctly", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
@@ -90,7 +90,7 @@ test_that("the `fmt_scientific()` function works correctly", {
   expect_equal(
     (tbl_latex %>%
        fmt_scientific(
-         columns = num_1, decimals = 3, force_sign = TRUE) %>%
+         columns = num_1, decimals = 3, force_sign_m = TRUE) %>%
        render_formats_test("latex"))[["num_1"]],
     c(
       "$+1.836 \\times 10^{3}$", "$+2.763 \\times 10^{3}$",
@@ -104,7 +104,7 @@ test_that("the `fmt_scientific()` function works correctly", {
   expect_equal(
     (tbl_latex %>%
        fmt_scientific(
-         columns = num_1, pattern = "*{x}*", force_sign = TRUE) %>%
+         columns = num_1, pattern = "*{x}*", force_sign_m = TRUE) %>%
        render_formats_test("latex"))[["num_1"]],
     c(
       "*$+1.84 \\times 10^{3}$*", "*$+2.76 \\times 10^{3}$*",

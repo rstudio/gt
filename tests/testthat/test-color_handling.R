@@ -17,7 +17,7 @@ selection_value <- function(html, key) {
   rvest::html_attr(rvest::html_nodes(html, selection), key)
 }
 
-test_that("the various color utility functions work correctly", {
+test_that("The various color utility functions work correctly", {
 
   # Assign various color vectors that are of different specifications
   c_name <- c("red", "tomato", "palevioletred3", "limegreen", "gray86", "blue", "transparent")
@@ -486,7 +486,7 @@ test_that("the various color utility functions work correctly", {
   expect_error(adjust_luminance(colors = c_hex, steps = +2.1))
 })
 
-test_that("the `cell_fill()` function accepts colors of various types", {
+test_that("The `cell_fill()` function accepts colors of various types", {
 
   # Create a `tbl_html` object by using `tab_style` with
   # the `cell_fill()` helper function and a color name

@@ -16,7 +16,7 @@ tbl <-
     105.4,  729.8,  962.4,  336.4,
     924.2,  424.6,  740.8,  104.2)
 
-test_that("the function `cols_merge()` works correctly", {
+test_that("The `cols_merge()` function works correctly", {
 
   # Create a `tbl_latex` object with `gt()`; merge two columns
   # with a `pattern`
@@ -93,7 +93,7 @@ test_that("the function `cols_merge()` works correctly", {
     expect_true()
 })
 
-test_that("the `cols_merge_uncert()` function works correctly", {
+test_that("The `cols_merge_uncert()` function works correctly", {
 
   # Create a `tbl_latex` object with `gt()`; merge two columns
   # with `cols_merge_uncert()`
@@ -181,7 +181,7 @@ test_that("the `cols_merge_uncert()` function works correctly", {
     expect_true()
 })
 
-test_that("the `cols_merge_range()` function works correctly", {
+test_that("The `cols_merge_range()` function works correctly", {
 
   # Create a `tbl_latex` object with `gt()`; merge two columns
   # with `cols_merge_range()`

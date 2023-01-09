@@ -9,7 +9,7 @@ selection_text <- function(html, selection) {
   rvest::html_text(rvest::html_nodes(html, selection))
 }
 
-test_that("a gt table object contains the correct components", {
+test_that("A gt table object contains the correct components", {
 
   # Create a `gt_tbl` object with `gt()`
   tab <- iris %>% gt()
@@ -40,7 +40,7 @@ test_that("a gt table object contains the correct components", {
   #expect_tab(tab, df = iris %>% dplyr::group_by(Species))
 })
 
-test_that("a gt table can be made to use the rownames of a data frame", {
+test_that("A gt table can be made to use the rownames of a data frame", {
 
   # Create a `gt_tbl` object with `gt()` and use the
   # data frame's row names as row names in the stub
@@ -63,7 +63,7 @@ test_that("a gt table can be made to use the rownames of a data frame", {
   )
 })
 
-test_that("a gt table can be made with the stub partially or fully populated", {
+test_that("A gt table can be made with the stub partially or fully populated", {
 
   # Create an input data frame with a `rowname` column
   # and a `value` column
@@ -120,7 +120,7 @@ test_that("a gt table can be made with the stub partially or fully populated", {
   )
 })
 
-test_that("a gt table can be made from a table with no rows", {
+test_that("A gt table can be made from a table with no rows", {
 
   # Create an input data frame based on the exibble
   # dataset, except with no rows
@@ -153,7 +153,7 @@ test_that("a gt table can be made from a table with no rows", {
   expect_tab(tab = tab, df = data_e %>% dplyr::group_by(group))
 })
 
-test_that("a gt table can use UTF-8 chars in any system locale", {
+test_that("A gt table can use UTF-8 chars in any system locale", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -236,7 +236,7 @@ test_that("a gt table can use UTF-8 chars in any system locale", {
   }
 })
 
-test_that("gt table can be made with grouped data -- one group", {
+test_that("A gt table can be made with grouped data -- one group", {
 
   # Use `dplyr::group_by()` to add a group to an
   # incoming table; create the gt object and build
@@ -250,32 +250,36 @@ test_that("gt table can be made with grouped data -- one group", {
   # Expect that groups are available in the gt object
   built_tbl$`_row_groups` %>% expect_equal(c("grp_a", "grp_b"))
 
-  built_tbl$`_groups_rows` %>%
-    expect_equal(
-      data.frame(
-        group_id = c("grp_a", "grp_b"),
-        group_label = c("grp_a", "grp_b"),
-        row_start = c(1, 5),
-        row_end = c(4, 8),
-        stringsAsFactors = FALSE
-      ),
-      ignore_attr = TRUE
-    )
+  # Expect the `_groups_rows` component to have a specific
+  # set of values within that data frame
+  expect_equal(
+    built_tbl$`_groups_rows`,
+    data.frame(
+      group_id = c("grp_a", "grp_b"),
+      group_label = c("grp_a", "grp_b"),
+      row_start = c(1, 5),
+      row_end = c(4, 8),
+      has_summary_rows = rep(FALSE, 2),
+      summary_row_side = rep(NA_character_, 2),
+      stringsAsFactors = FALSE
+    ),
+    ignore_attr = TRUE
+  )
 
-  built_tbl$`_boxhead` %>% .[, 1:2] %>%
-    expect_equal(
-      dplyr::tibble(
-        var = colnames(exibble),
-        type = c(rep("default", 8), "row_group")
-      )
+  expect_equal(
+    built_tbl$`_boxhead` %>% .[, 1:2],
+    dplyr::tibble(
+      var = colnames(exibble),
+      type = c(rep("default", 8), "row_group")
     )
+  )
 
   expect_equal(
     unlist(built_tbl$`_stub_df`$group_label),
     c(rep("grp_a", 4), rep("grp_b", 4))
   )
 
-  # Render the HTML table and read the HTML with `xml2`
+  # Render the HTML table and read the HTML with the `xml2::read_html()` fn
   html_tbl <-
     exibble %>%
     dplyr::group_by(group) %>%
@@ -308,7 +312,7 @@ test_that("gt table can be made with grouped data -- one group", {
     )
 })
 
-test_that("gt table can be made with grouped data - two groups", {
+test_that("A gt table can be made with grouped data - two groups", {
 
   # Use `dplyr::group_by()` to add two groups to an
   # incoming table; create the gt object and build
@@ -327,16 +331,20 @@ test_that("gt table can be made with grouped data - two groups", {
   built_tbl$`_row_groups` %>%
     expect_equal(table_groups)
 
-  built_tbl$`_groups_rows` %>%
-    expect_equal(
-      dplyr::tibble(
-        group_id = table_groups,
-        group_label = table_groups,
-        row_start = c(1, 3, 5, 7),
-        row_end = c(2, 4, 6, 8)
-      ),
-      ignore_attr = TRUE
-    )
+  # Expect the `_groups_rows` component to have a specific
+  # set of values within that data frame
+  expect_equal(
+    built_tbl$`_groups_rows`,
+    dplyr::tibble(
+      group_id = table_groups,
+      group_label = table_groups,
+      row_start = c(1, 3, 5, 7),
+      row_end = c(2, 4, 6, 8),
+      has_summary_rows = rep(FALSE, 4),
+      summary_row_side = rep(NA_character_, 4),
+    ),
+    ignore_attr = TRUE
+  )
 
   built_tbl$`_boxhead` %>% .[, 1:2] %>%
     expect_equal(
@@ -359,7 +367,7 @@ test_that("gt table can be made with grouped data - two groups", {
     rep(NA_character_, 8)
   )
 
-  # Render the HTML table and read the HTML with `xml2`
+  # Render the HTML table and read the HTML with the `xml2::read_html()` fn
   html_tbl <-
     exibble %>%
     dplyr::mutate(group_2 = rep(paste0("grp_", 1:4), 2) %>% sort()) %>%
@@ -418,21 +426,25 @@ test_that("The `gt()` groupname_col arg will override any grouped data", {
       )
     )
 
-  built_tbl$`_groups_rows` %>%
-    expect_equal(
-      data.frame(
-        group_id = c(
-          "2015-01-15", "2015-02-15", "2015-03-15", "2015-04-15",
-          "2015-05-15", "2015-06-15", "NA", "2015-08-15"),
-        group_label = c(
-          "2015-01-15", "2015-02-15", "2015-03-15", "2015-04-15",
-          "2015-05-15", "2015-06-15", "NA", "2015-08-15"),
-        row_start = 1:8,
-        row_end = 1:8,
-        stringsAsFactors = FALSE
-      ),
-      ignore_attr = TRUE
-    )
+  # Expect the `_groups_rows` component to have a specific
+  # set of values within that data frame
+  expect_equal(
+    built_tbl$`_groups_rows`,
+    data.frame(
+      group_id = c(
+        "2015-01-15", "2015-02-15", "2015-03-15", "2015-04-15",
+        "2015-05-15", "2015-06-15", "NA", "2015-08-15"),
+      group_label = c(
+        "2015-01-15", "2015-02-15", "2015-03-15", "2015-04-15",
+        "2015-05-15", "2015-06-15", "NA", "2015-08-15"),
+      row_start = 1:8,
+      row_end = 1:8,
+      has_summary_rows = rep(FALSE, 8),
+      summary_row_side = rep(NA_character_, 8),
+      stringsAsFactors = FALSE
+    ),
+    ignore_attr = TRUE
+  )
 
   built_tbl$`_boxhead` %>% .[, 1:2] %>%
     expect_equal(
@@ -471,7 +483,7 @@ test_that("The `gt()` groupname_col arg will override any grouped data", {
     )
   )
 
-  # Render the HTML table and read the HTML with `xml2`
+  # Render the HTML table and read the HTML with the `xml2::read_html()` fn
   html_tbl <-
     exibble %>%
     dplyr::group_by(group) %>%
@@ -558,7 +570,7 @@ test_that("The `gt()` `rowname_col` arg will be overridden by `rownames_to_stub 
       ignore_attr = TRUE
     )
 
-  # Render the HTML table and read the HTML with `xml2`
+  # Render the HTML table and read the HTML with the `xml2::read_html()` fn
   html_tbl <-
     mtcars[1:10, ] %>%
     gt(rownames_to_stub = TRUE, rowname_col = "disp", auto_align = FALSE) %>%
@@ -630,7 +642,7 @@ test_that("The `rowname` column will be safely included when `rownames_to_stub =
       ignore_attr = TRUE
     )
 
-  # Render the HTML table and read the HTML with `xml2`
+  # Render the HTML table and read the HTML with the `xml2::read_html()` fn
   html_tbl <-
     exibble %>%
     dplyr::mutate(rowname = "test") %>%
@@ -797,7 +809,6 @@ test_that("Escapable characters in rownames are handled correctly in each output
   )
 })
 
-
 test_that("Default locale settings are honored by formatting functions", {
 
   exibble_1 <- exibble[7, 1]
@@ -888,7 +899,8 @@ test_that("Default locale settings are honored when generating summary rows", {
     summary_rows(
       groups = c("grp_a", "grp_b"),
       columns = num,
-      fns = list(mean = ~ mean(., na.rm = TRUE))
+      fns = list(mean = ~ mean(., na.rm = TRUE)),
+      fmt = list(~ fmt_number(.))
     )
 
   # Expect that the default formatter for `summary_rows()` (`fmt_number`)

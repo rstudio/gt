@@ -81,6 +81,7 @@ reference:
     - fmt_duration
     - fmt_markdown
     - fmt_passthrough
+    - fmt_auto
     - fmt
     - sub_missing
     - sub_zero
@@ -102,15 +103,16 @@ reference:
     - cols_align_decimal
     - cols_width
     - cols_label
+    - cols_label_with
+    - cols_move
     - cols_move_to_start
     - cols_move_to_end
-    - cols_move
     - cols_hide
     - cols_unhide
+    - cols_merge
     - cols_merge_uncert
     - cols_merge_range
     - cols_merge_n_pct
-    - cols_merge
 
   - title: Add or Modify Rows
     desc: >
@@ -230,7 +232,7 @@ reference:
 
   - title: Datasets
     desc: >
-      The **gt** package is equipped with six datasets that come in all shapes
+      The **gt** package is equipped with eight datasets that come in all shapes
       and sizes. Use them to experiment with the package. Many examples in the
       internal help documents use these datasets to quickly demonstrate the key
       features of **gt**.
@@ -241,6 +243,8 @@ reference:
     - sp500
     - pizzaplace
     - exibble
+    - gt_adsl
+    - towny
 
   - title: Shiny Functions
     desc: >

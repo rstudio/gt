@@ -5,13 +5,13 @@
 \alias{countrypops}
 \title{Yearly populations of countries from 1960 to 2017}
 \format{
-A tibble with 12470 rows and 5 variables:
+A tibble with 12,470 rows and 5 variables:
 \describe{
-\item{country_name}{Name of the country}
-\item{country_code_2}{The 2-letter ISO 3166-1 country code}
-\item{country_code_3}{The 3-letter ISO 3166-1 country code}
-\item{year}{The year for the population estimate}
-\item{population}{The population estimate, midway through the year}
+\item{country_name}{The name of the country.}
+\item{country_code_2}{The 2-letter ISO 3166-1 country code.}
+\item{country_code_3}{The 3-letter ISO 3166-1 country code.}
+\item{year}{The year for the population estimate.}
+\item{population}{The population estimate, midway through the year.}
 }
 }
 \source{
@@ -52,10 +52,12 @@ Here is a glimpse at the data available in \code{countrypops}.
 \seealso{
 Other datasets: 
 \code{\link{exibble}},
+\code{\link{gt_adsl}},
 \code{\link{gtcars}},
 \code{\link{pizzaplace}},
 \code{\link{sp500}},
-\code{\link{sza}}
+\code{\link{sza}},
+\code{\link{towny}}
 }
 \concept{datasets}
 \keyword{datasets}
