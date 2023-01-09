@@ -657,10 +657,12 @@ as_rtf <- function(data) {
 #' @param keep_with_next A `TRUE` (the default) or `FALSE` value that indicates
 #'   whether a table should use Word option `keep rows together`.
 #'
-#' @examples
-#' # Use `gtcars` to create a gt table;
-#' # add a header and then export as
-#' # OOXML code for Word
+#' @section Examples:
+#'
+#' Use [`gtcars`] to create a **gt** table. Add a header and then export as
+#' OOXML code for Word.
+#'
+#' ```r
 #' tab_rtf <-
 #'   gtcars |>
 #'   dplyr::select(mfr, model) |>
@@ -671,6 +673,7 @@ as_rtf <- function(data) {
 #'     subtitle = md("`gtcars` is an R dataset")
 #'   ) |>
 #'   as_word()
+#' ```
 #'
 #' @family table export functions
 #' @section Function ID:
