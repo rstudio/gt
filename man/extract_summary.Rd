@@ -26,15 +26,15 @@ labeled as \code{min}, \code{max}, and \code{avg} for every row group with \code
 Then, extract the summary rows as a list object.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{summary_extracted <-
-  sp500 \%>\%
-  dplyr::filter(date >= "2015-01-05" & date <="2015-01-30") \%>\%
-  dplyr::arrange(date) \%>\%
-  dplyr::mutate(week = paste0("W", strftime(date, format = "\%V"))) \%>\%
-  dplyr::select(-adj_close, -volume) \%>\%
+  sp500 |>
+  dplyr::filter(date >= "2015-01-05" & date <="2015-01-30") |>
+  dplyr::arrange(date) |>
+  dplyr::mutate(week = paste0("W", strftime(date, format = "\%V"))) |>
+  dplyr::select(-adj_close, -volume) |>
   gt(
     rowname_col = "date",
     groupname_col = "week"
-  ) \%>\%
+  ) |>
   summary_rows(
     groups = everything(),
     columns = c(open, high, low, close),
@@ -43,7 +43,7 @@ Then, extract the summary rows as a list object.
       max = ~max(.),
       avg = ~mean(.)
     ),
-  ) \%>\%
+  ) |>
   extract_summary()
 
 summary_extracted
@@ -84,10 +84,10 @@ summary_extracted
 Use the summary list to make a new \strong{gt} table. The key thing is to use
 \code{dplyr::bind_rows()} and then pass the tibble to \code{\link[=gt]{gt()}}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{summary_extracted \%>\%
-  unlist(recursive = FALSE) \%>\%
-  dplyr::bind_rows() \%>\%
-  gt(groupname_col = "group_id") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{summary_extracted |>
+  unlist(recursive = FALSE) |>
+  dplyr::bind_rows() |>
+  gt(groupname_col = "group_id") |>
   cols_hide(columns = row_id)
 }\if{html}{\out{</div>}}
 
