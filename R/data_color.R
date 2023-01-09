@@ -244,8 +244,8 @@
 #' colorize a **gt** table. Let's do this with the [`exibble`] dataset:
 #'
 #' ```r
-#' exibble %>%
-#'   gt() %>%
+#' exibble |>
+#'   gt() |>
 #'   data_color()
 #' ```
 #'
@@ -265,8 +265,8 @@
 #' values of `"red"` and `"green"`.
 #'
 #' ```r
-#' exibble %>%
-#'   gt() %>%
+#' exibble |>
+#'   gt() |>
 #'   data_color(
 #'     method = "numeric",
 #'     palette = c("red", "green")
@@ -289,8 +289,8 @@
 #' cases). Here, the domain will be set as `domain = c(0, 50)`.
 #'
 #' ```r
-#' exibble %>%
-#'   gt() %>%
+#' exibble |>
+#'   gt() |>
 #'   data_color(
 #'     columns = currency,
 #'     rows = currency < 50,
@@ -311,11 +311,11 @@
 #' `palette = "viridis"`.
 #'
 #' ```r
-#' countrypops %>%
-#'   dplyr::filter(country_name == "Mongolia") %>%
-#'   dplyr::select(-contains("code")) %>%
-#'   tail(10) %>%
-#'   gt() %>%
+#' countrypops |>
+#'   dplyr::filter(country_name == "Mongolia") |>
+#'   dplyr::select(-contains("code")) |>
+#'   tail(10) |>
+#'   gt() |>
 #'   data_color(
 #'     columns = population,
 #'     method = "numeric",
@@ -335,11 +335,11 @@
 #' returns the same table as in the previous example.
 #'
 #' ```r
-#' countrypops %>%
-#'   dplyr::filter(country_name == "Mongolia") %>%
-#'   dplyr::select(-contains("code")) %>%
-#'   tail(10) %>%
-#'   gt() %>%
+#' countrypops |>
+#'   dplyr::filter(country_name == "Mongolia") |>
+#'   dplyr::select(-contains("code")) |>
+#'   tail(10) |>
+#'   gt() |>
 #'   data_color(
 #'     columns = population,
 #'     fn = scales::col_numeric(
@@ -365,25 +365,25 @@
 #' [`countrypops`]-based table example.
 #'
 #' ```r
-#' countrypops %>%
-#'   dplyr::filter(country_code_3 %in% c("FRA", "GBR")) %>%
-#'   dplyr::filter(year %% 10 == 0) %>%
-#'   dplyr::select(-contains("code")) %>%
-#'   dplyr::mutate(color = "") %>%
-#'   gt(groupname_col = "country_name") %>%
-#'   fmt_integer(columns = population) %>%
+#' countrypops |>
+#'   dplyr::filter(country_code_3 %in% c("FRA", "GBR")) |>
+#'   dplyr::filter(year %% 10 == 0) |>
+#'   dplyr::select(-contains("code")) |>
+#'   dplyr::mutate(color = "") |>
+#'   gt(groupname_col = "country_name") |>
+#'   fmt_integer(columns = population) |>
 #'   data_color(
 #'     columns = population,
 #'     target_columns = color,
 #'     method = "numeric",
 #'     palette = "viridis",
 #'     domain = c(4E7, 7E7)
-#'   ) %>%
+#'   ) |>
 #'   cols_label(
 #'     year = "",
 #'     population = "Population",
 #'     color = ""
-#'   ) %>%
+#'   ) |>
 #'   opt_vertical_padding(scale = 0.65)
 #' ```
 #'
@@ -398,28 +398,28 @@
 #' **viridis** package).
 #'
 #' ```r
-#' countrypops %>%
-#'   dplyr::filter(country_code_3 %in% c("FRA", "GBR", "ITA")) %>%
-#'   dplyr::select(-contains("code")) %>%
-#'   dplyr::filter(year %% 5 == 0) %>%
+#' countrypops |>
+#'   dplyr::filter(country_code_3 %in% c("FRA", "GBR", "ITA")) |>
+#'   dplyr::select(-contains("code")) |>
+#'   dplyr::filter(year %% 5 == 0) |>
 #'   tidyr::pivot_wider(
 #'     names_from = "country_name",
 #'     values_from = "population"
-#'   ) %>%
-#'   gt() %>%
-#'   fmt_integer(columns = c(everything(), -year)) %>%
+#'   ) |>
+#'   gt() |>
+#'   fmt_integer(columns = c(everything(), -year)) |>
 #'   cols_width(
 #'     year ~ px(80),
 #'     everything() ~ px(160)
-#'   ) %>%
-#'   opt_all_caps() %>%
-#'   opt_vertical_padding(scale = 0.75) %>%
-#'   opt_horizontal_padding(scale = 3) %>%
+#'   ) |>
+#'   opt_all_caps() |>
+#'   opt_vertical_padding(scale = 0.75) |>
+#'   opt_horizontal_padding(scale = 3) |>
 #'   data_color(
 #'     columns = year,
 #'     target_columns = everything(),
 #'     palette = "inferno"
-#'   ) %>%
+#'   ) |>
 #'   tab_options(
 #'     table_body.hlines.style = "none",
 #'     column_labels.border.top.color = "black",
@@ -441,32 +441,32 @@
 #' available data in each column.
 #'
 #' ```r
-#' pizzaplace %>%
-#'   dplyr::group_by(type, size) %>%
+#' pizzaplace |>
+#'   dplyr::group_by(type, size) |>
 #'   dplyr::summarize(
 #'     sold = dplyr::n(),
 #'     income = sum(price),
 #'     .groups = "drop_last"
-#'   ) %>%
-#'   dplyr::group_by(type) %>%
-#'   dplyr::mutate(f_sold = sold / sum(sold)) %>%
+#'   ) |>
+#'   dplyr::group_by(type) |>
+#'   dplyr::mutate(f_sold = sold / sum(sold)) |>
 #'   dplyr::mutate(size = factor(
 #'     size, levels = c("S", "M", "L", "XL", "XXL"))
-#'   ) %>%
-#'   dplyr::arrange(type, size) %>%
+#'   ) |>
+#'   dplyr::arrange(type, size) |>
 #'   gt(
 #'     rowname_col = "size",
 #'     groupname_col = "type"
-#'   ) %>%
+#'   ) |>
 #'   fmt_percent(
 #'     columns = f_sold,
 #'     decimals = 1
-#'   ) %>%
+#'   ) |>
 #'   cols_merge(
 #'     columns = c(size, f_sold),
 #'     pattern = "{1} ({2})"
-#'   ) %>%
-#'   cols_align(align = "left", columns = stub()) %>%
+#'   ) |>
+#'   cols_align(align = "left", columns = stub()) |>
 #'   data_color(
 #'     method = "numeric",
 #'     palette = "ggsci::red_material"
@@ -486,13 +486,13 @@
 #' here is required).
 #'
 #' ```r
-#' sza %>%
-#'   dplyr::filter(latitude == 20 & tst <= "1200") %>%
-#'   dplyr::select(-latitude) %>%
-#'   dplyr::filter(!is.na(sza)) %>%
-#'   tidyr::spread(key = "tst", value = sza) %>%
-#'   gt(rowname_col = "month") %>%
-#'   sub_missing(missing_text = "") %>%
+#' sza |>
+#'   dplyr::filter(latitude == 20 & tst <= "1200") |>
+#'   dplyr::select(-latitude) |>
+#'   dplyr::filter(!is.na(sza)) |>
+#'   tidyr::spread(key = "tst", value = sza) |>
+#'   gt(rowname_col = "month") |>
+#'   sub_missing(missing_text = "") |>
 #'   data_color(
 #'     direction = "row",
 #'     palette = "PuOr",
