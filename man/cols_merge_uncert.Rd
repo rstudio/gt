@@ -93,19 +93,19 @@ Use \code{\link{exibble}} to create a \strong{gt} table, keeping only the \code{
 \code{num} columns. Merge columns into one with a base value and uncertainty
 (after formatting the \code{num} column) using the \code{cols_merge_uncert()} function.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(currency, num) \%>\%
-  dplyr::slice(1:7) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(currency, num) |>
+  dplyr::slice(1:7) |>
+  gt() |>
   fmt_number(
     columns = num,
     decimals = 3,
     use_seps = FALSE
-  ) \%>\%
+  ) |>
   cols_merge_uncert(
     col_val = currency,
     col_uncert = num
-  ) \%>\%
+  ) |>
   cols_label(currency = "value + uncert.")
 }\if{html}{\out{</div>}}
 

@@ -57,13 +57,13 @@ entirely capitalized versions of the default labels but, instead of using
 use \code{cols_label_with()} and instruct it to apply the \code{toupper()} function to
 all column labels.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
   dplyr::filter(
     date >= "2015-12-01" &
       date <= "2015-12-15"
-  ) \%>\%
-  dplyr::select(-c(adj_close, volume)) \%>\%
-  gt() \%>\%
+  ) |>
+  dplyr::select(-c(adj_close, volume)) |>
+  gt() |>
   cols_label_with(fn = toupper)
 }\if{html}{\out{</div>}}
 
@@ -79,17 +79,17 @@ of \code{cols_label_with()}. Here, we use the \code{make_clean_names()} function
 the \strong{janitor} package and follow up with the removal of a numeral with
 \code{gsub()}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::filter(year == 2017) \%>\%
-  dplyr::filter(grepl("^C", country_code_3)) \%>\%
-  dplyr::select(-country_code_2, -year) \%>\%
-  head(8) \%>\%
-  gt() \%>\%
-  cols_move_to_start(columns = country_code_3) \%>\%
-  fmt_integer(columns = population) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::filter(year == 2017) |>
+  dplyr::filter(grepl("^C", country_code_3)) |>
+  dplyr::select(-country_code_2, -year) |>
+  head(8) |>
+  gt() |>
+  cols_move_to_start(columns = country_code_3) |>
+  fmt_integer(columns = population) |>
   cols_label_with(
     fn = ~ janitor::make_clean_names(., case = "title")
-  ) \%>\%
+  ) |>
   cols_label_with(
     fn = ~ gsub("[0-9]", "", .)
   )
@@ -107,24 +107,24 @@ mutations of \code{x} (the vector of column labels). We can even use the \code{\
 helper function with that to signal to \strong{gt} that the column label should be
 interpreted as Markdown text.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
-  dplyr::mutate(month = substr(date, 6, 7)) \%>\%
-  dplyr::group_by(month) \%>\%
-  dplyr::summarize(pizze_vendute = dplyr::n()) \%>\%
-  dplyr::ungroup() \%>\%
-  dplyr::mutate(frazione_della_quota = pizze_vendute / 4000) \%>\%
-  dplyr::mutate(date = paste0("2015/", month, "/01")) \%>\%
-  dplyr::select(-month) \%>\%
-  gt(rowname_col = "date") \%>\%
-  fmt_date(date, date_style = "month", locale = "it") \%>\%
-  fmt_percent(columns = frazione_della_quota) \%>\%
-  fmt_integer(columns = pizze_vendute) \%>\%
-  cols_width(everything() ~ px(100)) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
+  dplyr::mutate(month = substr(date, 6, 7)) |>
+  dplyr::group_by(month) |>
+  dplyr::summarize(pizze_vendute = dplyr::n()) |>
+  dplyr::ungroup() |>
+  dplyr::mutate(frazione_della_quota = pizze_vendute / 4000) |>
+  dplyr::mutate(date = paste0("2015/", month, "/01")) |>
+  dplyr::select(-month) |>
+  gt(rowname_col = "date") |>
+  fmt_date(date, date_style = "month", locale = "it") |>
+  fmt_percent(columns = frazione_della_quota) |>
+  fmt_integer(columns = pizze_vendute) |>
+  cols_width(everything() ~ px(100)) |>
   cols_label_with(
     fn = function(x) \{
-      janitor::make_clean_names(x, case = "title") \%>\%
-        toupper() \%>\%
-        stringr::str_replace_all("^|$", "**") \%>\%
+      janitor::make_clean_names(x, case = "title") |>
+        toupper() |>
+        stringr::str_replace_all("^|$", "**") |>
         md()
     \}
   )

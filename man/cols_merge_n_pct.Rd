@@ -80,36 +80,36 @@ percentages of the top 3 pizzas sold by pizza category in 2015. The
 \code{cols_merge_n_pct()} function is used to merge the \code{n} and \code{frac} columns
 (and the \code{frac} column is formatted using \code{\link[=fmt_percent]{fmt_percent()}}).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
-  dplyr::group_by(name, type, price) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
+  dplyr::group_by(name, type, price) |>
   dplyr::summarize(
     n = dplyr::n(),
-    frac = n/nrow(.),
+    frac = n/nrow(pizzaplace),
     .groups = "drop"
-  ) \%>\%
-  dplyr::arrange(type, dplyr::desc(n)) \%>\%
-  dplyr::group_by(type) \%>\%
-  dplyr::slice_head(n = 3) \%>\%
+  ) |>
+  dplyr::arrange(type, dplyr::desc(n)) |>
+  dplyr::group_by(type) |>
+  dplyr::slice_head(n = 3) |>
   gt(
     rowname_col = "name",
     groupname_col = "type"
-  ) \%>\%
-  fmt_currency(price) \%>\%
-  fmt_percent(frac) \%>\%
+  ) |>
+  fmt_currency(price) |>
+  fmt_percent(frac) |>
   cols_merge_n_pct(
     col_n = n,
     col_pct = frac
-  ) \%>\%
+  ) |>
   cols_label(
     n = md("*N* (\%)"),
     price = "Price"
-  ) \%>\%
+  ) |>
   tab_style(
     style = cell_text(font = "monospace"),
     locations = cells_stub()
-  ) \%>\%
-  tab_stubhead(md("Cat. and  \\nPizza Code")) \%>\%
-  tab_header(title = "Top 3 Pizzas Sold by Category in 2015") \%>\%
+  ) |>
+  tab_stubhead(md("Cat. and  \\nPizza Code")) |>
+  tab_header(title = "Top 3 Pizzas Sold by Category in 2015") |>
   tab_options(table.width = px(512))
 }\if{html}{\out{</div>}}
 
