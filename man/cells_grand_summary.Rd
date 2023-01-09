@@ -96,19 +96,19 @@ grand summary row.
 Use \code{\link{countrypops}} to create a \strong{gt} table. Add some styling to a grand
 summary cell with with \code{\link[=tab_style]{tab_style()}} and \code{cells_grand_summary()}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::filter(country_name == "Spain", year < 1970) \%>\%
-  dplyr::select(-contains("country")) \%>\%
-  gt(rowname_col = "year") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::filter(country_name == "Spain", year < 1970) |>
+  dplyr::select(-contains("country")) |>
+  gt(rowname_col = "year") |>
   fmt_number(
     columns = population,
     decimals = 0
-  ) \%>\%
+  ) |>
   grand_summary_rows(
     columns = population,
     fns = change ~ max(.) - min(.),
     fmt = ~ fmt_integer(.)
-  ) \%>\%
+  ) |>
   tab_style(
     style = list(
       cell_text(style = "italic"),

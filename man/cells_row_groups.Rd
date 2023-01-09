@@ -81,16 +81,16 @@ with the \code{\link[=summary_rows]{summary_rows()}} function and then add a foo
 \code{"peppr_salami"} row group label with \code{\link[=tab_footnote]{tab_footnote()}} and with
 \code{cells_row_groups()} in \code{locations}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
-  dplyr::filter(name \%in\% c("soppressata", "peppr_salami")) \%>\%
-  dplyr::group_by(name, size) \%>\%
-  dplyr::summarize(`Pizzas Sold` = dplyr::n(), .groups = "drop") \%>\%
-  gt(rowname_col = "size", groupname_col = "name") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
+  dplyr::filter(name \%in\% c("soppressata", "peppr_salami")) |>
+  dplyr::group_by(name, size) |>
+  dplyr::summarize(`Pizzas Sold` = dplyr::n(), .groups = "drop") |>
+  gt(rowname_col = "size", groupname_col = "name") |>
   summary_rows(
     columns = `Pizzas Sold`,
     fns = list(label = "TOTAL", fn = "sum"),
     fmt = ~ fmt_integer(.)
-  ) \%>\%
+  ) |>
   tab_footnote(
     footnote = "The Pepper-Salami.",
     cells_row_groups(groups = "peppr_salami")
