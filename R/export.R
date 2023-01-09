@@ -62,10 +62,10 @@
 #'
 #' ```r
 #' tab_1 <-
-#'   gtcars %>%
-#'   dplyr::select(model, year, hp, trq) %>%
-#'   dplyr::slice(1:5) %>%
-#'   gt(rowname_col = "model") %>%
+#'   gtcars |>
+#'   dplyr::select(model, year, hp, trq) |>
+#'   dplyr::slice(1:5) |>
+#'   gt(rowname_col = "model") |>
 #'   tab_stubhead(label = "car")
 #' ```
 #'
@@ -74,40 +74,40 @@
 #' `inline_css = TRUE` option.
 #'
 #' ```r
-#' tab_1 %>% gtsave(filename = "tab_1.html", inline_css = TRUE)
+#' tab_1 |> gtsave(filename = "tab_1.html", inline_css = TRUE)
 #' ```
 #'
 #' By leaving out the `inline_css` option, we get a more conventional HTML file
 #' with embedded CSS styles.
 #'
 #' ```r
-#' tab_1 %>% gtsave(filename = "tab_1.html")
+#' tab_1 |> gtsave(filename = "tab_1.html")
 #' ```
 #'
 #' Saving as a PNG file results in a cropped image of an HTML table. The amount
 #' of whitespace can be set with the `expand` option.
 #'
 #' ```r
-#' tab_1 %>% gtsave("tab_1.png", expand = 10)
+#' tab_1 |> gtsave("tab_1.png", expand = 10)
 #' ```
 #'
 #' Any use of the `.tex`, `.ltx`, or `.rnw` will result in the output of a LaTeX
 #' document.
 #'
 #' ```r
-#' tab_1 %>% gtsave("tab_1.tex")
+#' tab_1 |> gtsave("tab_1.tex")
 #' ```
 #'
 #' With the `.rtf` extension, we'll get an RTF document.
 #'
 #' ```r
-#' tab_1 %>% gtsave("tab_1.rtf")
+#' tab_1 |> gtsave("tab_1.rtf")
 #'
 #' ```
 #' With the `.docx` extension, we'll get a word/docx document.
 #'
 #' ```r
-#' tab_1 %>% gtsave("tab_1.docx")
+#' tab_1 |> gtsave("tab_1.docx")
 #' ```
 #'
 #' @family table export functions
@@ -371,14 +371,14 @@ gtsave_filename <- function(path, filename) {
 #'
 #' ```r
 #' tab_html <-
-#'   gtcars %>%
-#'   dplyr::select(mfr, model, msrp) %>%
-#'   dplyr::slice(1:5) %>%
-#'   gt() %>%
+#'   gtcars |>
+#'   dplyr::select(mfr, model, msrp) |>
+#'   dplyr::slice(1:5) |>
+#'   gt() |>
 #'   tab_header(
 #'     title = md("Data listing from **gtcars**"),
 #'     subtitle = md("`gtcars` is an R dataset")
-#'   ) %>%
+#'   ) |>
 #'   as_raw_html()
 #' ```
 #'
@@ -468,14 +468,14 @@ as_raw_html <- function(
 #'
 #' ```r
 #' tab_latex <-
-#'   gtcars %>%
-#'   dplyr::select(mfr, model, msrp) %>%
-#'   dplyr::slice(1:5) %>%
-#'   gt() %>%
+#'   gtcars |>
+#'   dplyr::select(mfr, model, msrp) |>
+#'   dplyr::slice(1:5) |>
+#'   gt() |>
 #'   tab_header(
 #'     title = md("Data listing from **gtcars**"),
 #'     subtitle = md("`gtcars` is an R dataset")
-#'   ) %>%
+#'   ) |>
 #'   as_latex()
 #' ```
 #'
@@ -556,14 +556,14 @@ as_latex <- function(data) {
 #'
 #' ```r
 #' tab_rtf <-
-#'   gtcars %>%
-#'   dplyr::select(mfr, model) %>%
-#'   dplyr::slice(1:2) %>%
-#'   gt() %>%
+#'   gtcars |>
+#'   dplyr::select(mfr, model) |>
+#'   dplyr::slice(1:2) |>
+#'   gt() |>
 #'   tab_header(
 #'     title = md("Data listing from **gtcars**"),
 #'     subtitle = md("`gtcars` is an R dataset")
-#'   ) %>%
+#'   ) |>
 #'   as_rtf()
 #' ```
 #'
@@ -662,14 +662,14 @@ as_rtf <- function(data) {
 #' # add a header and then export as
 #' # OOXML code for Word
 #' tab_rtf <-
-#'   gtcars %>%
-#'   dplyr::select(mfr, model) %>%
-#'   dplyr::slice(1:2) %>%
-#'   gt() %>%
+#'   gtcars |>
+#'   dplyr::select(mfr, model) |>
+#'   dplyr::slice(1:2) |>
+#'   gt() |>
 #'   tab_header(
 #'     title = md("Data listing from **gtcars**"),
 #'     subtitle = md("`gtcars` is an R dataset")
-#'   ) %>%
+#'   ) |>
 #'   as_word()
 #'
 #' @family table export functions
@@ -861,15 +861,15 @@ as_word_tbl_body <- function(
 #'
 #' ```{r}
 #' summary_extracted <-
-#'   sp500 %>%
-#'   dplyr::filter(date >= "2015-01-05" & date <="2015-01-30") %>%
-#'   dplyr::arrange(date) %>%
-#'   dplyr::mutate(week = paste0("W", strftime(date, format = "%V"))) %>%
-#'   dplyr::select(-adj_close, -volume) %>%
+#'   sp500 |>
+#'   dplyr::filter(date >= "2015-01-05" & date <="2015-01-30") |>
+#'   dplyr::arrange(date) |>
+#'   dplyr::mutate(week = paste0("W", strftime(date, format = "%V"))) |>
+#'   dplyr::select(-adj_close, -volume) |>
 #'   gt(
 #'     rowname_col = "date",
 #'     groupname_col = "week"
-#'   ) %>%
+#'   ) |>
 #'   summary_rows(
 #'     groups = everything(),
 #'     columns = c(open, high, low, close),
@@ -879,7 +879,7 @@ as_word_tbl_body <- function(
 #'       avg = ~mean(.)
 #'     ),
 #      fmt = ~ fmt_number(.)
-#'   ) %>%
+#'   ) |>
 #'   extract_summary()
 #'
 #' summary_extracted
@@ -889,10 +889,10 @@ as_word_tbl_body <- function(
 #' `dplyr::bind_rows()` and then pass the tibble to [gt()].
 #'
 #' ```r
-#' summary_extracted %>%
-#'   unlist(recursive = FALSE) %>%
-#'   dplyr::bind_rows() %>%
-#'   gt(groupname_col = "group_id") %>%
+#' summary_extracted |>
+#'   unlist(recursive = FALSE) |>
+#'   dplyr::bind_rows() |>
+#'   gt(groupname_col = "group_id") |>
 #'   cols_hide(columns = row_id)
 #' ```
 #'
@@ -1013,8 +1013,8 @@ extract_summary <- function(data) {
 #' extraction.
 #'
 #' ```r
-#' gt_tbl %>%
-#'   fmt_number(columns = num, decimals = 2) %>%
+#' gt_tbl |>
+#'   fmt_number(columns = num, decimals = 2) |>
 #'   extract_cells(columns = num, rows = 1)
 #' ```
 #' ```
