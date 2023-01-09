@@ -173,15 +173,15 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{num} c
 partially numeric  and partially in scientific notation (using the
 \code{num > 500} and \code{num <= 500} expressions in the respective \code{rows} arguments).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt() |>
   fmt_number(
     columns = num,
     rows = num > 500,
     decimals = 1,
     scale_by = 1/1000,
     pattern = "\{x\}K"
-  ) \%>\%
+  ) |>
   fmt_scientific(
     columns = num,
     rows = num <= 500,

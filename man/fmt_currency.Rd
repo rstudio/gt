@@ -249,8 +249,8 @@ useful reference on which locales are supported, we can use the
 Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{currency} column to
 have currency values in euros (\code{"EUR"}).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt() |>
   fmt_currency(
     columns = currency,
     currency = "EUR"
@@ -264,13 +264,13 @@ have currency values in euros (\code{"EUR"}).
 Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{num} and \code{currency},
 columns, then, format those columns using the \code{"CNY"} and \code{"GBP"} currencies.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(num, currency) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(num, currency) |>
+  gt() |>
   fmt_currency(
     columns = num,
     currency = "CNY"
-  ) \%>\%
+  ) |>
   fmt_currency(
     columns = currency,
     currency = "GBP"

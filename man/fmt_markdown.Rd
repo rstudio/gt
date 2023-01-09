@@ -115,9 +115,9 @@ then, create a \strong{gt} table and format all columns with \code{fmt_markdown(
   ~Markdown, ~md,
   text_1a,   text_2a,
   text_1b,   text_2b,
-) \%>\%
-  gt() \%>\%
-  fmt_markdown(columns = everything()) \%>\%
+) |>
+  gt() |>
+  fmt_markdown(columns = everything()) |>
   tab_options(table.width = px(400))
 }\if{html}{\out{</div>}}
 

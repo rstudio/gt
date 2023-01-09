@@ -171,8 +171,8 @@ useful reference on which locales are supported, we can use the
 Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{num} column in
 engineering notation.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt() |>
   fmt_engineering(columns = num)
 }\if{html}{\out{</div>}}
 

@@ -197,13 +197,13 @@ useful reference on which locales are supported, we can use the
 Use \code{\link{pizzaplace}} to create a \strong{gt} table. Format the \code{frac_of_quota}
 column to display values as percentages.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
-  dplyr::mutate(month = as.numeric(substr(date, 6, 7))) \%>\%
-  dplyr::group_by(month) \%>\%
-  dplyr::summarize(pizzas_sold = dplyr::n()) \%>\%
-  dplyr::ungroup() \%>\%
-  dplyr::mutate(frac_of_quota = pizzas_sold / 4000) \%>\%
-  gt(rowname_col = "month") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
+  dplyr::mutate(month = as.numeric(substr(date, 6, 7))) |>
+  dplyr::group_by(month) |>
+  dplyr::summarize(pizzas_sold = dplyr::n()) |>
+  dplyr::ungroup() |>
+  dplyr::mutate(frac_of_quota = pizzas_sold / 4000) |>
+  gt(rowname_col = "month") |>
   fmt_percent(
     columns = frac_of_quota,
     decimals = 1

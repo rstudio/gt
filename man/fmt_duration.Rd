@@ -213,19 +213,19 @@ Use part of the \code{sp500} table to create a \strong{gt} table. Create a
 \code{difftime}-based column and format the duration values to be displayed as the
 number of days since March 30, 2020.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
-  dplyr::slice_head(n = 10) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
+  dplyr::slice_head(n = 10) |>
   dplyr::mutate(
     time_point = lubridate::ymd("2020-03-30"),
     time_passed = difftime(time_point, date)
-  ) \%>\%
-  dplyr::select(time_passed, open, close) \%>\%
-  gt(rowname_col = "month") \%>\%
+  ) |>
+  dplyr::select(time_passed, open, close) |>
+  gt(rowname_col = "month") |>
   fmt_duration(
     columns = time_passed,
     output_units = "days",
     duration_style = "wide"
-  ) \%>\%
+  ) |>
   fmt_currency(columns = c(open, close))
 }\if{html}{\out{</div>}}
 

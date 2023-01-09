@@ -832,9 +832,9 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{dat
 Format the column to have dates formatted with the \code{"month_day_year"} style
 and times with the \code{"h_m_s_p"} 12-hour time style.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(datetime) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(datetime) |>
+  gt() |>
   fmt_datetime(
     columns = datetime,
     date_style = "month_day_year",
@@ -851,15 +851,15 @@ that work well together are \code{"MMMEd"} and \code{"Hms"}. These will mutate
 depending on the locale. Let's use the default locale for the first 3 rows
 and the Danish locale (\code{"da"}) for the remaining rows.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(datetime) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(datetime) |>
+  gt() |>
   fmt_datetime(
     columns = datetime,
     date_style = "MMMEd",
     time_style = "Hms",
     locale = "da"
-  ) \%>\%
+  ) |>
   fmt_datetime(
     columns = datetime,
     rows = 1:3,
@@ -878,9 +878,9 @@ specification. Using the CLDR datetime pattern
 zone formatting. Let's provide a time zone ID (\code{"America/Vancouver"}) to the
 \code{tz} argument.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(datetime) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(datetime) |>
+  gt() |>
   fmt_datetime(
     columns = datetime,
     format = "EEEE, MMMM d, y 'at' h:mm a (zzzz)",

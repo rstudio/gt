@@ -212,9 +212,9 @@ Create a tibble of small numeric values and generate a \strong{gt} table. Format
 the \code{a} column to appear in scientific notation with \code{\link[=fmt_scientific]{fmt_scientific()}} and
 format the \code{b} column as \emph{per mille} values with \code{fmt_partsper()}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(x = 0:-5, a = 10^(0:-5), b = a) \%>\%
-  gt(rowname_col = "x") \%>\%
-  fmt_scientific(a, decimals = 0) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(x = 0:-5, a = 10^(0:-5), b = a) |>
+  gt(rowname_col = "x") |>
+  fmt_scientific(a, decimals = 0) |>
   fmt_partsper(
     columns = b,
     to_units = "per-mille"

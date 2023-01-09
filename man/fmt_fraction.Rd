@@ -172,41 +172,41 @@ useful reference on which locales are supported, we can use the
 Use \code{\link{pizzaplace}} to create a \strong{gt} table. Format the \code{f_sold} and
 \code{f_income} columns to display fractions.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
-  dplyr::group_by(type, size) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
+  dplyr::group_by(type, size) |>
   dplyr::summarize(
     sold = dplyr::n(),
     income = sum(price),
     .groups = "drop_last"
-  ) \%>\%
-  dplyr::group_by(type) \%>\%
+  ) |>
+  dplyr::group_by(type) |>
   dplyr::mutate(
     f_sold = sold / sum(sold),
     f_income = income / sum(income),
-  ) \%>\%
-  dplyr::arrange(type, dplyr::desc(income)) \%>\%
-  gt(rowname_col = "size") \%>\%
+  ) |>
+  dplyr::arrange(type, dplyr::desc(income)) |>
+  gt(rowname_col = "size") |>
   tab_header(
     title = "Pizzas Sold in 2015",
     subtitle = "Fraction of Sell Count and Revenue by Size per Type"
-  ) \%>\%
-  fmt_integer(columns = sold) \%>\%
-  fmt_currency(columns = income) \%>\%
+  ) |>
+  fmt_integer(columns = sold) |>
+  fmt_currency(columns = income) |>
   fmt_fraction(
     columns = starts_with("f_"),
     accuracy = 10,
     simplify = FALSE,
     layout = "diagonal"
-  ) \%>\%
-  sub_missing(missing_text = "") \%>\%
+  ) |>
+  sub_missing(missing_text = "") |>
   tab_spanner(
     label = "Sold",
     columns = contains("sold")
-  ) \%>\%
+  ) |>
   tab_spanner(
     label = "Revenue",
     columns = contains("income")
-  ) \%>\%
+  ) |>
   text_transform(
     locations = cells_body(),
     fn = function(x) \{
@@ -215,14 +215,14 @@ Use \code{\link{pizzaplace}} to create a \strong{gt} table. Format the \code{f_s
         x != 0 ~ x
       )
     \}
-  ) \%>\%
+  ) |>
   cols_label(
     sold = "Amount",
     income = "Amount",
     f_sold = md("_f_"),
     f_income = md("_f_")
-  ) \%>\%
-  cols_align(align = "center", columns = starts_with("f")) \%>\%
+  ) |>
+  cols_align(align = "center", columns = starts_with("f")) |>
   tab_options(
     table.width = px(400),
     row_group.as_column = TRUE

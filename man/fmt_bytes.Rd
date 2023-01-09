@@ -184,9 +184,9 @@ useful reference on which locales are supported, we can use the
 Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{num} column to have
 byte sizes in the decimal standard.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(num) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(num) |>
+  gt() |>
   fmt_bytes(columns = num)
 }\if{html}{\out{</div>}}
 
@@ -197,9 +197,9 @@ byte sizes in the decimal standard.
 Create a similar table with the \code{fmt_bytes()} function, this time showing
 byte sizes as binary values.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(num) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(num) |>
+  gt() |>
   fmt_bytes(
     columns = num,
     standard = "binary"
