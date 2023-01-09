@@ -9,6 +9,7 @@ grand_summary_rows(
   columns = everything(),
   fns = NULL,
   fmt = NULL,
+  side = c("bottom", "top"),
   missing_text = "---",
   formatter = NULL,
   ...
@@ -37,6 +38,9 @@ contain a formatting call (e.g.,
 could contain a group-targeting expression (e.g.,
 \code{"group_a" ~ fmt_number(.)}). More information on this can be found in the
 \emph{Formatting expressions for \code{fmt}} section.}
+
+\item{side}{Should the grand summary rows be placed at the \code{"bottom"} (the
+default) or the \code{"top"} of the table?}
 
 \item{missing_text}{The text to be used in place of \code{NA} values in summary
 cells with no data outputs.}
@@ -240,6 +244,39 @@ summary rows \code{min}, \code{max}, and \code{avg} for the table with the
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_grand_summary_rows_1.png" alt="This image of a table was generated from the first code example in the `grand_summary_rows()` help file." style="width:100\%;">
+}}
+
+Let's take the \code{\link{countrypops}} dataset and process that a bit before handing
+it off to \strong{gt}. We can create a single grand summary row with totals that
+appears at the top of the table body (with \code{side = "top"}). We can define the
+aggregation with a list that contains parameters for the grand summary row
+label (\code{"TOTALS"}), the ID value of that row (\code{"totals"}), and the
+aggregation function (expressed as \code{"sum"}, which \strong{gt} recognizes as the
+\code{sum()} function). Finally, we'll add a background fill to the grand summary
+row with \code{\link[=tab_style]{tab_style()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
+  dplyr::filter(country_code_2 \%in\% c("BE", "NU", "LU")) \%>\%
+  dplyr::filter(year \%\% 10 == 0) \%>\%
+  dplyr::select(country_name, year, population) \%>\%
+  tidyr::pivot_wider(names_from = year, values_from = population) \%>\%
+  gt(rowname_col = "country_name") \%>\%
+  tab_header(title = "Populations of the Benelux Countries") \%>\%
+  tab_spanner(columns = everything(), label = "Year") \%>\%
+  fmt_integer() \%>\%
+  grand_summary_rows(
+    fns =  list(label = "TOTALS", id = "totals", fn = "sum"),
+    fmt = ~ fmt_integer(.),
+    side = "top"
+  ) \%>\%
+  tab_style(
+    locations = cells_grand_summary(),
+    style = cell_fill(color = "lightblue" \%>\% adjust_luminance(steps = +1))
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_grand_summary_rows_2.png" alt="This image of a table was generated from the second code example in the `grand_summary_rows()` help file." style="width:100\%;">
 }}
 }
 

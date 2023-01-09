@@ -27,6 +27,7 @@ tests/testthat/test-cols_merge.R
 tests/testthat/test-cols_width_rtf.R
 tests/testthat/test-data_color.R
 tests/testthat/test-extract_cells.R
+tests/testthat/test-fmt_auto.R
 tests/testthat/test-fmt_bytes.R
 tests/testthat/test-fmt_currency.R
 tests/testthat/test-fmt_datetime.R

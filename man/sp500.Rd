@@ -5,13 +5,13 @@
 \alias{sp500}
 \title{Daily S&P 500 Index data from 1950 to 2015}
 \format{
-A tibble with 16607 rows and 7 variables:
+A tibble with 16,607 rows and 7 variables:
 \describe{
-\item{date}{The date expressed as \code{Date} values}
+\item{date}{The date expressed as \code{Date} values.}
 \item{open, high, low, close}{The day's opening, high, low, and closing
-prices in USD; the \code{close} price is adjusted for splits}
-\item{volume}{the number of trades for the given \code{date}}
-\item{adj_close}{The close price adjusted for both dividends and splits}
+prices in USD. The \code{close} price is adjusted for splits.}
+\item{volume}{The number of trades for the given \code{date}.}
+\item{adj_close}{The close price adjusted for both dividends and splits.}
 }
 }
 \usage{
@@ -20,7 +20,8 @@ sp500
 \description{
 This dataset provides daily price indicators for the S&P 500 index from the
 beginning of 1950 to the end of 2015. The index includes 500 leading
-companies and captures about 80\\% coverage of available market capitalization.
+companies and captures about 80 percent coverage of available market
+capitalization.
 }
 \section{Examples}{
 
@@ -52,7 +53,8 @@ Other datasets:
 \code{\link{gt_adsl}},
 \code{\link{gtcars}},
 \code{\link{pizzaplace}},
-\code{\link{sza}}
+\code{\link{sza}},
+\code{\link{towny}}
 }
 \concept{datasets}
 \keyword{datasets}

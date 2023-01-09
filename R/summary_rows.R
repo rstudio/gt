@@ -31,6 +31,8 @@
 #'   could contain a group-targeting expression (e.g.,
 #'   `"group_a" ~ fmt_number(.)`). More information on this can be found in the
 #'   *Formatting expressions for `fmt`* section.
+#' @param side Should the summary rows be placed at the `"bottom"` (the default)
+#'   or the `"top"` of the row group?
 #' @param missing_text The text to be used in place of `NA` values in summary
 #'   cells with no data outputs.
 #' @param formatter Deprecated, please use `fmt` instead. This was previously
@@ -237,6 +239,54 @@
 #' `r man_get_image_tag(file = "man_summary_rows_1.png")`
 #' }}
 #'
+#' Using the [`countrypops`] dataset, let's process that a bit before giving it
+#' to **gt**. We can create a summary rows with totals that appear at the top of
+#' each row group (with `side = "top"`). We can define the aggregation with a
+#' list that contains parameters for the summary row label (`md("**ALL**")`),
+#' the shared ID value of those rows across groups (`"totals"`), and the
+#' aggregation function (expressed as `"sum"`, which **gt** recognizes as the
+#' `sum()` function). To top it all off, we'll add background fills to the
+#' summary rows with [tab_style()].
+#'
+#' ```r
+#' countrypops %>%
+#'   dplyr::filter(
+#'     country_code_2 %in% c("BR", "RU", "IN", "CN", "FR", "DE", "IT", "GB")
+#'   ) %>%
+#'   dplyr::filter(year %% 10 == 0) %>%
+#'   dplyr::select(country_name, year, population) %>%
+#'   tidyr::pivot_wider(names_from = year, values_from = population) %>%
+#'   gt(rowname_col = "country_name") %>%
+#'   tab_row_group(
+#'     label = md("*BRIC*"),
+#'     rows = c("Brazil", "Russian Federation", "India", "China"),
+#'     id = "bric"
+#'   ) %>%
+#'   tab_row_group(
+#'     label = md("*Big Four*"),
+#'     rows = c("France", "Germany", "Italy", "United Kingdom"),
+#'     id = "big4"
+#'   ) %>%
+#'   row_group_order(groups = c("bric", "big4")) %>%
+#'   tab_stub_indent(rows = everything()) %>%
+#'   tab_header(title = "Populations of the BRIC and Big Four Countries") %>%
+#'   tab_spanner(columns = everything(), label = "Year") %>%
+#'   fmt_number(n_sigfig = 3, suffixing = TRUE) %>%
+#'   summary_rows(
+#'     fns =  list(label = md("**ALL**"), id = "totals", fn = "sum"),
+#'     fmt = ~ fmt_number(., n_sigfig = 3, suffixing = TRUE),
+#'     side = "top"
+#'   ) %>%
+#'   tab_style(
+#'     locations = cells_summary(),
+#'     style = cell_fill(color = "lightblue" %>% adjust_luminance(steps = +1))
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_summary_rows_2.png")`
+#' }}
+#'
 #' @family row addition/modification functions
 #' @section Function ID:
 #' 5-1
@@ -248,6 +298,7 @@ summary_rows <- function(
     columns = everything(),
     fns = NULL,
     fmt = NULL,
+    side = c("bottom", "top"),
     missing_text = "---",
     formatter = NULL,
     ...
@@ -255,6 +306,9 @@ summary_rows <- function(
 
   # Perform input object validation
   stop_if_not_gt(data = data)
+
+  # Get the correct `side` value
+  side <- rlang::arg_match(side)
 
   # Collect all provided formatting options in a list
   formatter_options <- list(...)
@@ -371,7 +425,7 @@ summary_rows <- function(
 
     formatter_formula <- paste0("~ ", formatter_name, "(", fmt_args, ")")
 
-    fmt <- list(as.formula(formatter_formula))
+    fmt <- list(stats::as.formula(formatter_formula))
 
     # Provide deprecation warning
     cli::cli_warn(c(
@@ -392,6 +446,7 @@ summary_rows <- function(
       columns = columns,
       fns = summary_fns,
       fmt = fmt_fns,
+      side = side,
       missing_text = missing_text,
       formatter = formatter,
       formatter_options = formatter_options
@@ -415,6 +470,8 @@ summary_rows <- function(
 #' cells by use of formatting expressions in `fmt`.
 #'
 #' @inheritParams summary_rows
+#' @param side Should the grand summary rows be placed at the `"bottom"` (the
+#'   default) or the `"top"` of the table?
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -584,6 +641,40 @@ summary_rows <- function(
 #' `r man_get_image_tag(file = "man_grand_summary_rows_1.png")`
 #' }}
 #'
+#' Let's take the [`countrypops`] dataset and process that a bit before handing
+#' it off to **gt**. We can create a single grand summary row with totals that
+#' appears at the top of the table body (with `side = "top"`). We can define the
+#' aggregation with a list that contains parameters for the grand summary row
+#' label (`"TOTALS"`), the ID value of that row (`"totals"`), and the
+#' aggregation function (expressed as `"sum"`, which **gt** recognizes as the
+#' `sum()` function). Finally, we'll add a background fill to the grand summary
+#' row with [tab_style()].
+#'
+#' ```r
+#' countrypops %>%
+#'   dplyr::filter(country_code_2 %in% c("BE", "NU", "LU")) %>%
+#'   dplyr::filter(year %% 10 == 0) %>%
+#'   dplyr::select(country_name, year, population) %>%
+#'   tidyr::pivot_wider(names_from = year, values_from = population) %>%
+#'   gt(rowname_col = "country_name") %>%
+#'   tab_header(title = "Populations of the Benelux Countries") %>%
+#'   tab_spanner(columns = everything(), label = "Year") %>%
+#'   fmt_integer() %>%
+#'   grand_summary_rows(
+#'     fns =  list(label = "TOTALS", id = "totals", fn = "sum"),
+#'     fmt = ~ fmt_integer(.),
+#'     side = "top"
+#'   ) %>%
+#'   tab_style(
+#'     locations = cells_grand_summary(),
+#'     style = cell_fill(color = "lightblue" %>% adjust_luminance(steps = +1))
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_grand_summary_rows_2.png")`
+#' }}
+#'
 #' @family row addition/modification functions
 #' @section Function ID:
 #' 5-2
@@ -594,6 +685,7 @@ grand_summary_rows <- function(
     columns = everything(),
     fns = NULL,
     fmt = NULL,
+    side = c("bottom", "top"),
     missing_text = "---",
     formatter = NULL,
     ...
@@ -602,12 +694,16 @@ grand_summary_rows <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
+  # Get the correct `side` value
+  side <- rlang::arg_match(side)
+
   summary_rows(
     data = data,
     groups = ":GRAND_SUMMARY:",
     columns = {{ columns }},
     fns = fns,
     fmt = fmt,
+    side = side,
     missing_text = missing_text,
     formatter = formatter,
     ...

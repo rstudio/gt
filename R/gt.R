@@ -241,9 +241,14 @@ gt <- function(
     !is.null(rowname_col) &&
     rowname_col %in% colnames(dt_data_get(data = data))
   ) {
-
     data <- fmt_markdown(data = data, columns = rowname_col)
   }
+
+  # # If automatic formatting of values is to be done, call
+  # # the `cols_align()` function on data
+  # if (auto_fmt) {
+  #   data <- fmt_auto(data = data)
+  # }
 
   data
 }

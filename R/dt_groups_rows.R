@@ -87,5 +87,25 @@ dt_groups_rows_build <- function(data, context) {
     groups_rows <- cbind(groups_rows, group_label = character(0))
   }
 
+  if (nrow(groups_rows) > 1) {
+
+    groups_rows[["has_summary_rows"]] <- rep(FALSE, nrow(groups_rows))
+    groups_rows[["summary_row_side"]] <- rep(NA_character_, nrow(groups_rows))
+
+    list_of_summaries <- dt_summary_df_get(data = data)
+
+    for (i in seq_len(nrow(groups_rows))) {
+
+      group_id <- groups_rows[["group_id"]][i]
+
+      summary_rows_group_df_i <- list_of_summaries[["summary_df_display_list"]][[group_id]]
+
+      if (!is.null(summary_rows_group_df_i)) {
+        groups_rows[["has_summary_rows"]][i] <- TRUE
+        groups_rows[["summary_row_side"]][i] <- summary_row_side(data = data, group_id = group_id)
+      }
+    }
+  }
+
   dt_groups_rows_set(data = data, groups_rows = groups_rows)
 }

@@ -42,7 +42,7 @@ table as row captions in the display table stub.}
 
 \item{auto_align}{Optionally have column data be aligned depending on the
 content contained in each column of the input \code{data}. Internally, this
-calls \code{cols_align(align = "auto")} for all columns.}
+calls \code{cols_align(align = "auto")} on all columns.}
 
 \item{i_html}{Should the table be an interactive table when rendered as HTML?}
 

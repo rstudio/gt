@@ -412,7 +412,7 @@
     Code
       .
     Output
-      [1] "\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|l|r}\n\\toprule\n\\multicolumn{2}{l}{} & Pizzas Sold \\\\ \n\\midrule\npeppr\\_salami\\textsuperscript{1} & L & 696 \\\\ \n & M & 428 \\\\ \n & S & 322 \\\\ \n\\cmidrule(l{-0.05em}r){2-3}\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{sum} & $1,446$ \\\\ \n\\midrule\nsoppressata & L & 405 \\\\ \n & M & 268 \\\\ \n & S & 288 \\\\ \n\\cmidrule(l{-0.05em}r){2-3}\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{sum} & $961$ \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\textsuperscript{1}The Pepper-Salami.\\\\\n\\end{minipage}\n"
+      [1] "\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|l|r}\n\\toprule\n\\multicolumn{2}{l}{} & Pizzas Sold \\\\ \n\\midrule\npeppr\\_salami\\textsuperscript{1} & L & 696 \\\\ \n & M & 428 \\\\ \n & S & 322 \\\\ \n\\cmidrule(l{-0.05em}r){2-3}\n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{sum} & $1,446$ \\\\ \n\\midrule\nsoppressata & L & 405 \\\\ \n & M & 268 \\\\ \n & S & 288 \\\\ \n\\cmidrule(l{-0.05em}r){2-3}\n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{sum} & $961$ \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\textsuperscript{1}The Pepper-Salami.\\\\\n\\end{minipage}\n"
 
 ---
 
