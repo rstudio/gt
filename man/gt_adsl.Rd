@@ -11,19 +11,28 @@ A tibble with 182 rows and 14 variables:
 version.}
 \item{USUBJID}{The unique subject identifier.}
 \item{TRTA, TRTAN}{The study intervention and its numeric version, which
-is either \code{Placebo} (\code{1}), \verb{Drug 1} (\code{2}) or \verb{ (`3`, missing for screen failures).\} \\item\{ITTFL\}\{Intent-to-Treat (ITT) population flag, where `Y` indicates a subject belongs to the ITT population and `N` indicates a subject is not in the ITT population.\} \\item\{RANDFL\}\{Randomization flag, where `Y` indicates a subject was randomized to receive either `Placebo` or `Drug 1` and `N` indicates a subject was not randomized at all.\} \\item\{SCRFREAS\}\{The reason for screen failure. This is either missing (})
-for non-screen failure subjects or indicates the reason for screen failure}
+is either \code{"Placebo"} (\code{1}), \code{"Drug 1"} (\code{2}) or \code{NA} (\code{3}), missing for
+screen failures).}
+\item{ITTFL}{Intent-to-Treat (ITT) population flag, where \code{"Y"} indicates
+a subject belongs to the ITT population and \code{"N"} indicates a subject
+is not in the ITT population.}
+\item{RANDFL}{Randomization flag, where \code{"Y"} indicates a subject was
+randomized to receive either \code{"Placebo"} or \code{"Drug 1"} and \code{"N"} indicates
+a subject was not randomized at all.}
+\item{SCRFREAS}{The reason for screen failure. This is either missing
+(\code{""}) for non-screen failure subjects or indicates the reason for screen
+failure}
 \item{AGE}{The age of a subject at baseline in years.}
 \item{AAGEGR1}{The analysis age group, indicating if a subject was strictly
 younger than 40 years at baseline or older.}
-\item{SEX}{Sex of a subject. Can be either \code{Male}, \code{Female} or
-\code{Undifferentiated}.}
-\item{ETHNIC}{Ethnicity of a subject. Can be either \verb{Hispanic or Latino},
-\verb{Not Hispanic or Latino} or missing (``).}
+\item{SEX}{Sex of a subject. Can be either \code{"Male"}, \code{"Female"} or
+\code{"Undifferentiated"}.}
+\item{ETHNIC}{Ethnicity of a subject. Can be either \code{"Hispanic or Latino"},
+\code{"Not Hispanic or Latino"} or missing (\code{""}).}
 \item{BLBMI}{Body Mass Index (BMI) of a subject at baseline in kg/m2.}
 \item{EVNTFL}{Event Flag. Indicates whether the subject experienced a
-specific event during the course of the study or not. Can be either \code{Y},
-if the subject had the event, or `N`}
+specific event during the course of the study or not. Can be either \code{"Y"},
+if the subject had the event, or \code{"N"}}
 }
 }
 \usage{
@@ -39,6 +48,7 @@ dataset entails subject level demographics such as age, age group, sex,
 ethnicity and body mass index (BMI) at baseline, as well as an event
 flag, indicating whether the subject experienced a specific event
 throughout the course of the study or not.
+
 Although the data was intentionally created to mimic a typical clinical
 trial dataset following the CDISC format, it might not strictly comply
 with CDISC ADaM rules. The intent is to showcase the workflow for clinical
@@ -80,7 +90,8 @@ Other datasets:
 \code{\link{gtcars}},
 \code{\link{pizzaplace}},
 \code{\link{sp500}},
-\code{\link{sza}}
+\code{\link{sza}},
+\code{\link{towny}}
 }
 \concept{datasets}
 \keyword{datasets}
