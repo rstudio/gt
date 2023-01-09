@@ -232,7 +232,7 @@ reference:
 
   - title: Datasets
     desc: >
-      The **gt** package is equipped with six datasets that come in all shapes
+      The **gt** package is equipped with eight datasets that come in all shapes
       and sizes. Use them to experiment with the package. Many examples in the
       internal help documents use these datasets to quickly demonstrate the key
       features of **gt**.
@@ -244,6 +244,7 @@ reference:
     - pizzaplace
     - exibble
     - gt_adsl
+    - towny
 
   - title: Shiny Functions
     desc: >
