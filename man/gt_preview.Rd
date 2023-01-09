@@ -44,8 +44,8 @@ numbering option can be deactivated by setting \code{incl_rownums} to \code{FALS
 Use \code{\link{gtcars}} to create a \strong{gt} table preview (with only a few of its
 columns). You'll see the first five rows and the last row.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
-  dplyr::select(mfr, model, year) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::select(mfr, model, year) |>
   gt_preview()
 }\if{html}{\out{</div>}}
 

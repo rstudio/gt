@@ -33,8 +33,8 @@
 #' columns). You'll see the first five rows and the last row.
 #'
 #' ```r
-#' gtcars %>%
-#'   dplyr::select(mfr, model, year) %>%
+#' gtcars |>
+#'   dplyr::select(mfr, model, year) |>
 #'   gt_preview()
 #' ```
 #'
