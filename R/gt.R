@@ -61,7 +61,7 @@
 #'
 #' ```r
 #' tab_1 <-
-#'   exibble %>%
+#'   exibble |>
 #'   gt(
 #'     rowname_col = "row",
 #'     groupname_col = "group"
@@ -79,15 +79,15 @@
 #' available in the package.
 #'
 #' ```r
-#' tab_1 %>%
+#' tab_1 |>
 #'   tab_header(
 #'     title = "Table Title",
 #'     subtitle = "Subtitle"
-#'   ) %>%
+#'   ) |>
 #'   fmt_number(
 #'     columns = num,
 #'     decimals = 2
-#'   ) %>%
+#'   ) |>
 #'   cols_label(num = "number")
 #' ```
 #'

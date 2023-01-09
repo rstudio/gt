@@ -89,7 +89,7 @@ Create a \strong{gt} table object using the \code{\link{exibble}} dataset. Use t
 \code{groupname_col} arguments.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
-  exibble \%>\%
+  exibble |>
   gt(
     rowname_col = "row",
     groupname_col = "group"
@@ -106,15 +106,15 @@ The resulting \strong{gt} table object can be used in transformations with a
 variety of \verb{tab_*()}, \verb{fmt_*()}, \verb{cols_*()}, and even more functions
 available in the package.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |>
   tab_header(
     title = "Table Title",
     subtitle = "Subtitle"
-  ) \%>\%
+  ) |>
   fmt_number(
     columns = num,
     decimals = 2
-  ) \%>\%
+  ) |>
   cols_label(num = "number")
 }\if{html}{\out{</div>}}
 
