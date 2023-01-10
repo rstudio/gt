@@ -54,7 +54,7 @@ Imports:
 Suggests:
     covr,
     digest (>= 0.6.29),
-    knitr (>= 1.41.5),
+    knitr,
     paletteer,
     testthat (>= 3.0.0),
     RColorBrewer,
