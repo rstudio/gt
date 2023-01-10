@@ -28,8 +28,8 @@
 #' @param quoted Is `expr` a quoted expression (with `quote()`)? This is useful
 #'   if you want to save an expression in a variable.
 #' @param outputArgs A list of arguments to be passed through to the implicit
-#'   call to [gt_output()] when `render_gt` is used in an interactive R Markdown
-#'   document.
+#'   call to [gt_output()] when `render_gt()` is used in an interactive R
+#'   Markdown document.
 #'
 #' @section Examples:
 #'
@@ -42,18 +42,15 @@
 #' library(shiny)
 #'
 #' gt_tbl <-
-#'   gtcars %>%
-#'   gt() %>%
-#'   cols_hide(contains("_"))
+#'   gtcars |>
+#'   gt() |>
+#'   cols_hide(columns = contains("_"))
 #'
 #' ui <- fluidPage(
-#'
 #'   gt_output(outputId = "table")
 #' )
 #'
-#' server <- function(input,
-#'                    output,
-#'                    session) {
+#' server <- function(input, output, session) {
 #'
 #'   output$table <-
 #'     render_gt(
@@ -160,18 +157,15 @@ render_gt <- function(
 #' library(shiny)
 #'
 #' gt_tbl <-
-#'   gtcars %>%
-#'   gt() %>%
-#'   cols_hide(contains("_"))
+#'   gtcars |>
+#'   gt() |>
+#'   cols_hide(columns = contains("_"))
 #'
 #' ui <- fluidPage(
-#'
 #'   gt_output(outputId = "table")
 #' )
 #'
-#' server <- function(input,
-#'                    output,
-#'                    session) {
+#' server <- function(input, output, session) {
 #'
 #'   output$table <-
 #'     render_gt(
