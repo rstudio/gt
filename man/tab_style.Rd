@@ -56,13 +56,13 @@ bold text (the degree of choice is greater with variable fonts)
 Use \code{\link{exibble}} to create a \strong{gt} table. Add styles that are to be applied
 to data cells that satisfy a condition (using \code{tab_style()}).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(num, currency) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(num, currency) |>
+  gt() |>
   fmt_number(
     columns = c(num, currency),
     decimals = 1
-  ) \%>\%
+  ) |>
   tab_style(
     style = list(
       cell_fill(color = "lightcyan"),
@@ -72,7 +72,7 @@ to data cells that satisfy a condition (using \code{tab_style()}).
       columns = num,
       rows = num >= 5000
     )
-  ) \%>\%
+  ) |>
   tab_style(
     style = list(
       cell_fill(color = "#F9E3D6"),
@@ -92,17 +92,17 @@ to data cells that satisfy a condition (using \code{tab_style()}).
 Use \code{\link{sp500}} to create a \strong{gt} table. Color entire rows of cells based on
 values in a particular column.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
   dplyr::filter(
     date >= "2015-12-01" &
     date <= "2015-12-15"
-  ) \%>\%
-  dplyr::select(-c(adj_close, volume)) \%>\%
-  gt() \%>\%
+  ) |>
+  dplyr::select(-c(adj_close, volume)) |>
+  gt() |>
   tab_style(
     style = cell_fill(color = "lightgreen"),
     locations = cells_body(rows = close > open)
-  ) \%>\%
+  ) |>
   tab_style(
     style = list(
       cell_fill(color = "red"),
@@ -120,10 +120,10 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Replace missing values 
 \code{\link[=sub_missing]{sub_missing()}} function and then add styling to the \code{char} column with
 \code{\link[=cell_fill]{cell_fill()}} and with a CSS style declaration.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(char, fctr) \%>\%
-  gt() \%>\%
-  sub_missing() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(char, fctr) |>
+  gt() |>
+  sub_missing() |>
   tab_style(
     style = list(
       cell_fill(color = "lightcyan"),

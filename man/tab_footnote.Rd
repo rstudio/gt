@@ -70,21 +70,19 @@ Use \code{\link{sza}} to create a \strong{gt} table. Color the \code{sza} column
 \code{\link[=data_color]{data_color()}} function, then, use \code{tab_footnote()} to add a footnote to the
 \code{sza} column label (explaining what the color scale signifies).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza |>
   dplyr::filter(
     latitude == 20 &
       month == "jan" &
       !is.na(sza)
-  ) \%>\%
-  dplyr::select(-latitude, -month) \%>\%
-  gt() \%>\%
+  ) |>
+  dplyr::select(-latitude, -month) |>
+  gt() |>
   data_color(
     columns = sza,
-    colors = scales::col_numeric(
-      palette = c("white", "yellow", "navyblue"),
-      domain = c(0, 90)
-    )
-  ) \%>\%
+    palette = c("white", "yellow", "navyblue"),
+    domain = c(0, 90)
+  ) |>
   tab_footnote(
     footnote = "Color indicates height of sun.",
     locations = cells_column_labels(
