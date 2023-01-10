@@ -124,6 +124,7 @@ Collate:
     'utils_formatters.R'
     'utils_general_str_formatting.R'
     'utils_pipe.R'
+    'utils_quarto.R'
     'utils_render_common.R'
     'utils_render_html.R'
     'utils_render_latex.R'
