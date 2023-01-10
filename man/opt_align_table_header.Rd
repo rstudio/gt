@@ -20,7 +20,7 @@ By default, a table header added to a \strong{gt} table has center alignment
 for both the title and the subtitle elements. This function allows us to
 easily set the horizontal alignment of the title and subtitle to the left
 or right by using the \code{"align"} argument. This function serves as a
-convenient shortcut for \verb{<gt_tbl> \%>\% tab_options(heading.align = <align>)}.
+convenient shortcut for \verb{<gt_tbl> |> tab_options(heading.align = <align>)}.
 }
 \section{Examples}{
 
@@ -29,26 +29,26 @@ Use \code{\link{exibble}} to create a \strong{gt} table with a number of table p
 The header (consisting of the title and the subtitle) are to be aligned to
 the left with the \code{opt_align_table_header()} function.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  gt(rowname_col = "row", groupname_col = "group") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt(rowname_col = "row", groupname_col = "group") |>
   summary_rows(
     groups = "grp_a",
     columns = c(num, currency),
     fns = c("min", "max")
-  ) \%>\%
+  ) |>
   grand_summary_rows(
     columns = currency,
     fns = total ~ sum(., na.rm = TRUE)
-  ) \%>\%
-  tab_source_note(source_note = "This is a source note.") \%>\%
+  ) |>
+  tab_source_note(source_note = "This is a source note.") |>
   tab_footnote(
     footnote = "This is a footnote.",
     locations = cells_body(columns = 1, rows = 1)
-  ) \%>\%
+  ) |>
   tab_header(
     title = "The title of the table",
     subtitle = "The table's subtitle"
-  ) \%>\%
+  ) |>
   opt_align_table_header(align = "left")
 }\if{html}{\out{</div>}}
 
