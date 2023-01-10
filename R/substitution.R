@@ -1,6 +1,7 @@
 #' Substitute missing values in the table body
 #'
 #' @description
+#'
 #' Wherever there is missing data (i.e., `NA` values) customizable content may
 #' present better than the standard `NA` text that would otherwise appear. The
 #' `sub_missing()` function allows for this replacement through its
@@ -24,13 +25,13 @@
 #' columns will be given replacement text with two calls of `sub_missing()`.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(-row, -group) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(-row, -group) |>
+#'   gt() |>
 #'   sub_missing(
 #'     columns = 1:2,
 #'     missing_text = "missing"
-#'   ) %>%
+#'   ) |>
 #'   sub_missing(
 #'     columns = 4:7,
 #'     missing_text = "nothing"
@@ -137,11 +138,13 @@ fmt_missing <- function(
 #' Substitute zero values in the table body
 #'
 #' @description
+#'
 #' Wherever there is numerical data that are zero in value, replacement text may
 #' be better for explanatory purposes. The `sub_zero()` function allows for this
 #' replacement through its `zero_text` argument.
 #'
 #' @details
+#'
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
@@ -168,9 +171,9 @@ fmt_missing <- function(
 #' single call of `sub_zero()`.
 #'
 #' ```r
-#' tbl %>%
-#'   gt() %>%
-#'   fmt_number(columns = num) %>%
+#' tbl |>
+#'   gt() |>
+#'   fmt_number(columns = num) |>
 #'   sub_zero()
 #' ```
 #'
@@ -226,12 +229,14 @@ sub_zero <- function(
 #' Substitute small values in the table body
 #'
 #' @description
+#'
 #' Wherever there is numerical data that are very small in value, replacement
 #' text may be better for explanatory purposes. The `sub_small_vals()` function
 #' allows for this replacement through specification of a `threshold`, a
 #' `small_pattern`, and the sign of the values to be considered.
 #'
 #' @details
+#'
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
@@ -264,9 +269,9 @@ sub_zero <- function(
 #' do just that:
 #'
 #' ```r
-#' tbl %>%
-#'   gt() %>%
-#'   fmt_number(columns = num) %>%
+#' tbl |>
+#'   gt() |>
+#'   fmt_number(columns = num) |>
 #'   sub_small_vals()
 #' ```
 #'
@@ -279,10 +284,10 @@ sub_zero <- function(
 #' negative values.
 #'
 #' ```r
-#' tbl %>%
-#'   dplyr::mutate(num = -num) %>%
-#'   gt() %>%
-#'   fmt_number(columns = num) %>%
+#' tbl |>
+#'   dplyr::mutate(num = -num) |>
+#'   gt() |>
+#'   fmt_number(columns = num) |>
 #'   sub_small_vals(sign = "-")
 #' ```
 #'
@@ -296,9 +301,9 @@ sub_zero <- function(
 #' omitted.
 #'
 #' ```r
-#' tbl %>%
-#'   gt() %>%
-#'   fmt_number(columns = num) %>%
+#' tbl |>
+#'   gt() |>
+#'   fmt_number(columns = num) |>
 #'   sub_small_vals(
 #'     threshold = 0.0005,
 #'     small_pattern = "smol"
@@ -426,6 +431,7 @@ sub_small_vals <- function(
 #' Substitute large values in the table body
 #'
 #' @description
+#'
 #' Wherever there are numerical data that are very large in value, replacement
 #' text may be better for explanatory purposes. The `sub_large_vals()` function
 #' allows for this replacement through specification of a `threshold`, a
@@ -433,6 +439,7 @@ sub_small_vals <- function(
 #' considered.
 #'
 #' @details
+#'
 #' Targeting of values is done through `columns` and additionally by `rows` (if
 #' nothing is provided for `rows` then entire columns are selected). Conditional
 #' formatting is possible by providing a conditional expression to the `rows`
@@ -463,9 +470,9 @@ sub_small_vals <- function(
 #' can do just that:
 #'
 #' ```r
-#' tbl %>%
-#'   gt() %>%
-#'   fmt_number(columns = num) %>%
+#' tbl |>
+#'   gt() |>
+#'   fmt_number(columns = num) |>
 #'   sub_large_vals()
 #' ```
 #'
@@ -479,10 +486,10 @@ sub_small_vals <- function(
 #' value of `">={x}"` the `">="` is automatically changed to `"<="`.
 #'
 #' ```r
-#' tbl %>%
-#'   dplyr::mutate(num = -num) %>%
-#'   gt() %>%
-#'   fmt_number(columns = num) %>%
+#' tbl |>
+#'   dplyr::mutate(num = -num) |>
+#'   gt() |>
+#'   fmt_number(columns = num) |>
 #'   sub_large_vals(sign = "-")
 #' ```
 #'
@@ -496,9 +503,9 @@ sub_small_vals <- function(
 #' omitted.
 #'
 #' ```r
-#' tbl %>%
-#'   gt() %>%
-#'   fmt_number(columns = num) %>%
+#' tbl |>
+#'   gt() |>
+#'   fmt_number(columns = num) |>
 #'   sub_large_vals(
 #'     threshold = 5E10,
 #'     large_pattern = "hugemongous"
@@ -635,6 +642,7 @@ check_sub_fn_sign <- function(sign) {
 #' Substitute targeted values in the table body
 #'
 #' @description
+#'
 #' Should you need to replace specific cell values with custom text, the
 #' `sub_values()` function can be good choice. We can target cells for
 #' replacement though value, regex, and custom matching rules.
@@ -700,10 +708,10 @@ check_sub_fn_sign <- function(sign) {
 #' the replacement value can also be of the `numeric` or `character` types.
 #'
 #' ```r
-#' tbl %>%
-#'   gt() %>%
-#'   sub_values(values = c(74, 500), replacement = 150) %>%
-#'   sub_values(values = "B", replacement = "Bee") %>%
+#' tbl |>
+#'   gt() |>
+#'   sub_values(values = c(74, 500), replacement = 150) |>
+#'   sub_values(values = "B", replacement = "Bee") |>
 #'   sub_values(values = 800, replacement = "Eight hundred")
 #' ```
 #'
@@ -715,8 +723,8 @@ check_sub_fn_sign <- function(sign) {
 #' in `character`-based columns.
 #'
 #' ```r
-#' tbl %>%
-#'   gt() %>%
+#' tbl |>
+#'   gt() |>
 #'   sub_values(pattern = "A|C|E", replacement = "Ace")
 #' ```
 #'
@@ -730,8 +738,8 @@ check_sub_fn_sign <- function(sign) {
 #' that vector must match the length of `x`).
 #'
 #' ```r
-#' tbl %>%
-#'   gt() %>%
+#' tbl |>
+#'   gt() |>
 #'   sub_values(
 #'     fn = function(x) x >= 0 & x < 50,
 #'     replacement = "Between 0 and 50"
