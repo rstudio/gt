@@ -1,12 +1,14 @@
 #' Option to modify the set of footnote marks
 #'
 #' @description
+#'
 #' Alter the footnote marks for any footnotes that may be present in the table.
 #' Either a vector of marks can be provided (including Unicode characters), or,
 #' a specific keyword could be used to signify a preset sequence. This function
 #' serves as a shortcut for using `tab_options(footnotes.marks = {marks})`
 #'
 #' @details
+#'
 #' We can supply a vector of that will represent the series of marks.
 #' The series of footnote marks is recycled when its usage goes beyond the
 #' length of the set. At each cycle, the marks are simply doubled, tripled, and
@@ -107,6 +109,7 @@ opt_footnote_marks <- function(
 #' Option to add or remove row striping
 #'
 #' @description
+#'
 #' By default, a **gt** table does not have row striping enabled. However, this
 #' function allows us to easily enable or disable striped rows in the table
 #' body. This function serves as a convenient shortcut for
@@ -174,6 +177,7 @@ opt_row_striping <- function(
 #' Option to align the table header
 #'
 #' @description
+#'
 #' By default, a table header added to a **gt** table has center alignment
 #' for both the title and the subtitle elements. This function allows us to
 #' easily set the horizontal alignment of the title and subtitle to the left
