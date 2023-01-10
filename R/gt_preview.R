@@ -1,19 +1,13 @@
 #' Preview a **gt** table object
 #'
 #' @description
+#'
 #' Sometimes you may want to see just a small portion of your input data. We can
 #' use `gt_preview()` in place of [gt()] to get the first x rows of data and the
 #' last y rows of data (which can be set by the `top_n` and `bottom_n`
 #' arguments). It's not advised to use additional **gt** functions to further
 #' modify the output of `gt_preview()`. Furthermore, you cannot pass a **gt**
 #' object to `gt_preview()`.
-#'
-#' @details
-#' Any grouped data or magic columns such as `rowname` and `groupname` will be
-#' ignored by `gt_preview()` and, as such, one cannot add a stub or group rows
-#' in the output table. By default, the output table will include row numbers in
-#' a stub (including a range of row numbers for the omitted rows). This row
-#' numbering option can be deactivated by setting `incl_rownums` to `FALSE`.
 #'
 #' @param data A `data.frame` object or a tibble.
 #' @param top_n This value will be used as the number of rows from the top of
@@ -26,6 +20,12 @@
 #'   table stub. By default, this is `TRUE`.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @details
+#'
+#' By default, the output table will include row numbers in a stub (including a
+#' range of row numbers for the omitted rows). This row numbering option can be
+#' deactivated by setting `incl_rownums` to `FALSE`.
 #'
 #' @section Examples:
 #'

@@ -7,6 +7,16 @@
 #' a specific keyword could be used to signify a preset sequence. This function
 #' serves as a shortcut for using `tab_options(footnotes.marks = {marks})`
 #'
+#' @inheritParams fmt_number
+#' @param marks Either a character vector of length greater than 1 (that will
+#'   represent the series of marks) or a single keyword that represents a preset
+#'   sequence of marks. The valid keywords are: `"numbers"` (for numeric marks),
+#'   `"letters"` and `"LETTERS"` (for lowercase and uppercase alphabetic marks),
+#'   `"standard"` (for a traditional set of four symbol marks), and `"extended"`
+#'   (which adds two more symbols to the standard set).
+#'
+#' @return An object of class `gt_tbl`.
+#'
 #' @details
 #'
 #' We can supply a vector of that will represent the series of marks.
@@ -24,16 +34,6 @@
 #' - `"standard"`: symbolic marks, four symbols in total
 #' - `"extended"`: symbolic marks, extends the standard set by adding two
 #' more symbols, making six
-#'
-#' @inheritParams fmt_number
-#' @param marks Either a character vector of length greater than 1 (that will
-#'   represent the series of marks) or a single keyword that represents a preset
-#'   sequence of marks. The valid keywords are: `"numbers"` (for numeric marks),
-#'   `"letters"` and `"LETTERS"` (for lowercase and uppercase alphabetic marks),
-#'   `"standard"` (for a traditional set of four symbol marks), and `"extended"`
-#'   (which adds two more symbols to the standard set).
-#'
-#' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
 #'
@@ -758,12 +758,6 @@ opt_table_outline <- function(
 #' different fonts in select locations in the table, and for that you would need
 #' to use [tab_style()] in conjunction with the [cell_text()] helper function.
 #'
-#' @details
-#'
-#' We have the option to supply either a system font for the `font_name`, or, a
-#' font available at the Google Fonts service by use of the [google_font()]
-#' helper function.
-#'
 #' @inheritParams fmt_number
 #' @param font Either the name of a font available in the user system or a call
 #'   to [google_font()], which has a large selection of typefaces.
@@ -778,6 +772,12 @@ opt_table_outline <- function(
 #'   the list serves as fallbacks when certain fonts are not available.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @details
+#'
+#' We have the option to supply either a system font for the `font_name`, or, a
+#' font available at the Google Fonts service by use of the [google_font()]
+#' helper function.
 #'
 #' @section Examples:
 #'

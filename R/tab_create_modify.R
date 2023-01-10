@@ -332,19 +332,6 @@ resolve_spanned_column_names <- function(
 #' reference to individual columns must continue to be the column names from the
 #' input table data (which are unique by necessity).
 #'
-#' @details
-#'
-#' If we look to the column names in the `iris` dataset as an example of how
-#' `tab_spanner_delim()` might be useful, we find the names `Sepal.Length`,
-#' `Sepal.Width`, `Petal.Length`, `Petal.Width`. From this naming system, it's
-#' easy to see that the `Sepal` and `Petal` can group together the repeated
-#' common `Length` and `Width` values. In your own datasets, we can avoid a
-#' lengthy relabeling with [cols_label()] if column names can be fashioned
-#' beforehand to contain both the spanner column label and the column label. An
-#' additional advantage is that the column names in the input table data remain
-#' unique even though there may eventually be repeated column labels in the
-#' rendered output table).
-#'
 #' @inheritParams tab_spanner
 #' @param delim The delimiter to use to split an input column name. The
 #'   delimiter supplied will be autoescaped for the internal splitting
@@ -358,6 +345,19 @@ resolve_spanned_column_names <- function(
 #'   splitting begins at the last instance of the delimiter.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @details
+#'
+#' If we look to the column names in the `iris` dataset as an example of how
+#' `tab_spanner_delim()` might be useful, we find the names `Sepal.Length`,
+#' `Sepal.Width`, `Petal.Length`, `Petal.Width`. From this naming system, it's
+#' easy to see that the `Sepal` and `Petal` can group together the repeated
+#' common `Length` and `Width` values. In your own datasets, we can avoid a
+#' lengthy relabeling with [cols_label()] if column names can be fashioned
+#' beforehand to contain both the spanner column label and the column label. An
+#' additional advantage is that the column names in the input table data remain
+#' unique even though there may eventually be repeated column labels in the
+#' rendered output table).
 #'
 #' @section Examples:
 #'
@@ -994,21 +994,6 @@ tab_stub_indent <- function(
 #' different note, and one or more cells can be targeted via the location helper
 #' functions (e.g., [cells_body()], [cells_column_labels()], etc.).
 #'
-#' @details
-#'
-#' The formatting of the footnotes can be controlled through the use of various
-#' parameters in the [tab_options()] function:
-#' - `footnotes.multiline`: a setting that determines whether footnotes each
-#' start on a new line or are combined into a single block.
-#' - `footnotes.sep`: allows for a choice of the separator between consecutive
-#' footnotes in the table footer. By default, this is set to a single space
-#' character.
-#' - `footnotes.marks`: the set of sequential characters or numbers used to
-#' identify the footnotes.
-#' - `footnotes.font.size`: the size of the font used in the footnote section.
-#' - `footnotes.padding`: the amount of padding to apply between the footnote
-#' and source note sections in the table footer.
-#'
 #' @inheritParams fmt_number
 #' @param footnote The text to be used in the footnote. We can optionally use
 #'   the [md()] and [html()] functions to style the text as Markdown or to
@@ -1030,6 +1015,21 @@ tab_stub_indent <- function(
 #'   placement depending on the alignment of the cell content.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @details
+#'
+#' The formatting of the footnotes can be controlled through the use of various
+#' parameters in the [tab_options()] function:
+#' - `footnotes.multiline`: a setting that determines whether footnotes each
+#' start on a new line or are combined into a single block.
+#' - `footnotes.sep`: allows for a choice of the separator between consecutive
+#' footnotes in the table footer. By default, this is set to a single space
+#' character.
+#' - `footnotes.marks`: the set of sequential characters or numbers used to
+#' identify the footnotes.
+#' - `footnotes.font.size`: the size of the font used in the footnote section.
+#' - `footnotes.padding`: the amount of padding to apply between the footnote
+#' and source note sections in the table footer.
 #'
 #' @section Examples:
 #'

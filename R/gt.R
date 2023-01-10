@@ -1,12 +1,14 @@
 #' Create a **gt** table object
 #'
 #' @description
+#'
 #' The `gt()` function creates a **gt** table object when provided with table
 #' data. Using this function is the first step in a typical **gt** workflow.
 #' Once we have the **gt** table object, we can perform styling transformations
 #' before rendering to a display table of various formats.
 #'
 #' @details
+#'
 #' There are a few data ingest options we can consider at this stage. We can
 #' choose to create a table stub with rowname captions using the `rowname_col`
 #' argument. Further to this, stub row groups can be created with the

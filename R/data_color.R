@@ -1,6 +1,7 @@
 #' Perform data cell colorization
 #'
 #' @description
+#'
 #' It's possible to add color to data cells according to their values with the
 #' `data_color()` function. There is a multitude of ways to perform data cell
 #' colorizing here:

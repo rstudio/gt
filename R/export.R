@@ -1,11 +1,13 @@
 #' Save a **gt** table as a file
 #'
 #' @description
+#'
 #' The `gtsave()` function makes it easy to save a **gt** table to a file. The
 #' function guesses the file type by the extension provided in the output
 #' filename, producing either an HTML, PDF, PNG, LaTeX, or RTF file.
 #'
 #' @details
+#'
 #' Output filenames with either the `.html` or `.htm` extensions will produce an
 #' HTML document. In this case, we can pass a `TRUE` or `FALSE` value to the
 #' `inline_css` option to obtain an HTML document with inlined CSS styles (the
@@ -351,6 +353,7 @@ gtsave_filename <- function(path, filename) {
 #' Get the HTML content of a **gt** table
 #'
 #' @description
+#'
 #' Get the HTML content from a `gt_tbl` object as a single-element character
 #' vector. By default, the generated HTML will have inlined styles, where CSS
 #' styles (that were previously contained in CSS rule sets external to the
@@ -431,6 +434,7 @@ as_raw_html <- function(
 #' Output a gt object as LaTeX
 #'
 #' @description
+#'
 #' Get the LaTeX content from a `gt_tbl` object as a `knit_asis` object. This
 #' object contains the LaTeX code and attributes that serve as LaTeX
 #' dependencies (i.e., the LaTeX packages required for the table). Using
@@ -440,6 +444,7 @@ as_raw_html <- function(
 #' @param data A table object that is created using the [gt()] function.
 #'
 #' @details
+#'
 #' LaTeX packages required to generate tables are:
 #' `r paste0(gt:::latex_packages(), collapse = ", ")`.
 #'
@@ -543,6 +548,7 @@ as_latex <- function(data) {
 #' Output a **gt** object as RTF
 #'
 #' @description
+#'
 #' Get the RTF content from a `gt_tbl` object as as a single-element character
 #' vector. This object can be used with `writeLines()` to generate a valid .rtf
 #' file that can be opened by RTF readers.
@@ -641,6 +647,7 @@ as_rtf <- function(data) {
 #' Output a **gt** object as Word
 #'
 #' @description
+#'
 #' Get the Open Office XML table tag content from a `gt_tbl` object as as a
 #' single-element character vector.
 #'
@@ -847,6 +854,7 @@ as_word_tbl_body <- function(
 #' Extract a summary list from a **gt** object
 #'
 #' @description
+#'
 #' Get a list of summary row data frames from a `gt_tbl` object where summary
 #' rows were added via the [summary_rows()] function. The output data frames
 #' contain the `group_id` and `rowname` columns, whereby `rowname` contains
@@ -959,6 +967,7 @@ extract_summary <- function(data) {
 #' Extract a vector of formatted cells from a **gt** object
 #'
 #' @description
+#'
 #' Get a vector of cell data from a `gt_tbl` object. The output vector will have
 #' cell data formatted in the same way as the table.
 #'

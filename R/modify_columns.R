@@ -8,14 +8,6 @@
 #' allow **gt** to automatically choose the alignment of each column based on
 #' the data type (with the `auto` option).
 #'
-#' @details
-#'
-#' When you create a **gt** table object using [gt()], automatic alignment of
-#' column labels and their data cells is performed. By default, left-alignment
-#' is applied to columns of class `character`, `Date`, or `POSIXct`;
-#' center-alignment is for columns of class `logical`, `factor`, or `list`; and
-#' right-alignment is used for the `numeric` and `integer` columns.
-#'
 #' @param data A table object that is created using the [gt()] function.
 #' @param align The alignment type. This can be any of `"center"`, `"left"`, or
 #'   `"right"` for center-, left-, or right-alignment. Alternatively, the
@@ -27,6 +19,14 @@
 #'   affects all columns.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @details
+#'
+#' When you create a **gt** table object using [gt()], automatic alignment of
+#' column labels and their data cells is performed. By default, left-alignment
+#' is applied to columns of class `character`, `Date`, or `POSIXct`;
+#' center-alignment is for columns of class `logical`, `factor`, or `list`; and
+#' right-alignment is used for the `numeric` and `integer` columns.
 #'
 #' @section Examples:
 #'
@@ -371,16 +371,6 @@ align_to_char <- function(x, align_at = ".") {
 #' left-hand side defines the target columns and the right-hand side is a single
 #' dimension.
 #'
-#' @details
-#'
-#' Column widths can be set as absolute or relative values (with px and
-#' percentage values). Those columns not specified are treated as having
-#' variable width. The sizing behavior for column widths depends on the
-#' combination of value types, and, whether a table width has been set (which
-#' could, itself, be expressed as an absolute or relative value). Widths for the
-#' table and its container can be individually modified with the `table.width`
-#' and `container.width` arguments within [tab_options()]).
-#'
 #' @param .data A table object that is created using the [gt()] function.
 #' @param ... Expressions for the assignment of column widths for the table
 #'   columns in `.data`. Two-sided formulas (e.g, `<LHS> ~ <RHS>`) can be used,
@@ -398,6 +388,16 @@ align_to_char <- function(x, align_at = ".") {
 #' @param .list Allows for the use of a list as an input alternative to `...`.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @details
+#'
+#' Column widths can be set as absolute or relative values (with px and
+#' percentage values). Those columns not specified are treated as having
+#' variable width. The sizing behavior for column widths depends on the
+#' combination of value types, and, whether a table width has been set (which
+#' could, itself, be expressed as an absolute or relative value). Widths for the
+#' table and its container can be individually modified with the `table.width`
+#' and `container.width` arguments within [tab_options()]).
 #'
 #' @section Examples:
 #'
@@ -880,6 +880,14 @@ cols_label_with <- function(
 #' `columns` to be moved is preserved, as is the ordering of all other columns
 #' in the table.
 #'
+#' @inheritParams cols_align
+#' @param columns The column names to move to as a group to a different
+#'   position. The order of the remaining columns will be preserved.
+#' @param after A column name used to anchor the insertion of the moved columns.
+#'   All of the moved columns will be placed to the right of this column.
+#'
+#' @return An object of class `gt_tbl`.
+#'
 #' @details
 #'
 #' The columns supplied in `columns` must all exist in the table and none of
@@ -888,14 +896,6 @@ cols_label_with <- function(
 #' at the beginning of the column series, the [cols_move_to_start()] function
 #' should be used. Similarly, if those columns to move should be placed at the
 #' end of the column series then use [cols_move_to_end()].
-#'
-#' @inheritParams cols_align
-#' @param columns The column names to move to as a group to a different
-#'   position. The order of the remaining columns will be preserved.
-#' @param after A column name used to anchor the insertion of the moved columns.
-#'   All of the moved columns will be placed to the right of this column.
-#'
-#' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
 #'
@@ -1000,6 +1000,13 @@ cols_move <- function(
 #' start is preserved (same with the ordering of all other columns in the
 #' table).
 #'
+#' @inheritParams cols_align
+#' @param columns The column names to move to the left-most side of the table.
+#'   The order in which columns are provided will be preserved (as is the case
+#'   with the remaining columns).
+#'
+#' @return An object of class `gt_tbl`.
+#'
 #' @details
 #'
 #' The columns supplied in `columns` must all exist in the table. If you need to
@@ -1007,13 +1014,6 @@ cols_move <- function(
 #' [cols_move_to_end()] function should be used. More control is offered with
 #' the [cols_move()] function, where columns could be placed after a specific
 #' column.
-#'
-#' @inheritParams cols_align
-#' @param columns The column names to move to the left-most side of the table.
-#'   The order in which columns are provided will be preserved (as is the case
-#'   with the remaining columns).
-#'
-#' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
 #'
@@ -1107,6 +1107,13 @@ cols_move_to_start <- function(
 #' error prone. The ordering of the `columns` that are moved to the end is
 #' preserved (same with the ordering of all other columns in the table).
 #'
+#' @inheritParams cols_align
+#' @param columns The column names to move to the right-most side of the table.
+#'   The order in which columns are provided will be preserved (as is the case
+#'   with the remaining columns).
+#'
+#' @return An object of class `gt_tbl`.
+#'
 #' @details
 #'
 #' The columns supplied in `columns` must all exist in the table. If you need to
@@ -1114,13 +1121,6 @@ cols_move_to_start <- function(
 #' [cols_move_to_start()] function should be used. More control is offered with
 #' the [cols_move()] function, where columns could be placed after a specific
 #' column.
-#'
-#' @inheritParams cols_align
-#' @param columns The column names to move to the right-most side of the table.
-#'   The order in which columns are provided will be preserved (as is the case
-#'   with the remaining columns).
-#'
-#' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
 #'
@@ -1214,6 +1214,12 @@ cols_move_to_end <- function(
 #' a column reference during formatting of other columns) but the final display
 #' of those columns is not necessary.
 #'
+#' @inheritParams cols_align
+#' @param columns The column names to hide from the output display table. Values
+#'   provided that do not correspond to column names will be disregarded.
+#'
+#' @return An object of class `gt_tbl`.
+#'
 #' @details
 #'
 #' The hiding of columns is internally a rendering directive, so, all columns
@@ -1225,12 +1231,6 @@ cols_move_to_end <- function(
 #' of such a pipeline. The `cols_hide()` function quietly changes the visible
 #' state of a column (much like the [cols_unhide()] function) and doesn't yield
 #' warnings or messages when changing the state of already-invisible columns.
-#'
-#' @inheritParams cols_align
-#' @param columns The column names to hide from the output display table. Values
-#'   provided that do not correspond to column names will be disregarded.
-#'
-#' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
 #'
@@ -1326,19 +1326,20 @@ cols_hide <- function(
 #' obtains a `gt_tbl` object with hidden columns and there is motivation to
 #' reveal one or more of those.
 #'
+#' @inheritParams cols_align
+#' @param columns The column names to unhide from the output display table.
+#'   Values provided that do not correspond to column names will be disregarded.
+#'
+#' @return An object of class `gt_tbl`.
+#'
 #' @details
+#'
 #' The hiding and unhiding of columns is internally a rendering directive, so,
 #' all columns that are 'hidden' are still accessible and useful in any
 #' expression provided to a `rows` argument. The `cols_unhide()` function
 #' quietly changes the visible state of a column (much like the [cols_hide()]
 #' function) and doesn't yield warnings or messages when changing the state of
 #' already-visible columns.
-#'
-#' @inheritParams cols_align
-#' @param columns The column names to unhide from the output display table.
-#'   Values provided that do not correspond to column names will be disregarded.
-#'
-#' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
 #'
