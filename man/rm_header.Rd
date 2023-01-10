@@ -30,10 +30,10 @@ Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header part with t
 table.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
-  gtcars \%>\%
-  dplyr::select(mfr, model, msrp) \%>\%
-  dplyr::slice(1:5) \%>\%
-  gt() \%>\%
+  gtcars |>
+  dplyr::select(mfr, model, msrp) |>
+  dplyr::slice(1:5) |>
+  gt() |>
   tab_header(
     title = md("Data listing from **gtcars**"),
     subtitle = md("`gtcars` is an R dataset")
