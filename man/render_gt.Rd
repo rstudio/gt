@@ -47,8 +47,7 @@ The \code{width} and \code{height} arguments allow for sizing the container, and
 \code{align} argument allows us to align the table within the container (some
 other fine-grained options for positioning are available in the
 \code{\link[=tab_options]{tab_options()}} function).
-}
-\details{
+
 We need to ensure that we have the \strong{shiny} package installed first. This
 is easily by using \code{install.packages("shiny")}. More information on creating
 Shiny apps can be found at the \href{https://shiny.rstudio.com}{Shiny Site}.
