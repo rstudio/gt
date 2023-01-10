@@ -1,5 +1,7 @@
 #' A **gt** display table render function for use in Shiny
 #'
+#' @description
+#'
 #' With `render_gt()` we can create a reactive **gt** table that works
 #' wonderfully once assigned to an output slot (with [gt_output()]). This
 #' function is to be used within Shiny's `server()` component. We have some
@@ -130,6 +132,8 @@ render_gt <- function(
 }
 
 #' Create a **gt** display table output element for Shiny
+#'
+#' @description
 #'
 #' Using `gt_output()` we can render a reactive **gt** table, a process
 #' initiated by using the [render_gt()] function in the `server` component of a
