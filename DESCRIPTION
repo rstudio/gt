@@ -44,6 +44,7 @@ Imports:
     glue (>= 1.6.1),
     htmltools (>= 0.5.2),
     juicyjuice (>= 0.1.0),
+    jsonlite (>= 1.8.4),
     magrittr (>= 2.0.2),
     rlang (>= 1.0.2),
     sass (>= 0.4.1),
@@ -53,7 +54,7 @@ Imports:
 Suggests:
     covr,
     digest (>= 0.6.29),
-    knitr,
+    knitr (>= 1.41.5),
     paletteer,
     testthat (>= 3.0.0),
     RColorBrewer,
