@@ -37,6 +37,12 @@ knitr_is_word_output <- function() {
 #' @keywords internal
 #' @noRd
 knit_print.gt_tbl <- function(x, ...) {
+  if (check_quarto()) {
+    cap <- dt_options_get_value(data = x, option = "table_caption")
+    if (!is.na(cap)) {
+      quarto_api_send("set_cell_caption", cap)
+    }
+  }
 
   if (knitr_is_rtf_output()) {
 
@@ -57,6 +63,7 @@ knit_print.gt_tbl <- function(x, ...) {
     # Default to HTML output
     x <- as.tags.gt_tbl(x, ...)
   }
+
 
   # Use `knit_print()` to print in a code chunk
   knitr::knit_print(x, ...)

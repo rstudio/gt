@@ -19,6 +19,10 @@ quarto_api_send <- function(message, ...) {
   write(line, file, append = TRUE)
 }
 
+check_quarto <- function() {
+  Sys.getenv("QUARTO_MESSAGES_FILE") != ""
+}
+
 check_knitr <- function() {
 
   if (!requireNamespace("knitr", quietly = TRUE)) {
