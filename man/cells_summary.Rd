@@ -106,24 +106,24 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 Use \code{\link{countrypops}} to create a \strong{gt} table. Add some styling to the summary
 data cells with with \code{\link[=tab_style]{tab_style()}}, using \code{cells_summary()} in \code{locations}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::filter(country_name == "Japan", year < 1970) \%>\%
-  dplyr::select(-contains("country")) \%>\%
-  dplyr::mutate(decade = paste0(substr(year, 1, 3), "0s")) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::filter(country_name == "Japan", year < 1970) |>
+  dplyr::select(-contains("country")) |>
+  dplyr::mutate(decade = paste0(substr(year, 1, 3), "0s")) |>
   gt(
     rowname_col = "year",
     groupname_col = "decade"
-  ) \%>\%
+  ) |>
   fmt_number(
     columns = population,
     decimals = 0
-  ) \%>\%
+  ) |>
   summary_rows(
     groups = "1960s",
     columns = population,
     fns = list("min", "max"),
     fmt = ~ fmt_integer(.)
-  ) \%>\%
+  ) |>
   tab_style(
     style = list(
       cell_text(style = "italic"),
@@ -134,7 +134,7 @@ data cells with with \code{\link[=tab_style]{tab_style()}}, using \code{cells_su
       columns = population,
       rows = 1
     )
-  ) \%>\%
+  ) |>
   tab_style(
     style = list(
       cell_text(style = "italic"),

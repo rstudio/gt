@@ -67,6 +67,45 @@ Should you need to replace specific cell values with custom text, the
 \code{sub_values()} function can be good choice. We can target cells for
 replacement though value, regex, and custom matching rules.
 }
+\section{Targeting cells with \code{columns} and \code{rows}}{
+
+
+Targeting of values is done through \code{columns} and additionally by \code{rows} (if
+nothing is provided for \code{rows} then entire columns are selected). The
+\code{columns} argument allows us to target a subset of cells contained in the
+resolved columns. We say resolved because aside from declaring column names
+in \code{c()} (with bare column names or names in quotes) we can use
+\strong{tidyselect}-style expressions. This can be as basic as supplying a select
+helper like \code{starts_with()}, or, providing a more complex incantation like
+
+\code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
+
+which targets numeric columns that have a maximum value of 100,000 (excluding
+\code{NA}s from consideration).
+
+By default all columns and rows are selected (with the \code{everything()}
+defaults). Cell values that are incompatible with a given substitution
+function will be skipped over. So it's safe to select all columns with a
+particular substitution function (only those values that can be substituted
+will be), but, you may not want that. One strategy is to work on the bulk of
+cell values with one substitution function and then constrain the columns for
+later passes with other types of substitution (the last operation done to a
+cell is what you get in the final output).
+
+Once the columns are targeted, we may also target the \code{rows} within those
+columns. This can be done in a variety of ways. If a stub is present, then we
+potentially have row identifiers. Those can be used much like column names in
+the \code{columns}-targeting scenario. We can use simpler \strong{tidyselect}-style
+expressions (the select helpers should work well here) and we can use quoted
+row identifiers in \code{c()}. It's also possible to use row indices (e.g., \code{c(3, 5, 6)}) though these index values must correspond to the row numbers of the
+input data (the indices won't necessarily match those of rearranged rows if
+row groups are present). One more type of expression is possible, an
+expression that takes column values (can involve any of the available columns
+in the table) and returns a logical vector. This is nice if you want to base
+the substitution on values in the column or another column, or, you'd like to
+use a more complex predicate expression.
+}
+
 \section{Examples}{
 
 
@@ -99,10 +138,10 @@ should be replaced (in \code{values}) and what the replacement value should be.
 It's okay to search for numerical or character values across all columns and
 the replacement value can also be of the \code{numeric} or \code{character} types.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
-  gt() \%>\%
-  sub_values(values = c(74, 500), replacement = 150) \%>\%
-  sub_values(values = "B", replacement = "Bee") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |>
+  gt() |>
+  sub_values(values = c(74, 500), replacement = 150) |>
+  sub_values(values = "B", replacement = "Bee") |>
   sub_values(values = 800, replacement = "Eight hundred")
 }\if{html}{\out{</div>}}
 
@@ -113,8 +152,8 @@ the replacement value can also be of the \code{numeric} or \code{character} type
 We can also use the \code{pattern} argument to target cell values for replacement
 in \code{character}-based columns.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |>
+  gt() |>
   sub_values(pattern = "A|C|E", replacement = "Ace")
 }\if{html}{\out{</div>}}
 
@@ -127,8 +166,8 @@ need to ensure that the function you provide will return a logical vector
 when invoked on a column of cell values, taken as \code{x} (and, the length of
 that vector must match the length of \code{x}).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |>
+  gt() |>
   sub_values(
     fn = function(x) x >= 0 & x < 50,
     replacement = "Between 0 and 50"

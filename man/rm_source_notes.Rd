@@ -38,12 +38,12 @@ Use \code{\link{gtcars}} to create a \strong{gt} table. Use \code{tab_source_not
 source note to the table footer that cites the data source.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
-  gtcars \%>\%
-  dplyr::select(mfr, model, msrp) \%>\%
-  dplyr::slice(1:5) \%>\%
-  gt() \%>\%
-  tab_source_note(source_note = "Data from the 'edmunds.com' site.") \%>\%
-  tab_source_note(source_note = "Showing only the first five rows.") \%>\%
+  gtcars |>
+  dplyr::select(mfr, model, msrp) |>
+  dplyr::slice(1:5) |>
+  gt() |>
+  tab_source_note(source_note = "Data from the 'edmunds.com' site.") |>
+  tab_source_note(source_note = "Showing only the first five rows.") |>
   cols_width(everything() ~ px(120))
 
 gt_tbl

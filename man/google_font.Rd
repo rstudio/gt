@@ -27,10 +27,10 @@ with em dashes. For text in the \code{time} column, we use the Google font
 \code{"IBM Plex Mono"} and set up the \code{\link[=default_fonts]{default_fonts()}} as fallbacks (just in case
 the webfont is not accessible).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(char, time) \%>\%
-  gt() \%>\%
-  sub_missing() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(char, time) |>
+  gt() |>
+  sub_missing() |>
   tab_style(
     style = cell_text(
       font = c(
@@ -52,17 +52,17 @@ larger font size for the table and use the \code{"Merriweather"} font using the
 \code{google_font()} function (with two font fallbacks: \code{"Cochin"} and the
 catchall \code{"Serif"} group).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
-  dplyr::slice(1:10) \%>\%
-  dplyr::select(-volume, -adj_close) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
+  dplyr::slice(1:10) |>
+  dplyr::select(-volume, -adj_close) |>
+  gt() |>
   fmt_currency(
     columns = 2:5,
     rows = 1,
     currency = "USD",
     use_seps = FALSE
-  ) \%>\%
-  tab_options(table.font.size = px(20)) \%>\%
+  ) |>
+  tab_options(table.font.size = px(20)) |>
   opt_table_font(
     font = list(
       google_font(name = "Merriweather"),

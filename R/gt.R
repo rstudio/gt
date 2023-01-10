@@ -1,12 +1,14 @@
 #' Create a **gt** table object
 #'
 #' @description
+#'
 #' The `gt()` function creates a **gt** table object when provided with table
 #' data. Using this function is the first step in a typical **gt** workflow.
 #' Once we have the **gt** table object, we can perform styling transformations
 #' before rendering to a display table of various formats.
 #'
 #' @details
+#'
 #' There are a few data ingest options we can consider at this stage. We can
 #' choose to create a table stub with rowname captions using the `rowname_col`
 #' argument. Further to this, stub row groups can be created with the
@@ -61,7 +63,7 @@
 #'
 #' ```r
 #' tab_1 <-
-#'   exibble %>%
+#'   exibble |>
 #'   gt(
 #'     rowname_col = "row",
 #'     groupname_col = "group"
@@ -79,15 +81,15 @@
 #' available in the package.
 #'
 #' ```r
-#' tab_1 %>%
+#' tab_1 |>
 #'   tab_header(
 #'     title = "Table Title",
 #'     subtitle = "Subtitle"
-#'   ) %>%
+#'   ) |>
 #'   fmt_number(
 #'     columns = num,
 #'     decimals = 2
-#'   ) %>%
+#'   ) |>
 #'   cols_label(num = "number")
 #' ```
 #'

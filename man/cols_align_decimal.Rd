@@ -51,13 +51,13 @@ could remedy this and align the numbers by the decimal mark with
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
   char = LETTERS[1:9],
   num = c(1.2, -33.52, 9023.2, -283.527, NA, 0.401, -123.1, NA, 41)
-) \%>\%
-  gt() \%>\%
+) |>
+  gt() |>
   fmt_number(
     columns = num,
     decimals = 3,
     drop_trailing_zeros = TRUE
-  ) \%>\%
+  ) |>
   cols_align_decimal()
 }\if{html}{\out{</div>}}
 

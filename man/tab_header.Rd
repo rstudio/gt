@@ -33,10 +33,10 @@ output, we can use HTML in either of the title or subtitle.
 Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header part with the
 \code{tab_header()} function so that we get a title and a subtitle for the table.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
-  dplyr::select(mfr, model, msrp) \%>\%
-  dplyr::slice(1:5) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::select(mfr, model, msrp) |>
+  dplyr::slice(1:5) |>
+  gt() |>
   tab_header(
     title = md("Data listing from **gtcars**"),
     subtitle = md("`gtcars` is an R dataset")

@@ -1,6 +1,7 @@
 #' Target cells in the table body and style accordingly
 #'
 #' @description
+#'
 #' With the `tab_style_body()` function we can target cells though value, regex,
 #' and custom matching rules and apply styles to them and their surrounding
 #' context (i.e., styling an entire row or column wherein the match is found).
@@ -73,7 +74,7 @@
 #'
 #' ```r
 #' gt_tbl <-
-#'   exibble %>%
+#'   exibble |>
 #'   gt(
 #'     rowname_col = "row",
 #'     groupname_col = "group"
@@ -86,7 +87,7 @@
 #' values `49.95` and `33.33` and style those cells with an orange fill.
 #'
 #' ```r
-#' gt_tbl %>%
+#' gt_tbl |>
 #'   tab_style_body(
 #'     style = cell_fill(color = "orange"),
 #'     values = c(49.95, 33.33)
@@ -101,7 +102,7 @@
 #' the same cell targets:
 #'
 #' ```r
-#' gt_tbl %>%
+#' gt_tbl |>
 #'   tab_style_body(
 #'     style = list(
 #'       cell_text(font = google_font("Inter"), color = "white"),
@@ -126,12 +127,12 @@
 #' same styling.
 #'
 #' ```r
-#' gt_tbl %>%
+#' gt_tbl |>
 #'   tab_style_body(
 #'     style = cell_fill(color = "lightblue"),
 #'     values = 49.95,
 #'     targets = "row"
-#'   ) %>%
+#'   ) |>
 #'   tab_style_body(
 #'     style = cell_fill(color = "lightblue"),
 #'     values = 33.33,
@@ -150,13 +151,13 @@
 #' example and extend the styling of the row into the stub.
 #'
 #' ```r
-#' gt_tbl %>%
+#' gt_tbl |>
 #'   tab_style_body(
 #'     style = cell_fill(color = "lightblue"),
 #'     values = 49.95,
 #'     targets = "row",
 #'     extents = c("body", "stub")
-#'   ) %>%
+#'   ) |>
 #'   tab_style_body(
 #'     style = cell_fill(color = "lightblue"),
 #'     values = 33.33,
@@ -173,7 +174,7 @@
 #' fact a factor-based column.
 #'
 #' ```r
-#' gt_tbl %>%
+#' gt_tbl |>
 #'   tab_style_body(
 #'     style = cell_fill(color = "green"),
 #'     pattern = "ne|na"
@@ -192,7 +193,7 @@
 #' where(is.numeric)`.
 #'
 #' ```r
-#' gt_tbl %>%
+#' gt_tbl |>
 #'   tab_style_body(
 #'     columns = where(is.numeric),
 #'     style = cell_fill(color = "pink"),

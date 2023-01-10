@@ -11,13 +11,20 @@ A tibble with 414 rows and 25 variables:
 \item{website}{The website for the municipality. This is \code{NA} if there isn't
 an official site.}
 \item{status}{The status of the municipality. This is either \code{"Lower-tier"}
-or \code{"Single-tier"}.}
+or \code{"Single-tier"}. A single-tier municipality, which takes on all municipal
+duties outlined in the Municipal Act and other Provincial laws, is
+independent of an upper-tier municipality. Part of an upper-tier municipality
+is a lower-tier municipality. The upper-tier and lower-tier municipalities
+are responsible for carrying out the duties laid out in the Municipal Act and
+other provincial laws.}
 \item{csd_type}{The Census Subdivision Type. This can be one of \code{"Village"},
 \code{"Town"}, \code{"Township"}, \code{"Municipality"}, or \code{"City"}.}
-\item{census_div}{The Census division, of which there are 49.}
+\item{census_div}{The Census division, of which there are 49. This is made up
+of single-tier municipalities, regional municipalities, counties, and
+districts.}
 \item{latitude, longitude}{The location of the municipality, given as
 latitude and longitude values in decimal degrees.}
-\item{land_area_km2}{The total area of the municipality in square
+\item{land_area_km2}{The total area of the local municipality in square
 kilometers.}
 \item{population_1996, population_2001, population_2006, population_2011,
 population_2016, population_2021}{
@@ -29,7 +36,7 @@ each municipality from the 1996 to 2021 census years.}
 \item{pop_change_1996_2001_pct, pop_change_2001_2006_pct,
 pop_change_2006_2011_pct, pop_change_2011_2016_pct,
 pop_change_2016_2021_pct}{
-Fractional population changes between the census years from 1996 to 2021.}
+Population changes between the census years, from 1996 to 2021.}
 }
 }
 \usage{
@@ -37,10 +44,18 @@ towny
 }
 \description{
 A dataset containing census population data from six census years (1996 to
-2021) for all 414 municipalities in Ontario. Contains land area values
-according to 2021 boundaries and computed density values for each census
-year. Each row represents a single municipality country codes and the
-different figures by census year are distributed across columns.
+2021) for all 414 of Ontario's local municipalities. The Municipal Act of
+Ontario (2001) defines a local municipality as "a single-tier municipality or
+a lower-tier municipality". There are 173 single-tier municipalities and 241
+lower-tier municipalities representing 99 percent of Ontario's population
+and 17 percent of its land use.
+
+In the \code{towny} dataset we include information specific to each municipality
+such as location (in the \code{latitude} and \code{longitude} columns), their website
+URLs, their classifications, and land area sizes according to 2021
+boundaries. Additionally, there are computed columns containing population
+density values for each census year and population change measures from
+adjacent census year.
 }
 \section{Examples}{
 

@@ -37,16 +37,16 @@ group two columns together under a spanner column with the ID and label
 summarizes the ID values and their label text for all parts of the table.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
-  gtcars \%>\%
-  dplyr::select(model, year, starts_with("hp"), msrp) \%>\%
-  dplyr::slice(1:4) \%>\%
-  gt(rowname_col = "model") \%>\%
+  gtcars |>
+  dplyr::select(model, year, starts_with("hp"), msrp) |>
+  dplyr::slice(1:4) |>
+  gt(rowname_col = "model") |>
   tab_spanner(
     label = "performance",
     columns = starts_with("hp")
   )
 
-gt_tbl \%>\% tab_info()
+gt_tbl |> tab_info()
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{

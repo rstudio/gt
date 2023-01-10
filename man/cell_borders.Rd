@@ -38,9 +38,8 @@ borders can then be modified.
 Add horizontal border lines for all table body rows in \code{\link{exibble}} using
 \code{\link[=tab_style]{tab_style()}} and \code{cell_borders()}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  gt() \%>\%
-  tab_options(row.striping.include_table_body = FALSE) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt() |>
   tab_style(
     style = cell_borders(
       sides = c("top", "bottom"),
@@ -63,8 +62,8 @@ Incorporate different horizontal and vertical borders at several locations.
 This uses multiple \code{cell_borders()} and \code{\link[=cells_body]{cells_body()}} calls within
 \code{list()}s.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt() |>
   tab_style(
     style = list(
       cell_borders(

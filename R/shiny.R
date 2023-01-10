@@ -1,5 +1,7 @@
 #' A **gt** display table render function for use in Shiny
 #'
+#' @description
+#'
 #' With `render_gt()` we can create a reactive **gt** table that works
 #' wonderfully once assigned to an output slot (with [gt_output()]). This
 #' function is to be used within Shiny's `server()` component. We have some
@@ -28,8 +30,8 @@
 #' @param quoted Is `expr` a quoted expression (with `quote()`)? This is useful
 #'   if you want to save an expression in a variable.
 #' @param outputArgs A list of arguments to be passed through to the implicit
-#'   call to [gt_output()] when `render_gt` is used in an interactive R Markdown
-#'   document.
+#'   call to [gt_output()] when `render_gt()` is used in an interactive R
+#'   Markdown document.
 #'
 #' @section Examples:
 #'
@@ -42,18 +44,15 @@
 #' library(shiny)
 #'
 #' gt_tbl <-
-#'   gtcars %>%
-#'   gt() %>%
-#'   cols_hide(contains("_"))
+#'   gtcars |>
+#'   gt() |>
+#'   cols_hide(columns = contains("_"))
 #'
 #' ui <- fluidPage(
-#'
 #'   gt_output(outputId = "table")
 #' )
 #'
-#' server <- function(input,
-#'                    output,
-#'                    session) {
+#' server <- function(input, output, session) {
 #'
 #'   output$table <-
 #'     render_gt(
@@ -134,6 +133,8 @@ render_gt <- function(
 
 #' Create a **gt** display table output element for Shiny
 #'
+#' @description
+#'
 #' Using `gt_output()` we can render a reactive **gt** table, a process
 #' initiated by using the [render_gt()] function in the `server` component of a
 #' Shiny app. The `gt_output()` call is to be used in the Shiny `ui` component,
@@ -160,18 +161,15 @@ render_gt <- function(
 #' library(shiny)
 #'
 #' gt_tbl <-
-#'   gtcars %>%
-#'   gt() %>%
-#'   cols_hide(contains("_"))
+#'   gtcars |>
+#'   gt() |>
+#'   cols_hide(columns = contains("_"))
 #'
 #' ui <- fluidPage(
-#'
 #'   gt_output(outputId = "table")
 #' )
 #'
-#' server <- function(input,
-#'                    output,
-#'                    session) {
+#' server <- function(input, output, session) {
 #'
 #'   output$table <-
 #'     render_gt(

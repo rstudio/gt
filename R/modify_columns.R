@@ -8,14 +8,6 @@
 #' allow **gt** to automatically choose the alignment of each column based on
 #' the data type (with the `auto` option).
 #'
-#' @details
-#'
-#' When you create a **gt** table object using [gt()], automatic alignment of
-#' column labels and their data cells is performed. By default, left-alignment
-#' is applied to columns of class `character`, `Date`, or `POSIXct`;
-#' center-alignment is for columns of class `logical`, `factor`, or `list`; and
-#' right-alignment is used for the `numeric` and `integer` columns.
-#'
 #' @param data A table object that is created using the [gt()] function.
 #' @param align The alignment type. This can be any of `"center"`, `"left"`, or
 #'   `"right"` for center-, left-, or right-alignment. Alternatively, the
@@ -28,17 +20,25 @@
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @details
+#'
+#' When you create a **gt** table object using [gt()], automatic alignment of
+#' column labels and their data cells is performed. By default, left-alignment
+#' is applied to columns of class `character`, `Date`, or `POSIXct`;
+#' center-alignment is for columns of class `logical`, `factor`, or `list`; and
+#' right-alignment is used for the `numeric` and `integer` columns.
+#'
 #' @section Examples:
 #'
 #' Use [`countrypops`] to create a **gt** table. Align the `population` column
 #' data to the left.
 #'
 #' ```r
-#' countrypops %>%
-#'   dplyr::select(-contains("code")) %>%
-#'   dplyr::filter(country_name == "Mongolia") %>%
-#'   tail(5) %>%
-#'   gt() %>%
+#' countrypops |>
+#'   dplyr::select(-contains("code")) |>
+#'   dplyr::filter(country_name == "Mongolia") |>
+#'   tail(5) |>
+#'   gt() |>
 #'   cols_align(
 #'     align = "left",
 #'     columns = population
@@ -189,13 +189,13 @@ determine_which_character_number <- function(
 #' dplyr::tibble(
 #'   char = LETTERS[1:9],
 #'   num = c(1.2, -33.52, 9023.2, -283.527, NA, 0.401, -123.1, NA, 41)
-#' ) %>%
-#'   gt() %>%
+#' ) |>
+#'   gt() |>
 #'   fmt_number(
 #'     columns = num,
 #'     decimals = 3,
 #'     drop_trailing_zeros = TRUE
-#'   ) %>%
+#'   ) |>
 #'   cols_align_decimal()
 #' ```
 #'
@@ -371,16 +371,6 @@ align_to_char <- function(x, align_at = ".") {
 #' left-hand side defines the target columns and the right-hand side is a single
 #' dimension.
 #'
-#' @details
-#'
-#' Column widths can be set as absolute or relative values (with px and
-#' percentage values). Those columns not specified are treated as having
-#' variable width. The sizing behavior for column widths depends on the
-#' combination of value types, and, whether a table width has been set (which
-#' could, itself, be expressed as an absolute or relative value). Widths for the
-#' table and its container can be individually modified with the `table.width`
-#' and `container.width` arguments within [tab_options()]).
-#'
 #' @param .data A table object that is created using the [gt()] function.
 #' @param ... Expressions for the assignment of column widths for the table
 #'   columns in `.data`. Two-sided formulas (e.g, `<LHS> ~ <RHS>`) can be used,
@@ -399,6 +389,16 @@ align_to_char <- function(x, align_at = ".") {
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @details
+#'
+#' Column widths can be set as absolute or relative values (with px and
+#' percentage values). Those columns not specified are treated as having
+#' variable width. The sizing behavior for column widths depends on the
+#' combination of value types, and, whether a table width has been set (which
+#' could, itself, be expressed as an absolute or relative value). Widths for the
+#' table and its container can be individually modified with the `table.width`
+#' and `container.width` arguments within [tab_options()]).
+#'
 #' @section Examples:
 #'
 #' Use [`exibble`] to create a **gt** table. We can specify the widths of
@@ -407,12 +407,12 @@ align_to_char <- function(x, align_at = ".") {
 #' end will capture all remaining columns).
 #'
 #' ```r
-#' exibble %>%
+#' exibble |>
 #'   dplyr::select(
 #'     num, char, date,
 #'     datetime, row
-#'   ) %>%
-#'   gt() %>%
+#'   ) |>
+#'   gt() |>
 #'   cols_width(
 #'     num ~ px(150),
 #'     ends_with("r") ~ px(100),
@@ -564,11 +564,11 @@ cols_width <- function(
 #' with the `cols_label()` function to improve its presentation.
 #'
 #' ```r
-#' countrypops %>%
-#'   dplyr::select(-contains("code")) %>%
-#'   dplyr::filter(country_name == "Mongolia") %>%
-#'   tail(5) %>%
-#'   gt() %>%
+#' countrypops |>
+#'   dplyr::select(-contains("code")) |>
+#'   dplyr::filter(country_name == "Mongolia") |>
+#'   tail(5) |>
+#'   gt() |>
 #'   cols_label(
 #'     country_name = "Name",
 #'     year = "Year",
@@ -585,11 +585,11 @@ cols_width <- function(
 #' formatting.
 #'
 #' ```r
-#' countrypops %>%
-#'   dplyr::select(-contains("code")) %>%
-#'   dplyr::filter(country_name == "Mongolia") %>%
-#'   tail(5) %>%
-#'   gt() %>%
+#' countrypops |>
+#'   dplyr::select(-contains("code")) |>
+#'   dplyr::filter(country_name == "Mongolia") |>
+#'   tail(5) |>
+#'   gt() |>
 #'   cols_label(
 #'     country_name = md("**Name**"),
 #'     year = md("**Year**"),
@@ -717,13 +717,13 @@ cols_label <- function(
 #' all column labels.
 #'
 #' ```r
-#' sp500 %>%
+#' sp500 |>
 #'   dplyr::filter(
 #'     date >= "2015-12-01" &
 #'       date <= "2015-12-15"
-#'   ) %>%
-#'   dplyr::select(-c(adj_close, volume)) %>%
-#'   gt() %>%
+#'   ) |>
+#'   dplyr::select(-c(adj_close, volume)) |>
+#'   gt() |>
 #'   cols_label_with(fn = toupper)
 #' ```
 #'
@@ -740,17 +740,17 @@ cols_label <- function(
 #' `gsub()`.
 #'
 #' ```r
-#' countrypops %>%
-#'   dplyr::filter(year == 2017) %>%
-#'   dplyr::filter(grepl("^C", country_code_3)) %>%
-#'   dplyr::select(-country_code_2, -year) %>%
-#'   head(8) %>%
-#'   gt() %>%
-#'   cols_move_to_start(columns = country_code_3) %>%
-#'   fmt_integer(columns = population) %>%
+#' countrypops |>
+#'   dplyr::filter(year == 2017) |>
+#'   dplyr::filter(grepl("^C", country_code_3)) |>
+#'   dplyr::select(-country_code_2, -year) |>
+#'   head(8) |>
+#'   gt() |>
+#'   cols_move_to_start(columns = country_code_3) |>
+#'   fmt_integer(columns = population) |>
 #'   cols_label_with(
 #'     fn = ~ janitor::make_clean_names(., case = "title")
-#'   ) %>%
+#'   ) |>
 #'   cols_label_with(
 #'     fn = ~ gsub("[0-9]", "", .)
 #'   )
@@ -769,24 +769,24 @@ cols_label <- function(
 #' interpreted as Markdown text.
 #'
 #' ```r
-#' pizzaplace %>%
-#'   dplyr::mutate(month = substr(date, 6, 7)) %>%
-#'   dplyr::group_by(month) %>%
-#'   dplyr::summarize(pizze_vendute = dplyr::n()) %>%
-#'   dplyr::ungroup() %>%
-#'   dplyr::mutate(frazione_della_quota = pizze_vendute / 4000) %>%
-#'   dplyr::mutate(date = paste0("2015/", month, "/01")) %>%
-#'   dplyr::select(-month) %>%
-#'   gt(rowname_col = "date") %>%
-#'   fmt_date(date, date_style = "month", locale = "it") %>%
-#'   fmt_percent(columns = frazione_della_quota) %>%
-#'   fmt_integer(columns = pizze_vendute) %>%
-#'   cols_width(everything() ~ px(100)) %>%
+#' pizzaplace |>
+#'   dplyr::mutate(month = substr(date, 6, 7)) |>
+#'   dplyr::group_by(month) |>
+#'   dplyr::summarize(pizze_vendute = dplyr::n()) |>
+#'   dplyr::ungroup() |>
+#'   dplyr::mutate(frazione_della_quota = pizze_vendute / 4000) |>
+#'   dplyr::mutate(date = paste0("2015/", month, "/01")) |>
+#'   dplyr::select(-month) |>
+#'   gt(rowname_col = "date") |>
+#'   fmt_date(date, date_style = "month", locale = "it") |>
+#'   fmt_percent(columns = frazione_della_quota) |>
+#'   fmt_integer(columns = pizze_vendute) |>
+#'   cols_width(everything() ~ px(100)) |>
 #'   cols_label_with(
 #'     fn = function(x) {
-#'       janitor::make_clean_names(x, case = "title") %>%
-#'         toupper() %>%
-#'         stringr::str_replace_all("^|$", "**") %>%
+#'       janitor::make_clean_names(x, case = "title") |>
+#'         toupper() |>
+#'         stringr::str_replace_all("^|$", "**") |>
 #'         md()
 #'     }
 #'   )
@@ -880,6 +880,14 @@ cols_label_with <- function(
 #' `columns` to be moved is preserved, as is the ordering of all other columns
 #' in the table.
 #'
+#' @inheritParams cols_align
+#' @param columns The column names to move to as a group to a different
+#'   position. The order of the remaining columns will be preserved.
+#' @param after A column name used to anchor the insertion of the moved columns.
+#'   All of the moved columns will be placed to the right of this column.
+#'
+#' @return An object of class `gt_tbl`.
+#'
 #' @details
 #'
 #' The columns supplied in `columns` must all exist in the table and none of
@@ -889,25 +897,17 @@ cols_label_with <- function(
 #' should be used. Similarly, if those columns to move should be placed at the
 #' end of the column series then use [cols_move_to_end()].
 #'
-#' @inheritParams cols_align
-#' @param columns The column names to move to as a group to a different
-#'   position. The order of the remaining columns will be preserved.
-#' @param after A column name used to anchor the insertion of the moved columns.
-#'   All of the moved columns will be placed to the right of this column.
-#'
-#' @return An object of class `gt_tbl`.
-#'
 #' @section Examples:
 #'
 #' Use [`countrypops`] to create a **gt** table. With the remaining columns,
 #' position `population` after `country_name` with the `cols_move()` function.
 #'
 #' ```r
-#' countrypops %>%
-#'   dplyr::select(-contains("code")) %>%
-#'   dplyr::filter(country_name == "Mongolia") %>%
-#'   tail(5) %>%
-#'   gt() %>%
+#' countrypops |>
+#'   dplyr::select(-contains("code")) |>
+#'   dplyr::filter(country_name == "Mongolia") |>
+#'   tail(5) |>
+#'   gt() |>
 #'   cols_move(
 #'     columns = population,
 #'     after = country_name
@@ -1000,6 +1000,13 @@ cols_move <- function(
 #' start is preserved (same with the ordering of all other columns in the
 #' table).
 #'
+#' @inheritParams cols_align
+#' @param columns The column names to move to the left-most side of the table.
+#'   The order in which columns are provided will be preserved (as is the case
+#'   with the remaining columns).
+#'
+#' @return An object of class `gt_tbl`.
+#'
 #' @details
 #'
 #' The columns supplied in `columns` must all exist in the table. If you need to
@@ -1008,13 +1015,6 @@ cols_move <- function(
 #' the [cols_move()] function, where columns could be placed after a specific
 #' column.
 #'
-#' @inheritParams cols_align
-#' @param columns The column names to move to the left-most side of the table.
-#'   The order in which columns are provided will be preserved (as is the case
-#'   with the remaining columns).
-#'
-#' @return An object of class `gt_tbl`.
-#'
 #' @section Examples:
 #'
 #' Use [`countrypops`] to create a **gt** table. With the remaining columns,
@@ -1022,11 +1022,11 @@ cols_move <- function(
 #' `cols_move_to_start()`.
 #'
 #' ```r
-#' countrypops %>%
-#'   dplyr::select(-contains("code")) %>%
-#'   dplyr::filter(country_name == "Mongolia") %>%
-#'   tail(5) %>%
-#'   gt() %>%
+#' countrypops |>
+#'   dplyr::select(-contains("code")) |>
+#'   dplyr::filter(country_name == "Mongolia") |>
+#'   tail(5) |>
+#'   gt() |>
 #'   cols_move_to_start(columns = year)
 #' ```
 #'
@@ -1039,11 +1039,11 @@ cols_move <- function(
 #' move `year` and `population` to the start.
 #'
 #' ```r
-#' countrypops %>%
-#'   dplyr::select(-contains("code")) %>%
-#'   dplyr::filter(country_name == "Mongolia") %>%
-#'   tail(5) %>%
-#'   gt() %>%
+#' countrypops |>
+#'   dplyr::select(-contains("code")) |>
+#'   dplyr::filter(country_name == "Mongolia") |>
+#'   tail(5) |>
+#'   gt() |>
 #'   cols_move_to_start(columns = c(year, population))
 #' ```
 #'
@@ -1107,6 +1107,13 @@ cols_move_to_start <- function(
 #' error prone. The ordering of the `columns` that are moved to the end is
 #' preserved (same with the ordering of all other columns in the table).
 #'
+#' @inheritParams cols_align
+#' @param columns The column names to move to the right-most side of the table.
+#'   The order in which columns are provided will be preserved (as is the case
+#'   with the remaining columns).
+#'
+#' @return An object of class `gt_tbl`.
+#'
 #' @details
 #'
 #' The columns supplied in `columns` must all exist in the table. If you need to
@@ -1115,13 +1122,6 @@ cols_move_to_start <- function(
 #' the [cols_move()] function, where columns could be placed after a specific
 #' column.
 #'
-#' @inheritParams cols_align
-#' @param columns The column names to move to the right-most side of the table.
-#'   The order in which columns are provided will be preserved (as is the case
-#'   with the remaining columns).
-#'
-#' @return An object of class `gt_tbl`.
-#'
 #' @section Examples:
 #'
 #' Use [`countrypops`] to create a **gt** table. With the remaining columns,
@@ -1129,11 +1129,11 @@ cols_move_to_start <- function(
 #' `cols_move_to_end()` function.
 #'
 #' ```r
-#' countrypops %>%
-#'   dplyr::select(-contains("code")) %>%
-#'   dplyr::filter(country_name == "Mongolia") %>%
-#'   tail(5) %>%
-#'   gt() %>%
+#' countrypops |>
+#'   dplyr::select(-contains("code")) |>
+#'   dplyr::filter(country_name == "Mongolia") |>
+#'   tail(5) |>
+#'   gt() |>
 #'   cols_move_to_end(columns = year)
 #' ```
 #'
@@ -1145,11 +1145,11 @@ cols_move_to_start <- function(
 #' move `year` and `country_name` to the end of the column series.
 #'
 #' ```r
-#' countrypops %>%
-#'   dplyr::select(-contains("code")) %>%
-#'   dplyr::filter(country_name == "Mongolia") %>%
-#'   tail(5) %>%
-#'   gt() %>%
+#' countrypops |>
+#'   dplyr::select(-contains("code")) |>
+#'   dplyr::filter(country_name == "Mongolia") |>
+#'   tail(5) |>
+#'   gt() |>
 #'   cols_move_to_end(columns = c(year, country_name))
 #' ```
 #'
@@ -1214,6 +1214,12 @@ cols_move_to_end <- function(
 #' a column reference during formatting of other columns) but the final display
 #' of those columns is not necessary.
 #'
+#' @inheritParams cols_align
+#' @param columns The column names to hide from the output display table. Values
+#'   provided that do not correspond to column names will be disregarded.
+#'
+#' @return An object of class `gt_tbl`.
+#'
 #' @details
 #'
 #' The hiding of columns is internally a rendering directive, so, all columns
@@ -1226,22 +1232,16 @@ cols_move_to_end <- function(
 #' state of a column (much like the [cols_unhide()] function) and doesn't yield
 #' warnings or messages when changing the state of already-invisible columns.
 #'
-#' @inheritParams cols_align
-#' @param columns The column names to hide from the output display table. Values
-#'   provided that do not correspond to column names will be disregarded.
-#'
-#' @return An object of class `gt_tbl`.
-#'
 #' @section Examples:
 #'
 #' Use [`countrypops`] to create a **gt** table. Hide the `country_code_2` and
 #' `country_code_3` columns with `cols_hide()`.
 #'
 #' ```r
-#' countrypops %>%
-#'   dplyr::filter(country_name == "Mongolia") %>%
-#'   tail(5) %>%
-#'   gt() %>%
+#' countrypops |>
+#'   dplyr::filter(country_name == "Mongolia") |>
+#'   tail(5) |>
+#'   gt() |>
 #'   cols_hide(columns = c(country_code_2, country_code_3))
 #' ```
 #'
@@ -1255,11 +1255,11 @@ cols_move_to_end <- function(
 #' statements has no effect.
 #'
 #' ```r
-#' countrypops %>%
-#'   dplyr::filter(country_name == "Mongolia") %>%
-#'   tail(5) %>%
-#'   gt() %>%
-#'   cols_hide(columns = c(country_code_3, population)) %>%
+#' countrypops |>
+#'   dplyr::filter(country_name == "Mongolia") |>
+#'   tail(5) |>
+#'   gt() |>
+#'   cols_hide(columns = c(country_code_3, population)) |>
 #'   tab_footnote(
 #'     footnote = "Population above 3,000,000.",
 #'     locations = cells_body(
@@ -1326,19 +1326,20 @@ cols_hide <- function(
 #' obtains a `gt_tbl` object with hidden columns and there is motivation to
 #' reveal one or more of those.
 #'
+#' @inheritParams cols_align
+#' @param columns The column names to unhide from the output display table.
+#'   Values provided that do not correspond to column names will be disregarded.
+#'
+#' @return An object of class `gt_tbl`.
+#'
 #' @details
+#'
 #' The hiding and unhiding of columns is internally a rendering directive, so,
 #' all columns that are 'hidden' are still accessible and useful in any
 #' expression provided to a `rows` argument. The `cols_unhide()` function
 #' quietly changes the visible state of a column (much like the [cols_hide()]
 #' function) and doesn't yield warnings or messages when changing the state of
 #' already-visible columns.
-#'
-#' @inheritParams cols_align
-#' @param columns The column names to unhide from the output display table.
-#'   Values provided that do not correspond to column names will be disregarded.
-#'
-#' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
 #'
@@ -1347,10 +1348,10 @@ cols_hide <- function(
 #'
 #' ```r
 #' tab_1 <-
-#'   countrypops %>%
-#'   dplyr::filter(country_name == "Mongolia") %>%
-#'   tail(5) %>%
-#'   gt() %>%
+#'   countrypops |>
+#'   dplyr::filter(country_name == "Mongolia") |>
+#'   tail(5) |>
+#'   gt() |>
 #'   cols_hide(columns = c(country_code_2, country_code_3))
 #'
 #' tab_1
@@ -1365,7 +1366,7 @@ cols_hide <- function(
 #' the `cols_unhide()` function becomes useful.
 #'
 #' ```r
-#' tab_1 %>% cols_unhide(columns = country_code_2)
+#' tab_1 |> cols_unhide(columns = country_code_2)
 #' ```
 #'
 #' \if{html}{\out{
@@ -1504,18 +1505,18 @@ cols_unhide <- function(
 #' [cols_label()].
 #'
 #' ```r
-#' sp500 %>%
-#'   dplyr::slice(50:55) %>%
-#'   dplyr::select(-volume, -adj_close) %>%
-#'   gt() %>%
+#' sp500 |>
+#'   dplyr::slice(50:55) |>
+#'   dplyr::select(-volume, -adj_close) |>
+#'   gt() |>
 #'   cols_merge(
 #'     columns = c(open, close),
 #'     pattern = "{1}&mdash;{2}"
-#'   ) %>%
+#'   ) |>
 #'   cols_merge(
 #'     columns = c(low, high),
 #'     pattern = "{1}&mdash;{2}"
-#'   ) %>%
+#'   ) |>
 #'   cols_label(
 #'     open = "open/close",
 #'     low = "low/high"
@@ -1532,19 +1533,19 @@ cols_unhide <- function(
 #' drop parts of the output text whenever missing values are encountered.
 #'
 #' ```r
-#' gtcars %>%
-#'   dplyr::filter(year == 2017) %>%
-#'   dplyr::select(mfr, model, starts_with(c("trq", "mpg"))) %>%
-#'   gt() %>%
-#'   fmt_integer(columns = trq_rpm) %>%
+#' gtcars |>
+#'   dplyr::filter(year == 2017) |>
+#'   dplyr::select(mfr, model, starts_with(c("trq", "mpg"))) |>
+#'   gt() |>
+#'   fmt_integer(columns = trq_rpm) |>
 #'   cols_merge(
 #'     columns = starts_with("trq"),
 #'     pattern = "{1}<< ({2} rpm)>>"
-#'   ) %>%
+#'   ) |>
 #'   cols_merge(
 #'     columns = starts_with("mpg"),
 #'     pattern = "<<{1} city<</{2} hwy>>>>"
-#'   ) %>%
+#'   ) |>
 #'   cols_label(
 #'     mfr = "Manufacturer",
 #'     model = "Car Model",
@@ -1718,19 +1719,19 @@ cols_merge <- function(
 #' (after formatting the `num` column) using the `cols_merge_uncert()` function.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(currency, num) %>%
-#'   dplyr::slice(1:7) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(currency, num) |>
+#'   dplyr::slice(1:7) |>
+#'   gt() |>
 #'   fmt_number(
 #'     columns = num,
 #'     decimals = 3,
 #'     use_seps = FALSE
-#'   ) %>%
+#'   ) |>
 #'   cols_merge_uncert(
 #'     col_val = currency,
 #'     col_uncert = num
-#'   ) %>%
+#'   ) |>
 #'   cols_label(currency = "value + uncert.")
 #' ```
 #'
@@ -1868,14 +1869,14 @@ cols_merge_uncert <- function(
 #' function.
 #'
 #' ```r
-#' gtcars %>%
-#'   dplyr::select(model, starts_with("mpg")) %>%
-#'   dplyr::slice(1:8) %>%
-#'   gt() %>%
+#' gtcars |>
+#'   dplyr::select(model, starts_with("mpg")) |>
+#'   dplyr::slice(1:8) |>
+#'   gt() |>
 #'   cols_merge_range(
 #'     col_begin = mpg_c,
 #'     col_end = mpg_h
-#'   ) %>%
+#'   ) |>
 #'   cols_label(mpg_c = md("*MPG*"))
 #' ```
 #'
@@ -2042,36 +2043,36 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #' (and the `frac` column is formatted using [fmt_percent()]).
 #'
 #' ```r
-#' pizzaplace %>%
-#'   dplyr::group_by(name, type, price) %>%
+#' pizzaplace |>
+#'   dplyr::group_by(name, type, price) |>
 #'   dplyr::summarize(
 #'     n = dplyr::n(),
-#'     frac = n/nrow(.),
+#'     frac = n/nrow(pizzaplace),
 #'     .groups = "drop"
-#'   ) %>%
-#'   dplyr::arrange(type, dplyr::desc(n)) %>%
-#'   dplyr::group_by(type) %>%
-#'   dplyr::slice_head(n = 3) %>%
+#'   ) |>
+#'   dplyr::arrange(type, dplyr::desc(n)) |>
+#'   dplyr::group_by(type) |>
+#'   dplyr::slice_head(n = 3) |>
 #'   gt(
 #'     rowname_col = "name",
 #'     groupname_col = "type"
-#'   ) %>%
-#'   fmt_currency(price) %>%
-#'   fmt_percent(frac) %>%
+#'   ) |>
+#'   fmt_currency(price) |>
+#'   fmt_percent(frac) |>
 #'   cols_merge_n_pct(
 #'     col_n = n,
 #'     col_pct = frac
-#'   ) %>%
+#'   ) |>
 #'   cols_label(
 #'     n = md("*N* (%)"),
 #'     price = "Price"
-#'   ) %>%
+#'   ) |>
 #'   tab_style(
 #'     style = cell_text(font = "monospace"),
 #'     locations = cells_stub()
-#'   ) %>%
-#'   tab_stubhead(md("Cat. and  \nPizza Code")) %>%
-#'   tab_header(title = "Top 3 Pizzas Sold by Category in 2015") %>%
+#'   ) |>
+#'   tab_stubhead(md("Cat. and  \nPizza Code")) |>
+#'   tab_header(title = "Top 3 Pizzas Sold by Category in 2015") |>
 #'   tab_options(table.width = px(512))
 #' ```
 #'

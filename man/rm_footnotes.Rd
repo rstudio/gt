@@ -39,27 +39,25 @@ Use \code{\link{sza}} to create a \strong{gt} table. Color the \code{sza} column
 footnotes (each one targeting a different column label).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
-  sza \%>\%
+  sza |>
   dplyr::filter(
     latitude == 20 &
       month == "jan" &
       !is.na(sza)
-  ) \%>\%
-  dplyr::select(-latitude, -month) \%>\%
-  gt() \%>\%
+  ) |>
+  dplyr::select(-latitude, -month) |>
+  gt() |>
   data_color(
     columns = sza,
-    colors = scales::col_numeric(
-      palette = c("white", "yellow", "navyblue"),
-      domain = c(0, 90)
-    )
-  ) \%>\%
+    palette = c("white", "yellow", "navyblue"),
+    domain = c(0, 90)
+  ) |>
   tab_footnote(
     footnote = "Color indicates height of sun.",
     locations = cells_column_labels(
       columns = sza
     )
-  ) \%>\%
+  ) |>
   tab_footnote(
     footnote = "
     The true solar time at the given latitude
@@ -69,7 +67,7 @@ footnotes (each one targeting a different column label).
     locations = cells_column_labels(
       columns = tst
     )
-  ) \%>\%
+  ) |>
   cols_width(everything() ~ px(150))
 
 gt_tbl

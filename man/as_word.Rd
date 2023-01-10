@@ -36,27 +36,30 @@ whether a table should use Word option \verb{keep rows together}.}
 Get the Open Office XML table tag content from a \code{gt_tbl} object as as a
 single-element character vector.
 }
+\section{Examples}{
+
+
+Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header and then export as
+OOXML code for Word.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_rtf <-
+  gtcars |>
+  dplyr::select(mfr, model) |>
+  dplyr::slice(1:2) |>
+  gt() |>
+  tab_header(
+    title = md("Data listing from **gtcars**"),
+    subtitle = md("`gtcars` is an R dataset")
+  ) |>
+  as_word()
+}\if{html}{\out{</div>}}
+}
+
 \section{Function ID}{
 
 13-5
 }
 
-\examples{
-# Use `gtcars` to create a gt table;
-# add a header and then export as
-# OOXML code for Word
-tab_rtf <-
-  gtcars \%>\%
-  dplyr::select(mfr, model) \%>\%
-  dplyr::slice(1:2) \%>\%
-  gt() \%>\%
-  tab_header(
-    title = md("Data listing from **gtcars**"),
-    subtitle = md("`gtcars` is an R dataset")
-  ) \%>\%
-  as_word()
-
-}
 \seealso{
 Other table export functions: 
 \code{\link{as_latex}()},

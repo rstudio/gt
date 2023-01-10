@@ -84,19 +84,19 @@ which targets numeric columns that have a maximum value of 100,000 (excluding
 Use \code{\link{sza}} to create a \strong{gt} table. Add footnotes to the column labels with
 \code{\link[=tab_footnote]{tab_footnote()}} and \code{cells_column_labels()} in \code{locations}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza |>
   dplyr::filter(
     latitude == 20 & month == "jan" &
       !is.na(sza)
-  ) \%>\%
-  dplyr::select(-latitude, -month) \%>\%
-  gt() \%>\%
+  ) |>
+  dplyr::select(-latitude, -month) |>
+  gt() |>
   tab_footnote(
     footnote = "True solar time.",
     locations = cells_column_labels(
       columns = tst
     )
-  ) \%>\%
+  ) |>
   tab_footnote(
     footnote = "Solar zenith angle.",
     locations = cells_column_labels(

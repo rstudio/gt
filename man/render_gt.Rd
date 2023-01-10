@@ -35,8 +35,8 @@ pixel or percent units.}
 if you want to save an expression in a variable.}
 
 \item{outputArgs}{A list of arguments to be passed through to the implicit
-call to \code{\link[=gt_output]{gt_output()}} when \code{render_gt} is used in an interactive R Markdown
-document.}
+call to \code{\link[=gt_output]{gt_output()}} when \code{render_gt()} is used in an interactive R
+Markdown document.}
 }
 \description{
 With \code{render_gt()} we can create a reactive \strong{gt} table that works
@@ -47,8 +47,7 @@ The \code{width} and \code{height} arguments allow for sizing the container, and
 \code{align} argument allows us to align the table within the container (some
 other fine-grained options for positioning are available in the
 \code{\link[=tab_options]{tab_options()}} function).
-}
-\details{
+
 We need to ensure that we have the \strong{shiny} package installed first. This
 is easily by using \code{install.packages("shiny")}. More information on creating
 Shiny apps can be found at the \href{https://shiny.rstudio.com}{Shiny Site}.
@@ -64,18 +63,15 @@ expression.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{library(shiny)
 
 gt_tbl <-
-  gtcars \%>\%
-  gt() \%>\%
-  cols_hide(contains("_"))
+  gtcars |>
+  gt() |>
+  cols_hide(columns = contains("_"))
 
 ui <- fluidPage(
-
   gt_output(outputId = "table")
 )
 
-server <- function(input,
-                   output,
-                   session) \{
+server <- function(input, output, session) \{
 
   output$table <-
     render_gt(

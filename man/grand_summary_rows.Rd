@@ -222,15 +222,15 @@ Use \code{\link{sp500}} to create a \strong{gt} table with row groups. Create th
 summary rows \code{min}, \code{max}, and \code{avg} for the table with the
 \code{grand_summary_rows()} function.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
-  dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") \%>\%
-  dplyr::arrange(date) \%>\%
-  dplyr::mutate(week = paste0("W", strftime(date, format = "\%V"))) \%>\%
-  dplyr::select(-adj_close, -volume) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
+  dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") |>
+  dplyr::arrange(date) |>
+  dplyr::mutate(week = paste0("W", strftime(date, format = "\%V"))) |>
+  dplyr::select(-adj_close, -volume) |>
   gt(
     rowname_col = "date",
     groupname_col = "week"
-  ) \%>\%
+  ) |>
   grand_summary_rows(
     columns = c(open, high, low, close),
     fns = list(
@@ -255,23 +255,23 @@ aggregation function (expressed as \code{"sum"}, which \strong{gt} recognizes as
 \code{sum()} function). Finally, we'll add a background fill to the grand summary
 row with \code{\link[=tab_style]{tab_style()}}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::filter(country_code_2 \%in\% c("BE", "NU", "LU")) \%>\%
-  dplyr::filter(year \%\% 10 == 0) \%>\%
-  dplyr::select(country_name, year, population) \%>\%
-  tidyr::pivot_wider(names_from = year, values_from = population) \%>\%
-  gt(rowname_col = "country_name") \%>\%
-  tab_header(title = "Populations of the Benelux Countries") \%>\%
-  tab_spanner(columns = everything(), label = "Year") \%>\%
-  fmt_integer() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::filter(country_code_2 \%in\% c("BE", "NU", "LU")) |>
+  dplyr::filter(year \%\% 10 == 0) |>
+  dplyr::select(country_name, year, population) |>
+  tidyr::pivot_wider(names_from = year, values_from = population) |>
+  gt(rowname_col = "country_name") |>
+  tab_header(title = "Populations of the Benelux Countries") |>
+  tab_spanner(columns = everything(), label = "Year") |>
+  fmt_integer() |>
   grand_summary_rows(
     fns =  list(label = "TOTALS", id = "totals", fn = "sum"),
     fmt = ~ fmt_integer(.),
     side = "top"
-  ) \%>\%
+  ) |>
   tab_style(
     locations = cells_grand_summary(),
-    style = cell_fill(color = "lightblue" \%>\% adjust_luminance(steps = +1))
+    style = cell_fill(color = "lightblue" |> adjust_luminance(steps = +1))
   )
 }\if{html}{\out{</div>}}
 

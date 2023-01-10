@@ -24,10 +24,10 @@
 #' `tab_header()` function so that we get a title and a subtitle for the table.
 #'
 #' ```r
-#' gtcars %>%
-#'   dplyr::select(mfr, model, msrp) %>%
-#'   dplyr::slice(1:5) %>%
-#'   gt() %>%
+#' gtcars |>
+#'   dplyr::select(mfr, model, msrp) |>
+#'   dplyr::slice(1:5) |>
+#'   gt() |>
 #'   tab_header(
 #'     title = md("Data listing from **gtcars**"),
 #'     subtitle = md("`gtcars` is an R dataset")
@@ -105,13 +105,13 @@ tab_header <- function(
 #' column with the label `"performance"`.
 #'
 #' ```r
-#' gtcars %>%
+#' gtcars |>
 #'   dplyr::select(
 #'     -mfr, -trim, bdy_style,
 #'     -drivetrain, -trsmn, -ctry_origin
-#'   ) %>%
-#'   dplyr::slice(1:8) %>%
-#'   gt(rowname_col = "model") %>%
+#'   ) |>
+#'   dplyr::slice(1:8) |>
+#'   gt(rowname_col = "model") |>
 #'   tab_spanner(
 #'     label = "performance",
 #'     columns = c(
@@ -332,19 +332,6 @@ resolve_spanned_column_names <- function(
 #' reference to individual columns must continue to be the column names from the
 #' input table data (which are unique by necessity).
 #'
-#' @details
-#'
-#' If we look to the column names in the `iris` dataset as an example of how
-#' `tab_spanner_delim()` might be useful, we find the names `Sepal.Length`,
-#' `Sepal.Width`, `Petal.Length`, `Petal.Width`. From this naming system, it's
-#' easy to see that the `Sepal` and `Petal` can group together the repeated
-#' common `Length` and `Width` values. In your own datasets, we can avoid a
-#' lengthy relabeling with [cols_label()] if column names can be fashioned
-#' beforehand to contain both the spanner column label and the column label. An
-#' additional advantage is that the column names in the input table data remain
-#' unique even though there may eventually be repeated column labels in the
-#' rendered output table).
-#'
 #' @inheritParams tab_spanner
 #' @param delim The delimiter to use to split an input column name. The
 #'   delimiter supplied will be autoescaped for the internal splitting
@@ -359,6 +346,19 @@ resolve_spanned_column_names <- function(
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @details
+#'
+#' If we look to the column names in the `iris` dataset as an example of how
+#' `tab_spanner_delim()` might be useful, we find the names `Sepal.Length`,
+#' `Sepal.Width`, `Petal.Length`, `Petal.Width`. From this naming system, it's
+#' easy to see that the `Sepal` and `Petal` can group together the repeated
+#' common `Length` and `Width` values. In your own datasets, we can avoid a
+#' lengthy relabeling with [cols_label()] if column names can be fashioned
+#' beforehand to contain both the spanner column label and the column label. An
+#' additional advantage is that the column names in the input table data remain
+#' unique even though there may eventually be repeated column labels in the
+#' rendered output table).
+#'
 #' @section Examples:
 #'
 #' Use `iris` to create a **gt** table and use the `tab_spanner_delim()`
@@ -367,10 +367,10 @@ resolve_spanned_column_names <- function(
 #' column labels (second part).
 #'
 #' ```r
-#' iris %>%
-#'   dplyr::group_by(Species) %>%
-#'   dplyr::slice(1:4) %>%
-#'   gt() %>%
+#' iris |>
+#'   dplyr::group_by(Species) |>
+#'   dplyr::slice(1:4) |>
+#'   gt() |>
 #'   tab_spanner_delim(delim = ".")
 #' ```
 #'
@@ -561,9 +561,8 @@ tab_spanner_delim <- function(
   # Re-label column labels included in `colnames_spanners`
   #
 
-  new_labels <-
-    strsplit(colnames_spanners_ordered, split = delim, fixed = TRUE) %>%
-    vapply(FUN.VALUE = character(1), utils::tail, 1)
+  new_labels <- strsplit(colnames_spanners_ordered, split = delim, fixed = TRUE)
+  new_labels <- vapply(new_labels, FUN.VALUE = character(1), utils::tail, 1)
 
   new_label_list <- stats::setNames(as.list(new_labels), colnames_spanners)
 
@@ -641,10 +640,10 @@ tab_spanner_delim <- function(
 #' label ends up being rendered without a label at all.
 #'
 #' ```r
-#' gtcars %>%
-#'   dplyr::select(model, year, hp, trq) %>%
-#'   dplyr::slice(1:8) %>%
-#'   gt(rowname_col = "model") %>%
+#' gtcars |>
+#'   dplyr::select(model, year, hp, trq) |>
+#'   dplyr::slice(1:8) |>
+#'   gt(rowname_col = "model") |>
 #'   tab_row_group(
 #'     label = "numbered",
 #'     rows = matches("^[0-9]")
@@ -661,14 +660,14 @@ tab_spanner_delim <- function(
 #' provided to the `rows` argument).
 #'
 #' ```r
-#' gtcars %>%
-#'   dplyr::select(model, year, hp, trq) %>%
-#'   dplyr::slice(1:8) %>%
-#'   gt(rowname_col = "model") %>%
+#' gtcars |>
+#'   dplyr::select(model, year, hp, trq) |>
+#'   dplyr::slice(1:8) |>
+#'   gt(rowname_col = "model") |>
 #'   tab_row_group(
 #'     label = "powerful",
 #'     rows = hp <= 600
-#'   ) %>%
+#'   ) |>
 #'   tab_row_group(
 #'     label = "super powerful",
 #'     rows = hp > 600
@@ -806,10 +805,10 @@ tab_row_group <- function(
 #' is in the stub.
 #'
 #' ```r
-#' gtcars %>%
-#'   dplyr::select(model, year, hp, trq) %>%
-#'   dplyr::slice(1:5) %>%
-#'   gt(rowname_col = "model") %>%
+#' gtcars |>
+#'   dplyr::select(model, year, hp, trq) |>
+#'   dplyr::slice(1:5) |>
+#'   gt(rowname_col = "model") |>
 #'   tab_stubhead(label = "car")
 #' ```
 #'
@@ -860,60 +859,38 @@ tab_stubhead <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`pizzaplace`] to create a **gt** table. With `tab_stub_indent()` we can
-#' add indentation to targeted row labels in the stub. Here we target the
-#' different pizza sizes and avoid selecting the repeating `"All Sizes"` row
-#' label.
+#' Use [`pizzaplace`] to create a **gt** table with summary rows at the top of
+#' each row group. With `tab_stub_indent()` we can add indentation to the row
+#' labels in the stub.
 #'
 #' ```r
-#' dplyr::bind_rows(
-#'   pizzaplace %>%
-#'     dplyr::group_by(type, size) %>%
-#'     dplyr::summarize(
-#'       sold = n(),
-#'       income = sum(price),
-#'       .groups = "drop_last"
-#'     ) %>%
-#'     dplyr::summarize(
-#'       sold = sum(sold),
-#'       income = sum(income),
-#'       size = "All Sizes",
-#'       .groups = "drop"
-#'     ),
-#'   pizzaplace %>%
-#'     dplyr::group_by(type, size) %>%
-#'     dplyr::summarize(
-#'       sold = n(),
-#'       income = sum(price),
-#'       .groups = "drop"
+#' pizzaplace |>
+#'   dplyr::group_by(type, size) |>
+#'   dplyr::summarize(
+#'     sold = n(),
+#'     income = sum(price),
+#'     .groups = "drop"
+#'   ) |>
+#'   gt(rowname_col = "size", groupname_col = "type") |>
+#'   tab_header(title = "Pizzas Sold in 2015") |>
+#'   fmt_integer(columns = sold) |>
+#'   fmt_currency(columns = income) |>
+#'   summary_rows(
+#'     fns = list(label = "All Sizes", fn = "sum"),
+#'     side = "top",
+#'     fmt = list(
+#'       ~ fmt_integer(., columns = sold),
+#'       ~ fmt_currency(., columns = income)
 #'     )
-#' ) %>%
-#'   gt(rowname_col = "size", groupname_col = "type") %>%
-#'   tab_header(title = "Pizzas Sold in 2015") %>%
-#'   fmt_number(
-#'     columns = sold,
-#'     decimals = 0,
-#'     use_seps = TRUE
-#'   ) %>%
-#'   fmt_currency(
-#'     columns = income,
-#'     currency = "USD"
-#'   ) %>%
+#'   ) |>
 #'   tab_options(
-#'     summary_row.background.color = "#ACEACE",
+#'     summary_row.background.color = "gray95",
 #'     row_group.background.color = "#FFEFDB",
 #'     row_group.as_column = TRUE
-#'   ) %>%
+#'   ) |>
 #'   tab_stub_indent(
-#'     rows = matches("^L|^M|^S|^XL|^XXL"),
+#'     rows = everything(),
 #'     indent = 2
-#'   ) %>%
-#'   tab_style(
-#'     style = cell_fill(color = "gray95"),
-#'     locations = list(
-#'       cells_body(rows = matches("^All")),
-#'       cells_stub(rows = matches("^All"))
-#'     )
 #'   )
 #' ```
 #'
@@ -1017,21 +994,6 @@ tab_stub_indent <- function(
 #' different note, and one or more cells can be targeted via the location helper
 #' functions (e.g., [cells_body()], [cells_column_labels()], etc.).
 #'
-#' @details
-#'
-#' The formatting of the footnotes can be controlled through the use of various
-#' parameters in the [tab_options()] function:
-#' - `footnotes.multiline`: a setting that determines whether footnotes each
-#' start on a new line or are combined into a single block.
-#' - `footnotes.sep`: allows for a choice of the separator between consecutive
-#' footnotes in the table footer. By default, this is set to a single space
-#' character.
-#' - `footnotes.marks`: the set of sequential characters or numbers used to
-#' identify the footnotes.
-#' - `footnotes.font.size`: the size of the font used in the footnote section.
-#' - `footnotes.padding`: the amount of padding to apply between the footnote
-#' and source note sections in the table footer.
-#'
 #' @inheritParams fmt_number
 #' @param footnote The text to be used in the footnote. We can optionally use
 #'   the [md()] and [html()] functions to style the text as Markdown or to
@@ -1054,6 +1016,21 @@ tab_stub_indent <- function(
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @details
+#'
+#' The formatting of the footnotes can be controlled through the use of various
+#' parameters in the [tab_options()] function:
+#' - `footnotes.multiline`: a setting that determines whether footnotes each
+#' start on a new line or are combined into a single block.
+#' - `footnotes.sep`: allows for a choice of the separator between consecutive
+#' footnotes in the table footer. By default, this is set to a single space
+#' character.
+#' - `footnotes.marks`: the set of sequential characters or numbers used to
+#' identify the footnotes.
+#' - `footnotes.font.size`: the size of the font used in the footnote section.
+#' - `footnotes.padding`: the amount of padding to apply between the footnote
+#' and source note sections in the table footer.
+#'
 #' @section Examples:
 #'
 #' Use [`sza`] to create a **gt** table. Color the `sza` column using the
@@ -1061,21 +1038,19 @@ tab_stub_indent <- function(
 #' `sza` column label (explaining what the color scale signifies).
 #'
 #' ```r
-#' sza %>%
+#' sza |>
 #'   dplyr::filter(
 #'     latitude == 20 &
 #'       month == "jan" &
 #'       !is.na(sza)
-#'   ) %>%
-#'   dplyr::select(-latitude, -month) %>%
-#'   gt() %>%
+#'   ) |>
+#'   dplyr::select(-latitude, -month) |>
+#'   gt() |>
 #'   data_color(
 #'     columns = sza,
-#'     colors = scales::col_numeric(
-#'       palette = c("white", "yellow", "navyblue"),
-#'       domain = c(0, 90)
-#'     )
-#'   ) %>%
+#'     palette = c("white", "yellow", "navyblue"),
+#'     domain = c(0, 90)
+#'   ) |>
 #'   tab_footnote(
 #'     footnote = "Color indicates height of sun.",
 #'     locations = cells_column_labels(
@@ -1401,10 +1376,10 @@ set_footnote.cells_footnotes <- function(loc, data, footnote, placement) {
 #' source note to the table footer that cites the data source.
 #'
 #' ```r
-#' gtcars %>%
-#'   dplyr::select(mfr, model, msrp) %>%
-#'   dplyr::slice(1:5) %>%
-#'   gt() %>%
+#' gtcars |>
+#'   dplyr::select(mfr, model, msrp) |>
+#'   dplyr::slice(1:5) |>
+#'   gt() |>
 #'   tab_source_note(source_note = "From edmunds.com")
 #' ```
 #'
@@ -1453,14 +1428,14 @@ tab_source_note <- function(
 #' [tab_header()] function, and, add a caption as well with `tab_caption()`.
 #'
 #' ```r
-#' gtcars %>%
-#'   dplyr::select(mfr, model, msrp) %>%
-#'   dplyr::slice(1:5) %>%
-#'   gt() %>%
+#' gtcars |>
+#'   dplyr::select(mfr, model, msrp) |>
+#'   dplyr::slice(1:5) |>
+#'   gt() |>
 #'   tab_header(
 #'     title = md("Data listing from **gtcars**"),
 #'     subtitle = md("`gtcars` is an R dataset")
-#'   ) %>%
+#'   ) |>
 #'   tab_caption(caption = md("**gt** table example."))
 #' ```
 #'
@@ -1536,13 +1511,13 @@ tab_caption <- function(
 #' to data cells that satisfy a condition (using `tab_style()`).
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(num, currency) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(num, currency) |>
+#'   gt() |>
 #'   fmt_number(
 #'     columns = c(num, currency),
 #'     decimals = 1
-#'   ) %>%
+#'   ) |>
 #'   tab_style(
 #'     style = list(
 #'       cell_fill(color = "lightcyan"),
@@ -1552,7 +1527,7 @@ tab_caption <- function(
 #'       columns = num,
 #'       rows = num >= 5000
 #'     )
-#'   ) %>%
+#'   ) |>
 #'   tab_style(
 #'     style = list(
 #'       cell_fill(color = "#F9E3D6"),
@@ -1573,17 +1548,17 @@ tab_caption <- function(
 #' values in a particular column.
 #'
 #' ```r
-#' sp500 %>%
+#' sp500 |>
 #'   dplyr::filter(
 #'     date >= "2015-12-01" &
 #'     date <= "2015-12-15"
-#'   ) %>%
-#'   dplyr::select(-c(adj_close, volume)) %>%
-#'   gt() %>%
+#'   ) |>
+#'   dplyr::select(-c(adj_close, volume)) |>
+#'   gt() |>
 #'   tab_style(
 #'     style = cell_fill(color = "lightgreen"),
 #'     locations = cells_body(rows = close > open)
-#'   ) %>%
+#'   ) |>
 #'   tab_style(
 #'     style = list(
 #'       cell_fill(color = "red"),
@@ -1602,10 +1577,10 @@ tab_caption <- function(
 #' [cell_fill()] and with a CSS style declaration.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(char, fctr) %>%
-#'   gt() %>%
-#'   sub_missing() %>%
+#' exibble |>
+#'   dplyr::select(char, fctr) |>
+#'   gt() |>
+#'   sub_missing() |>
 #'   tab_style(
 #'     style = list(
 #'       cell_fill(color = "lightcyan"),
@@ -2211,32 +2186,32 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'
 #' ```r
 #' tab_1 <-
-#'   exibble %>%
-#'   dplyr::select(-c(fctr, date, time, datetime)) %>%
+#'   exibble |>
+#'   dplyr::select(-c(fctr, date, time, datetime)) |>
 #'   gt(
 #'     rowname_col = "row",
 #'     groupname_col = "group"
-#'   ) %>%
+#'   ) |>
 #'   tab_header(
 #'     title = md("Data listing from **exibble**"),
 #'     subtitle = md("`exibble` is an R dataset")
-#'   ) %>%
-#'   fmt_number(columns = num) %>%
-#'   fmt_currency(columns = currency) %>%
+#'   ) |>
+#'   fmt_number(columns = num) |>
+#'   fmt_currency(columns = currency) |>
 #'   tab_footnote(
 #'     footnote = "Using commas for separators.",
 #'     locations = cells_body(
 #'       columns = num,
 #'       rows = num > 1000
 #'     )
-#'   ) %>%
+#'   ) |>
 #'   tab_footnote(
 #'     footnote = "Using commas for separators.",
 #'     locations = cells_body(
 #'       columns = currency,
 #'       rows = currency > 1000
 #'     )
-#'   ) %>%
+#'   ) |>
 #'   tab_footnote(
 #'     footnote = "Alphabetical fruit.",
 #'     locations = cells_column_labels(columns = char)
@@ -2253,7 +2228,7 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' area).
 #'
 #' ```r
-#' tab_1 %>% tab_options(table.width = pct(100))
+#' tab_1 |> tab_options(table.width = pct(100))
 #' ```
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_tab_options_2.png")`
@@ -2262,7 +2237,7 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' Modify the table's background color to be `"lightcyan"`.
 #'
 #' ```r
-#' tab_1 %>% tab_options(table.background.color = "lightcyan")
+#' tab_1 |> tab_options(table.background.color = "lightcyan")
 #' ```
 #'
 #' \if{html}{\out{
@@ -2273,7 +2248,7 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' the footer by spaces instead of newlines.
 #'
 #' ```r
-#' tab_1 %>%
+#' tab_1 |>
 #'   tab_options(
 #'     footnotes.marks = letters,
 #'     footnotes.multiline = FALSE
@@ -2287,7 +2262,7 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' Change the padding of data rows to 5 px.
 #'
 #' ```r
-#' tab_1 %>%
+#' tab_1 |>
 #'   tab_options(
 #'     data_row.padding = px(5)
 #'   )
@@ -2300,7 +2275,7 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' Reduce the size of the title and the subtitle text.
 #'
 #' ```r
-#' tab_1 %>%
+#' tab_1 |>
 #'   tab_options(
 #'     heading.title.font.size = "small",
 #'     heading.subtitle.font.size = "small"

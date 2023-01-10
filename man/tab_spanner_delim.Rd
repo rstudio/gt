@@ -57,10 +57,10 @@ function to automatically generate column spanner labels. This splits any
 columns that are dot-separated between column spanner labels (first part) and
 column labels (second part).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{iris \%>\%
-  dplyr::group_by(Species) \%>\%
-  dplyr::slice(1:4) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{iris |>
+  dplyr::group_by(Species) |>
+  dplyr::slice(1:4) |>
+  gt() |>
   tab_spanner_delim(delim = ".")
 }\if{html}{\out{</div>}}
 

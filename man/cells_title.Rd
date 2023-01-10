@@ -71,11 +71,11 @@ Use \code{\link{sp500}} to create a \strong{gt} table. Add a header with a title
 add a footnote to the title with \code{\link[=tab_footnote]{tab_footnote()}} and \code{cells_title()} (in
 \code{locations}).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
-  dplyr::filter(date >= "2015-01-05" & date <="2015-01-10") \%>\%
-  dplyr::select(-c(adj_close, volume, high, low)) \%>\%
-  gt() \%>\%
-  tab_header(title = "S&P 500") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
+  dplyr::filter(date >= "2015-01-05" & date <="2015-01-10") |>
+  dplyr::select(-c(adj_close, volume, high, low)) |>
+  gt() |>
+  tab_header(title = "S&P 500") |>
   tab_footnote(
     footnote = "All values in USD.",
     locations = cells_title(groups = "title")

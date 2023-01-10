@@ -98,9 +98,9 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{cha
 the data in that column through but apply a simple pattern that adds an \code{"s"}
 to the non-\code{NA} values.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(char) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(char) |>
+  gt() |>
   fmt_passthrough(
     columns = char,
     rows = !is.na(char),

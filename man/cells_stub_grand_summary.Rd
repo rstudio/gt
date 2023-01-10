@@ -83,19 +83,19 @@ Use \code{\link{countrypops}} to create a \strong{gt} table. Add some styling to
 summary stub cell with with the \code{\link[=tab_style]{tab_style()}} and
 \code{cells_stub_grand_summary()} functions.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::filter(country_name == "Spain", year < 1970) \%>\%
-  dplyr::select(-contains("country")) \%>\%
-  gt(rowname_col = "year") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::filter(country_name == "Spain", year < 1970) |>
+  dplyr::select(-contains("country")) |>
+  gt(rowname_col = "year") |>
   fmt_number(
     columns = population,
     decimals = 0
-  ) \%>\%
+  ) |>
   grand_summary_rows(
     columns = population,
     fns = list(change = ~max(.) - min(.)),
     fmt = ~ fmt_integer(.)
-  ) \%>\%
+  ) |>
   tab_style(
     style = cell_text(weight = "bold", transform = "uppercase"),
     locations = cells_stub_grand_summary(rows = "change")

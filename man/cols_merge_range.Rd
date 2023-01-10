@@ -85,14 +85,14 @@ and \code{mpg_h} columns. Merge the \code{"mpg*"} columns together as a single r
 column (which is labeled as MPG, in italics) using the \code{cols_merge_range()}
 function.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
-  dplyr::select(model, starts_with("mpg")) \%>\%
-  dplyr::slice(1:8) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::select(model, starts_with("mpg")) |>
+  dplyr::slice(1:8) |>
+  gt() |>
   cols_merge_range(
     col_begin = mpg_c,
     col_end = mpg_h
-  ) \%>\%
+  ) |>
   cols_label(mpg_c = md("*MPG*"))
 }\if{html}{\out{</div>}}
 

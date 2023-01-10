@@ -39,7 +39,7 @@ gt_latex_dependencies()
 \begin{document}
 
 <<results='asis', echo=FALSE>>=
-exibble %>% gt()
+gt(exibble)
  @
 
 \end{document}

@@ -167,9 +167,9 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{dat
 columns. Format the \code{time} column to have times formatted as \code{hms_p} (time
 style \code{3}).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(date, time) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(date, time) |>
+  gt() |>
   fmt_time(
     columns = time,
     time_style = "h_m_s_p"
@@ -185,14 +185,14 @@ columns. Format the \code{time} column to have mixed time formats (times after
 16:00 will be different than the others because of the expressions used
 in the \code{rows} argument).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(date, time) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(date, time) |>
+  gt() |>
   fmt_time(
     columns = time,
     rows = time > "16:00",
     time_style = "h_m_s_p"
-  ) \%>\%
+  ) |>
   fmt_time(
     columns = time,
     rows = time <= "16:00",
@@ -209,9 +209,9 @@ Use \code{\link{exibble}} to create another \strong{gt} table, this time only wi
 (which is one of the 'flexible' styles). Also, set the locale to \code{"sv"} to
 get the dates in Swedish.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(time) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(time) |>
+  gt() |>
   fmt_time(
     columns = time,
     time_style = "EBhms",

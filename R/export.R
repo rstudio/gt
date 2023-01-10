@@ -1,11 +1,13 @@
 #' Save a **gt** table as a file
 #'
 #' @description
+#'
 #' The `gtsave()` function makes it easy to save a **gt** table to a file. The
 #' function guesses the file type by the extension provided in the output
 #' filename, producing either an HTML, PDF, PNG, LaTeX, or RTF file.
 #'
 #' @details
+#'
 #' Output filenames with either the `.html` or `.htm` extensions will produce an
 #' HTML document. In this case, we can pass a `TRUE` or `FALSE` value to the
 #' `inline_css` option to obtain an HTML document with inlined CSS styles (the
@@ -62,10 +64,10 @@
 #'
 #' ```r
 #' tab_1 <-
-#'   gtcars %>%
-#'   dplyr::select(model, year, hp, trq) %>%
-#'   dplyr::slice(1:5) %>%
-#'   gt(rowname_col = "model") %>%
+#'   gtcars |>
+#'   dplyr::select(model, year, hp, trq) |>
+#'   dplyr::slice(1:5) |>
+#'   gt(rowname_col = "model") |>
 #'   tab_stubhead(label = "car")
 #' ```
 #'
@@ -74,40 +76,40 @@
 #' `inline_css = TRUE` option.
 #'
 #' ```r
-#' tab_1 %>% gtsave(filename = "tab_1.html", inline_css = TRUE)
+#' tab_1 |> gtsave(filename = "tab_1.html", inline_css = TRUE)
 #' ```
 #'
 #' By leaving out the `inline_css` option, we get a more conventional HTML file
 #' with embedded CSS styles.
 #'
 #' ```r
-#' tab_1 %>% gtsave(filename = "tab_1.html")
+#' tab_1 |> gtsave(filename = "tab_1.html")
 #' ```
 #'
 #' Saving as a PNG file results in a cropped image of an HTML table. The amount
 #' of whitespace can be set with the `expand` option.
 #'
 #' ```r
-#' tab_1 %>% gtsave("tab_1.png", expand = 10)
+#' tab_1 |> gtsave("tab_1.png", expand = 10)
 #' ```
 #'
 #' Any use of the `.tex`, `.ltx`, or `.rnw` will result in the output of a LaTeX
 #' document.
 #'
 #' ```r
-#' tab_1 %>% gtsave("tab_1.tex")
+#' tab_1 |> gtsave("tab_1.tex")
 #' ```
 #'
 #' With the `.rtf` extension, we'll get an RTF document.
 #'
 #' ```r
-#' tab_1 %>% gtsave("tab_1.rtf")
+#' tab_1 |> gtsave("tab_1.rtf")
 #'
 #' ```
 #' With the `.docx` extension, we'll get a word/docx document.
 #'
 #' ```r
-#' tab_1 %>% gtsave("tab_1.docx")
+#' tab_1 |> gtsave("tab_1.docx")
 #' ```
 #'
 #' @family table export functions
@@ -351,6 +353,7 @@ gtsave_filename <- function(path, filename) {
 #' Get the HTML content of a **gt** table
 #'
 #' @description
+#'
 #' Get the HTML content from a `gt_tbl` object as a single-element character
 #' vector. By default, the generated HTML will have inlined styles, where CSS
 #' styles (that were previously contained in CSS rule sets external to the
@@ -371,14 +374,14 @@ gtsave_filename <- function(path, filename) {
 #'
 #' ```r
 #' tab_html <-
-#'   gtcars %>%
-#'   dplyr::select(mfr, model, msrp) %>%
-#'   dplyr::slice(1:5) %>%
-#'   gt() %>%
+#'   gtcars |>
+#'   dplyr::select(mfr, model, msrp) |>
+#'   dplyr::slice(1:5) |>
+#'   gt() |>
 #'   tab_header(
 #'     title = md("Data listing from **gtcars**"),
 #'     subtitle = md("`gtcars` is an R dataset")
-#'   ) %>%
+#'   ) |>
 #'   as_raw_html()
 #' ```
 #'
@@ -431,6 +434,7 @@ as_raw_html <- function(
 #' Output a gt object as LaTeX
 #'
 #' @description
+#'
 #' Get the LaTeX content from a `gt_tbl` object as a `knit_asis` object. This
 #' object contains the LaTeX code and attributes that serve as LaTeX
 #' dependencies (i.e., the LaTeX packages required for the table). Using
@@ -440,6 +444,7 @@ as_raw_html <- function(
 #' @param data A table object that is created using the [gt()] function.
 #'
 #' @details
+#'
 #' LaTeX packages required to generate tables are:
 #' `r paste0(gt:::latex_packages(), collapse = ", ")`.
 #'
@@ -468,14 +473,14 @@ as_raw_html <- function(
 #'
 #' ```r
 #' tab_latex <-
-#'   gtcars %>%
-#'   dplyr::select(mfr, model, msrp) %>%
-#'   dplyr::slice(1:5) %>%
-#'   gt() %>%
+#'   gtcars |>
+#'   dplyr::select(mfr, model, msrp) |>
+#'   dplyr::slice(1:5) |>
+#'   gt() |>
 #'   tab_header(
 #'     title = md("Data listing from **gtcars**"),
 #'     subtitle = md("`gtcars` is an R dataset")
-#'   ) %>%
+#'   ) |>
 #'   as_latex()
 #' ```
 #'
@@ -543,6 +548,7 @@ as_latex <- function(data) {
 #' Output a **gt** object as RTF
 #'
 #' @description
+#'
 #' Get the RTF content from a `gt_tbl` object as as a single-element character
 #' vector. This object can be used with `writeLines()` to generate a valid .rtf
 #' file that can be opened by RTF readers.
@@ -556,14 +562,14 @@ as_latex <- function(data) {
 #'
 #' ```r
 #' tab_rtf <-
-#'   gtcars %>%
-#'   dplyr::select(mfr, model) %>%
-#'   dplyr::slice(1:2) %>%
-#'   gt() %>%
+#'   gtcars |>
+#'   dplyr::select(mfr, model) |>
+#'   dplyr::slice(1:2) |>
+#'   gt() |>
 #'   tab_header(
 #'     title = md("Data listing from **gtcars**"),
 #'     subtitle = md("`gtcars` is an R dataset")
-#'   ) %>%
+#'   ) |>
 #'   as_rtf()
 #' ```
 #'
@@ -641,6 +647,7 @@ as_rtf <- function(data) {
 #' Output a **gt** object as Word
 #'
 #' @description
+#'
 #' Get the Open Office XML table tag content from a `gt_tbl` object as as a
 #' single-element character vector.
 #'
@@ -657,20 +664,23 @@ as_rtf <- function(data) {
 #' @param keep_with_next A `TRUE` (the default) or `FALSE` value that indicates
 #'   whether a table should use Word option `keep rows together`.
 #'
-#' @examples
-#' # Use `gtcars` to create a gt table;
-#' # add a header and then export as
-#' # OOXML code for Word
+#' @section Examples:
+#'
+#' Use [`gtcars`] to create a **gt** table. Add a header and then export as
+#' OOXML code for Word.
+#'
+#' ```r
 #' tab_rtf <-
-#'   gtcars %>%
-#'   dplyr::select(mfr, model) %>%
-#'   dplyr::slice(1:2) %>%
-#'   gt() %>%
+#'   gtcars |>
+#'   dplyr::select(mfr, model) |>
+#'   dplyr::slice(1:2) |>
+#'   gt() |>
 #'   tab_header(
 #'     title = md("Data listing from **gtcars**"),
 #'     subtitle = md("`gtcars` is an R dataset")
-#'   ) %>%
+#'   ) |>
 #'   as_word()
+#' ```
 #'
 #' @family table export functions
 #' @section Function ID:
@@ -844,6 +854,7 @@ as_word_tbl_body <- function(
 #' Extract a summary list from a **gt** object
 #'
 #' @description
+#'
 #' Get a list of summary row data frames from a `gt_tbl` object where summary
 #' rows were added via the [summary_rows()] function. The output data frames
 #' contain the `group_id` and `rowname` columns, whereby `rowname` contains
@@ -861,15 +872,15 @@ as_word_tbl_body <- function(
 #'
 #' ```{r}
 #' summary_extracted <-
-#'   sp500 %>%
-#'   dplyr::filter(date >= "2015-01-05" & date <="2015-01-30") %>%
-#'   dplyr::arrange(date) %>%
-#'   dplyr::mutate(week = paste0("W", strftime(date, format = "%V"))) %>%
-#'   dplyr::select(-adj_close, -volume) %>%
+#'   sp500 |>
+#'   dplyr::filter(date >= "2015-01-05" & date <="2015-01-30") |>
+#'   dplyr::arrange(date) |>
+#'   dplyr::mutate(week = paste0("W", strftime(date, format = "%V"))) |>
+#'   dplyr::select(-adj_close, -volume) |>
 #'   gt(
 #'     rowname_col = "date",
 #'     groupname_col = "week"
-#'   ) %>%
+#'   ) |>
 #'   summary_rows(
 #'     groups = everything(),
 #'     columns = c(open, high, low, close),
@@ -879,7 +890,7 @@ as_word_tbl_body <- function(
 #'       avg = ~mean(.)
 #'     ),
 #      fmt = ~ fmt_number(.)
-#'   ) %>%
+#'   ) |>
 #'   extract_summary()
 #'
 #' summary_extracted
@@ -889,10 +900,10 @@ as_word_tbl_body <- function(
 #' `dplyr::bind_rows()` and then pass the tibble to [gt()].
 #'
 #' ```r
-#' summary_extracted %>%
-#'   unlist(recursive = FALSE) %>%
-#'   dplyr::bind_rows() %>%
-#'   gt(groupname_col = "group_id") %>%
+#' summary_extracted |>
+#'   unlist(recursive = FALSE) |>
+#'   dplyr::bind_rows() |>
+#'   gt(groupname_col = "group_id") |>
 #'   cols_hide(columns = row_id)
 #' ```
 #'
@@ -956,6 +967,7 @@ extract_summary <- function(data) {
 #' Extract a vector of formatted cells from a **gt** object
 #'
 #' @description
+#'
 #' Get a vector of cell data from a `gt_tbl` object. The output vector will have
 #' cell data formatted in the same way as the table.
 #'
@@ -1013,8 +1025,8 @@ extract_summary <- function(data) {
 #' extraction.
 #'
 #' ```r
-#' gt_tbl %>%
-#'   fmt_number(columns = num, decimals = 2) %>%
+#' gt_tbl |>
+#'   fmt_number(columns = num, decimals = 2) |>
 #'   extract_cells(columns = num, rows = 1)
 #' ```
 #' ```

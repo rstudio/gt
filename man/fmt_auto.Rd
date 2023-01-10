@@ -103,8 +103,8 @@ more complex predicate expression.
 Use \code{\link{exibble}} to create a \strong{gt} table. Format the columns automatically
 with \code{fmt_auto()}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt() |>
   fmt_auto()
 }\if{html}{\out{</div>}}
 
@@ -116,13 +116,13 @@ Let's now use \code{\link{countrypops}} to create another \strong{gt} table. Aut
 format all columns with \code{fmt_auto()} but elect to use large-number suffixing
 instead of scientific notation with the \code{lg_num_pref = "suf"} option.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::select(country_code_3, year, population) \%>\%
-  dplyr::filter(country_code_3 \%in\% c("CHN", "IND", "USA", "PAK", "IDN")) \%>\%
-  dplyr::filter(year > 1975 & year \%\% 5 == 0) \%>\%
-  tidyr::spread(year, population) \%>\%
-  dplyr::arrange(desc(`2015`)) \%>\%
-  gt(rowname_col = "country_code_3") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::select(country_code_3, year, population) |>
+  dplyr::filter(country_code_3 \%in\% c("CHN", "IND", "USA", "PAK", "IDN")) |>
+  dplyr::filter(year > 1975 & year \%\% 5 == 0) |>
+  tidyr::spread(year, population) |>
+  dplyr::arrange(desc(`2015`)) |>
+  gt(rowname_col = "country_code_3") |>
   fmt_auto(lg_num_pref = "suf")
 }\if{html}{\out{</div>}}
 

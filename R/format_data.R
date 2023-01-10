@@ -169,8 +169,8 @@
 #' with three decimal places and with no use of digit separators.
 #'
 #' ```r
-#' exibble %>%
-#'   gt() %>%
+#' exibble |>
+#'   gt() |>
 #'   fmt_number(
 #'     columns = num,
 #'     decimals = 3,
@@ -186,13 +186,13 @@
 #' large-number suffixing with the `suffixing = TRUE` option.
 #'
 #' ```r
-#' countrypops %>%
-#'   dplyr::select(country_code_3, year, population) %>%
-#'   dplyr::filter(country_code_3 %in% c("CHN", "IND", "USA", "PAK", "IDN")) %>%
-#'   dplyr::filter(year > 1975 & year %% 5 == 0) %>%
-#'   tidyr::spread(year, population) %>%
-#'   dplyr::arrange(desc(`2015`)) %>%
-#'   gt(rowname_col = "country_code_3") %>%
+#' countrypops |>
+#'   dplyr::select(country_code_3, year, population) |>
+#'   dplyr::filter(country_code_3 %in% c("CHN", "IND", "USA", "PAK", "IDN")) |>
+#'   dplyr::filter(year > 1975 & year %% 5 == 0) |>
+#'   tidyr::spread(year, population) |>
+#'   dplyr::arrange(desc(`2015`)) |>
+#'   gt(rowname_col = "country_code_3") |>
 #'   fmt_number(suffixing = TRUE)
 #' ```
 #'
@@ -452,9 +452,9 @@ fmt_number <- function(
 #' values having no digit separators (with the `use_seps = FALSE` option).
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(num, char) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(num, char) |>
+#'   gt() |>
 #'   fmt_integer(
 #'     columns = num,
 #'     use_seps = FALSE
@@ -622,15 +622,15 @@ fmt_integer <- function(
 #' `num > 500` and `num <= 500` expressions in the respective `rows` arguments).
 #'
 #' ```r
-#' exibble %>%
-#'   gt() %>%
+#' exibble |>
+#'   gt() |>
 #'   fmt_number(
 #'     columns = num,
 #'     rows = num > 500,
 #'     decimals = 1,
 #'     scale_by = 1/1000,
 #'     pattern = "{x}K"
-#'   ) %>%
+#'   ) |>
 #'   fmt_scientific(
 #'     columns = num,
 #'     rows = num <= 500,
@@ -982,8 +982,8 @@ fmt_scientific <- function(
 #' engineering notation.
 #'
 #' ```r
-#' exibble %>%
-#'   gt() %>%
+#' exibble |>
+#'   gt() |>
 #'   fmt_engineering(columns = num)
 #' ```
 #'
@@ -1475,13 +1475,13 @@ fmt_symbol <- function(
 #' column to display values as percentages.
 #'
 #' ```r
-#' pizzaplace %>%
-#'   dplyr::mutate(month = as.numeric(substr(date, 6, 7))) %>%
-#'   dplyr::group_by(month) %>%
-#'   dplyr::summarize(pizzas_sold = dplyr::n()) %>%
-#'   dplyr::ungroup() %>%
-#'   dplyr::mutate(frac_of_quota = pizzas_sold / 4000) %>%
-#'   gt(rowname_col = "month") %>%
+#' pizzaplace |>
+#'   dplyr::mutate(month = as.numeric(substr(date, 6, 7))) |>
+#'   dplyr::group_by(month) |>
+#'   dplyr::summarize(pizzas_sold = dplyr::n()) |>
+#'   dplyr::ungroup() |>
+#'   dplyr::mutate(frac_of_quota = pizzas_sold / 4000) |>
+#'   gt(rowname_col = "month") |>
 #'   fmt_percent(
 #'     columns = frac_of_quota,
 #'     decimals = 1
@@ -1702,9 +1702,9 @@ fmt_percent <- function(
 #' format the `b` column as *per mille* values with `fmt_partsper()`.
 #'
 #' ```r
-#' dplyr::tibble(x = 0:-5, a = 10^(0:-5), b = a) %>%
-#'   gt(rowname_col = "x") %>%
-#'   fmt_scientific(a, decimals = 0) %>%
+#' dplyr::tibble(x = 0:-5, a = 10^(0:-5), b = a) |>
+#'   gt(rowname_col = "x") |>
+#'   fmt_scientific(a, decimals = 0) |>
 #'   fmt_partsper(
 #'     columns = b,
 #'     to_units = "per-mille"
@@ -1957,41 +1957,41 @@ fmt_partsper <- function(
 #' `f_income` columns to display fractions.
 #'
 #' ```r
-#' pizzaplace %>%
-#'   dplyr::group_by(type, size) %>%
+#' pizzaplace |>
+#'   dplyr::group_by(type, size) |>
 #'   dplyr::summarize(
 #'     sold = dplyr::n(),
 #'     income = sum(price),
 #'     .groups = "drop_last"
-#'   ) %>%
-#'   dplyr::group_by(type) %>%
+#'   ) |>
+#'   dplyr::group_by(type) |>
 #'   dplyr::mutate(
 #'     f_sold = sold / sum(sold),
 #'     f_income = income / sum(income),
-#'   ) %>%
-#'   dplyr::arrange(type, dplyr::desc(income)) %>%
-#'   gt(rowname_col = "size") %>%
+#'   ) |>
+#'   dplyr::arrange(type, dplyr::desc(income)) |>
+#'   gt(rowname_col = "size") |>
 #'   tab_header(
 #'     title = "Pizzas Sold in 2015",
 #'     subtitle = "Fraction of Sell Count and Revenue by Size per Type"
-#'   ) %>%
-#'   fmt_integer(columns = sold) %>%
-#'   fmt_currency(columns = income) %>%
+#'   ) |>
+#'   fmt_integer(columns = sold) |>
+#'   fmt_currency(columns = income) |>
 #'   fmt_fraction(
 #'     columns = starts_with("f_"),
 #'     accuracy = 10,
 #'     simplify = FALSE,
 #'     layout = "diagonal"
-#'   ) %>%
-#'   sub_missing(missing_text = "") %>%
+#'   ) |>
+#'   sub_missing(missing_text = "") |>
 #'   tab_spanner(
 #'     label = "Sold",
 #'     columns = contains("sold")
-#'   ) %>%
+#'   ) |>
 #'   tab_spanner(
 #'     label = "Revenue",
 #'     columns = contains("income")
-#'   ) %>%
+#'   ) |>
 #'   text_transform(
 #'     locations = cells_body(),
 #'     fn = function(x) {
@@ -2000,14 +2000,14 @@ fmt_partsper <- function(
 #'         x != 0 ~ x
 #'       )
 #'     }
-#'   ) %>%
+#'   ) |>
 #'   cols_label(
 #'     sold = "Amount",
 #'     income = "Amount",
 #'     f_sold = md("_f_"),
 #'     f_income = md("_f_")
-#'   ) %>%
-#'   cols_align(align = "center", columns = starts_with("f")) %>%
+#'   ) |>
+#'   cols_align(align = "center", columns = starts_with("f")) |>
 #'   tab_options(
 #'     table.width = px(400),
 #'     row_group.as_column = TRUE
@@ -2239,8 +2239,8 @@ fmt_fraction <- function(
 
           fraction_part <- gsub("^(.*?)([0-9]*/[0-9]*)", "\\2", x_str[has_a_fraction])
 
-          num_vec <- strsplit(fraction_part, "/") %>% lapply(`[[`, 1) %>% unlist()
-          denom_vec <- strsplit(fraction_part, "/") %>% lapply(`[[`, 2) %>% unlist()
+          num_vec <- unlist(lapply(strsplit(fraction_part, "/"), `[[`, 1))
+          denom_vec <- unlist(lapply(strsplit(fraction_part, "/"), `[[`, 2))
 
           if (context == "html") {
 
@@ -2512,8 +2512,8 @@ round_gt <- function(x, digits = 0) {
 #' have currency values in euros (`"EUR"`).
 #'
 #' ```r
-#' exibble %>%
-#'   gt() %>%
+#' exibble |>
+#'   gt() |>
 #'   fmt_currency(
 #'     columns = currency,
 #'     currency = "EUR"
@@ -2528,13 +2528,13 @@ round_gt <- function(x, digits = 0) {
 #' columns, then, format those columns using the `"CNY"` and `"GBP"` currencies.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(num, currency) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(num, currency) |>
+#'   gt() |>
 #'   fmt_currency(
 #'     columns = num,
 #'     currency = "CNY"
-#'   ) %>%
+#'   ) |>
 #'   fmt_currency(
 #'     columns = currency,
 #'     currency = "GBP"
@@ -2706,8 +2706,8 @@ fmt_currency <- function(
 #' the `roman` column to appear as Roman numerals with `fmt_roman()`.
 #'
 #' ```r
-#' dplyr::tibble(arabic = c(1, 8, 24, 85), roman = arabic) %>%
-#'   gt(rowname_col = "arabic") %>%
+#' dplyr::tibble(arabic = c(1, 8, 24, 85), roman = arabic) |>
+#'   gt(rowname_col = "arabic") |>
 #'   fmt_roman(columns = roman)
 #' ```
 #'
@@ -2910,9 +2910,9 @@ fmt_roman <- function(
 #' byte sizes in the decimal standard.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(num) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(num) |>
+#'   gt() |>
 #'   fmt_bytes(columns = num)
 #' ```
 #'
@@ -2924,9 +2924,9 @@ fmt_roman <- function(
 #' byte sizes as binary values.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(num) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(num) |>
+#'   gt() |>
 #'   fmt_bytes(
 #'     columns = num,
 #'     standard = "binary"
@@ -3053,8 +3053,10 @@ fmt_bytes <- function(
             drop_trailing_zeros = drop_trailing_zeros,
             drop_trailing_dec_mark = drop_trailing_dec_mark,
             format = formatC_format
-          ) %>%
-          paste_right(x_right = paste0(if (incl_space) " ", units_str))
+          )
+
+        x_str <-
+          paste_right(x_str, x_right = paste0(if (incl_space) " ", units_str))
 
         # Force a positive sign on certain values if the option is taken
         if (force_sign) {
@@ -3208,9 +3210,9 @@ fmt_bytes <- function(
 #' `"month_day_year"` date style.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(date, time) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(date, time) |>
+#'   gt() |>
 #'   fmt_date(
 #'     columns = date,
 #'     date_style = "month_day_year"
@@ -3227,14 +3229,14 @@ fmt_bytes <- function(
 #' in the `rows` argument).
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(date, time) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(date, time) |>
+#'   gt() |>
 #'   fmt_date(
 #'     columns = date,
 #'     rows = as.Date(date) > as.Date("2015-04-01"),
 #'     date_style = "m_day_year"
-#'   ) %>%
+#'   ) |>
 #'   fmt_date(
 #'     columns = date,
 #'     rows = as.Date(date) <= as.Date("2015-04-01"),
@@ -3252,9 +3254,9 @@ fmt_bytes <- function(
 #' get the dates in Dutch.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(date) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(date) |>
+#'   gt() |>
 #'   fmt_date(
 #'     columns = date,
 #'     date_style = "yMMMEd",
@@ -3473,9 +3475,9 @@ fmt_date <- function(
 #' style `3`).
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(date, time) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(date, time) |>
+#'   gt() |>
 #'   fmt_time(
 #'     columns = time,
 #'     time_style = "h_m_s_p"
@@ -3492,14 +3494,14 @@ fmt_date <- function(
 #' in the `rows` argument).
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(date, time) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(date, time) |>
+#'   gt() |>
 #'   fmt_time(
 #'     columns = time,
 #'     rows = time > "16:00",
 #'     time_style = "h_m_s_p"
-#'   ) %>%
+#'   ) |>
 #'   fmt_time(
 #'     columns = time,
 #'     rows = time <= "16:00",
@@ -3517,9 +3519,9 @@ fmt_date <- function(
 #' get the dates in Swedish.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(time) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(time) |>
+#'   gt() |>
 #'   fmt_time(
 #'     columns = time,
 #'     time_style = "EBhms",
@@ -4341,9 +4343,9 @@ fmt_time <- function(
 #' and times with the `"h_m_s_p"` 12-hour time style.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(datetime) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(datetime) |>
+#'   gt() |>
 #'   fmt_datetime(
 #'     columns = datetime,
 #'     date_style = "month_day_year",
@@ -4361,15 +4363,15 @@ fmt_time <- function(
 #' and the Danish locale (`"da"`) for the remaining rows.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(datetime) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(datetime) |>
+#'   gt() |>
 #'   fmt_datetime(
 #'     columns = datetime,
 #'     date_style = "MMMEd",
 #'     time_style = "Hms",
 #'     locale = "da"
-#'   ) %>%
+#'   ) |>
 #'   fmt_datetime(
 #'     columns = datetime,
 #'     rows = 1:3,
@@ -4389,9 +4391,9 @@ fmt_time <- function(
 #' `tz` argument.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(datetime) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(datetime) |>
+#'   gt() |>
 #'   fmt_datetime(
 #'     columns = datetime,
 #'     format = "EEEE, MMMM d, y 'at' h:mm a (zzzz)",
@@ -4722,19 +4724,19 @@ fmt_datetime <- function(
 #' number of days since March 30, 2020.
 #'
 #' ```r
-#' sp500 %>%
-#'   dplyr::slice_head(n = 10) %>%
+#' sp500 |>
+#'   dplyr::slice_head(n = 10) |>
 #'   dplyr::mutate(
 #'     time_point = lubridate::ymd("2020-03-30"),
 #'     time_passed = difftime(time_point, date)
-#'   ) %>%
-#'   dplyr::select(time_passed, open, close) %>%
-#'   gt(rowname_col = "month") %>%
+#'   ) |>
+#'   dplyr::select(time_passed, open, close) |>
+#'   gt(rowname_col = "month") |>
 #'   fmt_duration(
 #'     columns = time_passed,
 #'     output_units = "days",
 #'     duration_style = "wide"
-#'   ) %>%
+#'   ) |>
 #'   fmt_currency(columns = c(open, close))
 #' ```
 #'
@@ -5022,9 +5024,9 @@ validate_duration_input_units <- function(input_units) {
 normalize_duration_input_units <- function(input_units) {
 
   # Ensure that key transforms occur
-  input_units %>%
-    tidy_sub("secs", "seconds") %>%
-    tidy_sub("mins", "minutes")
+  input_units <- tidy_sub(input_units, "secs", "seconds")
+  input_units <- tidy_sub(input_units, "mins", "minutes")
+  input_units
 }
 
 validate_duration_output_units <- function(output_units) {
@@ -5059,11 +5061,9 @@ validate_duration_output_units <- function(output_units) {
 normalize_duration_output_units <- function(output_units) {
 
   # Ensure that key transforms occur and that the output units are a unique set
-  output_units <-
-    output_units %>%
-    tidy_sub("secs", "seconds") %>%
-    tidy_sub("mins", "minutes") %>%
-    unique()
+  output_units <- tidy_sub(output_units, "secs", "seconds")
+  output_units <- tidy_sub(output_units, "mins", "minutes")
+  output_units <- unique(output_units)
 
   # Ensure that the order of output units is from greatest to smallest
   time_parts <- c("weeks", "days", "hours", "minutes", "seconds")
@@ -5499,9 +5499,9 @@ extract_duration_pattern <- function(
 #'   ~Markdown, ~md,
 #'   text_1a,   text_2a,
 #'   text_1b,   text_2b,
-#' ) %>%
-#'   gt() %>%
-#'   fmt_markdown(columns = everything()) %>%
+#' ) |>
+#'   gt() |>
+#'   fmt_markdown(columns = everything()) |>
 #'   tab_options(table.width = px(400))
 #' ```
 #'
@@ -5626,9 +5626,9 @@ fmt_markdown <- function(
 #' to the non-`NA` values.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(char) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(char) |>
+#'   gt() |>
 #'   fmt_passthrough(
 #'     columns = char,
 #'     rows = !is.na(char),
@@ -5805,8 +5805,8 @@ fmt_passthrough <- function(
 #' with `fmt_auto()`.
 #'
 #' ```r
-#' exibble %>%
-#'   gt() %>%
+#' exibble |>
+#'   gt() |>
 #'   fmt_auto()
 #' ```
 #'
@@ -5819,13 +5819,13 @@ fmt_passthrough <- function(
 #' instead of scientific notation with the `lg_num_pref = "suf"` option.
 #'
 #' ```r
-#' countrypops %>%
-#'   dplyr::select(country_code_3, year, population) %>%
-#'   dplyr::filter(country_code_3 %in% c("CHN", "IND", "USA", "PAK", "IDN")) %>%
-#'   dplyr::filter(year > 1975 & year %% 5 == 0) %>%
-#'   tidyr::spread(year, population) %>%
-#'   dplyr::arrange(desc(`2015`)) %>%
-#'   gt(rowname_col = "country_code_3") %>%
+#' countrypops |>
+#'   dplyr::select(country_code_3, year, population) |>
+#'   dplyr::filter(country_code_3 %in% c("CHN", "IND", "USA", "PAK", "IDN")) |>
+#'   dplyr::filter(year > 1975 & year %% 5 == 0) |>
+#'   tidyr::spread(year, population) |>
+#'   dplyr::arrange(desc(`2015`)) |>
+#'   gt(rowname_col = "country_code_3") |>
 #'   fmt_auto(lg_num_pref = "suf")
 #' ```
 #'
@@ -6121,9 +6121,9 @@ fmt_auto <- function(
 #' `num` column with a function supplied to the `fns` argument.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(-row, -group) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(-row, -group) |>
+#'   gt() |>
 #'   fmt(
 #'     columns = num,
 #'     fns = function(x) {

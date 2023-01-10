@@ -182,9 +182,9 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{dat
 columns. Format the \code{date} column to have dates formatted with the
 \code{"month_day_year"} date style.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(date, time) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(date, time) |>
+  gt() |>
   fmt_date(
     columns = date,
     date_style = "month_day_year"
@@ -200,14 +200,14 @@ columns. Format the \code{date} column to have mixed date formats (dates after
 April will be different than the others because of the expressions used
 in the \code{rows} argument).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(date, time) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(date, time) |>
+  gt() |>
   fmt_date(
     columns = date,
     rows = as.Date(date) > as.Date("2015-04-01"),
     date_style = "m_day_year"
-  ) \%>\%
+  ) |>
   fmt_date(
     columns = date,
     rows = as.Date(date) <= as.Date("2015-04-01"),
@@ -224,9 +224,9 @@ Use \code{\link{exibble}} to create another \strong{gt} table, this time only wi
 (which is one of the 'flexible' styles). Also, set the locale to \code{"nl"} to
 get the dates in Dutch.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(date) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(date) |>
+  gt() |>
   fmt_date(
     columns = date,
     date_style = "yMMMEd",

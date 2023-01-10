@@ -40,10 +40,10 @@ warnings or messages when changing the state of already-invisible columns.
 Use \code{\link{countrypops}} to create a \strong{gt} table. Hide the \code{country_code_2} and
 \code{country_code_3} columns with \code{cols_hide()}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::filter(country_name == "Mongolia") \%>\%
-  tail(5) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::filter(country_name == "Mongolia") |>
+  tail(5) |>
+  gt() |>
   cols_hide(columns = c(country_code_2, country_code_3))
 }\if{html}{\out{</div>}}
 
@@ -56,11 +56,11 @@ provide the conditional placement of footnotes, then hide that column and one
 other. Note that the order of the \code{cols_hide()} and \code{\link[=tab_footnote]{tab_footnote()}}
 statements has no effect.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::filter(country_name == "Mongolia") \%>\%
-  tail(5) \%>\%
-  gt() \%>\%
-  cols_hide(columns = c(country_code_3, population)) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::filter(country_name == "Mongolia") |>
+  tail(5) |>
+  gt() |>
+  cols_hide(columns = c(country_code_3, population)) |>
   tab_footnote(
     footnote = "Population above 3,000,000.",
     locations = cells_body(

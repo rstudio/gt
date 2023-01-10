@@ -30,20 +30,20 @@ cells. Specifically, the call to \code{cell_fill()} should be bound to the
 Use \code{\link{exibble}} to create a \strong{gt} table. Add styles with \code{\link[=tab_style]{tab_style()}} and
 the \code{cell_fill()} helper function.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(num, currency) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(num, currency) |>
+  gt() |>
   fmt_number(
     columns = c(num, currency),
     decimals = 1
-  ) \%>\%
+  ) |>
   tab_style(
     style = cell_fill(color = "lightblue"),
     locations = cells_body(
       columns = num,
       rows = num >= 5000
     )
-  ) \%>\%
+  ) |>
   tab_style(
     style = cell_fill(color = "gray85"),
     locations = cells_body(

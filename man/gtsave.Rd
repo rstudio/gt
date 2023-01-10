@@ -72,10 +72,10 @@ Use \code{\link{gtcars}} to create a \strong{gt} table. Add a stubhead label wit
 \code{\link[=tab_stubhead]{tab_stubhead()}} function to describe what is in the stub.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
-  gtcars \%>\%
-  dplyr::select(model, year, hp, trq) \%>\%
-  dplyr::slice(1:5) \%>\%
-  gt(rowname_col = "model") \%>\%
+  gtcars |>
+  dplyr::select(model, year, hp, trq) |>
+  dplyr::slice(1:5) |>
+  gt(rowname_col = "model") |>
   tab_stubhead(label = "car")
 }\if{html}{\out{</div>}}
 
@@ -83,36 +83,36 @@ Export the \strong{gt} table to an HTML file with inlined CSS (which is necessar
 for including the table as part of an HTML email) using \code{gtsave()} and the
 \code{inline_css = TRUE} option.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% gtsave(filename = "tab_1.html", inline_css = TRUE)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |> gtsave(filename = "tab_1.html", inline_css = TRUE)
 }\if{html}{\out{</div>}}
 
 By leaving out the \code{inline_css} option, we get a more conventional HTML file
 with embedded CSS styles.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% gtsave(filename = "tab_1.html")
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |> gtsave(filename = "tab_1.html")
 }\if{html}{\out{</div>}}
 
 Saving as a PNG file results in a cropped image of an HTML table. The amount
 of whitespace can be set with the \code{expand} option.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% gtsave("tab_1.png", expand = 10)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |> gtsave("tab_1.png", expand = 10)
 }\if{html}{\out{</div>}}
 
 Any use of the \code{.tex}, \code{.ltx}, or \code{.rnw} will result in the output of a LaTeX
 document.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% gtsave("tab_1.tex")
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |> gtsave("tab_1.tex")
 }\if{html}{\out{</div>}}
 
 With the \code{.rtf} extension, we'll get an RTF document.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% gtsave("tab_1.rtf")
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |> gtsave("tab_1.rtf")
 
 }\if{html}{\out{</div>}}
 
 With the \code{.docx} extension, we'll get a word/docx document.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% gtsave("tab_1.docx")
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |> gtsave("tab_1.docx")
 }\if{html}{\out{</div>}}
 }
 
