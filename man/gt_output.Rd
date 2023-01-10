@@ -35,18 +35,15 @@ expression.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{library(shiny)
 
 gt_tbl <-
-  gtcars \%>\%
-  gt() \%>\%
-  cols_hide(contains("_"))
+  gtcars |>
+  gt() |>
+  cols_hide(columns = contains("_"))
 
 ui <- fluidPage(
-
   gt_output(outputId = "table")
 )
 
-server <- function(input,
-                   output,
-                   session) \{
+server <- function(input, output, session) \{
 
   output$table <-
     render_gt(
