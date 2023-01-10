@@ -413,22 +413,22 @@ get_padding_option_value_list <- function(scale, type) {
 
   # Get the padding parameters from `dt_options_tbl` that relate
   # to the `type` (either vertical or horizontal padding)
-  # TODO: refactor these stmts to remove dplyr fns
   padding_params <-
-    dt_options_tbl %>%
-    dplyr::filter(grepl(paste0(pattern, "$"), parameter)) %>%
-    dplyr::pull(parameter)
+    dplyr::pull(
+      dplyr::filter(dt_options_tbl, grepl(paste0(pattern, "$"), parameter)),
+      parameter
+    )
 
+  padding_options <- dplyr::filter(dt_options_tbl, parameter %in% padding_params)
+  padding_options <- dplyr::select(padding_options, parameter, value)
   padding_options <-
-    dt_options_tbl %>%
-    dplyr::filter(parameter %in% padding_params) %>%
-    dplyr::select(parameter, value) %>%
     dplyr::mutate(
+      padding_options,
       parameter = gsub(pattern, gsub("_", ".", pattern, fixed = TRUE), parameter, fixed = TRUE)
-    ) %>%
-    dplyr::mutate(value = unlist(value)) %>%
-    dplyr::mutate(px = as.numeric(gsub("px", "", value))) %>%
-    dplyr::mutate(px = px * scale)
+    )
+  padding_options <- dplyr::mutate(padding_options, value = unlist(value))
+  padding_options <- dplyr::mutate(padding_options, px = as.numeric(gsub("px", "", value)))
+  padding_options <- dplyr::mutate(padding_options, px = px * scale)
 
   create_option_value_list(
     padding_options$parameter,
@@ -1202,7 +1202,7 @@ create_option_value_list <- function(tab_options_args, values) {
     )
   }
 
-  stats::setNames(object = values, tab_options_args) %>% as.list()
+  as.list(stats::setNames(object = values, tab_options_args))
 }
 
 create_default_option_value_list <- function(tab_options_args) {
