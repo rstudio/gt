@@ -53,13 +53,13 @@ argument. See the Arguments section for more information on this.
 Use \code{\link{exibble}} to create a \strong{gt} table. The \code{NA} values in different
 columns will be given replacement text with two calls of \code{sub_missing()}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(-row, -group) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(-row, -group) |>
+  gt() |>
   sub_missing(
     columns = 1:2,
     missing_text = "missing"
-  ) \%>\%
+  ) |>
   sub_missing(
     columns = 4:7,
     missing_text = "nothing"

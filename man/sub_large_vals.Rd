@@ -84,9 +84,9 @@ The \code{tbl} object contains a variety of larger numbers and some might be
 larger enough to reformat with a threshold value. With \code{sub_large_vals()} we
 can do just that:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
-  gt() \%>\%
-  fmt_number(columns = num) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |>
+  gt() |>
+  fmt_number(columns = num) |>
   sub_large_vals()
 }\if{html}{\out{</div>}}
 
@@ -99,10 +99,10 @@ by the \code{sign} parameter. Setting that to \code{"-"} will format only the la
 values that are negative. Notice that with the default \code{large_pattern}
 value of \code{">={x}"} the \code{">="} is automatically changed to \code{"<="}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
-  dplyr::mutate(num = -num) \%>\%
-  gt() \%>\%
-  fmt_number(columns = num) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |>
+  dplyr::mutate(num = -num) |>
+  gt() |>
+  fmt_number(columns = num) |>
   sub_large_vals(sign = "-")
 }\if{html}{\out{</div>}}
 
@@ -115,9 +115,9 @@ replacement pattern (in \code{large_pattern}). This can be changed and the
 \code{"{x}"} in \code{large_pattern} (which uses the \code{threshold} value) can even be
 omitted.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
-  gt() \%>\%
-  fmt_number(columns = num) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |>
+  gt() |>
+  fmt_number(columns = num) |>
   sub_large_vals(
     threshold = 5E10,
     large_pattern = "hugemongous"

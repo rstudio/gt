@@ -83,9 +83,9 @@ The \code{tbl} contains a variety of smaller numbers and some might be small
 enough to reformat with a threshold value. With \code{sub_small_vals()} we can
 do just that:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
-  gt() \%>\%
-  fmt_number(columns = num) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |>
+  gt() |>
+  fmt_number(columns = num) |>
   sub_small_vals()
 }\if{html}{\out{</div>}}
 
@@ -97,10 +97,10 @@ Small and negative values can also be handled but they are handled specially
 by the \code{sign} parameter. Setting that to \code{"-"} will format only the small,
 negative values.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
-  dplyr::mutate(num = -num) \%>\%
-  gt() \%>\%
-  fmt_number(columns = num) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |>
+  dplyr::mutate(num = -num) |>
+  gt() |>
+  fmt_number(columns = num) |>
   sub_small_vals(sign = "-")
 }\if{html}{\out{</div>}}
 
@@ -113,9 +113,9 @@ replacement pattern (in \code{small_pattern}). This can be changed and the
 \code{"{x}"} in \code{small_pattern} (which uses the \code{threshold} value) can even be
 omitted.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
-  gt() \%>\%
-  fmt_number(columns = num) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |>
+  gt() |>
+  fmt_number(columns = num) |>
   sub_small_vals(
     threshold = 0.0005,
     small_pattern = "smol"

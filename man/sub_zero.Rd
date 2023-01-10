@@ -67,9 +67,9 @@ tbl
 With this table, the zero values in will be given replacement text with a
 single call of \code{sub_zero()}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
-  gt() \%>\%
-  fmt_number(columns = num) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |>
+  gt() |>
+  fmt_number(columns = num) |>
   sub_zero()
 }\if{html}{\out{</div>}}
 

@@ -99,10 +99,10 @@ should be replaced (in \code{values}) and what the replacement value should be.
 It's okay to search for numerical or character values across all columns and
 the replacement value can also be of the \code{numeric} or \code{character} types.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
-  gt() \%>\%
-  sub_values(values = c(74, 500), replacement = 150) \%>\%
-  sub_values(values = "B", replacement = "Bee") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |>
+  gt() |>
+  sub_values(values = c(74, 500), replacement = 150) |>
+  sub_values(values = "B", replacement = "Bee") |>
   sub_values(values = 800, replacement = "Eight hundred")
 }\if{html}{\out{</div>}}
 
@@ -113,8 +113,8 @@ the replacement value can also be of the \code{numeric} or \code{character} type
 We can also use the \code{pattern} argument to target cell values for replacement
 in \code{character}-based columns.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |>
+  gt() |>
   sub_values(pattern = "A|C|E", replacement = "Ace")
 }\if{html}{\out{</div>}}
 
@@ -127,8 +127,8 @@ need to ensure that the function you provide will return a logical vector
 when invoked on a column of cell values, taken as \code{x} (and, the length of
 that vector must match the length of \code{x}).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |>
+  gt() |>
   sub_values(
     fn = function(x) x >= 0 & x < 50,
     replacement = "Between 0 and 50"
