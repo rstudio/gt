@@ -32,11 +32,9 @@ modify the output of \code{gt_preview()}. Furthermore, you cannot pass a \strong
 object to \code{gt_preview()}.
 }
 \details{
-Any grouped data or magic columns such as \code{rowname} and \code{groupname} will be
-ignored by \code{gt_preview()} and, as such, one cannot add a stub or group rows
-in the output table. By default, the output table will include row numbers in
-a stub (including a range of row numbers for the omitted rows). This row
-numbering option can be deactivated by setting \code{incl_rownums} to \code{FALSE}.
+By default, the output table will include row numbers in a stub (including a
+range of row numbers for the omitted rows). This row numbering option can be
+deactivated by setting \code{incl_rownums} to \code{FALSE}.
 }
 \section{Examples}{
 

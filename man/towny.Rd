@@ -36,7 +36,7 @@ each municipality from the 1996 to 2021 census years.}
 \item{pop_change_1996_2001_pct, pop_change_2001_2006_pct,
 pop_change_2006_2011_pct, pop_change_2011_2016_pct,
 pop_change_2016_2021_pct}{
-Population changes between the census years from 1996 to 2021.}
+Population changes between the census years, from 1996 to 2021.}
 }
 }
 \usage{
