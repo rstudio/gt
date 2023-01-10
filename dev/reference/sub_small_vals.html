@@ -90,21 +90,23 @@ allows for this replacement through specification of a <code>threshold</code>, a
 
 
 <dt>columns</dt>
-<dd><p>The columns to format. Can either be a series of column names
-provided in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of column indices, or a helper function
-focused on selections. The select helper functions are: <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>,
-<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/one_of.html" class="external-link">one_of()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">num_range()</a></code>, and
-<code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>.</p></dd>
+<dd><p>Optional columns for constraining the targeting process.
+Providing <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code> (the default) results in cells in all <code>columns</code>
+being targeting (this can be limited by <code>rows</code> however). Can either be a
+series of column names provided in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of column indices, or a
+helper function focused on selections. The select helper functions are:
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/one_of.html" class="external-link">one_of()</a></code>,
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">num_range()</a></code>, and <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>.</p></dd>
 
 
 <dt>rows</dt>
-<dd><p>Optional rows to format. Providing <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code> (the
-default) results in all rows in <code>columns</code> being formatted. Alternatively,
-we can supply a vector of row captions within <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of row
-indices, or a helper function focused on selections. The select helper
-functions are: <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>,
-<code><a href="https://tidyselect.r-lib.org/reference/one_of.html" class="external-link">one_of()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">num_range()</a></code>, and <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>. We can also use expressions
-to filter down to the rows we need (e.g.,
+<dd><p>Optional rows for constraining the targeting process. Providing
+<code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code> (the default) results in all rows in <code>columns</code> being
+targeted. Alternatively, we can supply a vector of row captions within
+<code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of row indices, or a helper function focused on selections.
+The select helper functions are: <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>,
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/one_of.html" class="external-link">one_of()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">num_range()</a></code>, and <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>.
+We can also use expressions to filter down to the rows we need (e.g.,
 <code>[colname_1] &gt; 100 &amp; [colname_2] &lt; 50</code>).</p></dd>
 
 
@@ -131,11 +133,40 @@ can be used to consider only negative values.</p></dd>
 <p>An object of class <code>gt_tbl</code>.</p>
     </div>
     <div class="section level2">
-    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>Targeting of values is done through <code>columns</code> and additionally by <code>rows</code> (if
-nothing is provided for <code>rows</code> then entire columns are selected). Conditional
-formatting is possible by providing a conditional expression to the <code>rows</code>
-argument. See the Arguments section for more information on this.</p>
+    <h2 id="targeting-cells-with-columns-and-rows">Targeting cells with <code>columns</code> and <code>rows</code><a class="anchor" aria-label="anchor" href="#targeting-cells-with-columns-and-rows"></a></h2>
+    
+
+
+<p>Targeting of values is done through <code>columns</code> and additionally by <code>rows</code> (if
+nothing is provided for <code>rows</code> then entire columns are selected). The
+<code>columns</code> argument allows us to target a subset of cells contained in the
+resolved columns. We say resolved because aside from declaring column names
+in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> (with bare column names or names in quotes) we can use
+<strong>tidyselect</strong>-style expressions. This can be as basic as supplying a select
+helper like <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, or, providing a more complex incantation like</p>
+<p><code>where(~ is.numeric(.x) &amp;&amp; max(.x, na.rm = TRUE) &gt; 1E6)</code></p>
+<p>which targets numeric columns that have a maximum value of 100,000 (excluding
+<code>NA</code>s from consideration).</p>
+<p>By default all columns and rows are selected (with the <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>
+defaults). Cell values that are incompatible with a given substitution
+function will be skipped over. So it's safe to select all columns with a
+particular substitution function (only those values that can be substituted
+will be), but, you may not want that. One strategy is to work on the bulk of
+cell values with one substitution function and then constrain the columns for
+later passes with other types of substitution (the last operation done to a
+cell is what you get in the final output).</p>
+<p>Once the columns are targeted, we may also target the <code>rows</code> within those
+columns. This can be done in a variety of ways. If a stub is present, then we
+potentially have row identifiers. Those can be used much like column names in
+the <code>columns</code>-targeting scenario. We can use simpler <strong>tidyselect</strong>-style
+expressions (the select helpers should work well here) and we can use quoted
+row identifiers in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>. It's also possible to use row indices (e.g., <code>c(3, 5, 6)</code>) though these index values must correspond to the row numbers of the
+input data (the indices won't necessarily match those of rearranged rows if
+row groups are present). One more type of expression is possible, an
+expression that takes column values (can involve any of the available columns
+in the table) and returns a logical vector. This is nice if you want to base
+the substitution on values in the column or another column, or, you'd like to
+use a more complex predicate expression.</p>
     </div>
     <div class="section level2">
     <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
@@ -162,27 +193,27 @@ values that could potentially undergo some substitution.</p>
 <p>The <code>tbl</code> contains a variety of smaller numbers and some might be small
 enough to reformat with a threshold value. With <code>sub_small_vals()</code> we can
 do just that:</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">num</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">tbl</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">num</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/sub_small_vals.html">sub_small_vals</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_small_vals_1.png" alt="This image of a table was generated from the first code example in the `sub_small_vals()` help file." style="width:100%;"></p>
 <p>Small and negative values can also be handled but they are handled specially
 by the <code>sign</code> parameter. Setting that to <code>"-"</code> will format only the small,
 negative values.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>num <span class="op">=</span> <span class="op">-</span><span class="va">num</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">num</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">tbl</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>num <span class="op">=</span> <span class="op">-</span><span class="va">num</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">num</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/sub_small_vals.html">sub_small_vals</a></span><span class="op">(</span>sign <span class="op">=</span> <span class="st">"-"</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_sub_small_vals_2.png" alt="This image of a table was generated from the second code example in the `sub_small_vals()` help file." style="width:100%;"></p>
 <p>You don't have to settle with the default <code>threshold</code> value or the default
 replacement pattern (in <code>small_pattern</code>). This can be changed and the
 <code>"{x}"</code> in <code>small_pattern</code> (which uses the <code>threshold</code> value) can even be
 omitted.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">num</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">tbl</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">num</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/sub_small_vals.html">sub_small_vals</a></span><span class="op">(</span></span>
 <span>    threshold <span class="op">=</span> <span class="fl">0.0005</span>,</span>
 <span>    small_pattern <span class="op">=</span> <span class="st">"smol"</span></span>

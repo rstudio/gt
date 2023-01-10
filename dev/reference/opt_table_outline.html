@@ -106,32 +106,32 @@ provided for <code>width</code> and <code>color</code> will be ignored (i.e., no
 <p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table with a number of table parts added.
 Have an outline wrap around the entire table by using <code>opt_table_outline()</code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">tab_1</span> <span class="op">&lt;-</span></span>
-<span>  <span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"row"</span>, groupname_col <span class="op">=</span> <span class="st">"group"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="va">exibble</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"row"</span>, groupname_col <span class="op">=</span> <span class="st">"group"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/summary_rows.html">summary_rows</a></span><span class="op">(</span></span>
 <span>    groups <span class="op">=</span> <span class="st">"grp_a"</span>,</span>
 <span>    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">num</span>, <span class="va">currency</span><span class="op">)</span>,</span>
 <span>    fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"min"</span>, <span class="st">"max"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/grand_summary_rows.html">grand_summary_rows</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">currency</span>,</span>
 <span>    fns <span class="op">=</span> <span class="va">total</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">.</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/tab_source_note.html">tab_source_note</a></span><span class="op">(</span>source_note <span class="op">=</span> <span class="st">"This is a source note."</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_source_note.html">tab_source_note</a></span><span class="op">(</span>source_note <span class="op">=</span> <span class="st">"This is a source note."</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_footnote.html">tab_footnote</a></span><span class="op">(</span></span>
 <span>    footnote <span class="op">=</span> <span class="st">"This is a footnote."</span>,</span>
 <span>    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fl">1</span>, rows <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_header.html">tab_header</a></span><span class="op">(</span></span>
 <span>    title <span class="op">=</span> <span class="st">"The title of the table"</span>,</span>
 <span>    subtitle <span class="op">=</span> <span class="st">"The table's subtitle"</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/opt_table_outline.html">opt_table_outline</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">tab_1</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_table_outline_1.png" alt="This image of a table was generated from the first code example in the `opt_table_outline()` help file." style="width:100%;"></p>
 <p>Remove the table outline with the <code>style = "none"</code> option.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/opt_table_outline.html">opt_table_outline</a></span><span class="op">(</span>style <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">tab_1</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/opt_table_outline.html">opt_table_outline</a></span><span class="op">(</span>style <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_table_outline_2.png" alt="This image of a table was generated from the second code example in the `opt_table_outline()` help file." style="width:100%;"></p>
     </div>
     <div class="section level2">

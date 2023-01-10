@@ -217,9 +217,9 @@ can use the <code><a href="info_locales.html">info_locales()</a></code> function
 <p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table. Keep only the <code>date</code> and <code>time</code>
 columns. Format the <code>time</code> column to have times formatted as <code>hms_p</code> (time
 style <code>3</code>).</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">time</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">time</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_time.html">fmt_time</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">time</span>,</span>
 <span>    time_style <span class="op">=</span> <span class="st">"h_m_s_p"</span></span>
@@ -229,14 +229,14 @@ style <code>3</code>).</p>
 columns. Format the <code>time</code> column to have mixed time formats (times after
 16:00 will be different than the others because of the expressions used
 in the <code>rows</code> argument).</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">time</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">time</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_time.html">fmt_time</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">time</span>,</span>
 <span>    rows <span class="op">=</span> <span class="va">time</span> <span class="op">&gt;</span> <span class="st">"16:00"</span>,</span>
 <span>    time_style <span class="op">=</span> <span class="st">"h_m_s_p"</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_time.html">fmt_time</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">time</span>,</span>
 <span>    rows <span class="op">=</span> <span class="va">time</span> <span class="op">&lt;=</span> <span class="st">"16:00"</span>,</span>
@@ -247,9 +247,9 @@ in the <code>rows</code> argument).</p>
 <code>time</code> column. Format the <code>time</code> column to use the <code>"EBhms"</code> time style
 (which is one of the 'flexible' styles). Also, set the locale to <code>"sv"</code> to
 get the dates in Swedish.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">time</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">time</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_time.html">fmt_time</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">time</span>,</span>
 <span>    time_style <span class="op">=</span> <span class="st">"EBhms"</span>,</span>

@@ -292,15 +292,15 @@ useful reference on which locales are supported, we can use the
 <p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table. Format the <code>num</code> column as
 partially numeric  and partially in scientific notation (using the
 <code>num &gt; 500</code> and <code>num &lt;= 500</code> expressions in the respective <code>rows</code> arguments).</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">num</span>,</span>
 <span>    rows <span class="op">=</span> <span class="va">num</span> <span class="op">&gt;</span> <span class="fl">500</span>,</span>
 <span>    decimals <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>    scale_by <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">1000</span>,</span>
 <span>    pattern <span class="op">=</span> <span class="st">"{x}K"</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_scientific.html">fmt_scientific</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">num</span>,</span>
 <span>    rows <span class="op">=</span> <span class="va">num</span> <span class="op">&lt;=</span> <span class="fl">500</span>,</span>

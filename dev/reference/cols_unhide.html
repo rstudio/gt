@@ -113,10 +113,10 @@ already-visible columns.</p>
 <p>Use <code><a href="countrypops.html">countrypops</a></code> to create a <strong>gt</strong> table. Hide the <code>country_code_2</code> and
 <code>country_code_3</code> columns with <code><a href="cols_hide.html">cols_hide()</a></code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">tab_1</span> <span class="op">&lt;-</span></span>
-<span>  <span class="va">countrypops</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">country_name</span> <span class="op">==</span> <span class="st">"Mongolia"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="va">countrypops</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">country_name</span> <span class="op">==</span> <span class="st">"Mongolia"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">tail</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/cols_hide.html">cols_hide</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">country_code_2</span>, <span class="va">country_code_3</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">tab_1</span></span></code></pre><p></p></div>
@@ -124,7 +124,7 @@ already-visible columns.</p>
 <p>If the <code>tab_1</code> object is provided without the code or source data to
 regenerate it, and, the user wants to reveal otherwise hidden columns then
 the <code>cols_unhide()</code> function becomes useful.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/cols_unhide.html">cols_unhide</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">country_code_2</span><span class="op">)</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">tab_1</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/cols_unhide.html">cols_unhide</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">country_code_2</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_unhide_2.png" alt="This image of a table was generated from the second code example in the `cols_unhide()` help file." style="width:100%;"></p>
     </div>
     <div class="section level2">

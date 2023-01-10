@@ -115,26 +115,26 @@ argument).</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">pal</span> <span class="op">&lt;-</span> <span class="fu">RColorBrewer</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html" class="external-link">brewer.pal</a></span><span class="op">(</span><span class="fl">8</span>, <span class="st">"Pastel2"</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>Create lighter and darker variants of the base palette (one step lower, one
 step higher).</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">pal_darker</span>  <span class="op">&lt;-</span> <span class="va">pal</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/adjust_luminance.html">adjust_luminance</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1.0</span><span class="op">)</span></span>
-<span><span class="va">pal_lighter</span> <span class="op">&lt;-</span> <span class="va">pal</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="../reference/adjust_luminance.html">adjust_luminance</a></span><span class="op">(</span><span class="op">+</span><span class="fl">1.0</span><span class="op">)</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">pal_darker</span>  <span class="op">&lt;-</span> <span class="va">pal</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/adjust_luminance.html">adjust_luminance</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1.0</span><span class="op">)</span></span>
+<span><span class="va">pal_lighter</span> <span class="op">&lt;-</span> <span class="va">pal</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/adjust_luminance.html">adjust_luminance</a></span><span class="op">(</span><span class="op">+</span><span class="fl">1.0</span><span class="op">)</span></span></code></pre><p></p></div>
 <p>Create a tibble and make a <strong>gt</strong> table from it. Color each column in order
 of increasingly darker palettes (with <code><a href="data_color.html">data_color()</a></code>).</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, b <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, c <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, b <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">8</span>, c <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/data_color.html">data_color</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">a</span>,</span>
 <span>    colors <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/col_numeric.html" class="external-link">col_numeric</a></span><span class="op">(</span></span>
 <span>      palette <span class="op">=</span> <span class="va">pal_lighter</span>,</span>
 <span>      domain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">8</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/data_color.html">data_color</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">b</span>,</span>
 <span>    colors <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/col_numeric.html" class="external-link">col_numeric</a></span><span class="op">(</span></span>
 <span>      palette <span class="op">=</span> <span class="va">pal</span>,</span>
 <span>      domain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">8</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/data_color.html">data_color</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">c</span>,</span>
 <span>    colors <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/col_numeric.html" class="external-link">col_numeric</a></span><span class="op">(</span></span>

@@ -96,9 +96,9 @@ column, and a <code>vals</code> column (containing the same values as in <code>r
 <code>group</code> columns in that). Format the row labels of the stub with
 <code><a href="fmt_roman.html">fmt_roman()</a></code> to obtain Roman numerals in the stub; we're selecting the stub
 column here with the <code>stub()</code> select helper.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"row"</span>, groupname_col <span class="op">=</span> <span class="st">"group"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/fmt_roman.html">fmt_roman</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="../reference/stub.html">stub</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">tbl</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"row"</span>, groupname_col <span class="op">=</span> <span class="st">"group"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_roman.html">fmt_roman</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="../reference/stub.html">stub</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>row_group.as_column <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_stub_1.png" alt="This image of a table was generated from the first code example in the `stub()` help file." style="width:100%;"></p>
     </div>

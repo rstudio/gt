@@ -215,7 +215,7 @@ styling into the stub.</p></dd>
 contains an assortment of values that could potentially undergo some styling
 via <code>tab_style_body()</code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op">&lt;-</span></span>
-<span>  <span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="va">exibble</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span></span>
 <span>    rowname_col <span class="op">=</span> <span class="st">"row"</span>,</span>
 <span>    groupname_col <span class="op">=</span> <span class="st">"group"</span></span>
@@ -224,7 +224,7 @@ via <code>tab_style_body()</code>.</p>
 in the <code>values</code> argument of <code>tab_style_body()</code>. It's okay to search for
 numerical, character, or logical values across all columns. Let's target the
 values <code>49.95</code> and <code>33.33</code> and style those cells with an orange fill.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_style_body.html">tab_style_body</a></span><span class="op">(</span></span>
 <span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_fill.html">cell_fill</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"orange"</span><span class="op">)</span>,</span>
 <span>    values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">49.95</span>, <span class="fl">33.33</span><span class="op">)</span></span>
@@ -232,7 +232,7 @@ values <code>49.95</code> and <code>33.33</code> and style those cells with an o
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_body_1.png" alt="This image of a table was generated from the first code example in the `tab_style_body()` help file." style="width:100%;"></p>
 <p>Multiple styles can be combined in a <code>list</code>, here's an example of that using
 the same cell targets:</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_style_body.html">tab_style_body</a></span><span class="op">(</span></span>
 <span>    style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>      <span class="fu"><a href="../reference/cell_text.html">cell_text</a></span><span class="op">(</span>font <span class="op">=</span> <span class="fu"><a href="../reference/google_font.html">google_font</a></span><span class="op">(</span><span class="st">"Inter"</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span>,</span>
@@ -250,12 +250,12 @@ the same cell targets:</p>
 with those specific keywords in the <code>targets</code> argument. For the <code>49.95</code> value
 we will style the entire row and with <code>33.33</code> the entire column will get the
 same styling.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_style_body.html">tab_style_body</a></span><span class="op">(</span></span>
 <span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_fill.html">cell_fill</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"lightblue"</span><span class="op">)</span>,</span>
 <span>    values <span class="op">=</span> <span class="fl">49.95</span>,</span>
 <span>    targets <span class="op">=</span> <span class="st">"row"</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_style_body.html">tab_style_body</a></span><span class="op">(</span></span>
 <span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_fill.html">cell_fill</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"lightblue"</span><span class="op">)</span>,</span>
 <span>    values <span class="op">=</span> <span class="fl">33.33</span>,</span>
@@ -267,13 +267,13 @@ styling to other locations, or, entirely project the styling elsewhere. This
 is done with the <code>extents</code> argument. Valid keywords that can be included in
 the vector are: <code>"body"</code> (the default) and <code>"stub"</code>. Let's take the previous
 example and extend the styling of the row into the stub.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_style_body.html">tab_style_body</a></span><span class="op">(</span></span>
 <span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_fill.html">cell_fill</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"lightblue"</span><span class="op">)</span>,</span>
 <span>    values <span class="op">=</span> <span class="fl">49.95</span>,</span>
 <span>    targets <span class="op">=</span> <span class="st">"row"</span>,</span>
 <span>    extents <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"body"</span>, <span class="st">"stub"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_style_body.html">tab_style_body</a></span><span class="op">(</span></span>
 <span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_fill.html">cell_fill</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"lightblue"</span><span class="op">)</span>,</span>
 <span>    values <span class="op">=</span> <span class="fl">33.33</span>,</span>
@@ -283,7 +283,7 @@ example and extend the styling of the row into the stub.</p>
 <p>We can also use the <code>pattern</code> argument to target cell values in
 <code>character</code>-based columns. The <code>"fctr"</code> column is skipped because it is in
 fact a factor-based column.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_style_body.html">tab_style_body</a></span><span class="op">(</span></span>
 <span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_fill.html">cell_fill</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"green"</span><span class="op">)</span>,</span>
 <span>    pattern <span class="op">=</span> <span class="st">"ne|na"</span></span>
@@ -294,7 +294,7 @@ The function you give to <code>fn</code> will be invoked separately on all cells
 <code>columns</code> argument of <code>tab_style_body()</code> might be useful to limit which cells
 should be evaluated. For this next example, the supplied function should only
 be used on numeric values and we can make sure of this by using <code>columns = where(is.numeric)</code>.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_style_body.html">tab_style_body</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span>,</span>
 <span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_fill.html">cell_fill</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"pink"</span><span class="op">)</span>,</span>

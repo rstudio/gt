@@ -178,7 +178,7 @@ appear in the display table.</p>
 <code>group</code> columns to add a stub and row groups via the <code>rowname_col</code> and
 <code>groupname_col</code> arguments.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">tab_1</span> <span class="op">&lt;-</span></span>
-<span>  <span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="va">exibble</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span></span>
 <span>    rowname_col <span class="op">=</span> <span class="st">"row"</span>,</span>
 <span>    groupname_col <span class="op">=</span> <span class="st">"group"</span></span>
@@ -189,15 +189,15 @@ appear in the display table.</p>
 <p>The resulting <strong>gt</strong> table object can be used in transformations with a
 variety of <code>tab_*()</code>, <code>fmt_*()</code>, <code>cols_*()</code>, and even more functions
 available in the package.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">tab_1</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">tab_1</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_header.html">tab_header</a></span><span class="op">(</span></span>
 <span>    title <span class="op">=</span> <span class="st">"Table Title"</span>,</span>
 <span>    subtitle <span class="op">=</span> <span class="st">"Subtitle"</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">num</span>,</span>
 <span>    decimals <span class="op">=</span> <span class="fl">2</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/cols_label.html">cols_label</a></span><span class="op">(</span>num <span class="op">=</span> <span class="st">"number"</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_gt_2.png" alt="This image of a table was generated from the second code example in the `gt()` help file." style="width:100%;"></p>
     </div>

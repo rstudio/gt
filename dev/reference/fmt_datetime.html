@@ -697,9 +697,9 @@ can use the <code><a href="info_locales.html">info_locales()</a></code> function
 <p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table. Keep only the <code>datetime</code> column.
 Format the column to have dates formatted with the <code>"month_day_year"</code> style
 and times with the <code>"h_m_s_p"</code> 12-hour time style.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">datetime</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">datetime</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_datetime.html">fmt_datetime</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">datetime</span>,</span>
 <span>    date_style <span class="op">=</span> <span class="st">"month_day_year"</span>,</span>
@@ -710,15 +710,15 @@ and times with the <code>"h_m_s_p"</code> 12-hour time style.</p>
 that work well together are <code>"MMMEd"</code> and <code>"Hms"</code>. These will mutate
 depending on the locale. Let's use the default locale for the first 3 rows
 and the Danish locale (<code>"da"</code>) for the remaining rows.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">datetime</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">datetime</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_datetime.html">fmt_datetime</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">datetime</span>,</span>
 <span>    date_style <span class="op">=</span> <span class="st">"MMMEd"</span>,</span>
 <span>    time_style <span class="op">=</span> <span class="st">"Hms"</span>,</span>
 <span>    locale <span class="op">=</span> <span class="st">"da"</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_datetime.html">fmt_datetime</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">datetime</span>,</span>
 <span>    rows <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,</span>
@@ -731,9 +731,9 @@ specification. Using the CLDR datetime pattern
 <code>"EEEE, MMMM d, y 'at' h:mm a (zzzz)"</code> gives us datetime outputs with time
 zone formatting. Let's provide a time zone ID (<code>"America/Vancouver"</code>) to the
 <code>tz</code> argument.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">datetime</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">datetime</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_datetime.html">fmt_datetime</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">datetime</span>,</span>
 <span>    format <span class="op">=</span> <span class="st">"EEEE, MMMM d, y 'at' h:mm a (zzzz)"</span>,</span>
