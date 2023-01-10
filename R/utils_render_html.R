@@ -277,7 +277,7 @@ create_heading_component_h <- function(data) {
 
   title_classes <- c("gt_heading", "gt_title", "gt_font_normal")
 
-  subtitle_classes <- title_classes %>% tidy_sub("title", "subtitle")
+  subtitle_classes <- tidy_sub(title_classes, "title", "subtitle")
 
   if (!subtitle_defined) {
     title_classes <- c(title_classes, "gt_bottom_border")
@@ -820,9 +820,12 @@ create_body_component_h <- function(data) {
 
   # Replace an NA group with an empty string
   if (any(is.na(groups_rows_df$group_label))) {
+
     groups_rows_df <-
-      groups_rows_df %>%
-      dplyr::mutate(group_label = ifelse(is.na(group_label), "", group_label))
+      dplyr::mutate(
+        groups_rows_df,
+        group_label = ifelse(is.na(group_label), "", group_label)
+      )
   }
 
   # Is the stub to be striped?
@@ -1417,13 +1420,11 @@ create_footnotes_component_h <- function(data) {
 
   styles_tbl <- dt_styles_get(data = data)
 
-  # Get effective number of columns
+  # Get the effective number of columns
   n_cols_total <- get_effective_number_of_columns(data = data)
 
-  footnotes_tbl <-
-    footnotes_tbl %>%
-    dplyr::select(fs_id, footnotes) %>%
-    dplyr::distinct()
+  # Get the distinct set of `fs_id` & `footnotes` values in the `footnotes_tbl`
+  footnotes_tbl <- dplyr::distinct(dplyr::select(footnotes_tbl, fs_id, footnotes))
 
   # Get the style attrs for the footnotes
   if ("footnotes" %in% styles_tbl$locname) {
