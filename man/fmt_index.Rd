@@ -130,7 +130,7 @@ the \code{idx} column to appear as index characters with \code{fmt_index()}.
 }
 
 \seealso{
-The vector-formatting version of this function: \code{vec_fmt_index()}.
+The vector-formatting version of this function: \code{\link[=vec_fmt_index]{vec_fmt_index()}}.
 
 Other data formatting functions: 
 \code{\link{data_color}()},

@@ -133,7 +133,7 @@ instead of scientific notation with the \code{lg_num_pref = "suf"} option.
 
 \section{Function ID}{
 
-3-17
+3-18
 }
 
 \seealso{

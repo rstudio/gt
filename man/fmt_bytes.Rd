@@ -213,7 +213,7 @@ byte sizes as binary values.
 
 \section{Function ID}{
 
-3-10
+3-11
 }
 
 \seealso{

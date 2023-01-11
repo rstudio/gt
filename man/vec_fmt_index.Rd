@@ -61,7 +61,7 @@ of the \code{"plain"} output type).
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_index(num_vals)
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "I" "IV" "V" "VIII" "XII" "XX" "N" "V" "I" "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "A" "D" "E" "H" "L" "T" "Z" "HH" "" "E" "A" "NA"
 }\if{html}{\out{</div>}}
 
 We can also use \code{vec_fmt_index()} with the \code{case = "lower"} option to create
@@ -70,7 +70,7 @@ a character vector with values rendered as lowercase Roman numerals.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_index(num_vals, case = "lower")
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "i" "iv" "v" "viii" "xii" "xx" "n" "v" "i" "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "a" "d" "e" "h" "l" "t" "z" "hh" "" "e" "a" "NA"
 }\if{html}{\out{</div>}}
 
 As a last example, one can wrap the values in a pattern with the \code{pattern}
@@ -79,13 +79,13 @@ argument. Note here that \code{NA} values won't have the pattern applied.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_index(num_vals, case = "lower", pattern = "\{x\}.")
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "i." "iv." "v." "viii." "xii." "xx." "n." "v." "i." "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "a." "d." "e." "h." "l." "t." "z." "hh." "." "e." "a." "NA"
 }\if{html}{\out{</div>}}
 }
 
 \section{Function ID}{
 
-14-9
+14-10
 }
 
 \seealso{
