@@ -2891,7 +2891,7 @@ fmt_roman <- function(
 #' @section Function ID:
 #' 3-10
 #'
-#' @seealso The vector-formatting version of this function: `vec_fmt_index()`.
+#' @seealso The vector-formatting version of this function: [vec_fmt_index()].
 #'
 #' @import rlang
 #' @export
