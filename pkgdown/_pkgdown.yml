@@ -74,6 +74,7 @@ reference:
     - fmt_fraction
     - fmt_currency
     - fmt_roman
+    - fmt_index
     - fmt_bytes
     - fmt_date
     - fmt_time
