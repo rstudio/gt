@@ -2157,6 +2157,45 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
   summary_tbl_6 %>% as_latex() %>% as.character() %>% expect_snapshot()
   summary_tbl_6 %>% as_rtf() %>% expect_snapshot()
 
+  # This table has a single row group and the summary rows are to
+  # be styled via `tab_style()`
+  summary_tbl_7 <-
+    countrypops |>
+    dplyr::filter(country_name == "Japan", year < 1970) |>
+    dplyr::select(-contains("country")) |>
+    dplyr::mutate(decade = paste0(substr(year, 1, 3), "0s")) |>
+    gt(
+      rowname_col = "year",
+      groupname_col = "decade"
+    ) |>
+    fmt_integer(columns = population) |>
+    summary_rows(
+      groups = "1960s",
+      columns = population,
+      fns = list("min", "max"),
+      fmt = ~ fmt_integer(.)
+    ) |>
+    tab_style(
+      style = list(
+        cell_text(
+          weight = "bold",
+          transform = "capitalize"
+        ),
+        cell_fill(
+          color = "lightblue",
+          alpha = 0.5
+        )
+      ),
+      locations = cells_stub_summary(
+        groups = "1960s"
+      )
+    )
+
+  # Take snapshots of `summary_tbl_7`
+  summary_tbl_7 %>% render_as_html() %>% expect_snapshot()
+  summary_tbl_7 %>% as_latex() %>% as.character() %>% expect_snapshot()
+  summary_tbl_7 %>% as_rtf() %>% expect_snapshot()
+
   # We should expect no errors or warnings when rendering each of these
   # tables to the different output formats
   expect_error(regexp = NA, summary_tbl_1 %>% render_as_html())
