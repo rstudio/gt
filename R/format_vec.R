@@ -1485,6 +1485,121 @@ vec_fmt_roman <- function(
   )
 }
 
+#' Format a vector as indexed characters
+#'
+#' @description
+#'
+#' With numeric values in a vector, we can transform those to index values,
+#' usually based on letters. These characters can be derived from a specified
+#' locale and they are intended for ordering (often leaving out characters with
+#' diacritical marks).
+#'
+#' @inheritParams vec_fmt_number
+#' @param case Should resulting index characters be rendered as uppercase
+#'   (`"upper"`) or lowercase (`"lower"`) letters? By default, this is set to
+#'   `"upper"`.
+#' @param index_algo The indexing algorithm for handling the recycling of the
+#'   index character set. By default, the `"repeat"` option is used where
+#'   characters are doubled, tripled, and so on, when moving past the character
+#'   set limit. The alternative is the `"excel"` option, where Excel-based
+#'   column naming is adapted and used here (e.g., `[..., Y, Z, AA, AB, ...]`).
+#'
+#' @return A character vector.
+#'
+#' @section Examples:
+#'
+#' Let's create a numeric vector for the next few examples:
+#'
+#' ```r
+#' num_vals <- c(1, 4, 5, 8, 12, 20, 26, 34, 0, -5, 1.3, NA)
+#' ```
+#'
+#' Using `vec_fmt_index()` with the default options will create a character
+#' vector with values rendered as index numerals. Zero values will be rendered
+#' as `""` (i.e., empty strings), any `NA` values remain as `NA` values, and
+#' negative values will be automatically made positive. The rendering context
+#' will be autodetected unless specified in the `output` argument (here, it is
+#' of the `"plain"` output type).
+#'
+#' ```r
+#' vec_fmt_index(num_vals)
+#' ```
+#'
+#' ```
+#' #> [1] "A" "D" "E" "H" "L" "T" "Z" "HH" "" "E" "A" "NA"
+#' ```
+#'
+#' We can also use `vec_fmt_index()` with the `case = "lower"` option to create
+#' a character vector with values rendered as lowercase Roman numerals.
+#'
+#' ```r
+#' vec_fmt_index(num_vals, case = "lower")
+#' ```
+#'
+#' ```
+#' #> [1] "a" "d" "e" "h" "l" "t" "z" "hh" "" "e" "a" "NA"
+#' ```
+#'
+#' As a last example, one can wrap the values in a pattern with the `pattern`
+#' argument. Note here that `NA` values won't have the pattern applied.
+#'
+#' ```r
+#' vec_fmt_index(num_vals, case = "lower", pattern = "{x}.")
+#' ```
+#' ```
+#' #> [1] "a." "d." "e." "h." "l." "t." "z." "hh." "." "e." "a." "NA"
+#' ```
+#'
+#' @family vector formatting functions
+#' @section Function ID:
+#' 14-10
+#'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_index()].
+#'
+#' @import rlang
+#' @export
+vec_fmt_index <- function(
+    x,
+    case = c("upper", "lower"),
+    index_algo = c("repeat", "excel"),
+    pattern = "{x}",
+    output = c("auto", "plain", "html", "latex", "rtf", "word")
+) {
+
+  # Ensure that `output` is matched correctly to one option
+  output <- rlang::arg_match(output)
+
+  if (output == "auto") {
+    output <- determine_output_format()
+  }
+
+  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
+  stop_if_not_vector(x)
+
+  # Ensure that `case` is matched correctly to one option
+  case <- rlang::arg_match(case)
+
+  # Stop function if class of `x` is incompatible with the formatting
+  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
+    cli::cli_abort(
+      "The `vec_fmt_index()` function can only be used with numeric vectors."
+    )
+  }
+
+  render_as_vector(
+    fmt_index(
+      gt_one_col(x),
+      columns = "x",
+      rows = everything(),
+      case = case,
+      index_algo = index_algo,
+      pattern = pattern
+    ),
+    output = output
+  )
+}
+
 #' Format a vector as values in terms of bytes
 #'
 #' @description
