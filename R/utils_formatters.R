@@ -90,22 +90,18 @@ get_locale_sep_mark <- function(
     use_seps
 ) {
 
-  # If `use_seps` is FALSE, then force
-  # `sep_mark` to be an empty string
+  # If `use_seps` is FALSE, then force `sep_mark` to be an empty string
   if (!use_seps) {
     return("")
   }
 
-  # If `locale` is NULL then return the
-  # default `sep_mark`
+  # If `locale` is NULL then return the default `sep_mark`
   if (is.null(locale)) {
     return(default)
   }
 
-  # Get the correct `group_sep` value from the
-  # `gt:::locales` lookup table
-  sep_mark <-
-    filter_table_to_value(locales, group_sep, base_locale_id == locale)
+  # Get the correct `group_sep` value from the `gt:::locales` lookup table
+  sep_mark <- filter_table_to_value(locales, group_sep, base_locale_id == locale)
 
   # TODO: Modify `locales` table to replace `""` with
   # `" "` in `group_sep` column; once that is done, the
@@ -123,15 +119,28 @@ get_locale_sep_mark <- function(
 #' @noRd
 get_locale_dec_mark <- function(locale = NULL, default) {
 
-  # If `locale` is NULL then return the
-  # default `dec_mark`
+  # If `locale` is NULL then return the default `dec_mark`
   if (is.null(locale)) {
     return(default)
   }
 
-  # Get the correct `dec_sep` value from the
-  # `gt:::locales` lookup table
+  # Get the correct `dec_sep` value from the `gt:::locales` lookup table
   filter_table_to_value(locales, dec_sep, base_locale_id == locale)
+}
+
+#' Get the `idx_set` vector based on a locale
+#'
+#' @param locale The user-supplied `locale` value, found in several `fmt_*()`
+#'   functions. This is expected as `NULL` if not supplied by the user.
+#' @noRd
+get_locale_idx_set <- function(locale = NULL) {
+
+  # If `locale` is NULL then return `LETTERS`
+  if (is.null(locale)) {
+    return(LETTERS)
+  }
+
+  LETTERS
 }
 
 #' Resolve the locale in functions with a `locale` argument
