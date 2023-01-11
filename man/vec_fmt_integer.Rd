@@ -160,6 +160,7 @@ Other vector formatting functions:
 \code{\link{vec_fmt_duration}()},
 \code{\link{vec_fmt_engineering}()},
 \code{\link{vec_fmt_fraction}()},
+\code{\link{vec_fmt_index}()},
 \code{\link{vec_fmt_markdown}()},
 \code{\link{vec_fmt_number}()},
 \code{\link{vec_fmt_partsper}()},

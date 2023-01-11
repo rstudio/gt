@@ -9,7 +9,7 @@ fmt_index(
   columns = everything(),
   rows = everything(),
   case = c("upper", "lower"),
-  over_algo = c("repeat", "excel"),
+  index_algo = c("repeat", "excel"),
   pattern = "{x}",
   locale = NULL
 )
@@ -36,7 +36,11 @@ to filter down to the rows we need (e.g.,
 (\code{"upper"}) or lowercase (\code{"lower"}) letters? By default, this is set to
 \code{"upper"}.}
 
-\item{over_algo}{(\code{"repeat"}) (\code{"excel"})}
+\item{index_algo}{The indexing algorithm for handling the recycling of the
+index character set. By default, the \code{"repeat"} option is used where
+characters are doubled, tripled, and so on, when moving past the character
+set limit. The alternative is the \code{"excel"} option, where Excel-based
+column naming is adapted and used here (e.g., \verb{[..., Y, Z, AA, AB, ...]}).}
 
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other
