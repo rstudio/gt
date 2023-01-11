@@ -1699,7 +1699,7 @@ vec_fmt_index <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-10
+#' 14-11
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
 #'   [fmt_bytes()].
@@ -1898,7 +1898,7 @@ vec_fmt_bytes <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-11
+#' 14-12
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
 #'   [fmt_date()].
@@ -2065,7 +2065,7 @@ vec_fmt_date <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-12
+#' 14-13
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
 #'   [fmt_time()].
@@ -2888,7 +2888,7 @@ vec_fmt_time <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-13
+#' 14-14
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
 #'   [fmt_datetime()].
@@ -3113,7 +3113,7 @@ vec_fmt_datetime <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-14
+#' 14-15
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
 #'   [fmt_duration()].
@@ -3220,7 +3220,7 @@ vec_fmt_duration <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-15
+#' 14-16
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
 #'   [fmt_markdown()].
