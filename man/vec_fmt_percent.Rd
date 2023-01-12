@@ -73,10 +73,10 @@ and the percent sign. The default is to not introduce a space character.}
 \item{placement}{The placement of the percent sign. This can be either be
 \code{right} (the default) or \code{left}.}
 
-\item{locale}{An optional locale ID that can be used for formatting the value
-according the locale's rules. Examples include \code{"en"} for English (United
-States) and \code{"fr"} for French (France). The use of a valid locale ID will
-override any values provided in \code{sep_mark} and \code{dec_mark}. We can use the
+\item{locale}{An optional locale identifier that can be used for formatting
+the value according the locale's rules. Examples include \code{"en"} for English
+(United States) and \code{"fr"} for French (France). The use of a locale ID will
+override any locale-specific values provided. We can use the
 \code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
 are supported.}
 

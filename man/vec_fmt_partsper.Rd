@@ -78,10 +78,10 @@ and the symbol/units. The default is \code{"auto"} which provides spacing
 dependent on the mark itself. This can be directly controlled by using
 either \code{TRUE} or \code{FALSE}.}
 
-\item{locale}{An optional locale ID that can be used for formatting the value
-according the locale's rules. Examples include \code{"en"} for English (United
-States) and \code{"fr"} for French (France). The use of a valid locale ID will
-override any values provided in \code{sep_mark} and \code{dec_mark}. We can use the
+\item{locale}{An optional locale identifier that can be used for formatting
+the value according the locale's rules. Examples include \code{"en"} for English
+(United States) and \code{"fr"} for French (France). The use of a locale ID will
+override any locale-specific values provided. We can use the
 \code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
 are supported.}
 
