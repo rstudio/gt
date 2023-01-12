@@ -9,6 +9,7 @@ vec_fmt_index(
   case = c("upper", "lower"),
   index_algo = c("repeat", "excel"),
   pattern = "{x}",
+  locale = NULL,
   output = c("auto", "plain", "html", "latex", "rtf", "word")
 )
 }
@@ -28,6 +29,13 @@ column naming is adapted and used here (e.g., \verb{[..., Y, Z, AA, AB, ...]}).}
 \item{pattern}{A formatting pattern that allows for decoration of the
 formatted value. The value itself is represented by \code{{x}} and all other
 characters are taken to be string literals.}
+
+\item{locale}{An optional locale identifier that can be used for formatting
+the value according the locale's rules. Examples include \code{"en"} for English
+(United States) and \code{"fr"} for French (France). The use of a locale ID will
+override any locale-specific values provided. We can use the
+\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
+are supported.}
 
 \item{output}{The output style of the resulting character vector. This can
 either be \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"},
@@ -71,6 +79,15 @@ a character vector with values rendered as lowercase Roman numerals.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "a" "d" "e" "h" "l" "t" "z" "hh" "" "e" "a" "NA"
+}\if{html}{\out{</div>}}
+
+If we are formatting for a different locale, we could supply the locale ID
+and let \strong{gt} obtain a locale-specific set of index values:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_index(1:10, locale = "ja")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "あ" "か" "さ" "た" "な" "は" "ま" "や" "ら" "わ"
 }\if{html}{\out{</div>}}
 
 As a last example, one can wrap the values in a pattern with the \code{pattern}
