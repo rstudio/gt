@@ -46,8 +46,8 @@
 #'   table ID can be used with any single-length character vector.
 #' @param locale An optional locale ID that can be set as the default locale for
 #'   all functions that take a `locale` argument. Examples of valid locales
-#'   include `"en_US"` for English (United States) and `"fr_FR"` for French
-#'   (France). Refer to the information provided by the [info_locales()] to
+#'   include `"en"` for English (United States) and `"fr"` for French (France).
+#'   Refer to the information provided by the [info_locales()] function to
 #'   determine which locales are supported.
 #' @param row_group.sep The separator to use between consecutive group names (a
 #'   possibility when providing `data` as a `grouped_df` with multiple groups)
@@ -120,7 +120,7 @@ gt <- function(
   validate_table_id(id)
 
   # Stop function if `locale` does not have a valid value
-  validate_locale(locale)
+  validate_locale(locale = locale)
 
   if (rownames_to_stub) {
     # Just a column name that's unlikely to collide with user data
