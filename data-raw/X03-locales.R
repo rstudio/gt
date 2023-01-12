@@ -7,7 +7,7 @@ library(stringi)
 # locales <- readr::read_rds(file = "data-raw/locales.RDS")
 
 all_locales <- i18n::all_locales
-default_locales_tbl <- i18n::default_locales
+default_locales <- i18n::default_locales
 
 en_locale_names <- i18n::locale_names[i18n::locale_names$locale == "en", ]
 
@@ -31,8 +31,8 @@ parse_locale <- function(locale) {
     )
 
   # Resolve any default locales into their base names (e.g., 'en-US' -> 'en')
-  if (locale %in% default_locales_tbl$default_locale) {
-    locale <- default_locales_tbl[default_locales_tbl$default_locale == locale, ][["base_locale"]]
+  if (locale %in% default_locales$default_locale) {
+    locale <- default_locales[default_locales$default_locale == locale, ][["base_locale"]]
   }
 
   # Normalize any hyphens to underscores
