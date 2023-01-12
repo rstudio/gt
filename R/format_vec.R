@@ -1544,10 +1544,10 @@ vec_fmt_roman <- function(
 #' and let **gt** obtain a locale-specific set of index values:
 #'
 #' ```r
-#' vec_fmt_index(1:10, locale = "ja")
+#' vec_fmt_index(1:10, locale = "so")
 #' ```
 #' ```
-#' #> [1] "あ" "か" "さ" "た" "な" "は" "ま" "や" "ら" "わ"
+#' #> [1] "B" "C" "D" "F" "G" "H" "J" "K" "L" "M"
 #' ```
 #'
 #' As a last example, one can wrap the values in a pattern with the `pattern`
