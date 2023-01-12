@@ -74,10 +74,10 @@
 #'   for this option. The default is `FALSE`, where only negative numbers will
 #'   display a minus sign. This option is disregarded when using accounting
 #'   notation with `accounting = TRUE`.
-#' @param locale An optional locale ID that can be used for formatting the value
-#'   according the locale's rules. Examples include `"en"` for English (United
-#'   States) and `"fr"` for French (France). The use of a valid locale ID will
-#'   override any values provided in `sep_mark` and `dec_mark`. We can use the
+#' @param locale An optional locale identifier that can be used for formatting
+#'   the value according the locale's rules. Examples include `"en"` for English
+#'   (United States) and `"fr"` for French (France). The use of a locale ID will
+#'   override any locale-specific values provided. We can use the
 #'   [info_locales()] function as a useful reference for all of the locales that
 #'   are supported.
 #' @param output The output style of the resulting character vector. This can
@@ -2056,7 +2056,7 @@ vec_fmt_date <- function(
 #'   str_vals,
 #'   time_style = "hm",
 #'   pattern = "temps: {x}",
-#'   locale = "fr_CA"
+#'   locale = "fr-CA"
 #' )
 #' ```
 #' ```
