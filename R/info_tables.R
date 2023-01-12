@@ -422,30 +422,22 @@ info_locales <- function(begins_with = NULL) {
 
   if (!is.null(begins_with)) {
 
-    starting <-
-      substr(begins_with, 1, 1) %>%
-      tolower()
-
-    loc <-
-      locales %>%
-      dplyr::filter(grepl(paste0("^", starting, ".*"), base_locale_id))
+    starting <- tolower(substr(begins_with, 1, 1))
+    loc <- dplyr::filter(locales, grepl(paste0("^", starting, ".*"), base_locale_id))
 
   } else {
     loc <- locales
   }
 
-  tab_1 <-
-    loc %>%
-    dplyr::select(
-      base_locale_id, display_name, group_sep, dec_sep) %>%
-    dplyr::mutate(value = 11027) %>%
-    gt()
+  tab_1 <- dplyr::select(loc, base_locale_id, display_name, group_sep, dec_sep)
+  tab_1 <- dplyr::mutate(tab_1, value = 11027)
+  tab_1 <- gt(tab_1)
 
   for (i in seq(nrow(loc))) {
 
     tab_1 <-
-      tab_1 %>%
       fmt_number(
+        tab_1,
         columns = "value",
         rows = i,
         locale = loc$base_locale_id[i]
