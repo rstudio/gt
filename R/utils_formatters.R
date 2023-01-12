@@ -55,7 +55,11 @@ validate_locale <- function(locale) {
 
   # Stop function if the `locale` provided
   # isn't a valid one
-  if (!is.null(locale) && !(locale %in% locales[["locale"]])) {
+  if (
+    !is.null(locale) &&
+    !(gsub("_", "-", locale) %in% locales[["locale"]]) &&
+    !(gsub("_", "-", locale) %in% default_locales[["default_locale"]])
+  ) {
 
     cli::cli_abort(c(
       "The supplied `locale` is not available in the list of supported locales.",
