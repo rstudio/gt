@@ -84,10 +84,10 @@ a character vector with values rendered as lowercase Roman numerals.
 If we are formatting for a different locale, we could supply the locale ID
 and let \strong{gt} obtain a locale-specific set of index values:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_index(1:10, locale = "ja")
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_index(1:10, locale = "so")
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "あ" "か" "さ" "た" "な" "は" "ま" "や" "ら" "わ"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "B" "C" "D" "F" "G" "H" "J" "K" "L" "M"
 }\if{html}{\out{</div>}}
 
 As a last example, one can wrap the values in a pattern with the \code{pattern}
