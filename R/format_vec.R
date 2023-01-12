@@ -1540,6 +1540,16 @@ vec_fmt_roman <- function(
 #' #> [1] "a" "d" "e" "h" "l" "t" "z" "hh" "" "e" "a" "NA"
 #' ```
 #'
+#' If we are formatting for a different locale, we could supply the locale ID
+#' and let **gt** obtain a locale-specific set of index values:
+#'
+#' ```r
+#' vec_fmt_index(1:10, locale = "ja")
+#' ```
+#' ```
+#' #> [1] "あ" "か" "さ" "た" "な" "は" "ま" "や" "ら" "わ"
+#' ```
+#'
 #' As a last example, one can wrap the values in a pattern with the `pattern`
 #' argument. Note here that `NA` values won't have the pattern applied.
 #'
@@ -1564,6 +1574,7 @@ vec_fmt_index <- function(
     case = c("upper", "lower"),
     index_algo = c("repeat", "excel"),
     pattern = "{x}",
+    locale = NULL,
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
@@ -1577,8 +1588,9 @@ vec_fmt_index <- function(
   # Ensure that `x` is strictly a vector with `rlang::is_vector()`
   stop_if_not_vector(x)
 
-  # Ensure that `case` is matched correctly to one option
+  # Ensure that `case` and `index_algo` are matched correctly to one option
   case <- rlang::arg_match(case)
+  index_algo <- rlang::arg_match(index_algo)
 
   # Stop function if class of `x` is incompatible with the formatting
   if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
@@ -1594,7 +1606,8 @@ vec_fmt_index <- function(
       rows = everything(),
       case = case,
       index_algo = index_algo,
-      pattern = pattern
+      pattern = pattern,
+      locale = locale
     ),
     output = output
   )
