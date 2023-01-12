@@ -97,8 +97,12 @@
 #'   (i.e., `sep_mark`) are separated by three digits. The alternative system,
 #'   the Indian numbering system (`"ind"`) uses grouping separators that
 #'   correspond to thousand, lakh, crore, and higher quantities.
-#' @param locale An optional locale ID that can be used for formatting values
-#'   according to the locale's rules.
+#' @param locale An optional locale identifier that can be used for formatting
+#'   the value according the locale's rules. Examples include `"en"` for English
+#'   (United States) and `"fr"` for French (France). The use of a locale ID will
+#'   override any locale-specific values provided. We can use the
+#'   [info_locales()] function as a useful reference for all of the locales that
+#'   are supported.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -235,13 +239,16 @@ fmt_number <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
-
   # Ensure that arguments are matched
   system <- rlang::arg_match(system)
 
-  # Resolve the `locale` value here with the global locale value
+  # Declare formatting function compatibility
+  compat <- c("numeric", "integer")
+
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
   locale <- resolve_locale(data = data, locale = locale)
 
   # Use locale-based marks if a locale ID is provided
@@ -673,12 +680,15 @@ fmt_scientific <- function(
   # Declare formatting function compatibility
   compat <- c("numeric", "integer")
 
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
+  locale <- resolve_locale(data = data, locale = locale)
+
   # Set default values
   suffixing <- FALSE
   use_seps <- TRUE
-
-  # Resolve the `locale` value here with the global locale value
-  locale <- resolve_locale(data = data, locale = locale)
 
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
@@ -1021,12 +1031,15 @@ fmt_engineering <- function(
   # Declare formatting function compatibility
   compat <- c("numeric", "integer")
 
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
+  locale <- resolve_locale(data = data, locale = locale)
+
   # Set default values
   suffixing <- FALSE
   use_seps <- TRUE
-
-  # Resolve the `locale` value here with the global locale value
-  locale <- resolve_locale(data = data, locale = locale)
 
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
@@ -1523,13 +1536,16 @@ fmt_percent <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
-
   # Ensure that arguments are matched
   system <- rlang::arg_match(system)
 
-  # Resolve the `locale` value here with the global locale value
+  # Declare formatting function compatibility
+  compat <- c("numeric", "integer")
+
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
   locale <- resolve_locale(data = data, locale = locale)
 
   # In this case where strict mode is being used (with the option
@@ -1747,14 +1763,17 @@ fmt_partsper <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
-
   # Ensure that arguments are matched
   to_units <- rlang::arg_match(to_units)
   system <- rlang::arg_match(system)
 
-  # Resolve the `locale` value here with the global locale value
+  # Declare formatting function compatibility
+  compat <- c("numeric", "integer")
+
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
   locale <- resolve_locale(data = data, locale = locale)
 
   # In this case where strict mode is being used (with the option
@@ -2044,12 +2063,18 @@ fmt_fraction <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
-
   # Ensure that arguments are matched
   system <- rlang::arg_match(system)
   layout <- rlang::arg_match(layout)
+
+  # Declare formatting function compatibility
+  compat <- c("numeric", "integer")
+
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
+  locale <- resolve_locale(data = data, locale = locale)
 
   if (is.null(accuracy)) {
 
@@ -2086,9 +2111,6 @@ fmt_fraction <- function(
       ))
     }
   }
-
-  # Resolve the `locale` value here with the global locale value
-  locale <- resolve_locale(data = data, locale = locale)
 
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
@@ -2579,13 +2601,16 @@ fmt_currency <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
-
   # Ensure that arguments are matched
   system <- rlang::arg_match(system)
 
-  # Resolve the `locale` value here with the global locale value
+  # Declare formatting function compatibility
+  compat <- c("numeric", "integer")
+
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
   locale <- resolve_locale(data = data, locale = locale)
 
   # In this case where strict mode is being used (with the option
@@ -2734,11 +2759,11 @@ fmt_roman <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
-
   # Ensure that arguments are matched
   case <- rlang::arg_match(case)
+
+  # Declare formatting function compatibility
+  compat <- c("numeric", "integer")
 
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
@@ -2908,14 +2933,17 @@ fmt_index <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
-
   # Ensure that arguments are matched
   case <- rlang::arg_match(case)
   index_algo <- rlang::arg_match(index_algo)
 
-  # Resolve the `locale` value here with the global locale value
+  # Declare formatting function compatibility
+  compat <- c("numeric", "integer")
+
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
   locale <- resolve_locale(data = data, locale = locale)
 
   # Use locale-based `idx_set` if a locale ID is provided
@@ -3202,11 +3230,17 @@ fmt_bytes <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
+  # Ensure that arguments are matched
+  standard <- rlang::arg_match(standard)
+
   # Declare formatting function compatibility
   compat <- c("numeric", "integer")
 
-  # Ensure that arguments are matched
-  standard <- rlang::arg_match(standard)
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
+  locale <- resolve_locale(data = data, locale = locale)
 
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
@@ -3225,9 +3259,6 @@ fmt_bytes <- function(
       )
     }
   }
-
-  # Resolve the `locale` value here with the global locale value
-  locale <- resolve_locale(data = data, locale = locale)
 
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
@@ -3527,7 +3558,10 @@ fmt_date <- function(
   # Declare formatting function compatibility
   compat <- c("Date", "POSIXt", "character")
 
-  # Resolve the `locale` value here with the global locale value
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
   locale <- resolve_locale(data = data, locale = locale)
 
   # Transform `date_style` to `date_format_str`
@@ -3791,6 +3825,12 @@ fmt_time <- function(
 
   # Declare formatting function compatibility
   compat <- c("Date", "POSIXt", "character")
+
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
+  locale <- resolve_locale(data = data, locale = locale)
 
   # Transform `time_style` to `time_format_str`
   time_format_str <- get_time_format(time_style = time_style)
@@ -4669,6 +4709,12 @@ fmt_datetime <- function(
   # Declare formatting function compatibility
   compat <- c("Date", "POSIXct", "character")
 
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
+  locale <- resolve_locale(data = data, locale = locale)
+
   if (!is.null(format)) {
 
     # Ensure that the format code meets some basic validation requirements
@@ -5009,18 +5055,21 @@ fmt_duration <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer", "difftime")
-
   # Ensure that arguments are matched
   duration_style <- rlang::arg_match(duration_style)
   system <- rlang::arg_match(system)
 
+  # Declare formatting function compatibility
+  compat <- c("numeric", "integer", "difftime")
+
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
+  locale <- resolve_locale(data = data, locale = locale)
+
   # Duration values will never have decimal marks
   dec_mark <- "unused"
-
-  # Resolve the `locale` value here with the global locale value
-  locale <- resolve_locale(data = data, locale = locale)
 
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
