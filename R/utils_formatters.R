@@ -161,7 +161,7 @@ get_locale_idx_set <- function(locale = NULL) {
     return(LETTERS)
   }
 
-  LETTERS
+  locales[locales$locale == locale, ][["chr_index"]][[1]]
 }
 
 #' Resolve the locale in functions with a `locale` argument
