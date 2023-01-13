@@ -2899,17 +2899,40 @@ fmt_roman <- function(
 #'
 #' @section Examples:
 #'
-#' Create a tibble of small numeric values and generate a **gt** table. Format
-#' the `idx` column to appear as index characters with `fmt_index()`.
+#' Use the [`towny`] dataset to create a **gt** table. After some summarizing
+#' and filtering, the `fmt_index()` function is used to transform incremental
+#' integer values into capitalized letters (in the `ranking` column). That
+#' formatted column of `"A"` to `"E"` values is merged with the `census_div`
+#' column to create an indexed listing of census subdivisions, here ordered by
+#' increasing total municipal population.
 #'
 #' ```r
-#' dplyr::tibble(num = c(1, 8, 24, 85), idx = num) |>
-#'   gt(rowname_col = "num") |>
-#'   fmt_index(columns = idx)
+#' towny |>
+#'   dplyr::select(name, csd_type, census_div, population_2021) |>
+#'   dplyr::group_by(census_div) |>
+#'   dplyr::summarize(
+#'     population = sum(population_2021),
+#'     .groups = "drop_last"
+#'   ) |>
+#'   dplyr::arrange(population) |>
+#'   dplyr::slice_head(n = 5) |>
+#'   dplyr::mutate(ranking = dplyr::row_number()) |>
+#'   dplyr::select(ranking, dplyr::everything()) |>
+#'   gt() |>
+#'   fmt_integer() |>
+#'   fmt_index(columns = ranking, pattern = "{x}.") |>
+#'   cols_merge(columns = c(ranking, census_div)) |>
+#'   cols_align(align = "left", columns = ranking) |>
+#'   cols_label(
+#'     ranking = md("Census  \nSubdivision"),
+#'     population = md("Population  \nin 2021")
+#'   ) |>
+#'   tab_header(title = md("The smallest  \ncensus subdivisions")) |>
+#'   tab_options(table.width = px(325))
 #' ```
 #'
 #' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_fmt_roman_1.png")`
+#' `r man_get_image_tag(file = "man_fmt_index_1.png")`
 #' }}
 #'
 #' @family data formatting functions
