@@ -275,8 +275,12 @@ correspond to thousand, lakh, crore, and higher quantities.</p></dd>
 
 
 <dt>locale</dt>
-<dd><p>An optional locale ID that can be used for formatting values
-according to the locale's rules.</p></dd>
+<dd><p>An optional locale identifier that can be used for formatting
+the value according the locale's rules. Examples include <code>"en"</code> for English
+(United States) and <code>"fr"</code> for French (France). The use of a locale ID will
+override any locale-specific values provided. We can use the
+<code><a href="info_locales.html">info_locales()</a></code> function as a useful reference for all of the locales that
+are supported.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -387,6 +391,7 @@ format the <code>b</code> column as <em>per mille</em> values with <code>fmt_par
 <code><a href="fmt_duration.html">fmt_duration</a>()</code>,
 <code><a href="fmt_engineering.html">fmt_engineering</a>()</code>,
 <code><a href="fmt_fraction.html">fmt_fraction</a>()</code>,
+<code><a href="fmt_index.html">fmt_index</a>()</code>,
 <code><a href="fmt_integer.html">fmt_integer</a>()</code>,
 <code><a href="fmt_markdown.html">fmt_markdown</a>()</code>,
 <code><a href="fmt_number.html">fmt_number</a>()</code>,

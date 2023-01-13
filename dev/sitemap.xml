@@ -205,6 +205,9 @@
     <loc>https://gt.rstudio.com/dev/reference/fmt_fraction.html</loc>
   </url>
   <url>
+    <loc>https://gt.rstudio.com/dev/reference/fmt_index.html</loc>
+  </url>
+  <url>
     <loc>https://gt.rstudio.com/dev/reference/fmt_integer.html</loc>
   </url>
   <url>
@@ -476,6 +479,9 @@
   </url>
   <url>
     <loc>https://gt.rstudio.com/dev/reference/vec_fmt_fraction.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/vec_fmt_index.html</loc>
   </url>
   <url>
     <loc>https://gt.rstudio.com/dev/reference/vec_fmt_integer.html</loc>
