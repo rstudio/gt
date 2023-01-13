@@ -82,8 +82,12 @@ display a minus sign.}
 \item{incl_space}{An option for whether to include a space between the value
 and the units. The default of \code{TRUE} uses a space character for separation.}
 
-\item{locale}{An optional locale ID that can be used for formatting values
-according to the locale's rules.}
+\item{locale}{An optional locale identifier that can be used for formatting
+the value according the locale's rules. Examples include \code{"en"} for English
+(United States) and \code{"fr"} for French (France). The use of a locale ID will
+override any locale-specific values provided. We can use the
+\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
+are supported.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -213,7 +217,7 @@ byte sizes as binary values.
 
 \section{Function ID}{
 
-3-10
+3-11
 }
 
 \seealso{
@@ -228,6 +232,7 @@ Other data formatting functions:
 \code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},

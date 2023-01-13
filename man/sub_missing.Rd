@@ -108,7 +108,7 @@ columns will be given replacement text with two calls of \code{sub_missing()}.
 
 \section{Function ID}{
 
-3-19
+3-20
 }
 
 \seealso{
@@ -122,6 +122,7 @@ Other data formatting functions:
 \code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},

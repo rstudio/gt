@@ -49,8 +49,8 @@ table ID can be used with any single-length character vector.}
 
 \item{locale}{An optional locale ID that can be set as the default locale for
 all functions that take a \code{locale} argument. Examples of valid locales
-include \code{"en_US"} for English (United States) and \code{"fr_FR"} for French
-(France). Refer to the information provided by the \code{\link[=info_locales]{info_locales()}} to
+include \code{"en"} for English (United States) and \code{"fr"} for French (France).
+Refer to the information provided by the \code{\link[=info_locales]{info_locales()}} function to
 determine which locales are supported.}
 
 \item{row_group.sep}{The separator to use between consecutive group names (a

@@ -1538,8 +1538,7 @@ tidy_grepl <- function(x, pattern) {
 #' Create a vector of marks to use for footnotes
 #'
 #' @noRd
-process_footnote_marks <- function(x,
-                                   marks) {
+process_footnote_marks <- function(x, marks) {
 
   if (identical(marks, "numbers")) {
     return(as.character(x))

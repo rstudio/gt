@@ -422,54 +422,69 @@ info_locales <- function(begins_with = NULL) {
 
   if (!is.null(begins_with)) {
 
-    starting <-
-      substr(begins_with, 1, 1) %>%
-      tolower()
-
-    loc <-
-      locales %>%
-      dplyr::filter(grepl(paste0("^", starting, ".*"), base_locale_id))
+    starting <- tolower(substr(begins_with, 1, 1))
+    loc <- dplyr::filter(locales, grepl(paste0("^", starting, ".*"), locale))
 
   } else {
     loc <- locales
   }
 
   tab_1 <-
-    loc %>%
     dplyr::select(
-      base_locale_id, display_name, group_sep, dec_sep) %>%
-    dplyr::mutate(value = 11027) %>%
-    gt()
+      loc, locale, lang_desc, script_desc,
+      territory_desc, variant_desc, group, decimal
+    )
+  tab_1 <-
+    dplyr::mutate(
+      tab_1,
+      display_name = paste0(
+        lang_desc,
+          paste0(
+            " (",
+            territory_desc, ", ",
+            script_desc, ", ",
+            variant_desc,
+            ")"
+          )
+      )
+    )
+  tab_1 <- dplyr::select(tab_1, locale, display_name, group, decimal)
+  tab_1 <- dplyr::mutate(tab_1, display_name = gsub(" (NA, NA, NA)", "", display_name, fixed = TRUE))
+  tab_1 <- dplyr::mutate(tab_1, display_name = gsub(", NA, NA", "", display_name, fixed = TRUE))
+  tab_1 <- dplyr::mutate(tab_1, display_name = gsub("NA, ", "", display_name, fixed = TRUE))
+  tab_1 <- dplyr::mutate(tab_1, display_name = gsub(", NA)", ")", display_name, fixed = TRUE))
+  tab_1 <- dplyr::mutate(tab_1, value = 11027)
+  tab_1 <- gt(tab_1)
 
-  for (i in seq(nrow(loc))) {
+  for (i in seq_len(nrow(loc))) {
 
     tab_1 <-
-      tab_1 %>%
       fmt_number(
+        tab_1,
         columns = "value",
         rows = i,
-        locale = loc$base_locale_id[i]
+        locale = loc$locale[i]
       )
   }
 
   tab_1 %>%
     tab_spanner(
       label = "Separators",
-      columns = c("group_sep", "dec_sep")
+      columns = c("group", "decimal")
     ) %>%
     cols_merge(
-      columns = c("base_locale_id", "display_name"),
+      columns = c("locale", "display_name"),
       pattern = "<code>{1}</code><br><span style=font-size:11px>{2}</span>"
     ) %>%
     cols_label(
-      base_locale_id = "Locale",
-      group_sep = "Group",
-      dec_sep = "Decimal",
+      locale = "Locale",
+      group = "Group",
+      decimal = "Decimal",
       value = html("Formatted<br>Value")
     ) %>%
     cols_align(
       align = "center",
-      columns = c("group_sep", "dec_sep")
+      columns = c("group", "decimal")
     ) %>%
     tab_header(
       title = md("Locales Supported in **gt**"),
@@ -484,7 +499,7 @@ info_locales <- function(begins_with = NULL) {
     ) %>%
     tab_style(
       style = cell_text(size = px(32)),
-      locations = cells_body(columns = c(group_sep, dec_sep))
+      locations = cells_body(columns = c(group, decimal))
     ) %>%
     tab_options(data_row.padding = "5px")
 }

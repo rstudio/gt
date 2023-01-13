@@ -128,7 +128,7 @@ then, create a \strong{gt} table and format all columns with \code{fmt_markdown(
 
 \section{Function ID}{
 
-3-15
+3-16
 }
 
 \seealso{
@@ -145,6 +145,7 @@ Other data formatting functions:
 \code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_number}()},
 \code{\link{fmt_partsper}()},

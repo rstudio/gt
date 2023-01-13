@@ -34,6 +34,7 @@ tests/testthat/test-fmt_datetime.R
 tests/testthat/test-fmt_duration.R
 tests/testthat/test-fmt_engineering.R
 tests/testthat/test-fmt_fraction.R
+tests/testthat/test-fmt_index.R
 tests/testthat/test-fmt_integer.R
 tests/testthat/test-fmt_markdown.R
 tests/testthat/test-fmt_number.R
