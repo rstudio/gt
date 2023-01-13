@@ -115,16 +115,39 @@ more complex predicate expression.
 \section{Examples}{
 
 
-Create a tibble of small numeric values and generate a \strong{gt} table. Format
-the \code{idx} column to appear as index characters with \code{fmt_index()}.
+Use the \code{\link{towny}} dataset to create a \strong{gt} table. After some summarizing
+and filtering, the \code{fmt_index()} function is used to transform incremental
+integer values into capitalized letters (in the \code{ranking} column). That
+formatted column of \code{"A"} to \code{"E"} values is merged with the \code{census_div}
+column to create an indexed listing of census subdivisions, here ordered by
+increasing total municipal population.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(num = c(1, 8, 24, 85), idx = num) |>
-  gt(rowname_col = "num") |>
-  fmt_index(columns = idx)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
+  dplyr::select(name, csd_type, census_div, population_2021) |>
+  dplyr::group_by(census_div) |>
+  dplyr::summarize(
+    population = sum(population_2021),
+    .groups = "drop_last"
+  ) |>
+  dplyr::arrange(population) |>
+  dplyr::slice_head(n = 5) |>
+  dplyr::mutate(ranking = dplyr::row_number()) |>
+  dplyr::select(ranking, dplyr::everything()) |>
+  gt() |>
+  fmt_integer() |>
+  fmt_index(columns = ranking, pattern = "\{x\}.") |>
+  cols_merge(columns = c(ranking, census_div)) |>
+  cols_align(align = "left", columns = ranking) |>
+  cols_label(
+    ranking = md("Census  \\nSubdivision"),
+    population = md("Population  \\nin 2021")
+  ) |>
+  tab_header(title = md("The smallest  \\ncensus subdivisions")) |>
+  tab_options(table.width = px(325))
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_roman_1.png" alt="This image of a table was generated from the first code example in the `fmt_roman()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_index_1.png" alt="This image of a table was generated from the first code example in the `fmt_index()` help file." style="width:100\%;">
 }}
 }
 
