@@ -12,8 +12,8 @@
 #' @format A tibble with 13,330 rows and 5 variables:
 #' \describe{
 #' \item{country_name}{The name of the country.}
-#' \item{country_code_2}{The 2-letter ISO 3166-1 country code.}
-#' \item{country_code_3}{The 3-letter ISO 3166-1 country code.}
+#' \item{country_code_2, country_code_3}{The 2- and 3-letter ISO 3166-1 country
+#' codes.}
 #' \item{year}{The year for the population estimate.}
 #' \item{population}{The population estimate, midway through the year.}
 #' }
