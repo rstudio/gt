@@ -5,7 +5,7 @@
 \alias{countrypops}
 \title{Yearly populations of countries from 1960 to 2017}
 \format{
-A tibble with 12,470 rows and 5 variables:
+A tibble with 13,330 rows and 5 variables:
 \describe{
 \item{country_name}{The name of the country.}
 \item{country_code_2}{The 2-letter ISO 3166-1 country code.}
@@ -25,8 +25,8 @@ A dataset that presents yearly, total populations of countries. Total
 population is based on counts of all residents regardless of legal status or
 citizenship. Country identifiers include the English-language country names,
 and the 2- and 3-letter ISO 3166-1 country codes. Each row contains a
-\code{population} value for a given \code{year} (from 1960 to 2017). Any \code{NA} values
-for \code{populations} indicate the non-existence of the country during that year.
+\code{population} value for a given \code{year} (from 1960 to 2021). Any \code{NA} values
+for \code{populations} indicate the non-existence of the entity during that year.
 }
 \section{Examples}{
 
@@ -34,13 +34,13 @@ for \code{populations} indicate the non-existence of the country during that yea
 Here is a glimpse at the data available in \code{countrypops}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::glimpse(countrypops)
-#> Rows: 12,470
+#> Rows: 13,330
 #> Columns: 5
 #> $ country_name   <chr> "Aruba", "Aruba", "Aruba", "Aruba", "Aruba", "Aruba", "~
 #> $ country_code_2 <chr> "AW", "AW", "AW", "AW", "AW", "AW", "AW", "AW", "AW", "~
 #> $ country_code_3 <chr> "ABW", "ABW", "ABW", "ABW", "ABW", "ABW", "ABW", "ABW",~
 #> $ year           <int> 1960, 1961, 1962, 1963, 1964, 1965, 1966, 1967, 1968, 1~
-#> $ population     <int> 54211, 55438, 56225, 56695, 57032, 57360, 57715, 58055,~
+#> $ population     <int> 54608, 55811, 56682, 57475, 58178, 58782, 59291, 59522,~
 }\if{html}{\out{</div>}}
 }
 
