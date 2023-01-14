@@ -125,7 +125,7 @@ instead of scientific notation with the \code{lg_num_pref = "suf"} option.
   dplyr::filter(country_code_3 \%in\% c("CHN", "IND", "USA", "PAK", "IDN")) |>
   dplyr::filter(year > 1975 & year \%\% 5 == 0) |>
   tidyr::spread(year, population) |>
-  dplyr::arrange(desc(`2015`)) |>
+  dplyr::arrange(desc(`2020`)) |>
   gt(rowname_col = "country_code_3") |>
   fmt_auto(lg_num_pref = "suf")
 }\if{html}{\out{</div>}}
