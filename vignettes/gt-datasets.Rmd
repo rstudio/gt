@@ -32,9 +32,9 @@ In the next few examples, we'll show how tables can be created with each of thes
 
 ### `countrypops`
 
-This dataset provides the total populations of 215 countries on a yearly basis, from 1960 to 2017. The source data comes from the [World Bank](https://data.worldbank.org/indicator/SP.POP.TOTL), where it has been cleaned and tidied up for inclusion into this package. Each row contains a population value for a country in a given year, where `NA` values for `population` indicate that the country did not exist in that particular year.
+This dataset provides the total populations of 215 countries on a yearly basis, from 1960 to 2021. The source data comes from the [World Bank](https://data.worldbank.org/indicator/SP.POP.TOTL), where it has been cleaned and tidied up for inclusion into this package. Each row contains a population value for a country in a given year, where `NA` values for `population` indicate that the country did not exist in that particular year.
 
-The `countrypops` dataset is a tibble with 12,470 rows and 5 variables. Here are explanations for each of the variables:
+The `countrypops` dataset is a tibble with 13,330 rows and 5 variables. Here are explanations for each of the variables:
 
 ```{r countrypops_make_data_dictionary, echo=FALSE}
 countrypops_ddtab <-
@@ -71,13 +71,12 @@ The table that we'll create from `countrypops` will meet these requirements:
 
 1. use countries from Oceania
 2. countries in different regions of Oceania will be grouped together
-3. provide populations for the 1995, 2005, and 2015 years only; they should appear as separate columns with a spanner group column stating that these columns refer to population values
+3. provide populations for the 2000, 2010, and 2020 years only; they should appear as separate columns with a spanner group column stating that these columns refer to population values
 4. format population figures to contain commas
 5. provide a descriptive title
 
 ```{r countrypops}
-# Get vectors of 2-letter country codes for
-# each region of Oceania
+# Get vectors of 2-letter country codes for each region of Oceania
 Australasia <- c("AU", "NZ")
 Melanesia <- c("NC", "PG", "SB", "VU")
 Micronesia <- c("FM", "GU", "KI", "MH", "MP", "NR", "PW")
