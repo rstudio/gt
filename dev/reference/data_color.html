@@ -487,7 +487,7 @@ cases). Here, the domain will be set as <code>domain = c(0, 50)</code>.</p>
 <p>We can use any of the <strong>RColorBrewer</strong> and <strong>viridis</strong> palettes. Let's make a
 new <strong>gt</strong> table from a subset of the <code><a href="countrypops.html">countrypops</a></code> dataset. Then, through
 <code>data_color()</code>, we'll apply coloring to the <code>population</code> column with the
-<code>"numeric"</code> method, use a domain between 2.5 and 3.2 million, and specify
+<code>"numeric"</code> method, use a domain between 2.5 and 3.4 million, and specify
 <code>palette = "viridis"</code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">countrypops</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">country_name</span> <span class="op">==</span> <span class="st">"Mongolia"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -498,7 +498,7 @@ new <strong>gt</strong> table from a subset of the <code><a href="countrypops.ht
 <span>    columns <span class="op">=</span> <span class="va">population</span>,</span>
 <span>    method <span class="op">=</span> <span class="st">"numeric"</span>,</span>
 <span>    palette <span class="op">=</span> <span class="st">"viridis"</span>,</span>
-<span>    domain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.5E6</span>, <span class="fl">3.2E6</span><span class="op">)</span></span>
+<span>    domain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.5E6</span>, <span class="fl">3.4E6</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_data_color_4.png" alt="This image of a table was generated from the fourth code example in the `data_color()` help file." style="width:100%;"></p>
 <p>We can alternatively use the <code>fn</code> for supplying the <strong>scales</strong>-based function
@@ -515,7 +515,7 @@ returns the same table as in the previous example.</p>
 <span>    columns <span class="op">=</span> <span class="va">population</span>,</span>
 <span>    fn <span class="op">=</span> <span class="fu">scales</span><span class="fu">::</span><span class="fu"><a href="https://scales.r-lib.org/reference/col_numeric.html" class="external-link">col_numeric</a></span><span class="op">(</span></span>
 <span>      palette <span class="op">=</span> <span class="st">"viridis"</span>,</span>
-<span>      domain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.5E6</span>, <span class="fl">3.2E6</span><span class="op">)</span></span>
+<span>      domain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.5E6</span>, <span class="fl">3.4E6</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_data_color_4.png" alt="This image of a table was generated from the fourth code example in the `data_color()` help file." style="width:100%;"></p>
