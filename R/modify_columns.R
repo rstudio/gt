@@ -741,7 +741,7 @@ cols_label <- function(
 #'
 #' ```r
 #' countrypops |>
-#'   dplyr::filter(year == 2017) |>
+#'   dplyr::filter(year == 2021) |>
 #'   dplyr::filter(grepl("^C", country_code_3)) |>
 #'   dplyr::select(-country_code_2, -year) |>
 #'   head(8) |>
@@ -1261,10 +1261,10 @@ cols_move_to_end <- function(
 #'   gt() |>
 #'   cols_hide(columns = c(country_code_3, population)) |>
 #'   tab_footnote(
-#'     footnote = "Population above 3,000,000.",
+#'     footnote = "Population above 3,200,000.",
 #'     locations = cells_body(
 #'       columns = year,
-#'       rows = population > 3000000
+#'       rows = population > 3200000
 #'     )
 #'   )
 #' ```

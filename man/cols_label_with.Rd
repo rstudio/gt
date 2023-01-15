@@ -80,7 +80,7 @@ the \strong{janitor} package and follow up with the removal of a numeral with
 \code{gsub()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
-  dplyr::filter(year == 2017) |>
+  dplyr::filter(year == 2021) |>
   dplyr::filter(grepl("^C", country_code_3)) |>
   dplyr::select(-country_code_2, -year) |>
   head(8) |>

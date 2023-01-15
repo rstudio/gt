@@ -6,14 +6,14 @@
 #' population is based on counts of all residents regardless of legal status or
 #' citizenship. Country identifiers include the English-language country names,
 #' and the 2- and 3-letter ISO 3166-1 country codes. Each row contains a
-#' `population` value for a given `year` (from 1960 to 2017). Any `NA` values
-#' for `populations` indicate the non-existence of the country during that year.
+#' `population` value for a given `year` (from 1960 to 2021). Any `NA` values
+#' for `populations` indicate the non-existence of the entity during that year.
 #'
-#' @format A tibble with 12,470 rows and 5 variables:
+#' @format A tibble with 13,330 rows and 5 variables:
 #' \describe{
 #' \item{country_name}{The name of the country.}
-#' \item{country_code_2}{The 2-letter ISO 3166-1 country code.}
-#' \item{country_code_3}{The 3-letter ISO 3166-1 country code.}
+#' \item{country_code_2, country_code_3}{The 2- and 3-letter ISO 3166-1 country
+#' codes.}
 #' \item{year}{The year for the population estimate.}
 #' \item{population}{The population estimate, midway through the year.}
 #' }

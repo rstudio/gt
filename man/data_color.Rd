@@ -364,7 +364,7 @@ cases). Here, the domain will be set as \code{domain = c(0, 50)}.
 We can use any of the \strong{RColorBrewer} and \strong{viridis} palettes. Let's make a
 new \strong{gt} table from a subset of the \code{\link{countrypops}} dataset. Then, through
 \code{data_color()}, we'll apply coloring to the \code{population} column with the
-\code{"numeric"} method, use a domain between 2.5 and 3.2 million, and specify
+\code{"numeric"} method, use a domain between 2.5 and 3.4 million, and specify
 \code{palette = "viridis"}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
@@ -376,7 +376,7 @@ new \strong{gt} table from a subset of the \code{\link{countrypops}} dataset. Th
     columns = population,
     method = "numeric",
     palette = "viridis",
-    domain = c(2.5E6, 3.2E6)
+    domain = c(2.5E6, 3.4E6)
   )
 }\if{html}{\out{</div>}}
 
@@ -399,7 +399,7 @@ returns the same table as in the previous example.
     columns = population,
     fn = scales::col_numeric(
       palette = "viridis",
-      domain = c(2.5E6, 3.2E6)
+      domain = c(2.5E6, 3.4E6)
     )
   )
 }\if{html}{\out{</div>}}
