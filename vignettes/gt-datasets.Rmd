@@ -88,7 +88,7 @@ countrypops %>%
   filter(country_code_2 %in% c(
     Australasia, Melanesia, Micronesia, Polynesia)
   ) %>%
-  filter(year %in% c(1995, 2005, 2015)) %>%
+  filter(year %in% c(2000, 2010, 2020)) %>%
   mutate(region = case_when(
     country_code_2 %in% Australasia ~ "Australasia",
     country_code_2 %in% Melanesia ~ "Melanesia",
@@ -96,22 +96,18 @@ countrypops %>%
     country_code_2 %in% Polynesia ~ "Polynesia",
   )) %>%
   pivot_wider(names_from = year, values_from = population) %>%
-  arrange(region, desc(`2015`)) %>%
+  arrange(region, desc(`2020`)) %>%
   select(-starts_with("country_code")) %>%
   gt(
     rowname_col = "country_name",
     groupname_col = "region"
   ) %>%
-  tab_header(title = "Populations of Oceania's Countries in 1995, 2005, and 2015") %>%
+  tab_header(title = "Populations of Oceania's Countries in 2000, 2010, and 2020") %>%
   tab_spanner(
     label = "Total Population",
-    columns = c(`1995`, `2005`, `2015`)
+    columns = everything()
   ) %>%
-  fmt_number(
-    columns = c(`1995`, `2005`, `2015`),
-    decimals = 0,
-    use_seps = TRUE
-  )
+  fmt_integer()
 ```
 
 ### `sza`
