@@ -420,6 +420,9 @@ info_currencies <- function(
 #' @export
 info_locales <- function(begins_with = NULL) {
 
+  locale <- lang_desc <- script_desc <- territory_desc <- NULL
+  variant_desc <- group <- decimal <- NULL
+
   if (!is.null(begins_with)) {
 
     starting <- tolower(substr(begins_with, 1, 1))
