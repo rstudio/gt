@@ -3,7 +3,7 @@
 \docType{data}
 \name{countrypops}
 \alias{countrypops}
-\title{Yearly populations of countries from 1960 to 2017}
+\title{Yearly populations of countries from 1960 to 2021}
 \format{
 A tibble with 13,330 rows and 5 variables:
 \describe{

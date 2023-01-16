@@ -1,4 +1,4 @@
-#' Yearly populations of countries from 1960 to 2017
+#' Yearly populations of countries from 1960 to 2021
 #'
 #' @description
 #'
