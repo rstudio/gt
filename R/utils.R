@@ -552,16 +552,26 @@ unescape_html <- function(text) {
 #' @noRd
 md_to_html <- function(x) {
 
-  non_na_x <-
-    vapply(
-      as.character(x[!is.na(x)]),
-      FUN.VALUE = character(1),
-      USE.NAMES = FALSE,
-      FUN = commonmark::markdown_html
-    )
+  if (!check_quarto()) {
 
-  non_na_x <- tidy_gsub(non_na_x, "^", "<div class='gt_from_md'>")
-  non_na_x <- tidy_gsub(non_na_x, "$", "</div>")
+    non_na_x <-
+      vapply(
+        as.character(x[!is.na(x)]),
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = commonmark::markdown_html
+      )
+
+    non_na_x <- tidy_gsub(non_na_x, "^", "<div class='gt_from_md'>")
+    non_na_x <- tidy_gsub(non_na_x, "$", "</div>")
+
+  } else {
+
+    non_na_x <- x[!is.na(x)]
+
+    non_na_x <- tidy_gsub(non_na_x, "^", "<span data-qmd=\"")
+    non_na_x <- tidy_gsub(non_na_x, "$", "\"></span>")
+  }
 
   x[!is.na(x)] <- non_na_x
   x
