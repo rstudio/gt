@@ -20,7 +20,7 @@ quarto_api_send <- function(message, ...) {
 }
 
 check_quarto <- function() {
-  Sys.getenv("QUARTO_MESSAGES_FILE") != ""
+  Sys.getenv("QUARTO_ROOT") != ""
 }
 
 check_knitr <- function() {
