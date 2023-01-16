@@ -62,8 +62,12 @@ with \code{\link[=OlsonNames]{OlsonNames()}}).}
 formatted value. The value itself is represented by \code{{x}} and all other
 characters are taken to be string literals.}
 
-\item{locale}{An optional locale ID that can be used for formatting values
-according to the locale's rules.}
+\item{locale}{An optional locale identifier that can be used for formatting
+the value according the locale's rules. Examples include \code{"en"} for English
+(United States) and \code{"fr"} for French (France). The use of a locale ID will
+override any locale-specific values provided. We can use the
+\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
+are supported.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -895,7 +899,7 @@ zone formatting. Let's provide a time zone ID (\code{"America/Vancouver"}) to th
 
 \section{Function ID}{
 
-3-13
+3-14
 }
 
 \seealso{
@@ -911,6 +915,7 @@ Other data formatting functions:
 \code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},

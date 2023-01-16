@@ -308,7 +308,7 @@
 #' We can use any of the **RColorBrewer** and **viridis** palettes. Let's make a
 #' new **gt** table from a subset of the [`countrypops`] dataset. Then, through
 #' `data_color()`, we'll apply coloring to the `population` column with the
-#' `"numeric"` method, use a domain between 2.5 and 3.2 million, and specify
+#' `"numeric"` method, use a domain between 2.5 and 3.4 million, and specify
 #' `palette = "viridis"`.
 #'
 #' ```r
@@ -321,7 +321,7 @@
 #'     columns = population,
 #'     method = "numeric",
 #'     palette = "viridis",
-#'     domain = c(2.5E6, 3.2E6)
+#'     domain = c(2.5E6, 3.4E6)
 #'   )
 #' ```
 #'
@@ -345,7 +345,7 @@
 #'     columns = population,
 #'     fn = scales::col_numeric(
 #'       palette = "viridis",
-#'       domain = c(2.5E6, 3.2E6)
+#'       domain = c(2.5E6, 3.4E6)
 #'     )
 #'   )
 #' ```
@@ -511,7 +511,7 @@
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-25
+#' 3-26
 #'
 #' @import rlang
 #' @export

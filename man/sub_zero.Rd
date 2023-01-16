@@ -115,7 +115,7 @@ single call of \code{sub_zero()}.
 
 \section{Function ID}{
 
-3-20
+3-21
 }
 
 \seealso{
@@ -129,6 +129,7 @@ Other data formatting functions:
 \code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},

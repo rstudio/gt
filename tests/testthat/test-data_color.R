@@ -582,8 +582,8 @@ test_that("The correct color values are obtained when defining a palette", {
     gsub("(background-color: |; color: .*)", "", .) %>%
     expect_equal(
       c(
-        "#808080", "#FF0000", "#FF5700", "#FF8400", "#F6AE00", "#BED500",
-        "#5FF600", "#72C477", "#7773C1", "#0000FF"
+        "#808080", "#FF0000", "#FF5A00", "#FF8700", "#F3B000",
+        "#BBD700", "#57F800", "#76BC80", "#746BC7", "#0000FF"
       )
     )
 })
@@ -1033,9 +1033,9 @@ test_that("Columns can indirectly apply coloring to other columns", {
   tbl_gt_1 <-
     cp_gt_tbl %>%
     data_color(
-      columns = `2008`,
-      target_columns = `2017`,
-      domain = c(2620000, 3100000),
+      columns = `2012`,
+      target_columns = `2021`,
+      domain = c(2700000, 3400000),
       palette = c("green", "black")
     )
 
@@ -1046,9 +1046,9 @@ test_that("Columns can indirectly apply coloring to other columns", {
   tbl_gt_2 <-
     cp_gt_tbl %>%
     data_color(
-      columns = `2008`,
-      target_columns = c(`2015`, `2016`, `2017`),
-      domain = c(2620000, 3100000),
+      columns = `2012`,
+      target_columns = c(`2019`, `2020`, `2021`),
+      domain = c(2700000, 3400000),
       palette = c("green", "black")
     )
 
@@ -1060,9 +1060,9 @@ test_that("Columns can indirectly apply coloring to other columns", {
   tbl_gt_3 <-
     cp_gt_tbl %>%
     data_color(
-      columns = c(`2008`, `2011`, `2013`),
-      target_columns = c(`2015`, `2016`, `2017`),
-      domain = c(2620000, 3100000),
+      columns = c(`2012`, `2013`, `2014`),
+      target_columns = c(`2019`, `2020`, `2021`),
+      domain = c(2700000, 3400000),
       palette = c("green", "black")
     )
 
@@ -1074,9 +1074,9 @@ test_that("Columns can indirectly apply coloring to other columns", {
   tbl_gt_4 <-
     cp_gt_tbl %>%
     data_color(
-      columns = c(`2008`, `2011`, `2013`),
-      target_columns = c(`2015`, `2016`, `2017`),
-      domain = c(2620000, 3100000),
+      columns = c(`2012`, `2013`, `2014`),
+      target_columns = c(`2019`, `2020`, `2021`),
+      domain = c(2700000, 3400000),
       palette = c("green", "black"),
       reverse = TRUE
     )

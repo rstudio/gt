@@ -62,10 +62,10 @@ statements has no effect.
   gt() |>
   cols_hide(columns = c(country_code_3, population)) |>
   tab_footnote(
-    footnote = "Population above 3,000,000.",
+    footnote = "Population above 3,200,000.",
     locations = cells_body(
       columns = year,
-      rows = population > 3000000
+      rows = population > 3200000
     )
   )
 }\if{html}{\out{</div>}}

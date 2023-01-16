@@ -12,8 +12,8 @@ source("data-raw/X09-styles_colors_params.R")
 
 # Create internal datasets (`sysdata.rda`)
 usethis::use_data(
-  currencies, currency_symbols, locales, palettes_strips,
-  google_font_tbl, google_styles_tbl, google_axes_tbl,
+  currencies, currency_symbols, locales, default_locales,
+  palettes_strips, google_font_tbl, google_styles_tbl, google_axes_tbl,
   css_colors, fractions, durations, styles_colors_params,
   internal = TRUE, overwrite = TRUE
 )

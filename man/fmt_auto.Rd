@@ -39,8 +39,12 @@ be reduced to a single type of value to format.}
 small and very large values (\code{"sci"}, the default option), or, suffixed
 numbers (\code{"suf"}, for large values only).}
 
-\item{locale}{An optional locale ID that can be used for formatting values
-according to the locale's rules.}
+\item{locale}{An optional locale identifier that can be used for formatting
+the value according the locale's rules. Examples include \code{"en"} for English
+(United States) and \code{"fr"} for French (France). The use of a locale ID will
+override any locale-specific values provided. We can use the
+\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
+are supported.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -121,7 +125,7 @@ instead of scientific notation with the \code{lg_num_pref = "suf"} option.
   dplyr::filter(country_code_3 \%in\% c("CHN", "IND", "USA", "PAK", "IDN")) |>
   dplyr::filter(year > 1975 & year \%\% 5 == 0) |>
   tidyr::spread(year, population) |>
-  dplyr::arrange(desc(`2015`)) |>
+  dplyr::arrange(desc(`2020`)) |>
   gt(rowname_col = "country_code_3") |>
   fmt_auto(lg_num_pref = "suf")
 }\if{html}{\out{</div>}}
@@ -133,7 +137,7 @@ instead of scientific notation with the \code{lg_num_pref = "suf"} option.
 
 \section{Function ID}{
 
-3-17
+3-18
 }
 
 \seealso{
@@ -146,6 +150,7 @@ Other data formatting functions:
 \code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},

@@ -28,6 +28,24 @@ filter_table_to_value <- function(
   dplyr::pull(filtered_tbl, !!column_enquo)
 }
 
+normalize_locale <- function(locale = NULL) {
+
+  # Return NULL if the locale isn't specified
+  if (is.null(locale)) {
+    return(NULL)
+  }
+
+  # Normalize any underscores to hyphens
+  locale <- gsub("_", "-", locale)
+
+  # Resolve any default locales into their base names (e.g., 'en-US' -> 'en')
+  if (locale %in% default_locales$default_locale) {
+    locale <- default_locales[default_locales$default_locale == locale, ][["base_locale"]]
+  }
+
+  locale
+}
+
 #' Validate the user-supplied `locale` value
 #'
 #' @param locale The user-supplied `locale` value, found in several `fmt_*()`
@@ -37,7 +55,11 @@ validate_locale <- function(locale) {
 
   # Stop function if the `locale` provided
   # isn't a valid one
-  if (!is.null(locale) && !(locale %in% locales$base_locale_id)) {
+  if (
+    !is.null(locale) &&
+    !(gsub("_", "-", locale) %in% locales[["locale"]]) &&
+    !(gsub("_", "-", locale) %in% default_locales[["default_locale"]])
+  ) {
 
     cli::cli_abort(c(
       "The supplied `locale` is not available in the list of supported locales.",
@@ -90,27 +112,22 @@ get_locale_sep_mark <- function(
     use_seps
 ) {
 
-  # If `use_seps` is FALSE, then force
-  # `sep_mark` to be an empty string
+  # If `use_seps` is FALSE, then force `sep_mark` to be an empty string
   if (!use_seps) {
     return("")
   }
 
-  # If `locale` is NULL then return the
-  # default `sep_mark`
+  # If `locale` is NULL then return the default `sep_mark`
   if (is.null(locale)) {
     return(default)
   }
 
-  # Get the correct `group_sep` value from the
-  # `gt:::locales` lookup table
-  sep_mark <-
-    filter_table_to_value(locales, group_sep, base_locale_id == locale)
+  # Get the correct `group_sep` value from the `gt:::locales` lookup table
+  sep_mark <- filter_table_to_value(locales, group, locale == {{ locale }})
 
-  # TODO: Modify `locales` table to replace `""` with
-  # `" "` in `group_sep` column; once that is done, the
-  # below statement can be safely removed
-  if (sep_mark == "") sep_mark <- " "
+  # Replace any `""` or "\u00a0" with `" "` since an empty string actually
+  # signifies a space character, and, we want to normalize to a simple space
+  if (sep_mark == "" || sep_mark == "\u00a0") sep_mark <- " "
 
   sep_mark
 }
@@ -123,15 +140,28 @@ get_locale_sep_mark <- function(
 #' @noRd
 get_locale_dec_mark <- function(locale = NULL, default) {
 
-  # If `locale` is NULL then return the
-  # default `dec_mark`
+  # If `locale` is NULL then return the default `dec_mark`
   if (is.null(locale)) {
     return(default)
   }
 
-  # Get the correct `dec_sep` value from the
-  # `gt:::locales` lookup table
-  filter_table_to_value(locales, dec_sep, base_locale_id == locale)
+  # Get the correct `decimal` value from the `gt:::locales` lookup table
+  filter_table_to_value(locales, decimal, locale == {{ locale }})
+}
+
+#' Get the `idx_set` vector based on a locale
+#'
+#' @param locale The user-supplied `locale` value, found in several `fmt_*()`
+#'   functions. This is expected as `NULL` if not supplied by the user.
+#' @noRd
+get_locale_idx_set <- function(locale = NULL) {
+
+  # If `locale` is NULL then return `LETTERS`
+  if (is.null(locale)) {
+    return(LETTERS)
+  }
+
+  locales[locales$locale == locale, ][["chr_index"]][[1]]
 }
 
 #' Resolve the locale in functions with a `locale` argument
@@ -151,6 +181,8 @@ resolve_locale <- function(data, locale) {
   if (is.null(locale)) {
     locale <- dt_locale_get_value(data = data)
   }
+
+  locale <- normalize_locale(locale = locale)
 
   validate_locale(locale = locale)
 

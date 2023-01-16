@@ -4,17 +4,15 @@ test_that("the `filter_table_to_value()` function works correctly", {
   # `filter_table_to_value()` will return a single value
   # so long as the filtering expressions are well chosen
   expect_equal(
-    locales %>%
-      filter_table_to_value(lang, base_locale_id == "en_US"),
-    "en"
+    locales %>% filter_table_to_value(lang_name, locale == "ar-AE"),
+    "ar"
   )
 
   # Expect an error with `filter_table_to_value()` if the
   # chosen filtering expressions result in a number of
   # returned rows not equal to 1
   expect_error(
-    locales %>%
-      filter_table_to_value(base_locale_id, lang == "en")
+    locales %>% filter_table_to_value(lang_desc, lang_name == "en")
   )
 })
 
@@ -49,17 +47,17 @@ test_that("the `get_locale_sep_mark()` function works correctly", {
   # Expect the correct `sep_mark` values for a range of locales
   expect_equal(
     c(
-      get_locale_sep_mark(locale = "fr_CF",  default = ",", use_seps = TRUE),
-      get_locale_sep_mark(locale = "en_JE",  default = ",", use_seps = TRUE),
-      get_locale_sep_mark(locale = "en_KY",  default = ",", use_seps = TRUE),
-      get_locale_sep_mark(locale = "ln_CF",  default = ",", use_seps = TRUE),
-      get_locale_sep_mark(locale = "en_MO",  default = ",", use_seps = TRUE),
-      get_locale_sep_mark(locale = "teo_UG", default = ",", use_seps = TRUE),
-      get_locale_sep_mark(locale = "en_IL",  default = ",", use_seps = TRUE),
-      get_locale_sep_mark(locale = "pt_PT",  default = ",", use_seps = TRUE),
-      get_locale_sep_mark(locale = "en_DE",  default = ",", use_seps = TRUE)
+      get_locale_sep_mark(locale = "fr-CF",  default = ",", use_seps = TRUE),
+      get_locale_sep_mark(locale = "en-JE",  default = ",", use_seps = TRUE),
+      get_locale_sep_mark(locale = "en-KY",  default = ",", use_seps = TRUE),
+      get_locale_sep_mark(locale = "ln-CF",  default = ",", use_seps = TRUE),
+      get_locale_sep_mark(locale = "en-MO",  default = ",", use_seps = TRUE),
+      get_locale_sep_mark(locale = "teo-KE", default = ",", use_seps = TRUE),
+      get_locale_sep_mark(locale = "en-IL",  default = ",", use_seps = TRUE),
+      get_locale_sep_mark(locale = "pt",  default = ",", use_seps = TRUE),
+      get_locale_sep_mark(locale = "en-DE",  default = ",", use_seps = TRUE)
     ),
-    c(" ", ",", ",", ".", ",", ",", ",", " ", ".")
+    c(" ", ",", ",", ".", ",", ",", ",", ".", ".")
   )
 })
 
@@ -85,15 +83,15 @@ test_that("the `get_locale_dec_mark()` function works correctly", {
   # Expect the correct `dec_mark` values for a range of locales
   expect_equal(
     c(
-      get_locale_dec_mark(locale = "fr_CF",  default = "."),
-      get_locale_dec_mark(locale = "en_JE",  default = "."),
-      get_locale_dec_mark(locale = "en_KY",  default = "."),
-      get_locale_dec_mark(locale = "ln_CF",  default = "."),
-      get_locale_dec_mark(locale = "en_MO",  default = "."),
-      get_locale_dec_mark(locale = "teo_UG", default = "."),
-      get_locale_dec_mark(locale = "en_IL",  default = "."),
-      get_locale_dec_mark(locale = "pt_PT",  default = "."),
-      get_locale_dec_mark(locale = "en_DE",  default = ".")
+      get_locale_dec_mark(locale = "fr-CF",  default = "."),
+      get_locale_dec_mark(locale = "en-JE",  default = "."),
+      get_locale_dec_mark(locale = "en-KY",  default = "."),
+      get_locale_dec_mark(locale = "ln-CF",  default = "."),
+      get_locale_dec_mark(locale = "en-MO",  default = "."),
+      get_locale_dec_mark(locale = "teo-KE", default = "."),
+      get_locale_dec_mark(locale = "en-IL",  default = "."),
+      get_locale_dec_mark(locale = "pt",  default = "."),
+      get_locale_dec_mark(locale = "en-DE",  default = ".")
     ),
     c(",", ".", ".", ",", ".", ".", ".", ",", ",")
   )

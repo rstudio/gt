@@ -817,9 +817,9 @@ test_that("Default locale settings are honored by formatting functions", {
   (exibble_1 %>% gt() %>% fmt_number(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
     expect_equal("777,000.00")
   (exibble_1 %>% gt(locale = "fr") %>% fmt_number(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
-    expect_equal("777 000,00")
+    expect_equal("777 000,00")
   (exibble_1 %>% gt(locale = "en") %>% fmt_number(num, locale = "fr") %>% render_formats_test(context = "plain"))[["num"]] %>%
-    expect_equal("777 000,00")
+    expect_equal("777 000,00")
   (exibble_1 %>% gt(locale = "fr") %>% fmt_number(num, locale = "de") %>% render_formats_test(context = "plain"))[["num"]] %>%
     expect_equal("777.000,00")
 
@@ -827,9 +827,9 @@ test_that("Default locale settings are honored by formatting functions", {
   (exibble_1 %>% gt() %>% fmt_integer(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
     expect_equal("777,000")
   (exibble_1 %>% gt(locale = "fr") %>% fmt_integer(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
-    expect_equal("777 000")
+    expect_equal("777 000")
   (exibble_1 %>% gt(locale = "en") %>% fmt_integer(num, locale = "fr") %>% render_formats_test(context = "plain"))[["num"]] %>%
-    expect_equal("777 000")
+    expect_equal("777 000")
   (exibble_1 %>% gt(locale = "fr") %>% fmt_integer(num, locale = "de") %>% render_formats_test(context = "plain"))[["num"]] %>%
     expect_equal("777.000")
 
@@ -857,9 +857,9 @@ test_that("Default locale settings are honored by formatting functions", {
   (exibble_1 %>% gt() %>% fmt_percent(num, scale_values = FALSE) %>% render_formats_test(context = "plain"))[["num"]] %>%
     expect_equal("777,000.00%")
   (exibble_1 %>% gt(locale = "fr") %>% fmt_percent(num, scale_values = FALSE) %>% render_formats_test(context = "plain"))[["num"]] %>%
-    expect_equal("777 000,00%")
+    expect_equal("777 000,00%")
   (exibble_1 %>% gt(locale = "en") %>% fmt_percent(num, scale_values = FALSE, locale = "fr") %>% render_formats_test(context = "plain"))[["num"]] %>%
-    expect_equal("777 000,00%")
+    expect_equal("777 000,00%")
   (exibble_1 %>% gt(locale = "fr") %>% fmt_percent(num, scale_values = FALSE, locale = "de") %>% render_formats_test(context = "plain"))[["num"]] %>%
     expect_equal("777.000,00%")
 
@@ -867,9 +867,9 @@ test_that("Default locale settings are honored by formatting functions", {
   (exibble_1 %>% gt() %>% fmt_currency(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
     expect_equal("$777,000.00")
   (exibble_1 %>% gt(locale = "fr") %>% fmt_currency(num) %>% render_formats_test(context = "plain"))[["num"]] %>%
-    expect_equal("$777 000,00")
+    expect_equal("$777 000,00")
   (exibble_1 %>% gt(locale = "en") %>% fmt_currency(num, locale = "fr") %>% render_formats_test(context = "plain"))[["num"]] %>%
-    expect_equal("$777 000,00")
+    expect_equal("$777 000,00")
   (exibble_1 %>% gt(locale = "fr") %>% fmt_currency(num, locale = "de") %>% render_formats_test(context = "plain"))[["num"]] %>%
     expect_equal("$777.000,00")
 
