@@ -1,21 +1,53 @@
-# Workflow derived from https://github.com/rstudio/shiny-workflows
-#
-# NOTE: This Shiny team GHA workflow is overkill for most R packages.
-# For most R packages it is better to use https://github.com/r-lib/actions
 on:
   push:
-    branches: [main, master, rc-**]
+    branches:
+      - main
   pull_request:
-    branches: [main, master]
-  schedule:
-    - cron: '0 2 * * 1' # every monday
+    branches:
+      - main
 
-name: Package checks
+name: R-CMD-check
 
 jobs:
-  website:
-    uses: rstudio/shiny-workflows/.github/workflows/website.yaml@v1
-  routine:
-    uses: rstudio/shiny-workflows/.github/workflows/routine.yaml@v1
   R-CMD-check:
-    uses: rstudio/shiny-workflows/.github/workflows/R-CMD-check.yaml@v1
+    runs-on: ${{ matrix.config.os }}
+
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
+
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {os: macos-11, r: '4.1'}
+          - {os: macos-11, r: '4.2'}
+          - {os: windows-latest, r: '4.1'}
+          - {os: windows-latest, r: '4.2'}
+          - {os: ubuntu-latest, r: '3.6'}
+          - {os: ubuntu-latest, r: '4.0'}
+          - {os: ubuntu-latest, r: '4.1'}
+          - {os: ubuntu-latest, r: '4.2'}
+
+    env:
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      GITHUB_PAT: ${{ secrets.GHA_PAT }}
+      R_KEEP_PKG_SOURCE: yes
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          r-version: ${{ matrix.config.r }}
+          http-user-agent: ${{ matrix.config.http-user-agent }}
+          use-public-rspm: true
+
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          extra-packages: any::rcmdcheck
+          needs: check
+
+      - uses: r-lib/actions/check-r-package@v2
+        with:
+          upload-snapshots: true
