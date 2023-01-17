@@ -107,7 +107,7 @@ expect_tab <- function(tab, df) {
 
   dt_options_get(data = tab) %>%
     dim() %>%
-    expect_equal(c(171, 5))
+    expect_equal(c(178, 5))
 
   dt_transforms_get(data = tab) %>%
     length() %>%
