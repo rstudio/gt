@@ -98,9 +98,9 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{cha
 the data in that column through but apply a simple pattern that adds an \code{"s"}
 to the non-\code{NA} values.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(char) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(char) |>
+  gt() |>
   fmt_passthrough(
     columns = char,
     rows = !is.na(char),
@@ -115,7 +115,7 @@ to the non-\code{NA} values.
 
 \section{Function ID}{
 
-3-16
+3-17
 }
 
 \seealso{
@@ -129,6 +129,7 @@ Other data formatting functions:
 \code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},

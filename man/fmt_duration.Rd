@@ -102,8 +102,12 @@ international numbering system (\code{"intl"}) whereby grouping separators
 the Indian numbering system (\code{"ind"}) uses grouping separators that
 correspond to thousand, lakh, crore, and higher quantities.}
 
-\item{locale}{An optional locale ID that can be used for formatting values
-according to the locale's rules.}
+\item{locale}{An optional locale identifier that can be used for formatting
+the value according the locale's rules. Examples include \code{"en"} for English
+(United States) and \code{"fr"} for French (France). The use of a locale ID will
+override any locale-specific values provided. We can use the
+\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
+are supported.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -213,19 +217,19 @@ Use part of the \code{sp500} table to create a \strong{gt} table. Create a
 \code{difftime}-based column and format the duration values to be displayed as the
 number of days since March 30, 2020.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
-  dplyr::slice_head(n = 10) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
+  dplyr::slice_head(n = 10) |>
   dplyr::mutate(
     time_point = lubridate::ymd("2020-03-30"),
     time_passed = difftime(time_point, date)
-  ) \%>\%
-  dplyr::select(time_passed, open, close) \%>\%
-  gt(rowname_col = "month") \%>\%
+  ) |>
+  dplyr::select(time_passed, open, close) |>
+  gt(rowname_col = "month") |>
   fmt_duration(
     columns = time_passed,
     output_units = "days",
     duration_style = "wide"
-  ) \%>\%
+  ) |>
   fmt_currency(columns = c(open, close))
 }\if{html}{\out{</div>}}
 
@@ -236,7 +240,7 @@ number of days since March 30, 2020.
 
 \section{Function ID}{
 
-3-14
+3-15
 }
 
 \seealso{
@@ -252,6 +256,7 @@ Other data formatting functions:
 \code{\link{fmt_date}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},

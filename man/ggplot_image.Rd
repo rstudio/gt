@@ -32,8 +32,7 @@ then include a call to \code{ggplot_image()} within the required user-defined
 function (for the \code{fn} argument). If we want to include a plot in other
 places (e.g., in the header, within footnote text, etc.) we need to use
 \code{ggplot_image()} within the \code{\link[=html]{html()}} helper function.
-}
-\details{
+
 By itself, the function creates an HTML image tag with an image URI embedded
 within (a 100 dpi PNG). We can easily experiment with any \code{ggplot2} plot
 object, and using it within \verb{ggplot_image(plot_object = <plot object>}
@@ -70,12 +69,12 @@ function.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
   text = "Here is a ggplot:",
   ggplot = NA
-) \%>\%
-  gt() \%>\%
+) |>
+  gt() |>
   text_transform(
     locations = cells_body(columns = ggplot),
     fn = function(x) \{
-      plot_object \%>\%
+      plot_object |>
         ggplot_image(height = px(200))
     \}
   )

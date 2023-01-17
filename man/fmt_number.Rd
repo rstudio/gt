@@ -116,8 +116,12 @@ international numbering system (\code{"intl"}) whereby grouping separators
 the Indian numbering system (\code{"ind"}) uses grouping separators that
 correspond to thousand, lakh, crore, and higher quantities.}
 
-\item{locale}{An optional locale ID that can be used for formatting values
-according to the locale's rules.}
+\item{locale}{An optional locale identifier that can be used for formatting
+the value according the locale's rules. Examples include \code{"en"} for English
+(United States) and \code{"fr"} for French (France). The use of a locale ID will
+override any locale-specific values provided. We can use the
+\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
+are supported.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -214,8 +218,8 @@ useful reference on which locales are supported, we can use the
 Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{num} column as numeric
 with three decimal places and with no use of digit separators.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt() |>
   fmt_number(
     columns = num,
     decimals = 3,
@@ -230,13 +234,13 @@ with three decimal places and with no use of digit separators.
 Use \code{\link{countrypops}} to create a \strong{gt} table. Format all columns to use
 large-number suffixing with the \code{suffixing = TRUE} option.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::select(country_code_3, year, population) \%>\%
-  dplyr::filter(country_code_3 \%in\% c("CHN", "IND", "USA", "PAK", "IDN")) \%>\%
-  dplyr::filter(year > 1975 & year \%\% 5 == 0) \%>\%
-  tidyr::spread(year, population) \%>\%
-  dplyr::arrange(desc(`2015`)) \%>\%
-  gt(rowname_col = "country_code_3") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::select(country_code_3, year, population) |>
+  dplyr::filter(country_code_3 \%in\% c("CHN", "IND", "USA", "PAK", "IDN")) |>
+  dplyr::filter(year > 1975 & year \%\% 5 == 0) |>
+  tidyr::spread(year, population) |>
+  dplyr::arrange(desc(`2015`)) |>
+  gt(rowname_col = "country_code_3") |>
   fmt_number(suffixing = TRUE)
 }\if{html}{\out{</div>}}
 
@@ -267,6 +271,7 @@ Other data formatting functions:
 \code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_partsper}()},

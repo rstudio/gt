@@ -29,14 +29,14 @@ Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header and then ex
 code with inlined CSS styles.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_html <-
-  gtcars \%>\%
-  dplyr::select(mfr, model, msrp) \%>\%
-  dplyr::slice(1:5) \%>\%
-  gt() \%>\%
+  gtcars |>
+  dplyr::select(mfr, model, msrp) |>
+  dplyr::slice(1:5) |>
+  gt() |>
   tab_header(
     title = md("Data listing from **gtcars**"),
     subtitle = md("`gtcars` is an R dataset")
-  ) \%>\%
+  ) |>
   as_raw_html()
 }\if{html}{\out{</div>}}
 

@@ -35,59 +35,37 @@ level, or, by way of an indentation directive using keywords.
 \section{Examples}{
 
 
-Use \code{\link{pizzaplace}} to create a \strong{gt} table. With \code{tab_stub_indent()} we can
-add indentation to targeted row labels in the stub. Here we target the
-different pizza sizes and avoid selecting the repeating \code{"All Sizes"} row
-label.
+Use \code{\link{pizzaplace}} to create a \strong{gt} table with summary rows at the top of
+each row group. With \code{tab_stub_indent()} we can add indentation to the row
+labels in the stub.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::bind_rows(
-  pizzaplace \%>\%
-    dplyr::group_by(type, size) \%>\%
-    dplyr::summarize(
-      sold = n(),
-      income = sum(price),
-      .groups = "drop_last"
-    ) \%>\%
-    dplyr::summarize(
-      sold = sum(sold),
-      income = sum(income),
-      size = "All Sizes",
-      .groups = "drop"
-    ),
-  pizzaplace \%>\%
-    dplyr::group_by(type, size) \%>\%
-    dplyr::summarize(
-      sold = n(),
-      income = sum(price),
-      .groups = "drop"
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
+  dplyr::group_by(type, size) |>
+  dplyr::summarize(
+    sold = n(),
+    income = sum(price),
+    .groups = "drop"
+  ) |>
+  gt(rowname_col = "size", groupname_col = "type") |>
+  tab_header(title = "Pizzas Sold in 2015") |>
+  fmt_integer(columns = sold) |>
+  fmt_currency(columns = income) |>
+  summary_rows(
+    fns = list(label = "All Sizes", fn = "sum"),
+    side = "top",
+    fmt = list(
+      ~ fmt_integer(., columns = sold),
+      ~ fmt_currency(., columns = income)
     )
-) \%>\%
-  gt(rowname_col = "size", groupname_col = "type") \%>\%
-  tab_header(title = "Pizzas Sold in 2015") \%>\%
-  fmt_number(
-    columns = sold,
-    decimals = 0,
-    use_seps = TRUE
-  ) \%>\%
-  fmt_currency(
-    columns = income,
-    currency = "USD"
-  ) \%>\%
+  ) |>
   tab_options(
-    summary_row.background.color = "#ACEACE",
+    summary_row.background.color = "gray95",
     row_group.background.color = "#FFEFDB",
     row_group.as_column = TRUE
-  ) \%>\%
+  ) |>
   tab_stub_indent(
-    rows = matches("^L|^M|^S|^XL|^XXL"),
+    rows = everything(),
     indent = 2
-  ) \%>\%
-  tab_style(
-    style = cell_fill(color = "gray95"),
-    locations = list(
-      cells_body(rows = matches("^All")),
-      cells_stub(rows = matches("^All"))
-    )
   )
 }\if{html}{\out{</div>}}
 

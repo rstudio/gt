@@ -49,11 +49,11 @@ labels once they have been relabeled.
 Use \code{\link{countrypops}} to create a \strong{gt} table. Relabel all the table's columns
 with the \code{cols_label()} function to improve its presentation.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::select(-contains("code")) \%>\%
-  dplyr::filter(country_name == "Mongolia") \%>\%
-  tail(5) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::select(-contains("code")) |>
+  dplyr::filter(country_name == "Mongolia") |>
+  tail(5) |>
+  gt() |>
   cols_label(
     country_name = "Name",
     year = "Year",
@@ -69,11 +69,11 @@ Using \code{\link{countrypops}} again to create a \strong{gt} table, we label co
 as before but this time make the column labels bold through Markdown
 formatting.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::select(-contains("code")) \%>\%
-  dplyr::filter(country_name == "Mongolia") \%>\%
-  tail(5) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::select(-contains("code")) |>
+  dplyr::filter(country_name == "Mongolia") |>
+  tail(5) |>
+  gt() |>
   cols_label(
     country_name = md("**Name**"),
     year = md("**Year**"),

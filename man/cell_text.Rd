@@ -85,20 +85,20 @@ also define several styles within a single call of \code{cell_text()} and
 Use \code{\link{exibble}} to create a \strong{gt} table. Add styles with \code{\link[=tab_style]{tab_style()}} and
 the \code{cell_text()} helper function.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(num, currency) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(num, currency) |>
+  gt() |>
   fmt_number(
     columns = c(num, currency),
     decimals = 1
-  ) \%>\%
+  ) |>
   tab_style(
     style = cell_text(weight = "bold"),
     locations = cells_body(
       columns = num,
       rows = num >= 5000
     )
-  ) \%>\%
+  ) |>
   tab_style(
     style = cell_text(style = "italic"),
     locations = cells_body(

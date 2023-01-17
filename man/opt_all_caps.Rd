@@ -30,7 +30,7 @@ Sometimes an all-capitalized look is suitable for a table. With the
 the stub, and in all row groups in this way (and there's control over which
 of these locations are transformed).
 
-This function serves as a convenient shortcut for \verb{<gt_tbl> \%>\% tab_options(<location>.text_transform = "uppercase", <location>.font.size = pct(80), <location>.font.weight = "bolder")} (for all \code{locations} selected).
+This function serves as a convenient shortcut for \verb{<gt_tbl> |> tab_options(<location>.text_transform = "uppercase", <location>.font.size = pct(80), <location>.font.weight = "bolder")} (for all \code{locations} selected).
 }
 \section{Examples}{
 
@@ -39,26 +39,26 @@ Use \code{\link{exibble}} to create a \strong{gt} table with a number of table p
 All text in the column labels, the stub, and in all row groups is to be
 transformed to all caps using \code{opt_all_caps()}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  gt(rowname_col = "row", groupname_col = "group") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt(rowname_col = "row", groupname_col = "group") |>
   summary_rows(
     groups = "grp_a",
     columns = c(num, currency),
     fns = c("min", "max")
-  ) \%>\%
+  ) |>
   grand_summary_rows(
     columns = currency,
     fns = total ~ sum(., na.rm = TRUE)
-  ) \%>\%
-  tab_source_note(source_note = "This is a source note.") \%>\%
+  ) |>
+  tab_source_note(source_note = "This is a source note.") |>
   tab_footnote(
     footnote = "This is a footnote.",
     locations = cells_body(columns = 1, rows = 1)
-  ) \%>\%
+  ) |>
   tab_header(
     title = "The title of the table",
     subtitle = "The table's subtitle"
-  ) \%>\%
+  ) |>
   opt_all_caps()
 }\if{html}{\out{</div>}}
 

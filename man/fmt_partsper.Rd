@@ -99,8 +99,12 @@ international numbering system (\code{"intl"}) whereby grouping separators
 the Indian numbering system (\code{"ind"}) uses grouping separators that
 correspond to thousand, lakh, crore, and higher quantities.}
 
-\item{locale}{An optional locale ID that can be used for formatting values
-according to the locale's rules.}
+\item{locale}{An optional locale identifier that can be used for formatting
+the value according the locale's rules. Examples include \code{"en"} for English
+(United States) and \code{"fr"} for French (France). The use of a locale ID will
+override any locale-specific values provided. We can use the
+\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
+are supported.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -212,9 +216,9 @@ Create a tibble of small numeric values and generate a \strong{gt} table. Format
 the \code{a} column to appear in scientific notation with \code{\link[=fmt_scientific]{fmt_scientific()}} and
 format the \code{b} column as \emph{per mille} values with \code{fmt_partsper()}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(x = 0:-5, a = 10^(0:-5), b = a) \%>\%
-  gt(rowname_col = "x") \%>\%
-  fmt_scientific(a, decimals = 0) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(x = 0:-5, a = 10^(0:-5), b = a) |>
+  gt(rowname_col = "x") |>
+  fmt_scientific(a, decimals = 0) |>
   fmt_partsper(
     columns = b,
     to_units = "per-mille"
@@ -245,6 +249,7 @@ Other data formatting functions:
 \code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},

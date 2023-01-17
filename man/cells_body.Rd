@@ -101,17 +101,17 @@ Use \code{\link{gtcars}} to create a \strong{gt} table. Add a footnote that targ
 data cell with \code{\link[=tab_footnote]{tab_footnote()}}, using \code{cells_body()} in \code{locations}
 (\code{rows = hp == max(hp)} will target a single row in the \code{hp} column).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
-  dplyr::filter(ctry_origin == "United Kingdom") \%>\%
-  dplyr::select(mfr, model, year, hp) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::filter(ctry_origin == "United Kingdom") |>
+  dplyr::select(mfr, model, year, hp) |>
+  gt() |>
   tab_footnote(
     footnote = "Highest horsepower.",
     locations = cells_body(
       columns = hp,
       rows = hp == max(hp)
     )
-  ) \%>\%
+  ) |>
   opt_footnote_marks(marks = c("*", "+"))
 }\if{html}{\out{</div>}}
 

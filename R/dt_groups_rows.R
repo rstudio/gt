@@ -17,6 +17,8 @@ dt_groups_rows_set <- function(data, groups_rows) {
 
 dt_groups_rows_build <- function(data, context) {
 
+  data <- dt_stub_df_build(data = data, context = context)
+
   stub_df <- dt_stub_df_get(data = data)
   ordering <- dt_row_groups_get(data = data)
 
@@ -27,8 +29,8 @@ dt_groups_rows_build <- function(data, context) {
   if (dt_stub_df_exists(data = data)) {
 
     stub_var <- dt_boxhead_get_var_stub(data = data)
-    table_body <- dt_body_get(data = data)
-    stub_df[["rowname"]] <- table_body[[stub_var]]
+    table_body <- dt_data_get(data = data)
+    stub_df[["rowname"]] <- as.character(table_body[[stub_var]])
   }
 
   groups_rows <-
@@ -87,7 +89,7 @@ dt_groups_rows_build <- function(data, context) {
     groups_rows <- cbind(groups_rows, group_label = character(0))
   }
 
-  if (nrow(groups_rows) > 1) {
+  if (nrow(groups_rows) > 0) {
 
     groups_rows[["has_summary_rows"]] <- rep(FALSE, nrow(groups_rows))
     groups_rows[["summary_row_side"]] <- rep(NA_character_, nrow(groups_rows))

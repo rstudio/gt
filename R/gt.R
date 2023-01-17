@@ -1,12 +1,14 @@
 #' Create a **gt** table object
 #'
 #' @description
+#'
 #' The `gt()` function creates a **gt** table object when provided with table
 #' data. Using this function is the first step in a typical **gt** workflow.
 #' Once we have the **gt** table object, we can perform styling transformations
 #' before rendering to a display table of various formats.
 #'
 #' @details
+#'
 #' There are a few data ingest options we can consider at this stage. We can
 #' choose to create a table stub with rowname captions using the `rowname_col`
 #' argument. Further to this, stub row groups can be created with the
@@ -45,8 +47,8 @@
 #'   table ID can be used with any single-length character vector.
 #' @param locale An optional locale ID that can be set as the default locale for
 #'   all functions that take a `locale` argument. Examples of valid locales
-#'   include `"en_US"` for English (United States) and `"fr_FR"` for French
-#'   (France). Refer to the information provided by the [info_locales()] to
+#'   include `"en"` for English (United States) and `"fr"` for French (France).
+#'   Refer to the information provided by the [info_locales()] function to
 #'   determine which locales are supported.
 #' @param row_group.sep The separator to use between consecutive group names (a
 #'   possibility when providing `data` as a `grouped_df` with multiple groups)
@@ -62,7 +64,7 @@
 #'
 #' ```r
 #' tab_1 <-
-#'   exibble %>%
+#'   exibble |>
 #'   gt(
 #'     rowname_col = "row",
 #'     groupname_col = "group"
@@ -80,15 +82,15 @@
 #' available in the package.
 #'
 #' ```r
-#' tab_1 %>%
+#' tab_1 |>
 #'   tab_header(
 #'     title = "Table Title",
 #'     subtitle = "Subtitle"
-#'   ) %>%
+#'   ) |>
 #'   fmt_number(
 #'     columns = num,
 #'     decimals = 2
-#'   ) %>%
+#'   ) |>
 #'   cols_label(num = "number")
 #' ```
 #'
@@ -121,7 +123,7 @@ gt <- function(
   validate_table_id(id)
 
   # Stop function if `locale` does not have a valid value
-  validate_locale(locale)
+  validate_locale(locale = locale)
 
   if (rownames_to_stub) {
     # Just a column name that's unlikely to collide with user data

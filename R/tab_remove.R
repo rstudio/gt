@@ -1,6 +1,7 @@
 #' Remove the table header
 #'
 #' @description
+#'
 #' We can remove the table header from a **gt** table quite easily with
 #' `rm_header()`. The table header is an optional table part (positioned above
 #' the column labels) that can be added through the [tab_header()].
@@ -22,10 +23,10 @@
 #'
 #' ```r
 #' gt_tbl <-
-#'   gtcars %>%
-#'   dplyr::select(mfr, model, msrp) %>%
-#'   dplyr::slice(1:5) %>%
-#'   gt() %>%
+#'   gtcars |>
+#'   dplyr::select(mfr, model, msrp) |>
+#'   dplyr::slice(1:5) |>
+#'   gt() |>
 #'   tab_header(
 #'     title = md("Data listing from **gtcars**"),
 #'     subtitle = md("`gtcars` is an R dataset")
@@ -66,6 +67,7 @@ rm_header <- function(data) {
 #' Remove the stubhead label
 #'
 #' @description
+#'
 #' We can easily remove the stubhead label from a **gt** table with
 #' `rm_stubhead()`. The stubhead location only exists if there is a table stub
 #' and the text in that cell is added through the [tab_stubhead()] function.
@@ -87,10 +89,10 @@ rm_header <- function(data) {
 #'
 #' ```r
 #' gt_tbl <-
-#'   gtcars %>%
-#'   dplyr::select(model, year, hp, trq) %>%
-#'   dplyr::slice(1:5) %>%
-#'   gt(rowname_col = "model") %>%
+#'   gtcars |>
+#'   dplyr::select(model, year, hp, trq) |>
+#'   dplyr::slice(1:5) |>
+#'   gt(rowname_col = "model") |>
 #'   tab_stubhead(label = "car")
 #'
 #' gt_tbl
@@ -128,6 +130,7 @@ rm_stubhead <- function(data) {
 #' Remove column spanner labels
 #'
 #' @description
+#'
 #' If you would like to remove column spanner labels then the `rm_spanners()`
 #' function can make this possible. Column spanner labels appear above the
 #' column labels and can occupy several levels via stacking either though
@@ -164,16 +167,16 @@ rm_stubhead <- function(data) {
 #'
 #' ```r
 #' gt_tbl <-
-#'   gtcars %>%
+#'   gtcars |>
 #'   dplyr::select(
 #'     -mfr, -trim, bdy_style, drivetrain,
 #'     -drivetrain, -trsmn, -ctry_origin
-#'   ) %>%
-#'   dplyr::slice(1:8) %>%
-#'   gt(rowname_col = "model") %>%
-#'   tab_spanner(label = "HP", columns = c(hp, hp_rpm)) %>%
-#'   tab_spanner(label = "Torque", columns = c(trq, trq_rpm)) %>%
-#'   tab_spanner(label = "MPG", columns = c(mpg_c, mpg_h)) %>%
+#'   ) |>
+#'   dplyr::slice(1:8) |>
+#'   gt(rowname_col = "model") |>
+#'   tab_spanner(label = "HP", columns = c(hp, hp_rpm)) |>
+#'   tab_spanner(label = "Torque", columns = c(trq, trq_rpm)) |>
+#'   tab_spanner(label = "MPG", columns = c(mpg_c, mpg_h)) |>
 #'   tab_spanner(
 #'     label = "Performance",
 #'     columns = c(
@@ -323,6 +326,7 @@ rm_spanners <- function(
 #' Remove table footnotes
 #'
 #' @description
+#'
 #' If you have one or more footnotes that ought to be removed, the
 #' `rm_footnotes()` function allows for such a selective removal. The table
 #' footer is an optional table part that is positioned below the table body,
@@ -352,27 +356,25 @@ rm_spanners <- function(
 #'
 #' ```r
 #' gt_tbl <-
-#'   sza %>%
+#'   sza |>
 #'   dplyr::filter(
 #'     latitude == 20 &
 #'       month == "jan" &
 #'       !is.na(sza)
-#'   ) %>%
-#'   dplyr::select(-latitude, -month) %>%
-#'   gt() %>%
+#'   ) |>
+#'   dplyr::select(-latitude, -month) |>
+#'   gt() |>
 #'   data_color(
 #'     columns = sza,
-#'     colors = scales::col_numeric(
-#'       palette = c("white", "yellow", "navyblue"),
-#'       domain = c(0, 90)
-#'     )
-#'   ) %>%
+#'     palette = c("white", "yellow", "navyblue"),
+#'     domain = c(0, 90)
+#'   ) |>
 #'   tab_footnote(
 #'     footnote = "Color indicates height of sun.",
 #'     locations = cells_column_labels(
 #'       columns = sza
 #'     )
-#'   ) %>%
+#'   ) |>
 #'   tab_footnote(
 #'     footnote = "
 #'     The true solar time at the given latitude
@@ -382,7 +384,7 @@ rm_spanners <- function(
 #'     locations = cells_column_labels(
 #'       columns = tst
 #'     )
-#'   ) %>%
+#'   ) |>
 #'   cols_width(everything() ~ px(150))
 #'
 #' gt_tbl
@@ -483,6 +485,7 @@ rm_footnotes <- function(
 #' Remove table source notes
 #'
 #' @description
+#'
 #' If you have one or more source notes that ought to be removed, the
 #' `rm_source_notes()` function allows for such a selective removal. The table
 #' footer is an optional table part that is positioned below the table body,
@@ -511,12 +514,12 @@ rm_footnotes <- function(
 #'
 #' ```r
 #' gt_tbl <-
-#'   gtcars %>%
-#'   dplyr::select(mfr, model, msrp) %>%
-#'   dplyr::slice(1:5) %>%
-#'   gt() %>%
-#'   tab_source_note(source_note = "Data from the 'edmunds.com' site.") %>%
-#'   tab_source_note(source_note = "Showing only the first five rows.") %>%
+#'   gtcars |>
+#'   dplyr::select(mfr, model, msrp) |>
+#'   dplyr::slice(1:5) |>
+#'   gt() |>
+#'   tab_source_note(source_note = "Data from the 'edmunds.com' site.") |>
+#'   tab_source_note(source_note = "Showing only the first five rows.") |>
 #'   cols_width(everything() ~ px(120))
 #'
 #' gt_tbl
@@ -618,6 +621,7 @@ rm_source_notes <- function(
 #' Remove the table caption
 #'
 #' @description
+#'
 #' We can easily remove the caption text from a **gt** table with
 #' `rm_caption()`. The caption may exist if it were set through the [gt()]
 #' `caption` argument or via [tab_caption()].
@@ -638,14 +642,14 @@ rm_source_notes <- function(
 #'
 #' ```r
 #' gt_tbl <-
-#'   gtcars %>%
-#'   dplyr::select(mfr, model, msrp) %>%
-#'   dplyr::slice(1:5) %>%
-#'   gt() %>%
+#'   gtcars |>
+#'   dplyr::select(mfr, model, msrp) |>
+#'   dplyr::slice(1:5) |>
+#'   gt() |>
 #'   tab_header(
 #'     title = md("Data listing from **gtcars**"),
 #'     subtitle = md("`gtcars` is an R dataset")
-#'   ) %>%
+#'   ) |>
 #'   tab_caption(caption = md("**gt** table example."))
 #'
 #' gt_tbl

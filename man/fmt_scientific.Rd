@@ -70,8 +70,12 @@ numeric components of the notation. If so, use \code{TRUE} for either one of
 these options. The default for both is \code{FALSE}, where only negative numbers
 will display a sign.}
 
-\item{locale}{An optional locale ID that can be used for formatting values
-according to the locale's rules.}
+\item{locale}{An optional locale identifier that can be used for formatting
+the value according the locale's rules. Examples include \code{"en"} for English
+(United States) and \code{"fr"} for French (France). The use of a locale ID will
+override any locale-specific values provided. We can use the
+\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
+are supported.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -173,15 +177,15 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{num} c
 partially numeric  and partially in scientific notation (using the
 \code{num > 500} and \code{num <= 500} expressions in the respective \code{rows} arguments).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt() |>
   fmt_number(
     columns = num,
     rows = num > 500,
     decimals = 1,
     scale_by = 1/1000,
     pattern = "\{x\}K"
-  ) \%>\%
+  ) |>
   fmt_scientific(
     columns = num,
     rows = num <= 500,
@@ -213,6 +217,7 @@ Other data formatting functions:
 \code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},

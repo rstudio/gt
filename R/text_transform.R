@@ -12,18 +12,18 @@
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. transform the formatted text in the
+#' Use [`exibble`] to create a **gt** table. Transform the formatted text in the
 #' `num` column using a function supplied to `text_transform()` (via the `fn`
-#' argument). Note that the `x` in the `fn = function (x)` part is a formatted
-#' vector of column values from the `num` column.
+#' argument). Note that the `x` in the `fn = function (x)` part is an already
+#' formatted vector of column values from the `num` column.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(num, char, currency) %>%
-#'   dplyr::slice(1:4) %>%
-#'   gt() %>%
-#'   fmt_number(columns = num) %>%
-#'   fmt_currency(columns = currency) %>%
+#' exibble |>
+#'   dplyr::select(num, char, currency) |>
+#'   dplyr::slice(1:4) |>
+#'   gt() |>
+#'   fmt_number(columns = num) |>
+#'   fmt_currency(columns = currency) |>
 #'   text_transform(
 #'     locations = cells_body(columns = num),
 #'     fn = function(x) {
@@ -43,7 +43,7 @@
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-24
+#' 3-25
 #'
 #' @export
 text_transform <- function(

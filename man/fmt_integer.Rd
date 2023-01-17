@@ -87,8 +87,12 @@ international numbering system (\code{"intl"}) whereby grouping separators
 the Indian numbering system (\code{"ind"}) uses grouping separators that
 correspond to thousand, lakh, crore, and higher quantities.}
 
-\item{locale}{An optional locale ID that can be used for formatting values
-according to the locale's rules.}
+\item{locale}{An optional locale identifier that can be used for formatting
+the value according the locale's rules. Examples include \code{"en"} for English
+(United States) and \code{"fr"} for French (France). The use of a locale ID will
+override any locale-specific values provided. We can use the
+\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
+are supported.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -182,9 +186,9 @@ useful reference on which locales are supported, we can use the
 Use \code{\link{exibble}} to create a \strong{gt} table. format the \code{num} column as integer
 values having no digit separators (with the \code{use_seps = FALSE} option).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(num, char) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(num, char) |>
+  gt() |>
   fmt_integer(
     columns = num,
     use_seps = FALSE
@@ -217,6 +221,7 @@ Other data formatting functions:
 \code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_index}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},
 \code{\link{fmt_partsper}()},

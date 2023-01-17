@@ -256,15 +256,15 @@ Use \code{\link{sp500}} to create a \strong{gt} table with row groups. Create th
 rows labeled \code{min}, \code{max}, and \code{avg} by row group (where each each row group
 is a week number) with the \code{summary_rows()} function.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
-  dplyr::filter(date >= "2015-01-05" & date <="2015-01-16") \%>\%
-  dplyr::arrange(date) \%>\%
-  dplyr::mutate(week = paste0("W", strftime(date, format = "\%V"))) \%>\%
-  dplyr::select(-adj_close, -volume) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
+  dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") |>
+  dplyr::arrange(date) |>
+  dplyr::mutate(week = paste0("W", strftime(date, format = "\%V"))) |>
+  dplyr::select(-adj_close, -volume) |>
   gt(
     rowname_col = "date",
     groupname_col = "week"
-  ) \%>\%
+  ) |>
   summary_rows(
     fns = list(
       "min",
@@ -288,37 +288,37 @@ aggregation function (expressed as \code{"sum"}, which \strong{gt} recognizes as
 \code{sum()} function). To top it all off, we'll add background fills to the
 summary rows with \code{\link[=tab_style]{tab_style()}}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::filter(
     country_code_2 \%in\% c("BR", "RU", "IN", "CN", "FR", "DE", "IT", "GB")
-  ) \%>\%
-  dplyr::filter(year \%\% 10 == 0) \%>\%
-  dplyr::select(country_name, year, population) \%>\%
-  tidyr::pivot_wider(names_from = year, values_from = population) \%>\%
-  gt(rowname_col = "country_name") \%>\%
+  ) |>
+  dplyr::filter(year \%\% 10 == 0) |>
+  dplyr::select(country_name, year, population) |>
+  tidyr::pivot_wider(names_from = year, values_from = population) |>
+  gt(rowname_col = "country_name") |>
   tab_row_group(
     label = md("*BRIC*"),
     rows = c("Brazil", "Russian Federation", "India", "China"),
     id = "bric"
-  ) \%>\%
+  ) |>
   tab_row_group(
     label = md("*Big Four*"),
     rows = c("France", "Germany", "Italy", "United Kingdom"),
     id = "big4"
-  ) \%>\%
-  row_group_order(groups = c("bric", "big4")) \%>\%
-  tab_stub_indent(rows = everything()) \%>\%
-  tab_header(title = "Populations of the BRIC and Big Four Countries") \%>\%
-  tab_spanner(columns = everything(), label = "Year") \%>\%
-  fmt_number(n_sigfig = 3, suffixing = TRUE) \%>\%
+  ) |>
+  row_group_order(groups = c("bric", "big4")) |>
+  tab_stub_indent(rows = everything()) |>
+  tab_header(title = "Populations of the BRIC and Big Four Countries") |>
+  tab_spanner(columns = everything(), label = "Year") |>
+  fmt_number(n_sigfig = 3, suffixing = TRUE) |>
   summary_rows(
     fns =  list(label = md("**ALL**"), id = "totals", fn = "sum"),
     fmt = ~ fmt_number(., n_sigfig = 3, suffixing = TRUE),
     side = "top"
-  ) \%>\%
+  ) |>
   tab_style(
     locations = cells_summary(),
-    style = cell_fill(color = "lightblue" \%>\% adjust_luminance(steps = +1))
+    style = cell_fill(color = "lightblue" |> adjust_luminance(steps = +1))
   )
 }\if{html}{\out{</div>}}
 

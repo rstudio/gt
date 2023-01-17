@@ -38,14 +38,14 @@ Use \code{\link{exibble}} to create a \strong{gt} table and format the data in b
 With \code{opt_css()}, insert CSS rulesets as as string and be sure to set the
 table ID explicitly (here as \code{"one"}).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(num, currency) \%>\%
-  gt(id = "one") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(num, currency) |>
+  gt(id = "one") |>
   fmt_currency(
     columns = currency,
     currency = "HKD"
-  ) \%>\%
-  fmt_scientific(columns = num) \%>\%
+  ) |>
+  fmt_scientific(columns = num) |>
   opt_css(
     css = "
     #one .gt_table \{

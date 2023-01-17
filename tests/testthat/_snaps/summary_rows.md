@@ -7544,6 +7544,171 @@
       
       }
 
+---
+
+    Code
+      .
+    Output
+      [1] "<table class=\"gt_table\">\n  \n  <thead class=\"gt_col_headings\">\n    <tr>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"\"></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"population\">population</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr class=\"gt_group_heading_row\">\n      <th colspan=\"2\" class=\"gt_group_heading\" scope=\"colgroup\" id=\"1960s\">1960s</th>\n    </tr>\n    <tr class=\"gt_row_group_first\"><th id=\"stub_1_1\" scope=\"row\" class=\"gt_row gt_right gt_stub\">1960</th>\n<td headers=\"1960s stub_1_1 population\" class=\"gt_row gt_right\">93,216,000</td></tr>\n    <tr><th id=\"stub_1_2\" scope=\"row\" class=\"gt_row gt_right gt_stub\">1961</th>\n<td headers=\"1960s stub_1_2 population\" class=\"gt_row gt_right\">94,055,000</td></tr>\n    <tr><th id=\"stub_1_3\" scope=\"row\" class=\"gt_row gt_right gt_stub\">1962</th>\n<td headers=\"1960s stub_1_3 population\" class=\"gt_row gt_right\">94,933,000</td></tr>\n    <tr><th id=\"stub_1_4\" scope=\"row\" class=\"gt_row gt_right gt_stub\">1963</th>\n<td headers=\"1960s stub_1_4 population\" class=\"gt_row gt_right\">95,900,000</td></tr>\n    <tr><th id=\"stub_1_5\" scope=\"row\" class=\"gt_row gt_right gt_stub\">1964</th>\n<td headers=\"1960s stub_1_5 population\" class=\"gt_row gt_right\">96,903,000</td></tr>\n    <tr><th id=\"stub_1_6\" scope=\"row\" class=\"gt_row gt_right gt_stub\">1965</th>\n<td headers=\"1960s stub_1_6 population\" class=\"gt_row gt_right\">97,952,000</td></tr>\n    <tr><th id=\"stub_1_7\" scope=\"row\" class=\"gt_row gt_right gt_stub\">1966</th>\n<td headers=\"1960s stub_1_7 population\" class=\"gt_row gt_right\">98,851,000</td></tr>\n    <tr><th id=\"stub_1_8\" scope=\"row\" class=\"gt_row gt_right gt_stub\">1967</th>\n<td headers=\"1960s stub_1_8 population\" class=\"gt_row gt_right\">99,879,000</td></tr>\n    <tr><th id=\"stub_1_9\" scope=\"row\" class=\"gt_row gt_right gt_stub\">1968</th>\n<td headers=\"1960s stub_1_9 population\" class=\"gt_row gt_right\">101,011,000</td></tr>\n    <tr><th id=\"stub_1_10\" scope=\"row\" class=\"gt_row gt_right gt_stub\">1969</th>\n<td headers=\"1960s stub_1_10 population\" class=\"gt_row gt_right\">102,219,000</td></tr>\n    <tr><th id=\"summary_stub_1960s_1\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row gt_first_summary_row thick\" style=\"font-weight: bold; text-transform: capitalize; background-color: rgba(173,216,230,0.5);\">min</th>\n<td headers=\"1960s summary_stub_1960s_1 population\" class=\"gt_row gt_right gt_summary_row gt_first_summary_row thick\">93,216,000</td></tr>\n    <tr><th id=\"summary_stub_1960s_2\" scope=\"row\" class=\"gt_row gt_left gt_stub gt_summary_row gt_last_summary_row\" style=\"font-weight: bold; text-transform: capitalize; background-color: rgba(173,216,230,0.5);\">max</th>\n<td headers=\"1960s summary_stub_1960s_2 population\" class=\"gt_row gt_right gt_summary_row gt_last_summary_row\">102,219,000</td></tr>\n  </tbody>\n  \n  \n</table>"
+
+---
+
+    Code
+      .
+    Output
+      [1] "\\begin{longtable}{l|r}\n\\toprule\n\\multicolumn{1}{l}{} & population \\\\ \n\\midrule\n\\multicolumn{2}{l}{1960s} \\\\ \n\\midrule\n1960 & $93,216,000$ \\\\ \n1961 & $94,055,000$ \\\\ \n1962 & $94,933,000$ \\\\ \n1963 & $95,900,000$ \\\\ \n1964 & $96,903,000$ \\\\ \n1965 & $97,952,000$ \\\\ \n1966 & $98,851,000$ \\\\ \n1967 & $99,879,000$ \\\\ \n1968 & $101,011,000$ \\\\ \n1969 & $102,219,000$ \\\\ \n\\midrule \nmin & $93,216,000$ \\\\ \nmax & $102,219,000$ \\\\ \n\\bottomrule\n\\end{longtable}\n"
+
+---
+
+    Code
+      .
+    Output
+      {\rtf\ansi\ansicpg1252{\fonttbl{\f0\froman\fcharset0\fprq0 Courier New;}{\f1\froman\fcharset0\fprq0 Times;}}{\colortbl;\red211\green211\blue211;}
+      
+      \paperw12240\paperh15840\widowctrl\ftnbj\fet0\sectd\linex0
+      \lndscpsxn
+      \margl1440\margr1440\margt1440\margb1440
+      \headery720\footery720\fs20
+      
+      \trowd\trrh0\trhdr
+      
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx4680
+      \intbl {\f0 {\f0\fs20 }}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85\clbrdrb\brdrs\brdrw20\brdrcf1 \cellx9360
+      \intbl {\f0 {\f0\fs20 population}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0\fs20 1960s}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx4680
+      \intbl {\f0 {\f0\fs20 1960}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 93,216,000}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx4680
+      \intbl {\f0 {\f0\fs20 1961}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 94,055,000}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx4680
+      \intbl {\f0 {\f0\fs20 1962}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 94,933,000}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx4680
+      \intbl {\f0 {\f0\fs20 1963}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 95,900,000}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx4680
+      \intbl {\f0 {\f0\fs20 1964}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 96,903,000}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx4680
+      \intbl {\f0 {\f0\fs20 1965}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 97,952,000}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx4680
+      \intbl {\f0 {\f0\fs20 1966}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 98,851,000}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx4680
+      \intbl {\f0 {\f0\fs20 1967}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 99,879,000}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx4680
+      \intbl {\f0 {\f0\fs20 1968}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 101,011,000}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx4680
+      \intbl {\f0 {\f0\fs20 1969}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 102,219,000}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx4680
+      \intbl {\f0 {\f0\fs20 min}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 93,216,000}}\cell
+      
+      \row
+      
+      \trowd\trrh0
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx4680
+      \intbl {\f0 {\f0\fs20 max}}\cell
+      
+      \pard\plain\uc0\qr\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
+      \intbl {\f0 {\f0\fs20 102,219,000}}\cell
+      
+      \row
+      
+      }
+
 # Summary rows can be styled comprehensively
 
     Code

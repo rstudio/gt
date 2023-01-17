@@ -110,18 +110,18 @@ function to merge the \code{open} & \code{close} columns together, and, the \cod
 \code{high} columns (putting an em dash between both). Relabel the columns with
 \code{\link[=cols_label]{cols_label()}}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
-  dplyr::slice(50:55) \%>\%
-  dplyr::select(-volume, -adj_close) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
+  dplyr::slice(50:55) |>
+  dplyr::select(-volume, -adj_close) |>
+  gt() |>
   cols_merge(
     columns = c(open, close),
     pattern = "\{1\}&mdash;\{2\}"
-  ) \%>\%
+  ) |>
   cols_merge(
     columns = c(low, high),
     pattern = "\{1\}&mdash;\{2\}"
-  ) \%>\%
+  ) |>
   cols_label(
     open = "open/close",
     low = "low/high"
@@ -137,19 +137,19 @@ function to merge the \code{trq} & \code{trq_rpm} columns together, and, the \co
 \code{mpg_h} columns. Given the presence of \code{NA} values, we can use patterns that
 drop parts of the output text whenever missing values are encountered.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
-  dplyr::filter(year == 2017) \%>\%
-  dplyr::select(mfr, model, starts_with(c("trq", "mpg"))) \%>\%
-  gt() \%>\%
-  fmt_integer(columns = trq_rpm) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::filter(year == 2017) |>
+  dplyr::select(mfr, model, starts_with(c("trq", "mpg"))) |>
+  gt() |>
+  fmt_integer(columns = trq_rpm) |>
   cols_merge(
     columns = starts_with("trq"),
     pattern = "\{1\}<< (\{2\} rpm)>>"
-  ) \%>\%
+  ) |>
   cols_merge(
     columns = starts_with("mpg"),
     pattern = "<<\{1\} city<</\{2\} hwy>>>>"
-  ) \%>\%
+  ) |>
   cols_label(
     mfr = "Manufacturer",
     model = "Car Model",

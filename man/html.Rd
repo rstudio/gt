@@ -27,9 +27,9 @@ rendered... to HTML.
 Use \code{\link{exibble}} to create a \strong{gt} table. When adding a title, use the
 \code{html()} helper to use HTML formatting.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(currency, char) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(currency, char) |>
+  gt() |>
   tab_header(title = html("<em>HTML</em>"))
 }\if{html}{\out{</div>}}
 

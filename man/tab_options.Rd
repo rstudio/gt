@@ -435,32 +435,32 @@ can use this \strong{gt} object going forward to demo some of what's available i
 the \code{tab_options()} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
-  exibble \%>\%
-  dplyr::select(-c(fctr, date, time, datetime)) \%>\%
+  exibble |>
+  dplyr::select(-c(fctr, date, time, datetime)) |>
   gt(
     rowname_col = "row",
     groupname_col = "group"
-  ) \%>\%
+  ) |>
   tab_header(
     title = md("Data listing from **exibble**"),
     subtitle = md("`exibble` is an R dataset")
-  ) \%>\%
-  fmt_number(columns = num) \%>\%
-  fmt_currency(columns = currency) \%>\%
+  ) |>
+  fmt_number(columns = num) |>
+  fmt_currency(columns = currency) |>
   tab_footnote(
     footnote = "Using commas for separators.",
     locations = cells_body(
       columns = num,
       rows = num > 1000
     )
-  ) \%>\%
+  ) |>
   tab_footnote(
     footnote = "Using commas for separators.",
     locations = cells_body(
       columns = currency,
       rows = currency > 1000
     )
-  ) \%>\%
+  ) |>
   tab_footnote(
     footnote = "Alphabetical fruit.",
     locations = cells_column_labels(columns = char)
@@ -476,7 +476,7 @@ tab_1
 Modify the table width to be 100\% (which spans the entire content width
 area).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% tab_options(table.width = pct(100))
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |> tab_options(table.width = pct(100))
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
@@ -485,7 +485,7 @@ area).
 
 Modify the table's background color to be \code{"lightcyan"}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% tab_options(table.background.color = "lightcyan")
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |> tab_options(table.background.color = "lightcyan")
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
@@ -495,7 +495,7 @@ Modify the table's background color to be \code{"lightcyan"}.
 Use letters as the marks for footnote references. Also, separate footnotes in
 the footer by spaces instead of newlines.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |>
   tab_options(
     footnotes.marks = letters,
     footnotes.multiline = FALSE
@@ -508,7 +508,7 @@ the footer by spaces instead of newlines.
 
 Change the padding of data rows to 5 px.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |>
   tab_options(
     data_row.padding = px(5)
   )
@@ -520,7 +520,7 @@ Change the padding of data rows to 5 px.
 
 Reduce the size of the title and the subtitle text.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |>
   tab_options(
     heading.title.font.size = "small",
     heading.subtitle.font.size = "small"

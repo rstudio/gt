@@ -62,8 +62,12 @@ with \code{\link[=OlsonNames]{OlsonNames()}}).}
 formatted value. The value itself is represented by \code{{x}} and all other
 characters are taken to be string literals.}
 
-\item{locale}{An optional locale ID that can be used for formatting values
-according to the locale's rules.}
+\item{locale}{An optional locale identifier that can be used for formatting
+the value according the locale's rules. Examples include \code{"en"} for English
+(United States) and \code{"fr"} for French (France). The use of a locale ID will
+override any locale-specific values provided. We can use the
+\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
+are supported.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -832,9 +836,9 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{dat
 Format the column to have dates formatted with the \code{"month_day_year"} style
 and times with the \code{"h_m_s_p"} 12-hour time style.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(datetime) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(datetime) |>
+  gt() |>
   fmt_datetime(
     columns = datetime,
     date_style = "month_day_year",
@@ -851,15 +855,15 @@ that work well together are \code{"MMMEd"} and \code{"Hms"}. These will mutate
 depending on the locale. Let's use the default locale for the first 3 rows
 and the Danish locale (\code{"da"}) for the remaining rows.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(datetime) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(datetime) |>
+  gt() |>
   fmt_datetime(
     columns = datetime,
     date_style = "MMMEd",
     time_style = "Hms",
     locale = "da"
-  ) \%>\%
+  ) |>
   fmt_datetime(
     columns = datetime,
     rows = 1:3,
@@ -878,9 +882,9 @@ specification. Using the CLDR datetime pattern
 zone formatting. Let's provide a time zone ID (\code{"America/Vancouver"}) to the
 \code{tz} argument.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(datetime) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(datetime) |>
+  gt() |>
   fmt_datetime(
     columns = datetime,
     format = "EEEE, MMMM d, y 'at' h:mm a (zzzz)",
@@ -895,7 +899,7 @@ zone formatting. Let's provide a time zone ID (\code{"America/Vancouver"}) to th
 
 \section{Function ID}{
 
-3-13
+3-14
 }
 
 \seealso{
@@ -911,6 +915,7 @@ Other data formatting functions:
 \code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},

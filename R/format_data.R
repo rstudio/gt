@@ -97,8 +97,12 @@
 #'   (i.e., `sep_mark`) are separated by three digits. The alternative system,
 #'   the Indian numbering system (`"ind"`) uses grouping separators that
 #'   correspond to thousand, lakh, crore, and higher quantities.
-#' @param locale An optional locale ID that can be used for formatting values
-#'   according to the locale's rules.
+#' @param locale An optional locale identifier that can be used for formatting
+#'   the value according the locale's rules. Examples include `"en"` for English
+#'   (United States) and `"fr"` for French (France). The use of a locale ID will
+#'   override any locale-specific values provided. We can use the
+#'   [info_locales()] function as a useful reference for all of the locales that
+#'   are supported.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -169,8 +173,8 @@
 #' with three decimal places and with no use of digit separators.
 #'
 #' ```r
-#' exibble %>%
-#'   gt() %>%
+#' exibble |>
+#'   gt() |>
 #'   fmt_number(
 #'     columns = num,
 #'     decimals = 3,
@@ -186,13 +190,13 @@
 #' large-number suffixing with the `suffixing = TRUE` option.
 #'
 #' ```r
-#' countrypops %>%
-#'   dplyr::select(country_code_3, year, population) %>%
-#'   dplyr::filter(country_code_3 %in% c("CHN", "IND", "USA", "PAK", "IDN")) %>%
-#'   dplyr::filter(year > 1975 & year %% 5 == 0) %>%
-#'   tidyr::spread(year, population) %>%
-#'   dplyr::arrange(desc(`2015`)) %>%
-#'   gt(rowname_col = "country_code_3") %>%
+#' countrypops |>
+#'   dplyr::select(country_code_3, year, population) |>
+#'   dplyr::filter(country_code_3 %in% c("CHN", "IND", "USA", "PAK", "IDN")) |>
+#'   dplyr::filter(year > 1975 & year %% 5 == 0) |>
+#'   tidyr::spread(year, population) |>
+#'   dplyr::arrange(desc(`2015`)) |>
+#'   gt(rowname_col = "country_code_3") |>
 #'   fmt_number(suffixing = TRUE)
 #' ```
 #'
@@ -235,13 +239,16 @@ fmt_number <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
-
   # Ensure that arguments are matched
   system <- rlang::arg_match(system)
 
-  # Resolve the `locale` value here with the global locale value
+  # Declare formatting function compatibility
+  compat <- c("numeric", "integer")
+
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
   locale <- resolve_locale(data = data, locale = locale)
 
   # Use locale-based marks if a locale ID is provided
@@ -452,9 +459,9 @@ fmt_number <- function(
 #' values having no digit separators (with the `use_seps = FALSE` option).
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(num, char) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(num, char) |>
+#'   gt() |>
 #'   fmt_integer(
 #'     columns = num,
 #'     use_seps = FALSE
@@ -622,15 +629,15 @@ fmt_integer <- function(
 #' `num > 500` and `num <= 500` expressions in the respective `rows` arguments).
 #'
 #' ```r
-#' exibble %>%
-#'   gt() %>%
+#' exibble |>
+#'   gt() |>
 #'   fmt_number(
 #'     columns = num,
 #'     rows = num > 500,
 #'     decimals = 1,
 #'     scale_by = 1/1000,
 #'     pattern = "{x}K"
-#'   ) %>%
+#'   ) |>
 #'   fmt_scientific(
 #'     columns = num,
 #'     rows = num <= 500,
@@ -673,12 +680,15 @@ fmt_scientific <- function(
   # Declare formatting function compatibility
   compat <- c("numeric", "integer")
 
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
+  locale <- resolve_locale(data = data, locale = locale)
+
   # Set default values
   suffixing <- FALSE
   use_seps <- TRUE
-
-  # Resolve the `locale` value here with the global locale value
-  locale <- resolve_locale(data = data, locale = locale)
 
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
@@ -982,8 +992,8 @@ fmt_scientific <- function(
 #' engineering notation.
 #'
 #' ```r
-#' exibble %>%
-#'   gt() %>%
+#' exibble |>
+#'   gt() |>
 #'   fmt_engineering(columns = num)
 #' ```
 #'
@@ -1021,12 +1031,15 @@ fmt_engineering <- function(
   # Declare formatting function compatibility
   compat <- c("numeric", "integer")
 
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
+  locale <- resolve_locale(data = data, locale = locale)
+
   # Set default values
   suffixing <- FALSE
   use_seps <- TRUE
-
-  # Resolve the `locale` value here with the global locale value
-  locale <- resolve_locale(data = data, locale = locale)
 
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
@@ -1475,13 +1488,13 @@ fmt_symbol <- function(
 #' column to display values as percentages.
 #'
 #' ```r
-#' pizzaplace %>%
-#'   dplyr::mutate(month = as.numeric(substr(date, 6, 7))) %>%
-#'   dplyr::group_by(month) %>%
-#'   dplyr::summarize(pizzas_sold = dplyr::n()) %>%
-#'   dplyr::ungroup() %>%
-#'   dplyr::mutate(frac_of_quota = pizzas_sold / 4000) %>%
-#'   gt(rowname_col = "month") %>%
+#' pizzaplace |>
+#'   dplyr::mutate(month = as.numeric(substr(date, 6, 7))) |>
+#'   dplyr::group_by(month) |>
+#'   dplyr::summarize(pizzas_sold = dplyr::n()) |>
+#'   dplyr::ungroup() |>
+#'   dplyr::mutate(frac_of_quota = pizzas_sold / 4000) |>
+#'   gt(rowname_col = "month") |>
 #'   fmt_percent(
 #'     columns = frac_of_quota,
 #'     decimals = 1
@@ -1523,13 +1536,16 @@ fmt_percent <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
-
   # Ensure that arguments are matched
   system <- rlang::arg_match(system)
 
-  # Resolve the `locale` value here with the global locale value
+  # Declare formatting function compatibility
+  compat <- c("numeric", "integer")
+
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
   locale <- resolve_locale(data = data, locale = locale)
 
   # In this case where strict mode is being used (with the option
@@ -1702,9 +1718,9 @@ fmt_percent <- function(
 #' format the `b` column as *per mille* values with `fmt_partsper()`.
 #'
 #' ```r
-#' dplyr::tibble(x = 0:-5, a = 10^(0:-5), b = a) %>%
-#'   gt(rowname_col = "x") %>%
-#'   fmt_scientific(a, decimals = 0) %>%
+#' dplyr::tibble(x = 0:-5, a = 10^(0:-5), b = a) |>
+#'   gt(rowname_col = "x") |>
+#'   fmt_scientific(a, decimals = 0) |>
 #'   fmt_partsper(
 #'     columns = b,
 #'     to_units = "per-mille"
@@ -1747,14 +1763,17 @@ fmt_partsper <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
-
   # Ensure that arguments are matched
   to_units <- rlang::arg_match(to_units)
   system <- rlang::arg_match(system)
 
-  # Resolve the `locale` value here with the global locale value
+  # Declare formatting function compatibility
+  compat <- c("numeric", "integer")
+
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
   locale <- resolve_locale(data = data, locale = locale)
 
   # In this case where strict mode is being used (with the option
@@ -1957,41 +1976,41 @@ fmt_partsper <- function(
 #' `f_income` columns to display fractions.
 #'
 #' ```r
-#' pizzaplace %>%
-#'   dplyr::group_by(type, size) %>%
+#' pizzaplace |>
+#'   dplyr::group_by(type, size) |>
 #'   dplyr::summarize(
 #'     sold = dplyr::n(),
 #'     income = sum(price),
 #'     .groups = "drop_last"
-#'   ) %>%
-#'   dplyr::group_by(type) %>%
+#'   ) |>
+#'   dplyr::group_by(type) |>
 #'   dplyr::mutate(
 #'     f_sold = sold / sum(sold),
 #'     f_income = income / sum(income),
-#'   ) %>%
-#'   dplyr::arrange(type, dplyr::desc(income)) %>%
-#'   gt(rowname_col = "size") %>%
+#'   ) |>
+#'   dplyr::arrange(type, dplyr::desc(income)) |>
+#'   gt(rowname_col = "size") |>
 #'   tab_header(
 #'     title = "Pizzas Sold in 2015",
 #'     subtitle = "Fraction of Sell Count and Revenue by Size per Type"
-#'   ) %>%
-#'   fmt_integer(columns = sold) %>%
-#'   fmt_currency(columns = income) %>%
+#'   ) |>
+#'   fmt_integer(columns = sold) |>
+#'   fmt_currency(columns = income) |>
 #'   fmt_fraction(
 #'     columns = starts_with("f_"),
 #'     accuracy = 10,
 #'     simplify = FALSE,
 #'     layout = "diagonal"
-#'   ) %>%
-#'   sub_missing(missing_text = "") %>%
+#'   ) |>
+#'   sub_missing(missing_text = "") |>
 #'   tab_spanner(
 #'     label = "Sold",
 #'     columns = contains("sold")
-#'   ) %>%
+#'   ) |>
 #'   tab_spanner(
 #'     label = "Revenue",
 #'     columns = contains("income")
-#'   ) %>%
+#'   ) |>
 #'   text_transform(
 #'     locations = cells_body(),
 #'     fn = function(x) {
@@ -2000,14 +2019,14 @@ fmt_partsper <- function(
 #'         x != 0 ~ x
 #'       )
 #'     }
-#'   ) %>%
+#'   ) |>
 #'   cols_label(
 #'     sold = "Amount",
 #'     income = "Amount",
 #'     f_sold = md("_f_"),
 #'     f_income = md("_f_")
-#'   ) %>%
-#'   cols_align(align = "center", columns = starts_with("f")) %>%
+#'   ) |>
+#'   cols_align(align = "center", columns = starts_with("f")) |>
 #'   tab_options(
 #'     table.width = px(400),
 #'     row_group.as_column = TRUE
@@ -2044,12 +2063,18 @@ fmt_fraction <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
-
   # Ensure that arguments are matched
   system <- rlang::arg_match(system)
   layout <- rlang::arg_match(layout)
+
+  # Declare formatting function compatibility
+  compat <- c("numeric", "integer")
+
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
+  locale <- resolve_locale(data = data, locale = locale)
 
   if (is.null(accuracy)) {
 
@@ -2086,9 +2111,6 @@ fmt_fraction <- function(
       ))
     }
   }
-
-  # Resolve the `locale` value here with the global locale value
-  locale <- resolve_locale(data = data, locale = locale)
 
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
@@ -2239,8 +2261,8 @@ fmt_fraction <- function(
 
           fraction_part <- gsub("^(.*?)([0-9]*/[0-9]*)", "\\2", x_str[has_a_fraction])
 
-          num_vec <- strsplit(fraction_part, "/") %>% lapply(`[[`, 1) %>% unlist()
-          denom_vec <- strsplit(fraction_part, "/") %>% lapply(`[[`, 2) %>% unlist()
+          num_vec <- unlist(lapply(strsplit(fraction_part, "/"), `[[`, 1))
+          denom_vec <- unlist(lapply(strsplit(fraction_part, "/"), `[[`, 2))
 
           if (context == "html") {
 
@@ -2512,8 +2534,8 @@ round_gt <- function(x, digits = 0) {
 #' have currency values in euros (`"EUR"`).
 #'
 #' ```r
-#' exibble %>%
-#'   gt() %>%
+#' exibble |>
+#'   gt() |>
 #'   fmt_currency(
 #'     columns = currency,
 #'     currency = "EUR"
@@ -2528,13 +2550,13 @@ round_gt <- function(x, digits = 0) {
 #' columns, then, format those columns using the `"CNY"` and `"GBP"` currencies.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(num, currency) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(num, currency) |>
+#'   gt() |>
 #'   fmt_currency(
 #'     columns = num,
 #'     currency = "CNY"
-#'   ) %>%
+#'   ) |>
 #'   fmt_currency(
 #'     columns = currency,
 #'     currency = "GBP"
@@ -2579,13 +2601,16 @@ fmt_currency <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
-
   # Ensure that arguments are matched
   system <- rlang::arg_match(system)
 
-  # Resolve the `locale` value here with the global locale value
+  # Declare formatting function compatibility
+  compat <- c("numeric", "integer")
+
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
   locale <- resolve_locale(data = data, locale = locale)
 
   # In this case where strict mode is being used (with the option
@@ -2706,8 +2731,8 @@ fmt_currency <- function(
 #' the `roman` column to appear as Roman numerals with `fmt_roman()`.
 #'
 #' ```r
-#' dplyr::tibble(arabic = c(1, 8, 24, 85), roman = arabic) %>%
-#'   gt(rowname_col = "arabic") %>%
+#' dplyr::tibble(arabic = c(1, 8, 24, 85), roman = arabic) |>
+#'   gt(rowname_col = "arabic") |>
 #'   fmt_roman(columns = roman)
 #' ```
 #'
@@ -2734,11 +2759,11 @@ fmt_roman <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer")
-
   # Ensure that arguments are matched
   case <- rlang::arg_match(case)
+
+  # Declare formatting function compatibility
+  compat <- c("numeric", "integer")
 
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
@@ -2803,6 +2828,268 @@ fmt_roman <- function(
       }
     )
   )
+}
+
+#' Format values to indexed characters
+#'
+#' @description
+#'
+#' With numeric values in a **gt** table we can transform those to index values,
+#' usually based on letters. These characters can be derived from a specified
+#' locale and they are intended for ordering (often leaving out characters with
+#' diacritical marks).
+#'
+#' @inheritParams fmt_number
+#' @param case Should resulting index characters be rendered as uppercase
+#'   (`"upper"`) or lowercase (`"lower"`) letters? By default, this is set to
+#'   `"upper"`.
+#' @param index_algo The indexing algorithm for handling the recycling of the
+#'   index character set. By default, the `"repeat"` option is used where
+#'   characters are doubled, tripled, and so on, when moving past the character
+#'   set limit. The alternative is the `"excel"` option, where Excel-based
+#'   column naming is adapted and used here (e.g., `[..., Y, Z, AA, AB, ...]`).
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Compatibility of formatting function with data values:
+#'
+#' The `fmt_index()` formatting function is compatible with body cells that are
+#' of the `"numeric"` or `"integer"` types. Any other types of body cells are
+#' ignored during formatting. This is to say that cells of incompatible data
+#' types may be targeted, but there will be no attempt to format them.
+#'
+#' @section Targeting cells with `columns` and `rows`:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to target a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value of 100,000 (excluding
+#' `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given formatting function
+#' will be skipped over, like `character` values and numeric `fmt_*()`
+#' functions. So it's safe to select all columns with a particular formatting
+#' function (only those values that can be formatted will be formatted), but,
+#' you may not want that. One strategy is to format the bulk of cell values with
+#' one formatting function and then constrain the columns for later passes with
+#' other types of formatting (the last formatting done to a cell is what you get
+#' in the final output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
+#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
+#' the input data (the indices won't necessarily match those of rearranged rows
+#' if row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector. This is nice if you want to base
+#' formatting on values in the column or another column, or, you'd like to use a
+#' more complex predicate expression.
+#'
+#' @section Examples:
+#'
+#' Use the [`towny`] dataset to create a **gt** table. After some summarizing
+#' and filtering, the `fmt_index()` function is used to transform incremental
+#' integer values into capitalized letters (in the `ranking` column). That
+#' formatted column of `"A"` to `"E"` values is merged with the `census_div`
+#' column to create an indexed listing of census subdivisions, here ordered by
+#' increasing total municipal population.
+#'
+#' ```r
+#' towny |>
+#'   dplyr::select(name, csd_type, census_div, population_2021) |>
+#'   dplyr::group_by(census_div) |>
+#'   dplyr::summarize(
+#'     population = sum(population_2021),
+#'     .groups = "drop_last"
+#'   ) |>
+#'   dplyr::arrange(population) |>
+#'   dplyr::slice_head(n = 5) |>
+#'   dplyr::mutate(ranking = dplyr::row_number()) |>
+#'   dplyr::select(ranking, dplyr::everything()) |>
+#'   gt() |>
+#'   fmt_integer() |>
+#'   fmt_index(columns = ranking, pattern = "{x}.") |>
+#'   cols_merge(columns = c(ranking, census_div)) |>
+#'   cols_align(align = "left", columns = ranking) |>
+#'   cols_label(
+#'     ranking = md("Census  \nSubdivision"),
+#'     population = md("Population  \nin 2021")
+#'   ) |>
+#'   tab_header(title = md("The smallest  \ncensus subdivisions")) |>
+#'   tab_options(table.width = px(325))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_index_1.png")`
+#' }}
+#'
+#' @family data formatting functions
+#' @section Function ID:
+#' 3-10
+#'
+#' @seealso The vector-formatting version of this function: [vec_fmt_index()].
+#'
+#' @import rlang
+#' @export
+fmt_index <- function(
+    data,
+    columns = everything(),
+    rows = everything(),
+    case = c("upper", "lower"),
+    index_algo = c("repeat", "excel"),
+    pattern = "{x}",
+    locale = NULL
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  # Ensure that arguments are matched
+  case <- rlang::arg_match(case)
+  index_algo <- rlang::arg_match(index_algo)
+
+  # Declare formatting function compatibility
+  compat <- c("numeric", "integer")
+
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
+  locale <- resolve_locale(data = data, locale = locale)
+
+  # Use locale-based `idx_set` if a locale ID is provided
+  idx_set <- get_locale_idx_set(locale)
+
+  # In this case where strict mode is being used (with the option
+  # called "gt.strict_column_fmt"), stop the function if any of the
+  # resolved columns have data that is incompatible with this formatter
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = compat
+    )
+  ) {
+    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
+      cli::cli_abort(
+        "The `fmt_index()` function can only be used on `columns`
+      with numeric data."
+      )
+    }
+  }
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    compat = compat,
+    fns = num_fmt_factory_multi(
+      pattern = pattern,
+      use_latex_math_mode = FALSE,
+      format_fn = function(x, context) {
+
+        # Generate an vector of empty strings that will eventually contain
+        # all of the roman numerals
+        x_str <- character(length(x))
+
+        # Round all values of x to 3 digits with the R-H-U method of
+        # rounding (for reproducibility purposes)
+        x <- round_gt(x, 0)
+
+        # Determine which of `x` are finite values
+        x_is_a_number <- is.finite(x)
+        x[x_is_a_number] <- abs(x[x_is_a_number])
+
+        # Select the correct indexing function
+        if (index_algo == "repeat") {
+          index_fn <- index_repeat
+        } else {
+          index_fn <- index_excel
+        }
+
+        x_str[x_is_a_number] <-
+          vapply(
+            x[x_is_a_number],
+            FUN.VALUE = character(1),
+            USE.NAMES = FALSE,
+            FUN = function(x) index_fn(x, set = idx_set)
+          )
+
+        x_str[x_is_a_number & x == 0] <- ""
+
+        if (case == "lower") {
+          x_str <- tolower(x_str)
+        }
+
+        # In rare cases that Inf or -Inf appear, ensure that these
+        # special values are printed correctly
+        x_str[is.infinite(x)] <- x[is.infinite(x)]
+
+        x_str
+      }
+    )
+  )
+}
+
+index_repeat <- function(x, set) {
+
+  marks_rep <- floor((x - 1) / length(set)) + 1
+
+  marks_val <- set[(x - 1) %% length(set) + 1]
+
+  unname(
+    mapply(
+      marks_val, marks_rep,
+      FUN = function(val_i, rep_i) {
+        paste(rep(val_i, rep_i), collapse = "")}
+    )
+  )
+}
+
+index_excel <- function(num, set) {
+
+  result <-
+    vapply(
+      num,
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
+      FUN = function(x) {
+        get_letters_from_div(x, set = set)
+      }
+    )
+
+  ifelse(result == "", NA_character_, result)
+}
+
+get_letters_from_div <- function(x, set) {
+
+  if (is.na(x)) {
+    return(NA_character_)
+  }
+
+  result <- integer()
+
+  while (x > 0) {
+    remainder <- ((x - 1) %% 26) + 1
+    result <- c(remainder, result)
+    x <- (x - remainder) %/% 26
+  }
+
+  paste(set[result], collapse = "")
 }
 
 #' Format values as bytes
@@ -2910,9 +3197,9 @@ fmt_roman <- function(
 #' byte sizes in the decimal standard.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(num) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(num) |>
+#'   gt() |>
 #'   fmt_bytes(columns = num)
 #' ```
 #'
@@ -2924,9 +3211,9 @@ fmt_roman <- function(
 #' byte sizes as binary values.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(num) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(num) |>
+#'   gt() |>
 #'   fmt_bytes(
 #'     columns = num,
 #'     standard = "binary"
@@ -2939,7 +3226,7 @@ fmt_roman <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-10
+#' 3-11
 #'
 #' @seealso The vector-formatting version of this function: [vec_fmt_bytes()].
 #'
@@ -2966,11 +3253,17 @@ fmt_bytes <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
+  # Ensure that arguments are matched
+  standard <- rlang::arg_match(standard)
+
   # Declare formatting function compatibility
   compat <- c("numeric", "integer")
 
-  # Ensure that arguments are matched
-  standard <- rlang::arg_match(standard)
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
+  locale <- resolve_locale(data = data, locale = locale)
 
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
@@ -2989,9 +3282,6 @@ fmt_bytes <- function(
       )
     }
   }
-
-  # Resolve the `locale` value here with the global locale value
-  locale <- resolve_locale(data = data, locale = locale)
 
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
@@ -3053,8 +3343,10 @@ fmt_bytes <- function(
             drop_trailing_zeros = drop_trailing_zeros,
             drop_trailing_dec_mark = drop_trailing_dec_mark,
             format = formatC_format
-          ) %>%
-          paste_right(x_right = paste0(if (incl_space) " ", units_str))
+          )
+
+        x_str <-
+          paste_right(x_str, x_right = paste0(if (incl_space) " ", units_str))
 
         # Force a positive sign on certain values if the option is taken
         if (force_sign) {
@@ -3208,9 +3500,9 @@ fmt_bytes <- function(
 #' `"month_day_year"` date style.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(date, time) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(date, time) |>
+#'   gt() |>
 #'   fmt_date(
 #'     columns = date,
 #'     date_style = "month_day_year"
@@ -3227,14 +3519,14 @@ fmt_bytes <- function(
 #' in the `rows` argument).
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(date, time) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(date, time) |>
+#'   gt() |>
 #'   fmt_date(
 #'     columns = date,
 #'     rows = as.Date(date) > as.Date("2015-04-01"),
 #'     date_style = "m_day_year"
-#'   ) %>%
+#'   ) |>
 #'   fmt_date(
 #'     columns = date,
 #'     rows = as.Date(date) <= as.Date("2015-04-01"),
@@ -3252,9 +3544,9 @@ fmt_bytes <- function(
 #' get the dates in Dutch.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(date) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(date) |>
+#'   gt() |>
 #'   fmt_date(
 #'     columns = date,
 #'     date_style = "yMMMEd",
@@ -3268,7 +3560,7 @@ fmt_bytes <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-11
+#' 3-12
 #'
 #' @seealso The vector-formatting version of this function: [vec_fmt_date()].
 #'
@@ -3289,7 +3581,10 @@ fmt_date <- function(
   # Declare formatting function compatibility
   compat <- c("Date", "POSIXt", "character")
 
-  # Resolve the `locale` value here with the global locale value
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
   locale <- resolve_locale(data = data, locale = locale)
 
   # Transform `date_style` to `date_format_str`
@@ -3473,9 +3768,9 @@ fmt_date <- function(
 #' style `3`).
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(date, time) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(date, time) |>
+#'   gt() |>
 #'   fmt_time(
 #'     columns = time,
 #'     time_style = "h_m_s_p"
@@ -3492,14 +3787,14 @@ fmt_date <- function(
 #' in the `rows` argument).
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(date, time) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(date, time) |>
+#'   gt() |>
 #'   fmt_time(
 #'     columns = time,
 #'     rows = time > "16:00",
 #'     time_style = "h_m_s_p"
-#'   ) %>%
+#'   ) |>
 #'   fmt_time(
 #'     columns = time,
 #'     rows = time <= "16:00",
@@ -3517,9 +3812,9 @@ fmt_date <- function(
 #' get the dates in Swedish.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(time) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(time) |>
+#'   gt() |>
 #'   fmt_time(
 #'     columns = time,
 #'     time_style = "EBhms",
@@ -3533,7 +3828,7 @@ fmt_date <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-12
+#' 3-13
 #'
 #' @seealso The vector-formatting version of this function: [vec_fmt_time()].
 #'
@@ -3553,6 +3848,12 @@ fmt_time <- function(
 
   # Declare formatting function compatibility
   compat <- c("Date", "POSIXt", "character")
+
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
+  locale <- resolve_locale(data = data, locale = locale)
 
   # Transform `time_style` to `time_format_str`
   time_format_str <- get_time_format(time_style = time_style)
@@ -4341,9 +4642,9 @@ fmt_time <- function(
 #' and times with the `"h_m_s_p"` 12-hour time style.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(datetime) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(datetime) |>
+#'   gt() |>
 #'   fmt_datetime(
 #'     columns = datetime,
 #'     date_style = "month_day_year",
@@ -4361,15 +4662,15 @@ fmt_time <- function(
 #' and the Danish locale (`"da"`) for the remaining rows.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(datetime) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(datetime) |>
+#'   gt() |>
 #'   fmt_datetime(
 #'     columns = datetime,
 #'     date_style = "MMMEd",
 #'     time_style = "Hms",
 #'     locale = "da"
-#'   ) %>%
+#'   ) |>
 #'   fmt_datetime(
 #'     columns = datetime,
 #'     rows = 1:3,
@@ -4389,9 +4690,9 @@ fmt_time <- function(
 #' `tz` argument.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(datetime) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(datetime) |>
+#'   gt() |>
 #'   fmt_datetime(
 #'     columns = datetime,
 #'     format = "EEEE, MMMM d, y 'at' h:mm a (zzzz)",
@@ -4405,7 +4706,7 @@ fmt_time <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-13
+#' 3-14
 #'
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_datetime()].
@@ -4430,6 +4731,12 @@ fmt_datetime <- function(
 
   # Declare formatting function compatibility
   compat <- c("Date", "POSIXct", "character")
+
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
+  locale <- resolve_locale(data = data, locale = locale)
 
   if (!is.null(format)) {
 
@@ -4722,19 +5029,19 @@ fmt_datetime <- function(
 #' number of days since March 30, 2020.
 #'
 #' ```r
-#' sp500 %>%
-#'   dplyr::slice_head(n = 10) %>%
+#' sp500 |>
+#'   dplyr::slice_head(n = 10) |>
 #'   dplyr::mutate(
 #'     time_point = lubridate::ymd("2020-03-30"),
 #'     time_passed = difftime(time_point, date)
-#'   ) %>%
-#'   dplyr::select(time_passed, open, close) %>%
-#'   gt(rowname_col = "month") %>%
+#'   ) |>
+#'   dplyr::select(time_passed, open, close) |>
+#'   gt(rowname_col = "month") |>
 #'   fmt_duration(
 #'     columns = time_passed,
 #'     output_units = "days",
 #'     duration_style = "wide"
-#'   ) %>%
+#'   ) |>
 #'   fmt_currency(columns = c(open, close))
 #' ```
 #'
@@ -4744,7 +5051,7 @@ fmt_datetime <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-14
+#' 3-15
 #'
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_duration()].
@@ -4771,18 +5078,21 @@ fmt_duration <- function(
   # Perform input object validation
   stop_if_not_gt(data = data)
 
-  # Declare formatting function compatibility
-  compat <- c("numeric", "integer", "difftime")
-
   # Ensure that arguments are matched
   duration_style <- rlang::arg_match(duration_style)
   system <- rlang::arg_match(system)
 
+  # Declare formatting function compatibility
+  compat <- c("numeric", "integer", "difftime")
+
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
+  locale <- resolve_locale(data = data, locale = locale)
+
   # Duration values will never have decimal marks
   dec_mark <- "unused"
-
-  # Resolve the `locale` value here with the global locale value
-  locale <- resolve_locale(data = data, locale = locale)
 
   # Use locale-based marks if a locale ID is provided
   sep_mark <- get_locale_sep_mark(locale, sep_mark, use_seps)
@@ -5022,9 +5332,9 @@ validate_duration_input_units <- function(input_units) {
 normalize_duration_input_units <- function(input_units) {
 
   # Ensure that key transforms occur
-  input_units %>%
-    tidy_sub("secs", "seconds") %>%
-    tidy_sub("mins", "minutes")
+  input_units <- tidy_sub(input_units, "secs", "seconds")
+  input_units <- tidy_sub(input_units, "mins", "minutes")
+  input_units
 }
 
 validate_duration_output_units <- function(output_units) {
@@ -5059,11 +5369,9 @@ validate_duration_output_units <- function(output_units) {
 normalize_duration_output_units <- function(output_units) {
 
   # Ensure that key transforms occur and that the output units are a unique set
-  output_units <-
-    output_units %>%
-    tidy_sub("secs", "seconds") %>%
-    tidy_sub("mins", "minutes") %>%
-    unique()
+  output_units <- tidy_sub(output_units, "secs", "seconds")
+  output_units <- tidy_sub(output_units, "mins", "minutes")
+  output_units <- unique(output_units)
 
   # Ensure that the order of output units is from greatest to smallest
   time_parts <- c("weeks", "days", "hours", "minutes", "seconds")
@@ -5499,9 +5807,9 @@ extract_duration_pattern <- function(
 #'   ~Markdown, ~md,
 #'   text_1a,   text_2a,
 #'   text_1b,   text_2b,
-#' ) %>%
-#'   gt() %>%
-#'   fmt_markdown(columns = everything()) %>%
+#' ) |>
+#'   gt() |>
+#'   fmt_markdown(columns = everything()) |>
 #'   tab_options(table.width = px(400))
 #' ```
 #'
@@ -5511,7 +5819,7 @@ extract_duration_pattern <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-15
+#' 3-16
 #'
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_markdown()].
@@ -5626,9 +5934,9 @@ fmt_markdown <- function(
 #' to the non-`NA` values.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(char) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(char) |>
+#'   gt() |>
 #'   fmt_passthrough(
 #'     columns = char,
 #'     rows = !is.na(char),
@@ -5642,7 +5950,7 @@ fmt_markdown <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-16
+#' 3-17
 #'
 #' @import rlang
 #' @export
@@ -5805,8 +6113,8 @@ fmt_passthrough <- function(
 #' with `fmt_auto()`.
 #'
 #' ```r
-#' exibble %>%
-#'   gt() %>%
+#' exibble |>
+#'   gt() |>
 #'   fmt_auto()
 #' ```
 #'
@@ -5819,13 +6127,13 @@ fmt_passthrough <- function(
 #' instead of scientific notation with the `lg_num_pref = "suf"` option.
 #'
 #' ```r
-#' countrypops %>%
-#'   dplyr::select(country_code_3, year, population) %>%
-#'   dplyr::filter(country_code_3 %in% c("CHN", "IND", "USA", "PAK", "IDN")) %>%
-#'   dplyr::filter(year > 1975 & year %% 5 == 0) %>%
-#'   tidyr::spread(year, population) %>%
-#'   dplyr::arrange(desc(`2015`)) %>%
-#'   gt(rowname_col = "country_code_3") %>%
+#' countrypops |>
+#'   dplyr::select(country_code_3, year, population) |>
+#'   dplyr::filter(country_code_3 %in% c("CHN", "IND", "USA", "PAK", "IDN")) |>
+#'   dplyr::filter(year > 1975 & year %% 5 == 0) |>
+#'   tidyr::spread(year, population) |>
+#'   dplyr::arrange(desc(`2020`)) |>
+#'   gt(rowname_col = "country_code_3") |>
 #'   fmt_auto(lg_num_pref = "suf")
 #' ```
 #'
@@ -5835,7 +6143,7 @@ fmt_passthrough <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-17
+#' 3-18
 #'
 #' @export
 fmt_auto <- function(
@@ -6121,9 +6429,9 @@ fmt_auto <- function(
 #' `num` column with a function supplied to the `fns` argument.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(-row, -group) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(-row, -group) |>
+#'   gt() |>
 #'   fmt(
 #'     columns = num,
 #'     fns = function(x) {
@@ -6138,7 +6446,7 @@ fmt_auto <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-18
+#' 3-19
 #'
 #' @import rlang
 #' @export

@@ -99,9 +99,9 @@ more complex predicate expression.
 Use \code{\link{exibble}} to create a \strong{gt} table. Format the numeric values in the
 \code{num} column with a function supplied to the \code{fns} argument.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(-row, -group) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(-row, -group) |>
+  gt() |>
   fmt(
     columns = num,
     fns = function(x) \{
@@ -117,7 +117,7 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Format the numeric valu
 
 \section{Function ID}{
 
-3-18
+3-19
 }
 
 \seealso{
@@ -131,6 +131,7 @@ Other data formatting functions:
 \code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},

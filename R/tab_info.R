@@ -1,6 +1,7 @@
 #' Understand what's been set inside of a **gt** table object
 #'
 #' @description
+#'
 #' It can become increasingly difficult to recall the ID values associated with
 #' different labels in a **gt** table. Further to this, there are also
 #' situations where **gt** will generate ID values on your behalf (e.g., with
@@ -29,16 +30,16 @@
 #'
 #' ```r
 #' gt_tbl <-
-#'   gtcars %>%
-#'   dplyr::select(model, year, starts_with("hp"), msrp) %>%
-#'   dplyr::slice(1:4) %>%
-#'   gt(rowname_col = "model") %>%
+#'   gtcars |>
+#'   dplyr::select(model, year, starts_with("hp"), msrp) |>
+#'   dplyr::slice(1:4) |>
+#'   gt(rowname_col = "model") |>
 #'   tab_spanner(
 #'     label = "performance",
 #'     columns = starts_with("hp")
 #'   )
 #'
-#' gt_tbl %>% tab_info()
+#' gt_tbl |> tab_info()
 #' ```
 #'
 #' \if{html}{\out{

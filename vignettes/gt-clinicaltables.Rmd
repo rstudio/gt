@@ -31,17 +31,22 @@ gt_adsl |> str()
 Let's start with an example of a basic demographic summary table. In a first step, we use *dplyr* and *tidyr* to create a tibble with the shape of our desired table and then use *gt* functions to create the output table:
 
 ```{r gt_demo_input}
-custom_summary <- function(df, group_var, sum_var){
+custom_summary <- function(df, group_var, sum_var) {
+  
   group_var <- rlang::ensym(group_var)
   sum_var <- rlang::ensym(sum_var)
   
-  is_categorical <- is.character(eval(expr(`$`(df, !!sum_var)))) | is.factor(eval(expr(`$`(df, !!sum_var)))) 
+  is_categorical <- 
+    is.character(eval(expr(`$`(df, !!sum_var)))) |
+    is.factor(eval(expr(`$`(df, !!sum_var)))) 
   
-  if (is_categorical){
+  if (is_categorical) {
 
-    category_lbl <- sprintf("%s, n (%%)", attr(eval(expr(`$`(df, !!sum_var))), "label"))
+    category_lbl <- 
+      sprintf("%s, n (%%)", attr(eval(expr(`$`(df, !!sum_var))), "label"))
 
-    df_out <- df %>%
+    df_out <-
+      df |>
       dplyr::group_by(!!group_var)  |> 
       dplyr::mutate(N = dplyr::n()) |> 
       dplyr::ungroup() |> 
@@ -50,19 +55,30 @@ custom_summary <- function(df, group_var, sum_var){
         val = dplyr::n(),
         pct = dplyr::n()/mean(N),
         .groups = "drop"
-        ) |> 
+      ) |> 
       dplyr::ungroup()  |> 
-      tidyr::pivot_wider(id_cols = !!sum_var, names_from = !!group_var, values_from = c(val, pct))  |> 
+      tidyr::pivot_wider(
+        id_cols = !!sum_var, names_from = !!group_var,
+        values_from = c(val, pct)
+      ) |> 
       dplyr::rename(label = !!sum_var) |> 
-      dplyr::mutate(across(where(is.numeric), ~ifelse(is.na(.), 0, .)),
-                    category = category_lbl)
+      dplyr::mutate(
+        across(where(is.numeric), ~ifelse(is.na(.), 0, .)),
+        category = category_lbl
+      )
 
   } else {
 
-    category_lbl <- sprintf("%s (%s)", attr(eval(expr(`$`(df, !!sum_var))), "label"), attr(eval(expr(`$`(df, !!sum_var))), "units"))
+    category_lbl <-
+      sprintf(
+        "%s (%s)",
+        attr(eval(expr(`$`(df, !!sum_var))), "label"),
+        attr(eval(expr(`$`(df, !!sum_var))), "units")
+      )
 
-    df_out <- df  |> 
-      dplyr::group_by(!!group_var)  |> 
+    df_out <- 
+      df |> 
+      dplyr::group_by(!!group_var) |> 
       dplyr::summarize(
         n = sum(!is.na(!!sum_var)),
         mean = mean(!!sum_var, na.rm = TRUE),
@@ -72,31 +88,51 @@ custom_summary <- function(df, group_var, sum_var){
         max = max(!!sum_var, na.rm = TRUE),
         min_max = NA,
         .groups = "drop"
-                       )  |> 
-      dplyr::ungroup()  |> 
-      tidyr::pivot_longer(cols = c(n, mean, median, min_max), names_to = "label", values_to = "val")  |> 
-      dplyr::mutate(sd = ifelse(label == "mean", sd, NA),
-                    max = ifelse(label == "min_max", max, NA),
-                    min = ifelse(label == "min_max", min, NA),
-                    label = dplyr::recode(label, "mean" = "Mean (SD)", "min_max" = "Min - Max", "median" = "Median"))  |> 
-      tidyr::pivot_wider(id_cols = label, names_from = !!group_var, values_from = c(val, sd, min, max))  |> 
+      ) |> 
+      dplyr::ungroup() |> 
+      tidyr::pivot_longer(
+        cols = c(n, mean, median, min_max),
+        names_to = "label",
+        values_to = "val"
+      ) |> 
+      dplyr::mutate(
+        sd = ifelse(label == "mean", sd, NA),
+        max = ifelse(label == "min_max", max, NA),
+        min = ifelse(label == "min_max", min, NA),
+        label = dplyr::recode(
+          label,
+          "mean" = "Mean (SD)",
+          "min_max" = "Min - Max",
+          "median" = "Median"
+        )
+      ) |> 
+      tidyr::pivot_wider(
+        id_cols = label,
+        names_from = !!group_var,
+        values_from = c(val, sd, min, max)
+      ) |> 
       dplyr::mutate(category = category_lbl)
-
   }
 
   return(df_out)
 }
 
-adsl_summary <- gt_adsl |>  
+adsl_summary <- 
+  gt_adsl |>
   dplyr::filter(ITTFL == "Y") %>%
-  {purrr::map_df(.x = dplyr::vars(AGE, AAGEGR1, SEX, ETHNIC, BLBMI),
-                 .f = \(x) custom_summary(df = ., group_var = TRTA, sum_var = !!x))}
+  {
+    purrr::map_df(
+      .x = dplyr::vars(AGE, AAGEGR1, SEX, ETHNIC, BLBMI),
+      .f = \(x) custom_summary(df = ., group_var = TRTA, sum_var = !!x)
+    )
+  }
 ```
 
 We can now start to expose our tibble with the summary of adsl variables to **gt** using `gt()`. Values should be grouped by category, with labels as rownames. In addition, we can give our table a nice title and subtitle.
 
 ```{r gt_demo}
-gt_adsl_tbl <- adsl_summary |> 
+gt_adsl_tbl <- 
+  adsl_summary |> 
   gt(
     rowname_col = "label",
     groupname_col = "category"
@@ -112,11 +148,23 @@ gt_adsl_tbl
 As a first step, let's try to format the columns, formatting counts, min, max and medians with `fmt_integer()`, percentages with `fmt_percent()`, and mean and sd with `fmt_number()` using 1 and 2 decimals, respectively. To get rid of all NA values, we will use `sub_missing()` and replace all NA's with an empty string.
 
 ```{r gt_demo_fmt}
-gt_adsl_tbl <- gt_adsl_tbl |> 
-  fmt_integer(columns = starts_with(c("val_", "min_", "max_")), rows = label %in% c("n", "Median", "Min - Max")) |> 
+gt_adsl_tbl <- 
+  gt_adsl_tbl |> 
+  fmt_integer(
+    columns = starts_with(c("val_", "min_", "max_")),
+    rows = label %in% c("n", "Median", "Min - Max")
+  ) |> 
   fmt_percent(columns = starts_with("pct_"), decimals = 1) |> 
-  fmt_number(columns = starts_with("val_"), rows = label == "Mean (SD)", decimals = 1) |> 
-  fmt_number(columns = starts_with("sd_"), rows = label == "Mean (SD)", decimals = 2) |> 
+  fmt_number(
+    columns = starts_with("val_"),
+    rows = label == "Mean (SD)",
+    decimals = 1
+  ) |> 
+  fmt_number(
+    columns = starts_with("sd_"),
+    rows = label == "Mean (SD)",
+    decimals = 2
+  ) |> 
   sub_missing(missing_text = "")
 
 gt_adsl_tbl
@@ -125,15 +173,42 @@ gt_adsl_tbl
 This looks way better but our table still has a rather wide style. To collapse the columns appropriately, we will use `cols_merge*()`, combining mean and SD, min and max, as well as n and percentages, respectively. Although the aggregation of mean and SD is not strictly the intended use of `cols_merge_n_pct()`, the function does a great job here.
 
 ```{r gt_demo_merge}
-gt_adsl_tbl <- gt_adsl_tbl |> 
-  cols_merge_n_pct(col_n = "val_Placebo", col_pct = "pct_Placebo") |> 
-  cols_merge_n_pct(col_n = "val_Drug 1", col_pct = "pct_Drug 1") |>
-  cols_merge_n_pct(col_n = "val_Placebo", col_pct = "sd_Placebo") |> 
-  cols_merge_n_pct(col_n = "val_Drug 1", col_pct = "sd_Drug 1") |> 
-  cols_merge_range(col_begin = "min_Placebo", col_end = "max_Placebo", sep = " - ") |> 
-  cols_merge_range(col_begin = "min_Drug 1", col_end = "max_Drug 1", sep = " - ") |> 
-  cols_merge(columns = c("val_Placebo", "min_Placebo"), pattern = "{1}{2}") |> 
-  cols_merge(columns = c("val_Drug 1", "min_Drug 1"), pattern = "{1}{2}") 
+gt_adsl_tbl <- 
+  gt_adsl_tbl |> 
+  cols_merge_n_pct(
+    col_n = "val_Placebo",
+    col_pct = "pct_Placebo"
+  ) |> 
+  cols_merge_n_pct(
+    col_n = "val_Drug 1",
+    col_pct = "pct_Drug 1"
+  ) |>
+  cols_merge_n_pct(
+    col_n = "val_Placebo",
+    col_pct = "sd_Placebo"
+  ) |> 
+  cols_merge_n_pct(
+    col_n = "val_Drug 1",
+    col_pct = "sd_Drug 1"
+  ) |> 
+  cols_merge_range(
+    col_begin = "min_Placebo",
+    col_end = "max_Placebo",
+    sep = " - "
+  ) |> 
+  cols_merge_range(
+    col_begin = "min_Drug 1",
+    col_end = "max_Drug 1",
+    sep = " - "
+  ) |> 
+  cols_merge(
+    columns = c("val_Placebo", "min_Placebo"),
+    pattern = "{1}{2}"
+  ) |> 
+  cols_merge(
+    columns = c("val_Drug 1", "min_Drug 1"),
+    pattern = "{1}{2}"
+  ) 
 
 gt_adsl_tbl
 ```
@@ -141,7 +216,8 @@ gt_adsl_tbl
 Now that looks more like a demographic table. We can now start to look in to style features. Let us indent the values in the stub using `tab_stub_indent()` and left-align the title with `opt_align_table_header()`. 
 
 ```{r}
-gt_adsl_tbl <- gt_adsl_tbl |> 
+gt_adsl_tbl <-
+  gt_adsl_tbl |> 
   tab_stub_indent(
     rows = everything(),
     indent = 5
@@ -154,7 +230,8 @@ gt_adsl_tbl
 Let's now change the column width of our Placebo and Drug 1 columns and align all values to the center, making use of `cols_width()` and `cols_align()`.
 
 ```{r gt_demo_align}
-gt_adsl_tbl <- gt_adsl_tbl |> 
+gt_adsl_tbl <-
+  gt_adsl_tbl |> 
   cols_width(
     starts_with("val_") ~ px(200),
     1 ~ px(250)
@@ -171,7 +248,8 @@ In a final step we can now take care of the column names and assign something mo
 
 ```{r gt_demo_label}
 ### Count subjects per arm and summarize values in a list
-arm_n <- gt_adsl |> 
+arm_n <-
+  gt_adsl |> 
   dplyr::filter(ITTFL == "Y") |> 
   dplyr::group_by(TRTA) |> 
   dplyr::summarize(
@@ -183,8 +261,8 @@ arm_n <- gt_adsl |>
 collbl_list <- as.list(arm_n$lbl)
 names(collbl_list) <- paste0("val_", arm_n$TRTA)
 
-
-gt_adsl_tbl <- gt_adsl_tbl |> 
+gt_adsl_tbl <- 
+  gt_adsl_tbl |> 
   cols_label(.list = collbl_list)
 
 gt_adsl_tbl
@@ -197,18 +275,37 @@ In another table, we can summarize the number of subjects with an event per inte
 The below code performs the calculation outlined above within the subgroup defined by `AAGEGR1`, where confidence intervals around the event rates are computed using the Clopper Pearson method.
 
 ```{r gt_resp_summary}
-gt_responders <- gt_adsl |> 
+gt_responders <- 
+  gt_adsl |> 
   dplyr::filter(ITTFL == "Y") |> 
   dplyr::group_by(TRTA, AAGEGR1) |> 
   dplyr::summarize(
     n_resp = sum(EVNTFL == "Y"),
     n_total = dplyr::n(),
-    pct = 100*sum(EVNTFL == "Y")/dplyr::n(),
-    ci_up = 100*(1 + (dplyr::n()-sum(EVNTFL == "Y"))/((sum(EVNTFL == "Y")+1)*qf(.975, 2*(sum(EVNTFL == "Y")+1), 2*(dplyr::n()-sum(EVNTFL == "Y")))))^(-1),
-    ci_low = ifelse(sum(EVNTFL == "Y") == 0,
-                    0,
-                    100*(1 + (dplyr::n()-sum(EVNTFL == "Y")+1)/(sum(EVNTFL == "Y")*qf(.025, 2*sum(EVNTFL == "Y"), 2*(dplyr::n()-sum(EVNTFL == "Y")+1))))^(-1)),
-    odds = sum(EVNTFL == "Y")/(dplyr::n()-sum(EVNTFL == "Y")),
+    pct = 100 * sum(EVNTFL == "Y") / dplyr::n(),
+    ci_up = 100 * (
+      1 + (dplyr::n() - sum(EVNTFL == "Y")) / (
+        (sum(EVNTFL == "Y") + 1) * qf(
+          0.975,
+          2 * (sum(EVNTFL == "Y") + 1),
+          2 * (dplyr::n() - sum(EVNTFL == "Y"))
+          )
+        )
+      )^(-1),
+    ci_low = ifelse(
+      sum(EVNTFL == "Y") == 0,
+      0,
+      100 * (
+        1 + (dplyr::n() - sum(EVNTFL == "Y") + 1) /
+          (sum(EVNTFL == "Y") * qf(
+            0.025,
+            2 * sum(EVNTFL == "Y"),
+            2 * (dplyr::n() - sum(EVNTFL == "Y") + 1)
+            )
+          )
+        )^(-1)
+      ),
+    odds = sum(EVNTFL == "Y") / (dplyr::n() - sum(EVNTFL == "Y")),
     .groups = "drop"
   ) |> 
   tidyr::pivot_wider(
@@ -216,10 +313,29 @@ gt_responders <- gt_adsl |>
     names_from = TRTA,
     values_from = c(n_resp, n_total, pct, ci_up, ci_low, odds)
     ) |> 
-  dplyr::mutate(or = ifelse(odds_Placebo == 0, NA_real_, !! sym("odds_Drug 1") / odds_Placebo),
-                or_ci_low = exp(log(or)-qnorm(0.975)*sqrt(1/n_resp_Placebo + 1/!!sym("n_resp_Drug 1") + 1/(n_total_Placebo - n_resp_Placebo) + 1/(!!sym("n_total_Drug 1") - !!sym("n_resp_Drug 1")))),
-                or_ci_up = exp(log(or)+qnorm(0.975)*sqrt(1/n_resp_Placebo + 1/!!sym("n_resp_Drug 1") + 1/(n_total_Placebo - n_resp_Placebo) + 1/(!!sym("n_total_Drug 1") - !!sym("n_resp_Drug 1"))))
-                ) |> 
+  dplyr::mutate(
+    or = ifelse(
+      odds_Placebo == 0,
+      NA_real_,
+      !! sym("odds_Drug 1") / odds_Placebo
+      ),
+    or_ci_low = exp(
+      log(or) - qnorm(0.975) * sqrt(
+        1 / n_resp_Placebo +
+          1 / !!sym("n_resp_Drug 1") + 
+          1 / (n_total_Placebo - n_resp_Placebo) + 
+          1 / (!!sym("n_total_Drug 1") - !!sym("n_resp_Drug 1"))
+        )
+      ),
+    or_ci_up = exp(
+      log(or) + qnorm(0.975) * sqrt(
+        1 / n_resp_Placebo + 
+          1 / !!sym("n_resp_Drug 1") +
+          1 / (n_total_Placebo - n_resp_Placebo) +
+          1 / (!!sym("n_total_Drug 1") - !!sym("n_resp_Drug 1"))
+        )
+      )
+    ) |> 
   dplyr::select(-tidyselect::starts_with("odds_"))
 ```
 
@@ -240,7 +356,8 @@ gt_resp_tbl
 Next, we are formatting the columns for counts to integers with `fmt_integer()`, percentages and CI's around percentages as numbers with one decimal and odds ratio and the CI around the odds ratio as numbers with two decimals, in both cases using `fmt_number()`.
 
 ```{r}
-gt_resp_tbl <- gt_resp_tbl |> 
+gt_resp_tbl <- 
+  gt_resp_tbl |> 
   fmt_integer(columns = starts_with("n_")) |> 
   fmt_number(columns = starts_with(c("pct_", "ci_")), decimals = 1) |> 
   fmt_number(columns = starts_with("or"), decimals = 2) 
@@ -248,15 +365,31 @@ gt_resp_tbl <- gt_resp_tbl |>
 gt_resp_tbl
 ```
 
-We can now merge the columns for participants with events, total number of participants and percentage of participants with events, as well as the 95% CI's around the event rate using `cols_merge()`.  To indicate the intervention group we are adding tab spanners with `tab_spanner()`. 
+We can now merge the columns for participants with events, total number of participants and percentage of participants with events, as well as the 95% CI's around the event rate using `cols_merge()`. To indicate the intervention group we are adding tab spanners with `tab_spanner()`. 
 
 ```{r}
-gt_resp_tbl <- gt_resp_tbl |> 
-  cols_merge(columns = c("n_resp_Placebo", "n_total_Placebo", "pct_Placebo"), pattern = "{1}/{2} ({3})") |> 
-  cols_merge(columns = c("n_resp_Drug 1", "n_total_Drug 1", "pct_Drug 1"), pattern = "{1}/{2} ({3})") |> 
-  cols_merge(columns = c("ci_low_Placebo", "ci_up_Placebo"), pattern = "[{1}, {2}]") |> 
-  cols_merge(columns = c("ci_low_Drug 1", "ci_up_Drug 1"), pattern = "[{1}, {2}]") |> 
-  cols_merge(columns = c("or_ci_low", "or_ci_up"), pattern = "[{1}, {2}]") |> 
+gt_resp_tbl <-
+  gt_resp_tbl |> 
+  cols_merge(
+    columns = c("n_resp_Placebo", "n_total_Placebo", "pct_Placebo"),
+    pattern = "{1}/{2} ({3})"
+  ) |> 
+  cols_merge(
+    columns = c("n_resp_Drug 1", "n_total_Drug 1", "pct_Drug 1"),
+    pattern = "{1}/{2} ({3})"
+  ) |> 
+  cols_merge(
+    columns = c("ci_low_Placebo", "ci_up_Placebo"),
+    pattern = "[{1}, {2}]"
+  ) |> 
+  cols_merge(
+    columns = c("ci_low_Drug 1", "ci_up_Drug 1"),
+    pattern = "[{1}, {2}]"
+  ) |> 
+  cols_merge(
+    columns = c("or_ci_low", "or_ci_up"),
+    pattern = "[{1}, {2}]"
+  ) |> 
   tab_spanner(
     label = "Drug 1",
     columns = c("n_resp_Drug 1", "ci_low_Drug 1")
@@ -268,11 +401,12 @@ gt_resp_tbl <- gt_resp_tbl |>
 
 gt_resp_tbl
 ```
+
 The table is looking way better now. Let's now group the two categories and highlight the fact that these are actually age subgroups. We are using `tab_row_group()` to manually add a row group label *Age*.
 
-
 ```{r}
-gt_resp_tbl <- gt_resp_tbl |> 
+gt_resp_tbl <-
+  gt_resp_tbl |> 
   tab_row_group(
     label = "Age",
     rows = everything()
@@ -286,24 +420,28 @@ Next, we'll take care of the column labels. As we now have the `tab_row_group()`
 Using `cols_width()` and `cols_align()` we can apply a more convenient column width and left-align the first column.
 
 ```{r}
-gt_resp_tbl <- gt_resp_tbl |> 
-  cols_align(align = "center",
-             columns = starts_with(c("n_", "ci", "or"))) |> 
-  cols_label(.list = c("AAGEGR1" = "",
-                       "n_resp_Placebo" = "Event Rate (%)",
-                       "ci_low_Placebo" = "[95% CI]",
-                       "n_resp_Drug 1" = "Event Rate (%)",
-                       "ci_low_Drug 1" = "[95% CI]",
-                       "or" = "Odds ratio",
-                       "or_ci_low" = "[95% CI]")) |> 
+gt_resp_tbl <- 
+  gt_resp_tbl |> 
+  cols_align(
+    align = "center",
+    columns = starts_with(c("n_", "ci", "or"))
+  ) |> 
+  cols_label(
+    .list = c(
+      "AAGEGR1" = "",
+      "n_resp_Placebo" = "Event Rate (%)",
+      "ci_low_Placebo" = "[95% CI]",
+      "n_resp_Drug 1" = "Event Rate (%)",
+      "ci_low_Drug 1" = "[95% CI]",
+      "or" = "Odds ratio",
+      "or_ci_low" = "[95% CI]"
+      )
+    ) |> 
   cols_width(
     1 ~ px(80),
     everything() ~ px(120)
     ) |> 
-  cols_align(
-    align = "left",
-    columns = 1
-    ) 
+  cols_align(align = "left", columns = 1) 
 
 gt_resp_tbl
 ```
@@ -311,7 +449,8 @@ gt_resp_tbl
 Finally, we make use of `tab_footnote()` and can add a footnote to the columns with the 95% CI's around event rates, indicating that these were derived from the Clopper-Pearson method. To change the default symbol choice of `tab_footnote()` from numbers to letters, we add `tab_options(footnote.marks = letters)`.
 
 ```{r}
-gt_resp_tbl <- gt_resp_tbl |> 
+gt_resp_tbl <-
+  gt_resp_tbl |> 
   tab_footnote(
     footnote = "Event rate 95% exact confidence interval uses the Clopper−Pearson method.",
     locations = cells_column_labels(
@@ -319,10 +458,7 @@ gt_resp_tbl <- gt_resp_tbl |>
     ),
     placement = "right"
   ) |> 
-  tab_options(
-    footnotes.marks = letters
-  )
+  tab_options(footnotes.marks = letters)
 
 gt_resp_tbl
 ```
-

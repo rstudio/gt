@@ -1,6 +1,7 @@
 #' Add group-wise summary rows using aggregation functions
 #'
 #' @description
+#'
 #' Add summary rows to one or more row groups by using the table data and any
 #' suitable aggregation functions. Multiple summary rows can be added for
 #' selected groups via expressions given to `fns`. You can selectively format
@@ -216,15 +217,15 @@
 #' is a week number) with the `summary_rows()` function.
 #'
 #' ```r
-#' sp500 %>%
-#'   dplyr::filter(date >= "2015-01-05" & date <="2015-01-16") %>%
-#'   dplyr::arrange(date) %>%
-#'   dplyr::mutate(week = paste0("W", strftime(date, format = "%V"))) %>%
-#'   dplyr::select(-adj_close, -volume) %>%
+#' sp500 |>
+#'   dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") |>
+#'   dplyr::arrange(date) |>
+#'   dplyr::mutate(week = paste0("W", strftime(date, format = "%V"))) |>
+#'   dplyr::select(-adj_close, -volume) |>
 #'   gt(
 #'     rowname_col = "date",
 #'     groupname_col = "week"
-#'   ) %>%
+#'   ) |>
 #'   summary_rows(
 #'     fns = list(
 #'       "min",
@@ -249,37 +250,37 @@
 #' summary rows with [tab_style()].
 #'
 #' ```r
-#' countrypops %>%
+#' countrypops |>
 #'   dplyr::filter(
 #'     country_code_2 %in% c("BR", "RU", "IN", "CN", "FR", "DE", "IT", "GB")
-#'   ) %>%
-#'   dplyr::filter(year %% 10 == 0) %>%
-#'   dplyr::select(country_name, year, population) %>%
-#'   tidyr::pivot_wider(names_from = year, values_from = population) %>%
-#'   gt(rowname_col = "country_name") %>%
+#'   ) |>
+#'   dplyr::filter(year %% 10 == 0) |>
+#'   dplyr::select(country_name, year, population) |>
+#'   tidyr::pivot_wider(names_from = year, values_from = population) |>
+#'   gt(rowname_col = "country_name") |>
 #'   tab_row_group(
 #'     label = md("*BRIC*"),
 #'     rows = c("Brazil", "Russian Federation", "India", "China"),
 #'     id = "bric"
-#'   ) %>%
+#'   ) |>
 #'   tab_row_group(
 #'     label = md("*Big Four*"),
 #'     rows = c("France", "Germany", "Italy", "United Kingdom"),
 #'     id = "big4"
-#'   ) %>%
-#'   row_group_order(groups = c("bric", "big4")) %>%
-#'   tab_stub_indent(rows = everything()) %>%
-#'   tab_header(title = "Populations of the BRIC and Big Four Countries") %>%
-#'   tab_spanner(columns = everything(), label = "Year") %>%
-#'   fmt_number(n_sigfig = 3, suffixing = TRUE) %>%
+#'   ) |>
+#'   row_group_order(groups = c("bric", "big4")) |>
+#'   tab_stub_indent(rows = everything()) |>
+#'   tab_header(title = "Populations of the BRIC and Big Four Countries") |>
+#'   tab_spanner(columns = everything(), label = "Year") |>
+#'   fmt_number(n_sigfig = 3, suffixing = TRUE) |>
 #'   summary_rows(
 #'     fns =  list(label = md("**ALL**"), id = "totals", fn = "sum"),
 #'     fmt = ~ fmt_number(., n_sigfig = 3, suffixing = TRUE),
 #'     side = "top"
-#'   ) %>%
+#'   ) |>
 #'   tab_style(
 #'     locations = cells_summary(),
-#'     style = cell_fill(color = "lightblue" %>% adjust_luminance(steps = +1))
+#'     style = cell_fill(color = "lightblue" |> adjust_luminance(steps = +1))
 #'   )
 #' ```
 #'
@@ -376,9 +377,15 @@ summary_rows <- function(
 
     # Add the `"::rowname::"` column into `_data`
     data$`_data` <-
-      data$`_data` %>%
-      dplyr::mutate(!!rowname_col_private := rep("", nrow(data$`_data`))) %>%
-      dplyr::select(dplyr::everything(), dplyr::all_of(rowname_col_private))
+      dplyr::mutate(
+        data$`_data`,
+        !!rowname_col_private := rep("", nrow(data$`_data`))
+      )
+    data$`_data` <-
+      dplyr::select(
+        data$`_data`,
+        dplyr::everything(), dplyr::all_of(rowname_col_private)
+      )
 
     # Get the `stub_df` object from `data`
     stub_df <- dt_stub_df_get(data = data)
@@ -617,15 +624,15 @@ summary_rows <- function(
 #' `grand_summary_rows()` function.
 #'
 #' ```r
-#' sp500 %>%
-#'   dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") %>%
-#'   dplyr::arrange(date) %>%
-#'   dplyr::mutate(week = paste0("W", strftime(date, format = "%V"))) %>%
-#'   dplyr::select(-adj_close, -volume) %>%
+#' sp500 |>
+#'   dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") |>
+#'   dplyr::arrange(date) |>
+#'   dplyr::mutate(week = paste0("W", strftime(date, format = "%V"))) |>
+#'   dplyr::select(-adj_close, -volume) |>
 #'   gt(
 #'     rowname_col = "date",
 #'     groupname_col = "week"
-#'   ) %>%
+#'   ) |>
 #'   grand_summary_rows(
 #'     columns = c(open, high, low, close),
 #'     fns = list(
@@ -651,23 +658,23 @@ summary_rows <- function(
 #' row with [tab_style()].
 #'
 #' ```r
-#' countrypops %>%
-#'   dplyr::filter(country_code_2 %in% c("BE", "NU", "LU")) %>%
-#'   dplyr::filter(year %% 10 == 0) %>%
-#'   dplyr::select(country_name, year, population) %>%
-#'   tidyr::pivot_wider(names_from = year, values_from = population) %>%
-#'   gt(rowname_col = "country_name") %>%
-#'   tab_header(title = "Populations of the Benelux Countries") %>%
-#'   tab_spanner(columns = everything(), label = "Year") %>%
-#'   fmt_integer() %>%
+#' countrypops |>
+#'   dplyr::filter(country_code_2 %in% c("BE", "NU", "LU")) |>
+#'   dplyr::filter(year %% 10 == 0) |>
+#'   dplyr::select(country_name, year, population) |>
+#'   tidyr::pivot_wider(names_from = year, values_from = population) |>
+#'   gt(rowname_col = "country_name") |>
+#'   tab_header(title = "Populations of the Benelux Countries") |>
+#'   tab_spanner(columns = everything(), label = "Year") |>
+#'   fmt_integer() |>
 #'   grand_summary_rows(
 #'     fns =  list(label = "TOTALS", id = "totals", fn = "sum"),
 #'     fmt = ~ fmt_integer(.),
 #'     side = "top"
-#'   ) %>%
+#'   ) |>
 #'   tab_style(
 #'     locations = cells_grand_summary(),
-#'     style = cell_fill(color = "lightblue" %>% adjust_luminance(steps = +1))
+#'     style = cell_fill(color = "lightblue" |> adjust_luminance(steps = +1))
 #'   )
 #' ```
 #'

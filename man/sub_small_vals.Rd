@@ -16,19 +16,21 @@ sub_small_vals(
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{columns}{The columns to format. Can either be a series of column names
-provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
-focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}.}
+\item{columns}{Optional columns for constraining the targeting process.
+Providing \code{\link[=everything]{everything()}} (the default) results in cells in all \code{columns}
+being targeting (this can be limited by \code{rows} however). Can either be a
+series of column names provided in \code{\link[=c]{c()}}, a vector of column indices, or a
+helper function focused on selections. The select helper functions are:
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
 
-\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
-default) results in all rows in \code{columns} being formatted. Alternatively,
-we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
-indices, or a helper function focused on selections. The select helper
-functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
-\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
-to filter down to the rows we need (e.g.,
+\item{rows}{Optional rows for constraining the targeting process. Providing
+\code{\link[=everything]{everything()}} (the default) results in all rows in \code{columns} being
+targeted. Alternatively, we can supply a vector of row captions within
+\code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on selections.
+The select helper functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.
+We can also use expressions to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{threshold}{The threshold value with which values should be considered
@@ -50,12 +52,45 @@ text may be better for explanatory purposes. The \code{sub_small_vals()} functio
 allows for this replacement through specification of a \code{threshold}, a
 \code{small_pattern}, and the sign of the values to be considered.
 }
-\details{
+\section{Targeting cells with \code{columns} and \code{rows}}{
+
+
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
-nothing is provided for \code{rows} then entire columns are selected). Conditional
-formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the Arguments section for more information on this.
+nothing is provided for \code{rows} then entire columns are selected). The
+\code{columns} argument allows us to target a subset of cells contained in the
+resolved columns. We say resolved because aside from declaring column names
+in \code{c()} (with bare column names or names in quotes) we can use
+\strong{tidyselect}-style expressions. This can be as basic as supplying a select
+helper like \code{starts_with()}, or, providing a more complex incantation like
+
+\code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
+
+which targets numeric columns that have a maximum value of 100,000 (excluding
+\code{NA}s from consideration).
+
+By default all columns and rows are selected (with the \code{everything()}
+defaults). Cell values that are incompatible with a given substitution
+function will be skipped over. So it's safe to select all columns with a
+particular substitution function (only those values that can be substituted
+will be), but, you may not want that. One strategy is to work on the bulk of
+cell values with one substitution function and then constrain the columns for
+later passes with other types of substitution (the last operation done to a
+cell is what you get in the final output).
+
+Once the columns are targeted, we may also target the \code{rows} within those
+columns. This can be done in a variety of ways. If a stub is present, then we
+potentially have row identifiers. Those can be used much like column names in
+the \code{columns}-targeting scenario. We can use simpler \strong{tidyselect}-style
+expressions (the select helpers should work well here) and we can use quoted
+row identifiers in \code{c()}. It's also possible to use row indices (e.g., \code{c(3, 5, 6)}) though these index values must correspond to the row numbers of the
+input data (the indices won't necessarily match those of rearranged rows if
+row groups are present). One more type of expression is possible, an
+expression that takes column values (can involve any of the available columns
+in the table) and returns a logical vector. This is nice if you want to base
+the substitution on values in the column or another column, or, you'd like to
+use a more complex predicate expression.
 }
+
 \section{Examples}{
 
 
@@ -83,9 +118,9 @@ The \code{tbl} contains a variety of smaller numbers and some might be small
 enough to reformat with a threshold value. With \code{sub_small_vals()} we can
 do just that:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
-  gt() \%>\%
-  fmt_number(columns = num) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |>
+  gt() |>
+  fmt_number(columns = num) |>
   sub_small_vals()
 }\if{html}{\out{</div>}}
 
@@ -97,10 +132,10 @@ Small and negative values can also be handled but they are handled specially
 by the \code{sign} parameter. Setting that to \code{"-"} will format only the small,
 negative values.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
-  dplyr::mutate(num = -num) \%>\%
-  gt() \%>\%
-  fmt_number(columns = num) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |>
+  dplyr::mutate(num = -num) |>
+  gt() |>
+  fmt_number(columns = num) |>
   sub_small_vals(sign = "-")
 }\if{html}{\out{</div>}}
 
@@ -113,9 +148,9 @@ replacement pattern (in \code{small_pattern}). This can be changed and the
 \code{"{x}"} in \code{small_pattern} (which uses the \code{threshold} value) can even be
 omitted.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
-  gt() \%>\%
-  fmt_number(columns = num) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |>
+  gt() |>
+  fmt_number(columns = num) |>
   sub_small_vals(
     threshold = 0.0005,
     small_pattern = "smol"
@@ -129,7 +164,7 @@ omitted.
 
 \section{Function ID}{
 
-3-21
+3-22
 }
 
 \seealso{
@@ -143,6 +178,7 @@ Other data formatting functions:
 \code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},

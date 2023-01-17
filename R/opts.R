@@ -1,12 +1,24 @@
 #' Option to modify the set of footnote marks
 #'
 #' @description
+#'
 #' Alter the footnote marks for any footnotes that may be present in the table.
 #' Either a vector of marks can be provided (including Unicode characters), or,
 #' a specific keyword could be used to signify a preset sequence. This function
 #' serves as a shortcut for using `tab_options(footnotes.marks = {marks})`
 #'
+#' @inheritParams fmt_number
+#' @param marks Either a character vector of length greater than 1 (that will
+#'   represent the series of marks) or a single keyword that represents a preset
+#'   sequence of marks. The valid keywords are: `"numbers"` (for numeric marks),
+#'   `"letters"` and `"LETTERS"` (for lowercase and uppercase alphabetic marks),
+#'   `"standard"` (for a traditional set of four symbol marks), and `"extended"`
+#'   (which adds two more symbols to the standard set).
+#'
+#' @return An object of class `gt_tbl`.
+#'
 #' @details
+#'
 #' We can supply a vector of that will represent the series of marks.
 #' The series of footnote marks is recycled when its usage goes beyond the
 #' length of the set. At each cycle, the marks are simply doubled, tripled, and
@@ -23,25 +35,15 @@
 #' - `"extended"`: symbolic marks, extends the standard set by adding two
 #' more symbols, making six
 #'
-#' @inheritParams fmt_number
-#' @param marks Either a character vector of length greater than 1 (that will
-#'   represent the series of marks) or a single keyword that represents a preset
-#'   sequence of marks. The valid keywords are: `"numbers"` (for numeric marks),
-#'   `"letters"` and `"LETTERS"` (for lowercase and uppercase alphabetic marks),
-#'   `"standard"` (for a traditional set of four symbol marks), and `"extended"`
-#'   (which adds two more symbols to the standard set).
-#'
-#' @return An object of class `gt_tbl`.
-#'
 #' @section Examples:
 #'
 #' Use [`sza`] to create a **gt** table, adding three footnotes. Call
 #' `opt_footnote_marks()` to specify which footnote marks to use.
 #'
 #' ```r
-#' sza %>%
-#'   dplyr::filter(latitude == 30) %>%
-#'   dplyr::group_by(tst) %>%
+#' sza |>
+#'   dplyr::filter(latitude == 30) |>
+#'   dplyr::group_by(tst) |>
 #'   dplyr::summarize(
 #'     SZA.Max = if (
 #'       all(is.na(sza))) {
@@ -56,28 +58,28 @@
 #'       min(sza, na.rm = TRUE)
 #'     },
 #'     .groups = "drop"
-#'   ) %>%
-#'   gt(rowname_col = "tst") %>%
-#'   tab_spanner_delim(delim = ".") %>%
+#'   ) |>
+#'   gt(rowname_col = "tst") |>
+#'   tab_spanner_delim(delim = ".") |>
 #'   sub_missing(
 #'     columns = everything(),
 #'     missing_text = "90+"
-#'   ) %>%
-#'   tab_stubhead(label = "TST") %>%
+#'   ) |>
+#'   tab_stubhead(label = "TST") |>
 #'   tab_footnote(
 #'     footnote = "True solar time.",
 #'     locations = cells_stubhead()
-#'   ) %>%
+#'   ) |>
 #'   tab_footnote(
 #'     footnote = "Solar zenith angle.",
 #'     locations = cells_column_spanners(
 #'       spanners = "spanner-SZA.Max"
 #'     )
-#'   ) %>%
+#'   ) |>
 #'   tab_footnote(
 #'     footnote = "The Lowest SZA.",
 #'     locations = cells_stub(rows = "1200")
-#'   ) %>%
+#'   ) |>
 #'   opt_footnote_marks(marks = "standard")
 #' ```
 #'
@@ -107,10 +109,11 @@ opt_footnote_marks <- function(
 #' Option to add or remove row striping
 #'
 #' @description
+#'
 #' By default, a **gt** table does not have row striping enabled. However, this
 #' function allows us to easily enable or disable striped rows in the table
 #' body. This function serves as a convenient shortcut for
-#' `<gt_tbl> %>% tab_options(row.striping.include_table_body = TRUE|FALSE)`.
+#' `<gt_tbl> |> tab_options(row.striping.include_table_body = TRUE|FALSE)`.
 #'
 #' @inheritParams fmt_number
 #' @param row_striping A logical value to indicate whether row striping should
@@ -125,26 +128,26 @@ opt_footnote_marks <- function(
 #' function.
 #'
 #' ```r
-#' exibble %>%
-#'   gt(rowname_col = "row", groupname_col = "group") %>%
+#' exibble |>
+#'   gt(rowname_col = "row", groupname_col = "group") |>
 #'   summary_rows(
 #'     groups = "grp_a",
 #'     columns = c(num, currency),
 #'     fns = c("min", "max")
-#'   ) %>%
+#'   ) |>
 #'   grand_summary_rows(
 #'     columns = currency,
 #'     fns = total ~ sum(., na.rm = TRUE)
-#'   ) %>%
-#'   tab_source_note(source_note = "This is a source note.") %>%
+#'   ) |>
+#'   tab_source_note(source_note = "This is a source note.") |>
 #'   tab_footnote(
 #'     footnote = "This is a footnote.",
 #'     locations = cells_body(columns = 1, rows = 1)
-#'   ) %>%
+#'   ) |>
 #'   tab_header(
 #'     title = "The title of the table",
 #'     subtitle = "The table's subtitle"
-#'   ) %>%
+#'   ) |>
 #'   opt_row_striping()
 #' ```
 #'
@@ -174,11 +177,12 @@ opt_row_striping <- function(
 #' Option to align the table header
 #'
 #' @description
+#'
 #' By default, a table header added to a **gt** table has center alignment
 #' for both the title and the subtitle elements. This function allows us to
 #' easily set the horizontal alignment of the title and subtitle to the left
 #' or right by using the `"align"` argument. This function serves as a
-#' convenient shortcut for `<gt_tbl> %>% tab_options(heading.align = <align>)`.
+#' convenient shortcut for `<gt_tbl> |> tab_options(heading.align = <align>)`.
 #'
 #' @inheritParams fmt_number
 #' @param align The alignment of the title and subtitle elements in the table
@@ -193,26 +197,26 @@ opt_row_striping <- function(
 #' the left with the `opt_align_table_header()` function.
 #'
 #' ```r
-#' exibble %>%
-#'   gt(rowname_col = "row", groupname_col = "group") %>%
+#' exibble |>
+#'   gt(rowname_col = "row", groupname_col = "group") |>
 #'   summary_rows(
 #'     groups = "grp_a",
 #'     columns = c(num, currency),
 #'     fns = c("min", "max")
-#'   ) %>%
+#'   ) |>
 #'   grand_summary_rows(
 #'     columns = currency,
 #'     fns = total ~ sum(., na.rm = TRUE)
-#'   ) %>%
-#'   tab_source_note(source_note = "This is a source note.") %>%
+#'   ) |>
+#'   tab_source_note(source_note = "This is a source note.") |>
 #'   tab_footnote(
 #'     footnote = "This is a footnote.",
 #'     locations = cells_body(columns = 1, rows = 1)
-#'   ) %>%
+#'   ) |>
 #'   tab_header(
 #'     title = "The title of the table",
 #'     subtitle = "The table's subtitle"
-#'   ) %>%
+#'   ) |>
 #'   opt_align_table_header(align = "left")
 #' ```
 #'
@@ -244,6 +248,7 @@ opt_align_table_header <- function(
 #' Option to expand or contract vertical padding
 #'
 #' @description
+#'
 #' Increase or decrease the vertical padding throughout all locations of a
 #' **gt** table by use of a `scale` factor, which here is defined by a real
 #' number between `0` and `3`. This function serves as a shortcut for setting
@@ -272,26 +277,26 @@ opt_align_table_header <- function(
 #'
 #'
 #' ```r
-#' exibble %>%
-#'   gt(rowname_col = "row", groupname_col = "group") %>%
+#' exibble |>
+#'   gt(rowname_col = "row", groupname_col = "group") |>
 #'   summary_rows(
 #'     groups = "grp_a",
 #'     columns = c(num, currency),
 #'     fns = c("min", "max")
-#'   ) %>%
+#'   ) |>
 #'   grand_summary_rows(
 #'     columns = currency,
 #'     fns = total ~ sum(., na.rm = TRUE)
-#'   ) %>%
-#'   tab_source_note(source_note = "This is a source note.") %>%
+#'   ) |>
+#'   tab_source_note(source_note = "This is a source note.") |>
 #'   tab_footnote(
 #'     footnote = "This is a footnote.",
 #'     locations = cells_body(columns = 1, rows = 1)
-#'   ) %>%
+#'   ) |>
 #'   tab_header(
 #'     title = "The title of the table",
 #'     subtitle = "The table's subtitle"
-#'   ) %>%
+#'   ) |>
 #'   opt_vertical_padding(scale = 0.25)
 #' ```
 #'
@@ -324,6 +329,7 @@ opt_vertical_padding <- function(
 #' Option to expand or contract horizontal padding
 #'
 #' @description
+#'
 #' Increase or decrease the horizontal padding throughout all locations of a
 #' **gt** table by use of a `scale` factor, which here is defined by a real
 #' number between `0` and `3`. This function serves as a shortcut for setting
@@ -351,26 +357,26 @@ opt_vertical_padding <- function(
 #' `opt_horizontal_padding()`.
 #'
 #' ```r
-#' exibble %>%
-#'   gt(rowname_col = "row", groupname_col = "group") %>%
+#' exibble |>
+#'   gt(rowname_col = "row", groupname_col = "group") |>
 #'   summary_rows(
 #'     groups = "grp_a",
 #'     columns = c(num, currency),
 #'     fns = c("min", "max")
-#'   ) %>%
+#'   ) |>
 #'   grand_summary_rows(
 #'     columns = currency,
 #'     fns = total ~ sum(., na.rm = TRUE)
-#'   ) %>%
-#'   tab_source_note(source_note = "This is a source note.") %>%
+#'   ) |>
+#'   tab_source_note(source_note = "This is a source note.") |>
 #'   tab_footnote(
 #'     footnote = "This is a footnote.",
 #'     locations = cells_body(columns = 1, rows = 1)
-#'   ) %>%
+#'   ) |>
 #'   tab_header(
 #'     title = "The title of the table",
 #'     subtitle = "The table's subtitle"
-#'   ) %>%
+#'   ) |>
 #'   opt_horizontal_padding(scale = 3)
 #' ```
 #'
@@ -413,22 +419,22 @@ get_padding_option_value_list <- function(scale, type) {
 
   # Get the padding parameters from `dt_options_tbl` that relate
   # to the `type` (either vertical or horizontal padding)
-  # TODO: refactor these stmts to remove dplyr fns
   padding_params <-
-    dt_options_tbl %>%
-    dplyr::filter(grepl(paste0(pattern, "$"), parameter)) %>%
-    dplyr::pull(parameter)
+    dplyr::pull(
+      dplyr::filter(dt_options_tbl, grepl(paste0(pattern, "$"), parameter)),
+      parameter
+    )
 
+  padding_options <- dplyr::filter(dt_options_tbl, parameter %in% padding_params)
+  padding_options <- dplyr::select(padding_options, parameter, value)
   padding_options <-
-    dt_options_tbl %>%
-    dplyr::filter(parameter %in% padding_params) %>%
-    dplyr::select(parameter, value) %>%
     dplyr::mutate(
+      padding_options,
       parameter = gsub(pattern, gsub("_", ".", pattern, fixed = TRUE), parameter, fixed = TRUE)
-    ) %>%
-    dplyr::mutate(value = unlist(value)) %>%
-    dplyr::mutate(px = as.numeric(gsub("px", "", value))) %>%
-    dplyr::mutate(px = px * scale)
+    )
+  padding_options <- dplyr::mutate(padding_options, value = unlist(value))
+  padding_options <- dplyr::mutate(padding_options, px = as.numeric(gsub("px", "", value)))
+  padding_options <- dplyr::mutate(padding_options, px = px * scale)
 
   create_option_value_list(
     padding_options$parameter,
@@ -439,12 +445,13 @@ get_padding_option_value_list <- function(scale, type) {
 #' Option to use all caps in select table locations
 #'
 #' @description
+#'
 #' Sometimes an all-capitalized look is suitable for a table. With the
 #' `opt_all_caps()` function, we can transform characters in the column labels,
 #' the stub, and in all row groups in this way (and there's control over which
 #' of these locations are transformed).
 #'
-#' This function serves as a convenient shortcut for `<gt_tbl> %>%
+#' This function serves as a convenient shortcut for `<gt_tbl> |>
 #' tab_options(<location>.text_transform = "uppercase", <location>.font.size =
 #' pct(80), <location>.font.weight = "bolder")` (for all `locations` selected).
 #'
@@ -465,26 +472,26 @@ get_padding_option_value_list <- function(scale, type) {
 #' transformed to all caps using `opt_all_caps()`.
 #'
 #' ```r
-#' exibble %>%
-#'   gt(rowname_col = "row", groupname_col = "group") %>%
+#' exibble |>
+#'   gt(rowname_col = "row", groupname_col = "group") |>
 #'   summary_rows(
 #'     groups = "grp_a",
 #'     columns = c(num, currency),
 #'     fns = c("min", "max")
-#'   ) %>%
+#'   ) |>
 #'   grand_summary_rows(
 #'     columns = currency,
 #'     fns = total ~ sum(., na.rm = TRUE)
-#'   ) %>%
-#'   tab_source_note(source_note = "This is a source note.") %>%
+#'   ) |>
+#'   tab_source_note(source_note = "This is a source note.") |>
 #'   tab_footnote(
 #'     footnote = "This is a footnote.",
 #'     locations = cells_body(columns = 1, rows = 1)
-#'   ) %>%
+#'   ) |>
 #'   tab_header(
 #'     title = "The title of the table",
 #'     subtitle = "The table's subtitle"
-#'   ) %>%
+#'   ) |>
 #'   opt_all_caps()
 #' ```
 #'
@@ -546,6 +553,7 @@ opt_all_caps <- function(
 #' Option to set table lines to different extents
 #'
 #' @description
+#'
 #' The `opt_table_lines()` function sets table lines in one of three possible
 #' ways: (1) all possible table lines drawn (`"all"`), (2) no table lines at all
 #' (`"none"`), and (3) resetting to the default line styles (`"default"`). This
@@ -566,26 +574,26 @@ opt_all_caps <- function(
 #' can possibly be lines.
 #'
 #' ```r
-#' exibble %>%
-#'   gt(rowname_col = "row", groupname_col = "group") %>%
+#' exibble |>
+#'   gt(rowname_col = "row", groupname_col = "group") |>
 #'   summary_rows(
 #'     groups = "grp_a",
 #'     columns = c(num, currency),
 #'     fns = c("min", "max")
-#'   ) %>%
+#'   ) |>
 #'   grand_summary_rows(
 #'     columns = currency,
 #'     fns = total ~ sum(., na.rm = TRUE)
-#'   ) %>%
-#'   tab_source_note(source_note = "This is a source note.") %>%
+#'   ) |>
+#'   tab_source_note(source_note = "This is a source note.") |>
 #'   tab_footnote(
 #'     footnote = "This is a footnote.",
 #'     locations = cells_body(columns = 1, rows = 1)
-#'   ) %>%
+#'   ) |>
 #'   tab_header(
 #'     title = "The title of the table",
 #'     subtitle = "The table's subtitle"
-#'   ) %>%
+#'   ) |>
 #'   opt_table_lines()
 #' ```
 #'
@@ -629,6 +637,7 @@ opt_table_lines <- function(
 #' Option to wrap an outline around the entire table
 #'
 #' @description
+#'
 #' This function puts an outline of consistent `style`, `width`, and `color`
 #' around the entire table. It'll write over any existing outside lines so long
 #' as the `width` is larger that of the existing lines. The default value of
@@ -650,26 +659,26 @@ opt_table_lines <- function(
 #'
 #' ```r
 #' tab_1 <-
-#'   exibble %>%
-#'   gt(rowname_col = "row", groupname_col = "group") %>%
+#'   exibble |>
+#'   gt(rowname_col = "row", groupname_col = "group") |>
 #'   summary_rows(
 #'     groups = "grp_a",
 #'     columns = c(num, currency),
 #'     fns = c("min", "max")
-#'   ) %>%
+#'   ) |>
 #'   grand_summary_rows(
 #'     columns = currency,
 #'     fns = total ~ sum(., na.rm = TRUE)
-#'   ) %>%
-#'   tab_source_note(source_note = "This is a source note.") %>%
+#'   ) |>
+#'   tab_source_note(source_note = "This is a source note.") |>
 #'   tab_footnote(
 #'     footnote = "This is a footnote.",
 #'     locations = cells_body(columns = 1, rows = 1)
-#'   ) %>%
+#'   ) |>
 #'   tab_header(
 #'     title = "The title of the table",
 #'     subtitle = "The table's subtitle"
-#'   ) %>%
+#'   ) |>
 #'   opt_table_outline()
 #'
 #' tab_1
@@ -682,7 +691,7 @@ opt_table_lines <- function(
 #' Remove the table outline with the `style = "none"` option.
 #'
 #' ```r
-#' tab_1 %>% opt_table_outline(style = "none")
+#' tab_1 |> opt_table_outline(style = "none")
 #' ```
 #'
 #' \if{html}{\out{
@@ -742,16 +751,12 @@ opt_table_outline <- function(
 #' Option to define a custom font for the table
 #'
 #' @description
+#'
 #' The `opt_table_font()` function makes it possible to define a custom font for
 #' the entire **gt** table. The standard fallback fonts are still set by default
 #' but the font defined here will take precedence. You could still have
 #' different fonts in select locations in the table, and for that you would need
 #' to use [tab_style()] in conjunction with the [cell_text()] helper function.
-#'
-#' @details
-#' We have the option to supply either a system font for the `font_name`, or, a
-#' font available at the Google Fonts service by use of the [google_font()]
-#' helper function.
 #'
 #' @inheritParams fmt_number
 #' @param font Either the name of a font available in the user system or a call
@@ -768,6 +773,12 @@ opt_table_outline <- function(
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @details
+#'
+#' We have the option to supply either a system font for the `font_name`, or, a
+#' font available at the Google Fonts service by use of the [google_font()]
+#' helper function.
+#'
 #' @section Examples:
 #'
 #' Use [`sp500`] to create a small **gt** table, using [fmt_currency()] to
@@ -777,17 +788,17 @@ opt_table_outline <- function(
 #' the catchall `"Serif"` group).
 #'
 #' ```r
-#' sp500 %>%
-#'   dplyr::slice(1:10) %>%
-#'   dplyr::select(-volume, -adj_close) %>%
-#'   gt() %>%
+#' sp500 |>
+#'   dplyr::slice(1:10) |>
+#'   dplyr::select(-volume, -adj_close) |>
+#'   gt() |>
 #'   fmt_currency(
 #'     columns = 2:5,
 #'     rows = 1,
 #'     currency = "USD",
 #'     use_seps = FALSE
-#'   ) %>%
-#'   tab_options(table.font.size = px(18)) %>%
+#'   ) |>
+#'   tab_options(table.font.size = px(18)) |>
 #'   opt_table_font(
 #'     font = list(
 #'       google_font(name = "Merriweather"),
@@ -805,20 +816,20 @@ opt_table_outline <- function(
 #' (using part of the [default_fonts()] vector as a fallback).
 #'
 #' ```r
-#' sza %>%
+#' sza |>
 #'   dplyr::filter(
 #'     latitude == 20 &
 #'       month == "jan" &
 #'       !is.na(sza)
-#'   ) %>%
-#'   dplyr::select(-latitude, -month) %>%
-#'   gt() %>%
+#'   ) |>
+#'   dplyr::select(-latitude, -month) |>
+#'   gt() |>
 #'   opt_table_font(
 #'     font = c(
 #'       "Helvetica Neue", "Segoe UI",
 #'       default_fonts()[-c(1:3)]
 #'     )
-#'   ) %>%
+#'   ) |>
 #'   opt_all_caps()
 #' ```
 #'
@@ -902,6 +913,7 @@ opt_table_font <- function(
 #' Stylize your table with a colorful look
 #'
 #' @description
+#'
 #' With `opt_stylize()` you can quickly style your **gt** table with a carefully
 #' curated set of background colors, line colors, and line styles. There are six
 #' styles to choose from and they largely vary in the extent of coloring applied
@@ -930,26 +942,26 @@ opt_table_font <- function(
 #' style (using the `"cyan"` color variation and style number `6`).
 #'
 #' ```r
-#' exibble %>%
-#'   gt(rowname_col = "row", groupname_col = "group") %>%
+#' exibble |>
+#'   gt(rowname_col = "row", groupname_col = "group") |>
 #'   summary_rows(
 #'     groups = "grp_a",
 #'     columns = c(num, currency),
 #'     fns = c("min", "max")
-#'   ) %>%
+#'   ) |>
 #'   grand_summary_rows(
 #'     columns = currency,
 #'     fns = total ~ sum(., na.rm = TRUE)
-#'   ) %>%
-#'   tab_source_note(source_note = "This is a source note.") %>%
+#'   ) |>
+#'   tab_source_note(source_note = "This is a source note.") |>
 #'   tab_footnote(
 #'     footnote = "This is a footnote.",
 #'     locations = cells_body(columns = 1, rows = 1)
-#'   ) %>%
+#'   ) |>
 #'   tab_header(
 #'     title = "The title of the table",
 #'     subtitle = "The table's subtitle"
-#'   ) %>%
+#'   ) |>
 #'   opt_stylize(style = 6, color = "cyan")
 #' ```
 #'
@@ -1056,6 +1068,7 @@ get_colorized_params <- function(
 #' Option to add custom CSS for the table
 #'
 #' @description
+#'
 #' The `opt_css()` function makes it possible to add CSS to a **gt** table. This
 #' CSS will be added after the compiled CSS that **gt** generates automatically
 #' when the object is transformed to an HTML output table. You can supply `css`
@@ -1082,14 +1095,14 @@ get_colorized_params <- function(
 #' table ID explicitly (here as `"one"`).
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(num, currency) %>%
-#'   gt(id = "one") %>%
+#' exibble |>
+#'   dplyr::select(num, currency) |>
+#'   gt(id = "one") |>
 #'   fmt_currency(
 #'     columns = currency,
 #'     currency = "HKD"
-#'   ) %>%
-#'   fmt_scientific(columns = num) %>%
+#'   ) |>
+#'   fmt_scientific(columns = num) |>
 #'   opt_css(
 #'     css = "
 #'     #one .gt_table {
@@ -1202,7 +1215,7 @@ create_option_value_list <- function(tab_options_args, values) {
     )
   }
 
-  stats::setNames(object = values, tab_options_args) %>% as.list()
+  as.list(stats::setNames(object = values, tab_options_args))
 }
 
 create_default_option_value_list <- function(tab_options_args) {

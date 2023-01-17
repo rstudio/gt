@@ -46,11 +46,11 @@ right-alignment is used for the \code{numeric} and \code{integer} columns.
 Use \code{\link{countrypops}} to create a \strong{gt} table. Align the \code{population} column
 data to the left.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::select(-contains("code")) \%>\%
-  dplyr::filter(country_name == "Mongolia") \%>\%
-  tail(5) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::select(-contains("code")) |>
+  dplyr::filter(country_name == "Mongolia") |>
+  tail(5) |>
+  gt() |>
   cols_align(
     align = "left",
     columns = population

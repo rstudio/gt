@@ -71,14 +71,14 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Add a spanner column la
 three column labels with \code{\link[=tab_spanner]{tab_spanner()}} and then use \code{\link[=tab_style]{tab_style()}} and
 \code{cells_column_spanners()} to make the spanner label text bold.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(-fctr, -currency, -group) \%>\%
-  gt(rowname_col = "row") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(-fctr, -currency, -group) |>
+  gt(rowname_col = "row") |>
   tab_spanner(
     label = "dates and times",
-    id = "dt",
-    columns = c(date, time, datetime)
-  ) \%>\%
+    columns = c(date, time, datetime),
+    id = "dt"
+  ) |>
   tab_style(
     style = cell_text(weight = "bold"),
     locations = cells_column_spanners(spanners = "dt")

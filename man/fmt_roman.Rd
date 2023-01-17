@@ -100,8 +100,8 @@ more complex predicate expression.
 Create a tibble of small numeric values and generate a \strong{gt} table. Format
 the \code{roman} column to appear as Roman numerals with \code{fmt_roman()}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(arabic = c(1, 8, 24, 85), roman = arabic) \%>\%
-  gt(rowname_col = "arabic") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(arabic = c(1, 8, 24, 85), roman = arabic) |>
+  gt(rowname_col = "arabic") |>
   fmt_roman(columns = roman)
 }\if{html}{\out{</div>}}
 
@@ -128,6 +128,7 @@ Other data formatting functions:
 \code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},

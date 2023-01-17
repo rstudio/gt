@@ -54,12 +54,12 @@ columns with \code{cols_width()}. This is done with named arguments in \code{...
 specifying the exact widths for table columns (using \code{everything()} at the
 end will capture all remaining columns).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(
     num, char, date,
     datetime, row
-  ) \%>\%
-  gt() \%>\%
+  ) |>
+  gt() |>
   cols_width(
     num ~ px(150),
     ends_with("r") ~ px(100),

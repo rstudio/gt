@@ -94,8 +94,12 @@ international numbering system (\code{"intl"}) whereby grouping separators
 the Indian numbering system (\code{"ind"}) uses grouping separators that
 correspond to thousand, lakh, crore, and higher quantities.}
 
-\item{locale}{An optional locale ID that can be used for formatting values
-according to the locale's rules.}
+\item{locale}{An optional locale identifier that can be used for formatting
+the value according the locale's rules. Examples include \code{"en"} for English
+(United States) and \code{"fr"} for French (France). The use of a locale ID will
+override any locale-specific values provided. We can use the
+\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
+are supported.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -197,13 +201,13 @@ useful reference on which locales are supported, we can use the
 Use \code{\link{pizzaplace}} to create a \strong{gt} table. Format the \code{frac_of_quota}
 column to display values as percentages.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
-  dplyr::mutate(month = as.numeric(substr(date, 6, 7))) \%>\%
-  dplyr::group_by(month) \%>\%
-  dplyr::summarize(pizzas_sold = dplyr::n()) \%>\%
-  dplyr::ungroup() \%>\%
-  dplyr::mutate(frac_of_quota = pizzas_sold / 4000) \%>\%
-  gt(rowname_col = "month") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
+  dplyr::mutate(month = as.numeric(substr(date, 6, 7))) |>
+  dplyr::group_by(month) |>
+  dplyr::summarize(pizzas_sold = dplyr::n()) |>
+  dplyr::ungroup() |>
+  dplyr::mutate(frac_of_quota = pizzas_sold / 4000) |>
+  gt(rowname_col = "month") |>
   fmt_percent(
     columns = frac_of_quota,
     decimals = 1
@@ -233,6 +237,7 @@ Other data formatting functions:
 \code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},

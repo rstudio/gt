@@ -303,8 +303,8 @@ Accessibility Guidelines}).
 The \code{data_color()} function can be used without any supplied arguments to
 colorize a \strong{gt} table. Let's do this with the \code{\link{exibble}} dataset:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt() |>
   data_color()
 }\if{html}{\out{</div>}}
 
@@ -323,8 +323,8 @@ You can one of several methods and \strong{gt} will only apply color to the
 compatible values. Let's use the \code{"numeric"} method and supply \code{palette}
 values of \code{"red"} and \code{"green"}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt() |>
   data_color(
     method = "numeric",
     palette = c("red", "green")
@@ -346,8 +346,8 @@ We can constrain the cells to which coloring will be applied with the
 limits of the data with the \code{domain} argument (which is preferable in most
 cases). Here, the domain will be set as \code{domain = c(0, 50)}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt() |>
   data_color(
     columns = currency,
     rows = currency < 50,
@@ -364,19 +364,19 @@ cases). Here, the domain will be set as \code{domain = c(0, 50)}.
 We can use any of the \strong{RColorBrewer} and \strong{viridis} palettes. Let's make a
 new \strong{gt} table from a subset of the \code{\link{countrypops}} dataset. Then, through
 \code{data_color()}, we'll apply coloring to the \code{population} column with the
-\code{"numeric"} method, use a domain between 2.5 and 3.2 million, and specify
+\code{"numeric"} method, use a domain between 2.5 and 3.4 million, and specify
 \code{palette = "viridis"}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::filter(country_name == "Mongolia") \%>\%
-  dplyr::select(-contains("code")) \%>\%
-  tail(10) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::filter(country_name == "Mongolia") |>
+  dplyr::select(-contains("code")) |>
+  tail(10) |>
+  gt() |>
   data_color(
     columns = population,
     method = "numeric",
     palette = "viridis",
-    domain = c(2.5E6, 3.2E6)
+    domain = c(2.5E6, 3.4E6)
   )
 }\if{html}{\out{</div>}}
 
@@ -390,16 +390,16 @@ what the \code{fn} argument requires) that takes a vector of numeric values and
 returns color values. Here is the more complex version of the code that
 returns the same table as in the previous example.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::filter(country_name == "Mongolia") \%>\%
-  dplyr::select(-contains("code")) \%>\%
-  tail(10) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::filter(country_name == "Mongolia") |>
+  dplyr::select(-contains("code")) |>
+  tail(10) |>
+  gt() |>
   data_color(
     columns = population,
     fn = scales::col_numeric(
       palette = "viridis",
-      domain = c(2.5E6, 3.2E6)
+      domain = c(2.5E6, 3.4E6)
     )
   )
 }\if{html}{\out{</div>}}
@@ -419,25 +419,25 @@ one used to generate those specific colors. The trick is to use the
 \code{target_columns} argument. Let's do this with a more complete
 \code{\link{countrypops}}-based table example.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::filter(country_code_3 \%in\% c("FRA", "GBR")) \%>\%
-  dplyr::filter(year \%\% 10 == 0) \%>\%
-  dplyr::select(-contains("code")) \%>\%
-  dplyr::mutate(color = "") \%>\%
-  gt(groupname_col = "country_name") \%>\%
-  fmt_integer(columns = population) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::filter(country_code_3 \%in\% c("FRA", "GBR")) |>
+  dplyr::filter(year \%\% 10 == 0) |>
+  dplyr::select(-contains("code")) |>
+  dplyr::mutate(color = "") |>
+  gt(groupname_col = "country_name") |>
+  fmt_integer(columns = population) |>
   data_color(
     columns = population,
     target_columns = color,
     method = "numeric",
     palette = "viridis",
     domain = c(4E7, 7E7)
-  ) \%>\%
+  ) |>
   cols_label(
     year = "",
     population = "Population",
     color = ""
-  ) \%>\%
+  ) |>
   opt_vertical_padding(scale = 0.65)
 }\if{html}{\out{</div>}}
 
@@ -451,28 +451,28 @@ table where we map the generated colors from the \code{year} column to all colum
 in the table. This time, the \code{palette} used is \code{"inferno"} (also from the
 \strong{viridis} package).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::filter(country_code_3 \%in\% c("FRA", "GBR", "ITA")) \%>\%
-  dplyr::select(-contains("code")) \%>\%
-  dplyr::filter(year \%\% 5 == 0) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::filter(country_code_3 \%in\% c("FRA", "GBR", "ITA")) |>
+  dplyr::select(-contains("code")) |>
+  dplyr::filter(year \%\% 5 == 0) |>
   tidyr::pivot_wider(
     names_from = "country_name",
     values_from = "population"
-  ) \%>\%
-  gt() \%>\%
-  fmt_integer(columns = c(everything(), -year)) \%>\%
+  ) |>
+  gt() |>
+  fmt_integer(columns = c(everything(), -year)) |>
   cols_width(
     year ~ px(80),
     everything() ~ px(160)
-  ) \%>\%
-  opt_all_caps() \%>\%
-  opt_vertical_padding(scale = 0.75) \%>\%
-  opt_horizontal_padding(scale = 3) \%>\%
+  ) |>
+  opt_all_caps() |>
+  opt_vertical_padding(scale = 0.75) |>
+  opt_horizontal_padding(scale = 3) |>
   data_color(
     columns = year,
     target_columns = everything(),
     palette = "inferno"
-  ) \%>\%
+  ) |>
   tab_options(
     table_body.hlines.style = "none",
     column_labels.border.top.color = "black",
@@ -493,32 +493,32 @@ don't have to specify those in \code{columns} because those are the only columns
 in the table. Also, the \code{domain} is not set here. We'll use the bounds of the
 available data in each column.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
-  dplyr::group_by(type, size) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
+  dplyr::group_by(type, size) |>
   dplyr::summarize(
     sold = dplyr::n(),
     income = sum(price),
     .groups = "drop_last"
-  ) \%>\%
-  dplyr::group_by(type) \%>\%
-  dplyr::mutate(f_sold = sold / sum(sold)) \%>\%
+  ) |>
+  dplyr::group_by(type) |>
+  dplyr::mutate(f_sold = sold / sum(sold)) |>
   dplyr::mutate(size = factor(
     size, levels = c("S", "M", "L", "XL", "XXL"))
-  ) \%>\%
-  dplyr::arrange(type, size) \%>\%
+  ) |>
+  dplyr::arrange(type, size) |>
   gt(
     rowname_col = "size",
     groupname_col = "type"
-  ) \%>\%
+  ) |>
   fmt_percent(
     columns = f_sold,
     decimals = 1
-  ) \%>\%
+  ) |>
   cols_merge(
     columns = c(size, f_sold),
     pattern = "\{1\} (\{2\})"
-  ) \%>\%
-  cols_align(align = "left", columns = stub()) \%>\%
+  ) |>
+  cols_align(align = "left", columns = stub()) |>
   data_color(
     method = "numeric",
     palette = "ggsci::red_material"
@@ -537,13 +537,13 @@ row will be captured, coloring each cell with values relative to the range.
 The \code{palette} is \code{"PuOr"} from the \strong{RColorBrewer} package (only the name
 here is required).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza \%>\%
-  dplyr::filter(latitude == 20 & tst <= "1200") \%>\%
-  dplyr::select(-latitude) \%>\%
-  dplyr::filter(!is.na(sza)) \%>\%
-  tidyr::spread(key = "tst", value = sza) \%>\%
-  gt(rowname_col = "month") \%>\%
-  sub_missing(missing_text = "") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza |>
+  dplyr::filter(latitude == 20 & tst <= "1200") |>
+  dplyr::select(-latitude) |>
+  dplyr::filter(!is.na(sza)) |>
+  tidyr::spread(key = "tst", value = sza) |>
+  gt(rowname_col = "month") |>
+  sub_missing(missing_text = "") |>
   data_color(
     direction = "row",
     palette = "PuOr",
@@ -562,7 +562,7 @@ gray cells for the missing values (we also removed the \code{"NA"} text with
 
 \section{Function ID}{
 
-3-25
+3-26
 }
 
 \seealso{
@@ -575,6 +575,7 @@ Other data formatting functions:
 \code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},
