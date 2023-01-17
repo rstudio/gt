@@ -160,6 +160,7 @@ tab_options(
   row.striping.background_color = NULL,
   row.striping.include_stub = NULL,
   row.striping.include_table_body = NULL,
+  ihtml = FALSE,
   ihtml.use_pagination = NULL,
   ihtml.use_search = NULL,
   ihtml.use_sorting = NULL,
