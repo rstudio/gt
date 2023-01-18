@@ -2299,6 +2299,7 @@ tab_options <- function(
     container.padding.y = NULL,
     container.overflow.x = NULL,
     container.overflow.y = NULL,
+    table.interactive = NULL,
     table.width = NULL,
     table.layout = NULL,
     table.align = NULL,
@@ -2447,7 +2448,6 @@ tab_options <- function(
     row.striping.background_color = NULL,
     row.striping.include_stub = NULL,
     row.striping.include_table_body = NULL,
-    ihtml = FALSE,
     ihtml.use_pagination = NULL,
     ihtml.use_search = NULL,
     ihtml.use_sorting = NULL,
@@ -2479,7 +2479,6 @@ tab_options <- function(
   arg_vals <- mget(arg_names)
   arg_vals <- arg_vals[!vapply(arg_vals, FUN = is.null, FUN.VALUE = logical(1))]
   arg_vals <- set_super_options(arg_vals = arg_vals)
-
   new_df <-
     dplyr::tibble(
       parameter = tidy_gsub(names(arg_vals), ".", "_", fixed = TRUE),
