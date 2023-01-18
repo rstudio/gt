@@ -102,7 +102,7 @@ render_as_ihtml <- function(data, id) {
   names(col_defs) <- column_names
 
   #
-  # Add custom styles to `col_defs`
+  # Generate custom styles for `defaultColDef`
   #
 
   body_styles_tbl <-
@@ -111,51 +111,41 @@ render_as_ihtml <- function(data, id) {
     dplyr::arrange(colnum, rownum) %>%
     dplyr::select(colname, rownum, html_style)
 
-  cols_with_styles <- unique(body_styles_tbl[["colname"]])
+  # Generate styling rule per combination of `colname` and
+  # `rownum` in `body_styles_tbl`
+  body_style_rules <-
+    vapply(
+      seq_len(nrow(body_styles_tbl)), FUN.VALUE = character(1), USE.NAMES = FALSE,
+      FUN = function(x) {
+        colname <- body_styles_tbl[x, ][["colname"]]
+        rownum <- body_styles_tbl[x, ][["rownum"]]
+        html_style <- body_styles_tbl[x, ][["html_style"]]
+        html_style <- unlist(strsplit(html_style, "; "))
+        html_style <- gsub("(-)\\s*(.)", "\\U\\2", html_style, perl = TRUE)
+        html_style <- gsub("(:)\\s*(.*)", ": '\\2'", html_style, perl = TRUE)
+        html_style <- paste(html_style, collapse = ", ")
+        html_style <- gsub(";'$", "'", html_style)
 
-  for (column_i in cols_with_styles) {
-
-    styles_for_col <-
-      body_styles_tbl %>%
-      dplyr::filter(colname == .env$column_i) %>%
-      dplyr::select(rownum, html_style) %>%
-      dplyr::group_by(html_style) %>%
-      dplyr::summarize(rownums = list(rownum))
-
-    for (i in seq_len(nrow(styles_for_col))) {
-
-      html_style_cell <- styles_for_col[[i, "html_style"]]
-      row_indices <- unlist(styles_for_col[[i, "rownums"]])
-
-      html_style_cell <-
-        unlist(strsplit(html_style_cell, "; ")) %>%
-        gsub("(-)\\s*(.)", "\\U\\2", ., perl = TRUE) %>%
-        gsub("(:)\\s*(.*)", ": '\\2'", ., perl = TRUE) %>%
-        paste(collapse = ", ")
-
-      js_style_cell_fn <-
-        JS(
-          paste0(
-            "function(rowInfo) {
-        var value = rowInfo.row['", column_i, "']
-        if (", paste(paste("value ==", row_indices), collapse = " | "), ") {
-          return { ", html_style_cell, " }
-        }
-      }"
-          )
+        paste0(
+          "if (colInfo.id === '", colname, "' & rowIndex === ", rownum, ") {\n",
+          "  return { ", html_style , " }\n",
+          "}\n\n"
         )
-
-      # Append style to appropriate column in `col_defs`
-      if (column_i %in% names(col_defs)) {
-
-        col_defs[[column_i]] <-
-          append(
-            col_defs[[column_i]],
-            reactable::colDef(style = js_style_cell_fn)
-          )
       }
-    }
-  }
+    )
+
+  body_style_rules <- paste(body_style_rules, collapse = "")
+
+  body_style_js_str <-
+    paste0(
+      "function(rowInfo, colInfo) {\n",
+      "const rowIndex = rowInfo.viewIndex + 1\n",
+      body_style_rules,
+      "}",
+      collapse = ""
+    )
+
+  default_col_def <- reactable::colDef(style = reactable::JS(body_style_js_str))
 
   # Process the table heading, if available
   if (dt_heading_has_title(data = data)) {
@@ -240,7 +230,7 @@ render_as_ihtml <- function(data, id) {
       filterable = use_filters,
       searchable = use_search,
       searchMethod = NULL,
-      defaultColDef = NULL,
+      defaultColDef = default_col_def,
       defaultColGroup = NULL,
       defaultSortOrder = "asc",
       defaultSorted = NULL,
