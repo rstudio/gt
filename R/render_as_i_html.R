@@ -7,7 +7,7 @@
 #' @return A character object with an HTML table.
 #'
 #' @noRd
-render_as_i_html <- function(data, id) {
+render_as_ihtml <- function(data, id) {
 
   data <- build_data(data = data, context = "html")
 
@@ -61,7 +61,8 @@ render_as_i_html <- function(data, id) {
             x <- NA_integer_
           }
           x
-        })
+        }
+      )
   }
 
   # Get options settable in `tab_options()`
@@ -80,6 +81,8 @@ render_as_i_html <- function(data, id) {
   table_background_color <- opt_val(data = data, option = "table_background_color")
   table_font_style <- opt_val(data = data, option = "table_font_names")
   table_font_color <- opt_val(data = data, option = "table_font_color")
+
+  if (table_width == "auto") table_width <- NULL
 
   # Create a list of column definitions
   col_defs <-
@@ -236,6 +239,7 @@ render_as_i_html <- function(data, id) {
       resizable = use_resizers,
       filterable = use_filters,
       searchable = use_search,
+      searchMethod = NULL,
       defaultColDef = NULL,
       defaultColGroup = NULL,
       defaultSortOrder = "asc",
@@ -248,6 +252,7 @@ render_as_i_html <- function(data, id) {
       showPagination = NULL,
       showPageInfo = TRUE,
       minRows = 1,
+      paginateSubRows = FALSE,
       details = NULL,
       defaultExpanded = FALSE,
       selection = NULL,
@@ -269,10 +274,11 @@ render_as_i_html <- function(data, id) {
       rowStyle = NULL,
       fullWidth = TRUE,
       width = table_width,
-      height = "auto",
+      height = NULL,
       theme = tbl_theme,
-      language = getOption("reactable.language"),
-      elementId = id
+      language = NULL,
+      elementId = id,
+      static = FALSE
     )
 
   # Prepend the `heading_component` to the widget content
