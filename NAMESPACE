@@ -2,7 +2,6 @@
 
 S3method(as.data.frame,gt_tbl)
 S3method(print,gt_tbl)
-S3method(print,gti_tbl)
 S3method(print,rtf_text)
 export("%>%")
 export(adjust_luminance)
