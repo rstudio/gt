@@ -26,6 +26,7 @@ render_as_ihtml <- function(data, id) {
   # Obtain the language from the `locale`, if provided
   locale <- dt_locale_get_value(data = data)
 
+  # TODO: generate a language options object to pass to `language` option
   if (is.null(locale)) {
     lang <- "en"
   } else {
@@ -49,6 +50,7 @@ render_as_ihtml <- function(data, id) {
     unlist()
 
   if (!is.null(column_widths)) {
+
     column_widths <-
       vapply(
         column_widths,
