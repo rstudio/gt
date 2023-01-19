@@ -264,7 +264,7 @@ render_as_ihtml <- function(data, id) {
       rowStyle = NULL,
       fullWidth = TRUE,
       width = table_width,
-      height = NULL,
+      height = "auto",
       theme = tbl_theme,
       language = NULL,
       elementId = id,
