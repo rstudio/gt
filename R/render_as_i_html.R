@@ -159,7 +159,7 @@ render_as_ihtml <- function(data, id) {
           `border-top-style` = "solid",
           `border-top-width` = "2px",
           `border-top-color` = "#D3D3D3",
-          `padding-bottom` = "8px"
+          `padding-bottom` = if (use_search) "8px" else NULL
         ),
         id = id,
         htmltools::div(
@@ -170,12 +170,17 @@ render_as_ihtml <- function(data, id) {
         ),
         htmltools::div(
           id = id,
-          class = "gt_heading gt_subtitle gt_bottom_border",
+          class = paste(
+            "gt_heading", "gt_subtitle",
+            if (use_search) "gt_bottom_border" else NULL
+          ),
           htmltools::HTML(tbl_heading$subtitle)
         )
       )
+
   } else {
-    heading_component <- ""
+
+    heading_component <- htmltools::div()
   }
 
   # Generate the default theme for the table
