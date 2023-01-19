@@ -1978,6 +1978,13 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   horizontal or vertical scrolling is enabled to view the entire table in
 #'   those directions. With `FALSE`, the table may be clipped if the table width
 #'   or height exceeds the `container.width` or `container.height`.
+#' @param table.interactive An option to display an interactive version of an
+#'   HTML table (rather than an otherwise 'static' table). This enables the use
+#'   of controls for pagination, global searching, filtering, and sorting. The
+#'   individual features are controlled by the other `table.*` options. By
+#'   default, the pagination (`ihtml.use_pagination`) and sorting
+#'   (`ihtml.use_sorting`) features are enabled. The `table.interactive` option,
+#'   however, is `FALSE` by default.
 #' @param table.width The width of the table. Can be specified as a
 #'   single-length character with units of pixels or as a percentage. If
 #'   provided as a single-length numeric vector, it is assumed that the value is
@@ -2154,6 +2161,24 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   when striping rows.
 #' @param row.striping.include_table_body An option for whether to include the
 #'   table body when striping rows.
+#' @param ihtml.use_pagination For interactive HTML output, the option for using
+#'   pagination controls (below the table body) to page through table content.
+#'   By default, this is `TRUE`.
+#' @param ihtml.use_sorting For interactive HTML output, the option to provide
+#'   controls for sorting column values. By default, this is `TRUE`.
+#' @param ihtml.use_search For interactive HTML output, an option that places a
+#'   search field for globally filtering rows to the requested content. By
+#'   default, this is `FALSE`.
+#' @param ihtml.use_filters For interactive HTML output, this places search
+#'   fields below each column header and allows for filtering by column. By
+#'   default, this is `FALSE`.
+#' @param ihtml.use_resizers For interactive HTML output, this allows for
+#'   interactive resizing of columns. By default, this is `FALSE`.
+#' @param ihtml.use_highlight For interactive HTML output, this highlights
+#'   individual rows upon hover. By default, this is `FALSE`.
+#' @param ihtml.use_compact_mode For interactive HTML output, an option to
+#'   reduce vertical padding and thus make the table consume less vertical
+#'   space. By default, this is `FALSE`.
 #' @param page.orientation For RTF output, this provides an two options for page
 #'   orientation: `"portrait"` (the default) and `"landscape"`.
 #' @param page.numbering Within RTF output, should page numbering be displayed?
@@ -2449,8 +2474,8 @@ tab_options <- function(
     row.striping.include_stub = NULL,
     row.striping.include_table_body = NULL,
     ihtml.use_pagination = NULL,
-    ihtml.use_search = NULL,
     ihtml.use_sorting = NULL,
+    ihtml.use_search = NULL,
     ihtml.use_filters = NULL,
     ihtml.use_resizers = NULL,
     ihtml.use_highlight = NULL,
