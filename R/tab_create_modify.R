@@ -2501,26 +2501,32 @@ tab_options <- function(
   opts_df <- dt_options_get(data = data)
 
   arg_names <- base::setdiff(names(formals(tab_options)), "data")
+
   arg_vals <- mget(arg_names)
   arg_vals <- arg_vals[!vapply(arg_vals, FUN = is.null, FUN.VALUE = logical(1))]
   arg_vals <- set_super_options(arg_vals = arg_vals)
+
   new_df <-
     dplyr::tibble(
       parameter = tidy_gsub(names(arg_vals), ".", "_", fixed = TRUE),
       value = unname(arg_vals)
-    ) %>%
+    )
+  new_df <-
     dplyr::left_join(
+      new_df,
       dplyr::select(opts_df, parameter, type),
       by = "parameter"
-    ) %>%
+    )
+  new_df <-
     dplyr::mutate(
+      new_df,
       value = mapply(
         preprocess_tab_option,
         option = value, var_name = parameter, type = type,
         SIMPLIFY = FALSE
       )
-    ) %>%
-    dplyr::select(-type)
+    )
+  new_df <- dplyr::select(new_df, -type)
 
   # This rearranges the rows in the `opts_df` table, but this
   # shouldn't be a problem
