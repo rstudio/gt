@@ -9,19 +9,23 @@
 #' @noRd
 render_as_ihtml <- function(data, id) {
 
+  # Get the built data for the table body in the HTML context
   data <- build_data(data = data, context = "html")
 
-  # Upgrade `_styles` to gain a `js_style` column with CSS style rules
+  # Upgrade the `_styles` component to give it a `html_style` column
+  # with CSS style rules
   data <- add_css_styles(data = data)
 
-  # caption_component <- create_caption_component_h(data = data)
-  #
-  # # Create the source notes component
-  # source_notes_component <- create_source_notes_component_h(data = data)
-  #
-  # # Create the footnotes component
-  # footnotes_component <- create_footnotes_component_h(data = data)
-  #
+  # Get any available source notes or footnotes in the table
+  source_notes <- dt_source_notes_get(data = data)
+  footnotes <- dt_footnotes_get(data = data)
+
+  # Determine if the rendered table should have a footer section
+  has_footer_section <- !is.null(source_notes) || nrow(footnotes) > 1
+
+  # Determine if the rendered table should have a header section
+  has_header_section <- dt_heading_has_title(data = data)
+
 
   # Obtain the language from the `locale`, if provided
   locale <- dt_locale_get_value(data = data)
@@ -42,13 +46,12 @@ render_as_ihtml <- function(data, id) {
   column_alignments <- dt_boxhead_get_vars_align_default(data = data)
 
   # Obtain widths for each visible column label
-  column_widths <-
-    dt_boxhead_get(data = data) %>%
-    dplyr::filter(type %in% c("default", "stub")) %>%
-    dplyr::arrange(dplyr::desc(type)) %>%
-    dplyr::pull(column_width) %>%
-    unlist()
+  boxh <- dt_boxhead_get(data = data)
+  column_widths <- dplyr::filter(boxh, type %in% c("default", "stub"))
+  column_widths <- dplyr::pull(dplyr::arrange(column_widths, dplyr::desc(type)), column_width)
+  column_widths <- unlist(column_widths)
 
+  # Transform any column widths to integer values
   if (!is.null(column_widths)) {
 
     column_widths <-
@@ -78,7 +81,6 @@ render_as_ihtml <- function(data, id) {
   use_compact_mode <- opt_val(data = data, option = "ihtml_use_compact_mode")
   use_row_striping <- opt_val(data = data, option = "row_striping_include_table_body")
   row_striping_color <- opt_val(data = data, option = "row_striping_background_color")
-
   table_width <- opt_val(data = data, option = "table_width")
   table_background_color <- opt_val(data = data, option = "table_background_color")
   table_font_style <- opt_val(data = data, option = "table_font_names")
@@ -107,11 +109,10 @@ render_as_ihtml <- function(data, id) {
   # Generate custom styles for `defaultColDef`
   #
 
-  body_styles_tbl <-
-    dt_styles_get(data = data) %>%
-    dplyr::filter(locname %in% c("data", "stub")) %>%
-    dplyr::arrange(colnum, rownum) %>%
-    dplyr::select(colname, rownum, html_style)
+  styles_tbl <- dt_styles_get(data = data)
+  body_styles_tbl <- dplyr::filter(styles_tbl, locname %in% c("data", "stub"))
+  body_styles_tbl <- dplyr::arrange(body_styles_tbl, colnum, rownum)
+  body_styles_tbl <- dplyr::select(body_styles_tbl, colname, rownum, html_style)
 
   # Generate styling rule per combination of `colname` and
   # `rownum` in `body_styles_tbl`
@@ -119,6 +120,7 @@ render_as_ihtml <- function(data, id) {
     vapply(
       seq_len(nrow(body_styles_tbl)), FUN.VALUE = character(1), USE.NAMES = FALSE,
       FUN = function(x) {
+
         colname <- body_styles_tbl[x, ][["colname"]]
         rownum <- body_styles_tbl[x, ][["rownum"]]
         html_style <- body_styles_tbl[x, ][["html_style"]]
@@ -149,8 +151,8 @@ render_as_ihtml <- function(data, id) {
 
   default_col_def <- reactable::colDef(style = reactable::JS(body_style_js_str))
 
-  # Process the table heading, if available
-  if (dt_heading_has_title(data = data)) {
+  # Generate the table header if there are any heading components
+  if (has_header_section) {
 
     tbl_heading <- dt_heading_get(data = data)
 
@@ -181,8 +183,46 @@ render_as_ihtml <- function(data, id) {
       )
 
   } else {
+    heading_component <- NULL
+  }
 
-    heading_component <- htmltools::div()
+  # Generate the table footer if there are any footer components
+  if (has_footer_section) {
+
+    if (!is.null(source_notes)) {
+      source_notes_component <- create_source_notes_component_h(data = data)
+    } else {
+      source_notes_component <- NULL
+    }
+
+    if (!is.null(footnotes)) {
+      footnotes_component <- create_footnotes_component_h(data = data)
+    } else {
+      footnotes_component <- NULL
+    }
+
+    footer_component <-
+      htmltools::div(
+        class = "gt_table",
+        style = htmltools::css(
+          `border-top-style` = "solid",
+          `border-top-width` = "2px",
+          `border-top-color` = "#D3D3D3",
+          `border-bottom-style` = "solid",
+          `border-bottom-width` = "2px",
+          `border-bottom-color` = "#D3D3D3",
+          `padding-top` = "6px",
+          `padding-bottom` = "6px",
+          `padding-left` = "10px",
+          `padding-right` = "10px"
+        ),
+        id = id,
+        htmltools::div(source_notes_component),
+        htmltools::div(footnotes_component)
+      )
+
+  } else {
+    footer_component <- NULL
   }
 
   # Generate the default theme for the table
@@ -279,7 +319,14 @@ render_as_ihtml <- function(data, id) {
     )
 
   # Prepend the `heading_component` to the widget content
-  x <- htmlwidgets::prependContent(x, heading_component)
+  if (!is.null(heading_component)) {
+    x <- htmlwidgets::prependContent(x, heading_component)
+  }
+
+  # Append the `footer_component` to the widget content
+  if (!is.null(footer_component)) {
+    x <- htmlwidgets::appendContent(x, footer_component)
+  }
 
   x
 }
