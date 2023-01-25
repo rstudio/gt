@@ -44,7 +44,6 @@ Imports:
     glue (>= 1.6.1),
     htmltools (>= 0.5.2),
     juicyjuice (>= 0.1.0),
-    jsonlite (>= 1.8.4),
     magrittr (>= 2.0.2),
     rlang (>= 1.0.2),
     sass (>= 0.4.1),
