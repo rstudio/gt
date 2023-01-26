@@ -38,6 +38,15 @@ knitr_is_word_output <- function() {
 #' @noRd
 knit_print.gt_tbl <- function(x, ...) {
 
+  if (check_quarto()) {
+
+    caption_text <- dt_options_get_value(data = x, option = "table_caption")
+
+    if (!is.na(caption_text)) {
+      quarto_api_send("set_cell_caption", caption_text)
+    }
+  }
+
   if (knitr_is_rtf_output()) {
 
     x <- as_rtf(x)
