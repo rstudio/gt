@@ -117,7 +117,7 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Format the numeric valu
 
 \section{Function ID}{
 
-3-19
+3-20
 }
 
 \seealso{
@@ -140,6 +140,7 @@ Other data formatting functions:
 \code{\link{fmt_percent}()},
 \code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
+\code{\link{fmt_spelled_num}()},
 \code{\link{fmt_time}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
