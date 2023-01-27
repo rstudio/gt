@@ -164,6 +164,59 @@ get_locale_idx_set <- function(locale = NULL) {
   locales[locales$locale == locale, ][["chr_index"]][[1]]
 }
 
+#' Get the `idx_num_spellout` vector based on a locale
+#'
+#' @param locale The user-supplied `locale` value, found in several `fmt_*()`
+#'   functions. This is expected as `NULL` if not supplied by the user.
+#' @noRd
+get_locale_num_spellout <- function(locale = NULL) {
+
+  # If `locale` is NULL then set locale as 'en'
+  if (is.null(locale)) {
+    locale <- "en"
+  }
+
+  # Get a vector of all locales from the column names of the
+  # `spelled_num` dataset
+  all_locales <- base::setdiff(names(spelled_num), "number")
+
+  # The user may supply a valid locale (even one from those available
+  # in `gt:::locales`) but there is no associated locale in `all_locales`;
+  # in such a case when strip it down to the language and check if it is
+  # then available in this internal dataset
+  if (!(locale %in% all_locales)) {
+
+    locale_segments <- get_locale_segments(locale = locale)
+
+    if (any(locale_segments %in% all_locales)) {
+
+      locale <- locale_segments[locale_segments %in% all_locales]
+
+    } else {
+      locale <- "en"
+    }
+  }
+
+  spelled_num[[locale]]
+}
+
+get_locale_segments <- function(locale) {
+
+  if (!grepl("-", locale)) {
+    return(locale)
+  }
+
+  segments <- locale
+
+  while (grepl("-", locale)) {
+
+    locale <- gsub("-[^-]*$", "", locale)
+    segments <- c(segments, locale)
+  }
+
+  segments
+}
+
 #' Resolve the locale in functions with a `locale` argument
 #'
 #' This performs locale resolution since the default locale (possibly set in
