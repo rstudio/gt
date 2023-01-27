@@ -1613,6 +1613,110 @@ vec_fmt_index <- function(
   )
 }
 
+#' Format a vector as spelled out numbers
+#'
+#' @description
+#'
+#' With numeric values in a vector, we can transform those to numbers that are
+#' spelled out. Any values from `0` to `100` can be spelled out according to the
+#' specified locale. For example, the value `23` will be rendered as
+#' `"twenty-three"` if the locale is an English-language one (or, not provided
+#' at all); should a Swedish locale be provided (e.g., `"sv"`), the output will
+#' instead be `"tjugotre"`.
+#'
+#' @inheritParams vec_fmt_number
+#'
+#' @return A character vector.
+#'
+#' @section Examples:
+#'
+#' Let's create a numeric vector for the next few examples:
+#'
+#' ```r
+#' num_vals <- c(1, 8, 23, 76, 0, -5, 200, NA)
+#' ```
+#'
+#' Using `vec_fmt_spelled_num()` will create a character vector with values
+#' rendered as spelled-out numbers. Any `NA` values remain as `NA` values. The
+#' rendering context will be autodetected unless specified in the `output`
+#' argument (here, it is of the `"plain"` output type).
+#'
+#' ```r
+#' vec_fmt_spelled_num(num_vals)
+#' ```
+#'
+#' ```
+#' #> [1] "one"     "eight"     "twenty-three"  "seventy-six"  "zero"
+#' #> [6] "-5"      "200"       "NA"
+#' ```
+#'
+#' If we are formatting for a different locale, we could supply the locale ID
+#' and let **gt** obtain a locale-specific set of spelled numbers:
+#'
+#' ```r
+#' vec_fmt_spelled_num(num_vals, locale = "af")
+#' ```
+#' ```
+#' #> [1] "een"     "agt"     "drie-en-twintig"     "ses-en-sewentig"
+#' #> [5] "nul"     "-5"      "200"                 "NA"
+#' ```
+#'
+#' As a last example, one can wrap the values in a pattern with the `pattern`
+#' argument. Note here that `NA` values won't have the pattern applied.
+#'
+#' ```r
+#' vec_fmt_spelled_num(num_vals, pattern = "{x}.")
+#' ```
+#' ```
+#' #> [1] "one."     "eight."     "twenty-three."  "seventy-six."  "zero."
+#' #> [6] "-5."      "200."       "NA"
+#' ```
+#'
+#' @family vector formatting functions
+#' @section Function ID:
+#' 14-11
+#'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_spelled_num()].
+#'
+#' @import rlang
+#' @export
+vec_fmt_spelled_num <- function(
+    x,
+    pattern = "{x}",
+    locale = NULL,
+    output = c("auto", "plain", "html", "latex", "rtf", "word")
+) {
+
+  # Ensure that `output` is matched correctly to one option
+  output <- rlang::arg_match(output)
+
+  if (output == "auto") {
+    output <- determine_output_format()
+  }
+
+  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
+  stop_if_not_vector(x)
+
+  # Stop function if class of `x` is incompatible with the formatting
+  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
+    cli::cli_abort(
+      "The `vec_fmt_spelled_num()` function can only be used with numeric vectors."
+    )
+  }
+
+  render_as_vector(
+    fmt_spelled_num(
+      gt_one_col(x),
+      columns = "x",
+      rows = everything(),
+      pattern = pattern,
+      locale = locale
+    ),
+    output = output
+  )
+}
+
 #' Format a vector as values in terms of bytes
 #'
 #' @description
@@ -1712,7 +1816,7 @@ vec_fmt_index <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-11
+#' 14-12
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
 #'   [fmt_bytes()].
@@ -1911,7 +2015,7 @@ vec_fmt_bytes <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-12
+#' 14-13
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
 #'   [fmt_date()].
@@ -2078,7 +2182,7 @@ vec_fmt_date <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-13
+#' 14-14
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
 #'   [fmt_time()].
@@ -2901,7 +3005,7 @@ vec_fmt_time <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-14
+#' 14-15
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
 #'   [fmt_datetime()].
@@ -3126,7 +3230,7 @@ vec_fmt_datetime <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-15
+#' 14-16
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
 #'   [fmt_duration()].
@@ -3233,7 +3337,7 @@ vec_fmt_duration <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-16
+#' 14-17
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
 #'   [fmt_markdown()].
