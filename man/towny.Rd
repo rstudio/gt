@@ -10,15 +10,15 @@ A tibble with 414 rows and 25 variables:
 \item{name}{The name of the municipality.}
 \item{website}{The website for the municipality. This is \code{NA} if there isn't
 an official site.}
-\item{status}{The status of the municipality. This is either \code{"Lower-tier"}
-or \code{"Single-tier"}. A single-tier municipality, which takes on all municipal
+\item{status}{The status of the municipality. This is either \code{"lower-tier"}
+or \code{"single-tier"}. A single-tier municipality, which takes on all municipal
 duties outlined in the Municipal Act and other Provincial laws, is
 independent of an upper-tier municipality. Part of an upper-tier municipality
 is a lower-tier municipality. The upper-tier and lower-tier municipalities
 are responsible for carrying out the duties laid out in the Municipal Act and
 other provincial laws.}
-\item{csd_type}{The Census Subdivision Type. This can be one of \code{"Village"},
-\code{"Town"}, \code{"Township"}, \code{"Municipality"}, or \code{"City"}.}
+\item{csd_type}{The Census Subdivision Type. This can be one of \code{"village"},
+\code{"town"}, \code{"township"}, \code{"municipality"}, or \code{"city"}.}
 \item{census_div}{The Census division, of which there are 49. This is made up
 of single-tier municipalities, regional municipalities, counties, and
 districts.}
@@ -36,7 +36,8 @@ each municipality from the 1996 to 2021 census years.}
 \item{pop_change_1996_2001_pct, pop_change_2001_2006_pct,
 pop_change_2006_2011_pct, pop_change_2011_2016_pct,
 pop_change_2016_2021_pct}{
-Population changes between the census years, from 1996 to 2021.}
+Population changes between adjacent pairs of census years, from 1996 to
+2021.}
 }
 }
 \usage{
@@ -54,8 +55,8 @@ In the \code{towny} dataset we include information specific to each municipality
 such as location (in the \code{latitude} and \code{longitude} columns), their website
 URLs, their classifications, and land area sizes according to 2021
 boundaries. Additionally, there are computed columns containing population
-density values for each census year and population change measures from
-adjacent census year.
+density values for each census year and population change values from
+adjacent census years.
 }
 \section{Examples}{
 
@@ -67,8 +68,8 @@ Here is a glimpse at the data available in \code{towny}.
 #> Columns: 25
 #> $ name                     <chr> "Addington Highlands", "Adelaide Metcalfe", "~
 #> $ website                  <chr> "https://addingtonhighlands.ca", "https://ade~
-#> $ status                   <chr> "Lower-tier", "Lower-tier", "Lower-tier", "Lo~
-#> $ csd_type                 <chr> "Township", "Township", "Township", "Township~
+#> $ status                   <chr> "lower-tier", "lower-tier", "lower-tier", "lo~
+#> $ csd_type                 <chr> "township", "township", "township", "township~
 #> $ census_div               <chr> "Lennox and Addington", "Middlesex", "Simcoe"~
 #> $ latitude                 <dbl> 45.00000, 42.95000, 44.13333, 45.52917, 43.85~
 #> $ longitude                <dbl> -77.25000, -81.70000, -79.93333, -76.89694, -~

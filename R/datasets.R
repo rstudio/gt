@@ -499,23 +499,23 @@
 #' such as location (in the `latitude` and `longitude` columns), their website
 #' URLs, their classifications, and land area sizes according to 2021
 #' boundaries. Additionally, there are computed columns containing population
-#' density values for each census year and population change measures from
-#' adjacent census year.
+#' density values for each census year and population change values from
+#' adjacent census years.
 #'
 #' @format A tibble with 414 rows and 25 variables:
 #' \describe{
 #' \item{name}{The name of the municipality.}
 #' \item{website}{The website for the municipality. This is `NA` if there isn't
 #' an official site.}
-#' \item{status}{The status of the municipality. This is either `"Lower-tier"`
-#' or `"Single-tier"`. A single-tier municipality, which takes on all municipal
+#' \item{status}{The status of the municipality. This is either `"lower-tier"`
+#' or `"single-tier"`. A single-tier municipality, which takes on all municipal
 #' duties outlined in the Municipal Act and other Provincial laws, is
 #' independent of an upper-tier municipality. Part of an upper-tier municipality
 #' is a lower-tier municipality. The upper-tier and lower-tier municipalities
 #' are responsible for carrying out the duties laid out in the Municipal Act and
 #' other provincial laws.}
-#' \item{csd_type}{The Census Subdivision Type. This can be one of `"Village"`,
-#' `"Town"`, `"Township"`, `"Municipality"`, or `"City"`.}
+#' \item{csd_type}{The Census Subdivision Type. This can be one of `"village"`,
+#' `"town"`, `"township"`, `"municipality"`, or `"city"`.}
 #' \item{census_div}{The Census division, of which there are 49. This is made up
 #' of single-tier municipalities, regional municipalities, counties, and
 #' districts.}
@@ -533,7 +533,8 @@
 #' \item{pop_change_1996_2001_pct, pop_change_2001_2006_pct,
 #' pop_change_2006_2011_pct, pop_change_2011_2016_pct,
 #' pop_change_2016_2021_pct}{
-#' Population changes between the census years, from 1996 to 2021.}
+#' Population changes between adjacent pairs of census years, from 1996 to
+#' 2021.}
 #' }
 #'
 #' @section Examples:
