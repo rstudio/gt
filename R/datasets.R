@@ -354,7 +354,7 @@
 #'
 "exibble"
 
-#' An ADaM-flavored clinical trial toy dataset
+#' An ADSL-flavored clinical trial toy dataset
 #'
 #' @description
 #'
@@ -416,6 +416,73 @@
 #' 11-7
 #'
 "gt_adsl"
+
+#' An ADDV-flavored clinical trial toy dataset
+#'
+#' @description
+#'
+#' This tibble contains artificial protocol deviation data for 180 subjects
+#' in the Intent-to-Treat (ITT) population of the `GT01` study. The dataset
+#' contains the usual parameters (`PARAM`, `PARAMCD`) for an addv. There is
+#' summary parameter (`PARCAT1 == "OVERALL"`) for each subject of the `GT01`
+#' ITT-population, indicating whether or not at least one major protocol
+#' deviation (PD) occurred throughout the course of the study for the respective
+#' subject. Individual records for protocol deviations per subject exist,
+#' indicating which specific type of PD occurred. The additional flag `CRIT1FL`,
+#' shows a PD was related to COVID-19 or not.
+#'
+#'
+#' Although the data was intentionally created to mimic a typical clinical
+#' trial dataset following the CDISC format, it might not strictly comply
+#' with CDISC ADaM rules. The intent is to showcase the workflow for clinical
+#' table creation rather than creating a fully CDISC-compliant ADaM dataset.
+#'
+#' @format A tibble with 182 rows and 20 variables:
+#' \describe{
+#'   \item{STUDYID, STUDYIDN}{The unique study identifier and its numeric
+#'   version.}
+#'   \item{USUBJID}{The unique subject identifier.}
+#'   \item{TRTA, TRTAN}{The study intervention and its numeric version, which
+#'   is either `"Placebo"` (`1`), `"Drug 1"` (`2`) or `NA` (`3`), missing for
+#'   screen failures).}
+#'   \item{ITTFL}{Intent-to-Treat (ITT) population flag, where `"Y"` indicates
+#'   a subject belongs to the ITT population and `"N"` indicates a subject
+#'   is not in the ITT population.}
+#'   \item{AGE}{The age of a subject at baseline in years.}
+#'   \item{AAGEGR1}{The analysis age group, indicating if a subject was strictly
+#'   younger than 40 years at baseline or older.}
+#'   \item{SEX}{Sex of a subject. Can be either `"Male"`, `"Female"` or
+#'   `"Undifferentiated"`.}
+#'   \item{ETHNIC}{Ethnicity of a subject. Can be either `"Hispanic or Latino"`,
+#'   `"Not Hispanic or Latino"` or missing (`""`).}
+#'   \item{BLBMI}{Body Mass Index (BMI) of a subject at baseline in kg/m2.}
+#'   \item{DVTERM}{The Protocol Deviation Term.}
+#'   \item{PARAMCD, PARAM}{The Parameter Code and decoded parameter description
+#'   for the protocol deviation.}
+#'   \item{PARCAT1}{Parameter category. Can be `OVERALL` for derived PD
+#'   summaries or `PROTOCOL DEVIATION` for individual PDs.}
+#'   \item{DVCAT}{Category for PD, indicating whether the PD is a major one or
+#'   not.}
+#'   \item{ACAT1}{Analysis category 1. Only populated for individual PDs, not
+#'   for summary scores. High level category for PDs.}
+#'   \item{AVAL}{Analysis Value. Either 0 or 1.}
+#'   \item{CRIT1, CRIT1FL}{Analysis Criterion 1 and analysis criterion 1 flag,
+#'   indicating whether PD is related to COVID-19 or not.}
+#' }
+#'
+#' @section Examples:
+#'
+#' Here is the `gt_addv`.
+#'
+#' ```{r}
+#' gt_addv
+#' ```
+#'
+#' @family datasets
+#' @section Function ID:
+#' 11-7
+#'
+"gt_addv"
 
 #' Populations of all municipalities in Ontario from 1996 to 2021
 #'

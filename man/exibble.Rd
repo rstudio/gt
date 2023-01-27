@@ -64,6 +64,7 @@ Here is the \code{exibble}.
 \seealso{
 Other datasets: 
 \code{\link{countrypops}},
+\code{\link{gt_addv}},
 \code{\link{gt_adsl}},
 \code{\link{gtcars}},
 \code{\link{pizzaplace}},

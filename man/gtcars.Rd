@@ -82,6 +82,7 @@ Here is a glimpse at the data available in \code{gtcars}.
 Other datasets: 
 \code{\link{countrypops}},
 \code{\link{exibble}},
+\code{\link{gt_addv}},
 \code{\link{gt_adsl}},
 \code{\link{pizzaplace}},
 \code{\link{sp500}},

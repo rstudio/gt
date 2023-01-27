@@ -56,7 +56,6 @@ custom_summary <- function(df, group_var, sum_var) {
         pct = dplyr::n()/mean(N),
         .groups = "drop"
       ) |> 
-      dplyr::ungroup()  |> 
       tidyr::pivot_wider(
         id_cols = !!sum_var, names_from = !!group_var,
         values_from = c(val, pct)
@@ -89,7 +88,6 @@ custom_summary <- function(df, group_var, sum_var) {
         min_max = NA,
         .groups = "drop"
       ) |> 
-      dplyr::ungroup() |> 
       tidyr::pivot_longer(
         cols = c(n, mean, median, min_max),
         names_to = "label",
@@ -117,15 +115,10 @@ custom_summary <- function(df, group_var, sum_var) {
   return(df_out)
 }
 
-adsl_summary <- 
-  gt_adsl |>
-  dplyr::filter(ITTFL == "Y") %>%
-  {
-    purrr::map_df(
+adsl_summary <- purrr::map_df(
       .x = dplyr::vars(AGE, AAGEGR1, SEX, ETHNIC, BLBMI),
-      .f = \(x) custom_summary(df = ., group_var = TRTA, sum_var = !!x)
+      .f = \(x) custom_summary(df = dplyr::filter(gt_adsl, ITTFL == "Y"), group_var = TRTA, sum_var = !!x)
     )
-  }
 ```
 
 We can now start to expose our tibble with the summary of adsl variables to **gt** using `gt()`. Values should be grouped by category, with labels as rownames. In addition, we can give our table a nice title and subtitle.

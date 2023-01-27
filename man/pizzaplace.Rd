@@ -150,6 +150,7 @@ Here is a glimpse at the pizza data available in \code{pizzaplace}.
 Other datasets: 
 \code{\link{countrypops}},
 \code{\link{exibble}},
+\code{\link{gt_addv}},
 \code{\link{gt_adsl}},
 \code{\link{gtcars}},
 \code{\link{sp500}},

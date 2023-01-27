@@ -3,7 +3,7 @@
 \docType{data}
 \name{gt_adsl}
 \alias{gt_adsl}
-\title{An ADaM-flavored clinical trial toy dataset}
+\title{An ADSL-flavored clinical trial toy dataset}
 \format{
 A tibble with 182 rows and 14 variables:
 \describe{
@@ -87,6 +87,7 @@ Here is the \code{gt_adsl}.
 Other datasets: 
 \code{\link{countrypops}},
 \code{\link{exibble}},
+\code{\link{gt_addv}},
 \code{\link{gtcars}},
 \code{\link{pizzaplace}},
 \code{\link{sp500}},

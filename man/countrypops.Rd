@@ -52,6 +52,7 @@ Here is a glimpse at the data available in \code{countrypops}.
 \seealso{
 Other datasets: 
 \code{\link{exibble}},
+\code{\link{gt_addv}},
 \code{\link{gt_adsl}},
 \code{\link{gtcars}},
 \code{\link{pizzaplace}},
