@@ -39,6 +39,8 @@ test_that("All exported functions validate the incoming `data` object", {
   expect_error(exibble %>% fmt_fraction(), regexp = regexp_stop)
   expect_error(exibble %>% fmt_currency(), regexp = regexp_stop)
   expect_error(exibble %>% fmt_roman(), regexp = regexp_stop)
+  expect_error(exibble %>% fmt_index(), regexp = regexp_stop)
+  expect_error(exibble %>% fmt_spelled_num(), regexp = regexp_stop)
   expect_error(exibble %>% fmt_bytes(), regexp = regexp_stop)
   expect_error(exibble %>% fmt_date(), regexp = regexp_stop)
   expect_error(exibble %>% fmt_time(), regexp = regexp_stop)
@@ -143,6 +145,18 @@ test_that("Certain `fmt_*()` functions stop if given incompatible column data", 
   gt_tbl %>% fmt_roman(columns = c()) %>% expect_s3_class("gt_tbl")
   expect_error(regexp = NA, gt_tbl %>% fmt_roman(columns = c(num, fctr)))
   expect_error(regexp = NA, gt_tbl %>% fmt_roman(columns = char))
+
+  # Tests with `fmt_index()`
+  gt_tbl %>% fmt_index(columns = num) %>% expect_s3_class("gt_tbl")
+  gt_tbl %>% fmt_index(columns = c()) %>% expect_s3_class("gt_tbl")
+  expect_error(regexp = NA, gt_tbl %>% fmt_index(columns = c(num, fctr)))
+  expect_error(regexp = NA, gt_tbl %>% fmt_index(columns = char))
+
+  # Tests with `fmt_spelled_num()`
+  gt_tbl %>% fmt_spelled_num(columns = num) %>% expect_s3_class("gt_tbl")
+  gt_tbl %>% fmt_spelled_num(columns = c()) %>% expect_s3_class("gt_tbl")
+  expect_error(regexp = NA, gt_tbl %>% fmt_spelled_num(columns = c(num, fctr)))
+  expect_error(regexp = NA, gt_tbl %>% fmt_spelled_num(columns = char))
 
   # Tests with `fmt_bytes()`
   gt_tbl %>% fmt_bytes(columns = num) %>% expect_s3_class("gt_tbl")
