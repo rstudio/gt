@@ -1644,7 +1644,7 @@ test_that("The `fmt_duration()` function will produce localized outputs", {
   # Get a vector of some of the supported locales
   sample_locales <-
     c(
-      "af", "ak", "as", "asa", "ast", "az", "be", "bem", "bez", "bg",
+      "af", "ak", "ar", "as", "asa", "ast", "az", "be", "bem", "bez", "bg",
       "bm", "bn", "bo", "bs", "ca", "ccp", "ce", "ceb", "cgg", "chr",
       "ckb", "cy", "da", "dav", "de", "dje", "dua", "dyo", "dz", "ebu",
       "ee", "el", "en", "eo", "es", "et", "eu", "ewo", "fa", "ff",
@@ -1674,7 +1674,8 @@ test_that("The `fmt_duration()` function will produce localized outputs", {
   # Create two `gt_tbl` objects with `gt()` and the `data_tbl_5` dataset
   tab_narrow <- tab_wide <- gt(data_tbl_5)
 
-  # Ensure outputs are correctly localized for the `"narrow"` duration style
+  # Ensure outputs are correctly localized for the 'narrow'
+  # and 'wide' duration styles
   for (i in seq_along(sample_locales)) {
 
     tab_narrow <-
@@ -1696,10 +1697,12 @@ test_that("The `fmt_duration()` function will produce localized outputs", {
   tab_narrow <-
     tab_narrow %>%
     cols_width(everything() ~ px(175)) %>%
+    cols_align(align = "left", columns = everything()) %>%
     tab_style(style = cell_text(size = "smaller"), locations = cells_body())
   tab_wide <-
     tab_wide %>%
     cols_width(everything() ~ px(275)) %>%
+    cols_align(align = "left", columns = everything()) %>%
     tab_style(style = cell_text(size = "smaller"), locations = cells_body())
 
   # Perform snapshot tests
