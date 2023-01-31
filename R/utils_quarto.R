@@ -13,7 +13,13 @@ check_knitr <- function() {
   }
 }
 
+get_uuid <- function() {
+  uuid::UUIDgenerate()
+}
+
 quarto_api_send <- function(message, ...) {
+
+  uuid <- get_uuid()
 
   # Ensure that the knitr package is available
   check_knitr()
@@ -23,7 +29,7 @@ quarto_api_send <- function(message, ...) {
     jsonlite::toJSON(
       list(
         message = message,
-        cell_name = knitr::opts_current$get("label"),
+        uuid = uuid,
         payload = list(...)
       ),
       auto_unbox = TRUE
