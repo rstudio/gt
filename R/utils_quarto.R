@@ -38,4 +38,6 @@ quarto_api_send <- function(message, ...) {
   file <- Sys.getenv("QUARTO_MESSAGES_FILE")
 
   write(line, file, append = TRUE)
+
+  uuid
 }
