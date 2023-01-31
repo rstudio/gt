@@ -6,9 +6,8 @@ name: pkgdown
 
 jobs:
   pkgdown:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     env:
-      RSPM: https://packagemanager.rstudio.com/cran/__linux__/bionic/latest
       GITHUB_PAT: ${{ secrets.GHA_PAT }}
 
     steps:
