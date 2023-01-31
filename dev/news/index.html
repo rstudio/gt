@@ -61,7 +61,8 @@
 <h2 class="pkg-version" data-toc-text="development version" id="gt-development-version">gt (development version)<a class="anchor" aria-label="anchor" href="#gt-development-version"></a></h2>
 <div class="section level3">
 <h3 id="new-features-development-version">New features<a class="anchor" aria-label="anchor" href="#new-features-development-version"></a></h3>
-<ul><li>A new function, <code><a href="../reference/cols_label_with.html">cols_label_with()</a></code>, is added for relabeling columns with functions. It allows for renaming functions to applied to arbitrary sets of columns, using <code>tidyselect</code>. It’s like <code>rename_with()</code> for your <strong>gt</strong> table, but doesn’t need unique names for labeling.</li></ul></div>
+<ul><li>A new function, <code><a href="../reference/cols_label_with.html">cols_label_with()</a></code>, is added for relabeling columns with functions. It allows for renaming functions to applied to arbitrary sets of columns, using <code>tidyselect</code>. It’s like <code>rename_with()</code> for your <strong>gt</strong> table, but doesn’t need unique names for labeling.</li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.8.0" id="gt-080">gt 0.8.0<a class="anchor" aria-label="anchor" href="#gt-080"></a></h2><p class="text-muted">CRAN release: 2022-11-16</p>
@@ -195,10 +196,12 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.3.0" id="gt-030">gt 0.3.0<a class="anchor" aria-label="anchor" href="#gt-030"></a></h2><p class="text-muted">CRAN release: 2021-05-12</p>
 <p>This release focuses on improvements to two main areas:</p>
-<ol style="list-style-type: decimal"><li>Better RTF output support:<ul><li>RTF table generation is now fit for use following an extensive rewrite of internal RTF rendering functions.</li>
+<ol style="list-style-type: decimal"><li>Better RTF output support:
+<ul><li>RTF table generation is now fit for use following an extensive rewrite of internal RTF rendering functions.</li>
 <li>RTF table output with <code>gtsave(..., "&lt;file&gt;.rtf")</code> and <code><a href="../reference/as_rtf.html">as_rtf()</a></code> now has much more feature parity compared to HTML tables; we can now add summary rows, format table text with Markdown via <code><a href="../reference/fmt_markdown.html">fmt_markdown()</a></code>, and expect tables that look acceptable in Word and text editors that are RTF-compatible.</li>
 </ul></li>
-<li>Implementation of <strong>tidyselect</strong> semantics:<ul><li>References to columns (by way of the <code>columns</code> argument in many <strong>gt</strong> functions) now better adhere to <strong>tidyselect</strong> semantics.</li>
+<li>Implementation of <strong>tidyselect</strong> semantics:
+<ul><li>References to columns (by way of the <code>columns</code> argument in many <strong>gt</strong> functions) now better adhere to <strong>tidyselect</strong> semantics.</li>
 <li>Instead of using <code>columns = vars(a, b)</code>, we now use <code>columns = c(a, b)</code> (<code>columns = c("a", "b")</code> also works, and this type of expression always has been an option in <strong>gt</strong>).</li>
 <li>Other <strong>tidyselect</strong> idioms should also work; things like using <code>where()</code> to target columns (e.g., <code>gt(exibble) %&gt;% cols_hide(columns = where(is.numeric))</code> will hide all numeric columns) and negation (e.g., <code>columns = -c(a, b)</code>) function as expected.</li>
 </ul></li>
@@ -262,8 +265,11 @@
 </ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.0.5" id="gt-0205">gt 0.2.0.5<a class="anchor" aria-label="anchor" href="#gt-0205"></a></h2><p class="text-muted">CRAN release: 2020-03-31</p>
-<ul><li>New package with 80 exported functions for building display tables</li></ul></div>
-    <div class="section level2"><h2 class="pkg-version" data-toc-text="0.1.0" id="gt-010-unreleased">gt 0.1.0 (unreleased)<a class="anchor" aria-label="anchor" href="#gt-010-unreleased"></a></h2></div>
+<ul><li>New package with 80 exported functions for building display tables</li>
+</ul></div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.1.0" id="gt-010-unreleased">gt 0.1.0 (unreleased)<a class="anchor" aria-label="anchor" href="#gt-010-unreleased"></a></h2>
+</div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 

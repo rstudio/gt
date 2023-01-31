@@ -235,6 +235,9 @@
     <loc>https://gt.rstudio.com/dev/reference/fmt_scientific.html</loc>
   </url>
   <url>
+    <loc>https://gt.rstudio.com/dev/reference/fmt_spelled_num.html</loc>
+  </url>
+  <url>
     <loc>https://gt.rstudio.com/dev/reference/fmt_time.html</loc>
   </url>
   <url>
@@ -503,6 +506,9 @@
   </url>
   <url>
     <loc>https://gt.rstudio.com/dev/reference/vec_fmt_scientific.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/vec_fmt_spelled_num.html</loc>
   </url>
   <url>
     <loc>https://gt.rstudio.com/dev/reference/vec_fmt_time.html</loc>

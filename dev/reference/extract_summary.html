@@ -151,10 +151,10 @@ Then, extract the summary rows as a list object.</p>
 <span><span class="co">#&gt; 2 W05      max    max        NA 2050. 2058. 2041. 2057.    NA</span></span>
 <span><span class="co">#&gt; 3 W05      avg    avg        NA 2030. 2039. 2009. 2021.    NA</span></span></code></pre><p></p></div>
 <p>Use the summary list to make a new <strong>gt</strong> table. The key thing is to use
-<code><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">dplyr::bind_rows()</a></code> and then pass the tibble to <code><a href="gt.html">gt()</a></code>.</p>
+<code><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">dplyr::bind_rows()</a></code> and then pass the tibble to <code><a href="gt.html">gt()</a></code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">summary_extracted</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span>recursive <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>groupname_col <span class="op">=</span> <span class="st">"group_id"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/cols_hide.html">cols_hide</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">row_id</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_extract_summary_1.png" alt="This image of a table was generated from the first code example in the `extract_summary()` help file." style="width:100%;"></p>
