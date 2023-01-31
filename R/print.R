@@ -39,18 +39,15 @@ knitr_is_word_output <- function() {
 knit_print.gt_tbl <- function(x, ...) {
 
   if (check_quarto()) {
-
     caption_text <- dt_options_get_value(data = x, option = "table_caption")
-    table_uuid <- uuid::UUIDgenerate()
-    dt_options_set_value(data = x, option = "table_id", value = table_uuid)
-    table_id <- dt_options_get_value(data = x, option = "table_id")
-    # FIX THIS
+    table_uuid <- random_id()
+    x <- dt_options_set_value(data = x, option = "table_id", value = table_uuid)
 
     if (!is.na(caption_text)) {
       quarto_api_send(
         "set_table_caption",
         caption = caption_text,
-        table_id = table_uuid)
+        table_id = paste0("table-", table_uuid))
     }
   }
 
