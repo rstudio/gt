@@ -166,7 +166,7 @@ omitted.
 
 \section{Function ID}{
 
-3-23
+3-24
 }
 
 \seealso{
@@ -189,6 +189,7 @@ Other data formatting functions:
 \code{\link{fmt_percent}()},
 \code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
+\code{\link{fmt_spelled_num}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},
 \code{\link{sub_missing}()},

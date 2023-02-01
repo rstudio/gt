@@ -163,7 +163,7 @@ argument. Note here that \code{NA} values won't have the pattern applied.
 
 \section{Function ID}{
 
-14-11
+14-12
 }
 
 \seealso{
@@ -185,6 +185,7 @@ Other vector formatting functions:
 \code{\link{vec_fmt_percent}()},
 \code{\link{vec_fmt_roman}()},
 \code{\link{vec_fmt_scientific}()},
+\code{\link{vec_fmt_spelled_num}()},
 \code{\link{vec_fmt_time}()}
 }
 \concept{vector formatting functions}
