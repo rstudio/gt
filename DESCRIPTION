@@ -44,12 +44,14 @@ Imports:
     glue (>= 1.6.1),
     htmltools (>= 0.5.2),
     juicyjuice (>= 0.1.0),
+    jsonlite,
     magrittr (>= 2.0.2),
     rlang (>= 1.0.2),
     sass (>= 0.4.1),
     scales (>= 1.2.0),
     tibble (>= 3.1.6),
-    tidyselect (>= 1.1.1)
+    tidyselect (>= 1.1.1),
+    uuid
 Suggests:
     covr,
     digest (>= 0.6.29),

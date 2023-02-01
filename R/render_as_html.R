@@ -40,6 +40,7 @@ render_as_html <- function(data) {
   finalize_html_table(
     class = "gt_table",
     style = table_defs$table_style,
+    id = if (check_quarto()) paste0("table-", dt_options_get_value(data, "table_id")),
     caption_component,
     table_defs$table_colgroups,
     heading_component,
