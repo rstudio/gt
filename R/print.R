@@ -79,7 +79,7 @@ knit_print.gt_tbl <- function(x, ...) {
 as.tags.gt_tbl <- function(x, ...) {
 
   table_id <- dt_options_get_value(x, option = "table_id")
-  ihtml <- dt_options_get_value(x, option = "table_interactive")
+  ihtml <- dt_options_get_value(x, option = "ihtml_active")
 
   if (is.na(table_id)) {
     id <- random_id()
@@ -90,23 +90,16 @@ as.tags.gt_tbl <- function(x, ...) {
   # Compile the SCSS as CSS
   css <- compile_scss(data = x, id = id)
 
-  # Generate an interactive HTML table
   if (ihtml) {
 
-    # Generate the HTML table
-    x <- render_as_ihtml(data = x, id = id)
+    # Generate an interactive HTML table
+    html_table <- render_as_ihtml(data = x, id = id)
 
-    # Attach CSS styles to the HTML table
-    x <-
-      htmlwidgets::prependContent(
-        x, htmltools::tags$style(htmltools::HTML(css))
-      )
+  } else {
 
-    return(x)
+    # Generate a static HTML table
+    html_table <- htmltools::HTML(render_as_html(data = x))
   }
-
-  # Generate a static HTML table
-  html_table <- render_as_html(data = x)
 
   # Get options related to the enclosing <div>
   container_padding_x <- dt_options_get_value(x, option = "container_padding_x")
@@ -131,7 +124,7 @@ as.tags.gt_tbl <- function(x, ...) {
         width = container_width,
         height = container_height
       ),
-      htmltools::HTML(html_table)
+      html_table
     )
 
   html_tbl
