@@ -12,7 +12,14 @@ tab_options(
   container.padding.y = NULL,
   container.overflow.x = NULL,
   container.overflow.y = NULL,
-  table.interactive = NULL,
+  ihtml.active = NULL,
+  ihtml.use_pagination = NULL,
+  ihtml.use_sorting = NULL,
+  ihtml.use_search = NULL,
+  ihtml.use_filters = NULL,
+  ihtml.use_resizers = NULL,
+  ihtml.use_highlight = NULL,
+  ihtml.use_compact_mode = NULL,
   table.width = NULL,
   table.layout = NULL,
   table.align = NULL,
@@ -161,13 +168,6 @@ tab_options(
   row.striping.background_color = NULL,
   row.striping.include_stub = NULL,
   row.striping.include_table_body = NULL,
-  ihtml.use_pagination = NULL,
-  ihtml.use_sorting = NULL,
-  ihtml.use_search = NULL,
-  ihtml.use_filters = NULL,
-  ihtml.use_resizers = NULL,
-  ihtml.use_highlight = NULL,
-  ihtml.use_compact_mode = NULL,
   page.orientation = NULL,
   page.numbering = NULL,
   page.header.use_tbl_headings = NULL,
@@ -200,13 +200,38 @@ horizontal or vertical scrolling is enabled to view the entire table in
 those directions. With \code{FALSE}, the table may be clipped if the table width
 or height exceeds the \code{container.width} or \code{container.height}.}
 
-\item{table.interactive}{An option to display an interactive version of an
+\item{ihtml.active}{The option for displaying an interactive version of an
 HTML table (rather than an otherwise 'static' table). This enables the use
-of controls for pagination, global searching, filtering, and sorting. The
+of controls for pagination, global search, filtering, and sorting. The
 individual features are controlled by the other \verb{table.*} options. By
 default, the pagination (\code{ihtml.use_pagination}) and sorting
-(\code{ihtml.use_sorting}) features are enabled. The \code{table.interactive} option,
+(\code{ihtml.use_sorting}) features are enabled. The \code{ihtml.active} option,
 however, is \code{FALSE} by default.}
+
+\item{ihtml.use_pagination}{For interactive HTML output, the option for using
+pagination controls (below the table body) to page through table content.
+By default, this is \code{TRUE}.}
+
+\item{ihtml.use_sorting}{For interactive HTML output, the option to provide
+controls for sorting column values. By default, this is \code{TRUE}.}
+
+\item{ihtml.use_search}{For interactive HTML output, an option that places a
+search field for globally filtering rows to the requested content. By
+default, this is \code{FALSE}.}
+
+\item{ihtml.use_filters}{For interactive HTML output, this places search
+fields below each column header and allows for filtering by column. By
+default, this is \code{FALSE}.}
+
+\item{ihtml.use_resizers}{For interactive HTML output, this allows for
+interactive resizing of columns. By default, this is \code{FALSE}.}
+
+\item{ihtml.use_highlight}{For interactive HTML output, this highlights
+individual rows upon hover. By default, this is \code{FALSE}.}
+
+\item{ihtml.use_compact_mode}{For interactive HTML output, an option to
+reduce vertical padding and thus make the table consume less vertical
+space. By default, this is \code{FALSE}.}
 
 \item{table.width}{The width of the table. Can be specified as a
 single-length character with units of pixels or as a percentage. If
@@ -401,31 +426,6 @@ when striping rows.}
 
 \item{row.striping.include_table_body}{An option for whether to include the
 table body when striping rows.}
-
-\item{ihtml.use_pagination}{For interactive HTML output, the option for using
-pagination controls (below the table body) to page through table content.
-By default, this is \code{TRUE}.}
-
-\item{ihtml.use_sorting}{For interactive HTML output, the option to provide
-controls for sorting column values. By default, this is \code{TRUE}.}
-
-\item{ihtml.use_search}{For interactive HTML output, an option that places a
-search field for globally filtering rows to the requested content. By
-default, this is \code{FALSE}.}
-
-\item{ihtml.use_filters}{For interactive HTML output, this places search
-fields below each column header and allows for filtering by column. By
-default, this is \code{FALSE}.}
-
-\item{ihtml.use_resizers}{For interactive HTML output, this allows for
-interactive resizing of columns. By default, this is \code{FALSE}.}
-
-\item{ihtml.use_highlight}{For interactive HTML output, this highlights
-individual rows upon hover. By default, this is \code{FALSE}.}
-
-\item{ihtml.use_compact_mode}{For interactive HTML output, an option to
-reduce vertical padding and thus make the table consume less vertical
-space. By default, this is \code{FALSE}.}
 
 \item{page.orientation}{For RTF output, this provides an two options for page
 orientation: \code{"portrait"} (the default) and \code{"landscape"}.}
