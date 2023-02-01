@@ -302,7 +302,7 @@ render_as_ihtml <- function(data, id) {
       compact = use_compact_mode,
       wrap = TRUE,
       showSortIcon = TRUE,
-      showSortable = FALSE,
+      showSortable = TRUE,
       class = NULL,
       style = NULL,
       rowClass = NULL,
