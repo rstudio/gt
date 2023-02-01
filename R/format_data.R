@@ -3092,6 +3092,200 @@ get_letters_from_div <- function(x, set) {
   paste(set[result], collapse = "")
 }
 
+#' Format values to spelled out numbers
+#'
+#' @description
+#'
+#' With numeric values in a **gt** table we can transform those to numbers that
+#' are spelled out. Any values from `0` to `100` can be spelled out according to
+#' the specified locale. For example, the value `23` will be rendered as
+#' `"twenty-three"` if the locale is an English-language one (or, not provided
+#' at all); should a Swedish locale be provided (e.g., `"sv"`), the output will
+#' instead be `"tjugotre"`.
+#'
+#' @inheritParams fmt_number
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Compatibility of formatting function with data values:
+#'
+#' The `fmt_spelled_num()` formatting function is compatible with body cells
+#' that are of the `"numeric"` or `"integer"` types. Any other types of body
+#' cells are ignored during formatting. This is to say that cells of
+#' incompatible data types may be targeted, but there will be no attempt to
+#' format them.
+#'
+#' @section Targeting cells with `columns` and `rows`:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to target a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value of 100,000 (excluding
+#' `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given formatting function
+#' will be skipped over, like `character` values and numeric `fmt_*()`
+#' functions. So it's safe to select all columns with a particular formatting
+#' function (only those values that can be formatted will be formatted), but,
+#' you may not want that. One strategy is to format the bulk of cell values with
+#' one formatting function and then constrain the columns for later passes with
+#' other types of formatting (the last formatting done to a cell is what you get
+#' in the final output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
+#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
+#' the input data (the indices won't necessarily match those of rearranged rows
+#' if row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector. This is nice if you want to base
+#' formatting on values in the column or another column, or, you'd like to use a
+#' more complex predicate expression.
+#'
+#' @section Examples:
+#'
+#' Use the [`gtcars`] dataset to create a **gt** table. After some summarizing
+#' and arranging of rows, the `fmt_spelled_num()` function is used to transform
+#' integer values into spelled-out numbering (in the `n` column). That formatted
+#' column of numbers-as-words is given cell background colors via [data_color()]
+#' (the underlying numerical values are always available).
+#'
+#' ```r
+#' gtcars |>
+#'   dplyr::select(mfr, ctry_origin) |>
+#'   dplyr::group_by(mfr, ctry_origin) |>
+#'   dplyr::count() |>
+#'   dplyr::ungroup() |>
+#'   dplyr::arrange(ctry_origin) |>
+#'   gt(rowname_col = "mfr", groupname_col = "ctry_origin") |>
+#'   cols_label(n = "No. of Entries") |>
+#'   fmt_spelled_num() |>
+#'   tab_stub_indent(rows = everything(), indent = 2) |>
+#'   data_color(
+#'     columns = n,
+#'     method = "numeric",
+#'     palette = "viridis",
+#'     alpha = 0.8
+#'   ) |>
+#'   opt_all_caps() |>
+#'   opt_vertical_padding(scale = 0.5) |>
+#'   cols_align(align = "center", columns = n)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_spelled_num_1.png")`
+#' }}
+#'
+#' @family data formatting functions
+#' @section Function ID:
+#' 3-11
+#'
+#' @seealso The vector-formatting version of this function:
+#'   [vec_fmt_spelled_num()].
+#'
+#' @import rlang
+#' @export
+fmt_spelled_num <- function(
+    data,
+    columns = everything(),
+    rows = everything(),
+    pattern = "{x}",
+    locale = NULL
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  # Declare formatting function compatibility
+  compat <- c("numeric", "integer")
+
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
+  locale <- resolve_locale(data = data, locale = locale)
+
+  # Obtain a locale-based `num_spellout_set` vector
+  num_spellout_set <- get_locale_num_spellout(locale = locale)
+
+  # In this case where strict mode is being used (with the option
+  # called "gt.strict_column_fmt"), stop the function if any of the
+  # resolved columns have data that is incompatible with this formatter
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = compat
+    )
+  ) {
+    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
+      cli::cli_abort(
+        "The `fmt_spelled_num()` function can only be used on `columns`
+      with numeric data."
+      )
+    }
+  }
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    compat = compat,
+    fns = num_fmt_factory_multi(
+      pattern = pattern,
+      use_latex_math_mode = FALSE,
+      format_fn = function(x, context) {
+
+        # Generate an vector of empty strings that will eventually contain
+        # all of the roman numerals
+        x_str <- character(length(x))
+
+        # Round all values of x to 3 digits with the R-H-U method of
+        # rounding (for reproducibility purposes)
+        x <- floor(x)
+
+        # Determine which of `x` are finite values
+        x_is_a_number <- is.finite(x)
+        # x[x_is_a_number] <- abs(x[x_is_a_number])
+
+        # The allowed range of numbers that can be spelled out
+        # is `0` to `100`
+        x_is_in_range <- x >= 0 & x <= 100
+
+        # The `num_spellout_set` vector should always contain 101
+        # elements; it contains zero then the numbers from 1 to 100
+        x_str[x_is_a_number & x_is_in_range] <-
+          num_spellout_set[x[x_is_a_number & x_is_in_range] + 1]
+
+        # Ensure that numbers not in range are included as
+        # floored numeric values
+        x_str[x_is_a_number & !x_is_in_range] <-
+          x[x_is_a_number & !x_is_in_range]
+
+        # In rare cases that Inf or -Inf appear, ensure that these
+        # special values are printed correctly
+        x_str[is.infinite(x)] <- x[is.infinite(x)]
+
+        x_str
+      }
+    )
+  )
+}
+
 #' Format values as bytes
 #'
 #' @description
@@ -3226,7 +3420,7 @@ get_letters_from_div <- function(x, set) {
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-11
+#' 3-12
 #'
 #' @seealso The vector-formatting version of this function: [vec_fmt_bytes()].
 #'
@@ -3560,7 +3754,7 @@ fmt_bytes <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-12
+#' 3-13
 #'
 #' @seealso The vector-formatting version of this function: [vec_fmt_date()].
 #'
@@ -3828,7 +4022,7 @@ fmt_date <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-13
+#' 3-14
 #'
 #' @seealso The vector-formatting version of this function: [vec_fmt_time()].
 #'
@@ -4706,7 +4900,7 @@ fmt_time <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-14
+#' 3-15
 #'
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_datetime()].
@@ -5051,7 +5245,7 @@ fmt_datetime <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-15
+#' 3-16
 #'
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_duration()].
@@ -5819,7 +6013,7 @@ extract_duration_pattern <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-16
+#' 3-17
 #'
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_markdown()].
@@ -5950,7 +6144,7 @@ fmt_markdown <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-17
+#' 3-18
 #'
 #' @import rlang
 #' @export
@@ -6143,7 +6337,7 @@ fmt_passthrough <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-18
+#' 3-19
 #'
 #' @export
 fmt_auto <- function(
@@ -6446,7 +6640,7 @@ fmt_auto <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-19
+#' 3-20
 #'
 #' @import rlang
 #' @export

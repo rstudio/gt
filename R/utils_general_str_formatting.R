@@ -581,3 +581,34 @@ regexec_gt <- function(pattern, text, perl = FALSE) {
     res
   }
 }
+
+# The Hebrew Unicode character set (112 code points)
+hebrew_unicode_charset <- "[\U00590-\U005FF]"
+
+# The Arabic Unicode character set (256 code points)
+arabic_unicode_charset <- "[\U00600-\U006FF]"
+
+# The Syriac Unicode character set (80 code points)
+syriac_unicode_charset <- "[\U00700-\U0074F]"
+
+# The Thaana Unicode character set (64 code points)
+thaana_unicode_charset <- "[\U00780-\U007BF]"
+
+# The Samaritan Unicode character set (61 code points)
+samaritan_unicode_charset <- "[\U00800-\U0083F]"
+
+# The Mandaic Unicode character set (32 code points)
+mandaic_unicode_charset <- "[\U00840-\U0085F]"
+
+# The combination of these RTL character sets
+rtl_modern_unicode_charset <-
+  paste(
+    hebrew_unicode_charset,
+    arabic_unicode_charset,
+    syriac_unicode_charset,
+    thaana_unicode_charset,
+    samaritan_unicode_charset,
+    mandaic_unicode_charset,sep = "|"
+  )
+
+

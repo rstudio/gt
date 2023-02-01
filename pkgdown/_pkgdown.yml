@@ -75,6 +75,7 @@ reference:
     - fmt_currency
     - fmt_roman
     - fmt_index
+    - fmt_spelled_num
     - fmt_bytes
     - fmt_date
     - fmt_time
@@ -291,6 +292,7 @@ reference:
     - vec_fmt_currency
     - vec_fmt_roman
     - vec_fmt_index
+    - vec_fmt_spelled_num
     - vec_fmt_bytes
     - vec_fmt_date
     - vec_fmt_time

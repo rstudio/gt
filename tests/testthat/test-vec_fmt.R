@@ -3416,6 +3416,49 @@ test_that("The `vec_fmt_index()` function works", {
   expect_error(vec_fmt_index(dplyr::tibble(a = c(1, 2, 3))))
 })
 
+test_that("The `vec_fmt_spelled_num()` function works", {
+
+  vec_index <- c(1, 4, 5, 8, 12, 20, 0, -5, 1.3, NA, 20, 80, 100, 200)
+
+  vec_fmt_spelled_num(vec_index, output = "plain") %>%
+    expect_equal(
+      c(
+        "one", "four", "five", "eight", "twelve", "twenty", "zero",
+        "-5", "one", "NA", "twenty", "eighty", "one hundred", "200"
+      )
+    )
+
+  expect_equal(
+    vec_fmt_spelled_num(vec_index, output = "plain"),
+    vec_fmt_spelled_num(vec_index, output = "html")
+  )
+  expect_equal(
+    vec_fmt_spelled_num(vec_index, output = "plain"),
+    vec_fmt_spelled_num(vec_index, output = "latex")
+  )
+  expect_equal(
+    vec_fmt_spelled_num(vec_index, output = "plain"),
+    vec_fmt_spelled_num(vec_index, output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_spelled_num(vec_index, output = "plain"),
+    vec_fmt_spelled_num(vec_index, output = "word")
+  )
+
+  vec_fmt_spelled_num(vec_index, output = "plain", locale = "af") %>%
+    expect_equal(
+      c(
+        "een", "vier", "vyf", "agt", "twaalf", "twintig", "nul", "-5",
+        "een", "NA", "twintig", "tagtig", "honderd", "200"
+      )
+    )
+
+  expect_error(vec_fmt_spelled_num(letters))
+  expect_error(vec_fmt_spelled_num(TRUE))
+  expect_error(vec_fmt_spelled_num(list(1, 2, 3)))
+  expect_error(vec_fmt_spelled_num(dplyr::tibble(a = c(1, 2, 3))))
+})
+
 test_that("The `vec_fmt_bytes()` function works", {
 
   vec_fmt_bytes(vec_num_1, standard = "decimal", output = "plain") %>%

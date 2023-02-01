@@ -899,7 +899,7 @@ zone formatting. Let's provide a time zone ID (\code{"America/Vancouver"}) to th
 
 \section{Function ID}{
 
-3-14
+3-15
 }
 
 \seealso{
@@ -924,6 +924,7 @@ Other data formatting functions:
 \code{\link{fmt_percent}()},
 \code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
+\code{\link{fmt_spelled_num}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt}()},
 \code{\link{sub_large_vals}()},
