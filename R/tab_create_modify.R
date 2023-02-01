@@ -1964,45 +1964,6 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' components, the subcomponents, and the element that can adjusted.
 #'
 #' @inheritParams fmt_number
-#' @param container.width,container.height,container.padding.x,container.padding.y
-#'   The width and height of the table's container, and, the vertical and
-#'   horizontal padding of the table's container. The container width and height
-#'   can be specified with units of pixels or as a percentage. The padding is to
-#'   be specified as a length with units of pixels. If provided as a numeric
-#'   value, it is assumed that the value is given in units of pixels. The [px()]
-#'   and [pct()] helper functions can also be used to pass in numeric values and
-#'   obtain values as pixel or percent units.
-#' @param container.overflow.x,container.overflow.y Options to enable scrolling
-#'   in the horizontal and vertical directions when the table content overflows
-#'   the container dimensions. Using `TRUE` (the default for both) means that
-#'   horizontal or vertical scrolling is enabled to view the entire table in
-#'   those directions. With `FALSE`, the table may be clipped if the table width
-#'   or height exceeds the `container.width` or `container.height`.
-#' @param ihtml.active The option for displaying an interactive version of an
-#'   HTML table (rather than an otherwise 'static' table). This enables the use
-#'   of controls for pagination, global search, filtering, and sorting. The
-#'   individual features are controlled by the other `table.*` options. By
-#'   default, the pagination (`ihtml.use_pagination`) and sorting
-#'   (`ihtml.use_sorting`) features are enabled. The `ihtml.active` option,
-#'   however, is `FALSE` by default.
-#' @param ihtml.use_pagination For interactive HTML output, the option for using
-#'   pagination controls (below the table body) to page through table content.
-#'   By default, this is `TRUE`.
-#' @param ihtml.use_sorting For interactive HTML output, the option to provide
-#'   controls for sorting column values. By default, this is `TRUE`.
-#' @param ihtml.use_search For interactive HTML output, an option that places a
-#'   search field for globally filtering rows to the requested content. By
-#'   default, this is `FALSE`.
-#' @param ihtml.use_filters For interactive HTML output, this places search
-#'   fields below each column header and allows for filtering by column. By
-#'   default, this is `FALSE`.
-#' @param ihtml.use_resizers For interactive HTML output, this allows for
-#'   interactive resizing of columns. By default, this is `FALSE`.
-#' @param ihtml.use_highlight For interactive HTML output, this highlights
-#'   individual rows upon hover. By default, this is `FALSE`.
-#' @param ihtml.use_compact_mode For interactive HTML output, an option to
-#'   reduce vertical padding and thus make the table consume less vertical
-#'   space. By default, this is `FALSE`.
 #' @param table.width The width of the table. Can be specified as a
 #'   single-length character with units of pixels or as a percentage. If
 #'   provided as a single-length numeric vector, it is assumed that the value is
@@ -2179,6 +2140,63 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   when striping rows.
 #' @param row.striping.include_table_body An option for whether to include the
 #'   table body when striping rows.
+#' @param container.width,container.height,container.padding.x,container.padding.y
+#'   The width and height of the table's container, and, the vertical and
+#'   horizontal padding of the table's container. The container width and height
+#'   can be specified with units of pixels or as a percentage. The padding is to
+#'   be specified as a length with units of pixels. If provided as a numeric
+#'   value, it is assumed that the value is given in units of pixels. The [px()]
+#'   and [pct()] helper functions can also be used to pass in numeric values and
+#'   obtain values as pixel or percent units.
+#' @param container.overflow.x,container.overflow.y Options to enable scrolling
+#'   in the horizontal and vertical directions when the table content overflows
+#'   the container dimensions. Using `TRUE` (the default for both) means that
+#'   horizontal or vertical scrolling is enabled to view the entire table in
+#'   those directions. With `FALSE`, the table may be clipped if the table width
+#'   or height exceeds the `container.width` or `container.height`.
+#' @param ihtml.active The option for displaying an interactive version of an
+#'   HTML table (rather than an otherwise 'static' table). This enables the use
+#'   of controls for pagination, global search, filtering, and sorting. The
+#'   individual features are controlled by the other `table.*` options. By
+#'   default, the pagination (`ihtml.use_pagination`) and sorting
+#'   (`ihtml.use_sorting`) features are enabled. The `ihtml.active` option,
+#'   however, is `FALSE` by default.
+#' @param ihtml.use_pagination,ihtml.use_pagination_info For interactive HTML
+#'   output, the option for using pagination controls (below the table body) can
+#'   be controlled with `ihtml.use_pagination`. By default, this is `TRUE` and
+#'   it will allow the use to page through table content. The informational
+#'   display text regarding the current page can be set with
+#'   `ihtml.use_pagination_info` (which is `TRUE` by default).
+#' @param ihtml.use_sorting For interactive HTML output, the option to provide
+#'   controls for sorting column values. By default, this is `TRUE`.
+#' @param ihtml.use_search For interactive HTML output, an option that places a
+#'   search field for globally filtering rows to the requested content. By
+#'   default, this is `FALSE`.
+#' @param ihtml.use_filters For interactive HTML output, this places search
+#'   fields below each column header and allows for filtering by column. By
+#'   default, this is `FALSE`.
+#' @param ihtml.use_resizers For interactive HTML output, this allows for
+#'   interactive resizing of columns. By default, this is `FALSE`.
+#' @param ihtml.use_highlight For interactive HTML output, this highlights
+#'   individual rows upon hover. By default, this is `FALSE`.
+#' @param ihtml.use_compact_mode For interactive HTML output, an option to
+#'   reduce vertical padding and thus make the table consume less vertical
+#'   space. By default, this is `FALSE`.
+#' @param ihtml.use_page_size_select,ihtml.page_size_default,ihtml.page_size_values
+#'   For interactive HTML output, `ihtml.use_page_size_select` provides the
+#'   option to display a dropdown menu for the number of rows to show per page
+#'   of data. By default, this is the vector `c(10, 25, 50, 100)` which
+#'   corresponds to options for `10`, `25`, `50`, and `100` rows of data per
+#'   page. To modify these page-size options, provide a numeric vector to
+#'   `ihtml.page_size_values`. The default page size (initially set as `10`) can
+#'   be modified with `ihtml.page_size_default` and this works whether or not
+#'   `ihtml.use_page_size_select` is set to `TRUE`.
+#' @param ihtml.pagination_type For interactive HTML output and when using
+#'   pagination, one of three options for presentation pagination controls. The
+#'   default is `"numbers"`, where a series of page-number buttons is presented
+#'   along with 'previous' and 'next' buttons. The `"jump"` option provides an
+#'   input field with a stepper for the page number. With `"simple"`, only the
+#'   'previous' and 'next' buttons are displayed.
 #' @param page.orientation For RTF output, this provides an two options for page
 #'   orientation: `"portrait"` (the default) and `"landscape"`.
 #' @param page.numbering Within RTF output, should page numbering be displayed?
@@ -2318,20 +2336,6 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' @export
 tab_options <- function(
     data,
-    container.width = NULL,
-    container.height = NULL,
-    container.padding.x = NULL,
-    container.padding.y = NULL,
-    container.overflow.x = NULL,
-    container.overflow.y = NULL,
-    ihtml.active = NULL,
-    ihtml.use_pagination = NULL,
-    ihtml.use_sorting = NULL,
-    ihtml.use_search = NULL,
-    ihtml.use_filters = NULL,
-    ihtml.use_resizers = NULL,
-    ihtml.use_highlight = NULL,
-    ihtml.use_compact_mode = NULL,
     table.width = NULL,
     table.layout = NULL,
     table.align = NULL,
@@ -2480,6 +2484,25 @@ tab_options <- function(
     row.striping.background_color = NULL,
     row.striping.include_stub = NULL,
     row.striping.include_table_body = NULL,
+    container.width = NULL,
+    container.height = NULL,
+    container.padding.x = NULL,
+    container.padding.y = NULL,
+    container.overflow.x = NULL,
+    container.overflow.y = NULL,
+    ihtml.active = NULL,
+    ihtml.use_pagination = NULL,
+    ihtml.use_pagination_info = NULL,
+    ihtml.use_sorting = NULL,
+    ihtml.use_search = NULL,
+    ihtml.use_filters = NULL,
+    ihtml.use_resizers = NULL,
+    ihtml.use_highlight = NULL,
+    ihtml.use_compact_mode = NULL,
+    ihtml.use_page_size_select = NULL,
+    ihtml.page_size_default = NULL,
+    ihtml.page_size_values = NULL,
+    ihtml.pagination_type = NULL,
     page.orientation = NULL,
     page.numbering = NULL,
     page.header.use_tbl_headings = NULL,
@@ -2500,7 +2523,11 @@ tab_options <- function(
   # Extract the options table from `data`
   opts_df <- dt_options_get(data = data)
 
-  arg_names <- base::setdiff(names(formals(tab_options)), "data")
+  arg_names <-
+    base::setdiff(
+      names(formals(tab_options)),
+      c("data", "ihtml.page_size_values", "ihtml.page_size_default")
+    )
 
   arg_vals <- mget(arg_names)
   arg_vals <- arg_vals[!vapply(arg_vals, FUN = is.null, FUN.VALUE = logical(1))]
@@ -2541,7 +2568,33 @@ tab_options <- function(
     )
 
   # Write the modified options table back to `data`
-  dt_options_set(data = data, options = opts_df)
+  data <- dt_options_set(data = data, options = opts_df)
+
+  #
+  # Handle special cases where option values are vectors
+  #
+
+  ihtml_page_size_values <- mget("ihtml.page_size_values")
+  if (!is.null(ihtml_page_size_values[[1]])) {
+    data <-
+      dt_options_set_value(
+        data = data,
+        option = "ihtml_page_size_values",
+        value = unname(unlist(ihtml_page_size_values))
+      )
+  }
+
+  ihtml_page_size_default <- mget("ihtml.page_size_default")
+  if (!is.null(ihtml_page_size_default[[1]])) {
+    data <-
+      dt_options_set_value(
+        data = data,
+        option = "ihtml_page_size_default",
+        value = unname(unlist(ihtml_page_size_default))
+      )
+  }
+
+  data
 }
 
 preprocess_tab_option <- function(option, var_name, type) {
