@@ -26,7 +26,6 @@ render_as_ihtml <- function(data, id) {
   # Determine if the rendered table should have a header section
   has_header_section <- dt_heading_has_title(data = data)
 
-
   # Obtain the language from the `locale`, if provided
   locale <- dt_locale_get_value(data = data)
 
@@ -93,7 +92,6 @@ render_as_ihtml <- function(data, id) {
     lapply(
       seq_along(column_names),
       FUN = function(x) {
-
         reactable::colDef(
           name = column_labels[x],
           align = column_alignments[x],
@@ -158,22 +156,18 @@ render_as_ihtml <- function(data, id) {
 
     heading_component <-
       htmltools::div(
-        class = "gt_table",
         style = htmltools::css(
           `border-top-style` = "solid",
           `border-top-width` = "2px",
           `border-top-color` = "#D3D3D3",
           `padding-bottom` = if (use_search) "8px" else NULL
         ),
-        id = id,
         htmltools::div(
-          id = id,
           class = "gt_heading gt_title gt_font_normal",
           style = htmltools::css(`text-size` = "bigger"),
           htmltools::HTML(tbl_heading$title)
         ),
         htmltools::div(
-          id = id,
           class = paste(
             "gt_heading", "gt_subtitle",
             if (use_search) "gt_bottom_border" else NULL
@@ -203,7 +197,7 @@ render_as_ihtml <- function(data, id) {
 
     footer_component <-
       htmltools::div(
-        class = "gt_table",
+        #class = "gt_table",
         style = htmltools::css(
           `border-top-style` = "solid",
           `border-top-width` = "2px",
@@ -216,7 +210,7 @@ render_as_ihtml <- function(data, id) {
           `padding-left` = "10px",
           `padding-right` = "10px"
         ),
-        id = id,
+        #id = id,
         htmltools::div(source_notes_component),
         htmltools::div(footnotes_component)
       )
