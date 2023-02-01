@@ -72,12 +72,18 @@ render_as_ihtml <- function(data, id) {
   # Get options settable in `tab_options()`
   opt_val <- dt_options_get_value
   use_pagination <- opt_val(data = data, option = "ihtml_use_pagination")
+  use_pagination_info <- opt_val(data = data, option = "ihtml_use_pagination_info")
   use_search <- opt_val(data = data, option = "ihtml_use_search")
   use_sorting <- opt_val(data = data, option = "ihtml_use_sorting")
   use_filters <- opt_val(data = data, option = "ihtml_use_filters")
   use_resizers <- opt_val(data = data, option = "ihtml_use_resizers")
   use_highlight <- opt_val(data = data, option = "ihtml_use_highlight")
   use_compact_mode <- opt_val(data = data, option = "ihtml_use_compact_mode")
+  use_page_size_select <- opt_val(data = data, option = "ihtml_use_page_size_select")
+  page_size_default <- opt_val(data = data, option = "ihtml_page_size_default")
+  page_size_values <- opt_val(data = data, option = "ihtml_page_size_values")
+  pagination_type <- opt_val(data = data, option = "ihtml_pagination_type")
+
   use_row_striping <- opt_val(data = data, option = "row_striping_include_table_body")
   row_striping_color <- opt_val(data = data, option = "row_striping_background_color")
   table_width <- opt_val(data = data, option = "table_width")
@@ -197,7 +203,6 @@ render_as_ihtml <- function(data, id) {
 
     footer_component <-
       htmltools::div(
-        #class = "gt_table",
         style = htmltools::css(
           `border-top-style` = "solid",
           `border-top-width` = "2px",
@@ -210,7 +215,6 @@ render_as_ihtml <- function(data, id) {
           `padding-left` = "10px",
           `padding-right` = "10px"
         ),
-        #id = id,
         htmltools::div(source_notes_component),
         htmltools::div(footnotes_component)
       )
@@ -276,12 +280,12 @@ render_as_ihtml <- function(data, id) {
       defaultSortOrder = "asc",
       defaultSorted = NULL,
       pagination = use_pagination,
-      defaultPageSize = 10,
-      showPageSizeOptions = FALSE,
-      pageSizeOptions = c(10, 25, 50, 100),
-      paginationType = "numbers", # "numbers", "jump", or "simple"
-      showPagination = NULL,
-      showPageInfo = TRUE,
+      defaultPageSize = page_size_default,
+      showPageSizeOptions = use_page_size_select,
+      pageSizeOptions = page_size_values,
+      paginationType = pagination_type,
+      showPagination = TRUE,
+      showPageInfo = use_pagination_info,
       minRows = 1,
       paginateSubRows = FALSE,
       details = NULL,
