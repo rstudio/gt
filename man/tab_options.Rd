@@ -6,20 +6,6 @@
 \usage{
 tab_options(
   data,
-  container.width = NULL,
-  container.height = NULL,
-  container.padding.x = NULL,
-  container.padding.y = NULL,
-  container.overflow.x = NULL,
-  container.overflow.y = NULL,
-  ihtml.active = NULL,
-  ihtml.use_pagination = NULL,
-  ihtml.use_sorting = NULL,
-  ihtml.use_search = NULL,
-  ihtml.use_filters = NULL,
-  ihtml.use_resizers = NULL,
-  ihtml.use_highlight = NULL,
-  ihtml.use_compact_mode = NULL,
   table.width = NULL,
   table.layout = NULL,
   table.align = NULL,
@@ -168,6 +154,25 @@ tab_options(
   row.striping.background_color = NULL,
   row.striping.include_stub = NULL,
   row.striping.include_table_body = NULL,
+  container.width = NULL,
+  container.height = NULL,
+  container.padding.x = NULL,
+  container.padding.y = NULL,
+  container.overflow.x = NULL,
+  container.overflow.y = NULL,
+  ihtml.active = NULL,
+  ihtml.use_pagination = NULL,
+  ihtml.use_pagination_info = NULL,
+  ihtml.use_sorting = NULL,
+  ihtml.use_search = NULL,
+  ihtml.use_filters = NULL,
+  ihtml.use_resizers = NULL,
+  ihtml.use_highlight = NULL,
+  ihtml.use_compact_mode = NULL,
+  ihtml.use_page_size_select = NULL,
+  ihtml.page_size_default = NULL,
+  ihtml.page_size_values = NULL,
+  ihtml.pagination_type = NULL,
   page.orientation = NULL,
   page.numbering = NULL,
   page.header.use_tbl_headings = NULL,
@@ -184,54 +189,6 @@ tab_options(
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
-
-\item{container.width, container.height, container.padding.x, container.padding.y}{The width and height of the table's container, and, the vertical and
-horizontal padding of the table's container. The container width and height
-can be specified with units of pixels or as a percentage. The padding is to
-be specified as a length with units of pixels. If provided as a numeric
-value, it is assumed that the value is given in units of pixels. The \code{\link[=px]{px()}}
-and \code{\link[=pct]{pct()}} helper functions can also be used to pass in numeric values and
-obtain values as pixel or percent units.}
-
-\item{container.overflow.x, container.overflow.y}{Options to enable scrolling
-in the horizontal and vertical directions when the table content overflows
-the container dimensions. Using \code{TRUE} (the default for both) means that
-horizontal or vertical scrolling is enabled to view the entire table in
-those directions. With \code{FALSE}, the table may be clipped if the table width
-or height exceeds the \code{container.width} or \code{container.height}.}
-
-\item{ihtml.active}{The option for displaying an interactive version of an
-HTML table (rather than an otherwise 'static' table). This enables the use
-of controls for pagination, global search, filtering, and sorting. The
-individual features are controlled by the other \verb{table.*} options. By
-default, the pagination (\code{ihtml.use_pagination}) and sorting
-(\code{ihtml.use_sorting}) features are enabled. The \code{ihtml.active} option,
-however, is \code{FALSE} by default.}
-
-\item{ihtml.use_pagination}{For interactive HTML output, the option for using
-pagination controls (below the table body) to page through table content.
-By default, this is \code{TRUE}.}
-
-\item{ihtml.use_sorting}{For interactive HTML output, the option to provide
-controls for sorting column values. By default, this is \code{TRUE}.}
-
-\item{ihtml.use_search}{For interactive HTML output, an option that places a
-search field for globally filtering rows to the requested content. By
-default, this is \code{FALSE}.}
-
-\item{ihtml.use_filters}{For interactive HTML output, this places search
-fields below each column header and allows for filtering by column. By
-default, this is \code{FALSE}.}
-
-\item{ihtml.use_resizers}{For interactive HTML output, this allows for
-interactive resizing of columns. By default, this is \code{FALSE}.}
-
-\item{ihtml.use_highlight}{For interactive HTML output, this highlights
-individual rows upon hover. By default, this is \code{FALSE}.}
-
-\item{ihtml.use_compact_mode}{For interactive HTML output, an option to
-reduce vertical padding and thus make the table consume less vertical
-space. By default, this is \code{FALSE}.}
 
 \item{table.width}{The width of the table. Can be specified as a
 single-length character with units of pixels or as a percentage. If
@@ -426,6 +383,73 @@ when striping rows.}
 
 \item{row.striping.include_table_body}{An option for whether to include the
 table body when striping rows.}
+
+\item{container.width, container.height, container.padding.x, container.padding.y}{The width and height of the table's container, and, the vertical and
+horizontal padding of the table's container. The container width and height
+can be specified with units of pixels or as a percentage. The padding is to
+be specified as a length with units of pixels. If provided as a numeric
+value, it is assumed that the value is given in units of pixels. The \code{\link[=px]{px()}}
+and \code{\link[=pct]{pct()}} helper functions can also be used to pass in numeric values and
+obtain values as pixel or percent units.}
+
+\item{container.overflow.x, container.overflow.y}{Options to enable scrolling
+in the horizontal and vertical directions when the table content overflows
+the container dimensions. Using \code{TRUE} (the default for both) means that
+horizontal or vertical scrolling is enabled to view the entire table in
+those directions. With \code{FALSE}, the table may be clipped if the table width
+or height exceeds the \code{container.width} or \code{container.height}.}
+
+\item{ihtml.active}{The option for displaying an interactive version of an
+HTML table (rather than an otherwise 'static' table). This enables the use
+of controls for pagination, global search, filtering, and sorting. The
+individual features are controlled by the other \verb{table.*} options. By
+default, the pagination (\code{ihtml.use_pagination}) and sorting
+(\code{ihtml.use_sorting}) features are enabled. The \code{ihtml.active} option,
+however, is \code{FALSE} by default.}
+
+\item{ihtml.use_pagination, ihtml.use_pagination_info}{For interactive HTML
+output, the option for using pagination controls (below the table body) can
+be controlled with \code{ihtml.use_pagination}. By default, this is \code{TRUE} and
+it will allow the use to page through table content. The informational
+display text regarding the current page can be set with
+\code{ihtml.use_pagination_info} (which is \code{TRUE} by default).}
+
+\item{ihtml.use_sorting}{For interactive HTML output, the option to provide
+controls for sorting column values. By default, this is \code{TRUE}.}
+
+\item{ihtml.use_search}{For interactive HTML output, an option that places a
+search field for globally filtering rows to the requested content. By
+default, this is \code{FALSE}.}
+
+\item{ihtml.use_filters}{For interactive HTML output, this places search
+fields below each column header and allows for filtering by column. By
+default, this is \code{FALSE}.}
+
+\item{ihtml.use_resizers}{For interactive HTML output, this allows for
+interactive resizing of columns. By default, this is \code{FALSE}.}
+
+\item{ihtml.use_highlight}{For interactive HTML output, this highlights
+individual rows upon hover. By default, this is \code{FALSE}.}
+
+\item{ihtml.use_compact_mode}{For interactive HTML output, an option to
+reduce vertical padding and thus make the table consume less vertical
+space. By default, this is \code{FALSE}.}
+
+\item{ihtml.use_page_size_select, ihtml.page_size_default, ihtml.page_size_values}{For interactive HTML output, \code{ihtml.use_page_size_select} provides the
+option to display a dropdown menu for the number of rows to show per page
+of data. By default, this is the vector \code{c(10, 25, 50, 100)} which
+corresponds to options for \code{10}, \code{25}, \code{50}, and \code{100} rows of data per
+page. To modify these page-size options, provide a numeric vector to
+\code{ihtml.page_size_values}. The default page size (initially set as \code{10}) can
+be modified with \code{ihtml.page_size_default} and this works whether or not
+\code{ihtml.use_page_size_select} is set to \code{TRUE}.}
+
+\item{ihtml.pagination_type}{For interactive HTML output and when using
+pagination, one of three options for presentation pagination controls. The
+default is \code{"numbers"}, where a series of page-number buttons is presented
+along with 'previous' and 'next' buttons. The \code{"jump"} option provides an
+input field with a stepper for the page number. With \code{"simple"}, only the
+'previous' and 'next' buttons are displayed.}
 
 \item{page.orientation}{For RTF output, this provides an two options for page
 orientation: \code{"portrait"} (the default) and \code{"landscape"}.}
