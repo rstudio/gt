@@ -203,6 +203,7 @@ reference:
       row striping, change the alignment of the table header, and much more.
     contents:
     - opt_stylize
+    - opt_interactive
     - opt_footnote_marks
     - opt_row_striping
     - opt_align_table_header
