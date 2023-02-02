@@ -160,7 +160,7 @@ get_colorized_params <- function(
 #' By default, a **gt** table rendered as HTML will be essentially be a 'static'
 #' table but we can alternatively enable interactive HTML options with
 #' `opt_interactive()`. Making an HTML table interactive entails the enabling of
-#' controls for pagination, global search, filtering, and sorting.
+#' controls for pagination, global search, filtering, sorting, and more.
 #'
 #' This function serves as a shortcut for setting the following options in
 #' [tab_options()]:
