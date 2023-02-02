@@ -69,12 +69,6 @@ components, the subcomponents, and the element that can adjusted.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">tab_options</span><span class="op">(</span></span>
 <span>  <span class="va">data</span>,</span>
-<span>  container.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  container.height <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  container.padding.x <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  container.padding.y <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  container.overflow.x <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  container.overflow.y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  table.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  table.layout <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  table.align <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -223,6 +217,25 @@ components, the subcomponents, and the element that can adjusted.</p>
 <span>  row.striping.background_color <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  row.striping.include_stub <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  row.striping.include_table_body <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  container.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  container.height <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  container.padding.x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  container.padding.y <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  container.overflow.x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  container.overflow.y <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ihtml.active <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ihtml.use_pagination <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ihtml.use_pagination_info <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ihtml.use_sorting <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ihtml.use_search <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ihtml.use_filters <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ihtml.use_resizers <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ihtml.use_highlight <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ihtml.use_compact_mode <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ihtml.use_page_size_select <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ihtml.page_size_default <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ihtml.page_size_values <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ihtml.pagination_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  page.orientation <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  page.numbering <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  page.header.use_tbl_headings <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -242,25 +255,6 @@ components, the subcomponents, and the element that can adjusted.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p>A table object that is created using the <code><a href="gt.html">gt()</a></code> function.</p></dd>
-
-
-<dt>container.width, container.height, container.padding.x, container.padding.y</dt>
-<dd><p>The width and height of the table's container, and, the vertical and
-horizontal padding of the table's container. The container width and height
-can be specified with units of pixels or as a percentage. The padding is to
-be specified as a length with units of pixels. If provided as a numeric
-value, it is assumed that the value is given in units of pixels. The <code><a href="px.html">px()</a></code>
-and <code><a href="pct.html">pct()</a></code> helper functions can also be used to pass in numeric values and
-obtain values as pixel or percent units.</p></dd>
-
-
-<dt>container.overflow.x, container.overflow.y</dt>
-<dd><p>Options to enable scrolling
-in the horizontal and vertical directions when the table content overflows
-the container dimensions. Using <code>TRUE</code> (the default for both) means that
-horizontal or vertical scrolling is enabled to view the entire table in
-those directions. With <code>FALSE</code>, the table may be clipped if the table width
-or height exceeds the <code>container.width</code> or <code>container.height</code>.</p></dd>
 
 
 <dt>table.width</dt>
@@ -541,6 +535,97 @@ when striping rows.</p></dd>
 <dt>row.striping.include_table_body</dt>
 <dd><p>An option for whether to include the
 table body when striping rows.</p></dd>
+
+
+<dt>container.width, container.height, container.padding.x, container.padding.y</dt>
+<dd><p>The width and height of the table's container, and, the vertical and
+horizontal padding of the table's container. The container width and height
+can be specified with units of pixels or as a percentage. The padding is to
+be specified as a length with units of pixels. If provided as a numeric
+value, it is assumed that the value is given in units of pixels. The <code><a href="px.html">px()</a></code>
+and <code><a href="pct.html">pct()</a></code> helper functions can also be used to pass in numeric values and
+obtain values as pixel or percent units.</p></dd>
+
+
+<dt>container.overflow.x, container.overflow.y</dt>
+<dd><p>Options to enable scrolling
+in the horizontal and vertical directions when the table content overflows
+the container dimensions. Using <code>TRUE</code> (the default for both) means that
+horizontal or vertical scrolling is enabled to view the entire table in
+those directions. With <code>FALSE</code>, the table may be clipped if the table width
+or height exceeds the <code>container.width</code> or <code>container.height</code>.</p></dd>
+
+
+<dt>ihtml.active</dt>
+<dd><p>The option for displaying an interactive version of an
+HTML table (rather than an otherwise 'static' table). This enables the use
+of controls for pagination, global search, filtering, and sorting. The
+individual features are controlled by the other <code>table.*</code> options. By
+default, the pagination (<code>ihtml.use_pagination</code>) and sorting
+(<code>ihtml.use_sorting</code>) features are enabled. The <code>ihtml.active</code> option,
+however, is <code>FALSE</code> by default.</p></dd>
+
+
+<dt>ihtml.use_pagination, ihtml.use_pagination_info</dt>
+<dd><p>For interactive HTML
+output, the option for using pagination controls (below the table body) can
+be controlled with <code>ihtml.use_pagination</code>. By default, this is <code>TRUE</code> and
+it will allow the use to page through table content. The informational
+display text regarding the current page can be set with
+<code>ihtml.use_pagination_info</code> (which is <code>TRUE</code> by default).</p></dd>
+
+
+<dt>ihtml.use_sorting</dt>
+<dd><p>For interactive HTML output, the option to provide
+controls for sorting column values. By default, this is <code>TRUE</code>.</p></dd>
+
+
+<dt>ihtml.use_search</dt>
+<dd><p>For interactive HTML output, an option that places a
+search field for globally filtering rows to the requested content. By
+default, this is <code>FALSE</code>.</p></dd>
+
+
+<dt>ihtml.use_filters</dt>
+<dd><p>For interactive HTML output, this places search
+fields below each column header and allows for filtering by column. By
+default, this is <code>FALSE</code>.</p></dd>
+
+
+<dt>ihtml.use_resizers</dt>
+<dd><p>For interactive HTML output, this allows for
+interactive resizing of columns. By default, this is <code>FALSE</code>.</p></dd>
+
+
+<dt>ihtml.use_highlight</dt>
+<dd><p>For interactive HTML output, this highlights
+individual rows upon hover. By default, this is <code>FALSE</code>.</p></dd>
+
+
+<dt>ihtml.use_compact_mode</dt>
+<dd><p>For interactive HTML output, an option to
+reduce vertical padding and thus make the table consume less vertical
+space. By default, this is <code>FALSE</code>.</p></dd>
+
+
+<dt>ihtml.use_page_size_select, ihtml.page_size_default, ihtml.page_size_values</dt>
+<dd><p>For interactive HTML output, <code>ihtml.use_page_size_select</code> provides the
+option to display a dropdown menu for the number of rows to show per page
+of data. By default, this is the vector <code>c(10, 25, 50, 100)</code> which
+corresponds to options for <code>10</code>, <code>25</code>, <code>50</code>, and <code>100</code> rows of data per
+page. To modify these page-size options, provide a numeric vector to
+<code>ihtml.page_size_values</code>. The default page size (initially set as <code>10</code>) can
+be modified with <code>ihtml.page_size_default</code> and this works whether or not
+<code>ihtml.use_page_size_select</code> is set to <code>TRUE</code>.</p></dd>
+
+
+<dt>ihtml.pagination_type</dt>
+<dd><p>For interactive HTML output and when using
+pagination, one of three options for presentation pagination controls. The
+default is <code>"numbers"</code>, where a series of page-number buttons is presented
+along with 'previous' and 'next' buttons. The <code>"jump"</code> option provides an
+input field with a stepper for the page number. With <code>"simple"</code>, only the
+'previous' and 'next' buttons are displayed.</p></dd>
 
 
 <dt>page.orientation</dt>
