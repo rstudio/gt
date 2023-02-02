@@ -113,6 +113,7 @@ as.tags.gt_tbl <- function(x, ...) {
   html_tbl <-
     htmltools::tags$div(
       id = id,
+      class = if (ihtml) ".gt_table" else NULL,
       htmltools::tags$style(htmltools::HTML(css)),
       style = htmltools::css(
         `padding-left` = container_padding_x,
