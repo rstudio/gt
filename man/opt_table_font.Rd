@@ -99,7 +99,7 @@ a preferred list of sans-serif fonts that are commonly available in macOS
 
 \section{Function ID}{
 
-9-10
+9-11
 }
 
 \seealso{
@@ -109,6 +109,7 @@ Other table option functions:
 \code{\link{opt_css}()},
 \code{\link{opt_footnote_marks}()},
 \code{\link{opt_horizontal_padding}()},
+\code{\link{opt_interactive}()},
 \code{\link{opt_row_striping}()},
 \code{\link{opt_stylize}()},
 \code{\link{opt_table_lines}()},
