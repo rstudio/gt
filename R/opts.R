@@ -153,6 +153,146 @@ get_colorized_params <- function(
   )
 }
 
+#' Option to put interactive elements in an HTML table
+#'
+#' @description
+#'
+#' By default, a **gt** table rendered as HTML will be essentially be a 'static'
+#' table but we can alternatively enable interactive HTML options with
+#' `opt_interactive()`. Making an HTML table interactive entails the enabling of
+#' controls for pagination, global search, filtering, and sorting.
+#'
+#' This function serves as a shortcut for setting the following options in
+#' [tab_options()]:
+#'
+#' - `ihtml.active`
+#' - `ihtml.use_pagination`
+#' - `ihtml.use_pagination_info`
+#' - `ihtml.use_sorting`
+#' - `ihtml.use_search`
+#' - `ihtml.use_filters`
+#' - `ihtml.use_resizers`
+#' - `ihtml.use_highlight`
+#' - `ihtml.use_compact_mode`
+#' - `ihtml.use_page_size_select`
+#' - `ihtml.page_size_default`
+#' - `ihtml.page_size_values`
+#' - `ihtml.pagination_type`
+#'
+#' @inheritParams fmt_number
+#' @param active The `active` option will either enable or disable interactive
+#'   features for an HTML table. The individual features of an interactive HTML
+#'   table are controlled by the other options.
+#' @param use_pagination This is the option for using pagination controls (below
+#'   the table body). By default, this is `TRUE` and it will allow the use to
+#'   page through table content.
+#' @param use_pagination_info If `use_pagination` is `TRUE` then the
+#'   `use_pagination_info` option can be used to display informational text
+#'   regarding the current page view (this is set to `TRUE` by default).
+#' @param use_sorting This option provides controls for sorting column values.
+#'   By default, this is `TRUE`.
+#' @param use_search The `use_search` option places a search field for globally
+#'   filtering rows to the requested content. By default, this is `FALSE`.
+#' @param use_filters The `use_filters` option places search fields below each
+#'   column header and allows for filtering by column. By default, this is
+#'   `FALSE`.
+#' @param use_resizers This option allows for the interactive resizing of
+#'   columns. By default, this is `FALSE`.
+#' @param use_highlight The `use_highlight` option highlights individual rows
+#'   upon hover. By default, this is `FALSE`.
+#' @param use_compact_mode To reduce vertical padding and thus make the table
+#'   consume less vertical space the `use_compact_mode` option can be used. By
+#'   default, this is `FALSE`.
+#' @param use_page_size_select,page_size_default,page_size_values The
+#'   `use_page_size_select` option lets us display a dropdown menu for the
+#'   number of rows to show per page of data. By default, this is the vector
+#'   `c(10, 25, 50, 100)` which corresponds to options for `10`, `25`, `50`, and
+#'   `100` rows of data per page. To modify these page-size options, provide a
+#'   numeric vector to `page_size_values`. The default page size (initially set
+#'   as `10`) can be modified with `page_size_default` and this works whether or
+#'   not `use_page_size_select` is set to `TRUE`.
+#' @param pagination_type When using pagination the `pagination_type` option
+#'   lets us select between one of three options for the layout of pagination
+#'   controls. The default is `"numbers"`, where a series of page-number buttons
+#'   is presented along with 'previous' and 'next' buttons. The `"jump"` option
+#'   provides an input field with a stepper for the page number. With
+#'   `"simple"`, only the 'previous' and 'next' buttons are displayed.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Use [`towny`] to create a **gt** table with a header and a source note.
+#' Next, we add interactive HTML features through `opt_interactive()`. It'll
+#' just be the default set of interactive options.
+#'
+#' ```r
+#' towny |>
+#'   dplyr::select(name, census_div, starts_with("population")) |>
+#'   gt() |>
+#'   fmt_auto() |>
+#'   cols_label_with(fn = function(x) sub("population_", "", x)) |>
+#'   cols_width(
+#'     name ~ px(200),
+#'     census_div ~ px(200)
+#'   ) |>
+#'   tab_header(
+#'     title = "Populations of Municipalities",
+#'     subtitle = "Census values from 1996 to 2021."
+#'   ) |>
+#'   tab_source_note(source_note = md("Data taken from the `towny` dataset.")) |>
+#'   opt_interactive()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_opt_interactive_1.png")`
+#' }}
+#'
+#' @family table option functions
+#' @section Function ID:
+#' 9-2
+#'
+#' @export
+opt_interactive <- function(
+    data,
+    active = TRUE,
+    use_pagination = TRUE,
+    use_pagination_info = TRUE,
+    use_sorting = TRUE,
+    use_search = FALSE,
+    use_filters = FALSE,
+    use_resizers = FALSE,
+    use_highlight = FALSE,
+    use_compact_mode = FALSE,
+    use_page_size_select = FALSE,
+    page_size_default = 10,
+    page_size_values = c(10, 25, 50, 100),
+    pagination_type = c("numbers", "jump", "simple")
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  pagination_type <- rlang::arg_match(pagination_type)
+
+  tab_options(
+    data = data,
+    ihtml.active = active,
+    ihtml.use_pagination = use_pagination,
+    ihtml.use_pagination_info = use_pagination_info,
+    ihtml.use_sorting = use_sorting,
+    ihtml.use_search = use_search,
+    ihtml.use_filters = use_filters,
+    ihtml.use_resizers = use_resizers,
+    ihtml.use_highlight = use_highlight,
+    ihtml.use_compact_mode = use_compact_mode,
+    ihtml.use_page_size_select = use_page_size_select,
+    ihtml.page_size_default = page_size_default,
+    ihtml.page_size_values = page_size_values,
+    ihtml.pagination_type = pagination_type
+  )
+}
+
 #' Option to modify the set of footnote marks
 #'
 #' @description
@@ -244,7 +384,7 @@ get_colorized_params <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-2
+#' 9-3
 #'
 #' @export
 opt_footnote_marks <- function(
@@ -312,7 +452,7 @@ opt_footnote_marks <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-3
+#' 9-4
 #'
 #' @export
 opt_row_striping <- function(
@@ -381,7 +521,7 @@ opt_row_striping <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-4
+#' 9-5
 #'
 #' @export
 opt_align_table_header <- function(
@@ -461,7 +601,7 @@ opt_align_table_header <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-5
+#' 9-6
 #'
 #' @export
 opt_vertical_padding <- function(
@@ -541,7 +681,7 @@ opt_vertical_padding <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-6
+#' 9-7
 #'
 #' @export
 opt_horizontal_padding <- function(
@@ -656,7 +796,7 @@ get_padding_option_value_list <- function(scale, type) {
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-7
+#' 9-8
 #'
 #' @export
 opt_all_caps <- function(
@@ -758,7 +898,7 @@ opt_all_caps <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-8
+#' 9-9
 #'
 #' @export
 opt_table_lines <- function(
@@ -855,7 +995,7 @@ opt_table_lines <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-9
+#' 9-10
 #'
 #' @export
 opt_table_outline <- function(
@@ -994,7 +1134,7 @@ opt_table_outline <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-10
+#' 9-11
 #'
 #' @export
 opt_table_font <- function(
@@ -1124,7 +1264,7 @@ opt_table_font <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-11
+#' 9-12
 #'
 #' @export
 opt_css <- function(
