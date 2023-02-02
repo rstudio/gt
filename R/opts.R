@@ -157,10 +157,11 @@ get_colorized_params <- function(
 #'
 #' @description
 #'
-#' By default, a **gt** table rendered as HTML will be essentially be a 'static'
-#' table but we can alternatively enable interactive HTML options with
-#' `opt_interactive()`. Making an HTML table interactive entails the enabling of
-#' controls for pagination, global search, filtering, sorting, and more.
+#' By default, a **gt** table rendered as HTML will essentially be a 'static'
+#' table. However, we can make it 'interactive' and configure those interactive
+#' HTML options through the `opt_interactive()` function. Making an HTML table
+#' interactive entails the enabling of controls for pagination, global search,
+#' filtering, sorting, and more.
 #'
 #' This function serves as a shortcut for setting the following options in
 #' [tab_options()]:
@@ -222,9 +223,9 @@ get_colorized_params <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`towny`] to create a **gt** table with a header and a source note.
-#' Next, we add interactive HTML features through `opt_interactive()`. It'll
-#' just be the default set of interactive options.
+#' Use the [`towny`] dataset to create a **gt** table with a header and a source
+#' note. Next, we add interactive HTML features through `opt_interactive()`.
+#' It'll just be the default set of interactive options.
 #'
 #' ```r
 #' towny |>

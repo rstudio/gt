@@ -76,10 +76,11 @@ provides an input field with a stepper for the page number. With
 An object of class \code{gt_tbl}.
 }
 \description{
-By default, a \strong{gt} table rendered as HTML will be essentially be a 'static'
-table but we can alternatively enable interactive HTML options with
-\code{opt_interactive()}. Making an HTML table interactive entails the enabling of
-controls for pagination, global search, filtering, sorting, and more.
+By default, a \strong{gt} table rendered as HTML will essentially be a 'static'
+table. However, we can make it 'interactive' and configure those interactive
+HTML options through the \code{opt_interactive()} function. Making an HTML table
+interactive entails the enabling of controls for pagination, global search,
+filtering, sorting, and more.
 
 This function serves as a shortcut for setting the following options in
 \code{\link[=tab_options]{tab_options()}}:
@@ -102,9 +103,9 @@ This function serves as a shortcut for setting the following options in
 \section{Examples}{
 
 
-Use \code{\link{towny}} to create a \strong{gt} table with a header and a source note.
-Next, we add interactive HTML features through \code{opt_interactive()}. It'll
-just be the default set of interactive options.
+Use the \code{\link{towny}} dataset to create a \strong{gt} table with a header and a source
+note. Next, we add interactive HTML features through \code{opt_interactive()}.
+It'll just be the default set of interactive options.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
   dplyr::select(name, census_div, starts_with("population")) |>
