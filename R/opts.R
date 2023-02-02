@@ -1,3 +1,298 @@
+#' Stylize your table with a colorful look
+#'
+#' @description
+#'
+#' With `opt_stylize()` you can quickly style your **gt** table with a carefully
+#' curated set of background colors, line colors, and line styles. There are six
+#' styles to choose from and they largely vary in the extent of coloring applied
+#' to different table locations. Some have table borders applied, some apply
+#' darker colors to the table stub and summary sections, and, some even have
+#' vertical lines. In addition to choosing a `style` preset, there are six
+#' `color` variations that each use a range of five color tints. Each of the
+#' color tints have been fine-tuned to maximize the contrast between text and
+#' its background. There are 36 combinations of `style` and `color` to choose
+#' from.
+#'
+#' @inheritParams fmt_number
+#' @param style Six numbered styles are available. Simply provide a number from
+#'   `1` (the default) to `6` to choose a distinct look.
+#' @param color There are six color variations: `"blue"` (the default),
+#'   `"cyan"`, `"pink"`, `"green"`, `"red"`, and `"gray"`.
+#' @param add_row_striping An option to enable row striping in the table body
+#'   for the style chosen. By default, this is `TRUE`.
+#'
+#' @return an object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Use `exibble` to create a **gt** table with a number of table parts added.
+#' Then, use the `opt_stylize()` function to give the table some additional
+#' style (using the `"cyan"` color variation and style number `6`).
+#'
+#' ```r
+#' exibble |>
+#'   gt(rowname_col = "row", groupname_col = "group") |>
+#'   summary_rows(
+#'     groups = "grp_a",
+#'     columns = c(num, currency),
+#'     fns = c("min", "max")
+#'   ) |>
+#'   grand_summary_rows(
+#'     columns = currency,
+#'     fns = total ~ sum(., na.rm = TRUE)
+#'   ) |>
+#'   tab_source_note(source_note = "This is a source note.") |>
+#'   tab_footnote(
+#'     footnote = "This is a footnote.",
+#'     locations = cells_body(columns = 1, rows = 1)
+#'   ) |>
+#'   tab_header(
+#'     title = "The title of the table",
+#'     subtitle = "The table's subtitle"
+#'   ) |>
+#'   opt_stylize(style = 6, color = "cyan")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_opt_stylize_1.png")`
+#' }}
+#'
+#' @family table option functions
+#' @section Function ID:
+#' 9-1
+#'
+#' @export
+opt_stylize <- function(
+    data,
+    style = 1,
+    color = "blue",
+    add_row_striping = TRUE
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  if (!(length(style) == 1 && style %in% 1:6)) {
+    cli::cli_abort("The `style` value must be a number in the range of 1 to 6.")
+  }
+
+  if (!(length(color) == 1 && color %in% unique(styles_colors_params$color))) {
+    cli::cli_abort(c(
+      "The `color` value must be one of seven specific colors:",
+      "*" = "\"blue\", \"cyan\", \"pink\", \"green\", \"red\", or \"gray\""
+    ))
+  }
+
+  # Get the set of parameters based on the `style` and `color` values
+  params <-
+    get_colorized_params(
+      styles_colors_params = styles_colors_params,
+      style = style,
+      color = color
+    )
+
+  tbl_colorized <-
+    tab_options(
+      data,
+      table.border.top.color = params$table_hlines_color,
+      table.border.bottom.color = params$table_hlines_color,
+      heading.border.bottom.color = params$location_hlines_color,
+      column_labels.border.top.color = params$location_hlines_color,
+      column_labels.border.bottom.color = params$location_hlines_color,
+      row_group.border.top.color = params$location_hlines_color,
+      row_group.border.bottom.color = params$location_hlines_color,
+      summary_row.border.color = params$location_hlines_color,
+      grand_summary_row.border.color = params$location_hlines_color,
+      column_labels.background.color = params$column_labels_background_color,
+      stub.background.color = params$stub_background_color,
+      stub.border.style = params$stub_border_style,
+      stub.border.color = params$stub_border_color,
+      table_body.border.top.color = params$location_hlines_color,
+      table_body.border.bottom.color = params$location_hlines_color,
+      table_body.hlines.style = params$data_hlines_style,
+      table_body.hlines.color = params$data_hlines_color,
+      table_body.vlines.style = params$data_vlines_style,
+      table_body.vlines.color = params$data_vlines_color,
+      summary_row.background.color = params$summary_row_background_color,
+      grand_summary_row.background.color = params$grand_summary_row_background_color,
+      row.striping.background_color = params$row_striping_background_color
+    )
+
+  if (!is.na(params$table_outline_color)) {
+
+    tbl_colorized <-
+      opt_table_outline(
+        tbl_colorized,
+        width = px(3),
+        color = params$table_outline_color
+      )
+  }
+
+  if (add_row_striping) {
+    tbl_colorized <- opt_row_striping(tbl_colorized)
+  }
+
+  tbl_colorized
+}
+
+get_colorized_params <- function(
+    styles_colors_params,
+    style,
+    color
+) {
+
+  style_filter <- style
+  color_filter <- color
+
+  as.list(
+    dplyr::filter(
+      styles_colors_params,
+      style == style_filter,
+      color == color_filter
+    )
+  )
+}
+
+#' Option to put interactive elements in an HTML table
+#'
+#' @description
+#'
+#' By default, a **gt** table rendered as HTML will be essentially be a 'static'
+#' table but we can alternatively enable interactive HTML options with
+#' `opt_interactive()`. Making an HTML table interactive entails the enabling of
+#' controls for pagination, global search, filtering, sorting, and more.
+#'
+#' This function serves as a shortcut for setting the following options in
+#' [tab_options()]:
+#'
+#' - `ihtml.active`
+#' - `ihtml.use_pagination`
+#' - `ihtml.use_pagination_info`
+#' - `ihtml.use_sorting`
+#' - `ihtml.use_search`
+#' - `ihtml.use_filters`
+#' - `ihtml.use_resizers`
+#' - `ihtml.use_highlight`
+#' - `ihtml.use_compact_mode`
+#' - `ihtml.use_page_size_select`
+#' - `ihtml.page_size_default`
+#' - `ihtml.page_size_values`
+#' - `ihtml.pagination_type`
+#'
+#' @inheritParams fmt_number
+#' @param active The `active` option will either enable or disable interactive
+#'   features for an HTML table. The individual features of an interactive HTML
+#'   table are controlled by the other options.
+#' @param use_pagination This is the option for using pagination controls (below
+#'   the table body). By default, this is `TRUE` and it will allow the use to
+#'   page through table content.
+#' @param use_pagination_info If `use_pagination` is `TRUE` then the
+#'   `use_pagination_info` option can be used to display informational text
+#'   regarding the current page view (this is set to `TRUE` by default).
+#' @param use_sorting This option provides controls for sorting column values.
+#'   By default, this is `TRUE`.
+#' @param use_search The `use_search` option places a search field for globally
+#'   filtering rows to the requested content. By default, this is `FALSE`.
+#' @param use_filters The `use_filters` option places search fields below each
+#'   column header and allows for filtering by column. By default, this is
+#'   `FALSE`.
+#' @param use_resizers This option allows for the interactive resizing of
+#'   columns. By default, this is `FALSE`.
+#' @param use_highlight The `use_highlight` option highlights individual rows
+#'   upon hover. By default, this is `FALSE`.
+#' @param use_compact_mode To reduce vertical padding and thus make the table
+#'   consume less vertical space the `use_compact_mode` option can be used. By
+#'   default, this is `FALSE`.
+#' @param use_page_size_select,page_size_default,page_size_values The
+#'   `use_page_size_select` option lets us display a dropdown menu for the
+#'   number of rows to show per page of data. By default, this is the vector
+#'   `c(10, 25, 50, 100)` which corresponds to options for `10`, `25`, `50`, and
+#'   `100` rows of data per page. To modify these page-size options, provide a
+#'   numeric vector to `page_size_values`. The default page size (initially set
+#'   as `10`) can be modified with `page_size_default` and this works whether or
+#'   not `use_page_size_select` is set to `TRUE`.
+#' @param pagination_type When using pagination the `pagination_type` option
+#'   lets us select between one of three options for the layout of pagination
+#'   controls. The default is `"numbers"`, where a series of page-number buttons
+#'   is presented along with 'previous' and 'next' buttons. The `"jump"` option
+#'   provides an input field with a stepper for the page number. With
+#'   `"simple"`, only the 'previous' and 'next' buttons are displayed.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Use [`towny`] to create a **gt** table with a header and a source note.
+#' Next, we add interactive HTML features through `opt_interactive()`. It'll
+#' just be the default set of interactive options.
+#'
+#' ```r
+#' towny |>
+#'   dplyr::select(name, census_div, starts_with("population")) |>
+#'   gt() |>
+#'   fmt_auto() |>
+#'   cols_label_with(fn = function(x) sub("population_", "", x)) |>
+#'   cols_width(
+#'     name ~ px(200),
+#'     census_div ~ px(200)
+#'   ) |>
+#'   tab_header(
+#'     title = "Populations of Municipalities",
+#'     subtitle = "Census values from 1996 to 2021."
+#'   ) |>
+#'   tab_source_note(source_note = md("Data taken from the `towny` dataset.")) |>
+#'   opt_interactive()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_opt_interactive_1.png")`
+#' }}
+#'
+#' @family table option functions
+#' @section Function ID:
+#' 9-2
+#'
+#' @export
+opt_interactive <- function(
+    data,
+    active = TRUE,
+    use_pagination = TRUE,
+    use_pagination_info = TRUE,
+    use_sorting = TRUE,
+    use_search = FALSE,
+    use_filters = FALSE,
+    use_resizers = FALSE,
+    use_highlight = FALSE,
+    use_compact_mode = FALSE,
+    use_page_size_select = FALSE,
+    page_size_default = 10,
+    page_size_values = c(10, 25, 50, 100),
+    pagination_type = c("numbers", "jump", "simple")
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  pagination_type <- rlang::arg_match(pagination_type)
+
+  tab_options(
+    data = data,
+    ihtml.active = active,
+    ihtml.use_pagination = use_pagination,
+    ihtml.use_pagination_info = use_pagination_info,
+    ihtml.use_sorting = use_sorting,
+    ihtml.use_search = use_search,
+    ihtml.use_filters = use_filters,
+    ihtml.use_resizers = use_resizers,
+    ihtml.use_highlight = use_highlight,
+    ihtml.use_compact_mode = use_compact_mode,
+    ihtml.use_page_size_select = use_page_size_select,
+    ihtml.page_size_default = page_size_default,
+    ihtml.page_size_values = page_size_values,
+    ihtml.pagination_type = pagination_type
+  )
+}
+
 #' Option to modify the set of footnote marks
 #'
 #' @description
@@ -89,7 +384,7 @@
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-1
+#' 9-3
 #'
 #' @export
 opt_footnote_marks <- function(
@@ -157,7 +452,7 @@ opt_footnote_marks <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-2
+#' 9-4
 #'
 #' @export
 opt_row_striping <- function(
@@ -226,7 +521,7 @@ opt_row_striping <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-3
+#' 9-5
 #'
 #' @export
 opt_align_table_header <- function(
@@ -306,7 +601,7 @@ opt_align_table_header <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-4
+#' 9-6
 #'
 #' @export
 opt_vertical_padding <- function(
@@ -386,7 +681,7 @@ opt_vertical_padding <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-5
+#' 9-7
 #'
 #' @export
 opt_horizontal_padding <- function(
@@ -501,7 +796,7 @@ get_padding_option_value_list <- function(scale, type) {
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-6
+#' 9-8
 #'
 #' @export
 opt_all_caps <- function(
@@ -603,7 +898,7 @@ opt_all_caps <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-7
+#' 9-9
 #'
 #' @export
 opt_table_lines <- function(
@@ -700,7 +995,7 @@ opt_table_lines <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-8
+#' 9-10
 #'
 #' @export
 opt_table_outline <- function(
@@ -839,7 +1134,7 @@ opt_table_outline <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-9
+#' 9-11
 #'
 #' @export
 opt_table_font <- function(
@@ -910,161 +1205,6 @@ opt_table_font <- function(
   data
 }
 
-#' Stylize your table with a colorful look
-#'
-#' @description
-#'
-#' With `opt_stylize()` you can quickly style your **gt** table with a carefully
-#' curated set of background colors, line colors, and line styles. There are six
-#' styles to choose from and they largely vary in the extent of coloring applied
-#' to different table locations. Some have table borders applied, some apply
-#' darker colors to the table stub and summary sections, and, some even have
-#' vertical lines. In addition to choosing a `style` preset, there are six
-#' `color` variations that each use a range of five color tints. Each of the
-#' color tints have been fine-tuned to maximize the contrast between text and
-#' its background. There are 36 combinations of `style` and `color` to choose
-#' from.
-#'
-#' @inheritParams fmt_number
-#' @param style Six numbered styles are available. Simply provide a number from
-#'   `1` (the default) to `6` to choose a distinct look.
-#' @param color There are six color variations: `"blue"` (the default),
-#'   `"cyan"`, `"pink"`, `"green"`, `"red"`, and `"gray"`.
-#' @param add_row_striping An option to enable row striping in the table body
-#'   for the style chosen. By default, this is `TRUE`.
-#'
-#' @return an object of class `gt_tbl`.
-#'
-#' @section Examples:
-#'
-#' Use `exibble` to create a **gt** table with a number of table parts added.
-#' Then, use the `opt_stylize()` function to give the table some additional
-#' style (using the `"cyan"` color variation and style number `6`).
-#'
-#' ```r
-#' exibble |>
-#'   gt(rowname_col = "row", groupname_col = "group") |>
-#'   summary_rows(
-#'     groups = "grp_a",
-#'     columns = c(num, currency),
-#'     fns = c("min", "max")
-#'   ) |>
-#'   grand_summary_rows(
-#'     columns = currency,
-#'     fns = total ~ sum(., na.rm = TRUE)
-#'   ) |>
-#'   tab_source_note(source_note = "This is a source note.") |>
-#'   tab_footnote(
-#'     footnote = "This is a footnote.",
-#'     locations = cells_body(columns = 1, rows = 1)
-#'   ) |>
-#'   tab_header(
-#'     title = "The title of the table",
-#'     subtitle = "The table's subtitle"
-#'   ) |>
-#'   opt_stylize(style = 6, color = "cyan")
-#' ```
-#'
-#' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_opt_stylize_1.png")`
-#' }}
-#'
-#' @family table option functions
-#' @section Function ID:
-#' 9-10
-#'
-#' @export
-opt_stylize <- function(
-    data,
-    style = 1,
-    color = "blue",
-    add_row_striping = TRUE
-) {
-
-  # Perform input object validation
-  stop_if_not_gt(data = data)
-
-  if (!(length(style) == 1 && style %in% 1:6)) {
-    cli::cli_abort("The `style` value must be a number in the range of 1 to 6.")
-  }
-
-  if (!(length(color) == 1 && color %in% unique(styles_colors_params$color))) {
-    cli::cli_abort(c(
-      "The `color` value must be one of seven specific colors:",
-      "*" = "\"blue\", \"cyan\", \"pink\", \"green\", \"red\", or \"gray\""
-    ))
-  }
-
-  # Get the set of parameters based on the `style` and `color` values
-  params <-
-    get_colorized_params(
-      styles_colors_params = styles_colors_params,
-      style = style,
-      color = color
-    )
-
-  tbl_colorized <-
-    tab_options(
-      data,
-      table.border.top.color = params$table_hlines_color,
-      table.border.bottom.color = params$table_hlines_color,
-      heading.border.bottom.color = params$location_hlines_color,
-      column_labels.border.top.color = params$location_hlines_color,
-      column_labels.border.bottom.color = params$location_hlines_color,
-      row_group.border.top.color = params$location_hlines_color,
-      row_group.border.bottom.color = params$location_hlines_color,
-      summary_row.border.color = params$location_hlines_color,
-      grand_summary_row.border.color = params$location_hlines_color,
-      column_labels.background.color = params$column_labels_background_color,
-      stub.background.color = params$stub_background_color,
-      stub.border.style = params$stub_border_style,
-      stub.border.color = params$stub_border_color,
-      table_body.border.top.color = params$location_hlines_color,
-      table_body.border.bottom.color = params$location_hlines_color,
-      table_body.hlines.style = params$data_hlines_style,
-      table_body.hlines.color = params$data_hlines_color,
-      table_body.vlines.style = params$data_vlines_style,
-      table_body.vlines.color = params$data_vlines_color,
-      summary_row.background.color = params$summary_row_background_color,
-      grand_summary_row.background.color = params$grand_summary_row_background_color,
-      row.striping.background_color = params$row_striping_background_color
-    )
-
-  if (!is.na(params$table_outline_color)) {
-
-    tbl_colorized <-
-      opt_table_outline(
-        tbl_colorized,
-        width = px(3),
-        color = params$table_outline_color
-      )
-  }
-
-  if (add_row_striping) {
-    tbl_colorized <- opt_row_striping(tbl_colorized)
-  }
-
-  tbl_colorized
-}
-
-get_colorized_params <- function(
-    styles_colors_params,
-    style,
-    color
-) {
-
-  style_filter <- style
-  color_filter <- color
-
-  as.list(
-    dplyr::filter(
-      styles_colors_params,
-      style == style_filter,
-      color == color_filter
-    )
-  )
-}
-
 #' Option to add custom CSS for the table
 #'
 #' @description
@@ -1124,7 +1264,7 @@ get_colorized_params <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-11
+#' 9-12
 #'
 #' @export
 opt_css <- function(

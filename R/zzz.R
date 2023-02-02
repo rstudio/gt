@@ -67,6 +67,7 @@ utils::globalVariables(
     "groups",
     "grpname",
     "grprow",
+    "html_style",
     "i",
     "id",
     "integrate_summary_lines",

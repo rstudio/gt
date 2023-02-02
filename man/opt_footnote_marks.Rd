@@ -98,7 +98,7 @@ Use \code{\link{sza}} to create a \strong{gt} table, adding three footnotes. Cal
 
 \section{Function ID}{
 
-9-1
+9-3
 }
 
 \seealso{
@@ -107,6 +107,7 @@ Other table option functions:
 \code{\link{opt_all_caps}()},
 \code{\link{opt_css}()},
 \code{\link{opt_horizontal_padding}()},
+\code{\link{opt_interactive}()},
 \code{\link{opt_row_striping}()},
 \code{\link{opt_stylize}()},
 \code{\link{opt_table_font}()},
