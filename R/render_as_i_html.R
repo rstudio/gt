@@ -147,7 +147,7 @@ render_as_ihtml <- function(data, id) {
   body_style_js_str <-
     paste0(
       "function(rowInfo, colInfo) {\n",
-      "const rowIndex = rowInfo.viewIndex + 1\n",
+      "const rowIndex = rowInfo.index + 1\n",
       body_style_rules,
       "}",
       collapse = ""
