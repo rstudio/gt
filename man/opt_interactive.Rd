@@ -79,7 +79,7 @@ An object of class \code{gt_tbl}.
 By default, a \strong{gt} table rendered as HTML will be essentially be a 'static'
 table but we can alternatively enable interactive HTML options with
 \code{opt_interactive()}. Making an HTML table interactive entails the enabling of
-controls for pagination, global search, filtering, and sorting.
+controls for pagination, global search, filtering, sorting, and more.
 
 This function serves as a shortcut for setting the following options in
 \code{\link[=tab_options]{tab_options()}}:
