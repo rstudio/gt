@@ -86,10 +86,18 @@ render_as_ihtml <- function(data, id) {
 
   use_row_striping <- opt_val(data = data, option = "row_striping_include_table_body")
   row_striping_color <- opt_val(data = data, option = "row_striping_background_color")
+
   table_width <- opt_val(data = data, option = "table_width")
   table_background_color <- opt_val(data = data, option = "table_background_color")
   table_font_style <- opt_val(data = data, option = "table_font_names")
   table_font_color <- opt_val(data = data, option = "table_font_color")
+
+  column_labels_border_top_style <- opt_val(data = data, option = "column_labels_border_top_style")
+  column_labels_border_top_width <- opt_val(data = data, option = "column_labels_border_top_width")
+  column_labels_border_top_color <- opt_val(data = data, option = "column_labels_border_top_color")
+  column_labels_border_bottom_style <- opt_val(data = data, option = "column_labels_border_bottom_style")
+  column_labels_border_bottom_width <- opt_val(data = data, option = "column_labels_border_bottom_width")
+  column_labels_border_bottom_color <- opt_val(data = data, option = "column_labels_border_bottom_color")
 
   if (table_width == "auto") table_width <- NULL
 
@@ -238,9 +246,13 @@ render_as_ihtml <- function(data, id) {
       ),
       tableStyle = NULL,
       headerStyle = list(
-        borderTopStyle = "solid",
-        borderTopWidth = "2px",
-        borderTopColor = "#D3D3D3"
+        borderTopStyle = column_labels_border_top_style,
+        borderTopWidth = column_labels_border_top_width,
+        borderTopColor = column_labels_border_top_color,
+        borderBottomStyle = column_labels_border_bottom_style,
+        borderBottomWidth = column_labels_border_bottom_width,
+        borderBottomColor = column_labels_border_bottom_color
+
       ),
       groupHeaderStyle = NULL,
       tableBodyStyle = NULL,
