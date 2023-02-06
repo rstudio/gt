@@ -91,7 +91,7 @@
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-21
+#' 3-22
 #'
 #' @import rlang
 #' @export
@@ -276,7 +276,7 @@ fmt_missing <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-22
+#' 3-23
 #'
 #' @import rlang
 #' @export
@@ -455,7 +455,7 @@ sub_zero <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-23
+#' 3-24
 #'
 #' @import rlang
 #' @export
@@ -705,7 +705,7 @@ sub_small_vals <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-24
+#' 3-25
 #'
 #' @import rlang
 #' @export
@@ -977,7 +977,7 @@ check_sub_fn_sign <- function(sign) {
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-25
+#' 3-26
 #'
 #' @import rlang
 #' @export

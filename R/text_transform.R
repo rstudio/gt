@@ -43,7 +43,7 @@
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-26
+#' 3-27
 #'
 #' @export
 text_transform <- function(
