@@ -8,7 +8,11 @@ fmt_url(
   data,
   columns = everything(),
   rows = everything(),
-  link_colors = "auto"
+  label = NULL,
+  as_button = FALSE,
+  color = "auto",
+  show_underline = "auto",
+  button_fill = "auto"
 )
 }
 \arguments{
@@ -28,13 +32,37 @@ functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with
 \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
 to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
+
+\item{as_button}{An option to style the link as a button. By default, this is
+\code{FALSE}. If this option is chosen then the \code{button_fill} argument becomes
+usable.}
+
+\item{color}{The color used for the resulting link and its underline. This is
+\code{"auto"} by default; this allows \strong{gt} to choose an appropriate color
+based on various factors (e.g., background \code{button_fill} when \code{as_button}
+is \code{TRUE}).}
+
+\item{show_underline}{Should the link be decorated with an underline? By
+default this is \code{"auto"} which means that \strong{gt} will choose \code{TRUE} when
+\code{as_button = FALSE} and \code{FALSE} in the other case. The link underline will
+be the same color as that set in the \code{color} option.}
+
+\item{button_fill}{The color used for the button background (but only if
+\code{as_button = TRUE}). This is by default set to \code{"auto"} and this allows
+\strong{gt} to choose an appropriate button fill based on the color of the link
+text.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
 Should cells contain URLs, the \code{fmt_url()} function can be used to make them
-navigable links.
+navigable links. This should be expressly used on columns that contain \emph{only}
+URL text (i.e., no URLs as part of a larger block of text). Should you have
+such a column of data, there are options for how the links should be styled.
+They can be of the conventional style (with underlines and text coloring that
+sets it apart from other text), or, they can appear to be button-like (with
+a surrounding box that can be filled with a color of your choosing).
 }
 \section{Targeting cells with \code{columns} and \code{rows}}{
 
@@ -75,6 +103,145 @@ expression that takes column values (can involve any of the available columns
 in the table) and returns a logical vector. This is nice if you want to base
 formatting on values in the column or another column, or, you'd like to use a
 more complex predicate expression.
+}
+
+\section{Examples}{
+
+
+Use the \code{\link{towny}} dataset to create a \strong{gt} table. After some major
+\strong{dplyr}ing to get a nicely formatted data table, we use the \code{fmt_url()}
+function on the \verb{"website} column to generate navigable links to websites.
+By default the links are underlined and the color will be chosen for you
+(it's dark cyan).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
+  dplyr::filter(csd_type == "city") |>
+  dplyr::arrange(desc(population_2021)) |>
+  dplyr::select(name, website, population_2021) |>
+  dplyr::slice_head(n = 10) |>
+  gt() |>
+  tab_header(
+    title = md("The 10 Largest Municipalities in `towny`"),
+    subtitle = "Population values taken from the 2021 census."
+  ) |>
+  fmt_integer() |>
+  fmt_url(columns = website) |>
+  cols_label(
+    name = "Name",
+    website = "Site",
+    population_2021 = "Population"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_url_1.png" alt="This image of a table was generated from the first code example in the `fmt_url()` help file." style="width:100\%;">
+}}
+
+Let's try something else. We can set a static text label for the link with
+the \code{label} argument (and we'll use the word \code{"site"} for this). The link
+underline is removable with \code{show_underline = FALSE}. With this change, it
+seems sensible to merge the link to the \code{"name"} column and enclose the link
+text in parentheses (the \code{\link[=cols_merge]{cols_merge()}} function handles all that).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
+  dplyr::filter(csd_type == "city") |>
+  dplyr::arrange(desc(population_2021)) |>
+  dplyr::select(name, website, population_2021) |>
+  dplyr::slice_head(n = 10) |>
+  gt() |>
+  tab_header(
+    title = md("The 10 Largest Municipalities in `towny`"),
+    subtitle = "Population values taken from the 2021 census."
+  ) |>
+  fmt_integer() |>
+  fmt_url(
+    columns = website,
+    label = "site",
+    show_underline = FALSE
+  ) |>
+  cols_merge(
+    columns = c(name, website),
+    pattern = "\{1\} (\{2\})"
+  ) |>
+  cols_label(
+    name = "Name",
+    population_2021 = "Population"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_url_2.png" alt="This image of a table was generated from the second code example in the `fmt_url()` help file." style="width:100\%;">
+}}
+
+The \code{fmt_url()} function allows for the styling of links as 'buttons'. This
+is as easy as setting \code{as_button = TRUE}. Doing that unlocks the ability to
+set a \code{button_fill} color. This color can automatically selected by \strong{gt}
+(this is the default) but here we're using \code{"steelblue"}. The \code{label}
+argument also accepts a function! We can choose to adapt the label text from
+the URLs by eliminating any leading \code{"https://"} or \code{"www."} parts.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
+  dplyr::filter(csd_type == "city") |>
+  dplyr::arrange(desc(population_2021)) |>
+  dplyr::select(name, website, population_2021) |>
+  dplyr::slice_head(n = 10) |>
+  dplyr::mutate(ranking = dplyr::row_number()) |>
+  gt(rowname_col = "ranking") |>
+  tab_header(
+    title = md("The 10 Largest Municipalities in `towny`"),
+    subtitle = "Population values taken from the 2021 census."
+  ) |>
+  fmt_integer() |>
+  fmt_url(
+    columns = website,
+    label = function(x) gsub("https://|www.", "", x),
+    as_button = TRUE,
+    button_fill = "steelblue"
+  ) |>
+  cols_move_to_end(columns = website) |>
+  cols_align(align = "center", columns = website) |>
+  cols_width(
+    ranking ~ px(40),
+    website ~ px(200)
+  ) |>
+  tab_options(column_labels.hidden = TRUE) |>
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_stub()
+  ) \%>\%
+  opt_vertical_padding(scale = 0.75)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_url_3.png" alt="This image of a table was generated from the third code example in the `fmt_url()` help file." style="width:100\%;">
+}}
+
+It's perhaps inevitable that you'll come across missing values in your column
+of URLs. The \code{fmt_url()} function will preserve input \code{NA} values, allowing
+you to handle them with \code{\link[=sub_missing]{sub_missing()}}. Here's an example of that.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
+  dplyr::arrange(population_2021) |>
+  dplyr::select(name, website, population_2021) |>
+  dplyr::slice_head(n = 10) |>
+  gt() |>
+  tab_header(
+    title = md("The 10 Smallest Municipalities in `towny`"),
+    subtitle = "Population values taken from the 2021 census."
+  ) |>
+  fmt_integer() |>
+  fmt_url(columns = website) |>
+  cols_label(
+    name = "Name",
+    website = "Site",
+    population_2021 = "Population"
+  ) |>
+  sub_missing()
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_url_4.png" alt="This image of a table was generated from the fourth code example in the `fmt_url()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
