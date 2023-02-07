@@ -51,7 +51,9 @@ Imports:
     sass (>= 0.4.1),
     scales (>= 1.2.0),
     tibble (>= 3.1.6),
-    tidyselect (>= 1.1.1)
+    tidyselect (>= 1.1.1),
+    grid, 
+    gtable
 Suggests:
     covr,
     digest (>= 0.6.29),
@@ -128,6 +130,7 @@ Collate:
     'utils_pipe.R'
     'utils_quarto.R'
     'utils_render_common.R'
+    'utils_render_grob.R'
     'utils_render_html.R'
     'utils_render_latex.R'
     'utils_render_rtf.R'
