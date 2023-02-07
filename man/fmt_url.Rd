@@ -115,7 +115,7 @@ more complex predicate expression.
 
 Use the \code{\link{towny}} dataset to create a \strong{gt} table. After some major
 \strong{dplyr}ing to get a nicely formatted data table, we use the \code{fmt_url()}
-function on the \verb{"website} column to generate navigable links to websites.
+function on the \code{website} column to generate navigable links to websites.
 By default the links are underlined and the color will be chosen for you
 (it's dark cyan).
 
