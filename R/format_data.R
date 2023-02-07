@@ -5920,6 +5920,10 @@ extract_duration_pattern <- function(
 #' a surrounding box that can be filled with a color of your choosing).
 #'
 #' @inheritParams fmt_number
+#' @param label The visible 'label' to use for the link. If `NULL` (the default)
+#'   the URL will serve as the label. There are two non-`NULL` options: (1) a
+#'   static text can be used for the label by providing a string, and (2) a
+#'   function can be provided to fashion a label from every URL.
 #' @param as_button An option to style the link as a button. By default, this is
 #'   `FALSE`. If this option is chosen then the `button_fill` argument becomes
 #'   usable.
