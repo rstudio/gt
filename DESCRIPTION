@@ -43,8 +43,10 @@ Imports:
     ggplot2 (>= 3.3.5),
     glue (>= 1.6.1),
     htmltools (>= 0.5.2),
+    htmlwidgets (>= 1.6.1),
     juicyjuice (>= 0.1.0),
     magrittr (>= 2.0.2),
+    reactable (>= 0.2.3),
     rlang (>= 1.0.2),
     sass (>= 0.4.1),
     scales (>= 1.2.0),
@@ -110,6 +112,7 @@ Collate:
     'print.R'
     'reexports.R'
     'render_as_html.R'
+    'render_as_i_html.R'
     'resolver.R'
     'shiny.R'
     'substitution.R'

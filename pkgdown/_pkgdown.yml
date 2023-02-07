@@ -82,6 +82,7 @@ reference:
     - fmt_datetime
     - fmt_duration
     - fmt_markdown
+    - fmt_url
     - fmt_passthrough
     - fmt_auto
     - fmt
@@ -202,6 +203,8 @@ reference:
       instance, we can modify the set of marks to use with footnotes, turn on
       row striping, change the alignment of the table header, and much more.
     contents:
+    - opt_stylize
+    - opt_interactive
     - opt_footnote_marks
     - opt_row_striping
     - opt_align_table_header
@@ -211,7 +214,6 @@ reference:
     - opt_table_lines
     - opt_table_outline
     - opt_table_font
-    - opt_stylize
     - opt_css
 
   - title: Information Functions

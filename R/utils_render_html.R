@@ -340,6 +340,7 @@ create_columns_component_h <- function(data) {
 
   stubh <- dt_stubhead_get(data = data)
   styles_tbl <- dt_styles_get(data = data)
+  body <- dt_body_get(data = data)
 
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
@@ -353,6 +354,26 @@ create_columns_component_h <- function(data) {
 
   # Get the column alignments and also the alignment class names
   col_alignment <- dt_boxhead_get_vars_align_default(data = data)
+
+  # Detect any RTL script characters within the visible columns;
+  # this creates a vector the same length as `col_alignment`
+  rtl_detect <-
+    vapply(
+      dt_boxhead_get_vars_default(data = data),
+      FUN.VALUE = logical(1),
+      USE.NAMES = FALSE,
+      FUN = function(x) {
+        any(grepl(rtl_modern_unicode_charset, body[[x]]))
+      }
+    )
+
+  # For any columns containing characters from RTL scripts; we
+  # will transform a 'left' alignment to a 'right' alignment
+  for (i in seq_along(rtl_detect)) {
+    if (rtl_detect[i] && col_alignment[i] != "center") {
+      col_alignment[i] <- "right"
+    }
+  }
 
   # Get the column headings
   headings_vars <- dt_boxhead_get_vars_default(data = data)
@@ -1180,6 +1201,16 @@ create_body_component_h <- function(data) {
                   extra_classes,
                   row_styles,
                   FUN = function(x, col_id, row_id, row_span, alignment_class, extra_class, cell_style) {
+
+                    # If any characters come from a RTL script, ensure that a
+                    # left alignment is transformed to a right alignment
+                    if (grepl(rtl_modern_unicode_charset, x)) {
+                      if (alignment_class != "gt_center") {
+                        alignment_class <- "gt_right"
+                      }
+                      x <- paste0("<p dir=\"rtl\">", x, "</p>")
+                    }
+
                     sprintf(
                       "<%s %sclass=\"%s\"%s>%s</%s>",
                       if ("gt_stub" %in% extra_class) {

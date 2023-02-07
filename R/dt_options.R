@@ -32,16 +32,12 @@ default_fonts_vec <-
     "Droid Sans", "Arial", "sans-serif"
   )
 
+default_page_size_vec <- c(10, 25, 50, 100)
+
 dt_options_tbl <-
   dplyr::tribble(
     ~parameter,                          ~scss,  ~category,          ~type,     ~value,
     "empty",                             FALSE,  "empty",            "value",   list(),
-    "container_width",                   FALSE,  "container",        "px",      "auto",
-    "container_height",                  FALSE,  "container",        "px",      "auto",
-    "container_padding_x",               FALSE,  "container",        "px",      "0px",
-    "container_padding_y",               FALSE,  "container",        "px",      "10px",
-    "container_overflow_x",              FALSE,  "container",        "overflow","auto",
-    "container_overflow_y",              FALSE,  "container",        "overflow","auto",
     "table_id",                          FALSE,  "table",            "value",   NA_character_,
     "table_caption",                     FALSE,  "table",            "value",   NA_character_,
     "table_width",                        TRUE,  "table",            "px",      "auto",
@@ -195,6 +191,25 @@ dt_options_tbl <-
     "row_striping_background_color",      TRUE,  "row",              "value",   "rgba(128,128,128,0.05)",
     "row_striping_include_stub",         FALSE,  "row",              "logical", FALSE,
     "row_striping_include_table_body",   FALSE,  "row",              "logical", FALSE,
+    "container_width",                   FALSE,  "container",        "px",      "auto",
+    "container_height",                  FALSE,  "container",        "px",      "auto",
+    "container_padding_x",               FALSE,  "container",        "px",      "0px",
+    "container_padding_y",               FALSE,  "container",        "px",      "10px",
+    "container_overflow_x",              FALSE,  "container",        "overflow","auto",
+    "container_overflow_y",              FALSE,  "container",        "overflow","auto",
+    "ihtml_active",                      FALSE,  "interactive",      "logical", FALSE,
+    "ihtml_use_pagination",              FALSE,  "interactive",      "logical", TRUE,
+    "ihtml_use_pagination_info",         FALSE,  "interactive",      "logical", TRUE,
+    "ihtml_use_sorting",                 FALSE,  "interactive",      "logical", TRUE,
+    "ihtml_use_search",                  FALSE,  "interactive",      "logical", FALSE,
+    "ihtml_use_filters",                 FALSE,  "interactive",      "logical", FALSE,
+    "ihtml_use_resizers",                FALSE,  "interactive",      "logical", FALSE,
+    "ihtml_use_highlight",               FALSE,  "interactive",      "logical", FALSE,
+    "ihtml_use_compact_mode",            FALSE,  "interactive",      "logical", FALSE,
+    "ihtml_use_page_size_select",        FALSE,  "interactive",      "logical", FALSE,
+    "ihtml_page_size_default",           FALSE,  "interactive",      "values",  10,
+    "ihtml_page_size_values",            FALSE,  "interactive",      "values",  default_page_size_vec,
+    "ihtml_pagination_type",             FALSE,  "interactive",      "value",   "numbers",
     "page_orientation",                  FALSE,  "page",             "value",   "portrait",
     "page_numbering",                    FALSE,  "page",             "logical", FALSE,
     "page_header_use_tbl_headings",      FALSE,  "page",             "logical", FALSE,

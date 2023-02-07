@@ -69,7 +69,7 @@ transformed to all caps using \code{opt_all_caps()}.
 
 \section{Function ID}{
 
-9-6
+9-8
 }
 
 \seealso{
@@ -78,6 +78,7 @@ Other table option functions:
 \code{\link{opt_css}()},
 \code{\link{opt_footnote_marks}()},
 \code{\link{opt_horizontal_padding}()},
+\code{\link{opt_interactive}()},
 \code{\link{opt_row_striping}()},
 \code{\link{opt_stylize}()},
 \code{\link{opt_table_font}()},
