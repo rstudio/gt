@@ -5907,6 +5907,375 @@ extract_duration_pattern <- function(
   pattern
 }
 
+#' Format URLs to generate links
+#'
+#' @description
+#'
+#' Should cells contain URLs, the `fmt_url()` function can be used to make them
+#' navigable links. This should be expressly used on columns that contain *only*
+#' URL text (i.e., no URLs as part of a larger block of text). Should you have
+#' such a column of data, there are options for how the links should be styled.
+#' They can be of the conventional style (with underlines and text coloring that
+#' sets it apart from other text), or, they can appear to be button-like (with
+#' a surrounding box that can be filled with a color of your choosing).
+#'
+#' @inheritParams fmt_number
+#' @param label The visible 'label' to use for the link. If `NULL` (the default)
+#'   the URL will serve as the label. There are two non-`NULL` options: (1) a
+#'   static text can be used for the label by providing a string, and (2) a
+#'   function can be provided to fashion a label from every URL.
+#' @param as_button An option to style the link as a button. By default, this is
+#'   `FALSE`. If this option is chosen then the `button_fill` argument becomes
+#'   usable.
+#' @param color The color used for the resulting link and its underline. This is
+#'   `"auto"` by default; this allows **gt** to choose an appropriate color
+#'   based on various factors (e.g., background `button_fill` when `as_button`
+#'   is `TRUE`).
+#' @param show_underline Should the link be decorated with an underline? By
+#'   default this is `"auto"` which means that **gt** will choose `TRUE` when
+#'   `as_button = FALSE` and `FALSE` in the other case. The link underline will
+#'   be the same color as that set in the `color` option.
+#' @param button_fill The color used for the button background (but only if
+#'   `as_button = TRUE`). This is by default set to `"auto"` and this allows
+#'   **gt** to choose an appropriate button fill based on the color of the link
+#'   text.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Targeting cells with `columns` and `rows`:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to target a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value of 100,000 (excluding
+#' `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given formatting function
+#' will be skipped over, like `character` values and numeric `fmt_*()`
+#' functions. So it's safe to select all columns with a particular formatting
+#' function (only those values that can be formatted will be formatted), but,
+#' you may not want that. One strategy is to format the bulk of cell values with
+#' one formatting function and then constrain the columns for later passes with
+#' other types of formatting (the last formatting done to a cell is what you get
+#' in the final output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
+#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
+#' the input data (the indices won't necessarily match those of rearranged rows
+#' if row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector. This is nice if you want to base
+#' formatting on values in the column or another column, or, you'd like to use a
+#' more complex predicate expression.
+#'
+#' @section Examples:
+#'
+#' Use the [`towny`] dataset to create a **gt** table. After some major
+#' **dplyr**ing to get a nicely formatted data table, we use the `fmt_url()`
+#' function on the `"website` column to generate navigable links to websites.
+#' By default the links are underlined and the color will be chosen for you
+#' (it's dark cyan).
+#'
+#' ```r
+#' towny |>
+#'   dplyr::filter(csd_type == "city") |>
+#'   dplyr::arrange(desc(population_2021)) |>
+#'   dplyr::select(name, website, population_2021) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt() |>
+#'   tab_header(
+#'     title = md("The 10 Largest Municipalities in `towny`"),
+#'     subtitle = "Population values taken from the 2021 census."
+#'   ) |>
+#'   fmt_integer() |>
+#'   fmt_url(columns = website) |>
+#'   cols_label(
+#'     name = "Name",
+#'     website = "Site",
+#'     population_2021 = "Population"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_url_1.png")`
+#' }}
+#'
+#' Let's try something else. We can set a static text label for the link with
+#' the `label` argument (and we'll use the word `"site"` for this). The link
+#' underline is removable with `show_underline = FALSE`. With this change, it
+#' seems sensible to merge the link to the `"name"` column and enclose the link
+#' text in parentheses (the [cols_merge()] function handles all that).
+#'
+#' ```r
+#' towny |>
+#'   dplyr::filter(csd_type == "city") |>
+#'   dplyr::arrange(desc(population_2021)) |>
+#'   dplyr::select(name, website, population_2021) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt() |>
+#'   tab_header(
+#'     title = md("The 10 Largest Municipalities in `towny`"),
+#'     subtitle = "Population values taken from the 2021 census."
+#'   ) |>
+#'   fmt_integer() |>
+#'   fmt_url(
+#'     columns = website,
+#'     label = "site",
+#'     show_underline = FALSE
+#'   ) |>
+#'   cols_merge(
+#'     columns = c(name, website),
+#'     pattern = "{1} ({2})"
+#'   ) |>
+#'   cols_label(
+#'     name = "Name",
+#'     population_2021 = "Population"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_url_2.png")`
+#' }}
+#'
+#' The `fmt_url()` function allows for the styling of links as 'buttons'. This
+#' is as easy as setting `as_button = TRUE`. Doing that unlocks the ability to
+#' set a `button_fill` color. This color can automatically selected by **gt**
+#' (this is the default) but here we're using `"steelblue"`. The `label`
+#' argument also accepts a function! We can choose to adapt the label text from
+#' the URLs by eliminating any leading `"https://"` or `"www."` parts.
+#'
+#' ```r
+#' towny |>
+#'   dplyr::filter(csd_type == "city") |>
+#'   dplyr::arrange(desc(population_2021)) |>
+#'   dplyr::select(name, website, population_2021) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   dplyr::mutate(ranking = dplyr::row_number()) |>
+#'   gt(rowname_col = "ranking") |>
+#'   tab_header(
+#'     title = md("The 10 Largest Municipalities in `towny`"),
+#'     subtitle = "Population values taken from the 2021 census."
+#'   ) |>
+#'   fmt_integer() |>
+#'   fmt_url(
+#'     columns = website,
+#'     label = function(x) gsub("https://|www.", "", x),
+#'     as_button = TRUE,
+#'     button_fill = "steelblue"
+#'   ) |>
+#'   cols_move_to_end(columns = website) |>
+#'   cols_align(align = "center", columns = website) |>
+#'   cols_width(
+#'     ranking ~ px(40),
+#'     website ~ px(200)
+#'   ) |>
+#'   tab_options(column_labels.hidden = TRUE) |>
+#'   tab_style(
+#'     style = cell_text(weight = "bold"),
+#'     locations = cells_stub()
+#'   ) %>%
+#'   opt_vertical_padding(scale = 0.75)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_url_3.png")`
+#' }}
+#'
+#' It's perhaps inevitable that you'll come across missing values in your column
+#' of URLs. The `fmt_url()` function will preserve input `NA` values, allowing
+#' you to handle them with [sub_missing()]. Here's an example of that.
+#'
+#' ```r
+#' towny |>
+#'   dplyr::arrange(population_2021) |>
+#'   dplyr::select(name, website, population_2021) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt() |>
+#'   tab_header(
+#'     title = md("The 10 Smallest Municipalities in `towny`"),
+#'     subtitle = "Population values taken from the 2021 census."
+#'   ) |>
+#'   fmt_integer() |>
+#'   fmt_url(columns = website) |>
+#'   cols_label(
+#'     name = "Name",
+#'     website = "Site",
+#'     population_2021 = "Population"
+#'   ) |>
+#'   sub_missing()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_url_4.png")`
+#' }}
+#'
+#' @family data formatting functions
+#' @section Function ID:
+#' 3-17
+#'
+#' @seealso The vector-formatting version of this function.
+#'
+#' @import rlang
+#' @export
+fmt_url <- function(
+    data,
+    columns = everything(),
+    rows = everything(),
+    label = NULL,
+    as_button = FALSE,
+    color = "auto",
+    show_underline = "auto",
+    button_fill = "auto"
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  if (as_button) {
+
+    #
+    # All determinations of `color`, `show_underline`, and `button_fill` for the
+    # case where `as_button = TRUE`; each of the above arguments are set to
+    # "auto" by default
+    #
+
+    # In the button case, we opt to never show an underline unless it's
+    # requested by the user (i.e., `show_underline = TRUE`)
+    if (show_underline == "auto") {
+      show_underline <- FALSE
+    }
+
+    # There are various combinations of "auto" or not with `button_fill` and
+    # `color` that need to be handled delicately so as to ensure contrast
+    # between foreground text and background fill is maximized
+    if (button_fill == "auto" && color == "auto") {
+
+      # Choose a fixed and standard color combination if both options are 'auto'
+      button_fill <- "#008B8B"
+      color <- "#FFFFFF"
+
+    } else if (button_fill == "auto" && color != "auto") {
+
+      # Case where text color is chosen but background is left to gt
+      # to determine; will either by light blue or dark blue based on the
+      # brightness of the text color (can be of poor contrast if user chooses
+      # a text color somewhere in the mid range of brightness, but nothing
+      # really can be done there to compensate)
+
+      # Use `ideal_fgnd_color()` in a backwards manner only to see whether
+      # the proxy background color is light (#FFFFFF) or dark (#000000)
+      bgrnd_bw <-
+        ideal_fgnd_color(
+          bgnd_color = color,
+          algo = "apca"
+        )
+
+      if (bgrnd_bw == "#FFFFFF") {
+        # Background should be light so using 'lightblue'
+        button_fill <- "lightblue"
+      } else {
+        # Background should be dark so using 'darkblue'
+        button_fill <- "darkblue"
+      }
+
+    } else if (button_fill != "auto" && color == "auto") {
+
+      # Case where background color is chosen for foreground text color is
+      # not; this is the simple case where `ideal_fgnd_color()` is well suited
+      # to determine the text color (either black or white)
+
+      color <-
+        ideal_fgnd_color(
+          bgnd_color = button_fill,
+          algo = "apca"
+        )
+    }
+
+  } else {
+
+    if (show_underline == "auto") {
+      show_underline <- TRUE
+    }
+
+    if (color == "auto") {
+      color <- "#008B8B"
+    }
+  }
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    fns = list(
+      html = function(x) {
+
+        # Generate an vector of empty strings that will eventually
+        # contain all of the link text
+        x_str <- character(length(x))
+
+        x_str_non_missing <- x[!is.na(x)]
+
+        if (!is.null(label)) {
+          if (rlang::is_function(label)) {
+            label_str <- label(x_str_non_missing)
+          } else {
+            label_str <- label
+          }
+        } else {
+          label_str <- x_str_non_missing
+        }
+
+        x_str_non_missing <-
+          paste0(
+            "<a ",
+            "href=\"", x_str_non_missing, "\" ",
+            "target=\"_blank\" ",
+            "style=\"color:", color[1], ";",
+            "text-decoration:", if (show_underline) "underline" else "none", ";",
+            if (show_underline) "text-underline-position: under;" else NULL,
+            "display: inline-block;",
+            if (as_button) paste0("background-color: ", button_fill, ";") else NULL,
+            if (as_button) "padding: 8px 12px;" else NULL,
+            "\">",
+            label_str,
+            "</a>"
+          )
+
+        x_str[!is.na(x)] <- x_str_non_missing
+        x_str[is.na(x)] <- as.character(NA_character_)
+        x_str
+      },
+      latex = function(x) {
+        x
+      },
+      rtf = function(x) {
+        x
+      },
+      word = function(x) {
+        x
+      },
+      default = function(x) {
+        x
+      }
+    )
+  )
+}
+
 #' Format Markdown text
 #'
 #' @description
@@ -6013,7 +6382,7 @@ extract_duration_pattern <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-17
+#' 3-18
 #'
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_markdown()].
@@ -6144,7 +6513,7 @@ fmt_markdown <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-18
+#' 3-19
 #'
 #' @import rlang
 #' @export
@@ -6337,7 +6706,7 @@ fmt_passthrough <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-19
+#' 3-20
 #'
 #' @export
 fmt_auto <- function(
@@ -6640,7 +7009,7 @@ fmt_auto <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-20
+#' 3-21
 #'
 #' @import rlang
 #' @export

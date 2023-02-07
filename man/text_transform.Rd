@@ -57,7 +57,7 @@ formatted vector of column values from the \code{num} column.
 
 \section{Function ID}{
 
-3-26
+3-27
 }
 
 \seealso{
@@ -82,6 +82,7 @@ Other data formatting functions:
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
 \code{\link{fmt_time}()},
+\code{\link{fmt_url}()},
 \code{\link{fmt}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
