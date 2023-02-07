@@ -33,6 +33,11 @@ functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with
 to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
+\item{label}{The visible 'label' to use for the link. If \code{NULL} (the default)
+the URL will serve as the label. There are two non-\code{NULL} options: (1) a
+static text can be used for the label by providing a string, and (2) a
+function can be provided to fashion a label from every URL.}
+
 \item{as_button}{An option to style the link as a button. By default, this is
 \code{FALSE}. If this option is chosen then the \code{button_fill} argument becomes
 usable.}
