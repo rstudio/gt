@@ -5985,7 +5985,7 @@ extract_duration_pattern <- function(
 #'
 #' Use the [`towny`] dataset to create a **gt** table. After some major
 #' **dplyr**ing to get a nicely formatted data table, we use the `fmt_url()`
-#' function on the `"website` column to generate navigable links to websites.
+#' function on the `website` column to generate navigable links to websites.
 #' By default the links are underlined and the color will be chosen for you
 #' (it's dark cyan).
 #'
