@@ -209,7 +209,7 @@
 #' @section Function ID:
 #' 2-11
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
 #'
 #' @export

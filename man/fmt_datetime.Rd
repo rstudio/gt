@@ -902,7 +902,7 @@ zone formatting. Let's provide a time zone ID (\code{"America/Vancouver"}) to th
 3-15
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.2.0.5} (March 31, 2020)
 }

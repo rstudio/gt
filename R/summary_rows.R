@@ -292,7 +292,7 @@
 #' @section Function ID:
 #' 5-1
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
@@ -689,7 +689,7 @@ summary_rows <- function(
 #' @section Function ID:
 #' 5-2
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export

@@ -118,7 +118,7 @@ the \code{cell_text()} helper function.
 7-20
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.2.0.5} (March 31, 2020)
 }

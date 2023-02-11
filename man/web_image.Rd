@@ -111,7 +111,7 @@ and five times in the subtitle.
 8-1
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.2.0.5} (March 31, 2020)
 }

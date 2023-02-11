@@ -43,7 +43,7 @@ Use \code{\link{exibble}} to create a \strong{gt} table. When adding a title, us
 7-2
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.2.0.5} (March 31, 2020)
 }

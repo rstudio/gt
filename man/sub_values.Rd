@@ -184,7 +184,7 @@ that vector must match the length of \code{x}).
 3-26
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.8.0} (November 16, 2022)
 }

@@ -95,7 +95,7 @@ three column labels with \code{\link[=tab_spanner]{tab_spanner()}} and then use 
 7-8
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.2.0.5} (March 31, 2020)
 }

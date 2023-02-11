@@ -148,7 +148,7 @@ argument. Note here that \code{NA} values won't have the pattern applied.
 14-2
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.7.0} (Aug 25, 2022)
 }

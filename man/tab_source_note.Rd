@@ -46,7 +46,7 @@ source note to the table footer that cites the data source.
 2-8
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.2.0.5} (March 31, 2020)
 }

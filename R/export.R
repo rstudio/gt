@@ -116,7 +116,7 @@
 #' @section Function ID:
 #' 13-1
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
@@ -396,7 +396,7 @@ gtsave_filename <- function(path, filename) {
 #' @section Function ID:
 #' 13-2
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
@@ -498,7 +498,7 @@ as_raw_html <- function(
 #' @section Function ID:
 #' 13-3
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
@@ -586,7 +586,7 @@ as_latex <- function(data) {
 #' @section Function ID:
 #' 13-4
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
@@ -698,7 +698,7 @@ as_rtf <- function(data) {
 #' @section Function ID:
 #' 13-5
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.7.0` (August 25, 2022)
 #'
 #' @export
@@ -930,7 +930,7 @@ as_word_tbl_body <- function(
 #' @section Function ID:
 #' 13-6
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
@@ -1055,7 +1055,7 @@ extract_summary <- function(data) {
 #' @section Function ID:
 #' 13-7
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
 #'
 #' @export

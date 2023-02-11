@@ -235,7 +235,7 @@ format the \code{b} column as \emph{per mille} values with \code{fmt_partsper()}
 3-6
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.6.0} (May 24, 2022)
 }

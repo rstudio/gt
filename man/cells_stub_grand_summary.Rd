@@ -112,7 +112,7 @@ summary stub cell with with the \code{\link[=tab_style]{tab_style()}} and
 7-16
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.3.0} (May 12, 2021)
 }

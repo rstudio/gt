@@ -205,7 +205,7 @@ values having no digit separators (with the \code{use_seps = FALSE} option).
 3-2
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.3.1} (August 9, 2021)
 }

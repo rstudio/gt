@@ -54,7 +54,7 @@
 #' @section Function ID:
 #' 6-1
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
 #'
 #' @export
@@ -120,7 +120,7 @@ rm_header <- function(data) {
 #' @section Function ID:
 #' 6-2
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
 #'
 #' @export
@@ -240,7 +240,7 @@ rm_stubhead <- function(data) {
 #' @section Function ID:
 #' 6-3
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
 #'
 #' @export
@@ -431,7 +431,7 @@ rm_spanners <- function(
 #' @section Function ID:
 #' 6-4
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
 #'
 #' @export
@@ -570,7 +570,7 @@ rm_footnotes <- function(
 #' @section Function ID:
 #' 6-5
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
 #'
 #' @export
@@ -689,7 +689,7 @@ rm_source_notes <- function(
 #' @section Function ID:
 #' 6-6
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
 #'
 #' @export

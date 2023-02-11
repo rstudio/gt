@@ -120,7 +120,7 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Format the numeric valu
 3-21
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.2.0.5} (March 31, 2020)
 }

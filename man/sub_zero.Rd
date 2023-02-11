@@ -118,7 +118,7 @@ single call of \code{sub_zero()}.
 3-23
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.6.0} (May 24, 2022)
 }

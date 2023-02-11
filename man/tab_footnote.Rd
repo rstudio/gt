@@ -101,7 +101,7 @@ Use \code{\link{sza}} to create a \strong{gt} table. Color the \code{sza} column
 2-7
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.2.0.5} (March 31, 2020)
 }

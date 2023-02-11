@@ -70,7 +70,7 @@ move \code{year} and \code{country_name} to the end of the column series.
 4-8
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.2.0.5} (March 31, 2020)
 }

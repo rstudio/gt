@@ -143,7 +143,7 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Replace missing values 
 2-10
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.2.0.5} (March 31, 2020)
 }

@@ -220,7 +220,7 @@ byte sizes as binary values.
 3-12
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.3.0} (May 12, 2021)
 }

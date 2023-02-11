@@ -42,7 +42,7 @@
 #' @section Function ID:
 #' 2-1
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
@@ -132,7 +132,7 @@ tab_header <- function(
 #' @section Function ID:
 #' 2-2
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @import rlang
@@ -388,7 +388,7 @@ resolve_spanned_column_names <- function(
 #' @section Function ID:
 #' 2-3
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @import rlang
@@ -691,7 +691,7 @@ tab_spanner_delim <- function(
 #' @section Function ID:
 #' 2-4
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @import rlang
@@ -832,7 +832,7 @@ tab_row_group <- function(
 #' @section Function ID:
 #' 2-5
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
@@ -917,7 +917,7 @@ tab_stubhead <- function(
 #' @section Function ID:
 #' 2-6
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
 #'
 #' @import rlang
@@ -1085,7 +1085,7 @@ tab_stub_indent <- function(
 #' @section Function ID:
 #' 2-7
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
@@ -1412,7 +1412,7 @@ set_footnote.cells_footnotes <- function(loc, data, footnote, placement) {
 #' @section Function ID:
 #' 2-8
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
@@ -1471,7 +1471,7 @@ tab_source_note <- function(
 #' @section Function ID:
 #' 2-9
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
 #'
 #' @export
@@ -1625,7 +1625,7 @@ tab_caption <- function(
 #' @section Function ID:
 #' 2-10
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @seealso [cell_text()], [cell_fill()], and [cell_borders()] as helpers for
@@ -2363,7 +2363,7 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' @section Function ID:
 #' 2-12
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export

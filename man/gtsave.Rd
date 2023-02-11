@@ -121,7 +121,7 @@ With the \code{.docx} extension, we'll get a word/docx document.
 13-1
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.2.0.5} (March 31, 2020)
 }

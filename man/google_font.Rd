@@ -81,7 +81,7 @@ catchall \code{"Serif"} group).
 7-27
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.2.2} (August 5, 2020)
 }

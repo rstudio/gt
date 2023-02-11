@@ -111,7 +111,7 @@ columns will be given replacement text with two calls of \code{sub_missing()}.
 3-22
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.6.0} (May 24, 2022)
 }

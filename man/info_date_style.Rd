@@ -34,7 +34,7 @@ by supplying a number code to the \code{\link[=fmt_date]{fmt_date()}} function).
 10-1
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.2.0.5} (March 31, 2020)
 }

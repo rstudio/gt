@@ -67,7 +67,7 @@ the \code{cols_unhide()} function becomes useful.
 4-10
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.3.0} (May 12, 2021)
 }

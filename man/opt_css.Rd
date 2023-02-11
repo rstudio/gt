@@ -71,7 +71,7 @@ table ID explicitly (here as \code{"one"}).
 9-12
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.2.2} (August 5, 2020)
 }

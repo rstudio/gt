@@ -190,7 +190,7 @@ engineering notation.
 3-4
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.3.1} (August 9, 2021)
 }

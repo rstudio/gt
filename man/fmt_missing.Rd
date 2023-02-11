@@ -35,7 +35,7 @@ rendered table.}
 \description{
 Format missing values (deprecated)
 }
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.2.0.5} (March 31, 2020)
 }

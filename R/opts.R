@@ -61,7 +61,7 @@
 #' @section Function ID:
 #' 9-1
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
 #'
 #' @export
@@ -256,7 +256,7 @@ get_colorized_params <- function(
 #' @section Function ID:
 #' 9-2
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' *In Development*
 #'
 #' @export
@@ -393,7 +393,7 @@ opt_interactive <- function(
 #' @section Function ID:
 #' 9-3
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
@@ -464,7 +464,7 @@ opt_footnote_marks <- function(
 #' @section Function ID:
 #' 9-4
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
@@ -536,7 +536,7 @@ opt_row_striping <- function(
 #' @section Function ID:
 #' 9-5
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
@@ -619,7 +619,7 @@ opt_align_table_header <- function(
 #' @section Function ID:
 #' 9-6
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.4.0` (February 15, 2022)
 #'
 #' @export
@@ -702,7 +702,7 @@ opt_vertical_padding <- function(
 #' @section Function ID:
 #' 9-7
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.4.0` (February 15, 2022)
 #'
 #' @export
@@ -820,7 +820,7 @@ get_padding_option_value_list <- function(scale, type) {
 #' @section Function ID:
 #' 9-8
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
@@ -925,7 +925,7 @@ opt_all_caps <- function(
 #' @section Function ID:
 #' 9-9
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
@@ -1025,7 +1025,7 @@ opt_table_lines <- function(
 #' @section Function ID:
 #' 9-10
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
@@ -1167,7 +1167,7 @@ opt_table_outline <- function(
 #' @section Function ID:
 #' 9-11
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.2` (August 5, 2020)
 #'
 #' @export
@@ -1300,7 +1300,7 @@ opt_table_font <- function(
 #' @section Function ID:
 #' 9-12
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.2` (August 5, 2020)
 #'
 #' @export

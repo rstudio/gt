@@ -163,7 +163,7 @@
 #' @section Function ID:
 #' 14-1
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
@@ -322,7 +322,7 @@ vec_fmt_number <- function(
 #' @section Function ID:
 #' 14-2
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
@@ -473,7 +473,7 @@ vec_fmt_integer <- function(
 #' @section Function ID:
 #' 14-3
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
@@ -635,7 +635,7 @@ vec_fmt_scientific <- function(
 #' @section Function ID:
 #' 14-4
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
@@ -805,7 +805,7 @@ vec_fmt_engineering <- function(
 #' @section Function ID:
 #' 14-5
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
@@ -995,7 +995,7 @@ vec_fmt_percent <- function(
 #' @section Function ID:
 #' 14-6
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
@@ -1150,7 +1150,7 @@ vec_fmt_partsper <- function(
 #' @section Function ID:
 #' 14-7
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
@@ -1334,7 +1334,7 @@ vec_fmt_fraction <- function(
 #' @section Function ID:
 #' 14-8
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
@@ -1465,7 +1465,7 @@ vec_fmt_currency <- function(
 #' @section Function ID:
 #' 14-9
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
@@ -1591,7 +1591,7 @@ vec_fmt_roman <- function(
 #' @section Function ID:
 #' 14-10
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' *In Development*
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
@@ -1706,7 +1706,7 @@ vec_fmt_index <- function(
 #' @section Function ID:
 #' 14-11
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' *In Development*
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
@@ -1851,7 +1851,7 @@ vec_fmt_spelled_num <- function(
 #' @section Function ID:
 #' 14-12
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
@@ -2053,7 +2053,7 @@ vec_fmt_bytes <- function(
 #' @section Function ID:
 #' 14-13
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
@@ -2223,7 +2223,7 @@ vec_fmt_date <- function(
 #' @section Function ID:
 #' 14-14
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
@@ -3049,7 +3049,7 @@ vec_fmt_time <- function(
 #' @section Function ID:
 #' 14-15
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
@@ -3277,7 +3277,7 @@ vec_fmt_datetime <- function(
 #' @section Function ID:
 #' 14-16
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
@@ -3387,7 +3387,7 @@ vec_fmt_duration <- function(
 #' @section Function ID:
 #' 14-17
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
 #'
 #' @seealso The variant function intended for formatting **gt** table data:

@@ -233,7 +233,7 @@ get the dates in Swedish.
 3-14
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.2.0.5} (March 31, 2020)
 }

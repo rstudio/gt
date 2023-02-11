@@ -100,7 +100,7 @@ This uses multiple \code{cell_borders()} and \code{\link[=cells_body]{cells_body
 7-22
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.2.0.5} (March 31, 2020)
 }

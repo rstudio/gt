@@ -254,7 +254,7 @@ you to handle them with \code{\link[=sub_missing]{sub_missing()}}. Here's an exa
 3-17
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \emph{In Development}
 }

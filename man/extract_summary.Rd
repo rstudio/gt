@@ -101,7 +101,7 @@ Use the summary list to make a new \strong{gt} table. The key thing is to use
 13-6
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.2.0.5} (March 31, 2020)
 }

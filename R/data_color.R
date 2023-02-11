@@ -513,7 +513,7 @@
 #' @section Function ID:
 #' 3-28
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @import rlang

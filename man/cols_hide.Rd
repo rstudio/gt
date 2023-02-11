@@ -80,7 +80,7 @@ statements has no effect.
 4-9
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.2.0.5} (March 31, 2020)
 }

@@ -131,7 +131,7 @@ then, create a \strong{gt} table and format all columns with \code{fmt_markdown(
 3-18
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.2.0.5} (March 31, 2020)
 }

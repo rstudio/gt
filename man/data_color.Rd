@@ -565,7 +565,7 @@ gray cells for the missing values (we also removed the \code{"NA"} text with
 3-28
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.2.0.5} (March 31, 2020)
 }

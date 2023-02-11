@@ -63,7 +63,7 @@ the \code{cell_fill()} helper function.
 7-21
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.2.0.5} (March 31, 2020)
 }

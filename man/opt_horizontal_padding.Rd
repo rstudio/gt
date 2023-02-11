@@ -71,7 +71,7 @@ Expand the horizontal padding across the entire table with
 9-7
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.4.0} (February 15, 2022)
 }

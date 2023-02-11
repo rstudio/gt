@@ -48,7 +48,7 @@ the font size for the column labels.
 7-4
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.2.0.5} (March 31, 2020)
 }

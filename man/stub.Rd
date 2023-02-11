@@ -49,7 +49,7 @@ column here with the \code{stub()} select helper.
 7-5
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.8.0} (November 16, 2022)
 }

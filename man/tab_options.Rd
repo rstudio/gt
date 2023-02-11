@@ -595,7 +595,7 @@ Reduce the size of the title and the subtitle text.
 2-12
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.2.0.5} (March 31, 2020)
 }

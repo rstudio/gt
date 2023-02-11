@@ -62,7 +62,7 @@ the left with the \code{opt_align_table_header()} function.
 9-5
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.2.0.5} (March 31, 2020)
 }

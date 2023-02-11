@@ -143,7 +143,7 @@ column of numbers-as-words is given cell background colors via \code{\link[=data
 3-11
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \emph{In Development}
 }

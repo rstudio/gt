@@ -230,7 +230,7 @@ be used on numeric values and we can make sure of this by using \code{columns = 
 2-11
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.8.0} (November 16, 2022)
 }

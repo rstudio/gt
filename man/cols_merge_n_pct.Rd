@@ -123,7 +123,7 @@ percentages of the top 3 pizzas sold by pizza category in 2015. The
 4-14
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.3.0} (May 12, 2021)
 }

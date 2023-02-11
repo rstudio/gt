@@ -285,7 +285,7 @@ row with \code{\link[=tab_style]{tab_style()}}.
 5-2
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.2.0.5} (March 31, 2020)
 }

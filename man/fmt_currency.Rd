@@ -291,7 +291,7 @@ columns, then, format those columns using the \code{"CNY"} and \code{"GBP"} curr
 3-8
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.2.0.5} (March 31, 2020)
 }

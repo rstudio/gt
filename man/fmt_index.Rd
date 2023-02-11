@@ -156,7 +156,7 @@ increasing total municipal population.
 3-10
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \emph{In Development}
 }

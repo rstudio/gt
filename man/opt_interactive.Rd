@@ -134,7 +134,7 @@ It'll just be the default set of interactive options.
 9-2
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \emph{In Development}
 }

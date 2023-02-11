@@ -104,7 +104,7 @@
 #' @section Function ID:
 #' 8-1
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
@@ -183,7 +183,7 @@ web_image <- function(
 #' @section Function ID:
 #' 8-2
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
@@ -288,7 +288,7 @@ local_image <- function(
 #' @section Function ID:
 #' 8-3
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
@@ -351,7 +351,7 @@ ggplot_image <- function(
 #' @section Function ID:
 #' 8-4
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export

@@ -115,7 +115,7 @@ the \code{roman} column to appear as Roman numerals with \code{fmt_roman()}.
 3-9
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.8.0} (November 16, 2022)
 }

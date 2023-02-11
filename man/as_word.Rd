@@ -60,7 +60,7 @@ OOXML code for Word.
 13-5
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.7.0} (August 25, 2022)
 }

@@ -140,7 +140,7 @@ instead of scientific notation with the \code{lg_num_pref = "suf"} option.
 3-20
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \emph{In Development}
 }

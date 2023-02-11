@@ -60,7 +60,7 @@ formatted vector of column values from the \code{num} column.
 3-27
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.2.0.5} (March 31, 2020)
 }

@@ -26,7 +26,7 @@
 #' @section Function ID:
 #' 10-1
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
@@ -137,7 +137,7 @@ info_date_style <- function() {
 #' @section Function ID:
 #' 10-2
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
@@ -270,7 +270,7 @@ info_time_style <- function() {
 #' @section Function ID:
 #' 10-3
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
@@ -426,7 +426,7 @@ info_currencies <- function(
 #' @section Function ID:
 #' 10-4
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
@@ -592,7 +592,7 @@ info_locales <- function(begins_with = NULL) {
 #' @section Function ID:
 #' 10-5
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
@@ -703,7 +703,7 @@ info_paletteer <- function(color_pkgs = NULL) {
 #' @section Function ID:
 #' 10-6
 #'
-#' @section Function Introduction:
+#' @section Function Introduced:
 #' `v0.2.2` (August 5, 2020)
 #'
 #' @export

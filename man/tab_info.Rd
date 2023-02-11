@@ -59,7 +59,7 @@ gt_tbl |> tab_info()
 2-12
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.8.0} (November 16, 2022)
 }

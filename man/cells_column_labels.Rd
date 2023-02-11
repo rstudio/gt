@@ -115,7 +115,7 @@ Use \code{\link{sza}} to create a \strong{gt} table. Add footnotes to the column
 7-9
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.2.0.5} (March 31, 2020)
 }

@@ -102,7 +102,7 @@ a preferred list of sans-serif fonts that are commonly available in macOS
 9-11
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.2.2} (August 5, 2020)
 }

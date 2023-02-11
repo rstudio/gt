@@ -53,7 +53,7 @@ Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header part with t
 2-1
 }
 
-\section{Function Introduction}{
+\section{Function Introduced}{
 
 \code{v0.2.0.5} (March 31, 2020)
 }
