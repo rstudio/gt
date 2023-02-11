@@ -205,6 +205,11 @@ values having no digit separators (with the \code{use_seps = FALSE} option).
 3-2
 }
 
+\section{Function Introduction}{
+
+\code{v0.3.1} (August 9, 2021)
+}
+
 \seealso{
 The \code{\link[=fmt_number]{fmt_number()}} function might be more of what you need if you'd
 like decimal values in your outputs. Need to do integer-based formatting on

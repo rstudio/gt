@@ -92,6 +92,11 @@ source notes section.
 7-18
 }
 
+\section{Function Introduction}{
+
+\code{v0.3.0} (May 12, 2021)
+}
+
 \seealso{
 Other helper functions: 
 \code{\link{adjust_luminance}()},

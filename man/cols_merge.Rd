@@ -168,6 +168,11 @@ drop parts of the output text whenever missing values are encountered.
 4-11
 }
 
+\section{Function Introduction}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other column modification functions: 
 \code{\link{cols_align_decimal}()},

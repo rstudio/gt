@@ -88,6 +88,11 @@ Use \code{\link{pizzaplace}} to create a \strong{gt} table. Add a stubhead label
 7-7
 }
 
+\section{Function Introduction}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other helper functions: 
 \code{\link{adjust_luminance}()},

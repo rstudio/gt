@@ -332,6 +332,11 @@ summary rows with \code{\link[=tab_style]{tab_style()}}.
 5-1
 }
 
+\section{Function Introduction}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other row addition/modification functions: 
 \code{\link{grand_summary_rows}()},

@@ -67,6 +67,11 @@ data to the left.
 4-1
 }
 
+\section{Function Introduction}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other column modification functions: 
 \code{\link{cols_align_decimal}()},

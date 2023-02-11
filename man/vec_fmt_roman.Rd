@@ -79,6 +79,11 @@ argument. Note here that \code{NA} values won't have the pattern applied.
 14-9
 }
 
+\section{Function Introduction}{
+
+\code{v0.8.0} (November 16, 2022)
+}
+
 \seealso{
 The variant function intended for formatting \strong{gt} table data:
 \code{\link[=fmt_roman]{fmt_roman()}}.

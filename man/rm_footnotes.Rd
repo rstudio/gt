@@ -105,6 +105,11 @@ would give the correct index value to \code{footnotes}.
 6-4
 }
 
+\section{Function Introduction}{
+
+\code{v0.8.0} (November 16, 2022)
+}
+
 \seealso{
 Other part removal functions: 
 \code{\link{rm_caption}()},

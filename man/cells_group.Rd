@@ -12,4 +12,9 @@ cells_group(groups = everything())
 \description{
 Location helper for targeting row groups (deprecated)
 }
+\section{Function Introduction}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \keyword{internal}

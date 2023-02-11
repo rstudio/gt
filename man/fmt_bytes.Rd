@@ -220,6 +220,11 @@ byte sizes as binary values.
 3-12
 }
 
+\section{Function Introduction}{
+
+\code{v0.3.0} (May 12, 2021)
+}
+
 \seealso{
 The vector-formatting version of this function: \code{\link[=vec_fmt_bytes]{vec_fmt_bytes()}}.
 

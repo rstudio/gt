@@ -42,6 +42,9 @@
 #' @section Function ID:
 #' 5-3
 #'
+#' @section Function Introduction:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @export
 row_group_order <- function(
     data,

@@ -70,6 +70,11 @@ move \code{year} and \code{country_name} to the end of the column series.
 4-8
 }
 
+\section{Function Introduction}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other column modification functions: 
 \code{\link{cols_align_decimal}()},

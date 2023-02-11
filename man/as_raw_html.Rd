@@ -50,6 +50,11 @@ document but rather an HTML fragment.
 13-2
 }
 
+\section{Function Introduction}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other table export functions: 
 \code{\link{as_latex}()},

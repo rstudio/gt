@@ -48,6 +48,11 @@ is in the stub.
 2-5
 }
 
+\section{Function Introduction}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other part creation/modification functions: 
 \code{\link{tab_caption}()},

@@ -230,6 +230,11 @@ be used on numeric values and we can make sure of this by using \code{columns = 
 2-11
 }
 
+\section{Function Introduction}{
+
+\code{v0.8.0} (November 16, 2022)
+}
+
 \seealso{
 Other part creation/modification functions: 
 \code{\link{tab_caption}()},

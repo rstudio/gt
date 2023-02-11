@@ -57,6 +57,11 @@ columns). You'll see the first five rows and the last row.
 1-2
 }
 
+\section{Function Introduction}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other table creation functions: 
 \code{\link{gt}()}

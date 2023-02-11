@@ -224,6 +224,11 @@ column to display values as percentages.
 3-5
 }
 
+\section{Function Introduction}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 The vector-formatting version of this function: \code{\link[=vec_fmt_percent]{vec_fmt_percent()}}.
 

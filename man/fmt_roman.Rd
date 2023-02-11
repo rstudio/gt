@@ -115,6 +115,11 @@ the \code{roman} column to appear as Roman numerals with \code{fmt_roman()}.
 3-9
 }
 
+\section{Function Introduction}{
+
+\code{v0.8.0} (November 16, 2022)
+}
+
 \seealso{
 The vector-formatting version of this function: \code{\link[=vec_fmt_roman]{vec_fmt_roman()}}.
 

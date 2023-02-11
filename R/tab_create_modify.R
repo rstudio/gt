@@ -42,6 +42,9 @@
 #' @section Function ID:
 #' 2-1
 #'
+#' @section Function Introduction:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @export
 tab_header <- function(
     data,
@@ -128,6 +131,9 @@ tab_header <- function(
 #' @family part creation/modification functions
 #' @section Function ID:
 #' 2-2
+#'
+#' @section Function Introduction:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 #' @import rlang
 #' @export
@@ -381,6 +387,9 @@ resolve_spanned_column_names <- function(
 #' @family part creation/modification functions
 #' @section Function ID:
 #' 2-3
+#'
+#' @section Function Introduction:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 #' @import rlang
 #' @export
@@ -682,6 +691,9 @@ tab_spanner_delim <- function(
 #' @section Function ID:
 #' 2-4
 #'
+#' @section Function Introduction:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @import rlang
 #' @export
 tab_row_group <- function(
@@ -820,6 +832,9 @@ tab_row_group <- function(
 #' @section Function ID:
 #' 2-5
 #'
+#' @section Function Introduction:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @export
 tab_stubhead <- function(
     data,
@@ -901,6 +916,9 @@ tab_stubhead <- function(
 #' @family part creation/modification functions
 #' @section Function ID:
 #' 2-6
+#'
+#' @section Function Introduction:
+#' `v0.7.0` (Aug 25, 2022)
 #'
 #' @import rlang
 #' @export
@@ -1066,6 +1084,9 @@ tab_stub_indent <- function(
 #' @family part creation/modification functions
 #' @section Function ID:
 #' 2-7
+#'
+#' @section Function Introduction:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
 tab_footnote <- function(
@@ -1391,6 +1412,9 @@ set_footnote.cells_footnotes <- function(loc, data, footnote, placement) {
 #' @section Function ID:
 #' 2-8
 #'
+#' @section Function Introduction:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @export
 tab_source_note <- function(
     data,
@@ -1446,6 +1470,9 @@ tab_source_note <- function(
 #' @family part creation/modification functions
 #' @section Function ID:
 #' 2-9
+#'
+#' @section Function Introduction:
+#' `v0.8.0` (November 16, 2022)
 #'
 #' @export
 tab_caption <- function(
@@ -1597,6 +1624,9 @@ tab_caption <- function(
 #' @family part creation/modification functions
 #' @section Function ID:
 #' 2-10
+#'
+#' @section Function Introduction:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 #' @seealso [cell_text()], [cell_fill()], and [cell_borders()] as helpers for
 #'   defining custom styles and [cells_body()] as one of many useful helper
@@ -2332,6 +2362,9 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' @family part creation/modification functions
 #' @section Function ID:
 #' 2-12
+#'
+#' @section Function Introduction:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
 tab_options <- function(

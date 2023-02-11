@@ -62,6 +62,11 @@ the left with the \code{opt_align_table_header()} function.
 9-5
 }
 
+\section{Function Introduction}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other table option functions: 
 \code{\link{opt_all_caps}()},

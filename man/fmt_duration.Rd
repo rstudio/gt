@@ -243,6 +243,11 @@ number of days since March 30, 2020.
 3-16
 }
 
+\section{Function Introduction}{
+
+\code{v0.7.0} (Aug 25, 2022)
+}
+
 \seealso{
 The vector-formatting version of this function:
 \code{\link[=vec_fmt_duration]{vec_fmt_duration()}}.

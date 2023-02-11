@@ -24,6 +24,11 @@ since we test various sizes of the test image within that function.
 8-4
 }
 
+\section{Function Introduction}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other image addition functions: 
 \code{\link{ggplot_image}()},

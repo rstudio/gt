@@ -152,6 +152,11 @@ argument. Note here that \code{NA} values won't have the pattern applied.
 14-4
 }
 
+\section{Function Introduction}{
+
+\code{v0.7.0} (Aug 25, 2022)
+}
+
 \seealso{
 The variant function intended for formatting \strong{gt} table data:
 \code{\link[=fmt_engineering]{fmt_engineering()}}.

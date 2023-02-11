@@ -112,6 +112,11 @@ summary stub cell with with the \code{\link[=tab_style]{tab_style()}} and
 7-16
 }
 
+\section{Function Introduction}{
+
+\code{v0.3.0} (May 12, 2021)
+}
+
 \seealso{
 Other helper functions: 
 \code{\link{adjust_luminance}()},

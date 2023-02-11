@@ -190,6 +190,11 @@ engineering notation.
 3-4
 }
 
+\section{Function Introduction}{
+
+\code{v0.3.1} (August 9, 2021)
+}
+
 \seealso{
 The vector-formatting version of this function:
 \code{\link[=vec_fmt_engineering]{vec_fmt_engineering()}}.

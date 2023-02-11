@@ -63,6 +63,11 @@ can possibly be lines.
 9-9
 }
 
+\section{Function Introduction}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other table option functions: 
 \code{\link{opt_align_table_header}()},

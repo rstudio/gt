@@ -513,6 +513,9 @@
 #' @section Function ID:
 #' 3-28
 #'
+#' @section Function Introduction:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @import rlang
 #' @export
 data_color <- function(

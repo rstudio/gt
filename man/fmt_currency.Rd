@@ -291,6 +291,11 @@ columns, then, format those columns using the \code{"CNY"} and \code{"GBP"} curr
 3-8
 }
 
+\section{Function Introduction}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 The vector-formatting version of this function:
 \code{\link[=vec_fmt_currency]{vec_fmt_currency()}}.

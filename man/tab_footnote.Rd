@@ -101,6 +101,11 @@ Use \code{\link{sza}} to create a \strong{gt} table. Color the \code{sza} column
 2-7
 }
 
+\section{Function Introduction}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other part creation/modification functions: 
 \code{\link{tab_caption}()},

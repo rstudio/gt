@@ -105,6 +105,11 @@ Use \code{\link{sza}} to create a \strong{gt} table. Color the \code{sza} column
 7-17
 }
 
+\section{Function Introduction}{
+
+\code{v0.3.0} (May 12, 2021)
+}
+
 \seealso{
 Other helper functions: 
 \code{\link{adjust_luminance}()},

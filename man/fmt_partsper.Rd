@@ -235,6 +235,11 @@ format the \code{b} column as \emph{per mille} values with \code{fmt_partsper()}
 3-6
 }
 
+\section{Function Introduction}{
+
+\code{v0.6.0} (May 24, 2022)
+}
+
 \seealso{
 The vector-formatting version of this function:
 \code{\link[=vec_fmt_partsper]{vec_fmt_partsper()}}.

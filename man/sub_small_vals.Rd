@@ -167,6 +167,11 @@ omitted.
 3-24
 }
 
+\section{Function Introduction}{
+
+\code{v0.6.0} (May 24, 2022)
+}
+
 \seealso{
 Other data formatting functions: 
 \code{\link{data_color}()},

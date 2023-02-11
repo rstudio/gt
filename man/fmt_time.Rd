@@ -233,6 +233,11 @@ get the dates in Swedish.
 3-14
 }
 
+\section{Function Introduction}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 The vector-formatting version of this function: \code{\link[=vec_fmt_time]{vec_fmt_time()}}.
 

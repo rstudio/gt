@@ -248,6 +248,11 @@ get the dates in Dutch.
 3-13
 }
 
+\section{Function Introduction}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 The vector-formatting version of this function: \code{\link[=vec_fmt_date]{vec_fmt_date()}}.
 

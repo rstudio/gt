@@ -156,6 +156,11 @@ increasing total municipal population.
 3-10
 }
 
+\section{Function Introduction}{
+
+\emph{In Development}
+}
+
 \seealso{
 The vector-formatting version of this function: \code{\link[=vec_fmt_index]{vec_fmt_index()}}.
 

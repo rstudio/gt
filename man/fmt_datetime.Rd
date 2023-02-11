@@ -902,6 +902,11 @@ zone formatting. Let's provide a time zone ID (\code{"America/Vancouver"}) to th
 3-15
 }
 
+\section{Function Introduction}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 The vector-formatting version of this function:
 \code{\link[=vec_fmt_datetime]{vec_fmt_datetime()}}.

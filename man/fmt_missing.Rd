@@ -35,4 +35,9 @@ rendered table.}
 \description{
 Format missing values (deprecated)
 }
+\section{Function Introduction}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \keyword{internal}

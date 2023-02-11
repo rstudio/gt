@@ -50,6 +50,9 @@
 #' @section Function ID:
 #' 2-12
 #'
+#' @section Function Introduction:
+#' `v0.8.0` (November 16, 2022)
+#'
 #' @export
 tab_info <- function(data) {
 

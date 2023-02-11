@@ -71,6 +71,11 @@ table ID explicitly (here as \code{"one"}).
 9-12
 }
 
+\section{Function Introduction}{
+
+\code{v0.2.2} (August 5, 2020)
+}
+
 \seealso{
 Other table option functions: 
 \code{\link{opt_align_table_header}()},

@@ -63,6 +63,11 @@ the \code{cell_fill()} helper function.
 7-21
 }
 
+\section{Function Introduction}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other helper functions: 
 \code{\link{adjust_luminance}()},

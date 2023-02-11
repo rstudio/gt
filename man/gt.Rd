@@ -128,6 +128,11 @@ available in the package.
 1-1
 }
 
+\section{Function Introduction}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other table creation functions: 
 \code{\link{gt_preview}()}

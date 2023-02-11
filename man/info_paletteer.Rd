@@ -80,6 +80,11 @@ from the \strong{paletteer} package).
 10-5
 }
 
+\section{Function Introduction}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other information functions: 
 \code{\link{info_currencies}()},

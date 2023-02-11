@@ -49,6 +49,11 @@ Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header part with t
 2-9
 }
 
+\section{Function Introduction}{
+
+\code{v0.8.0} (November 16, 2022)
+}
+
 \seealso{
 Other part creation/modification functions: 
 \code{\link{tab_footnote}()},

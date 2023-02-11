@@ -52,6 +52,11 @@ new ordering in \code{groups}.
 5-3
 }
 
+\section{Function Introduction}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other row addition/modification functions: 
 \code{\link{grand_summary_rows}()},

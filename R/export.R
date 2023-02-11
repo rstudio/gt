@@ -116,6 +116,9 @@
 #' @section Function ID:
 #' 13-1
 #'
+#' @section Function Introduction:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @export
 gtsave <- function(
     data,
@@ -393,6 +396,9 @@ gtsave_filename <- function(path, filename) {
 #' @section Function ID:
 #' 13-2
 #'
+#' @section Function Introduction:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @export
 as_raw_html <- function(
     data,
@@ -492,6 +498,9 @@ as_raw_html <- function(
 #' @section Function ID:
 #' 13-3
 #'
+#' @section Function Introduction:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @export
 as_latex <- function(data) {
 
@@ -576,6 +585,9 @@ as_latex <- function(data) {
 #' @family table export functions
 #' @section Function ID:
 #' 13-4
+#'
+#' @section Function Introduction:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
 as_rtf <- function(data) {
@@ -685,6 +697,9 @@ as_rtf <- function(data) {
 #' @family table export functions
 #' @section Function ID:
 #' 13-5
+#'
+#' @section Function Introduction:
+#' `v0.7.0` (August 25, 2022)
 #'
 #' @export
 as_word <- function(
@@ -915,6 +930,9 @@ as_word_tbl_body <- function(
 #' @section Function ID:
 #' 13-6
 #'
+#' @section Function Introduction:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @export
 extract_summary <- function(data) {
 
@@ -1036,6 +1054,9 @@ extract_summary <- function(data) {
 #' @family table export functions
 #' @section Function ID:
 #' 13-7
+#'
+#' @section Function Introduction:
+#' `v0.8.0` (November 16, 2022)
 #'
 #' @export
 extract_cells <- function(

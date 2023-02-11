@@ -292,6 +292,9 @@
 #' @section Function ID:
 #' 5-1
 #'
+#' @section Function Introduction:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @export
 summary_rows <- function(
     data,
@@ -685,6 +688,9 @@ summary_rows <- function(
 #' @family row addition/modification functions
 #' @section Function ID:
 #' 5-2
+#'
+#' @section Function Introduction:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
 grand_summary_rows <- function(

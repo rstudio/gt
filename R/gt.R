@@ -101,6 +101,9 @@
 #' @section Function ID:
 #' 1-1
 #'
+#' @section Function Introduction:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @export
 gt <- function(
     data,

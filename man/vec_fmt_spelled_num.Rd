@@ -87,6 +87,11 @@ argument. Note here that \code{NA} values won't have the pattern applied.
 14-11
 }
 
+\section{Function Introduction}{
+
+\emph{In Development}
+}
+
 \seealso{
 The variant function intended for formatting \strong{gt} table data:
 \code{\link[=fmt_spelled_num]{fmt_spelled_num()}}.

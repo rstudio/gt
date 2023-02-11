@@ -143,6 +143,11 @@ column of numbers-as-words is given cell background colors via \code{\link[=data
 3-11
 }
 
+\section{Function Introduction}{
+
+\emph{In Development}
+}
+
 \seealso{
 The vector-formatting version of this function:
 \code{\link[=vec_fmt_spelled_num]{vec_fmt_spelled_num()}}.

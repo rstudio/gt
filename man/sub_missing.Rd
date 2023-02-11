@@ -111,6 +111,11 @@ columns will be given replacement text with two calls of \code{sub_missing()}.
 3-22
 }
 
+\section{Function Introduction}{
+
+\code{v0.6.0} (May 24, 2022)
+}
+
 \seealso{
 Other data formatting functions: 
 \code{\link{data_color}()},

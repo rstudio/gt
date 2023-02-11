@@ -34,6 +34,11 @@ by supplying a number code to the \code{\link[=fmt_date]{fmt_date()}} function).
 10-1
 }
 
+\section{Function Introduction}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other information functions: 
 \code{\link{info_currencies}()},

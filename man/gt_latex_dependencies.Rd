@@ -50,6 +50,11 @@ gt(exibble)
 7-26
 }
 
+\section{Function Introduction}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other helper functions: 
 \code{\link{adjust_luminance}()},

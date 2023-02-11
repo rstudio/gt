@@ -92,6 +92,11 @@ add a footnote to the title with \code{\link[=tab_footnote]{tab_footnote()}} and
 7-6
 }
 
+\section{Function Introduction}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other helper functions: 
 \code{\link{adjust_luminance}()},

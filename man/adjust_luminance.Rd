@@ -84,6 +84,11 @@ of increasingly darker palettes (with \code{\link[=data_color]{data_color()}}).
 7-23
 }
 
+\section{Function Introduction}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other helper functions: 
 \code{\link{cell_borders}()},

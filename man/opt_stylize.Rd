@@ -73,6 +73,11 @@ style (using the \code{"cyan"} color variation and style number \code{6}).
 9-1
 }
 
+\section{Function Introduction}{
+
+\code{v0.7.0} (Aug 25, 2022)
+}
+
 \seealso{
 Other table option functions: 
 \code{\link{opt_align_table_header}()},

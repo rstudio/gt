@@ -243,6 +243,11 @@ Use \code{\link{pizzaplace}} to create a \strong{gt} table. Format the \code{f_s
 3-7
 }
 
+\section{Function Introduction}{
+
+\code{v0.4.0} (February 15, 2022)
+}
+
 \seealso{
 The vector-formatting version of this function:
 \code{\link[=vec_fmt_fraction]{vec_fmt_fraction()}}.

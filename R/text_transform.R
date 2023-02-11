@@ -45,6 +45,9 @@
 #' @section Function ID:
 #' 3-27
 #'
+#' @section Function Introduction:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @export
 text_transform <- function(
     data,

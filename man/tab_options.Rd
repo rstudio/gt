@@ -595,6 +595,11 @@ Reduce the size of the title and the subtitle text.
 2-12
 }
 
+\section{Function Introduction}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other part creation/modification functions: 
 \code{\link{tab_caption}()},
