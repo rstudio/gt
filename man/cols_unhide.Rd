@@ -67,6 +67,11 @@ the \code{cols_unhide()} function becomes useful.
 4-10
 }
 
+\section{Function Introduced}{
+
+\code{v0.3.0} (May 12, 2021)
+}
+
 \seealso{
 \code{\link[=cols_hide]{cols_hide()}} to perform the inverse operation.
 

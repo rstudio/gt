@@ -72,6 +72,11 @@ transformed to all caps using \code{opt_all_caps()}.
 9-8
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other table option functions: 
 \code{\link{opt_align_table_header}()},

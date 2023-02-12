@@ -118,6 +118,11 @@ to the non-\code{NA} values.
 3-19
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other data formatting functions: 
 \code{\link{data_color}()},

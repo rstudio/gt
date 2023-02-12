@@ -90,6 +90,11 @@ function.
 8-3
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other image addition functions: 
 \code{\link{local_image}()},

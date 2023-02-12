@@ -51,6 +51,11 @@ the \code{default_fonts()} set).
 7-28
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.2} (August 5, 2020)
+}
+
 \seealso{
 Other helper functions: 
 \code{\link{adjust_luminance}()},

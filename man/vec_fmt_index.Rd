@@ -105,6 +105,11 @@ argument. Note here that \code{NA} values won't have the pattern applied.
 14-10
 }
 
+\section{Function Introduced}{
+
+\emph{In Development}
+}
+
 \seealso{
 The variant function intended for formatting \strong{gt} table data:
 \code{\link[=fmt_index]{fmt_index()}}.

@@ -64,6 +64,11 @@ have currency values in guilder (a defunct Dutch currency).
 7-19
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other helper functions: 
 \code{\link{adjust_luminance}()},

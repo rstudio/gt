@@ -62,6 +62,11 @@ be removed with the \code{rm_header()} function.
 6-1
 }
 
+\section{Function Introduced}{
+
+\code{v0.8.0} (November 16, 2022)
+}
+
 \seealso{
 Other part removal functions: 
 \code{\link{rm_caption}()},

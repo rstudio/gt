@@ -134,6 +134,11 @@ It'll just be the default set of interactive options.
 9-2
 }
 
+\section{Function Introduced}{
+
+\emph{In Development}
+}
+
 \seealso{
 Other table option functions: 
 \code{\link{opt_align_table_header}()},

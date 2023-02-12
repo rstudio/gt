@@ -166,6 +166,11 @@ argument. Note here that \code{NA} values won't have the pattern applied.
 14-12
 }
 
+\section{Function Introduced}{
+
+\code{v0.7.0} (Aug 25, 2022)
+}
+
 \seealso{
 The variant function intended for formatting \strong{gt} table data:
 \code{\link[=fmt_bytes]{fmt_bytes()}}.

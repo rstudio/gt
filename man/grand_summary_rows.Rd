@@ -285,6 +285,11 @@ row with \code{\link[=tab_style]{tab_style()}}.
 5-2
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other row addition/modification functions: 
 \code{\link{row_group_order}()},

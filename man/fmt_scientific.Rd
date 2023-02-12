@@ -203,6 +203,11 @@ partially numeric  and partially in scientific notation (using the
 3-3
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 The vector-formatting version of this function:
 \code{\link[=vec_fmt_scientific]{vec_fmt_scientific()}}.

@@ -93,6 +93,9 @@
 #' @section Function ID:
 #' 3-22
 #'
+#' @section Function Introduced:
+#' `v0.6.0` (May 24, 2022)
+#'
 #' @import rlang
 #' @export
 sub_missing <- function(
@@ -154,6 +157,9 @@ sub_missing <- function(
 #' @inheritParams fmt_number
 #' @param missing_text The text to be used in place of `NA` values in the
 #'   rendered table.
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 #' @import rlang
 #' @keywords internal
@@ -277,6 +283,9 @@ fmt_missing <- function(
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-23
+#'
+#' @section Function Introduced:
+#' `v0.6.0` (May 24, 2022)
 #'
 #' @import rlang
 #' @export
@@ -456,6 +465,9 @@ sub_zero <- function(
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-24
+#'
+#' @section Function Introduced:
+#' `v0.6.0` (May 24, 2022)
 #'
 #' @import rlang
 #' @export
@@ -706,6 +718,9 @@ sub_small_vals <- function(
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-25
+#'
+#' @section Function Introduced:
+#' `v0.6.0` (May 24, 2022)
 #'
 #' @import rlang
 #' @export
@@ -978,6 +993,9 @@ check_sub_fn_sign <- function(sign) {
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-26
+#'
+#' @section Function Introduced:
+#' `v0.8.0` (November 16, 2022)
 #'
 #' @import rlang
 #' @export
