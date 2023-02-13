@@ -103,10 +103,10 @@ Here is a glimpse at the data available in \code{towny}.
 Other datasets: 
 \code{\link{countrypops}},
 \code{\link{exibble}},
-\code{\link{gt_addv}},
-\code{\link{gt_adsl}},
 \code{\link{gtcars}},
 \code{\link{pizzaplace}},
+\code{\link{rx_addv}},
+\code{\link{rx_adsl}},
 \code{\link{sp500}},
 \code{\link{sza}}
 }

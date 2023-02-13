@@ -247,8 +247,8 @@ reference:
     - sp500
     - pizzaplace
     - exibble
-    - gt_adsl
-    - gt_addv
+    - rx_adsl
+    - rx_addv
     - towny
 
   - title: Shiny Functions

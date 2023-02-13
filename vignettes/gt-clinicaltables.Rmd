@@ -20,17 +20,17 @@ library(rlang)
 library(purrr)
 ```
 
-*gt* contains the gt_adsl dataset, which resembles the structure of a common ADSL ADaM dataset for clinical trial data. Each record refers to demographic information for a single subject on the fictional trial. Every column is equipped with a label attribute allowing the users to get familiar with the data.
+*gt* contains the rx_adsl dataset, which resembles the structure of a common ADSL ADaM dataset for clinical trial data. Each record refers to demographic information for a single subject on the fictional trial. Every column is equipped with a label attribute allowing the users to get familiar with the data.
 
 ```{r glimpse_datasets}
-gt_adsl |> str()
+rx_adsl |> str()
 ```
 
 ### Demographic Summary Tables
 
 Let's start with an example of a basic demographic summary table. In a first step, we use *dplyr* and *tidyr* to create a tibble with the shape of our desired table and then use *gt* functions to create the output table:
 
-```{r gt_demo_input}
+```{r rx_demo_input}
 custom_summary <- function(df, group_var, sum_var) {
   
   group_var <- rlang::ensym(group_var)
@@ -117,14 +117,14 @@ custom_summary <- function(df, group_var, sum_var) {
 
 adsl_summary <- purrr::map_df(
       .x = dplyr::vars(AGE, AAGEGR1, SEX, ETHNIC, BLBMI),
-      .f = \(x) custom_summary(df = dplyr::filter(gt_adsl, ITTFL == "Y"), group_var = TRTA, sum_var = !!x)
+      .f = \(x) custom_summary(df = dplyr::filter(rx_adsl, ITTFL == "Y"), group_var = TRTA, sum_var = !!x)
     )
 ```
 
 We can now start to expose our tibble with the summary of adsl variables to **gt** using `gt()`. Values should be grouped by category, with labels as rownames. In addition, we can give our table a nice title and subtitle.
 
-```{r gt_demo}
-gt_adsl_tbl <- 
+```{r rx_demo}
+rx_adsl_tbl <- 
   adsl_summary |> 
   gt(
     rowname_col = "label",
@@ -135,14 +135,14 @@ gt_adsl_tbl <-
     subtitle = "x.x.x: Demographic Characteristics - {gt} Analysis Set"
   )
 
-gt_adsl_tbl
+rx_adsl_tbl
 ```
 
 As a first step, let's try to format the columns, formatting counts, min, max and medians with `fmt_integer()`, percentages with `fmt_percent()`, and mean and sd with `fmt_number()` using 1 and 2 decimals, respectively. To get rid of all NA values, we will use `sub_missing()` and replace all NA's with an empty string.
 
-```{r gt_demo_fmt}
-gt_adsl_tbl <- 
-  gt_adsl_tbl |> 
+```{r rx_demo_fmt}
+rx_adsl_tbl <- 
+  rx_adsl_tbl |> 
   fmt_integer(
     columns = starts_with(c("val_", "min_", "max_")),
     rows = label %in% c("n", "Median", "Min - Max")
@@ -160,14 +160,14 @@ gt_adsl_tbl <-
   ) |> 
   sub_missing(missing_text = "")
 
-gt_adsl_tbl
+rx_adsl_tbl
 ```
 
 This looks way better but our table still has a rather wide style. To collapse the columns appropriately, we will use `cols_merge*()`, combining mean and SD, min and max, as well as n and percentages, respectively. Although the aggregation of mean and SD is not strictly the intended use of `cols_merge_n_pct()`, the function does a great job here.
 
-```{r gt_demo_merge}
-gt_adsl_tbl <- 
-  gt_adsl_tbl |> 
+```{r rx_demo_merge}
+rx_adsl_tbl <- 
+  rx_adsl_tbl |> 
   cols_merge_n_pct(
     col_n = "val_Placebo",
     col_pct = "pct_Placebo"
@@ -203,28 +203,28 @@ gt_adsl_tbl <-
     pattern = "{1}{2}"
   ) 
 
-gt_adsl_tbl
+rx_adsl_tbl
 ```
 
 Now that looks more like a demographic table. We can now start to look in to style features. Let us indent the values in the stub using `tab_stub_indent()` and left-align the title with `opt_align_table_header()`. 
 
 ```{r}
-gt_adsl_tbl <-
-  gt_adsl_tbl |> 
+rx_adsl_tbl <-
+  rx_adsl_tbl |> 
   tab_stub_indent(
     rows = everything(),
     indent = 5
   ) |> 
   opt_align_table_header(align = "left") 
 
-gt_adsl_tbl
+rx_adsl_tbl
 ```
 
 Let's now change the column width of our Placebo and Drug 1 columns and align all values to the center, making use of `cols_width()` and `cols_align()`.
 
-```{r gt_demo_align}
-gt_adsl_tbl <-
-  gt_adsl_tbl |> 
+```{r rx_demo_align}
+rx_adsl_tbl <-
+  rx_adsl_tbl |> 
   cols_width(
     starts_with("val_") ~ px(200),
     1 ~ px(250)
@@ -234,15 +234,15 @@ gt_adsl_tbl <-
     columns = starts_with("val_")
     )
 
-gt_adsl_tbl
+rx_adsl_tbl
 ```
 
 In a final step we can now take care of the column names and assign something more meaningful. Out column header should be the name of the study intervention together with the respective subject count. To make use of `cols_label()`'s ability to handle lists, we summarize our new column labels in a named list.
 
-```{r gt_demo_label}
+```{r rx_demo_label}
 ### Count subjects per arm and summarize values in a list
 arm_n <-
-  gt_adsl |> 
+  rx_adsl |> 
   dplyr::filter(ITTFL == "Y") |> 
   dplyr::group_by(TRTA) |> 
   dplyr::summarize(
@@ -254,11 +254,11 @@ arm_n <-
 collbl_list <- as.list(arm_n$lbl)
 names(collbl_list) <- paste0("val_", arm_n$TRTA)
 
-gt_adsl_tbl <- 
-  gt_adsl_tbl |> 
+rx_adsl_tbl <- 
+  rx_adsl_tbl |> 
   cols_label(.list = collbl_list)
 
-gt_adsl_tbl
+rx_adsl_tbl
 ```
 
 ### Response/ Event Rate Analysis Tables
@@ -267,9 +267,9 @@ In another table, we can summarize the number of subjects with an event per inte
 
 The below code performs the calculation outlined above within the subgroup defined by `AAGEGR1`, where confidence intervals around the event rates are computed using the Clopper Pearson method.
 
-```{r gt_resp_summary}
-gt_responders <- 
-  gt_adsl |> 
+```{r rx_resp_summary}
+rx_responders <- 
+  rx_adsl |> 
   dplyr::filter(ITTFL == "Y") |> 
   dplyr::group_by(TRTA, AAGEGR1) |> 
   dplyr::summarize(
@@ -334,8 +334,8 @@ gt_responders <-
 
 Let's first create a basic **gt** table with a left-aligned table title and subtitle. Here we are using `tab_header()` and `opt_align_table_header()` again.
 
-```{r gt_resp_tbl}
-gt_resp_tbl <- gt_responders |> 
+```{r rx_resp_tbl}
+rx_resp_tbl <- rx_responders |> 
   gt() |> 
   tab_header(
     title = "x.x: Efficacy Data",
@@ -343,26 +343,26 @@ gt_resp_tbl <- gt_responders |>
   ) |> 
   opt_align_table_header(align = "left")
 
-gt_resp_tbl
+rx_resp_tbl
 ```
 
 Next, we are formatting the columns for counts to integers with `fmt_integer()`, percentages and CI's around percentages as numbers with one decimal and odds ratio and the CI around the odds ratio as numbers with two decimals, in both cases using `fmt_number()`.
 
 ```{r}
-gt_resp_tbl <- 
-  gt_resp_tbl |> 
+rx_resp_tbl <- 
+  rx_resp_tbl |> 
   fmt_integer(columns = starts_with("n_")) |> 
   fmt_number(columns = starts_with(c("pct_", "ci_")), decimals = 1) |> 
   fmt_number(columns = starts_with("or"), decimals = 2) 
 
-gt_resp_tbl
+rx_resp_tbl
 ```
 
 We can now merge the columns for participants with events, total number of participants and percentage of participants with events, as well as the 95% CI's around the event rate using `cols_merge()`. To indicate the intervention group we are adding tab spanners with `tab_spanner()`. 
 
 ```{r}
-gt_resp_tbl <-
-  gt_resp_tbl |> 
+rx_resp_tbl <-
+  rx_resp_tbl |> 
   cols_merge(
     columns = c("n_resp_Placebo", "n_total_Placebo", "pct_Placebo"),
     pattern = "{1}/{2} ({3})"
@@ -392,20 +392,20 @@ gt_resp_tbl <-
     columns = c("n_resp_Placebo", "ci_low_Placebo")
   ) 
 
-gt_resp_tbl
+rx_resp_tbl
 ```
 
 The table is looking way better now. Let's now group the two categories and highlight the fact that these are actually age subgroups. We are using `tab_row_group()` to manually add a row group label *Age*.
 
 ```{r}
-gt_resp_tbl <-
-  gt_resp_tbl |> 
+rx_resp_tbl <-
+  rx_resp_tbl |> 
   tab_row_group(
     label = "Age",
     rows = everything()
   ) 
 
-gt_resp_tbl
+rx_resp_tbl
 ```
 
 Next, we'll take care of the column labels. As we now have the `tab_row_group()` label in place, we no longer need the label for the first column and can assign an empty string. Also, because of the two tab spanners, we can assign equal column labels for event rates and 95% CI's in both intervention groups.
@@ -413,8 +413,8 @@ Next, we'll take care of the column labels. As we now have the `tab_row_group()`
 Using `cols_width()` and `cols_align()` we can apply a more convenient column width and left-align the first column.
 
 ```{r}
-gt_resp_tbl <- 
-  gt_resp_tbl |> 
+rx_resp_tbl <- 
+  rx_resp_tbl |> 
   cols_align(
     align = "center",
     columns = starts_with(c("n_", "ci", "or"))
@@ -436,14 +436,14 @@ gt_resp_tbl <-
     ) |> 
   cols_align(align = "left", columns = 1) 
 
-gt_resp_tbl
+rx_resp_tbl
 ```
 
 Finally, we make use of `tab_footnote()` and can add a footnote to the columns with the 95% CI's around event rates, indicating that these were derived from the Clopper-Pearson method. To change the default symbol choice of `tab_footnote()` from numbers to letters, we add `tab_options(footnote.marks = letters)`.
 
 ```{r}
-gt_resp_tbl <-
-  gt_resp_tbl |> 
+rx_resp_tbl <-
+  rx_resp_tbl |> 
   tab_footnote(
     footnote = "Event rate 95% exact confidence interval uses the Clopper−Pearson method.",
     locations = cells_column_labels(
@@ -453,5 +453,182 @@ gt_resp_tbl <-
   ) |> 
   tab_options(footnotes.marks = letters)
 
-gt_resp_tbl
+rx_resp_tbl
 ```
+
+
+### Protocol Deviation Table
+
+For the summary table for protocol deviations (PDs) we will use a second CDISC-flavored dataset, namely `rx_addv`. This dataset contains a summary row, indicating whether a subject in the ITT population in `rx_adsl` experienced at least one major PD or not. In addition to the subject level summary, individual PDs are summarized.
+
+```{r glimpse_addv}
+rx_addv |> str()
+```
+
+We would now like to build a table to summarize overall and counts of individual PDs by treatment arm and furthermore indicate, whether the PD was related to COVID-19 or not. In order to build this table, we first need to apply some data wrangling with `dplyr` and `tidyr`.
+
+```{r addv_datawrangling}
+addv_sum <- rx_addv |> 
+  dplyr::group_by(TRTA) |> 
+  dplyr::mutate(
+    NTOT = n_distinct(USUBJID),
+    .groups = "drop"
+  ) |> 
+  dplyr::group_by(TRTA, PARCAT1, PARAM, CRIT1FL) |> 
+  dplyr::summarize(
+    n = sum(AVAL, na.rm = TRUE),
+    pct = 100*sum(AVAL, na.rm = TRUE)/mean(NTOT),
+    .groups = "drop"
+  ) |> 
+  tidyr::pivot_wider(id_cols = c(PARCAT1, PARAM), names_from = c(TRTA, CRIT1FL), values_from = c(n, pct)) |> 
+  dplyr::mutate(across(where(is.numeric), ~ifelse(is.na(.), 0, .))) |> 
+  dplyr::add_row(PARAM = "Subjects with at least:", .before = 1)
+
+addv_sum
+```
+
+This is the dataset that serves as a starting point for `gt`. We will start by exposing the dataset to `gt` and add our usual headers and footers.
+
+```{r addv_gtstart}
+addv_tbl <- addv_sum |> 
+  gt(
+    rowname_col = "PARAM"
+  ) |> 
+  tab_header(
+    title = "xx.x: Demographic and Baseline Data",
+    subtitle = "xx.x.x: Major Protocol Deviations and Relationship to COVID-19 - ITT Set"
+  ) |> 
+  opt_align_table_header(align = "left")
+
+addv_tbl
+```
+
+In a next step, we would like to create a summary row for all individual PDs to get the overall number of individual PDs, as well as the corresponding percentage. For this, we will first create a row group for individual PDs using `tab_row_group()` applied to all rows where `PARCAT1` is equal to `PROTOCOL DEVIATIONS`. Then, we'll arrange the order of the row groups to list individual PDs after the overall summary. Finally, we can create a summary row, using `summary_rows()` and `gt` sums up all columns with n's and percentages for us (other summary functions are possible, but `fn = 'sum'` does the job for us).
+
+```{r addv_summaryrow}
+addv_tbl <- addv_tbl |> 
+  tab_row_group(
+    label = " ",
+    rows = PARCAT1 == "PROTOCOL DEVIATION"
+  ) |> 
+  row_group_order(groups = c(NA, " ")) |>
+  summary_rows(
+    groups = " ",
+    columns = where(is.numeric),
+    fns = list(label = "Study Procedure Deviations", fn = "sum"),
+    side = "top"
+  )
+
+addv_tbl
+```
+
+We only kept the column `PARCAT1` to facilitate the generation of the row group. We can hide this column now using `cols_hide()`:
+
+```{r rx_dropparcat1}
+addv_tbl <- addv_tbl |> 
+  cols_hide(columns = "PARCAT1")
+
+addv_tbl
+```
+
+Now that the table has roughly the right shape, we can start to format all numeric columns and merge columns for n's and percentages by intervention group and COVID-19 relationship flag.
+
+```{r}
+addv_tbl <- addv_tbl |> 
+  sub_missing(
+    rows = 1,
+    missing_text = ""
+  ) |> 
+  fmt_number(
+    columns = starts_with("pct"),
+    decimals = 1
+  ) |> 
+  cols_merge_n_pct(
+    col_n = "n_Placebo_Y",
+    col_pct = "pct_Placebo_Y"
+  ) |> 
+  cols_merge_n_pct(
+    col_n = "n_Placebo_N",
+    col_pct = "pct_Placebo_N"
+  ) |> 
+  cols_merge_n_pct(
+    col_n = "n_Drug 1_Y",
+    col_pct = "pct_Drug 1_Y"
+  ) |> 
+  cols_merge_n_pct(
+    col_n = "n_Drug 1_N",
+    col_pct = "pct_Drug 1_N"
+  )
+
+addv_tbl
+```
+
+This looks more like a PD table! We can now modify the column names and create a cascade of column spanners.
+
+```{r addv_colspan}
+addv_tbl <- addv_tbl |> 
+  tab_spanner(
+    label = md("COVID-19 Related"),
+    columns = c("n_Placebo_Y", "n_Placebo_N"),
+    id = "cov_pla"
+  ) |> 
+  tab_spanner(
+    label = md("COVID-19 Related"),
+    columns = c("n_Drug 1_Y", "n_Drug 1_N"),
+    id = "cov_dru"
+  ) |> 
+  tab_spanner(
+    label = md("Placebo  \n  N=90 (100%)  \n   n (%)"),
+    columns = c("n_Placebo_Y", "n_Placebo_N")
+  ) |> 
+  tab_spanner(
+    label = md("Drug 1  \n  N=90 (100%)  \n   n (%)"),
+    columns = c("n_Drug 1_Y", "n_Drug 1_N")
+  ) |> 
+  cols_label(
+    .list = list(
+      "n_Placebo_Y" = "Yes",
+      "n_Placebo_N" = "No",
+      "n_Drug 1_Y" = "Yes",
+      "n_Drug 1_N" = "No"
+    )
+  ) |> 
+  tab_style(
+    style = cell_text(align = "center"),
+    locations = cells_column_spanners(spanners = everything())
+  )
+
+addv_tbl
+```
+
+We can now add a footnote, indicating that subjects can have more than one PD during the course of the study. The footnote is added with `tab_footnote()` to the row `At least one major Protocol Deviation`.
+
+```{r addv_footnote}
+addv_tbl <- addv_tbl |> 
+  tab_footnote(
+    footnote = "Subjects can have more than one Protocol Deviation throughout the study.",
+    locations = cells_stub(rows = c("At least one major Protocol Deviation")),
+    placement = "right"
+  )
+
+addv_tbl
+```
+
+Finally, we can style the table, indenting the individual PDs under `Study Procedure Deviations`, left-aligning the first column and centering all other columns. Note that for the indentation, we can still use the hidden column `PARCAT1` to identify individual PDs.
+
+```{r}
+addv_tbl |> 
+  cols_align(
+    align = "center",
+    columns = 3:6
+  ) |> 
+  cols_align(
+    align = "left",
+    columns = 1:2
+  ) |> 
+  tab_stub_indent(
+    rows = PARCAT1 == "PROTOCOL DEVIATION",
+    indent = 5
+  )
+```
+

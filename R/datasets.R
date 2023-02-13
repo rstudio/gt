@@ -405,17 +405,17 @@
 #'
 #' @section Examples:
 #'
-#' Here is the `gt_adsl`.
+#' Here is the `rx_adsl`.
 #'
 #' ```{r}
-#' gt_adsl
+#' rx_adsl
 #' ```
 #'
 #' @family datasets
 #' @section Function ID:
 #' 11-7
 #'
-"gt_adsl"
+"rx_adsl"
 
 #' An ADDV-flavored clinical trial toy dataset
 #'
@@ -472,17 +472,17 @@
 #'
 #' @section Examples:
 #'
-#' Here is the `gt_addv`.
+#' Here is the `rx_addv`.
 #'
 #' ```{r}
-#' gt_addv
+#' rx_addv
 #' ```
 #'
 #' @family datasets
 #' @section Function ID:
 #' 11-7
 #'
-"gt_addv"
+"rx_addv"
 
 #' Populations of all municipalities in Ontario from 1996 to 2021
 #'
