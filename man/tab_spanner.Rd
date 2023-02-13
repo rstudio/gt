@@ -91,6 +91,11 @@ column with the label \code{"performance"}.
 2-2
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other part creation/modification functions: 
 \code{\link{tab_caption}()},

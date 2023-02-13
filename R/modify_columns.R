@@ -53,6 +53,9 @@
 #' @section Function ID:
 #' 4-1
 #'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @export
 cols_align <- function(
     data,
@@ -206,6 +209,9 @@ determine_which_character_number <- function(
 #' @family column modification functions
 #' @section Function ID:
 #' 4-2
+#'
+#' @section Function Introduced:
+#' `v0.8.0` (November 16, 2022)
 #'
 #' @import rlang
 #' @export
@@ -429,6 +435,9 @@ align_to_char <- function(x, align_at = ".") {
 #' @section Function ID:
 #' 4-3
 #'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @export
 cols_width <- function(
     .data,
@@ -604,6 +613,9 @@ cols_width <- function(
 #' @family column modification functions
 #' @section Function ID:
 #' 4-4
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 #' @import rlang
 #' @export
@@ -922,6 +934,9 @@ cols_label_with <- function(
 #' @section Function ID:
 #' 4-6
 #'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @import rlang
 #' @export
 cols_move <- function(
@@ -1055,6 +1070,9 @@ cols_move <- function(
 #' @section Function ID:
 #' 4-7
 #'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @import rlang
 #' @export
 cols_move_to_start <- function(
@@ -1160,6 +1178,9 @@ cols_move_to_start <- function(
 #' @family column modification functions
 #' @section Function ID:
 #' 4-8
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 #' @import rlang
 #' @export
@@ -1277,6 +1298,9 @@ cols_move_to_end <- function(
 #' @section Function ID:
 #' 4-9
 #'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @seealso [cols_unhide()] to perform the inverse operation.
 #'
 #' @import rlang
@@ -1376,6 +1400,9 @@ cols_hide <- function(
 #' @family column modification functions
 #' @section Function ID:
 #' 4-10
+#'
+#' @section Function Introduced:
+#' `v0.3.0` (May 12, 2021)
 #'
 #' @seealso [cols_hide()] to perform the inverse operation.
 #'
@@ -1562,6 +1589,9 @@ cols_unhide <- function(
 #' @section Function ID:
 #' 4-11
 #'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @import rlang
 #' @export
 cols_merge <- function(
@@ -1743,6 +1773,9 @@ cols_merge <- function(
 #' @section Function ID:
 #' 4-12
 #'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @import rlang
 #' @export
 cols_merge_uncert <- function(
@@ -1887,6 +1920,9 @@ cols_merge_uncert <- function(
 #' @family column modification functions
 #' @section Function ID:
 #' 4-13
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 #' @import rlang
 #' @export
@@ -2083,6 +2119,9 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #' @family column modification functions
 #' @section Function ID:
 #' 4-14
+#'
+#' @section Function Introduced:
+#' `v0.3.0` (May 12, 2021)
 #'
 #' @import rlang
 #' @export

@@ -46,6 +46,11 @@ source note to the table footer that cites the data source.
 2-8
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other part creation/modification functions: 
 \code{\link{tab_caption}()},

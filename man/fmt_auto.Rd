@@ -140,6 +140,11 @@ instead of scientific notation with the \code{lg_num_pref = "suf"} option.
 3-20
 }
 
+\section{Function Introduced}{
+
+\emph{In Development}
+}
+
 \seealso{
 Other data formatting functions: 
 \code{\link{data_color}()},

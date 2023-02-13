@@ -107,6 +107,11 @@ with the \code{\link[=summary_rows]{summary_rows()}} function and then add a foo
 7-10
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other helper functions: 
 \code{\link{adjust_luminance}()},

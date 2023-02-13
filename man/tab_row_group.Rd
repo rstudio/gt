@@ -98,6 +98,11 @@ provided to the \code{rows} argument).
 2-4
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other part creation/modification functions: 
 \code{\link{tab_caption}()},

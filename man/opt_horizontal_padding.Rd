@@ -71,6 +71,11 @@ Expand the horizontal padding across the entire table with
 9-7
 }
 
+\section{Function Introduced}{
+
+\code{v0.4.0} (February 15, 2022)
+}
+
 \seealso{
 Other table option functions: 
 \code{\link{opt_align_table_header}()},

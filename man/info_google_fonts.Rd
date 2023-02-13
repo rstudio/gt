@@ -39,6 +39,11 @@ Get a table of info on some of the recommended \emph{Google Fonts} for tables.
 10-6
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.2} (August 5, 2020)
+}
+
 \seealso{
 Other information functions: 
 \code{\link{info_currencies}()},

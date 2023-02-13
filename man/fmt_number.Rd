@@ -254,6 +254,11 @@ large-number suffixing with the \code{suffixing = TRUE} option.
 3-1
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 The \code{\link[=fmt_integer]{fmt_integer()}} function might be more useful if you really need
 to format numeric values to appear as integers (i.e., no decimals will be

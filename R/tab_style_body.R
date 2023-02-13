@@ -209,6 +209,9 @@
 #' @section Function ID:
 #' 2-11
 #'
+#' @section Function Introduced:
+#' `v0.8.0` (November 16, 2022)
+#'
 #' @export
 tab_style_body <- function(
   data,

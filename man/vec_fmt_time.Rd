@@ -153,6 +153,11 @@ applied.
 14-14
 }
 
+\section{Function Introduced}{
+
+\code{v0.7.0} (Aug 25, 2022)
+}
+
 \seealso{
 The variant function intended for formatting \strong{gt} table data:
 \code{\link[=fmt_time]{fmt_time()}}.

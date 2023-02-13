@@ -65,6 +65,11 @@ used with \code{\link[=fmt_currency]{fmt_currency()}}.
 10-3
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other information functions: 
 \code{\link{info_date_style}()},

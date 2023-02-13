@@ -121,6 +121,11 @@ With the \code{.docx} extension, we'll get a word/docx document.
 13-1
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other table export functions: 
 \code{\link{as_latex}()},

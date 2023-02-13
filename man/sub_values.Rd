@@ -184,6 +184,11 @@ that vector must match the length of \code{x}).
 3-26
 }
 
+\section{Function Introduced}{
+
+\code{v0.8.0} (November 16, 2022)
+}
+
 \seealso{
 Other data formatting functions: 
 \code{\link{data_color}()},
