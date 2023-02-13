@@ -21,6 +21,11 @@ value argument of variable length (the default is 10 letters).
 7-24
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other helper functions: 
 \code{\link{adjust_luminance}()},

@@ -60,6 +60,11 @@ formatted vector of column values from the \code{num} column.
 3-27
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other data formatting functions: 
 \code{\link{data_color}()},

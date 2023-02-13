@@ -71,6 +71,11 @@ could remedy this and align the numbers by the decimal mark with
 4-2
 }
 
+\section{Function Introduced}{
+
+\code{v0.8.0} (November 16, 2022)
+}
+
 \seealso{
 Other column modification functions: 
 \code{\link{cols_align}()},

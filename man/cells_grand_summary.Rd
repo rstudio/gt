@@ -131,6 +131,11 @@ summary cell with with \code{\link[=tab_style]{tab_style()}} and \code{cells_gra
 7-14
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other helper functions: 
 \code{\link{adjust_luminance}()},

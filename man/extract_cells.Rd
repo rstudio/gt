@@ -85,6 +85,11 @@ extraction.
 13-7
 }
 
+\section{Function Introduced}{
+
+\code{v0.8.0} (November 16, 2022)
+}
+
 \seealso{
 Other table export functions: 
 \code{\link{as_latex}()},

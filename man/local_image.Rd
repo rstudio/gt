@@ -71,6 +71,11 @@ various sizes.
 8-2
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other image addition functions: 
 \code{\link{ggplot_image}()},

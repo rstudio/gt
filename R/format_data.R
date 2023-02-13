@@ -208,6 +208,9 @@
 #' @section Function ID:
 #' 3-1
 #'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @seealso The [fmt_integer()] function might be more useful if you really need
 #'   to format numeric values to appear as integers (i.e., no decimals will be
 #'   shown and input values are rounded as necessary). Need to do numeric
@@ -476,6 +479,9 @@ fmt_number <- function(
 #' @section Function ID:
 #' 3-2
 #'
+#' @section Function Introduced:
+#' `v0.3.1` (August 9, 2021)
+#'
 #' @seealso The [fmt_number()] function might be more of what you need if you'd
 #'   like decimal values in your outputs. Need to do integer-based formatting on
 #'   a vector? Take a look at the vector-formatting version of this function:
@@ -652,6 +658,9 @@ fmt_integer <- function(
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-3
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_scientific()].
@@ -1004,6 +1013,9 @@ fmt_scientific <- function(
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-4
+#'
+#' @section Function Introduced:
+#' `v0.3.1` (August 9, 2021)
 #'
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_engineering()].
@@ -1509,6 +1521,9 @@ fmt_symbol <- function(
 #' @section Function ID:
 #' 3-5
 #'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @seealso The vector-formatting version of this function: [vec_fmt_percent()].
 #'
 #' @import rlang
@@ -1734,6 +1749,9 @@ fmt_percent <- function(
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-6
+#'
+#' @section Function Introduced:
+#' `v0.6.0` (May 24, 2022)
 #'
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_partsper()].
@@ -2040,6 +2058,9 @@ fmt_partsper <- function(
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-7
+#'
+#' @section Function Introduced:
+#' `v0.4.0` (February 15, 2022)
 #'
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_fraction()].
@@ -2571,6 +2592,9 @@ round_gt <- function(x, digits = 0) {
 #' @section Function ID:
 #' 3-8
 #'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_currency()].
 #'
@@ -2743,6 +2767,9 @@ fmt_currency <- function(
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-9
+#'
+#' @section Function Introduced:
+#' `v0.8.0` (November 16, 2022)
 #'
 #' @seealso The vector-formatting version of this function: [vec_fmt_roman()].
 #'
@@ -2938,6 +2965,9 @@ fmt_roman <- function(
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-10
+#'
+#' @section Function Introduced:
+#' *In Development*
 #'
 #' @seealso The vector-formatting version of this function: [vec_fmt_index()].
 #'
@@ -3192,6 +3222,9 @@ get_letters_from_div <- function(x, set) {
 #' @section Function ID:
 #' 3-11
 #'
+#' @section Function Introduced:
+#' *In Development*
+#'
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_spelled_num()].
 #'
@@ -3421,6 +3454,9 @@ fmt_spelled_num <- function(
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-12
+#'
+#' @section Function Introduced:
+#' `v0.3.0` (May 12, 2021)
 #'
 #' @seealso The vector-formatting version of this function: [vec_fmt_bytes()].
 #'
@@ -3756,6 +3792,9 @@ fmt_bytes <- function(
 #' @section Function ID:
 #' 3-13
 #'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @seealso The vector-formatting version of this function: [vec_fmt_date()].
 #'
 #' @import rlang
@@ -4023,6 +4062,9 @@ fmt_date <- function(
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-14
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 #' @seealso The vector-formatting version of this function: [vec_fmt_time()].
 #'
@@ -4902,6 +4944,9 @@ fmt_time <- function(
 #' @section Function ID:
 #' 3-15
 #'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_datetime()].
 #'
@@ -5246,6 +5291,9 @@ fmt_datetime <- function(
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-16
+#'
+#' @section Function Introduced:
+#' `v0.7.0` (Aug 25, 2022)
 #'
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_duration()].
@@ -6126,6 +6174,9 @@ extract_duration_pattern <- function(
 #' @section Function ID:
 #' 3-17
 #'
+#' @section Function Introduced:
+#' *In Development*
+#'
 #' @seealso The vector-formatting version of this function.
 #'
 #' @import rlang
@@ -6384,6 +6435,9 @@ fmt_url <- function(
 #' @section Function ID:
 #' 3-18
 #'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_markdown()].
 #'
@@ -6514,6 +6568,9 @@ fmt_markdown <- function(
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-19
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 #' @import rlang
 #' @export
@@ -6707,6 +6764,9 @@ fmt_passthrough <- function(
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-20
+#'
+#' @section Function Introduced:
+#' *In Development*
 #'
 #' @export
 fmt_auto <- function(
@@ -7010,6 +7070,9 @@ fmt_auto <- function(
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-21
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 #' @import rlang
 #' @export

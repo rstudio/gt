@@ -111,6 +111,11 @@ and five times in the subtitle.
 8-1
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other image addition functions: 
 \code{\link{ggplot_image}()},

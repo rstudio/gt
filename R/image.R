@@ -104,6 +104,9 @@
 #' @section Function ID:
 #' 8-1
 #'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @export
 web_image <- function(
     url,
@@ -179,6 +182,9 @@ web_image <- function(
 #' @family image addition functions
 #' @section Function ID:
 #' 8-2
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
 local_image <- function(
@@ -282,7 +288,9 @@ local_image <- function(
 #' @section Function ID:
 #' 8-3
 #'
-#' @importFrom ggplot2 ggsave
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @export
 ggplot_image <- function(
     plot_object,
@@ -342,6 +350,9 @@ ggplot_image <- function(
 #' @family image addition functions
 #' @section Function ID:
 #' 8-4
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
 test_image <- function(type = c("png", "svg")) {

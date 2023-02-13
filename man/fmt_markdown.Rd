@@ -131,6 +131,11 @@ then, create a \strong{gt} table and format all columns with \code{fmt_markdown(
 3-18
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 The vector-formatting version of this function:
 \code{\link[=vec_fmt_markdown]{vec_fmt_markdown()}}.

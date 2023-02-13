@@ -106,6 +106,11 @@ function.
 4-13
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other column modification functions: 
 \code{\link{cols_align_decimal}()},

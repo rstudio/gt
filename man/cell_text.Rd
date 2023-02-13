@@ -118,6 +118,11 @@ the \code{cell_text()} helper function.
 7-20
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other helper functions: 
 \code{\link{adjust_luminance}()},

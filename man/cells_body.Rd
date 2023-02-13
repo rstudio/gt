@@ -125,6 +125,11 @@ data cell with \code{\link[=tab_footnote]{tab_footnote()}}, using \code{cells_bo
 7-12
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other helper functions: 
 \code{\link{adjust_luminance}()},

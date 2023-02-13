@@ -143,6 +143,11 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Replace missing values 
 2-10
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 \code{\link[=cell_text]{cell_text()}}, \code{\link[=cell_fill]{cell_fill()}}, and \code{\link[=cell_borders]{cell_borders()}} as helpers for
 defining custom styles and \code{\link[=cells_body]{cells_body()}} as one of many useful helper

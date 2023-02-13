@@ -80,6 +80,11 @@ statements has no effect.
 4-9
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 \code{\link[=cols_unhide]{cols_unhide()}} to perform the inverse operation.
 

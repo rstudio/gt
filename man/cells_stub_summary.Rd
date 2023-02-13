@@ -131,6 +131,11 @@ data stub cells with \code{\link[=tab_style]{tab_style()}} and \code{cells_stub_
 7-15
 }
 
+\section{Function Introduced}{
+
+\code{v0.3.0} (May 12, 2021)
+}
+
 \seealso{
 Other helper functions: 
 \code{\link{adjust_luminance}()},

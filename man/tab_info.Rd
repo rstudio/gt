@@ -59,6 +59,11 @@ gt_tbl |> tab_info()
 2-12
 }
 
+\section{Function Introduced}{
+
+\code{v0.8.0} (November 16, 2022)
+}
+
 \seealso{
 Other part creation/modification functions: 
 \code{\link{tab_caption}()},
