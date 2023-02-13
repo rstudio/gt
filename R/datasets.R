@@ -354,6 +354,73 @@
 #'
 "exibble"
 
+#' Populations of all municipalities in Ontario from 1996 to 2021
+#'
+#' @description
+#'
+#' A dataset containing census population data from six census years (1996 to
+#' 2021) for all 414 of Ontario's local municipalities. The Municipal Act of
+#' Ontario (2001) defines a local municipality as "a single-tier municipality or
+#' a lower-tier municipality". There are 173 single-tier municipalities and 241
+#' lower-tier municipalities representing 99 percent of Ontario's population
+#' and 17 percent of its land use.
+#'
+#' In the `towny` dataset we include information specific to each municipality
+#' such as location (in the `latitude` and `longitude` columns), their website
+#' URLs, their classifications, and land area sizes according to 2021
+#' boundaries. Additionally, there are computed columns containing population
+#' density values for each census year and population change values from
+#' adjacent census years.
+#'
+#' @format A tibble with 414 rows and 25 variables:
+#' \describe{
+#' \item{name}{The name of the municipality.}
+#' \item{website}{The website for the municipality. This is `NA` if there isn't
+#' an official site.}
+#' \item{status}{The status of the municipality. This is either `"lower-tier"`
+#' or `"single-tier"`. A single-tier municipality, which takes on all municipal
+#' duties outlined in the Municipal Act and other Provincial laws, is
+#' independent of an upper-tier municipality. Part of an upper-tier municipality
+#' is a lower-tier municipality. The upper-tier and lower-tier municipalities
+#' are responsible for carrying out the duties laid out in the Municipal Act and
+#' other provincial laws.}
+#' \item{csd_type}{The Census Subdivision Type. This can be one of `"village"`,
+#' `"town"`, `"township"`, `"municipality"`, or `"city"`.}
+#' \item{census_div}{The Census division, of which there are 49. This is made up
+#' of single-tier municipalities, regional municipalities, counties, and
+#' districts.}
+#' \item{latitude, longitude}{The location of the municipality, given as
+#' latitude and longitude values in decimal degrees.}
+#' \item{land_area_km2}{The total area of the local municipality in square
+#' kilometers.}
+#' \item{population_1996, population_2001, population_2006, population_2011,
+#' population_2016, population_2021}{
+#' Population values for each municipality from the 1996 to 2021 census years.}
+#' \item{density_1996, density_2001, density_2006, density_2011, density_2016,
+#' density_2021}{
+#' Population density values, calculated as persons per square kilometer, for
+#' each municipality from the 1996 to 2021 census years.}
+#' \item{pop_change_1996_2001_pct, pop_change_2001_2006_pct,
+#' pop_change_2006_2011_pct, pop_change_2011_2016_pct,
+#' pop_change_2016_2021_pct}{
+#' Population changes between adjacent pairs of census years, from 1996 to
+#' 2021.}
+#' }
+#'
+#' @section Examples:
+#'
+#' Here is a glimpse at the data available in `towny`.
+#'
+#' ```{r}
+#' dplyr::glimpse(towny)
+#' ```
+#'
+#' @family datasets
+#' @section Function ID:
+#' 11-7
+#'
+"towny"
+
 #' An ADSL-flavored clinical trial toy dataset
 #'
 #' @description
@@ -413,7 +480,7 @@
 #'
 #' @family datasets
 #' @section Function ID:
-#' 11-7
+#' 11-8
 #'
 "rx_adsl"
 
@@ -480,73 +547,6 @@
 #'
 #' @family datasets
 #' @section Function ID:
-#' 11-7
+#' 11-9
 #'
 "rx_addv"
-
-#' Populations of all municipalities in Ontario from 1996 to 2021
-#'
-#' @description
-#'
-#' A dataset containing census population data from six census years (1996 to
-#' 2021) for all 414 of Ontario's local municipalities. The Municipal Act of
-#' Ontario (2001) defines a local municipality as "a single-tier municipality or
-#' a lower-tier municipality". There are 173 single-tier municipalities and 241
-#' lower-tier municipalities representing 99 percent of Ontario's population
-#' and 17 percent of its land use.
-#'
-#' In the `towny` dataset we include information specific to each municipality
-#' such as location (in the `latitude` and `longitude` columns), their website
-#' URLs, their classifications, and land area sizes according to 2021
-#' boundaries. Additionally, there are computed columns containing population
-#' density values for each census year and population change values from
-#' adjacent census years.
-#'
-#' @format A tibble with 414 rows and 25 variables:
-#' \describe{
-#' \item{name}{The name of the municipality.}
-#' \item{website}{The website for the municipality. This is `NA` if there isn't
-#' an official site.}
-#' \item{status}{The status of the municipality. This is either `"lower-tier"`
-#' or `"single-tier"`. A single-tier municipality, which takes on all municipal
-#' duties outlined in the Municipal Act and other Provincial laws, is
-#' independent of an upper-tier municipality. Part of an upper-tier municipality
-#' is a lower-tier municipality. The upper-tier and lower-tier municipalities
-#' are responsible for carrying out the duties laid out in the Municipal Act and
-#' other provincial laws.}
-#' \item{csd_type}{The Census Subdivision Type. This can be one of `"village"`,
-#' `"town"`, `"township"`, `"municipality"`, or `"city"`.}
-#' \item{census_div}{The Census division, of which there are 49. This is made up
-#' of single-tier municipalities, regional municipalities, counties, and
-#' districts.}
-#' \item{latitude, longitude}{The location of the municipality, given as
-#' latitude and longitude values in decimal degrees.}
-#' \item{land_area_km2}{The total area of the local municipality in square
-#' kilometers.}
-#' \item{population_1996, population_2001, population_2006, population_2011,
-#' population_2016, population_2021}{
-#' Population values for each municipality from the 1996 to 2021 census years.}
-#' \item{density_1996, density_2001, density_2006, density_2011, density_2016,
-#' density_2021}{
-#' Population density values, calculated as persons per square kilometer, for
-#' each municipality from the 1996 to 2021 census years.}
-#' \item{pop_change_1996_2001_pct, pop_change_2001_2006_pct,
-#' pop_change_2006_2011_pct, pop_change_2011_2016_pct,
-#' pop_change_2016_2021_pct}{
-#' Population changes between adjacent pairs of census years, from 1996 to
-#' 2021.}
-#' }
-#'
-#' @section Examples:
-#'
-#' Here is a glimpse at the data available in `towny`.
-#'
-#' ```{r}
-#' dplyr::glimpse(towny)
-#' ```
-#'
-#' @family datasets
-#' @section Function ID:
-#' 11-8
-#'
-"towny"
