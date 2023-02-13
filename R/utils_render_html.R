@@ -676,14 +676,14 @@ create_columns_component_h <- function(data) {
 
       table_col_headings <-
         htmltools::tagList(
-          htmltools::tags$tr(level_1_spanners),
+          htmltools::tags$tr(class = "gt_spanner_row", level_1_spanners),
           htmltools::tags$tr(spanned_column_labels)
         )
 
     } else {
 
       # Create the `table_col_headings` HTML component
-      table_col_headings <- htmltools::tags$tr(level_1_spanners)
+      table_col_headings <- htmltools::tags$tr(class = "gt_spanner_row", level_1_spanners)
     }
   }
 
@@ -774,7 +774,7 @@ create_columns_component_h <- function(data) {
       higher_spanner_rows <-
         htmltools::tagList(
           higher_spanner_rows,
-          htmltools::tagList(htmltools::tags$tr(level_i_spanners))
+          htmltools::tagList(htmltools::tags$tr(class = "gt_spanner_row", level_i_spanners))
         )
     }
 
