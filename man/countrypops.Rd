@@ -52,9 +52,10 @@ Here is a glimpse at the data available in \code{countrypops}.
 \seealso{
 Other datasets: 
 \code{\link{exibble}},
-\code{\link{gt_adsl}},
 \code{\link{gtcars}},
 \code{\link{pizzaplace}},
+\code{\link{rx_addv}},
+\code{\link{rx_adsl}},
 \code{\link{sp500}},
 \code{\link{sza}},
 \code{\link{towny}}
