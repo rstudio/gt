@@ -262,9 +262,6 @@
     <loc>https://gt.rstudio.com/dev/reference/gt.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/dev/reference/gt_adsl.html</loc>
-  </url>
-  <url>
     <loc>https://gt.rstudio.com/dev/reference/gt_latex_dependencies.html</loc>
   </url>
   <url>
@@ -392,6 +389,12 @@
   </url>
   <url>
     <loc>https://gt.rstudio.com/dev/reference/row_group_order.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/rx_addv.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/rx_adsl.html</loc>
   </url>
   <url>
     <loc>https://gt.rstudio.com/dev/reference/sp500.html</loc>
