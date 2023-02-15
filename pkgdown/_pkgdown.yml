@@ -245,9 +245,11 @@ reference:
     - render_gt
     - gt_output
 
-  - title: Multiple Tables
+  - title: Managing Multiple Tables
     contents:
     - gt_multi
+    - multi_extract_tbl
+    - multi_options
 
   - title: Export Functions
     desc: >
