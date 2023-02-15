@@ -1,7 +1,8 @@
 #' @export
 gt_multi <- function(
     data = NULL,
-    index = NULL
+    index = NULL,
+    options = NULL
 ) {
 
   # Initialize the `gt_multi` object
@@ -63,29 +64,109 @@ generate_gt_tbl_tbl_0 <- function() {
     dplyr::tibble(
       i = NA_integer_,
       gt_tbl = list(),
-      rows = NA_integer_,
-      columns = NA_integer_,
-      summary_rows = NA_integer_,
-      grand_summary_rows = NA_integer_,
-      groups = NA_integer_,
+      column_names = list(),
+      n_columns_total = NA_integer_,
+      n_columns_data = NA_integer_,
+      n_columns_stub = NA_integer_,
+      n_rows_data = NA_integer_,
+      n_summary_rows_total = NA_integer_,
+      n_summary_rows_group = NA_integer_,
+      n_summary_rows_grand = NA_integer_,
+      n_groups_summary_rows_total = NA_integer_,
+      n_groups_summary_rows_group = NA_integer_,
+      n_groups_summary_rows_grand = NA_integer_,
+      n_groups = NA_integer_,
       active = NA
     )[0, ]
 }
 
 generate_gt_tbl_tbl_i <- function(i, gt_tbl, active = TRUE) {
 
-  # gt_tbl_built <- build_data(data = gt_tbl, context = "html")
-
-  # TODO: get metadata for counts of rows, columns, summary rows, etc.
+  gt_tbl_info_list <- generate_gt_tbl_info_list(gt_tbl = gt_tbl)
 
   dplyr::tibble(
     i = i,
     gt_tbl = list(gt_tbl),
-    rows = NA_integer_,
-    columns = NA_integer_,
-    summary_rows = NA_integer_,
-    grand_summary_rows = NA_integer_,
-    groups = NA_integer_,
+    column_names = list(gt_tbl_info_list$column_names),
+    n_columns_total = gt_tbl_info_list$n_columns_total,
+    n_columns_data = gt_tbl_info_list$n_columns_data,
+    n_columns_stub = gt_tbl_info_list$n_columns_stub,
+    n_rows_data = gt_tbl_info_list$n_rows_data,
+    n_summary_rows_total = gt_tbl_info_list$n_summary_rows_total,
+    n_summary_rows_group = gt_tbl_info_list$n_summary_rows_group,
+    n_summary_rows_grand = gt_tbl_info_list$n_summary_rows_grand,
+    n_groups_summary_rows_total = gt_tbl_info_list$n_groups_summary_rows_total,
+    n_groups_summary_rows_group = gt_tbl_info_list$n_groups_summary_rows_group,
+    n_groups_summary_rows_grand = gt_tbl_info_list$n_groups_summary_rows_grand,
+    n_groups = gt_tbl_info_list$n_groups,
     active = active
+  )
+}
+
+generate_gt_tbl_info_list <- function(gt_tbl) {
+
+  gt_tbl_built <- build_data(data = gt_tbl, context = "html")
+
+  column_names <- dt_boxhead_get_vars_default(data = gt_tbl_built)
+
+  # Get various column number counts
+  n_columns_total <- get_effective_number_of_columns(data = gt_tbl_built)
+  n_columns_data <- get_number_of_visible_data_columns(data = gt_tbl_built)
+  n_columns_stub <- n_columns_total - n_columns_data
+
+  # Get various row number counts
+  n_rows_data <- nrow(gt_tbl_built[["_stub_df"]])
+
+  if (dt_summary_exists(data = gt_tbl_built)) {
+
+    summary_list <- gt_tbl_built[["_summary_build"]][["summary_df_display_list"]]
+
+    n_groups_summary_rows_total <- length(summary_list)
+
+    n_summary_rows_total <-
+      sum(
+        vapply(
+          summary_list,
+          FUN.VALUE = integer(1),
+          FUN = function(x) nrow(x))
+      )
+
+    if (!is.null(summary_list[["::GRAND_SUMMARY"]])) {
+      n_summary_rows_grand <- nrow(summary_list[["::GRAND_SUMMARY"]])
+      n_groups_summary_rows_grand <- 1L
+    } else {
+      n_summary_rows_grand <- 0L
+      n_groups_summary_rows_grand <- 0L
+    }
+
+    n_summary_rows_group <- n_summary_rows_total - n_summary_rows_grand
+    n_groups_summary_rows_group <-
+      n_groups_summary_rows_total - n_groups_summary_rows_grand
+
+  } else {
+    n_summary_rows_total <- 0L
+    n_summary_rows_group <- 0L
+    n_summary_rows_grand <- 0L
+    n_groups_summary_rows_total <- 0L
+    n_groups_summary_rows_group <- 0L
+    n_groups_summary_rows_grand <- 0L
+  }
+
+  # TODO: Get total count of groups
+  n_groups <- 0L
+
+  list(
+    column_names = column_names,
+    n_columns_total = n_columns_total,
+    n_columns_data = n_columns_data,
+    n_columns_stub = n_columns_stub,
+    n_rows_data = n_rows_data,
+    n_summary_rows_total = n_summary_rows_total,
+    n_summary_rows_group = n_summary_rows_group,
+    n_summary_rows_grand = n_summary_rows_grand,
+    n_groups_summary_rows_total = n_groups_summary_rows_total,
+    n_groups_summary_rows_group = n_groups_summary_rows_group,
+    n_groups_summary_rows_grand = n_groups_summary_rows_grand,
+    n_groups = n_groups
   )
 }
