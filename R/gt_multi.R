@@ -1,40 +1,44 @@
+#' Create a container for multiple **gt** table objects
+#'
+#' @description
+#'
+#' The `gt_multi()` function creates a container for storage of multiple **gt**
+#' tables. This type of object allows for flexibility in printing in different
+#' output formats. For example, if printing multiple tables in a paginated
+#' output environment (e.g., RTF, Word, etc.), each **gt** table can be printed
+#' independently and table separation (usually a page break) occurs between each
+#' of those.
+#'
+#' @param ... One or more gt table (`gt_tbl`) objects, typically generated via
+#'   the [gt()] function.
+#' @param .list Allows for the use of a list as an input alternative to `...`.
+#' @param .options Custom options to be applied to all tables.
+#'
+#' @import rlang
 #' @export
 gt_multi <- function(
-    data = NULL,
-    index = NULL,
-    options = NULL
+    ...,
+    .list = list2(...),
+    .options = NULL
 ) {
 
-  # Initialize the `gt_multi` object
-  gt_multi <- list()
+  # Collect a list of objects
+  obj_list <- .list
 
-  # Create an empty
-  gt_tbl_tbl <- generate_gt_tbl_tbl_0()
-
-  if (is.null(data)) {
-
-    gt_multi$gt_tbl <- gt_tbl_tbl
-
-    # Apply the `gt_multi` class to the object and return
-    class(gt_multi) <- "gt_multi"
-    return(gt_multi)
+  # If no data is provided, return an empty `gt_multi` object
+  if (length(obj_list) < 1) {
+    return(init_gt_multi_list())
   }
 
   #
   # Check and normalize incoming data
   #
 
-  if (rlang::is_bare_list(data)) {
+  if (rlang::is_bare_list(obj_list)) {
 
     # TODO: Perform gt object validation for each of the list components
     # stop_if_not_gt(data = gt_tbl)
-    gt_tbl_list <- data
-
-  } else if (is_gt(data)) {
-
-    # With a single `gt_tbl` object, we want to enclose that in a
-    # bare list
-    gt_tbl_list <- list(data)
+    gt_tbl_list <- obj_list
 
   } else {
 
@@ -42,8 +46,13 @@ gt_multi <- function(
     # tables or a single gt table object
   }
 
+  # Initialize the `gt_multi` object and create
+  # an empty `gt_tbl_tbl` object
+  gt_multi <- init_gt_multi_list()
+  gt_tbl_tbl <- generate_gt_tbl_tbl_0()
+
   #
-  # Add gt tables to the `gt_tbl_tbl` object
+  # Process gt tables and add records to the `gt_tbl_tbl` object
   #
 
   for (i in seq_len(length(gt_tbl_list))) {
@@ -52,9 +61,21 @@ gt_multi <- function(
     gt_tbl_tbl <- dplyr::bind_rows(gt_tbl_tbl, gt_tbl_tbl_i)
   }
 
-  gt_multi$gt_tbl <- gt_tbl_tbl
+  # Add fully-processed `gt_tbl_tbl` object into `gt_multi`
+  gt_multi[["gt_tbls"]] <- gt_tbl_tbl
 
-  # Apply the `gt_multi` class to the object and return
+  gt_multi
+}
+
+init_gt_multi_list <- function() {
+
+  # Initialize the `gt_multi` object
+  gt_multi <- list()
+
+  gt_multi[["gt_tbls"]] <- generate_gt_tbl_tbl_0()
+  gt_multi[["gt_tbl_options"]] <- dt_options_tbl
+  gt_multi[["use_parent_options"]] <- FALSE
+
   class(gt_multi) <- "gt_multi"
   gt_multi
 }
@@ -104,6 +125,8 @@ generate_gt_tbl_tbl_i <- function(i, gt_tbl, active = TRUE) {
 }
 
 generate_gt_tbl_info_list <- function(gt_tbl) {
+
+  stop_if_not_gt(data = gt_tbl)
 
   gt_tbl_built <- build_data(data = gt_tbl, context = "html")
 
