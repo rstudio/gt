@@ -12,38 +12,23 @@
 #' @param ... One or more gt table (`gt_tbl`) objects, typically generated via
 #'   the [gt()] function.
 #' @param .list Allows for the use of a list as an input alternative to `...`.
-#' @param .options Custom options to be applied to all tables.
+#' @param .use_parent_opts Should options specified in the `gt_multi` object be
+#' applied to all contained **gt** tables? By default this is `FALSE`.
 #'
 #' @import rlang
 #' @export
 gt_multi <- function(
     ...,
     .list = list2(...),
-    .options = NULL
+    .use_parent_opts = FALSE
 ) {
 
   # Collect a list of objects
-  obj_list <- .list
+  gt_tbl_list <- .list
 
   # If no data is provided, return an empty `gt_multi` object
-  if (length(obj_list) < 1) {
+  if (length(gt_tbl_list) < 1) {
     return(init_gt_multi_list())
-  }
-
-  #
-  # Check and normalize incoming data
-  #
-
-  if (rlang::is_bare_list(obj_list)) {
-
-    # TODO: Perform gt object validation for each of the list components
-    # stop_if_not_gt(data = gt_tbl)
-    gt_tbl_list <- obj_list
-
-  } else {
-
-    # TODO: stop function here if we don't get a bare list with gt
-    # tables or a single gt table object
   }
 
   # Initialize the `gt_multi` object and create
@@ -63,6 +48,7 @@ gt_multi <- function(
 
   # Add fully-processed `gt_tbl_tbl` object into `gt_multi`
   gt_multi[["gt_tbls"]] <- gt_tbl_tbl
+  gt_multi[["use_parent_opts"]] <- .use_parent_opts
 
   gt_multi
 }
@@ -74,7 +60,7 @@ init_gt_multi_list <- function() {
 
   gt_multi[["gt_tbls"]] <- generate_gt_tbl_tbl_0()
   gt_multi[["gt_tbl_options"]] <- dt_options_tbl
-  gt_multi[["use_parent_options"]] <- FALSE
+  gt_multi[["use_parent_opts"]] <- FALSE
 
   class(gt_multi) <- "gt_multi"
   gt_multi
@@ -122,6 +108,298 @@ generate_gt_tbl_tbl_i <- function(i, gt_tbl, active = TRUE) {
     n_groups = gt_tbl_info_list$n_groups,
     active = active
   )
+}
+
+
+
+#' @export
+multi_extract_tbl <- function(data, which) {
+
+  gt_tbl <- extract_gt_tbl_from_gt_multi(data = data, which = which)
+
+  use_parent_opts <- get_use_parent_opts_param(data = data)
+
+  if (use_parent_opts) {
+
+    # Extract options from `data` (which is a `gt_multi` object)
+    gt_tbl[["_options"]] <- data[["gt_tbl_options"]]
+  }
+
+  gt_tbl
+}
+
+#' Modify table options for all tables within a `gt_multi` object
+#'
+#' @description
+#'
+#' Modify the options for a collection of **gt** tables in a `gt_multi` object.
+#' These options are named by the components, the subcomponents, and the
+#' element that can adjusted.
+#'
+#' @inheritParams tab_options
+#'
+#' @export
+multi_options <- function(
+    data,
+    table.width = NULL,
+    table.layout = NULL,
+    table.align = NULL,
+    table.margin.left = NULL,
+    table.margin.right = NULL,
+    table.background.color = NULL,
+    table.additional_css = NULL,
+    table.font.names = NULL,
+    table.font.size = NULL,
+    table.font.weight = NULL,
+    table.font.style = NULL,
+    table.font.color = NULL,
+    table.font.color.light = NULL,
+    table.border.top.style = NULL,
+    table.border.top.width = NULL,
+    table.border.top.color = NULL,
+    table.border.right.style = NULL,
+    table.border.right.width = NULL,
+    table.border.right.color = NULL,
+    table.border.bottom.style = NULL,
+    table.border.bottom.width = NULL,
+    table.border.bottom.color = NULL,
+    table.border.left.style = NULL,
+    table.border.left.width = NULL,
+    table.border.left.color = NULL,
+    heading.background.color = NULL,
+    heading.align = NULL,
+    heading.title.font.size = NULL,
+    heading.title.font.weight = NULL,
+    heading.subtitle.font.size = NULL,
+    heading.subtitle.font.weight = NULL,
+    heading.padding = NULL,
+    heading.padding.horizontal = NULL,
+    heading.border.bottom.style = NULL,
+    heading.border.bottom.width = NULL,
+    heading.border.bottom.color = NULL,
+    heading.border.lr.style = NULL,
+    heading.border.lr.width = NULL,
+    heading.border.lr.color = NULL,
+    column_labels.background.color = NULL,
+    column_labels.font.size = NULL,
+    column_labels.font.weight = NULL,
+    column_labels.text_transform = NULL,
+    column_labels.padding = NULL,
+    column_labels.padding.horizontal = NULL,
+    column_labels.vlines.style = NULL,
+    column_labels.vlines.width = NULL,
+    column_labels.vlines.color = NULL,
+    column_labels.border.top.style = NULL,
+    column_labels.border.top.width = NULL,
+    column_labels.border.top.color = NULL,
+    column_labels.border.bottom.style = NULL,
+    column_labels.border.bottom.width = NULL,
+    column_labels.border.bottom.color = NULL,
+    column_labels.border.lr.style = NULL,
+    column_labels.border.lr.width = NULL,
+    column_labels.border.lr.color = NULL,
+    column_labels.hidden = NULL,
+    row_group.background.color = NULL,
+    row_group.font.size = NULL,
+    row_group.font.weight = NULL,
+    row_group.text_transform = NULL,
+    row_group.padding = NULL,
+    row_group.padding.horizontal = NULL,
+    row_group.border.top.style = NULL,
+    row_group.border.top.width = NULL,
+    row_group.border.top.color = NULL,
+    row_group.border.bottom.style = NULL,
+    row_group.border.bottom.width = NULL,
+    row_group.border.bottom.color = NULL,
+    row_group.border.left.style = NULL,
+    row_group.border.left.width = NULL,
+    row_group.border.left.color = NULL,
+    row_group.border.right.style = NULL,
+    row_group.border.right.width = NULL,
+    row_group.border.right.color = NULL,
+    row_group.default_label = NULL,
+    row_group.as_column = NULL,
+    table_body.hlines.style = NULL,
+    table_body.hlines.width = NULL,
+    table_body.hlines.color = NULL,
+    table_body.vlines.style = NULL,
+    table_body.vlines.width = NULL,
+    table_body.vlines.color = NULL,
+    table_body.border.top.style = NULL,
+    table_body.border.top.width = NULL,
+    table_body.border.top.color = NULL,
+    table_body.border.bottom.style = NULL,
+    table_body.border.bottom.width = NULL,
+    table_body.border.bottom.color = NULL,
+    stub.background.color = NULL,
+    stub.font.size = NULL,
+    stub.font.weight = NULL,
+    stub.text_transform = NULL,
+    stub.border.style = NULL,
+    stub.border.width = NULL,
+    stub.border.color = NULL,
+    stub.indent_length = NULL,
+    stub_row_group.font.size = NULL,
+    stub_row_group.font.weight = NULL,
+    stub_row_group.text_transform = NULL,
+    stub_row_group.border.style = NULL,
+    stub_row_group.border.width = NULL,
+    stub_row_group.border.color = NULL,
+    data_row.padding = NULL,
+    data_row.padding.horizontal = NULL,
+    summary_row.background.color = NULL,
+    summary_row.text_transform = NULL,
+    summary_row.padding = NULL,
+    summary_row.padding.horizontal = NULL,
+    summary_row.border.style = NULL,
+    summary_row.border.width = NULL,
+    summary_row.border.color = NULL,
+    grand_summary_row.background.color = NULL,
+    grand_summary_row.text_transform = NULL,
+    grand_summary_row.padding = NULL,
+    grand_summary_row.padding.horizontal = NULL,
+    grand_summary_row.border.style = NULL,
+    grand_summary_row.border.width = NULL,
+    grand_summary_row.border.color = NULL,
+    footnotes.background.color = NULL,
+    footnotes.font.size = NULL,
+    footnotes.padding = NULL,
+    footnotes.padding.horizontal = NULL,
+    footnotes.border.bottom.style = NULL,
+    footnotes.border.bottom.width = NULL,
+    footnotes.border.bottom.color = NULL,
+    footnotes.border.lr.style = NULL,
+    footnotes.border.lr.width = NULL,
+    footnotes.border.lr.color = NULL,
+    footnotes.marks = NULL,
+    footnotes.multiline = NULL,
+    footnotes.sep = NULL,
+    source_notes.background.color = NULL,
+    source_notes.font.size = NULL,
+    source_notes.padding = NULL,
+    source_notes.padding.horizontal = NULL,
+    source_notes.border.bottom.style = NULL,
+    source_notes.border.bottom.width = NULL,
+    source_notes.border.bottom.color = NULL,
+    source_notes.border.lr.style = NULL,
+    source_notes.border.lr.width = NULL,
+    source_notes.border.lr.color = NULL,
+    source_notes.multiline = NULL,
+    source_notes.sep = NULL,
+    row.striping.background_color = NULL,
+    row.striping.include_stub = NULL,
+    row.striping.include_table_body = NULL,
+    container.width = NULL,
+    container.height = NULL,
+    container.padding.x = NULL,
+    container.padding.y = NULL,
+    container.overflow.x = NULL,
+    container.overflow.y = NULL,
+    ihtml.active = NULL,
+    ihtml.use_pagination = NULL,
+    ihtml.use_pagination_info = NULL,
+    ihtml.use_sorting = NULL,
+    ihtml.use_search = NULL,
+    ihtml.use_filters = NULL,
+    ihtml.use_resizers = NULL,
+    ihtml.use_highlight = NULL,
+    ihtml.use_compact_mode = NULL,
+    ihtml.use_page_size_select = NULL,
+    ihtml.page_size_default = NULL,
+    ihtml.page_size_values = NULL,
+    ihtml.pagination_type = NULL,
+    page.orientation = NULL,
+    page.numbering = NULL,
+    page.header.use_tbl_headings = NULL,
+    page.footer.use_tbl_notes = NULL,
+    page.width = NULL,
+    page.height = NULL,
+    page.margin.left = NULL,
+    page.margin.right = NULL,
+    page.margin.top = NULL,
+    page.margin.bottom = NULL,
+    page.header.height = NULL,
+    page.footer.height = NULL
+) {
+
+  # Perform input object validation for the `gt_multi` object
+  # stop_if_not_gt(data = data)
+
+  # Extract options from `data` (which is a `gt_multi` object)
+  opts_df <- data[["gt_tbl_options"]]
+
+  arg_names <-
+    base::setdiff(
+      names(formals(multi_options)),
+      c("data", "ihtml.page_size_values", "ihtml.page_size_default")
+    )
+
+  arg_vals <- mget(arg_names)
+  arg_vals <- arg_vals[!vapply(arg_vals, FUN = is.null, FUN.VALUE = logical(1))]
+  arg_vals <- set_super_options(arg_vals = arg_vals)
+
+  new_df <-
+    dplyr::tibble(
+      parameter = tidy_gsub(names(arg_vals), ".", "_", fixed = TRUE),
+      value = unname(arg_vals)
+    )
+  new_df <-
+    dplyr::left_join(
+      new_df,
+      dplyr::select(opts_df, parameter, type),
+      by = "parameter"
+    )
+  new_df <-
+    dplyr::mutate(
+      new_df,
+      value = mapply(
+        preprocess_tab_option,
+        option = value, var_name = parameter, type = type,
+        SIMPLIFY = FALSE
+      )
+    )
+  new_df <- dplyr::select(new_df, -type)
+
+  # This rearranges the rows in the `opts_df` table, but this
+  # shouldn't be a problem
+  opts_df <-
+    dplyr::bind_rows(
+      dplyr::inner_join(
+        new_df,
+        dplyr::select(opts_df, -value),
+        by = "parameter"
+      ),
+      dplyr::anti_join(opts_df, new_df, by = "parameter")
+    )
+
+  # Write the modified options table back to `data`
+  data[["gt_tbl_options"]] <- opts_df
+
+  #
+  # TODO: Handle special cases where option values are vectors
+  #
+  #
+  # ihtml_page_size_values <- mget("ihtml.page_size_values")
+  # if (!is.null(ihtml_page_size_values[[1]])) {
+  #   data <-
+  #     dt_options_set_value(
+  #       data = data,
+  #       option = "ihtml_page_size_values",
+  #       value = unname(unlist(ihtml_page_size_values))
+  #     )
+  # }
+  #
+  # ihtml_page_size_default <- mget("ihtml.page_size_default")
+  # if (!is.null(ihtml_page_size_default[[1]])) {
+  #   data <-
+  #     dt_options_set_value(
+  #       data = data,
+  #       option = "ihtml_page_size_default",
+  #       value = unname(unlist(ihtml_page_size_default))
+  #     )
+  # }
+
+  data
 }
 
 generate_gt_tbl_info_list <- function(gt_tbl) {
@@ -192,4 +470,21 @@ generate_gt_tbl_info_list <- function(gt_tbl) {
     n_groups_summary_rows_grand = n_groups_summary_rows_grand,
     n_groups = n_groups
   )
+}
+
+extract_gt_tbl_from_gt_multi <- function(data, which) {
+
+  valid_idx <- seq_len(nrow(data[["gt_tbls"]]))
+
+  if (!(which %in% valid_idx)) {
+    cli::cli_abort("The value for `which` is not a valid index.")
+  }
+
+  gt_tbl <- data[["gt_tbls"]][["gt_tbl"]][[which]]
+
+  gt_tbl
+}
+
+get_use_parent_opts_param <- function(data) {
+  data[["use_parent_opts"]]
 }
