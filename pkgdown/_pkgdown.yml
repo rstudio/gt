@@ -245,6 +245,10 @@ reference:
     - render_gt
     - gt_output
 
+  - title: Multiple Tables
+    contents:
+    - gt_multi
+
   - title: Export Functions
     desc: >
       There may come a day when you need to export a **gt** table to some
