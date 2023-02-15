@@ -3,11 +3,11 @@
 #' @description
 #'
 #' The `gt_multi()` function creates a container for storage of multiple **gt**
-#' tables. This type of object allows for flexibility in printing in different
-#' output formats. For example, if printing multiple tables in a paginated
-#' output environment (e.g., RTF, Word, etc.), each **gt** table can be printed
-#' independently and table separation (usually a page break) occurs between each
-#' of those.
+#' tables. This type of object allows for flexibility in printing multiple
+#' tables in different output formats. For example, if printing multiple tables
+#' in a paginated output environment (e.g., RTF, Word, etc.), each **gt** table
+#' can be printed independently and table separation (usually a page break)
+#' occurs between each of those.
 #'
 #' @param ... One or more gt table (`gt_tbl`) objects, typically generated via
 #'   the [gt()] function.
@@ -52,65 +52,6 @@ gt_multi <- function(
 
   gt_multi
 }
-
-init_gt_multi_list <- function() {
-
-  # Initialize the `gt_multi` object
-  gt_multi <- list()
-
-  gt_multi[["gt_tbls"]] <- generate_gt_tbl_tbl_0()
-  gt_multi[["gt_tbl_options"]] <- dt_options_tbl
-  gt_multi[["use_parent_opts"]] <- FALSE
-
-  class(gt_multi) <- "gt_multi"
-  gt_multi
-}
-
-generate_gt_tbl_tbl_0 <- function() {
-
-    dplyr::tibble(
-      i = NA_integer_,
-      gt_tbl = list(),
-      column_names = list(),
-      n_columns_total = NA_integer_,
-      n_columns_data = NA_integer_,
-      n_columns_stub = NA_integer_,
-      n_rows_data = NA_integer_,
-      n_summary_rows_total = NA_integer_,
-      n_summary_rows_group = NA_integer_,
-      n_summary_rows_grand = NA_integer_,
-      n_groups_summary_rows_total = NA_integer_,
-      n_groups_summary_rows_group = NA_integer_,
-      n_groups_summary_rows_grand = NA_integer_,
-      n_groups = NA_integer_,
-      active = NA
-    )[0, ]
-}
-
-generate_gt_tbl_tbl_i <- function(i, gt_tbl, active = TRUE) {
-
-  gt_tbl_info_list <- generate_gt_tbl_info_list(gt_tbl = gt_tbl)
-
-  dplyr::tibble(
-    i = i,
-    gt_tbl = list(gt_tbl),
-    column_names = list(gt_tbl_info_list$column_names),
-    n_columns_total = gt_tbl_info_list$n_columns_total,
-    n_columns_data = gt_tbl_info_list$n_columns_data,
-    n_columns_stub = gt_tbl_info_list$n_columns_stub,
-    n_rows_data = gt_tbl_info_list$n_rows_data,
-    n_summary_rows_total = gt_tbl_info_list$n_summary_rows_total,
-    n_summary_rows_group = gt_tbl_info_list$n_summary_rows_group,
-    n_summary_rows_grand = gt_tbl_info_list$n_summary_rows_grand,
-    n_groups_summary_rows_total = gt_tbl_info_list$n_groups_summary_rows_total,
-    n_groups_summary_rows_group = gt_tbl_info_list$n_groups_summary_rows_group,
-    n_groups_summary_rows_grand = gt_tbl_info_list$n_groups_summary_rows_grand,
-    n_groups = gt_tbl_info_list$n_groups,
-    active = active
-  )
-}
-
-
 
 #' @export
 multi_extract_tbl <- function(data, which) {
@@ -400,6 +341,63 @@ multi_options <- function(
   # }
 
   data
+}
+
+init_gt_multi_list <- function() {
+
+  # Initialize the `gt_multi` object
+  gt_multi <- list()
+
+  gt_multi[["gt_tbls"]] <- generate_gt_tbl_tbl_0()
+  gt_multi[["gt_tbl_options"]] <- dt_options_tbl
+  gt_multi[["use_parent_opts"]] <- FALSE
+
+  class(gt_multi) <- "gt_multi"
+  gt_multi
+}
+
+generate_gt_tbl_tbl_0 <- function() {
+
+  dplyr::tibble(
+    i = NA_integer_,
+    gt_tbl = list(),
+    column_names = list(),
+    n_columns_total = NA_integer_,
+    n_columns_data = NA_integer_,
+    n_columns_stub = NA_integer_,
+    n_rows_data = NA_integer_,
+    n_summary_rows_total = NA_integer_,
+    n_summary_rows_group = NA_integer_,
+    n_summary_rows_grand = NA_integer_,
+    n_groups_summary_rows_total = NA_integer_,
+    n_groups_summary_rows_group = NA_integer_,
+    n_groups_summary_rows_grand = NA_integer_,
+    n_groups = NA_integer_,
+    active = NA
+  )[0, ]
+}
+
+generate_gt_tbl_tbl_i <- function(i, gt_tbl, active = TRUE) {
+
+  gt_tbl_info_list <- generate_gt_tbl_info_list(gt_tbl = gt_tbl)
+
+  dplyr::tibble(
+    i = i,
+    gt_tbl = list(gt_tbl),
+    column_names = list(gt_tbl_info_list$column_names),
+    n_columns_total = gt_tbl_info_list$n_columns_total,
+    n_columns_data = gt_tbl_info_list$n_columns_data,
+    n_columns_stub = gt_tbl_info_list$n_columns_stub,
+    n_rows_data = gt_tbl_info_list$n_rows_data,
+    n_summary_rows_total = gt_tbl_info_list$n_summary_rows_total,
+    n_summary_rows_group = gt_tbl_info_list$n_summary_rows_group,
+    n_summary_rows_grand = gt_tbl_info_list$n_summary_rows_grand,
+    n_groups_summary_rows_total = gt_tbl_info_list$n_groups_summary_rows_total,
+    n_groups_summary_rows_group = gt_tbl_info_list$n_groups_summary_rows_group,
+    n_groups_summary_rows_grand = gt_tbl_info_list$n_groups_summary_rows_grand,
+    n_groups = gt_tbl_info_list$n_groups,
+    active = active
+  )
 }
 
 generate_gt_tbl_info_list <- function(gt_tbl) {
