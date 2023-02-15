@@ -4,7 +4,7 @@
 \alias{gt_multi}
 \title{Create a container for multiple \strong{gt} table objects}
 \usage{
-gt_multi(..., .list = list2(...), .options = NULL)
+gt_multi(..., .list = list2(...), .use_parent_opts = FALSE)
 }
 \arguments{
 \item{...}{One or more gt table (\code{gt_tbl}) objects, typically generated via
@@ -12,7 +12,8 @@ the \code{\link[=gt]{gt()}} function.}
 
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
 
-\item{.options}{Custom options to be applied to all tables.}
+\item{.use_parent_opts}{Should options specified in the \code{gt_multi} object be
+applied to all contained \strong{gt} tables? By default this is \code{FALSE}.}
 }
 \description{
 The \code{gt_multi()} function creates a container for storage of multiple \strong{gt}
