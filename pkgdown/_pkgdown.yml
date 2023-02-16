@@ -245,12 +245,6 @@ reference:
     - render_gt
     - gt_output
 
-  - title: Managing Multiple Tables
-    contents:
-    - gt_multi
-    - multi_extract_tbl
-    - multi_options
-
   - title: Export Functions
     desc: >
       There may come a day when you need to export a **gt** table to some
@@ -267,6 +261,14 @@ reference:
     - as_word
     - extract_summary
     - extract_cells
+
+  - title: Managing Multiple Tables
+    contents:
+    - gt_multi
+    - opts_gt_tbls
+    - pull_gt_tbls
+    - add_gt_tbls
+    - rm_gt_tbls
 
   - title: Vector Formatting Functions
     desc: >
