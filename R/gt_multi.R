@@ -1,4 +1,4 @@
-#' Create a container for multiple **gt** table objects
+#' Create a `gt_multi` container for multiple **gt** table objects
 #'
 #' @description
 #'
@@ -14,6 +14,8 @@
 #' @param .list Allows for the use of a list as an input alternative to `...`.
 #' @param .use_parent_opts Should options specified in the `gt_multi` object be
 #' applied to all contained **gt** tables? By default this is `FALSE`.
+#'
+#' @return An object of class `gt_multi`.
 #'
 #' @import rlang
 #' @export
@@ -53,20 +55,205 @@ gt_multi <- function(
   gt_multi
 }
 
+#' Pull out a **gt** table from a `gt_multi` container object
+#'
+#' @description
+#'
+#' Should you have a `gt_multi` object, created through use of the [gt_multi()]
+#' function, you may have a need to extract a **gt** table from that container.
+#' The `pull_gt_tbls()` function makes this possible, returning a `gt_tbl`
+#' object. The only thing you need to provide is the index value for the **gt**
+#' table within the `gt_multi` object.
+#'
+#' @param data A `gt_multi` container object, typically generated through use of
+#'   the [gt_multi()] function along with one or more `gt_tbl` objects.
+#' @param which An index value denoting which `gt_tbl` table should be obtained
+#'   from the `gt_multi` object.
+#'
+#' @return An object of class `gt_tbl`.
+#'
 #' @export
-multi_extract_tbl <- function(data, which) {
+pull_gt_tbls <- function(
+    data,
+    which
+) {
+
+  # TODO: this only handles the extraction of a single table currently;
+  # need to implement extraction of multiple `gt_tbl`s to a bare list
 
   gt_tbl <- extract_gt_tbl_from_gt_multi(data = data, which = which)
 
   use_parent_opts <- get_use_parent_opts_param(data = data)
 
   if (use_parent_opts) {
-
     # Extract options from `data` (which is a `gt_multi` object)
     gt_tbl[["_options"]] <- data[["gt_tbl_options"]]
   }
 
   gt_tbl
+}
+
+#' Add one or more **gt** tables to a `gt_multi` container object
+#'
+#' @description
+#'
+#' Should you have a `gt_multi` object, created through use of the [gt_multi()]
+#' function, you might want to add more **gt** tables to that container. While
+#' it's common to generate a `gt_multi` object with a collection of `gt_tbl`
+#' objects, one can also create an 'empty' `gt_multi` object. Whatever your
+#' workflow might be, the `add_gt_tbls()` function makes it possible to flexibly
+#' add one or more new
+#' **gt** tables, returning a refreshed `gt_multi`
+#' object.
+#'
+#' @param .data A `gt_multi` container object, typically generated through use
+#'   of the [gt_multi()] function along with one or more `gt_tbl` objects.
+#' @param ... One or more gt table (`gt_tbl`) objects, typically generated via
+#'   the [gt()] function.
+#' @param .list Allows for the use of a list as an input alternative to `...`.
+#' @param .before,.after A single index for either `.before` or `.after`,
+#'   specifying where the supplied `gt_tbl` objects should be placed amongst the
+#'   existing collection of **gt** tables. If nothing is provided for either
+#'   argument the incoming `gt_tbl` objects will be appended.
+#'
+#' @return An object of class `gt_multi`.
+#'
+#' @import rlang
+#' @export
+add_gt_tbls <- function(
+    .data,
+    ...,
+    .list = list2(...),
+    .before = NULL,
+    .after = NULL
+) {
+
+  # Collect a list of objects
+  gt_tbl_list <- .list
+
+  # If no data is provided, return the `gt_multi` unchanged
+  if (length(gt_tbl_list) < 1) {
+    return(.data)
+  }
+
+  gt_multi <- .data
+
+  #
+  # Stop function if `.before` and `.after` options are invalid
+  #
+
+  if (!is.null(.before) && !is.null(.after)) {
+    cli::cli_abort("Values cannot be supplied for both `.before` and `.after`.")
+  }
+
+  valid_idx <- seq_len(nrow(gt_multi[["gt_tbls"]]))
+
+  if (is.null(.before) && is.null(.after)) {
+
+    insertion_mode <- "append"
+
+  } else if (!is.null(.after)) {
+
+    if (!rlang::is_integerish(.after)) {
+      cli::cli_abort("An integer value should be supplied for `.after`.")
+    }
+
+    if (!(.after %in% valid_idx)) {
+      cli::cli_abort("The value supplied for `.after` should be a valid index.")
+    }
+
+    if (.after == max(valid_idx)) {
+      insertion_mode <- "append"
+    } else {
+      insertion_mode <- "insert"
+    }
+
+  } else if (!is.null(.before)) {
+
+    if (!rlang::is_integerish(.before)) {
+      cli::cli_abort("An integer value should be supplied for `.before`.")
+    }
+
+    if (!(.before %in% valid_idx)) {
+      cli::cli_abort("The value supplied for `.before` should be a valid index.")
+    }
+
+    if (.before == min(valid_idx)) {
+      insertion_mode <- "prepend"
+    } else {
+      insertion_mode <- "insert"
+      .after <- .before - 1
+    }
+  }
+
+  # Create an empty `gt_tbl_tbl` object
+  gt_tbl_tbl <- generate_gt_tbl_tbl_0()
+
+  #
+  # Process gt tables and add records to the `gt_tbl_tbl` object
+  #
+
+  for (i in seq_len(length(gt_tbl_list))) {
+
+    gt_tbl_tbl_i <- generate_gt_tbl_tbl_i(i = i, gt_tbl = gt_tbl_list[[i]])
+    gt_tbl_tbl <- dplyr::bind_rows(gt_tbl_tbl, gt_tbl_tbl_i)
+  }
+
+  #
+  # Add fully-processed `gt_tbl_tbl` object into `gt_multi`
+  #
+
+  if (insertion_mode == "insert") {
+
+    gt_multi[["gt_tbls"]] <-
+      dplyr::bind_rows(
+        gt_multi[["gt_tbls"]][1:.after, ],
+        gt_tbl_tbl,
+        gt_multi[["gt_tbls"]][(.after + 1):max(valid_idx), ]
+      )
+
+  } else if (insertion_mode == "append") {
+
+    gt_multi[["gt_tbls"]] <- dplyr::bind_rows(gt_multi[["gt_tbls"]], gt_tbl_tbl)
+
+  } else {
+
+    gt_multi[["gt_tbls"]] <- dplyr::bind_rows(gt_tbl_tbl, gt_multi[["gt_tbls"]])
+  }
+
+  gt_multi <- reindex_gt_tbls(data = gt_multi)
+
+  gt_multi
+}
+
+#' Remove one or more **gt** tables from a `gt_multi` container object
+#'
+#' @description
+#'
+#' A `gt_multi` object, created through use of the [gt_multi()] function, can
+#' hold a multiple of **gt** tables. However, you might want to delete one or
+#' more `gt_tbl` objects table from that container. With `rm_gt_tbls()`, this
+#' possible and safe to perform. What's returned is a `gt_multi` object with the
+#' specified `gt_tbl` objects gone. The only thing you need to provide is the
+#' index value for the **gt** table within the `gt_multi` object.
+#'
+#' @param data A `gt_multi` container object, typically generated through use of
+#'   the [gt_multi()] function along with one or more `gt_tbl` objects.
+#' @param which An index value denoting which `gt_tbl` table should be removed
+#'   from the `gt_multi` object.
+#'
+#' @return An object of class `gt_multi`.
+#'
+#' @export
+rm_gt_tbls <- function(
+    data,
+    which
+) {
+
+  # TODO: this only handles the removal of a single table currently;
+  # need to implement removal of multiple `gt_tbl`s to a bare list
+
+  remove_gt_tbl_from_gt_multi(data = data, which = which)
 }
 
 #' Modify table options for all tables within a `gt_multi` object
@@ -80,7 +267,7 @@ multi_extract_tbl <- function(data, which) {
 #' @inheritParams tab_options
 #'
 #' @export
-multi_options <- function(
+opts_gt_tbls <- function(
     data,
     table.width = NULL,
     table.layout = NULL,
@@ -271,7 +458,7 @@ multi_options <- function(
 
   arg_names <-
     base::setdiff(
-      names(formals(multi_options)),
+      names(formals(opts_gt_tbls)),
       c("data", "ihtml.page_size_values", "ihtml.page_size_default")
     )
 
@@ -481,6 +668,27 @@ extract_gt_tbl_from_gt_multi <- function(data, which) {
   gt_tbl <- data[["gt_tbls"]][["gt_tbl"]][[which]]
 
   gt_tbl
+}
+
+remove_gt_tbl_from_gt_multi <- function(data, which) {
+
+  valid_idx <- seq_len(nrow(data[["gt_tbls"]]))
+
+  if (!(which %in% valid_idx)) {
+    cli::cli_abort("The value for `which` is not a valid index.")
+  }
+
+  data[["gt_tbls"]] <- data[["gt_tbls"]][-which, ]
+
+  data <- reindex_gt_tbls(data = data)
+
+  data
+}
+
+reindex_gt_tbls <- function(data) {
+  new_idx <- seq_len(nrow(data[["gt_tbls"]]))
+  data[["gt_tbls"]][["i"]] <- new_idx
+  data
 }
 
 get_use_parent_opts_param <- function(data) {
