@@ -625,16 +625,12 @@ markdown_to_xml <- function(text) {
 
         children <- xml2::xml_children(x)
 
-        if (length(children) == 1 && xml2::xml_type(children[[1]]) == "element" & xml2::xml_name(children[[1]]) != "list") {
-          children <- xml2::xml_children(children[[1]])
-        }
-
         apply_rules <- function(x, ...) {
 
           if (inherits(x, "xml_nodeset")) {
 
             results <- lapply( x, apply_rules)
-            do.call( 'paste0',c(results,collapse = ""))
+            do.call( 'paste0',c(results,collapse = "\n"))
 
           } else {
 
@@ -663,12 +659,11 @@ markdown_to_xml <- function(text) {
          }
        }
 
-       lapply(children, apply_rules) %>%
-          vapply(
-            FUN = as.character,
-            FUN.VALUE = character(1)
-            ) %>%
-          paste0(collapse = "")
+        lapply(children, apply_rules) %>%
+          vapply(FUN = as.character,
+                 FUN.VALUE = character(1)) %>%
+          paste0(collapse = "") %>%
+          paste0("<md_container>", ., "</md_container>")
       }
     )
 
@@ -784,6 +779,7 @@ cmark_rules_xml <- list(
         collapse = ""
     )
   },
+
   item = function(x, process, ...) {
 
     item_contents <- lapply(
@@ -877,6 +873,19 @@ cmark_rules_xml <- list(
     # Any unrecognized HTML tags are stripped, returning nothing
     return(rtf_raw(""))
   },
+
+  html_block = function(x, process, ...){
+    xml_p(
+      xml_pPr(),
+      xml_r(xml_rPr(),
+            xml_t(
+              enc2utf8(as.character(xml2::xml_text(x))),
+              xml_space = "preserve")
+      )
+    ) %>%
+      as.character()
+  },
+
   link = function(x, process, ...) {
     # NOTE: Links are difficult to insert in OOXML documents because
     # a relationship must be provided in the 'document.xml.rels' file
@@ -908,8 +917,6 @@ add_text_style.shiny.tag <- function(x, style){
   x <- x %>% as.character() %>% tag_pull("w:rPr")
   add_text_style.character(x, style = style)
 }
-
-
 
 
 
