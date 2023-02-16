@@ -9,11 +9,11 @@
 #' can be printed independently and table separation (usually a page break)
 #' occurs between each of those.
 #'
-#' @param ... One or more gt table (`gt_tbl`) objects, typically generated via
-#'   the [gt()] function.
+#' @param ... One or more **gt** table (`gt_tbl`) objects, typically generated
+#'   via the [gt()] function.
 #' @param .list Allows for the use of a list as an input alternative to `...`.
 #' @param .use_parent_opts Should options specified in the `gt_multi` object be
-#' applied to all contained **gt** tables? By default this is `FALSE`.
+#'   applied to all contained **gt** tables? By default this is `FALSE`.
 #'
 #' @return An object of class `gt_multi`.
 #'
@@ -108,8 +108,8 @@ pull_gt_tbls <- function(
 #'
 #' @param .data A `gt_multi` container object, typically generated through use
 #'   of the [gt_multi()] function along with one or more `gt_tbl` objects.
-#' @param ... One or more gt table (`gt_tbl`) objects, typically generated via
-#'   the [gt()] function.
+#' @param ... One or more **gt** table (`gt_tbl`) objects, typically generated
+#'   via the [gt()] function.
 #' @param .list Allows for the use of a list as an input alternative to `...`.
 #' @param .before,.after A single index for either `.before` or `.after`,
 #'   specifying where the supplied `gt_tbl` objects should be placed amongst the
@@ -254,6 +254,73 @@ rm_gt_tbls <- function(
   # need to implement removal of multiple `gt_tbl`s to a bare list
 
   remove_gt_tbl_from_gt_multi(data = data, which = which)
+}
+
+#' Replace one or more **gt** tables in a `gt_multi` container object
+#'
+#' @description
+#'
+#' The [gt_multi()] function can be used to create a container for multiple
+#' **gt** tables. In some circumstances, you might want to replace a specific
+#' `gt_tbl` object (or multiple) with a different one. This can be done with the
+#' `replace_gt_tbls()` function. The important thing is that the number of
+#' **gt** tables provided must equal the number of indices for tables present
+#' in the `gt_multi` object.
+#'
+#' @param .data A `gt_multi` container object, typically generated through use
+#'   of the [gt_multi()] function along with one or more `gt_tbl` objects.
+#' @param ... One or more **gt** table (`gt_tbl`) objects, typically generated
+#'   via the [gt()] function.
+#' @param .list Allows for the use of a list as an input alternative to `...`.
+#' @param .which Index values denoting which `gt_tbl` tables should be replaced
+#'   in the `gt_multi` object.
+#'
+#' @return An object of class `gt_multi`.
+#'
+#' @export
+replace_gt_tbls <- function(
+    .data,
+    ...,
+    .list = list2(...),
+    .which
+) {
+
+  # Collect a list of objects
+  gt_tbl_list <- .list
+
+  # Stop function if no data is provided
+  if (length(gt_tbl_list) < 1) {
+    cli::cli_abort("At least one gt table must be provided.")
+  }
+
+  gt_multi <- .data
+
+  valid_idx <- seq_len(nrow(gt_multi[["gt_tbls"]]))
+
+  if (!all(.which %in% valid_idx)) {
+    cli::cli_abort("All values provided in `.which` must be valid indices.")
+  }
+
+  if (length(gt_tbl_list) != length(unique(.which))) {
+    cli::cli_abort(
+      "The number of indices in `.which` must match the number of `gt_tbl` objects."
+    )
+  }
+
+  #
+  # Process gt tables and add records to the `gt_tbl_tbl` object
+  #
+
+  for (i in seq_len(length(.which))) {
+
+    gt_tbl_tbl_i <- generate_gt_tbl_tbl_i(i = i, gt_tbl = gt_tbl_list[[i]])
+
+    gt_multi[["gt_tbls"]][.which[i], ] <- gt_tbl_tbl_i
+  }
+
+  gt_multi <- reindex_gt_tbls(data = gt_multi)
+
+  gt_multi
 }
 
 #' Modify table options for all tables within a `gt_multi` object
