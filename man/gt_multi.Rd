@@ -2,7 +2,7 @@
 % Please edit documentation in R/gt_multi.R
 \name{gt_multi}
 \alias{gt_multi}
-\title{Create a container for multiple \strong{gt} table objects}
+\title{Create a \code{gt_multi} container for multiple \strong{gt} table objects}
 \usage{
 gt_multi(..., .list = list2(...), .use_parent_opts = FALSE)
 }
@@ -14,6 +14,9 @@ the \code{\link[=gt]{gt()}} function.}
 
 \item{.use_parent_opts}{Should options specified in the \code{gt_multi} object be
 applied to all contained \strong{gt} tables? By default this is \code{FALSE}.}
+}
+\value{
+An object of class \code{gt_multi}.
 }
 \description{
 The \code{gt_multi()} function creates a container for storage of multiple \strong{gt}
