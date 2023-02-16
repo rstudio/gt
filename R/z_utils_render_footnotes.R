@@ -427,7 +427,7 @@ set_footnote_marks_columns <- function(data,
         text <- unique(spanner_labels[vector_indices])
 
         text <-
-          paste0(
+          apply_footnotes_method[[context]](
             text,
             footnotes_dispatch[[context]](footnotes_columns_group_marks$fs_id_coalesced[i])
           )
@@ -457,7 +457,7 @@ set_footnote_marks_columns <- function(data,
 
       for (i in seq(nrow(footnotes_columns_column_marks))) {
         text <-
-          paste0(
+          apply_footnotes_method[[context]](
             boxh$column_label[
               boxh$var == footnotes_columns_column_marks$colname[i]][[1]],
             footnotes_dispatch[[context]](footnotes_columns_column_marks$fs_id_coalesced[i])
@@ -506,7 +506,7 @@ set_footnote_marks_stubhead <- function(data,
         dplyr::distinct() %>%
         dplyr::pull(fs_id_coalesced)
 
-      label <- paste0(label, footnotes_dispatch[[context]](footnotes_stubhead_marks))
+      label <- apply_footnotes_method[[context]](label, footnotes_dispatch[[context]](footnotes_stubhead_marks))
     }
   }
 
@@ -579,7 +579,7 @@ apply_footnotes_to_output <- function(data, context = "html") {
             )
 
         } else {
-          text <- paste0(text, mark)
+          text <- apply_footnotes_method[[context]](text, mark)
         }
 
       } else {
@@ -597,7 +597,9 @@ apply_footnotes_to_output <- function(data, context = "html") {
               gsub("<div class='gt_from_md'><p>", "", text, fixed = TRUE)
             )
 
-        } else {
+        } else if (context == "word"){
+          text <- apply_footnotes_method[[context]](text, mark, position = "left")
+        }else {
           text <- paste0(mark, if (context == "html") "\U000A0" else " ", text)
         }
       }
@@ -638,7 +640,7 @@ set_footnote_marks_row_groups <- function(data,
         which(groups_rows_df[, "group_id"] == footnotes_row_groups_marks$grpname[i])
 
       groups_rows_df[row_index, "group_label"] <-
-        paste0(
+        apply_footnotes_method[[context]](
           groups_rows_df[row_index, "group_label"],
           fn(footnotes_row_groups_marks$fs_id_coalesced[i])
         )
@@ -681,7 +683,8 @@ apply_footnotes_to_summary <- function(data,
 
     for (i in seq(nrow(footnotes_data_marks))) {
       summary_df_list[[footnotes_data_marks[i, ][["grpname"]]]][[
-        footnotes_data_marks$row[i], footnotes_data_marks$colname[i]]] <- paste0(
+        footnotes_data_marks$row[i], footnotes_data_marks$colname[i]]] <-
+        apply_footnotes_method[[context]](
           summary_df_list[[footnotes_data_marks[i, ][["grpname"]]]][[
             footnotes_data_marks$row[i], footnotes_data_marks$colname[i]]],
           footnotes_dispatch[[context]](footnotes_data_marks$fs_id_coalesced[i]))
@@ -705,7 +708,8 @@ apply_footnotes_to_summary <- function(data,
 
     for (i in seq(nrow(footnotes_data_marks))) {
       summary_df_list[[grand_summary_col]][[
-        footnotes_data_marks$rownum[i], footnotes_data_marks$colname[i]]] <- paste0(
+        footnotes_data_marks$rownum[i], footnotes_data_marks$colname[i]]] <-
+        apply_footnotes_method[[context]](
           summary_df_list[[grand_summary_col]][[
             footnotes_data_marks$rownum[i], footnotes_data_marks$colname[i]]],
           footnotes_dispatch[[context]](footnotes_data_marks$fs_id_coalesced[i]))
@@ -730,4 +734,11 @@ footnotes_dispatch <- list(
   rtf = footnote_mark_to_rtf,
   latex = footnote_mark_to_latex,
   word = footnote_mark_to_xml
+)
+
+apply_footnotes_method <- list(
+  html = paste0,
+  rtf = paste0,
+  latex = paste0,
+  word = paste_footnote_xml
 )

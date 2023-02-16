@@ -967,6 +967,9 @@ create_heading_component_xml <- function(
   heading_border_bottom_color <- dt_options_get_value(data, option = "heading_border_bottom_color")
 
   # Get the footnote marks for the title
+  title_caption_string <- parse_to_xml(heading$title)
+
+  # Get the footnote marks for the title
   if ("title" %in% footnotes_tbl$locname) {
 
     footnote_title_marks <-
@@ -976,11 +979,48 @@ create_heading_component_xml <- function(
       )
 
     footnote_title_marks <-
-      footnote_mark_to_xml(mark = footnote_title_marks$fs_id_c)
+      footnote_mark_to_xml(mark = footnote_title_marks$fs_id_c) %>%
+      as_xml_node() %>%
+      .[[1]]
 
-  } else {
-    footnote_title_marks <- ""
+    title_caption_string %>%
+      xml_add_child(
+        footnote_title_marks
+      )
+
   }
+
+  title_caption_string <- as.character(title_caption_string) %>%
+    paste0("<md_container>",.,"</md_container>")
+
+
+  title_caption_xml <- process_cell_content(
+    x = title_caption_string,
+    font = header_title_style[["cell_text"]][["font"]] %||% "Calibri",
+    size = header_title_style[["cell_text"]][["size"]] %||% 24,
+    whitespace = header_title_style[["cell_text"]][["whitespace"]],
+    paragraph_style = "caption",
+    color = header_title_style[["cell_text"]][["color"]] %||% table_font_color,
+    align = header_title_style[["cell_text"]][["align"]] %||% align,
+    keep_with_next = keep_with_next
+  ) %>%
+    as_xml_node()
+
+  autonum_node_xml <- xml_table_autonum(
+    font = xml_r_font(header_title_style[["cell_text"]][["font"]] %||% "Calibri"),
+    size = xml_sz(val = header_title_style[["cell_text"]][["size"]] %||% 24)
+  ) %>%
+    as_xml_node()
+
+  for(autonum_node in rev(autonum_node_xml)){
+    title_caption_xml %>%
+      xml_add_child(
+        autonum_node,
+        .where = 1
+      )
+  }
+
+  title_caption <- as.character(title_caption_xml)
 
   header_title_style <- styles_tbl %>%
     dplyr::filter(
@@ -990,13 +1030,15 @@ create_heading_component_xml <- function(
     .[1] %>% .[[1]]
 
 
+
+
   title_section <- htmltools::tagList(xml_tr(
     xml_trPr(if (!split) {
       xml_cantSplit()
     },
     xml_tbl_header()),
     xml_table_cell(
-      content = paste0(heading$title, footnote_title_marks),
+      content = title_caption,
       size = header_title_style[["cell_text"]][["size"]] %||% 20,
       color = header_title_style[["cell_text"]][["color"]] %||% table_font_color,
       align = header_title_style[["cell_text"]][["align"]] %||% "center",
@@ -1028,6 +1070,9 @@ create_heading_component_xml <- function(
   if (subtitle_defined) {
 
     # Get the footnote marks for the subtitle
+    subtitle_caption_string <- parse_to_xml(heading$subtitle)
+
+    # Get the footnote marks for the subtitle
     if ("subtitle" %in% footnotes_tbl$locname) {
 
       footnote_subtitle_marks <-
@@ -1037,11 +1082,19 @@ create_heading_component_xml <- function(
         )
 
       footnote_subtitle_marks <-
-        footnote_mark_to_xml(mark = footnote_subtitle_marks$fs_id_c)
+        footnote_mark_to_xml(mark = footnote_subtitle_marks$fs_id_c) %>%
+        as_xml_node() %>%
+        .[[1]]
 
-    } else {
-      footnote_subtitle_marks <- ""
+      subtitle_caption_string %>%
+        xml_add_child(
+          footnote_subtitle_marks
+        )
+
     }
+
+    subtitle_caption_string <- as.character(subtitle_caption_string) %>%
+      paste0("<md_container>",.,"</md_container>")
 
 
     header_subtitle_style <- styles_tbl %>%
@@ -1057,7 +1110,7 @@ create_heading_component_xml <- function(
       },
       xml_tbl_header()),
       xml_table_cell(
-        content = paste0(heading$subtitle, footnote_subtitle_marks),
+        content = subtitle_caption_string,
         size = header_subtitle_style[["cell_text"]][["size"]] %||% 20,
         color = header_subtitle_style[["cell_text"]][["color"]] %||% table_font_color,
         align = header_subtitle_style[["cell_text"]][["align"]] %||% "center",
@@ -1741,13 +1794,18 @@ create_source_notes_component_xml <- function(
       source_note,
       function(x) {
 
+        source_note_xml <- parse_to_xml(x)
+
+        source_note_content <- as.character(source_note_xml) %>%
+          paste0("<md_container>", ., "</md_container>")
+
         as.character(
           xml_tr(
             xml_trPr(
               if (!split) { xml_cantSplit() }
             ),
             xml_table_cell(
-              content = x,
+              content = source_note_content,
               font = cell_style[["cell_text"]][["font"]],
               size = cell_style[["cell_text"]][["size"]] %||% 20,
               color = cell_style[["cell_text"]][["color"]],
@@ -1786,8 +1844,6 @@ create_footnotes_component_xml <- function(
     return("")
   }
 
-
-
   stub_components <- dt_stub_components(data = data)
 
   cell_style <- dt_styles_get(data = data) %>%
@@ -1795,7 +1851,8 @@ create_footnotes_component_xml <- function(
       locname == "footnotes"
     ) %>%
     dplyr::pull("styles") %>%
-    .[1] %>% .[[1]]
+    .[1] %>%
+    .[[1]]
 
   n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
 
@@ -1824,43 +1881,43 @@ create_footnotes_component_xml <- function(
       seq_along(footnote_ids),
       function(x) {
 
-        footnote_content <- xml_p(
-          xml_pPr(),
-          do.call('paste0',list(
-            if(!is.na(footnote_ids[x])){
-              xml_r(
-                xml_rPr(
-                  xml_r_font(
-                    ascii_font = cell_style[["cell_text"]][["font"]] %||% "Calibri",
-                    ansi_font = cell_style[["cell_text"]][["font"]] %||% "Calibri"
-                  ),
-                  if (!is.null(cell_style[["cell_text"]][["color"]])) {
-                    xml_color(color = cell_style[["cell_text"]][["color"]])
-                  },
-                  xml_sz(val = cell_style[["cell_text"]][["size"]] %||% 20),
-                  xml_baseline_adj(v_align = "superscript"),
-                  xml_i()
-                ),
-                xml_t(footnote_ids[x])
-              )},
-            xml_r(
-              xml_rPr(
-                xml_r_font(
-                  ascii_font = cell_style[["cell_text"]][["font"]] %||% "Calibri",
-                  ansi_font = cell_style[["cell_text"]][["font"]] %||% "Calibri"
-                ),
-                if (!is.null(cell_style[["cell_text"]][["color"]])) {
-                  xml_color(color = cell_style[["cell_text"]][["color"]])
-                },
-                xml_sz(val = cell_style[["cell_text"]][["size"]] %||% 20),
-                xml_baseline_adj(v_align = "baseline")
-              ),
-              xml_t(x = footnote_text[[x]])
-            )
-          ))
-        ) %>%
-          as.character()
+        footnote_text_xml <- parse_to_xml(footnote_text[[x]])
 
+        # Get the footnote marks for the subtitle
+        if (!is.na(footnote_ids[x])) {
+
+          footnote_id_xml <- xml_r(
+            xml_rPr(
+              if (!is.null(cell_style[["cell_text"]][["font"]])) {
+                xml_r_font(
+                  ascii_font = cell_style[["cell_text"]][["font"]],
+                  ansi_font = cell_style[["cell_text"]][["font"]]
+                )
+              },
+              if (!is.null(cell_style[["cell_text"]][["color"]])) {
+                xml_color(color = cell_style[["cell_text"]][["color"]])
+              },
+              if (!is.null(cell_style[["cell_text"]][["size"]])) {
+                xml_sz(val = cell_style[["cell_text"]][["size"]])
+              },
+              xml_i(),
+              xml_baseline_adj(v_align = "superscript")
+            ),
+            xml_t(footnote_ids[x])
+          ) %>%
+            as_xml_node() %>%
+            .[[1]]
+
+          footnote_text_xml %>%
+            xml_add_child(
+              footnote_id_xml,
+              .where = 1
+            )
+
+        }
+
+        footnote_content <- as.character(footnote_text_xml) %>%
+          paste0("<md_container>", ., "</md_container>")
 
         as.character(
           xml_tr(
@@ -1869,20 +1926,26 @@ create_footnotes_component_xml <- function(
             ),
             xml_table_cell(
               content = footnote_content,
+              font = cell_style[["cell_text"]][["font"]],
+              size = cell_style[["cell_text"]][["size"]],
+              color = cell_style[["cell_text"]][["color"]],
+              style = cell_style[["cell_text"]][["style"]],
+              weight = cell_style[["cell_text"]][["weight"]],
               stretch = cell_style[["cell_text"]][["stretch"]],
+              whitespace = cell_style[["cell_text"]][["whitespace"]],
               align = cell_style[["cell_text"]][["align"]],
               v_align = cell_style[["cell_text"]][["v_align"]],
               col_span = n_cols,
               fill = cell_style[["cell_fill"]][["color"]],
-              keep_with_next = keep_with_next,
-              whitespace = whitespace
+              keep_with_next = keep_with_next
             )
           )
         )
       }
     )
 
-  paste0(unlist(footnote_rows), collapse = "")
+  paste0(unlist(footnote_rows), collapse = "\n")
+
 }
 
 summary_rows_xml <- function(
@@ -2126,6 +2189,9 @@ xml_table_cell <- function(
           if (!is.null(margins[["left"]])) { xml_width("left", width = margins[["left"]][["width"]], type = margins[["left"]][["type"]]) },
           if (!is.null(margins[["right"]])) { xml_width("right", width = margins[["right"]][["width"]], type = margins[["right"]][["type"]]) }
         )
+      },
+      if (!is.null(col_span)) {
+        as_xml_node(xml_gridSpan(val = as.character(col_span)))
       }
     ),
     process_cell_content(
@@ -2166,7 +2232,7 @@ process_cell_content_ooxml_t <- function(x, ..., whitespace = NULL) {
     ## if its already set to preserve, respect preservation
     if (!text_tag_attr == "preserve") {
       xml_text(txt) <- white_space_in_text(x = text_tag_content, whitespace = whitespace)
-      xml_attr(txt, attr = "space") <- white_space_to_t_xml_space(whitespace)
+      xml_attr(txt, attr = "xml:space") <- white_space_to_t_xml_space(whitespace)
     }
   }
   x
@@ -2232,9 +2298,6 @@ process_cell_content_ooxml_p <- function(x, ..., align = NULL, col_span = NULL, 
     as_xml_node(
       xml_spacing(before = 0, after = 60)
     ),
-    if (!is.null(col_span)) {
-      as_xml_node(xml_gridSpan(val = as.character(col_span)))
-    },
     if (keep_with_next) {
       as_xml_node(xml_keepNext())
     },
@@ -2616,4 +2679,32 @@ add_ns <- function(x){
       `xmlns:wp` = "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
     )
   )
+}
+
+
+paste_footnote_xml <- function(text, footmark_xml, position = "right"){
+
+  text_xml <- parse_to_xml(text)
+
+  position <- match.arg(position, c("left","right"))
+
+  footmark_xml <- footmark_xml %>%
+      as_xml_node() %>%
+      .[[1]]
+
+  if(position == "right"){
+    text_xml %>%
+      xml_add_child(
+        footmark_xml
+        )
+  }else{
+    text_xml %>%
+      xml_add_child(
+        footmark_xml,
+        .where = 1
+      )
+  }
+
+  as.character(text_xml) %>%
+    paste0("<md_container>",.,"</md_container>")
 }

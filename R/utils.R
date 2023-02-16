@@ -603,6 +603,12 @@ markdown_to_latex <- function(text) {
   )
 }
 
+
+#' Transform Markdown text to ooxml
+#'
+#' @noRd
+#'
+#' @importFrom xml2 read_xml xml_name xml_children xml_type xml_contents
 markdown_to_xml <- function(text) {
 
   text %>%
@@ -676,7 +682,7 @@ cmark_rules_xml <- list(
   text = function(x, process, ...) {
     xml_r(xml_rPr(),
           xml_t(
-            enc2utf8(as.character(xml2::xml_text(x))),
+            enc2utf8(as.character(htmltools::htmlEscape(xml2::xml_text(x)))),
             xml_space = "preserve")
     ) %>% as.character()
   },
