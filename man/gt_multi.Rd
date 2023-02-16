@@ -7,8 +7,8 @@
 gt_multi(..., .list = list2(...), .use_parent_opts = FALSE)
 }
 \arguments{
-\item{...}{One or more gt table (\code{gt_tbl}) objects, typically generated via
-the \code{\link[=gt]{gt()}} function.}
+\item{...}{One or more \strong{gt} table (\code{gt_tbl}) objects, typically generated
+via the \code{\link[=gt]{gt()}} function.}
 
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
 

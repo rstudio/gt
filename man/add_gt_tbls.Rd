@@ -10,8 +10,8 @@ add_gt_tbls(.data, ..., .list = list2(...), .before = NULL, .after = NULL)
 \item{.data}{A \code{gt_multi} container object, typically generated through use
 of the \code{\link[=gt_multi]{gt_multi()}} function along with one or more \code{gt_tbl} objects.}
 
-\item{...}{One or more gt table (\code{gt_tbl}) objects, typically generated via
-the \code{\link[=gt]{gt()}} function.}
+\item{...}{One or more \strong{gt} table (\code{gt_tbl}) objects, typically generated
+via the \code{\link[=gt]{gt()}} function.}
 
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
 
