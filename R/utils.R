@@ -1881,3 +1881,21 @@ man_get_image_tag <- function(file, dir = "images") {
     "style=\"width:100\\%;\">"
   )
 }
+
+data_get_image_tag <- function(file, dir = "images") {
+
+  repo_url <- "https://raw.githubusercontent.com/rstudio/gt/master"
+
+  alt_text <- "This image of that of a dataset badge."
+
+  image_url <- file.path(repo_url, dir, file)
+
+  paste0(
+    "<div align=\"center\">",
+    "<img ",
+    "src=\"", image_url, "\" ",
+    "alt=\"", alt_text, "\" ",
+    "style=\"width:50\\%;\">",
+    "</div>"
+  )
+}
