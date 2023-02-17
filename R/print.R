@@ -17,14 +17,39 @@ print.gt_tbl <- function(x, ..., view = interactive()) {
   print(html_tbl, browse = view, ...)
 }
 
-knitr_is_rtf_output <- function() {
 
-  "rtf" %in% knitr::opts_knit$get("rmarkdown.pandoc.to")
-}
+#' Print a collection of tables
+#'
+#' This facilitates printing of multiple HTML tables (in a `gt_multi` object) to
+#' the R console.
+#'
+#' @param x An object of class `gt_multi`.
+#' @param ... Any additional parameters.
+#' @param view The value for `print()`s `browse` argument.
+#'
+#' @keywords internal
+#'
+#' @export
+print.gt_multi <- function(x, ..., view = interactive()) {
 
-knitr_is_word_output <- function() {
+  html_tbls <- htmltools::tagList()
 
-  "docx" %in% knitr::opts_knit$get("rmarkdown.pandoc.to")
+  seq_tbls <- seq_len(nrow(x$gt_tbls))
+
+  for (i in seq_tbls) {
+
+    html_tbl_i <- as.tags.gt_tbl(pull_gt_tbls(x, which = i), ...)
+
+    html_tbls <-
+      htmltools::tagList(
+        html_tbls,
+        html_tbl_i,
+        if (i != max(seq_tbls)) htmltools::HTML("<br />")
+      )
+  }
+
+  # Use `print()` to print to the console
+  print(html_tbls, browse = view, ...)
 }
 
 #' Knit print the table
@@ -142,4 +167,12 @@ as.tags.gt_tbl <- function(x, ...) {
 print.rtf_text <- function(x, ...) {
 
   cat(paste(x, collapse = "\n"))
+}
+
+knitr_is_rtf_output <- function() {
+  "rtf" %in% knitr::opts_knit$get("rmarkdown.pandoc.to")
+}
+
+knitr_is_word_output <- function() {
+  "docx" %in% knitr::opts_knit$get("rmarkdown.pandoc.to")
 }
