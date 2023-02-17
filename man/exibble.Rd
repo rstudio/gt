@@ -57,6 +57,10 @@ Here is the entirety of the \code{exibble} table.
 \section{Dataset ID}{
 
 6
+
+\if{html}{\out{
+<div align="center"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_exibble.png" alt="This image of that of a dataset badge." style="width:50\%;"></div>
+}}
 }
 
 \section{Dataset Introduced}{

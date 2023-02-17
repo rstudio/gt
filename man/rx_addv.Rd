@@ -91,6 +91,10 @@ Here is a glimpse at the data available in \code{rx_addv}.
 \section{Dataset ID}{
 
 9
+
+\if{html}{\out{
+<div align="center"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_rx_addv.png" alt="This image of that of a dataset badge." style="width:50\%;"></div>
+}}
 }
 
 \section{Dataset Introduced}{

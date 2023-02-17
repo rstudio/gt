@@ -44,6 +44,10 @@ Here is a glimpse at the data available in \code{sp500}.
 \section{Dataset ID}{
 
 4
+
+\if{html}{\out{
+<div align="center"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_sp500.png" alt="This image of that of a dataset badge." style="width:50\%;"></div>
+}}
 }
 
 \section{Dataset Introduced}{

@@ -142,6 +142,10 @@ Here is a glimpse at the pizza data available in \code{pizzaplace}.
 \section{Dataset ID}{
 
 5
+
+\if{html}{\out{
+<div align="center"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_pizzaplace.png" alt="This image of that of a dataset badge." style="width:50\%;"></div>
+}}
 }
 
 \section{Dataset Introduced}{
