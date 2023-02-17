@@ -23,3 +23,22 @@ The \code{pull_gt_tbls()} function makes this possible, returning a \code{gt_tbl
 object. The only thing you need to provide is the index value for the \strong{gt}
 table within the \code{gt_multi} object.
 }
+\section{Function ID}{
+
+14-2
+}
+
+\section{Function Introduced}{
+
+\emph{In Development}
+}
+
+\seealso{
+Other multiple-table functions: 
+\code{\link{add_gt_tbls}()},
+\code{\link{gt_multi}()},
+\code{\link{opts_gt_tbls}()},
+\code{\link{replace_gt_tbls}()},
+\code{\link{rm_gt_tbls}()}
+}
+\concept{multiple-table functions}

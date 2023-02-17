@@ -26,3 +26,22 @@ in a paginated output environment (e.g., RTF, Word, etc.), each \strong{gt} tabl
 can be printed independently and table separation (usually a page break)
 occurs between each of those.
 }
+\section{Function ID}{
+
+14-1
+}
+
+\section{Function Introduced}{
+
+\emph{In Development}
+}
+
+\seealso{
+Other multiple-table functions: 
+\code{\link{add_gt_tbls}()},
+\code{\link{opts_gt_tbls}()},
+\code{\link{pull_gt_tbls}()},
+\code{\link{replace_gt_tbls}()},
+\code{\link{rm_gt_tbls}()}
+}
+\concept{multiple-table functions}

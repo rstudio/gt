@@ -188,7 +188,8 @@ opts_gt_tbls(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{A \code{gt_multi} container object, typically generated through use of
+the \code{\link[=gt_multi]{gt_multi()}} function along with one or more \code{gt_tbl} objects.}
 
 \item{table.width}{The width of the table. Can be specified as a
 single-length character with units of pixels or as a percentage. If
@@ -478,8 +479,30 @@ bottom page margins. The default values for each of these is \verb{1.0in}.}
 \item{page.header.height, page.footer.height}{The heights of the page header
 and footer for RTF table outputs. Default values for both are \verb{0.5in}.}
 }
+\value{
+An object of class \code{gt_multi}.
+}
 \description{
 Modify the options for a collection of \strong{gt} tables in a \code{gt_multi} object.
 These options are named by the components, the subcomponents, and the
 element that can adjusted.
 }
+\section{Function ID}{
+
+14-6
+}
+
+\section{Function Introduced}{
+
+\emph{In Development}
+}
+
+\seealso{
+Other multiple-table functions: 
+\code{\link{add_gt_tbls}()},
+\code{\link{gt_multi}()},
+\code{\link{pull_gt_tbls}()},
+\code{\link{replace_gt_tbls}()},
+\code{\link{rm_gt_tbls}()}
+}
+\concept{multiple-table functions}

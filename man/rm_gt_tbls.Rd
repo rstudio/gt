@@ -24,3 +24,22 @@ possible and safe to perform. What's returned is a \code{gt_multi} object with t
 specified \code{gt_tbl} objects gone. The only thing you need to provide is the
 index value for the \strong{gt} table within the \code{gt_multi} object.
 }
+\section{Function ID}{
+
+14-5
+}
+
+\section{Function Introduced}{
+
+\emph{In Development}
+}
+
+\seealso{
+Other multiple-table functions: 
+\code{\link{add_gt_tbls}()},
+\code{\link{gt_multi}()},
+\code{\link{opts_gt_tbls}()},
+\code{\link{pull_gt_tbls}()},
+\code{\link{replace_gt_tbls}()}
+}
+\concept{multiple-table functions}

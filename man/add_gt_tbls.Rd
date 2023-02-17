@@ -33,3 +33,22 @@ add one or more new
 \strong{gt} tables, returning a refreshed \code{gt_multi}
 object.
 }
+\section{Function ID}{
+
+14-3
+}
+
+\section{Function Introduced}{
+
+\emph{In Development}
+}
+
+\seealso{
+Other multiple-table functions: 
+\code{\link{gt_multi}()},
+\code{\link{opts_gt_tbls}()},
+\code{\link{pull_gt_tbls}()},
+\code{\link{replace_gt_tbls}()},
+\code{\link{rm_gt_tbls}()}
+}
+\concept{multiple-table functions}

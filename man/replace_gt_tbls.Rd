@@ -29,3 +29,22 @@ The \code{\link[=gt_multi]{gt_multi()}} function can be used to create a contain
 \strong{gt} tables provided must equal the number of indices for tables present
 in the \code{gt_multi} object.
 }
+\section{Function ID}{
+
+14-4
+}
+
+\section{Function Introduced}{
+
+\emph{In Development}
+}
+
+\seealso{
+Other multiple-table functions: 
+\code{\link{add_gt_tbls}()},
+\code{\link{gt_multi}()},
+\code{\link{opts_gt_tbls}()},
+\code{\link{pull_gt_tbls}()},
+\code{\link{rm_gt_tbls}()}
+}
+\concept{multiple-table functions}
