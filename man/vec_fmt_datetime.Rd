@@ -46,10 +46,10 @@ with \code{\link[=OlsonNames]{OlsonNames()}}).}
 formatted value. The value itself is represented by \code{{x}} and all other
 characters are taken to be string literals.}
 
-\item{locale}{An optional locale ID that can be used for formatting the value
-according the locale's rules. Examples include \code{"en"} for English (United
-States) and \code{"fr"} for French (France). The use of a valid locale ID will
-override any values provided in \code{sep_mark} and \code{dec_mark}. We can use the
+\item{locale}{An optional locale identifier that can be used for formatting
+the value according the locale's rules. Examples include \code{"en"} for English
+(United States) and \code{"fr"} for French (France). The use of a locale ID will
+override any locale-specific values provided. We can use the
 \code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
 are supported.}
 
@@ -65,7 +65,7 @@ A character vector.
 Format values in a vector to datetime values using either presets for the
 date and time components or a formatting directive (this can either use a
 \emph{CLDR} datetime pattern or \code{strptime} formatting). Input can be in the form
-of \code{POSIXt} (i.e., datetimes), the \code{Date} type, or \code{character} (must be in
+of \code{POSIXct} (i.e., datetimes), the \code{Date} type, or \code{character} (must be in
 the ISO 8601 form of \verb{YYYY-MM-DD HH:MM:SS} or \code{YYYY-MM-DD}).
 }
 \section{Formatting with the \code{date_style} argument}{
@@ -125,8 +125,8 @@ values (corresponding to an input date of \code{2000-02-29}).\tabular{llll}{
 }
 
 
-We can use the \code{\link[=info_date_style]{info_date_style()}} within the console to view a similar table
-of date styles with example output.
+We can use the \code{\link[=info_date_style]{info_date_style()}} function within the console to view a
+similar table of date styles with example output.
 }
 
 \section{Formatting with the \code{time_style} argument}{
@@ -174,8 +174,8 @@ redundant or repeating information.\tabular{llll}{
 }
 
 
-We can use the \code{\link[=info_time_style]{info_time_style()}} within the console to view a similar table
-of time styles with example output.
+We can use the \code{\link[=info_time_style]{info_time_style()}} function within the console to view a
+similar table of time styles with example output.
 }
 
 \section{Formatting with a \emph{CLDR} datetime pattern}{
@@ -869,10 +869,18 @@ applied.
 
 \section{Function ID}{
 
-14-13
+15-15
+}
+
+\section{Function Introduced}{
+
+\code{v0.7.0} (Aug 25, 2022)
 }
 
 \seealso{
+The variant function intended for formatting \strong{gt} table data:
+\code{\link[=fmt_datetime]{fmt_datetime()}}.
+
 Other vector formatting functions: 
 \code{\link{vec_fmt_bytes}()},
 \code{\link{vec_fmt_currency}()},
@@ -880,6 +888,7 @@ Other vector formatting functions:
 \code{\link{vec_fmt_duration}()},
 \code{\link{vec_fmt_engineering}()},
 \code{\link{vec_fmt_fraction}()},
+\code{\link{vec_fmt_index}()},
 \code{\link{vec_fmt_integer}()},
 \code{\link{vec_fmt_markdown}()},
 \code{\link{vec_fmt_number}()},
@@ -887,6 +896,7 @@ Other vector formatting functions:
 \code{\link{vec_fmt_percent}()},
 \code{\link{vec_fmt_roman}()},
 \code{\link{vec_fmt_scientific}()},
+\code{\link{vec_fmt_spelled_num}()},
 \code{\link{vec_fmt_time}()}
 }
 \concept{vector formatting functions}

@@ -5,7 +5,7 @@
 <hr style="color:transparent"/>
 <!-- badges: start -->
 <a href="https://cran.r-project.org/package=gt"><img src="https://www.r-pkg.org/badges/version/gt" alt="CRAN status" /></a>
-<a href="https://github.com/rstudio/gt/actions"><img src="https://github.com/rich-iannone/pointblank/workflows/R-CMD-check/badge.svg" alt="R build status" /></a>
+<a href="https://github.com/rstudio/gt/actions/workflows/R-CMD-check.yaml"><img src="https://github.com/rstudio/gt/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R build status" /></a>
 <a href="https://app.codecov.io/gh/rstudio/gt?branch=master"><img src="https://codecov.io/gh/rstudio/gt/branch/master/graph/badge.svg" alt="Coverage status" /></a>
 
 <a href="https://bestpractices.coreinfrastructure.org/projects/5593"><img src="https://bestpractices.coreinfrastructure.org/projects/5593/badge" alt="Best Practices"></a>
@@ -13,7 +13,7 @@
 <a href="https://CRAN.R-project.org/package=gt"><img src="https://cranlogs.r-pkg.org/badges/gt" alt="Monthly Downloads"></a>
 <a href="https://CRAN.R-project.org/package=gt"><img src="https://cranlogs.r-pkg.org/badges/grand-total/gt" alt="Total Downloads"></a>
 
-[![RStudio community](https://img.shields.io/badge/RStudio%20Cloud-gt%20Test%20Drive-blue?style=social&logo=rstudio&logoColor=75AADB)](https://rstudio.cloud/project/779965)
+[![Posit Cloud](https://img.shields.io/badge/Posit%20Cloud-gt%20Test%20Drive-blue?style=social&logo=rstudio&logoColor=75AADB)](https://rstudio.cloud/project/779965)
 
 <a href="https://www.contributor-covenant.org/version/2/0/code_of_conduct/"><img src="https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg" alt="Contributor Covenant" /></a>
 <!-- badges: end -->
@@ -93,7 +93,7 @@ for experimenting with **gt**’s functions.
 Beyond this simple example, there are many functions available in **gt**
 for creating super-customized tables. For much more information on these, visit the
 [documentation website](https://gt.rstudio.com/) or take
-a *Test Drive* in the [RStudio Cloud project](https://rstudio.cloud/project/779965).
+a *Test Drive* in the [Posit Cloud project](https://rstudio.cloud/project/779965).
 
 ## DISCUSSIONS
 
@@ -179,7 +179,7 @@ participating in this project you agree to abide by its terms.
 **gt** is licensed under the MIT license. See the
 [`LICENSE.md`](LICENSE.md) file for more details.
 
-© RStudio, PBC.
+© Posit Software, PBC.
 
 ## 🏛️ Governance
 

@@ -185,7 +185,7 @@ resolve_cols_c <- function(
     null_means = c("everything", "nothing")
 ) {
 
-  null_means <- match.arg(null_means)
+  null_means <- rlang::arg_match(null_means)
 
   names(
     resolve_cols_i(
@@ -216,7 +216,7 @@ resolve_cols_i <- function(
 ) {
   quo <- rlang::enquo(expr)
   cols_excl <- c()
-  null_means <- match.arg(null_means)
+  null_means <- rlang::arg_match(null_means)
 
   if (is_gt(data)) {
 
@@ -265,7 +265,19 @@ resolve_cols_i <- function(
   # With the quosure and the `data`, we can use `tidyselect::eval_select()`
   # to resolve the expression to columns indices/names; no `env` argument
   # is required here because the `expr` is a quosure
-  selected <- tidyselect::eval_select(expr = quo, data = data, strict = strict)
+  # TODO: with tidyselect v1.2.0, there are a lot of warnings emitted because
+  # of the way that the expression is supplied; this can be fixed later (since
+  # these errors are developer facing) but suppressing here was important so
+  # as to not pollute the snapshot testing values with warnings (that would
+  # cause failures)
+  selected <-
+    suppressWarnings(
+      tidyselect::eval_select(
+        expr = quo,
+        data = data,
+        strict = strict
+      )
+    )
 
   # Exclude certain columns (e.g., stub & group columns) if necessary
   selected[!names(selected) %in% cols_excl]
@@ -398,6 +410,54 @@ resolve_vector_l <- function(
 
 resolve_vector_i <- function(expr, vector, item_label = "item") {
   which(resolve_vector_l(expr = {{ expr }}, vector = vector, item_label = item_label))
+}
+
+resolve_groups <- function(expr, vector) {
+
+  quo <- rlang::enquo(expr)
+
+  resolved <-
+    tidyselect::with_vars(
+      vars = vector,
+      expr = rlang::eval_tidy(expr = quo, data = NULL)
+    )
+
+  if (length(resolved) == 1 && resolved == ":GRAND_SUMMARY:") {
+    return(":GRAND_SUMMARY:")
+  }
+
+  if (is.null(resolved)) {
+
+    # Provide deprecation warning
+    cli::cli_warn(c(
+      "Since gt v0.9.0, the `groups = NULL` option has been deprecated.",
+      "*" = "If this was intended for generation of grand summary rows, instead
+  use the `grand_summary_rows()` function."
+    ))
+
+    return(":GRAND_SUMMARY:")
+  }
+
+  if (length(resolved) < 1) {
+    return(NULL)
+  }
+
+  if (is.integer(resolved)) {
+    return(vector[resolved])
+  }
+
+  if (is.character(resolved)) {
+
+    resolved <- base::intersect(resolved, vector)
+
+    if (length(resolved) < 1) {
+      return(NULL)
+    }
+
+    return(resolved)
+  }
+
+  NULL
 }
 
 normalize_resolved <- function(

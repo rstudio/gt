@@ -37,10 +37,10 @@ Use \code{\link{countrypops}} to create a \strong{gt} table. Hide the \code{coun
 \code{country_code_3} columns with \code{\link[=cols_hide]{cols_hide()}}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
-  countrypops \%>\%
-  dplyr::filter(country_name == "Mongolia") \%>\%
-  tail(5) \%>\%
-  gt() \%>\%
+  countrypops |>
+  dplyr::filter(country_name == "Mongolia") |>
+  tail(5) |>
+  gt() |>
   cols_hide(columns = c(country_code_2, country_code_3))
 
 tab_1
@@ -54,7 +54,7 @@ If the \code{tab_1} object is provided without the code or source data to
 regenerate it, and, the user wants to reveal otherwise hidden columns then
 the \code{cols_unhide()} function becomes useful.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% cols_unhide(columns = country_code_2)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |> cols_unhide(columns = country_code_2)
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
@@ -64,7 +64,12 @@ the \code{cols_unhide()} function becomes useful.
 
 \section{Function ID}{
 
-4-9
+4-10
+}
+
+\section{Function Introduced}{
+
+\code{v0.3.0} (May 12, 2021)
 }
 
 \seealso{
@@ -74,6 +79,7 @@ Other column modification functions:
 \code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
+\code{\link{cols_label_with}()},
 \code{\link{cols_label}()},
 \code{\link{cols_merge_n_pct}()},
 \code{\link{cols_merge_range}()},

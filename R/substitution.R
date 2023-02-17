@@ -1,22 +1,70 @@
 #' Substitute missing values in the table body
 #'
 #' @description
+#'
 #' Wherever there is missing data (i.e., `NA` values) customizable content may
 #' present better than the standard `NA` text that would otherwise appear. The
 #' `sub_missing()` function allows for this replacement through its
 #' `missing_text` argument (where an em dash serves as the default).
 #'
-#' @details
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). Conditional
-#' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
-#'
 #' @inheritParams fmt_number
+#' @param columns Optional columns for constraining the targeting process.
+#'   Providing [everything()] (the default) results in cells in all `columns`
+#'   being targeting (this can be limited by `rows` however). Can either be a
+#'   series of column names provided in [c()], a vector of column indices, or a
+#'   helper function focused on selections. The select helper functions are:
+#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
+#'   [num_range()], and [everything()].
+#' @param rows Optional rows for constraining the targeting process. Providing
+#'   [everything()] (the default) results in all rows in `columns` being
+#'   targeted. Alternatively, we can supply a vector of row captions within
+#'   [c()], a vector of row indices, or a helper function focused on selections.
+#'   The select helper functions are: [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
+#'   We can also use expressions to filter down to the rows we need (e.g.,
+#'   `[colname_1] > 100 & [colname_2] < 50`).
 #' @param missing_text The text to be used in place of `NA` values in the
 #'   rendered table.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @section Targeting cells with `columns` and `rows`:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to target a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value of 100,000 (excluding
+#' `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given substitution
+#' function will be skipped over. So it's safe to select all columns with a
+#' particular substitution function (only those values that can be substituted
+#' will be), but, you may not want that. One strategy is to work on the bulk of
+#' cell values with one substitution function and then constrain the columns for
+#' later passes with other types of substitution (the last operation done to a
+#' cell is what you get in the final output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g., `c(3,
+#' 5, 6)`) though these index values must correspond to the row numbers of the
+#' input data (the indices won't necessarily match those of rearranged rows if
+#' row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector. This is nice if you want to base
+#' the substitution on values in the column or another column, or, you'd like to
+#' use a more complex predicate expression.
 #'
 #' @section Examples:
 #'
@@ -24,13 +72,13 @@
 #' columns will be given replacement text with two calls of `sub_missing()`.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(-row, -group) %>%
-#'   gt() %>%
+#' exibble |>
+#'   dplyr::select(-row, -group) |>
+#'   gt() |>
 #'   sub_missing(
 #'     columns = 1:2,
 #'     missing_text = "missing"
-#'   ) %>%
+#'   ) |>
 #'   sub_missing(
 #'     columns = 4:7,
 #'     missing_text = "nothing"
@@ -43,7 +91,10 @@
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-17
+#' 3-22
+#'
+#' @section Function Introduced:
+#' `v0.6.0` (May 24, 2022)
 #'
 #' @import rlang
 #' @export
@@ -107,6 +158,9 @@ sub_missing <- function(
 #' @param missing_text The text to be used in place of `NA` values in the
 #'   rendered table.
 #'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @import rlang
 #' @keywords internal
 #' @export
@@ -121,7 +175,10 @@ fmt_missing <- function(
     "Since gt v0.6.0 the `fmt_missing()` function is deprecated and will
     soon be removed.",
     "*" = "Use the `sub_missing()` function instead."
-  ))
+  ),
+  .frequency = "regularly",
+  .frequency_id = "fmt_missing_fn_deprecation"
+  )
 
   sub_missing(
     data = data,
@@ -134,21 +191,69 @@ fmt_missing <- function(
 #' Substitute zero values in the table body
 #'
 #' @description
+#'
 #' Wherever there is numerical data that are zero in value, replacement text may
 #' be better for explanatory purposes. The `sub_zero()` function allows for this
 #' replacement through its `zero_text` argument.
 #'
-#' @details
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). Conditional
-#' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
-#'
 #' @inheritParams fmt_number
+#' @param columns Optional columns for constraining the targeting process.
+#'   Providing [everything()] (the default) results in cells in all `columns`
+#'   being targeting (this can be limited by `rows` however). Can either be a
+#'   series of column names provided in [c()], a vector of column indices, or a
+#'   helper function focused on selections. The select helper functions are:
+#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
+#'   [num_range()], and [everything()].
+#' @param rows Optional rows for constraining the targeting process. Providing
+#'   [everything()] (the default) results in all rows in `columns` being
+#'   targeted. Alternatively, we can supply a vector of row captions within
+#'   [c()], a vector of row indices, or a helper function focused on selections.
+#'   The select helper functions are: [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
+#'   We can also use expressions to filter down to the rows we need (e.g.,
+#'   `[colname_1] > 100 & [colname_2] < 50`).
 #' @param zero_text The text to be used in place of zero values in the rendered
 #'   table.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @section Targeting cells with `columns` and `rows`:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to target a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value of 100,000 (excluding
+#' `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given substitution
+#' function will be skipped over. So it's safe to select all columns with a
+#' particular substitution function (only those values that can be substituted
+#' will be), but, you may not want that. One strategy is to work on the bulk of
+#' cell values with one substitution function and then constrain the columns for
+#' later passes with other types of substitution (the last operation done to a
+#' cell is what you get in the final output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g., `c(3,
+#' 5, 6)`) though these index values must correspond to the row numbers of the
+#' input data (the indices won't necessarily match those of rearranged rows if
+#' row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector. This is nice if you want to base
+#' the substitution on values in the column or another column, or, you'd like to
+#' use a more complex predicate expression.
 #'
 #' @section Examples:
 #'
@@ -165,9 +270,9 @@ fmt_missing <- function(
 #' single call of `sub_zero()`.
 #'
 #' ```r
-#' tbl %>%
-#'   gt() %>%
-#'   fmt_number(columns = num) %>%
+#' tbl |>
+#'   gt() |>
+#'   fmt_number(columns = num) |>
 #'   sub_zero()
 #' ```
 #'
@@ -177,7 +282,10 @@ fmt_missing <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-18
+#' 3-23
+#'
+#' @section Function Introduced:
+#' `v0.6.0` (May 24, 2022)
 #'
 #' @import rlang
 #' @export
@@ -223,18 +331,28 @@ sub_zero <- function(
 #' Substitute small values in the table body
 #'
 #' @description
+#'
 #' Wherever there is numerical data that are very small in value, replacement
 #' text may be better for explanatory purposes. The `sub_small_vals()` function
 #' allows for this replacement through specification of a `threshold`, a
 #' `small_pattern`, and the sign of the values to be considered.
 #'
-#' @details
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). Conditional
-#' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
-#'
 #' @inheritParams fmt_number
+#' @param columns Optional columns for constraining the targeting process.
+#'   Providing [everything()] (the default) results in cells in all `columns`
+#'   being targeting (this can be limited by `rows` however). Can either be a
+#'   series of column names provided in [c()], a vector of column indices, or a
+#'   helper function focused on selections. The select helper functions are:
+#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
+#'   [num_range()], and [everything()].
+#' @param rows Optional rows for constraining the targeting process. Providing
+#'   [everything()] (the default) results in all rows in `columns` being
+#'   targeted. Alternatively, we can supply a vector of row captions within
+#'   [c()], a vector of row indices, or a helper function focused on selections.
+#'   The select helper functions are: [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
+#'   We can also use expressions to filter down to the rows we need (e.g.,
+#'   `[colname_1] > 100 & [colname_2] < 50`).
 #' @param threshold The threshold value with which values should be considered
 #'   small enough for replacement.
 #' @param small_pattern The pattern text to be used in place of the suitably
@@ -244,6 +362,44 @@ sub_zero <- function(
 #'   can be used to consider only negative values.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @section Targeting cells with `columns` and `rows`:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to target a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value of 100,000 (excluding
+#' `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given substitution
+#' function will be skipped over. So it's safe to select all columns with a
+#' particular substitution function (only those values that can be substituted
+#' will be), but, you may not want that. One strategy is to work on the bulk of
+#' cell values with one substitution function and then constrain the columns for
+#' later passes with other types of substitution (the last operation done to a
+#' cell is what you get in the final output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g., `c(3,
+#' 5, 6)`) though these index values must correspond to the row numbers of the
+#' input data (the indices won't necessarily match those of rearranged rows if
+#' row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector. This is nice if you want to base
+#' the substitution on values in the column or another column, or, you'd like to
+#' use a more complex predicate expression.
 #'
 #' @section Examples:
 #'
@@ -261,9 +417,9 @@ sub_zero <- function(
 #' do just that:
 #'
 #' ```r
-#' tbl %>%
-#'   gt() %>%
-#'   fmt_number(columns = num) %>%
+#' tbl |>
+#'   gt() |>
+#'   fmt_number(columns = num) |>
 #'   sub_small_vals()
 #' ```
 #'
@@ -276,10 +432,10 @@ sub_zero <- function(
 #' negative values.
 #'
 #' ```r
-#' tbl %>%
-#'   dplyr::mutate(num = -num) %>%
-#'   gt() %>%
-#'   fmt_number(columns = num) %>%
+#' tbl |>
+#'   dplyr::mutate(num = -num) |>
+#'   gt() |>
+#'   fmt_number(columns = num) |>
 #'   sub_small_vals(sign = "-")
 #' ```
 #'
@@ -293,9 +449,9 @@ sub_zero <- function(
 #' omitted.
 #'
 #' ```r
-#' tbl %>%
-#'   gt() %>%
-#'   fmt_number(columns = num) %>%
+#' tbl |>
+#'   gt() |>
+#'   fmt_number(columns = num) |>
 #'   sub_small_vals(
 #'     threshold = 0.0005,
 #'     small_pattern = "smol"
@@ -308,7 +464,10 @@ sub_zero <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-19
+#' 3-24
+#'
+#' @section Function Introduced:
+#' `v0.6.0` (May 24, 2022)
 #'
 #' @import rlang
 #' @export
@@ -423,26 +582,76 @@ sub_small_vals <- function(
 #' Substitute large values in the table body
 #'
 #' @description
+#'
 #' Wherever there are numerical data that are very large in value, replacement
 #' text may be better for explanatory purposes. The `sub_large_vals()` function
 #' allows for this replacement through specification of a `threshold`, a
 #' `large_pattern`, and the sign (positive or negative) of the values to be
 #' considered.
 #'
-#' @details
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). Conditional
-#' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
-#'
 #' @inheritParams fmt_number
-#' @inheritParams sub_small_vals
+#' @param columns Optional columns for constraining the targeting process.
+#'   Providing [everything()] (the default) results in cells in all `columns`
+#'   being targeting (this can be limited by `rows` however). Can either be a
+#'   series of column names provided in [c()], a vector of column indices, or a
+#'   helper function focused on selections. The select helper functions are:
+#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
+#'   [num_range()], and [everything()].
+#' @param rows Optional rows for constraining the targeting process. Providing
+#'   [everything()] (the default) results in all rows in `columns` being
+#'   targeted. Alternatively, we can supply a vector of row captions within
+#'   [c()], a vector of row indices, or a helper function focused on selections.
+#'   The select helper functions are: [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
+#'   We can also use expressions to filter down to the rows we need (e.g.,
+#'   `[colname_1] > 100 & [colname_2] < 50`).
 #' @param threshold The threshold value with which values should be considered
 #'   large enough for replacement.
 #' @param large_pattern The pattern text to be used in place of the suitably
 #'   large values in the rendered table.
+#' @param sign The sign of the numbers to be considered in the replacement. By
+#'   default, we only consider positive values (`"+"`). The other option (`"-"`)
+#'   can be used to consider only negative values.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @section Targeting cells with `columns` and `rows`:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to target a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value of 100,000 (excluding
+#' `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given substitution
+#' function will be skipped over. So it's safe to select all columns with a
+#' particular substitution function (only those values that can be substituted
+#' will be), but, you may not want that. One strategy is to work on the bulk of
+#' cell values with one substitution function and then constrain the columns for
+#' later passes with other types of substitution (the last operation done to a
+#' cell is what you get in the final output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g., `c(3,
+#' 5, 6)`) though these index values must correspond to the row numbers of the
+#' input data (the indices won't necessarily match those of rearranged rows if
+#' row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector. This is nice if you want to base
+#' the substitution on values in the column or another column, or, you'd like to
+#' use a more complex predicate expression.
 #'
 #' @section Examples:
 #'
@@ -460,9 +669,9 @@ sub_small_vals <- function(
 #' can do just that:
 #'
 #' ```r
-#' tbl %>%
-#'   gt() %>%
-#'   fmt_number(columns = num) %>%
+#' tbl |>
+#'   gt() |>
+#'   fmt_number(columns = num) |>
 #'   sub_large_vals()
 #' ```
 #'
@@ -476,10 +685,10 @@ sub_small_vals <- function(
 #' value of `">={x}"` the `">="` is automatically changed to `"<="`.
 #'
 #' ```r
-#' tbl %>%
-#'   dplyr::mutate(num = -num) %>%
-#'   gt() %>%
-#'   fmt_number(columns = num) %>%
+#' tbl |>
+#'   dplyr::mutate(num = -num) |>
+#'   gt() |>
+#'   fmt_number(columns = num) |>
 #'   sub_large_vals(sign = "-")
 #' ```
 #'
@@ -493,9 +702,9 @@ sub_small_vals <- function(
 #' omitted.
 #'
 #' ```r
-#' tbl %>%
-#'   gt() %>%
-#'   fmt_number(columns = num) %>%
+#' tbl |>
+#'   gt() |>
+#'   fmt_number(columns = num) |>
 #'   sub_large_vals(
 #'     threshold = 5E10,
 #'     large_pattern = "hugemongous"
@@ -508,7 +717,10 @@ sub_small_vals <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-20
+#' 3-25
+#'
+#' @section Function Introduced:
+#' `v0.6.0` (May 24, 2022)
 #'
 #' @import rlang
 #' @export
@@ -632,16 +844,27 @@ check_sub_fn_sign <- function(sign) {
 #' Substitute targeted values in the table body
 #'
 #' @description
-#' Should you need to replace specific cell values with something else, the
-#' `sub_values()` function is a good choice.
 #'
-#' @details
-#' Targeting of values is done through `columns` and additionally by `rows` (if
-#' nothing is provided for `rows` then entire columns are selected). Conditional
-#' formatting is possible by providing a conditional expression to the `rows`
-#' argument. See the Arguments section for more information on this.
+#' Should you need to replace specific cell values with custom text, the
+#' `sub_values()` function can be good choice. We can target cells for
+#' replacement though value, regex, and custom matching rules.
 #'
 #' @inheritParams fmt_number
+#' @param columns Optional columns for constraining the targeting process.
+#'   Providing [everything()] (the default) results in cells in all `columns`
+#'   being targeting (this can be limited by `rows` however). Can either be a
+#'   series of column names provided in [c()], a vector of column indices, or a
+#'   helper function focused on selections. The select helper functions are:
+#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
+#'   [num_range()], and [everything()].
+#' @param rows Optional rows for constraining the targeting process. Providing
+#'   [everything()] (the default) results in all rows in `columns` being
+#'   targeted. Alternatively, we can supply a vector of row captions within
+#'   [c()], a vector of row indices, or a helper function focused on selections.
+#'   The select helper functions are: [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
+#'   We can also use expressions to filter down to the rows we need (e.g.,
+#'   `[colname_1] > 100 & [colname_2] < 50`).
 #' @param values The specific value or values that should be replaced with a
 #'   `replacement` value. If `pattern` is also supplied then `values` will be
 #'   ignored.
@@ -663,6 +886,44 @@ check_sub_fn_sign <- function(sign) {
 #'   format in mind.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @section Targeting cells with `columns` and `rows`:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to target a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value of 100,000 (excluding
+#' `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given substitution
+#' function will be skipped over. So it's safe to select all columns with a
+#' particular substitution function (only those values that can be substituted
+#' will be), but, you may not want that. One strategy is to work on the bulk of
+#' cell values with one substitution function and then constrain the columns for
+#' later passes with other types of substitution (the last operation done to a
+#' cell is what you get in the final output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g., `c(3,
+#' 5, 6)`) though these index values must correspond to the row numbers of the
+#' input data (the indices won't necessarily match those of rearranged rows if
+#' row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector. This is nice if you want to base
+#' the substitution on values in the column or another column, or, you'd like to
+#' use a more complex predicate expression.
 #'
 #' @section Examples:
 #'
@@ -687,10 +948,10 @@ check_sub_fn_sign <- function(sign) {
 #' the replacement value can also be of the `numeric` or `character` types.
 #'
 #' ```r
-#' tbl %>%
-#'   gt() %>%
-#'   sub_values(values = c(74, 500), replacement = 150) %>%
-#'   sub_values(values = "B", replacement = "Bee") %>%
+#' tbl |>
+#'   gt() |>
+#'   sub_values(values = c(74, 500), replacement = 150) |>
+#'   sub_values(values = "B", replacement = "Bee") |>
 #'   sub_values(values = 800, replacement = "Eight hundred")
 #' ```
 #'
@@ -702,8 +963,8 @@ check_sub_fn_sign <- function(sign) {
 #' in `character`-based columns.
 #'
 #' ```r
-#' tbl %>%
-#'   gt() %>%
+#' tbl |>
+#'   gt() |>
 #'   sub_values(pattern = "A|C|E", replacement = "Ace")
 #' ```
 #'
@@ -717,8 +978,8 @@ check_sub_fn_sign <- function(sign) {
 #' that vector must match the length of `x`).
 #'
 #' ```r
-#' tbl %>%
-#'   gt() %>%
+#' tbl |>
+#'   gt() |>
 #'   sub_values(
 #'     fn = function(x) x >= 0 & x < 50,
 #'     replacement = "Between 0 and 50"
@@ -731,7 +992,10 @@ check_sub_fn_sign <- function(sign) {
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-21
+#' 3-26
+#'
+#' @section Function Introduced:
+#' `v0.8.0` (November 16, 2022)
 #'
 #' @import rlang
 #' @export

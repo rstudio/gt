@@ -45,14 +45,14 @@ Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header and then ex
 object with LaTeX code.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_latex <-
-  gtcars \%>\%
-  dplyr::select(mfr, model, msrp) \%>\%
-  dplyr::slice(1:5) \%>\%
-  gt() \%>\%
+  gtcars |>
+  dplyr::select(mfr, model, msrp) |>
+  dplyr::slice(1:5) |>
+  gt() |>
   tab_header(
     title = md("Data listing from **gtcars**"),
     subtitle = md("`gtcars` is an R dataset")
-  ) \%>\%
+  ) |>
   as_latex()
 }\if{html}{\out{</div>}}
 
@@ -64,6 +64,11 @@ just the LaTeX code as a single-element vector.
 \section{Function ID}{
 
 13-3
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{

@@ -1,4 +1,4 @@
-test_that("the `fmt_duration()` function works correctly with numerical inputs", {
+test_that("The `fmt_duration()` function works correctly with numerical inputs", {
 
   # Create an input tibble with a numeric column
   data_tbl_1 <-
@@ -1352,7 +1352,7 @@ test_that("the `fmt_duration()` function works correctly with numerical inputs",
   )
 })
 
-test_that("specialized handling of the `colon-sep` format works correctly", {
+test_that("Specialized handling of the `colon-sep` format works correctly", {
 
   # Create an input tibble with a numeric column
   data_tbl_1 <-
@@ -1521,7 +1521,7 @@ test_that("specialized handling of the `colon-sep` format works correctly", {
   )
 })
 
-test_that("the `fmt_duration()` function works correctly with difftime inputs", {
+test_that("The `fmt_duration()` function works correctly with difftime inputs", {
 
   dt_1 <- ISOdatetime(year = 2015, month = 6, day = 3:5, hour = 3:5, min = 5:7, sec = 25:27, tz = "GMT")
   dt_2 <- ISOdatetime(year = 2015, month = 6, day = c(5, 8, 12), hour = 5:7, min = 30:32, sec = 0:2, tz = "GMT")
@@ -1590,7 +1590,7 @@ test_that("the `fmt_duration()` function works correctly with difftime inputs", 
   )
 })
 
-test_that("the `fmt_duration()` function works well with mixed numeric/difftime inputs", {
+test_that("The `fmt_duration()` function works well with mixed numeric/difftime inputs", {
 
   dt_1 <- ISOdatetime(year = 2015, month = 6, day = 3:5, hour = 3:5, min = 5:7, sec = 25:27, tz = "GMT")
   dt_2 <- ISOdatetime(year = 2015, month = 6, day = c(5, 8, 12), hour = 5:7, min = 30:32, sec = 0:2, tz = "GMT")
@@ -1633,7 +1633,7 @@ test_that("the `fmt_duration()` function works well with mixed numeric/difftime 
   )
 })
 
-test_that("the `fmt_duration()` function will produce localized outputs", {
+test_that("The `fmt_duration()` function will produce localized outputs", {
 
   # Create an input tibble with a numeric column
   data_tbl_5 <-
@@ -1644,25 +1644,24 @@ test_that("the `fmt_duration()` function will produce localized outputs", {
   # Get a vector of some of the supported locales
   sample_locales <-
     c(
-      "agq", "ak", "am", "as", "asa", "ast", "az", "bas",
-      "be", "bem", "bez", "bg", "bm", "bn", "bo", "br", "brx", "bs",
-      "ca", "ce", "cgg", "chr", "ckb", "cs", "cy", "da", "dav", "de",
-      "dje", "dsb", "dua", "dyo", "dz", "ebu", "ee", "el", "en", "eo",
-      "es", "et", "eu", "ewo", "ff", "fi", "fil", "fo", "fr",
-      "fur", "fy", "ga", "gd", "gl", "gsw", "gu", "guz", "gv", "ha",
-      "haw", "hi", "hr", "hsb", "hu", "hy", "id", "ig", "ii",
-      "is", "it", "ja", "jgo", "jmc", "ka", "kab", "kam", "kde", "kea",
-      "khq", "ki", "kk", "kkj", "kl", "kln", "km", "kn", "ko", "kok",
-      "ksb", "ksf", "ksh", "kw", "ky", "lag", "lb", "lg", "lkt",
-      "ln", "lo", "lt", "lu", "luo", "luy", "lv", "mas", "mer", "mfe",
-      "mg", "mgh", "mgo", "mk", "ml", "mn", "mr", "ms", "mt", "mua",
-      "my", "naq", "nb", "nd", "nds", "ne", "nl", "nmg", "nn", "nnh",
-      "nus", "nyn", "om", "or", "os", "pa", "pl", "pt", "qu",
-      "rm", "rn", "ro", "rof", "ru", "rw", "rwk", "sah", "saq", "sbp",
-      "se", "seh", "ses", "sg", "shi", "si", "sk", "sl", "smn", "sn",
-      "so", "sq", "sr", "sv", "sw", "ta", "te", "teo", "tg", "th",
-      "ti", "to", "tr", "tt", "twq", "tzm", "uk", "uz", "vai", "vi",
-      "vun", "wae", "wo", "xog", "yav", "yi", "yo", "yue", "zh", "zu"
+      "af", "ak", "ar", "as", "asa", "ast", "az", "be", "bem", "bez", "bg",
+      "bm", "bn", "bo", "bs", "ca", "ccp", "ce", "ceb", "cgg", "chr",
+      "ckb", "cy", "da", "dav", "de", "dje", "dua", "dyo", "dz", "ebu",
+      "ee", "el", "en", "eo", "es", "et", "eu", "ewo", "fa", "ff",
+      "fi", "fil", "fo", "fr", "fur", "fy", "ga", "gd", "gl", "gsw",
+      "guz", "gv", "haw", "he", "hi", "hr", "hsb", "hy", "id", "ig",
+      "ii", "it", "ja", "jgo", "jmc", "jv", "ka", "kab", "kam", "kde",
+      "kea", "kgp", "khq", "ki", "kk", "kkj", "kl", "kln", "km", "kn",
+      "ko", "kok", "ks", "ksf", "ksh", "ky", "lag", "lb", "lkt", "ln",
+      "lo", "lt", "lu", "luo", "luy", "lv", "mai", "mer", "mfe", "mg",
+      "mgh", "mk", "ml", "mn", "mni", "mt", "mua", "my", "mzn", "naq",
+      "nb", "nd", "ne", "nl", "nn", "nnh", "no", "nus", "om", "or",
+      "os", "pa", "pcm", "pl", "pt", "rm", "rn", "ro", "rof", "rw",
+      "rwk", "sa", "sah", "saq", "sat", "sbp", "sc", "sd", "se", "seh",
+      "ses", "sg", "shi", "si", "sk", "sl", "smn", "sn", "so", "sq",
+      "su", "sw", "ta", "te", "tg", "ti", "tk", "to", "tr", "tt", "twq",
+      "tzm", "ug", "uk", "und", "ur", "uz", "vai", "vi", "vun", "wae",
+      "wo", "xog", "yav", "yo", "yrl", "yue", "zgh", "zh", "zu"
     )
 
   # Replicate single column to match number of locales and rename columns
@@ -1675,7 +1674,8 @@ test_that("the `fmt_duration()` function will produce localized outputs", {
   # Create two `gt_tbl` objects with `gt()` and the `data_tbl_5` dataset
   tab_narrow <- tab_wide <- gt(data_tbl_5)
 
-  # Ensure outputs are correctly localized for the `"narrow"` duration style
+  # Ensure outputs are correctly localized for the 'narrow'
+  # and 'wide' duration styles
   for (i in seq_along(sample_locales)) {
 
     tab_narrow <-
@@ -1697,10 +1697,12 @@ test_that("the `fmt_duration()` function will produce localized outputs", {
   tab_narrow <-
     tab_narrow %>%
     cols_width(everything() ~ px(175)) %>%
+    cols_align(align = "left", columns = everything()) %>%
     tab_style(style = cell_text(size = "smaller"), locations = cells_body())
   tab_wide <-
     tab_wide %>%
     cols_width(everything() ~ px(275)) %>%
+    cols_align(align = "left", columns = everything()) %>%
     tab_style(style = cell_text(size = "smaller"), locations = cells_body())
 
   # Perform snapshot tests
@@ -1708,7 +1710,7 @@ test_that("the `fmt_duration()` function will produce localized outputs", {
   tab_wide %>% render_as_html() %>% expect_snapshot()
 })
 
-test_that("the `fmt_duration()` function will error in specific cases", {
+test_that("The `fmt_duration()` function will error in specific cases", {
 
   dt_1 <- ISOdatetime(year = 2015, month = 6, day = 3:5, hour = 3:5, min = 5:7, sec = 25:27, tz = "GMT")
   dt_2 <- ISOdatetime(year = 2015, month = 6, day = c(5, 8, 12), hour = 5:7, min = 30:32, sec = 0:2, tz = "GMT")

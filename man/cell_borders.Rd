@@ -14,11 +14,11 @@ selected cells, we can use the \code{"all"} option.}
 \item{color, style, weight}{The border color, style, and weight. The \code{color}
 can be defined with a color name or with a hexadecimal color code. The
 default \code{color} value is \code{"#000000"} (black). The \code{style} can be one of
-either \code{"solid"} (the default), \code{"dashed"}, \code{"dotted"}, or \code{"hidden"}.
-The \code{weight} of the border lines is to be given in pixel values (the
-\code{\link[=px]{px()}} helper function is useful for this. The default value for \code{weight}
-is \code{"1px"}. Borders for any defined \code{sides} can be removed by supplying
-\code{NULL} to any of \code{color}, \code{style}, or \code{weight}.}
+either \code{"solid"} (the default), \code{"dashed"}, \code{"dotted"}, \code{"hidden"}, or
+\code{"double"}. The \code{weight} of the border lines is to be given in pixel values
+(the \code{\link[=px]{px()}} helper function is useful for this. The default value for
+\code{weight} is \code{"1px"}. Borders for any defined \code{sides} can be removed by
+supplying \code{NULL} to any of \code{color}, \code{style}, or \code{weight}.}
 }
 \value{
 A list object of class \code{cell_styles}.
@@ -38,9 +38,8 @@ borders can then be modified.
 Add horizontal border lines for all table body rows in \code{\link{exibble}} using
 \code{\link[=tab_style]{tab_style()}} and \code{cell_borders()}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  gt() \%>\%
-  tab_options(row.striping.include_table_body = FALSE) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt() |>
   tab_style(
     style = cell_borders(
       sides = c("top", "bottom"),
@@ -63,8 +62,8 @@ Incorporate different horizontal and vertical borders at several locations.
 This uses multiple \code{cell_borders()} and \code{\link[=cells_body]{cells_body()}} calls within
 \code{list()}s.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt() |>
   tab_style(
     style = list(
       cell_borders(
@@ -99,6 +98,11 @@ This uses multiple \code{cell_borders()} and \code{\link[=cells_body]{cells_body
 \section{Function ID}{
 
 7-22
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{

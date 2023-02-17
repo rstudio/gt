@@ -1,5 +1,7 @@
 #' Helper function for adding an image from the web
 #'
+#' @description
+#'
 #' We can flexibly add a web image inside of a table with `web_image()`
 #' function. The function provides a convenient way to generate an HTML fragment
 #' with an image URL. Because this function is currently HTML-based, it is only
@@ -42,8 +44,8 @@
 #' dplyr::tibble(
 #'   pixels = px(seq(10, 35, 5)),
 #'   image = seq(10, 35, 5)
-#' ) %>%
-#'   gt() %>%
+#' ) |>
+#'   gt() |>
 #'   text_transform(
 #'     locations = cells_body(columns = image),
 #'     fn = function(x) {
@@ -74,8 +76,8 @@
 #' dplyr::tibble(
 #'   pixels = px(seq(10, 35, 5)),
 #'   image = seq(10, 35, 5)
-#' ) %>%
-#'   gt() %>%
+#' ) |>
+#'   gt() |>
 #'   tab_header(
 #'     title = html(
 #'       "<strong>R Logo</strong>",
@@ -88,7 +90,7 @@
 #'       web_image(
 #'         url = r_svg_url,
 #'         height = px(12)
-#'       ) %>%
+#'       ) |>
 #'         rep(5)
 #'     )
 #'   )
@@ -101,6 +103,9 @@
 #' @family image addition functions
 #' @section Function ID:
 #' 8-1
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
 web_image <- function(
@@ -116,6 +121,8 @@ web_image <- function(
 }
 
 #' Helper function for adding a local image
+#'
+#' @description
 #'
 #' We can flexibly add a local image (i.e., an image residing on disk) inside of
 #' a table with `local_image()` function. The function provides a convenient way
@@ -155,8 +162,8 @@ web_image <- function(
 #' dplyr::tibble(
 #'   pixels = px(seq(10, 35, 5)),
 #'   image = seq(10, 35, 5)
-#' ) %>%
-#'   gt() %>%
+#' ) |>
+#'   gt() |>
 #'   text_transform(
 #'     locations = cells_body(columns = image),
 #'     fn = function(x) {
@@ -175,6 +182,9 @@ web_image <- function(
 #' @family image addition functions
 #' @section Function ID:
 #' 8-2
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
 local_image <- function(
@@ -197,6 +207,8 @@ local_image <- function(
 }
 
 #' Helper function for adding a ggplot
+#'
+#' @description
 #'
 #' We can add a **ggplot2** plot inside of a table with the help of the
 #' `ggplot_image()` function. The function provides a convenient way to generate
@@ -257,12 +269,12 @@ local_image <- function(
 #' dplyr::tibble(
 #'   text = "Here is a ggplot:",
 #'   ggplot = NA
-#' ) %>%
-#'   gt() %>%
+#' ) |>
+#'   gt() |>
 #'   text_transform(
 #'     locations = cells_body(columns = ggplot),
 #'     fn = function(x) {
-#'       plot_object %>%
+#'       plot_object |>
 #'         ggplot_image(height = px(200))
 #'     }
 #'   )
@@ -276,7 +288,9 @@ local_image <- function(
 #' @section Function ID:
 #' 8-3
 #'
-#' @importFrom ggplot2 ggsave
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @export
 ggplot_image <- function(
     plot_object,
@@ -321,6 +335,8 @@ ggplot_image <- function(
 
 #' Generate a path to a test image
 #'
+#' @description
+#'
 #' Two test images are available within the **gt** package. Both contain the
 #' same imagery (sized at 200px by 200px) but one is a PNG file while the other
 #' is an SVG file. This function is most useful when paired with [local_image()]
@@ -335,10 +351,13 @@ ggplot_image <- function(
 #' @section Function ID:
 #' 8-4
 #'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @export
 test_image <- function(type = c("png", "svg")) {
 
-  type <- match.arg(type)
+  type <- rlang::arg_match(type)
 
   system_file(file = paste0("graphics/test_image.", type))
 }

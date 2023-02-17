@@ -4,7 +4,7 @@
 \alias{cols_merge_n_pct}
 \title{Merge two columns to combine counts and percentages}
 \usage{
-cols_merge_n_pct(data, col_n, col_pct, autohide = TRUE)
+cols_merge_n_pct(data, col_n, col_pct, rows = everything(), autohide = TRUE)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -14,6 +14,15 @@ cols_merge_n_pct(data, col_n, col_pct, autohide = TRUE)
 \item{col_pct}{A column that contains values for the percentage component.
 This column should be formatted such that percentages are displayed (e.g.,
 with \code{fmt_percent()}).}
+
+\item{rows}{Rows that will participate in the merging process. Providing
+\code{\link[=everything]{everything()}} (the default) results in all rows in \code{columns} undergoing
+merging. Alternatively, we can supply a vector of row identifiers within
+\code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on selections.
+The select helper functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.
+We can also use a standalone predicate expression to filter down to the
+rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{autohide}{An option to automatically hide the column specified as
 \code{col_pct}. Any columns with their state changed to hidden will behave
@@ -30,7 +39,9 @@ merges them into a single column. What results is a column containing both
 counts and their associated percentages (e.g., \verb{12 (23.2\%)}). The column
 specified in \code{col_pct} is dropped from the output table.
 }
-\details{
+\section{Comparison with other column-merging functions}{
+
+
 This function could be somewhat replicated using \code{\link[=cols_merge]{cols_merge()}}, however,
 \code{cols_merge_n_pct()} employs the following specialized semantics for \code{NA}
 and zero-value handling:
@@ -55,11 +66,12 @@ recalculates values in either). Formatting of each column can be done
 independently in separate \code{\link[=fmt_number]{fmt_number()}} and \code{\link[=fmt_percent]{fmt_percent()}} calls.
 
 This function is part of a set of four column-merging functions. The other
-two are the general \code{\link[=cols_merge]{cols_merge()}} function and the specialized
+three are the general \code{\link[=cols_merge]{cols_merge()}} function and the specialized
 \code{\link[=cols_merge_uncert]{cols_merge_uncert()}} and \code{\link[=cols_merge_range]{cols_merge_range()}} functions. These functions
 operate similarly, where the non-target columns can be optionally hidden from
 the output table through the \code{hide_columns} or \code{autohide} options.
 }
+
 \section{Examples}{
 
 
@@ -68,36 +80,36 @@ percentages of the top 3 pizzas sold by pizza category in 2015. The
 \code{cols_merge_n_pct()} function is used to merge the \code{n} and \code{frac} columns
 (and the \code{frac} column is formatted using \code{\link[=fmt_percent]{fmt_percent()}}).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
-  dplyr::group_by(name, type, price) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
+  dplyr::group_by(name, type, price) |>
   dplyr::summarize(
     n = dplyr::n(),
-    frac = n/nrow(.),
+    frac = n/nrow(pizzaplace),
     .groups = "drop"
-  ) \%>\%
-  dplyr::arrange(type, dplyr::desc(n)) \%>\%
-  dplyr::group_by(type) \%>\%
-  dplyr::slice_head(n = 3) \%>\%
+  ) |>
+  dplyr::arrange(type, dplyr::desc(n)) |>
+  dplyr::group_by(type) |>
+  dplyr::slice_head(n = 3) |>
   gt(
     rowname_col = "name",
     groupname_col = "type"
-  ) \%>\%
-  fmt_currency(price) \%>\%
-  fmt_percent(frac) \%>\%
+  ) |>
+  fmt_currency(price) |>
+  fmt_percent(frac) |>
   cols_merge_n_pct(
     col_n = n,
     col_pct = frac
-  ) \%>\%
+  ) |>
   cols_label(
     n = md("*N* (\%)"),
     price = "Price"
-  ) \%>\%
+  ) |>
   tab_style(
     style = cell_text(font = "monospace"),
     locations = cells_stub()
-  ) \%>\%
-  tab_stubhead(md("Cat. and  \\nPizza Code")) \%>\%
-  tab_header(title = "Top 3 Pizzas Sold by Category in 2015") \%>\%
+  ) |>
+  tab_stubhead(md("Cat. and  \\nPizza Code")) |>
+  tab_header(title = "Top 3 Pizzas Sold by Category in 2015") |>
   tab_options(table.width = px(512))
 }\if{html}{\out{</div>}}
 
@@ -108,7 +120,12 @@ percentages of the top 3 pizzas sold by pizza category in 2015. The
 
 \section{Function ID}{
 
-4-12
+4-14
+}
+
+\section{Function Introduced}{
+
+\code{v0.3.0} (May 12, 2021)
 }
 
 \seealso{
@@ -116,6 +133,7 @@ Other column modification functions:
 \code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
+\code{\link{cols_label_with}()},
 \code{\link{cols_label}()},
 \code{\link{cols_merge_range}()},
 \code{\link{cols_merge_uncert}()},

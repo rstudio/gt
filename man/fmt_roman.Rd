@@ -6,7 +6,7 @@
 \usage{
 fmt_roman(
   data,
-  columns,
+  columns = everything(),
   rows = everything(),
   case = c("upper", "lower"),
   pattern = "{x}"
@@ -44,13 +44,54 @@ An object of class \code{gt_tbl}.
 With numeric values in a \strong{gt} table we can transform those to Roman
 numerals, rounding values as necessary.
 }
-\section{Targeting the values to be formatted}{
+\section{Compatibility of formatting function with data values}{
+
+
+The \code{fmt_roman()} formatting function is compatible with body cells that are
+of the \code{"numeric"} or \code{"integer"} types. Any other types of body cells are
+ignored during formatting. This is to say that cells of incompatible data
+types may be targeted, but there will be no attempt to format them.
+}
+
+\section{Targeting cells with \code{columns} and \code{rows}}{
 
 
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
-nothing is provided for \code{rows} then entire columns are selected). Conditional
-formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the \emph{Arguments} section for more information on this.
+nothing is provided for \code{rows} then entire columns are selected). The
+\code{columns} argument allows us to target a subset of cells contained in the
+resolved columns. We say resolved because aside from declaring column names
+in \code{c()} (with bare column names or names in quotes) we can use
+\strong{tidyselect}-style expressions. This can be as basic as supplying a select
+helper like \code{starts_with()}, or, providing a more complex incantation like
+
+\code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
+
+which targets numeric columns that have a maximum value of 100,000 (excluding
+\code{NA}s from consideration).
+
+By default all columns and rows are selected (with the \code{everything()}
+defaults). Cell values that are incompatible with a given formatting function
+will be skipped over, like \code{character} values and numeric \verb{fmt_*()}
+functions. So it's safe to select all columns with a particular formatting
+function (only those values that can be formatted will be formatted), but,
+you may not want that. One strategy is to format the bulk of cell values with
+one formatting function and then constrain the columns for later passes with
+other types of formatting (the last formatting done to a cell is what you get
+in the final output).
+
+Once the columns are targeted, we may also target the \code{rows} within those
+columns. This can be done in a variety of ways. If a stub is present, then we
+potentially have row identifiers. Those can be used much like column names in
+the \code{columns}-targeting scenario. We can use simpler \strong{tidyselect}-style
+expressions (the select helpers should work well here) and we can use quoted
+row identifiers in \code{c()}. It's also possible to use row indices (e.g.,
+\code{c(3, 5, 6)}) though these index values must correspond to the row numbers of
+the input data (the indices won't necessarily match those of rearranged rows
+if row groups are present). One more type of expression is possible, an
+expression that takes column values (can involve any of the available columns
+in the table) and returns a logical vector. This is nice if you want to base
+formatting on values in the column or another column, or, you'd like to use a
+more complex predicate expression.
 }
 
 \section{Examples}{
@@ -59,8 +100,8 @@ argument. See the \emph{Arguments} section for more information on this.
 Create a tibble of small numeric values and generate a \strong{gt} table. Format
 the \code{roman} column to appear as Roman numerals with \code{fmt_roman()}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(arabic = c(1, 8, 24, 85), roman = arabic) \%>\%
-  gt(rowname_col = "arabic") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(arabic = c(1, 8, 24, 85), roman = arabic) |>
+  gt(rowname_col = "arabic") |>
   fmt_roman(columns = roman)
 }\if{html}{\out{</div>}}
 
@@ -74,9 +115,17 @@ the \code{roman} column to appear as Roman numerals with \code{fmt_roman()}.
 3-9
 }
 
+\section{Function Introduced}{
+
+\code{v0.8.0} (November 16, 2022)
+}
+
 \seealso{
+The vector-formatting version of this function: \code{\link[=vec_fmt_roman]{vec_fmt_roman()}}.
+
 Other data formatting functions: 
 \code{\link{data_color}()},
+\code{\link{fmt_auto}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
@@ -84,6 +133,7 @@ Other data formatting functions:
 \code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},
@@ -91,7 +141,9 @@ Other data formatting functions:
 \code{\link{fmt_passthrough}()},
 \code{\link{fmt_percent}()},
 \code{\link{fmt_scientific}()},
+\code{\link{fmt_spelled_num}()},
 \code{\link{fmt_time}()},
+\code{\link{fmt_url}()},
 \code{\link{fmt}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},

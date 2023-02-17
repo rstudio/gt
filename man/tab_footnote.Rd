@@ -70,21 +70,19 @@ Use \code{\link{sza}} to create a \strong{gt} table. Color the \code{sza} column
 \code{\link[=data_color]{data_color()}} function, then, use \code{tab_footnote()} to add a footnote to the
 \code{sza} column label (explaining what the color scale signifies).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza |>
   dplyr::filter(
     latitude == 20 &
       month == "jan" &
       !is.na(sza)
-  ) \%>\%
-  dplyr::select(-latitude, -month) \%>\%
-  gt() \%>\%
+  ) |>
+  dplyr::select(-latitude, -month) |>
+  gt() |>
   data_color(
     columns = sza,
-    colors = scales::col_numeric(
-      palette = c("white", "yellow", "navyblue"),
-      domain = c(0, 90)
-    )
-  ) \%>\%
+    palette = c("white", "yellow", "navyblue"),
+    domain = c(0, 90)
+  ) |>
   tab_footnote(
     footnote = "Color indicates height of sun.",
     locations = cells_column_labels(
@@ -103,10 +101,16 @@ Use \code{\link{sza}} to create a \strong{gt} table. Color the \code{sza} column
 2-7
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other part creation/modification functions: 
 \code{\link{tab_caption}()},
 \code{\link{tab_header}()},
+\code{\link{tab_info}()},
 \code{\link{tab_options}()},
 \code{\link{tab_row_group}()},
 \code{\link{tab_source_note}()},
@@ -114,6 +118,7 @@ Other part creation/modification functions:
 \code{\link{tab_spanner}()},
 \code{\link{tab_stub_indent}()},
 \code{\link{tab_stubhead}()},
+\code{\link{tab_style_body}()},
 \code{\link{tab_style}()}
 }
 \concept{part creation/modification functions}

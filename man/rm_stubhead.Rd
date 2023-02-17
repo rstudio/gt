@@ -30,10 +30,10 @@ to add a stubhead label. This appears in the top-left and can be used to
 describe what is in the stub.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
-  gtcars \%>\%
-  dplyr::select(model, year, hp, trq) \%>\%
-  dplyr::slice(1:5) \%>\%
-  gt(rowname_col = "model") \%>\%
+  gtcars |>
+  dplyr::select(model, year, hp, trq) |>
+  dplyr::slice(1:5) |>
+  gt(rowname_col = "model") |>
   tab_stubhead(label = "car")
 
 gt_tbl
@@ -57,6 +57,11 @@ it can be removed with the \code{rm_stubhead()} function.
 \section{Function ID}{
 
 6-2
+}
+
+\section{Function Introduced}{
+
+\code{v0.8.0} (November 16, 2022)
 }
 
 \seealso{

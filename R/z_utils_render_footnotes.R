@@ -381,8 +381,7 @@ resolve_footnotes_styles <- function(data, tbl_type) {
 }
 
 #' @noRd
-set_footnote_marks_columns <- function(data,
-                                       context = "html") {
+set_footnote_marks_columns <- function(data, context = "html") {
 
   boxh <- dt_boxhead_get(data = data)
   footnotes_tbl <- dt_footnotes_get(data = data)
@@ -483,8 +482,7 @@ set_footnote_marks_columns <- function(data,
 #' Set footnote marks for the stubhead
 #'
 #' @noRd
-set_footnote_marks_stubhead <- function(data,
-                                        context = "html") {
+set_footnote_marks_stubhead <- function(data, context = "html") {
 
   footnotes_tbl <- dt_footnotes_get(data = data)
   stubhead <- dt_stubhead_get(data = data)
@@ -614,8 +612,7 @@ apply_footnotes_to_output <- function(data, context = "html") {
 }
 
 #' @noRd
-set_footnote_marks_row_groups <- function(data,
-                                          context = "html") {
+set_footnote_marks_row_groups <- function(data, context = "html") {
 
   groups_rows_df <- dt_groups_rows_get(data = data)
   footnotes_tbl <- dt_footnotes_get(data = data)
@@ -659,8 +656,7 @@ set_footnote_marks_row_groups <- function(data,
 #' Apply footnotes to the summary rows
 #'
 #' @noRd
-apply_footnotes_to_summary <- function(data,
-                                       context = "html") {
+apply_footnotes_to_summary <- function(data, context = "html") {
 
   list_of_summaries <- dt_summary_df_get(data = data)
   footnotes_tbl <- dt_footnotes_get(data = data)

@@ -12,7 +12,7 @@ expect_caption_eq <- function(caption, expected) {
   )
 }
 
-test_that("a caption can be added/removed with `tab_caption()`/`rm_caption()`", {
+test_that("A caption can be added/removed with `tab_caption()`/`rm_caption()`", {
 
   # Create a table and add a caption
   tbl_1 <-

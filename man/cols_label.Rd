@@ -29,7 +29,9 @@ provides the flexibility to relabel one or more columns and we even have the
 option to use the \code{\link[=md]{md()}} or \code{\link[=html]{html()}} helper functions for rendering column
 labels from Markdown or using HTML.
 }
-\details{
+\section{A note on column names and column labels}{
+
+
 It's important to note that while columns can be freely relabeled, we
 continue to refer to columns by their original column names. Column names in
 a tibble or data frame must be unique whereas column labels in \strong{gt} have
@@ -40,17 +42,18 @@ between columns in other \strong{gt} function calls (e.g., in all of the
 \verb{fmt*()} functions) even though we may lose distinguishability in column
 labels once they have been relabeled.
 }
+
 \section{Examples}{
 
 
 Use \code{\link{countrypops}} to create a \strong{gt} table. Relabel all the table's columns
 with the \code{cols_label()} function to improve its presentation.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::select(-contains("code")) \%>\%
-  dplyr::filter(country_name == "Mongolia") \%>\%
-  tail(5) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::select(-contains("code")) |>
+  dplyr::filter(country_name == "Mongolia") |>
+  tail(5) |>
+  gt() |>
   cols_label(
     country_name = "Name",
     year = "Year",
@@ -66,11 +69,11 @@ Using \code{\link{countrypops}} again to create a \strong{gt} table, we label co
 as before but this time make the column labels bold through Markdown
 formatting.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::select(-contains("code")) \%>\%
-  dplyr::filter(country_name == "Mongolia") \%>\%
-  tail(5) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::select(-contains("code")) |>
+  dplyr::filter(country_name == "Mongolia") |>
+  tail(5) |>
+  gt() |>
   cols_label(
     country_name = md("**Name**"),
     year = md("**Year**"),
@@ -88,11 +91,17 @@ formatting.
 4-4
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other column modification functions: 
 \code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
+\code{\link{cols_label_with}()},
 \code{\link{cols_merge_n_pct}()},
 \code{\link{cols_merge_range}()},
 \code{\link{cols_merge_uncert}()},

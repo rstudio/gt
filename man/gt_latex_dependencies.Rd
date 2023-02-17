@@ -39,7 +39,7 @@ gt_latex_dependencies()
 \begin{document}
 
 <<results='asis', echo=FALSE>>=
-exibble %>% gt()
+gt(exibble)
  @
 
 \end{document}
@@ -48,6 +48,11 @@ exibble %>% gt()
 \section{Function ID}{
 
 7-26
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{

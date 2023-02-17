@@ -25,16 +25,17 @@ tbl_summary <-
     fns = list(
       min = ~min(.),
       max = ~max(.),
-      avg = ~mean(.)),
-    formatter = fmt_number,
-    use_seps = FALSE
+      avg = ~mean(.)
+    ),
+    fmt = list(~ fmt_number(., use_seps = FALSE))
   ) %>%
   grand_summary_rows(
     columns = currency,
     fns = list(
       min = ~min(., na.rm = TRUE),
       max = ~max(., na.rm = TRUE)
-    )
+    ),
+    fmt = list(~ fmt_number(.))
   )
 
 # Gets the HTML attr value from a single key
@@ -43,7 +44,7 @@ selection_value <- function(html, key) {
   rvest::html_attr(rvest::html_nodes(html, selection), key)
 }
 
-test_that("the `cells_title()` function works correctly", {
+test_that("The `cells_title()` function works correctly", {
 
   # Create a `cells_title` object with the `title` option
   helper_cells_title <- cells_title(groups = "title")
@@ -100,7 +101,7 @@ test_that("the `cells_title()` function works correctly", {
   expect_error(cells_title(groups = character(0)))
 })
 
-test_that("the `cells_column_labels()` function works correctly", {
+test_that("The `cells_column_labels()` function works correctly", {
 
   # Create a `cells_column_labels` object with names provided to `columns`
   helper_cells_column_labels <-
@@ -158,7 +159,7 @@ test_that("the `cells_column_labels()` function works correctly", {
     expect_equal(c("group_1", "group_2"))
 })
 
-test_that("the `cells_row_groups()` function works correctly", {
+test_that("The `cells_row_groups()` function works correctly", {
 
   # Create a `cells_row_groups` object with names provided to `groups`
   helper_cells_row_groups <- cells_row_groups(groups = c("group_1", "group_2"))
@@ -186,7 +187,7 @@ test_that("the `cells_row_groups()` function works correctly", {
     expect_equal(c("group_1", "group_2"))
 })
 
-test_that("the `cells_stub()` function works correctly", {
+test_that("The `cells_stub()` function works correctly", {
 
   # Create a `cells_stub` object with names provided to `rows`
   helper_cells_stub <- cells_stub(rows = c("row_1", "row_2"))
@@ -214,7 +215,7 @@ test_that("the `cells_stub()` function works correctly", {
     expect_equal(c("row_1", "row_2"))
 })
 
-test_that("the `cells_body()` function works correctly", {
+test_that("The `cells_body()` function works correctly", {
 
   # Create a `cells_body` object with names provided to `columns`
   helper_cells_body <- cells_body(columns = c("col_1", "col_2"))
@@ -280,7 +281,7 @@ test_that("the `cells_body()` function works correctly", {
     expect_equal(c("row_1", "row_2"))
 })
 
-test_that("the `cells_summary()` function works correctly", {
+test_that("The `cells_summary()` function works correctly", {
 
   # Create a `cells_summary` object with names provided to `columns`
   helper_cells_summary <-
@@ -333,7 +334,7 @@ test_that("the `cells_summary()` function works correctly", {
     )
 })
 
-test_that("the `cells_grand_summary()` function works correctly", {
+test_that("The `cells_grand_summary()` function works correctly", {
 
   # Create a `cells_grand_summary` object with names provided to `columns`
   helper_cells_grand_summary <-
@@ -375,7 +376,7 @@ test_that("the `cells_grand_summary()` function works correctly", {
     )
 })
 
-test_that("the `cells_stubhead()` function works correctly", {
+test_that("The `cells_stubhead()` function works correctly", {
 
   # Create a `cells_stubhead` object
   helper_cells_stubhead <- cells_stubhead()
@@ -402,7 +403,7 @@ test_that("the `cells_stubhead()` function works correctly", {
     expect_equal("stubhead")
 })
 
-test_that("styles are correctly applied to HTML output with location functions", {
+test_that("Styles are correctly applied to HTML output with location functions", {
 
   check_suggests()
 
@@ -611,7 +612,7 @@ test_that("styles are correctly applied to HTML output with location functions",
         cell_text(size = px(20), color = "white"),
         cell_fill(color = "#FFA500")
       ),
-      locations = cells_row_groups(groups = TRUE)
+      locations = cells_row_groups()
     )
 
   # Expect that the styling was applied to the correct row group

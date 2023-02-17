@@ -18,8 +18,7 @@ the position and context wherein this call is made determines the where the
 ID given during the \code{\link[=render_gt]{render_gt()}} call is needed as the \code{outputId} in
 \code{gt_output()} (e.g., \strong{server}: \verb{output$<id> <- render_gt(...)}; \strong{ui}:
 \verb{gt_output(outputId = "<id>"}).
-}
-\details{
+
 We need to ensure that we have the \strong{shiny} package installed first. This
 is easily by using \code{install.packages("shiny")}. More information on creating
 Shiny apps can be found at the \href{https://shiny.rstudio.com}{Shiny Site}.
@@ -35,18 +34,15 @@ expression.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{library(shiny)
 
 gt_tbl <-
-  gtcars \%>\%
-  gt() \%>\%
-  cols_hide(contains("_"))
+  gtcars |>
+  gt() |>
+  cols_hide(columns = contains("_"))
 
 ui <- fluidPage(
-
   gt_output(outputId = "table")
 )
 
-server <- function(input,
-                   output,
-                   session) \{
+server <- function(input, output, session) \{
 
   output$table <-
     render_gt(
@@ -61,6 +57,11 @@ server <- function(input,
 \section{Function ID}{
 
 12-2
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{

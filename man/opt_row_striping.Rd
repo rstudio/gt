@@ -19,7 +19,7 @@ An object of class \code{gt_tbl}.
 By default, a \strong{gt} table does not have row striping enabled. However, this
 function allows us to easily enable or disable striped rows in the table
 body. This function serves as a convenient shortcut for
-\verb{<gt_tbl> \%>\% tab_options(row.striping.include_table_body = TRUE|FALSE)}.
+\verb{<gt_tbl> |> tab_options(row.striping.include_table_body = TRUE|FALSE)}.
 }
 \section{Examples}{
 
@@ -28,29 +28,26 @@ Use \code{\link{exibble}} to create a \strong{gt} table with a number of table p
 Next, we add row striping to every second row with the \code{opt_row_striping()}
 function.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  gt(rowname_col = "row", groupname_col = "group") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt(rowname_col = "row", groupname_col = "group") |>
   summary_rows(
     groups = "grp_a",
     columns = c(num, currency),
-    fns = list(
-      min = ~min(., na.rm = TRUE),
-      max = ~max(., na.rm = TRUE)
-    )) \%>\%
+    fns = c("min", "max")
+  ) |>
   grand_summary_rows(
     columns = currency,
-    fns = list(
-      total = ~sum(., na.rm = TRUE)
-    )) \%>\%
-  tab_source_note(source_note = "This is a source note.") \%>\%
+    fns = total ~ sum(., na.rm = TRUE)
+  ) |>
+  tab_source_note(source_note = "This is a source note.") |>
   tab_footnote(
     footnote = "This is a footnote.",
     locations = cells_body(columns = 1, rows = 1)
-  ) \%>\%
+  ) |>
   tab_header(
     title = "The title of the table",
     subtitle = "The table's subtitle"
-  ) \%>\%
+  ) |>
   opt_row_striping()
 }\if{html}{\out{</div>}}
 
@@ -61,7 +58,12 @@ function.
 
 \section{Function ID}{
 
-9-2
+9-4
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
@@ -71,6 +73,7 @@ Other table option functions:
 \code{\link{opt_css}()},
 \code{\link{opt_footnote_marks}()},
 \code{\link{opt_horizontal_padding}()},
+\code{\link{opt_interactive}()},
 \code{\link{opt_stylize}()},
 \code{\link{opt_table_font}()},
 \code{\link{opt_table_lines}()},

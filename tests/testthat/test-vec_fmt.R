@@ -833,7 +833,7 @@ test_that("The `vec_fmt_scientific()` function works", {
       )
     )
 
-  vec_fmt_scientific(vec_num_4_m, force_sign = TRUE, output = "plain") %>%
+  vec_fmt_scientific(vec_num_4_m, force_sign_m = TRUE, output = "plain") %>%
     expect_equal(
       c(
         "-2.50 \U000D7 10^6", "-2.00 \U000D7 10^6",
@@ -845,7 +845,7 @@ test_that("The `vec_fmt_scientific()` function works", {
       )
     )
 
-  vec_fmt_scientific(vec_num_4_m, force_sign = TRUE, output = "html") %>%
+  vec_fmt_scientific(vec_num_4_m, force_sign_m = TRUE, output = "html") %>%
     expect_equal(
       c(
         paste0("\U02212", "2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
@@ -863,7 +863,7 @@ test_that("The `vec_fmt_scientific()` function works", {
       )
     )
 
-  vec_fmt_scientific(vec_num_4_m, force_sign = TRUE, output = "latex") %>%
+  vec_fmt_scientific(vec_num_4_m, force_sign_m = TRUE, output = "latex") %>%
     expect_equal(
       c(
         "$-2.50 \\times 10^{6}$", "$-2.00 \\times 10^{6}$", "$-1.50 \\times 10^{6}$",
@@ -873,7 +873,7 @@ test_that("The `vec_fmt_scientific()` function works", {
       )
     )
 
-  vec_fmt_scientific(vec_num_4_m, force_sign = TRUE, output = "rtf") %>%
+  vec_fmt_scientific(vec_num_4_m, force_sign_m = TRUE, output = "rtf") %>%
     expect_equal(
       c(
         "-2.50 \\'d7 10{\\super 6}", "-2.00 \\'d7 10{\\super 6}", "-1.50 \\'d7 10{\\super 6}",
@@ -1192,7 +1192,7 @@ test_that("The `vec_fmt_engineering()` function works", {
       )
     )
 
-  vec_fmt_engineering(vec_num_4, force_sign = TRUE, output = "plain") %>%
+  vec_fmt_engineering(vec_num_4, force_sign_m = TRUE, output = "plain") %>%
     expect_equal(
       c(
         "-2.50 \U000D7 10^6", "-2.00 \U000D7 10^6",
@@ -1204,7 +1204,7 @@ test_that("The `vec_fmt_engineering()` function works", {
       )
     )
 
-  vec_fmt_engineering(vec_num_4, force_sign = TRUE, output = "html") %>%
+  vec_fmt_engineering(vec_num_4, force_sign_m = TRUE, output = "html") %>%
     expect_equal(
       c(
         paste0("\U02212", "2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
@@ -1222,7 +1222,7 @@ test_that("The `vec_fmt_engineering()` function works", {
       )
     )
 
-  vec_fmt_engineering(vec_num_4, force_sign = TRUE, output = "latex") %>%
+  vec_fmt_engineering(vec_num_4, force_sign_m = TRUE, output = "latex") %>%
     expect_equal(
       c(
         "$-2.50 \\times 10^{6}$", "$-2.00 \\times 10^{6}$",
@@ -1233,7 +1233,7 @@ test_that("The `vec_fmt_engineering()` function works", {
       )
     )
 
-  vec_fmt_engineering(vec_num_4, force_sign = TRUE, output = "rtf") %>%
+  vec_fmt_engineering(vec_num_4, force_sign_m = TRUE, output = "rtf") %>%
     expect_equal(
       c(
         "-2.50 \\'d7 10{\\super 6}", "-2.00 \\'d7 10{\\super 6}",
@@ -3294,54 +3294,54 @@ test_that("The `vec_fmt_roman()` function works", {
 
   vec_roman <- c(1, 4, 5, 8, 12, 20, 0, -5, 1.3, NA, 3799, 3800, 1e6)
 
-  vec_fmt_roman(vec_num_1, output = "plain") %>%
+  vec_fmt_roman(vec_roman, output = "plain") %>%
     expect_equal(
       c(
-        "III", "II", "II", "I", "I", "N", "I", "I", "II", "II", "III",
-        "NA", "Inf"
+        "I", "IV", "V", "VIII", "XII", "XX", "N", "V", "I", "NA", "MMMDCCXCIX",
+        "MMMDCCC", "ex terminis"
       )
     )
 
   expect_equal(
-    vec_fmt_roman(vec_num_1, output = "plain"),
-    vec_fmt_roman(vec_num_1, output = "html")
+    vec_fmt_roman(vec_roman, output = "plain"),
+    vec_fmt_roman(vec_roman, output = "html")
   )
   expect_equal(
-    vec_fmt_roman(vec_num_1, output = "plain"),
-    vec_fmt_roman(vec_num_1, output = "latex")
+    vec_fmt_roman(vec_roman, output = "plain"),
+    vec_fmt_roman(vec_roman, output = "latex")
   )
   expect_equal(
-    vec_fmt_roman(vec_num_1, output = "plain"),
-    vec_fmt_roman(vec_num_1, output = "rtf")
+    vec_fmt_roman(vec_roman, output = "plain"),
+    vec_fmt_roman(vec_roman, output = "rtf")
   )
   expect_equal(
-    vec_fmt_roman(vec_num_1, output = "plain"),
-    vec_fmt_roman(vec_num_1, output = "word")
+    vec_fmt_roman(vec_roman, output = "plain"),
+    vec_fmt_roman(vec_roman, output = "word")
   )
 
-  vec_fmt_roman(vec_num_1, case = "lower", output = "plain") %>%
+  vec_fmt_roman(vec_roman, case = "lower", output = "plain") %>%
     expect_equal(
       c(
-        "iii", "ii", "ii", "i", "i", "n", "i", "i", "ii", "ii", "iii",
-        "NA", "Inf"
+        "i", "iv", "v", "viii", "xii", "xx", "n", "v", "i", "NA", "mmmdccxcix",
+        "mmmdccc", "ex terminis"
       )
     )
 
   expect_equal(
-    vec_fmt_roman(vec_num_1, case = "lower", output = "plain"),
-    vec_fmt_roman(vec_num_1, case = "lower", output = "html")
+    vec_fmt_roman(vec_roman, case = "lower", output = "plain"),
+    vec_fmt_roman(vec_roman, case = "lower", output = "html")
   )
   expect_equal(
-    vec_fmt_roman(vec_num_1, case = "lower", output = "plain"),
-    vec_fmt_roman(vec_num_1, case = "lower", output = "latex")
+    vec_fmt_roman(vec_roman, case = "lower", output = "plain"),
+    vec_fmt_roman(vec_roman, case = "lower", output = "latex")
   )
   expect_equal(
-    vec_fmt_roman(vec_num_1, case = "lower", output = "plain"),
-    vec_fmt_roman(vec_num_1, case = "lower", output = "rtf")
+    vec_fmt_roman(vec_roman, case = "lower", output = "plain"),
+    vec_fmt_roman(vec_roman, case = "lower", output = "rtf")
   )
   expect_equal(
-    vec_fmt_roman(vec_num_1, case = "lower", output = "plain"),
-    vec_fmt_roman(vec_num_1, case = "lower", output = "word")
+    vec_fmt_roman(vec_roman, case = "lower", output = "plain"),
+    vec_fmt_roman(vec_roman, case = "lower", output = "word")
   )
 
   expect_error(vec_fmt_roman(c(1, 2), case = "middle"))
@@ -3349,6 +3349,114 @@ test_that("The `vec_fmt_roman()` function works", {
   expect_error(vec_fmt_roman(TRUE))
   expect_error(vec_fmt_roman(list(1, 2, 3)))
   expect_error(vec_fmt_roman(dplyr::tibble(a = c(1, 2, 3))))
+})
+
+test_that("The `vec_fmt_index()` function works", {
+
+  vec_index <- c(1, 4, 5, 8, 12, 20, 0, -5, 1.3, NA, 20, 80)
+
+  vec_fmt_index(vec_index, output = "plain") %>%
+    expect_equal(
+      c("A", "D", "E", "H", "L", "T", "", "E", "A", "NA", "T", "BBBB")
+    )
+
+  expect_equal(
+    vec_fmt_index(vec_index, output = "plain"),
+    vec_fmt_index(vec_index, output = "html")
+  )
+  expect_equal(
+    vec_fmt_index(vec_index, output = "plain"),
+    vec_fmt_index(vec_index, output = "latex")
+  )
+  expect_equal(
+    vec_fmt_index(vec_index, output = "plain"),
+    vec_fmt_index(vec_index, output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_index(vec_index, output = "plain"),
+    vec_fmt_index(vec_index, output = "word")
+  )
+
+  vec_fmt_index(vec_index, case = "lower", output = "plain") %>%
+    expect_equal(
+      c("a", "d", "e", "h", "l", "t", "", "e", "a", "NA", "t", "bbbb")
+    )
+
+  expect_equal(
+    vec_fmt_index(vec_index, case = "lower", output = "plain"),
+    vec_fmt_index(vec_index, case = "lower", output = "html")
+  )
+  expect_equal(
+    vec_fmt_index(vec_index, case = "lower", output = "plain"),
+    vec_fmt_index(vec_index, case = "lower", output = "latex")
+  )
+  expect_equal(
+    vec_fmt_index(vec_index, case = "lower", output = "plain"),
+    vec_fmt_index(vec_index, case = "lower", output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_index(vec_index, case = "lower", output = "plain"),
+    vec_fmt_index(vec_index, case = "lower", output = "word")
+  )
+
+  vec_fmt_index(
+    vec_index,
+    case = "lower",
+    index_algo = "excel",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c("a", "d", "e", "h", "l", "t", "", "e", "a", "NA", "t", "cb")
+    )
+
+  expect_error(vec_fmt_index(c(1, 2), case = "middle"))
+  expect_error(vec_fmt_index(letters))
+  expect_error(vec_fmt_index(TRUE))
+  expect_error(vec_fmt_index(list(1, 2, 3)))
+  expect_error(vec_fmt_index(dplyr::tibble(a = c(1, 2, 3))))
+})
+
+test_that("The `vec_fmt_spelled_num()` function works", {
+
+  vec_index <- c(1, 4, 5, 8, 12, 20, 0, -5, 1.3, NA, 20, 80, 100, 200)
+
+  vec_fmt_spelled_num(vec_index, output = "plain") %>%
+    expect_equal(
+      c(
+        "one", "four", "five", "eight", "twelve", "twenty", "zero",
+        "-5", "one", "NA", "twenty", "eighty", "one hundred", "200"
+      )
+    )
+
+  expect_equal(
+    vec_fmt_spelled_num(vec_index, output = "plain"),
+    vec_fmt_spelled_num(vec_index, output = "html")
+  )
+  expect_equal(
+    vec_fmt_spelled_num(vec_index, output = "plain"),
+    vec_fmt_spelled_num(vec_index, output = "latex")
+  )
+  expect_equal(
+    vec_fmt_spelled_num(vec_index, output = "plain"),
+    vec_fmt_spelled_num(vec_index, output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_spelled_num(vec_index, output = "plain"),
+    vec_fmt_spelled_num(vec_index, output = "word")
+  )
+
+  vec_fmt_spelled_num(vec_index, output = "plain", locale = "af") %>%
+    expect_equal(
+      c(
+        "een", "vier", "vyf", "agt", "twaalf", "twintig", "nul", "-5",
+        "een", "NA", "twintig", "tagtig", "honderd", "200"
+      )
+    )
+
+  expect_error(vec_fmt_spelled_num(letters))
+  expect_error(vec_fmt_spelled_num(TRUE))
+  expect_error(vec_fmt_spelled_num(list(1, 2, 3)))
+  expect_error(vec_fmt_spelled_num(dplyr::tibble(a = c(1, 2, 3))))
 })
 
 test_that("The `vec_fmt_bytes()` function works", {

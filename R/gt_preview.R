@@ -1,19 +1,13 @@
 #' Preview a **gt** table object
 #'
 #' @description
+#'
 #' Sometimes you may want to see just a small portion of your input data. We can
 #' use `gt_preview()` in place of [gt()] to get the first x rows of data and the
 #' last y rows of data (which can be set by the `top_n` and `bottom_n`
 #' arguments). It's not advised to use additional **gt** functions to further
 #' modify the output of `gt_preview()`. Furthermore, you cannot pass a **gt**
 #' object to `gt_preview()`.
-#'
-#' @details
-#' Any grouped data or magic columns such as `rowname` and `groupname` will be
-#' ignored by `gt_preview()` and, as such, one cannot add a stub or group rows
-#' in the output table. By default, the output table will include row numbers in
-#' a stub (including a range of row numbers for the omitted rows). This row
-#' numbering option can be deactivated by setting `incl_rownums` to `FALSE`.
 #'
 #' @param data A `data.frame` object or a tibble.
 #' @param top_n This value will be used as the number of rows from the top of
@@ -27,14 +21,20 @@
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @details
+#'
+#' By default, the output table will include row numbers in a stub (including a
+#' range of row numbers for the omitted rows). This row numbering option can be
+#' deactivated by setting `incl_rownums` to `FALSE`.
+#'
 #' @section Examples:
 #'
 #' Use [`gtcars`] to create a **gt** table preview (with only a few of its
 #' columns). You'll see the first five rows and the last row.
 #'
 #' ```r
-#' gtcars %>%
-#'   dplyr::select(mfr, model, year) %>%
+#' gtcars |>
+#'   dplyr::select(mfr, model, year) |>
 #'   gt_preview()
 #' ```
 #'
@@ -45,6 +45,9 @@
 #' @family table creation functions
 #' @section Function ID:
 #' 1-2
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
 gt_preview <- function(
@@ -131,8 +134,8 @@ gt_preview <- function(
   if (isTRUE(incl_rownums)) {
 
     gt_tbl <-
-      gt_tbl %>%
       tab_style(
+        gt_tbl,
         style = cell_text(font = "Courier"),
         locations = cells_stub()
       )

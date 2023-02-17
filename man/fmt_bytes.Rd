@@ -6,7 +6,7 @@
 \usage{
 fmt_bytes(
   data,
-  columns,
+  columns = everything(),
   rows = everything(),
   standard = c("decimal", "binary"),
   decimals = 1,
@@ -82,13 +82,12 @@ display a minus sign.}
 \item{incl_space}{An option for whether to include a space between the value
 and the units. The default of \code{TRUE} uses a space character for separation.}
 
-\item{locale}{An optional locale ID that can be used for formatting the value
-according the locale's rules. Examples include \code{"en"} for English (United
-States) and \code{"fr"} for French (France). The use of a valid locale ID will
-override any values provided in \code{sep_mark} and \code{dec_mark}. We can use the
+\item{locale}{An optional locale identifier that can be used for formatting
+the value according the locale's rules. Examples include \code{"en"} for English
+(United States) and \code{"fr"} for French (France). The use of a locale ID will
+override any locale-specific values provided. We can use the
 \code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
-are supported. Any \code{locale} value provided here will override any global
-locale setting performed in \code{\link[=gt]{gt()}}'s own \code{locale} argument.}
+are supported.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -116,13 +115,71 @@ values
 formatting specific to the chosen locale
 }
 }
-\section{Targeting the values to be formatted}{
+\section{Compatibility of formatting function with data values}{
+
+
+The \code{fmt_bytes()} formatting function is compatible with body cells that are
+of the \code{"numeric"} or \code{"integer"} types. Any other types of body cells are
+ignored during formatting. This is to say that cells of incompatible data
+types may be targeted, but there will be no attempt to format them.
+}
+
+\section{Targeting cells with \code{columns} and \code{rows}}{
 
 
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
-nothing is provided for \code{rows} then entire columns are selected). Conditional
-formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the \emph{Arguments} section for more information on this.
+nothing is provided for \code{rows} then entire columns are selected). The
+\code{columns} argument allows us to target a subset of cells contained in the
+resolved columns. We say resolved because aside from declaring column names
+in \code{c()} (with bare column names or names in quotes) we can use
+\strong{tidyselect}-style expressions. This can be as basic as supplying a select
+helper like \code{starts_with()}, or, providing a more complex incantation like
+
+\code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
+
+which targets numeric columns that have a maximum value of 100,000 (excluding
+\code{NA}s from consideration).
+
+By default all columns and rows are selected (with the \code{everything()}
+defaults). Cell values that are incompatible with a given formatting function
+will be skipped over, like \code{character} values and numeric \verb{fmt_*()}
+functions. So it's safe to select all columns with a particular formatting
+function (only those values that can be formatted will be formatted), but,
+you may not want that. One strategy is to format the bulk of cell values with
+one formatting function and then constrain the columns for later passes with
+other types of formatting (the last formatting done to a cell is what you get
+in the final output).
+
+Once the columns are targeted, we may also target the \code{rows} within those
+columns. This can be done in a variety of ways. If a stub is present, then we
+potentially have row identifiers. Those can be used much like column names in
+the \code{columns}-targeting scenario. We can use simpler \strong{tidyselect}-style
+expressions (the select helpers should work well here) and we can use quoted
+row identifiers in \code{c()}. It's also possible to use row indices (e.g.,
+\code{c(3, 5, 6)}) though these index values must correspond to the row numbers of
+the input data (the indices won't necessarily match those of rearranged rows
+if row groups are present). One more type of expression is possible, an
+expression that takes column values (can involve any of the available columns
+in the table) and returns a logical vector. This is nice if you want to base
+formatting on values in the column or another column, or, you'd like to use a
+more complex predicate expression.
+}
+
+\section{Adapting output to a specific \code{locale}}{
+
+
+This formatting function can adapt outputs according to a provided \code{locale}
+value. Examples include \code{"en"} for English (United States) and \code{"fr"} for
+French (France). The use of a valid locale ID here means separator and
+decimal marks will be correct for the given locale. Should any values be
+provided in \code{sep_mark} or \code{dec_mark}, they will be overridden by the locale's
+preferred values.
+
+Note that a \code{locale} value provided here will override any global locale
+setting performed in \code{\link[=gt]{gt()}}'s own \code{locale} argument (it is settable there as
+a value received by all other functions that have a \code{locale} argument). As a
+useful reference on which locales are supported, we can use the
+\code{\link[=info_locales]{info_locales()}} function to view an info table.
 }
 
 \section{Examples}{
@@ -131,9 +188,9 @@ argument. See the \emph{Arguments} section for more information on this.
 Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{num} column to have
 byte sizes in the decimal standard.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(num) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(num) |>
+  gt() |>
   fmt_bytes(columns = num)
 }\if{html}{\out{</div>}}
 
@@ -144,9 +201,9 @@ byte sizes in the decimal standard.
 Create a similar table with the \code{fmt_bytes()} function, this time showing
 byte sizes as binary values.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(num) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(num) |>
+  gt() |>
   fmt_bytes(
     columns = num,
     standard = "binary"
@@ -160,18 +217,27 @@ byte sizes as binary values.
 
 \section{Function ID}{
 
-3-10
+3-12
+}
+
+\section{Function Introduced}{
+
+\code{v0.3.0} (May 12, 2021)
 }
 
 \seealso{
+The vector-formatting version of this function: \code{\link[=vec_fmt_bytes]{vec_fmt_bytes()}}.
+
 Other data formatting functions: 
 \code{\link{data_color}()},
+\code{\link{fmt_auto}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
 \code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},
@@ -180,7 +246,9 @@ Other data formatting functions:
 \code{\link{fmt_percent}()},
 \code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
+\code{\link{fmt_spelled_num}()},
 \code{\link{fmt_time}()},
+\code{\link{fmt_url}()},
 \code{\link{fmt}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},

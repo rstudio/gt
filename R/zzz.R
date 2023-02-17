@@ -31,6 +31,7 @@ utils::globalVariables(
     "b",
     "blue",
     "built",
+    "built_group_label",
     "boxhead",
     "category",
     "colname",
@@ -47,6 +48,7 @@ utils::globalVariables(
     "curr_name",
     "data_attr",
     "date_added",
+    "decimal",
     "designer",
     "display_name",
     "flexible",
@@ -59,11 +61,15 @@ utils::globalVariables(
     "get_groups_rows",
     "g",
     "green",
+    "group",
     "group_id",
     "group_label",
     "groups",
     "grpname",
     "grprow",
+    "html_style",
+    "i",
+    "id",
     "integrate_summary_lines",
     "label",
     "locname",
@@ -77,11 +83,13 @@ utils::globalVariables(
     "package",
     "palette",
     "red",
+    "row_id",
     "row_end",
     "row_start",
     "rownum",
     "rownum_i",
     "spanner_id",
+    "spanner_label",
     "spanner_level",
     "styles",
     "styles_appended",
@@ -134,7 +142,8 @@ NULL
 
 gt_default_options <- list(
   gt.row_group.sep = " - ",
-  gt.html_tag_check = TRUE
+  gt.html_tag_check = TRUE,
+  gt.strict_column_fmt = FALSE
 )
 
 # R 3.5 and earlier have a bug on Windows where if x is latin1 or unknown and
@@ -152,7 +161,11 @@ utf8_aware_sub <- NULL
   toset <- !(names(gt_default_options) %in% names(op))
   if (any(toset)) options(gt_default_options[toset])
 
-  utf8_aware_sub <<- identical("UTF-8", Encoding(sub(".", "\u00B1", ".", fixed = TRUE)))
+  utf8_aware_sub <<-
+    identical(
+      "UTF-8",
+      Encoding(sub(".", "\u00B1", ".", fixed = TRUE))
+    )
 
   invisible()
 }

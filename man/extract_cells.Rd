@@ -71,8 +71,8 @@ Multiple cells can be extracted. Let's get the first four cells from the
 We can format cells and expect that the formatting is fully retained after
 extraction.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl \%>\%
-  fmt_number(columns = num, decimals = 2) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl |>
+  fmt_number(columns = num, decimals = 2) |>
   extract_cells(columns = num, rows = 1)
 }\if{html}{\out{</div>}}
 
@@ -83,6 +83,11 @@ extraction.
 \section{Function ID}{
 
 13-7
+}
+
+\section{Function Introduced}{
+
+\code{v0.8.0} (November 16, 2022)
 }
 
 \seealso{

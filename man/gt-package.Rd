@@ -25,12 +25,13 @@ Authors:
   \item Joe Cheng \email{joe@rstudio.com}
   \item Barret Schloerke \email{barret@rstudio.com} (\href{https://orcid.org/0000-0001-9986-114X}{ORCID})
   \item Ellis Hughes \email{ellis.h.hughes@gsk.com} (\href{https://orcid.org/0000-0003-0637-4436}{ORCID})
+  \item Alexandra Lauer \email{alexandralauer1@gmail.com} (\href{https://orcid.org/0000-0002-4191-6301}{ORCID})
   \item JooYoung Seo \email{jseo1005@illinois.edu} (\href{https://orcid.org/0000-0002-4064-6012}{ORCID})
 }
 
 Other contributors:
 \itemize{
-  \item RStudio [copyright holder, funder]
+  \item Posit Software, PBC [copyright holder, funder]
 }
 
 }

@@ -10,7 +10,7 @@ If you believe you found a bug, create a minimal [reprex](https://reprex.tidyver
 
 A great way to help is by simply answering questions. It's amazing how a little conversation could lead to better insights on a problem. Don't quite know the answer? That's okay too. We're all in this together.
 
-Where might you answer user questions? Some of the forums for Q&A on **gt** include the [RStudio community](https://community.rstudio.com), on Twitter (a good search term is `gt #rstats`), and on [Stack Overflow](https://stackoverflow.com). Good etiquette is key during these interactions: be a good person to all who ask questions.
+Where might you answer user questions? Some of the forums for Q&A on **gt** include the [Posit community](https://community.rstudio.com), on Twitter (a good search term is `gt #rstats`), and on [Stack Overflow](https://stackoverflow.com). Good etiquette is key during these interactions: be a good person to all who ask questions.
 
 ### Making Pull Requests
 
@@ -19,9 +19,8 @@ Should you consider making a pull request (PR), please file an issue first and e
 Once there is consensus that a PR based on the issue would be helpful, adhering to the following process will make things proceed more quickly: 
 
 *  Create a separate Git branch for each PR.
-*  Look at the Travis and AppVeyor build status badges before and after making changes; these badges are available in the package [README](https://github.com/rstudio/gt).  
+*  Look at the build status badges before and after making changes; these badges are available in the package [README](https://github.com/rstudio/gt).  
 *  The **gt** package follows the tidyverse [style guide](http://style.tidyverse.org) so please adopt those style guidelines in your submitted code as best as possible.
 *  The internal documentation uses [roxygen2](https://cran.r-project.org/web/packages/roxygen2/vignettes/roxygen2.html); if your contribution requires new or revised documentation ensure that the roxygen comments are added/modified (do not modify any `.Rd` files in the `man` folder).
 *  We use [testthat](https://cran.r-project.org/web/packages/testthat/) for code coverage; those contributions with test cases included are helpful easier to accept.
-*  Add a bullet to the top of `NEWS.md` below the current development version header describing any user-facing changes made; include your GitHub username, and links to relevant issue(s)/PR(s).
 * Ensure that you have signed the contributor license agreement. It will appear as a "Check" on your PR and a comment from "CLAassistant" will also appear explaining whether you have yet to sign. After you sign, you can click the "Recheck" link in that comment and the check will flip to reflect that you've signed.

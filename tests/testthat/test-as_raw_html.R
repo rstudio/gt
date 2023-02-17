@@ -1,11 +1,12 @@
-test_that("`as_raw_html()` produces the same table every time", {
+test_that("The `as_raw_html()` function produces the same table every time", {
 
   gt_html_1 <-
     gt(exibble) %>%
-    as_raw_html(inline_css = TRUE)
+    as_raw_html(inline_css = TRUE) %>%
+    gsub("id=\"[a-z]*?\"", "", .)
 
   gt_html_1_sha1 <- digest::sha1(gt_html_1)
-  expect_equal(gt_html_1_sha1, "ea4301a8442752cf8321bad80db2f1f726e66c50")
+  expect_equal(gt_html_1_sha1, "5344de4ed3bbff521ddaa77db44242b7d7000074")
 
   gt_html_2 <-
     gt(
@@ -44,7 +45,9 @@ test_that("`as_raw_html()` produces the same table every time", {
       columns = c(hp, wt, qsec),
       fns = list(
         ~mean(., na.rm = TRUE),
-        ~sum(., na.rm = TRUE))
+        ~sum(., na.rm = TRUE)
+      ),
+      fmt = list(~ fmt_number(.))
     ) %>%
     tab_style(
       style = cell_fill(color = "lightgray"),
@@ -108,8 +111,32 @@ test_that("`as_raw_html()` produces the same table every time", {
         rows = "Mazda RX4"
       )
     ) %>%
-    as_raw_html(inline_css = TRUE)
+    as_raw_html(inline_css = TRUE) %>%
+    gsub("id=\"[a-z]*?\"", "", .)
 
   gt_html_2_sha1 <- digest::sha1(gt_html_2)
-  expect_equal(gt_html_2_sha1, "d0b881eaa690047bf58877d4de65883ca3d0ba39")
+  expect_equal(gt_html_2_sha1, "b2e2deea3a177363b8fc058c3c0972be8535aa9e")
+
+  # Expect that font family values with multiple words (i.e., have a space
+  # character) added with `tab_style()` preserve single-quote characters
+  expect_match(
+    exibble[1, ] %>%
+      gt() %>%
+      tab_header(title = "Title") %>%
+      tab_style(style = cell_text(font = "Two Words"), locations = cells_title()) %>%
+      as_raw_html(),
+    "font-family: 'Two Words';"
+  )
+
+  expect_match(
+    exibble[1, ] %>%
+      gt() %>%
+      tab_header(title = "Title") %>%
+      tab_style(
+        style = cell_text(font = c("Fira Sans", "Droid Sans", "Arial", "sans-serif")),
+        locations = cells_title()
+      ) %>%
+      as_raw_html(),
+    "font-family: 'Fira Sans', 'Droid Sans', Arial, sans-serif;"
+  )
 })

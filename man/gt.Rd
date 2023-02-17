@@ -8,6 +8,7 @@ gt(
   data,
   rowname_col = "rowname",
   groupname_col = dplyr::group_vars(data),
+  process_md = FALSE,
   caption = NULL,
   rownames_to_stub = FALSE,
   auto_align = TRUE,
@@ -29,6 +30,9 @@ group labels for generation of stub row groups. If the input \code{data} table
 has the \code{grouped_df} class (through use of the \code{\link[dplyr:group_by]{dplyr::group_by()}} function
 or associated \verb{group_by*()} functions) then any input here is ignored.}
 
+\item{process_md}{Should the contents of the \code{rowname_col} and
+\code{groupname_col} be interpreted as Markdown? By default this is \code{FALSE}.}
+
 \item{caption}{An optional table caption to use for cross-referencing in R
 Markdown, Quarto, or \strong{bookdown}.}
 
@@ -45,8 +49,8 @@ table ID can be used with any single-length character vector.}
 
 \item{locale}{An optional locale ID that can be set as the default locale for
 all functions that take a \code{locale} argument. Examples of valid locales
-include \code{"en_US"} for English (United States) and \code{"fr_FR"} for French
-(France). Refer to the information provided by the \code{\link[=info_locales]{info_locales()}} to
+include \code{"en"} for English (United States) and \code{"fr"} for French (France).
+Refer to the information provided by the \code{\link[=info_locales]{info_locales()}} function to
 determine which locales are supported.}
 
 \item{row_group.sep}{The separator to use between consecutive group names (a
@@ -85,7 +89,7 @@ Create a \strong{gt} table object using the \code{\link{exibble}} dataset. Use t
 \code{groupname_col} arguments.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
-  exibble \%>\%
+  exibble |>
   gt(
     rowname_col = "row",
     groupname_col = "group"
@@ -102,15 +106,15 @@ The resulting \strong{gt} table object can be used in transformations with a
 variety of \verb{tab_*()}, \verb{fmt_*()}, \verb{cols_*()}, and even more functions
 available in the package.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |>
   tab_header(
     title = "Table Title",
     subtitle = "Subtitle"
-  ) \%>\%
+  ) |>
   fmt_number(
     columns = num,
     decimals = 2
-  ) \%>\%
+  ) |>
   cols_label(num = "number")
 }\if{html}{\out{</div>}}
 
@@ -122,6 +126,11 @@ available in the package.
 \section{Function ID}{
 
 1-1
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{

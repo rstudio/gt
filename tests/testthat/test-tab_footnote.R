@@ -37,7 +37,7 @@ data <-
       ~mean(., na.rm = TRUE),
       ~sum(., na.rm = TRUE))
   ) %>%
-  summary_rows(
+  grand_summary_rows(
     columns = c(hp, wt),
     fns = list(
       ~mean(., na.rm = TRUE),
@@ -98,7 +98,7 @@ data_3 <-
       ~mean(., na.rm = TRUE),
       ~min(., na.rm = TRUE))
   ) %>%
-  summary_rows(
+  grand_summary_rows(
     columns = "msrp",
     fns = list(
       ~min(., na.rm = TRUE),
@@ -170,7 +170,7 @@ selection_text <- function(html, selection) {
   rvest::html_text(rvest::html_nodes(html, selection))
 }
 
-test_that("the `tab_footnote()` function works correctly", {
+test_that("The `tab_footnote()` function works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -659,10 +659,10 @@ test_that("the `tab_footnote()` function works correctly", {
     tidy_gsub("\n          ", "") %>%
     expect_equal(
       c(
-        "1 German cars only.",
-        "2 The most important details.",
-        "3 AWD = All Wheel Drive, RWD = Rear Wheel Drive.",
-        "4 Prices in USD."
+        "\n  1 German cars only.",
+        "\n  2 The most important details.",
+        "\n  3 AWD = All Wheel Drive, RWD = Rear Wheel Drive.",
+        "\n  4 Prices in USD."
       )
     )
 
@@ -675,7 +675,7 @@ test_that("the `tab_footnote()` function works correctly", {
     expect_equal(rep(as.character(1:4), 2))
 })
 
-test_that("the footnotes table is structured correctly", {
+test_that("The footnotes table is structured correctly", {
 
   # Extract `footnotes_resolved` and `list_of_summaries`
   footnotes_tbl <- dt_footnotes_get(data = data_3)
@@ -755,14 +755,14 @@ test_that("the footnotes table is structured correctly", {
   # footnote glyphs applied
   tbl_html %>%
     selection_text(selection = "[class='gt_heading gt_title gt_font_normal']") %>%
-    expect_equal("S&P 5001")
+    expect_equal("S&P 500\n  1")
 
   tbl_html %>%
     selection_text(selection = "[class='gt_heading gt_subtitle gt_font_normal gt_bottom_border']") %>%
-    expect_equal("Open and Close Values2")
+    expect_equal("Open and Close Values\n  2")
 })
 
-test_that("the `list_of_summaries` table is structured correctly", {
+test_that("The `list_of_summaries` table is structured correctly", {
 
   gtcars_built <-
     gtcars %>%
@@ -780,7 +780,7 @@ test_that("the `list_of_summaries` table is structured correctly", {
         ~min(., na.rm = TRUE)
       )
     ) %>%
-    summary_rows(
+    grand_summary_rows(
       columns = msrp,
       fns = list(
         ~min(., na.rm = TRUE),
@@ -823,21 +823,21 @@ test_that("the `list_of_summaries` table is structured correctly", {
   # Expect formatted cell values with no HTML footnote markup
   expect_equal(
     gtcars_built_summary_df_display$summary_df_display_list$`::GRAND_SUMMARY`$msrp,
-    c("56,000.00", "140,700.00")
+    c("56000", "140700")
   )
 
   expect_equal(
     gtcars_built_summary_df_display$summary_df_display_list$Audi$msrp,
-    c("113,233.33", "108,900.00")
+    c("113233.3", "108900.0")
   )
 
   expect_equal(
     gtcars_built_summary_df_display$summary_df_display_list$BMW$msrp,
-    c("116,066.67", "94,100.00")
+    c("116066.7", "94100.0")
   )
 })
 
-test_that("footnotes with no location are rendered correctly", {
+test_that("Footnotes with no location are rendered correctly", {
 
   gt_tbl <- gt(data = exibble[1, ])
 
@@ -921,7 +921,7 @@ test_that("The final placement of footnotes is correct with the 'auto' mode", {
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("[class='gt_row gt_right']") %>%
-    expect_equal(paste0("mark_1", "\U000A0", "0.1111"))
+    expect_equal(paste0("\n  mark_1", "\U000A0", "0.1111"))
 
   # Expect a footnote mark to the right of the center-aligned number
   # (this turns off the auto-alignment option in the `gt()` function)
@@ -932,7 +932,7 @@ test_that("The final placement of footnotes is correct with the 'auto' mode", {
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("[class='gt_row gt_center']") %>%
-    expect_equal("0.1111mark_1")
+    expect_equal("0.1111\n  mark_1")
 
   # Expect a footnote mark to the right of the left-aligned character value
   exibble[1, 2] %>%
@@ -942,7 +942,7 @@ test_that("The final placement of footnotes is correct with the 'auto' mode", {
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("[class='gt_row gt_left']") %>%
-    expect_equal("apricotmark_1")
+    expect_equal("apricot\n  mark_1")
 
   # Expect a footnote mark to the right of the center-aligned character value
   exibble[1, 3] %>%
@@ -952,7 +952,7 @@ test_that("The final placement of footnotes is correct with the 'auto' mode", {
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("[class='gt_row gt_center']") %>%
-    expect_equal("onemark_1")
+    expect_equal("one\n  mark_1")
 
   # Expect a footnote mark to the right of the left-aligned number value
   # (the `tab_style()` statement decided the final alignment)
@@ -968,7 +968,7 @@ test_that("The final placement of footnotes is correct with the 'auto' mode", {
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("[class='gt_row gt_right']") %>% # The .gt_right class is overridden
-    expect_equal("0.11mark_1")
+    expect_equal("0.11\n  mark_1")
 
   # Expect a footnote mark to the left of the right-aligned number value
   # (the second `tab_style()` statement decided the final alignment)
@@ -988,7 +988,7 @@ test_that("The final placement of footnotes is correct with the 'auto' mode", {
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("[class='gt_row gt_right']") %>%
-    expect_equal(paste0("mark_1", "\U000A0", "0.11"))
+    expect_equal(paste0("\n  mark_1", "\U000A0", "0.11"))
 
   # Expect a footnote mark to the right of the left-aligned number value
   # (the first `tab_style()` statement with literal CSS style rules is more
@@ -1013,7 +1013,7 @@ test_that("The final placement of footnotes is correct with the 'auto' mode", {
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("[class='gt_row gt_right']") %>%
-    expect_equal("0.11mark_1")
+    expect_equal("0.11\n  mark_1")
 
   # Expect a footnote mark to the right of the left-aligned number value
   # (the final 'text-align' rule in `tab_style()` determines the alignment)
@@ -1029,7 +1029,7 @@ test_that("The final placement of footnotes is correct with the 'auto' mode", {
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("[class='gt_row gt_right']") %>%
-    expect_equal("0.11mark_1")
+    expect_equal("0.11\n  mark_1")
 
   # Expect a footnote mark to the left of the right-aligned number value
   # (the !important 'text-align' rule in `tab_style()` determines the alignment)
@@ -1045,7 +1045,7 @@ test_that("The final placement of footnotes is correct with the 'auto' mode", {
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("[class='gt_row gt_right']") %>%
-    expect_equal(paste0("mark_1", "\U000A0", "0.11"))
+    expect_equal(paste0("\n  mark_1", "\U000A0", "0.11"))
 
   # Expect a footnote mark to the right of the left-aligned number value
   # (the final !important 'text-align' rule in `tab_style()` determines the alignment)
@@ -1061,7 +1061,7 @@ test_that("The final placement of footnotes is correct with the 'auto' mode", {
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("[class='gt_row gt_right']") %>%
-    expect_equal("0.11mark_1")
+    expect_equal("0.11\n  mark_1")
 
   # Expect a footnote mark to the right of the center-aligned number value
   # (the center alignment was set by `cols_align()`)
@@ -1074,7 +1074,7 @@ test_that("The final placement of footnotes is correct with the 'auto' mode", {
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("[class='gt_row gt_center']") %>%
-    expect_equal("0.11mark_1")
+    expect_equal("0.11\n  mark_1")
 })
 
 test_that("Footnotes are correctly placed with text produced by `fmt_markdown()`", {
@@ -1086,7 +1086,7 @@ test_that("Footnotes are correctly placed with text produced by `fmt_markdown()`
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("[class='gt_row gt_left']") %>%
-    expect_equal("apricot1")
+    expect_equal("apricot\n  1")
 
   exibble[1, 2] %>%
     gt() %>%
@@ -1102,7 +1102,7 @@ test_that("Footnotes are correctly placed with text produced by `fmt_markdown()`
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("[class='gt_row gt_left']") %>%
-    expect_equal(paste0("1", "\U000A0", "apricot\n"))
+    expect_equal(paste0("\n  1", "\U000A0", "apricot\n"))
 
   exibble[1, 2] %>%
     gt() %>%
@@ -1121,12 +1121,10 @@ test_that("Footnotes work with group labels in 2-column stub arrangements", {
     dplyr::summarize(`Pizzas Sold` = dplyr::n(), .groups = "drop") %>%
     gt(rowname_col = "size", groupname_col = "name") %>%
     summary_rows(
-      groups = TRUE,
+      groups = everything(),
       columns = `Pizzas Sold`,
       fns = list(TOTAL = "sum"),
-      formatter = fmt_number,
-      decimals = 0,
-      use_seps = TRUE
+      fmt = list(~ fmt_number(., decimals = 0, use_seps = TRUE))
     ) %>%
     tab_options(row_group.as_column = TRUE) %>%
     tab_footnote(

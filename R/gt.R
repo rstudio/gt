@@ -1,12 +1,14 @@
 #' Create a **gt** table object
 #'
 #' @description
+#'
 #' The `gt()` function creates a **gt** table object when provided with table
 #' data. Using this function is the first step in a typical **gt** workflow.
 #' Once we have the **gt** table object, we can perform styling transformations
 #' before rendering to a display table of various formats.
 #'
 #' @details
+#'
 #' There are a few data ingest options we can consider at this stage. We can
 #' choose to create a table stub with rowname captions using the `rowname_col`
 #' argument. Further to this, stub row groups can be created with the
@@ -30,6 +32,8 @@
 #'   group labels for generation of stub row groups. If the input `data` table
 #'   has the `grouped_df` class (through use of the [dplyr::group_by()] function
 #'   or associated `group_by*()` functions) then any input here is ignored.
+#' @param process_md Should the contents of the `rowname_col` and
+#'   `groupname_col` be interpreted as Markdown? By default this is `FALSE`.
 #' @param caption An optional table caption to use for cross-referencing in R
 #'   Markdown, Quarto, or **bookdown**.
 #' @param rownames_to_stub An option to take rownames from the input `data`
@@ -42,8 +46,8 @@
 #'   table ID can be used with any single-length character vector.
 #' @param locale An optional locale ID that can be set as the default locale for
 #'   all functions that take a `locale` argument. Examples of valid locales
-#'   include `"en_US"` for English (United States) and `"fr_FR"` for French
-#'   (France). Refer to the information provided by the [info_locales()] to
+#'   include `"en"` for English (United States) and `"fr"` for French (France).
+#'   Refer to the information provided by the [info_locales()] function to
 #'   determine which locales are supported.
 #' @param row_group.sep The separator to use between consecutive group names (a
 #'   possibility when providing `data` as a `grouped_df` with multiple groups)
@@ -59,7 +63,7 @@
 #'
 #' ```r
 #' tab_1 <-
-#'   exibble %>%
+#'   exibble |>
 #'   gt(
 #'     rowname_col = "row",
 #'     groupname_col = "group"
@@ -77,15 +81,15 @@
 #' available in the package.
 #'
 #' ```r
-#' tab_1 %>%
+#' tab_1 |>
 #'   tab_header(
 #'     title = "Table Title",
 #'     subtitle = "Subtitle"
-#'   ) %>%
+#'   ) |>
 #'   fmt_number(
 #'     columns = num,
 #'     decimals = 2
-#'   ) %>%
+#'   ) |>
 #'   cols_label(num = "number")
 #' ```
 #'
@@ -97,11 +101,15 @@
 #' @section Function ID:
 #' 1-1
 #'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @export
 gt <- function(
     data,
     rowname_col = "rowname",
     groupname_col = dplyr::group_vars(data),
+    process_md = FALSE,
     caption = NULL,
     rownames_to_stub = FALSE,
     auto_align = TRUE,
@@ -110,12 +118,13 @@ gt <- function(
     row_group.sep = getOption("gt.row_group.sep", " - ")
 ) {
 
+
   # Stop function if the supplied `id` doesn't conform
   # to character(1) input or isn't NULL
   validate_table_id(id)
 
   # Stop function if `locale` does not have a valid value
-  validate_locale(locale)
+  validate_locale(locale = locale)
 
   if (rownames_to_stub) {
     # Just a column name that's unlikely to collide with user data
@@ -153,7 +162,8 @@ gt <- function(
       data = data,
       rowname_col = rowname_col,
       groupname_col = groupname_col,
-      row_group.sep = row_group.sep
+      row_group.sep = row_group.sep,
+      process_md = process_md
     )
   data <- dt_row_groups_init(data = data)
   data <- dt_heading_init(data = data)
@@ -193,8 +203,8 @@ gt <- function(
       )
   }
 
-  # Apply the `gt_tbl` class to the object while
-  # also keeping the `data.frame` class
+  # Apply the `gt_tbl` class to the object while also
+  # keeping the `data.frame` class
   class(data) <- c("gt_tbl", class(data))
 
   # If automatic alignment of values is to be done, call
@@ -227,6 +237,14 @@ gt <- function(
           )
       }
     }
+  }
+
+  if (
+    process_md &&
+    !is.null(rowname_col) &&
+    rowname_col %in% colnames(dt_data_get(data = data))
+  ) {
+    data <- fmt_markdown(data = data, columns = rowname_col)
   }
 
   data

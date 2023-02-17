@@ -1,7 +1,7 @@
 skip_on_ci()
 skip_on_covr()
 
-test_that("the `gtsave()` function creates an HTML file based on the extension", {
+test_that("The `gtsave()` function creates an HTML file based on the extension", {
 
   # Create a filename with path, having the
   # .html extension
@@ -461,7 +461,7 @@ test_that("HTML saving with `gt_save_html()` with different path defs works", {
   #     fixed = TRUE)
 # })
 
-test_that("the `gtsave()` function stops in some cases", {
+test_that("The `gtsave()` function stops in some cases", {
 
   # Expect an error if the file extension doesn't
   # correspond to a saving function
@@ -471,7 +471,7 @@ test_that("the `gtsave()` function stops in some cases", {
   expect_error(exibble %>% gt() %>% gtsave(filename = "exibble"))
 })
 
-test_that("`gtsave()` create docx as expected",{
+test_that("The `gtsave()` function creates docx files as expected", {
 
   gt_exibble <- exibble %>% gt()
 
@@ -492,7 +492,7 @@ test_that("`gtsave()` create docx as expected",{
     expect_snapshot()
 })
 
-test_that("`gtsave()` create docx as expected - table has special characters",{
+test_that("The `gtsave()` fn creates docx files even when a table has special characters", {
 
   # addresses issue raised in gh issue #121
 

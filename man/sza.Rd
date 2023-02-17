@@ -7,13 +7,13 @@
 \format{
 A tibble with 816 rows and 4 variables:
 \describe{
-\item{latitude}{The latitude in decimal degrees for the observations}
-\item{month}{The measurement month; all calculations where conducted
-for the first day of each month}
+\item{latitude}{The latitude in decimal degrees for the observations.}
+\item{month}{The measurement month. All calculations where conducted
+for the first day of each month.}
 \item{tst}{The true solar time at the given \code{latitude} and date
-(first of \code{month}) for which the solar zenith angle is calculated}
-\item{sza}{The solar zenith angle in degrees, where \code{NA}s
-indicate that sunrise hadn't yet occurred by the \code{tst} value}
+(first of \code{month}) for which the solar zenith angle is calculated.}
+\item{sza}{The solar zenith angle in degrees, where \code{NA}s indicate that
+sunrise hadn't yet occurred by the \code{tst} value.}
 }
 }
 \source{
@@ -61,7 +61,7 @@ Here is a glimpse at the data available in \code{sza}.
 
 \section{Function ID}{
 
-11-2
+16-2
 }
 
 \seealso{
@@ -70,7 +70,10 @@ Other datasets:
 \code{\link{exibble}},
 \code{\link{gtcars}},
 \code{\link{pizzaplace}},
-\code{\link{sp500}}
+\code{\link{rx_addv}},
+\code{\link{rx_adsl}},
+\code{\link{sp500}},
+\code{\link{towny}}
 }
 \concept{datasets}
 \keyword{datasets}

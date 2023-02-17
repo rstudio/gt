@@ -1,925 +1,7 @@
-#' Option to modify the set of footnote marks
-#'
-#' @description
-#' Alter the footnote marks for any footnotes that may be present in the table.
-#' Either a vector of marks can be provided (including Unicode characters), or,
-#' a specific keyword could be used to signify a preset sequence. This function
-#' serves as a shortcut for using `tab_options(footnotes.marks = {marks})`
-#'
-#' @details
-#' We can supply a vector of that will represent the series of marks.
-#' The series of footnote marks is recycled when its usage goes beyond the
-#' length of the set. At each cycle, the marks are simply doubled, tripled, and
-#' so on (e.g., `*` -> `**` -> `***`). The option exists for providing keywords
-#' for certain types of footnote marks. The keywords are:
-#'
-#' - `"numbers"`: numeric marks, they begin from 1 and these marks are not
-#' subject to recycling behavior
-#' - `"letters"`: miniscule alphabetic marks, internally uses the `letters`
-#' vector which contains 26 lowercase letters of the Roman alphabet
-#' - `"LETTERS"`: majuscule alphabetic marks, using the `LETTERS` vector
-#' which has 26 uppercase letters of the Roman alphabet
-#' - `"standard"`: symbolic marks, four symbols in total
-#' - `"extended"`: symbolic marks, extends the standard set by adding two
-#' more symbols, making six
-#'
-#' @inheritParams fmt_number
-#' @param marks Either a character vector of length greater than 1 (that will
-#'   represent the series of marks) or a single keyword that represents a preset
-#'   sequence of marks. The valid keywords are: `"numbers"` (for numeric marks),
-#'   `"letters"` and `"LETTERS"` (for lowercase and uppercase alphabetic marks),
-#'   `"standard"` (for a traditional set of four symbol marks), and `"extended"`
-#'   (which adds two more symbols to the standard set).
-#'
-#' @return An object of class `gt_tbl`.
-#'
-#' @section Examples:
-#'
-#' Use [`sza`] to create a **gt** table, adding three footnotes. Call
-#' `opt_footnote_marks()` to specify which footnote marks to use.
-#'
-#' ```r
-#' sza %>%
-#'   dplyr::filter(latitude == 30) %>%
-#'   dplyr::group_by(tst) %>%
-#'   dplyr::summarize(
-#'     SZA.Max = if (
-#'       all(is.na(sza))) {
-#'       NA
-#'     } else {
-#'       max(sza, na.rm = TRUE)
-#'     },
-#'     SZA.Min = if (
-#'       all(is.na(sza))) {
-#'       NA
-#'     } else {
-#'       min(sza, na.rm = TRUE)
-#'     },
-#'     .groups = "drop"
-#'   ) %>%
-#'   gt(rowname_col = "tst") %>%
-#'   tab_spanner_delim(delim = ".") %>%
-#'   sub_missing(
-#'     columns = everything(),
-#'     missing_text = "90+"
-#'   ) %>%
-#'   tab_stubhead(label = "TST") %>%
-#'   tab_footnote(
-#'     footnote = "True solar time.",
-#'     locations = cells_stubhead()
-#'   ) %>%
-#'   tab_footnote(
-#'     footnote = "Solar zenith angle.",
-#'     locations = cells_column_spanners(
-#'       spanners = "spanner-SZA.Max"
-#'     )
-#'   ) %>%
-#'   tab_footnote(
-#'     footnote = "The Lowest SZA.",
-#'     locations = cells_stub(rows = "1200")
-#'   ) %>%
-#'   opt_footnote_marks(marks = "standard")
-#' ```
-#'
-#' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_opt_footnote_marks_1.png")`
-#' }}
-#'
-#' @family table option functions
-#' @section Function ID:
-#' 9-1
-#'
-#' @export
-opt_footnote_marks <- function(
-    data,
-    marks
-) {
-
-  # Perform input object validation
-  stop_if_not_gt(data = data)
-
-  # Validate input for `marks`
-  validate_marks(marks)
-
-  tab_options(data = data, footnotes.marks = marks)
-}
-
-#' Option to add or remove row striping
-#'
-#' @description
-#' By default, a **gt** table does not have row striping enabled. However, this
-#' function allows us to easily enable or disable striped rows in the table
-#' body. This function serves as a convenient shortcut for
-#' `<gt_tbl> %>% tab_options(row.striping.include_table_body = TRUE|FALSE)`.
-#'
-#' @inheritParams fmt_number
-#' @param row_striping A logical value to indicate whether row striping should
-#'   be added or removed.
-#'
-#' @return An object of class `gt_tbl`.
-#'
-#' @section Examples:
-#'
-#' Use [`exibble`] to create a **gt** table with a number of table parts added.
-#' Next, we add row striping to every second row with the `opt_row_striping()`
-#' function.
-#'
-#' ```r
-#' exibble %>%
-#'   gt(rowname_col = "row", groupname_col = "group") %>%
-#'   summary_rows(
-#'     groups = "grp_a",
-#'     columns = c(num, currency),
-#'     fns = list(
-#'       min = ~min(., na.rm = TRUE),
-#'       max = ~max(., na.rm = TRUE)
-#'     )) %>%
-#'   grand_summary_rows(
-#'     columns = currency,
-#'     fns = list(
-#'       total = ~sum(., na.rm = TRUE)
-#'     )) %>%
-#'   tab_source_note(source_note = "This is a source note.") %>%
-#'   tab_footnote(
-#'     footnote = "This is a footnote.",
-#'     locations = cells_body(columns = 1, rows = 1)
-#'   ) %>%
-#'   tab_header(
-#'     title = "The title of the table",
-#'     subtitle = "The table's subtitle"
-#'   ) %>%
-#'   opt_row_striping()
-#' ```
-#'
-#' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_opt_row_striping_1.png")`
-#' }}
-#'
-#' @family table option functions
-#' @section Function ID:
-#' 9-2
-#'
-#' @export
-opt_row_striping <- function(
-    data,
-    row_striping = TRUE
-) {
-
-  # Perform input object validation
-  stop_if_not_gt(data = data)
-
-  tab_options(
-    data = data,
-    row.striping.include_table_body = row_striping
-  )
-}
-
-#' Option to align the table header
-#'
-#' @description
-#' By default, a table header added to a **gt** table has center alignment
-#' for both the title and the subtitle elements. This function allows us to
-#' easily set the horizontal alignment of the title and subtitle to the left
-#' or right by using the `"align"` argument. This function serves as a
-#' convenient shortcut for `<gt_tbl> %>% tab_options(heading.align = <align>)`.
-#'
-#' @inheritParams fmt_number
-#' @param align The alignment of the title and subtitle elements in the table
-#' header. Options are `"left"` (the default), `"center"`, or `"right"`.
-#'
-#' @return An object of class `gt_tbl`.
-#'
-#' @section Examples:
-#'
-#' Use [`exibble`] to create a **gt** table with a number of table parts added.
-#' The header (consisting of the title and the subtitle) are to be aligned to
-#' the left with the `opt_align_table_header()` function.
-#'
-#' ```r
-#' exibble %>%
-#'   gt(rowname_col = "row", groupname_col = "group") %>%
-#'   summary_rows(
-#'     groups = "grp_a",
-#'     columns = c(num, currency),
-#'     fns = list(
-#'       min = ~min(., na.rm = TRUE),
-#'       max = ~max(., na.rm = TRUE)
-#'     )) %>%
-#'   grand_summary_rows(
-#'     columns = currency,
-#'     fns = list(
-#'       total = ~sum(., na.rm = TRUE)
-#'     )) %>%
-#'   tab_source_note(source_note = "This is a source note.") %>%
-#'   tab_footnote(
-#'     footnote = "This is a footnote.",
-#'     locations = cells_body(columns = 1, rows = 1)
-#'   ) %>%
-#'   tab_header(
-#'     title = "The title of the table",
-#'     subtitle = "The table's subtitle"
-#'   ) %>%
-#'   opt_align_table_header(align = "left")
-#' ```
-#'
-#' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_opt_align_table_header_1.png")`
-#' }}
-#'
-#' @family table option functions
-#' @section Function ID:
-#' 9-3
-#'
-#' @export
-opt_align_table_header <- function(
-    data,
-    align = c("left", "center", "right")
-) {
-
-  # Perform input object validation
-  stop_if_not_gt(data = data)
-
-  align <- match.arg(align)
-
-  tab_options(
-    data = data,
-    heading.align = align
-  )
-}
-
-#' Option to expand or contract vertical padding
-#'
-#' @description
-#' Increase or decrease the vertical padding throughout all locations of a
-#' **gt** table by use of a `scale` factor, which here is defined by a real
-#' number between `0` and `3`. This function serves as a shortcut for setting
-#' the following eight options in [tab_options()]:
-#'
-#' - `heading.padding`
-#' - `column_labels.padding`
-#' - `data_row.padding`
-#' - `row_group.padding`
-#' - `summary_row.padding`
-#' - `grand_summary_row.padding`
-#' - `footnotes.padding`
-#' - `source_notes.padding`
-#'
-#' @inheritParams fmt_number
-#' @param scale A scale factor by which the vertical padding will be adjusted.
-#'   Must be a number between `0` and `3`.
-#'
-#' @return An object of class `gt_tbl`.
-#'
-#' @section Examples:
-#'
-#' Use [`exibble`] to create a **gt** table with a number of table parts added.
-#' Contract the vertical padding across the entire table with
-#' `opt_vertical_padding()`.
-#'
-#'
-#' ```r
-#' exibble %>%
-#'   gt(rowname_col = "row", groupname_col = "group") %>%
-#'   summary_rows(
-#'     groups = "grp_a",
-#'     columns = c(num, currency),
-#'     fns = list(
-#'       min = ~min(., na.rm = TRUE),
-#'       max = ~max(., na.rm = TRUE)
-#'     )) %>%
-#'   grand_summary_rows(
-#'     columns = currency,
-#'     fns = list(
-#'       total = ~sum(., na.rm = TRUE)
-#'     )) %>%
-#'   tab_source_note(source_note = "This is a source note.") %>%
-#'   tab_footnote(
-#'     footnote = "This is a footnote.",
-#'     locations = cells_body(columns = 1, rows = 1)
-#'   ) %>%
-#'   tab_header(
-#'     title = "The title of the table",
-#'     subtitle = "The table's subtitle"
-#'   ) %>%
-#'   opt_vertical_padding(scale = 0.25)
-#' ```
-#'
-#' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_opt_vertical_padding_1.png")`
-#' }}
-#'
-#' @family table option functions
-#' @section Function ID:
-#' 9-4
-#'
-#' @export
-opt_vertical_padding <- function(
-    data,
-    scale = 1
-) {
-
-  option_value_list <-
-    get_padding_option_value_list(
-      scale = scale,
-      type = "vertical"
-    )
-
-  tab_options_multi(
-    data = data,
-    options = option_value_list
-  )
-}
-
-#' Option to expand or contract horizontal padding
-#'
-#' @description
-#' Increase or decrease the horizontal padding throughout all locations of a
-#' **gt** table by use of a `scale` factor, which here is defined by a real
-#' number between `0` and `3`. This function serves as a shortcut for setting
-#' the following eight options in [tab_options()]:
-#'
-#' - `heading.padding.horizontal`
-#' - `column_labels.padding.horizontal`
-#' - `data_row.padding.horizontal`
-#' - `row_group.padding.horizontal`
-#' - `summary_row.padding.horizontal`
-#' - `grand_summary_row.padding.horizontal`
-#' - `footnotes.padding.horizontal`
-#' - `source_notes.padding.horizontal`
-#'
-#' @inheritParams fmt_number
-#' @param scale A scale factor by which the horizontal padding will be adjusted.
-#'   Must be a number between `0` and `3`.
-#'
-#' @return An object of class `gt_tbl`.
-#'
-#' @section Examples:
-#'
-#' Use [`exibble`] to create a **gt** table with a number of table parts added.
-#' Expand the horizontal padding across the entire table with
-#' `opt_horizontal_padding()`.
-#'
-#' ```r
-#' exibble %>%
-#'   gt(rowname_col = "row", groupname_col = "group") %>%
-#'   summary_rows(
-#'     groups = "grp_a",
-#'     columns = c(num, currency),
-#'     fns = list(
-#'       min = ~min(., na.rm = TRUE),
-#'       max = ~max(., na.rm = TRUE)
-#'     )) %>%
-#'   grand_summary_rows(
-#'     columns = currency,
-#'     fns = list(
-#'       total = ~sum(., na.rm = TRUE)
-#'     )) %>%
-#'   tab_source_note(source_note = "This is a source note.") %>%
-#'   tab_footnote(
-#'     footnote = "This is a footnote.",
-#'     locations = cells_body(columns = 1, rows = 1)
-#'   ) %>%
-#'   tab_header(
-#'     title = "The title of the table",
-#'     subtitle = "The table's subtitle"
-#'   ) %>%
-#'   opt_horizontal_padding(scale = 3)
-#' ```
-#'
-#' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_opt_horizontal_padding_1.png")`
-#' }}
-#'
-#' @family table option functions
-#' @section Function ID:
-#' 9-5
-#'
-#' @export
-opt_horizontal_padding <- function(
-    data,
-    scale = 1
-) {
-
-  option_value_list <-
-    get_padding_option_value_list(
-      scale = scale,
-      type = "horizontal"
-    )
-
-  tab_options_multi(
-    data = data,
-    options = option_value_list
-  )
-}
-
-get_padding_option_value_list <- function(scale, type) {
-
-  # Stop if `scale` is beyond an acceptable range
-  if (scale < 0 | scale > 3) {
-    cli::cli_abort(
-      "The value provided for `scale` ({scale}) must be between `0` and `3`."
-    )
-  }
-
-  pattern <- if (type == "vertical") "_padding" else  "_padding_horizontal"
-
-  # Get the padding parameters from `dt_options_tbl` that relate
-  # to the `type` (either vertical or horizontal padding)
-  # TODO: refactor these stmts to remove dplyr fns
-  padding_params <-
-    dt_options_tbl %>%
-    dplyr::filter(grepl(paste0(pattern, "$"), parameter)) %>%
-    dplyr::pull(parameter)
-
-  padding_options <-
-    dt_options_tbl %>%
-    dplyr::filter(parameter %in% padding_params) %>%
-    dplyr::select(parameter, value) %>%
-    dplyr::mutate(
-      parameter = gsub(pattern, gsub("_", ".", pattern, fixed = TRUE), parameter, fixed = TRUE)
-    ) %>%
-    dplyr::mutate(value = unlist(value)) %>%
-    dplyr::mutate(px = as.numeric(gsub("px", "", value))) %>%
-    dplyr::mutate(px = px * scale)
-
-  create_option_value_list(
-    padding_options$parameter,
-    paste0(padding_options$px, "px")
-  )
-}
-
-#' Option to use all caps in select table locations
-#'
-#' @description
-#' Sometimes an all-capitalized look is suitable for a table. With the
-#' `opt_all_caps()` function, we can transform characters in the column labels,
-#' the stub, and in all row groups in this way (and there's control over which
-#' of these locations are transformed).
-#'
-#' This function serves as a convenient shortcut for `<gt_tbl> %>%
-#' tab_options(<location>.text_transform = "uppercase", <location>.font.size =
-#' pct(80), <location>.font.weight = "bolder")` (for all `locations` selected).
-#'
-#' @inheritParams fmt_number
-#' @param all_caps A logical value to indicate whether the text transformation
-#'   to all caps should be performed (`TRUE`, the default) or reset to default
-#'   values (`FALSE`) for the `locations` targeted.
-#' @param locations Which locations should undergo this text transformation? By
-#'   default it includes all of the `"column_labels"`, the `"stub"`, and the
-#'   `"row_group"` locations. However, we could just choose one or two of those.
-#'
-#' @return An object of class `gt_tbl`.
-#'
-#' @section Examples:
-#'
-#' Use [`exibble`] to create a **gt** table with a number of table parts added.
-#' All text in the column labels, the stub, and in all row groups is to be
-#' transformed to all caps using `opt_all_caps()`.
-#'
-#' ```r
-#' exibble %>%
-#'   gt(rowname_col = "row", groupname_col = "group") %>%
-#'   summary_rows(
-#'     groups = "grp_a",
-#'     columns = c(num, currency),
-#'     fns = list(
-#'       min = ~min(., na.rm = TRUE),
-#'       max = ~max(., na.rm = TRUE)
-#'     )) %>%
-#'   grand_summary_rows(
-#'     columns = currency,
-#'     fns = list(
-#'       total = ~sum(., na.rm = TRUE)
-#'     )) %>%
-#'   tab_source_note(source_note = "This is a source note.") %>%
-#'   tab_footnote(
-#'     footnote = "This is a footnote.",
-#'     locations = cells_body(columns = 1, rows = 1)
-#'   ) %>%
-#'   tab_header(
-#'     title = "The title of the table",
-#'     subtitle = "The table's subtitle"
-#'   ) %>%
-#'   opt_all_caps()
-#' ```
-#'
-#' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_opt_all_caps_1.png")`
-#' }}
-#'
-#' @family table option functions
-#' @section Function ID:
-#' 9-6
-#'
-#' @export
-opt_all_caps <- function(
-    data,
-    all_caps = TRUE,
-    locations = c("column_labels", "stub", "row_group")
-) {
-
-  # Perform input object validation
-  stop_if_not_gt(data = data)
-
-  # Ensure that all named locations are valid
-  if (!all(locations %in% c("column_labels", "stub", "row_group"))) {
-    cli::cli_abort(
-      "The available locations are `column_labels`, `stub`, and `row_group`."
-    )
-  }
-
-  # Create a regex pattern to obtain arg names for all specific `locations`
-  pattern <-
-    paste0(
-      "^(", paste(locations, collapse = "|"),
-      ")\\.(text_transform|font\\.size|font\\.weight)"
-    )
-
-  # Obtain the `tab_options()` args vector with the `pattern`
-  options_vec <- get_tab_options_arg_vec(pattern = pattern)
-
-  if (all_caps) {
-
-    values_vec <-
-      dplyr::case_when(
-        grepl("\\.font\\.size$", options_vec) ~ "80%",
-        grepl("\\.font\\.weight$", options_vec) ~ "bolder",
-        grepl("\\.text_transform$", options_vec) ~ "uppercase"
-      )
-
-    option_value_list <- create_option_value_list(options_vec, values_vec)
-  } else {
-    option_value_list <- create_default_option_value_list(options_vec)
-  }
-
-  tab_options_multi(
-    data = data,
-    options = option_value_list
-  )
-}
-
-#' Option to set table lines to different extents
-#'
-#' @description
-#' The `opt_table_lines()` function sets table lines in one of three possible
-#' ways: (1) all possible table lines drawn (`"all"`), (2) no table lines at all
-#' (`"none"`), and (3) resetting to the default line styles (`"default"`). This
-#' is great if you want to start off with lots of lines and subtract just a few
-#' of them with [tab_options()] or [tab_style()]. Or, use it to start with a
-#' completely lineless table, adding individual lines as needed.
-#'
-#' @inheritParams fmt_number
-#' @param extent The extent to which lines will be visible in the table. Options
-#' are `"all"`, `"none"`, or `"default"`.
-#'
-#' @return An object of class `gt_tbl`.
-#'
-#' @section Examples:
-#'
-#' Use [`exibble`] to create a **gt** table with a number of table parts added.
-#' Then, use the `opt_table_lines()` function to haves lines everywhere there
-#' can possibly be lines.
-#'
-#' ```r
-#' exibble %>%
-#'   gt(rowname_col = "row", groupname_col = "group") %>%
-#'   summary_rows(
-#'     groups = "grp_a",
-#'     columns = c(num, currency),
-#'     fns = list(
-#'       min = ~min(., na.rm = TRUE),
-#'       max = ~max(., na.rm = TRUE)
-#'     )) %>%
-#'   grand_summary_rows(
-#'     columns = currency,
-#'     fns = list(
-#'       total = ~sum(., na.rm = TRUE)
-#'     )) %>%
-#'   tab_source_note(source_note = "This is a source note.") %>%
-#'   tab_footnote(
-#'     footnote = "This is a footnote.",
-#'     locations = cells_body(columns = 1, rows = 1)
-#'   ) %>%
-#'   tab_header(
-#'     title = "The title of the table",
-#'     subtitle = "The table's subtitle"
-#'   ) %>%
-#'   opt_table_lines()
-#' ```
-#'
-#' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_opt_table_lines_1.png")`
-#' }}
-#'
-#' @family table option functions
-#' @section Function ID:
-#' 9-7
-#'
-#' @export
-opt_table_lines <- function(
-    data,
-    extent = c("all", "none", "default")
-) {
-
-  # Perform input object validation
-  stop_if_not_gt(data = data)
-
-  extent <- match.arg(extent)
-
-  # Normalize `extent` values to property values
-  values_vec <- if (extent == "all") "solid" else extent
-
-  # Get vector of `tab_options()` arg names for all table line styles
-  options_vec <- get_tab_options_arg_vec(pattern = "\\.style$")
-
-  if (values_vec %in% c("solid", "none")) {
-    option_value_list <- create_option_value_list(options_vec, values_vec)
-  } else {
-    option_value_list <- create_default_option_value_list(options_vec)
-  }
-
-  tab_options_multi(
-    data = data,
-    options = option_value_list
-  )
-}
-
-#' Option to wrap an outline around the entire table
-#'
-#' @description
-#' This function puts an outline of consistent `style`, `width`, and `color`
-#' around the entire table. It'll write over any existing outside lines so long
-#' as the `width` is larger that of the existing lines. The default value of
-#' `style` (`"solid"`) will draw a solid outline, whereas a value of `"none"`
-#' will remove any present outline.
-#'
-#' @inheritParams fmt_number
-#' @param style,width,color The style, width, and color properties for the table
-#'   outline. By default, these are `"solid"`, `px(3)` (or, `"3px"`), and
-#'   `"#D3D3D3"`. If `"none"` is used then the outline is removed and any values
-#'   provided for `width` and `color` will be ignored (i.e., not set).
-#'
-#' @return An object of class `gt_tbl`.
-#'
-#' @section Examples:
-#'
-#' Use [`exibble`] to create a **gt** table with a number of table parts added.
-#' Have an outline wrap around the entire table by using `opt_table_outline()`.
-#'
-#' ```r
-#' tab_1 <-
-#'   exibble %>%
-#'   gt(rowname_col = "row", groupname_col = "group") %>%
-#'   summary_rows(
-#'     groups = "grp_a",
-#'     columns = c(num, currency),
-#'     fns = list(
-#'       min = ~min(., na.rm = TRUE),
-#'       max = ~max(., na.rm = TRUE)
-#'     )) %>%
-#'   grand_summary_rows(
-#'     columns = currency,
-#'     fns = list(
-#'       total = ~sum(., na.rm = TRUE)
-#'     )) %>%
-#'   tab_source_note(source_note = "This is a source note.") %>%
-#'   tab_footnote(
-#'     footnote = "This is a footnote.",
-#'     locations = cells_body(columns = 1, rows = 1)
-#'   ) %>%
-#'   tab_header(
-#'     title = "The title of the table",
-#'     subtitle = "The table's subtitle"
-#'   ) %>%
-#'   opt_table_outline()
-#'
-#' tab_1
-#' ```
-#'
-#' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_opt_table_outline_1.png")`
-#' }}
-#'
-#' Remove the table outline with the `style = "none"` option.
-#'
-#' ```r
-#' tab_1 %>% opt_table_outline(style = "none")
-#' ```
-#'
-#' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_opt_table_outline_2.png")`
-#' }}
-#'
-#' @family table option functions
-#' @section Function ID:
-#' 9-8
-#'
-#' @export
-opt_table_outline <- function(
-    data,
-    style = "solid",
-    width = px(3),
-    color = "#D3D3D3"
-) {
-
-  # Perform input object validation
-  stop_if_not_gt(data = data)
-
-  if (style == "none") {
-    width <- NULL
-    color <- NULL
-  }
-
-  params <-
-    c(
-      if (!is.null(style)) "style",
-      if (!is.null(width)) "width",
-      if (!is.null(color)) "color"
-    )
-
-  pattern <- paste0("^table\\.border.*?\\.(", paste(params, collapse = "|"), ")")
-
-  # Get vector of `tab_options()` arg names for the table border styles
-  options_vec <- get_tab_options_arg_vec(pattern = pattern)
-
-  if (is.null(width)) width <- NA_character_
-  if (is.null(color)) color <- NA_character_
-
-  values_vec <-
-    dplyr::case_when(
-      grepl("^table\\.border\\..*?\\.style$", options_vec) ~ style,
-      grepl("^table\\.border\\..*?\\.width$", options_vec) ~ width,
-      grepl("^table\\.border\\..*?\\.color$", options_vec) ~ color
-    )
-
-  option_value_list <- create_option_value_list(options_vec, values_vec)
-
-  tab_options_multi(
-    data = data,
-    options = option_value_list
-  )
-}
-
-#' Option to define a custom font for the table
-#'
-#' @description
-#' The `opt_table_font()` function makes it possible to define a custom font for
-#' the entire **gt** table. The standard fallback fonts are still set by default
-#' but the font defined here will take precedence. You could still have
-#' different fonts in select locations in the table, and for that you would need
-#' to use [tab_style()] in conjunction with the [cell_text()] helper function.
-#'
-#' @details
-#' We have the option to supply either a system font for the `font_name`, or, a
-#' font available at the Google Fonts service by use of the [google_font()]
-#' helper function.
-#'
-#' @inheritParams fmt_number
-#' @param font Either the name of a font available in the user system or a call
-#'   to [google_font()], which has a large selection of typefaces.
-#' @param style The text style. Can be one of either `"normal"`, `"italic"`, or
-#'   `"oblique"`.
-#' @param weight The weight of the font. Can be a text-based keyword such as
-#'   `"normal"`, `"bold"`, `"lighter"`, `"bolder"`, or, a numeric value between
-#'   `1` and `1000`, inclusive. Note that only variable fonts may support the
-#'   numeric mapping of weight.
-#' @param add Should this font be added to the front of the already-defined
-#'   fonts for the table? By default, this is `TRUE` and is recommended since
-#'   the list serves as fallbacks when certain fonts are not available.
-#'
-#' @return An object of class `gt_tbl`.
-#'
-#' @section Examples:
-#'
-#' Use [`sp500`] to create a small **gt** table, using [fmt_currency()] to
-#' provide a dollar sign for the first row of monetary values. Then, set a
-#' larger font size for the table and use the `"Merriweather"` font (from
-#' *Google Fonts*, via [google_font()]) with two font fallbacks (`"Cochin"` and
-#' the catchall `"Serif"` group).
-#'
-#' ```r
-#' sp500 %>%
-#'   dplyr::slice(1:10) %>%
-#'   dplyr::select(-volume, -adj_close) %>%
-#'   gt() %>%
-#'   fmt_currency(
-#'     columns = 2:5,
-#'     rows = 1,
-#'     currency = "USD",
-#'     use_seps = FALSE
-#'   ) %>%
-#'   tab_options(table.font.size = px(18)) %>%
-#'   opt_table_font(
-#'     font = list(
-#'       google_font(name = "Merriweather"),
-#'       "Cochin", "Serif"
-#'     )
-#'   )
-#' ```
-#'
-#' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_opt_table_font_1.png")`
-#' }}
-#'
-#' Use [`sza`] to create an eleven-row table. Within `opt_table_font()`, set up
-#' a preferred list of sans-serif fonts that are commonly available in macOS
-#' (using part of the [default_fonts()] vector as a fallback).
-#'
-#' ```r
-#' sza %>%
-#'   dplyr::filter(
-#'     latitude == 20 &
-#'       month == "jan" &
-#'       !is.na(sza)
-#'   ) %>%
-#'   dplyr::select(-latitude, -month) %>%
-#'   gt() %>%
-#'   opt_table_font(
-#'     font = c(
-#'       "Helvetica Neue", "Segoe UI",
-#'       default_fonts()[-c(1:3)]
-#'     )
-#'   ) %>%
-#'   opt_all_caps()
-#' ```
-#'
-#' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_opt_table_font_2.png")`
-#' }}
-#'
-#' @family table option functions
-#' @section Function ID:
-#' 9-9
-#'
-#' @export
-opt_table_font <- function(
-    data,
-    font,
-    weight = NULL,
-    style = NULL,
-    add = TRUE
-) {
-
-  existing_fonts <-
-    dt_options_get_value(
-      data = data,
-      option = "table_font_names"
-    )
-
-  existing_additional_css <-
-    dt_options_get_value(
-      data = data,
-      option = "table_additional_css"
-    )
-
-  font <- normalize_font_input(font_input = font)
-
-  additional_css <- c(font$import_stmt, existing_additional_css)
-
-  data <-
-    tab_options(
-      data = data,
-      table.font.names = c(font$name, if (add) existing_fonts)
-    )
-
-  data <-
-    tab_options(
-      data = data,
-      table.additional_css = additional_css
-    )
-
-  if (!is.null(weight)) {
-
-    if (is.numeric(weight)) weight <- as.character(weight)
-
-    data <-
-      tab_options(
-        data = data,
-        table.font.weight = weight
-      )
-
-    data <-
-      tab_options(
-        data = data,
-        column_labels.font.weight = weight
-      )
-  }
-
-  if (!is.null(style)) {
-
-    data <-
-      tab_options(
-        data = data,
-        table.font.style = style
-      )
-  }
-
-  data
-}
-
 #' Stylize your table with a colorful look
 #'
 #' @description
+#'
 #' With `opt_stylize()` you can quickly style your **gt** table with a carefully
 #' curated set of background colors, line colors, and line styles. There are six
 #' styles to choose from and they largely vary in the extent of coloring applied
@@ -948,29 +30,26 @@ opt_table_font <- function(
 #' style (using the `"cyan"` color variation and style number `6`).
 #'
 #' ```r
-#' exibble %>%
-#'   gt(rowname_col = "row", groupname_col = "group") %>%
+#' exibble |>
+#'   gt(rowname_col = "row", groupname_col = "group") |>
 #'   summary_rows(
 #'     groups = "grp_a",
 #'     columns = c(num, currency),
-#'     fns = list(
-#'       min = ~min(., na.rm = TRUE),
-#'       max = ~max(., na.rm = TRUE)
-#'     )) %>%
+#'     fns = c("min", "max")
+#'   ) |>
 #'   grand_summary_rows(
 #'     columns = currency,
-#'     fns = list(
-#'       total = ~sum(., na.rm = TRUE)
-#'     )) %>%
-#'   tab_source_note(source_note = "This is a source note.") %>%
+#'     fns = total ~ sum(., na.rm = TRUE)
+#'   ) |>
+#'   tab_source_note(source_note = "This is a source note.") |>
 #'   tab_footnote(
 #'     footnote = "This is a footnote.",
 #'     locations = cells_body(columns = 1, rows = 1)
-#'   ) %>%
+#'   ) |>
 #'   tab_header(
 #'     title = "The title of the table",
 #'     subtitle = "The table's subtitle"
-#'   ) %>%
+#'   ) |>
 #'   opt_stylize(style = 6, color = "cyan")
 #' ```
 #'
@@ -980,7 +59,10 @@ opt_table_font <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-10
+#' 9-1
+#'
+#' @section Function Introduced:
+#' `v0.7.0` (Aug 25, 2022)
 #'
 #' @export
 opt_stylize <- function(
@@ -989,6 +71,9 @@ opt_stylize <- function(
     color = "blue",
     add_row_striping = TRUE
 ) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   if (!(length(style) == 1 && style %in% 1:6)) {
     cli::cli_abort("The `style` value must be a number in the range of 1 to 6.")
@@ -1071,9 +156,1093 @@ get_colorized_params <- function(
   )
 }
 
+#' Option to put interactive elements in an HTML table
+#'
+#' @description
+#'
+#' By default, a **gt** table rendered as HTML will essentially be a 'static'
+#' table. However, we can make it 'interactive' and configure those interactive
+#' HTML options through the `opt_interactive()` function. Making an HTML table
+#' interactive entails the enabling of controls for pagination, global search,
+#' filtering, sorting, and more.
+#'
+#' This function serves as a shortcut for setting the following options in
+#' [tab_options()]:
+#'
+#' - `ihtml.active`
+#' - `ihtml.use_pagination`
+#' - `ihtml.use_pagination_info`
+#' - `ihtml.use_sorting`
+#' - `ihtml.use_search`
+#' - `ihtml.use_filters`
+#' - `ihtml.use_resizers`
+#' - `ihtml.use_highlight`
+#' - `ihtml.use_compact_mode`
+#' - `ihtml.use_page_size_select`
+#' - `ihtml.page_size_default`
+#' - `ihtml.page_size_values`
+#' - `ihtml.pagination_type`
+#'
+#' @inheritParams fmt_number
+#' @param active The `active` option will either enable or disable interactive
+#'   features for an HTML table. The individual features of an interactive HTML
+#'   table are controlled by the other options.
+#' @param use_pagination This is the option for using pagination controls (below
+#'   the table body). By default, this is `TRUE` and it will allow the use to
+#'   page through table content.
+#' @param use_pagination_info If `use_pagination` is `TRUE` then the
+#'   `use_pagination_info` option can be used to display informational text
+#'   regarding the current page view (this is set to `TRUE` by default).
+#' @param use_sorting This option provides controls for sorting column values.
+#'   By default, this is `TRUE`.
+#' @param use_search The `use_search` option places a search field for globally
+#'   filtering rows to the requested content. By default, this is `FALSE`.
+#' @param use_filters The `use_filters` option places search fields below each
+#'   column header and allows for filtering by column. By default, this is
+#'   `FALSE`.
+#' @param use_resizers This option allows for the interactive resizing of
+#'   columns. By default, this is `FALSE`.
+#' @param use_highlight The `use_highlight` option highlights individual rows
+#'   upon hover. By default, this is `FALSE`.
+#' @param use_compact_mode To reduce vertical padding and thus make the table
+#'   consume less vertical space the `use_compact_mode` option can be used. By
+#'   default, this is `FALSE`.
+#' @param use_page_size_select,page_size_default,page_size_values The
+#'   `use_page_size_select` option lets us display a dropdown menu for the
+#'   number of rows to show per page of data. By default, this is the vector
+#'   `c(10, 25, 50, 100)` which corresponds to options for `10`, `25`, `50`, and
+#'   `100` rows of data per page. To modify these page-size options, provide a
+#'   numeric vector to `page_size_values`. The default page size (initially set
+#'   as `10`) can be modified with `page_size_default` and this works whether or
+#'   not `use_page_size_select` is set to `TRUE`.
+#' @param pagination_type When using pagination the `pagination_type` option
+#'   lets us select between one of three options for the layout of pagination
+#'   controls. The default is `"numbers"`, where a series of page-number buttons
+#'   is presented along with 'previous' and 'next' buttons. The `"jump"` option
+#'   provides an input field with a stepper for the page number. With
+#'   `"simple"`, only the 'previous' and 'next' buttons are displayed.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Use the [`towny`] dataset to create a **gt** table with a header and a source
+#' note. Next, we add interactive HTML features through `opt_interactive()`.
+#' It'll just be the default set of interactive options.
+#'
+#' ```r
+#' towny |>
+#'   dplyr::select(name, census_div, starts_with("population")) |>
+#'   gt() |>
+#'   fmt_auto() |>
+#'   cols_label_with(fn = function(x) sub("population_", "", x)) |>
+#'   cols_width(
+#'     name ~ px(200),
+#'     census_div ~ px(200)
+#'   ) |>
+#'   tab_header(
+#'     title = "Populations of Municipalities",
+#'     subtitle = "Census values from 1996 to 2021."
+#'   ) |>
+#'   tab_source_note(source_note = md("Data taken from the `towny` dataset.")) |>
+#'   opt_interactive()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_opt_interactive_1.png")`
+#' }}
+#'
+#' @family table option functions
+#' @section Function ID:
+#' 9-2
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @export
+opt_interactive <- function(
+    data,
+    active = TRUE,
+    use_pagination = TRUE,
+    use_pagination_info = TRUE,
+    use_sorting = TRUE,
+    use_search = FALSE,
+    use_filters = FALSE,
+    use_resizers = FALSE,
+    use_highlight = FALSE,
+    use_compact_mode = FALSE,
+    use_page_size_select = FALSE,
+    page_size_default = 10,
+    page_size_values = c(10, 25, 50, 100),
+    pagination_type = c("numbers", "jump", "simple")
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  pagination_type <- rlang::arg_match(pagination_type)
+
+  tab_options(
+    data = data,
+    ihtml.active = active,
+    ihtml.use_pagination = use_pagination,
+    ihtml.use_pagination_info = use_pagination_info,
+    ihtml.use_sorting = use_sorting,
+    ihtml.use_search = use_search,
+    ihtml.use_filters = use_filters,
+    ihtml.use_resizers = use_resizers,
+    ihtml.use_highlight = use_highlight,
+    ihtml.use_compact_mode = use_compact_mode,
+    ihtml.use_page_size_select = use_page_size_select,
+    ihtml.page_size_default = page_size_default,
+    ihtml.page_size_values = page_size_values,
+    ihtml.pagination_type = pagination_type
+  )
+}
+
+#' Option to modify the set of footnote marks
+#'
+#' @description
+#'
+#' Alter the footnote marks for any footnotes that may be present in the table.
+#' Either a vector of marks can be provided (including Unicode characters), or,
+#' a specific keyword could be used to signify a preset sequence. This function
+#' serves as a shortcut for using `tab_options(footnotes.marks = {marks})`
+#'
+#' @inheritParams fmt_number
+#' @param marks Either a character vector of length greater than 1 (that will
+#'   represent the series of marks) or a single keyword that represents a preset
+#'   sequence of marks. The valid keywords are: `"numbers"` (for numeric marks),
+#'   `"letters"` and `"LETTERS"` (for lowercase and uppercase alphabetic marks),
+#'   `"standard"` (for a traditional set of four symbol marks), and `"extended"`
+#'   (which adds two more symbols to the standard set).
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @details
+#'
+#' We can supply a vector of that will represent the series of marks.
+#' The series of footnote marks is recycled when its usage goes beyond the
+#' length of the set. At each cycle, the marks are simply doubled, tripled, and
+#' so on (e.g., `*` -> `**` -> `***`). The option exists for providing keywords
+#' for certain types of footnote marks. The keywords are:
+#'
+#' - `"numbers"`: numeric marks, they begin from 1 and these marks are not
+#' subject to recycling behavior
+#' - `"letters"`: miniscule alphabetic marks, internally uses the `letters`
+#' vector which contains 26 lowercase letters of the Roman alphabet
+#' - `"LETTERS"`: majuscule alphabetic marks, using the `LETTERS` vector
+#' which has 26 uppercase letters of the Roman alphabet
+#' - `"standard"`: symbolic marks, four symbols in total
+#' - `"extended"`: symbolic marks, extends the standard set by adding two
+#' more symbols, making six
+#'
+#' @section Examples:
+#'
+#' Use [`sza`] to create a **gt** table, adding three footnotes. Call
+#' `opt_footnote_marks()` to specify which footnote marks to use.
+#'
+#' ```r
+#' sza |>
+#'   dplyr::filter(latitude == 30) |>
+#'   dplyr::group_by(tst) |>
+#'   dplyr::summarize(
+#'     SZA.Max = if (
+#'       all(is.na(sza))) {
+#'       NA
+#'     } else {
+#'       max(sza, na.rm = TRUE)
+#'     },
+#'     SZA.Min = if (
+#'       all(is.na(sza))) {
+#'       NA
+#'     } else {
+#'       min(sza, na.rm = TRUE)
+#'     },
+#'     .groups = "drop"
+#'   ) |>
+#'   gt(rowname_col = "tst") |>
+#'   tab_spanner_delim(delim = ".") |>
+#'   sub_missing(
+#'     columns = everything(),
+#'     missing_text = "90+"
+#'   ) |>
+#'   tab_stubhead(label = "TST") |>
+#'   tab_footnote(
+#'     footnote = "True solar time.",
+#'     locations = cells_stubhead()
+#'   ) |>
+#'   tab_footnote(
+#'     footnote = "Solar zenith angle.",
+#'     locations = cells_column_spanners(
+#'       spanners = "spanner-SZA.Max"
+#'     )
+#'   ) |>
+#'   tab_footnote(
+#'     footnote = "The Lowest SZA.",
+#'     locations = cells_stub(rows = "1200")
+#'   ) |>
+#'   opt_footnote_marks(marks = "standard")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_opt_footnote_marks_1.png")`
+#' }}
+#'
+#' @family table option functions
+#' @section Function ID:
+#' 9-3
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
+#' @export
+opt_footnote_marks <- function(
+    data,
+    marks
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  # Validate input for `marks`
+  validate_marks(marks)
+
+  tab_options(data = data, footnotes.marks = marks)
+}
+
+#' Option to add or remove row striping
+#'
+#' @description
+#'
+#' By default, a **gt** table does not have row striping enabled. However, this
+#' function allows us to easily enable or disable striped rows in the table
+#' body. This function serves as a convenient shortcut for
+#' `<gt_tbl> |> tab_options(row.striping.include_table_body = TRUE|FALSE)`.
+#'
+#' @inheritParams fmt_number
+#' @param row_striping A logical value to indicate whether row striping should
+#'   be added or removed.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table with a number of table parts added.
+#' Next, we add row striping to every second row with the `opt_row_striping()`
+#' function.
+#'
+#' ```r
+#' exibble |>
+#'   gt(rowname_col = "row", groupname_col = "group") |>
+#'   summary_rows(
+#'     groups = "grp_a",
+#'     columns = c(num, currency),
+#'     fns = c("min", "max")
+#'   ) |>
+#'   grand_summary_rows(
+#'     columns = currency,
+#'     fns = total ~ sum(., na.rm = TRUE)
+#'   ) |>
+#'   tab_source_note(source_note = "This is a source note.") |>
+#'   tab_footnote(
+#'     footnote = "This is a footnote.",
+#'     locations = cells_body(columns = 1, rows = 1)
+#'   ) |>
+#'   tab_header(
+#'     title = "The title of the table",
+#'     subtitle = "The table's subtitle"
+#'   ) |>
+#'   opt_row_striping()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_opt_row_striping_1.png")`
+#' }}
+#'
+#' @family table option functions
+#' @section Function ID:
+#' 9-4
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
+#' @export
+opt_row_striping <- function(
+    data,
+    row_striping = TRUE
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  tab_options(
+    data = data,
+    row.striping.include_table_body = row_striping
+  )
+}
+
+#' Option to align the table header
+#'
+#' @description
+#'
+#' By default, a table header added to a **gt** table has center alignment
+#' for both the title and the subtitle elements. This function allows us to
+#' easily set the horizontal alignment of the title and subtitle to the left
+#' or right by using the `"align"` argument. This function serves as a
+#' convenient shortcut for `<gt_tbl> |> tab_options(heading.align = <align>)`.
+#'
+#' @inheritParams fmt_number
+#' @param align The alignment of the title and subtitle elements in the table
+#' header. Options are `"left"` (the default), `"center"`, or `"right"`.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table with a number of table parts added.
+#' The header (consisting of the title and the subtitle) are to be aligned to
+#' the left with the `opt_align_table_header()` function.
+#'
+#' ```r
+#' exibble |>
+#'   gt(rowname_col = "row", groupname_col = "group") |>
+#'   summary_rows(
+#'     groups = "grp_a",
+#'     columns = c(num, currency),
+#'     fns = c("min", "max")
+#'   ) |>
+#'   grand_summary_rows(
+#'     columns = currency,
+#'     fns = total ~ sum(., na.rm = TRUE)
+#'   ) |>
+#'   tab_source_note(source_note = "This is a source note.") |>
+#'   tab_footnote(
+#'     footnote = "This is a footnote.",
+#'     locations = cells_body(columns = 1, rows = 1)
+#'   ) |>
+#'   tab_header(
+#'     title = "The title of the table",
+#'     subtitle = "The table's subtitle"
+#'   ) |>
+#'   opt_align_table_header(align = "left")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_opt_align_table_header_1.png")`
+#' }}
+#'
+#' @family table option functions
+#' @section Function ID:
+#' 9-5
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
+#' @export
+opt_align_table_header <- function(
+    data,
+    align = c("left", "center", "right")
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  align <- rlang::arg_match(align)
+
+  tab_options(
+    data = data,
+    heading.align = align
+  )
+}
+
+#' Option to expand or contract vertical padding
+#'
+#' @description
+#'
+#' Increase or decrease the vertical padding throughout all locations of a
+#' **gt** table by use of a `scale` factor, which here is defined by a real
+#' number between `0` and `3`. This function serves as a shortcut for setting
+#' the following eight options in [tab_options()]:
+#'
+#' - `heading.padding`
+#' - `column_labels.padding`
+#' - `data_row.padding`
+#' - `row_group.padding`
+#' - `summary_row.padding`
+#' - `grand_summary_row.padding`
+#' - `footnotes.padding`
+#' - `source_notes.padding`
+#'
+#' @inheritParams fmt_number
+#' @param scale A scale factor by which the vertical padding will be adjusted.
+#'   Must be a number between `0` and `3`.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table with a number of table parts added.
+#' Contract the vertical padding across the entire table with
+#' `opt_vertical_padding()`.
+#'
+#'
+#' ```r
+#' exibble |>
+#'   gt(rowname_col = "row", groupname_col = "group") |>
+#'   summary_rows(
+#'     groups = "grp_a",
+#'     columns = c(num, currency),
+#'     fns = c("min", "max")
+#'   ) |>
+#'   grand_summary_rows(
+#'     columns = currency,
+#'     fns = total ~ sum(., na.rm = TRUE)
+#'   ) |>
+#'   tab_source_note(source_note = "This is a source note.") |>
+#'   tab_footnote(
+#'     footnote = "This is a footnote.",
+#'     locations = cells_body(columns = 1, rows = 1)
+#'   ) |>
+#'   tab_header(
+#'     title = "The title of the table",
+#'     subtitle = "The table's subtitle"
+#'   ) |>
+#'   opt_vertical_padding(scale = 0.25)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_opt_vertical_padding_1.png")`
+#' }}
+#'
+#' @family table option functions
+#' @section Function ID:
+#' 9-6
+#'
+#' @section Function Introduced:
+#' `v0.4.0` (February 15, 2022)
+#'
+#' @export
+opt_vertical_padding <- function(
+    data,
+    scale = 1
+) {
+
+  option_value_list <-
+    get_padding_option_value_list(
+      scale = scale,
+      type = "vertical"
+    )
+
+  tab_options_multi(
+    data = data,
+    options = option_value_list
+  )
+}
+
+#' Option to expand or contract horizontal padding
+#'
+#' @description
+#'
+#' Increase or decrease the horizontal padding throughout all locations of a
+#' **gt** table by use of a `scale` factor, which here is defined by a real
+#' number between `0` and `3`. This function serves as a shortcut for setting
+#' the following eight options in [tab_options()]:
+#'
+#' - `heading.padding.horizontal`
+#' - `column_labels.padding.horizontal`
+#' - `data_row.padding.horizontal`
+#' - `row_group.padding.horizontal`
+#' - `summary_row.padding.horizontal`
+#' - `grand_summary_row.padding.horizontal`
+#' - `footnotes.padding.horizontal`
+#' - `source_notes.padding.horizontal`
+#'
+#' @inheritParams fmt_number
+#' @param scale A scale factor by which the horizontal padding will be adjusted.
+#'   Must be a number between `0` and `3`.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table with a number of table parts added.
+#' Expand the horizontal padding across the entire table with
+#' `opt_horizontal_padding()`.
+#'
+#' ```r
+#' exibble |>
+#'   gt(rowname_col = "row", groupname_col = "group") |>
+#'   summary_rows(
+#'     groups = "grp_a",
+#'     columns = c(num, currency),
+#'     fns = c("min", "max")
+#'   ) |>
+#'   grand_summary_rows(
+#'     columns = currency,
+#'     fns = total ~ sum(., na.rm = TRUE)
+#'   ) |>
+#'   tab_source_note(source_note = "This is a source note.") |>
+#'   tab_footnote(
+#'     footnote = "This is a footnote.",
+#'     locations = cells_body(columns = 1, rows = 1)
+#'   ) |>
+#'   tab_header(
+#'     title = "The title of the table",
+#'     subtitle = "The table's subtitle"
+#'   ) |>
+#'   opt_horizontal_padding(scale = 3)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_opt_horizontal_padding_1.png")`
+#' }}
+#'
+#' @family table option functions
+#' @section Function ID:
+#' 9-7
+#'
+#' @section Function Introduced:
+#' `v0.4.0` (February 15, 2022)
+#'
+#' @export
+opt_horizontal_padding <- function(
+    data,
+    scale = 1
+) {
+
+  option_value_list <-
+    get_padding_option_value_list(
+      scale = scale,
+      type = "horizontal"
+    )
+
+  tab_options_multi(
+    data = data,
+    options = option_value_list
+  )
+}
+
+get_padding_option_value_list <- function(scale, type) {
+
+  # Stop if `scale` is beyond an acceptable range
+  if (scale < 0 | scale > 3) {
+    cli::cli_abort(
+      "The value provided for `scale` ({scale}) must be between `0` and `3`."
+    )
+  }
+
+  pattern <- if (type == "vertical") "_padding" else  "_padding_horizontal"
+
+  # Get the padding parameters from `dt_options_tbl` that relate
+  # to the `type` (either vertical or horizontal padding)
+  padding_params <-
+    dplyr::pull(
+      dplyr::filter(dt_options_tbl, grepl(paste0(pattern, "$"), parameter)),
+      parameter
+    )
+
+  padding_options <- dplyr::filter(dt_options_tbl, parameter %in% padding_params)
+  padding_options <- dplyr::select(padding_options, parameter, value)
+  padding_options <-
+    dplyr::mutate(
+      padding_options,
+      parameter = gsub(pattern, gsub("_", ".", pattern, fixed = TRUE), parameter, fixed = TRUE)
+    )
+  padding_options <- dplyr::mutate(padding_options, value = unlist(value))
+  padding_options <- dplyr::mutate(padding_options, px = as.numeric(gsub("px", "", value)))
+  padding_options <- dplyr::mutate(padding_options, px = px * scale)
+
+  create_option_value_list(
+    padding_options$parameter,
+    paste0(padding_options$px, "px")
+  )
+}
+
+#' Option to use all caps in select table locations
+#'
+#' @description
+#'
+#' Sometimes an all-capitalized look is suitable for a table. With the
+#' `opt_all_caps()` function, we can transform characters in the column labels,
+#' the stub, and in all row groups in this way (and there's control over which
+#' of these locations are transformed).
+#'
+#' This function serves as a convenient shortcut for `<gt_tbl> |>
+#' tab_options(<location>.text_transform = "uppercase", <location>.font.size =
+#' pct(80), <location>.font.weight = "bolder")` (for all `locations` selected).
+#'
+#' @inheritParams fmt_number
+#' @param all_caps A logical value to indicate whether the text transformation
+#'   to all caps should be performed (`TRUE`, the default) or reset to default
+#'   values (`FALSE`) for the `locations` targeted.
+#' @param locations Which locations should undergo this text transformation? By
+#'   default it includes all of the `"column_labels"`, the `"stub"`, and the
+#'   `"row_group"` locations. However, we could just choose one or two of those.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table with a number of table parts added.
+#' All text in the column labels, the stub, and in all row groups is to be
+#' transformed to all caps using `opt_all_caps()`.
+#'
+#' ```r
+#' exibble |>
+#'   gt(rowname_col = "row", groupname_col = "group") |>
+#'   summary_rows(
+#'     groups = "grp_a",
+#'     columns = c(num, currency),
+#'     fns = c("min", "max")
+#'   ) |>
+#'   grand_summary_rows(
+#'     columns = currency,
+#'     fns = total ~ sum(., na.rm = TRUE)
+#'   ) |>
+#'   tab_source_note(source_note = "This is a source note.") |>
+#'   tab_footnote(
+#'     footnote = "This is a footnote.",
+#'     locations = cells_body(columns = 1, rows = 1)
+#'   ) |>
+#'   tab_header(
+#'     title = "The title of the table",
+#'     subtitle = "The table's subtitle"
+#'   ) |>
+#'   opt_all_caps()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_opt_all_caps_1.png")`
+#' }}
+#'
+#' @family table option functions
+#' @section Function ID:
+#' 9-8
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
+#' @export
+opt_all_caps <- function(
+    data,
+    all_caps = TRUE,
+    locations = c("column_labels", "stub", "row_group")
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  # Ensure that all named locations are valid
+  if (!all(locations %in% c("column_labels", "stub", "row_group"))) {
+    cli::cli_abort(
+      "The available locations are `column_labels`, `stub`, and `row_group`."
+    )
+  }
+
+  # Create a regex pattern to obtain arg names for all specific `locations`
+  pattern <-
+    paste0(
+      "^(", paste(locations, collapse = "|"),
+      ")\\.(text_transform|font\\.size|font\\.weight)"
+    )
+
+  # Obtain the `tab_options()` args vector with the `pattern`
+  options_vec <- get_tab_options_arg_vec(pattern = pattern)
+
+  if (all_caps) {
+
+    values_vec <-
+      dplyr::case_when(
+        grepl("\\.font\\.size$", options_vec) ~ "80%",
+        grepl("\\.font\\.weight$", options_vec) ~ "bolder",
+        grepl("\\.text_transform$", options_vec) ~ "uppercase"
+      )
+
+    option_value_list <- create_option_value_list(options_vec, values_vec)
+  } else {
+    option_value_list <- create_default_option_value_list(options_vec)
+  }
+
+  tab_options_multi(
+    data = data,
+    options = option_value_list
+  )
+}
+
+#' Option to set table lines to different extents
+#'
+#' @description
+#'
+#' The `opt_table_lines()` function sets table lines in one of three possible
+#' ways: (1) all possible table lines drawn (`"all"`), (2) no table lines at all
+#' (`"none"`), and (3) resetting to the default line styles (`"default"`). This
+#' is great if you want to start off with lots of lines and subtract just a few
+#' of them with [tab_options()] or [tab_style()]. Or, use it to start with a
+#' completely lineless table, adding individual lines as needed.
+#'
+#' @inheritParams fmt_number
+#' @param extent The extent to which lines will be visible in the table. Options
+#' are `"all"`, `"none"`, or `"default"`.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table with a number of table parts added.
+#' Then, use the `opt_table_lines()` function to haves lines everywhere there
+#' can possibly be lines.
+#'
+#' ```r
+#' exibble |>
+#'   gt(rowname_col = "row", groupname_col = "group") |>
+#'   summary_rows(
+#'     groups = "grp_a",
+#'     columns = c(num, currency),
+#'     fns = c("min", "max")
+#'   ) |>
+#'   grand_summary_rows(
+#'     columns = currency,
+#'     fns = total ~ sum(., na.rm = TRUE)
+#'   ) |>
+#'   tab_source_note(source_note = "This is a source note.") |>
+#'   tab_footnote(
+#'     footnote = "This is a footnote.",
+#'     locations = cells_body(columns = 1, rows = 1)
+#'   ) |>
+#'   tab_header(
+#'     title = "The title of the table",
+#'     subtitle = "The table's subtitle"
+#'   ) |>
+#'   opt_table_lines()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_opt_table_lines_1.png")`
+#' }}
+#'
+#' @family table option functions
+#' @section Function ID:
+#' 9-9
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
+#' @export
+opt_table_lines <- function(
+    data,
+    extent = c("all", "none", "default")
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  extent <- rlang::arg_match(extent)
+
+  # Normalize `extent` values to property values
+  values_vec <- if (extent == "all") "solid" else extent
+
+  # Get vector of `tab_options()` arg names for all table line styles
+  options_vec <- get_tab_options_arg_vec(pattern = "\\.style$")
+
+  if (values_vec %in% c("solid", "none")) {
+    option_value_list <- create_option_value_list(options_vec, values_vec)
+  } else {
+    option_value_list <- create_default_option_value_list(options_vec)
+  }
+
+  tab_options_multi(
+    data = data,
+    options = option_value_list
+  )
+}
+
+#' Option to wrap an outline around the entire table
+#'
+#' @description
+#'
+#' This function puts an outline of consistent `style`, `width`, and `color`
+#' around the entire table. It'll write over any existing outside lines so long
+#' as the `width` is larger that of the existing lines. The default value of
+#' `style` (`"solid"`) will draw a solid outline, whereas a value of `"none"`
+#' will remove any present outline.
+#'
+#' @inheritParams fmt_number
+#' @param style,width,color The style, width, and color properties for the table
+#'   outline. By default, these are `"solid"`, `px(3)` (or, `"3px"`), and
+#'   `"#D3D3D3"`. If `"none"` is used then the outline is removed and any values
+#'   provided for `width` and `color` will be ignored (i.e., not set).
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table with a number of table parts added.
+#' Have an outline wrap around the entire table by using `opt_table_outline()`.
+#'
+#' ```r
+#' tab_1 <-
+#'   exibble |>
+#'   gt(rowname_col = "row", groupname_col = "group") |>
+#'   summary_rows(
+#'     groups = "grp_a",
+#'     columns = c(num, currency),
+#'     fns = c("min", "max")
+#'   ) |>
+#'   grand_summary_rows(
+#'     columns = currency,
+#'     fns = total ~ sum(., na.rm = TRUE)
+#'   ) |>
+#'   tab_source_note(source_note = "This is a source note.") |>
+#'   tab_footnote(
+#'     footnote = "This is a footnote.",
+#'     locations = cells_body(columns = 1, rows = 1)
+#'   ) |>
+#'   tab_header(
+#'     title = "The title of the table",
+#'     subtitle = "The table's subtitle"
+#'   ) |>
+#'   opt_table_outline()
+#'
+#' tab_1
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_opt_table_outline_1.png")`
+#' }}
+#'
+#' Remove the table outline with the `style = "none"` option.
+#'
+#' ```r
+#' tab_1 |> opt_table_outline(style = "none")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_opt_table_outline_2.png")`
+#' }}
+#'
+#' @family table option functions
+#' @section Function ID:
+#' 9-10
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
+#' @export
+opt_table_outline <- function(
+    data,
+    style = "solid",
+    width = px(3),
+    color = "#D3D3D3"
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  if (style == "none") {
+    width <- NULL
+    color <- NULL
+  }
+
+  params <-
+    c(
+      if (!is.null(style)) "style",
+      if (!is.null(width)) "width",
+      if (!is.null(color)) "color"
+    )
+
+  pattern <- paste0("^table\\.border.*?\\.(", paste(params, collapse = "|"), ")")
+
+  # Get vector of `tab_options()` arg names for the table border styles
+  options_vec <- get_tab_options_arg_vec(pattern = pattern)
+
+  if (is.null(width)) width <- NA_character_
+  if (is.null(color)) color <- NA_character_
+
+  values_vec <-
+    dplyr::case_when(
+      grepl("^table\\.border\\..*?\\.style$", options_vec) ~ style,
+      grepl("^table\\.border\\..*?\\.width$", options_vec) ~ width,
+      grepl("^table\\.border\\..*?\\.color$", options_vec) ~ color
+    )
+
+  option_value_list <- create_option_value_list(options_vec, values_vec)
+
+  tab_options_multi(
+    data = data,
+    options = option_value_list
+  )
+}
+
+#' Option to define a custom font for the table
+#'
+#' @description
+#'
+#' The `opt_table_font()` function makes it possible to define a custom font for
+#' the entire **gt** table. The standard fallback fonts are still set by default
+#' but the font defined here will take precedence. You could still have
+#' different fonts in select locations in the table, and for that you would need
+#' to use [tab_style()] in conjunction with the [cell_text()] helper function.
+#'
+#' @inheritParams fmt_number
+#' @param font Either the name of a font available in the user system or a call
+#'   to [google_font()], which has a large selection of typefaces.
+#' @param style The text style. Can be one of either `"normal"`, `"italic"`, or
+#'   `"oblique"`.
+#' @param weight The weight of the font. Can be a text-based keyword such as
+#'   `"normal"`, `"bold"`, `"lighter"`, `"bolder"`, or, a numeric value between
+#'   `1` and `1000`, inclusive. Note that only variable fonts may support the
+#'   numeric mapping of weight.
+#' @param add Should this font be added to the front of the already-defined
+#'   fonts for the table? By default, this is `TRUE` and is recommended since
+#'   the list serves as fallbacks when certain fonts are not available.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @details
+#'
+#' We have the option to supply either a system font for the `font_name`, or, a
+#' font available at the Google Fonts service by use of the [google_font()]
+#' helper function.
+#'
+#' @section Examples:
+#'
+#' Use [`sp500`] to create a small **gt** table, using [fmt_currency()] to
+#' provide a dollar sign for the first row of monetary values. Then, set a
+#' larger font size for the table and use the `"Merriweather"` font (from
+#' *Google Fonts*, via [google_font()]) with two font fallbacks (`"Cochin"` and
+#' the catchall `"Serif"` group).
+#'
+#' ```r
+#' sp500 |>
+#'   dplyr::slice(1:10) |>
+#'   dplyr::select(-volume, -adj_close) |>
+#'   gt() |>
+#'   fmt_currency(
+#'     columns = 2:5,
+#'     rows = 1,
+#'     currency = "USD",
+#'     use_seps = FALSE
+#'   ) |>
+#'   tab_options(table.font.size = px(18)) |>
+#'   opt_table_font(
+#'     font = list(
+#'       google_font(name = "Merriweather"),
+#'       "Cochin", "Serif"
+#'     )
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_opt_table_font_1.png")`
+#' }}
+#'
+#' Use [`sza`] to create an eleven-row table. Within `opt_table_font()`, set up
+#' a preferred list of sans-serif fonts that are commonly available in macOS
+#' (using part of the [default_fonts()] vector as a fallback).
+#'
+#' ```r
+#' sza |>
+#'   dplyr::filter(
+#'     latitude == 20 &
+#'       month == "jan" &
+#'       !is.na(sza)
+#'   ) |>
+#'   dplyr::select(-latitude, -month) |>
+#'   gt() |>
+#'   opt_table_font(
+#'     font = c(
+#'       "Helvetica Neue", "Segoe UI",
+#'       default_fonts()[-c(1:3)]
+#'     )
+#'   ) |>
+#'   opt_all_caps()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_opt_table_font_2.png")`
+#' }}
+#'
+#' @family table option functions
+#' @section Function ID:
+#' 9-11
+#'
+#' @section Function Introduced:
+#' `v0.2.2` (August 5, 2020)
+#'
+#' @export
+opt_table_font <- function(
+    data,
+    font,
+    weight = NULL,
+    style = NULL,
+    add = TRUE
+) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
+
+  existing_fonts <-
+    dt_options_get_value(
+      data = data,
+      option = "table_font_names"
+    )
+
+  existing_additional_css <-
+    dt_options_get_value(
+      data = data,
+      option = "table_additional_css"
+    )
+
+  font <- normalize_font_input(font_input = font)
+
+  additional_css <- c(font$import_stmt, existing_additional_css)
+
+  data <-
+    tab_options(
+      data = data,
+      table.font.names = c(font$name, if (add) existing_fonts)
+    )
+
+  data <-
+    tab_options(
+      data = data,
+      table.additional_css = additional_css
+    )
+
+  if (!is.null(weight)) {
+
+    if (is.numeric(weight)) weight <- as.character(weight)
+
+    data <-
+      tab_options(
+        data = data,
+        table.font.weight = weight
+      )
+
+    data <-
+      tab_options(
+        data = data,
+        column_labels.font.weight = weight
+      )
+  }
+
+  if (!is.null(style)) {
+
+    data <-
+      tab_options(
+        data = data,
+        table.font.style = style
+      )
+  }
+
+  data
+}
+
 #' Option to add custom CSS for the table
 #'
 #' @description
+#'
 #' The `opt_css()` function makes it possible to add CSS to a **gt** table. This
 #' CSS will be added after the compiled CSS that **gt** generates automatically
 #' when the object is transformed to an HTML output table. You can supply `css`
@@ -1100,16 +1269,14 @@ get_colorized_params <- function(
 #' table ID explicitly (here as `"one"`).
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(num, currency) %>%
-#'   gt(id = "one") %>%
+#' exibble |>
+#'   dplyr::select(num, currency) |>
+#'   gt(id = "one") |>
 #'   fmt_currency(
 #'     columns = currency,
 #'     currency = "HKD"
-#'   ) %>%
-#'   fmt_scientific(
-#'     columns = num
-#'   ) %>%
+#'   ) |>
+#'   fmt_scientific(columns = num) |>
 #'   opt_css(
 #'     css = "
 #'     #one .gt_table {
@@ -1131,7 +1298,10 @@ get_colorized_params <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-11
+#' 9-12
+#'
+#' @section Function Introduced:
+#' `v0.2.2` (August 5, 2020)
 #'
 #' @export
 opt_css <- function(
@@ -1140,6 +1310,9 @@ opt_css <- function(
     add = TRUE,
     allow_duplicates = FALSE
 ) {
+
+  # Perform input object validation
+  stop_if_not_gt(data = data)
 
   existing_additional_css <-
     dt_options_get_value(
@@ -1219,7 +1392,7 @@ create_option_value_list <- function(tab_options_args, values) {
     )
   }
 
-  stats::setNames(object = values, tab_options_args) %>% as.list()
+  as.list(stats::setNames(object = values, tab_options_args))
 }
 
 create_default_option_value_list <- function(tab_options_args) {

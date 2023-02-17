@@ -24,6 +24,7 @@ every \strong{gt} table.
 }
 \section{Overview of Location Helper Functions}{
 
+
 Location helper functions can be used to target cells with virtually any
 function that has a \code{locations} argument. Here is a listing of all of the
 location helper functions, with locations corresponding roughly from top to
@@ -64,6 +65,35 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \code{list()} (e.g., \code{list(cells_body(), cells_grand_summary())}).
 }
 
+\section{Targeting cells with \code{columns} and \code{rows}}{
+
+
+Targeting of values is done through \code{columns} and additionally by \code{rows} (if
+nothing is provided for \code{rows} then entire columns are selected). The
+\code{columns} argument allows us to target a subset of cells contained in the
+resolved columns. We say resolved because aside from declaring column names
+in \code{c()} (with bare column names or names in quotes) we can use
+\strong{tidyselect}-style expressions. This can be as basic as supplying a select
+helper like \code{starts_with()}, or, providing a more complex incantation like
+
+\code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
+
+which targets numeric columns that have a maximum value of 100,000 (excluding
+\code{NA}s from consideration).
+
+Once the columns are targeted, we may also target the \code{rows} within those
+columns. This can be done in a variety of ways. If a stub is present, then we
+potentially have row identifiers. Those can be used much like column names in
+the \code{columns}-targeting scenario. We can use simpler \strong{tidyselect}-style
+expressions (the select helpers should work well here) and we can use quoted
+row identifiers in \code{c()}. It's also possible to use row indices (e.g.,
+\code{c(3, 5, 6)}) though these index values must correspond to the row numbers of
+the input data (the indices won't necessarily match those of rearranged rows
+if row groups are present). One more type of expression is possible, an
+expression that takes column values (can involve any of the available columns
+in the table) and returns a logical vector.
+}
+
 \section{Examples}{
 
 
@@ -71,17 +101,17 @@ Use \code{\link{gtcars}} to create a \strong{gt} table. Add a footnote that targ
 data cell with \code{\link[=tab_footnote]{tab_footnote()}}, using \code{cells_body()} in \code{locations}
 (\code{rows = hp == max(hp)} will target a single row in the \code{hp} column).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
-  dplyr::filter(ctry_origin == "United Kingdom") \%>\%
-  dplyr::select(mfr, model, year, hp) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::filter(ctry_origin == "United Kingdom") |>
+  dplyr::select(mfr, model, year, hp) |>
+  gt() |>
   tab_footnote(
     footnote = "Highest horsepower.",
     locations = cells_body(
       columns = hp,
       rows = hp == max(hp)
     )
-  ) \%>\%
+  ) |>
   opt_footnote_marks(marks = c("*", "+"))
 }\if{html}{\out{</div>}}
 
@@ -93,6 +123,11 @@ data cell with \code{\link[=tab_footnote]{tab_footnote()}}, using \code{cells_bo
 \section{Function ID}{
 
 7-12
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{

@@ -37,11 +37,11 @@ Use \code{\link{countrypops}} to create a \strong{gt} table. With the remaining 
 move the \code{year} column to the end of the column series with the
 \code{cols_move_to_end()} function.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::select(-contains("code")) \%>\%
-  dplyr::filter(country_name == "Mongolia") \%>\%
-  tail(5) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::select(-contains("code")) |>
+  dplyr::filter(country_name == "Mongolia") |>
+  tail(5) |>
+  gt() |>
   cols_move_to_end(columns = year)
 }\if{html}{\out{</div>}}
 
@@ -52,11 +52,11 @@ move the \code{year} column to the end of the column series with the
 Use \code{\link{countrypops}} to create a \strong{gt} table. With the remaining columns,
 move \code{year} and \code{country_name} to the end of the column series.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::select(-contains("code")) \%>\%
-  dplyr::filter(country_name == "Mongolia") \%>\%
-  tail(5) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::select(-contains("code")) |>
+  dplyr::filter(country_name == "Mongolia") |>
+  tail(5) |>
+  gt() |>
   cols_move_to_end(columns = c(year, country_name))
 }\if{html}{\out{</div>}}
 
@@ -67,7 +67,12 @@ move \code{year} and \code{country_name} to the end of the column series.
 
 \section{Function ID}{
 
-4-6
+4-8
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
@@ -75,6 +80,7 @@ Other column modification functions:
 \code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
+\code{\link{cols_label_with}()},
 \code{\link{cols_label}()},
 \code{\link{cols_merge_n_pct}()},
 \code{\link{cols_merge_range}()},

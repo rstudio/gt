@@ -22,8 +22,10 @@ selection_text <- function(html, selection) {
   rvest::html_text(rvest::html_nodes(html, selection))
 }
 
-test_that("the correct color values are obtained when defining a palette", {
+test_that("The correct color values are obtained when defining a palette", {
+
   skip_if_not_installed("paletteer")
+
   # Obtain a palette of 12 colors in #RRGGBB format
   pal_12 <-
     paletteer::paletteer_d(palette = "rcartocolor::Vivid") %>% as.character() %>%
@@ -37,7 +39,7 @@ test_that("the correct color values are obtained when defining a palette", {
     gt() %>%
     data_color(
       columns = "month",
-      colors = pal_12,
+      palette = pal_12,
       autocolor_text = TRUE
     ) %>%
     render_as_html() %>%
@@ -73,7 +75,7 @@ test_that("the correct color values are obtained when defining a palette", {
     gt() %>%
     data_color(
       columns = month,
-      colors = pal_12,
+      palette = pal_12,
       autocolor_text = FALSE
     ) %>%
     render_as_html() %>%
@@ -90,7 +92,7 @@ test_that("the correct color values are obtained when defining a palette", {
     gt() %>%
     data_color(
       columns = month,
-      colors = pal_12,
+      palette = pal_12,
       autocolor_text = TRUE
     ) %>%
     render_as_html() %>%
@@ -123,7 +125,7 @@ test_that("the correct color values are obtained when defining a palette", {
     gt() %>%
     data_color(
       columns = month,
-      colors = pal_12,
+      palette = pal_12,
       autocolor_text = FALSE
     ) %>%
     render_as_html() %>%
@@ -141,7 +143,7 @@ test_that("the correct color values are obtained when defining a palette", {
     gt() %>%
     data_color(
       columns = min_sza,
-      colors = c("red", "orange", "green", "blue"),
+      palette = c("red", "orange", "green", "blue"),
       autocolor_text = TRUE
     ) %>%
     render_as_html() %>%
@@ -176,7 +178,6 @@ test_that("the correct color values are obtained when defining a palette", {
   # Create a `tbl_html_rrggbb` object by using `data_color` with color values
   # written in the #RRGGBB form (arranged in the same way as before);
   # again, applied to the `min_sza` column
-
   rgb_hex_colors <- c("#FF0000", "#FFA500", "#00FF00", "#0000FF")
 
   tbl_html_rrggbb <-
@@ -184,7 +185,7 @@ test_that("the correct color values are obtained when defining a palette", {
     gt() %>%
     data_color(
       columns = min_sza,
-      colors = rgb_hex_colors,
+      palette = rgb_hex_colors,
       autocolor_text = TRUE
     ) %>%
     render_as_html() %>%
@@ -236,7 +237,7 @@ test_that("the correct color values are obtained when defining a palette", {
     gt() %>%
     data_color(
       columns = min_sza,
-      colors = rgba_hex_colors,
+      palette = rgba_hex_colors,
       autocolor_text = TRUE
     ) %>%
     render_as_html() %>%
@@ -291,7 +292,7 @@ test_that("the correct color values are obtained when defining a palette", {
     gt() %>%
     data_color(
       columns = min_sza,
-      colors = rgba_hex_colors_mixed,
+      palette = rgba_hex_colors_mixed,
       autocolor_text = TRUE
     ) %>%
     render_as_html() %>%
@@ -347,7 +348,7 @@ test_that("the correct color values are obtained when defining a palette", {
     gt() %>%
     data_color(
       columns = min_sza,
-      colors = rgba_hex_colors_mixed_2,
+      palette = rgba_hex_colors_mixed_2,
       autocolor_text = TRUE
     ) %>%
     render_as_html() %>%
@@ -414,7 +415,7 @@ test_that("the correct color values are obtained when defining a palette", {
     gt() %>%
     data_color(
       columns = month,
-      colors = pal_12,
+      palette = pal_12,
       autocolor_text = TRUE,
       alpha = 1
     ) %>%
@@ -451,7 +452,7 @@ test_that("the correct color values are obtained when defining a palette", {
     gt() %>%
     data_color(
       columns = month,
-      colors = pal_12,
+      palette = pal_12,
       autocolor_text = FALSE,
       alpha = 1
     ) %>%
@@ -482,7 +483,7 @@ test_that("the correct color values are obtained when defining a palette", {
     gt() %>%
     data_color(
       columns = month,
-      colors = pal_12,
+      palette = pal_12,
       autocolor_text = TRUE,
       alpha = 0.5
     ) %>%
@@ -531,7 +532,6 @@ test_that("the correct color values are obtained when defining a palette", {
     all() %>%
     expect_true()
 
-
   # Expect that NAs in column values will result in default colors
   tbl <-
     countrypops %>%
@@ -545,7 +545,7 @@ test_that("the correct color values are obtained when defining a palette", {
     gt() %>%
     data_color(
       columns = country_name,
-      colors = c("red", "orange", "green", "blue")
+      palette = c("red", "orange", "green", "blue")
     ) %>%
     render_as_html() %>%
     xml2::read_html() %>%
@@ -557,89 +557,667 @@ test_that("the correct color values are obtained when defining a palette", {
     gt() %>%
     data_color(
       columns = year,
-      colors = c("red", "orange", "green", "blue")
+      palette = c("red", "orange", "green", "blue")
     ) %>%
     render_as_html() %>%
     xml2::read_html() %>%
     selection_value("style") %>%
     gsub("(background-color: |; color: .*)", "", .) %>%
     expect_equal(
-      c("#808080", "#FF0000", "#FF5E00", "#FF8B00", "#F0B300", "#BAD700",
-        "#62F600", "#6FC972", "#7978BD", "#0000FF"))
+      c(
+        "#808080", "#FF0000", "#FF5E00", "#FF8B00", "#F0B300", "#BAD700",
+        "#62F600", "#6FC972", "#7978BD", "#0000FF"
+      )
+    )
 
   tbl %>%
     gt() %>%
     data_color(
       columns = population,
-      colors = c("red", "orange", "green", "blue")
+      palette = c("red", "orange", "green", "blue")
     ) %>%
     render_as_html() %>%
     xml2::read_html() %>%
     selection_value("style") %>%
     gsub("(background-color: |; color: .*)", "", .) %>%
     expect_equal(
-      c("#808080", "#FF0000", "#FF5700", "#FF8400", "#F6AE00", "#BED500",
-        "#5FF600", "#72C477", "#7773C1", "#0000FF"))
+      c(
+        "#808080", "#FF0000", "#FF5A00", "#FF8700", "#F3B000",
+        "#BBD700", "#57F800", "#76BC80", "#746BC7", "#0000FF"
+      )
+    )
+})
 
-  # Expect an error when using an invalid color name in `colors`
+test_that("Color palettes can be obtained from the paletteer package", {
+
+  skip_if_not_installed("paletteer")
+
+  # Use `data_color()` with all defaults and a palette obtain from
+  # the paletteer package
+  tbl_gt_1 <-
+    exibble %>%
+    gt() %>%
+    data_color(palette = "ggsci::red_material")
+
+  # Perform snapshot test
+  tbl_gt_1 %>% render_as_html() %>% expect_snapshot()
+})
+
+test_that("Some color palettes from the viridis package can be used", {
+
+  # Use `data_color()` with all defaults and the "viridis" palette
+  tbl_gt_1 <-
+    exibble %>%
+    gt() %>%
+    data_color(palette = "viridis")
+
+  # Perform snapshot test
+  tbl_gt_1 %>% render_as_html() %>% expect_snapshot()
+
+  # Use `data_color()` with all defaults and the "magma" palette
+  tbl_gt_2 <-
+    exibble %>%
+    gt() %>%
+    data_color(palette = "magma")
+
+  # Perform snapshot test
+  tbl_gt_2 %>% render_as_html() %>% expect_snapshot()
+
+  # Use `data_color()` with all defaults and the "plasma" palette
+  tbl_gt_3 <-
+    exibble %>%
+    gt() %>%
+    data_color(palette = "plasma")
+
+  # Perform snapshot test
+  tbl_gt_3 %>% render_as_html() %>% expect_snapshot()
+
+  # Use `data_color()` with all defaults and the "inferno" palette
+  tbl_gt_4 <-
+    exibble %>%
+    gt() %>%
+    data_color(palette = "inferno")
+
+  # Perform snapshot test
+  tbl_gt_4 %>% render_as_html() %>% expect_snapshot()
+})
+
+test_that("Some color palettes from the RColorBrewer package can be used", {
+
+  skip_if_not_installed("RColorBrewer")
+
+  # Get all palette names from the RColorBrewer package
+  pal_names <- rownames(RColorBrewer::brewer.pal.info)
+
+  # Use `data_color()` with all defaults and the different palette names
+  # of the RColorBrewer package
+  RColorBrewer_tests_out <-
+    lapply(
+      pal_names,
+      FUN = function(x) {
+        expect_error(
+          regexp = NA,
+          exibble %>%
+            gt() %>%
+            data_color(palette = x)
+        )
+      }
+    )
+})
+
+test_that("Different combinations of methods and column types work well", {
+
+  # Use `data_color()` with all defaults
+  tbl_gt_1 <-
+    exibble %>%
+    gt() %>%
+    data_color()
+
+  # Perform snapshot test
+  tbl_gt_1 %>% render_as_html() %>% expect_snapshot()
+
+  # Use `data_color()` with a subset of rows targeted
+  tbl_gt_2 <-
+    test_tbl %>%
+    gt() %>%
+    data_color(rows = c(3:5, 8:10))
+
+  # Perform snapshot test
+  tbl_gt_2 %>% render_as_html() %>% expect_snapshot()
+
+  # Target the `num` column and use the `data_color()` "numeric" method
+  tbl_gt_3 <-
+    exibble %>%
+    gt() %>%
+    data_color(columns = num, method = "numeric")
+
+  # Perform snapshot test
+  tbl_gt_3 %>% render_as_html() %>% expect_snapshot()
+
+  # Target the `num` column and use the `data_color()` "bin" method
+  tbl_gt_4 <-
+    exibble %>%
+    gt() %>%
+    data_color(columns = num, method = "bin")
+
+  # Perform snapshot test
+  tbl_gt_4 %>% render_as_html() %>% expect_snapshot()
+
+  # Target the `num` column and use the `data_color()` "quantile" method
+  tbl_gt_5 <-
+    exibble %>%
+    gt() %>%
+    data_color(columns = num, method = "quantile")
+
+  # Perform snapshot test
+  tbl_gt_5 %>% render_as_html() %>% expect_snapshot()
+
+  # Target the `num` column and use the `data_color()` "factor" method
+  tbl_gt_6 <-
+    exibble %>%
+    gt() %>%
+    data_color(columns = num, method = "factor")
+
+  # Perform snapshot test
+  tbl_gt_6 %>% render_as_html() %>% expect_snapshot()
+
+  # Target the `char` column and use the `data_color()` "numeric" method
+  tbl_gt_7 <-
+    exibble %>%
+    gt() %>%
+    data_color(columns = char, method = "numeric")
+
+  # Perform snapshot test
+  tbl_gt_7 %>% render_as_html() %>% expect_snapshot()
+
+  # Target the `char` column and use the `data_color()` "bin" method
+  tbl_gt_8 <-
+    exibble %>%
+    gt() %>%
+    data_color(columns = char, method = "bin")
+
+  # Perform snapshot test
+  tbl_gt_8 %>% render_as_html() %>% expect_snapshot()
+
+  # Target the `char` column and use the `data_color()` "quantile" method
+  tbl_gt_9 <-
+    exibble %>%
+    gt() %>%
+    data_color(columns = char, method = "quantile")
+
+  # Perform snapshot test
+  tbl_gt_9 %>% render_as_html() %>% expect_snapshot()
+
+  # Target the `char` column and use the `data_color()` "factor" method
+  tbl_gt_10 <-
+    exibble %>%
+    gt() %>%
+    data_color(columns = char, method = "factor")
+
+  # Perform snapshot test
+  tbl_gt_10 %>% render_as_html() %>% expect_snapshot()
+
+  # Target the `fctr` column and use the `data_color()` "numeric" method
+  tbl_gt_11 <-
+    exibble %>%
+    gt() %>%
+    data_color(columns = fctr, method = "numeric")
+
+  # Perform snapshot test
+  tbl_gt_11 %>% render_as_html() %>% expect_snapshot()
+
+  # Target the `fctr` column and use the `data_color()` "bin" method
+  tbl_gt_12 <-
+    exibble %>%
+    gt() %>%
+    data_color(columns = fctr, method = "bin")
+
+  # Perform snapshot test
+  tbl_gt_12 %>% render_as_html() %>% expect_snapshot()
+
+  # Target the `fctr` column and use the `data_color()` "quantile" method
+  tbl_gt_13 <-
+    exibble %>%
+    gt() %>%
+    data_color(columns = fctr, method = "quantile")
+
+  # Perform snapshot test
+  tbl_gt_13 %>% render_as_html() %>% expect_snapshot()
+
+  # Target the `fctr` column and use the `data_color()` "factor" method
+  tbl_gt_14 <-
+    exibble %>%
+    gt() %>%
+    data_color(columns = fctr, method = "factor")
+
+  # Perform snapshot test
+  tbl_gt_14 %>% render_as_html() %>% expect_snapshot()
+
+  # With all columns, use the `data_color()` "numeric" method
+  tbl_gt_15 <-
+    exibble %>%
+    gt() %>%
+    data_color(method = "numeric")
+
+  # Perform snapshot test
+  tbl_gt_15 %>% render_as_html() %>% expect_snapshot()
+
+  # With all columns, use the `data_color()` "bin" method
+  tbl_gt_16 <-
+    exibble %>%
+    gt() %>%
+    data_color(method = "bin")
+
+  # Perform snapshot test
+  tbl_gt_16 %>% render_as_html() %>% expect_snapshot()
+
+  # With all columns, use the `data_color()` "quantile" method
+  tbl_gt_17 <-
+    exibble %>%
+    gt() %>%
+    data_color(method = "quantile")
+
+  # Perform snapshot test
+  tbl_gt_17 %>% render_as_html() %>% expect_snapshot()
+
+  # With all columns, use the `data_color()` "factor" method
+  tbl_gt_18 <-
+    exibble %>%
+    gt() %>%
+    data_color(method = "factor")
+
+  # Perform snapshot test
+  tbl_gt_18 %>% render_as_html() %>% expect_snapshot()
+
+  #
+  # Use different options of the "bin" method
+  #
+
+  # Using `bins = 4`
+  tbl_gt_19 <-
+    dplyr::tibble(a = 1:20) %>%
+    gt() %>%
+    data_color(
+      columns = a,
+      method = "bin",
+      palette = "viridis",
+      bins = 4
+    )
+
+  # Perform snapshot test
+  tbl_gt_19 %>% render_as_html() %>% expect_snapshot()
+
+  # Using `bins = 5`
+  tbl_gt_20 <-
+    dplyr::tibble(a = 1:20) %>%
+    gt() %>%
+    data_color(
+      columns = a,
+      method = "bin",
+      palette = "viridis",
+      bins = 5
+    )
+
+  # Perform snapshot test
+  tbl_gt_20 %>% render_as_html() %>% expect_snapshot()
+
+  #
+  # Use different options of the "quantile" method
+  #
+
+  # Using `quantiles = 5`
+  tbl_gt_21 <-
+    dplyr::tibble(a = 1:20) %>%
+    gt() %>%
+    data_color(
+      columns = a,
+      method = "quantile",
+      palette = "viridis",
+      quantiles = 5
+    )
+
+  # Perform snapshot test
+  tbl_gt_21 %>% render_as_html() %>% expect_snapshot()
+
+  # Using `quantiles = 10`
+  tbl_gt_22 <-
+    dplyr::tibble(a = 1:20) %>%
+    gt() %>%
+    data_color(
+      columns = a,
+      method = "quantile",
+      palette = "viridis",
+      quantiles = 10
+    )
+
+  # Perform snapshot test
+  tbl_gt_22 %>% render_as_html() %>% expect_snapshot()
+})
+
+test_that("The direction of coloring can be column-wise or row-wise", {
+
+  # Generate a gt table based on the `sza` dataset
+  sza_gt_tbl <-
+    sza %>%
+    dplyr::filter(latitude == 20 & tst <= "1200") %>%
+    dplyr::select(-latitude) %>%
+    dplyr::filter(!is.na(sza)) %>%
+    tidyr::spread(key = "tst", value = sza) %>%
+    gt(rowname_col = "month") %>%
+    sub_missing(missing_text = "")
+
+  # Use `data_color()` with `direction = "column"` (the default) and
+  # a palette of three colors
+  tbl_gt_1 <-
+    sza_gt_tbl %>%
+    data_color(
+      direction = "column",
+      method = "auto",
+      palette = c("orange", "blue", "gray30"),
+      na_color = "white"
+    )
+
+  # Perform snapshot test
+  tbl_gt_1 %>% render_as_html() %>% expect_snapshot()
+
+  # Use `data_color()` with `direction = "row"`
+  tbl_gt_2 <-
+    sza_gt_tbl %>%
+    data_color(
+      direction = "row",
+      method = "auto",
+      palette = c("orange", "blue", "gray30"),
+      na_color = "white"
+    )
+
+  # Perform snapshot test
+  tbl_gt_2 %>% render_as_html() %>% expect_snapshot()
+
+  # Using a fixed domain should not result in any difference
+  # between coloring that is applied column-wise or row-wise
+  expect_equal(
+    sza_gt_tbl %>%
+      data_color(
+        direction = "column",
+        domain = c(0, 90),
+        method = "auto",
+        palette = c("orange", "blue", "gray30"),
+        na_color = "white"
+      ) %>%
+      render_as_html(),
+    sza_gt_tbl %>%
+      data_color(
+        direction = "row",
+        domain = c(0, 90),
+        method = "auto",
+        palette = c("orange", "blue", "gray30"),
+        na_color = "white"
+      ) %>%
+      render_as_html()
+  )
+
+  # There should be no difference in output when using
+  # either of the "auto" or "numeric" methods since all
+  # columns are of the numeric class
+  expect_equal(
+    sza_gt_tbl %>%
+      data_color(
+        direction = "row",
+        method = "numeric",
+        palette = c("orange", "blue", "gray30"),
+        na_color = "white"
+      ) %>%
+      render_as_html(),
+    sza_gt_tbl %>%
+      data_color(
+        direction = "row",
+        method = "auto",
+        palette = c("orange", "blue", "gray30"),
+        na_color = "white"
+      ) %>%
+      render_as_html()
+  )
+
+  # Use `data_color()` with `direction = "row"` and `method = "bin"`
+  tbl_gt_3 <-
+    sza_gt_tbl %>%
+    data_color(
+      direction = "row",
+      method = "bin",
+      palette = c("orange", "blue", "gray30"),
+      na_color = "white"
+    )
+
+  # Perform snapshot test
+  tbl_gt_3 %>% render_as_html() %>% expect_snapshot()
+
+  # Use `data_color()` with `direction = "row"` and `method = "quantile"`
+  tbl_gt_4 <-
+    sza_gt_tbl %>%
+    data_color(
+      direction = "row",
+      method = "quantile",
+      palette = c("orange", "blue", "gray30"),
+      na_color = "white"
+    )
+
+  # Perform snapshot test
+  tbl_gt_4 %>% render_as_html() %>% expect_snapshot()
+
+  # Use `data_color()` with `direction = "row"` and `method = "factor"`
+  tbl_gt_5 <-
+    sza_gt_tbl %>%
+    data_color(
+      direction = "row",
+      method = "factor",
+      palette = c("orange", "blue", "gray30"),
+      na_color = "white"
+    )
+
+  # Perform snapshot test
+  tbl_gt_5 %>% render_as_html() %>% expect_snapshot()
+})
+
+test_that("Columns can indirectly apply coloring to other columns", {
+
+  # Generate a gt table based on the `countrypops` dataset
+  cp_gt_tbl <-
+    countrypops %>%
+    dplyr::filter(country_name == "Mongolia") %>%
+    dplyr::select(-contains("code")) %>%
+    tail(10) %>%
+    tidyr::pivot_wider(names_from = "year", values_from = "population") %>%
+    gt(rowname_col = "country_name")
+
+  # Apply coloring from one column to another
+  tbl_gt_1 <-
+    cp_gt_tbl %>%
+    data_color(
+      columns = `2012`,
+      target_columns = `2021`,
+      domain = c(2700000, 3400000),
+      palette = c("green", "black")
+    )
+
+  # Perform snapshot test
+  tbl_gt_1 %>% render_as_html() %>% expect_snapshot()
+
+  # Apply coloring from one column to several different columns
+  tbl_gt_2 <-
+    cp_gt_tbl %>%
+    data_color(
+      columns = `2012`,
+      target_columns = c(`2019`, `2020`, `2021`),
+      domain = c(2700000, 3400000),
+      palette = c("green", "black")
+    )
+
+  # Perform snapshot test
+  tbl_gt_2 %>% render_as_html() %>% expect_snapshot()
+
+  # Apply coloring from multiple columns to several columns
+  # of the same multiple
+  tbl_gt_3 <-
+    cp_gt_tbl %>%
+    data_color(
+      columns = c(`2012`, `2013`, `2014`),
+      target_columns = c(`2019`, `2020`, `2021`),
+      domain = c(2700000, 3400000),
+      palette = c("green", "black")
+    )
+
+  # Perform snapshot test
+  tbl_gt_3 %>% render_as_html() %>% expect_snapshot()
+
+  # Apply coloring from multiple columns to several columns
+  # of the same multiple, this time reversing the palette
+  tbl_gt_4 <-
+    cp_gt_tbl %>%
+    data_color(
+      columns = c(`2012`, `2013`, `2014`),
+      target_columns = c(`2019`, `2020`, `2021`),
+      domain = c(2700000, 3400000),
+      palette = c("green", "black"),
+      reverse = TRUE
+    )
+
+  # Perform snapshot test
+  tbl_gt_4 %>% render_as_html() %>% expect_snapshot()
+})
+
+test_that("Certain errors can be expected (and some things don't error)", {
+
+  # Expect an error when using an invalid color name in `palette`
   expect_error(
     test_tbl %>%
       gt() %>%
       data_color(
         columns = min_sza,
-        colors = c("red", "blau"),
+        palette = c("red", "blau"),
         autocolor_text = TRUE
       )
   )
 
-  # Expect an error when providing `NULL` to `colors`
+  # Do not expect an error when providing `NULL` to `palette`
   expect_error(
+    regexp = NA,
     test_tbl %>%
       gt() %>%
       data_color(
         columns = min_sza,
-        colors = NULL,
+        palette = NULL,
         autocolor_text = TRUE
       )
   )
 
-  # Expect an error when providing an `NA` to `colors`
+  # Expect an error when providing an `NA` to `palette`
   expect_error(
     test_tbl %>%
       gt() %>%
       data_color(
         columns = min_sza,
-        colors = NA,
+        palette = NA,
         autocolor_text = TRUE
       )
   )
 
-  # Expect an error when providing a numeric vector
-  # to `colors`
+  # Expect an error when providing a numeric vector to `palette`
   expect_error(
     test_tbl %>%
       gt() %>%
       data_color(
         columns = min_sza,
-        colors = 1:6,
+        palette = 1:6,
         autocolor_text = TRUE
       )
   )
 
   # Expect an error if there is a malformed
-  # hexadecimal color value given to `colors`
+  # hexadecimal color value given to `palette`
   expect_error(
     test_tbl %>%
       gt() %>%
       data_color(
         columns = min_sza,
-        colors = c("#EEFFAA", "##45AA22"),
+        palette = c("#EEFFAA", "##45AA22"),
         autocolor_text = TRUE
+      )
+  )
+
+  # Expect an error if using `direction = "row"` with a numeric method
+  # when there are non-numeric cells
+  expect_error(
+    exibble %>%
+      gt() %>%
+      data_color(
+        direction = "row",
+        method = "numeric"
+      )
+  )
+
+  # Expect an error if using `direction = "row"` when specifying
+  # `target_columns`
+  expect_error(
+    exibble %>%
+      gt() %>%
+      data_color(
+        columns = num,
+        target_columns = row,
+        direction = "row"
+      )
+  )
+
+  # Expect an error with length of `target_columns` doesn't match that
+  # of `columns` (when length of `columns` is greater than one)
+  expect_error(
+    exibble %>%
+      gt() %>%
+      data_color(
+        columns = c(num, currency),
+        target_columns = row,
+      )
+  )
+
+  # Don't expect an error if the greater-than-one lengths of
+  # `target_columns` and `columns` match
+  expect_error(
+    regexp = NA,
+    exibble %>%
+      gt() %>%
+      data_color(
+        columns = c(num, currency),
+        target_columns = c(row, group),
       )
   )
 })
 
-test_that("the correct color values are obtained when using a color fn", {
+test_that("Certain warnings can be expected when using deprecated arguments", {
+
+  local_options("rlib_warning_verbosity" = "verbose")
+
+  # Expect a warning if a palette is provided to `colors`
+  expect_warning(
+    exibble %>%
+      gt() %>%
+      data_color(
+        method = "numeric",
+        colors = c("red", "green")
+      )
+  )
+
+  # Expect a warning if a function is provided to `colors`
+  expect_warning(
+    exibble %>%
+      gt() %>%
+      data_color(
+        columns = num,
+        method = "numeric",
+        colors = scales::col_numeric(palette = c("red", "green"), domain = c(0, 1E7))
+      )
+  )
+})
+
+test_that("The correct color values are obtained when using a color fn", {
 
   # Create a `tbl_html` object by using `data_color` with the
   # `scales::col_factor()` fn on the month column
@@ -650,7 +1228,7 @@ test_that("the correct color values are obtained when using a color fn", {
     gt() %>%
     data_color(
       columns = month,
-      colors = scales::col_factor(
+      fn = scales::col_factor(
         palette = c(
           "red", "orange", "green", "blue"),
         domain = levels(test_tbl$month)
@@ -696,7 +1274,7 @@ test_that("the correct color values are obtained when using a color fn", {
     gt() %>%
     data_color(
       columns = month,
-      colors = scales::col_factor(
+      fn = scales::col_factor(
         palette = c("red", "orange", "green", "blue"),
         domain = levels(test_tbl$month)
       ),
@@ -732,16 +1310,15 @@ test_that("the correct color values are obtained when using a color fn", {
     expect_equal("80")
 
   # Create a `tbl_html` object by using `data_color` with the
-  # `scales::col_factor()` fn on the month column
-  # (which is of the `character` class); this time, set `alpha`
-  # to `1.0`
+  # `scales::col_factor()` fn on the month column (which is of
+  # the `character` class); this time, set `alpha` to `1.0`
   tbl_html_3 <-
     test_tbl %>%
     dplyr::mutate(month = as.character(month)) %>%
     gt() %>%
     data_color(
       columns = month,
-      colors = scales::col_factor(
+      fn = scales::col_factor(
         palette = c("red", "orange", "green", "blue"),
         domain = levels(test_tbl$month)
       ),
@@ -796,7 +1373,7 @@ test_that("the correct color values are obtained when using a color fn", {
     gt() %>%
     data_color(
       columns = month,
-      colors = scales::col_factor(
+      fn = scales::col_factor(
         palette = c("red", "orange", "green", "blue"),
         domain = levels(test_tbl$month)
       ),
@@ -851,7 +1428,7 @@ test_that("the correct color values are obtained when using a color fn", {
     gt() %>%
     data_color(
       columns = min_sza,
-      colors = scales::col_numeric(
+      fn = scales::col_numeric(
         palette = c("red", "orange", "green", "blue"),
         domain = c(0, 90)
       ),
@@ -896,7 +1473,7 @@ test_that("the correct color values are obtained when using a color fn", {
     gt() %>%
     data_color(
       columns = min_sza,
-      colors = scales::col_numeric(
+      fn = scales::col_numeric(
         palette = c("red", "orange", "green", "blue"),
         domain = c(0, 90)
       ),
@@ -939,7 +1516,7 @@ test_that("the correct color values are obtained when using a color fn", {
     gt() %>%
     data_color(
       columns = min_sza,
-      colors = scales::col_quantile(
+      fn = scales::col_quantile(
         palette = c("red", "orange", "green", "blue"),
         domain = c(0, 90)
       ),
@@ -982,7 +1559,7 @@ test_that("the correct color values are obtained when using a color fn", {
     gt() %>%
     data_color(
       columns = min_sza,
-      colors = scales::col_bin(
+      fn = scales::col_bin(
         palette = c("red", "orange", "green", "blue"),
         domain = c(0, 90),
         bins = 4
@@ -1019,7 +1596,7 @@ test_that("the correct color values are obtained when using a color fn", {
     expect_true()
 })
 
-test_that("the various color utility functions work correctly", {
+test_that("The various color utility functions work correctly", {
 
   # Assign various color vectors that are of different specifications
   c_name <- c("red", "tomato", "palevioletred3", "limegreen", "gray86", "blue")
@@ -1412,7 +1989,7 @@ test_that("the various color utility functions work correctly", {
   expect_error(adjust_luminance(colors = c_hex, steps = +2.1))
 })
 
-test_that("the `cell_fill()` function accepts colors of various types", {
+test_that("The `cell_fill()` function accepts colors of various types", {
 
   # Create a `tbl_html` object by using `tab_style` with
   # the `cell_fill()` helper function and a color name

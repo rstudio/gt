@@ -47,16 +47,16 @@ this example, that is done with several calls of \code{\link[=tab_spanner]{tab_s
 create two levels of spanner column labels.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
-  gtcars \%>\%
+  gtcars |>
   dplyr::select(
     -mfr, -trim, bdy_style, drivetrain,
     -drivetrain, -trsmn, -ctry_origin
-  ) \%>\%
-  dplyr::slice(1:8) \%>\%
-  gt(rowname_col = "model") \%>\%
-  tab_spanner(label = "HP", columns = c(hp, hp_rpm)) \%>\%
-  tab_spanner(label = "Torque", columns = c(trq, trq_rpm)) \%>\%
-  tab_spanner(label = "MPG", columns = c(mpg_c, mpg_h)) \%>\%
+  ) |>
+  dplyr::slice(1:8) |>
+  gt(rowname_col = "model") |>
+  tab_spanner(label = "HP", columns = c(hp, hp_rpm)) |>
+  tab_spanner(label = "Torque", columns = c(trq, trq_rpm)) |>
+  tab_spanner(label = "MPG", columns = c(mpg_c, mpg_h)) |>
   tab_spanner(
     label = "Performance",
     columns = c(
@@ -111,6 +111,11 @@ accordingly.
 \section{Function ID}{
 
 6-3
+}
+
+\section{Function Introduced}{
+
+\code{v0.8.0} (November 16, 2022)
 }
 
 \seealso{

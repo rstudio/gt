@@ -4,7 +4,7 @@
 \alias{cells_group}
 \title{Location helper for targeting row groups (deprecated)}
 \usage{
-cells_group(groups = TRUE)
+cells_group(groups = everything())
 }
 \arguments{
 \item{groups}{The names of the row groups that are to be targeted.}
@@ -12,4 +12,9 @@ cells_group(groups = TRUE)
 \description{
 Location helper for targeting row groups (deprecated)
 }
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \keyword{internal}

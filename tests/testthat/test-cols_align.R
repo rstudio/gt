@@ -14,7 +14,7 @@ check_suggests <- function() {
   skip_if_not_installed("xml2")
 }
 
-test_that("the `cols_align()` function works correctly", {
+test_that("The `cols_align()` function works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -125,7 +125,7 @@ test_that("the `cols_align()` function works correctly", {
     expect_equal(c("Date", "Open", "High", "Low", "Close", "Volume"))
 })
 
-test_that("the stub get its alignment set properly with `cols_align()`", {
+test_that("The stub gets its alignment set properly with `cols_align()`", {
 
   # Check that specific suggested packages are available
   check_suggests()

@@ -21,14 +21,14 @@ Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header and then ex
 code.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_rtf <-
-  gtcars \%>\%
-  dplyr::select(mfr, model) \%>\%
-  dplyr::slice(1:2) \%>\%
-  gt() \%>\%
+  gtcars |>
+  dplyr::select(mfr, model) |>
+  dplyr::slice(1:2) |>
+  gt() |>
   tab_header(
     title = md("Data listing from **gtcars**"),
     subtitle = md("`gtcars` is an R dataset")
-  ) \%>\%
+  ) |>
   as_rtf()
 }\if{html}{\out{</div>}}
 }
@@ -36,6 +36,11 @@ code.
 \section{Function ID}{
 
 13-4
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{

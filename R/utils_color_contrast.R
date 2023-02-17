@@ -30,7 +30,7 @@ get_contrast_ratio <- function(
 ) {
 
   # Get the correct `algo` value
-  algo <- match.arg(algo)
+  algo <- rlang::arg_match(algo)
 
   if (length(color_1) < 1L || length(color_2) < 1L) {
     cli::cli_abort(

@@ -350,12 +350,13 @@ get_alignment_at_body_cell <- function(
   # Return the value of the last `text-align` property, if present
   if (!is.null(cell_style) && grepl("text-align", cell_style)) {
 
-    m <- gregexec("(?:^|;)\\s*text-align\\s*:\\s*([\\w-]+)\\s*(!important)?", cell_style, perl = TRUE)
+    m <- regexec_gt("(?:^|;)\\s*text-align\\s*:\\s*([\\w-]+)\\s*(!important)?", cell_style, perl = TRUE)
+
     cell_style_match_mat <- regmatches(cell_style, m)[[1]]
 
     is_important <- grepl("!important", cell_style_match_mat[1, ], fixed = TRUE)
 
-    # Pick last !important, or if no !important, then last anything
+    # Pick last '!important', or if no '!important', then last anything
     if (any(is_important)) {
       cell_alignment <- cell_style_match_mat[2, max(which(is_important))]
     } else {
@@ -551,16 +552,26 @@ unescape_html <- function(text) {
 #' @noRd
 md_to_html <- function(x) {
 
-  non_na_x <-
-    vapply(
-      as.character(x[!is.na(x)]),
-      FUN.VALUE = character(1),
-      USE.NAMES = FALSE,
-      FUN = commonmark::markdown_html
-    )
+  if (!check_quarto()) {
 
-  non_na_x <- tidy_gsub(non_na_x, "^", "<div class='gt_from_md'>")
-  non_na_x <- tidy_gsub(non_na_x, "$", "</div>")
+    non_na_x <-
+      vapply(
+        as.character(x[!is.na(x)]),
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = commonmark::markdown_html
+      )
+
+    non_na_x <- tidy_gsub(non_na_x, "^", "<div class='gt_from_md'>")
+    non_na_x <- tidy_gsub(non_na_x, "$", "</div>")
+
+  } else {
+
+    non_na_x <- x[!is.na(x)]
+
+    non_na_x <- tidy_gsub(non_na_x, "^", "<span data-qmd=\"")
+    non_na_x <- tidy_gsub(non_na_x, "$", "\"></span>")
+  }
 
   x[!is.na(x)] <- non_na_x
   x
@@ -1562,148 +1573,8 @@ remove_html <- function(text) {
   gsub("<.+?>", "", text)
 }
 
-#' Transform a CSS stylesheet to a tibble representation
-#'
-#' @noRd
-get_css_tbl <- function(data) {
-
-  raw_css_vec <- unlist(strsplit(as.character(compile_scss(data)), "\n"))
-
-  ruleset_start <- which(grepl("\\{\\s*", raw_css_vec))
-  ruleset_end <- which(grepl("\\s*\\}\\s*", raw_css_vec))
-
-  css_tbl <- dplyr::tibble()
-
-  for (i in seq(ruleset_start)) {
-
-    css_tbl <-
-      dplyr::bind_rows(
-        css_tbl,
-        dplyr::tibble(
-          selector = rep(
-            str_single_replace(raw_css_vec[ruleset_start[i]], "\\s*\\{\\s*$", ""),
-            (ruleset_end[i] - ruleset_start[i] - 1)),
-          property = raw_css_vec[(ruleset_start[i] + 1):(ruleset_end[i] - 1)] %>%
-            str_single_extract("[a-zA-z-]*?(?=:)") %>%
-            str_trim_sides(),
-          value = raw_css_vec[(ruleset_start[i] + 1):(ruleset_end[i] - 1)] %>%
-            str_single_extract("(?<=:).*") %>%
-            str_single_replace(pattern = ";\\s*", "") %>%
-            str_single_replace(pattern = "\\/\\*.*", "") %>%
-            str_trim_sides()
-        ) %>%
-          dplyr::filter(!is.na(property))
-      )
-  }
-
-  # Add a column that has the selector type for each row
-  # For anything other than a class selector, the class type
-  # will entered as NA
-  css_tbl <-
-    dplyr::mutate(
-      css_tbl,
-      type = dplyr::case_when(
-        str_has_match(selector, "^\\.") ~ "class",
-        !str_has_match(selector, "^\\.") ~ NA_character_
-      )
-    )
-  css_tbl <- dplyr::select(css_tbl, selector, type, property, value)
-
-  # Stop function if any NA values found while inspecting the
-  # selector names (e.g., not determined to be class selectors)
-  if (any(is.na(css_tbl$type))) {
-    cli::cli_abort("All selectors must be class selectors.")
-  }
-
-  css_tbl
-}
-
-#' Create an inlined style block from a CSS tibble
-#'
-#' @noRd
-create_inline_styles <- function(
-    class_names,
-    css_tbl,
-    extra_style = ""
-) {
-
-  class_names <- unlist(strsplit(class_names, "\\s+"))
-
-  paste0(
-    "style=\"",
-    css_tbl %>%
-      dplyr::filter(selector %in% paste0(".", class_names)) %>%
-      dplyr::select(property, value) %>%
-      dplyr::distinct() %>%
-      dplyr::mutate(property_value = paste0(property, ": ", value, "; ")) %>%
-      dplyr::pull(property_value) %>%
-      paste(collapse = ""),
-    extra_style,
-    "\"") %>%
-    tidy_gsub(" \\\"$", "\\\"")
-}
-
 extract_strings <- function(text, pattern, perl = TRUE) {
   sapply(regmatches(text, regexec(pattern, text, perl = perl)), "[", 1)
-}
-
-#' Transform HTML to inlined HTML using a CSS tibble
-#'
-#' @noRd
-inline_html_styles <- function(html, css_tbl) {
-
-  cls_sty_pattern <- "class=\\\"(.*?)\\\"\\s+style=\\\"(.*?)\\\""
-  cls_names_pattern <- "(?<=\\\").*?(?=\\\")"
-  sty_exist_pattern <- "style=\\\"(.*?)\\\""
-  cls_pattern <- "class=\\\"(.*?)\\\""
-
-  repeat {
-
-    matching_css_style <- extract_strings(html, cls_sty_pattern)
-
-    if (is.na(matching_css_style)) break
-
-    class_names <- extract_strings(matching_css_style, cls_names_pattern)
-
-    existing_style <- str_get_match(matching_css_style, sty_exist_pattern)[, 2]
-
-    inline_styles <-
-      create_inline_styles(
-        class_names = class_names,
-        css_tbl = css_tbl,
-        extra_style = existing_style
-      )
-
-    html <-
-      str_single_replace(
-        html,
-        pattern = cls_sty_pattern,
-        replacement = inline_styles
-      )
-  }
-
-  repeat {
-
-    class_names <- str_single_extract(html, pattern = cls_pattern)
-    class_names <- str_single_extract(class_names, pattern = cls_names_pattern)
-
-    if (is.na(class_names)) break
-
-    inline_styles <-
-      create_inline_styles(
-        class_names = class_names,
-        css_tbl = css_tbl
-      )
-
-    html <-
-      str_single_replace(
-        html,
-        pattern = cls_pattern,
-        replacement = inline_styles
-      )
-  }
-
-  html
 }
 
 #' Split any strings that are values in scientific notation
@@ -1772,8 +1643,7 @@ tidy_grepl <- function(x, pattern) {
 #' Create a vector of marks to use for footnotes
 #'
 #' @noRd
-process_footnote_marks <- function(x,
-                                   marks) {
+process_footnote_marks <- function(x, marks) {
 
   if (identical(marks, "numbers")) {
     return(as.character(x))

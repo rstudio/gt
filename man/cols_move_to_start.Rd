@@ -38,11 +38,11 @@ Use \code{\link{countrypops}} to create a \strong{gt} table. With the remaining 
 move the \code{year} column to the start of the column series with
 \code{cols_move_to_start()}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::select(-contains("code")) \%>\%
-  dplyr::filter(country_name == "Mongolia") \%>\%
-  tail(5) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::select(-contains("code")) |>
+  dplyr::filter(country_name == "Mongolia") |>
+  tail(5) |>
+  gt() |>
   cols_move_to_start(columns = year)
 }\if{html}{\out{</div>}}
 
@@ -53,11 +53,11 @@ move the \code{year} column to the start of the column series with
 Use \code{\link{countrypops}} to create a \strong{gt} table. With the remaining columns,
 move \code{year} and \code{population} to the start.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::select(-contains("code")) \%>\%
-  dplyr::filter(country_name == "Mongolia") \%>\%
-  tail(5) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::select(-contains("code")) |>
+  dplyr::filter(country_name == "Mongolia") |>
+  tail(5) |>
+  gt() |>
   cols_move_to_start(columns = c(year, population))
 }\if{html}{\out{</div>}}
 
@@ -68,7 +68,12 @@ move \code{year} and \code{population} to the start.
 
 \section{Function ID}{
 
-4-5
+4-7
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
@@ -76,6 +81,7 @@ Other column modification functions:
 \code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
+\code{\link{cols_label_with}()},
 \code{\link{cols_label}()},
 \code{\link{cols_merge_n_pct}()},
 \code{\link{cols_merge_range}()},

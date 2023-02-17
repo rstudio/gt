@@ -4,7 +4,14 @@
 \alias{cols_merge_range}
 \title{Merge two columns to a value range column}
 \usage{
-cols_merge_range(data, col_begin, col_end, sep = "--", autohide = TRUE)
+cols_merge_range(
+  data,
+  col_begin,
+  col_end,
+  rows = everything(),
+  sep = "--",
+  autohide = TRUE
+)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -12,6 +19,15 @@ cols_merge_range(data, col_begin, col_end, sep = "--", autohide = TRUE)
 \item{col_begin}{A column that contains values for the start of the range.}
 
 \item{col_end}{A column that contains values for the end of the range.}
+
+\item{rows}{Rows that will participate in the merging process. Providing
+\code{\link[=everything]{everything()}} (the default) results in all rows in \code{columns} undergoing
+merging. Alternatively, we can supply a vector of row identifiers within
+\code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on selections.
+The select helper functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.
+We can also use a standalone predicate expression to filter down to the
+rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{sep}{The separator text that indicates the values are ranged. The
 default value of \code{"--"} indicates that an en dash will be used for the
@@ -34,7 +50,9 @@ column. What results is a column containing both values separated by a long
 dash (e.g., \verb{12.0 — 20.0}). The column specified in \code{col_end} is dropped from
 the output table.
 }
-\details{
+\section{Comparison with other column-merging functions}{
+
+
 This function could be somewhat replicated using \code{\link[=cols_merge]{cols_merge()}}, however,
 \code{cols_merge_range()} employs the following specialized operations for \code{NA}
 handling:
@@ -53,11 +71,12 @@ Separate calls of \code{\link[=sub_missing]{sub_missing()}} can be used for the 
 \code{col_end} columns for finer control of the replacement values.
 
 This function is part of a set of four column-merging functions. The other
-two are the general \code{\link[=cols_merge]{cols_merge()}} function and the specialized
+three are the general \code{\link[=cols_merge]{cols_merge()}} function and the specialized
 \code{\link[=cols_merge_uncert]{cols_merge_uncert()}} and \code{\link[=cols_merge_n_pct]{cols_merge_n_pct()}} functions. These functions
 operate similarly, where the non-target columns can be optionally hidden from
 the output table through the \code{hide_columns} or \code{autohide} options.
 }
+
 \section{Examples}{
 
 
@@ -66,14 +85,14 @@ and \code{mpg_h} columns. Merge the \code{"mpg*"} columns together as a single r
 column (which is labeled as MPG, in italics) using the \code{cols_merge_range()}
 function.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
-  dplyr::select(model, starts_with("mpg")) \%>\%
-  dplyr::slice(1:8) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::select(model, starts_with("mpg")) |>
+  dplyr::slice(1:8) |>
+  gt() |>
   cols_merge_range(
     col_begin = mpg_c,
     col_end = mpg_h
-  ) \%>\%
+  ) |>
   cols_label(mpg_c = md("*MPG*"))
 }\if{html}{\out{</div>}}
 
@@ -84,7 +103,12 @@ function.
 
 \section{Function ID}{
 
-4-11
+4-13
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
@@ -92,6 +116,7 @@ Other column modification functions:
 \code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
+\code{\link{cols_label_with}()},
 \code{\link{cols_label}()},
 \code{\link{cols_merge_n_pct}()},
 \code{\link{cols_merge_uncert}()},

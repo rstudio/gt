@@ -7,7 +7,7 @@ check_suggests <- function() {
   skip_if_not_installed("xml2")
 }
 
-test_that("the `tab_spanner_delim()` function works correctly", {
+test_that("The `tab_spanner_delim()` function works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -693,5 +693,81 @@ test_that("`tab_spanner_delim()` works with complex splits", {
       "spanner-a.j.y", "spanner-b.j.y", "spanner-a.i.z", "spanner-b.i.z",
       "spanner-a.j.z", "spanner-b.j.z"
     )
+  )
+})
+
+test_that("`tab_spanner_delim()` won't overwrite any set column labels", {
+
+  tbl_1 <-
+    iris[1:5,] %>%
+    gt() %>%
+    cols_label(Sepal.Width = md("Sepal.*W*idth")) %>%
+    tab_spanner_delim(".")
+
+  tbl_2 <-
+    iris[1:5,] %>%
+    gt() %>%
+    tab_spanner_delim(".") %>%
+    cols_label(Sepal.Width = md("Sepal.*W*idth"))
+
+  expect_equal(
+    tbl_1 %>% render_as_html(),
+    tbl_2 %>% render_as_html()
+  )
+
+  tbl_3 <-
+    iris[1:5,] %>%
+    gt() %>%
+    cols_label(Sepal.Width = html("<em>Sepal.Width</em>")) %>%
+    tab_spanner_delim(".")
+
+  tbl_4 <-
+    iris[1:5,] %>%
+    gt() %>%
+    tab_spanner_delim(".") %>%
+    cols_label(Sepal.Width = html("<em>Sepal.Width</em>"))
+
+  expect_equal(
+    tbl_3 %>% render_as_html(),
+    tbl_4 %>% render_as_html()
+  )
+
+  data_tbl <-
+    dplyr::tibble(
+      A.B.C.D.E = 1,
+      A.B.C.D = 2,
+      A.B.C = 3,
+      A.B = 4,
+      A = 5
+    )
+
+  gt_tbl_first_1 <-
+    gt(data_tbl) %>%
+    cols_label(A.B.C.D.E = "ABCDE") %>%
+    tab_spanner_delim(delim = ".", split = "first")
+
+  gt_tbl_first_2 <-
+    gt(data_tbl) %>%
+    tab_spanner_delim(delim = ".", split = "first") %>%
+    cols_label(A.B.C.D.E = "ABCDE")
+
+  expect_equal(
+    gt_tbl_first_1 %>% render_as_html(),
+    gt_tbl_first_2 %>% render_as_html()
+  )
+
+  gt_tbl_last_1 <-
+    gt(data_tbl) %>%
+    cols_label(A.B.C.D.E = "ABCDE") %>%
+    tab_spanner_delim(delim = ".", split = "last")
+
+  gt_tbl_last_2 <-
+    gt(data_tbl) %>%
+    tab_spanner_delim(delim = ".", split = "last") %>%
+    cols_label(A.B.C.D.E = "ABCDE")
+
+  expect_equal(
+    gt_tbl_last_1 %>% render_as_html(),
+    gt_tbl_last_2 %>% render_as_html()
   )
 })

@@ -593,8 +593,8 @@ rtf_tbl_cell <- function(
 
   x <- paste(x, collapse = " ")
 
-  h_align <- substr(match.arg(h_align), 1, 1)
-  v_align <- substr(match.arg(v_align), 1, 1)
+  h_align <- substr(rlang::arg_match(h_align), 1, 1)
+  v_align <- substr(rlang::arg_match(v_align), 1, 1)
 
   # Set default padding values if `padding = NULL`
   if (is.null(padding)) padding <- c(25, 85, 25, 85)
@@ -1234,15 +1234,30 @@ create_columns_component_rtf <- function(data) {
       spanner_ids_row[is.na(spanner_ids_row)] <- ""
       spanners_row[is.na(spanners_row)] <- ""
 
-      spanners_lengths <- unclass(rle(spanner_ids[i, ]))
+      spanners_rle <- rle(unname(spanner_ids[i, ]))
+
+      spanners_lengths <- unclass(spanners_rle)
 
       merge_keys_spanners <- c()
-
       for (j in seq_along(spanners_lengths$lengths)) {
         if (spanners_lengths$lengths[j] == 1) {
           merge_keys_spanners <- c(merge_keys_spanners, 0)
         } else {
           merge_keys_spanners <- c(merge_keys_spanners, 1, rep(2, spanners_lengths$lengths[j] - 1))
+        }
+      }
+
+      # The `sig_cells` vector contains the indices of spanners' elements
+      # where the value is either NA, or, is different than the previous value;
+      # because NAs are distinct, every NA element will be present in `sig_cells`
+      sig_cells <- c(1, utils::head(cumsum(spanners_rle$lengths) + 1, -1))
+
+      # Replace repeating labels with an empty string, based on the
+      # vector `sig_cells`
+      for (k in seq_along(spanner_ids_row)) {
+        if (k %in% sig_cells) next
+        if (!(k %in% sig_cells)) {
+          spanners_row[k] <- ""
         }
       }
 
@@ -1535,8 +1550,7 @@ create_body_component_rtf <- function(data) {
     # Add groupwise summary rows
     #
 
-    if (summaries_present &&
-        i %in% groups_rows_df$row_end) {
+    if (summaries_present && i %in% groups_rows_df$row_end) {
 
       group_id <-
         groups_rows_df[
@@ -1549,7 +1563,8 @@ create_body_component_rtf <- function(data) {
         summary_df <-
           dplyr::select(
             list_of_summaries$summary_df_display_list[[group_id]],
-            .env$rowname_col_private, .env$default_vars
+            dplyr::all_of(rowname_col_private),
+            dplyr::all_of(default_vars)
           )
 
         n_summary_rows <- seq_len(nrow(summary_df))
@@ -1601,16 +1616,15 @@ create_body_component_rtf <- function(data) {
               }
             )
 
-          row_list_body <-
-            c(
-              row_list_body,
-              rtf_tbl_row(
-                cell_list,
-                page_body_width = page_body_width,
-                widths = col_widths,
-                height = 0
-              )
+          row_list_summary <-
+            rtf_tbl_row(
+              cell_list,
+              page_body_width = page_body_width,
+              widths = col_widths,
+              height = 0
             )
+
+          row_list_body <- c(row_list_body, row_list_summary)
         }
       }
     }
@@ -1620,13 +1634,16 @@ create_body_component_rtf <- function(data) {
   # Add grand summary rows
   #
 
-  if (summaries_present &&
-      grand_summary_col %in% names(list_of_summaries$summary_df_display_list)) {
+  if (
+    summaries_present &&
+    grand_summary_col %in% names(list_of_summaries$summary_df_display_list)
+  ) {
 
     grand_summary_df <-
       dplyr::select(
         list_of_summaries$summary_df_display_list[[grand_summary_col]],
-        .env$rowname_col_private, .env$default_vars
+        dplyr::all_of(rowname_col_private),
+        dplyr::all_of(default_vars)
       )
 
     for (j in seq_len(nrow(grand_summary_df))) {
@@ -1641,6 +1658,7 @@ create_body_component_rtf <- function(data) {
         merge_keys_cells <- c(1, 2, rep(0, length(grand_summary_row) - 2))
       }
 
+      # Generate a cell list containing grand summary rows
       cell_list <-
         lapply(
           seq_len(n_cols), FUN = function(x) {
@@ -1665,24 +1683,21 @@ create_body_component_rtf <- function(data) {
           }
         )
 
-      row_list_body <-
-        c(
-          row_list_body,
-          rtf_tbl_row(
-            cell_list,
-            page_body_width = page_body_width,
-            widths = col_widths,
-            height = 0#,
-            # borders = list(
-            #   rtf_border(
-            #     "top",
-            #     style = ifelse(j == 1, "db", "s"),
-            #     color = table_body_hlines_color,
-            #     width = ifelse(j == 1, 50, 10)
-            #   )
-            # )
-          )
+      side <- summary_row_side(data = data, group_id = grand_summary_col)
+
+      row_list_grand_summary <-
+        rtf_tbl_row(
+          cell_list,
+          page_body_width = page_body_width,
+          widths = col_widths,
+          height = 0
         )
+
+      if (side == "top") {
+        row_list_body <- c(row_list_grand_summary, row_list_body)
+      } else {
+        row_list_body <- c(row_list_body, row_list_grand_summary)
+      }
     }
   }
 
@@ -1853,9 +1868,7 @@ generate_notes_list <- function(
   if (nrow(footnotes_tbl) > 0) {
 
     footnotes_tbl <-
-      footnotes_tbl %>%
-      dplyr::select(fs_id, footnotes) %>%
-      dplyr::distinct()
+      dplyr::distinct(dplyr::select(footnotes_tbl, fs_id, footnotes))
 
     footnote_text <- footnotes_tbl[["footnotes"]]
     footnote_mark <- footnotes_tbl[["fs_id"]]

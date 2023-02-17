@@ -1,39 +1,41 @@
-expect_tab_colnames <- function(tab,
-                                df,
-                                rowname = "NA",
-                                groupname_is_na = TRUE) {
+expect_tab_colnames <- function(
+    tab,
+    df,
+    rowname = "NA",
+    groupname_is_na = TRUE
+) {
 
   if (rowname == "NA") {
 
-    # Expect that the `rowname` column of the `stub_df`
+    # Expect that the `row_id` column of the `stub_df`
     # object is entirely filled with NAs
     expect_true(
-      all(is.na(dt_stub_df_get(data = tab)[["rowname"]]))
+      all(is.na(dt_stub_df_get(data = tab)[["row_id"]]))
     )
 
   } else if (rowname == "col") {
 
-    # Expect that the `rowname` column of the `stub_df`
+    # Expect that the `row_id` column of the `stub_df`
     # object is entirely filled with NAs
     expect_equal(
-      dt_stub_df_get(data = tab)[["rowname"]],
+      dt_stub_df_get(data = tab)[["row_id"]],
       df$rowname
     )
 
   } else if (rowname == "tibble") {
 
     expect_equal(
-      dt_stub_df_get(data = tab)[["rowname"]],
+      dt_stub_df_get(data = tab)[["row_id"]],
       row.names(df)
     )
   }
 
   if (groupname_is_na) {
 
-    # Expect that the `groupname` column of the `stub_df`
+    # Expect that the `group_id` column of the `stub_df`
     # object is entirely filled with NAs
     expect_true(
-      all(is.na(dt_stub_df_get(data = tab)[["groupname"]]))
+      all(is.na(dt_stub_df_get(data = tab)[["group_id"]]))
     )
   }
 }
@@ -69,7 +71,7 @@ expect_tab <- function(tab, df) {
 
   dt_stub_df_get(data = tab) %>%
     dim() %>%
-    expect_equal(c(nrow(df), 7))
+    expect_equal(c(nrow(df), 6))
 
   dt_heading_get(data = tab) %>%
     length() %>%
@@ -105,7 +107,7 @@ expect_tab <- function(tab, df) {
 
   dt_options_get(data = tab) %>%
     dim() %>%
-    expect_equal(c(169, 5))
+    expect_equal(c(184, 5))
 
   dt_transforms_get(data = tab) %>%
     length() %>%
@@ -124,13 +126,12 @@ expect_tab <- function(tab, df) {
     nrow(df)
   )
 
-  # Expect that the column names of the `stub_df` object are `rownum_i`,
-  # `group_id`, `rowname`, `row_id`, `group_label`, `indent`, and `built`
+  # Expect specific column names within the `stub_df` object
   expect_equal(
     colnames(dt_stub_df_get(data = tab)),
     c(
-      "rownum_i", "group_id", "rowname", "row_id",
-      "group_label", "indent", "built"
+      "rownum_i", "row_id", "group_id", "group_label",
+      "indent", "built_group_label"
     )
   )
 }

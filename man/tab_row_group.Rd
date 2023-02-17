@@ -55,10 +55,10 @@ Use \code{\link{gtcars}} to create a \strong{gt} table and use \code{tab_row_gro
 row groups with the labels: \code{numbered} and \code{NA}. The row group with the \code{NA}
 label ends up being rendered without a label at all.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
-  dplyr::select(model, year, hp, trq) \%>\%
-  dplyr::slice(1:8) \%>\%
-  gt(rowname_col = "model") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::select(model, year, hp, trq) |>
+  dplyr::slice(1:8) |>
+  gt(rowname_col = "model") |>
   tab_row_group(
     label = "numbered",
     rows = matches("^[0-9]")
@@ -74,14 +74,14 @@ Use \code{\link{gtcars}} to create a \strong{gt} table. Add two row groups with 
 whether \code{hp} is lesser or greater than \code{600} (governed by the expressions
 provided to the \code{rows} argument).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
-  dplyr::select(model, year, hp, trq) \%>\%
-  dplyr::slice(1:8) \%>\%
-  gt(rowname_col = "model") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::select(model, year, hp, trq) |>
+  dplyr::slice(1:8) |>
+  gt(rowname_col = "model") |>
   tab_row_group(
     label = "powerful",
     rows = hp <= 600
-  ) \%>\%
+  ) |>
   tab_row_group(
     label = "super powerful",
     rows = hp > 600
@@ -98,17 +98,24 @@ provided to the \code{rows} argument).
 2-4
 }
 
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
+}
+
 \seealso{
 Other part creation/modification functions: 
 \code{\link{tab_caption}()},
 \code{\link{tab_footnote}()},
 \code{\link{tab_header}()},
+\code{\link{tab_info}()},
 \code{\link{tab_options}()},
 \code{\link{tab_source_note}()},
 \code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
 \code{\link{tab_stub_indent}()},
 \code{\link{tab_stubhead}()},
+\code{\link{tab_style_body}()},
 \code{\link{tab_style}()}
 }
 \concept{part creation/modification functions}

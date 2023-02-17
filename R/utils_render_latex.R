@@ -289,15 +289,18 @@ create_columns_component_l <- function(data) {
 #' @noRd
 create_body_component_l <- function(data) {
 
-  body <- dt_body_get(data = data)
+  summaries_present <- dt_summary_exists(data = data)
+  list_of_summaries <- dt_summary_df_get(data = data)
   groups_rows_df <- dt_groups_rows_get(data = data)
   stub_df <- dt_stub_df_get(data = data)
 
-  n_rows <- nrow(body)
-
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
+
+  # Determine if there is a stub column in `stub_layout` and whether we
+  # have a two-column stub (with the group label on the left side)
   has_stub_column <- "rowname" %in% stub_layout
+  has_two_col_stub <- "group_label" %in% stub_layout
 
   n_cols <- get_effective_number_of_columns(data = data)
 
@@ -305,6 +308,9 @@ create_body_component_l <- function(data) {
   # character vectors by row, and create a vector of LaTeX body rows
   cell_matrix <- get_body_component_cell_matrix(data = data)
   row_splits_body <- split_row_content(cell_matrix)
+
+  # Get the number of rows in the body
+  n_rows <- nrow(cell_matrix)
 
   if ("group_label" %in% stub_layout) {
 
@@ -358,43 +364,277 @@ create_body_component_l <- function(data) {
       )
   }
 
-  summary_rows <-
-    create_summary_rows_l(
-      data = data,
-      groups_rows_df = groups_rows_df,
-      n_rows = n_rows
+  current_group_id <- character(0)
+
+  body_rows <-
+    lapply(
+      seq_len(n_rows),
+      function(i) {
+
+        body_section <- list()
+
+        group_info <-
+          groups_rows_df[i >= groups_rows_df$row_start & i <= groups_rows_df$row_end, ]
+
+        if (nrow(group_info) == 0) {
+          group_info <- NULL
+        }
+
+        group_id <- group_info[["group_id"]]
+        group_label <- group_info[["group_label"]]
+        group_row_start <- group_info[["row_start"]]
+        group_row_end <- group_info[["row_end"]]
+        group_has_summary_rows <- group_info[["has_summary_rows"]]
+        group_summary_row_side <- group_info[["summary_row_side"]]
+
+        if (!is.null(group_id)) current_group_id <<- group_id
+
+        # Is there a group heading row (dedicated row w/ group label) at `i`?
+        group_heading_row_at_i <-
+          !is.null(group_id) &&
+          !has_two_col_stub &&
+          group_row_start == i
+
+        # Is this the first row of a group?
+        group_start <- !is.null(group_info) && group_row_start == i
+
+        # Insert a horizontal line if this is the beginning of a new row
+        # group and there is a two-column stub
+        if (group_start && has_two_col_stub && i != 1) {
+          body_section <- append(body_section, "\\midrule\n")
+        }
+
+        #
+        # Create a group heading row
+        #
+
+        if (group_heading_row_at_i) {
+
+          group_heading_row <-
+            latex_group_row(
+              group_name = group_label,
+              n_cols = n_cols,
+              top_border = i != 1,
+              bottom_border = i != n_rows
+            )
+
+          body_section <- append(body_section, list(group_heading_row))
+        }
+
+        #
+        # Get groupwise summary rows (for either top or bottom of group)
+        #
+
+        if (
+          summaries_present &&
+          !is.null(group_has_summary_rows) &&
+          group_has_summary_rows &&
+          (
+            i %in% groups_rows_df$row_start &&
+            !is.null(group_summary_row_side) &&
+            !is.na(group_summary_row_side) &&
+            group_summary_row_side == "top"
+          ) ||
+          (
+            i %in% groups_rows_df$row_end &&
+            !is.null(group_summary_row_side) &&
+            !is.na(group_summary_row_side) &&
+            group_summary_row_side == "bottom"
+          )
+        ) {
+
+          summary_section <-
+            summary_rows_for_group_l(
+              data = data,
+              group_id = group_id,
+              side_group_summary = group_summary_row_side
+            )
+
+        } else {
+          summary_section <- NULL
+        }
+
+        body_row <- body_rows[i]
+
+        if (!is.null(summary_section) && group_summary_row_side == "top") {
+
+          if (!has_two_col_stub) {
+            summary_section <- paste0(summary_section, summary_h_border)
+          }
+
+          body_section <- append(body_section, summary_section)
+        }
+
+        body_section <- append(body_section, list(body_row))
+
+        if (!is.null(summary_section) && group_summary_row_side == "bottom") {
+
+          if (!(has_stub_column && has_two_col_stub)) {
+            summary_section <- paste0(summary_h_border, summary_section)
+          }
+
+          body_section <- append(body_section, summary_section)
+        }
+
+        # In a very particular case, we need to hoist the group label to the
+        # first row of summary labels (at the top of a row group where there
+        # is a two-column stub)
+        if (
+          has_stub_column &&
+          has_two_col_stub &&
+          group_row_start == i &&
+          !is.null(summary_section) &&
+          group_summary_row_side == "top" &&
+          length(body_section) > 1
+        ) {
+
+          body_row_idx <- length(body_section)
+          summary_idx <- body_row_idx - 1
+
+          group_name_fragment <- gsub("(^.*? & ).*", "\\1", body_section[[body_row_idx]])
+          body_section[[summary_idx]] <- sub("^.*? & ", "", body_section[[summary_idx]])
+          body_section[[summary_idx]] <- paste0(group_name_fragment, body_section[[summary_idx]])
+          body_section[[body_row_idx]] <- sub("^.*? & ", " & ", body_section[[body_row_idx]])
+        }
+
+        body_section
+      }
     )
 
-  grand_summary_rows <- create_grand_summary_rows_l(data = data)
+  body_rows <- unlist(body_rows)
 
-  paste0(
+  #
+  # Add grand summary rows
+  #
+
+  if (
+    summaries_present &&
+    grand_summary_col %in% names(list_of_summaries$summary_df_display_list)
+  ) {
+
+    side <- summary_row_side(data = data, group_id = grand_summary_col)
+
+    grand_summary_section <-
+      summary_rows_for_group_l(
+        data = data,
+        group_id = grand_summary_col,
+        side_grand_summary = side
+      )
+
+    if (side == "top") {
+      body_rows <- c(grand_summary_section, body_rows)
+    } else {
+      body_rows <- c(body_rows, grand_summary_section)
+    }
+  }
+
+  paste(body_rows, collapse = "")
+}
+
+summary_rows_for_group_l <- function(
+    data,
+    group_id,
+    side_group_summary = "bottom",
+    side_grand_summary = "bottom"
+) {
+
+  # Check that `group_id` isn't NULL and that length is exactly 1
+  if (is.null(group_id) || length(group_id) != 1) {
+    cli::cli_abort("`group_id` cannot be `NULL` and must be of length 1.")
+  }
+
+  list_of_summaries <- dt_summary_df_get(data = data)
+
+  # Obtain all of the visible (`"default"`), non-stub column names
+  # for the table from the `boxh` object
+  default_vars <- dt_boxhead_get_vars_default(data = data)
+
+  stub_layout <- get_stub_layout(data = data)
+
+  stub_is_2 <- length(stub_layout) > 1
+
+  summary_row_lines <- list()
+
+  # In the below conditions
+  # - `grand_summary_col` is a global variable (`"::GRAND_SUMMARY"`, assigned
+  #   in `dt_summary.R`)
+  # - `group_id` might be passed in as NA when there are unnamed groups (this
+  #   can happen usually when using `tab_row_group()` to build these row groups)
+  #   and you cannot create summary rows for unnamed groups
+  if (is.na(group_id)) {
+    return(summary_row_lines)
+  } else if (
+    group_id %in% names(list_of_summaries$summary_df_display_list) &&
+    group_id != grand_summary_col
+  ) {
+    summary_row_type <- "group"
+  } else if (group_id == grand_summary_col) {
+    summary_row_type <- "grand"
+  } else {
+    return(summary_row_lines)
+  }
+
+  # Obtain the summary data table specific to the group ID and
+  # select the column named `rowname` and all of the visible columns
+  summary_df <-
+    dplyr::select(
+      list_of_summaries$summary_df_display_list[[group_id]],
+      dplyr::all_of(rowname_col_private),
+      dplyr::all_of(default_vars)
+    )
+
+  row_splits_summary <- split_row_content(summary_df)
+
+  if (stub_is_2) {
+
+    row_splits_summary <-
+      lapply(
+        row_splits_summary,
+        function(x) {
+          x <- c("", x)
+          x[1:2] <- paste0("\\multicolumn{1}{l|}{", x[1:2], "}")
+          x
+        }
+      )
+  }
+
+  summary_rows <-
     paste0(
-      if (!("group_label" %in% stub_layout)) {
-
-        group_rows <-
-          create_group_rows_l(
-            groups_rows_df = groups_rows_df,
-            n_rows = n_rows,
-            n_cols = n_cols
-          )
-
-        paste0(group_rows, body_rows, summary_rows)
-
-      } else {
-
-        group_dividers <-
-          create_group_dividers_l(
-            groups_rows_df = groups_rows_df,
-            n_rows = n_rows
-          )
-
-        paste0(group_dividers, body_rows, summary_rows)
-      },
+      vapply(
+        row_splits_summary,
+        FUN.VALUE = character(1),
+        latex_body_row,
+        type = "row"
+      ),
       collapse = ""
-    ),
-    grand_summary_rows,
-    collapse = ""
-  )
+    )
+
+  if (summary_row_type != "grand") {
+
+    summary_rows <-
+      paste0(
+        if (side_group_summary == "top") summary_rows,
+        if ("group_label" %in% stub_layout && stub_is_2) {
+          paste0(
+            "\\cmidrule(l{-0.05em}r){2-",
+            ncol(summary_df) + 1,
+            "}\n"
+          )
+        },
+        if (side_group_summary == "bottom") summary_rows
+      )
+  }
+
+  if (summary_row_type == "grand") {
+
+    if (side_grand_summary == "top") {
+      summary_rows <- paste0(summary_rows, grand_summary_h_border)
+    } else {
+      summary_rows <- paste0(grand_summary_h_border, summary_rows)
+    }
+  }
+
+  summary_rows
 }
 
 #' @noRd
@@ -501,20 +741,6 @@ create_group_rows_l <- function(
   )
 }
 
-create_group_dividers_l <- function(groups_rows_df, n_rows) {
-
-  dividers <- rep_len("", n_rows)
-
-  # Dividing line is inserted *after* last row of each group
-  # so add 1 to `groups_rows_df$row_end`; bottom of series (outside
-  # row range) shouldn't have a dividing line
-  divider_idx <- groups_rows_df$row_end + 1
-  divider_idx <- divider_idx[divider_idx <= n_rows]
-
-  dividers[divider_idx] <- "\\midrule\n"
-
-  dividers
-}
 
 # Function to build a vector of `body` rows
 create_body_rows_l <- function(row_splits_body) {
@@ -578,8 +804,11 @@ create_summary_rows_l <- function(
           # Obtain the summary data table specific to the group ID and
           # select the column named `::rowname::` and all of the visible columns
           summary_df <-
-            list_of_summaries$summary_df_display_list[[group_id]] %>%
-            dplyr::select(.env$rowname_col_private, .env$default_vars)
+            dplyr::select(
+              list_of_summaries$summary_df_display_list[[group_id]],
+              dplyr::all_of(rowname_col_private),
+              dplyr::all_of(default_vars)
+            )
 
           row_splits_summary <- split_row_content(summary_df)
 
@@ -627,58 +856,6 @@ create_summary_rows_l <- function(
       )
     )
   )
-}
-
-create_grand_summary_rows_l <- function(data) {
-
-  list_of_summaries <- dt_summary_df_get(data = data)
-
-  if (
-    length(list_of_summaries) < 1 ||
-    is.null(list_of_summaries$summary_df_display_list[[grand_summary_col]]) ||
-    nrow(list_of_summaries$summary_df_display_list[[grand_summary_col]]) < 1
-  ) {
-    return("")
-  }
-
-  # Get vector representation of stub layout
-  stub_layout <- get_stub_layout(data = data)
-  stub_width <- length(stub_layout)
-
-  # Obtain all of the visible (`"default"`), non-stub
-  # column names for the table
-  default_vars <- dt_boxhead_get_vars_default(data = data)
-
-  grand_summary_df <-
-    list_of_summaries$summary_df_display_list[[grand_summary_col]] %>%
-    dplyr::select(.env$rowname_col_private, .env$default_vars)
-
-  row_splits_summary <- split_row_content(grand_summary_df)
-
-  if (stub_width > 1) {
-
-    row_splits_summary <-
-      lapply(
-        row_splits_summary,
-        function(x) {
-          x[[1]] <- paste0("\\multicolumn{", stub_width, "}{l|}{", x[1], "}")
-          x
-        }
-      )
-  }
-
-  grand_summary_rows <-
-    paste(
-      vapply(
-        row_splits_summary,
-        FUN.VALUE = character(1),
-        latex_body_row,
-        type = "row"
-      ),
-      collapse = ""
-    )
-
-  paste0(grand_summary_h_border, grand_summary_rows)
 }
 
 # Define horizontal border line types for

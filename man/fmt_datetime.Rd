@@ -6,7 +6,7 @@
 \usage{
 fmt_datetime(
   data,
-  columns,
+  columns = everything(),
   rows = everything(),
   date_style = "iso",
   time_style = "iso",
@@ -62,13 +62,12 @@ with \code{\link[=OlsonNames]{OlsonNames()}}).}
 formatted value. The value itself is represented by \code{{x}} and all other
 characters are taken to be string literals.}
 
-\item{locale}{An optional locale ID that can be used for formatting the value
-according the locale's rules. Examples include \code{"en"} for English (United
-States) and \code{"fr"} for French (France). The use of a valid locale ID will
-override any values provided in \code{sep_mark} and \code{dec_mark}. We can use the
+\item{locale}{An optional locale identifier that can be used for formatting
+the value according the locale's rules. Examples include \code{"en"} for English
+(United States) and \code{"fr"} for French (France). The use of a locale ID will
+override any locale-specific values provided. We can use the
 \code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
-are supported. Any \code{locale} value provided here will override any global
-locale setting performed in \code{\link[=gt]{gt()}}'s own \code{locale} argument.}
+are supported.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -76,17 +75,59 @@ An object of class \code{gt_tbl}.
 \description{
 Format input values to datetime values using either presets for the date and
 time components or a formatting directive (this can either use a \emph{CLDR}
-datetime pattern or \code{strptime} formatting). Input can be in the form of
-\code{POSIXt} (i.e., datetimes), the \code{Date} type, or \code{character} (must be in the
-ISO 8601 form of \verb{YYYY-MM-DD HH:MM:SS} or \code{YYYY-MM-DD}).
+datetime pattern or \code{strptime} formatting). The input values can be in the
+form of \code{POSIXct} (i.e., datetimes), the \code{Date} type, or \code{character} (must be
+in the ISO 8601 form of \verb{YYYY-MM-DD HH:MM:SS} or \code{YYYY-MM-DD}).
 }
-\section{Targeting the values to be formatted}{
+\section{Compatibility of formatting function with data values}{
+
+
+The \code{fmt_datetime()} formatting function is compatible with body cells that
+are of the \code{"Date"}, \code{"POSIXct"} or \code{"character"} types. Any other types of
+body cells are ignored during formatting. This is to say that cells of
+incompatible data types may be targeted, but there will be no attempt to
+format them.
+}
+
+\section{Targeting cells with \code{columns} and \code{rows}}{
 
 
 Targeting of values is done through \code{columns} and additionally by \code{rows} (if
-nothing is provided for \code{rows} then entire columns are selected). Conditional
-formatting is possible by providing a conditional expression to the \code{rows}
-argument. See the \emph{Arguments} section for more information on this.
+nothing is provided for \code{rows} then entire columns are selected). The
+\code{columns} argument allows us to target a subset of cells contained in the
+resolved columns. We say resolved because aside from declaring column names
+in \code{c()} (with bare column names or names in quotes) we can use
+\strong{tidyselect}-style expressions. This can be as basic as supplying a select
+helper like \code{starts_with()}, or, providing a more complex incantation like
+
+\code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
+
+which targets numeric columns that have a maximum value of 100,000 (excluding
+\code{NA}s from consideration).
+
+By default all columns and rows are selected (with the \code{everything()}
+defaults). Cell values that are incompatible with a given formatting function
+will be skipped over, like \code{character} values and numeric \verb{fmt_*()}
+functions. So it's safe to select all columns with a particular formatting
+function (only those values that can be formatted will be formatted), but,
+you may not want that. One strategy is to format the bulk of cell values with
+one formatting function and then constrain the columns for later passes with
+other types of formatting (the last formatting done to a cell is what you get
+in the final output).
+
+Once the columns are targeted, we may also target the \code{rows} within those
+columns. This can be done in a variety of ways. If a stub is present, then we
+potentially have row identifiers. Those can be used much like column names in
+the \code{columns}-targeting scenario. We can use simpler \strong{tidyselect}-style
+expressions (the select helpers should work well here) and we can use quoted
+row identifiers in \code{c()}. It's also possible to use row indices (e.g.,
+\code{c(3, 5, 6)}) though these index values must correspond to the row numbers of
+the input data (the indices won't necessarily match those of rearranged rows
+if row groups are present). One more type of expression is possible, an
+expression that takes column values (can involve any of the available columns
+in the table) and returns a logical vector. This is nice if you want to base
+formatting on values in the column or another column, or, you'd like to use a
+more complex predicate expression.
 }
 
 \section{Formatting with the \code{date_style} argument}{
@@ -146,8 +187,8 @@ values (corresponding to an input date of \code{2000-02-29}).\tabular{llll}{
 }
 
 
-We can use the \code{\link[=info_date_style]{info_date_style()}} within the console to view a similar table
-of date styles with example output.
+We can use the \code{\link[=info_date_style]{info_date_style()}} function within the console to view a
+similar table of date styles with example output.
 }
 
 \section{Formatting with the \code{time_style} argument}{
@@ -195,8 +236,8 @@ redundant or repeating information.\tabular{llll}{
 }
 
 
-We can use the \code{\link[=info_time_style]{info_time_style()}} within the console to view a similar table
-of time styles with example output.
+We can use the \code{\link[=info_time_style]{info_time_style()}} function within the console to view a
+similar table of time styles with example output.
 }
 
 \section{Formatting with a \emph{CLDR} datetime pattern}{
@@ -776,6 +817,18 @@ Here are some extra formats that you may find useful:
 }
 }
 
+\section{Adapting output to a specific \code{locale}}{
+
+
+This formatting function can adapt outputs according to a provided \code{locale}
+value. Examples include \code{"en"} for English (United States) and \code{"fr"} for
+French (France). Note that a \code{locale} value provided here will override any
+global locale setting performed in \code{\link[=gt]{gt()}}'s own \code{locale} argument (it is
+settable there as a value received by all other functions that have a
+\code{locale} argument). As a useful reference on which locales are supported, we
+can use the \code{\link[=info_locales]{info_locales()}} function to view an info table.
+}
+
 \section{Examples}{
 
 
@@ -783,9 +836,9 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{dat
 Format the column to have dates formatted with the \code{"month_day_year"} style
 and times with the \code{"h_m_s_p"} 12-hour time style.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(datetime) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(datetime) |>
+  gt() |>
   fmt_datetime(
     columns = datetime,
     date_style = "month_day_year",
@@ -802,15 +855,15 @@ that work well together are \code{"MMMEd"} and \code{"Hms"}. These will mutate
 depending on the locale. Let's use the default locale for the first 3 rows
 and the Danish locale (\code{"da"}) for the remaining rows.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(datetime) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(datetime) |>
+  gt() |>
   fmt_datetime(
     columns = datetime,
     date_style = "MMMEd",
     time_style = "Hms",
     locale = "da"
-  ) \%>\%
+  ) |>
   fmt_datetime(
     columns = datetime,
     rows = 1:3,
@@ -829,9 +882,9 @@ specification. Using the CLDR datetime pattern
 zone formatting. Let's provide a time zone ID (\code{"America/Vancouver"}) to the
 \code{tz} argument.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(datetime) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(datetime) |>
+  gt() |>
   fmt_datetime(
     columns = datetime,
     format = "EEEE, MMMM d, y 'at' h:mm a (zzzz)",
@@ -846,18 +899,28 @@ zone formatting. Let's provide a time zone ID (\code{"America/Vancouver"}) to th
 
 \section{Function ID}{
 
-3-13
+3-15
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
+The vector-formatting version of this function:
+\code{\link[=vec_fmt_datetime]{vec_fmt_datetime()}}.
+
 Other data formatting functions: 
 \code{\link{data_color}()},
+\code{\link{fmt_auto}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_date}()},
 \code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},
@@ -866,7 +929,9 @@ Other data formatting functions:
 \code{\link{fmt_percent}()},
 \code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
+\code{\link{fmt_spelled_num}()},
 \code{\link{fmt_time}()},
+\code{\link{fmt_url}()},
 \code{\link{fmt}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},

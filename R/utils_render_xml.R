@@ -37,7 +37,7 @@ xml_tblW <- function(
     app = "word"
 ) {
 
-  type <- match.arg(type)
+  type <- rlang::arg_match(type)
 
   htmltools::tag(
     `_tag_name` = xml_tag_type("tblW", app),
@@ -98,8 +98,8 @@ xml_width <- function(
     app = "word"
 ) {
 
-  dir <- match.arg(dir)
-  type <- match.arg(type)
+  dir <- rlang::arg_match(dir)
+  type <- rlang::arg_match(type)
 
   dir <-
     switch(
@@ -155,7 +155,7 @@ xml_tr_height <- function(
     app = "word"
 ) {
 
-  h_rule <- match.arg(h_rule)
+  h_rule <- rlang::arg_match(h_rule)
 
   htmltools::tag(
     `_tag_name` = xml_tag_type("trHeight", app),
@@ -205,7 +205,7 @@ xml_tc_margins <- function(..., app = "word") {
 # Vertical alignment of paragraph in cell (child of `tcPr`)
 xml_v_align <- function(v_align = c("center", "bottom", "top"), app = "word") {
 
-  v_align <- match.arg(v_align)
+  v_align <- rlang::arg_match(v_align)
 
   htmltools::tag(
     `_tag_name` = xml_tag_type("vAlign", app),
@@ -225,7 +225,7 @@ xml_gridSpan <- function(val = "1", app = "word") {
 # Span cells vertically (child of `tcPr`)
 xml_v_merge <- function(val = c("restart", "continue"), app = "word") {
 
-  val <- match.arg(val)
+  val <- rlang::arg_match(val)
 
   htmltools::tag(
     `_tag_name` = xml_tag_type("vMerge", app),
@@ -253,7 +253,7 @@ xml_border <- function(
     app = "word"
 ) {
 
-  dir <- match.arg(dir)
+  dir <- rlang::arg_match(dir)
 
   dir <-
     switch(
@@ -381,7 +381,7 @@ xml_jc <- function(
     app = "word"
 ) {
 
-  val <- match.arg(val)
+  val <- rlang::arg_match(val)
 
   val <-
     switch(
@@ -480,7 +480,7 @@ xml_baseline_adj <- function(
     app = "word"
 ) {
 
-  v_align <- match.arg(v_align)
+  v_align <- rlang::arg_match(v_align)
 
   htmltools::tag(
     `_tag_name` = xml_tag_type("vertAlign", app),
@@ -495,7 +495,7 @@ xml_t <- function(
     app = "word"
 ) {
 
-  xml_space <- match.arg(xml_space)
+  xml_space <- rlang::arg_match(xml_space)
 
   # HTML-escape literal text
   htmltools::tag(
@@ -598,7 +598,7 @@ xml_fldChar <- function(
     app = "word"
 ) {
 
-  fldCharType <- match.arg(fldCharType)
+  fldCharType <- rlang::arg_match(fldCharType)
   stopifnot(is_bool(dirty))
 
   htmltools::tag(
@@ -1625,7 +1625,7 @@ create_body_component_xml <- function(
         #
 
         row_cells <- list()
-        col_idx <- i
+        row_idx <- i
 
         for (y in seq_along(output_df_row_as_vec(i))) {
 
@@ -1651,7 +1651,7 @@ create_body_component_xml <- function(
               weight = cell_style[["cell_text"]][["weight"]],
               stretch = cell_style[["cell_text"]][["stretch"]],
               whitespace = cell_style[["cell_text"]][["whitespace"]],
-              align = cell_style[["cell_text"]][["align"]] %||% alignment[style_col_idx],
+              align = cell_style[["cell_text"]][["align"]] %||% alignment[y],
               v_align = cell_style[["cell_text"]][["v_align"]],
               border = list(
                 top = cell_border(color = table_body_hlines_color),
@@ -1972,10 +1972,11 @@ summary_rows_xml <- function(
     # Obtain the summary data table specific to the group ID and
     # select the column named `rowname` and all of the visible columns
     summary_df <-
-      list_of_summaries$summary_df_display_list[[group_id]] %>%
-      dplyr::select(.env$rowname_col_private, .env$default_vars)
-
-    n_cols <- ncol(summary_df)
+      dplyr::select(
+        list_of_summaries$summary_df_display_list[[group_id]],
+        dplyr::all_of(rowname_col_private),
+        dplyr::all_of(default_vars)
+      )
 
     summary_df_row <- function(j) {
       unname(unlist(summary_df[j, ]))
@@ -2058,7 +2059,7 @@ cell_border <- function(
 
 cell_margin <- function(width, type = c("dxa", "nil")) {
 
-  type <- match.arg(type)
+  type <- rlang::arg_match(type)
 
   list(
     width = width,
@@ -2069,9 +2070,9 @@ cell_margin <- function(width, type = c("dxa", "nil")) {
 stretch_to_xml_stretch <- function(x) {
 
   x <-
-    match.arg(
+    rlang::arg_match(
       x,
-      choices = c(
+      values = c(
         "ultra-condensed",
         "extra-condensed",
         "condensed",
@@ -2099,8 +2100,8 @@ stretch_to_xml_stretch <- function(x) {
 
 v_align_to_xml_v_align <- function(x){
   x <-
-    match.arg(x,
-              choices = c("middle", "top", "bottom"))
+    rlang::arg_match(x,
+                     values = c("middle", "top", "bottom"))
 
   c(
     "middle" = "center",
@@ -2111,7 +2112,7 @@ v_align_to_xml_v_align <- function(x){
 
 row_span_to_xml_v_merge <- function(x){
 
-  x <- match.arg(x,choices = c("start","continue"))
+  x <- rlang::arg_match(x, values = c("start", "continue"))
 
   c(
     "continue" = "continue",

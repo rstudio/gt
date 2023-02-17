@@ -40,29 +40,26 @@ Use \code{exibble} to create a \strong{gt} table with a number of table parts ad
 Then, use the \code{opt_stylize()} function to give the table some additional
 style (using the \code{"cyan"} color variation and style number \code{6}).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  gt(rowname_col = "row", groupname_col = "group") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt(rowname_col = "row", groupname_col = "group") |>
   summary_rows(
     groups = "grp_a",
     columns = c(num, currency),
-    fns = list(
-      min = ~min(., na.rm = TRUE),
-      max = ~max(., na.rm = TRUE)
-    )) \%>\%
+    fns = c("min", "max")
+  ) |>
   grand_summary_rows(
     columns = currency,
-    fns = list(
-      total = ~sum(., na.rm = TRUE)
-    )) \%>\%
-  tab_source_note(source_note = "This is a source note.") \%>\%
+    fns = total ~ sum(., na.rm = TRUE)
+  ) |>
+  tab_source_note(source_note = "This is a source note.") |>
   tab_footnote(
     footnote = "This is a footnote.",
     locations = cells_body(columns = 1, rows = 1)
-  ) \%>\%
+  ) |>
   tab_header(
     title = "The title of the table",
     subtitle = "The table's subtitle"
-  ) \%>\%
+  ) |>
   opt_stylize(style = 6, color = "cyan")
 }\if{html}{\out{</div>}}
 
@@ -73,7 +70,12 @@ style (using the \code{"cyan"} color variation and style number \code{6}).
 
 \section{Function ID}{
 
-9-10
+9-1
+}
+
+\section{Function Introduced}{
+
+\code{v0.7.0} (Aug 25, 2022)
 }
 
 \seealso{
@@ -83,6 +85,7 @@ Other table option functions:
 \code{\link{opt_css}()},
 \code{\link{opt_footnote_marks}()},
 \code{\link{opt_horizontal_padding}()},
+\code{\link{opt_interactive}()},
 \code{\link{opt_row_striping}()},
 \code{\link{opt_table_font}()},
 \code{\link{opt_table_lines}()},

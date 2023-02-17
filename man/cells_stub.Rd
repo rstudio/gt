@@ -25,6 +25,7 @@ true.
 }
 \section{Overview of Location Helper Functions}{
 
+
 Location helper functions can be used to target cells with virtually any
 function that has a \code{locations} argument. Here is a listing of all of the
 location helper functions, with locations corresponding roughly from top to
@@ -71,13 +72,13 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 Use \code{\link{sza}} to create a \strong{gt} table. Color all of the \code{month} values in the
 table stub with \code{\link[=tab_style]{tab_style()}}, using \code{cells_stub()} in \code{locations}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza \%>\%
-  dplyr::filter(latitude == 20 & tst <= "1000") \%>\%
-  dplyr::select(-latitude) \%>\%
-  dplyr::filter(!is.na(sza)) \%>\%
-  tidyr::spread(key = "tst", value = sza) \%>\%
-  gt(rowname_col = "month") \%>\%
-  sub_missing(missing_text = "") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza |>
+  dplyr::filter(latitude == 20 & tst <= "1000") |>
+  dplyr::select(-latitude) |>
+  dplyr::filter(!is.na(sza)) |>
+  tidyr::spread(key = "tst", value = sza) |>
+  gt(rowname_col = "month") |>
+  sub_missing(missing_text = "") |>
   tab_style(
     style = list(
       cell_fill(color = "darkblue"),
@@ -95,6 +96,11 @@ table stub with \code{\link[=tab_style]{tab_style()}}, using \code{cells_stub()}
 \section{Function ID}{
 
 7-11
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{

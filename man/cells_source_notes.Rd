@@ -21,6 +21,7 @@ to the table).
 }
 \section{Overview of Location Helper Functions}{
 
+
 Location helper functions can be used to target cells with virtually any
 function that has a \code{locations} argument. Here is a listing of all of the
 location helper functions, with locations corresponding roughly from top to
@@ -67,11 +68,11 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 Use \code{\link{gtcars}} to create a \strong{gt} table. Add a source note and style the
 source notes section.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
-  dplyr::select(mfr, model, msrp) \%>\%
-  dplyr::slice(1:5) \%>\%
-  gt() \%>\%
-  tab_source_note(source_note = "From edmunds.com") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::select(mfr, model, msrp) |>
+  dplyr::slice(1:5) |>
+  gt() |>
+  tab_source_note(source_note = "From edmunds.com") |>
   tab_style(
     style = cell_text(
       color = "#A9A9A9",
@@ -89,6 +90,11 @@ source notes section.
 \section{Function ID}{
 
 7-18
+}
+
+\section{Function Introduced}{
+
+\code{v0.3.0} (May 12, 2021)
 }
 
 \seealso{

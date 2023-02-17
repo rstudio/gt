@@ -361,137 +361,6 @@ test_that("the `remove_html()` function works correctly", {
     expect_equal(remove_html(html_text_1))
 })
 
-test_that("the `get_css_tbl()` function works correctly", {
-
-  # Get a CSS table from a gt table based on the
-  # `mtcars` dataset
-  css_tbl <-
-    gt(mtcars, rownames_to_stub = TRUE) %>%
-    get_css_tbl()
-
-  css_tbl %>% expect_s3_class(c("tbl_df", "tbl", "data.frame"))
-
-  ncol(css_tbl) %>% expect_equal(4)
-
-  css_tbl %>%
-    colnames() %>%
-    expect_equal(c("selector", "type", "property", "value"))
-})
-
-test_that("the `inline_html_styles()` function works correctly", {
-
-  # Create a simple gt table from `mtcars`
-  data <- gt(mtcars)
-
-  # Get the CSS tibble and the raw HTML
-  css_tbl <- data %>% get_css_tbl()
-  html <- data %>% as_raw_html(inline_css = FALSE)
-
-  # Get the inlined HTML using `inline_html_styles()`
-  inlined_html <- inline_html_styles(html = html, css_tbl = css_tbl)
-
-  # Expect that certain portions of `inlined_html` have
-  # inlined CSS rules
-  expect_true(
-    grepl(
-      paste0(
-        "style=\"font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', ",
-        "Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', ",
-        "'Droid Sans', Arial, sans-serif; display: table; border-collapse: ",
-        "collapse; margin-left: auto; margin-right: auto; color: #333333; ",
-        "font-size: 16px; font-weight: normal; font-style: normal; ",
-        "background-color: #FFFFFF; width: auto; ",
-        "border-top-style: solid; border-top-width: 2px; ",
-        "border-top-color: #A8A8A8; border-right-style: none; ",
-        "border-right-width: 2px; border-right-color: #D3D3D3; ",
-        "border-bottom-style: solid; border-bottom-width: 2px; ",
-        "border-bottom-color: #A8A8A8; border-left-style: none; ",
-        "border-left-width: 2px; border-left-color: #D3D3D3;"
-      ),
-      inlined_html
-    )
-  )
-
-  expect_true(
-    grepl(
-      paste0(
-        "padding-top: 8px; padding-bottom: 8px; padding-left: 5px; ",
-        "padding-right: 5px; margin: 10px; border-top-style: solid; ",
-        "border-top-width: 1px; border-top-color: #D3D3D3; ",
-        "border-left-style: none; border-left-width: 1px; ",
-        "border-left-color: #D3D3D3; border-right-style: none; ",
-        "border-right-width: 1px; border-right-color: #D3D3D3; ",
-        "vertical-align: middle; overflow-x: hidden; text-align: right; ",
-        "font-variant-numeric: tabular-nums;"
-      ),
-      inlined_html
-    )
-  )
-
-  # Augment the gt table with custom styles
-  data <-
-    data %>%
-    tab_style(
-      style = cell_text(size = px(10)),
-      locations = cells_body(columns = everything())
-    )
-
-  # Get the CSS tibble and the raw HTML
-  css_tbl <- data %>% get_css_tbl()
-  html <- data %>% as_raw_html(inline_css = FALSE)
-
-  # Get the inlined HTML using `inline_html_styles()`
-  inlined_html <- inline_html_styles(html = html, css_tbl = css_tbl)
-
-  # Expect that the style rule from `tab_style` is a listed value along with
-  # the inlined rules derived from the CSS classes
-  expect_true(
-    grepl(
-      paste0(
-        "<td headers=\"mpg\" style=\"padding-top: 8px; padding-bottom: 8px; ",
-        "padding-left: 5px; padding-right: 5px; margin: 10px; ",
-        "border-top-style: solid; border-top-width: 1px; ",
-        "border-top-color: #D3D3D3; border-left-style: none; ",
-        "border-left-width: 1px; border-left-color: #D3D3D3; ",
-        "border-right-style: none; border-right-width: 1px; ",
-        "border-right-color: #D3D3D3; vertical-align: middle; ",
-        "overflow-x: hidden; text-align: right; ",
-        "font-variant-numeric: tabular-nums; font-size: 10px;"
-      ),
-      inlined_html
-    )
-  )
-
-  # Create a gt table with a custom style in the title and subtitle
-  # (left alignment of text)
-  data <-
-    gt(mtcars) %>%
-    tab_header(
-      title = "The title",
-      subtitle = "The subtitle"
-    ) %>%
-    tab_style(
-      style = cell_text(align = "left"),
-      locations = list(
-        cells_title(groups = "title"),
-        cells_title(groups = "subtitle")
-      )
-    )
-
-  # Get the CSS tibble and the raw HTML
-  css_tbl <- data %>% get_css_tbl()
-  html <- data %>% as_raw_html(inline_css = FALSE)
-
-  # Get the inlined HTML using `inline_html_styles()`
-  inlined_html <- inline_html_styles(html = html, css_tbl = css_tbl)
-
-  # Expect that the `colspan` attr is preserved in both <th> elements
-  # and that the `text-align:left` rule is present
-  expect_true(
-    grepl("td colspan=\"11\" style=.*?text-align: left;", inlined_html)
-  )
-})
-
 test_that("the `as_locations()` function works correctly", {
 
   # Define `locations` as a `cells_body` object
@@ -674,4 +543,57 @@ test_that("the `get_file_ext()` function works correctly", {
   get_file_ext(file = "_file.jpg") %>% expect_equal("jpg")
   get_file_ext(file = "file.png") %>% expect_equal("png")
   get_file_ext(file = "file.gif") %>% expect_equal("gif")
+})
+
+test_that("The `resolve_secondary_pattern()` function works properly", {
+
+  # Define function to test input and output of the
+  # `resolve_secondary_pattern()` util function
+  expect_secondary_pattern <- function(x, expectation) {
+    expect_equal(resolve_secondary_pattern(x), expectation)
+  }
+
+  # Generate a list of input `x` values and expected output values
+  secondary_pattern_tests <-
+    list(
+      c("<< a >><< b >>", " a  b "),
+      c("<< a >><< ::missing_val:: >>", " a "),
+      c("<< ::missing_val:: >><< b >>", " b "),
+      c("<< ::missing_val:: >><< ::missing_val:: >>", ""),
+      c("<<<< ::missing_val:: >><< ::missing_val:: >>>>", ""),
+      c("<<a>><<c<< - ::missing_val::>>>>", "ac"),
+      c("<<a>><< (c<< - d>>)>>", "a (c - d)"),
+      c("<<a>><< (c<< - ::missing_val::>>)>>", "a (c)"),
+      c("<<a>><< (::missing_val::<< - d>>)>>", "a"),
+      c("<<a>><< (::missing_val::<< - ::missing_val::>>)>>", "a"),
+      c("<<::missing_val::>><< (c<< - d>>)>>", " (c - d)"),
+      c("<<::missing_val::<< (c<< - d>>)>>>>", ""),
+      c("<<>>", ""),
+      c("<<>><<>>", ""),
+      c("<<a>>", "a"),
+      c("<<<>>", "<"),
+      c("<<>>>", ">"),
+      c("", ""),
+      c("a", "a"),
+      c("<>", "<>"),
+      c(">>a<<", ">>a<<"),
+      c("<<<<a>>*::missing_val::*>>", ""),
+      c("<<<<*::missing_val::*>> b >>", " b "),
+      c("x<< <<a>> <<b>> *::missing_val::*>>y", "xy"),
+      c("a<< ::missing_val::/::missing_val::>>b", "ab"),
+      c("a ::missing_val:: ::missing_val:: b", "a ::missing_val:: ::missing_val:: b")
+    )
+
+  # Iterate through list with `expect_secondary_pattern()` in `lapply()` stmt
+  secondary_pattern_tests_out <-
+    lapply(
+      seq_along(secondary_pattern_tests),
+      FUN = function(x) {
+        expect_secondary_pattern(
+          secondary_pattern_tests[[x]][1],
+          secondary_pattern_tests[[x]][2]
+        )
+      }
+    )
+
 })

@@ -49,9 +49,9 @@ more symbols, making six
 Use \code{\link{sza}} to create a \strong{gt} table, adding three footnotes. Call
 \code{opt_footnote_marks()} to specify which footnote marks to use.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza \%>\%
-  dplyr::filter(latitude == 30) \%>\%
-  dplyr::group_by(tst) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza |>
+  dplyr::filter(latitude == 30) |>
+  dplyr::group_by(tst) |>
   dplyr::summarize(
     SZA.Max = if (
       all(is.na(sza))) \{
@@ -66,28 +66,28 @@ Use \code{\link{sza}} to create a \strong{gt} table, adding three footnotes. Cal
       min(sza, na.rm = TRUE)
     \},
     .groups = "drop"
-  ) \%>\%
-  gt(rowname_col = "tst") \%>\%
-  tab_spanner_delim(delim = ".") \%>\%
+  ) |>
+  gt(rowname_col = "tst") |>
+  tab_spanner_delim(delim = ".") |>
   sub_missing(
     columns = everything(),
     missing_text = "90+"
-  ) \%>\%
-  tab_stubhead(label = "TST") \%>\%
+  ) |>
+  tab_stubhead(label = "TST") |>
   tab_footnote(
     footnote = "True solar time.",
     locations = cells_stubhead()
-  ) \%>\%
+  ) |>
   tab_footnote(
     footnote = "Solar zenith angle.",
     locations = cells_column_spanners(
       spanners = "spanner-SZA.Max"
     )
-  ) \%>\%
+  ) |>
   tab_footnote(
     footnote = "The Lowest SZA.",
     locations = cells_stub(rows = "1200")
-  ) \%>\%
+  ) |>
   opt_footnote_marks(marks = "standard")
 }\if{html}{\out{</div>}}
 
@@ -98,7 +98,12 @@ Use \code{\link{sza}} to create a \strong{gt} table, adding three footnotes. Cal
 
 \section{Function ID}{
 
-9-1
+9-3
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
@@ -107,6 +112,7 @@ Other table option functions:
 \code{\link{opt_all_caps}()},
 \code{\link{opt_css}()},
 \code{\link{opt_horizontal_padding}()},
+\code{\link{opt_interactive}()},
 \code{\link{opt_row_striping}()},
 \code{\link{opt_stylize}()},
 \code{\link{opt_table_font}()},

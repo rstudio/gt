@@ -22,7 +22,8 @@ test_that("Using summary rows in LaTeX tables is correct", {
   gt(tbl) %>%
     grand_summary_rows(
       columns = col_1,
-      fns = list(average = ~ mean(., na.rm = TRUE))
+      fns = list(average = ~ mean(., na.rm = TRUE)),
+      fmt = list(~ fmt_number(.))
     ) %>%
     as_latex() %>%
     as.character() %>%
@@ -31,7 +32,8 @@ test_that("Using summary rows in LaTeX tables is correct", {
   gt(tbl, rowname_col = "row") %>%
     grand_summary_rows(
       columns = col_1,
-      fns = list(average = ~ mean(., na.rm = TRUE))
+      fns = list(average = ~ mean(., na.rm = TRUE)),
+      fmt = list(~ fmt_number(.))
     ) %>%
     as_latex() %>%
     as.character() %>%
@@ -40,7 +42,8 @@ test_that("Using summary rows in LaTeX tables is correct", {
   gt(tbl, groupname_col = "group") %>%
     grand_summary_rows(
       columns = col_1,
-      fns = list(average = ~ mean(., na.rm = TRUE))
+      fns = list(average = ~ mean(., na.rm = TRUE)),
+      fmt = list(~ fmt_number(.))
     ) %>%
     as_latex() %>%
     as.character() %>%
@@ -49,7 +52,8 @@ test_that("Using summary rows in LaTeX tables is correct", {
   gt(tbl, rowname_col = "row", groupname_col = "group") %>%
     grand_summary_rows(
       columns = col_1,
-      fns = list(average = ~ mean(., na.rm = TRUE))
+      fns = list(average = ~ mean(., na.rm = TRUE)),
+      fmt = list(~ fmt_number(.))
     ) %>%
     as_latex() %>%
     as.character() %>%
@@ -63,7 +67,8 @@ test_that("Using summary rows in LaTeX tables is correct", {
     summary_rows(
       groups = "first_five",
       columns = col_1,
-      fns = list(average = ~ mean(., na.rm = TRUE))
+      fns = list(average = ~ mean(., na.rm = TRUE)),
+      fmt = list(~ fmt_number(.))
     ) %>%
     as_latex() %>%
     as.character() %>%
@@ -73,7 +78,8 @@ test_that("Using summary rows in LaTeX tables is correct", {
     summary_rows(
       groups = "first_five",
       columns = col_1,
-      fns = list(average = ~ mean(., na.rm = TRUE))
+      fns = list(average = ~ mean(., na.rm = TRUE)),
+      fmt = list(~ fmt_number(.))
     ) %>%
     as_latex() %>%
     as.character() %>%
@@ -83,7 +89,8 @@ test_that("Using summary rows in LaTeX tables is correct", {
     summary_rows(
       groups = "first_five",
       columns = c(col_1, col_3),
-      fns = list(average = ~ mean(., na.rm = TRUE))
+      fns = list(average = ~ mean(., na.rm = TRUE)),
+      fmt = list(~ fmt_number(.))
     ) %>%
     as_latex() %>%
     as.character() %>%
@@ -93,7 +100,8 @@ test_that("Using summary rows in LaTeX tables is correct", {
     summary_rows(
       groups = "first_five",
       columns = c(col_3, col_1, col_4),
-      fns = list(average = ~ mean(., na.rm = TRUE))
+      fns = list(average = ~ mean(., na.rm = TRUE)),
+      fmt = list(~ fmt_number(.))
     ) %>%
     as_latex() %>%
     as.character() %>%
@@ -103,7 +111,8 @@ test_that("Using summary rows in LaTeX tables is correct", {
     summary_rows(
       groups = "first_five",
       columns = c(col_3, col_1, col_4, col_2),
-      fns = list(average = ~ mean(., na.rm = TRUE))
+      fns = list(average = ~ mean(., na.rm = TRUE)),
+      fmt = list(~ fmt_number(.))
     ) %>%
     as_latex() %>%
     as.character() %>%
@@ -113,7 +122,8 @@ test_that("Using summary rows in LaTeX tables is correct", {
     summary_rows(
       groups = "first_five",
       columns = c(col_1, col_3),
-      fns = list(average = ~ mean(., na.rm = TRUE))
+      fns = list(average = ~ mean(., na.rm = TRUE)),
+      fmt = list(~ fmt_number(.))
     ) %>%
     as_latex() %>%
     as.character() %>%
@@ -127,33 +137,32 @@ test_that("Using summary rows in LaTeX tables is correct", {
     summary_rows(
       groups = "first_five",
       columns = col_1,
-      fns = list(average = ~ mean(., na.rm = TRUE))
+      fns = list(average = ~ mean(., na.rm = TRUE)),
+      fmt = list(~ fmt_number(.))
     ) %>%
     summary_rows(
       groups = "first_five",
       columns = col_2,
-      fns = list(min = ~ min(., na.rm = TRUE))
+      fns = list(min = ~ min(., na.rm = TRUE)),
+      fmt = list(~ fmt_number(.))
     ) %>%
     summary_rows(
       groups = "first_five",
       columns = col_4,
-      fns = list(average = ~ mean(., na.rm = TRUE))
+      fns = list(average = ~ mean(., na.rm = TRUE)),
+      fmt = list(~ fmt_number(.))
     ) %>%
     summary_rows(
       groups = "2nd_five",
       columns = col_4,
-      fns = list(
-        max = ~ max(., na.rm = TRUE)
-      )
+      fns = list(max = ~ max(., na.rm = TRUE)),
+      fmt = list(~ fmt_number(.))
     ) %>%
     summary_rows(
-      groups = TRUE,
+      groups = everything(),
       columns = col_3,
-      fns = list(
-        count = ~ length(.)
-      ),
-      formatter = fmt_number,
-      decimals = 0
+      fns = list(count = ~ length(.)),
+      fmt = list(~ fmt_number(., decimals = 0))
     ) %>%
     grand_summary_rows(
       columns = starts_with("col"),
@@ -161,7 +170,8 @@ test_that("Using summary rows in LaTeX tables is correct", {
         MEAN = ~ mean(., na.rm = TRUE),
         MIN = ~ min(., na.rm = TRUE),
         MAX = ~ max(., na.rm = TRUE)
-      )
+      ),
+      fmt = list(~ fmt_number(.))
     ) %>%
     as_latex() %>%
     as.character() %>%
@@ -171,33 +181,32 @@ test_that("Using summary rows in LaTeX tables is correct", {
     summary_rows(
       groups = "first_five",
       columns = col_1,
-      fns = list(average = ~ mean(., na.rm = TRUE))
+      fns = list(average = ~ mean(., na.rm = TRUE)),
+      fmt = list(~ fmt_number(.))
     ) %>%
     summary_rows(
       groups = "first_five",
       columns = col_2,
-      fns = list(min = ~ min(., na.rm = TRUE))
+      fns = list(min = ~ min(., na.rm = TRUE)),
+      fmt = list(~ fmt_number(.))
     ) %>%
     summary_rows(
       groups = "first_five",
       columns = col_4,
-      fns = list(average = ~ mean(., na.rm = TRUE))
+      fns = list(average = ~ mean(., na.rm = TRUE)),
+      fmt = list(~ fmt_number(.))
     ) %>%
     summary_rows(
       groups = "2nd_five",
       columns = col_4,
-      fns = list(
-        max = ~ max(., na.rm = TRUE)
-      )
+      fns = list(max = ~ max(., na.rm = TRUE)),
+      fmt = list(~ fmt_number(.))
     ) %>%
     summary_rows(
-      groups = TRUE,
+      groups = everything(),
       columns = col_3,
-      fns = list(
-        count = ~ length(.)
-      ),
-      formatter = fmt_number,
-      decimals = 0
+      fns = list(count = ~ length(.)),
+      fmt = list(~ fmt_number(., decimals = 0))
     ) %>%
     grand_summary_rows(
       columns = starts_with("col"),
@@ -205,7 +214,8 @@ test_that("Using summary rows in LaTeX tables is correct", {
         MEAN = ~ mean(., na.rm = TRUE),
         MIN = ~ min(., na.rm = TRUE),
         MAX = ~ max(., na.rm = TRUE)
-      )
+      ),
+      fmt = list(~ fmt_number(.))
     ) %>%
     as_latex() %>%
     as.character() %>%

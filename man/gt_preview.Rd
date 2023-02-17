@@ -32,11 +32,9 @@ modify the output of \code{gt_preview()}. Furthermore, you cannot pass a \strong
 object to \code{gt_preview()}.
 }
 \details{
-Any grouped data or magic columns such as \code{rowname} and \code{groupname} will be
-ignored by \code{gt_preview()} and, as such, one cannot add a stub or group rows
-in the output table. By default, the output table will include row numbers in
-a stub (including a range of row numbers for the omitted rows). This row
-numbering option can be deactivated by setting \code{incl_rownums} to \code{FALSE}.
+By default, the output table will include row numbers in a stub (including a
+range of row numbers for the omitted rows). This row numbering option can be
+deactivated by setting \code{incl_rownums} to \code{FALSE}.
 }
 \section{Examples}{
 
@@ -44,8 +42,8 @@ numbering option can be deactivated by setting \code{incl_rownums} to \code{FALS
 Use \code{\link{gtcars}} to create a \strong{gt} table preview (with only a few of its
 columns). You'll see the first five rows and the last row.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
-  dplyr::select(mfr, model, year) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::select(mfr, model, year) |>
   gt_preview()
 }\if{html}{\out{</div>}}
 
@@ -57,6 +55,11 @@ columns). You'll see the first five rows and the last row.
 \section{Function ID}{
 
 1-2
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{

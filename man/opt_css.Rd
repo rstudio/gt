@@ -38,16 +38,14 @@ Use \code{\link{exibble}} to create a \strong{gt} table and format the data in b
 With \code{opt_css()}, insert CSS rulesets as as string and be sure to set the
 table ID explicitly (here as \code{"one"}).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(num, currency) \%>\%
-  gt(id = "one") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(num, currency) |>
+  gt(id = "one") |>
   fmt_currency(
     columns = currency,
     currency = "HKD"
-  ) \%>\%
-  fmt_scientific(
-    columns = num
-  ) \%>\%
+  ) |>
+  fmt_scientific(columns = num) |>
   opt_css(
     css = "
     #one .gt_table \{
@@ -70,7 +68,12 @@ table ID explicitly (here as \code{"one"}).
 
 \section{Function ID}{
 
-9-11
+9-12
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.2} (August 5, 2020)
 }
 
 \seealso{
@@ -79,6 +82,7 @@ Other table option functions:
 \code{\link{opt_all_caps}()},
 \code{\link{opt_footnote_marks}()},
 \code{\link{opt_horizontal_padding}()},
+\code{\link{opt_interactive}()},
 \code{\link{opt_row_striping}()},
 \code{\link{opt_stylize}()},
 \code{\link{opt_table_font}()},

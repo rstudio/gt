@@ -18,6 +18,7 @@ when applying a footnote with \code{\link[=tab_footnote]{tab_footnote()}} or add
 }
 \section{Overview of Location Helper Functions}{
 
+
 Location helper functions can be used to target cells with virtually any
 function that has a \code{locations} argument. Here is a listing of all of the
 location helper functions, with locations corresponding roughly from top to
@@ -64,13 +65,13 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 Use \code{\link{pizzaplace}} to create a \strong{gt} table. Add a stubhead label with
 \code{\link[=tab_stubhead]{tab_stubhead()}} and then style it with \code{\link[=tab_style]{tab_style()}} and \code{cells_stubhead()}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
-  dplyr::mutate(month = as.numeric(substr(date, 6, 7))) \%>\%
-  dplyr::group_by(month, type) \%>\%
-  dplyr::summarize(sold = dplyr::n(), .groups = "drop") \%>\%
-  dplyr::filter(month \%in\% 1:2) \%>\%
-  gt(rowname_col = "type") \%>\%
-  tab_stubhead(label = "type") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
+  dplyr::mutate(month = as.numeric(substr(date, 6, 7))) |>
+  dplyr::group_by(month, type) |>
+  dplyr::summarize(sold = dplyr::n(), .groups = "drop") |>
+  dplyr::filter(month \%in\% 1:2) |>
+  gt(rowname_col = "type") |>
+  tab_stubhead(label = "type") |>
   tab_style(
     style = cell_fill(color = "lightblue"),
     locations = cells_stubhead()
@@ -85,6 +86,11 @@ Use \code{\link{pizzaplace}} to create a \strong{gt} table. Add a stubhead label
 \section{Function ID}{
 
 7-7
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{

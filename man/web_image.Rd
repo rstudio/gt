@@ -26,8 +26,7 @@ function, we can specify which data cells to target and then include a
 argument). If we want to include an image in other places (e.g., in the
 header, within footnote text, etc.) we need to use \code{web_image()} within the
 \code{\link[=html]{html()}} helper function.
-}
-\details{
+
 By itself, the function creates an HTML image tag, so, the call
 \code{web_image("http://example.com/image.png")} evaluates to:
 
@@ -52,8 +51,8 @@ sizes.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
   pixels = px(seq(10, 35, 5)),
   image = seq(10, 35, 5)
-) \%>\%
-  gt() \%>\%
+) |>
+  gt() |>
   text_transform(
     locations = cells_body(columns = image),
     fn = function(x) \{
@@ -82,8 +81,8 @@ and five times in the subtitle.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
   pixels = px(seq(10, 35, 5)),
   image = seq(10, 35, 5)
-) \%>\%
-  gt() \%>\%
+) |>
+  gt() |>
   tab_header(
     title = html(
       "<strong>R Logo</strong>",
@@ -96,7 +95,7 @@ and five times in the subtitle.
       web_image(
         url = r_svg_url,
         height = px(12)
-      ) \%>\%
+      ) |>
         rep(5)
     )
   )
@@ -110,6 +109,11 @@ and five times in the subtitle.
 \section{Function ID}{
 
 8-1
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{

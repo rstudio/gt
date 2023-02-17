@@ -24,7 +24,6 @@ knitr_is_rtf_output <- function() {
 
 knitr_is_word_output <- function() {
 
-  "word_document" %in% rmarkdown::all_output_formats(knitr::current_input()) |
   "docx" %in% knitr::opts_knit$get("rmarkdown.pandoc.to")
 }
 
@@ -38,6 +37,8 @@ knitr_is_word_output <- function() {
 #' @keywords internal
 #' @noRd
 knit_print.gt_tbl <- function(x, ...) {
+
+  # TODO: Add print method for interactive HTML table
 
   if (knitr_is_rtf_output()) {
 
@@ -78,6 +79,7 @@ knit_print.gt_tbl <- function(x, ...) {
 as.tags.gt_tbl <- function(x, ...) {
 
   table_id <- dt_options_get_value(x, option = "table_id")
+  ihtml <- dt_options_get_value(x, option = "ihtml_active")
 
   if (is.na(table_id)) {
     id <- random_id()
@@ -85,13 +87,23 @@ as.tags.gt_tbl <- function(x, ...) {
     id <- table_id
   }
 
-  # Generate the HTML table
-  html_table <- render_as_html(data = x)
-
   # Compile the SCSS as CSS
   css <- compile_scss(data = x, id = id)
 
+  if (ihtml) {
+
+    # Generate an interactive HTML table
+    html_table <- render_as_ihtml(data = x, id = id)
+
+  } else {
+
+    # Generate a static HTML table
+    html_table <- htmltools::HTML(render_as_html(data = x))
+  }
+
   # Get options related to the enclosing <div>
+  container_padding_x <- dt_options_get_value(x, option = "container_padding_x")
+  container_padding_y <- dt_options_get_value(x, option = "container_padding_y")
   container_overflow_x <- dt_options_get_value(x, option = "container_overflow_x")
   container_overflow_y <- dt_options_get_value(x, option = "container_overflow_y")
   container_width <- dt_options_get_value(x, option = "container_width")
@@ -101,14 +113,19 @@ as.tags.gt_tbl <- function(x, ...) {
   html_tbl <-
     htmltools::tags$div(
       id = id,
+      class = if (ihtml) ".gt_table" else NULL,
       htmltools::tags$style(htmltools::HTML(css)),
       style = htmltools::css(
+        `padding-left` = container_padding_x,
+        `padding-right` = container_padding_x,
+        `padding-top` = container_padding_y,
+        `padding-bottom` = container_padding_y,
         `overflow-x` = container_overflow_x,
         `overflow-y` = container_overflow_y,
         width = container_width,
         height = container_height
       ),
-      htmltools::HTML(html_table)
+      html_table
     )
 
   html_tbl

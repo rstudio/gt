@@ -1,6 +1,7 @@
 #' Format a vector as numeric values
 #'
 #' @description
+#'
 #' With numeric values in a vector, we can perform number-based formatting so
 #' that the values are rendered to a character vector with some level of
 #' precision. The following major options are available:
@@ -73,10 +74,10 @@
 #'   for this option. The default is `FALSE`, where only negative numbers will
 #'   display a minus sign. This option is disregarded when using accounting
 #'   notation with `accounting = TRUE`.
-#' @param locale An optional locale ID that can be used for formatting the value
-#'   according the locale's rules. Examples include `"en"` for English (United
-#'   States) and `"fr"` for French (France). The use of a valid locale ID will
-#'   override any values provided in `sep_mark` and `dec_mark`. We can use the
+#' @param locale An optional locale identifier that can be used for formatting
+#'   the value according the locale's rules. Examples include `"en"` for English
+#'   (United States) and `"fr"` for French (France). The use of a locale ID will
+#'   override any locale-specific values provided. We can use the
 #'   [info_locales()] function as a useful reference for all of the locales that
 #'   are supported.
 #' @param output The output style of the resulting character vector. This can
@@ -160,7 +161,13 @@
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-1
+#' 15-1
+#'
+#' @section Function Introduced:
+#' `v0.7.0` (Aug 25, 2022)
+#'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_number()].
 #'
 #' @export
 vec_fmt_number <- function(
@@ -182,7 +189,7 @@ vec_fmt_number <- function(
 ) {
 
   # Ensure that `output` is matched correctly to one option
-  output <- match.arg(output)
+  output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
@@ -194,14 +201,15 @@ vec_fmt_number <- function(
   # Stop function if class of `x` is incompatible with the formatting
   if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
     cli::cli_abort(
-      "The `vec_fmt_number()` and `vec_fmt_integer()` functions can only be used with numeric vectors."
+      "The `vec_fmt_number()` function can only be used with numeric vectors."
     )
   }
 
   render_as_vector(
     fmt_number(
-      gt(dplyr::tibble(x = x)),
-      columns = "x", rows = everything(),
+      gt_one_col(x),
+      columns = "x",
+      rows = everything(),
       decimals = decimals,
       n_sigfig = n_sigfig,
       drop_trailing_zeros = drop_trailing_zeros,
@@ -223,6 +231,7 @@ vec_fmt_number <- function(
 #' Format a vector as integer values
 #'
 #' @description
+#'
 #' With numeric values in a vector, we can perform number-based formatting so
 #' that the input values are always rendered as integer values within a
 #' character vector. The following major options are available:
@@ -311,7 +320,13 @@ vec_fmt_number <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-2
+#' 15-2
+#'
+#' @section Function Introduced:
+#' `v0.7.0` (Aug 25, 2022)
+#'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_integer()].
 #'
 #' @export
 vec_fmt_integer <- function(
@@ -326,6 +341,13 @@ vec_fmt_integer <- function(
     locale = NULL,
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
+
+  # Stop function if class of `x` is incompatible with the formatting
+  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
+    cli::cli_abort(
+      "The `vec_fmt_integer()` function can only be used with numeric vectors."
+    )
+  }
 
   vec_fmt_number(
     x,
@@ -349,9 +371,19 @@ vec_fmt_integer <- function(
 #' Format a vector as values in scientific notation
 #'
 #' @description
-#' With numeric values in a vector, we can perform formatting so that the input
-#' values are rendered into scientific notation within the output character
-#' vector. The following major options are available:
+#'
+#' With numeric values in a vector, we can perform formatting so that the
+#' targeted values are rendered in scientific notation, where extremely large or
+#' very small numbers can be expressed in a more practical fashion. Here,
+#' numbers are written in the form of a mantissa (`m`) and an exponent (`n`)
+#' with the construction *m* x 10^*n* or *m*E*n*. The mantissa component is a
+#' number between `1` and `10`. For instance, `2.5 x 10^9` can be used to
+#' represent the value 2,500,000,000 in scientific notation. In a similar way,
+#' 0.00000012 can be expressed as `1.2 x 10^-7`. Due to its ability to describe
+#' numbers more succinctly and its ease of calculation, scientific notation is
+#' widely employed in scientific and technical domains.
+#'
+#' We have fine control over the formatting task, with the following options:
 #'
 #' - decimals: choice of the number of decimal places, option to drop
 #' trailing zeros, and a choice of the decimal symbol
@@ -364,10 +396,17 @@ vec_fmt_integer <- function(
 #' @inheritParams vec_fmt_number
 #' @param scale_by A value to scale the input. The default is `1.0`. All numeric
 #'   values will be multiplied by this value first before undergoing formatting.
-#' @param force_sign Should the positive sign be shown for positive values
-#'   (effectively showing a sign for all values except zero)? If so, use `TRUE`
-#'   for this option. The default is `FALSE`, where only negative numbers will
-#'   display a minus sign.
+#' @param exp_style Style of formatting to use for the scientific notation
+#'   formatting. By default this is `"x10n"` but other options include using
+#'   a single letter (e.g., `"e"`, `"E"`, etc.), a letter followed by a `"1"` to
+#'   signal a minimum digit width of one, or `"low-ten"` for using a stylized
+#'   `"10"` marker.
+#' @param force_sign_m,force_sign_n Should the plus sign be shown for positive
+#'   values of the mantissa (first component) or the exponent? This would
+#'   effectively show a sign for all values except zero on either of those
+#'   numeric components of the notation. If so, use `TRUE` for either one of
+#'   these options. The default for both is `FALSE`, where only negative numbers
+#'   will display a sign.
 #'
 #' @return A character vector.
 #'
@@ -432,7 +471,13 @@ vec_fmt_integer <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-3
+#' 15-3
+#'
+#' @section Function Introduced:
+#' `v0.7.0` (Aug 25, 2022)
+#'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_scientific()].
 #'
 #' @export
 vec_fmt_scientific <- function(
@@ -440,16 +485,18 @@ vec_fmt_scientific <- function(
     decimals = 2,
     drop_trailing_zeros = FALSE,
     scale_by = 1.0,
+    exp_style = "x10n",
     pattern = "{x}",
     sep_mark = ",",
     dec_mark = ".",
-    force_sign = FALSE,
+    force_sign_m = FALSE,
+    force_sign_n = FALSE,
     locale = NULL,
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
   # Ensure that `output` is matched correctly to one option
-  output <- match.arg(output)
+  output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
@@ -467,15 +514,18 @@ vec_fmt_scientific <- function(
 
   render_as_vector(
     fmt_scientific(
-      gt(dplyr::tibble(x = x)),
-      columns = "x", rows = everything(),
+      gt_one_col(x),
+      columns = "x",
+      rows = everything(),
       decimals = decimals,
       drop_trailing_zeros = drop_trailing_zeros,
       scale_by = scale_by,
+      exp_style = exp_style,
       pattern = pattern,
       sep_mark = sep_mark,
       dec_mark = dec_mark,
-      force_sign = force_sign,
+      force_sign_m = force_sign_m,
+      force_sign_n = force_sign_n,
       locale = locale
     ),
     output = output
@@ -485,13 +535,20 @@ vec_fmt_scientific <- function(
 #' Format a vector as values in engineering notation
 #'
 #' @description
-#' With numeric values in a vector, we can perform formatting so that the input
-#' values are rendered into engineering notation within the output character
-#' vector. The following major options are available:
+#'
+#' With numeric values in a vector, we can perform formatting so that the
+#' targeted values are rendered in engineering notation, where numbers are
+#' written in the form of a mantissa (`m`) and an exponent (`n`). When combined
+#' the construction is either of the form *m* x 10^*n* or *m*E*n*. The mantissa
+#' is a number between `1` and `1000` and the exponent is a multiple of `3`. For
+#' example, the number 0.0000345 can be written in engineering notation as
+#' `34.50 x 10^-6`. This notation helps to simplify calculations and make it
+#' easier to compare numbers that are on very different scales.
+#'
+#' We have fine control over the formatting task, with the following options:
 #'
 #' - decimals: choice of the number of decimal places, option to drop
 #' trailing zeros, and a choice of the decimal symbol
-#' - digit grouping separators: choice of separator symbol
 #' - scaling: we can choose to scale targeted values by a multiplier value
 #' - pattern: option to use a text pattern for decoration of the formatted
 #' values
@@ -501,10 +558,17 @@ vec_fmt_scientific <- function(
 #' @inheritParams vec_fmt_number
 #' @param scale_by A value to scale the input. The default is `1.0`. All numeric
 #'   values will be multiplied by this value first before undergoing formatting.
-#' @param force_sign Should the positive sign be shown for positive values
-#'   (effectively showing a sign for all values except zero)? If so, use `TRUE`
-#'   for this option. The default is `FALSE`, where only negative numbers will
-#'   display a minus sign.
+#' @param exp_style Style of formatting to use for the engineering notation
+#'   formatting. By default this is `"x10n"` but other options include using
+#'   a single letter (e.g., `"e"`, `"E"`, etc.), a letter followed by a `"1"` to
+#'   signal a minimum digit width of one, or `"low-ten"` for using a stylized
+#'   `"10"` marker.
+#' @param force_sign_m,force_sign_n Should the plus sign be shown for positive
+#'   values of the mantissa (first component) or the exponent? This would
+#'   effectively show a sign for all values except zero on either of those
+#'   numeric components of the notation. If so, use `TRUE` for either one of
+#'   these options. The default for both is `FALSE`, where only negative numbers
+#'   will display a sign.
 #'
 #' @return A character vector.
 #'
@@ -569,7 +633,13 @@ vec_fmt_scientific <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-4
+#' 15-4
+#'
+#' @section Function Introduced:
+#' `v0.7.0` (Aug 25, 2022)
+#'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_engineering()].
 #'
 #' @export
 vec_fmt_engineering <- function(
@@ -577,16 +647,18 @@ vec_fmt_engineering <- function(
     decimals = 2,
     drop_trailing_zeros = FALSE,
     scale_by = 1.0,
+    exp_style = "x10n",
     pattern = "{x}",
     sep_mark = ",",
     dec_mark = ".",
-    force_sign = FALSE,
+    force_sign_m = FALSE,
+    force_sign_n = FALSE,
     locale = NULL,
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
   # Ensure that `output` is matched correctly to one option
-  output <- match.arg(output)
+  output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
@@ -604,15 +676,18 @@ vec_fmt_engineering <- function(
 
   render_as_vector(
     fmt_engineering(
-      gt(dplyr::tibble(x = x)),
-      columns = "x", rows = everything(),
+      gt_one_col(x),
+      columns = "x",
+      rows = everything(),
       decimals = decimals,
       drop_trailing_zeros = drop_trailing_zeros,
       scale_by = scale_by,
+      exp_style = exp_style,
       pattern = pattern,
       sep_mark = sep_mark,
       dec_mark = dec_mark,
-      force_sign = force_sign,
+      force_sign_m = force_sign_m,
+      force_sign_n = force_sign_n,
       locale = locale
     ),
     output = output
@@ -622,6 +697,7 @@ vec_fmt_engineering <- function(
 #' Format a vector as percentage values
 #'
 #' @description
+#'
 #' With numeric values in vector, we can perform percentage-based formatting. It
 #' is assumed that numeric values in the input vector are proportional values
 #' and, in this case, the values will be automatically multiplied by `100`
@@ -727,7 +803,13 @@ vec_fmt_engineering <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-5
+#' 15-5
+#'
+#' @section Function Introduced:
+#' `v0.7.0` (Aug 25, 2022)
+#'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_percent()].
 #'
 #' @export
 vec_fmt_percent <- function(
@@ -749,7 +831,7 @@ vec_fmt_percent <- function(
 ) {
 
   # Ensure that `output` is matched correctly to one option
-  output <- match.arg(output)
+  output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
@@ -767,8 +849,9 @@ vec_fmt_percent <- function(
 
   render_as_vector(
     fmt_percent(
-      gt(dplyr::tibble(x = x)),
-      columns = "x", rows = everything(),
+      gt_one_col(x),
+      columns = "x",
+      rows = everything(),
       decimals = decimals,
       drop_trailing_zeros = drop_trailing_zeros,
       drop_trailing_dec_mark = drop_trailing_dec_mark,
@@ -790,6 +873,7 @@ vec_fmt_percent <- function(
 #' Format a vector as parts-per quantities
 #'
 #' @description
+#'
 #' With numeric values in a vector, we can format the values so that they
 #' are rendered as *per mille*, *ppm*, *ppb*, etc., quantities. The following
 #' list of keywords (with associated naming and scaling factors) is available to
@@ -909,7 +993,13 @@ vec_fmt_percent <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-6
+#' 15-6
+#'
+#' @section Function Introduced:
+#' `v0.7.0` (Aug 25, 2022)
+#'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_partsper()].
 #'
 #' @export
 vec_fmt_partsper <- function(
@@ -931,7 +1021,7 @@ vec_fmt_partsper <- function(
 ) {
 
   # Ensure that `output` is matched correctly to one option
-  output <- match.arg(output)
+  output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
@@ -941,7 +1031,7 @@ vec_fmt_partsper <- function(
   stop_if_not_vector(x)
 
   # Ensure that `to_units` is matched correctly to one option
-  to_units <- match.arg(to_units)
+  to_units <- rlang::arg_match(to_units)
 
   # Stop function if class of `x` is incompatible with the formatting
   if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
@@ -952,8 +1042,9 @@ vec_fmt_partsper <- function(
 
   render_as_vector(
     fmt_partsper(
-      gt(dplyr::tibble(x = x)),
-      columns = "x", rows = everything(),
+      gt_one_col(x),
+      columns = "x",
+      rows = everything(),
       to_units = to_units,
       symbol = symbol,
       decimals = decimals,
@@ -975,6 +1066,7 @@ vec_fmt_partsper <- function(
 #' Format a vector as mixed fractions
 #'
 #' @description
+#'
 #' With numeric values in vector, we can perform mixed-fraction-based
 #' formatting. There are several options for setting the accuracy of the
 #' fractions. Furthermore, there is an option for choosing a layout (i.e.,
@@ -1056,7 +1148,13 @@ vec_fmt_partsper <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-7
+#' 15-7
+#'
+#' @section Function Introduced:
+#' `v0.7.0` (Aug 25, 2022)
+#'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_fraction()].
 #'
 #' @export
 vec_fmt_fraction <- function(
@@ -1072,7 +1170,7 @@ vec_fmt_fraction <- function(
 ) {
 
   # Ensure that `output` is matched correctly to one option
-  output <- match.arg(output)
+  output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
@@ -1082,7 +1180,7 @@ vec_fmt_fraction <- function(
   stop_if_not_vector(x)
 
   # Ensure that `layout` is matched correctly to one option
-  layout <- match.arg(layout)
+  layout <- rlang::arg_match(layout)
 
   # Stop function if class of `x` is incompatible with the formatting
   if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
@@ -1093,8 +1191,9 @@ vec_fmt_fraction <- function(
 
   render_as_vector(
     fmt_fraction(
-      gt(dplyr::tibble(x = x)),
-      columns = "x", rows = everything(),
+      gt_one_col(x),
+      columns = "x",
+      rows = everything(),
       accuracy = accuracy,
       simplify = simplify,
       layout = layout,
@@ -1110,6 +1209,7 @@ vec_fmt_fraction <- function(
 #' Format a vector as currency values
 #'
 #' @description
+#'
 #' With numeric values in a vector, we can perform currency-based formatting.
 #' This function supports both automatic formatting with a three-letter or
 #' numeric currency code. We can also specify a custom currency that is
@@ -1232,7 +1332,13 @@ vec_fmt_fraction <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-8
+#' 15-8
+#'
+#' @section Function Introduced:
+#' `v0.7.0` (Aug 25, 2022)
+#'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_currency()].
 #'
 #' @export
 vec_fmt_currency <- function(
@@ -1256,7 +1362,7 @@ vec_fmt_currency <- function(
 ) {
 
   # Ensure that `output` is matched correctly to one option
-  output <- match.arg(output)
+  output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
@@ -1274,8 +1380,9 @@ vec_fmt_currency <- function(
 
   render_as_vector(
     fmt_currency(
-      gt(dplyr::tibble(x = x)),
-      columns = "x", rows = everything(),
+      gt_one_col(x),
+      columns = "x",
+      rows = everything(),
       currency = currency,
       use_subunits = use_subunits,
       decimals = decimals,
@@ -1299,6 +1406,7 @@ vec_fmt_currency <- function(
 #' Format a vector as Roman numerals
 #'
 #' @description
+#'
 #' With numeric values in a vector, we can transform those to Roman numerals,
 #' rounding values as necessary.
 #'
@@ -1355,7 +1463,13 @@ vec_fmt_currency <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-9
+#' 15-9
+#'
+#' @section Function Introduced:
+#' `v0.8.0` (November 16, 2022)
+#'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_roman()].
 #'
 #' @import rlang
 #' @export
@@ -1367,7 +1481,7 @@ vec_fmt_roman <- function(
 ) {
 
   # Ensure that `output` is matched correctly to one option
-  output <- match.arg(output)
+  output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
@@ -1377,7 +1491,7 @@ vec_fmt_roman <- function(
   stop_if_not_vector(x)
 
   # Ensure that `case` is matched correctly to one option
-  case <- match.arg(case)
+  case <- rlang::arg_match(case)
 
   # Stop function if class of `x` is incompatible with the formatting
   if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
@@ -1388,10 +1502,249 @@ vec_fmt_roman <- function(
 
   render_as_vector(
     fmt_roman(
-      gt(dplyr::tibble(x = x)),
-      columns = "x", rows = everything(),
+      gt_one_col(x),
+      columns = "x",
+      rows = everything(),
       case = case,
       pattern = pattern
+    ),
+    output = output
+  )
+}
+
+#' Format a vector as indexed characters
+#'
+#' @description
+#'
+#' With numeric values in a vector, we can transform those to index values,
+#' usually based on letters. These characters can be derived from a specified
+#' locale and they are intended for ordering (often leaving out characters with
+#' diacritical marks).
+#'
+#' @inheritParams vec_fmt_number
+#' @param case Should resulting index characters be rendered as uppercase
+#'   (`"upper"`) or lowercase (`"lower"`) letters? By default, this is set to
+#'   `"upper"`.
+#' @param index_algo The indexing algorithm for handling the recycling of the
+#'   index character set. By default, the `"repeat"` option is used where
+#'   characters are doubled, tripled, and so on, when moving past the character
+#'   set limit. The alternative is the `"excel"` option, where Excel-based
+#'   column naming is adapted and used here (e.g., `[..., Y, Z, AA, AB, ...]`).
+#'
+#' @return A character vector.
+#'
+#' @section Examples:
+#'
+#' Let's create a numeric vector for the next few examples:
+#'
+#' ```r
+#' num_vals <- c(1, 4, 5, 8, 12, 20, 26, 34, 0, -5, 1.3, NA)
+#' ```
+#'
+#' Using `vec_fmt_index()` with the default options will create a character
+#' vector with values rendered as index numerals. Zero values will be rendered
+#' as `""` (i.e., empty strings), any `NA` values remain as `NA` values, and
+#' negative values will be automatically made positive. The rendering context
+#' will be autodetected unless specified in the `output` argument (here, it is
+#' of the `"plain"` output type).
+#'
+#' ```r
+#' vec_fmt_index(num_vals)
+#' ```
+#'
+#' ```
+#' #> [1] "A" "D" "E" "H" "L" "T" "Z" "HH" "" "E" "A" "NA"
+#' ```
+#'
+#' We can also use `vec_fmt_index()` with the `case = "lower"` option to create
+#' a character vector with values rendered as lowercase Roman numerals.
+#'
+#' ```r
+#' vec_fmt_index(num_vals, case = "lower")
+#' ```
+#'
+#' ```
+#' #> [1] "a" "d" "e" "h" "l" "t" "z" "hh" "" "e" "a" "NA"
+#' ```
+#'
+#' If we are formatting for a different locale, we could supply the locale ID
+#' and let **gt** obtain a locale-specific set of index values:
+#'
+#' ```r
+#' vec_fmt_index(1:10, locale = "so")
+#' ```
+#' ```
+#' #> [1] "B" "C" "D" "F" "G" "H" "J" "K" "L" "M"
+#' ```
+#'
+#' As a last example, one can wrap the values in a pattern with the `pattern`
+#' argument. Note here that `NA` values won't have the pattern applied.
+#'
+#' ```r
+#' vec_fmt_index(num_vals, case = "lower", pattern = "{x}.")
+#' ```
+#' ```
+#' #> [1] "a." "d." "e." "h." "l." "t." "z." "hh." "." "e." "a." "NA"
+#' ```
+#'
+#' @family vector formatting functions
+#' @section Function ID:
+#' 15-10
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_index()].
+#'
+#' @import rlang
+#' @export
+vec_fmt_index <- function(
+    x,
+    case = c("upper", "lower"),
+    index_algo = c("repeat", "excel"),
+    pattern = "{x}",
+    locale = NULL,
+    output = c("auto", "plain", "html", "latex", "rtf", "word")
+) {
+
+  # Ensure that `output` is matched correctly to one option
+  output <- rlang::arg_match(output)
+
+  if (output == "auto") {
+    output <- determine_output_format()
+  }
+
+  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
+  stop_if_not_vector(x)
+
+  # Ensure that `case` and `index_algo` are matched correctly to one option
+  case <- rlang::arg_match(case)
+  index_algo <- rlang::arg_match(index_algo)
+
+  # Stop function if class of `x` is incompatible with the formatting
+  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
+    cli::cli_abort(
+      "The `vec_fmt_index()` function can only be used with numeric vectors."
+    )
+  }
+
+  render_as_vector(
+    fmt_index(
+      gt_one_col(x),
+      columns = "x",
+      rows = everything(),
+      case = case,
+      index_algo = index_algo,
+      pattern = pattern,
+      locale = locale
+    ),
+    output = output
+  )
+}
+
+#' Format a vector as spelled out numbers
+#'
+#' @description
+#'
+#' With numeric values in a vector, we can transform those to numbers that are
+#' spelled out. Any values from `0` to `100` can be spelled out according to the
+#' specified locale. For example, the value `23` will be rendered as
+#' `"twenty-three"` if the locale is an English-language one (or, not provided
+#' at all); should a Swedish locale be provided (e.g., `"sv"`), the output will
+#' instead be `"tjugotre"`.
+#'
+#' @inheritParams vec_fmt_number
+#'
+#' @return A character vector.
+#'
+#' @section Examples:
+#'
+#' Let's create a numeric vector for the next few examples:
+#'
+#' ```r
+#' num_vals <- c(1, 8, 23, 76, 0, -5, 200, NA)
+#' ```
+#'
+#' Using `vec_fmt_spelled_num()` will create a character vector with values
+#' rendered as spelled-out numbers. Any `NA` values remain as `NA` values. The
+#' rendering context will be autodetected unless specified in the `output`
+#' argument (here, it is of the `"plain"` output type).
+#'
+#' ```r
+#' vec_fmt_spelled_num(num_vals)
+#' ```
+#'
+#' ```
+#' #> [1] "one"     "eight"     "twenty-three"  "seventy-six"  "zero"
+#' #> [6] "-5"      "200"       "NA"
+#' ```
+#'
+#' If we are formatting for a different locale, we could supply the locale ID
+#' and let **gt** obtain a locale-specific set of spelled numbers:
+#'
+#' ```r
+#' vec_fmt_spelled_num(num_vals, locale = "af")
+#' ```
+#' ```
+#' #> [1] "een"     "agt"     "drie-en-twintig"     "ses-en-sewentig"
+#' #> [5] "nul"     "-5"      "200"                 "NA"
+#' ```
+#'
+#' As a last example, one can wrap the values in a pattern with the `pattern`
+#' argument. Note here that `NA` values won't have the pattern applied.
+#'
+#' ```r
+#' vec_fmt_spelled_num(num_vals, pattern = "{x}.")
+#' ```
+#' ```
+#' #> [1] "one."     "eight."     "twenty-three."  "seventy-six."  "zero."
+#' #> [6] "-5."      "200."       "NA"
+#' ```
+#'
+#' @family vector formatting functions
+#' @section Function ID:
+#' 15-11
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_spelled_num()].
+#'
+#' @import rlang
+#' @export
+vec_fmt_spelled_num <- function(
+    x,
+    pattern = "{x}",
+    locale = NULL,
+    output = c("auto", "plain", "html", "latex", "rtf", "word")
+) {
+
+  # Ensure that `output` is matched correctly to one option
+  output <- rlang::arg_match(output)
+
+  if (output == "auto") {
+    output <- determine_output_format()
+  }
+
+  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
+  stop_if_not_vector(x)
+
+  # Stop function if class of `x` is incompatible with the formatting
+  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
+    cli::cli_abort(
+      "The `vec_fmt_spelled_num()` function can only be used with numeric vectors."
+    )
+  }
+
+  render_as_vector(
+    fmt_spelled_num(
+      gt_one_col(x),
+      columns = "x",
+      rows = everything(),
+      pattern = pattern,
+      locale = locale
     ),
     output = output
   )
@@ -1400,6 +1753,7 @@ vec_fmt_roman <- function(
 #' Format a vector as values in terms of bytes
 #'
 #' @description
+#'
 #' With numeric values in a vector, we can transform each into byte values with
 #' human readable units. The `vec_fmt_bytes()` function allows for the
 #' formatting of byte sizes to either of two common representations: (1) with
@@ -1495,7 +1849,13 @@ vec_fmt_roman <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-10
+#' 15-12
+#'
+#' @section Function Introduced:
+#' `v0.7.0` (Aug 25, 2022)
+#'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_bytes()].
 #'
 #' @export
 vec_fmt_bytes <- function(
@@ -1516,7 +1876,7 @@ vec_fmt_bytes <- function(
 ) {
 
   # Ensure that `output` is matched correctly to one option
-  output <- match.arg(output)
+  output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
@@ -1526,7 +1886,7 @@ vec_fmt_bytes <- function(
   stop_if_not_vector(x)
 
   # Ensure that `standard` is matched correctly to one option
-  standard <- match.arg(standard)
+  standard <- rlang::arg_match(standard)
 
   # Stop function if class of `x` is incompatible with the formatting
   if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
@@ -1537,8 +1897,9 @@ vec_fmt_bytes <- function(
 
   render_as_vector(
     fmt_bytes(
-      gt(dplyr::tibble(x = x)),
-      columns = "x", rows = everything(),
+      gt_one_col(x),
+      columns = "x",
+      rows = everything(),
       standard = standard,
       decimals = decimals,
       n_sigfig = n_sigfig,
@@ -1559,10 +1920,18 @@ vec_fmt_bytes <- function(
 #' Format a vector as date values
 #'
 #' @description
+#'
 #' Format vector values to date values using one of 41 preset date styles. Input
 #' can be in the form of `POSIXt` (i.e., datetimes), the `Date` type, or
 #' `character` (must be in the ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or
 #' `YYYY-MM-DD`).
+#'
+#' @inheritParams vec_fmt_number
+#' @param date_style The date style to use. By default this is `"iso"` which
+#'   corresponds to ISO 8601 date formatting. The other date styles can be
+#'   viewed using [info_date_style()].
+#'
+#' @return A character vector.
 #'
 #' @section Formatting with the `date_style` argument:
 #'
@@ -1620,15 +1989,8 @@ vec_fmt_bytes <- function(
 #' | 40 | `"d"`                 | `"29"`                  | flexible      |
 #' | 41 | `"Ed"`                | `"29 Tue"`              | flexible      |
 #'
-#' We can use the [info_date_style()] within the console to view a similar table
-#' of date styles with example output.
-#'
-#' @inheritParams vec_fmt_number
-#' @param date_style The date style to use. By default this is `"iso"` which
-#'   corresponds to ISO 8601 date formatting. The other date styles can be
-#'   viewed using [info_date_style()].
-#'
-#' @return A character vector.
+#' We can use the [info_date_style()] function within the console to view a
+#' similar table of date styles with example output.
 #'
 #' @section Examples:
 #'
@@ -1689,7 +2051,13 @@ vec_fmt_bytes <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-11
+#' 15-13
+#'
+#' @section Function Introduced:
+#' `v0.7.0` (Aug 25, 2022)
+#'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_date()].
 #'
 #' @export
 vec_fmt_date <- function(
@@ -1701,7 +2069,7 @@ vec_fmt_date <- function(
 ) {
 
   # Ensure that `output` is matched correctly to one option
-  output <- match.arg(output)
+  output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
@@ -1713,14 +2081,15 @@ vec_fmt_date <- function(
   # Stop function if class of `x` is incompatible with the formatting
   if (!vector_class_is_valid(x, valid_classes = c("Date", "POSIXt", "character"))) {
     cli::cli_abort(
-      "The `vec_fmt_date()` function can only be used with numeric vectors."
+      "The `vec_fmt_date()` function can only be used with Date, POSIXt, or character vectors."
     )
   }
 
   render_as_vector(
     fmt_date(
-      gt(dplyr::tibble(x = x)),
-      columns = "x", rows = everything(),
+      gt_one_col(x),
+      columns = "x",
+      rows = everything(),
       date_style = date_style,
       pattern = pattern,
       locale = locale
@@ -1732,10 +2101,18 @@ vec_fmt_date <- function(
 #' Format a vector as time values
 #'
 #' @description
+#'
 #' Format vector values to time values using one of 25 preset time styles. Input
 #' can be in the form of `POSIXt` (i.e., datetimes), `character` (must be in the
 #' ISO 8601 forms of `HH:MM:SS` or `YYYY-MM-DD HH:MM:SS`), or `Date` (which
 #' always results in the formatting of `00:00:00`).
+#'
+#' @inheritParams vec_fmt_number
+#' @param time_style The time style to use. By default this is `"iso"` which
+#'   corresponds to how times are formatted within ISO 8601 datetime values. The
+#'   other time styles can be viewed using [info_time_style()].
+#'
+#' @return A character vector.
 #'
 #' @section Formatting with the `time_style` argument:
 #'
@@ -1778,15 +2155,8 @@ vec_fmt_date <- function(
 #' | 24 | `"hmv"`       | `"2:35 PM GMT+00:00"`           | flexible, 12h |
 #' | 25 | `"ms"`        | `"35:00"`                       | flexible      |
 #'
-#' We can use the [info_time_style()] within the console to view a similar table
-#' of time styles with example output.
-#'
-#' @inheritParams vec_fmt_number
-#' @param time_style The time style to use. By default this is `"iso"` which
-#'   corresponds to how times are formatted within ISO 8601 datetime values. The
-#'   other time styles can be viewed using [info_time_style()].
-#'
-#' @return A character vector.
+#' We can use the [info_time_style()] function within the console to view a
+#' similar table of time styles with example output.
 #'
 #' @section Examples:
 #'
@@ -1842,7 +2212,7 @@ vec_fmt_date <- function(
 #'   str_vals,
 #'   time_style = "hm",
 #'   pattern = "temps: {x}",
-#'   locale = "fr_CA"
+#'   locale = "fr-CA"
 #' )
 #' ```
 #' ```
@@ -1851,7 +2221,13 @@ vec_fmt_date <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-12
+#' 15-14
+#'
+#' @section Function Introduced:
+#' `v0.7.0` (Aug 25, 2022)
+#'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_time()].
 #'
 #' @export
 vec_fmt_time <- function(
@@ -1863,7 +2239,7 @@ vec_fmt_time <- function(
 ) {
 
   # Ensure that `output` is matched correctly to one option
-  output <- match.arg(output)
+  output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
@@ -1875,14 +2251,15 @@ vec_fmt_time <- function(
   # Stop function if class of `x` is incompatible with the formatting
   if (!vector_class_is_valid(x, valid_classes = c("Date", "POSIXt", "character"))) {
     cli::cli_abort(
-      "The `vec_fmt_time()` function can only be used with numeric vectors."
+      "The `vec_fmt_time()` function can only be used with Date, POSIXt, or character vectors."
     )
   }
 
   render_as_vector(
     fmt_time(
-      gt(dplyr::tibble(x = x)),
-      columns = "x", rows = everything(),
+      gt_one_col(x),
+      columns = "x",
+      rows = everything(),
       time_style = time_style,
       pattern = pattern,
       locale = locale
@@ -1894,11 +2271,30 @@ vec_fmt_time <- function(
 #' Format a vector as datetime values
 #'
 #' @description
+#'
 #' Format values in a vector to datetime values using either presets for the
 #' date and time components or a formatting directive (this can either use a
 #' *CLDR* datetime pattern or `strptime` formatting). Input can be in the form
-#' of `POSIXt` (i.e., datetimes), the `Date` type, or `character` (must be in
+#' of `POSIXct` (i.e., datetimes), the `Date` type, or `character` (must be in
 #' the ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or `YYYY-MM-DD`).
+#'
+#' @inheritParams vec_fmt_number
+#' @inheritParams vec_fmt_date
+#' @inheritParams vec_fmt_time
+#' @param sep The separator string to use between the date and time components.
+#'   By default, this is a single space character (`" "`). Only used when not
+#'   specifying a `format` code.
+#' @param format An optional format code used for generating custom dates/times.
+#'   If used then the arguments governing preset styles (`date_style` and
+#'   `time_style`) will be ignored in favor of formatting via the `format`
+#'   string.
+#' @param tz The time zone for printing dates/times (i.e., the output). The
+#'   default of `NULL` will preserve the time zone of the input data in the
+#'   output. If providing a time zone, it must be one that is recognized by the
+#'   user's operating system (a vector of all valid `tz` values can be produced
+#'   with [OlsonNames()]).
+#'
+#' @return A character vector.
 #'
 #' @section Formatting with the `date_style` argument:
 #'
@@ -1956,8 +2352,8 @@ vec_fmt_time <- function(
 #' | 40 | `"d"`                 | `"29"`                  | flexible      |
 #' | 41 | `"Ed"`                | `"29 Tue"`              | flexible      |
 #'
-#' We can use the [info_date_style()] within the console to view a similar table
-#' of date styles with example output.
+#' We can use the [info_date_style()] function within the console to view a
+#' similar table of date styles with example output.
 #'
 #' @section Formatting with the `time_style` argument:
 #'
@@ -2003,8 +2399,8 @@ vec_fmt_time <- function(
 #' | 24 | `"hmv"`       | `"2:35 PM GMT+00:00"`           | flexible, 12h |
 #' | 25 | `"ms"`        | `"35:00"`                       | flexible      |
 #'
-#' We can use the [info_time_style()] within the console to view a similar table
-#' of time styles with example output.
+#' We can use the [info_time_style()] function within the console to view a
+#' similar table of time styles with example output.
 #'
 #' @section Formatting with a *CLDR* datetime pattern:
 #'
@@ -2531,24 +2927,6 @@ vec_fmt_time <- function(
 #' - `"%F"` -> `"2015-06-08"` (the date in the ISO 8601 date format)
 #' - `"%%"` -> `"%"` (the literal "`%`" character, in case you need it)
 #'
-#' @inheritParams vec_fmt_number
-#' @inheritParams vec_fmt_date
-#' @inheritParams vec_fmt_time
-#' @param sep The separator string to use between the date and time components.
-#'   By default, this is a single space character (`" "`). Only used when not
-#'   specifying a `format` code.
-#' @param format An optional format code used for generating custom dates/times.
-#'   If used then the arguments governing preset styles (`date_style` and
-#'   `time_style`) will be ignored in favor of formatting via the `format`
-#'   string.
-#' @param tz The time zone for printing dates/times (i.e., the output). The
-#'   default of `NULL` will preserve the time zone of the input data in the
-#'   output. If providing a time zone, it must be one that is recognized by the
-#'   user's operating system (a vector of all valid `tz` values can be produced
-#'   with [OlsonNames()]).
-#'
-#' @return A character vector.
-#'
 #' @section Examples:
 #'
 #' Let's create a character vector of datetime values in the ISO-8601 format
@@ -2669,7 +3047,13 @@ vec_fmt_time <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-13
+#' 15-15
+#'
+#' @section Function Introduced:
+#' `v0.7.0` (Aug 25, 2022)
+#'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_datetime()].
 #'
 #' @export
 vec_fmt_datetime <- function(
@@ -2685,7 +3069,7 @@ vec_fmt_datetime <- function(
 ) {
 
   # Ensure that `output` is matched correctly to one option
-  output <- match.arg(output)
+  output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
@@ -2697,14 +3081,15 @@ vec_fmt_datetime <- function(
   # Stop function if class of `x` is incompatible with the formatting
   if (!vector_class_is_valid(x, valid_classes = c("Date", "POSIXct", "character"))) {
     cli::cli_abort(
-      "The `vec_fmt_datetime()` function can only be used with numeric vectors."
+      "The `vec_fmt_datetime()` function can only be used with Date, POSIXct, or character vectors."
     )
   }
 
   render_as_vector(
     fmt_datetime(
-      gt(dplyr::tibble(x = x)),
-      columns = "x", rows = everything(),
+      gt_one_col(x),
+      columns = "x",
+      rows = everything(),
       date_style = date_style,
       time_style = time_style,
       sep = sep,
@@ -2720,6 +3105,7 @@ vec_fmt_datetime <- function(
 #' Format a vector of numeric or duration values as styled time duration strings
 #'
 #' @description
+#'
 #' Format input values to time duration values whether those input values are
 #' numbers or of the `difftime` class. We can specify which time units any
 #' numeric input values have (as weeks, days, hours, minutes, or seconds) and
@@ -2889,7 +3275,13 @@ vec_fmt_datetime <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-14
+#' 15-16
+#'
+#' @section Function Introduced:
+#' `v0.7.0` (Aug 25, 2022)
+#'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_duration()].
 #'
 #' @export
 vec_fmt_duration <- function(
@@ -2908,7 +3300,7 @@ vec_fmt_duration <- function(
 ) {
 
   # Ensure that `output` is matched correctly to one option
-  output <- match.arg(output)
+  output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
@@ -2918,19 +3310,20 @@ vec_fmt_duration <- function(
   stop_if_not_vector(x)
 
   # Ensure that `duration_style` is matched correctly to one option
-  duration_style <- match.arg(duration_style)
+  duration_style <- rlang::arg_match(duration_style)
 
   # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("numeric", "difftime"))) {
+  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer", "difftime"))) {
     cli::cli_abort(
-      "The `vec_fmt_bytes()` function can only be used with numeric vectors."
+      "The `vec_fmt_duration()` function can only be used with numeric, integer, or difftime vectors."
     )
   }
 
   render_as_vector(
     fmt_duration(
-      gt(dplyr::tibble(x = x)),
-      columns = "x", rows = everything(),
+      gt_one_col(x),
+      columns = "x",
+      rows = everything(),
       input_units = input_units,
       output_units = output_units,
       duration_style = duration_style,
@@ -2949,6 +3342,7 @@ vec_fmt_duration <- function(
 #' Format a vector containing Markdown text
 #'
 #' @description
+#'
 #' Any Markdown-formatted text in the input vector will be transformed to the
 #' appropriate output type.
 #'
@@ -2991,7 +3385,13 @@ vec_fmt_duration <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-15
+#' 15-17
+#'
+#' @section Function Introduced:
+#' `v0.7.0` (Aug 25, 2022)
+#'
+#' @seealso The variant function intended for formatting **gt** table data:
+#'   [fmt_markdown()].
 #'
 #' @export
 vec_fmt_markdown <- function(
@@ -3000,7 +3400,7 @@ vec_fmt_markdown <- function(
 ) {
 
   # Ensure that `output` is matched correctly to one option
-  output <- match.arg(output)
+  output <- rlang::arg_match(output)
 
   if (output == "auto") {
     output <- determine_output_format()
@@ -3012,8 +3412,9 @@ vec_fmt_markdown <- function(
   vec_fmt_out <-
     render_as_vector(
       fmt_markdown(
-        gt(dplyr::tibble(x = x)),
-        columns = "x", rows = everything()
+        gt_one_col(x),
+        columns = "x",
+        rows = everything()
       ),
       output = output
     )
@@ -3024,6 +3425,10 @@ vec_fmt_markdown <- function(
   }
 
   vec_fmt_out
+}
+
+gt_one_col <- function(x) {
+  gt(dplyr::tibble(x = x), auto_align = FALSE, process_md = FALSE)
 }
 
 stop_if_not_vector <- function(x) {

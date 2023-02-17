@@ -1,6 +1,8 @@
 # Define the contexts
 all_contexts <- c("html", "latex", "rtf", "word", "default")
 
+missing_val_token <- "::missing_val::"
+
 validate_contexts <- function(contexts) {
 
   if (!all(contexts %in% all_contexts)) {
@@ -61,37 +63,57 @@ render_formats <- function(data, context) {
   data_tbl <- dt_data_get(data = data)
   formats <- dt_formats_get(data = data)
 
-  # Render input data to output data where formatting
-  # is specified
-
+  # Render input data to output data where formatting is specified
   for (fmt in formats)  {
 
-    # Determine if the formatter has a function relevant
-    # to the context; if not, use the `default` function
-    # (which should always be present)
+    # Determine if the formatting function has a function relevant to
+    # the context; if not, use the `default` function (which should
+    # always be present)
     if (context %in% names(fmt$func)) {
       eval_func <- context
     } else {
       eval_func <- "default"
     }
 
+    # Obtain compatibility information for the formatting function
+    compat <- fmt$compat
+
+    # Get the rows to which the formatting should be constrained
+    rows <- fmt$rows
+
     for (col in fmt[["cols"]]) {
 
       # Perform rendering but only do so if the column is present
-      if (col %in% colnames(data_tbl)) {
+      if (
+        col %in% colnames(data_tbl) &&
+        is_compatible_formatter(
+          table = data_tbl,
+          column = col,
+          rows = rows,
+          compat = compat
+        )
+      ) {
 
-        result <- fmt$func[[eval_func]](data_tbl[[col]][fmt$rows])
+        result <- fmt$func[[eval_func]](data_tbl[[col]][rows])
 
-        # If any of the resulting output is `NA`, that
-        # means we want to NOT make changes to those
-        # particular cells' output (i.e. inherit the
-        # results of the previous formatter).
-        body[[col]][fmt$rows][!is.na(result)] <- stats::na.omit(result)
+        # If any of the resulting output is `NA`, that means we want
+        # to NOT make changes to those particular cells' output
+        # (i.e. inherit the results of the previous formatter).
+        body[[col]][rows][!is.na(result)] <- stats::na.omit(result)
       }
     }
   }
 
   dt_body_set(data = data, body = body)
+}
+
+is_compatible_formatter <- function(table, column, rows, compat) {
+
+  if (is.null(compat)) {
+    return(TRUE)
+  }
+
+  inherits(table[[column]][rows], compat)
 }
 
 #' Render any formatting directives available in the `substitutions` list
@@ -307,6 +329,43 @@ reorder_styles <- function(data) {
   dt_styles_set(data = data, styles = styles_tbl)
 }
 
+resolve_secondary_pattern <- function(x) {
+
+  while (grepl("<<.*?>>", x)) {
+
+    m <- gregexpr("<<[^<]*?>>", x, perl = TRUE)
+
+    matched <- unlist(regmatches(x, m))[1]
+
+    m_start <- as.integer(m[[1]])
+    m_length <- attr(m[[1]], "match.length")
+
+    if (grepl(missing_val_token, matched)) {
+
+      # Remove `matched` text from `x`
+      x <-
+        paste0(
+          substr(x, 0, m_start - 1L),
+          substr(x, m_start + m_length, 100000)
+        )
+
+    } else {
+
+      # Remove `<<` and `>>` from `matched` and insert back into `x`
+      matched_trimmed <- gsub("^<<|>>$", "", matched)
+
+      x <-
+        paste0(
+          substr(x, 0, m_start - 1L),
+          matched_trimmed,
+          substr(x, m_start + m_length, 100000)
+        )
+    }
+  }
+
+  x
+}
+
 #' Perform merging of column contents
 #'
 #' This merges column content together with a pattern and possibly with a `type`
@@ -333,25 +392,72 @@ perform_col_merge <- function(data, context) {
 
     if (type == "merge") {
 
+      #
+      # The `cols_merge()` formatting case
+      #
+
       mutated_column <- col_merge[[i]]$vars[1]
-      mutated_column_sym <- sym(mutated_column)
 
-      columns <- col_merge[[i]]$vars
-      pattern <- col_merge[[i]]$pattern
+      columns <- col_merge[[i]][["vars"]]
+      rows <- col_merge[[i]][["rows"]]
+      pattern <- col_merge[[i]][["pattern"]]
 
-      glue_src_data <- as.list(body[, columns])
+      glue_src_na_data <- lapply(as.list(data_tbl[rows, columns]), FUN = is.na)
+
+      glue_src_data <- as.list(body[rows, columns])
+
+      glue_src_data <-
+        lapply(
+          seq_along(glue_src_data),
+          FUN = function(x) {
+
+            # The source data (and 'source data' here means data that's already
+            # been formatted and converted to `character`) having a character
+            # `"NA"` value signals that the value should *probably* be treated
+            # as missing (we are relatively certain it wasn't modified by
+            # `sub_missing()`, a case where we consider the value *not* to be
+            # missing because it was handled later) but we also want to
+            # corroborate that with the original data values (checking for true
+            # missing data there)
+
+            missing_cond <- glue_src_data[[x]] == "NA" & glue_src_na_data[[x]]
+            missing_cond[is.na(missing_cond)] <- TRUE
+
+            glue_src_data[[x]][missing_cond] <- missing_val_token
+            glue_src_data[[x]]
+          }
+        )
+
       glue_src_data <- stats::setNames(glue_src_data, seq_len(length(glue_src_data)))
 
-      body <-
-        dplyr::mutate(
-          body,
-          !!mutated_column_sym := as.character(glue_gt(glue_src_data, pattern))
-        )
+      glued_cols <- as.character(glue_gt(glue_src_data, pattern))
+
+      if (grepl("<<.*?>>", pattern)) {
+
+        glued_cols <-
+          vapply(
+            glued_cols,
+            FUN.VALUE = character(1),
+            USE.NAMES = FALSE,
+            FUN = resolve_secondary_pattern
+          )
+
+        glued_cols <- gsub("<<|>>", "", glued_cols)
+      }
+
+      glued_cols <- gsub(missing_val_token, "NA", glued_cols, fixed = TRUE)
+
+      body[rows, mutated_column] <- glued_cols
 
     } else if (type == "merge_n_pct") {
 
-      mutated_column <- col_merge[[i]]$vars[1]
-      second_column <- col_merge[[i]]$vars[2]
+      #
+      # The `cols_merge_n_pct()` formatting case
+      #
+
+      mutated_column <- col_merge[[i]][["vars"]][1]
+      second_column <- col_merge[[i]][["vars"]][2]
+      rows <- col_merge[[i]][["rows"]]
 
       # This is a fixed pattern
       pattern <- "{1} ({2})"
@@ -368,7 +474,8 @@ perform_col_merge <- function(data, context) {
       # An `NA` value in either column should exclude that row from
       # processing via `glue_gt()`
       rows_to_format_idx <- which(!(na_1_rows | na_2_rows))
-      rows_to_format_idx <- setdiff(rows_to_format_idx, zero_rows_idx)
+      rows_to_format_idx <- base::setdiff(rows_to_format_idx, zero_rows_idx)
+      rows_to_format_idx <- base::intersect(rows_to_format_idx, rows)
 
       body[rows_to_format_idx, mutated_column] <-
         as.character(
@@ -383,14 +490,18 @@ perform_col_merge <- function(data, context) {
 
     } else if (type == "merge_uncert" && length(col_merge[[i]]$vars) == 3) {
 
-      # Case where lower and upper certainties provided as input columns
+      #
+      # The `cols_merge_uncert()` case where lower and upper certainties
+      # were provided as input columns
+      #
 
-      mutated_column <- col_merge[[i]]$vars[1]
-      lu_column <- col_merge[[i]]$vars[2]
-      uu_column <- col_merge[[i]]$vars[3]
+      mutated_column <- col_merge[[i]][["vars"]][1]
+      lu_column <- col_merge[[i]][["vars"]][2]
+      uu_column <- col_merge[[i]][["vars"]][3]
+      rows <- col_merge[[i]][["rows"]]
 
-      pattern_equal <- col_merge[[i]]$pattern
-      sep <- col_merge[[i]]$sep
+      pattern_equal <- col_merge[[i]][["pattern"]]
+      sep <- col_merge[[i]][["sep"]]
 
       # Transform the separator text depending on specific
       # inputs and the `context`
@@ -431,8 +542,8 @@ perform_col_merge <- function(data, context) {
       na_lu_and_uu <- na_lu_rows & na_uu_rows
       lu_equals_uu <- data_tbl[[lu_column]] == data_tbl[[uu_column]] & !na_lu_or_uu
 
-      rows_to_format_equal <- which(!na_1_rows & lu_equals_uu)
-      rows_to_format_unequal <- which(!na_1_rows & !na_lu_and_uu & !lu_equals_uu)
+      rows_to_format_equal <- base::intersect(which(!na_1_rows & lu_equals_uu), rows)
+      rows_to_format_unequal <- base::intersect(which(!na_1_rows & !na_lu_and_uu & !lu_equals_uu), rows)
 
       body[rows_to_format_equal, mutated_column] <-
         as.character(
@@ -462,11 +573,17 @@ perform_col_merge <- function(data, context) {
 
     } else {
 
-      mutated_column <- col_merge[[i]]$vars[1]
-      second_column <- col_merge[[i]]$vars[2]
+      #
+      # The `cols_merge_range()` and `cols_merge_uncert()` (standard
+      # uncertainties) formatting cases
+      #
 
-      pattern <- col_merge[[i]]$pattern
-      sep <- col_merge[[i]]$sep
+      mutated_column <- col_merge[[i]][["vars"]][1]
+      second_column <- col_merge[[i]][["vars"]][2]
+      rows <- col_merge[[i]][["rows"]]
+
+      pattern <- col_merge[[i]][["pattern"]]
+      sep <- col_merge[[i]][["sep"]]
 
       # Transform the separator text depending on specific
       # inputs and the `context`
@@ -477,12 +594,11 @@ perform_col_merge <- function(data, context) {
       na_1_rows <- is.na(data_tbl[[mutated_column]])
       na_2_rows <- is.na(data_tbl[[second_column]])
 
-      rows_to_format <-
-        if (type == "merge_range") {
-          which(!(na_1_rows & na_2_rows))
-        } else if (type == "merge_uncert") {
-          which(!(na_1_rows | na_2_rows))
-        }
+      if (type == "merge_range") {
+        rows_to_format <- base::intersect(which(!(na_1_rows & na_2_rows)), rows)
+      } else if (type == "merge_uncert") {
+        rows_to_format <- base::intersect(which(!(na_1_rows | na_2_rows)), rows)
+      }
 
       body[rows_to_format, mutated_column] <-
         as.character(
@@ -539,14 +655,14 @@ last_non_na <- function(vect) {
   if (length(positions) == 0) {
     return(NA_character_)
   } else {
-    return(vect[max(positions)])
+    return(as.character(vect[max(positions)]))
   }
 }
 
 # Determine whether the table should have row labels
 # set within a column in the stub
 stub_rownames_has_column <- function(data) {
-  isTRUE("rowname" %in% dt_stub_components(data = data))
+  isTRUE("row_id" %in% dt_stub_components(data = data))
 }
 
 # Determine whether the table should have row group labels
@@ -573,7 +689,8 @@ get_number_of_visible_data_columns <- function(data) {
 get_effective_number_of_columns <- function(data) {
 
   # Check if the table has been built, return an error if that's not the case
-  if (!dt_has_built(data)) {
+  if (!dt_has_built(data = data)) {
+
     cli::cli_abort(
       "The `get_effective_number_of_columns()` function can only be used on
       gt objects that have tables 'built'."
@@ -582,7 +699,7 @@ get_effective_number_of_columns <- function(data) {
 
   # Obtain the number of visible columns in the built table
   n_data_cols <- get_number_of_visible_data_columns(data = data)
-  n_data_cols + length(get_stub_layout(data))
+  n_data_cols + length(get_stub_layout(data = data))
 }
 
 get_stub_layout <- function(data) {
@@ -610,4 +727,66 @@ get_stub_layout <- function(data) {
       if (stub_rownames_is_column) "rowname"
     )
   }
+}
+
+# Get a matrix of all body cells
+get_body_component_cell_matrix <- function(data) {
+
+  body <- dt_body_get(data = data)
+  stub_layout <- get_stub_layout(data = data)
+  default_vars <- dt_boxhead_get_vars_default(data = data)
+
+  body_matrix <- unname(as.matrix(body[, default_vars]))
+
+  if (length(stub_layout) == 0) {
+    return(body_matrix)
+  }
+
+  if ("rowname" %in% stub_layout) {
+
+    body_matrix <-
+      cbind(
+        unname(as.matrix(body[, dt_boxhead_get_var_stub(data = data)])),
+        body_matrix
+      )
+  }
+
+  if ("group_label" %in% stub_layout) {
+
+    groups_rows_df <-
+      dt_groups_rows_get(data = data) %>%
+      dplyr::select(group_id, group_label, row_start)
+
+    group_label_matrix <-
+      dt_stub_df_get(data = data) %>%
+      dplyr::select(-row_id, -group_label) %>%
+      dplyr::inner_join(groups_rows_df, by = "group_id") %>%
+      dplyr::mutate(
+        row = dplyr::row_number(),
+        built = dplyr::if_else(row_start != row, "", built_group_label)
+      ) %>%
+      dplyr::select(built) %>%
+      as.matrix() %>%
+      unname()
+
+    body_matrix <- cbind(group_label_matrix, body_matrix)
+  }
+
+  body_matrix
+}
+
+summary_row_side <- function(data, group_id) {
+
+  # Check that `group_id` isn't NULL and that length is exactly 1
+  if (is.null(group_id) || length(group_id) != 1) {
+    cli::cli_abort("`group_id` cannot be `NULL` and must be of length 1.")
+  }
+
+  list_of_summaries <- dt_summary_df_get(data = data)
+
+  # Obtain the summary data table specific to the group ID and
+  # then get the "side" attribute value
+  summary_df <- list_of_summaries$summary_df_display_list[[group_id]]
+
+  unique(summary_df[["::side::"]])
 }

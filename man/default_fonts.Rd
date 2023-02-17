@@ -27,9 +27,9 @@ end of the \code{font} listing in the \code{cell_text()} call (the \code{"Comic 
 \code{"Menloa"} fonts don't exist, but, we'll get the first available font from
 the \code{default_fonts()} set).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(char, time) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(char, time) |>
+  gt() |>
   tab_style(
     style = cell_text(
       font = c(
@@ -49,6 +49,11 @@ the \code{default_fonts()} set).
 \section{Function ID}{
 
 7-28
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.2} (August 5, 2020)
 }
 
 \seealso{

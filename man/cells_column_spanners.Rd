@@ -23,6 +23,7 @@ is expressly used in each of those functions' \code{locations} argument. The
 }
 \section{Overview of Location Helper Functions}{
 
+
 Location helper functions can be used to target cells with virtually any
 function that has a \code{locations} argument. Here is a listing of all of the
 location helper functions, with locations corresponding roughly from top to
@@ -70,14 +71,14 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Add a spanner column la
 three column labels with \code{\link[=tab_spanner]{tab_spanner()}} and then use \code{\link[=tab_style]{tab_style()}} and
 \code{cells_column_spanners()} to make the spanner label text bold.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(-fctr, -currency, -group) \%>\%
-  gt(rowname_col = "row") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(-fctr, -currency, -group) |>
+  gt(rowname_col = "row") |>
   tab_spanner(
     label = "dates and times",
-    id = "dt",
-    columns = c(date, time, datetime)
-  ) \%>\%
+    columns = c(date, time, datetime),
+    id = "dt"
+  ) |>
   tab_style(
     style = cell_text(weight = "bold"),
     locations = cells_column_spanners(spanners = "dt")
@@ -92,6 +93,11 @@ three column labels with \code{\link[=tab_spanner]{tab_spanner()}} and then use 
 \section{Function ID}{
 
 7-8
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{

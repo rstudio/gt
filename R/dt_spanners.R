@@ -130,10 +130,14 @@ dt_spanners_print_matrix <- function(
   # (3) `spanner_level` values have all gaps removed, being compressed
   #     down to start at 1 (e.g., 7, 5, 3, 1 -> 4, 3, 2, 1)
   spanners_tbl <-
-    spanners_tbl %>%
-    dplyr::mutate(vars = lapply(.data$vars, base::intersect, .env$vars)) %>%
-    dplyr::filter(vapply(vars, length, integer(1)) > 0) %>%
+    dplyr::mutate(spanners_tbl, vars = lapply(.data$vars, base::intersect, .env$vars))
+
+  spanners_tbl <-
+    dplyr::filter(spanners_tbl, vapply(vars, length, integer(1)) > 0)
+
+  spanners_tbl <-
     dplyr::mutate(
+      spanners_tbl,
       spanner_level = match(spanner_level, sort(unique(spanner_level)))
     )
 

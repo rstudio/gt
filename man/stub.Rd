@@ -33,9 +33,9 @@ Create a \strong{gt} table with a two-column stub (incorporating the \code{row} 
 \code{\link[=fmt_roman]{fmt_roman()}} to obtain Roman numerals in the stub; we're selecting the stub
 column here with the \code{stub()} select helper.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl \%>\%
-  gt(rowname_col = "row", groupname_col = "group") \%>\%
-  fmt_roman(columns = stub()) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl |>
+  gt(rowname_col = "row", groupname_col = "group") |>
+  fmt_roman(columns = stub()) |>
   tab_options(row_group.as_column = TRUE)
 }\if{html}{\out{</div>}}
 
@@ -47,6 +47,11 @@ column here with the \code{stub()} select helper.
 \section{Function ID}{
 
 7-5
+}
+
+\section{Function Introduced}{
+
+\code{v0.8.0} (November 16, 2022)
 }
 
 \seealso{

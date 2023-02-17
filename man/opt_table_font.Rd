@@ -48,17 +48,17 @@ larger font size for the table and use the \code{"Merriweather"} font (from
 \emph{Google Fonts}, via \code{\link[=google_font]{google_font()}}) with two font fallbacks (\code{"Cochin"} and
 the catchall \code{"Serif"} group).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 \%>\%
-  dplyr::slice(1:10) \%>\%
-  dplyr::select(-volume, -adj_close) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
+  dplyr::slice(1:10) |>
+  dplyr::select(-volume, -adj_close) |>
+  gt() |>
   fmt_currency(
     columns = 2:5,
     rows = 1,
     currency = "USD",
     use_seps = FALSE
-  ) \%>\%
-  tab_options(table.font.size = px(18)) \%>\%
+  ) |>
+  tab_options(table.font.size = px(18)) |>
   opt_table_font(
     font = list(
       google_font(name = "Merriweather"),
@@ -75,20 +75,20 @@ Use \code{\link{sza}} to create an eleven-row table. Within \code{opt_table_font
 a preferred list of sans-serif fonts that are commonly available in macOS
 (using part of the \code{\link[=default_fonts]{default_fonts()}} vector as a fallback).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza |>
   dplyr::filter(
     latitude == 20 &
       month == "jan" &
       !is.na(sza)
-  ) \%>\%
-  dplyr::select(-latitude, -month) \%>\%
-  gt() \%>\%
+  ) |>
+  dplyr::select(-latitude, -month) |>
+  gt() |>
   opt_table_font(
     font = c(
       "Helvetica Neue", "Segoe UI",
       default_fonts()[-c(1:3)]
     )
-  ) \%>\%
+  ) |>
   opt_all_caps()
 }\if{html}{\out{</div>}}
 
@@ -99,7 +99,12 @@ a preferred list of sans-serif fonts that are commonly available in macOS
 
 \section{Function ID}{
 
-9-9
+9-11
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.2} (August 5, 2020)
 }
 
 \seealso{
@@ -109,6 +114,7 @@ Other table option functions:
 \code{\link{opt_css}()},
 \code{\link{opt_footnote_marks}()},
 \code{\link{opt_horizontal_padding}()},
+\code{\link{opt_interactive}()},
 \code{\link{opt_row_striping}()},
 \code{\link{opt_stylize}()},
 \code{\link{opt_table_lines}()},
