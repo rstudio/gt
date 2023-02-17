@@ -218,7 +218,7 @@ argument. Note here that \code{NA} values won't have the pattern applied.
 
 \section{Function ID}{
 
-14-8
+15-8
 }
 
 \section{Function Introduced}{

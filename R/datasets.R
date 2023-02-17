@@ -30,7 +30,7 @@
 #'
 #' @family datasets
 #' @section Function ID:
-#' 11-1
+#' 16-1
 #'
 "countrypops"
 
@@ -83,7 +83,7 @@
 #'
 #' @family datasets
 #' @section Function ID:
-#' 11-2
+#' 16-2
 #'
 "sza"
 
@@ -140,7 +140,7 @@
 #'
 #' @family datasets
 #' @section Function ID:
-#' 11-3
+#' 16-3
 #'
 "gtcars"
 
@@ -172,7 +172,7 @@
 #'
 #' @family datasets
 #' @section Function ID:
-#' 11-4
+#' 16-4
 #'
 "sp500"
 
@@ -305,7 +305,7 @@
 #'
 #' @family datasets
 #' @section Function ID:
-#' 11-5
+#' 16-5
 #'
 "pizzaplace"
 
@@ -350,7 +350,7 @@
 #'
 #' @family datasets
 #' @section Function ID:
-#' 11-6
+#' 16-6
 #'
 "exibble"
 
@@ -417,7 +417,7 @@
 #'
 #' @family datasets
 #' @section Function ID:
-#' 11-7
+#' 16-7
 #'
 "towny"
 
@@ -480,7 +480,7 @@
 #'
 #' @family datasets
 #' @section Function ID:
-#' 11-8
+#' 16-8
 #'
 "rx_adsl"
 
@@ -547,6 +547,6 @@
 #'
 #' @family datasets
 #' @section Function ID:
-#' 11-9
+#' 16-9
 #'
 "rx_addv"

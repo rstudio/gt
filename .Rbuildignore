@@ -46,6 +46,7 @@ tests/testthat/test-fmt_scientific.R
 tests/testthat/test-fmt_spelled_num.R
 tests/testthat/test-footer.R
 tests/testthat/test-group_column_label.R
+tests/testthat/test-gt_multi.R
 tests/testthat/test-gtsave.R
 tests/testthat/test-image.R
 tests/testthat/test-l_table_parts.R
