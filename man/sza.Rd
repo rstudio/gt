@@ -8,10 +8,10 @@
 A tibble with 816 rows and 4 variables:
 \describe{
 \item{latitude}{The latitude in decimal degrees for the observations.}
-\item{month}{The measurement month. All calculations where conducted
-for the first day of each month.}
-\item{tst}{The true solar time at the given \code{latitude} and date
-(first of \code{month}) for which the solar zenith angle is calculated.}
+\item{month}{The measurement month. All calculations where conducted for the
+first day of each month.}
+\item{tst}{The true solar time at the given \code{latitude} and date (first of
+\code{month}) for which the solar zenith angle is calculated.}
 \item{sza}{The solar zenith angle in degrees, where \code{NA}s indicate that
 sunrise hadn't yet occurred by the \code{tst} value.}
 }
@@ -59,9 +59,18 @@ Here is a glimpse at the data available in \code{sza}.
 }\if{html}{\out{</div>}}
 }
 
-\section{Function ID}{
+\section{Dataset ID}{
 
-16-2
+2
+
+\if{html}{\out{
+<div align="center"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_sza.png" alt="This image of that of a dataset badge." style="width:50\%;"></div>
+}}
+}
+
+\section{Dataset Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{

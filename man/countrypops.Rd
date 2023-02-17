@@ -44,9 +44,18 @@ Here is a glimpse at the data available in \code{countrypops}.
 }\if{html}{\out{</div>}}
 }
 
-\section{Function ID}{
+\section{Dataset ID}{
 
-16-1
+1
+
+\if{html}{\out{
+<div align="center"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_countrypops.png" alt="This image of that of a dataset badge." style="width:50\%;"></div>
+}}
+}
+
+\section{Dataset Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
