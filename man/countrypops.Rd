@@ -44,9 +44,14 @@ Here is a glimpse at the data available in \code{countrypops}.
 }\if{html}{\out{</div>}}
 }
 
-\section{Function ID}{
+\section{Dataset ID}{
 
-16-1
+1
+}
+
+\section{Dataset Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{

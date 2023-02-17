@@ -94,9 +94,14 @@ Here is a glimpse at the data available in \code{towny}.
 }\if{html}{\out{</div>}}
 }
 
-\section{Function ID}{
+\section{Dataset ID}{
 
-16-7
+7
+}
+
+\section{Dataset Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
