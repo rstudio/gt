@@ -17,6 +17,13 @@
 #'
 #' @return An object of class `gt_multi`.
 #'
+#' @family multiple-table functions
+#' @section Function ID:
+#' 14-1
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
 #' @import rlang
 #' @export
 gt_multi <- function(
@@ -72,6 +79,13 @@ gt_multi <- function(
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @family multiple-table functions
+#' @section Function ID:
+#' 14-2
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
 #' @export
 pull_gt_tbls <- function(
     data,
@@ -86,6 +100,7 @@ pull_gt_tbls <- function(
   use_parent_opts <- get_use_parent_opts_param(data = data)
 
   if (use_parent_opts) {
+
     # Extract options from `data` (which is a `gt_multi` object)
     gt_tbl[["_options"]] <- data[["gt_tbl_options"]]
   }
@@ -117,6 +132,13 @@ pull_gt_tbls <- function(
 #'   argument the incoming `gt_tbl` objects will be appended.
 #'
 #' @return An object of class `gt_multi`.
+#'
+#' @family multiple-table functions
+#' @section Function ID:
+#' 14-3
+#'
+#' @section Function Introduced:
+#' *In Development*
 #'
 #' @import rlang
 #' @export
@@ -247,6 +269,13 @@ add_gt_tbls <- function(
 #'
 #' @return An object of class `gt_multi`.
 #'
+#' @family multiple-table functions
+#' @section Function ID:
+#' 14-4
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
 #' @export
 replace_gt_tbls <- function(
     .data,
@@ -311,6 +340,13 @@ replace_gt_tbls <- function(
 #'
 #' @return An object of class `gt_multi`.
 #'
+#' @family multiple-table functions
+#' @section Function ID:
+#' 14-5
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
 #' @export
 rm_gt_tbls <- function(
     data,
@@ -332,6 +368,17 @@ rm_gt_tbls <- function(
 #' element that can adjusted.
 #'
 #' @inheritParams tab_options
+#' @param data A `gt_multi` container object, typically generated through use of
+#'   the [gt_multi()] function along with one or more `gt_tbl` objects.
+#'
+#' @return An object of class `gt_multi`.
+#'
+#' @family multiple-table functions
+#' @section Function ID:
+#' 14-6
+#'
+#' @section Function Introduced:
+#' *In Development*
 #'
 #' @export
 opts_gt_tbls <- function(

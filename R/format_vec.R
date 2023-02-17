@@ -161,7 +161,7 @@
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-1
+#' 15-1
 #'
 #' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
@@ -320,7 +320,7 @@ vec_fmt_number <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-2
+#' 15-2
 #'
 #' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
@@ -471,7 +471,7 @@ vec_fmt_integer <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-3
+#' 15-3
 #'
 #' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
@@ -633,7 +633,7 @@ vec_fmt_scientific <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-4
+#' 15-4
 #'
 #' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
@@ -803,7 +803,7 @@ vec_fmt_engineering <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-5
+#' 15-5
 #'
 #' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
@@ -993,7 +993,7 @@ vec_fmt_percent <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-6
+#' 15-6
 #'
 #' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
@@ -1148,7 +1148,7 @@ vec_fmt_partsper <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-7
+#' 15-7
 #'
 #' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
@@ -1332,7 +1332,7 @@ vec_fmt_fraction <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-8
+#' 15-8
 #'
 #' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
@@ -1463,7 +1463,7 @@ vec_fmt_currency <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-9
+#' 15-9
 #'
 #' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
@@ -1589,7 +1589,7 @@ vec_fmt_roman <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-10
+#' 15-10
 #'
 #' @section Function Introduced:
 #' *In Development*
@@ -1704,7 +1704,7 @@ vec_fmt_index <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-11
+#' 15-11
 #'
 #' @section Function Introduced:
 #' *In Development*
@@ -1849,7 +1849,7 @@ vec_fmt_spelled_num <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-12
+#' 15-12
 #'
 #' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
@@ -2051,7 +2051,7 @@ vec_fmt_bytes <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-13
+#' 15-13
 #'
 #' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
@@ -2221,7 +2221,7 @@ vec_fmt_date <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-14
+#' 15-14
 #'
 #' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
@@ -3047,7 +3047,7 @@ vec_fmt_time <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-15
+#' 15-15
 #'
 #' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
@@ -3275,7 +3275,7 @@ vec_fmt_datetime <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-16
+#' 15-16
 #'
 #' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
@@ -3385,7 +3385,7 @@ vec_fmt_duration <- function(
 #'
 #' @family vector formatting functions
 #' @section Function ID:
-#' 14-17
+#' 15-17
 #'
 #' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
