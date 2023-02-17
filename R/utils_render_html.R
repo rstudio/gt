@@ -15,7 +15,9 @@ footnote_mark_to_html <- function(mark) {
     sup_class <- "gt_footnote_marks gt_asterisk"
   }
 
-  as.character(htmltools::tags$sup(class = sup_class, mark))
+  as.character(
+    htmltools::tags$span(class = sup_class, htmltools::tags$sup(mark))
+  )
 }
 
 styles_to_html <- function(styles) {
@@ -676,14 +678,14 @@ create_columns_component_h <- function(data) {
 
       table_col_headings <-
         htmltools::tagList(
-          htmltools::tags$tr(level_1_spanners),
+          htmltools::tags$tr(class = "gt_spanner_row", level_1_spanners),
           htmltools::tags$tr(spanned_column_labels)
         )
 
     } else {
 
       # Create the `table_col_headings` HTML component
-      table_col_headings <- htmltools::tags$tr(level_1_spanners)
+      table_col_headings <- htmltools::tags$tr(class = "gt_spanner_row", level_1_spanners)
     }
   }
 
@@ -774,7 +776,7 @@ create_columns_component_h <- function(data) {
       higher_spanner_rows <-
         htmltools::tagList(
           higher_spanner_rows,
-          htmltools::tagList(htmltools::tags$tr(level_i_spanners))
+          htmltools::tagList(htmltools::tags$tr(class = "gt_spanner_row", level_i_spanners))
         )
     }
 

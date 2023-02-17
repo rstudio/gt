@@ -234,23 +234,6 @@ reference:
     - info_paletteer
     - info_google_fonts
 
-  - title: Datasets
-    desc: >
-      The **gt** package is equipped with eight datasets that come in all shapes
-      and sizes. Use them to experiment with the package. Many examples in the
-      internal help documents use these datasets to quickly demonstrate the key
-      features of **gt**.
-    contents:
-    - countrypops
-    - sza
-    - gtcars
-    - sp500
-    - pizzaplace
-    - exibble
-    - rx_adsl
-    - rx_addv
-    - towny
-
   - title: Shiny Functions
     desc: >
       Shiny is great for building interactive web apps with R. There's
@@ -279,6 +262,15 @@ reference:
     - extract_summary
     - extract_cells
 
+  - title: Multiple-table Functions
+    contents:
+    - gt_multi
+    - opts_gt_tbls
+    - pull_gt_tbls
+    - add_gt_tbls
+    - replace_gt_tbls
+    - rm_gt_tbls
+
   - title: Vector Formatting Functions
     desc: >
       Why should columns have all the formatting fun? If you have vectors in
@@ -302,6 +294,23 @@ reference:
     - vec_fmt_datetime
     - vec_fmt_duration
     - vec_fmt_markdown
+
+  - title: Datasets
+    desc: >
+      The **gt** package is equipped with nine datasets that come in all shapes
+      and sizes. Use them to experiment with the package. Many examples in the
+      internal help documents use these datasets to quickly demonstrate the key
+      features of **gt**.
+    contents:
+    - countrypops
+    - sza
+    - gtcars
+    - sp500
+    - pizzaplace
+    - exibble
+    - towny
+    - rx_adsl
+    - rx_addv
 
 navbar:
   structure:

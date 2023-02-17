@@ -137,6 +137,10 @@
     width: 100%;
   }
 
+  .gt_spanner_row {
+    border-bottom-style: hidden;
+  }
+
   .gt_group_heading {
     padding-top: $row_group_padding; // row_group.padding
     padding-bottom: $row_group_padding; // row_group.padding

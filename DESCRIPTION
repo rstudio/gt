@@ -99,6 +99,7 @@ Collate:
     'format_vec.R'
     'gt-package.R'
     'gt.R'
+    'gt_multi.R'
     'gt_preview.R'
     'helpers.R'
     'image.R'
