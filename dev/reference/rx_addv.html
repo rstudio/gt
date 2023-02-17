@@ -7,7 +7,7 @@ ITT-population, indicating whether or not at least one major protocol
 deviation (PD) occurred throughout the course of the study for the respective
 subject. Individual records for protocol deviations per subject exist,
 indicating which specific type of PD occurred. The additional flag CRIT1FL,
-shows a PD was related to COVID-19 or not.
+shows whether a PD was related to COVID-19 or not.
 Although the data was intentionally created to mimic a typical clinical
 trial dataset following the CDISC format, it might not strictly comply
 with CDISC ADaM rules. The intent is to showcase the workflow for clinical
@@ -19,7 +19,7 @@ ITT-population, indicating whether or not at least one major protocol
 deviation (PD) occurred throughout the course of the study for the respective
 subject. Individual records for protocol deviations per subject exist,
 indicating which specific type of PD occurred. The additional flag CRIT1FL,
-shows a PD was related to COVID-19 or not.
+shows whether a PD was related to COVID-19 or not.
 Although the data was intentionally created to mimic a typical clinical
 trial dataset following the CDISC format, it might not strictly comply
 with CDISC ADaM rules. The intent is to showcase the workflow for clinical
@@ -91,7 +91,7 @@ ITT-population, indicating whether or not at least one major protocol
 deviation (PD) occurred throughout the course of the study for the respective
 subject. Individual records for protocol deviations per subject exist,
 indicating which specific type of PD occurred. The additional flag <code>CRIT1FL</code>,
-shows a PD was related to COVID-19 or not.</p>
+shows whether a PD was related to COVID-19 or not.</p>
 <p>Although the data was intentionally created to mimic a typical clinical
 trial dataset following the CDISC format, it might not strictly comply
 with CDISC ADaM rules. The intent is to showcase the workflow for clinical
@@ -113,14 +113,14 @@ version.</p></dd>
 <dd><p>The unique subject identifier.</p></dd>
 
 <dt>TRTA, TRTAN</dt>
-<dd><p>The study intervention and its numeric version, which
-is either <code>"Placebo"</code> (<code>1</code>), <code>"Drug 1"</code> (<code>2</code>) or <code>NA</code> (<code>3</code>), missing for
+<dd><p>The study intervention and its numeric version, which is
+either <code>"Placebo"</code> (<code>1</code>), <code>"Drug 1"</code> (<code>2</code>), or <code>NA</code> (<code>3</code>), missing for
 screen failures).</p></dd>
 
 <dt>ITTFL</dt>
 <dd><p>Intent-to-Treat (ITT) population flag, where <code>"Y"</code> indicates
-a subject belongs to the ITT population and <code>"N"</code> indicates a subject
-is not in the ITT population.</p></dd>
+a subject belongs to the ITT population and <code>"N"</code> indicates a subject is not
+in the ITT population.</p></dd>
 
 <dt>AGE</dt>
 <dd><p>The age of a subject at baseline in years.</p></dd>
@@ -148,19 +148,19 @@ younger than 40 years at baseline or older.</p></dd>
 for the protocol deviation.</p></dd>
 
 <dt>PARCAT1</dt>
-<dd><p>Parameter category. Can be <code>OVERALL</code> for derived PD
-summaries or <code>PROTOCOL DEVIATION</code> for individual PDs.</p></dd>
+<dd><p>Parameter category. Can be <code>"OVERALL"</code> for derived PD
+summaries or <code>"PROTOCOL DEVIATION"</code> for individual PDs.</p></dd>
 
 <dt>DVCAT</dt>
 <dd><p>Category for PD, indicating whether the PD is a major one or
 not.</p></dd>
 
 <dt>ACAT1</dt>
-<dd><p>Analysis category 1. Only populated for individual PDs, not
-for summary scores. High level category for PDs.</p></dd>
+<dd><p>Analysis category 1. Only populated for individual PDs, not for
+summary scores. High level category for PDs.</p></dd>
 
 <dt>AVAL</dt>
-<dd><p>Analysis Value. Either 0 or 1.</p></dd>
+<dd><p>Analysis Value. Either <code>0</code> or <code>1</code>.</p></dd>
 
 <dt>CRIT1, CRIT1FL</dt>
 <dd><p>Analysis Criterion 1 and analysis criterion 1 flag,
@@ -173,30 +173,43 @@ indicating whether PD is related to COVID-19 or not.</p></dd>
     
 
 
-<p>Here is the <code>rx_addv</code>.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">rx_addv</span></span>
-<span><span class="co">#&gt; # A tibble: 291 x 20</span></span>
-<span><span class="co">#&gt;    STUDYID STUDYIDN USUBJID TRTA    TRTAN ITTFL   AGE AAGEGR1 SEX   ETHNIC BLBMI</span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;   &lt;chr&gt;    &lt;chr&gt;   &lt;fct&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;int&gt; &lt;fct&gt;   &lt;fct&gt; &lt;fct&gt;  &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt;  1 GT01    4001     GT1001  Placebo     1 Y        41 &gt;=40    Male  Not H~  33.4</span></span>
-<span><span class="co">#&gt;  2 GT01    4001     GT1002  Placebo     1 Y        39 &lt;40     Fema~ Not H~  30.5</span></span>
-<span><span class="co">#&gt;  3 GT01    4001     GT1002  Placebo     1 Y        39 &lt;40     Fema~ Not H~  30.5</span></span>
-<span><span class="co">#&gt;  4 GT01    4001     GT1003  Placebo     1 Y        38 &lt;40     Male  Not H~  22.9</span></span>
-<span><span class="co">#&gt;  5 GT01    4001     GT1003  Placebo     1 Y        38 &lt;40     Male  Not H~  22.9</span></span>
-<span><span class="co">#&gt;  6 GT01    4001     GT1003  Placebo     1 Y        38 &lt;40     Male  Not H~  22.9</span></span>
-<span><span class="co">#&gt;  7 GT01    4001     GT1004  Placebo     1 Y        45 &gt;=40    Male  Not H~  23.9</span></span>
-<span><span class="co">#&gt;  8 GT01    4001     GT1004  Placebo     1 Y        45 &gt;=40    Male  Not H~  23.9</span></span>
-<span><span class="co">#&gt;  9 GT01    4001     GT1005  Placebo     1 Y        35 &lt;40     Fema~ Hispa~  29.1</span></span>
-<span><span class="co">#&gt; 10 GT01    4001     GT1005  Placebo     1 Y        35 &lt;40     Fema~ Hispa~  29.1</span></span>
-<span><span class="co">#&gt; # ... with 281 more rows, and 9 more variables: DVTERM &lt;chr&gt;, PARAMCD &lt;fct&gt;,</span></span>
-<span><span class="co">#&gt; #   PARAM &lt;fct&gt;, PARCAT1 &lt;chr&gt;, DVCAT &lt;chr&gt;, ACAT1 &lt;chr&gt;, AVAL &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   CRIT1 &lt;chr&gt;, CRIT1FL &lt;chr&gt;</span></span></code></pre><p></p></div>
+<p>Here is a glimpse at the data available in <code>rx_addv</code>.</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">rx_addv</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 291</span></span>
+<span><span class="co">#&gt; Columns: 20</span></span>
+<span><span class="co">#&gt; $ STUDYID  &lt;chr&gt; "GT01", "GT01", "GT01", "GT01", "GT01", "GT01", "GT01", "GT01~</span></span>
+<span><span class="co">#&gt; $ STUDYIDN &lt;chr&gt; "4001", "4001", "4001", "4001", "4001", "4001", "4001", "4001~</span></span>
+<span><span class="co">#&gt; $ USUBJID  &lt;chr&gt; "GT1001", "GT1002", "GT1002", "GT1003", "GT1003", "GT1003", "~</span></span>
+<span><span class="co">#&gt; $ TRTA     &lt;fct&gt; Placebo, Placebo, Placebo, Placebo, Placebo, Placebo, Placebo~</span></span>
+<span><span class="co">#&gt; $ TRTAN    &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1~</span></span>
+<span><span class="co">#&gt; $ ITTFL    &lt;chr&gt; "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "~</span></span>
+<span><span class="co">#&gt; $ AGE      &lt;int&gt; 41, 39, 39, 38, 38, 38, 45, 45, 35, 35, 35, 35, 35, 42, 35, 3~</span></span>
+<span><span class="co">#&gt; $ AAGEGR1  &lt;fct&gt; &gt;=40, &lt;40, &lt;40, &lt;40, &lt;40, &lt;40, &gt;=40, &gt;=40, &lt;40, &lt;40, &lt;40, &lt;40~</span></span>
+<span><span class="co">#&gt; $ SEX      &lt;fct&gt; Male, Female, Female, Male, Male, Male, Male, Male, Female, F~</span></span>
+<span><span class="co">#&gt; $ ETHNIC   &lt;fct&gt; Not Hispanic or Latino, Not Hispanic or Latino, Not Hispanic ~</span></span>
+<span><span class="co">#&gt; $ BLBMI    &lt;dbl&gt; 33.35073, 30.45862, 30.45862, 22.85986, 22.85986, 22.85986, 2~</span></span>
+<span><span class="co">#&gt; $ DVTERM   &lt;chr&gt; "", "", "Lab values not taken at month 3", "", "{gt} Question~</span></span>
+<span><span class="co">#&gt; $ PARAMCD  &lt;fct&gt; PDANYM, PDANYM, PDEV02, PDANYM, PDEV01, PDEV02, PDANYM, PDEV0~</span></span>
+<span><span class="co">#&gt; $ PARAM    &lt;fct&gt; At least one major Protocol Deviation, At least one major Pro~</span></span>
+<span><span class="co">#&gt; $ PARCAT1  &lt;chr&gt; "OVERALL", "OVERALL", "PROTOCOL DEVIATION", "OVERALL", "PROTO~</span></span>
+<span><span class="co">#&gt; $ DVCAT    &lt;chr&gt; "", "", "Major", "", "Major", "Major", "", "Major", "", "", "~</span></span>
+<span><span class="co">#&gt; $ ACAT1    &lt;chr&gt; "", "", "Study Procedures Criteria Deviations", "", "Study Pr~</span></span>
+<span><span class="co">#&gt; $ AVAL     &lt;dbl&gt; 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1~</span></span>
+<span><span class="co">#&gt; $ CRIT1    &lt;chr&gt; "COVID-19 Related", "COVID-19 Related", "COVID-19 Related", "~</span></span>
+<span><span class="co">#&gt; $ CRIT1FL  &lt;chr&gt; "N", "N", "N", "N", "N", "N", "N", "N", "N", "Y", "N", "N", "~</span></span></code></pre><p></p></div>
     </div>
     <div class="section level2">
-    <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
+    <h2 id="dataset-id">Dataset ID<a class="anchor" aria-label="anchor" href="#dataset-id"></a></h2>
     
 
-<p>16-9</p>
+<p>9</p>
+<p></p><div align="center"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_rx_addv.png" alt="This image of that of a dataset badge." style="width:50%;"></div>
+    </div>
+    <div class="section level2">
+    <h2 id="dataset-introduced">Dataset Introduced<a class="anchor" aria-label="anchor" href="#dataset-introduced"></a></h2>
+    
+
+<p><em>In Development</em></p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
