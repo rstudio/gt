@@ -226,36 +226,6 @@ add_gt_tbls <- function(
   gt_multi
 }
 
-#' Remove one or more **gt** tables from a `gt_multi` container object
-#'
-#' @description
-#'
-#' A `gt_multi` object, created through use of the [gt_multi()] function, can
-#' hold a multiple of **gt** tables. However, you might want to delete one or
-#' more `gt_tbl` objects table from that container. With `rm_gt_tbls()`, this
-#' possible and safe to perform. What's returned is a `gt_multi` object with the
-#' specified `gt_tbl` objects gone. The only thing you need to provide is the
-#' index value for the **gt** table within the `gt_multi` object.
-#'
-#' @param data A `gt_multi` container object, typically generated through use of
-#'   the [gt_multi()] function along with one or more `gt_tbl` objects.
-#' @param which An index value denoting which `gt_tbl` table should be removed
-#'   from the `gt_multi` object.
-#'
-#' @return An object of class `gt_multi`.
-#'
-#' @export
-rm_gt_tbls <- function(
-    data,
-    which
-) {
-
-  # TODO: this only handles the removal of a single table currently;
-  # need to implement removal of multiple `gt_tbl`s to a bare list
-
-  remove_gt_tbl_from_gt_multi(data = data, which = which)
-}
-
 #' Replace one or more **gt** tables in a `gt_multi` container object
 #'
 #' @description
@@ -321,6 +291,36 @@ replace_gt_tbls <- function(
   gt_multi <- reindex_gt_tbls(data = gt_multi)
 
   gt_multi
+}
+
+#' Remove one or more **gt** tables from a `gt_multi` container object
+#'
+#' @description
+#'
+#' A `gt_multi` object, created through use of the [gt_multi()] function, can
+#' hold a multiple of **gt** tables. However, you might want to delete one or
+#' more `gt_tbl` objects table from that container. With `rm_gt_tbls()`, this
+#' possible and safe to perform. What's returned is a `gt_multi` object with the
+#' specified `gt_tbl` objects gone. The only thing you need to provide is the
+#' index value for the **gt** table within the `gt_multi` object.
+#'
+#' @param data A `gt_multi` container object, typically generated through use of
+#'   the [gt_multi()] function along with one or more `gt_tbl` objects.
+#' @param which An index value denoting which `gt_tbl` table should be removed
+#'   from the `gt_multi` object.
+#'
+#' @return An object of class `gt_multi`.
+#'
+#' @export
+rm_gt_tbls <- function(
+    data,
+    which
+) {
+
+  # TODO: this only handles the removal of a single table currently;
+  # need to implement removal of multiple `gt_tbl`s to a bare list
+
+  remove_gt_tbl_from_gt_multi(data = data, which = which)
 }
 
 #' Modify table options for all tables within a `gt_multi` object
