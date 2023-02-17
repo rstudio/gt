@@ -32,6 +32,10 @@
 #' @section Dataset ID:
 #' 1
 #'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_countrypops.png")`
+#' }}
+#'
 #' @section Dataset Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
@@ -87,6 +91,10 @@
 #' @family datasets
 #' @section Dataset ID:
 #' 2
+#'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_sza.png")`
+#' }}
 #'
 #' @section Dataset Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -148,6 +156,10 @@
 #' @section Dataset ID:
 #' 3
 #'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_gtcars.png")`
+#' }}
+#'
 #' @section Dataset Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
@@ -182,6 +194,10 @@
 #' @family datasets
 #' @section Dataset ID:
 #' 4
+#'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_sp500.png")`
+#' }}
 #'
 #' @section Dataset Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -317,6 +333,10 @@
 #' @section Dataset ID:
 #' 5
 #'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_pizzaplace.png")`
+#' }}
+#'
 #' @section Dataset Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
@@ -362,6 +382,10 @@
 #' @family datasets
 #' @section Dataset ID:
 #' 6
+#'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_exibble.png")`
+#' }}
 #'
 #' @section Dataset Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -433,6 +457,10 @@
 #' @section Dataset ID:
 #' 7
 #'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_towny.png")`
+#' }}
+#'
 #' @section Dataset Introduced:
 #' `v0.2.0.5` (March 31, 2020)
 #'
@@ -498,6 +526,10 @@
 #' @family datasets
 #' @section Dataset ID:
 #' 8
+#'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_rx_adsl.png")`
+#' }}
 #'
 #' @section Dataset Introduced:
 #' *In Development*
@@ -567,6 +599,10 @@
 #' @family datasets
 #' @section Dataset ID:
 #' 9
+#'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_rx_addv.png")`
+#' }}
 #'
 #' @section Dataset Introduced:
 #' *In Development*
