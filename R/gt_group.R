@@ -1,8 +1,8 @@
-#' Create a `gt_multi` container for multiple **gt** table objects
+#' Create a `gt_group` container for multiple **gt** table objects
 #'
 #' @description
 #'
-#' The `gt_multi()` function creates a container for storage of multiple **gt**
+#' The `gt_group()` function creates a container for storage of multiple **gt**
 #' tables. This type of object allows for flexibility in printing multiple
 #' tables in different output formats. For example, if printing multiple tables
 #' in a paginated output environment (e.g., RTF, Word, etc.), each **gt** table
@@ -12,10 +12,10 @@
 #' @param ... One or more **gt** table (`gt_tbl`) objects, typically generated
 #'   via the [gt()] function.
 #' @param .list Allows for the use of a list as an input alternative to `...`.
-#' @param .use_parent_opts Should options specified in the `gt_multi` object be
+#' @param .use_parent_opts Should options specified in the `gt_group` object be
 #'   applied to all contained **gt** tables? By default this is `FALSE`.
 #'
-#' @return An object of class `gt_multi`.
+#' @return An object of class `gt_group`.
 #'
 #' @family multiple-table functions
 #' @section Function ID:
@@ -26,7 +26,7 @@
 #'
 #' @import rlang
 #' @export
-gt_multi <- function(
+gt_group <- function(
     ...,
     .list = list2(...),
     .use_parent_opts = FALSE
@@ -35,14 +35,14 @@ gt_multi <- function(
   # Collect a list of objects
   gt_tbl_list <- .list
 
-  # If no data is provided, return an empty `gt_multi` object
+  # If no data is provided, return an empty `gt_group` object
   if (length(gt_tbl_list) < 1) {
-    return(init_gt_multi_list())
+    return(init_gt_group_list())
   }
 
-  # Initialize the `gt_multi` object and create
+  # Initialize the `gt_group` object and create
   # an empty `gt_tbl_tbl` object
-  gt_multi <- init_gt_multi_list()
+  gt_group <- init_gt_group_list()
   gt_tbl_tbl <- generate_gt_tbl_tbl_0()
 
   #
@@ -55,27 +55,27 @@ gt_multi <- function(
     gt_tbl_tbl <- dplyr::bind_rows(gt_tbl_tbl, gt_tbl_tbl_i)
   }
 
-  # Add fully-processed `gt_tbl_tbl` object into `gt_multi`
-  gt_multi[["gt_tbls"]] <- gt_tbl_tbl
-  gt_multi[["use_parent_opts"]] <- .use_parent_opts
+  # Add fully-processed `gt_tbl_tbl` object into `gt_group`
+  gt_group[["gt_tbls"]] <- gt_tbl_tbl
+  gt_group[["use_parent_opts"]] <- .use_parent_opts
 
-  gt_multi
+  gt_group
 }
 
-#' Pull out a **gt** table from a `gt_multi` container object
+#' Pull out a **gt** table from a `gt_group` container object
 #'
 #' @description
 #'
-#' Should you have a `gt_multi` object, created through use of the [gt_multi()]
+#' Should you have a `gt_group` object, created through use of the [gt_group()]
 #' function, you may have a need to extract a **gt** table from that container.
-#' The `pull_gt_tbls()` function makes this possible, returning a `gt_tbl`
-#' object. The only thing you need to provide is the index value for the **gt**
-#' table within the `gt_multi` object.
+#' The `grp_pull()` function makes this possible, returning a `gt_tbl` object.
+#' The only thing you need to provide is the index value for the **gt** table
+#' within the `gt_group` object.
 #'
-#' @param data A `gt_multi` container object, typically generated through use of
-#'   the [gt_multi()] function along with one or more `gt_tbl` objects.
+#' @param data A `gt_group` container object, typically generated through use of
+#'   the [gt_group()] function along with one or more `gt_tbl` objects.
 #' @param which An index value denoting which `gt_tbl` table should be obtained
-#'   from the `gt_multi` object.
+#'   from the `gt_group` object.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -87,7 +87,7 @@ gt_multi <- function(
 #' *In Development*
 #'
 #' @export
-pull_gt_tbls <- function(
+grp_pull <- function(
     data,
     which
 ) {
@@ -95,34 +95,34 @@ pull_gt_tbls <- function(
   # TODO: this only handles the extraction of a single table currently;
   # need to implement extraction of multiple `gt_tbl`s to a bare list
 
-  gt_tbl <- extract_gt_tbl_from_gt_multi(data = data, which = which)
+  gt_tbl <- extract_gt_tbl_from_gt_group(data = data, which = which)
 
   use_parent_opts <- get_use_parent_opts_param(data = data)
 
   if (use_parent_opts) {
 
-    # Extract options from `data` (which is a `gt_multi` object)
+    # Extract options from `data` (which is a `gt_group` object)
     gt_tbl[["_options"]] <- data[["gt_tbl_options"]]
   }
 
   gt_tbl
 }
 
-#' Add one or more **gt** tables to a `gt_multi` container object
+#' Add one or more **gt** tables to a `gt_group` container object
 #'
 #' @description
 #'
-#' Should you have a `gt_multi` object, created through use of the [gt_multi()]
+#' Should you have a `gt_group` object, created through use of the [gt_group()]
 #' function, you might want to add more **gt** tables to that container. While
-#' it's common to generate a `gt_multi` object with a collection of `gt_tbl`
-#' objects, one can also create an 'empty' `gt_multi` object. Whatever your
-#' workflow might be, the `add_gt_tbls()` function makes it possible to flexibly
+#' it's common to generate a `gt_group` object with a collection of `gt_tbl`
+#' objects, one can also create an 'empty' `gt_group` object. Whatever your
+#' workflow might be, the `grp_add()` function makes it possible to flexibly
 #' add one or more new
-#' **gt** tables, returning a refreshed `gt_multi`
+#' **gt** tables, returning a refreshed `gt_group`
 #' object.
 #'
-#' @param .data A `gt_multi` container object, typically generated through use
-#'   of the [gt_multi()] function along with one or more `gt_tbl` objects.
+#' @param .data A `gt_group` container object, typically generated through use
+#'   of the [gt_group()] function along with one or more `gt_tbl` objects.
 #' @param ... One or more **gt** table (`gt_tbl`) objects, typically generated
 #'   via the [gt()] function.
 #' @param .list Allows for the use of a list as an input alternative to `...`.
@@ -131,7 +131,7 @@ pull_gt_tbls <- function(
 #'   existing collection of **gt** tables. If nothing is provided for either
 #'   argument the incoming `gt_tbl` objects will be appended.
 #'
-#' @return An object of class `gt_multi`.
+#' @return An object of class `gt_group`.
 #'
 #' @family multiple-table functions
 #' @section Function ID:
@@ -142,7 +142,7 @@ pull_gt_tbls <- function(
 #'
 #' @import rlang
 #' @export
-add_gt_tbls <- function(
+grp_add <- function(
     .data,
     ...,
     .list = list2(...),
@@ -153,12 +153,12 @@ add_gt_tbls <- function(
   # Collect a list of objects
   gt_tbl_list <- .list
 
-  # If no data is provided, return the `gt_multi` unchanged
+  # If no data is provided, return the `gt_group` unchanged
   if (length(gt_tbl_list) < 1) {
     return(.data)
   }
 
-  gt_multi <- .data
+  gt_group <- .data
 
   #
   # Stop function if `.before` and `.after` options are invalid
@@ -168,7 +168,7 @@ add_gt_tbls <- function(
     cli::cli_abort("Values cannot be supplied for both `.before` and `.after`.")
   }
 
-  valid_idx <- seq_len(nrow(gt_multi[["gt_tbls"]]))
+  valid_idx <- seq_len(nrow(gt_group[["gt_tbls"]]))
 
   if (is.null(.before) && is.null(.after)) {
 
@@ -222,62 +222,62 @@ add_gt_tbls <- function(
   }
 
   #
-  # Add fully-processed `gt_tbl_tbl` object into `gt_multi`
+  # Add fully-processed `gt_tbl_tbl` object into `gt_group`
   #
 
   if (insertion_mode == "insert") {
 
-    gt_multi[["gt_tbls"]] <-
+    gt_group[["gt_tbls"]] <-
       dplyr::bind_rows(
-        gt_multi[["gt_tbls"]][1:.after, ],
+        gt_group[["gt_tbls"]][1:.after, ],
         gt_tbl_tbl,
-        gt_multi[["gt_tbls"]][(.after + 1):max(valid_idx), ]
+        gt_group[["gt_tbls"]][(.after + 1):max(valid_idx), ]
       )
 
   } else if (insertion_mode == "append") {
 
-    gt_multi[["gt_tbls"]] <- dplyr::bind_rows(gt_multi[["gt_tbls"]], gt_tbl_tbl)
+    gt_group[["gt_tbls"]] <- dplyr::bind_rows(gt_group[["gt_tbls"]], gt_tbl_tbl)
 
   } else {
 
-    gt_multi[["gt_tbls"]] <- dplyr::bind_rows(gt_tbl_tbl, gt_multi[["gt_tbls"]])
+    gt_group[["gt_tbls"]] <- dplyr::bind_rows(gt_tbl_tbl, gt_group[["gt_tbls"]])
   }
 
-  gt_multi <- reindex_gt_tbls(data = gt_multi)
+  gt_group <- reindex_gt_tbls(data = gt_group)
 
-  gt_multi
+  gt_group
 }
 
-#' Replace one or more **gt** tables in a `gt_multi` container object
+#' Replace one or more **gt** tables in a `gt_group` container object
 #'
 #' @description
 #'
-#' The [gt_multi()] function can be used to create a container for multiple
+#' The [gt_group()] function can be used to create a container for multiple
 #' **gt** tables. In some circumstances, you might want to replace a specific
 #' `gt_tbl` object (or multiple) with a different one. This can be done with the
-#' `replace_gt_tbls()` function. The important thing is that the number of
+#' `grp_replace()` function. The important thing is that the number of
 #' **gt** tables provided must equal the number of indices for tables present
-#' in the `gt_multi` object.
+#' in the `gt_group` object.
 #'
-#' @param .data A `gt_multi` container object, typically generated through use
-#'   of the [gt_multi()] function along with one or more `gt_tbl` objects.
+#' @param .data A `gt_group` container object, typically generated through use
+#'   of the [gt_group()] function along with one or more `gt_tbl` objects.
 #' @param ... One or more **gt** table (`gt_tbl`) objects, typically generated
 #'   via the [gt()] function.
 #' @param .list Allows for the use of a list as an input alternative to `...`.
 #' @param .which Index values denoting which `gt_tbl` tables should be replaced
-#'   in the `gt_multi` object.
+#'   in the `gt_group` object.
 #'
-#' @return An object of class `gt_multi`.
+#' @return An object of class `gt_group`.
 #'
 #' @family multiple-table functions
 #' @section Function ID:
-#' 14-4
+#' 14-5
 #'
 #' @section Function Introduced:
 #' *In Development*
 #'
 #' @export
-replace_gt_tbls <- function(
+grp_replace <- function(
     .data,
     ...,
     .list = list2(...),
@@ -292,9 +292,9 @@ replace_gt_tbls <- function(
     cli::cli_abort("At least one gt table must be provided.")
   }
 
-  gt_multi <- .data
+  gt_group <- .data
 
-  valid_idx <- seq_len(nrow(gt_multi[["gt_tbls"]]))
+  valid_idx <- seq_len(nrow(gt_group[["gt_tbls"]]))
 
   if (!all(.which %in% valid_idx)) {
     cli::cli_abort("All values provided in `.which` must be valid indices.")
@@ -314,64 +314,31 @@ replace_gt_tbls <- function(
 
     gt_tbl_tbl_i <- generate_gt_tbl_tbl_i(i = i, gt_tbl = gt_tbl_list[[i]])
 
-    gt_multi[["gt_tbls"]][.which[i], ] <- gt_tbl_tbl_i
+    gt_group[["gt_tbls"]][.which[i], ] <- gt_tbl_tbl_i
   }
 
-  gt_multi <- reindex_gt_tbls(data = gt_multi)
+  gt_group <- reindex_gt_tbls(data = gt_group)
 
-  gt_multi
+  gt_group
 }
 
-#' Remove one or more **gt** tables from a `gt_multi` container object
+#' Remove one or more **gt** tables from a `gt_group` container object
 #'
 #' @description
 #'
-#' A `gt_multi` object, created through use of the [gt_multi()] function, can
+#' A `gt_group` object, created through use of the [gt_group()] function, can
 #' hold a multiple of **gt** tables. However, you might want to delete one or
-#' more `gt_tbl` objects table from that container. With `rm_gt_tbls()`, this
-#' possible and safe to perform. What's returned is a `gt_multi` object with the
+#' more `gt_tbl` objects table from that container. With `grp_rm()`, this
+#' possible and safe to perform. What's returned is a `gt_group` object with the
 #' specified `gt_tbl` objects gone. The only thing you need to provide is the
-#' index value for the **gt** table within the `gt_multi` object.
+#' index value for the **gt** table within the `gt_group` object.
 #'
-#' @param data A `gt_multi` container object, typically generated through use of
-#'   the [gt_multi()] function along with one or more `gt_tbl` objects.
+#' @param data A `gt_group` container object, typically generated through use of
+#'   the [gt_group()] function along with one or more `gt_tbl` objects.
 #' @param which An index value denoting which `gt_tbl` table should be removed
-#'   from the `gt_multi` object.
+#'   from the `gt_group` object.
 #'
-#' @return An object of class `gt_multi`.
-#'
-#' @family multiple-table functions
-#' @section Function ID:
-#' 14-5
-#'
-#' @section Function Introduced:
-#' *In Development*
-#'
-#' @export
-rm_gt_tbls <- function(
-    data,
-    which
-) {
-
-  # TODO: this only handles the removal of a single table currently;
-  # need to implement removal of multiple `gt_tbl`s to a bare list
-
-  remove_gt_tbl_from_gt_multi(data = data, which = which)
-}
-
-#' Modify table options for all tables within a `gt_multi` object
-#'
-#' @description
-#'
-#' Modify the options for a collection of **gt** tables in a `gt_multi` object.
-#' These options are named by the components, the subcomponents, and the
-#' element that can adjusted.
-#'
-#' @inheritParams tab_options
-#' @param data A `gt_multi` container object, typically generated through use of
-#'   the [gt_multi()] function along with one or more `gt_tbl` objects.
-#'
-#' @return An object of class `gt_multi`.
+#' @return An object of class `gt_group`.
 #'
 #' @family multiple-table functions
 #' @section Function ID:
@@ -381,7 +348,40 @@ rm_gt_tbls <- function(
 #' *In Development*
 #'
 #' @export
-opts_gt_tbls <- function(
+grp_rm <- function(
+    data,
+    which
+) {
+
+  # TODO: this only handles the removal of a single table currently;
+  # need to implement removal of multiple `gt_tbl`s to a bare list
+
+  remove_gt_tbl_from_gt_group(data = data, which = which)
+}
+
+#' Modify table options for all tables within a `gt_group` object
+#'
+#' @description
+#'
+#' Modify the options for a collection of **gt** tables in a `gt_group` object.
+#' These options are named by the components, the subcomponents, and the
+#' element that can adjusted.
+#'
+#' @inheritParams tab_options
+#' @param data A `gt_group` container object, typically generated through use of
+#'   the [gt_group()] function along with one or more `gt_tbl` objects.
+#'
+#' @return An object of class `gt_group`.
+#'
+#' @family multiple-table functions
+#' @section Function ID:
+#' 14-7
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @export
+grp_options <- function(
     data,
     table.width = NULL,
     table.layout = NULL,
@@ -564,15 +564,15 @@ opts_gt_tbls <- function(
     page.footer.height = NULL
 ) {
 
-  # Perform input object validation for the `gt_multi` object
+  # Perform input object validation for the `gt_group` object
   # stop_if_not_gt(data = data)
 
-  # Extract options from `data` (which is a `gt_multi` object)
+  # Extract options from `data` (which is a `gt_group` object)
   opts_df <- data[["gt_tbl_options"]]
 
   arg_names <-
     base::setdiff(
-      names(formals(opts_gt_tbls)),
+      names(formals(grp_options)),
       c("data", "ihtml.page_size_values", "ihtml.page_size_default")
     )
 
@@ -644,17 +644,17 @@ opts_gt_tbls <- function(
   data
 }
 
-init_gt_multi_list <- function() {
+init_gt_group_list <- function() {
 
-  # Initialize the `gt_multi` object
-  gt_multi <- list()
+  # Initialize the `gt_group` object
+  gt_group <- list()
 
-  gt_multi[["gt_tbls"]] <- generate_gt_tbl_tbl_0()
-  gt_multi[["gt_tbl_options"]] <- dt_options_tbl
-  gt_multi[["use_parent_opts"]] <- FALSE
+  gt_group[["gt_tbls"]] <- generate_gt_tbl_tbl_0()
+  gt_group[["gt_tbl_options"]] <- dt_options_tbl
+  gt_group[["use_parent_opts"]] <- FALSE
 
-  class(gt_multi) <- "gt_multi"
-  gt_multi
+  class(gt_group) <- "gt_group"
+  gt_group
 }
 
 generate_gt_tbl_tbl_0 <- function() {
@@ -771,7 +771,7 @@ generate_gt_tbl_info_list <- function(gt_tbl) {
   )
 }
 
-extract_gt_tbl_from_gt_multi <- function(data, which) {
+extract_gt_tbl_from_gt_group <- function(data, which) {
 
   valid_idx <- seq_len(nrow(data[["gt_tbls"]]))
 
@@ -784,7 +784,7 @@ extract_gt_tbl_from_gt_multi <- function(data, which) {
   gt_tbl
 }
 
-remove_gt_tbl_from_gt_multi <- function(data, which) {
+remove_gt_tbl_from_gt_group <- function(data, which) {
 
   valid_idx <- seq_len(nrow(data[["gt_tbls"]]))
 

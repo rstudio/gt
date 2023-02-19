@@ -20,17 +20,17 @@ print.gt_tbl <- function(x, ..., view = interactive()) {
 
 #' Print a collection of tables
 #'
-#' This facilitates printing of multiple HTML tables (in a `gt_multi` object) to
+#' This facilitates printing of multiple HTML tables (in a `gt_group` object) to
 #' the R console.
 #'
-#' @param x An object of class `gt_multi`.
+#' @param x An object of class `gt_group`.
 #' @param ... Any additional parameters.
 #' @param view The value for `print()`s `browse` argument.
 #'
 #' @keywords internal
 #'
 #' @export
-print.gt_multi <- function(x, ..., view = interactive()) {
+print.gt_group <- function(x, ..., view = interactive()) {
 
   html_tbls <- htmltools::tagList()
 
@@ -38,7 +38,7 @@ print.gt_multi <- function(x, ..., view = interactive()) {
 
   for (i in seq_tbls) {
 
-    html_tbl_i <- as.tags.gt_tbl(pull_gt_tbls(x, which = i), ...)
+    html_tbl_i <- as.tags.gt_tbl(grp_pull(x, which = i), ...)
 
     html_tbls <-
       htmltools::tagList(
