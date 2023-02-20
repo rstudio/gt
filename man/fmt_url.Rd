@@ -12,7 +12,9 @@ fmt_url(
   as_button = FALSE,
   color = "auto",
   show_underline = "auto",
-  button_fill = "auto"
+  button_fill = "auto",
+  button_width = "auto",
+  button_outline = "auto"
 )
 }
 \arguments{
@@ -52,10 +54,10 @@ default this is \code{"auto"} which means that \strong{gt} will choose \code{TRU
 \code{as_button = FALSE} and \code{FALSE} in the other case. The link underline will
 be the same color as that set in the \code{color} option.}
 
-\item{button_fill}{The color used for the button background (but only if
-\code{as_button = TRUE}). This is by default set to \code{"auto"} and this allows
-\strong{gt} to choose an appropriate button fill based on the color of the link
-text.}
+\item{button_fill, button_width, button_outline}{Options for styling a
+link-as-button (and only applies if \code{as_button = TRUE}). All of these
+options are by default set to \code{"auto"}, allowing \strong{gt} to choose
+appropriate fill, width, and outline values.}
 }
 \value{
 An object of class \code{gt_tbl}.
