@@ -1,4 +1,4 @@
-#' Print the table
+#' Print a **gt** table
 #'
 #' This facilitates printing of the HTML table to the R console.
 #'
@@ -18,7 +18,7 @@ print.gt_tbl <- function(x, ..., view = interactive()) {
 }
 
 
-#' Print a collection of tables
+#' Print a collection of **gt** tables
 #'
 #' This facilitates printing of multiple HTML tables (in a `gt_group` object) to
 #' the R console.
@@ -52,7 +52,7 @@ print.gt_group <- function(x, ..., view = interactive()) {
   print(html_tbls, browse = view, ...)
 }
 
-#' Knit print the table
+#' Knit print a **gt** table
 #'
 #' This facilitates printing of the HTML table within a knitr code chunk.
 #'
@@ -80,6 +80,47 @@ knit_print.gt_tbl <- function(x, ...) {
       knitr::asis_output()
 
   } else {
+
+    # Default to HTML output
+    x <- as.tags.gt_tbl(x, ...)
+  }
+
+  # Use `knit_print()` to print in a code chunk
+  knitr::knit_print(x, ...)
+}
+
+#' Knit print a collection of **gt** tables
+#'
+#' This facilitates printing of multiple HTML tables (in a `gt_group` object)
+#' within a knitr code chunk.
+#'
+#' @param x An object of class `gt_group`.
+#' @param ... Any additional parameters.
+#'
+#' @keywords internal
+#' @noRd
+knit_print.gt_group <- function(x, ...) {
+
+  if (knitr_is_rtf_output()) {
+
+    # TODO: make this work for RTF
+    x <- as_rtf(x)
+
+  } else if (knitr::is_latex_output()) {
+
+    # TODO: make this work for LaTeX
+    x <- as_latex(x)
+
+  } else if (knitr_is_word_output()) {
+
+    # TODO: make this work for OOXML
+    x <-
+      paste("```{=openxml}", as_word(x), "```\n\n", sep = "\n") %>%
+      knitr::asis_output()
+
+  } else {
+
+    # TODO: make this work for HTML
 
     # Default to HTML output
     x <- as.tags.gt_tbl(x, ...)
