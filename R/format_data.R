@@ -5983,10 +5983,10 @@ extract_duration_pattern <- function(
 #'   default this is `"auto"` which means that **gt** will choose `TRUE` when
 #'   `as_button = FALSE` and `FALSE` in the other case. The link underline will
 #'   be the same color as that set in the `color` option.
-#' @param button_fill The color used for the button background (but only if
-#'   `as_button = TRUE`). This is by default set to `"auto"` and this allows
-#'   **gt** to choose an appropriate button fill based on the color of the link
-#'   text.
+#' @param button_fill,button_width,button_outline Options for styling a
+#'   link-as-button (and only applies if `as_button = TRUE`). All of these
+#'   options are by default set to `"auto"`, allowing **gt** to choose
+#'   appropriate fill, width, and outline values.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -6122,7 +6122,8 @@ extract_duration_pattern <- function(
 #'     columns = website,
 #'     label = function(x) gsub("https://|www.", "", x),
 #'     as_button = TRUE,
-#'     button_fill = "steelblue"
+#'     button_fill = "steelblue",
+#'     button_width = px(150)
 #'   ) |>
 #'   cols_move_to_end(columns = website) |>
 #'   cols_align(align = "center", columns = website) |>
@@ -6189,7 +6190,9 @@ fmt_url <- function(
     as_button = FALSE,
     color = "auto",
     show_underline = "auto",
-    button_fill = "auto"
+    button_fill = "auto",
+    button_width = "auto",
+    button_outline = "auto"
 ) {
 
   # Perform input object validation
@@ -6198,9 +6201,9 @@ fmt_url <- function(
   if (as_button) {
 
     #
-    # All determinations of `color`, `show_underline`, and `button_fill` for the
-    # case where `as_button = TRUE`; each of the above arguments are set to
-    # "auto" by default
+    # All determinations of `color`, `show_underline`, `button_fill` and
+    # `button_width` for the case where `as_button = TRUE`; each of the
+    # above arguments are set to "auto" by default
     #
 
     # In the button case, we opt to never show an underline unless it's
@@ -6209,14 +6212,26 @@ fmt_url <- function(
       show_underline <- FALSE
     }
 
+    if (button_width == "auto") {
+      button_width <- NULL
+    }
+
+    button_outline_color <- button_outline
+    button_outline_style <- "solid"
+    button_outline_width <- "2px"
+
     # There are various combinations of "auto" or not with `button_fill` and
     # `color` that need to be handled delicately so as to ensure contrast
     # between foreground text and background fill is maximized
     if (button_fill == "auto" && color == "auto") {
 
       # Choose a fixed and standard color combination if both options are 'auto'
-      button_fill <- "#008B8B"
+      button_fill <- "steelblue"
       color <- "#FFFFFF"
+
+      if (button_outline == "auto") {
+        button_outline_color <- "gray"
+      }
 
     } else if (button_fill == "auto" && color != "auto") {
 
@@ -6242,6 +6257,11 @@ fmt_url <- function(
         button_fill <- "darkblue"
       }
 
+      if (button_outline == "auto") {
+        button_outline_color <- "gray"
+        button_outline_style <- "none"
+      }
+
     } else if (button_fill != "auto" && color == "auto") {
 
       # Case where background color is chosen for foreground text color is
@@ -6253,6 +6273,11 @@ fmt_url <- function(
           bgnd_color = button_fill,
           algo = "apca"
         )
+
+      if (button_outline == "auto") {
+        button_outline_color <- "gray"
+        button_outline_style <- "none"
+      }
     }
 
   } else {
@@ -6288,7 +6313,45 @@ fmt_url <- function(
             label_str <- label
           }
         } else {
-          label_str <- x_str_non_missing
+
+
+          if (any(grepl("\\[.*?\\]\\(.*?\\)", x_str_non_missing))) {
+
+            # Generate labels
+            label_str <-
+              vapply(
+                x_str_non_missing,
+                FUN.VALUE = character(1),
+                USE.NAMES = FALSE,
+                FUN = function(x) {
+                  if (grepl("\\[.*?\\]\\(.*?\\)", x)) {
+                    out <- sub("\\[(.*?)\\]\\(.*?\\)", "\\1", x)
+                  } else {
+                    out <- x
+                  }
+                  out
+                }
+              )
+
+            # Generate href values
+            x_str_non_missing <-
+              vapply(
+                x_str_non_missing,
+                FUN.VALUE = character(1),
+                USE.NAMES = FALSE,
+                FUN = function(x) {
+                  if (grepl("\\[.*?\\]\\(.*?\\)", x)) {
+                    out <- sub("\\[.*?\\]\\((.*?)\\)", "\\1", x)
+                  } else {
+                    out <- x
+                  }
+                  out
+                }
+              )
+
+          } else {
+            label_str <- x_str_non_missing
+          }
         }
 
         x_str_non_missing <-
@@ -6302,6 +6365,16 @@ fmt_url <- function(
             "display: inline-block;",
             if (as_button) paste0("background-color: ", button_fill, ";") else NULL,
             if (as_button) "padding: 8px 12px;" else NULL,
+            if (as_button && !is.null(button_width)) paste0("width: ", button_width, "; text-align: center;"),
+            if (as_button) {
+              paste0(
+                "outline-style: ", button_outline_style, "; ",
+                "outline-color: ", button_outline_color, "; ",
+                "outline-width: ", button_outline_width, ";"
+              )
+            } else {
+              NULL
+            },
             "\">",
             label_str,
             "</a>"
