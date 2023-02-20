@@ -2,7 +2,7 @@
 % Please edit documentation in R/print.R
 \name{print.gt_group}
 \alias{print.gt_group}
-\title{Print a collection of tables}
+\title{Print a collection of \strong{gt} tables}
 \usage{
 \method{print}{gt_group}(x, ..., view = interactive())
 }
