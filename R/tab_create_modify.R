@@ -2248,6 +2248,10 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   bottom page margins. The default values for each of these is `1.0in`.
 #' @param page.header.height,page.footer.height The heights of the page header
 #'   and footer for RTF table outputs. Default values for both are `0.5in`.
+#' @param quarto.disable_processing When publishing a **gt** table with Quarto,
+#'   the table can undergo transformation to support advanced Quarto features.
+#'   Setting this to `TRUE` disables any transformation of the table. This is
+#'   `FALSE` by default.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -2547,7 +2551,8 @@ tab_options <- function(
     page.margin.top = NULL,
     page.margin.bottom = NULL,
     page.header.height = NULL,
-    page.footer.height = NULL
+    page.footer.height = NULL,
+    quarto.disable_processing = NULL
 ) {
 
   # Perform input object validation
