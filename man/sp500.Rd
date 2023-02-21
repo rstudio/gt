@@ -41,12 +41,12 @@ Here is a glimpse at the data available in \code{sp500}.
 }\if{html}{\out{</div>}}
 }
 
-\section{Dataset ID}{
+\section{Dataset ID and Badge}{
 
-4
+DATA-4
 
 \if{html}{\out{
-<div align="center"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_sp500.png" alt="This image of that of a dataset badge." style="width:50\%;"></div>
+<div align="center"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_sp500.png" alt="This image of that of a dataset badge." style="width:50\%;padding-bottom:20px;"></div>
 }}
 }
 
