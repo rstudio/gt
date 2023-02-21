@@ -5967,6 +5967,12 @@ extract_duration_pattern <- function(
 #' sets it apart from other text), or, they can appear to be button-like (with
 #' a surrounding box that can be filled with a color of your choosing).
 #'
+#' URLs in data cells are detected in two ways. The first is using the simple
+#' Markdown notation for URLs of the form: `[label](URL)`. The second assumes
+#' that the text is the URL. In the latter case the URL is also used as the
+#' label but there is the option to use the `label` argument to modify that
+#' text.
+#'
 #' @inheritParams fmt_number
 #' @param label The visible 'label' to use for the link. If `NULL` (the default)
 #'   the URL will serve as the label. There are two non-`NULL` options: (1) a
