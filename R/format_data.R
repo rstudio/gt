@@ -6225,13 +6225,10 @@ fmt_url <- function(
     # between foreground text and background fill is maximized
     if (button_fill == "auto" && color == "auto") {
 
-      # Choose a fixed and standard color combination if both options are 'auto'
-      button_fill <- "steelblue"
+      # Choose a fixed and standard color combination if both options are
+      # 'auto'; these will be 'steelblue' and 'white'
+      button_fill <- "#4682B4"
       color <- "#FFFFFF"
-
-      if (button_outline == "auto") {
-        button_outline_color <- "gray"
-      }
 
     } else if (button_fill == "auto" && color != "auto") {
 
@@ -6240,6 +6237,9 @@ fmt_url <- function(
       # brightness of the text color (can be of poor contrast if user chooses
       # a text color somewhere in the mid range of brightness, but nothing
       # really can be done there to compensate)
+
+      # Ensure that the incoming `color` is transformed to hexadecimal form
+      color <- html_color(colors = color, alpha = NULL)
 
       # Use `ideal_fgnd_color()` in a backwards manner only to see whether
       # the proxy background color is light (#FFFFFF) or dark (#000000)
@@ -6251,23 +6251,26 @@ fmt_url <- function(
 
       if (bgrnd_bw == "#FFFFFF") {
         # Background should be light so using 'lightblue'
-        button_fill <- "lightblue"
+        button_fill <- "#ADD8E6"
       } else {
         # Background should be dark so using 'darkblue'
-        button_fill <- "darkblue"
+        button_fill <- "#00008B"
       }
 
       if (button_outline == "auto") {
-        button_outline_color <- "gray"
+        button_outline_color <- "#BEBEBE"
         button_outline_style <- "none"
       }
 
     } else if (button_fill != "auto" && color == "auto") {
 
+      # Ensure that the incoming `button_fill` is transformed
+      # to hexadecimal form
+      button_fill <- html_color(colors = button_fill, alpha = NULL)
+
       # Case where background color is chosen for foreground text color is
       # not; this is the simple case where `ideal_fgnd_color()` is well suited
       # to determine the text color (either black or white)
-
       color <-
         ideal_fgnd_color(
           bgnd_color = button_fill,
@@ -6275,12 +6278,27 @@ fmt_url <- function(
         )
 
       if (button_outline == "auto") {
-        button_outline_color <- "gray"
-        button_outline_style <- "none"
+
+        button_outline_color <- "#DFDFDF"
+
+        if (button_fill %in% c(
+          "#FFFFFF", "#FFFFFF", "#FAF5EF", "#FAFAFA", "#FFFEFC", "#FBFCFA", "#FBFAF2"
+        )) {
+          button_outline_style <- "solid"
+        } else {
+          button_outline_style <- "none"
+        }
       }
+    } else {
+
+      # Ensure that the incoming `color` is transformed to hexadecimal form
+      color <- html_color(colors = color, alpha = NULL)
     }
 
   } else {
+
+    # Ensure that the incoming `color` is transformed to hexadecimal form
+    color <- html_color(colors = color, alpha = NULL)
 
     if (show_underline == "auto") {
       show_underline <- TRUE
