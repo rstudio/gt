@@ -184,7 +184,8 @@ tab_options(
   page.margin.top = NULL,
   page.margin.bottom = NULL,
   page.header.height = NULL,
-  page.footer.height = NULL
+  page.footer.height = NULL,
+  quarto.disable_processing = NULL
 )
 }
 \arguments{
@@ -477,6 +478,11 @@ bottom page margins. The default values for each of these is \verb{1.0in}.}
 
 \item{page.header.height, page.footer.height}{The heights of the page header
 and footer for RTF table outputs. Default values for both are \verb{0.5in}.}
+
+\item{quarto.disable_processing}{When publishing a \strong{gt} table with Quarto,
+the table can undergo transformation to support advanced Quarto features.
+Setting this to \code{TRUE} disables any transformation of the table. This is
+\code{FALSE} by default.}
 }
 \value{
 An object of class \code{gt_tbl}.
