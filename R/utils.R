@@ -1895,7 +1895,7 @@ data_get_image_tag <- function(file, dir = "images") {
     "<img ",
     "src=\"", image_url, "\" ",
     "alt=\"", alt_text, "\" ",
-    "style=\"width:50\\%;\">",
+    "style=\"width:50\\%;padding-bottom:20px;\">",
     "</div>"
   )
 }
