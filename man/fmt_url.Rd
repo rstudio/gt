@@ -70,6 +70,12 @@ such a column of data, there are options for how the links should be styled.
 They can be of the conventional style (with underlines and text coloring that
 sets it apart from other text), or, they can appear to be button-like (with
 a surrounding box that can be filled with a color of your choosing).
+
+URLs in data cells are detected in two ways. The first is using the simple
+Markdown notation for URLs of the form: \verb{[label](URL)}. The second assumes
+that the text is the URL. In the latter case the URL is also used as the
+label but there is the option to use the \code{label} argument to modify that
+text.
 }
 \section{Targeting cells with \code{columns} and \code{rows}}{
 
@@ -203,7 +209,8 @@ the URLs by eliminating any leading \code{"https://"} or \code{"www."} parts.
     columns = website,
     label = function(x) gsub("https://|www.", "", x),
     as_button = TRUE,
-    button_fill = "steelblue"
+    button_fill = "steelblue",
+    button_width = px(150)
   ) |>
   cols_move_to_end(columns = website) |>
   cols_align(align = "center", columns = website) |>
