@@ -12,7 +12,9 @@ fmt_url(
   as_button = FALSE,
   color = "auto",
   show_underline = "auto",
-  button_fill = "auto"
+  button_fill = "auto",
+  button_width = "auto",
+  button_outline = "auto"
 )
 }
 \arguments{
@@ -52,10 +54,10 @@ default this is \code{"auto"} which means that \strong{gt} will choose \code{TRU
 \code{as_button = FALSE} and \code{FALSE} in the other case. The link underline will
 be the same color as that set in the \code{color} option.}
 
-\item{button_fill}{The color used for the button background (but only if
-\code{as_button = TRUE}). This is by default set to \code{"auto"} and this allows
-\strong{gt} to choose an appropriate button fill based on the color of the link
-text.}
+\item{button_fill, button_width, button_outline}{Options for styling a
+link-as-button (and only applies if \code{as_button = TRUE}). All of these
+options are by default set to \code{"auto"}, allowing \strong{gt} to choose
+appropriate fill, width, and outline values.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -68,6 +70,12 @@ such a column of data, there are options for how the links should be styled.
 They can be of the conventional style (with underlines and text coloring that
 sets it apart from other text), or, they can appear to be button-like (with
 a surrounding box that can be filled with a color of your choosing).
+
+URLs in data cells are detected in two ways. The first is using the simple
+Markdown notation for URLs of the form: \verb{[label](URL)}. The second assumes
+that the text is the URL. In the latter case the URL is also used as the
+label but there is the option to use the \code{label} argument to modify that
+text.
 }
 \section{Targeting cells with \code{columns} and \code{rows}}{
 
@@ -201,7 +209,8 @@ the URLs by eliminating any leading \code{"https://"} or \code{"www."} parts.
     columns = website,
     label = function(x) gsub("https://|www.", "", x),
     as_button = TRUE,
-    button_fill = "steelblue"
+    button_fill = "steelblue",
+    button_width = px(150)
   ) |>
   cols_move_to_end(columns = website) |>
   cols_align(align = "center", columns = website) |>
