@@ -6303,15 +6303,18 @@ fmt_url <- function(
 
   } else {
 
-    # Ensure that the incoming `color` is transformed to hexadecimal form
-    color <- html_color(colors = color, alpha = NULL)
-
     if (show_underline == "auto") {
       show_underline <- TRUE
     }
 
     if (color == "auto") {
+
       color <- "#008B8B"
+
+    } else {
+
+      # Ensure that the incoming `color` is transformed to hexadecimal form
+      color <- html_color(colors = color, alpha = NULL)
     }
   }
 
