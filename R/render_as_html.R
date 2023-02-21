@@ -36,10 +36,15 @@ render_as_html <- function(data) {
   # Get attributes for the gt table
   table_defs <- get_table_defs(data = data)
 
+  # Determine whether Quarto processing of the table is enabled
+  quarto_disable_processing <-
+    dt_options_get_value(data = data, option = "quarto_disable_processing")
+
   # Compose the HTML table
   finalize_html_table(
     class = "gt_table",
     style = table_defs$table_style,
+    quarto_disable_processing = quarto_disable_processing,
     caption_component,
     table_defs$table_colgroups,
     heading_component,
@@ -53,6 +58,7 @@ render_as_html <- function(data) {
 finalize_html_table <- function(
     class,
     style,
+    quarto_disable_processing,
     ...) {
 
   html_tbl <-
@@ -60,6 +66,7 @@ finalize_html_table <- function(
       htmltools::tags$table(
         class = "gt_table",
         style = style,
+        `data-quarto-disable-processing` = if (quarto_disable_processing) "true" else NULL,
         ...
       )
     )

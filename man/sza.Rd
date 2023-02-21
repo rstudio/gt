@@ -59,12 +59,12 @@ Here is a glimpse at the data available in \code{sza}.
 }\if{html}{\out{</div>}}
 }
 
-\section{Dataset ID}{
+\section{Dataset ID and Badge}{
 
-2
+DATA-2
 
 \if{html}{\out{
-<div align="center"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_sza.png" alt="This image of that of a dataset badge." style="width:50\%;"></div>
+<div align="center"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_sza.png" alt="This image of that of a dataset badge." style="width:50\%;padding-bottom:20px;"></div>
 }}
 }
 

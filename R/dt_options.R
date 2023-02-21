@@ -222,4 +222,5 @@ dt_options_tbl <-
     "page_margin_bottom",                FALSE,  "page",             "value",   "1.0in",
     "page_header_height",                FALSE,  "page",             "value",   "0.5in",
     "page_footer_height",                FALSE,  "page",             "value",   "0.5in",
+    "quarto_disable_processing",         FALSE,  "quarto",           "logical", FALSE,
   )[-1, ]

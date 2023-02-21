@@ -29,8 +29,8 @@
 #' ```
 #'
 #' @family datasets
-#' @section Dataset ID:
-#' 1
+#' @section Dataset ID and Badge:
+#' DATA-1
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_countrypops.png")`
@@ -89,8 +89,8 @@
 #' ```
 #'
 #' @family datasets
-#' @section Dataset ID:
-#' 2
+#' @section Dataset ID and Badge:
+#' DATA-2
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_sza.png")`
@@ -153,8 +153,8 @@
 #' ```
 #'
 #' @family datasets
-#' @section Dataset ID:
-#' 3
+#' @section Dataset ID and Badge:
+#' DATA-3
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_gtcars.png")`
@@ -192,8 +192,8 @@
 #' ```
 #'
 #' @family datasets
-#' @section Dataset ID:
-#' 4
+#' @section Dataset ID and Badge:
+#' DATA-4
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_sp500.png")`
@@ -330,8 +330,8 @@
 #' ```
 #'
 #' @family datasets
-#' @section Dataset ID:
-#' 5
+#' @section Dataset ID and Badge:
+#' DATA-5
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_pizzaplace.png")`
@@ -380,8 +380,8 @@
 #' ```
 #'
 #' @family datasets
-#' @section Dataset ID:
-#' 6
+#' @section Dataset ID and Badge:
+#' DATA-6
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_exibble.png")`
@@ -454,15 +454,15 @@
 #' ```
 #'
 #' @family datasets
-#' @section Dataset ID:
-#' 7
+#' @section Dataset ID and Badge:
+#' DATA-7
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_towny.png")`
 #' }}
 #'
 #' @section Dataset Introduced:
-#' `v0.2.0.5` (March 31, 2020)
+#' *In Development*
 #'
 "towny"
 
@@ -524,8 +524,8 @@
 #' ```
 #'
 #' @family datasets
-#' @section Dataset ID:
-#' 8
+#' @section Dataset ID and Badge:
+#' DATA-8
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_rx_adsl.png")`
@@ -597,8 +597,8 @@
 #' ```
 #'
 #' @family datasets
-#' @section Dataset ID:
-#' 9
+#' @section Dataset ID and Badge:
+#' DATA-9
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_rx_addv.png")`
