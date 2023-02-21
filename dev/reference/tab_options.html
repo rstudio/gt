@@ -247,7 +247,8 @@ components, the subcomponents, and the element that can adjusted.</p>
 <span>  page.margin.top <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  page.margin.bottom <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  page.header.height <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  page.footer.height <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  page.footer.height <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  quarto.disable_processing <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -667,6 +668,13 @@ bottom page margins. The default values for each of these is <code>1.0in</code>.
 <dt>page.header.height, page.footer.height</dt>
 <dd><p>The heights of the page header
 and footer for RTF table outputs. Default values for both are <code>0.5in</code>.</p></dd>
+
+
+<dt>quarto.disable_processing</dt>
+<dd><p>When publishing a <strong>gt</strong> table with Quarto,
+the table can undergo transformation to support advanced Quarto features.
+Setting this to <code>TRUE</code> disables any transformation of the table. This is
+<code>FALSE</code> by default.</p></dd>
 
 </dl></div>
     <div class="section level2">
