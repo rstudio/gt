@@ -18,22 +18,22 @@ test_that("The `gt_group()` function can be used to contain gt tables", {
   # Expect that the `gt_group` objects are the same in both cases
   expect_equal(gt_tbls_1, gt_tbls_2)
 
-  # Setting the option `.use_parent_opts` means that the internal
+  # Setting the option `.use_grp_opts` means that the internal
   # component of similar naming is set to that logical value
   # Create a `gt_group` object with `gt_group()`
-  gt_tbls_3 <- gt_group(gt_tbl_1, gt_tbl_2, .use_parent_opts = TRUE)
-  expect_true(gt_tbls_3[["use_parent_opts"]])
-  gt_tbls_4 <- gt_group(gt_tbl_1, gt_tbl_2, .use_parent_opts = FALSE)
-  expect_false(gt_tbls_4[["use_parent_opts"]])
+  gt_tbls_3 <- gt_group(gt_tbl_1, gt_tbl_2, .use_grp_opts = TRUE)
+  expect_true(gt_tbls_3[["use_grp_opts"]])
+  gt_tbls_4 <- gt_group(gt_tbl_1, gt_tbl_2, .use_grp_opts = FALSE)
+  expect_false(gt_tbls_4[["use_grp_opts"]])
 
   # Not setting it means it will be FALSE by default
   gt_tbls_5 <- gt_group(gt_tbl_1, gt_tbl_2)
-  expect_false(gt_tbls_5[["use_parent_opts"]])
+  expect_false(gt_tbls_5[["use_grp_opts"]])
 
   # Expect specific components inside of a 'gt_group' object
   expect_equal(
     names(gt_tbls_1),
-    c("gt_tbls", "gt_tbl_options", "use_parent_opts")
+    c("gt_tbls", "gt_tbl_options", "use_grp_opts")
   )
 
   # Expect that the 'gt_tbls' and `gt_tbl_options` objects inside of
