@@ -218,7 +218,7 @@ resolve_cols_i <- function(
   cols_excl <- c()
   null_means <- rlang::arg_match(null_means)
 
-  if (is_gt_tbl(data)) {
+  if (is_gt_tbl(data = data)) {
 
     # If we use the gt-specific select helper `stub()` then we
     # will retrieve the stub var name and return the output in the
@@ -341,8 +341,8 @@ translate_legacy_resolver_expr <- function(quo, null_means) {
 
 resolve_rows_l <- function(expr, data) {
 
-  if (is_gt_tbl(data)) {
-    row_names <- dt_stub_df_get(data)$row_id
+  if (is_gt_tbl(data = data)) {
+    row_names <- dt_stub_df_get(data = data)$row_id
     data <- dt_data_get(data = data)
   } else {
     row_names <- row.names(data)
