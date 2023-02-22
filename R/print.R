@@ -76,8 +76,9 @@ knit_print.gt_tbl <- function(x, ...) {
   } else if (knitr_is_word_output()) {
 
     x <-
-      paste("```{=openxml}", as_word(x), "```\n\n", sep = "\n") %>%
-      knitr::asis_output()
+      knitr::asis_output(
+        paste("```{=openxml}", as_word(x), "```\n\n", sep = "\n")
+      )
 
   } else {
 
@@ -113,10 +114,25 @@ knit_print.gt_group <- function(x, ...) {
 
   } else if (knitr_is_word_output()) {
 
-    # TODO: make this work for OOXML
+    word_tbls <- c()
+
+    seq_tbls <- seq_len(nrow(x$gt_tbls))
+
+    for (i in seq_tbls) {
+      word_tbl_i <- as_word(grp_pull(x, which = i))
+      word_tbls <- c(word_tbls, word_tbl_i)
+    }
+
+    word_tbls_combined <-
+      paste(
+        word_tbls,
+        collapse = "\n\n<w:p><w:r><w:br w:type=\"page\" /></w:r></w:p>\n\n"
+      )
+
     x <-
-      paste("```{=openxml}", as_word(x), "```\n\n", sep = "\n") %>%
-      knitr::asis_output()
+      knitr::asis_output(
+        paste("```{=openxml}", word_tbls_combined, "```\n\n", sep = "\n")
+      )
 
   } else {
 
