@@ -305,13 +305,45 @@ gt_save_docx <- function(
 
   filename <- gtsave_filename(path = path, filename = filename)
 
-  word_md_text <- paste0(c(
-    "```{=openxml}",
-    enc2utf8(as_word(data = data)),
-    "```",
-    ""),
-    collapse = "\n"
-  )
+  if (is_gt_tbl(data)) {
+
+  word_md_text <-
+    paste0(
+      c(
+        "```{=openxml}",
+        enc2utf8(as_word(data = data)),
+        "```",
+        ""),
+      collapse = "\n"
+    )
+
+  } else {
+
+    word_tbls <- c()
+
+    seq_tbls <- seq_len(nrow(data$gt_tbls))
+
+    for (i in seq_tbls) {
+      word_tbl_i <- as_word(grp_pull(data, which = i))
+      word_tbls <- c(word_tbls, word_tbl_i)
+    }
+
+    word_tbls_combined <-
+      paste(
+        word_tbls,
+        collapse = "\n\n<w:p><w:r><w:br w:type=\"page\" /></w:r></w:p>\n\n"
+      )
+
+    word_md_text <-
+      paste0(
+        c(
+          "```{=openxml}",
+          enc2utf8(word_tbls_combined),
+          "```",
+          ""),
+        collapse = "\n"
+      )
+  }
 
   word_md_file <- tempfile(fileext = ".md")
 
