@@ -73,7 +73,7 @@ opt_stylize <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   if (!(length(style) == 1 && style %in% 1:6)) {
     cli::cli_abort("The `style` value must be a number in the range of 1 to 6.")
@@ -278,7 +278,7 @@ opt_interactive <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   pagination_type <- rlang::arg_match(pagination_type)
 
@@ -403,7 +403,7 @@ opt_footnote_marks <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Validate input for `marks`
   validate_marks(marks)
@@ -474,7 +474,7 @@ opt_row_striping <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   tab_options(
     data = data,
@@ -546,7 +546,7 @@ opt_align_table_header <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   align <- rlang::arg_match(align)
 
@@ -831,7 +831,7 @@ opt_all_caps <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Ensure that all named locations are valid
   if (!all(locations %in% c("column_labels", "stub", "row_group"))) {
@@ -935,7 +935,7 @@ opt_table_lines <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   extent <- rlang::arg_match(extent)
 
@@ -1037,7 +1037,7 @@ opt_table_outline <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   if (style == "none") {
     width <- NULL
@@ -1180,7 +1180,7 @@ opt_table_font <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   existing_fonts <-
     dt_options_get_value(
@@ -1312,7 +1312,7 @@ opt_css <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   existing_additional_css <-
     dt_options_get_value(

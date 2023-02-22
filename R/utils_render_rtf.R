@@ -205,6 +205,7 @@ rtf_header <- function(
   rtf_header
 }
 
+# Generate an RTF file based on content in an RTF 'document'
 rtf_file <- function(
     data,
     document
@@ -214,11 +215,43 @@ rtf_file <- function(
   # Generate the header based on the RTF `document` content
   # (and also modify the document)
   #
-  # Scan for hexadecimal colors in the document; generate
-  # a <colortbl> object
-  matched_colors <-
-    unique(unlist(str_complete_extract(document, "<<COLOR:#[0-9a-fA-F]{6}>>")))
 
+  # Scan for any font declarations within the document (they use
+  # a specialized notation with angle brackets)
+  matched_fonts <-
+    unique(
+      unlist(
+        str_complete_extract(document, "<<FONT:.*?>>")
+      )
+    )
+
+  # Generate a <fonttbl> object, which is required for every RTF file
+  if (length(matched_fonts) > 0) {
+
+    fonttbl <-
+      rtf_fonttbl(
+        .font_names = c("Times", gsub("<<FONT:|>>", "", matched_fonts)),
+        .default_n = 1
+      )
+
+    for (i in seq_along(matched_fonts)) {
+      document <- gsub(matched_fonts[i], as.character(i), document, fixed = TRUE)
+    }
+
+  } else {
+    fonttbl <- rtf_fonttbl()
+  }
+
+  # Scan for any hexadecimal colors within the document (they use
+  # a specialized notation with angle brackets)
+  matched_colors <-
+    unique(
+      unlist(
+        str_complete_extract(document, "<<COLOR:#[0-9a-fA-F]{6}>>")
+      )
+    )
+
+  # Generate a <colortbl> object
   if (length(matched_colors) > 0) {
 
     colortbl <-
@@ -231,24 +264,7 @@ rtf_file <- function(
     colortbl <- rtf_colortbl(.hexadecimal_colors = "#FFFFFF")
   }
 
-  # Scan for font declarations in the document; generate a <fonttbl> object
-  matched_fonts <-
-    unique(unlist(str_complete_extract(document, "<<FONT:.*?>>")))
-
-  if (length(matched_fonts) > 0) {
-
-    fonttbl <-
-      rtf_fonttbl(.font_names = c("Times", gsub("<<FONT:|>>", "", matched_fonts)), .default_n = 1)
-
-    for (i in seq_along(matched_fonts)) {
-      document <- gsub(matched_fonts[i], as.character(i), document, fixed = TRUE)
-    }
-
-  } else {
-    fonttbl <- rtf_fonttbl()
-  }
-
-  # Create the document header
+  # Create the RTF document header (an 'rtf_header' object)
   header <- rtf_header(fonttbl, colortbl)
 
   #

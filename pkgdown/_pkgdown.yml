@@ -264,12 +264,13 @@ reference:
 
   - title: Multiple-table Functions
     contents:
-    - gt_multi
-    - opts_gt_tbls
-    - pull_gt_tbls
-    - add_gt_tbls
-    - replace_gt_tbls
-    - rm_gt_tbls
+    - gt_group
+    - grp_pull
+    - grp_add
+    - grp_clone
+    - grp_replace
+    - grp_rm
+    - grp_options
 
   - title: Vector Formatting Functions
     desc: >

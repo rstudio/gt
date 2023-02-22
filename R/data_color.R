@@ -542,7 +542,7 @@ data_color <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Get the correct `direction` value
   direction <- rlang::arg_match(direction)

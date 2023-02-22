@@ -64,7 +64,7 @@ cols_align <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Get the `align` value, this stops the function if there is no match
   align <- rlang::arg_match(align)
@@ -223,7 +223,7 @@ cols_align_decimal <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Resolve the `locale` value here with the global locale value
   locale <- resolve_locale(data = data, locale = locale)
@@ -446,7 +446,7 @@ cols_width <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = .data)
+  stop_if_not_gt_tbl(data = .data)
 
   # Collect a named list of column widths
   widths_list <- .list
@@ -629,7 +629,7 @@ cols_label <- function(
   labels_list <- .list
 
   # Perform input object validation
-  stop_if_not_gt(data = .data)
+  stop_if_not_gt_tbl(data = .data)
 
   # If nothing is provided, return `data` unchanged
   if (length(labels_list) == 0) {
@@ -821,7 +821,7 @@ cols_label_with <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   fn <- rlang::as_function(fn)
 
@@ -946,7 +946,7 @@ cols_move <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Get the columns supplied in `columns` as a character vector
   columns <-
@@ -1081,7 +1081,7 @@ cols_move_to_start <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   vars <- dt_boxhead_get_vars(data = data)
 
@@ -1190,7 +1190,7 @@ cols_move_to_end <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   vars <- dt_boxhead_get_vars(data = data)
 
@@ -1311,7 +1311,7 @@ cols_hide <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Get the columns supplied in `columns` as a character vector
   columns <-
@@ -1414,7 +1414,7 @@ cols_unhide <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Get the columns supplied in `columns` as a character vector
   columns <-
@@ -1603,7 +1603,7 @@ cols_merge <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Get the columns supplied in `columns` as a character vector
   columns <-
@@ -1788,7 +1788,7 @@ cols_merge_uncert <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   resolved <-
     cols_merge_resolver(
@@ -1936,7 +1936,7 @@ cols_merge_range <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   resolved <-
     cols_merge_resolver(
@@ -2134,7 +2134,7 @@ cols_merge_n_pct <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   resolved <-
     cols_merge_resolver(

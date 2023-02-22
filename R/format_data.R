@@ -240,7 +240,7 @@ fmt_number <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Ensure that arguments are matched
   system <- rlang::arg_match(system)
@@ -684,7 +684,7 @@ fmt_scientific <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Declare formatting function compatibility
   compat <- c("numeric", "integer")
@@ -1038,7 +1038,7 @@ fmt_engineering <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Declare formatting function compatibility
   compat <- c("numeric", "integer")
@@ -1549,7 +1549,7 @@ fmt_percent <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Ensure that arguments are matched
   system <- rlang::arg_match(system)
@@ -1779,7 +1779,7 @@ fmt_partsper <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Ensure that arguments are matched
   to_units <- rlang::arg_match(to_units)
@@ -2082,7 +2082,7 @@ fmt_fraction <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Ensure that arguments are matched
   system <- rlang::arg_match(system)
@@ -2623,7 +2623,7 @@ fmt_currency <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Ensure that arguments are matched
   system <- rlang::arg_match(system)
@@ -2784,7 +2784,7 @@ fmt_roman <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Ensure that arguments are matched
   case <- rlang::arg_match(case)
@@ -2984,7 +2984,7 @@ fmt_index <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Ensure that arguments are matched
   case <- rlang::arg_match(case)
@@ -3239,7 +3239,7 @@ fmt_spelled_num <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Declare formatting function compatibility
   compat <- c("numeric", "integer")
@@ -3481,7 +3481,7 @@ fmt_bytes <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Ensure that arguments are matched
   standard <- rlang::arg_match(standard)
@@ -3809,7 +3809,7 @@ fmt_date <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Declare formatting function compatibility
   compat <- c("Date", "POSIXt", "character")
@@ -4080,7 +4080,7 @@ fmt_time <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Declare formatting function compatibility
   compat <- c("Date", "POSIXt", "character")
@@ -4966,7 +4966,7 @@ fmt_datetime <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Declare formatting function compatibility
   compat <- c("Date", "POSIXct", "character")
@@ -5318,7 +5318,7 @@ fmt_duration <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Ensure that arguments are matched
   duration_style <- rlang::arg_match(duration_style)
@@ -6202,7 +6202,7 @@ fmt_url <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   if (as_button) {
 
@@ -6550,7 +6550,7 @@ fmt_markdown <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -6683,7 +6683,7 @@ fmt_passthrough <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions (as a function list) to `fmt()`
@@ -6879,7 +6879,7 @@ fmt_auto <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Ensure that arguments are matched
   lg_num_pref <- rlang::arg_match(lg_num_pref)
@@ -7185,7 +7185,7 @@ fmt <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   #
   # Resolution of columns and rows as character vectors

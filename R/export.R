@@ -128,7 +128,7 @@ gtsave <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl_or_group(data = data)
 
   # Get the lowercased file extension
   file_ext <- gtsave_file_ext(filename)
@@ -281,8 +281,12 @@ gt_save_rtf <- function(
 
   filename <- gtsave_filename(path = path, filename = filename)
 
-  rtf_lines <- as_rtf(data = data)
+  if (is_gt_tbl(data = data)) {
+    rtf_lines <- as_rtf(data = data)
+  }
 
+  # Remove the comments specific to knitr since this will be a standalone
+  # document not dependent on the knitr package
   rtf_lines <- gsub("!!!!!RAW-KNITR-CONTENT|RAW-KNITR-CONTENT!!!!!", "", rtf_lines)
 
   writeLines(rtf_lines, con = filename)
@@ -299,19 +303,54 @@ gt_save_docx <- function(
     open = rlang::is_interactive()
 ) {
 
+  # Because creation of a .docx container is somewhat difficult, we
+  # require the rmarkdown package to be installed to generate this
+  # type of output
   if (!rlang::is_installed("rmarkdown")) {
     stop("{rmarkdown} package is necessary to save gt tables as word documents.")
   }
 
   filename <- gtsave_filename(path = path, filename = filename)
 
-  word_md_text <- paste0(c(
-    "```{=openxml}",
-    enc2utf8(as_word(data = data)),
-    "```",
-    ""),
-    collapse = "\n"
-  )
+  if (is_gt_tbl(data = data)) {
+
+  word_md_text <-
+    paste0(
+      c(
+        "```{=openxml}",
+        enc2utf8(as_word(data = data)),
+        "```",
+        ""),
+      collapse = "\n"
+    )
+
+  } else {
+
+    word_tbls <- c()
+
+    seq_tbls <- seq_len(nrow(data$gt_tbls))
+
+    for (i in seq_tbls) {
+      word_tbl_i <- as_word(grp_pull(data, which = i))
+      word_tbls <- c(word_tbls, word_tbl_i)
+    }
+
+    word_tbls_combined <-
+      paste(
+        word_tbls,
+        collapse = "\n\n<w:p><w:r><w:br w:type=\"page\" /></w:r></w:p>\n\n"
+      )
+
+    word_md_text <-
+      paste0(
+        c(
+          "```{=openxml}",
+          enc2utf8(word_tbls_combined),
+          "```",
+          ""),
+        collapse = "\n"
+      )
+  }
 
   word_md_file <- tempfile(fileext = ".md")
 
@@ -406,7 +445,7 @@ as_raw_html <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   html_table <- as.character(as.tags.gt_tbl(data))
 
@@ -505,7 +544,7 @@ as_raw_html <- function(
 as_latex <- function(data) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Build all table data objects through a common pipeline
   data <- build_data(data = data, context = "latex")
@@ -593,7 +632,7 @@ as_latex <- function(data) {
 as_rtf <- function(data) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   if (dt_options_get_value(data = data, option = "page_numbering")) {
 
@@ -712,7 +751,7 @@ as_word <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   caption_location <- rlang::arg_match(caption_location)
 
@@ -786,7 +825,7 @@ as_word_tbl_header_caption <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Composition of caption OOXML -----------------------------------------------
 
@@ -823,7 +862,7 @@ as_word_tbl_body <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Composition of table Word OOXML -----------------------------------------------
 
@@ -937,7 +976,7 @@ as_word_tbl_body <- function(
 extract_summary <- function(data) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Stop function if there are no
   # directives to create summary rows
@@ -1067,7 +1106,7 @@ extract_cells <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Ensure that `output` is matched correctly to one option
   output <- rlang::arg_match(output)

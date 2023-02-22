@@ -106,7 +106,7 @@ sub_missing <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions (as a function list) to `subst()`
@@ -297,7 +297,7 @@ sub_zero <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions (as a function list) to `subst()`
@@ -481,7 +481,7 @@ sub_small_vals <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Check that the `sign` value is an acceptable value
   check_sub_fn_sign(sign = sign)
@@ -734,7 +734,7 @@ sub_large_vals <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Check that the `sign` value is an acceptable value
   check_sub_fn_sign(sign = sign)
@@ -1011,7 +1011,7 @@ sub_values <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   if (is.null(values) && is.null(pattern) && is.null(fn)) {
     cli::cli_abort(
@@ -1164,7 +1164,7 @@ subst <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   #
   # Resolution of columns and rows as character vectors
