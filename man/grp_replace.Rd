@@ -25,9 +25,9 @@ An object of class \code{gt_group}.
 The \code{\link[=gt_group]{gt_group()}} function can be used to create a container for multiple
 \strong{gt} tables. In some circumstances, you might want to replace a specific
 \code{gt_tbl} object (or multiple) with a different one. This can be done with the
-\code{grp_replace()} function. The important thing is that the number of
-\strong{gt} tables provided must equal the number of indices for tables present
-in the \code{gt_group} object.
+\code{grp_replace()} function. The important thing is that the number of \strong{gt}
+tables provided must equal the number of indices for tables present in the
+\code{gt_group} object.
 }
 \section{Function ID}{
 
@@ -42,6 +42,7 @@ in the \code{gt_group} object.
 \seealso{
 Other multiple-table functions: 
 \code{\link{grp_add}()},
+\code{\link{grp_clone}()},
 \code{\link{grp_options}()},
 \code{\link{grp_pull}()},
 \code{\link{grp_rm}()},

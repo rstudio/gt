@@ -4,7 +4,7 @@
 \alias{gt_group}
 \title{Create a \code{gt_group} container for multiple \strong{gt} table objects}
 \usage{
-gt_group(..., .list = list2(...), .use_parent_opts = FALSE)
+gt_group(..., .list = list2(...), .use_grp_opts = FALSE)
 }
 \arguments{
 \item{...}{One or more \strong{gt} table (\code{gt_tbl}) objects, typically generated
@@ -12,7 +12,7 @@ via the \code{\link[=gt]{gt()}} function.}
 
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
 
-\item{.use_parent_opts}{Should options specified in the \code{gt_group} object be
+\item{.use_grp_opts}{Should options specified in the \code{gt_group} object be
 applied to all contained \strong{gt} tables? By default this is \code{FALSE}.}
 }
 \value{
@@ -39,6 +39,7 @@ occurs between each of those.
 \seealso{
 Other multiple-table functions: 
 \code{\link{grp_add}()},
+\code{\link{grp_clone}()},
 \code{\link{grp_options}()},
 \code{\link{grp_pull}()},
 \code{\link{grp_replace}()},

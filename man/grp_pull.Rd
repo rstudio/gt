@@ -36,6 +36,7 @@ within the \code{gt_group} object.
 \seealso{
 Other multiple-table functions: 
 \code{\link{grp_add}()},
+\code{\link{grp_clone}()},
 \code{\link{grp_options}()},
 \code{\link{grp_replace}()},
 \code{\link{grp_rm}()},
