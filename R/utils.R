@@ -1622,7 +1622,7 @@ is_nonempty_string <- function(x) {
 #'
 #' @noRd
 stop_if_not_gt_tbl <- function(data) {
-  if (!is_gt_tbl(data)) {
+  if (!is_gt_tbl(data = data)) {
     cli::cli_abort(
       "The `data` provided is not a `gt_tbl` object."
     )
@@ -1635,8 +1635,10 @@ stop_if_not_gt_tbl <- function(data) {
 #'
 #' @noRd
 stop_if_not_gt_group <- function(data) {
-  if (!is_gt_group(data)) {
-    cli::cli_abort("The object to `data` is not a `gt_group` object.")
+  if (!is_gt_group(data = data)) {
+    cli::cli_abort(
+      "The `data` provided is not a `gt_group` object."
+    )
   }
 }
 
@@ -1646,7 +1648,7 @@ stop_if_not_gt_group <- function(data) {
 #'
 #' @noRd
 stop_if_not_gt_tbl_or_group <- function(data) {
-  if (!is_gt_tbl(data) && !is_gt_group(data)) {
+  if (!is_gt_tbl(data = data) && !is_gt_group(data = data)) {
     cli::cli_abort(
       "The `data` provided is neither a `gt_tbl` nor a `gt_group` object."
     )
