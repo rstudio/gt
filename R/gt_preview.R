@@ -57,7 +57,7 @@ gt_preview <- function(
     incl_rownums = TRUE
 ) {
 
-  if (is_gt(data)) {
+  if (is_gt_tbl(data)) {
     data <- dt_data_get(data = data)
   }
 
