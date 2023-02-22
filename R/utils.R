@@ -1587,8 +1587,25 @@ process_footnote_marks <- function(x, marks) {
 #'
 #' @param data A table object that is created using the [gt()] function.
 #' @noRd
-is_gt <- function(data) {
+is_gt_tbl <- function(data) {
   inherits(data, "gt_tbl")
+}
+
+#' Determine whether an object is a `gt_group`
+#'
+#' @param data A table object that is created using the [gt_group()] function.
+#' @noRd
+is_gt_group <- function(data) {
+  inherits(data, "gt_group")
+}
+
+#' Determine whether an object inherits from `gt_tbl` or `gt_group`
+#'
+#' @param data A table object that is created either using the [gt()] or
+#' [gt_group()] functions.
+#' @noRd
+is_gt_tbl_or_group <- function(data) {
+  inherits(data, "gt_tbl") || inherits(data, "gt_group")
 }
 
 #' Determines whether a character vector is non-empty
