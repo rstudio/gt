@@ -1622,8 +1622,13 @@ is_nonempty_string <- function(x) {
 #'
 #' @noRd
 stop_if_not_gt <- function(data) {
-  if (!is_gt(data)) {
-    cli::cli_abort("The object to `data` is not a `gt_tbl` object.")
+  if (!is_gt_tbl(data)) {
+    cli::cli_abort(
+      "The `data` provided is not a `gt_tbl` object."
+    )
+  }
+}
+
   }
 }
 
