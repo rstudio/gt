@@ -1621,7 +1621,7 @@ is_nonempty_string <- function(x) {
 #' @param data The input `data` object that is to be validated.
 #'
 #' @noRd
-stop_if_not_gt <- function(data) {
+stop_if_not_gt_tbl <- function(data) {
   if (!is_gt_tbl(data)) {
     cli::cli_abort(
       "The `data` provided is not a `gt_tbl` object."

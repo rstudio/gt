@@ -52,7 +52,7 @@ row_group_order <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Stop function if `groups` is not a `character` vector
   if (!inherits(groups, "character")) {

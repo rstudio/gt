@@ -226,7 +226,7 @@ tab_style_body <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   targets <-
     rlang::arg_match(

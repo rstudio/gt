@@ -565,9 +565,9 @@ grp_options <- function(
 ) {
 
   # Perform input object validation for the `gt_group` object
-  # stop_if_not_gt(data = data)
+  stop_if_not_gt_group(data = data)
 
-  # Extract options from `data` (which is a `gt_group` object)
+  # Extract options from `data`
   opts_df <- data[["gt_tbl_options"]]
 
   arg_names <-
@@ -703,7 +703,7 @@ generate_gt_tbl_tbl_i <- function(i, gt_tbl, active = TRUE) {
 
 generate_gt_tbl_info_list <- function(gt_tbl) {
 
-  stop_if_not_gt(data = gt_tbl)
+  stop_if_not_gt_tbl(data = gt_tbl)
 
   gt_tbl_built <- build_data(data = gt_tbl, context = "html")
 

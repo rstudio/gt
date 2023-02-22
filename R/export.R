@@ -438,7 +438,7 @@ as_raw_html <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   html_table <- as.character(as.tags.gt_tbl(data))
 
@@ -537,7 +537,7 @@ as_raw_html <- function(
 as_latex <- function(data) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Build all table data objects through a common pipeline
   data <- build_data(data = data, context = "latex")
@@ -625,7 +625,7 @@ as_latex <- function(data) {
 as_rtf <- function(data) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   if (dt_options_get_value(data = data, option = "page_numbering")) {
 
@@ -744,7 +744,7 @@ as_word <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   caption_location <- rlang::arg_match(caption_location)
 
@@ -818,7 +818,7 @@ as_word_tbl_header_caption <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Composition of caption OOXML -----------------------------------------------
 
@@ -855,7 +855,7 @@ as_word_tbl_body <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Composition of table Word OOXML -----------------------------------------------
 
@@ -969,7 +969,7 @@ as_word_tbl_body <- function(
 extract_summary <- function(data) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Stop function if there are no
   # directives to create summary rows
@@ -1099,7 +1099,7 @@ extract_cells <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Ensure that `output` is matched correctly to one option
   output <- rlang::arg_match(output)
