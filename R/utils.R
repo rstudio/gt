@@ -1629,6 +1629,27 @@ stop_if_not_gt <- function(data) {
   }
 }
 
+#' Stop any function if object is not a `gt_group` object
+#'
+#' @param data The input `data` object that is to be validated.
+#'
+#' @noRd
+stop_if_not_gt_group <- function(data) {
+  if (!is_gt_group(data)) {
+    cli::cli_abort("The object to `data` is not a `gt_group` object.")
+  }
+}
+
+#' Stop any function if object is neither `gt_tbl` nor `gt_group`
+#'
+#' @param data The input `data` object that is to be validated.
+#'
+#' @noRd
+stop_if_not_gt_tbl_or_group <- function(data) {
+  if (!is_gt_tbl(data) && !is_gt_group(data)) {
+    cli::cli_abort(
+      "The `data` provided is neither a `gt_tbl` nor a `gt_group` object."
+    )
   }
 }
 
