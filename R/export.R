@@ -281,8 +281,12 @@ gt_save_rtf <- function(
 
   filename <- gtsave_filename(path = path, filename = filename)
 
-  rtf_lines <- as_rtf(data = data)
+  if (is_gt_tbl(data = data)) {
+    rtf_lines <- as_rtf(data = data)
+  }
 
+  # Remove the comments specific to knitr since this will be a standalone
+  # document not dependent on the knitr package
   rtf_lines <- gsub("!!!!!RAW-KNITR-CONTENT|RAW-KNITR-CONTENT!!!!!", "", rtf_lines)
 
   writeLines(rtf_lines, con = filename)
@@ -299,13 +303,16 @@ gt_save_docx <- function(
     open = rlang::is_interactive()
 ) {
 
+  # Because creation of a .docx container is somewhat difficult, we
+  # require the rmarkdown package to be installed to generate this
+  # type of output
   if (!rlang::is_installed("rmarkdown")) {
     stop("{rmarkdown} package is necessary to save gt tables as word documents.")
   }
 
   filename <- gtsave_filename(path = path, filename = filename)
 
-  if (is_gt_tbl(data)) {
+  if (is_gt_tbl(data = data)) {
 
   word_md_text <-
     paste0(
