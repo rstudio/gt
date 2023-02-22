@@ -128,7 +128,7 @@ gtsave <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl_or_group(data = data)
 
   # Get the lowercased file extension
   file_ext <- gtsave_file_ext(filename)
