@@ -29,9 +29,7 @@ function, you might want to add more \strong{gt} tables to that container. While
 it's common to generate a \code{gt_group} object with a collection of \code{gt_tbl}
 objects, one can also create an 'empty' \code{gt_group} object. Whatever your
 workflow might be, the \code{grp_add()} function makes it possible to flexibly
-add one or more new
-\strong{gt} tables, returning a refreshed \code{gt_group}
-object.
+add one or more new \strong{gt} tables, returning a refreshed \code{gt_group} object.
 }
 \section{Function ID}{
 
@@ -45,6 +43,7 @@ object.
 
 \seealso{
 Other multiple-table functions: 
+\code{\link{grp_clone}()},
 \code{\link{grp_options}()},
 \code{\link{grp_pull}()},
 \code{\link{grp_replace}()},

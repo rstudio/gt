@@ -19,7 +19,7 @@ An object of class \code{gt_group}.
 \description{
 A \code{gt_group} object, created through use of the \code{\link[=gt_group]{gt_group()}} function, can
 hold a multiple of \strong{gt} tables. However, you might want to delete one or
-more \code{gt_tbl} objects table from that container. With \code{grp_rm()}, this
+more \code{gt_tbl} objects table from that container. With \code{grp_rm()}, this is
 possible and safe to perform. What's returned is a \code{gt_group} object with the
 specified \code{gt_tbl} objects gone. The only thing you need to provide is the
 index value for the \strong{gt} table within the \code{gt_group} object.
@@ -37,6 +37,7 @@ index value for the \strong{gt} table within the \code{gt_group} object.
 \seealso{
 Other multiple-table functions: 
 \code{\link{grp_add}()},
+\code{\link{grp_clone}()},
 \code{\link{grp_options}()},
 \code{\link{grp_pull}()},
 \code{\link{grp_replace}()},

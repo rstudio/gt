@@ -123,11 +123,7 @@ knit_print.gt_group <- function(x, ...) {
       word_tbls <- c(word_tbls, word_tbl_i)
     }
 
-    word_tbls_combined <-
-      paste(
-        word_tbls,
-        collapse = "\n\n<w:p><w:r><w:br w:type=\"page\" /></w:r></w:p>\n\n"
-      )
+    word_tbls_combined <- paste(word_tbls, collapse = page_break_word())
 
     x <-
       knitr::asis_output(
@@ -232,4 +228,8 @@ knitr_is_rtf_output <- function() {
 
 knitr_is_word_output <- function() {
   "docx" %in% knitr::opts_knit$get("rmarkdown.pandoc.to")
+}
+
+page_break_word <- function() {
+  "\n\n<w:p><w:r><w:br w:type=\"page\" /></w:r></w:p>\n\n"
 }
