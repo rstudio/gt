@@ -43,9 +43,6 @@
     <loc>https://gt.rstudio.com/dev/news/index.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/dev/reference/add_gt_tbls.html</loc>
-  </url>
-  <url>
     <loc>https://gt.rstudio.com/dev/reference/adjust_luminance.html</loc>
   </url>
   <url>
@@ -256,6 +253,24 @@
     <loc>https://gt.rstudio.com/dev/reference/grand_summary_rows.html</loc>
   </url>
   <url>
+    <loc>https://gt.rstudio.com/dev/reference/grp_add.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/grp_clone.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/grp_options.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/grp_pull.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/grp_replace.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/grp_rm.html</loc>
+  </url>
+  <url>
     <loc>https://gt.rstudio.com/dev/reference/gt-options.html</loc>
   </url>
   <url>
@@ -265,10 +280,10 @@
     <loc>https://gt.rstudio.com/dev/reference/gt.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/dev/reference/gt_latex_dependencies.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/gt_group.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/dev/reference/gt_multi.html</loc>
+    <loc>https://gt.rstudio.com/dev/reference/gt_latex_dependencies.html</loc>
   </url>
   <url>
     <loc>https://gt.rstudio.com/dev/reference/gt_output.html</loc>
@@ -349,9 +364,6 @@
     <loc>https://gt.rstudio.com/dev/reference/opt_vertical_padding.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/dev/reference/opts_gt_tbls.html</loc>
-  </url>
-  <url>
     <loc>https://gt.rstudio.com/dev/reference/pct.html</loc>
   </url>
   <url>
@@ -361,13 +373,13 @@
     <loc>https://gt.rstudio.com/dev/reference/pizzaplace.html</loc>
   </url>
   <url>
+    <loc>https://gt.rstudio.com/dev/reference/print.gt_group.html</loc>
+  </url>
+  <url>
     <loc>https://gt.rstudio.com/dev/reference/print.gt_tbl.html</loc>
   </url>
   <url>
     <loc>https://gt.rstudio.com/dev/reference/print.rtf_text.html</loc>
-  </url>
-  <url>
-    <loc>https://gt.rstudio.com/dev/reference/pull_gt_tbls.html</loc>
   </url>
   <url>
     <loc>https://gt.rstudio.com/dev/reference/px.html</loc>
@@ -382,16 +394,10 @@
     <loc>https://gt.rstudio.com/dev/reference/render_gt.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/dev/reference/replace_gt_tbls.html</loc>
-  </url>
-  <url>
     <loc>https://gt.rstudio.com/dev/reference/rm_caption.html</loc>
   </url>
   <url>
     <loc>https://gt.rstudio.com/dev/reference/rm_footnotes.html</loc>
-  </url>
-  <url>
-    <loc>https://gt.rstudio.com/dev/reference/rm_gt_tbls.html</loc>
   </url>
   <url>
     <loc>https://gt.rstudio.com/dev/reference/rm_header.html</loc>
