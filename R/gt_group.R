@@ -166,7 +166,7 @@ grp_add <- function(
     cli::cli_abort("Values cannot be supplied for both `.before` and `.after`.")
   }
 
-  valid_idx <- seq_len(nrow(gt_group[["gt_tbls"]]))
+  valid_idx <- get_indices_gt_tbls(data = gt_group)
 
   if (is.null(.before) && is.null(.after)) {
 
@@ -298,7 +298,7 @@ grp_clone <- function(
     cli::cli_abort("Values cannot be supplied for both `before` and `after`.")
   }
 
-  valid_idx <- seq_len(nrow(data[["gt_tbls"]]))
+  valid_idx <- get_indices_gt_tbls(data = data)
 
   if (is.null(before) && is.null(after)) {
 
@@ -414,7 +414,7 @@ grp_replace <- function(
 
   gt_group <- .data
 
-  valid_idx <- seq_len(nrow(gt_group[["gt_tbls"]]))
+  valid_idx <- get_indices_gt_tbls(data = gt_group)
 
   if (!all(.which %in% valid_idx)) {
     cli::cli_abort("All values provided in `.which` must be valid indices.")
@@ -431,9 +431,7 @@ grp_replace <- function(
   #
 
   for (i in seq_len(length(.which))) {
-
     gt_tbl_tbl_i <- generate_gt_tbl_tbl_i(i = i, gt_tbl = gt_tbl_list[[i]])
-
     gt_group[["gt_tbls"]][.which[i], ] <- gt_tbl_tbl_i
   }
 
@@ -472,9 +470,6 @@ grp_rm <- function(
     data,
     which
 ) {
-
-  # TODO: this only handles the removal of a single table currently;
-  # need to implement removal of multiple `gt_tbl`s to a bare list
 
   remove_gt_tbl_from_gt_group(data = data, which = which)
 }
@@ -893,7 +888,7 @@ generate_gt_tbl_info_list <- function(gt_tbl) {
 
 extract_gt_tbl_from_gt_group <- function(data, which) {
 
-  valid_idx <- seq_len(nrow(data[["gt_tbls"]]))
+  valid_idx <- get_indices_gt_tbls(data = data)
 
   if (!(which %in% valid_idx)) {
     cli::cli_abort("The value for `which` is not a valid index.")
@@ -906,9 +901,9 @@ extract_gt_tbl_from_gt_group <- function(data, which) {
 
 remove_gt_tbl_from_gt_group <- function(data, which) {
 
-  valid_idx <- seq_len(nrow(data[["gt_tbls"]]))
+  valid_idx <- get_indices_gt_tbls(data = data)
 
-  if (!(which %in% valid_idx)) {
+  if (!all(which %in% valid_idx)) {
     cli::cli_abort("The value for `which` is not a valid index.")
   }
 
@@ -920,11 +915,19 @@ remove_gt_tbl_from_gt_group <- function(data, which) {
 }
 
 reindex_gt_tbls <- function(data) {
-  new_idx <- seq_len(nrow(data[["gt_tbls"]]))
+  new_idx <- get_indices_gt_tbls(data = data)
   data[["gt_tbls"]][["i"]] <- new_idx
   data
 }
 
 get_use_grp_opts_param <- function(data) {
   data[["use_grp_opts"]]
+}
+
+get_indices_gt_tbls <- function(data) {
+  seq_len(nrow(data[["gt_tbls"]]))
+}
+
+get_number_of_gt_tbls <- function(data) {
+  nrow(data[["gt_tbls"]])
 }
