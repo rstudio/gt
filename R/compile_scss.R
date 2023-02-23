@@ -15,6 +15,10 @@ compile_scss <- function(data, id = NULL) {
       }
     )
 
+  # TODO: Seems like `id` can never be NULL so an ID is always placed in
+  # the HTML table; we always need ID values for accessibility features
+  # but in some use cases we'd not want to prefix the CSS rules with the
+  # ID (this should perhaps be another options available in `tab_options()`)
   has_id <- !is.null(id)
 
   # Get the vector of fonts and transform to a `font-family` string
