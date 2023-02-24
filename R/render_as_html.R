@@ -72,13 +72,16 @@ finalize_html_table <- function(
     quarto_use_bootstrap,
     ...) {
 
+  quarto_disable_processing <- tolower(as.character(quarto_disable_processing))
+  quarto_use_bootstrap <- tolower(as.character(quarto_use_bootstrap))
+
   html_tbl <-
     as.character(
       htmltools::tags$table(
         class = "gt_table",
         style = style,
-        `data-quarto-disable-processing` = if (quarto_disable_processing) "true" else "false",
-        `data-quarto-bootstrap` = if (quarto_use_bootstrap) "true" else "false",
+        `data-quarto-disable-processing` = quarto_disable_processing,
+        `data-quarto-bootstrap` = quarto_use_bootstrap,
         ...
       )
     )
