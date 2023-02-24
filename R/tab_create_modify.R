@@ -2552,6 +2552,7 @@ tab_options <- function(
     page.margin.bottom = NULL,
     page.header.height = NULL,
     page.footer.height = NULL,
+    quarto.use_bootstrap = NULL,
     quarto.disable_processing = NULL
 ) {
 
