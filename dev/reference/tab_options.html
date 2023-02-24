@@ -248,6 +248,7 @@ components, the subcomponents, and the element that can adjusted.</p>
 <span>  page.margin.bottom <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  page.header.height <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  page.footer.height <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  quarto.use_bootstrap <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  quarto.disable_processing <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -670,11 +671,14 @@ bottom page margins. The default values for each of these is <code>1.0in</code>.
 and footer for RTF table outputs. Default values for both are <code>0.5in</code>.</p></dd>
 
 
-<dt>quarto.disable_processing</dt>
-<dd><p>When publishing a <strong>gt</strong> table with Quarto,
-the table can undergo transformation to support advanced Quarto features.
-Setting this to <code>TRUE</code> disables any transformation of the table. This is
-<code>FALSE</code> by default.</p></dd>
+<dt>quarto.use_bootstrap, quarto.disable_processing</dt>
+<dd><p>When rendering a <strong>gt</strong>
+table with Quarto, the table can undergo transformations to support
+advanced Quarto features. Setting <code>quarto.use_bootstrap</code> to <code>TRUE</code> (<code>FALSE</code>
+by default) will allow Quarto to add Bootstrap classes to the table,
+allowing those styles to permeate the table. Quarto performs other
+alterations as well but they can all be deactivated with
+<code>quarto.disable_processing = TRUE</code> (this option is <code>FALSE</code> by default).</p></dd>
 
 </dl></div>
     <div class="section level2">
