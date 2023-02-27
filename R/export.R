@@ -451,6 +451,17 @@ as_raw_html <- function(
 
   if (inline_css) {
 
+    # Check whether juicyjuice is in the package library and stop function
+    # only if it is not present
+    if (!requireNamespace("juicyjuice", quietly = TRUE)) {
+
+      cli::cli_abort(c(
+        "Using `as_raw_html(... , inline_css = TRUE)` requires the juicyjuice
+        package.",
+        "*" = "It can be installed with `install.packages(\"juicyjuice\")`."
+      ))
+    }
+
     font_vec <- unique(dt_options_get_value(data = data, option = "table_font_names"))
     font_family_attr <- as_css_font_family_attr(font_vec = font_vec)
 
