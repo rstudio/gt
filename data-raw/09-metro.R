@@ -12,7 +12,7 @@ metro <-
         connect_tramway = col_character(),
         connect_transilien = col_character(),
         connect_other = col_character(),
-        passengers = col_double(),
+        passengers = col_integer(),
         latitude = col_double(),
         longitude = col_double(),
         location = col_character(),
