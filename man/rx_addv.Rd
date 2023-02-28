@@ -90,7 +90,7 @@ Here is a glimpse at the data available in \code{rx_addv}.
 
 \section{Dataset ID and Badge}{
 
-DATA-9
+DATA-10
 
 \if{html}{\out{
 <div align="center"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_rx_addv.png" alt="This image of that of a dataset badge." style="width:50\%;padding-bottom:20px;"></div>
@@ -107,6 +107,7 @@ Other datasets:
 \code{\link{countrypops}},
 \code{\link{exibble}},
 \code{\link{gtcars}},
+\code{\link{metro}},
 \code{\link{pizzaplace}},
 \code{\link{rx_adsl}},
 \code{\link{sp500}},
