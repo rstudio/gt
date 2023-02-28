@@ -1482,6 +1482,39 @@ extract_strings <- function(text, pattern, perl = TRUE) {
   sapply(regmatches(text, regexec(pattern, text, perl = perl)), "[", 1)
 }
 
+any_labeled_columns_in_data_tbl <- function(data) {
+
+  data_tbl <- dt_data_get(data = data)
+
+  any(
+    vapply(
+      seq_len(ncol(data_tbl)),
+      FUN.VALUE = logical(1),
+      USE.NAMES = FALSE,
+      FUN = function(x) {
+        "label" %in% names(attributes(data_tbl[[x]]))
+      }
+    )
+  )
+}
+
+get_columns_labels_from_attrs <- function(data) {
+
+  data_tbl <- dt_data_get(data = data)
+
+  # Initialize vector of column labels
+  var_labels <- colnames(data_tbl)
+
+  # Overwrite `var_labels` wherever a column contains a `label` attribute value
+  for (i in seq_along(var_labels)) {
+    if ("label" %in% names(attributes(data_tbl[[i]]))) {
+      var_labels[i] <- attr(data_tbl[[i]], which = "label")
+    }
+  }
+
+  var_labels
+}
+
 #' Split any strings that are values in scientific notation
 #'
 #' @param x_str The input character vector of values formatted in scientific
