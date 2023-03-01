@@ -298,10 +298,10 @@ reference:
 
   - title: Datasets
     desc: >
-      The **gt** package is equipped with nine datasets that come in all shapes
-      and sizes. Use them to experiment with the package. Many examples in the
-      internal help documents use these datasets to quickly demonstrate the key
-      features of **gt**.
+      The **gt** package is equipped with ten datasets that come in all shapes
+      and sizes. Use them to experiment with the package! Many examples in the
+      internal help documents use these datasets to quickly demonstrate the
+      awesome features of **gt**.
     contents:
     - countrypops
     - sza
@@ -310,6 +310,7 @@ reference:
     - pizzaplace
     - exibble
     - towny
+    - metro
     - rx_adsl
     - rx_addv
 

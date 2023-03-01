@@ -62,6 +62,7 @@ DATA-1
 Other datasets: 
 \code{\link{exibble}},
 \code{\link{gtcars}},
+\code{\link{metro}},
 \code{\link{pizzaplace}},
 \code{\link{rx_addv}},
 \code{\link{rx_adsl}},

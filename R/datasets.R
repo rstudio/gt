@@ -466,6 +466,81 @@
 #'
 "towny"
 
+#' The stations of the Paris Metro
+#'
+#' @description
+#'
+#' A dataset with information on all 308 Paris Metro stations as of February
+#' 2023. Each record represents a station, describing which Metro lines are
+#' serviced by the station, which other connections are available, and annual
+#' passenger volumes. Basic location information is provided for each station in
+#' terms where they reside on a municipal level, and, through latitude/longitude
+#' coordinates.
+#'
+#' The system has 16 lines (numbered from 1 to 14, with two additional lines:
+#' 3bis and 7bis) and covers over 200 kilometers of track. The Metro runs on
+#' standard gauge tracks (1,435 mm) and operates using a variety of rolling
+#' stock, including rubber-tired trains and steel-wheeled trains (which are far
+#' more common).
+#'
+#' The Metro is operated by the RATP, which also operates other transit systems
+#' in the region, including buses, trams, and the RER. The RER is an important
+#' component of the region's transit infrastructure, and several RER stations
+#' have connectivity with the Metro. This integration allows passengers to
+#' transfer between those two systems seamlessly. The Metro also has connections
+#' to the Transilien rail network, tramway stations, several major train
+#' stations (e.g., Gare du Nord, Gare de l'Est, etc.), and many bus lines.
+#'
+#' @format A tibble with 308 rows and 11 variables:
+#' \describe{
+#' \item{name}{The name of the station.}
+#' \item{caption}{In some cases, a station will have a caption that might
+#' describe a nearby place of interest. This is `NA` if there isn't a caption
+#' for the station name.}
+#' \item{lines}{All Metro lines associated with the station. This is a
+#' `character`-based, comma-separated series of line names.}
+#' \item{connect_rer}{Station connections with the RER. The RER system has
+#' five lines (A, B, C, D, and E) with 257 stations and several interchanges
+#' with the Metro.}
+#' \item{connect_tram}{Connections with tramway lines. This system has twelve
+#' lines in operation (T1, T2, T3a, T3b, T4, T5, T6, T7, T8, T9, T11, and T13)
+#' with 235 stations.}
+#' \item{connect_transilien}{Connections with Transilien lines. This system has
+#' eight lines in operation (H, J, K, L, N, P, R, and U).}
+#' \item{connect_other}{Other connections with transportation infrastructure
+#' such as regional, intercity, night, and high-speed trains (typically at
+#' railway stations).}
+#' \item{latitude, longitude}{The location of the station, given as
+#' latitude and longitude values in decimal degrees.}
+#' \item{location}{The arrondissement of Paris or municipality in which the
+#' station resides. For some stations located at borders, the grouping of
+#' locations will be presented as a comma-separated series}
+#' \item{passengers}{The total number of Metro station entries during 2021. Some
+#' of the newest stations in the Metro system do not have this data, thus they
+#' show `NA` values.}
+#' }
+#'
+#' @section Examples:
+#'
+#' Here is a glimpse at the data available in `metro`.
+#'
+#' ```{r}
+#' dplyr::glimpse(metro)
+#' ```
+#'
+#' @family datasets
+#' @section Dataset ID and Badge:
+#' DATA-8
+#'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_metro.png")`
+#' }}
+#'
+#' @section Dataset Introduced:
+#' *In Development*
+#'
+"metro"
+
 #' An ADSL-flavored clinical trial toy dataset
 #'
 #' @description
@@ -525,7 +600,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-8
+#' DATA-9
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_rx_adsl.png")`
@@ -555,7 +630,7 @@
 #' with CDISC ADaM rules. The intent is to showcase the workflow for clinical
 #' table creation rather than creating a fully CDISC-compliant ADaM dataset.
 #'
-#' @format A tibble with 182 rows and 20 variables:
+#' @format A tibble with 291 rows and 20 variables:
 #' \describe{
 #' \item{STUDYID, STUDYIDN}{The unique study identifier and its numeric
 #' version.}
@@ -598,7 +673,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-9
+#' DATA-10
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_rx_addv.png")`

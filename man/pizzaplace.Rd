@@ -158,6 +158,7 @@ Other datasets:
 \code{\link{countrypops}},
 \code{\link{exibble}},
 \code{\link{gtcars}},
+\code{\link{metro}},
 \code{\link{rx_addv}},
 \code{\link{rx_adsl}},
 \code{\link{sp500}},
