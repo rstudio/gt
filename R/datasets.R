@@ -466,13 +466,13 @@
 #'
 "towny"
 
-#' Dataset of Paris Metro stations and their connections
+#' The stations of the Paris Metro
 #'
 #' @description
 #'
 #' A dataset with information on all 308 Paris Metro stations as of February
 #' 2023. Each record represents a station, describing which Metro lines are
-#' serviced by the station, which other connections are available, annual
+#' serviced by the station, which other connections are available, and annual
 #' passenger volumes. Basic location information is provided for each station in
 #' terms where they reside on a municipal level, and, through latitude/longitude
 #' coordinates.
@@ -491,7 +491,7 @@
 #' to the Transilien rail network, tramway stations, several major train
 #' stations (e.g., Gare du Nord, Gare de l'Est, etc.), and many bus lines.
 #'
-#' @format A tibble with 414 rows and 25 variables:
+#' @format A tibble with 308 rows and 11 variables:
 #' \describe{
 #' \item{name}{The name of the station.}
 #' \item{caption}{In some cases, a station will have a caption that might
@@ -630,7 +630,7 @@
 #' with CDISC ADaM rules. The intent is to showcase the workflow for clinical
 #' table creation rather than creating a fully CDISC-compliant ADaM dataset.
 #'
-#' @format A tibble with 182 rows and 20 variables:
+#' @format A tibble with 291 rows and 20 variables:
 #' \describe{
 #' \item{STUDYID, STUDYIDN}{The unique study identifier and its numeric
 #' version.}
