@@ -498,10 +498,10 @@
 #' describe a nearby place of interest. This is `NA` if there isn't a caption
 #' for the station name.}
 #' \item{lines}{All Metro lines associated with the station. This is a
-#' `character`-based, comma-separated list of line numbers.}
+#' `character`-based, comma-separated series of line names.}
 #' \item{connect_rer}{Station connections with the RER. The RER system has
-#' five lines (A, B, C, D, and E) with 257 stations and interchanges with the
-#' Metro.}
+#' five lines (A, B, C, D, and E) with 257 stations and several interchanges
+#' with the Metro.}
 #' \item{connect_tram}{Connections with tramway lines. This system has twelve
 #' lines in operation (T1, T2, T3a, T3b, T4, T5, T6, T7, T8, T9, T11, and T13)
 #' with 235 stations.}
@@ -509,14 +509,15 @@
 #' eight lines in operation (H, J, K, L, N, P, R, and U).}
 #' \item{connect_other}{Other connections with transportation infrastructure
 #' such as regional, intercity, night, and high-speed trains (typically at
-#' railway stations) .}
+#' railway stations).}
 #' \item{latitude, longitude}{The location of the station, given as
 #' latitude and longitude values in decimal degrees.}
 #' \item{location}{The arrondissement of Paris or municipality in which the
-#' station resides. For some stations located at borders, the shared locations
-#' will be presented as a comma-separated list.}
-#' \item{passengers}{The total number of station entries during 2021. Newer
-#' stations do not this data and thus they have `NA` values.}
+#' station resides. For some stations located at borders, the grouping of
+#' locations will be presented as a comma-separated series}
+#' \item{passengers}{The total number of Metro station entries during 2021. Some
+#' of the newest stations in the Metro system do not have this data, thus they
+#' show `NA` values.}
 #' }
 #'
 #' @section Examples:
