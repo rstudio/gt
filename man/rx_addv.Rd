@@ -5,7 +5,7 @@
 \alias{rx_addv}
 \title{An ADDV-flavored clinical trial toy dataset}
 \format{
-A tibble with 182 rows and 20 variables:
+A tibble with 291 rows and 20 variables:
 \describe{
 \item{STUDYID, STUDYIDN}{The unique study identifier and its numeric
 version.}
