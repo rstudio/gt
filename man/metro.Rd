@@ -48,16 +48,16 @@ coordinates.
 The system has 16 lines (numbered from 1 to 14, with two additional lines:
 3bis and 7bis) and covers over 200 kilometers of track. The Metro runs on
 standard gauge tracks (1,435 mm) and operates using a variety of rolling
-stock, including rubber-tired trains and steel-wheeled trains (which are more
-common).
+stock, including rubber-tired trains and steel-wheeled trains (which are far
+more common).
 
 The Metro is operated by the RATP, which also operates other transit systems
 in the region, including buses, trams, and the RER. The RER is an important
 component of the region's transit infrastructure, and several RER stations
 have connectivity with the Metro. This integration allows passengers to
 transfer between those two systems seamlessly. The Metro also has connections
-to the Transilien rail network, several major train stations (e.g., Gare du
-Nord, Gare de l'Est, etc.), and many regional bus lines.
+to the Transilien rail network, tramway stations, several major train
+stations (e.g., Gare du Nord, Gare de l'Est, etc.), and many bus lines.
 }
 \section{Examples}{
 
