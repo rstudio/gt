@@ -85,7 +85,7 @@ Here is a glimpse at the data available in \code{metro}.
 DATA-8
 
 \if{html}{\out{
-<div align="center"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_towny.png" alt="This image of that of a dataset badge." style="width:50\%;padding-bottom:20px;"></div>
+<div align="center"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_metro.png" alt="This image of that of a dataset badge." style="width:50\%;padding-bottom:20px;"></div>
 }}
 }
 
