@@ -9,7 +9,7 @@ Châtelet,,"1, 4, 7, 11, 14","A, B, D",,,,8350794,48.858352,2.347324,"Paris 1st,
 Concorde,,"1, 8, 12",,,,,3401219,48.865410,2.321110,Paris 1st,1
 Esplanade de La Défense,,1,,,,,4708183,48.888333,2.250000,"Courbevoie, Puteaux",1
 Franklin D. Roosevelt,,"1, 9",,,,,6173830,48.868977,2.309890,Paris 8th,1
-Gare de Lyon,,"1, 14","A, D",,R,"TGV, TGV Lyria, Renfe-SNCF, Frecciarossa, OUIGO",28640475,48.844722,2.373889,Paris 12th,1
+Gare de Lyon,,"1, 14","A, D",,R,"TGV, TGV Lyria, Renfe-SNCF, OUIGO, Frecciarossa",28640475,48.844722,2.373889,Paris 12th,1
 George V,,1,,,,,3842260,48.871944,2.300556,Paris 8th,1
 Hôtel de Ville,,"1, 11",,,,,7251729,48.857487,2.351525,Paris 4th,1
 La Défense,Grande Arche,1,A,T2,"L, U",,9256802,48.891852,2.238539,Puteaux,1
@@ -116,7 +116,7 @@ Quai de la Rapée,,5,,,,,798728,48.846000,2.366000,Paris 12th,5
 Richard-Lenoir,,5,,,,,1544636,48.860000,2.372000,Paris 11th,5
 Saint-Marcel,,5,,,,,1666744,48.838000,2.360000,Paris 13th,5
 Bel-Air,,6,,,,,1605573,48.841344,2.400912,Paris 12th,6
-Bercy,,"6, 14",,,,"TER Bourgogne-Franche-Comté, Intercités",3884212,48.839930,2.380418,Paris 12th,6
+Bercy,,"6, 14",,,,"TER, Intercités",3884212,48.839930,2.380418,Paris 12th,6
 Bir-Hakeim,Tour Eiffel,6,C,,,,3362908,48.853917,2.289332,Paris 15th,6
 Boissière,,6,,,,,1224181,48.867386,2.290392,Paris 16th,6
 Cambronne,,6,,,,,1636566,48.847537,2.302937,Paris 15th,6
@@ -140,7 +140,7 @@ Trocadéro,,"6, 9",,,,,5284134,48.863301,2.287061,Paris 16th,6
 Aubervilliers—Pantin—Quatre Chemins,,7,,,,,5616435,48.903900,2.392500,Aubervilliers,7
 Cadet,,7,,,,,1843984,48.876135,2.344876,Paris 9th,7
 Censier—Daubenton,,7,,,,,2291843,48.840597,2.351774,Paris 5th,7
-Château-Landon,,7,,,P,"TGV, TER Grand Est",1140353,48.878460,2.362071,Paris 10th,7
+Château-Landon,,7,,,P,"TGV, TER",1140353,48.878460,2.362071,Paris 10th,7
 Chaussée d'Antin—La Fayette,,"7, 9",,,,,4251916,48.873070,2.333930,Paris 9th,7
 Corentin Cariou,,7,,,,,1697076,48.894340,2.381745,Paris 19th,7
 Crimée,,7,,,,,3543952,48.891580,2.377070,Paris 19th,7
