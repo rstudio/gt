@@ -532,7 +532,7 @@
 #' DATA-8
 #'
 #' \if{html}{\out{
-#' `r data_get_image_tag(file = "dataset_towny.png")`
+#' `r data_get_image_tag(file = "dataset_metro.png")`
 #' }}
 #'
 #' @section Dataset Introduced:
