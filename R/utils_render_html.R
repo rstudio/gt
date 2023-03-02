@@ -16,7 +16,11 @@ footnote_mark_to_html <- function(mark) {
   }
 
   as.character(
-    htmltools::tags$span(class = sup_class, htmltools::tags$sup(mark))
+    htmltools::tags$span(
+      class = sup_class,
+      style = htmltools::css(`white-space` = "nowrap"),
+      htmltools::tags$sup(mark)
+    )
   )
 }
 
