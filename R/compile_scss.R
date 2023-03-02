@@ -50,7 +50,8 @@ compile_scss <- function(data, id = NULL) {
         <<ifelse(has_id, '}', '')>>
 
         <<ifelse(has_additional_css, table_additional_css, '')>>
-        ")
+        "
+      )
     )
   )
 }
