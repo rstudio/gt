@@ -1,5 +1,14 @@
 @mixin gt_styles() {
 
+  thead, tbody, tfoot, tr, td, th {
+    border-style: none;
+  }
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
+
   .gt_table {
     display: table;
     border-collapse: collapse;
