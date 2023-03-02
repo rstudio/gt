@@ -16,7 +16,11 @@ footnote_mark_to_html <- function(mark) {
   }
 
   as.character(
-    htmltools::tags$span(class = sup_class, htmltools::tags$sup(mark))
+    htmltools::tags$span(
+      class = sup_class,
+      style = htmltools::css(`white-space` = "nowrap"),
+      htmltools::tags$sup(mark)
+    )
   )
 }
 
@@ -57,6 +61,7 @@ cell_style_to_html.default <- function(style) {
 
 # Upgrade `_styles` to gain a `html_style` column with CSS style rules
 add_css_styles <- function(data) {
+
   styles_tbl <- dt_styles_get(data = data)
 
   styles_tbl$html_style <- vapply(styles_tbl$styles, styles_to_html, character(1))
@@ -81,6 +86,7 @@ coalesce_marks <- function(
 
 # Get the attributes for the table tag
 get_table_defs <- function(data) {
+
   boxh <- dt_boxhead_get(data = data)
 
   # Get the `table-layout` value, which is set in `_options`

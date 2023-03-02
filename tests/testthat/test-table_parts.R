@@ -280,7 +280,7 @@ test_that("Row groups can be successfully generated with `tab_row_group()", {
   # row group labels
   expect_match(
     tbl_html,
-    regexp = "<strong><em>void</em></strong><span class=\"gt_footnote_marks\">\n  <sup>1</sup>",
+    regexp = "<strong><em>void</em></strong><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;\">\n  <sup>1</sup>",
     fixed = TRUE
   )
   expect_match(
