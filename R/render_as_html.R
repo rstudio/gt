@@ -26,6 +26,13 @@ render_as_html <- function(data) {
   # Create the columns component
   columns_component <- create_columns_component_h(data = data)
 
+  # Assemble the table head element
+  table_head <-
+    prepare_table_head(
+      heading_component = heading_component,
+      columns_component = columns_component
+  )
+
   # Create the body component
   body_component <- create_body_component_h(data = data)
 
@@ -57,12 +64,33 @@ render_as_html <- function(data) {
     quarto_use_bootstrap = quarto_use_bootstrap,
     caption_component,
     table_defs$table_colgroups,
-    heading_component,
-    columns_component,
+    table_head,
     body_component,
     source_notes_component,
     footnotes_component
   )
+}
+
+prepare_table_head <- function(
+    heading_component,
+    columns_component
+) {
+
+  if (
+    all(
+      (!is.list(heading_component) && heading_component == "") &&
+      (!is.list(columns_component) && columns_component == "")
+    )
+  ) {
+    table_head <- ""
+  } else {
+    table_head <-
+      htmltools::tags$thead(
+        heading_component,
+        columns_component
+      )
+  }
+  table_head
 }
 
 finalize_html_table <- function(
