@@ -342,8 +342,8 @@
   .gt_footnote {
     margin: $footnotes_margin;
     font-size: $footnotes_font_size; // footnotes.font.size
-    padding-left: $footnotes_padding; // footnotes.padding
-    padding-right: $footnotes_padding; // footnotes.padding
+    padding-top: $footnotes_padding; // footnotes.padding
+    padding-bottom: $footnotes_padding; // footnotes.padding
     padding-left: $footnotes_padding_horizontal; // footnotes.padding.horizontal
     padding-right: $footnotes_padding_horizontal; // footnotes.padding.horizontal
   }
