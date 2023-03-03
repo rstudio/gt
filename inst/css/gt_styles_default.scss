@@ -34,18 +34,6 @@
     border-left-color: $table_border_left_color; // table.border.left.color
   }
 
-  .gt_heading {
-    background-color: $heading_background_color; // heading.background.color
-    text-align: $heading_align; // heading.align
-    border-bottom-color: $table_background_color; // table.background.color
-    border-left-style: $heading_border_lr_style; // heading.border.lr.style
-    border-left-width: $heading_border_lr_width; // heading.border.lr.width
-    border-left-color: $heading_border_lr_color; // heading.border.lr.color
-    border-right-style: $heading_border_lr_style; // heading.border.lr.style
-    border-right-width: $heading_border_lr_width; // heading.border.lr.width
-    border-right-color: $heading_border_lr_color; // heading.border.lr.color
-  }
-
   .gt_caption {
     padding-top: 4px;
     padding-bottom: 4px;
@@ -67,12 +55,24 @@
     color: font-color($heading_background_color);
     font-size: $heading_subtitle_font_size; // heading.subtitle.font.size
     font-weight: $heading_subtitle_font_weight; // heading.subtitle.font.weight
-    padding-top: 0;
-    padding-bottom: $heading_padding + 2; // heading.padding
+    padding-top: $heading_padding - 1; // heading.padding
+    padding-bottom: $heading_padding + 1; // heading.padding
     padding-left: $heading_padding_horizontal; // heading.padding.horizontal
     padding-right: $heading_padding_horizontal; //heading.padding.horizontal
     border-top-color: $table_background_color; // table.background.color
     border-top-width: 0;
+  }
+
+  .gt_heading {
+    background-color: $heading_background_color; // heading.background.color
+    text-align: $heading_align; // heading.align
+    border-bottom-color: $table_background_color; // table.background.color
+    border-left-style: $heading_border_lr_style; // heading.border.lr.style
+    border-left-width: $heading_border_lr_width; // heading.border.lr.width
+    border-left-color: $heading_border_lr_color; // heading.border.lr.color
+    border-right-style: $heading_border_lr_style; // heading.border.lr.style
+    border-right-width: $heading_border_lr_width; // heading.border.lr.width
+    border-right-color: $heading_border_lr_color; // heading.border.lr.color
   }
 
   .gt_bottom_border {
