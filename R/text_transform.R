@@ -1,12 +1,12 @@
-#' Perform targeted text transformation with a function
+#' Perform text transformations with a custom function
 #'
-#' @inheritParams cols_align
+#' @param data A table object that is created using the [gt()] function.
+#' @param fn The function to use for text transformation.
 #' @param locations The cell or set of cells to be associated with the text
 #'   transformation. Only the [cells_body()], [cells_stub()],
 #'   [cells_column_labels()], and [cells_row_groups()] helper functions can be
 #'   used here. We can enclose several of these calls within a `list()` if we
 #'   wish to make the transformation happen at different locations.
-#' @param fn The function to use for text transformation.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -25,15 +25,16 @@
 #'   fmt_number(columns = num) |>
 #'   fmt_currency(columns = currency) |>
 #'   text_transform(
-#'     locations = cells_body(columns = num),
 #'     fn = function(x) {
 #'       paste0(
 #'         x, " (",
 #'         dplyr::case_when(
-#'           x > 20   ~ "large",
-#'           x <= 20  ~ "small"),
-#'         ")")
-#'     }
+#'           x > 20  ~ "large",
+#'           x <= 20 ~ "small"),
+#'         ")"
+#'         )
+#'     },
+#'     locations = cells_body(columns = num)
 #'   )
 #' ```
 #'
@@ -41,9 +42,9 @@
 #' `r man_get_image_tag(file = "man_text_transform_1.png")`
 #' }}
 #'
-#' @family data formatting functions
+#' @family text transforming functions
 #' @section Function ID:
-#' 3-27
+#' 4-1
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -51,8 +52,8 @@
 #' @export
 text_transform <- function(
     data,
-    locations,
-    fn
+    fn,
+    locations = cells_body()
 ) {
 
   # Perform input object validation
@@ -61,13 +62,171 @@ text_transform <- function(
   # Resolve into a list of locations
   locations <- as_locations(locations = locations)
 
-  # Resolve the locations of the targeted data cells and append
-  # the footnotes
+  # For all of the resolved locations, store the transforms
+  # for later execution
   for (loc in locations) {
     data <- dt_transforms_add(data = data, loc = loc, fn = fn)
   }
 
   data
+}
+
+#' Perform highly targeted text replacement with a regex pattern
+#'
+#' @param data A table object that is created using the [gt()] function.
+#' @param locations The cell or set of cells to be associated with the text
+#'   transformation. Only the [cells_body()], [cells_stub()],
+#'   [cells_column_labels()], and [cells_row_groups()] helper functions can be
+#'   used here. We can enclose several of these calls within a `list()` if we
+#'   wish to make the transformation happen at different locations.
+#'
+#' @family text transforming functions
+#' @section Function ID:
+#' 4-2
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @export
+text_replace <- function(
+    data,
+    pattern,
+    replacement,
+    locations = cells_body()
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  text_transform(
+    data = data,
+    locations = locations,
+    fn = function(x) {
+      str_complete_replace(x, pattern = pattern, replacement = replacement)
+    }
+  )
+}
+
+#' Perform whole text replacements using a case-when expression approach
+#'
+#' @param .data A table object that is created using the [gt()] function.
+#' @param ... A sequence of two-sided formulas. The left hand side (LHS)
+#'   determines which values match this case. The right hand side (RHS) provides
+#'   the replacement text (it must resolve to a value of the `character` class).
+#'   The LHS inputs must evaluate to logical vectors.
+#' @param .locations The cell or set of cells to be associated with the text
+#'   transformation. Only the [cells_body()], [cells_stub()],
+#'   [cells_column_labels()], and [cells_row_groups()] helper functions can be
+#'   used here. We can enclose several of these calls within a `list()` if we
+#'   wish to make the transformation happen at different locations.
+#'
+#' @family text transforming functions
+#' @section Function ID:
+#' 4-3
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @import rlang
+#' @export
+text_case_when <- function(
+    .data,
+    ...,
+    .default = NULL,
+    .locations = cells_body()
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = .data)
+
+  x_list <- list(...)
+
+  # TODO: perform some basic checking of `x_list` and stop function
+  # should issues arise; the RHS should always be `character`-based
+
+  # TODO: check that the modernized version of the `case_when()`
+  # function is available in the user's version of dplyr
+
+  text_transform(
+    data = .data,
+    locations = .locations,
+    fn = function(x) {
+
+      # Don't accept that `.default = NULL` should mean `NA`,
+      # it should simply return the original data
+      if (is.null(.default)) {
+        .default <- x
+      }
+
+      for (i in seq_along(x_list)) {
+        x_list[[i]] <- rlang::set_env(x_list[[i]])
+      }
+
+      dplyr::case_when(!!!x_list, .default = .default)
+    }
+  )
+}
+
+#' Perform whole text replacements which complete matches
+#'
+#' @param .data A table object that is created using the [gt()] function.
+#' @param ... A sequence of two-sided formulas matching this general
+#'   construction: `old_text` ~ `new_text`. The left hand side (LHS) determines
+#'   which values to match on and it can be any length (allowing for `new_text`
+#'   to replace different values of `old_text`). The right hand side (RHS)
+#'   provides the replacement text (it must resolve to a single value of the
+#'   `character` class).
+#' @param .locations The cell or set of cells to be associated with the text
+#'   transformation. Only the [cells_body()], [cells_stub()],
+#'   [cells_column_labels()], and [cells_row_groups()] helper functions can be
+#'   used here. We can enclose several of these calls within a `list()` if we
+#'   wish to make the transformation happen at different locations.
+#'
+#' @family text transforming functions
+#' @section Function ID:
+#' 4-4
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @import rlang
+#' @export
+text_case_match <- function(
+    .data,
+    ...,
+    .default = NULL,
+    .locations = cells_body()
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = .data)
+
+  x_list <- list(...)
+
+  # TODO: perform some basic checking of `...` and stop function
+  # should issues arise
+
+  # TODO: check that the `case_match()` function is available in
+  # the user's version of dplyr
+
+  text_transform(
+    data = .data,
+    locations = .locations,
+    fn = function(x) {
+
+      # Don't accept that `.default = NULL` should mean `NA`,
+      # it should simply return the original data
+      if (is.null(.default)) {
+        .default <- x
+      }
+
+      for (i in seq_along(x_list)) {
+        x_list[[i]] <- rlang::set_env(x_list[[i]])
+      }
+
+      dplyr::case_match(.x = x, !!!x_list, .default = .default)
+    }
+  )
 }
 
 # Given a location, gt attr object, and mapping function (one chr vector as
