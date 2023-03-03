@@ -2,26 +2,26 @@
 % Please edit documentation in R/text_transform.R
 \name{text_transform}
 \alias{text_transform}
-\title{Perform targeted text transformation with a function}
+\title{Perform text transformations with a custom function}
 \usage{
-text_transform(data, locations, fn)
+text_transform(data, fn, locations = cells_body())
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+
+\item{fn}{The function to use for text transformation.}
 
 \item{locations}{The cell or set of cells to be associated with the text
 transformation. Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}},
 \code{\link[=cells_column_labels]{cells_column_labels()}}, and \code{\link[=cells_row_groups]{cells_row_groups()}} helper functions can be
 used here. We can enclose several of these calls within a \code{list()} if we
 wish to make the transformation happen at different locations.}
-
-\item{fn}{The function to use for text transformation.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
-Perform targeted text transformation with a function
+Perform text transformations with a custom function
 }
 \section{Examples}{
 
@@ -38,15 +38,16 @@ formatted vector of column values from the \code{num} column.
   fmt_number(columns = num) |>
   fmt_currency(columns = currency) |>
   text_transform(
-    locations = cells_body(columns = num),
     fn = function(x) \{
       paste0(
         x, " (",
         dplyr::case_when(
-          x > 20   ~ "large",
-          x <= 20  ~ "small"),
-        ")")
-    \}
+          x > 20  ~ "large",
+          x <= 20 ~ "small"),
+        ")"
+        )
+    \},
+    locations = cells_body(columns = num)
   )
 }\if{html}{\out{</div>}}
 
@@ -57,7 +58,7 @@ formatted vector of column values from the \code{num} column.
 
 \section{Function ID}{
 
-3-27
+4-1
 }
 
 \section{Function Introduced}{
@@ -66,33 +67,9 @@ formatted vector of column values from the \code{num} column.
 }
 
 \seealso{
-Other data formatting functions: 
-\code{\link{data_color}()},
-\code{\link{fmt_auto}()},
-\code{\link{fmt_bytes}()},
-\code{\link{fmt_currency}()},
-\code{\link{fmt_datetime}()},
-\code{\link{fmt_date}()},
-\code{\link{fmt_duration}()},
-\code{\link{fmt_engineering}()},
-\code{\link{fmt_fraction}()},
-\code{\link{fmt_index}()},
-\code{\link{fmt_integer}()},
-\code{\link{fmt_markdown}()},
-\code{\link{fmt_number}()},
-\code{\link{fmt_partsper}()},
-\code{\link{fmt_passthrough}()},
-\code{\link{fmt_percent}()},
-\code{\link{fmt_roman}()},
-\code{\link{fmt_scientific}()},
-\code{\link{fmt_spelled_num}()},
-\code{\link{fmt_time}()},
-\code{\link{fmt_url}()},
-\code{\link{fmt}()},
-\code{\link{sub_large_vals}()},
-\code{\link{sub_missing}()},
-\code{\link{sub_small_vals}()},
-\code{\link{sub_values}()},
-\code{\link{sub_zero}()}
+Other text transforming functions: 
+\code{\link{text_case_match}()},
+\code{\link{text_case_when}()},
+\code{\link{text_replace}()}
 }
-\concept{data formatting functions}
+\concept{text transforming functions}
