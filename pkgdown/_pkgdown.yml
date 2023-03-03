@@ -91,8 +91,14 @@ reference:
     - sub_small_vals
     - sub_large_vals
     - sub_values
-    - text_transform
     - data_color
+
+  - title: Text Transformation Functions
+    contents:
+    - text_transform
+    - text_replace
+    - text_case_when
+    - text_case_match
 
   - title: Modify Columns
     desc: >
