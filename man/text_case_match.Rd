@@ -4,7 +4,13 @@
 \alias{text_case_match}
 \title{Perform whole text replacements which complete matches}
 \usage{
-text_case_match(.data, ..., .default = NULL, .locations = cells_body())
+text_case_match(
+  .data,
+  ...,
+  .default = NULL,
+  .replace = c("all", "partial"),
+  .locations = cells_body()
+)
 }
 \arguments{
 \item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -19,6 +25,13 @@ provides the replacement text (it must resolve to a single value of the
 \item{.default}{The replacement text to use when cell values aren't matched
 by any of the LHS inputs. If \code{NULL}, the default, no replacement text will
 be used.}
+
+\item{.replace}{A choice in how the matching is to be done. The default
+\code{"all"} means that the \code{old_text} (on the LHS of formulas given in \code{...})
+must match the cell text \emph{completely}. With that option, the replacement
+will completely replace that matched text. With \code{"partial"}, the match will
+occur in all substrings of \code{old_text}. In this way, the replacements will
+act on those matched substrings.}
 
 \item{.locations}{The cell or set of cells to be associated with the text
 transformation. Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}},
