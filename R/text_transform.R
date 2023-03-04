@@ -74,6 +74,9 @@ text_transform <- function(
 #' Perform highly targeted text replacement with a regex pattern
 #'
 #' @param data A table object that is created using the [gt()] function.
+#' @param pattern A regex pattern used to target text fragments in the cells
+#'   resolved in locations.
+#' @param replacement The replacement text for any matched text fragments.
 #' @param locations The cell or set of cells to be associated with the text
 #'   transformation. Only the [cells_body()], [cells_stub()],
 #'   [cells_column_labels()], and [cells_row_groups()] helper functions can be
@@ -114,6 +117,9 @@ text_replace <- function(
 #'   determines which values match this case. The right hand side (RHS) provides
 #'   the replacement text (it must resolve to a value of the `character` class).
 #'   The LHS inputs must evaluate to logical vectors.
+#' @param .default The replacement text to use when cell values aren't matched
+#'   by any of the LHS inputs. If `NULL`, the default, no replacement text will
+#'   be used.
 #' @param .locations The cell or set of cells to be associated with the text
 #'   transformation. Only the [cells_body()], [cells_stub()],
 #'   [cells_column_labels()], and [cells_row_groups()] helper functions can be
@@ -158,8 +164,24 @@ text_case_when <- function(
         .default <- x
       }
 
+      # Need to coerce all RHS formula parts to character;
+      # this ensure that objects that have classes that include
+      # a character base class (like fontawesome icons) become
+      # stripped of other classes and acceptable input for
+      # the `case_match()` function
       for (i in seq_along(x_list)) {
+
         x_list[[i]] <- rlang::set_env(x_list[[i]])
+
+        rhs <- rlang::f_rhs(x_list[[i]])
+
+        rhs_char <- as.character(rlang::eval_tidy(rhs))
+
+        x_list[[i]] <-
+          rlang::new_formula(
+            lhs = rlang::f_lhs(x_list[[i]]),
+            rhs = rhs_char
+          )
       }
 
       dplyr::case_when(!!!x_list, .default = .default)
@@ -176,6 +198,9 @@ text_case_when <- function(
 #'   to replace different values of `old_text`). The right hand side (RHS)
 #'   provides the replacement text (it must resolve to a single value of the
 #'   `character` class).
+#' @param .default The replacement text to use when cell values aren't matched
+#'   by any of the LHS inputs. If `NULL`, the default, no replacement text will
+#'   be used.
 #' @param .locations The cell or set of cells to be associated with the text
 #'   transformation. Only the [cells_body()], [cells_stub()],
 #'   [cells_column_labels()], and [cells_row_groups()] helper functions can be
