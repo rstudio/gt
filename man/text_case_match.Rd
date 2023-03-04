@@ -16,6 +16,10 @@ to replace different values of \code{old_text}). The right hand side (RHS)
 provides the replacement text (it must resolve to a single value of the
 \code{character} class).}
 
+\item{.default}{The replacement text to use when cell values aren't matched
+by any of the LHS inputs. If \code{NULL}, the default, no replacement text will
+be used.}
+
 \item{.locations}{The cell or set of cells to be associated with the text
 transformation. Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}},
 \code{\link[=cells_column_labels]{cells_column_labels()}}, and \code{\link[=cells_row_groups]{cells_row_groups()}} helper functions can be
