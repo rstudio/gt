@@ -201,6 +201,12 @@ text_case_when <- function(
 #' @param .default The replacement text to use when cell values aren't matched
 #'   by any of the LHS inputs. If `NULL`, the default, no replacement text will
 #'   be used.
+#' @param .replace A choice in how the matching is to be done. The default
+#'   `"all"` means that the `old_text` (on the LHS of formulas given in `...`)
+#'   must match the cell text *completely*. With that option, the replacement
+#'   will completely replace that matched text. With `"partial"`, the match will
+#'   occur in all substrings of `old_text`. In this way, the replacements will
+#'   act on those matched substrings.
 #' @param .locations The cell or set of cells to be associated with the text
 #'   transformation. Only the [cells_body()], [cells_stub()],
 #'   [cells_column_labels()], and [cells_row_groups()] helper functions can be
@@ -220,11 +226,15 @@ text_case_match <- function(
     .data,
     ...,
     .default = NULL,
+    .replace = c("all", "partial"),
     .locations = cells_body()
 ) {
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = .data)
+
+  # Ensure that arguments are matched
+  .replace <- rlang::arg_match(.replace)
 
   x_list <- list(...)
 
@@ -265,7 +275,30 @@ text_case_match <- function(
           )
       }
 
-      dplyr::case_match(.x = x, !!!x_list, .default = .default)
+      if (.replace == "all") {
+
+        x <- dplyr::case_match(.x = x, !!!x_list, .default = .default)
+
+      } else {
+
+        for (i in seq_along(x_list)) {
+
+          pattern <- rlang::eval_tidy(rlang::f_lhs(x_list[[i]]))
+
+          for (j in seq_along(pattern)) {
+
+            x <-
+              gsub(
+                pattern[j],
+                rlang::f_rhs(x_list[[i]]),
+                x,
+                fixed = TRUE
+              )
+          }
+        }
+      }
+
+      x
     }
   )
 }
