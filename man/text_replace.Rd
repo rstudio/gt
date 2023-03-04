@@ -9,6 +9,11 @@ text_replace(data, pattern, replacement, locations = cells_body())
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
+\item{pattern}{A regex pattern used to target text fragments in the cells
+resolved in locations.}
+
+\item{replacement}{The replacement text for any matched text fragments.}
+
 \item{locations}{The cell or set of cells to be associated with the text
 transformation. Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}},
 \code{\link[=cells_column_labels]{cells_column_labels()}}, and \code{\link[=cells_row_groups]{cells_row_groups()}} helper functions can be
