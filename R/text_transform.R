@@ -220,8 +220,24 @@ text_case_match <- function(
         .default <- x
       }
 
+      # Need to coerce all RHS formula parts to character;
+      # this ensure that objects that have classes that include
+      # a character base class (like fontawesome icons) become
+      # stripped of other classes and acceptable input for
+      # the `case_match()` function
       for (i in seq_along(x_list)) {
+
         x_list[[i]] <- rlang::set_env(x_list[[i]])
+
+        rhs <- rlang::f_rhs(x_list[[i]])
+
+        rhs_char <- as.character(rlang::eval_tidy(rhs))
+
+        x_list[[i]] <-
+          rlang::new_formula(
+            lhs = rlang::f_lhs(x_list[[i]]),
+            rhs = rhs_char
+          )
       }
 
       dplyr::case_match(.x = x, !!!x_list, .default = .default)
