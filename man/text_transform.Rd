@@ -36,33 +36,73 @@ character vector of the same length as the input. Using the construction
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Transform the formatted text in the
-\code{num} column using a function supplied to \code{text_transform()} (via the \code{fn}
-argument). Note that the \code{x} in the \verb{fn = function (x)} part is an already
-formatted vector of column values from the \code{num} column.
+Use \code{\link{sp500}} to create a \strong{gt} table. Transform the text in the
+\code{date} column using a function supplied to \code{text_transform()} (via the \code{fn}
+argument). Note that the \code{x} in the \verb{fn = function (x)} part consists
+entirely of ISO 8601 date strings (which are acceptable as input to the
+\code{\link[=vec_fmt_date]{vec_fmt_date()}} and \code{\link[=vec_fmt_datetime]{vec_fmt_datetime()}} functions).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
-  dplyr::select(num, char, currency) |>
-  dplyr::slice(1:4) |>
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
+  dplyr::slice_head(n = 10) |>
+  dplyr::select(date, open, close) |>
+  dplyr::arrange(-dplyr::row_number()) |>
   gt() |>
-  fmt_number(columns = num) |>
-  fmt_currency(columns = currency) |>
+  fmt_currency() |>
   text_transform(
     fn = function(x) \{
       paste0(
-        x, " (",
-        dplyr::case_when(
-          x > 20  ~ "large",
-          x <= 20 ~ "small"),
-        ")"
-        )
+        "<strong>",
+        vec_fmt_date(x, date_style = "m_day_year"),
+        "</strong>",
+        "&mdash;W",
+        vec_fmt_datetime(x, format = "w")
+      )
     \},
-    locations = cells_body(columns = num)
+    locations = cells_body(columns = date)
+  ) |>
+  cols_label(
+    date = "Date and Week",
+    open = "Opening Price",
+    close = "Closing Price"
   )
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_text_transform_1.png" alt="This image of a table was generated from the first code example in the `text_transform()` help file." style="width:100\%;">
+}}
+
+Use \code{\link{gtcars}} to create a \strong{gt} table. First, the numeric values in the \code{n}
+column are formatted as spelled-out numbers with \code{\link[=fmt_spelled_num]{fmt_spelled_num()}}. The
+output values are indeed spelled out but exclusively with lowercase letters.
+We actually want these words to begin with a capital letter and end with a
+period. To make this possible, the \code{text_transform()} function will be used
+since it can modify already-formatted text. Through the \code{fn} argument, we
+provide a custom function that uses R's \code{toTitleCase()} operating on \code{x} (the
+numbers-as-text strings) within a \code{paste0()} so that a period can be properly
+placed.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::select(mfr, ctry_origin) |>
+  dplyr::filter(ctry_origin \%in\% c("Germany", "Italy", "Japan")) |>
+  dplyr::group_by(mfr, ctry_origin) |>
+  dplyr::count() |>
+  dplyr::ungroup() |>
+  dplyr::arrange(ctry_origin, desc(n)) |>
+  gt(rowname_col = "mfr", groupname_col = "ctry_origin") |>
+  cols_label(n = "No. of Entries") |>
+  tab_stub_indent(rows = everything(), indent = 2) |>
+  cols_align(align = "center", columns = n) |>
+  fmt_spelled_num() |>
+  text_transform(
+    fn = function(x) \{
+      paste0(tools::toTitleCase(x), ".")
+    \},
+    locations = cells_body(columns = n)
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_text_transform_2.png" alt="This image of a table was generated from the second code example in the `text_transform()` help file." style="width:100\%;">
 }}
 }
 
