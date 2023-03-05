@@ -39,6 +39,9 @@ transformation. Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=c
 used here. We can enclose several of these calls within a \code{list()} if we
 wish to make the transformation happen at different locations.}
 }
+\value{
+An object of class \code{gt_tbl}.
+}
 \description{
 The \code{text_case_match()} function provides a useful interface for a approach
 to replacing table cells that behaves much like a switch statement. The
@@ -53,6 +56,39 @@ default, \code{text_case_match()} will try to match on entire strings and replac
 those strings. This can be changed to a partial matching and replacement
 strategy with the alternate option.
 }
+\section{Examples}{
+
+
+Use \code{\link{towny}} to create a \strong{gt} table. Transform the text in the
+\code{csd_type} column using two-sided formulas supplied to \code{text_case_match()}.
+We can replace matches on the LHS with Fontawesome icons furnished by the
+\strong{fontawesome} R package.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
+  dplyr::select(name, csd_type, population_2021) |>
+  dplyr::filter(csd_type \%in\% c("city", "town")) |>
+  dplyr::group_by(csd_type) |>
+  dplyr::arrange(desc(population_2021)) |>
+  dplyr::slice_head(n = 5) |>
+  dplyr::ungroup() |>
+  gt() |>
+  fmt_integer() |>
+  text_case_match(
+    "city" ~ fontawesome::fa("city"),
+    "town" ~ fontawesome::fa("house-chimney")
+  ) |>
+  cols_label(
+    name = "City/Town",
+    csd_type = "",
+    population_2021 = "Population"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_text_case_match_1.png" alt="This image of a table was generated from the first code example in the `text_case_match()` help file." style="width:100\%;">
+}}
+}
+
 \section{Function ID}{
 
 4-3

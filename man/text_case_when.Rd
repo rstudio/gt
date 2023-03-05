@@ -24,6 +24,9 @@ transformation. Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=c
 used here. We can enclose several of these calls within a \code{list()} if we
 wish to make the transformation happen at different locations.}
 }
+\value{
+An object of class \code{gt_tbl}.
+}
 \description{
 The \code{text_case_when()} function provides a useful interface for a
 case-by-case approach to replacing entire table cells. First off, you have to
