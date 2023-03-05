@@ -493,6 +493,15 @@
     <loc>https://gt.rstudio.com/dev/reference/test_image.html</loc>
   </url>
   <url>
+    <loc>https://gt.rstudio.com/dev/reference/text_case_match.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/text_case_when.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/dev/reference/text_replace.html</loc>
+  </url>
+  <url>
     <loc>https://gt.rstudio.com/dev/reference/text_transform.html</loc>
   </url>
   <url>
