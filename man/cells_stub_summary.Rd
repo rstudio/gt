@@ -128,7 +128,7 @@ data stub cells with \code{\link[=tab_style]{tab_style()}} and \code{cells_stub_
 
 \section{Function ID}{
 
-7-15
+8-15
 }
 
 \section{Function Introduced}{

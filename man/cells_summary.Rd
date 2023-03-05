@@ -155,7 +155,7 @@ data cells with with \code{\link[=tab_style]{tab_style()}}, using \code{cells_su
 
 \section{Function ID}{
 
-7-13
+8-13
 }
 
 \section{Function Introduced}{

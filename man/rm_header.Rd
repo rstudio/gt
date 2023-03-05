@@ -59,7 +59,7 @@ be removed with the \code{rm_header()} function.
 
 \section{Function ID}{
 
-6-1
+7-1
 }
 
 \section{Function Introduced}{

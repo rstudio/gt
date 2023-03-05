@@ -95,7 +95,7 @@ table stub with \code{\link[=tab_style]{tab_style()}}, using \code{cells_stub()}
 
 \section{Function ID}{
 
-7-11
+8-11
 }
 
 \section{Function Introduced}{

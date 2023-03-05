@@ -52,7 +52,7 @@
 #'
 #' @family part removal functions
 #' @section Function ID:
-#' 6-1
+#' 7-1
 #'
 #' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
@@ -118,7 +118,7 @@ rm_header <- function(data) {
 #'
 #' @family part removal functions
 #' @section Function ID:
-#' 6-2
+#' 7-2
 #'
 #' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
@@ -238,7 +238,7 @@ rm_stubhead <- function(data) {
 #'
 #' @family part removal functions
 #' @section Function ID:
-#' 6-3
+#' 7-3
 #'
 #' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
@@ -429,7 +429,7 @@ rm_spanners <- function(
 #'
 #' @family part removal functions
 #' @section Function ID:
-#' 6-4
+#' 7-4
 #'
 #' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
@@ -568,7 +568,7 @@ rm_footnotes <- function(
 #'
 #' @family part removal functions
 #' @section Function ID:
-#' 6-5
+#' 7-5
 #'
 #' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
@@ -687,7 +687,7 @@ rm_source_notes <- function(
 #'
 #' @family part removal functions
 #' @section Function ID:
-#' 6-6
+#' 7-6
 #'
 #' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)

@@ -98,7 +98,7 @@ Use \code{\link{sza}} to create a \strong{gt} table, adding three footnotes. Cal
 
 \section{Function ID}{
 
-9-3
+10-3
 }
 
 \section{Function Introduced}{

@@ -21,7 +21,7 @@ since we test various sizes of the test image within that function.
 }
 \section{Function ID}{
 
-8-4
+9-4
 }
 
 \section{Function Introduced}{

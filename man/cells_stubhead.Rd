@@ -85,7 +85,7 @@ Use \code{\link{pizzaplace}} to create a \strong{gt} table. Add a stubhead label
 
 \section{Function ID}{
 
-7-7
+8-7
 }
 
 \section{Function Introduced}{

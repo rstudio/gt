@@ -60,7 +60,7 @@ position \code{population} after \code{country_name} with the \code{cols_move()}
 
 \section{Function ID}{
 
-4-6
+5-6
 }
 
 \section{Function Introduced}{

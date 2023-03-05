@@ -40,7 +40,7 @@
 #'
 #' @family row addition/modification functions
 #' @section Function ID:
-#' 5-3
+#' 6-3
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)

@@ -102,7 +102,7 @@
 #'
 #' @family image addition functions
 #' @section Function ID:
-#' 8-1
+#' 9-1
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -181,7 +181,7 @@ web_image <- function(
 #'
 #' @family image addition functions
 #' @section Function ID:
-#' 8-2
+#' 9-2
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -286,7 +286,7 @@ local_image <- function(
 #'
 #' @family image addition functions
 #' @section Function ID:
-#' 8-3
+#' 9-3
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -349,7 +349,7 @@ ggplot_image <- function(
 #'
 #' @family image addition functions
 #' @section Function ID:
-#' 8-4
+#' 9-4
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)

@@ -59,7 +59,7 @@ it can be removed with the \code{rm_caption()} function.
 
 \section{Function ID}{
 
-6-6
+7-6
 }
 
 \section{Function Introduced}{

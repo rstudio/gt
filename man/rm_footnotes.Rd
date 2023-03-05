@@ -102,7 +102,7 @@ would give the correct index value to \code{footnotes}.
 
 \section{Function ID}{
 
-6-4
+7-4
 }
 
 \section{Function Introduced}{

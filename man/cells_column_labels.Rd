@@ -112,7 +112,7 @@ Use \code{\link{sza}} to create a \strong{gt} table. Add footnotes to the column
 
 \section{Function ID}{
 
-7-9
+8-9
 }
 
 \section{Function Introduced}{
