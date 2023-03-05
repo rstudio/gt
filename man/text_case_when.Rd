@@ -26,6 +26,36 @@ wish to make the transformation happen at different locations.}
 }
 \value{
 An object of class \code{gt_tbl}.
+
+#' @section Examples:
+
+Use \code{\link{metro}} to create a \strong{gt} table. In the \code{connect_rer} column,
+perform a count of pattern matches with \code{stringr::str_count()} and determine
+which cells have 1, 2, or 3 matched patterns. For each of these cases,
+provide descriptive replacement text. Here, we use a \code{.default} to replace
+the non-matched cases with an empty string.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{metro |>
+  dplyr::arrange(desc(passengers)) |>
+  dplyr::select(name, lines, connect_rer) |>
+  dplyr::slice_head(n = 10) |>
+  gt() |>
+  text_case_when(
+    stringr::str_count(x, pattern = "[ABCDE]") == 1 ~ "One connection.",
+    stringr::str_count(x, pattern = "[ABCDE]") == 2 ~ "Two connections.",
+    stringr::str_count(x, pattern = "[ABCDE]") == 3 ~ "Three connections.",
+    .default = "", .locations = cells_body(columns = connect_rer)
+  ) |>
+  cols_label(
+    name = "Station",
+    lines = "Lines Serviced",
+    connect_rer = "RER Connections"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_text_case_when_1.png" alt="This image of a table was generated from the first code example in the `text_case_when()` help file." style="width:100\%;">
+}}
 }
 \description{
 The \code{text_case_when()} function provides a useful interface for a
