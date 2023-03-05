@@ -106,6 +106,37 @@ text_replace <- function(
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' #' @section Examples:
+#'
+#' Use [`metro`] to create a **gt** table. In the `connect_rer` column,
+#' perform a count of pattern matches with `stringr::str_count()` and determine
+#' which cells have 1, 2, or 3 matched patterns. For each of these cases,
+#' provide descriptive replacement text. Here, we use a `.default` to replace
+#' the non-matched cases with an empty string.
+#'
+#' ```r
+#' metro |>
+#'   dplyr::arrange(desc(passengers)) |>
+#'   dplyr::select(name, lines, connect_rer) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt() |>
+#'   text_case_when(
+#'     stringr::str_count(x, pattern = "[ABCDE]") == 1 ~ "One connection.",
+#'     stringr::str_count(x, pattern = "[ABCDE]") == 2 ~ "Two connections.",
+#'     stringr::str_count(x, pattern = "[ABCDE]") == 3 ~ "Three connections.",
+#'     .default = "", .locations = cells_body(columns = connect_rer)
+#'   ) |>
+#'   cols_label(
+#'     name = "Station",
+#'     lines = "Lines Serviced",
+#'     connect_rer = "RER Connections"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_text_case_when_1.png")`
+#' }}
+#'
 #' @family text transforming functions
 #' @section Function ID:
 #' 4-2
@@ -212,6 +243,32 @@ text_case_when <- function(
 #'
 #' @section Examples:
 #'
+#' Use [`exibble`] to create a **gt** table. In the `char` column, transform the
+#' `NA` value to `"elderberry"`. Over in the `fctr` column, perform some
+#' sophisticated matches on spelled-out numbers and replace with descriptive
+#' text. Here, we use a `.default` to replace text for any of those non-matched
+#' cases.
+#'
+#' ```r
+#' exibble |>
+#'   dplyr::select(char, fctr) |>
+#'   gt() |>
+#'   text_case_match(
+#'     NA ~ "elderberry",
+#'     .locations = cells_body(columns = char)
+#'   ) |>
+#'   text_case_match(
+#'     vec_fmt_spelled_num(1:4) ~ "one to four",
+#'     vec_fmt_spelled_num(5:6) ~ "five or six",
+#'     .default = "seven or more",
+#'     .locations = cells_body(columns = fctr)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_text_case_match_1.png")`
+#' }}
+#'
 #' Use [`towny`] to create a **gt** table. Transform the text in the
 #' `csd_type` column using two-sided formulas supplied to `text_case_match()`.
 #' We can replace matches on the LHS with Fontawesome icons furnished by the
@@ -239,7 +296,7 @@ text_case_when <- function(
 #' ```
 #'
 #' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_text_case_match_1.png")`
+#' `r man_get_image_tag(file = "man_text_case_match_2.png")`
 #' }}
 #'
 #' @family text transforming functions
