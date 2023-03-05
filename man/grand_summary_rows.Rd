@@ -282,7 +282,7 @@ row with \code{\link[=tab_style]{tab_style()}}.
 
 \section{Function ID}{
 
-5-2
+6-2
 }
 
 \section{Function Introduced}{

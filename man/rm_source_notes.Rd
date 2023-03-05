@@ -79,7 +79,7 @@ the other source note) we would give the correct index value to
 
 \section{Function ID}{
 
-6-5
+7-5
 }
 
 \section{Function Introduced}{

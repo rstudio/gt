@@ -70,7 +70,7 @@ style (using the \code{"cyan"} color variation and style number \code{6}).
 
 \section{Function ID}{
 
-9-1
+10-1
 }
 
 \section{Function Introduced}{

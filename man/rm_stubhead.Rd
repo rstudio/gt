@@ -56,7 +56,7 @@ it can be removed with the \code{rm_stubhead()} function.
 
 \section{Function ID}{
 
-6-2
+7-2
 }
 
 \section{Function Introduced}{

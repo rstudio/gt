@@ -290,7 +290,7 @@
 #'
 #' @family row addition/modification functions
 #' @section Function ID:
-#' 5-1
+#' 6-1
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -687,7 +687,7 @@ summary_rows <- function(
 #'
 #' @family row addition/modification functions
 #' @section Function ID:
-#' 5-2
+#' 6-2
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)

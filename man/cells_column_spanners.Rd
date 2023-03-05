@@ -92,7 +92,7 @@ three column labels with \code{\link[=tab_spanner]{tab_spanner()}} and then use 
 
 \section{Function ID}{
 
-7-8
+8-8
 }
 
 \section{Function Introduced}{

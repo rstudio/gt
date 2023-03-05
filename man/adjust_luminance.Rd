@@ -81,7 +81,7 @@ of increasingly darker palettes (with \code{\link[=data_color]{data_color()}}).
 
 \section{Function ID}{
 
-7-23
+8-23
 }
 
 \section{Function Introduced}{

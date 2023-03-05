@@ -64,7 +64,7 @@ the \code{cols_unhide()} function becomes useful.
 
 \section{Function ID}{
 
-4-10
+5-10
 }
 
 \section{Function Introduced}{

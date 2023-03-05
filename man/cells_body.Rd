@@ -122,7 +122,7 @@ data cell with \code{\link[=tab_footnote]{tab_footnote()}}, using \code{cells_bo
 
 \section{Function ID}{
 
-7-12
+8-12
 }
 
 \section{Function Introduced}{

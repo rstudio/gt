@@ -68,7 +68,7 @@ Expand the horizontal padding across the entire table with
 
 \section{Function ID}{
 
-9-7
+10-7
 }
 
 \section{Function Introduced}{

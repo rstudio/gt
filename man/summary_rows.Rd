@@ -329,7 +329,7 @@ summary rows with \code{\link[=tab_style]{tab_style()}}.
 
 \section{Function ID}{
 
-5-1
+6-1
 }
 
 \section{Function Introduced}{

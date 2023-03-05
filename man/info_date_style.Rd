@@ -31,7 +31,7 @@ by supplying a number code to the \code{\link[=fmt_date]{fmt_date()}} function).
 
 \section{Function ID}{
 
-10-1
+11-1
 }
 
 \section{Function Introduced}{
