@@ -2,7 +2,7 @@
 % Please edit documentation in R/text_transform.R
 \name{text_case_when}
 \alias{text_case_when}
-\title{Perform whole text replacements using a case-when expression approach}
+\title{Perform whole text replacements using a 'case-when'-expression approach}
 \usage{
 text_case_when(.data, ..., .default = NULL, .locations = cells_body())
 }
@@ -25,11 +25,18 @@ used here. We can enclose several of these calls within a \code{list()} if we
 wish to make the transformation happen at different locations.}
 }
 \description{
-Perform whole text replacements using a case-when expression approach
+The \code{text_case_when()} function provides a useful interface for a
+case-by-case approach to replacing entire table cells. First off, you have to
+make sure you're targeting the appropriate cells with the \code{.locations}
+argument. Following that, you supply a sequence of two-sided formulas
+matching of the general form: \verb{<logical_stmt> ~ <new_text>}. In the left hand
+side (LHS) there should be a predicate statement that evaluates to a logical
+vector of length one (i.e., either \code{TRUE} or \code{FALSE}). To refer to the values
+undergoing transformation, you need to use the \code{x} variable.
 }
 \section{Function ID}{
 
-4-3
+4-2
 }
 
 \section{Function Introduced}{

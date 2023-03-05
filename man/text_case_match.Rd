@@ -2,7 +2,7 @@
 % Please edit documentation in R/text_transform.R
 \name{text_case_match}
 \alias{text_case_match}
-\title{Perform whole text replacements which complete matches}
+\title{Perform whole or partial text replacements with a 'switch'-like approach}
 \usage{
 text_case_match(
   .data,
@@ -16,11 +16,11 @@ text_case_match(
 \item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{...}{A sequence of two-sided formulas matching this general
-construction: \code{old_text} ~ \code{new_text}. The left hand side (LHS) determines
-which values to match on and it can be any length (allowing for \code{new_text}
-to replace different values of \code{old_text}). The right hand side (RHS)
-provides the replacement text (it must resolve to a single value of the
-\code{character} class).}
+construction: \verb{<old_text> ~ <new_text>}. The left hand side (LHS)
+determines which values to match on and it can be any length (allowing for
+\code{new_text} to replace different values of \code{old_text}). The right hand side
+(RHS) provides the replacement text (it must resolve to a single value of
+the \code{character} class).}
 
 \item{.default}{The replacement text to use when cell values aren't matched
 by any of the LHS inputs. If \code{NULL}, the default, no replacement text will
@@ -40,11 +40,22 @@ used here. We can enclose several of these calls within a \code{list()} if we
 wish to make the transformation happen at different locations.}
 }
 \description{
-Perform whole text replacements which complete matches
+The \code{text_case_match()} function provides a useful interface for a approach
+to replacing table cells that behaves much like a switch statement. The
+targeting of cells for transformation happens with the \code{.locations} argument.
+Once overall targeting is handled, you need to supply a sequence of two-sided
+formulas matching of the general form: \verb{<vector_old_text> ~ <new_text>}. In
+the left hand side (LHS) there should be a character vector containing
+strings to match on. The right hand side (RHS) should contain a single string
+(or something coercible to a length one character vector). There's also the
+\code{.replace} argument that changes the matching and replacing behavior. By
+default, \code{text_case_match()} will try to match on entire strings and replace
+those strings. This can be changed to a partial matching and replacement
+strategy with the alternate option.
 }
 \section{Function ID}{
 
-4-4
+4-3
 }
 
 \section{Function Introduced}{

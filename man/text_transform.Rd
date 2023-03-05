@@ -9,7 +9,9 @@ text_transform(data, fn, locations = cells_body())
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{fn}{The function to use for text transformation.}
+\item{fn}{The function to use for text transformation. It should include \code{x}
+as an argument and return a character vector of the same length as the
+input \code{x}.}
 
 \item{locations}{The cell or set of cells to be associated with the text
 transformation. Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}},
@@ -21,7 +23,15 @@ wish to make the transformation happen at different locations.}
 An object of class \code{gt_tbl}.
 }
 \description{
-Perform text transformations with a custom function
+Text transforming in \strong{gt} is the act of modifying formatted strings in
+targeted cells. The \code{text_transform()} function provides the most flexibility
+of all the \verb{text_*()} functions in their family of functions. With it, you
+target the cells to undergo modification in the \code{locations} argument while
+also supplying a function to the \code{fn} argument. The function given to \code{fn}
+should ideally at the very least take \code{x} as an input (it stands for the
+character vector that is essentially the targeted cells) and return a
+character vector of the same length as the input. Using the construction
+\code{function(x) { .. }} for the function is recommended.
 }
 \section{Examples}{
 
@@ -58,7 +68,7 @@ formatted vector of column values from the \code{num} column.
 
 \section{Function ID}{
 
-4-1
+4-4
 }
 
 \section{Function Introduced}{

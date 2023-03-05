@@ -21,11 +21,15 @@ used here. We can enclose several of these calls within a \code{list()} if we
 wish to make the transformation happen at different locations.}
 }
 \description{
-Perform highly targeted text replacement with a regex pattern
+The \code{text_replace()} function provides a specialized interface for replacing
+text fragments in table cells with literal text. You need to ensure that
+you're targeting the appropriate cells with the \code{locations} argument. Once
+that is done, the remaining two values to supply are for the regex pattern
+(\code{pattern}) and the replacement for all matched text (\code{replacement}).
 }
 \section{Function ID}{
 
-4-2
+4-1
 }
 
 \section{Function Introduced}{
