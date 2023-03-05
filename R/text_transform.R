@@ -18,6 +18,38 @@
 #'   used here. We can enclose several of these calls within a `list()` if we
 #'   wish to make the transformation happen at different locations.
 #'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Use [`metro`] to create a **gt** table. Merge the `name` and `caption`
+#' columns together but only if `caption` doesn't have an `NA` value (the
+#' special `pattern` syntax of `"{1}<< ({2})>>"` takes care of this). This
+#' merged content is now part of the `name` column. We'd like to modify this
+#' further wherever there is text in parentheses: (1) make that text italicized,
+#' and (2) introduce a line break before the text in parentheses. We can do this
+#' with the `text_replace()` function.
+#'
+#' ```r
+#' metro |>
+#'   dplyr::select(name, caption, lines) |>
+#'   dplyr::slice(110:120) |>
+#'   gt() |>
+#'   cols_merge(
+#'     columns = c(name, caption),
+#'     pattern = "{1}<< ({2})>>"
+#'   ) |>
+#'   text_replace(
+#'     locations = cells_body(columns = name),
+#'     pattern = "\\((.*?)\\)",
+#'     replacement = "<br>(<em>\\1</em>)"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_text_replace_1.png")`
+#' }}
+#'
 #' @family text transforming functions
 #' @section Function ID:
 #' 4-1
@@ -71,6 +103,8 @@ text_replace <- function(
 #'   [cells_column_labels()], and [cells_row_groups()] helper functions can be
 #'   used here. We can enclose several of these calls within a `list()` if we
 #'   wish to make the transformation happen at different locations.
+#'
+#' @return An object of class `gt_tbl`.
 #'
 #' @family text transforming functions
 #' @section Function ID:
@@ -173,6 +207,40 @@ text_case_when <- function(
 #'   [cells_column_labels()], and [cells_row_groups()] helper functions can be
 #'   used here. We can enclose several of these calls within a `list()` if we
 #'   wish to make the transformation happen at different locations.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Use [`towny`] to create a **gt** table. Transform the text in the
+#' `csd_type` column using two-sided formulas supplied to `text_case_match()`.
+#' We can replace matches on the LHS with Fontawesome icons furnished by the
+#' **fontawesome** R package.
+#'
+#' ```r
+#' towny |>
+#'   dplyr::select(name, csd_type, population_2021) |>
+#'   dplyr::filter(csd_type %in% c("city", "town")) |>
+#'   dplyr::group_by(csd_type) |>
+#'   dplyr::arrange(desc(population_2021)) |>
+#'   dplyr::slice_head(n = 5) |>
+#'   dplyr::ungroup() |>
+#'   gt() |>
+#'   fmt_integer() |>
+#'   text_case_match(
+#'     "city" ~ fontawesome::fa("city"),
+#'     "town" ~ fontawesome::fa("house-chimney")
+#'   ) |>
+#'   cols_label(
+#'     name = "City/Town",
+#'     csd_type = "",
+#'     population_2021 = "Population"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_text_case_match_1.png")`
+#' }}
 #'
 #' @family text transforming functions
 #' @section Function ID:
