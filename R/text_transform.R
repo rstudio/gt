@@ -1,77 +1,12 @@
-#' Perform text transformations with a custom function
-#'
-#' @param data A table object that is created using the [gt()] function.
-#' @param fn The function to use for text transformation.
-#' @param locations The cell or set of cells to be associated with the text
-#'   transformation. Only the [cells_body()], [cells_stub()],
-#'   [cells_column_labels()], and [cells_row_groups()] helper functions can be
-#'   used here. We can enclose several of these calls within a `list()` if we
-#'   wish to make the transformation happen at different locations.
-#'
-#' @return An object of class `gt_tbl`.
-#'
-#' @section Examples:
-#'
-#' Use [`exibble`] to create a **gt** table. Transform the formatted text in the
-#' `num` column using a function supplied to `text_transform()` (via the `fn`
-#' argument). Note that the `x` in the `fn = function (x)` part is an already
-#' formatted vector of column values from the `num` column.
-#'
-#' ```r
-#' exibble |>
-#'   dplyr::select(num, char, currency) |>
-#'   dplyr::slice(1:4) |>
-#'   gt() |>
-#'   fmt_number(columns = num) |>
-#'   fmt_currency(columns = currency) |>
-#'   text_transform(
-#'     fn = function(x) {
-#'       paste0(
-#'         x, " (",
-#'         dplyr::case_when(
-#'           x > 20  ~ "large",
-#'           x <= 20 ~ "small"),
-#'         ")"
-#'         )
-#'     },
-#'     locations = cells_body(columns = num)
-#'   )
-#' ```
-#'
-#' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_text_transform_1.png")`
-#' }}
-#'
-#' @family text transforming functions
-#' @section Function ID:
-#' 4-1
-#'
-#' @section Function Introduced:
-#' `v0.2.0.5` (March 31, 2020)
-#'
-#' @export
-text_transform <- function(
-    data,
-    fn,
-    locations = cells_body()
-) {
-
-  # Perform input object validation
-  stop_if_not_gt_tbl(data = data)
-
-  # Resolve into a list of locations
-  locations <- as_locations(locations = locations)
-
-  # For all of the resolved locations, store the transforms
-  # for later execution
-  for (loc in locations) {
-    data <- dt_transforms_add(data = data, loc = loc, fn = fn)
-  }
-
-  data
-}
-
 #' Perform highly targeted text replacement with a regex pattern
+#'
+#' @description
+#'
+#' The `text_replace()` function provides a specialized interface for replacing
+#' text fragments in table cells with literal text. You need to ensure that
+#' you're targeting the appropriate cells with the `locations` argument. Once
+#' that is done, the remaining two values to supply are for the regex pattern
+#' (`pattern`) and the replacement for all matched text (`replacement`).
 #'
 #' @param data A table object that is created using the [gt()] function.
 #' @param pattern A regex pattern used to target text fragments in the cells
@@ -85,7 +20,7 @@ text_transform <- function(
 #'
 #' @family text transforming functions
 #' @section Function ID:
-#' 4-2
+#' 4-1
 #'
 #' @section Function Introduced:
 #' *In Development*
@@ -110,7 +45,18 @@ text_replace <- function(
   )
 }
 
-#' Perform whole text replacements using a case-when expression approach
+#' Perform whole text replacements using a 'case-when'-expression approach
+#'
+#' @description
+#'
+#' The `text_case_when()` function provides a useful interface for a
+#' case-by-case approach to replacing entire table cells. First off, you have to
+#' make sure you're targeting the appropriate cells with the `.locations`
+#' argument. Following that, you supply a sequence of two-sided formulas
+#' matching of the general form: `<logical_stmt> ~ <new_text>`. In the left hand
+#' side (LHS) there should be a predicate statement that evaluates to a logical
+#' vector of length one (i.e., either `TRUE` or `FALSE`). To refer to the values
+#' undergoing transformation, you need to use the `x` variable.
 #'
 #' @param .data A table object that is created using the [gt()] function.
 #' @param ... A sequence of two-sided formulas. The left hand side (LHS)
@@ -128,7 +74,7 @@ text_replace <- function(
 #'
 #' @family text transforming functions
 #' @section Function ID:
-#' 4-3
+#' 4-2
 #'
 #' @section Function Introduced:
 #' *In Development*
@@ -189,15 +135,30 @@ text_case_when <- function(
   )
 }
 
-#' Perform whole text replacements which complete matches
+#' Perform whole or partial text replacements with a 'switch'-like approach
+#'
+#' @description
+#'
+#' The `text_case_match()` function provides a useful interface for a approach
+#' to replacing table cells that behaves much like a switch statement. The
+#' targeting of cells for transformation happens with the `.locations` argument.
+#' Once overall targeting is handled, you need to supply a sequence of two-sided
+#' formulas matching of the general form: `<vector_old_text> ~ <new_text>`. In
+#' the left hand side (LHS) there should be a character vector containing
+#' strings to match on. The right hand side (RHS) should contain a single string
+#' (or something coercible to a length one character vector). There's also the
+#' `.replace` argument that changes the matching and replacing behavior. By
+#' default, `text_case_match()` will try to match on entire strings and replace
+#' those strings. This can be changed to a partial matching and replacement
+#' strategy with the alternate option.
 #'
 #' @param .data A table object that is created using the [gt()] function.
 #' @param ... A sequence of two-sided formulas matching this general
-#'   construction: `old_text` ~ `new_text`. The left hand side (LHS) determines
-#'   which values to match on and it can be any length (allowing for `new_text`
-#'   to replace different values of `old_text`). The right hand side (RHS)
-#'   provides the replacement text (it must resolve to a single value of the
-#'   `character` class).
+#'   construction: `<old_text> ~ <new_text>`. The left hand side (LHS)
+#'   determines which values to match on and it can be any length (allowing for
+#'   `new_text` to replace different values of `old_text`). The right hand side
+#'   (RHS) provides the replacement text (it must resolve to a single value of
+#'   the `character` class).
 #' @param .default The replacement text to use when cell values aren't matched
 #'   by any of the LHS inputs. If `NULL`, the default, no replacement text will
 #'   be used.
@@ -215,7 +176,7 @@ text_case_when <- function(
 #'
 #' @family text transforming functions
 #' @section Function ID:
-#' 4-4
+#' 4-3
 #'
 #' @section Function Introduced:
 #' *In Development*
@@ -302,6 +263,94 @@ text_case_match <- function(
     }
   )
 }
+
+#' Perform text transformations with a custom function
+#'
+#' @description
+#'
+#' Text transforming in **gt** is the act of modifying formatted strings in
+#' targeted cells. The `text_transform()` function provides the most flexibility
+#' of all the `text_*()` functions in their family of functions. With it, you
+#' target the cells to undergo modification in the `locations` argument while
+#' also supplying a function to the `fn` argument. The function given to `fn`
+#' should ideally at the very least take `x` as an input (it stands for the
+#' character vector that is essentially the targeted cells) and return a
+#' character vector of the same length as the input. Using the construction
+#' `function(x) { .. }` for the function is recommended.
+#'
+#' @param data A table object that is created using the [gt()] function.
+#' @param fn The function to use for text transformation. It should include `x`
+#'   as an argument and return a character vector of the same length as the
+#'   input `x`.
+#' @param locations The cell or set of cells to be associated with the text
+#'   transformation. Only the [cells_body()], [cells_stub()],
+#'   [cells_column_labels()], and [cells_row_groups()] helper functions can be
+#'   used here. We can enclose several of these calls within a `list()` if we
+#'   wish to make the transformation happen at different locations.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Use [`exibble`] to create a **gt** table. Transform the formatted text in the
+#' `num` column using a function supplied to `text_transform()` (via the `fn`
+#' argument). Note that the `x` in the `fn = function (x)` part is an already
+#' formatted vector of column values from the `num` column.
+#'
+#' ```r
+#' exibble |>
+#'   dplyr::select(num, char, currency) |>
+#'   dplyr::slice(1:4) |>
+#'   gt() |>
+#'   fmt_number(columns = num) |>
+#'   fmt_currency(columns = currency) |>
+#'   text_transform(
+#'     fn = function(x) {
+#'       paste0(
+#'         x, " (",
+#'         dplyr::case_when(
+#'           x > 20  ~ "large",
+#'           x <= 20 ~ "small"),
+#'         ")"
+#'         )
+#'     },
+#'     locations = cells_body(columns = num)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_text_transform_1.png")`
+#' }}
+#'
+#' @family text transforming functions
+#' @section Function ID:
+#' 4-4
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
+#' @export
+text_transform <- function(
+    data,
+    fn,
+    locations = cells_body()
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  # Resolve into a list of locations
+  locations <- as_locations(locations = locations)
+
+  # For all of the resolved locations, store the transforms
+  # for later execution
+  for (loc in locations) {
+    data <- dt_transforms_add(data = data, loc = loc, fn = fn)
+  }
+
+  data
+}
+
 
 # Given a location, gt attr object, and mapping function (one chr vector as
 # input, chr vector of same length as output), replace the contents in the
