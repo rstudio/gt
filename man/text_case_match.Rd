@@ -59,6 +59,31 @@ strategy with the alternate option.
 \section{Examples}{
 
 
+Use \code{\link{exibble}} to create a \strong{gt} table. In the \code{char} column, transform the
+\code{NA} value to \code{"elderberry"}. Over in the \code{fctr} column, perform some
+sophisticated matches on spelled-out numbers and replace with descriptive
+text. Here, we use a \code{.default} to replace text for any of those non-matched
+cases.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(char, fctr) |>
+  gt() |>
+  text_case_match(
+    NA ~ "elderberry",
+    .locations = cells_body(columns = char)
+  ) |>
+  text_case_match(
+    vec_fmt_spelled_num(1:4) ~ "one to four",
+    vec_fmt_spelled_num(5:6) ~ "five or six",
+    .default = "seven or more",
+    .locations = cells_body(columns = fctr)
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_text_case_match_1.png" alt="This image of a table was generated from the first code example in the `text_case_match()` help file." style="width:100\%;">
+}}
+
 Use \code{\link{towny}} to create a \strong{gt} table. Transform the text in the
 \code{csd_type} column using two-sided formulas supplied to \code{text_case_match()}.
 We can replace matches on the LHS with Fontawesome icons furnished by the
@@ -85,7 +110,7 @@ We can replace matches on the LHS with Fontawesome icons furnished by the
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_text_case_match_1.png" alt="This image of a table was generated from the first code example in the `text_case_match()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_text_case_match_2.png" alt="This image of a table was generated from the second code example in the `text_case_match()` help file." style="width:100\%;">
 }}
 }
 
