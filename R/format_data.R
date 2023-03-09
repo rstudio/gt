@@ -6429,6 +6429,18 @@ fmt_url <- function(
 
 #' Format image paths to generate images in cells
 #'
+#' To more easily insert graphics into body cells, we can use the `fmt_image()`
+#' function. This allows for one or more images to be placed in the targeted
+#' cells. The cells need to contain some reference to an image file, either: (1)
+#' complete http/https or local paths to the files; (2) the file names, where a
+#' common path can be provided via `path`; or (3) a fragment of the file name,
+#' where the `file_pattern` helps to compose the entire file name and `path`
+#' provides the path information. This should be expressly used on columns that
+#' contain *only* references to image files (i.e., no image references as part
+#' of a larger block of text). Multiple images can be included per cell by
+#' separating image references by commas. The `sep` argument allows for a common
+#' separator to be applied between images.
+#'
 #' @inheritParams fmt_number
 #' @param height The absolute height (px) of the image in the table cell.
 #' @param sep In the output of images within a body cell, `sep` provides the
@@ -6481,6 +6493,68 @@ fmt_url <- function(
 #' formatting on values in the column or another column, or, you'd like to use a
 #' more complex predicate expression.
 #'
+#' @section Examples:
+#'
+#' Use the [`metro`] dataset to create a **gt** table. We will only include a
+#' few columns and rows from that table. The `lines` and `connect_rer` columns
+#' have comma-separated listings of numbers/letters (corresponding to lines
+#' served at each station). We have a directory SVG graphics for all of these
+#' lines in the package (the path for the image directory can be accessed via
+#' `system.file("metro_svg", package = "gt")`), and the filenames roughly
+#' correspond to the data in those two columns. The `fmt_image()` function can
+#' be used with these inputs since the `path` and `file_pattern` arguments allow
+#' us to compose complete and valid file locations. What you get from this are
+#' sequences of images in the table cells, taken from the referenced graphics
+#' files on disk.
+#'
+#' ```r
+#' metro |>
+#'   dplyr::select(name, caption, lines, connect_rer) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt() |>
+#'   cols_merge(
+#'     columns = c(name, caption),
+#'     pattern = "{1}<< ({2})>>"
+#'   ) |>
+#'   text_replace(
+#'     locations = cells_body(columns = name),
+#'     pattern = "\\((.*?)\\)",
+#'     replacement = "<br>(<em>\\1</em>)"
+#'   ) |>
+#'   sub_missing(columns = connect_rer, missing_text = "") |>
+#'   fmt_image(
+#'     columns = lines,
+#'     path = system.file("metro_svg", package = "gt"),
+#'     file_pattern = "metro_{x}.svg"
+#'   ) |>
+#'   fmt_image(
+#'     columns = connect_rer,
+#'     path = system.file("metro_svg", package = "gt"),
+#'     file_pattern = "rer_{x}.svg"
+#'   ) |>
+#'   cols_label(
+#'     name = "Station",
+#'     lines = "Lines",
+#'     connect_rer = "RER"
+#'   ) |>
+#'   cols_align(align = "left") |>
+#'   tab_style(
+#'     style = cell_borders(
+#'       sides = c("left", "right"),
+#'       weight = px(1),
+#'       color = "gray85"
+#'     ),
+#'     locations = cells_body(columns = lines)
+#'   ) |>
+#'   opt_stylize(style = 6, color = "blue") |>
+#'   opt_all_caps() |>
+#'   opt_horizontal_padding(scale = 1.75)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_image_1.png")`
+#' }}
+#'
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-18
@@ -6519,7 +6593,6 @@ fmt_image <- function(
 
         x_str_non_missing <- x[!is.na(x)]
 
-        # TODO: detect local images
         x_str_non_missing <-
           vapply(
             seq_along(x_str_non_missing),
@@ -6533,6 +6606,12 @@ fmt_image <- function(
                 files <- x_str_non_missing[x]
               }
 
+              # Automatically append `px` length unit when `height`
+              # is given as a number
+              if (is.numeric(height)) {
+                height <- paste0(height, "px")
+              }
+
               # Handle formatting of `file_pattern`
               files <-
                 apply_pattern_fmt_x(
@@ -6544,30 +6623,52 @@ fmt_image <- function(
 
               for (y in seq_along(files)) {
 
-                filename <- gtsave_filename(path = path, filename = files[y])
+                if (
+                  (!is.null(path) && grepl("https?://", path)) ||
+                  grepl("https?://", files[y])
+                ) {
 
-                # Normalize file path
-                filename <- path_expand(filename)
+                  if (!is.null(path)) {
 
-                # Automatically append `px` length unit when `height`
-                # is given as a number
-                if (is.numeric(height)) {
-                  height <- paste0(height, "px")
+                    # Normalize ending of `path`
+                    path <- gsub("/\\s+$", "", path)
+                    uri <- paste0(path, "/", files[y])
+                  } else {
+                    uri <- files[y]
+                  }
+
+                  # Place the `uri` value it within an <img>, setting the
+                  # height and always preferring vertical alignment as 'middle'
+                  out_y <-
+                    paste0(
+                      "<img src=\"", uri, "\" ",
+                      "style=\"height:", height, ";",
+                      "vertical-align:middle;\">"
+                    )
+
+                } else {
+
+                  # Compose and normalize the local file path
+                  filename <- gtsave_filename(path = path, filename = files[y])
+                  filename <- path_expand(filename)
+
+                  # Create the image URI; this uses the logical value of
+                  # `encode` to either perform or bypass Base64 encoding
+                  if (encode) {
+                    uri <- get_image_uri(filename)
+                  } else {
+                    uri <- filename
+                  }
+
+                  # Place the `uri` value it within an <img>, setting the
+                  # height and always preferring vertical alignment as 'middle'
+                  out_y <-
+                    paste0(
+                      "<img src=\"", uri, "\" ",
+                      "style=\"height:", height, ";",
+                      "vertical-align:middle;\">"
+                    )
                 }
-
-                # Create the image URI
-                # TODO: use the `encode` logical value to either perform
-                #       or bypass Base64 encoding
-                uri <- get_image_uri(filename)
-
-                # Place the `uri` value it within an <img>, setting the
-                # height and always preferring vertical alignment as 'middle'
-                out_y <-
-                  paste0(
-                    "<img src=\"", uri, "\" ",
-                    "style=\"height:", height, ";",
-                    "vertical-align:middle;\">"
-                  )
 
                 out <- c(out, out_y)
               }
