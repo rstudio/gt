@@ -6427,6 +6427,280 @@ fmt_url <- function(
   )
 }
 
+#' Format image paths to generate images in cells
+#'
+#' To more easily insert graphics into body cells, we can use the `fmt_image()`
+#' function. This allows for one or more images to be placed in the targeted
+#' cells. The cells need to contain some reference to an image file, either: (1)
+#' complete http/https or local paths to the files; (2) the file names, where a
+#' common path can be provided via `path`; or (3) a fragment of the file name,
+#' where the `file_pattern` helps to compose the entire file name and `path`
+#' provides the path information. This should be expressly used on columns that
+#' contain *only* references to image files (i.e., no image references as part
+#' of a larger block of text). Multiple images can be included per cell by
+#' separating image references by commas. The `sep` argument allows for a common
+#' separator to be applied between images.
+#'
+#' @inheritParams fmt_number
+#' @param height The absolute height (px) of the image in the table cell.
+#' @param sep In the output of images within a body cell, `sep` provides the
+#'   separator between each image.
+#' @param path An optional path to local image files (this is combined with all
+#'   filenames).
+#' @param file_pattern The pattern to use for mapping input values in the body
+#'   cells to the names of the graphics files.
+#' @param encode The option to always use Base64 encoding for image paths that
+#'   are determined to be local. By default, this is `TRUE`.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Targeting cells with `columns` and `rows`:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to target a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value of 100,000 (excluding
+#' `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given formatting function
+#' will be skipped over, like `character` values and numeric `fmt_*()`
+#' functions. So it's safe to select all columns with a particular formatting
+#' function (only those values that can be formatted will be formatted), but,
+#' you may not want that. One strategy is to format the bulk of cell values with
+#' one formatting function and then constrain the columns for later passes with
+#' other types of formatting (the last formatting done to a cell is what you get
+#' in the final output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
+#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
+#' the input data (the indices won't necessarily match those of rearranged rows
+#' if row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector. This is nice if you want to base
+#' formatting on values in the column or another column, or, you'd like to use a
+#' more complex predicate expression.
+#'
+#' @section Examples:
+#'
+#' Use the [`metro`] dataset to create a **gt** table. We will only include a
+#' few columns and rows from that table. The `lines` and `connect_rer` columns
+#' have comma-separated listings of numbers/letters (corresponding to lines
+#' served at each station). We have a directory SVG graphics for all of these
+#' lines in the package (the path for the image directory can be accessed via
+#' `system.file("metro_svg", package = "gt")`), and the filenames roughly
+#' correspond to the data in those two columns. The `fmt_image()` function can
+#' be used with these inputs since the `path` and `file_pattern` arguments allow
+#' us to compose complete and valid file locations. What you get from this are
+#' sequences of images in the table cells, taken from the referenced graphics
+#' files on disk.
+#'
+#' ```r
+#' metro |>
+#'   dplyr::select(name, caption, lines, connect_rer) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt() |>
+#'   cols_merge(
+#'     columns = c(name, caption),
+#'     pattern = "{1}<< ({2})>>"
+#'   ) |>
+#'   text_replace(
+#'     locations = cells_body(columns = name),
+#'     pattern = "\\((.*?)\\)",
+#'     replacement = "<br>(<em>\\1</em>)"
+#'   ) |>
+#'   sub_missing(columns = connect_rer, missing_text = "") |>
+#'   fmt_image(
+#'     columns = lines,
+#'     path = system.file("metro_svg", package = "gt"),
+#'     file_pattern = "metro_{x}.svg"
+#'   ) |>
+#'   fmt_image(
+#'     columns = connect_rer,
+#'     path = system.file("metro_svg", package = "gt"),
+#'     file_pattern = "rer_{x}.svg"
+#'   ) |>
+#'   cols_label(
+#'     name = "Station",
+#'     lines = "Lines",
+#'     connect_rer = "RER"
+#'   ) |>
+#'   cols_align(align = "left") |>
+#'   tab_style(
+#'     style = cell_borders(
+#'       sides = c("left", "right"),
+#'       weight = px(1),
+#'       color = "gray85"
+#'     ),
+#'     locations = cells_body(columns = lines)
+#'   ) |>
+#'   opt_stylize(style = 6, color = "blue") |>
+#'   opt_all_caps() |>
+#'   opt_horizontal_padding(scale = 1.75)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_image_1.png")`
+#' }}
+#'
+#' @family data formatting functions
+#' @section Function ID:
+#' 3-18
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @import rlang
+#' @export
+fmt_image <- function(
+    data,
+    columns = everything(),
+    rows = everything(),
+    height = 30,
+    sep = " ",
+    path = NULL,
+    file_pattern = "{x}",
+    encode = TRUE
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    fns = list(
+      html = function(x) {
+
+        # Generate an vector of empty strings that will eventually
+        # contain all of the link text
+        x_str <- character(length(x))
+
+        x_str_non_missing <- x[!is.na(x)]
+
+        x_str_non_missing <-
+          vapply(
+            seq_along(x_str_non_missing),
+            FUN.VALUE = character(1),
+            USE.NAMES = FALSE,
+            FUN = function(x) {
+
+              if (grepl(",", x_str_non_missing[x])) {
+                files <- unlist(strsplit(x_str_non_missing[x], ",\\s*"))
+              } else {
+                files <- x_str_non_missing[x]
+              }
+
+              # Automatically append `px` length unit when `height`
+              # is given as a number
+              if (is.numeric(height)) {
+                height <- paste0(height, "px")
+              }
+
+              # Handle formatting of `file_pattern`
+              files <-
+                apply_pattern_fmt_x(
+                  pattern = file_pattern,
+                  values = files
+                )
+
+              out <- c()
+
+              for (y in seq_along(files)) {
+
+                if (
+                  (!is.null(path) && grepl("https?://", path)) ||
+                  grepl("https?://", files[y])
+                ) {
+
+                  if (!is.null(path)) {
+
+                    # Normalize ending of `path`
+                    path <- gsub("/\\s+$", "", path)
+                    uri <- paste0(path, "/", files[y])
+                  } else {
+                    uri <- files[y]
+                  }
+
+                  # Place the `uri` value it within an <img>, setting the
+                  # height and always preferring vertical alignment as 'middle'
+                  out_y <-
+                    paste0(
+                      "<img src=\"", uri, "\" ",
+                      "style=\"height:", height, ";",
+                      "vertical-align:middle;\">"
+                    )
+
+                } else {
+
+                  # Compose and normalize the local file path
+                  filename <- gtsave_filename(path = path, filename = files[y])
+                  filename <- path_expand(filename)
+
+                  # Create the image URI; this uses the logical value of
+                  # `encode` to either perform or bypass Base64 encoding
+                  if (encode) {
+                    uri <- get_image_uri(filename)
+                  } else {
+                    uri <- filename
+                  }
+
+                  # Place the `uri` value it within an <img>, setting the
+                  # height and always preferring vertical alignment as 'middle'
+                  out_y <-
+                    paste0(
+                      "<img src=\"", uri, "\" ",
+                      "style=\"height:", height, ";",
+                      "vertical-align:middle;\">"
+                    )
+                }
+
+                out <- c(out, out_y)
+              }
+
+              paste0(
+                "<span style=\"white-space:nowrap;\">",
+                paste0(out, collapse = sep),
+                "</span>"
+              )
+            }
+          )
+
+        x_str[!is.na(x)] <- x_str_non_missing
+        x_str[is.na(x)] <- as.character(NA_character_)
+        x_str
+      },
+      latex = function(x) {
+        x
+      },
+      rtf = function(x) {
+        x
+      },
+      word = function(x) {
+        x
+      },
+      default = function(x) {
+        x
+      }
+    )
+  )
+}
+
 #' Format Markdown text
 #'
 #' @description
@@ -6533,7 +6807,7 @@ fmt_url <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-18
+#' 3-19
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -6667,7 +6941,7 @@ fmt_markdown <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-19
+#' 3-20
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -6863,7 +7137,7 @@ fmt_passthrough <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-20
+#' 3-21
 #'
 #' @section Function Introduced:
 #' *In Development*
@@ -7169,7 +7443,7 @@ fmt_auto <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-21
+#' 3-22
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
