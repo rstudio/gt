@@ -6708,14 +6708,14 @@ fmt_image <- function(
 #' [fmt_image()] is one way to it), there is often the need to incorporate
 #' specialized types of graphics within a table. One such group of graphics
 #' involves iconography representing different countries, and the `fmt_flag()`
-#' helps with inserting a flag icon (or multiple) in body cells. To make this
-#' work seamlessly, the input cells need to contain some reference to a country,
-#' and this is in the form of a 2-letter ISO 3166-1 country code (e.g., Egypt
-#' has the `"EG"` country code). This function will parse the targeted body
-#' cells for those codes (and the [countrypops] dataset contains all of them)
-#' and insert the appropriate flag graphics. Multiple flags can be included per
-#' cell by separating image references by commas. The `sep` argument allows for
-#' a common separator to be applied between flag images.
+#' function helps with inserting a flag icon (or multiple) in body cells. To
+#' make this work seamlessly, the input cells need to contain some reference to
+#' a country, and this is in the form of a 2-letter ISO 3166-1 country code
+#' (e.g., Egypt has the `"EG"` country code). This function will parse the
+#' targeted body cells for those codes (and the [countrypops] dataset contains
+#' all of them) and insert the appropriate flag graphics. Multiple flags can be
+#' included per cell by separating image references by commas. The `sep`
+#' argument allows for a common separator to be applied between flag images.
 #'
 #' @inheritParams fmt_number
 #' @param height The absolute height of the flag icon in the table cell. By
@@ -6791,6 +6791,36 @@ fmt_image <- function(
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_fmt_flag_1.png")`
+#' }}
+#'
+#' Using [`countrypops`] we can generate a table that provides populations
+#' every five years for the Benelux countries (`"BE"`, `"NU"`, and `"LU"`).
+#' This requires some manipulation with **dplyr** and **tidyr** before
+#' introducing the table to **gt**. With `fmt_flag()` we can obtain flag icons
+#' in the `country_code_2` column. After that, we can merge the flag icons into
+#' the stub column, generating row labels that have a combination of icon and
+#' text.
+#'
+#' ```r
+#' countrypops |>
+#'   dplyr::filter(country_code_2 %in% c("BE", "NU", "LU")) |>
+#'   dplyr::filter(year %% 10 == 0) |>
+#'   dplyr::select(country_name, country_code_2, year, population) |>
+#'   tidyr::pivot_wider(names_from = year, values_from = population) |>
+#'   dplyr::slice(1, 3, 2) |>
+#'   gt(rowname_col = "country_name") |>
+#'   tab_header(title = "Populations of the Benelux Countries") |>
+#'   tab_spanner(columns = everything(), label = "Year") |>
+#'   fmt_integer() |>
+#'   fmt_flag(columns = country_code_2) |>
+#'   cols_merge(
+#'     columns = c(country_name, country_code_2),
+#'     pattern = "{2} {1}"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_flag_2.png")`
 #' }}
 #'
 #' @family data formatting functions
