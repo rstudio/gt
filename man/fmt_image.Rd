@@ -8,7 +8,7 @@ fmt_image(
   data,
   columns = everything(),
   rows = everything(),
-  height = 30,
+  height = "2em",
   sep = " ",
   path = NULL,
   file_pattern = "{x}",
@@ -33,7 +33,8 @@ functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with
 to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{height}{The absolute height (px) of the image in the table cell.}
+\item{height}{The absolute height of the image in the table cell. By default,
+this is set to \code{"1em"}.}
 
 \item{sep}{In the output of images within a body cell, \code{sep} provides the
 separator between each image.}
