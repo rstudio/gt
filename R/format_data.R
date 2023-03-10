@@ -6442,7 +6442,8 @@ fmt_url <- function(
 #' separator to be applied between images.
 #'
 #' @inheritParams fmt_number
-#' @param height The absolute height (px) of the image in the table cell.
+#' @param height The absolute height of the image in the table cell. By default,
+#'   this is set to `"1em"`.
 #' @param sep In the output of images within a body cell, `sep` provides the
 #'   separator between each image.
 #' @param path An optional path to local image files (this is combined with all
@@ -6568,7 +6569,7 @@ fmt_image <- function(
     data,
     columns = everything(),
     rows = everything(),
-    height = 30,
+    height = "2em",
     sep = " ",
     path = NULL,
     file_pattern = "{x}",
@@ -6701,25 +6702,26 @@ fmt_image <- function(
   )
 }
 
-#' Format image paths to generate images in cells
+#' Generate flag icons for countries from their country codes
 #'
-#' While it is fairly straightforward to insert image into body cells (using
-#' [fmt_image()] is one way to do just that), there is often the need to
-#' incorporate specialized classes of graphics within a table. One such group of
-#' graphics involves flags for different countries, and the `fmt_flag()` helps
-#' with inserting a flag (or multiple) in body cells. To make this work
-#' seamlessly, the input cells need to contain some reference to a country, and
-#' this is in the form of a 2-letter ISO 3166-1 country code (e.g., Egypt has
-#' the `"EG"` country code). This function will parse the targeted body cells
-#' for those codes (and the [countrypops] dataset contains all of them) and
-#' insert the appropriate flag graphics. Multiple flags can be included per cell
-#' by separating image references by commas. The `sep` argument allows for a
-#' common separator to be applied between flag images.
+#' While it is fairly straightforward to insert images into body cells (using
+#' [fmt_image()] is one way to it), there is often the need to incorporate
+#' specialized types of graphics within a table. One such group of graphics
+#' involves iconography representing different countries, and the `fmt_flag()`
+#' helps with inserting a flag icon (or multiple) in body cells. To make this
+#' work seamlessly, the input cells need to contain some reference to a country,
+#' and this is in the form of a 2-letter ISO 3166-1 country code (e.g., Egypt
+#' has the `"EG"` country code). This function will parse the targeted body
+#' cells for those codes (and the [countrypops] dataset contains all of them)
+#' and insert the appropriate flag graphics. Multiple flags can be included per
+#' cell by separating image references by commas. The `sep` argument allows for
+#' a common separator to be applied between flag images.
 #'
 #' @inheritParams fmt_number
-#' @param height The absolute height (px) of the flag in the table cell.
-#' @param sep In the output of images within a body cell, `sep` provides the
-#'   separator between each flag.
+#' @param height The absolute height of the flag icon in the table cell. By
+#'   default, this is set to `"1em"`.
+#' @param sep In the output of flag icons within a body cell, `sep` provides the
+#'   separator between each icon.
 #'
 #' @return An object of class `gt_tbl`.
 #'
