@@ -22,7 +22,7 @@
 #' function you might want to define
 #' - color palettes: with `palette` we could supply a vector of colors, a
 #' **virdis** or **RColorBrewer** palette name, or, a palette from the
-#' **paleteer** package
+#' **paletteer** package
 #' - value domain: we can either opt to have the range of values define the
 #' domain, or, specify one explicitly with the `domain` argument
 #' - indirect color application: it's possible to compute colors from one column
