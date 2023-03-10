@@ -82,6 +82,7 @@ reference:
     - fmt_markdown
     - fmt_url
     - fmt_image
+    - fmt_flag
     - fmt_passthrough
     - fmt_auto
     - fmt
