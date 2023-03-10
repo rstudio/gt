@@ -128,7 +128,7 @@ then, create a \strong{gt} table and format all columns with \code{fmt_markdown(
 
 \section{Function ID}{
 
-3-19
+3-20
 }
 
 \section{Function Introduced}{
@@ -149,6 +149,7 @@ Other data formatting functions:
 \code{\link{fmt_date}()},
 \code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
+\code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},
 \code{\link{fmt_image}()},
 \code{\link{fmt_index}()},

@@ -166,7 +166,7 @@ omitted.
 
 \section{Function ID}{
 
-3-26
+3-27
 }
 
 \section{Function Introduced}{
@@ -184,6 +184,7 @@ Other data formatting functions:
 \code{\link{fmt_date}()},
 \code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
+\code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},
 \code{\link{fmt_image}()},
 \code{\link{fmt_index}()},
