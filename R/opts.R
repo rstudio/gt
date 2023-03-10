@@ -329,7 +329,7 @@ opt_interactive <- function(
 #'
 #' - `"numbers"`: numeric marks, they begin from 1 and these marks are not
 #' subject to recycling behavior
-#' - `"letters"`: miniscule alphabetic marks, internally uses the `letters`
+#' - `"letters"`: minuscule alphabetic marks, internally uses the `letters`
 #' vector which contains 26 lowercase letters of the Roman alphabet
 #' - `"LETTERS"`: majuscule alphabetic marks, using the `LETTERS` vector
 #' which has 26 uppercase letters of the Roman alphabet
