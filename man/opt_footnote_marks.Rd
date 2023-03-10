@@ -34,7 +34,7 @@ for certain types of footnote marks. The keywords are:
 \itemize{
 \item \code{"numbers"}: numeric marks, they begin from 1 and these marks are not
 subject to recycling behavior
-\item \code{"letters"}: miniscule alphabetic marks, internally uses the \code{letters}
+\item \code{"letters"}: minuscule alphabetic marks, internally uses the \code{letters}
 vector which contains 26 lowercase letters of the Roman alphabet
 \item \code{"LETTERS"}: majuscule alphabetic marks, using the \code{LETTERS} vector
 which has 26 uppercase letters of the Roman alphabet

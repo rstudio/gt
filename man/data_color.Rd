@@ -144,7 +144,7 @@ for finer control over color evaluation with data; the color mapping
 function you might want to define
 \item color palettes: with \code{palette} we could supply a vector of colors, a
 \strong{virdis} or \strong{RColorBrewer} palette name, or, a palette from the
-\strong{paleteer} package
+\strong{paletteer} package
 \item value domain: we can either opt to have the range of values define the
 domain, or, specify one explicitly with the \code{domain} argument
 \item indirect color application: it's possible to compute colors from one column
