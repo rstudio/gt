@@ -15,6 +15,7 @@ source("data-raw/X10-spelled_num.R")
 usethis::use_data(
   currencies, currency_symbols, locales, default_locales,
   palettes_strips, google_font_tbl, google_styles_tbl, google_axes_tbl,
-  css_colors, fractions, durations, styles_colors_params, spelled_num,
+  css_colors, fractions, durations, styles_colors_params,
+  spelled_num, flag_tbl,
   internal = TRUE, overwrite = TRUE
 )
