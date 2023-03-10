@@ -45,12 +45,12 @@ incorporate specialized classes of graphics within a table. One such group of
 graphics involves flags for different countries, and the \code{fmt_flag()} helps
 with inserting a flag (or multiple) in body cells. To make this work
 seamlessly, the input cells need to contain some reference to a country, and
-this is either a 2- or 3-letter ISO 3166-1 country code (e.g., Egypt has the
-\code{"EG"} and \code{"EGY"} country codes). This function will parse the targeted body
-cells for those codes (and the \link{countrypops} dataset contains all of them)
-and insert the appropriate flag graphics. Multiple flags can be included per
-cell by separating image references by commas. The \code{sep} argument allows for
-a common separator to be applied between flag images.
+this is in the form of a 2-letter ISO 3166-1 country code (e.g., Egypt has
+the \code{"EG"} country code). This function will parse the targeted body cells
+for those codes (and the \link{countrypops} dataset contains all of them) and
+insert the appropriate flag graphics. Multiple flags can be included per cell
+by separating image references by commas. The \code{sep} argument allows for a
+common separator to be applied between flag images.
 }
 \section{Targeting cells with \code{columns} and \code{rows}}{
 
