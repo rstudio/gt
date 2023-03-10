@@ -6701,6 +6701,207 @@ fmt_image <- function(
   )
 }
 
+#' Format image paths to generate images in cells
+#'
+#' While it is fairly straightforward to insert image into body cells (using
+#' [fmt_image()] is one way to do just that), there is often the need to
+#' incorporate specialized classes of graphics within a table. One such group of
+#' graphics involves flags for different countries, and the `fmt_flag()` helps
+#' with inserting a flag (or multiple) in body cells. To make this work
+#' seamlessly, the input cells need to contain some reference to a country, and
+#' this is either a 2- or 3-letter ISO 3166-1 country code (e.g., Egypt has the
+#' `"EG"` and `"EGY"` country codes). This function will parse the targeted body
+#' cells for those codes (and the [countrypops] dataset contains all of them)
+#' and insert the appropriate flag graphics. Multiple flags can be included per
+#' cell by separating image references by commas. The `sep` argument allows for
+#' a common separator to be applied between flag images.
+#'
+#' @inheritParams fmt_number
+#' @param height The absolute height (px) of the flag in the table cell.
+#' @param sep In the output of images within a body cell, `sep` provides the
+#'   separator between each flag.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Targeting cells with `columns` and `rows`:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to target a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value of 100,000 (excluding
+#' `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given formatting function
+#' will be skipped over, like `character` values and numeric `fmt_*()`
+#' functions. So it's safe to select all columns with a particular formatting
+#' function (only those values that can be formatted will be formatted), but,
+#' you may not want that. One strategy is to format the bulk of cell values with
+#' one formatting function and then constrain the columns for later passes with
+#' other types of formatting (the last formatting done to a cell is what you get
+#' in the final output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
+#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
+#' the input data (the indices won't necessarily match those of rearranged rows
+#' if row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector. This is nice if you want to base
+#' formatting on values in the column or another column, or, you'd like to use a
+#' more complex predicate expression.
+#'
+#' @section Examples:
+#'
+#' Use the [`countrypops`] dataset to create a **gt** table. We will only
+#' include a few columns and rows from that table. The `country_code_2` column
+#' has 2-letter country codes in the format required for `fmt_flag()` and using
+#' that function transforms the codes in circular flag icons.
+#'
+#' ```r
+#' countrypops |>
+#'   dplyr::filter(year == 2021) |>
+#'   dplyr::filter(grepl("^S", country_name)) |>
+#'   dplyr::arrange(country_name) |>
+#'   dplyr::select(-country_code_3, -year) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt() |>
+#'   cols_move_to_start(columns = country_code_2) |>
+#'   fmt_integer() |>
+#'   fmt_flag(columns = country_code_2) |>
+#'   cols_label(
+#'     country_code_2 = "",
+#'     country_name = "Country",
+#'     population = "Population (2021)"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_flag_1.png")`
+#' }}
+#'
+#' @family data formatting functions
+#' @section Function ID:
+#' 3-19
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @import rlang
+#' @export
+fmt_flag <- function(
+    data,
+    columns = everything(),
+    rows = everything(),
+    height = "1em",
+    sep = " "
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    fns = list(
+      html = function(x) {
+
+        # Generate an vector of empty strings that will eventually
+        # contain all of the link text
+        x_str <- character(length(x))
+
+        x_str_non_missing <- x[!is.na(x)]
+
+        x_str_non_missing <-
+          vapply(
+            seq_along(x_str_non_missing),
+            FUN.VALUE = character(1),
+            USE.NAMES = FALSE,
+            FUN = function(x) {
+
+              if (grepl(",", x_str_non_missing[x])) {
+                countries <-
+                  toupper(unlist(strsplit(x_str_non_missing[x], ",\\s*")))
+              } else {
+                countries <- toupper(x_str_non_missing[x])
+              }
+
+              # Automatically append `px` length unit when `height`
+              # is given as a number
+              if (is.numeric(height)) {
+                height <- paste0(height, "px")
+              }
+
+              # TODO: Parse to ensure that `country_code` values are valid
+
+              out <- c()
+
+              for (y in seq_along(countries)) {
+
+                flag_svg <- flag_tbl[flag_tbl[["country_code"]] == countries[y], ][["country_flag"]]
+
+                out_y <-
+                  gsub(
+                    "<svg.*?>",
+                    paste0(
+                      "<svg xmlns=\"http://www.w3.org/2000/svg\" ",
+                      "width=\"512\" height=\"512\" ",
+                      "viewBox=\"0 0 512 512\" ",
+                      "style=\"vertical-align:-0.125em;",
+                      "image-rendering:optimizeQuality;",
+                      "height:", height, ";",
+                      "width:", height, ";",
+                      "\"",
+                      ">"
+                    ),
+                    flag_svg
+                  )
+
+                out <- c(out, out_y)
+              }
+
+              paste0(
+                "<span style=\"white-space:nowrap;\">",
+                paste0(out, collapse = sep),
+                "</span>"
+              )
+            }
+          )
+
+        x_str[!is.na(x)] <- x_str_non_missing
+        x_str[is.na(x)] <- as.character(NA_character_)
+        x_str
+      },
+      latex = function(x) {
+        x
+      },
+      rtf = function(x) {
+        x
+      },
+      word = function(x) {
+        x
+      },
+      default = function(x) {
+        x
+      }
+    )
+  )
+}
+
 #' Format Markdown text
 #'
 #' @description
@@ -6807,7 +7008,7 @@ fmt_image <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-19
+#' 3-20
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -6941,7 +7142,7 @@ fmt_markdown <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-20
+#' 3-21
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -7137,7 +7338,7 @@ fmt_passthrough <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-21
+#' 3-22
 #'
 #' @section Function Introduced:
 #' *In Development*
@@ -7443,7 +7644,7 @@ fmt_auto <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-22
+#' 3-23
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
