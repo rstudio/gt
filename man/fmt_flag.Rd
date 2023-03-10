@@ -44,14 +44,14 @@ While it is fairly straightforward to insert images into body cells (using
 \code{\link[=fmt_image]{fmt_image()}} is one way to it), there is often the need to incorporate
 specialized types of graphics within a table. One such group of graphics
 involves iconography representing different countries, and the \code{fmt_flag()}
-helps with inserting a flag icon (or multiple) in body cells. To make this
-work seamlessly, the input cells need to contain some reference to a country,
-and this is in the form of a 2-letter ISO 3166-1 country code (e.g., Egypt
-has the \code{"EG"} country code). This function will parse the targeted body
-cells for those codes (and the \link{countrypops} dataset contains all of them)
-and insert the appropriate flag graphics. Multiple flags can be included per
-cell by separating image references by commas. The \code{sep} argument allows for
-a common separator to be applied between flag images.
+function helps with inserting a flag icon (or multiple) in body cells. To
+make this work seamlessly, the input cells need to contain some reference to
+a country, and this is in the form of a 2-letter ISO 3166-1 country code
+(e.g., Egypt has the \code{"EG"} country code). This function will parse the
+targeted body cells for those codes (and the \link{countrypops} dataset contains
+all of them) and insert the appropriate flag graphics. Multiple flags can be
+included per cell by separating image references by commas. The \code{sep}
+argument allows for a common separator to be applied between flag images.
 }
 \section{Targeting cells with \code{columns} and \code{rows}}{
 
@@ -121,6 +121,35 @@ that function transforms the codes in circular flag icons.
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_flag_1.png" alt="This image of a table was generated from the first code example in the `fmt_flag()` help file." style="width:100\%;">
+}}
+
+Using \code{\link{countrypops}} we can generate a table that provides populations
+every five years for the Benelux countries (\code{"BE"}, \code{"NU"}, and \code{"LU"}).
+This requires some manipulation with \strong{dplyr} and \strong{tidyr} before
+introducing the table to \strong{gt}. With \code{fmt_flag()} we can obtain flag icons
+in the \code{country_code_2} column. After that, we can merge the flag icons into
+the stub column, generating row labels that have a combination of icon and
+text.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::filter(country_code_2 \%in\% c("BE", "NU", "LU")) |>
+  dplyr::filter(year \%\% 10 == 0) |>
+  dplyr::select(country_name, country_code_2, year, population) |>
+  tidyr::pivot_wider(names_from = year, values_from = population) |>
+  dplyr::slice(1, 3, 2) |>
+  gt(rowname_col = "country_name") |>
+  tab_header(title = "Populations of the Benelux Countries") |>
+  tab_spanner(columns = everything(), label = "Year") |>
+  fmt_integer() |>
+  fmt_flag(columns = country_code_2) |>
+  cols_merge(
+    columns = c(country_name, country_code_2),
+    pattern = "\{2\} \{1\}"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_flag_2.png" alt="This image of a table was generated from the second code example in the `fmt_flag()` help file." style="width:100\%;">
 }}
 }
 
