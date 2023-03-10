@@ -2,7 +2,7 @@
 % Please edit documentation in R/format_data.R
 \name{fmt_flag}
 \alias{fmt_flag}
-\title{Format image paths to generate images in cells}
+\title{Generate flag icons for countries from their country codes}
 \usage{
 fmt_flag(
   data,
@@ -30,27 +30,28 @@ functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with
 to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{height}{The absolute height (px) of the flag in the table cell.}
+\item{height}{The absolute height of the flag icon in the table cell. By
+default, this is set to \code{"1em"}.}
 
-\item{sep}{In the output of images within a body cell, \code{sep} provides the
-separator between each flag.}
+\item{sep}{In the output of flag icons within a body cell, \code{sep} provides the
+separator between each icon.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
-While it is fairly straightforward to insert image into body cells (using
-\code{\link[=fmt_image]{fmt_image()}} is one way to do just that), there is often the need to
-incorporate specialized classes of graphics within a table. One such group of
-graphics involves flags for different countries, and the \code{fmt_flag()} helps
-with inserting a flag (or multiple) in body cells. To make this work
-seamlessly, the input cells need to contain some reference to a country, and
-this is in the form of a 2-letter ISO 3166-1 country code (e.g., Egypt has
-the \code{"EG"} country code). This function will parse the targeted body cells
-for those codes (and the \link{countrypops} dataset contains all of them) and
-insert the appropriate flag graphics. Multiple flags can be included per cell
-by separating image references by commas. The \code{sep} argument allows for a
-common separator to be applied between flag images.
+While it is fairly straightforward to insert images into body cells (using
+\code{\link[=fmt_image]{fmt_image()}} is one way to it), there is often the need to incorporate
+specialized types of graphics within a table. One such group of graphics
+involves iconography representing different countries, and the \code{fmt_flag()}
+helps with inserting a flag icon (or multiple) in body cells. To make this
+work seamlessly, the input cells need to contain some reference to a country,
+and this is in the form of a 2-letter ISO 3166-1 country code (e.g., Egypt
+has the \code{"EG"} country code). This function will parse the targeted body
+cells for those codes (and the \link{countrypops} dataset contains all of them)
+and insert the appropriate flag graphics. Multiple flags can be included per
+cell by separating image references by commas. The \code{sep} argument allows for
+a common separator to be applied between flag images.
 }
 \section{Targeting cells with \code{columns} and \code{rows}}{
 
