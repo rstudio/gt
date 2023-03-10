@@ -67,7 +67,7 @@
 
 * The `tab_stub_indent()` function was added to allow for fine control over row label indentation. (#999, #1002)
 
-* The `fmt_duration()` function is now available for formatting values to time durations whether those input values are numbers or of the `difftime` class. It provides a wide array of options so you can get the formatting of time duration values just right (#403). (#916)
+* The `fmt_duration()` function is now available for formatting values to time duration values whether those input values are numbers or of the `difftime` class. It provides a wide array of options so you can get the formatting of time duration values just right (#403). (#916)
 
 * Generating PNG files from **gt** tables using `gtsave()` is now way better due to the move away from **webshot** to its sequel package **webshot2** (#621, #885). (#985)
 
@@ -248,7 +248,7 @@ This release focuses on improvements to two main areas:
 
 * The `tab_spanner_delim()` with `gather = TRUE` did not work reliably (Issue #626) but was fixed along with other work done to overhaul the function. (#665)
 
-* Correction made to the representation of the `PEN` (Peruvian Neuvo Sol) currency. (#663)
+* Correction made to the representation of the `PEN` (Peruvian Nuevo Sol) currency. (#663)
 
 * Fix for `gtsave()` when saving an image and specifying a `path` value. (#592)
 
