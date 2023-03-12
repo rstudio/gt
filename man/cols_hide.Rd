@@ -2,9 +2,12 @@
 % Please edit documentation in R/modify_columns.R
 \name{cols_hide}
 \alias{cols_hide}
+\alias{cols_hide_missing}
 \title{Hide one or more columns}
 \usage{
 cols_hide(data, columns)
+
+cols_hide_missing(data)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
