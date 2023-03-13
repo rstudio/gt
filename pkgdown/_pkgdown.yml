@@ -276,6 +276,14 @@ reference:
     - extract_cells
 
   - title: Multiple-table Functions
+    desc: >
+      Sometimes you want to deal with a multitude of **gt** tables, all at once.
+      There are some advantages to having a group of tables bundled together in
+      a `gt_group` object. You could apply options that petain to all tables yet
+      still access the individual tables for their own specialized
+      modifications. They all print together at once too! For HTML, each table
+      will be separated by a line break whereas in paginated formats the tables
+      are separated by page breaks.
     contents:
     - gt_group
     - grp_pull

@@ -918,16 +918,23 @@ rtf_border <- function(
   rtf_border
 }
 
-as_rtf_string <- function(x) {
+as_rtf_string <- function(
+    x,
+    incl_open = TRUE,
+    incl_header = TRUE,
+    incl_page_info = TRUE,
+    incl_body = TRUE,
+    incl_close = TRUE
+) {
 
   rtf_paste0(
-    rtf_raw("{"),
-    rtf_raw(as.character(x$header)),
+    if (incl_open) rtf_raw("{") else NULL,
+    if (incl_header) rtf_raw(as.character(x$header)) else NULL,
     "\n",
-    rtf_raw(as.character(x$page_information)),
+    if (incl_page_info) rtf_raw(as.character(x$page_information)) else NULL,
     "\n",
-    rtf_raw(as.character(x$document)),
-    rtf_raw("}")
+    if (incl_body) rtf_raw(as.character(x$document)) else NULL,
+    if (incl_close) rtf_raw("}") else NULL
   )
 }
 
