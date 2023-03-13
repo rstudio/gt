@@ -15,7 +15,7 @@
 
 [![Posit Cloud](https://img.shields.io/badge/Posit%20Cloud-gt%20Test%20Drive-blue?style=social&logo=rstudio&logoColor=75AADB)](https://rstudio.cloud/project/779965)
 
-<a href="https://www.contributor-covenant.org/version/2/0/code_of_conduct/"><img src="https://img.shields.io/badge/Contributor%20Covenant-v2.0%20adopted-ff69b4.svg" alt="Contributor Covenant" /></a>
+<a href="https://www.contributor-covenant.org/version/2/1/code_of_conduct.html"><img src="https://img.shields.io/badge/Contributor%20Covenant-v2.1%20adopted-ff69b4.svg" alt="Contributor Covenant" /></a>
 <!-- badges: end -->
 <hr style="color:transparent" />
 <br />
@@ -171,7 +171,7 @@ pages:
 ## Code of Conduct
 
 Please note that the gt project is released with a [contributor code of
-conduct](https://www.contributor-covenant.org/version/2/0/code_of_conduct/).<br>By
+conduct](https://www.contributor-covenant.org/version/2/1/code_of_conduct.html).<br>By
 participating in this project you agree to abide by its terms.
 
 ## 📄 License
