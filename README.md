@@ -179,7 +179,7 @@ participating in this project you agree to abide by its terms.
 **gt** is licensed under the MIT license. See the
 [`LICENSE.md`](LICENSE.md) file for more details.
 
-© Posit, PBC.
+© Posit Software, PBC.
 
 ## 🏛️ Governance
 
