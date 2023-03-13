@@ -2,7 +2,7 @@
 
 ## New features
 
-* A new function, `cols_label_with()`, is added for relabeling columns with functions. It allows for renaming functions to applied to arbitrary sets of columns, using `tidyselect`. It's like `rename_with()` for your **gt** table, but doesn't need unique names for labeling.
+* A new function, `cols_label_with()`, is added for relabeling columns via functions. It allows renaming functions to be applied to arbitrary sets of columns, taking advantage of **tidyselect**. It's like `dplyr::rename_with()` for your **gt** table, but doesn't need unique names for labeling.
 
 # gt 0.8.0
 
