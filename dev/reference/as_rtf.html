@@ -70,13 +70,41 @@ file that can be opened by RTF readers.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">as_rtf</span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">as_rtf</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  incl_open <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  incl_header <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  incl_page_info <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  incl_body <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  incl_close <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p>A table object that is created using the <code><a href="gt.html">gt()</a></code> function.</p></dd>
+
+
+<dt>incl_open, incl_close</dt>
+<dd><p>Options that govern whether the opening or
+closing <code>"{"</code> and <code>"}"</code> should be included. By default, both options are
+<code>TRUE</code>.</p></dd>
+
+
+<dt>incl_header</dt>
+<dd><p>Should the RTF header be included in the output? By
+default, this is <code>TRUE</code>.</p></dd>
+
+
+<dt>incl_page_info</dt>
+<dd><p>Should the RTF output include directives for the
+document pages? This is <code>TRUE</code> by default.</p></dd>
+
+
+<dt>incl_body</dt>
+<dd><p>An option to include the body of RTF document. By
+default, this is <code>TRUE</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
