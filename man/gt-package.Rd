@@ -18,12 +18,12 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Richard Iannone \email{rich@rstudio.com} (\href{https://orcid.org/0000-0003-3925-190X}{ORCID})
+\strong{Maintainer}: Richard Iannone \email{rich@posit.co} (\href{https://orcid.org/0000-0003-3925-190X}{ORCID})
 
 Authors:
 \itemize{
-  \item Joe Cheng \email{joe@rstudio.com}
-  \item Barret Schloerke \email{barret@rstudio.com} (\href{https://orcid.org/0000-0001-9986-114X}{ORCID})
+  \item Joe Cheng \email{joe@posit.co}
+  \item Barret Schloerke \email{barret@posit.co} (\href{https://orcid.org/0000-0001-9986-114X}{ORCID})
   \item Ellis Hughes \email{ellis.h.hughes@gsk.com} (\href{https://orcid.org/0000-0003-0637-4436}{ORCID})
   \item Alexandra Lauer \email{alexandralauer1@gmail.com} (\href{https://orcid.org/0000-0002-4191-6301}{ORCID})
   \item JooYoung Seo \email{jseo1005@illinois.edu} (\href{https://orcid.org/0000-0002-4064-6012}{ORCID})
@@ -31,7 +31,7 @@ Authors:
 
 Other contributors:
 \itemize{
-  \item Posit, PBC [copyright holder, funder]
+  \item Posit Software, PBC [copyright holder, funder]
 }
 
 }
