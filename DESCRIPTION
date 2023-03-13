@@ -10,10 +10,10 @@ Description: Build display tables from tabular data with an easy-to-use set of
     handles things for you means that you don't often have to worry about the
     fine details.
 Authors@R: c(
-    person("Richard", "Iannone", , "rich@rstudio.com", c("aut", "cre"),
+    person("Richard", "Iannone", , "rich@posit.co", c("aut", "cre"),
            comment = c(ORCID = "0000-0003-3925-190X")),
-    person("Joe", "Cheng", , "joe@rstudio.com", "aut"),
-    person("Barret", "Schloerke", , "barret@rstudio.com", "aut",
+    person("Joe", "Cheng", , "joe@posit.co", "aut"),
+    person("Barret", "Schloerke", , "barret@posit.co", "aut",
            comment = c(ORCID = "0000-0001-9986-114X")),
     person("Ellis", "Hughes", , "ellis.h.hughes@gsk.com", "aut",
            comment = c(ORCID = "0000-0003-0637-4436")),   
