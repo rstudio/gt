@@ -4,10 +4,30 @@
 \alias{as_rtf}
 \title{Output a \strong{gt} object as RTF}
 \usage{
-as_rtf(data)
+as_rtf(
+  data,
+  incl_open = TRUE,
+  incl_header = TRUE,
+  incl_page_info = TRUE,
+  incl_body = TRUE,
+  incl_close = TRUE
+)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{gt()} function.}
+
+\item{incl_open, incl_close}{Options that govern whether the opening or
+closing \code{"{"} and \code{"}"} should be included. By default, both options are
+\code{TRUE}.}
+
+\item{incl_header}{Should the RTF header be included in the output? By
+default, this is \code{TRUE}.}
+
+\item{incl_page_info}{Should the RTF output include directives for the
+document pages? This is \code{TRUE} by default.}
+
+\item{incl_body}{An option to include the body of RTF document. By
+default, this is \code{TRUE}.}
 }
 \description{
 Get the RTF content from a \code{gt_tbl} object as as a single-element character

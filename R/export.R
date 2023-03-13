@@ -282,7 +282,47 @@ gt_save_rtf <- function(
   filename <- gtsave_filename(path = path, filename = filename)
 
   if (is_gt_tbl(data = data)) {
+
     rtf_lines <- as_rtf(data = data)
+
+  } else {
+
+    rtf_lines <- c()
+
+    rtf_open <-
+      as_rtf(
+        grp_pull(data, which = 1),
+        incl_open = TRUE,
+        incl_header = TRUE,
+        incl_page_info = TRUE,
+        incl_body = FALSE,
+        incl_close = FALSE
+      )
+
+    seq_tbls <- seq_len(nrow(data$gt_tbls))
+
+    for (i in seq_tbls) {
+
+      rtf_lines_i <-
+        as_rtf(
+          grp_pull(data, which = i),
+          incl_open = FALSE,
+          incl_header = FALSE,
+          incl_page_info = FALSE,
+          incl_body = TRUE,
+          incl_close = FALSE
+        )
+
+      rtf_lines <- c(rtf_lines, rtf_lines_i)
+    }
+
+    rtf_lines_combined <-
+      paste(
+        rtf_lines,
+        collapse = "\n{\\pard\\fs2\\par}\\page{\\pard\\fs2\\par}\n"
+      )
+
+    rtf_lines <- paste0(rtf_open, rtf_lines_combined, "}")
   }
 
   # Remove the comments specific to knitr since this will be a standalone
@@ -314,15 +354,15 @@ gt_save_docx <- function(
 
   if (is_gt_tbl(data = data)) {
 
-  word_md_text <-
-    paste0(
-      c(
-        "```{=openxml}",
-        enc2utf8(as_word(data = data)),
-        "```",
-        ""),
-      collapse = "\n"
-    )
+    word_md_text <-
+      paste0(
+        c(
+          "```{=openxml}",
+          enc2utf8(as_word(data = data)),
+          "```",
+          ""),
+        collapse = "\n"
+      )
 
   } else {
 
@@ -613,6 +653,15 @@ as_latex <- function(data) {
 #' file that can be opened by RTF readers.
 #'
 #' @param data A table object that is created using the `gt()` function.
+#' @param incl_open,incl_close Options that govern whether the opening or
+#'   closing `"{"` and `"}"` should be included. By default, both options are
+#'   `TRUE`.
+#' @param incl_header Should the RTF header be included in the output? By
+#'   default, this is `TRUE`.
+#' @param incl_page_info Should the RTF output include directives for the
+#'   document pages? This is `TRUE` by default.
+#' @param incl_body An option to include the body of RTF document. By
+#'   default, this is `TRUE`.
 #'
 #' @section Examples:
 #'
@@ -640,7 +689,14 @@ as_latex <- function(data) {
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
-as_rtf <- function(data) {
+as_rtf <- function(
+    data,
+    incl_open = TRUE,
+    incl_header = TRUE,
+    incl_page_info = TRUE,
+    incl_body = TRUE,
+    incl_close = TRUE
+) {
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
@@ -696,7 +752,12 @@ as_rtf <- function(data) {
             )
           )
         }
-      )
+      ),
+      incl_open = incl_open,
+      incl_header = incl_header,
+      incl_page_info = incl_page_info,
+      incl_body = incl_body,
+      incl_close = incl_close
     )
 
   if (isTRUE(getOption('knitr.in.progress'))) {
