@@ -2,7 +2,7 @@
 % Please edit documentation in R/gt_preview.R
 \name{gt_preview}
 \alias{gt_preview}
-\title{Preview a \strong{gt} table object}
+\title{Generate a special \strong{gt} table for previewing a dataset}
 \usage{
 gt_preview(data, top_n = 5, bottom_n = 1, incl_rownums = TRUE)
 }

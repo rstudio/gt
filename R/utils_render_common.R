@@ -94,6 +94,9 @@ render_formats <- function(data, context) {
         )
       ) {
 
+        # Omit rows that are not present in the `data_tbl` object
+        rows <- base::intersect(seq_len(nrow(data_tbl)), rows)
+
         result <- fmt$func[[eval_func]](data_tbl[[col]][rows])
 
         # If any of the resulting output is `NA`, that means we want
