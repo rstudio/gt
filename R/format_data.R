@@ -6965,6 +6965,8 @@ fmt_image <- function(
 #'   default, this is set to `"1em"`.
 #' @param sep In the output of flag icons within a body cell, `sep` provides the
 #'   separator between each icon.
+#' @param use_title An option to display a tooltip for the country name when
+#'   hovering over the flag icon. By default this is `TRUE`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -7066,6 +7068,43 @@ fmt_image <- function(
 #' `r man_get_image_tag(file = "man_fmt_flag_2.png")`
 #' }}
 #'
+#' The `fmt_flag()` function works well even when there are multiple country
+#' codes within the same cell. It can operate on comma-separated codes without
+#' issue. When rendered to HTML, hovering over each of the flag icons results in
+#' tooltip text showing the name of the country.
+#'
+#' ```r
+#' countrypops |>
+#'   dplyr::filter(year == 2021, population < 100000) |>
+#'   dplyr::select(country_code_2, population) |>
+#'   dplyr::mutate(population_class = cut(
+#'     population,
+#'     breaks = scales::breaks_pretty(n = 5)(population)
+#'     )
+#'   ) |>
+#'   dplyr::group_by(population_class) |>
+#'   dplyr::summarize(
+#'     countries = paste0(country_code_2, collapse = ",")
+#'   ) |>
+#'   dplyr::arrange(desc(population_class)) |>
+#'   gt() |>
+#'   tab_header(title = "Countries with Small Populations") |>
+#'   fmt_flag(columns = countries) |>
+#'   fmt_bins(
+#'     columns = population_class,
+#'     fmt = ~ fmt_integer(., suffixing = TRUE)
+#'   ) |>
+#'   cols_label(
+#'     population_class = "Population Range",
+#'     countries = "Countries"
+#'   ) |>
+#'   cols_width(population_class ~ px(150))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_flag_3.png")`
+#' }}
+#'
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-20
@@ -7080,7 +7119,8 @@ fmt_flag <- function(
     columns = everything(),
     rows = everything(),
     height = "1em",
-    sep = " "
+    sep = " ",
+    use_title = TRUE
 ) {
 
   # Perform input object validation
@@ -7127,13 +7167,24 @@ fmt_flag <- function(
 
               for (y in seq_along(countries)) {
 
-                flag_svg <- flag_tbl[flag_tbl[["country_code"]] == countries[y], ][["country_flag"]]
+                flag_svg <-
+                  flag_tbl[
+                    flag_tbl[["country_code"]] == countries[y],
+                  ][["country_flag"]]
+
+                if (use_title) {
+                  flag_title <-
+                    flag_tbl[
+                      flag_tbl[["country_code"]] == countries[y],
+                    ][["country_name"]]
+                }
 
                 out_y <-
                   gsub(
                     "<svg.*?>",
                     paste0(
                       "<svg xmlns=\"http://www.w3.org/2000/svg\" ",
+                      "aria-hidden=\"true\" role=\"img\" ",
                       "width=\"512\" height=\"512\" ",
                       "viewBox=\"0 0 512 512\" ",
                       "style=\"vertical-align:-0.125em;",
@@ -7141,7 +7192,12 @@ fmt_flag <- function(
                       "height:", height, ";",
                       "width:", height, ";",
                       "\"",
-                      ">"
+                      ">",
+                      if (use_title) {
+                        paste0("<title>", flag_title, "</title>")
+                      } else {
+                        NULL
+                      }
                     ),
                     flag_svg
                   )
