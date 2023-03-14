@@ -76,7 +76,7 @@
           
           <code><a href="gt_preview.html">gt_preview()</a></code> 
         </dt>
-        <dd>Preview a <strong>gt</strong> table object</dd>
+        <dd>Generate a special <strong>gt</strong> table for previewing a dataset</dd>
       </dl></div><div class="section level2">
       <h2 id="create-or-modify-parts">Create or Modify Parts<a class="anchor" aria-label="anchor" href="#create-or-modify-parts"></a></h2>
       
@@ -852,7 +852,7 @@
       </dl></div><div class="section level2">
       <h2 id="multiple-table-functions">Multiple-table Functions<a class="anchor" aria-label="anchor" href="#multiple-table-functions"></a></h2>
       
-      <p class="section-desc"></p><p>Sometimes you want to deal with a multitude of <strong>gt</strong> tables, all at once. There are some advantages to having a group of tables bundled together in a <code>gt_group</code> object. You could apply options that petain to all tables yet still access the individual tables for their own specialized modifications. They all print together at once too! For HTML, each table will be separated by a line break whereas in paginated formats the tables are separated by page breaks.</p>
+      <p class="section-desc"></p><p>Sometimes you want to deal with a multitude of <strong>gt</strong> tables, all at once. There are some advantages to having a group of tables bundled together in a <code>gt_group</code> object. You could apply options that pertain to all tables yet still access the individual tables to give them their own specialized modifications. They all print together at once too! For HTML, each table will be separated by a line break whereas in paginated formats the tables are separated by page breaks.</p>
 
       
     </div><div id="" class="section level2">
@@ -865,6 +865,11 @@
           <code><a href="gt_group.html">gt_group()</a></code> 
         </dt>
         <dd>Create a <code>gt_group</code> container for multiple <strong>gt</strong> table objects</dd>
+      </dl><dl><dt>
+          
+          <code><a href="gt_splitter.html">gt_splitter()</a></code> 
+        </dt>
+        <dd>Split a table into a group of tables (a <code>gt_group</code>)</dd>
       </dl><dl><dt>
           
           <code><a href="grp_pull.html">grp_pull()</a></code> 
