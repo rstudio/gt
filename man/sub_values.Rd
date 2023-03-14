@@ -181,7 +181,7 @@ that vector must match the length of \code{x}).
 
 \section{Function ID}{
 
-3-28
+3-29
 }
 
 \section{Function Introduced}{
@@ -193,6 +193,7 @@ that vector must match the length of \code{x}).
 Other data formatting functions: 
 \code{\link{data_color}()},
 \code{\link{fmt_auto}()},
+\code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},

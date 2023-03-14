@@ -260,7 +260,7 @@ you to handle them with \code{\link[=sub_missing]{sub_missing()}}. Here's an exa
 
 \section{Function ID}{
 
-3-17
+3-18
 }
 
 \section{Function Introduced}{
@@ -269,11 +269,10 @@ you to handle them with \code{\link[=sub_missing]{sub_missing()}}. Here's an exa
 }
 
 \seealso{
-The vector-formatting version of this function.
-
 Other data formatting functions: 
 \code{\link{data_color}()},
 \code{\link{fmt_auto}()},
+\code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},

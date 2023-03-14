@@ -108,7 +108,7 @@ columns will be given replacement text with two calls of \code{sub_missing()}.
 
 \section{Function ID}{
 
-3-24
+3-25
 }
 
 \section{Function Introduced}{
@@ -120,6 +120,7 @@ columns will be given replacement text with two calls of \code{sub_missing()}.
 Other data formatting functions: 
 \code{\link{data_color}()},
 \code{\link{fmt_auto}()},
+\code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},

@@ -117,7 +117,7 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Format the numeric valu
 
 \section{Function ID}{
 
-3-23
+3-24
 }
 
 \section{Function Introduced}{
@@ -129,6 +129,7 @@ Use \code{\link{exibble}} to create a \strong{gt} table. Format the numeric valu
 Other data formatting functions: 
 \code{\link{data_color}()},
 \code{\link{fmt_auto}()},
+\code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},

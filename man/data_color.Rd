@@ -562,7 +562,7 @@ gray cells for the missing values (we also removed the \code{"NA"} text with
 
 \section{Function ID}{
 
-3-29
+3-30
 }
 
 \section{Function Introduced}{
@@ -573,6 +573,7 @@ gray cells for the missing values (we also removed the \code{"NA"} text with
 \seealso{
 Other data formatting functions: 
 \code{\link{fmt_auto}()},
+\code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
