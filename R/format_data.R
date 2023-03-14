@@ -6965,6 +6965,8 @@ fmt_image <- function(
 #'   default, this is set to `"1em"`.
 #' @param sep In the output of flag icons within a body cell, `sep` provides the
 #'   separator between each icon.
+#' @param use_title An option to display a tooltip for the country name when
+#'   hovering over the flag icon. By default this is `TRUE`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -7080,7 +7082,8 @@ fmt_flag <- function(
     columns = everything(),
     rows = everything(),
     height = "1em",
-    sep = " "
+    sep = " ",
+    use_title = TRUE
 ) {
 
   # Perform input object validation
@@ -7127,13 +7130,24 @@ fmt_flag <- function(
 
               for (y in seq_along(countries)) {
 
-                flag_svg <- flag_tbl[flag_tbl[["country_code"]] == countries[y], ][["country_flag"]]
+                flag_svg <-
+                  flag_tbl[
+                    flag_tbl[["country_code"]] == countries[y],
+                  ][["country_flag"]]
+
+                if (use_title) {
+                  flag_title <-
+                    flag_tbl[
+                      flag_tbl[["country_code"]] == countries[y],
+                    ][["country_name"]]
+                }
 
                 out_y <-
                   gsub(
                     "<svg.*?>",
                     paste0(
                       "<svg xmlns=\"http://www.w3.org/2000/svg\" ",
+                      "aria-hidden=\"true\" role=\"img\" ",
                       "width=\"512\" height=\"512\" ",
                       "viewBox=\"0 0 512 512\" ",
                       "style=\"vertical-align:-0.125em;",
@@ -7141,7 +7155,12 @@ fmt_flag <- function(
                       "height:", height, ";",
                       "width:", height, ";",
                       "\"",
-                      ">"
+                      ">",
+                      if (use_title) {
+                        paste0("<title>", flag_title, "</title>")
+                      } else {
+                        NULL
+                      }
                     ),
                     flag_svg
                   )
