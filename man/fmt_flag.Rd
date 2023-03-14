@@ -155,6 +155,42 @@ text.
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_flag_2.png" alt="This image of a table was generated from the second code example in the `fmt_flag()` help file." style="width:100\%;">
 }}
+
+The \code{fmt_flag()} function works well even when there are multiple country
+codes within the same cell. It can operate on comma-separated codes without
+issue. When rendered to HTML, hovering over each of the flag icons results in
+tooltip text showing the name of the country.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::filter(year == 2021, population < 100000) |>
+  dplyr::select(country_code_2, population) |>
+  dplyr::mutate(population_class = cut(
+    population,
+    breaks = scales::breaks_pretty(n = 5)(population)
+    )
+  ) |>
+  dplyr::group_by(population_class) |>
+  dplyr::summarize(
+    countries = paste0(country_code_2, collapse = ",")
+  ) |>
+  dplyr::arrange(desc(population_class)) |>
+  gt() |>
+  tab_header(title = "Countries with Small Populations") |>
+  fmt_flag(columns = countries) |>
+  fmt_bins(
+    columns = population_class,
+    fmt = ~ fmt_integer(., suffixing = TRUE)
+  ) |>
+  cols_label(
+    population_class = "Population Range",
+    countries = "Countries"
+  ) |>
+  cols_width(population_class ~ px(150))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_flag_3.png" alt="This image of a table was generated from the third code example in the `fmt_flag()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
