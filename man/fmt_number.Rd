@@ -269,6 +269,7 @@ this function: \code{\link[=vec_fmt_number]{vec_fmt_number()}}.
 Other data formatting functions: 
 \code{\link{data_color}()},
 \code{\link{fmt_auto}()},
+\code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},

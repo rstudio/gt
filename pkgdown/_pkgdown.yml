@@ -79,6 +79,7 @@ reference:
     - fmt_time
     - fmt_datetime
     - fmt_duration
+    - fmt_bins
     - fmt_markdown
     - fmt_url
     - fmt_image

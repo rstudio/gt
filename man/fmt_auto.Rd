@@ -137,7 +137,7 @@ instead of scientific notation with the \code{lg_num_pref = "suf"} option.
 
 \section{Function ID}{
 
-3-22
+3-23
 }
 
 \section{Function Introduced}{
@@ -148,6 +148,7 @@ instead of scientific notation with the \code{lg_num_pref = "suf"} option.
 \seealso{
 Other data formatting functions: 
 \code{\link{data_color}()},
+\code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},

@@ -115,7 +115,7 @@ to the non-\code{NA} values.
 
 \section{Function ID}{
 
-3-21
+3-22
 }
 
 \section{Function Introduced}{
@@ -127,6 +127,7 @@ to the non-\code{NA} values.
 Other data formatting functions: 
 \code{\link{data_color}()},
 \code{\link{fmt_auto}()},
+\code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
