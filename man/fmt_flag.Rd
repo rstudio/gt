@@ -9,7 +9,8 @@ fmt_flag(
   columns = everything(),
   rows = everything(),
   height = "1em",
-  sep = " "
+  sep = " ",
+  use_title = TRUE
 )
 }
 \arguments{
@@ -35,6 +36,9 @@ default, this is set to \code{"1em"}.}
 
 \item{sep}{In the output of flag icons within a body cell, \code{sep} provides the
 separator between each icon.}
+
+\item{use_title}{An option to display a tooltip for the country name when
+hovering over the flag icon. By default this is \code{TRUE}.}
 }
 \value{
 An object of class \code{gt_tbl}.
