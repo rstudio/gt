@@ -12,6 +12,11 @@ countrypops_countries <-
   countrypops$country_code_2 %>%
   unique()
 
+countrypops_country_lookup <-
+  countrypops %>%
+  dplyr::select(country_code_2, country_name) %>%
+  dplyr::distinct()
+
 files_to_delete <- base::setdiff(flag_file_countries, countrypops_countries)
 
 if (length(files_to_delete) > 0) {
@@ -29,10 +34,9 @@ flag_files <- list.files(flags_dir, full.names = TRUE)
 flag_tbl <-
   dplyr::tibble(
     country_code = character(0),
+    country_name = character(0),
     country_flag = character(0)
   )
-
-svg_insert <- "overflow=\"visible\" style=\"vertical-align:-0.125em;\""
 
 for (i in seq_along(flag_files)) {
 
@@ -42,17 +46,19 @@ for (i in seq_along(flag_files)) {
     sub(".svg", "", ., fixed = TRUE) %>%
     toupper()
 
-  flag_file_lines_i <- readLines(flag_files[i], warn = FALSE)
+  country_name_i <-
+    countrypops_country_lookup[["country_name"]][
+      countrypops_country_lookup[["country_code_2"]] == country_code_i
+    ]
 
-  flag_file_lines_i[1] <-
-    flag_file_lines_i[1] %>%
-    gsub("viewBox=\"0 0 512 512\">", paste0("viewBox=\"0 0 512 512\" ", svg_insert, ">"), .)
+  flag_file_lines_i <- readLines(flag_files[i], warn = FALSE)
 
   country_flag_i <- paste(flag_file_lines_i, collapse = "")
 
   flag_tbl_i <-
     dplyr::tibble(
       country_code = country_code_i,
+      country_name = country_name_i,
       country_flag = country_flag_i
     )
 
@@ -61,6 +67,7 @@ for (i in seq_along(flag_files)) {
 
 rm(
   flag_file_countries, flag_file_lines_i, flag_files, flags_dir,
-  i, svg_insert, country_code_i, country_flag_i, countrypops_countries,
+  i, country_code_i, country_name_i, country_flag_i,
+  countrypops_countries, countrypops_country_lookup,
   flag_tbl_i, files_to_delete
 )
