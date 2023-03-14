@@ -17,7 +17,6 @@ print.gt_tbl <- function(x, ..., view = interactive()) {
   print(html_tbl, browse = view, ...)
 }
 
-
 #' Print a collection of **gt** tables
 #'
 #' This facilitates printing of multiple HTML tables (in a `gt_group` object) to
