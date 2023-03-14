@@ -1020,6 +1020,7 @@ fmt_scientific <- function(
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_engineering()].
 #'
+#' @import rlang
 #' @export
 fmt_engineering <- function(
     data,
@@ -5955,6 +5956,250 @@ extract_duration_pattern <- function(
   pattern
 }
 
+#' Format column data containing bin/interval information
+#'
+#' When using the `cut()` function (or other functions that use it in some way)
+#' you get bins that can look like this: `"(0,10]"`, `"(10,15]"`, `"(15,20]"`,
+#' `"(20,40]"`. This interval notation expresses the lower and upper limits of
+#' each range. The square or round brackets define whether each of the endpoints
+#' are included in the range (`[`/`]` for inclusion, `(`/`)` for exclusion).
+#' Should bins of this sort be present in a table, the `fmt_bins()` function can
+#' be used to format that syntax to a form that presents better in a display
+#' table. It's possible to format the values of the intervals with the `fmt`
+#' argument, and, the separator can be modified with the `sep` argument.
+#'
+#' @inheritParams fmt_number
+#' @param sep The separator text that indicates the values are ranged. The
+#'   default value of `"--"` indicates that an en dash will be used for the
+#'   range separator. Using `"---"` will be taken to mean that an em dash should
+#'   be used. Should you want these special symbols to be taken literally, they
+#'   can be supplied within the base [I()] function.
+#' @param fmt Formatting expressions in formula form. The RHS of `~` should
+#'   contain a formatting call (e.g.,
+#'   `~ fmt_number(., decimals = 3, use_seps = FALSE`).
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Targeting cells with `columns` and `rows`:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to target a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value of 100,000 (excluding
+#' `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given formatting function
+#' will be skipped over, like `character` values and numeric `fmt_*()`
+#' functions. So it's safe to select all columns with a particular formatting
+#' function (only those values that can be formatted will be formatted), but,
+#' you may not want that. One strategy is to format the bulk of cell values with
+#' one formatting function and then constrain the columns for later passes with
+#' other types of formatting (the last formatting done to a cell is what you get
+#' in the final output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
+#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
+#' the input data (the indices won't necessarily match those of rearranged rows
+#' if row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector. This is nice if you want to base
+#' formatting on values in the column or another column, or, you'd like to use a
+#' more complex predicate expression.
+#'
+#' @section Formatting expressions for `fmt`:
+#'
+#' We can supply a one-sided (RHS only) expression to `fmt`, and, several can be
+#' provided in a list. The expression uses a formatting function (e.g.,
+#' [fmt_number()], [fmt_currency()], etc.) and it must contain an initial `.`
+#' that stands for the data object. If performing numeric formatting it might
+#' look something like this:
+#'
+#' `fmt = ~ fmt_number(., decimals = 1, use_seps = FALSE)`
+#'
+#' @section Examples:
+#'
+#' Use the [`countrypops`] dataset to create a **gt** table. Before even getting
+#' to the [gt()] call, we use the `cut()` function in conjunction with the
+#' [scales::breaks_log()] function to create some highly customized bins.
+#' Consequently each country's population in the 2021 year is assigned to a bin.
+#' These bins have a characteristic type of formatting that can be used as input
+#' to `fmt_bins()`, and using that formatting function allows us to customize
+#' the presentation of those ranges. For instance, here we are formatting the
+#' left and right values of the ranges with the [fmt_integer()] function (using
+#' formula syntax).
+#'
+#' ```r
+#' countrypops |>
+#'   dplyr::filter(year == 2021) |>
+#'   dplyr::select(country_code_2, population) |>
+#'   dplyr::mutate(population_class = cut(
+#'     population,
+#'     breaks = scales::breaks_log(n = 20)(population)
+#'     )
+#'   ) |>
+#'   dplyr::group_by(population_class) |>
+#'   dplyr::summarize(
+#'     count = dplyr::n(),
+#'     countries = paste0(country_code_2, collapse = ",")
+#'   ) |>
+#'   dplyr::arrange(desc(population_class)) |>
+#'   gt() |>
+#'   fmt_flag(columns = countries) |>
+#'   fmt_bins(
+#'     columns = population_class,
+#'     fmt = ~ fmt_integer(., suffixing = TRUE)
+#'   ) |>
+#'   cols_label(
+#'     population_class = "Population Range",
+#'     count = "",
+#'     countries = "Countries"
+#'   ) |>
+#'   cols_width(
+#'     population_class ~ px(150),
+#'     count ~ px(50)
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(style = "italic"),
+#'     locations = cells_body(columns = count)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_bins_1.png")`
+#' }}
+#'
+#' @family data formatting functions
+#' @section Function ID:
+#' 3-17
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @import rlang
+#' @export
+fmt_bins <- function(
+    data,
+    columns = everything(),
+    rows = everything(),
+    sep = "--",
+    fmt = NULL
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    fns = list(
+      html = function(x) {
+        format_bins_by_context(x, sep = sep, fmt = fmt, context = "html")
+      },
+      latex = function(x) {
+        format_bins_by_context(x, sep = sep, fmt = fmt, context = "latex")
+      },
+      rtf = function(x) {
+        format_bins_by_context(x, sep = sep, fmt = fmt, context = "rtf")
+      },
+      word = function(x) {
+        format_bins_by_context(x, sep = sep, fmt = fmt, context = "word")
+      },
+      default = function(x) {
+        format_bins_by_context(x, sep = sep, fmt = fmt, context = "plain")
+      }
+    )
+  )
+}
+
+format_bins_by_context <- function(x, sep, fmt, context) {
+
+  # Format `sep` for output context
+  if (context != "plain") {
+    sep <- context_dash_mark(sep, context = context)
+  }
+
+  # Generate an vector of empty strings that will eventually
+  # contain all of the ranged value text
+  x_str <- character(length(x))
+
+  x_str_non_missing <- x[!is.na(x)]
+
+  x_str_non_missing <- as.character(x_str_non_missing)
+
+  x_str_is_bin <-
+    grepl("^(\\(|\\[]).*?,.*?(\\)|\\])$", x_str_non_missing)
+
+  x_str_lhs <-
+    gsub(
+      "^(\\(|\\[])(.*?),(.*?)(\\)|\\])$",
+      "\\2",
+      x_str_non_missing[x_str_is_bin]
+    )
+
+  x_str_rhs <-
+    gsub(
+      "^(\\(|\\[])(.*?),(.*?)(\\)|\\])$",
+      "\\3",
+      x_str_non_missing[x_str_is_bin]
+    )
+
+  if (!is.null(fmt)) {
+
+    # Format the LHS and RHS values
+    val_tbl <-
+      dplyr::tibble(
+        left = as.numeric(x_str_lhs),
+        right = as.numeric(x_str_rhs)
+      )
+
+    val_tbl_gt <- gt(val_tbl)
+
+    # Ensure that the expression (a RHS formula) is made a closure
+    format_fn <- rlang::as_closure(fmt)
+
+    # Perform the formatting on this gt table with closure
+    val_tbl_gt <- format_fn(val_tbl_gt)
+
+    #
+    # Extract the columns of formatted data
+    #
+
+    x_val_lhs_fmt <-
+      extract_cells(val_tbl_gt, columns = "left", output = context)
+
+    x_val_rhs_fmt <-
+      extract_cells(val_tbl_gt, columns = "right", output = context)
+
+  } else {
+
+    x_val_lhs_fmt <- x_str_lhs
+    x_val_rhs_fmt <- x_str_rhs
+  }
+
+  x_str_non_missing[x_str_is_bin] <-
+    paste0(x_val_lhs_fmt, sep, x_val_rhs_fmt)
+
+  x_str[!is.na(x)] <- x_str_non_missing
+  x_str[is.na(x)] <- as.character(NA_character_)
+  x_str
+}
+
 #' Format URLs to generate links
 #'
 #' @description
@@ -6179,12 +6424,10 @@ extract_duration_pattern <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-17
+#' 3-18
 #'
 #' @section Function Introduced:
 #' *In Development*
-#'
-#' @seealso The vector-formatting version of this function.
 #'
 #' @import rlang
 #' @export
@@ -6558,7 +6801,7 @@ fmt_url <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-18
+#' 3-19
 #'
 #' @section Function Introduced:
 #' *In Development*
@@ -6825,7 +7068,7 @@ fmt_image <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-19
+#' 3-20
 #'
 #' @section Function Introduced:
 #' *In Development*
@@ -7040,7 +7283,7 @@ fmt_flag <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-20
+#' 3-21
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -7174,7 +7417,7 @@ fmt_markdown <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-21
+#' 3-22
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -7370,11 +7613,12 @@ fmt_passthrough <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-22
+#' 3-23
 #'
 #' @section Function Introduced:
 #' *In Development*
 #'
+#' @import rlang
 #' @export
 fmt_auto <- function(
     data,
@@ -7676,7 +7920,7 @@ fmt_auto <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-23
+#' 3-24
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
