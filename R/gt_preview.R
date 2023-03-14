@@ -1,4 +1,4 @@
-#' Preview a **gt** table object
+#' Generate a special **gt** table for previewing a dataset
 #'
 #' @description
 #'
