@@ -279,13 +279,14 @@ reference:
     desc: >
       Sometimes you want to deal with a multitude of **gt** tables, all at once.
       There are some advantages to having a group of tables bundled together in
-      a `gt_group` object. You could apply options that petain to all tables yet
-      still access the individual tables for their own specialized
+      a `gt_group` object. You could apply options that pertain to all tables
+      yet still access the individual tables to give them their own specialized
       modifications. They all print together at once too! For HTML, each table
       will be separated by a line break whereas in paginated formats the tables
       are separated by page breaks.
     contents:
     - gt_group
+    - gt_splitter
     - grp_pull
     - grp_add
     - grp_clone
