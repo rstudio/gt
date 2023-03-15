@@ -442,7 +442,10 @@ get_markdown_engine_fn <- function(
   # the `markdown` is not available, use the `commonmark` package as a
   # fallback; the situation is that `commonmark` is a hard dependency whereas
   # `markdown` is a soft dependency (though commonly present in user libraries)
-  if (md_engine_pref == "auto" && !requireNamespace("markdown", quietly = TRUE)) {
+  if (
+    md_engine_pref == "auto" &&
+    !requireNamespace("markdown", quietly = TRUE)
+  ) {
 
     if (context == "html") {
       md_engine_fn <- commonmark::markdown_html
@@ -471,7 +474,10 @@ process_text <- function(text, context = "html") {
   # When processing text globally (outside of the `fmt_markdown()`
   # function) we will use the 'markdown' package if it is available,
   # otherwise the 'commonmark' package
-  if (requireNamespace("markdown", quietly = TRUE)) {
+  if (
+    requireNamespace("markdown", quietly = TRUE) &&
+    utils::packageVersion("markdown") >= "1.5"
+  ) {
     md_engine <- "markdown"
   } else {
     md_engine <- "commonmark"
