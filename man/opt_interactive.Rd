@@ -110,7 +110,7 @@ It'll just be the default set of interactive options.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
   dplyr::select(name, census_div, starts_with("population")) |>
   gt() |>
-  fmt_auto() |>
+  fmt_integer() |>
   cols_label_with(fn = function(x) sub("population_", "", x)) |>
   cols_width(
     name ~ px(200),
