@@ -69,6 +69,7 @@ appropriate output type.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">vec_fmt_markdown</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
+<span>  md_engine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"auto"</span>, <span class="st">"markdown"</span>, <span class="st">"commonmark"</span><span class="op">)</span>,</span>
 <span>  output <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"auto"</span>, <span class="st">"plain"</span>, <span class="st">"html"</span>, <span class="st">"latex"</span>, <span class="st">"rtf"</span>, <span class="st">"word"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -77,6 +78,14 @@ appropriate output type.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
 <dd><p>A numeric vector.</p></dd>
+
+
+<dt>md_engine</dt>
+<dd><p>The engine preference for Markdown rendering. By default,
+this is set to <code>"auto"</code> where <strong>gt</strong> will choose the <strong>markdown</strong> package
+if it is available in the user library, otherwise functions from the
+<strong>commonmark</strong> package will be used. You can explicitly choose one or the
+other with the <code>"markdown"</code> or <code>"commonmark"</code> keyword option.</p></dd>
 
 
 <dt>output</dt>
