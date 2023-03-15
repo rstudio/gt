@@ -793,7 +793,8 @@ context_symbol_str <- function(context, symbol) {
         if (!inherits(symbol, "AsIs")) {
           paste_between(
             markdown_to_latex(
-              get_currency_str(currency = symbol, fallback_to_code = TRUE)
+              get_currency_str(currency = symbol, fallback_to_code = TRUE),
+              md_engine = "commonmark"
             ),
             c("\\text{", "}")
           )
