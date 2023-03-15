@@ -4,7 +4,12 @@
 \alias{fmt_markdown}
 \title{Format Markdown text}
 \usage{
-fmt_markdown(data, columns = everything(), rows = everything())
+fmt_markdown(
+  data,
+  columns = everything(),
+  rows = everything(),
+  md_engine = c("auto", "markdown", "commonmark")
+)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -23,6 +28,12 @@ functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with
 \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
 to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
+
+\item{md_engine}{The engine preference for Markdown rendering. By default,
+this is set to \code{"auto"} where \strong{gt} will choose the \strong{markdown} package
+if it is available in the user library, otherwise functions from the
+\strong{commonmark} package will be used. You can explicitly choose one or the
+other with the \code{"markdown"} or \code{"commonmark"} keyword option.}
 }
 \value{
 An object of class \code{gt_tbl}.
