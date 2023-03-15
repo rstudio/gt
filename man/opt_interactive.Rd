@@ -110,7 +110,7 @@ It'll just be the default set of interactive options.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
   dplyr::select(name, census_div, starts_with("population")) |>
   gt() |>
-  fmt_auto() |>
+  fmt_integer() |>
   cols_label_with(fn = function(x) sub("population_", "", x)) |>
   cols_width(
     name ~ px(200),
@@ -126,6 +126,30 @@ It'll just be the default set of interactive options.
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_interactive_1.png" alt="This image of a table was generated from the first code example in the `opt_interactive()` help file." style="width:100\%;">
+}}
+
+Interactive tables can have styled body cells. Here, we use the \code{\link{gtcars}}
+dataset to create an interactive \strong{gt} table. Using \code{\link[=tab_style]{tab_style()}} and
+\code{\link[=data_color]{data_color()}} we can flexibly style body cells throughout the table.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  gt() |>
+  cols_width(everything() ~ px(130)) |>
+  tab_style(
+    style = cell_fill(color = "gray95"),
+    locations = cells_body(columns = c(mfr, model))
+  ) |>
+  data_color(
+    columns = c(starts_with("hp"), starts_with("trq")),
+    method = "numeric",
+    palette = "viridis"
+  ) |>
+  cols_hide(columns = trim) |>
+  opt_interactive()
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_interactive_2.png" alt="This image of a table was generated from the second code example in the `opt_interactive()` help file." style="width:100\%;">
 }}
 }
 

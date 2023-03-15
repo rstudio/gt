@@ -39,6 +39,21 @@ render_as_ihtml <- function(data, id) {
   # Obtain the rendered HTML table body
   html_body <- dt_body_get(data = data)
 
+  #
+  # Only preserve columns that are not hidden
+  #
+
+  html_body_vars <- dt_boxhead_get_vars_default(data = data)
+  html_body <- html_body[, html_body_vars, drop = FALSE]
+
+  if (ncol(html_body) < 1) {
+    cli::cli_abort(c(
+      "When displaying an interactive gt table, there must be at least one visible column.",
+      "*" = "Check that the input data table has at least one column,",
+      "*" = "Failing that, look at whether all columns have been inadvertently hidden."
+    ))
+  }
+
   # Obtain column label attributes
   column_names  <- dt_boxhead_get_vars_default(data = data)
   column_labels <- dt_boxhead_get_vars_labels_default(data = data)
