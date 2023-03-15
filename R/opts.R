@@ -252,6 +252,31 @@ get_colorized_params <- function(
 #' `r man_get_image_tag(file = "man_opt_interactive_1.png")`
 #' }}
 #'
+#' Interactive tables can have styled body cells. Here, we use the [`gtcars`]
+#' dataset to create an interactive **gt** table. Using [tab_style()] and
+#' [data_color()] we can flexibly style body cells throughout the table.
+#'
+#' ```r
+#' gtcars |>
+#'   gt() |>
+#'   cols_width(everything() ~ px(130)) |>
+#'   tab_style(
+#'     style = cell_fill(color = "gray95"),
+#'     locations = cells_body(columns = c(mfr, model))
+#'   ) |>
+#'   data_color(
+#'     columns = c(starts_with("hp"), starts_with("trq")),
+#'     method = "numeric",
+#'     palette = "viridis"
+#'   ) |>
+#'   cols_hide(columns = trim) |>
+#'   opt_interactive()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_opt_interactive_2.png")`
+#' }}
+#'
 #' @family table option functions
 #' @section Function ID:
 #' 10-2
