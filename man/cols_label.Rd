@@ -16,9 +16,10 @@ right-hand side evaluates to single-length values for the label to apply.
 Column names should be enclosed in \code{\link[=c]{c()}}. Select helpers like
 \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and
 \code{\link[=everything]{everything()}} can be used in the LHS. Named arguments are also valid as
-input and should be of the form \verb{<column name> = <label>}. Subsequent
-expressions that operate on the columns assigned previously will result in
-overwriting column width values.}
+input for simple mappings of column name to label text; they should be of
+the form \verb{<column name> = <label>}. Subsequent expressions that operate on
+the columns assigned previously will result in overwriting column width
+values.}
 
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
 }
@@ -53,7 +54,9 @@ labels once they have been relabeled.
 
 
 Use \code{\link{countrypops}} to create a \strong{gt} table. Relabel all the table's columns
-with the \code{cols_label()} function to improve its presentation.
+with the \code{cols_label()} function to improve its presentation. In this simple
+case we are supplying the name of the column on the left-hand side, and the
+label text on the right-hand side.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>
@@ -67,13 +70,14 @@ with the \code{cols_label()} function to improve its presentation.
   )
 }\if{html}{\out{</div>}}
 
-#' \if{html}{\out{
+\if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_1.png" alt="This image of a table was generated from the first code example in the `cols_label()` help file." style="width:100\%;">
 }}
 
 Using \code{\link{countrypops}} again to create a \strong{gt} table, we label columns just
 as before but this time make the column labels bold through Markdown
-formatting.
+formatting (with the \code{\link[=md]{md()}} helper function). It's possible here to use
+either a \code{=} or a \code{~} between the column name and the label text.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>
@@ -83,12 +87,47 @@ formatting.
   cols_label(
     country_name = md("**Name**"),
     year = md("**Year**"),
-    population = md("**Population**")
+    population ~ md("**Population**")
   )
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_2.png" alt="This image of a table was generated from the second code example in the `cols_label()` help file." style="width:100\%;">
+}}
+
+Using \code{\link{towny}}, we can create an interesting \strong{gt} table. First, only
+certain columns are selected from the dataset, some filtering of rows is
+done, rows are sorted, and then only the first 10 rows are kept. When
+introduced to \code{\link[=gt]{gt()}}, we apply some spanner column labels through two calls
+of \code{\link[=tab_spanner]{tab_spanner()}} all the table's columns. Below those spanners, we want to
+label the columns by the years of interest. Using \code{cols_label()} and select
+expressions on the left side of the formulas, we can easily relabel multiple
+columns with common label text. Note that we cannot use an \code{=} sign in any
+of the expressions within \code{cols_label()}; because the left-hand side is not
+a single column name, we must use formula syntax (i.e., with the \code{~}).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
+  dplyr::select(
+    name, ends_with("2001"), ends_with("2006"), matches("2001_2006")
+  ) |>
+  dplyr::filter(population_2001 > 100000) |>
+  dplyr::arrange(desc(pop_change_2001_2006_pct)) |>
+  dplyr::slice_head(n = 10) |>
+  gt() |>
+  fmt_integer() |>
+  fmt_percent(columns = matches("change"), decimals = 1) |>
+  tab_spanner(label = "Population", columns = starts_with("population")) |>
+  tab_spanner(label = "Density", columns = starts_with("density")) |>
+  cols_label(
+    ends_with("01") ~ "2001",
+    ends_with("06") ~ "2006",
+    matches("change") ~ md("Population Change,<br>2001 to 2006")
+  ) |>
+  cols_width(everything() ~ px(120))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_3.png" alt="This image of a table was generated from the third code example in the `cols_label()` help file." style="width:100\%;">
 }}
 }
 
