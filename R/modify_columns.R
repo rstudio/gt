@@ -688,6 +688,12 @@ cols_label <- function(
 
     label_i <- labels_list[i]
 
+    # When input is provided as a list in `.list`, we obtain named vectors;
+    # upgrade this to a list to match the input collected from `...`
+    if (rlang::is_named(label_i) && rlang::is_scalar_vector(label_i)) {
+      label_i <- as.list(label_i)
+    }
+
     if (
       is.list(label_i) &&
       rlang::is_named(label_i) &&
