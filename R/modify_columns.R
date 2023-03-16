@@ -625,57 +625,80 @@ cols_label <- function(
     .list = list2(...)
 ) {
 
-  # Collect a named list of column labels
-  labels_list <- .list
-
   # Perform input object validation
   stop_if_not_gt_tbl(data = .data)
+
+  # Collect a list of column labels
+  labels_list <- .list
+
+  column_vars <- dt_boxhead_get_vars(data = .data)
 
   # If nothing is provided, return `data` unchanged
   if (length(labels_list) == 0) {
     return(.data)
   }
 
-  # Test for names being NULL
-  if (is.null(names(labels_list))) {
-    cli::cli_abort(
-      "Named arguments are required for `cols_label()`."
-    )
-  }
-
-  # Test for any missing names
-  if (any(names(labels_list) == "")) {
-    cli::cli_abort(
-      "All arguments to `cols_label()` must be named."
-    )
-  }
-
-  # Stop function if any of the column names specified are not in `cols_labels`
-  if (!all(names(labels_list) %in% dt_boxhead_get_vars(data = .data))) {
-    cli::cli_abort(
-      "All column names provided must exist in the input `.data` table."
-    )
-  }
-
-  # Filter the list of labels by the var names in `data`
-  labels_list <-
-    labels_list[names(labels_list) %in% dt_boxhead_get_vars(data = .data)]
-
-  # If no labels remain after filtering, return the data
-  if (length(labels_list) == 0) {
-    return(.data)
-  }
-
-  nm_labels_list <- names(labels_list)
-
   for (i in seq_along(labels_list)) {
 
-    .data <-
-      dt_boxhead_edit_column_label(
-        data = .data,
-        var = nm_labels_list[i],
-        column_label = labels_list[[i]]
-      )
+    label_i <- labels_list[i]
+
+    if (
+      is.list(label_i) &&
+      rlang::is_named(label_i) &&
+      rlang::is_scalar_vector(label_i[[1]])
+    ) {
+
+      # Get column and value
+      columns <- names(label_i)
+      new_label <- label_i[[1]]
+
+      if (!(columns %in% column_vars)) {
+        cli::cli_abort(c(
+          "The column name supplied to `cols_label()` (`{columns}`) is not valid.",
+          "*" = "Include column names or a tidyselect statement on the LHS."
+        ))
+      }
+
+    } else if (
+      is.list(label_i) &&
+      rlang::is_formula(label_i[[1]])
+    ) {
+
+      label_i <- label_i[[1]]
+
+      cols <- rlang::f_lhs(label_i)
+
+      if (is.null(cols)) {
+        cli::cli_abort(c(
+          "A formula supplied to `cols_label()` must be two-sided.",
+          "*" = "Include column names or a tidyselect statement on the LHS."
+        ))
+      }
+
+      # The default use of `resolve_cols_c()` won't work here if there
+      # is a table stub column (because we need to be able to set the
+      # stub column width and, by default, `resolve_cols_c()` excludes
+      # the stub); to prevent this exclusion, we set `excl_stub` to FALSE
+      columns <-
+        resolve_cols_c(
+          expr = !!cols,
+          data = .data
+        )
+
+      new_label <- rlang::eval_tidy(rlang::f_rhs(label_i))
+    }
+
+    for (j in seq_along(columns)) {
+
+      # For each of the resolved columns, insert the new label
+      # into the boxhead
+      .data <-
+        dt_boxhead_edit_column_label(
+          data = .data,
+          var = columns[j],
+          column_label = new_label
+        )
+    }
   }
 
   .data
