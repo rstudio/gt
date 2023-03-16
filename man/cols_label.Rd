@@ -9,10 +9,16 @@ cols_label(.data, ..., .list = list2(...))
 \arguments{
 \item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{...}{One or more named arguments of column names from the input \code{.data}
-table along with their labels for display as the column labels. We can
-optionally wrap the column labels with \code{\link[=md]{md()}} (to interpret text as
-Markdown) or \code{\link[=html]{html()}} (to interpret text as HTML).}
+\item{...}{Expressions for the assignment of column labels for the table
+columns in \code{.data}. Two-sided formulas (e.g, \verb{<LHS> ~ <RHS>}) can be used,
+where the left-hand side corresponds to selections of columns and the
+right-hand side evaluates to single-length values for the label to apply.
+Column names should be enclosed in \code{\link[=c]{c()}}. Select helpers like
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and
+\code{\link[=everything]{everything()}} can be used in the LHS. Named arguments are also valid as
+input and should be of the form \verb{<column name> = <label>}. Subsequent
+expressions that operate on the columns assigned previously will result in
+overwriting column width values.}
 
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
 }
@@ -23,11 +29,11 @@ An object of class \code{gt_tbl}.
 Column labels can be modified from their default values (the names of the
 columns from the input table data). When you create a \strong{gt} table object
 using \code{\link[=gt]{gt()}}, column names effectively become the column labels. While this
-serves as a good first approximation, column names aren't often appealing as
-column labels in a \strong{gt} output table. The \code{cols_label()} function
-provides the flexibility to relabel one or more columns and we even have the
-option to use the \code{\link[=md]{md()}} or \code{\link[=html]{html()}} helper functions for rendering column
-labels from Markdown or using HTML.
+serves as a good first approximation, column names as label defaults aren't
+often appealing as the alternative for custom column labels in a \strong{gt}
+output table. The \code{cols_label()} function provides the flexibility to relabel
+one or more columns and we even have the option to use the \code{\link[=md]{md()}} or \code{\link[=html]{html()}}
+helper functions for rendering column labels from Markdown or using HTML.
 }
 \section{A note on column names and column labels}{
 
