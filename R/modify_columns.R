@@ -554,9 +554,10 @@ cols_width <- function(
 #'   Column names should be enclosed in [c()]. Select helpers like
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()], and
 #'   [everything()] can be used in the LHS. Named arguments are also valid as
-#'   input and should be of the form `<column name> = <label>`. Subsequent
-#'   expressions that operate on the columns assigned previously will result in
-#'   overwriting column width values.
+#'   input for simple mappings of column name to label text; they should be of
+#'   the form `<column name> = <label>`. Subsequent expressions that operate on
+#'   the columns assigned previously will result in overwriting column width
+#'   values.
 #' @param .list Allows for the use of a list as an input alternative to `...`.
 #'
 #' @return An object of class `gt_tbl`.
@@ -576,7 +577,9 @@ cols_width <- function(
 #' @section Examples:
 #'
 #' Use [`countrypops`] to create a **gt** table. Relabel all the table's columns
-#' with the `cols_label()` function to improve its presentation.
+#' with the `cols_label()` function to improve its presentation. In this simple
+#' case we are supplying the name of the column on the left-hand side, and the
+#' label text on the right-hand side.
 #'
 #' ```r
 #' countrypops |>
@@ -591,13 +594,14 @@ cols_width <- function(
 #'   )
 #' ```
 #'
-#' #' \if{html}{\out{
+#' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_cols_label_1.png")`
 #' }}
 #'
 #' Using [`countrypops`] again to create a **gt** table, we label columns just
 #' as before but this time make the column labels bold through Markdown
-#' formatting.
+#' formatting (with the [md()] helper function). It's possible here to use
+#' either a `=` or a `~` between the column name and the label text.
 #'
 #' ```r
 #' countrypops |>
@@ -608,12 +612,48 @@ cols_width <- function(
 #'   cols_label(
 #'     country_name = md("**Name**"),
 #'     year = md("**Year**"),
-#'     population = md("**Population**")
+#'     population ~ md("**Population**")
 #'   )
 #' ```
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_cols_label_2.png")`
+#' }}
+#'
+#' Using [`towny`], we can create an interesting **gt** table. First, only
+#' certain columns are selected from the dataset, some filtering of rows is
+#' done, rows are sorted, and then only the first 10 rows are kept. When
+#' introduced to [gt()], we apply some spanner column labels through two calls
+#' of [tab_spanner()] all the table's columns. Below those spanners, we want to
+#' label the columns by the years of interest. Using `cols_label()` and select
+#' expressions on the left side of the formulas, we can easily relabel multiple
+#' columns with common label text. Note that we cannot use an `=` sign in any
+#' of the expressions within `cols_label()`; because the left-hand side is not
+#' a single column name, we must use formula syntax (i.e., with the `~`).
+#'
+#' ```r
+#' towny |>
+#'   dplyr::select(
+#'     name, ends_with("2001"), ends_with("2006"), matches("2001_2006")
+#'   ) |>
+#'   dplyr::filter(population_2001 > 100000) |>
+#'   dplyr::arrange(desc(pop_change_2001_2006_pct)) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt() |>
+#'   fmt_integer() |>
+#'   fmt_percent(columns = matches("change"), decimals = 1) |>
+#'   tab_spanner(label = "Population", columns = starts_with("population")) |>
+#'   tab_spanner(label = "Density", columns = starts_with("density")) |>
+#'   cols_label(
+#'     ends_with("01") ~ "2001",
+#'     ends_with("06") ~ "2006",
+#'     matches("change") ~ md("Population Change,<br>2001 to 2006")
+#'   ) |>
+#'   cols_width(everything() ~ px(120))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_label_3.png")`
 #' }}
 #'
 #' @family column modification functions
