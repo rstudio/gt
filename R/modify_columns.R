@@ -540,17 +540,23 @@ cols_width <- function(
 #' Column labels can be modified from their default values (the names of the
 #' columns from the input table data). When you create a **gt** table object
 #' using [gt()], column names effectively become the column labels. While this
-#' serves as a good first approximation, column names aren't often appealing as
-#' column labels in a **gt** output table. The `cols_label()` function
-#' provides the flexibility to relabel one or more columns and we even have the
-#' option to use the [md()] or [html()] helper functions for rendering column
-#' labels from Markdown or using HTML.
+#' serves as a good first approximation, column names as label defaults aren't
+#' often appealing as the alternative for custom column labels in a **gt**
+#' output table. The `cols_label()` function provides the flexibility to relabel
+#' one or more columns and we even have the option to use the [md()] or [html()]
+#' helper functions for rendering column labels from Markdown or using HTML.
 #'
 #' @param .data A table object that is created using the [gt()] function.
-#' @param ... One or more named arguments of column names from the input `.data`
-#'   table along with their labels for display as the column labels. We can
-#'   optionally wrap the column labels with [md()] (to interpret text as
-#'   Markdown) or [html()] (to interpret text as HTML).
+#' @param ... Expressions for the assignment of column labels for the table
+#'   columns in `.data`. Two-sided formulas (e.g, `<LHS> ~ <RHS>`) can be used,
+#'   where the left-hand side corresponds to selections of columns and the
+#'   right-hand side evaluates to single-length values for the label to apply.
+#'   Column names should be enclosed in [c()]. Select helpers like
+#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()], and
+#'   [everything()] can be used in the LHS. Named arguments are also valid as
+#'   input and should be of the form `<column name> = <label>`. Subsequent
+#'   expressions that operate on the columns assigned previously will result in
+#'   overwriting column width values.
 #' @param .list Allows for the use of a list as an input alternative to `...`.
 #'
 #' @return An object of class `gt_tbl`.
