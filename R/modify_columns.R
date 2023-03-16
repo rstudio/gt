@@ -540,17 +540,24 @@ cols_width <- function(
 #' Column labels can be modified from their default values (the names of the
 #' columns from the input table data). When you create a **gt** table object
 #' using [gt()], column names effectively become the column labels. While this
-#' serves as a good first approximation, column names aren't often appealing as
-#' column labels in a **gt** output table. The `cols_label()` function
-#' provides the flexibility to relabel one or more columns and we even have the
-#' option to use the [md()] or [html()] helper functions for rendering column
-#' labels from Markdown or using HTML.
+#' serves as a good first approximation, column names as label defaults aren't
+#' often appealing as the alternative for custom column labels in a **gt**
+#' output table. The `cols_label()` function provides the flexibility to relabel
+#' one or more columns and we even have the option to use the [md()] or [html()]
+#' helper functions for rendering column labels from Markdown or using HTML.
 #'
 #' @param .data A table object that is created using the [gt()] function.
-#' @param ... One or more named arguments of column names from the input `.data`
-#'   table along with their labels for display as the column labels. We can
-#'   optionally wrap the column labels with [md()] (to interpret text as
-#'   Markdown) or [html()] (to interpret text as HTML).
+#' @param ... Expressions for the assignment of column labels for the table
+#'   columns in `.data`. Two-sided formulas (e.g, `<LHS> ~ <RHS>`) can be used,
+#'   where the left-hand side corresponds to selections of columns and the
+#'   right-hand side evaluates to single-length values for the label to apply.
+#'   Column names should be enclosed in [c()]. Select helpers like
+#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()], and
+#'   [everything()] can be used in the LHS. Named arguments are also valid as
+#'   input for simple mappings of column name to label text; they should be of
+#'   the form `<column name> = <label>`. Subsequent expressions that operate on
+#'   the columns assigned previously will result in overwriting column width
+#'   values.
 #' @param .list Allows for the use of a list as an input alternative to `...`.
 #'
 #' @return An object of class `gt_tbl`.
@@ -570,7 +577,9 @@ cols_width <- function(
 #' @section Examples:
 #'
 #' Use [`countrypops`] to create a **gt** table. Relabel all the table's columns
-#' with the `cols_label()` function to improve its presentation.
+#' with the `cols_label()` function to improve its presentation. In this simple
+#' case we are supplying the name of the column on the left-hand side, and the
+#' label text on the right-hand side.
 #'
 #' ```r
 #' countrypops |>
@@ -585,13 +594,14 @@ cols_width <- function(
 #'   )
 #' ```
 #'
-#' #' \if{html}{\out{
+#' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_cols_label_1.png")`
 #' }}
 #'
 #' Using [`countrypops`] again to create a **gt** table, we label columns just
 #' as before but this time make the column labels bold through Markdown
-#' formatting.
+#' formatting (with the [md()] helper function). It's possible here to use
+#' either a `=` or a `~` between the column name and the label text.
 #'
 #' ```r
 #' countrypops |>
@@ -602,12 +612,48 @@ cols_width <- function(
 #'   cols_label(
 #'     country_name = md("**Name**"),
 #'     year = md("**Year**"),
-#'     population = md("**Population**")
+#'     population ~ md("**Population**")
 #'   )
 #' ```
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_cols_label_2.png")`
+#' }}
+#'
+#' Using [`towny`], we can create an interesting **gt** table. First, only
+#' certain columns are selected from the dataset, some filtering of rows is
+#' done, rows are sorted, and then only the first 10 rows are kept. When
+#' introduced to [gt()], we apply some spanner column labels through two calls
+#' of [tab_spanner()] all the table's columns. Below those spanners, we want to
+#' label the columns by the years of interest. Using `cols_label()` and select
+#' expressions on the left side of the formulas, we can easily relabel multiple
+#' columns with common label text. Note that we cannot use an `=` sign in any
+#' of the expressions within `cols_label()`; because the left-hand side is not
+#' a single column name, we must use formula syntax (i.e., with the `~`).
+#'
+#' ```r
+#' towny |>
+#'   dplyr::select(
+#'     name, ends_with("2001"), ends_with("2006"), matches("2001_2006")
+#'   ) |>
+#'   dplyr::filter(population_2001 > 100000) |>
+#'   dplyr::arrange(desc(pop_change_2001_2006_pct)) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt() |>
+#'   fmt_integer() |>
+#'   fmt_percent(columns = matches("change"), decimals = 1) |>
+#'   tab_spanner(label = "Population", columns = starts_with("population")) |>
+#'   tab_spanner(label = "Density", columns = starts_with("density")) |>
+#'   cols_label(
+#'     ends_with("01") ~ "2001",
+#'     ends_with("06") ~ "2006",
+#'     matches("change") ~ md("Population Change,<br>2001 to 2006")
+#'   ) |>
+#'   cols_width(everything() ~ px(120))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_label_3.png")`
 #' }}
 #'
 #' @family column modification functions
@@ -625,57 +671,80 @@ cols_label <- function(
     .list = list2(...)
 ) {
 
-  # Collect a named list of column labels
-  labels_list <- .list
-
   # Perform input object validation
   stop_if_not_gt_tbl(data = .data)
+
+  # Collect a list of column labels
+  labels_list <- .list
+
+  column_vars <- dt_boxhead_get_vars(data = .data)
 
   # If nothing is provided, return `data` unchanged
   if (length(labels_list) == 0) {
     return(.data)
   }
 
-  # Test for names being NULL
-  if (is.null(names(labels_list))) {
-    cli::cli_abort(
-      "Named arguments are required for `cols_label()`."
-    )
-  }
-
-  # Test for any missing names
-  if (any(names(labels_list) == "")) {
-    cli::cli_abort(
-      "All arguments to `cols_label()` must be named."
-    )
-  }
-
-  # Stop function if any of the column names specified are not in `cols_labels`
-  if (!all(names(labels_list) %in% dt_boxhead_get_vars(data = .data))) {
-    cli::cli_abort(
-      "All column names provided must exist in the input `.data` table."
-    )
-  }
-
-  # Filter the list of labels by the var names in `data`
-  labels_list <-
-    labels_list[names(labels_list) %in% dt_boxhead_get_vars(data = .data)]
-
-  # If no labels remain after filtering, return the data
-  if (length(labels_list) == 0) {
-    return(.data)
-  }
-
-  nm_labels_list <- names(labels_list)
-
   for (i in seq_along(labels_list)) {
 
-    .data <-
-      dt_boxhead_edit_column_label(
-        data = .data,
-        var = nm_labels_list[i],
-        column_label = labels_list[[i]]
-      )
+    label_i <- labels_list[i]
+
+    if (
+      is.list(label_i) &&
+      rlang::is_named(label_i) &&
+      rlang::is_scalar_vector(label_i[[1]])
+    ) {
+
+      # Get column and value
+      columns <- names(label_i)
+      new_label <- label_i[[1]]
+
+      if (!(columns %in% column_vars)) {
+        cli::cli_abort(c(
+          "The column name supplied to `cols_label()` (`{columns}`) is not valid.",
+          "*" = "Include column names or a tidyselect statement on the LHS."
+        ))
+      }
+
+    } else if (
+      is.list(label_i) &&
+      rlang::is_formula(label_i[[1]])
+    ) {
+
+      label_i <- label_i[[1]]
+
+      cols <- rlang::f_lhs(label_i)
+
+      if (is.null(cols)) {
+        cli::cli_abort(c(
+          "A formula supplied to `cols_label()` must be two-sided.",
+          "*" = "Include column names or a tidyselect statement on the LHS."
+        ))
+      }
+
+      # The default use of `resolve_cols_c()` won't work here if there
+      # is a table stub column (because we need to be able to set the
+      # stub column width and, by default, `resolve_cols_c()` excludes
+      # the stub); to prevent this exclusion, we set `excl_stub` to FALSE
+      columns <-
+        resolve_cols_c(
+          expr = !!cols,
+          data = .data
+        )
+
+      new_label <- rlang::eval_tidy(rlang::f_rhs(label_i))
+    }
+
+    for (j in seq_along(columns)) {
+
+      # For each of the resolved columns, insert the new label
+      # into the boxhead
+      .data <-
+        dt_boxhead_edit_column_label(
+          data = .data,
+          var = columns[j],
+          column_label = new_label
+        )
+    }
   }
 
   .data
