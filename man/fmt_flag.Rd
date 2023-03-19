@@ -35,7 +35,8 @@ to filter down to the rows we need (e.g.,
 default, this is set to \code{"1em"}.}
 
 \item{sep}{In the output of flag icons within a body cell, \code{sep} provides the
-separator between each icon.}
+separator between each icon. By default, this is a single space character
+(\code{" "}).}
 
 \item{use_title}{An option to display a tooltip for the country name when
 hovering over the flag icon. By default this is \code{TRUE}.}
@@ -54,8 +55,9 @@ a country, and this is in the form of a 2-letter ISO 3166-1 country code
 (e.g., Egypt has the \code{"EG"} country code). This function will parse the
 targeted body cells for those codes (and the \link{countrypops} dataset contains
 all of them) and insert the appropriate flag graphics. Multiple flags can be
-included per cell by separating image references by commas. The \code{sep}
-argument allows for a common separator to be applied between flag images.
+included per cell by separating country codes with commas (e.g., \code{"GB,TT"}).
+The \code{sep} argument allows for a common separator to be applied between flag
+icons.
 }
 \section{Targeting cells with \code{columns} and \code{rows}}{
 
