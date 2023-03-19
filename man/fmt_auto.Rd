@@ -50,15 +50,15 @@ are supported.}
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{fmt_auto()} function will automatic applying formatting of various types
-in a way that best suits the data table provided. The function will attempt
-format numbers such that they are condensed to an optimal width, either with
-scientific notation or large number suffixing. Currency values are detected
-by currency codes embedded in the column name and formatted in the correct
-way. Although the functionality here is comprehensive it's still possible to
-reduce the scope of automatic formatting with the \code{scope} argument and also
-by choosing a subset of columns and rows to which the formatting will be
-applied.
+The \code{fmt_auto()} function will automatically apply formatting of various
+types in a way that best suits the data table provided. The function will
+attempt to format numbers such that they are condensed to an optimal width,
+either with scientific notation or large-number suffixing. Currency values
+are detected by currency codes embedded in the column name and formatted in
+the correct way. Although the functionality here is comprehensive it's still
+possible to reduce the scope of automatic formatting with the \code{scope}
+argument and also by choosing a subset of columns and rows to which the
+formatting will be applied.
 }
 \section{Targeting cells with \code{columns} and \code{rows}}{
 
