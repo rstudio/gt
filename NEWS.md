@@ -2,7 +2,90 @@
 
 ## New features
 
-* A new function, `cols_label_with()`, is added for relabeling columns via functions. It allows renaming functions to be applied to arbitrary sets of columns, taking advantage of **tidyselect**. It's like `dplyr::rename_with()` for your **gt** table, but doesn't need unique names for labeling.
+* `summary_rows()` and `grand_summary_rows()` improvements, including option to place summary rows at top or bottom of group or table (#177, #270, #292, #545, #581, #784, #785, #840). (#1159, #1171)
+
+* `data_color()` improvements (#116, #633, #637, #1103, #1119). (#1147)
+
+* `cols_merge()` improvements, including a better `pattern` syntax (#1167). (#1168)
+
+* `cols_label()` improvements. (#1255, #1256)
+
+* A new function, `cols_label_with()`, has been added for relabeling columns via functions. It allows for such functions to be applied to arbitrary sets of columns, taking advantage of **tidyselect**. It's like `dplyr::rename_with()` for your **gt** table, but it doesn't need unique names for labeling (#701). (#1158, thank you @christopherkenny!)
+
+* We added `fmt_spelled_num()` and `vec_fmt_spelled_num()` so that numeric values could be transformed to spelled out numbers. Any values from `0` to `100` can be spelled out according to a given `locale` value. For example, the value `23` will be rendered as `"twenty-three"` if the locale is an English-language one (or, not provided at all); should a Swedish locale be provided (e.g., `"sv"`), the output will instead be `"tjugotre"`. (#1198)
+
+* The `fmt_index()` and `vec_fmt_index()` functions were added in so that numeric values could undergo transform those to index values, which are usually based on letters (depending on the `locale` chosen). For example, the value `5` will be rendered as `"E"` if the locale is an English-language one. The characters chosen for indexing here are based on character sets intended for ordering (often leaving out characters with
+diacritical marks). (#1189)
+
+* Should body cells contain URLs, the new `fmt_url()` function can be used to make them navigable links. There are several options provided that control how the links should be styled (conventional underline style or button-like text) (#609). (#1205, #1220, #1221)
+
+* To more easily insert graphics into body cells, we have added the `fmt_image()` function. This allows for one or more images to be placed in the targeted cells. The cells need to contain some reference to an image file, either: (1) complete http/https or local paths to the files; (2) the file names, where a common path can be provided via `path`; or (3) a fragment of the file name, where the `file_pattern` argument helps to compose the entire file name and the `path` argument provides the path information. (#1240)
+
+* The new `fmt_flag()` function helps with inserting a flag icon (or multiple) in body cells. The input cells need to contain 2-letter ISO 3166-1 country codes (e.g., Mauritius with the `"MU"` country code). This function will parse the targeted body cells insert the appropriate flag icon. Multiple flags can be included per body cell by separating country codes with commas. (#1241, #1244, #1251)
+
+* With `fmt_bins()`, you can format bin or interval syntax (returned from `cut()`) to a form that presents better in a display table. It's possible to format the values of the intervals with the `fmt` argument, and, the separator can be modified with the `sep` argument. (#1250)
+
+* The new `fmt_auto()` function has been added to automatically apply formatting of various types in a way that best suits the data table provided. For example, the function will attempt format numbers such that they are condensed to an optimal width and currency values can be detected (by currency codes embedded in the column name) and formatted in the correct way (#248). (#1176)
+
+* Three `text_*()` functions were added to better enable transformations of formatted text in various table locations: `text_replace()`, `text_case_when()`, and `text_case_match()`. (#1238)
+
+* Interactive HTML tables are now possible to generate in **gt**. Options for enabling interactive table rendering are available in `tab_options()` and also in `opt_interactive()` (#207). (#902)
+
+* Multi-table functions. Introduce `gt_group()`, the `grp_*()` functions, and `gt_splitter()`. (#1216, #1219, #1226, #1248, #1249)
+
+* The `towny` dataset was added (#1184, #1199).
+
+* The `metro` dataset is new (#1231).
+
+* The `rx_adsl` and `rx_addv` datasets have been added (#1145, #1200; thank you @alex-lauer!).
+
+* We now have better right-to-left (RTL) text handling through detection of RTL script characters within certain Unicode blocks (prioritizing those that correspond to modern RTL scripts); with that new detection scheme, **gt** will set the appropriate alignment for RTL text in HTML output (#697). (#1202)
+
+* Use labeled columns’ labels as column labels (#656). (#1230)
+
+* There is now a choice of which Markdown engine to use for Markdown rendering (in `fmt_markdown()` and `vec_fmt_markdown()`) and a default default choice. The **markdown** package can be chosen instead of **commonmark** to perform conversions of Markdown to HTML and LaTeX (and it's now the default). One of many benefits to this change is the parsing of subscripts and superscripts (#725). (#1254)
+
+## Documentation enhancements
+
+* Addition of a new vignette (*gt Clinical Tables*) that uses `rx_adsl` and `rx_addv` datasets. (#1145, #1217, #1224; all contributed by @alex-lauer)
+
+* All examples in the documentation were modernized by using the `|>` instead of the `%>%`. A lot of explanatory text was improved through rewriting. The ordering of documentation sections was improved. And functions that had very little documentation (like `text_transform()`) were greatly improved (#1087). (#1166, #1185, #1192)
+
+* Several small documentation and housekeeping updates. (#1134, #1135, #1136, #1190, #1206, #1242, #1246, #1258)
+
+* Added a citation file for the package. (#1128)
+
+## Minor improvements and bug fixes
+
+* Enhancements to `fmt_scientific()` and `fmt_engineering()` (and their `vec_fmt_*()` analogues. (#1178)
+
+* The `countrypops` dataset has been updated (#1191).
+
+* Improvements for W3C validation of HTML output tables (#1235). (#1237)
+
+* CSS fix for superscripted footnote marks. (#1210)
+
+* Fix conflict between `tab_spanner_delim()` and `cols_label()` (#1130). (#1173)
+
+* Fix for a `summary_rows()` problem where summary rows generated with only a single group would not display the summary rows at all. (#1188)
+
+* Fix for hidden columns not being hidden in interactive tables (i.e., through `opt_interactive()`). (#1252)
+
+* Remove **knitr** flags when saving an RTF file through the `gtsave()` function (#674). (#1153)
+
+* Fixed some border-related issues for **gt** tables published in R Markdown and Quarto documents (#1120). (#1234)
+
+* Use **juicyjuice** as a soft dependency (#1179). (#1229)
+
+* Added the `quarto.use_bootstrap` and `quarto.disable_processing` options in `tab_options()` to control whether Quarto will add Bootstrap classes to a **gt** table or ignore a **gt** table. (#1222, #1227)
+
+* Fixed the unintended appearance of a bottom border in the column spanner row for some CSS environments. (#1209)
+
+* Fixed the SCSS class `.gt_footnote_marks` to ensure that the footnote mark is at a consistent height from the baseline in different CSS environments. (#1187)
+
+* Added frequency levels to `cli_abort()` warnings throughout package (#1160). (#1169)
+
+* Added the `"double"` option for a border style in `cell_borders()` (#1132). (#1137)
 
 # gt 0.8.0
 
@@ -22,7 +105,7 @@
 
 * The `as_raw_html()` function is useful for generating an HTML string for table-in-HTML-email situations and for HTML embedding purposes (with that `inline_css = TRUE` option). While the CSS-inlining has been mostly fine, it had two major problems: (1) it was *slow*, and (2) the underlying R code was so underpowered that it just couldn't keep up with changes to our SCSS styles. This is now solved by integrating a package that uses the *juice* JS library (we call it **juicyjuice**!). This solution is far more performant and correct (#455, #540, #837, #858, #915, #1093). (#1114)
 
-* There's now padding around an HTML table! And you can even control the left/right (`container.padding.x`) and top/bottom (`container.padding.y`) padding values through `tab_options()`! This is very helpful since tables were way too close to paragraphs of text in rendered HTML documents produced by R Markdown and Quarto (#590, #1105). (#1116) 
+* There's now padding around an HTML table! And you can even control the left/right (`container.padding.x`) and top/bottom (`container.padding.y`) padding values through `tab_options()`! This is very helpful since tables were way too close to paragraphs of text in rendered HTML documents produced by R Markdown and Quarto (#590, #1105). (#1116)
 
 * The table stub can now freely merge with other columns using any of the `cols_merge*()` collection of functions. This is great if you want to independently format the stub and other columns and then bring them together in interesting ways. (#1122)
 
