@@ -104,7 +104,7 @@ with the \code{\link[=summary_rows]{summary_rows()}} function and then add a foo
 
 \section{Function ID}{
 
-7-10
+8-10
 }
 
 \section{Function Introduced}{

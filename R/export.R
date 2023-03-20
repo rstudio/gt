@@ -128,7 +128,7 @@ gtsave <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl_or_group(data = data)
 
   # Get the lowercased file extension
   file_ext <- gtsave_file_ext(filename)
@@ -281,8 +281,52 @@ gt_save_rtf <- function(
 
   filename <- gtsave_filename(path = path, filename = filename)
 
-  rtf_lines <- as_rtf(data = data)
+  if (is_gt_tbl(data = data)) {
 
+    rtf_lines <- as_rtf(data = data)
+
+  } else {
+
+    rtf_lines <- c()
+
+    rtf_open <-
+      as_rtf(
+        grp_pull(data, which = 1),
+        incl_open = TRUE,
+        incl_header = TRUE,
+        incl_page_info = TRUE,
+        incl_body = FALSE,
+        incl_close = FALSE
+      )
+
+    seq_tbls <- seq_len(nrow(data$gt_tbls))
+
+    for (i in seq_tbls) {
+
+      rtf_lines_i <-
+        as_rtf(
+          grp_pull(data, which = i),
+          incl_open = FALSE,
+          incl_header = FALSE,
+          incl_page_info = FALSE,
+          incl_body = TRUE,
+          incl_close = FALSE
+        )
+
+      rtf_lines <- c(rtf_lines, rtf_lines_i)
+    }
+
+    rtf_lines_combined <-
+      paste(
+        rtf_lines,
+        collapse = "\n{\\pard\\fs2\\par}\\page{\\pard\\fs2\\par}\n"
+      )
+
+    rtf_lines <- paste0(rtf_open, rtf_lines_combined, "}")
+  }
+
+  # Remove the comments specific to knitr since this will be a standalone
+  # document not dependent on the knitr package
   rtf_lines <- gsub("!!!!!RAW-KNITR-CONTENT|RAW-KNITR-CONTENT!!!!!", "", rtf_lines)
 
   writeLines(rtf_lines, con = filename)
@@ -299,19 +343,54 @@ gt_save_docx <- function(
     open = rlang::is_interactive()
 ) {
 
+  # Because creation of a .docx container is somewhat difficult, we
+  # require the rmarkdown package to be installed to generate this
+  # type of output
   if (!rlang::is_installed("rmarkdown")) {
     stop("{rmarkdown} package is necessary to save gt tables as word documents.")
   }
 
   filename <- gtsave_filename(path = path, filename = filename)
 
-  word_md_text <- paste0(c(
-    "```{=openxml}",
-    enc2utf8(as_word(data = data)),
-    "```",
-    ""),
-    collapse = "\n"
-  )
+  if (is_gt_tbl(data = data)) {
+
+    word_md_text <-
+      paste0(
+        c(
+          "```{=openxml}",
+          enc2utf8(as_word(data = data)),
+          "```",
+          ""),
+        collapse = "\n"
+      )
+
+  } else {
+
+    word_tbls <- c()
+
+    seq_tbls <- seq_len(nrow(data$gt_tbls))
+
+    for (i in seq_tbls) {
+      word_tbl_i <- as_word(grp_pull(data, which = i))
+      word_tbls <- c(word_tbls, word_tbl_i)
+    }
+
+    word_tbls_combined <-
+      paste(
+        word_tbls,
+        collapse = "\n\n<w:p><w:r><w:br w:type=\"page\" /></w:r></w:p>\n\n"
+      )
+
+    word_md_text <-
+      paste0(
+        c(
+          "```{=openxml}",
+          enc2utf8(word_tbls_combined),
+          "```",
+          ""),
+        collapse = "\n"
+      )
+  }
 
   word_md_file <- tempfile(fileext = ".md")
 
@@ -406,11 +485,22 @@ as_raw_html <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   html_table <- as.character(as.tags.gt_tbl(data))
 
   if (inline_css) {
+
+    # Check whether juicyjuice is in the package library and stop function
+    # only if it is not present
+    if (!requireNamespace("juicyjuice", quietly = TRUE)) {
+
+      cli::cli_abort(c(
+        "Using `as_raw_html(... , inline_css = TRUE)` requires the juicyjuice
+        package.",
+        "*" = "It can be installed with `install.packages(\"juicyjuice\")`."
+      ))
+    }
 
     font_vec <- unique(dt_options_get_value(data = data, option = "table_font_names"))
     font_family_attr <- as_css_font_family_attr(font_vec = font_vec)
@@ -505,7 +595,7 @@ as_raw_html <- function(
 as_latex <- function(data) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Build all table data objects through a common pipeline
   data <- build_data(data = data, context = "latex")
@@ -563,6 +653,15 @@ as_latex <- function(data) {
 #' file that can be opened by RTF readers.
 #'
 #' @param data A table object that is created using the `gt()` function.
+#' @param incl_open,incl_close Options that govern whether the opening or
+#'   closing `"{"` and `"}"` should be included. By default, both options are
+#'   `TRUE`.
+#' @param incl_header Should the RTF header be included in the output? By
+#'   default, this is `TRUE`.
+#' @param incl_page_info Should the RTF output include directives for the
+#'   document pages? This is `TRUE` by default.
+#' @param incl_body An option to include the body of RTF document. By
+#'   default, this is `TRUE`.
 #'
 #' @section Examples:
 #'
@@ -590,10 +689,17 @@ as_latex <- function(data) {
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
-as_rtf <- function(data) {
+as_rtf <- function(
+    data,
+    incl_open = TRUE,
+    incl_header = TRUE,
+    incl_page_info = TRUE,
+    incl_body = TRUE,
+    incl_close = TRUE
+) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   if (dt_options_get_value(data = data, option = "page_numbering")) {
 
@@ -646,7 +752,12 @@ as_rtf <- function(data) {
             )
           )
         }
-      )
+      ),
+      incl_open = incl_open,
+      incl_header = incl_header,
+      incl_page_info = incl_page_info,
+      incl_body = incl_body,
+      incl_close = incl_close
     )
 
   if (isTRUE(getOption('knitr.in.progress'))) {
@@ -712,7 +823,7 @@ as_word <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   caption_location <- rlang::arg_match(caption_location)
 
@@ -786,7 +897,7 @@ as_word_tbl_header_caption <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Composition of caption OOXML -----------------------------------------------
 
@@ -823,7 +934,7 @@ as_word_tbl_body <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Composition of table Word OOXML -----------------------------------------------
 
@@ -937,7 +1048,7 @@ as_word_tbl_body <- function(
 extract_summary <- function(data) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Stop function if there are no
   # directives to create summary rows
@@ -1067,7 +1178,7 @@ extract_cells <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Ensure that `output` is matched correctly to one option
   output <- rlang::arg_match(output)

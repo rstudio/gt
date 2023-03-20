@@ -2,7 +2,7 @@
 % Please edit documentation in R/print.R
 \name{print.gt_tbl}
 \alias{print.gt_tbl}
-\title{Print the table}
+\title{Print a \strong{gt} table}
 \usage{
 \method{print}{gt_tbl}(x, ..., view = interactive())
 }

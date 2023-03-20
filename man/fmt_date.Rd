@@ -259,12 +259,15 @@ The vector-formatting version of this function: \code{\link[=vec_fmt_date]{vec_f
 Other data formatting functions: 
 \code{\link{data_color}()},
 \code{\link{fmt_auto}()},
+\code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
+\code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_image}()},
 \code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
@@ -282,7 +285,6 @@ Other data formatting functions:
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},
 \code{\link{sub_values}()},
-\code{\link{sub_zero}()},
-\code{\link{text_transform}()}
+\code{\link{sub_zero}()}
 }
 \concept{data formatting functions}

@@ -4,7 +4,7 @@
 build_data <- function(data, context) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Create `body` with rendered values; move
   # input data cells to `body` that didn't have

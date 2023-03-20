@@ -89,7 +89,7 @@ add a footnote to the title with \code{\link[=tab_footnote]{tab_footnote()}} and
 
 \section{Function ID}{
 
-7-6
+8-6
 }
 
 \section{Function Introduced}{

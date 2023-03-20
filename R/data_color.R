@@ -22,7 +22,7 @@
 #' function you might want to define
 #' - color palettes: with `palette` we could supply a vector of colors, a
 #' **virdis** or **RColorBrewer** palette name, or, a palette from the
-#' **paleteer** package
+#' **paletteer** package
 #' - value domain: we can either opt to have the range of values define the
 #' domain, or, specify one explicitly with the `domain` argument
 #' - indirect color application: it's possible to compute colors from one column
@@ -511,7 +511,7 @@
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-28
+#' 3-30
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -542,7 +542,7 @@ data_color <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Get the correct `direction` value
   direction <- rlang::arg_match(direction)

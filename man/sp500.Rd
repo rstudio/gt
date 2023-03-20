@@ -41,9 +41,18 @@ Here is a glimpse at the data available in \code{sp500}.
 }\if{html}{\out{</div>}}
 }
 
-\section{Function ID}{
+\section{Dataset ID and Badge}{
 
-16-4
+DATA-4
+
+\if{html}{\out{
+<div align="center"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_sp500.png" alt="This image of that of a dataset badge." style="width:50\%;padding-bottom:20px;"></div>
+}}
+}
+
+\section{Dataset Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
@@ -51,6 +60,7 @@ Other datasets:
 \code{\link{countrypops}},
 \code{\link{exibble}},
 \code{\link{gtcars}},
+\code{\link{metro}},
 \code{\link{pizzaplace}},
 \code{\link{rx_addv}},
 \code{\link{rx_adsl}},

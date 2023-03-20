@@ -49,7 +49,7 @@ new ordering in \code{groups}.
 
 \section{Function ID}{
 
-5-3
+6-3
 }
 
 \section{Function Introduced}{

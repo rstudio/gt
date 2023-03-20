@@ -7,22 +7,20 @@
 \format{
 A tibble with 49,574 rows and 7 variables:
 \describe{
-\item{id}{The ID for the order, which consists of one or more pizzas
-at a given \code{date} and \code{time}.}
-\item{date}{A character representation of the \code{order} date,
-expressed in the ISO 8601 date format (YYYY-MM-DD).}
-\item{time}{A character representation of the \code{order} time,
-expressed as a 24-hour time the ISO 8601 extended time format
-(hh:mm:ss).}
+\item{id}{The ID for the order, which consists of one or more pizzas at a
+given \code{date} and \code{time}.}
+\item{date}{A character representation of the \code{order} date, expressed in the
+ISO 8601 date format ('YYYY-MM-DD').}
+\item{time}{A character representation of the \code{order} time, expressed as a
+24-hour time the ISO 8601 extended time format ('hh:mm:ss').}
 \item{name}{The short name for the pizza.}
-\item{size}{The size of the pizza, which can either be \code{"S"},
-\code{"M"}, \code{"L"}, \code{"XL"} (rare!), or \code{"XXL"} (even rarer!);
-most pizzas are available in the \code{"S"}, \code{"M"}, and \code{"L"} sizes
-but exceptions apply.}
-\item{type}{The category or type of pizza, which can either be
-\code{"classic"}, \code{"chicken"}, \code{"supreme"}, or \code{"veggie"}.}
-\item{price}{The price of the pizza and the amount that it sold for
-(in USD).}
+\item{size}{The size of the pizza, which can either be \code{"S"}, \code{"M"}, \code{"L"},
+\code{"XL"} (rare!), or \code{"XXL"} (even rarer!); most pizzas are available in the
+\code{"S"}, \code{"M"}, and \code{"L"} sizes but exceptions apply.}
+\item{type}{The category or type of pizza, which can either be \code{"classic"},
+\code{"chicken"}, \code{"supreme"}, or \code{"veggie"}.}
+\item{price}{The price of the pizza and the amount that it sold for (in
+USD).}
 }
 }
 \usage{
@@ -141,9 +139,18 @@ Here is a glimpse at the pizza data available in \code{pizzaplace}.
 }\if{html}{\out{</div>}}
 }
 
-\section{Function ID}{
+\section{Dataset ID and Badge}{
 
-16-5
+DATA-5
+
+\if{html}{\out{
+<div align="center"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_pizzaplace.png" alt="This image of that of a dataset badge." style="width:50\%;padding-bottom:20px;"></div>
+}}
+}
+
+\section{Dataset Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
@@ -151,6 +158,7 @@ Other datasets:
 \code{\link{countrypops}},
 \code{\link{exibble}},
 \code{\link{gtcars}},
+\code{\link{metro}},
 \code{\link{rx_addv}},
 \code{\link{rx_adsl}},
 \code{\link{sp500}},

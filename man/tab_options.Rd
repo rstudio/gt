@@ -184,7 +184,9 @@ tab_options(
   page.margin.top = NULL,
   page.margin.bottom = NULL,
   page.header.height = NULL,
-  page.footer.height = NULL
+  page.footer.height = NULL,
+  quarto.use_bootstrap = NULL,
+  quarto.disable_processing = NULL
 )
 }
 \arguments{
@@ -477,6 +479,14 @@ bottom page margins. The default values for each of these is \verb{1.0in}.}
 
 \item{page.header.height, page.footer.height}{The heights of the page header
 and footer for RTF table outputs. Default values for both are \verb{0.5in}.}
+
+\item{quarto.use_bootstrap, quarto.disable_processing}{When rendering a \strong{gt}
+table with Quarto, the table can undergo transformations to support
+advanced Quarto features. Setting \code{quarto.use_bootstrap} to \code{TRUE} (\code{FALSE}
+by default) will allow Quarto to add Bootstrap classes to the table,
+allowing those styles to permeate the table. Quarto performs other
+alterations as well but they can all be deactivated with
+\code{quarto.disable_processing = TRUE} (this option is \code{FALSE} by default).}
 }
 \value{
 An object of class \code{gt_tbl}.

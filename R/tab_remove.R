@@ -52,7 +52,7 @@
 #'
 #' @family part removal functions
 #' @section Function ID:
-#' 6-1
+#' 7-1
 #'
 #' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
@@ -61,7 +61,7 @@
 rm_header <- function(data) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Reinitialize the heading component of the `gt_tbl` object
   dt_heading_init(data = data)
@@ -118,7 +118,7 @@ rm_header <- function(data) {
 #'
 #' @family part removal functions
 #' @section Function ID:
-#' 6-2
+#' 7-2
 #'
 #' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
@@ -127,7 +127,7 @@ rm_header <- function(data) {
 rm_stubhead <- function(data) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Reinitialize the stubhead component of the `gt_tbl` object
   dt_stubhead_init(data = data)
@@ -238,7 +238,7 @@ rm_stubhead <- function(data) {
 #'
 #' @family part removal functions
 #' @section Function ID:
-#' 6-3
+#' 7-3
 #'
 #' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
@@ -251,7 +251,7 @@ rm_spanners <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Obtain the spanners table (may be an empty table if no spanners
   # have been produced by `tab_spanner()` or `tab_spanner_delim`)
@@ -429,7 +429,7 @@ rm_spanners <- function(
 #'
 #' @family part removal functions
 #' @section Function ID:
-#' 6-4
+#' 7-4
 #'
 #' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
@@ -441,7 +441,7 @@ rm_footnotes <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Obtain the footnotes table (may be an empty table if no footnotes
   # have been produced by `tab_footnote()`)
@@ -568,7 +568,7 @@ rm_footnotes <- function(
 #'
 #' @family part removal functions
 #' @section Function ID:
-#' 6-5
+#' 7-5
 #'
 #' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
@@ -580,7 +580,7 @@ rm_source_notes <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Obtain the source notes list (may be an empty list
   # if no source notes have been produced by `tab_source_note()`)
@@ -687,7 +687,7 @@ rm_source_notes <- function(
 #'
 #' @family part removal functions
 #' @section Function ID:
-#' 6-6
+#' 7-6
 #'
 #' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
@@ -696,7 +696,7 @@ rm_source_notes <- function(
 rm_caption <- function(data) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Reset the `table_caption` parameter value to an NA value inside
   # the `_options` component of the `gt_tbl` object

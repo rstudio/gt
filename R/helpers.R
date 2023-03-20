@@ -31,7 +31,7 @@
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-1
+#' 8-1
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -78,7 +78,7 @@ md <- function(text) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-2
+#' 8-2
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -139,7 +139,7 @@ is_rtf <- function(x) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-3
+#' 8-3
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -193,7 +193,7 @@ px <- function(x) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-4
+#' 8-4
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -250,7 +250,7 @@ pct <- function(x) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-5
+#' 8-5
 #'
 #' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
@@ -342,7 +342,7 @@ stub <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-6
+#' 8-6
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -453,7 +453,7 @@ cells_title <- function(groups = c("title", "subtitle")) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-7
+#' 8-7
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -553,7 +553,7 @@ cells_stubhead <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-8
+#' 8-8
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -675,7 +675,7 @@ cells_column_spanners <- function(spanners = everything()) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-9
+#' 8-9
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -789,7 +789,7 @@ cells_column_labels <- function(columns = everything()) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-10
+#' 8-10
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -918,7 +918,7 @@ cells_group <- function(groups = everything()) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-11
+#' 8-11
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1049,7 +1049,7 @@ cells_stub <- function(rows = everything()) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-12
+#' 8-12
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1216,7 +1216,7 @@ cells_body <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-13
+#' 8-13
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1365,7 +1365,7 @@ cells_summary <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-14
+#' 8-14
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1510,7 +1510,7 @@ cells_grand_summary <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-15
+#' 8-15
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
@@ -1637,7 +1637,7 @@ cells_stub_summary <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-16
+#' 8-16
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
@@ -1752,7 +1752,7 @@ cells_stub_grand_summary <- function(rows = everything()) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-17
+#' 8-17
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
@@ -1851,7 +1851,7 @@ cells_footnotes <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-18
+#' 8-18
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
@@ -1924,7 +1924,7 @@ cells_source_notes <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-19
+#' 8-19
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2053,7 +2053,7 @@ currency <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-20
+#' 8-20
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2232,7 +2232,7 @@ cell_style_to_html.cell_text <- function(style) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-21
+#' 8-21
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2359,7 +2359,7 @@ cell_style_to_html.cell_fill <- function(style) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-22
+#' 8-22
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2556,7 +2556,7 @@ cell_style_structure <- function(name, obj, subclass = name) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-23
+#' 8-23
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2617,7 +2617,7 @@ adjust_luminance <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-24
+#' 8-24
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2656,7 +2656,7 @@ latex_special_chars <- c(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-25
+#' 8-25
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2730,7 +2730,7 @@ escape_latex <- function(text) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-26
+#' 8-26
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2830,7 +2830,7 @@ gt_latex_dependencies <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-27
+#' 8-27
 #'
 #' @section Function Introduced:
 #' `v0.2.2` (August 5, 2020)
@@ -2900,7 +2900,7 @@ google_font <- function(name) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 7-28
+#' 8-28
 #'
 #' @section Function Introduced:
 #' `v0.2.2` (August 5, 2020)

@@ -77,7 +77,7 @@ from the \strong{paletteer} package).
 
 \section{Function ID}{
 
-10-5
+11-5
 }
 
 \section{Function Introduced}{

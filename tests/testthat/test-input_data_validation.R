@@ -1,6 +1,6 @@
 test_that("All exported functions validate the incoming `data` object", {
 
-  regexp_stop <- "The object to `data` is not a `gt_tbl` object"
+  regexp_stop <- "The `data` provided is not a `gt_tbl` object"
 
   # Test the `exibble` tibble with all exported functions;
   # don't provide values for any arguments and ensure that
@@ -78,7 +78,6 @@ test_that("All exported functions validate the incoming `data` object", {
   expect_error(exibble %>% rm_footnotes(), regexp = regexp_stop)
   expect_error(exibble %>% rm_source_notes(), regexp = regexp_stop)
   expect_error(exibble %>% rm_caption(), regexp = regexp_stop)
-  expect_error(exibble %>% gtsave(), regexp = regexp_stop)
   expect_error(exibble %>% as_raw_html(), regexp = regexp_stop)
   expect_error(exibble %>% as_latex(), regexp = regexp_stop)
   expect_error(exibble %>% as_rtf(), regexp = regexp_stop)

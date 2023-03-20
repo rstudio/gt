@@ -8,6 +8,6 @@ Thank you for contributing to **gt**! To make this process easier for everyone, 
 
 # Checklist
 
-- [ ] I understand and agree to the [Code of Conduct](https://www.contributor-covenant.org/version/2/0/code_of_conduct/).
+- [ ] I understand and agree to the [Code of Conduct](https://www.contributor-covenant.org/version/2/1/code_of_conduct.html).
 - [ ] I have listed any major changes in the [NEWS](https://github.com/rstudio/gt/blob/master/NEWS.md).
 - [ ] I have added [`testthat`](https://github.com/r-lib/testthat) unit tests to [`tests/testthat`](https://github.com/rstudio/gt/tree/master/tests/testthat) for any new functionality.

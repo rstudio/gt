@@ -155,6 +155,7 @@ utf8_aware_sub <- NULL
 .onLoad <- function(libname, pkgname, ...) {
 
   register_s3_method("knitr", "knit_print", "gt_tbl")
+  register_s3_method("knitr", "knit_print", "gt_group")
   register_s3_method("htmltools", "as.tags", "gt_tbl")
 
   op <- options()

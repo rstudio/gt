@@ -398,6 +398,69 @@ get_currency_exponent <- function(currency) {
   }
 }
 
+get_markdown_engine_fn <- function(
+    md_engine_pref,
+    context = c("html", "latex")
+) {
+
+  context <- match.arg(context)
+
+  md_engine_name <-
+    switch(
+      md_engine_pref,
+      auto = ,
+      markdown = "markdown",
+      commonmark = "commonmark"
+    )
+
+  md_engine_fn <-
+    switch(
+      md_engine_pref,
+      auto = ,
+      markdown = markdown::mark,
+      commonmark = if (context == "html") {
+        commonmark::markdown_html
+      } else {
+        commonmark::markdown_latex
+      }
+    )
+
+  # Stop function if user explicitly chose the `markdown` package as
+  # the Markdown engine but the package is not available
+  if (md_engine_pref == "markdown") {
+
+    if (!requireNamespace("markdown", quietly = TRUE)) {
+
+      cli::cli_abort(c(
+        "Using the \"markdown\"` engine preference requires the markdown package.",
+        "*" = "It can be installed with `install.packages(\"markdown\")`."
+      ))
+    }
+  }
+
+  # If the Markdown engine preference was set to 'auto' (the default) and
+  # the `markdown` is not available, use the `commonmark` package as a
+  # fallback; the situation is that `commonmark` is a hard dependency whereas
+  # `markdown` is a soft dependency (though commonly present in user libraries)
+  if (
+    md_engine_pref == "auto" &&
+    !requireNamespace("markdown", quietly = TRUE)
+  ) {
+
+    if (context == "html") {
+      md_engine_fn <- commonmark::markdown_html
+    } else {
+      md_engine_fn <- commonmark::markdown_latex
+    }
+
+    md_engine_name <- "commonmark"
+  }
+
+  md_engine_fn <- c(md_engine_fn)
+  names(md_engine_fn) <- md_engine_name
+  md_engine_fn
+}
+
 #' Process text based on rendering context any applied classes
 #'
 #' If the incoming text has the class `from_markdown` (applied by the `md()`
@@ -407,6 +470,18 @@ get_currency_exponent <- function(currency) {
 #' sanitization.
 #' @noRd
 process_text <- function(text, context = "html") {
+
+  # When processing text globally (outside of the `fmt_markdown()`
+  # function) we will use the 'markdown' package if it is available,
+  # otherwise the 'commonmark' package
+  if (
+    requireNamespace("markdown", quietly = TRUE) &&
+    utils::packageVersion("markdown") >= "1.5"
+  ) {
+    md_engine <- "markdown"
+  } else {
+    md_engine <- "commonmark"
+  }
 
   # If text is marked `AsIs` (by using `I()`) then just
   # return the text unchanged
@@ -426,12 +501,18 @@ process_text <- function(text, context = "html") {
 
     if (inherits(text, "from_markdown")) {
 
+      md_engine_fn <-
+        get_markdown_engine_fn(
+          md_engine_pref = md_engine,
+          context = "html"
+        )
+
       text <-
         vapply(
           as.character(text),
           FUN.VALUE = character(1),
           USE.NAMES = FALSE,
-          FUN = commonmark::markdown_html
+          FUN = md_engine_fn[[1]]
         )
 
       text <- gsub("^<p>|</p>\n$", "", text)
@@ -454,13 +535,14 @@ process_text <- function(text, context = "html") {
 
       return(text)
     }
+
   } else if (context == "latex") {
 
     # Text processing for LaTeX output
 
     if (inherits(text, "from_markdown")) {
 
-      text <- markdown_to_latex(text = text)
+      text <- markdown_to_latex(text = text, md_engine = md_engine)
 
       return(text)
 
@@ -502,6 +584,7 @@ process_text <- function(text, context = "html") {
     # Text processing for Word output
 
     if (inherits(text, "from_markdown")) {
+
       text <- markdown_to_xml(text)
     }else{
       text <- htmltools::htmlEscape(as.character(text))
@@ -550,7 +633,13 @@ unescape_html <- function(text) {
 #' Transform Markdown text to HTML and also perform HTML escaping
 #'
 #' @noRd
-md_to_html <- function(x) {
+md_to_html <- function(x, md_engine) {
+
+  md_engine_fn <-
+    get_markdown_engine_fn(
+      md_engine_pref = md_engine,
+      context = "html"
+    )
 
   if (!check_quarto()) {
 
@@ -559,7 +648,7 @@ md_to_html <- function(x) {
         as.character(x[!is.na(x)]),
         FUN.VALUE = character(1),
         USE.NAMES = FALSE,
-        FUN = commonmark::markdown_html
+        FUN = md_engine_fn[[1]]
       )
 
     non_na_x <- tidy_gsub(non_na_x, "^", "<div class='gt_from_md'>")
@@ -583,7 +672,13 @@ md_to_html <- function(x) {
 #' `markdown_to_latex()` also escapes ASCII characters with special meaning in
 #' LaTeX.
 #' @noRd
-markdown_to_latex <- function(text) {
+markdown_to_latex <- function(text, md_engine) {
+
+  md_engine_fn <-
+    get_markdown_engine_fn(
+      md_engine_pref = md_engine,
+      context = "latex"
+    )
 
   # Vectorize `commonmark::markdown_latex` and modify output
   # behavior to pass through NAs
@@ -607,7 +702,11 @@ markdown_to_latex <- function(text) {
             }
           }
 
-          tidy_gsub(commonmark::markdown_latex(x), "\\n$", "")
+          if (names(md_engine_fn) == "commonmark") {
+            tidy_gsub(md_engine_fn[[1]](x), "\\n$", "")
+          } else {
+            tidy_gsub(md_engine_fn[[1]](x, format = "latex"), "\\n$", "")
+          }
         }
       )
     )
@@ -1572,6 +1671,39 @@ extract_strings <- function(text, pattern, perl = TRUE) {
   sapply(regmatches(text, regexec(pattern, text, perl = perl)), "[", 1)
 }
 
+any_labeled_columns_in_data_tbl <- function(data) {
+
+  data_tbl <- dt_data_get(data = data)
+
+  any(
+    vapply(
+      seq_len(ncol(data_tbl)),
+      FUN.VALUE = logical(1),
+      USE.NAMES = FALSE,
+      FUN = function(x) {
+        "label" %in% names(attributes(data_tbl[[x]]))
+      }
+    )
+  )
+}
+
+get_columns_labels_from_attrs <- function(data) {
+
+  data_tbl <- dt_data_get(data = data)
+
+  # Initialize vector of column labels
+  var_labels <- colnames(data_tbl)
+
+  # Overwrite `var_labels` wherever a column contains a `label` attribute value
+  for (i in seq_along(var_labels)) {
+    if ("label" %in% names(attributes(data_tbl[[i]]))) {
+      var_labels[i] <- attr(data_tbl[[i]], which = "label")
+    }
+  }
+
+  var_labels
+}
+
 #' Split any strings that are values in scientific notation
 #'
 #' @param x_str The input character vector of values formatted in scientific
@@ -1677,8 +1809,25 @@ process_footnote_marks <- function(x, marks) {
 #'
 #' @param data A table object that is created using the [gt()] function.
 #' @noRd
-is_gt <- function(data) {
+is_gt_tbl <- function(data) {
   inherits(data, "gt_tbl")
+}
+
+#' Determine whether an object is a `gt_group`
+#'
+#' @param data A table object that is created using the [gt_group()] function.
+#' @noRd
+is_gt_group <- function(data) {
+  inherits(data, "gt_group")
+}
+
+#' Determine whether an object inherits from `gt_tbl` or `gt_group`
+#'
+#' @param data A table object that is created either using the [gt()] or
+#' [gt_group()] functions.
+#' @noRd
+is_gt_tbl_or_group <- function(data) {
+  inherits(data, "gt_tbl") || inherits(data, "gt_group")
 }
 
 #' Determines whether a character vector is non-empty
@@ -1694,9 +1843,37 @@ is_nonempty_string <- function(x) {
 #' @param data The input `data` object that is to be validated.
 #'
 #' @noRd
-stop_if_not_gt <- function(data) {
-  if (!is_gt(data)) {
-    cli::cli_abort("The object to `data` is not a `gt_tbl` object.")
+stop_if_not_gt_tbl <- function(data) {
+  if (!is_gt_tbl(data = data)) {
+    cli::cli_abort(
+      "The `data` provided is not a `gt_tbl` object."
+    )
+  }
+}
+
+#' Stop any function if object is not a `gt_group` object
+#'
+#' @param data The input `data` object that is to be validated.
+#'
+#' @noRd
+stop_if_not_gt_group <- function(data) {
+  if (!is_gt_group(data = data)) {
+    cli::cli_abort(
+      "The `data` provided is not a `gt_group` object."
+    )
+  }
+}
+
+#' Stop any function if object is neither `gt_tbl` nor `gt_group`
+#'
+#' @param data The input `data` object that is to be validated.
+#'
+#' @noRd
+stop_if_not_gt_tbl_or_group <- function(data) {
+  if (!is_gt_tbl(data = data) && !is_gt_group(data = data)) {
+    cli::cli_abort(
+      "The `data` provided is neither a `gt_tbl` nor a `gt_group` object."
+    )
   }
 }
 
@@ -1969,5 +2146,23 @@ man_get_image_tag <- function(file, dir = "images") {
     "src=\"", image_url, "\" ",
     "alt=\"", alt_text, "\" ",
     "style=\"width:100\\%;\">"
+  )
+}
+
+data_get_image_tag <- function(file, dir = "images") {
+
+  repo_url <- "https://raw.githubusercontent.com/rstudio/gt/master"
+
+  alt_text <- "This image of that of a dataset badge."
+
+  image_url <- file.path(repo_url, dir, file)
+
+  paste0(
+    "<div align=\"center\">",
+    "<img ",
+    "src=\"", image_url, "\" ",
+    "alt=\"", alt_text, "\" ",
+    "style=\"width:50\\%;padding-bottom:20px;\">",
+    "</div>"
   )
 }

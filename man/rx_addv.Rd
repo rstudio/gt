@@ -5,17 +5,17 @@
 \alias{rx_addv}
 \title{An ADDV-flavored clinical trial toy dataset}
 \format{
-A tibble with 182 rows and 20 variables:
+A tibble with 291 rows and 20 variables:
 \describe{
 \item{STUDYID, STUDYIDN}{The unique study identifier and its numeric
 version.}
 \item{USUBJID}{The unique subject identifier.}
-\item{TRTA, TRTAN}{The study intervention and its numeric version, which
-is either \code{"Placebo"} (\code{1}), \code{"Drug 1"} (\code{2}) or \code{NA} (\code{3}), missing for
+\item{TRTA, TRTAN}{The study intervention and its numeric version, which is
+either \code{"Placebo"} (\code{1}), \code{"Drug 1"} (\code{2}), or \code{NA} (\code{3}), missing for
 screen failures).}
 \item{ITTFL}{Intent-to-Treat (ITT) population flag, where \code{"Y"} indicates
-a subject belongs to the ITT population and \code{"N"} indicates a subject
-is not in the ITT population.}
+a subject belongs to the ITT population and \code{"N"} indicates a subject is not
+in the ITT population.}
 \item{AGE}{The age of a subject at baseline in years.}
 \item{AAGEGR1}{The analysis age group, indicating if a subject was strictly
 younger than 40 years at baseline or older.}
@@ -27,13 +27,13 @@ younger than 40 years at baseline or older.}
 \item{DVTERM}{The Protocol Deviation Term.}
 \item{PARAMCD, PARAM}{The Parameter Code and decoded parameter description
 for the protocol deviation.}
-\item{PARCAT1}{Parameter category. Can be \code{OVERALL} for derived PD
-summaries or \verb{PROTOCOL DEVIATION} for individual PDs.}
+\item{PARCAT1}{Parameter category. Can be \code{"OVERALL"} for derived PD
+summaries or \code{"PROTOCOL DEVIATION"} for individual PDs.}
 \item{DVCAT}{Category for PD, indicating whether the PD is a major one or
 not.}
-\item{ACAT1}{Analysis category 1. Only populated for individual PDs, not
-for summary scores. High level category for PDs.}
-\item{AVAL}{Analysis Value. Either 0 or 1.}
+\item{ACAT1}{Analysis category 1. Only populated for individual PDs, not for
+summary scores. High level category for PDs.}
+\item{AVAL}{Analysis Value. Either \code{0} or \code{1}.}
 \item{CRIT1, CRIT1FL}{Analysis Criterion 1 and analysis criterion 1 flag,
 indicating whether PD is related to COVID-19 or not.}
 }
@@ -50,7 +50,7 @@ ITT-population, indicating whether or not at least one major protocol
 deviation (PD) occurred throughout the course of the study for the respective
 subject. Individual records for protocol deviations per subject exist,
 indicating which specific type of PD occurred. The additional flag \code{CRIT1FL},
-shows a PD was related to COVID-19 or not.
+shows whether a PD was related to COVID-19 or not.
 
 Although the data was intentionally created to mimic a typical clinical
 trial dataset following the CDISC format, it might not strictly comply
@@ -60,31 +60,46 @@ table creation rather than creating a fully CDISC-compliant ADaM dataset.
 \section{Examples}{
 
 
-Here is the \code{rx_addv}.
+Here is a glimpse at the data available in \code{rx_addv}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{rx_addv
-#> # A tibble: 291 x 20
-#>    STUDYID STUDYIDN USUBJID TRTA    TRTAN ITTFL   AGE AAGEGR1 SEX   ETHNIC BLBMI
-#>    <chr>   <chr>    <chr>   <fct>   <dbl> <chr> <int> <fct>   <fct> <fct>  <dbl>
-#>  1 GT01    4001     GT1001  Placebo     1 Y        41 >=40    Male  Not H~  33.4
-#>  2 GT01    4001     GT1002  Placebo     1 Y        39 <40     Fema~ Not H~  30.5
-#>  3 GT01    4001     GT1002  Placebo     1 Y        39 <40     Fema~ Not H~  30.5
-#>  4 GT01    4001     GT1003  Placebo     1 Y        38 <40     Male  Not H~  22.9
-#>  5 GT01    4001     GT1003  Placebo     1 Y        38 <40     Male  Not H~  22.9
-#>  6 GT01    4001     GT1003  Placebo     1 Y        38 <40     Male  Not H~  22.9
-#>  7 GT01    4001     GT1004  Placebo     1 Y        45 >=40    Male  Not H~  23.9
-#>  8 GT01    4001     GT1004  Placebo     1 Y        45 >=40    Male  Not H~  23.9
-#>  9 GT01    4001     GT1005  Placebo     1 Y        35 <40     Fema~ Hispa~  29.1
-#> 10 GT01    4001     GT1005  Placebo     1 Y        35 <40     Fema~ Hispa~  29.1
-#> # ... with 281 more rows, and 9 more variables: DVTERM <chr>, PARAMCD <fct>,
-#> #   PARAM <fct>, PARCAT1 <chr>, DVCAT <chr>, ACAT1 <chr>, AVAL <dbl>,
-#> #   CRIT1 <chr>, CRIT1FL <chr>
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::glimpse(rx_addv)
+#> Rows: 291
+#> Columns: 20
+#> $ STUDYID  <chr> "GT01", "GT01", "GT01", "GT01", "GT01", "GT01", "GT01", "GT01~
+#> $ STUDYIDN <chr> "4001", "4001", "4001", "4001", "4001", "4001", "4001", "4001~
+#> $ USUBJID  <chr> "GT1001", "GT1002", "GT1002", "GT1003", "GT1003", "GT1003", "~
+#> $ TRTA     <fct> Placebo, Placebo, Placebo, Placebo, Placebo, Placebo, Placebo~
+#> $ TRTAN    <dbl> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1~
+#> $ ITTFL    <chr> "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "Y", "~
+#> $ AGE      <int> 41, 39, 39, 38, 38, 38, 45, 45, 35, 35, 35, 35, 35, 42, 35, 3~
+#> $ AAGEGR1  <fct> >=40, <40, <40, <40, <40, <40, >=40, >=40, <40, <40, <40, <40~
+#> $ SEX      <fct> Male, Female, Female, Male, Male, Male, Male, Male, Female, F~
+#> $ ETHNIC   <fct> Not Hispanic or Latino, Not Hispanic or Latino, Not Hispanic ~
+#> $ BLBMI    <dbl> 33.35073, 30.45862, 30.45862, 22.85986, 22.85986, 22.85986, 2~
+#> $ DVTERM   <chr> "", "", "Lab values not taken at month 3", "", "\{gt\} Question~
+#> $ PARAMCD  <fct> PDANYM, PDANYM, PDEV02, PDANYM, PDEV01, PDEV02, PDANYM, PDEV0~
+#> $ PARAM    <fct> At least one major Protocol Deviation, At least one major Pro~
+#> $ PARCAT1  <chr> "OVERALL", "OVERALL", "PROTOCOL DEVIATION", "OVERALL", "PROTO~
+#> $ DVCAT    <chr> "", "", "Major", "", "Major", "Major", "", "Major", "", "", "~
+#> $ ACAT1    <chr> "", "", "Study Procedures Criteria Deviations", "", "Study Pr~
+#> $ AVAL     <dbl> 0, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1~
+#> $ CRIT1    <chr> "COVID-19 Related", "COVID-19 Related", "COVID-19 Related", "~
+#> $ CRIT1FL  <chr> "N", "N", "N", "N", "N", "N", "N", "N", "N", "Y", "N", "N", "~
 }\if{html}{\out{</div>}}
 }
 
-\section{Function ID}{
+\section{Dataset ID and Badge}{
 
-16-9
+DATA-10
+
+\if{html}{\out{
+<div align="center"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_rx_addv.png" alt="This image of that of a dataset badge." style="width:50\%;padding-bottom:20px;"></div>
+}}
+}
+
+\section{Dataset Introduced}{
+
+\emph{In Development}
 }
 
 \seealso{
@@ -92,6 +107,7 @@ Other datasets:
 \code{\link{countrypops}},
 \code{\link{exibble}},
 \code{\link{gtcars}},
+\code{\link{metro}},
 \code{\link{pizzaplace}},
 \code{\link{rx_adsl}},
 \code{\link{sp500}},

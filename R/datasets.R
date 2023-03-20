@@ -29,8 +29,15 @@
 #' ```
 #'
 #' @family datasets
-#' @section Function ID:
-#' 16-1
+#' @section Dataset ID and Badge:
+#' DATA-1
+#'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_countrypops.png")`
+#' }}
+#'
+#' @section Dataset Introduced:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 "countrypops"
 
@@ -60,13 +67,13 @@
 #'
 #' @format A tibble with 816 rows and 4 variables:
 #' \describe{
-#'   \item{latitude}{The latitude in decimal degrees for the observations.}
-#'   \item{month}{The measurement month. All calculations where conducted
-#'   for the first day of each month.}
-#'   \item{tst}{The true solar time at the given `latitude` and date
-#'   (first of `month`) for which the solar zenith angle is calculated.}
-#'   \item{sza}{The solar zenith angle in degrees, where `NA`s indicate that
-#'   sunrise hadn't yet occurred by the `tst` value.}
+#' \item{latitude}{The latitude in decimal degrees for the observations.}
+#' \item{month}{The measurement month. All calculations where conducted for the
+#' first day of each month.}
+#' \item{tst}{The true solar time at the given `latitude` and date (first of
+#' `month`) for which the solar zenith angle is calculated.}
+#' \item{sza}{The solar zenith angle in degrees, where `NA`s indicate that
+#' sunrise hadn't yet occurred by the `tst` value.}
 #' }
 #'
 #' @source Calculated Actinic Fluxes (290 - 700 nm) for Air Pollution
@@ -82,8 +89,15 @@
 #' ```
 #'
 #' @family datasets
-#' @section Function ID:
-#' 16-2
+#' @section Dataset ID and Badge:
+#' DATA-2
+#'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_sza.png")`
+#' }}
+#'
+#' @section Dataset Introduced:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 "sza"
 
@@ -109,25 +123,25 @@
 #'
 #' @format A tibble with 47 rows and 15 variables:
 #' \describe{
-#'   \item{mfr}{The name of the car manufacturer.}
-#'   \item{model}{The car's model name.}
-#'   \item{year}{The car's model year.}
-#'   \item{trim}{A short description of the car model's trim.}
-#'   \item{bdy_style}{An identifier of the car's body style, which is either
-#'   `"coupe"`, `"convertible"`, `"sedan"`, or `"hatchback"`.}
-#'   \item{hp, hp_rpm}{The car's horsepower and the associated RPM level.}
-#'   \item{trq, trq_rpm}{The car's torque and the associated RPM level.}
-#'   \item{mpg_c, mpg_h}{The miles per gallon fuel efficiency rating for city
-#'   and highway driving.}
-#'   \item{drivetrain}{The car's drivetrain which, for this dataset, is either
-#'   `"rwd"` (Rear Wheel Drive) or `"awd"` (All Wheel Drive).}
-#'   \item{trsmn}{An encoding of the transmission type, where the number part is
-#'   the number of gears. The car could have automatic transmission (`"a"`),
-#'   manual transmission (`"m"`), an option to switch between both types
-#'   (`"am"`), or, direct drive (`"dd"`)}
-#'   \item{ctry_origin}{The country name for where the vehicle manufacturer
-#'   is headquartered.}
-#'   \item{msrp}{Manufacturer's suggested retail price in U.S. dollars (USD).}
+#' \item{mfr}{The name of the car manufacturer.}
+#' \item{model}{The car's model name.}
+#' \item{year}{The car's model year.}
+#' \item{trim}{A short description of the car model's trim.}
+#' \item{bdy_style}{An identifier of the car's body style, which is either
+#' `"coupe"`, `"convertible"`, `"sedan"`, or `"hatchback"`.}
+#' \item{hp, hp_rpm}{The car's horsepower and the associated RPM level.}
+#' \item{trq, trq_rpm}{The car's torque and the associated RPM level.}
+#' \item{mpg_c, mpg_h}{The miles per gallon fuel efficiency rating for city
+#' and highway driving.}
+#' \item{drivetrain}{The car's drivetrain which, for this dataset, is either
+#' `"rwd"` (Rear Wheel Drive) or `"awd"` (All Wheel Drive).}
+#' \item{trsmn}{An encoding of the transmission type, where the number part is
+#' the number of gears. The car could have automatic transmission (`"a"`),
+#' manual transmission (`"m"`), an option to switch between both types
+#' (`"am"`), or, direct drive (`"dd"`)}
+#' \item{ctry_origin}{The country name for where the vehicle manufacturer
+#' is headquartered.}
+#' \item{msrp}{Manufacturer's suggested retail price in U.S. dollars (USD).}
 #' }
 #'
 #' @section Examples:
@@ -139,8 +153,15 @@
 #' ```
 #'
 #' @family datasets
-#' @section Function ID:
-#' 16-3
+#' @section Dataset ID and Badge:
+#' DATA-3
+#'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_gtcars.png")`
+#' }}
+#'
+#' @section Dataset Introduced:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 "gtcars"
 
@@ -171,8 +192,15 @@
 #' ```
 #'
 #' @family datasets
-#' @section Function ID:
-#' 16-4
+#' @section Dataset ID and Badge:
+#' DATA-4
+#'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_sp500.png")`
+#' }}
+#'
+#' @section Dataset Introduced:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 "sp500"
 
@@ -277,22 +305,20 @@
 #'
 #' @format A tibble with 49,574 rows and 7 variables:
 #' \describe{
-#'   \item{id}{The ID for the order, which consists of one or more pizzas
-#'   at a given `date` and `time`.}
-#'   \item{date}{A character representation of the `order` date,
-#'   expressed in the ISO 8601 date format (YYYY-MM-DD).}
-#'   \item{time}{A character representation of the `order` time,
-#'   expressed as a 24-hour time the ISO 8601 extended time format
-#'   (hh:mm:ss).}
-#'   \item{name}{The short name for the pizza.}
-#'   \item{size}{The size of the pizza, which can either be `"S"`,
-#'   `"M"`, `"L"`, `"XL"` (rare!), or `"XXL"` (even rarer!);
-#'   most pizzas are available in the `"S"`, `"M"`, and `"L"` sizes
-#'   but exceptions apply.}
-#'   \item{type}{The category or type of pizza, which can either be
-#'   `"classic"`, `"chicken"`, `"supreme"`, or `"veggie"`.}
-#'   \item{price}{The price of the pizza and the amount that it sold for
-#'   (in USD).}
+#' \item{id}{The ID for the order, which consists of one or more pizzas at a
+#' given `date` and `time`.}
+#' \item{date}{A character representation of the `order` date, expressed in the
+#' ISO 8601 date format ('YYYY-MM-DD').}
+#' \item{time}{A character representation of the `order` time, expressed as a
+#' 24-hour time the ISO 8601 extended time format ('hh:mm:ss').}
+#' \item{name}{The short name for the pizza.}
+#' \item{size}{The size of the pizza, which can either be `"S"`, `"M"`, `"L"`,
+#' `"XL"` (rare!), or `"XXL"` (even rarer!); most pizzas are available in the
+#' `"S"`, `"M"`, and `"L"` sizes but exceptions apply.}
+#' \item{type}{The category or type of pizza, which can either be `"classic"`,
+#' `"chicken"`, `"supreme"`, or `"veggie"`.}
+#' \item{price}{The price of the pizza and the amount that it sold for (in
+#' USD).}
 #' }
 #'
 #' @section Examples:
@@ -304,8 +330,15 @@
 #' ```
 #'
 #' @family datasets
-#' @section Function ID:
-#' 16-5
+#' @section Dataset ID and Badge:
+#' DATA-5
+#'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_pizzaplace.png")`
+#' }}
+#'
+#' @section Dataset Introduced:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 "pizzaplace"
 
@@ -325,32 +358,37 @@
 #'
 #' @format A tibble with 8 rows and 9 variables:
 #' \describe{
-#'   \item{num}{A numeric column ordered with increasingly larger values.}
-#'   \item{char}{A character column composed of names of fruits from `a` to
-#'   `h`.}
-#'   \item{fctr}{A factor column with numbers from `1` to `8`, written out.}
-#'   \item{date, time, datetime}{Character columns with dates, times, and
-#'   datetimes.}
-#'   \item{currency}{A numeric column that is useful for testing currency-based
-#'   formatting.}
-#'   \item{row}{A character column in the format `row_X` which can be
-#'   useful for testing with row captions in a table stub.}
-#'   \item{group}{A character column with four `grp_a` values and four
-#'   `grp_b` values which can be useful for testing tables that contain
-#'   row groups.}
+#' \item{num}{A numeric column ordered with increasingly larger values.}
+#' \item{char}{A character column composed of names of fruits from `a` to `h`.}
+#' \item{fctr}{A factor column with numbers from `1` to `8`, written out.}
+#' \item{date, time, datetime}{Character columns with dates, times, and
+#' datetimes.}
+#' \item{currency}{A numeric column that is useful for testing currency-based
+#' formatting.}
+#' \item{row}{A character column in the format `row_X` which can be useful for
+#' testing with row captions in a table stub.}
+#' \item{group}{A character column with four `grp_a` values and four `grp_b`
+#' values which can be useful for testing tables that contain row groups.}
 #' }
 #'
 #' @section Examples:
 #'
-#' Here is the `exibble`.
+#' Here is the entirety of the `exibble` table.
 #'
 #' ```{r}
 #' exibble
 #' ```
 #'
 #' @family datasets
-#' @section Function ID:
-#' 16-6
+#' @section Dataset ID and Badge:
+#' DATA-6
+#'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_exibble.png")`
+#' }}
+#'
+#' @section Dataset Introduced:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 "exibble"
 
@@ -416,10 +454,92 @@
 #' ```
 #'
 #' @family datasets
-#' @section Function ID:
-#' 16-7
+#' @section Dataset ID and Badge:
+#' DATA-7
+#'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_towny.png")`
+#' }}
+#'
+#' @section Dataset Introduced:
+#' *In Development*
 #'
 "towny"
+
+#' The stations of the Paris Metro
+#'
+#' @description
+#'
+#' A dataset with information on all 308 Paris Metro stations as of February
+#' 2023. Each record represents a station, describing which Metro lines are
+#' serviced by the station, which other connections are available, and annual
+#' passenger volumes. Basic location information is provided for each station in
+#' terms where they reside on a municipal level, and, through latitude/longitude
+#' coordinates.
+#'
+#' The system has 16 lines (numbered from 1 to 14, with two additional lines:
+#' 3bis and 7bis) and covers over 200 kilometers of track. The Metro runs on
+#' standard gauge tracks (1,435 mm) and operates using a variety of rolling
+#' stock, including rubber-tired trains and steel-wheeled trains (which are far
+#' more common).
+#'
+#' The Metro is operated by the RATP, which also operates other transit systems
+#' in the region, including buses, trams, and the RER. The RER is an important
+#' component of the region's transit infrastructure, and several RER stations
+#' have connectivity with the Metro. This integration allows passengers to
+#' transfer between those two systems seamlessly. The Metro also has connections
+#' to the Transilien rail network, tramway stations, several major train
+#' stations (e.g., Gare du Nord, Gare de l'Est, etc.), and many bus lines.
+#'
+#' @format A tibble with 308 rows and 11 variables:
+#' \describe{
+#' \item{name}{The name of the station.}
+#' \item{caption}{In some cases, a station will have a caption that might
+#' describe a nearby place of interest. This is `NA` if there isn't a caption
+#' for the station name.}
+#' \item{lines}{All Metro lines associated with the station. This is a
+#' `character`-based, comma-separated series of line names.}
+#' \item{connect_rer}{Station connections with the RER. The RER system has
+#' five lines (A, B, C, D, and E) with 257 stations and several interchanges
+#' with the Metro.}
+#' \item{connect_tram}{Connections with tramway lines. This system has twelve
+#' lines in operation (T1, T2, T3a, T3b, T4, T5, T6, T7, T8, T9, T11, and T13)
+#' with 235 stations.}
+#' \item{connect_transilien}{Connections with Transilien lines. This system has
+#' eight lines in operation (H, J, K, L, N, P, R, and U).}
+#' \item{connect_other}{Other connections with transportation infrastructure
+#' such as regional, intercity, night, and high-speed trains (typically at
+#' railway stations).}
+#' \item{latitude, longitude}{The location of the station, given as
+#' latitude and longitude values in decimal degrees.}
+#' \item{location}{The arrondissement of Paris or municipality in which the
+#' station resides. For some stations located at borders, the grouping of
+#' locations will be presented as a comma-separated series}
+#' \item{passengers}{The total number of Metro station entries during 2021. Some
+#' of the newest stations in the Metro system do not have this data, thus they
+#' show `NA` values.}
+#' }
+#'
+#' @section Examples:
+#'
+#' Here is a glimpse at the data available in `metro`.
+#'
+#' ```{r}
+#' dplyr::glimpse(metro)
+#' ```
+#'
+#' @family datasets
+#' @section Dataset ID and Badge:
+#' DATA-8
+#'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_metro.png")`
+#' }}
+#'
+#' @section Dataset Introduced:
+#' *In Development*
+#'
+"metro"
 
 #' An ADSL-flavored clinical trial toy dataset
 #'
@@ -429,9 +549,9 @@
 #' Each row corresponds to demographic characteristics of a single trial
 #' participant. Two out of 182 study participants were screen failures and
 #' thus not treated, the rest of the study population was randomized with a
-#' 1:1 ratio to receive either `Placebo` (as comparator) or `Drug 1`. The
+#' 1:1 ratio to receive either `"Placebo"` (as comparator) or `"Drug 1"`. The
 #' dataset entails subject level demographics such as age, age group, sex,
-#' ethnicity and body mass index (BMI) at baseline, as well as an event
+#' ethnicity, and body mass index (BMI) at baseline, as well as an event
 #' flag, indicating whether the subject experienced a specific event
 #' throughout the course of the study or not.
 #'
@@ -442,45 +562,52 @@
 #'
 #' @format A tibble with 182 rows and 14 variables:
 #' \describe{
-#'   \item{STUDYID, STUDYIDN}{The unique study identifier and its numeric
-#'   version.}
-#'   \item{USUBJID}{The unique subject identifier.}
-#'   \item{TRTA, TRTAN}{The study intervention and its numeric version, which
-#'   is either `"Placebo"` (`1`), `"Drug 1"` (`2`) or `NA` (`3`), missing for
-#'   screen failures).}
-#'   \item{ITTFL}{Intent-to-Treat (ITT) population flag, where `"Y"` indicates
-#'   a subject belongs to the ITT population and `"N"` indicates a subject
-#'   is not in the ITT population.}
-#'   \item{RANDFL}{Randomization flag, where `"Y"` indicates a subject was
-#'   randomized to receive either `"Placebo"` or `"Drug 1"` and `"N"` indicates
-#'   a subject was not randomized at all.}
-#'   \item{SCRFREAS}{The reason for screen failure. This is either missing
-#'   (`""`) for non-screen failure subjects or indicates the reason for screen
-#'   failure}
-#'   \item{AGE}{The age of a subject at baseline in years.}
-#'   \item{AAGEGR1}{The analysis age group, indicating if a subject was strictly
-#'   younger than 40 years at baseline or older.}
-#'   \item{SEX}{Sex of a subject. Can be either `"Male"`, `"Female"` or
-#'   `"Undifferentiated"`.}
-#'   \item{ETHNIC}{Ethnicity of a subject. Can be either `"Hispanic or Latino"`,
-#'   `"Not Hispanic or Latino"` or missing (`""`).}
-#'   \item{BLBMI}{Body Mass Index (BMI) of a subject at baseline in kg/m2.}
-#'   \item{EVNTFL}{Event Flag. Indicates whether the subject experienced a
-#'   specific event during the course of the study or not. Can be either `"Y"`,
-#'   if the subject had the event, or `"N"`}
+#' \item{STUDYID, STUDYIDN}{The unique study identifier and its numeric
+#' version.}
+#' \item{USUBJID}{The unique subject identifier.}
+#' \item{TRTA, TRTAN}{The study intervention and its numeric version, which is
+#' either `"Placebo"` (`1`), `"Drug 1"` (`2`) or `NA` (`3`), missing for
+#' screen failures).}
+#' \item{ITTFL}{Intent-to-Treat (ITT) population flag, where `"Y"` indicates
+#' a subject belongs to the ITT population and `"N"` indicates a subject is not
+#' in the ITT population.}
+#' \item{RANDFL}{Randomization flag, where `"Y"` indicates a subject was
+#' randomized to receive either `"Placebo"` or `"Drug 1"` and `"N"` indicates
+#' a subject was not randomized at all.}
+#' \item{SCRFREAS}{The reason for screen failure. This is either missing
+#' (`""`) for non-screen failure subjects or indicates the reason for screen
+#' failure}
+#' \item{AGE}{The age of a subject at baseline in years.}
+#' \item{AAGEGR1}{The analysis age group, indicating if a subject was strictly
+#' younger than 40 years at baseline or older.}
+#' \item{SEX}{Sex of a subject. Can be either `"Male"`, `"Female"` or
+#' `"Undifferentiated"`.}
+#' \item{ETHNIC}{Ethnicity of a subject. Can be either `"Hispanic or Latino"`,
+#' `"Not Hispanic or Latino"` or missing (`""`).}
+#' \item{BLBMI}{Body Mass Index (BMI) of a subject at baseline in kg/m2.}
+#' \item{EVNTFL}{Event Flag. Indicates whether the subject experienced a
+#' specific event during the course of the study or not. Can be either `"Y"` (if
+#' if the subject had the event) or `"N"`.}
 #' }
 #'
 #' @section Examples:
 #'
-#' Here is the `rx_adsl`.
+#' Here is a glimpse at the data available in `rx_adsl`.
 #'
 #' ```{r}
-#' rx_adsl
+#' dplyr::glimpse(rx_adsl)
 #' ```
 #'
 #' @family datasets
-#' @section Function ID:
-#' 16-8
+#' @section Dataset ID and Badge:
+#' DATA-9
+#'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_rx_adsl.png")`
+#' }}
+#'
+#' @section Dataset Introduced:
+#' *In Development*
 #'
 "rx_adsl"
 
@@ -496,57 +623,63 @@
 #' deviation (PD) occurred throughout the course of the study for the respective
 #' subject. Individual records for protocol deviations per subject exist,
 #' indicating which specific type of PD occurred. The additional flag `CRIT1FL`,
-#' shows a PD was related to COVID-19 or not.
-#'
+#' shows whether a PD was related to COVID-19 or not.
 #'
 #' Although the data was intentionally created to mimic a typical clinical
 #' trial dataset following the CDISC format, it might not strictly comply
 #' with CDISC ADaM rules. The intent is to showcase the workflow for clinical
 #' table creation rather than creating a fully CDISC-compliant ADaM dataset.
 #'
-#' @format A tibble with 182 rows and 20 variables:
+#' @format A tibble with 291 rows and 20 variables:
 #' \describe{
-#'   \item{STUDYID, STUDYIDN}{The unique study identifier and its numeric
-#'   version.}
-#'   \item{USUBJID}{The unique subject identifier.}
-#'   \item{TRTA, TRTAN}{The study intervention and its numeric version, which
-#'   is either `"Placebo"` (`1`), `"Drug 1"` (`2`) or `NA` (`3`), missing for
-#'   screen failures).}
-#'   \item{ITTFL}{Intent-to-Treat (ITT) population flag, where `"Y"` indicates
-#'   a subject belongs to the ITT population and `"N"` indicates a subject
-#'   is not in the ITT population.}
-#'   \item{AGE}{The age of a subject at baseline in years.}
-#'   \item{AAGEGR1}{The analysis age group, indicating if a subject was strictly
-#'   younger than 40 years at baseline or older.}
-#'   \item{SEX}{Sex of a subject. Can be either `"Male"`, `"Female"` or
-#'   `"Undifferentiated"`.}
-#'   \item{ETHNIC}{Ethnicity of a subject. Can be either `"Hispanic or Latino"`,
-#'   `"Not Hispanic or Latino"` or missing (`""`).}
-#'   \item{BLBMI}{Body Mass Index (BMI) of a subject at baseline in kg/m2.}
-#'   \item{DVTERM}{The Protocol Deviation Term.}
-#'   \item{PARAMCD, PARAM}{The Parameter Code and decoded parameter description
-#'   for the protocol deviation.}
-#'   \item{PARCAT1}{Parameter category. Can be `OVERALL` for derived PD
-#'   summaries or `PROTOCOL DEVIATION` for individual PDs.}
-#'   \item{DVCAT}{Category for PD, indicating whether the PD is a major one or
-#'   not.}
-#'   \item{ACAT1}{Analysis category 1. Only populated for individual PDs, not
-#'   for summary scores. High level category for PDs.}
-#'   \item{AVAL}{Analysis Value. Either 0 or 1.}
-#'   \item{CRIT1, CRIT1FL}{Analysis Criterion 1 and analysis criterion 1 flag,
-#'   indicating whether PD is related to COVID-19 or not.}
+#' \item{STUDYID, STUDYIDN}{The unique study identifier and its numeric
+#' version.}
+#' \item{USUBJID}{The unique subject identifier.}
+#' \item{TRTA, TRTAN}{The study intervention and its numeric version, which is
+#' either `"Placebo"` (`1`), `"Drug 1"` (`2`), or `NA` (`3`), missing for
+#' screen failures).}
+#' \item{ITTFL}{Intent-to-Treat (ITT) population flag, where `"Y"` indicates
+#' a subject belongs to the ITT population and `"N"` indicates a subject is not
+#' in the ITT population.}
+#' \item{AGE}{The age of a subject at baseline in years.}
+#' \item{AAGEGR1}{The analysis age group, indicating if a subject was strictly
+#' younger than 40 years at baseline or older.}
+#' \item{SEX}{Sex of a subject. Can be either `"Male"`, `"Female"` or
+#' `"Undifferentiated"`.}
+#' \item{ETHNIC}{Ethnicity of a subject. Can be either `"Hispanic or Latino"`,
+#' `"Not Hispanic or Latino"` or missing (`""`).}
+#' \item{BLBMI}{Body Mass Index (BMI) of a subject at baseline in kg/m2.}
+#' \item{DVTERM}{The Protocol Deviation Term.}
+#' \item{PARAMCD, PARAM}{The Parameter Code and decoded parameter description
+#' for the protocol deviation.}
+#' \item{PARCAT1}{Parameter category. Can be `"OVERALL"` for derived PD
+#' summaries or `"PROTOCOL DEVIATION"` for individual PDs.}
+#' \item{DVCAT}{Category for PD, indicating whether the PD is a major one or
+#' not.}
+#' \item{ACAT1}{Analysis category 1. Only populated for individual PDs, not for
+#' summary scores. High level category for PDs.}
+#' \item{AVAL}{Analysis Value. Either `0` or `1`.}
+#' \item{CRIT1, CRIT1FL}{Analysis Criterion 1 and analysis criterion 1 flag,
+#' indicating whether PD is related to COVID-19 or not.}
 #' }
 #'
 #' @section Examples:
 #'
-#' Here is the `rx_addv`.
+#' Here is a glimpse at the data available in `rx_addv`.
 #'
 #' ```{r}
-#' rx_addv
+#' dplyr::glimpse(rx_addv)
 #' ```
 #'
 #' @family datasets
-#' @section Function ID:
-#' 16-9
+#' @section Dataset ID and Badge:
+#' DATA-10
+#'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_rx_addv.png")`
+#' }}
+#'
+#' @section Dataset Introduced:
+#' *In Development*
 #'
 "rx_addv"

@@ -144,7 +144,7 @@ for finer control over color evaluation with data; the color mapping
 function you might want to define
 \item color palettes: with \code{palette} we could supply a vector of colors, a
 \strong{virdis} or \strong{RColorBrewer} palette name, or, a palette from the
-\strong{paleteer} package
+\strong{paletteer} package
 \item value domain: we can either opt to have the range of values define the
 domain, or, specify one explicitly with the \code{domain} argument
 \item indirect color application: it's possible to compute colors from one column
@@ -562,7 +562,7 @@ gray cells for the missing values (we also removed the \code{"NA"} text with
 
 \section{Function ID}{
 
-3-28
+3-30
 }
 
 \section{Function Introduced}{
@@ -573,13 +573,16 @@ gray cells for the missing values (we also removed the \code{"NA"} text with
 \seealso{
 Other data formatting functions: 
 \code{\link{fmt_auto}()},
+\code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
 \code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
+\code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_image}()},
 \code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
@@ -597,7 +600,6 @@ Other data formatting functions:
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},
 \code{\link{sub_values}()},
-\code{\link{sub_zero}()},
-\code{\link{text_transform}()}
+\code{\link{sub_zero}()}
 }
 \concept{data formatting functions}

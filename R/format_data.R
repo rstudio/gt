@@ -240,7 +240,7 @@ fmt_number <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Ensure that arguments are matched
   system <- rlang::arg_match(system)
@@ -684,7 +684,7 @@ fmt_scientific <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Declare formatting function compatibility
   compat <- c("numeric", "integer")
@@ -1020,6 +1020,7 @@ fmt_scientific <- function(
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_engineering()].
 #'
+#' @import rlang
 #' @export
 fmt_engineering <- function(
     data,
@@ -1038,7 +1039,7 @@ fmt_engineering <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Declare formatting function compatibility
   compat <- c("numeric", "integer")
@@ -1549,7 +1550,7 @@ fmt_percent <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Ensure that arguments are matched
   system <- rlang::arg_match(system)
@@ -1779,7 +1780,7 @@ fmt_partsper <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Ensure that arguments are matched
   to_units <- rlang::arg_match(to_units)
@@ -2082,7 +2083,7 @@ fmt_fraction <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Ensure that arguments are matched
   system <- rlang::arg_match(system)
@@ -2623,7 +2624,7 @@ fmt_currency <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Ensure that arguments are matched
   system <- rlang::arg_match(system)
@@ -2784,7 +2785,7 @@ fmt_roman <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Ensure that arguments are matched
   case <- rlang::arg_match(case)
@@ -2984,7 +2985,7 @@ fmt_index <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Ensure that arguments are matched
   case <- rlang::arg_match(case)
@@ -3239,7 +3240,7 @@ fmt_spelled_num <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Declare formatting function compatibility
   compat <- c("numeric", "integer")
@@ -3481,7 +3482,7 @@ fmt_bytes <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Ensure that arguments are matched
   standard <- rlang::arg_match(standard)
@@ -3809,7 +3810,7 @@ fmt_date <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Declare formatting function compatibility
   compat <- c("Date", "POSIXt", "character")
@@ -4080,7 +4081,7 @@ fmt_time <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Declare formatting function compatibility
   compat <- c("Date", "POSIXt", "character")
@@ -4966,7 +4967,7 @@ fmt_datetime <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Declare formatting function compatibility
   compat <- c("Date", "POSIXct", "character")
@@ -5318,7 +5319,7 @@ fmt_duration <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Ensure that arguments are matched
   duration_style <- rlang::arg_match(duration_style)
@@ -5955,6 +5956,250 @@ extract_duration_pattern <- function(
   pattern
 }
 
+#' Format column data containing bin/interval information
+#'
+#' When using the `cut()` function (or other functions that use it in some way)
+#' you get bins that can look like this: `"(0,10]"`, `"(10,15]"`, `"(15,20]"`,
+#' `"(20,40]"`. This interval notation expresses the lower and upper limits of
+#' each range. The square or round brackets define whether each of the endpoints
+#' are included in the range (`[`/`]` for inclusion, `(`/`)` for exclusion).
+#' Should bins of this sort be present in a table, the `fmt_bins()` function can
+#' be used to format that syntax to a form that presents better in a display
+#' table. It's possible to format the values of the intervals with the `fmt`
+#' argument, and, the separator can be modified with the `sep` argument.
+#'
+#' @inheritParams fmt_number
+#' @param sep The separator text that indicates the values are ranged. The
+#'   default value of `"--"` indicates that an en dash will be used for the
+#'   range separator. Using `"---"` will be taken to mean that an em dash should
+#'   be used. Should you want these special symbols to be taken literally, they
+#'   can be supplied within the base [I()] function.
+#' @param fmt Formatting expressions in formula form. The RHS of `~` should
+#'   contain a formatting call (e.g.,
+#'   `~ fmt_number(., decimals = 3, use_seps = FALSE`).
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Targeting cells with `columns` and `rows`:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to target a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value of 100,000 (excluding
+#' `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given formatting function
+#' will be skipped over, like `character` values and numeric `fmt_*()`
+#' functions. So it's safe to select all columns with a particular formatting
+#' function (only those values that can be formatted will be formatted), but,
+#' you may not want that. One strategy is to format the bulk of cell values with
+#' one formatting function and then constrain the columns for later passes with
+#' other types of formatting (the last formatting done to a cell is what you get
+#' in the final output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
+#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
+#' the input data (the indices won't necessarily match those of rearranged rows
+#' if row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector. This is nice if you want to base
+#' formatting on values in the column or another column, or, you'd like to use a
+#' more complex predicate expression.
+#'
+#' @section Formatting expressions for `fmt`:
+#'
+#' We can supply a one-sided (RHS only) expression to `fmt`, and, several can be
+#' provided in a list. The expression uses a formatting function (e.g.,
+#' [fmt_number()], [fmt_currency()], etc.) and it must contain an initial `.`
+#' that stands for the data object. If performing numeric formatting it might
+#' look something like this:
+#'
+#' `fmt = ~ fmt_number(., decimals = 1, use_seps = FALSE)`
+#'
+#' @section Examples:
+#'
+#' Use the [`countrypops`] dataset to create a **gt** table. Before even getting
+#' to the [gt()] call, we use the `cut()` function in conjunction with the
+#' [scales::breaks_log()] function to create some highly customized bins.
+#' Consequently each country's population in the 2021 year is assigned to a bin.
+#' These bins have a characteristic type of formatting that can be used as input
+#' to `fmt_bins()`, and using that formatting function allows us to customize
+#' the presentation of those ranges. For instance, here we are formatting the
+#' left and right values of the ranges with the [fmt_integer()] function (using
+#' formula syntax).
+#'
+#' ```r
+#' countrypops |>
+#'   dplyr::filter(year == 2021) |>
+#'   dplyr::select(country_code_2, population) |>
+#'   dplyr::mutate(population_class = cut(
+#'     population,
+#'     breaks = scales::breaks_log(n = 20)(population)
+#'     )
+#'   ) |>
+#'   dplyr::group_by(population_class) |>
+#'   dplyr::summarize(
+#'     count = dplyr::n(),
+#'     countries = paste0(country_code_2, collapse = ",")
+#'   ) |>
+#'   dplyr::arrange(desc(population_class)) |>
+#'   gt() |>
+#'   fmt_flag(columns = countries) |>
+#'   fmt_bins(
+#'     columns = population_class,
+#'     fmt = ~ fmt_integer(., suffixing = TRUE)
+#'   ) |>
+#'   cols_label(
+#'     population_class = "Population Range",
+#'     count = "",
+#'     countries = "Countries"
+#'   ) |>
+#'   cols_width(
+#'     population_class ~ px(150),
+#'     count ~ px(50)
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(style = "italic"),
+#'     locations = cells_body(columns = count)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_bins_1.png")`
+#' }}
+#'
+#' @family data formatting functions
+#' @section Function ID:
+#' 3-17
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @import rlang
+#' @export
+fmt_bins <- function(
+    data,
+    columns = everything(),
+    rows = everything(),
+    sep = "--",
+    fmt = NULL
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    fns = list(
+      html = function(x) {
+        format_bins_by_context(x, sep = sep, fmt = fmt, context = "html")
+      },
+      latex = function(x) {
+        format_bins_by_context(x, sep = sep, fmt = fmt, context = "latex")
+      },
+      rtf = function(x) {
+        format_bins_by_context(x, sep = sep, fmt = fmt, context = "rtf")
+      },
+      word = function(x) {
+        format_bins_by_context(x, sep = sep, fmt = fmt, context = "word")
+      },
+      default = function(x) {
+        format_bins_by_context(x, sep = sep, fmt = fmt, context = "plain")
+      }
+    )
+  )
+}
+
+format_bins_by_context <- function(x, sep, fmt, context) {
+
+  # Format `sep` for output context
+  if (context != "plain") {
+    sep <- context_dash_mark(sep, context = context)
+  }
+
+  # Generate an vector of empty strings that will eventually
+  # contain all of the ranged value text
+  x_str <- character(length(x))
+
+  x_str_non_missing <- x[!is.na(x)]
+
+  x_str_non_missing <- as.character(x_str_non_missing)
+
+  x_str_is_bin <-
+    grepl("^(\\(|\\[]).*?,.*?(\\)|\\])$", x_str_non_missing)
+
+  x_str_lhs <-
+    gsub(
+      "^(\\(|\\[])(.*?),(.*?)(\\)|\\])$",
+      "\\2",
+      x_str_non_missing[x_str_is_bin]
+    )
+
+  x_str_rhs <-
+    gsub(
+      "^(\\(|\\[])(.*?),(.*?)(\\)|\\])$",
+      "\\3",
+      x_str_non_missing[x_str_is_bin]
+    )
+
+  if (!is.null(fmt)) {
+
+    # Format the LHS and RHS values
+    val_tbl <-
+      dplyr::tibble(
+        left = as.numeric(x_str_lhs),
+        right = as.numeric(x_str_rhs)
+      )
+
+    val_tbl_gt <- gt(val_tbl)
+
+    # Ensure that the expression (a RHS formula) is made a closure
+    format_fn <- rlang::as_closure(fmt)
+
+    # Perform the formatting on this gt table with closure
+    val_tbl_gt <- format_fn(val_tbl_gt)
+
+    #
+    # Extract the columns of formatted data
+    #
+
+    x_val_lhs_fmt <-
+      extract_cells(val_tbl_gt, columns = "left", output = context)
+
+    x_val_rhs_fmt <-
+      extract_cells(val_tbl_gt, columns = "right", output = context)
+
+  } else {
+
+    x_val_lhs_fmt <- x_str_lhs
+    x_val_rhs_fmt <- x_str_rhs
+  }
+
+  x_str_non_missing[x_str_is_bin] <-
+    paste0(x_val_lhs_fmt, sep, x_val_rhs_fmt)
+
+  x_str[!is.na(x)] <- x_str_non_missing
+  x_str[is.na(x)] <- as.character(NA_character_)
+  x_str
+}
+
 #' Format URLs to generate links
 #'
 #' @description
@@ -5966,6 +6211,12 @@ extract_duration_pattern <- function(
 #' They can be of the conventional style (with underlines and text coloring that
 #' sets it apart from other text), or, they can appear to be button-like (with
 #' a surrounding box that can be filled with a color of your choosing).
+#'
+#' URLs in data cells are detected in two ways. The first is using the simple
+#' Markdown notation for URLs of the form: `[label](URL)`. The second assumes
+#' that the text is the URL. In the latter case the URL is also used as the
+#' label but there is the option to use the `label` argument to modify that
+#' text.
 #'
 #' @inheritParams fmt_number
 #' @param label The visible 'label' to use for the link. If `NULL` (the default)
@@ -5983,10 +6234,10 @@ extract_duration_pattern <- function(
 #'   default this is `"auto"` which means that **gt** will choose `TRUE` when
 #'   `as_button = FALSE` and `FALSE` in the other case. The link underline will
 #'   be the same color as that set in the `color` option.
-#' @param button_fill The color used for the button background (but only if
-#'   `as_button = TRUE`). This is by default set to `"auto"` and this allows
-#'   **gt** to choose an appropriate button fill based on the color of the link
-#'   text.
+#' @param button_fill,button_width,button_outline Options for styling a
+#'   link-as-button (and only applies if `as_button = TRUE`). All of these
+#'   options are by default set to `"auto"`, allowing **gt** to choose
+#'   appropriate fill, width, and outline values.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -6122,7 +6373,8 @@ extract_duration_pattern <- function(
 #'     columns = website,
 #'     label = function(x) gsub("https://|www.", "", x),
 #'     as_button = TRUE,
-#'     button_fill = "steelblue"
+#'     button_fill = "steelblue",
+#'     button_width = px(150)
 #'   ) |>
 #'   cols_move_to_end(columns = website) |>
 #'   cols_align(align = "center", columns = website) |>
@@ -6172,12 +6424,10 @@ extract_duration_pattern <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-17
+#' 3-18
 #'
 #' @section Function Introduced:
 #' *In Development*
-#'
-#' @seealso The vector-formatting version of this function.
 #'
 #' @import rlang
 #' @export
@@ -6189,18 +6439,20 @@ fmt_url <- function(
     as_button = FALSE,
     color = "auto",
     show_underline = "auto",
-    button_fill = "auto"
+    button_fill = "auto",
+    button_width = "auto",
+    button_outline = "auto"
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   if (as_button) {
 
     #
-    # All determinations of `color`, `show_underline`, and `button_fill` for the
-    # case where `as_button = TRUE`; each of the above arguments are set to
-    # "auto" by default
+    # All determinations of `color`, `show_underline`, `button_fill` and
+    # `button_width` for the case where `as_button = TRUE`; each of the
+    # above arguments are set to "auto" by default
     #
 
     # In the button case, we opt to never show an underline unless it's
@@ -6209,13 +6461,22 @@ fmt_url <- function(
       show_underline <- FALSE
     }
 
+    if (button_width == "auto") {
+      button_width <- NULL
+    }
+
+    button_outline_color <- button_outline
+    button_outline_style <- "solid"
+    button_outline_width <- "2px"
+
     # There are various combinations of "auto" or not with `button_fill` and
     # `color` that need to be handled delicately so as to ensure contrast
     # between foreground text and background fill is maximized
     if (button_fill == "auto" && color == "auto") {
 
-      # Choose a fixed and standard color combination if both options are 'auto'
-      button_fill <- "#008B8B"
+      # Choose a fixed and standard color combination if both options are
+      # 'auto'; these will be 'steelblue' and 'white'
+      button_fill <- "#4682B4"
       color <- "#FFFFFF"
 
     } else if (button_fill == "auto" && color != "auto") {
@@ -6225,6 +6486,9 @@ fmt_url <- function(
       # brightness of the text color (can be of poor contrast if user chooses
       # a text color somewhere in the mid range of brightness, but nothing
       # really can be done there to compensate)
+
+      # Ensure that the incoming `color` is transformed to hexadecimal form
+      color <- html_color(colors = color, alpha = NULL)
 
       # Use `ideal_fgnd_color()` in a backwards manner only to see whether
       # the proxy background color is light (#FFFFFF) or dark (#000000)
@@ -6236,23 +6500,48 @@ fmt_url <- function(
 
       if (bgrnd_bw == "#FFFFFF") {
         # Background should be light so using 'lightblue'
-        button_fill <- "lightblue"
+        button_fill <- "#ADD8E6"
       } else {
         # Background should be dark so using 'darkblue'
-        button_fill <- "darkblue"
+        button_fill <- "#00008B"
+      }
+
+      if (button_outline == "auto") {
+        button_outline_color <- "#BEBEBE"
+        button_outline_style <- "none"
       }
 
     } else if (button_fill != "auto" && color == "auto") {
 
+      # Ensure that the incoming `button_fill` is transformed
+      # to hexadecimal form
+      button_fill <- html_color(colors = button_fill, alpha = NULL)
+
       # Case where background color is chosen for foreground text color is
       # not; this is the simple case where `ideal_fgnd_color()` is well suited
       # to determine the text color (either black or white)
-
       color <-
         ideal_fgnd_color(
           bgnd_color = button_fill,
           algo = "apca"
         )
+
+      if (button_outline == "auto") {
+
+        button_outline_color <- "#DFDFDF"
+
+        if (button_fill %in% c(
+          "#FFFFFF", "#FFFFFF", "#FAF5EF", "#FAFAFA", "#FFFEFC", "#FBFCFA", "#FBFAF2"
+        )) {
+          button_outline_style <- "solid"
+        } else {
+          button_outline_style <- "none"
+        }
+      }
+    } else {
+
+      # Ensure that the incoming `color` is transformed to hexadecimal form
+      color <- html_color(colors = color, alpha = NULL)
     }
 
   } else {
@@ -6262,7 +6551,13 @@ fmt_url <- function(
     }
 
     if (color == "auto") {
+
       color <- "#008B8B"
+
+    } else {
+
+      # Ensure that the incoming `color` is transformed to hexadecimal form
+      color <- html_color(colors = color, alpha = NULL)
     }
   }
 
@@ -6288,7 +6583,45 @@ fmt_url <- function(
             label_str <- label
           }
         } else {
-          label_str <- x_str_non_missing
+
+
+          if (any(grepl("\\[.*?\\]\\(.*?\\)", x_str_non_missing))) {
+
+            # Generate labels
+            label_str <-
+              vapply(
+                x_str_non_missing,
+                FUN.VALUE = character(1),
+                USE.NAMES = FALSE,
+                FUN = function(x) {
+                  if (grepl("\\[.*?\\]\\(.*?\\)", x)) {
+                    out <- sub("\\[(.*?)\\]\\(.*?\\)", "\\1", x)
+                  } else {
+                    out <- x
+                  }
+                  out
+                }
+              )
+
+            # Generate href values
+            x_str_non_missing <-
+              vapply(
+                x_str_non_missing,
+                FUN.VALUE = character(1),
+                USE.NAMES = FALSE,
+                FUN = function(x) {
+                  if (grepl("\\[.*?\\]\\(.*?\\)", x)) {
+                    out <- sub("\\[.*?\\]\\((.*?)\\)", "\\1", x)
+                  } else {
+                    out <- x
+                  }
+                  out
+                }
+              )
+
+          } else {
+            label_str <- x_str_non_missing
+          }
         }
 
         x_str_non_missing <-
@@ -6302,9 +6635,584 @@ fmt_url <- function(
             "display: inline-block;",
             if (as_button) paste0("background-color: ", button_fill, ";") else NULL,
             if (as_button) "padding: 8px 12px;" else NULL,
+            if (as_button && !is.null(button_width)) paste0("width: ", button_width, "; text-align: center;"),
+            if (as_button) {
+              paste0(
+                "outline-style: ", button_outline_style, "; ",
+                "outline-color: ", button_outline_color, "; ",
+                "outline-width: ", button_outline_width, ";"
+              )
+            } else {
+              NULL
+            },
             "\">",
             label_str,
             "</a>"
+          )
+
+        x_str[!is.na(x)] <- x_str_non_missing
+        x_str[is.na(x)] <- as.character(NA_character_)
+        x_str
+      },
+      latex = function(x) {
+        x
+      },
+      rtf = function(x) {
+        x
+      },
+      word = function(x) {
+        x
+      },
+      default = function(x) {
+        x
+      }
+    )
+  )
+}
+
+#' Format image paths to generate images in cells
+#'
+#' To more easily insert graphics into body cells, we can use the `fmt_image()`
+#' function. This allows for one or more images to be placed in the targeted
+#' cells. The cells need to contain some reference to an image file, either: (1)
+#' complete http/https or local paths to the files; (2) the file names, where a
+#' common path can be provided via `path`; or (3) a fragment of the file name,
+#' where the `file_pattern` helps to compose the entire file name and `path`
+#' provides the path information. This should be expressly used on columns that
+#' contain *only* references to image files (i.e., no image references as part
+#' of a larger block of text). Multiple images can be included per cell by
+#' separating image references by commas. The `sep` argument allows for a common
+#' separator to be applied between images.
+#'
+#' @inheritParams fmt_number
+#' @param height The absolute height of the image in the table cell. By default,
+#'   this is set to `"1em"`.
+#' @param sep In the output of images within a body cell, `sep` provides the
+#'   separator between each image.
+#' @param path An optional path to local image files (this is combined with all
+#'   filenames).
+#' @param file_pattern The pattern to use for mapping input values in the body
+#'   cells to the names of the graphics files.
+#' @param encode The option to always use Base64 encoding for image paths that
+#'   are determined to be local. By default, this is `TRUE`.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Targeting cells with `columns` and `rows`:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to target a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value of 100,000 (excluding
+#' `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given formatting function
+#' will be skipped over, like `character` values and numeric `fmt_*()`
+#' functions. So it's safe to select all columns with a particular formatting
+#' function (only those values that can be formatted will be formatted), but,
+#' you may not want that. One strategy is to format the bulk of cell values with
+#' one formatting function and then constrain the columns for later passes with
+#' other types of formatting (the last formatting done to a cell is what you get
+#' in the final output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
+#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
+#' the input data (the indices won't necessarily match those of rearranged rows
+#' if row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector. This is nice if you want to base
+#' formatting on values in the column or another column, or, you'd like to use a
+#' more complex predicate expression.
+#'
+#' @section Examples:
+#'
+#' Use the [`metro`] dataset to create a **gt** table. We will only include a
+#' few columns and rows from that table. The `lines` and `connect_rer` columns
+#' have comma-separated listings of numbers/letters (corresponding to lines
+#' served at each station). We have a directory SVG graphics for all of these
+#' lines in the package (the path for the image directory can be accessed via
+#' `system.file("metro_svg", package = "gt")`), and the filenames roughly
+#' correspond to the data in those two columns. The `fmt_image()` function can
+#' be used with these inputs since the `path` and `file_pattern` arguments allow
+#' us to compose complete and valid file locations. What you get from this are
+#' sequences of images in the table cells, taken from the referenced graphics
+#' files on disk.
+#'
+#' ```r
+#' metro |>
+#'   dplyr::select(name, caption, lines, connect_rer) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt() |>
+#'   cols_merge(
+#'     columns = c(name, caption),
+#'     pattern = "{1}<< ({2})>>"
+#'   ) |>
+#'   text_replace(
+#'     locations = cells_body(columns = name),
+#'     pattern = "\\((.*?)\\)",
+#'     replacement = "<br>(<em>\\1</em>)"
+#'   ) |>
+#'   sub_missing(columns = connect_rer, missing_text = "") |>
+#'   fmt_image(
+#'     columns = lines,
+#'     path = system.file("metro_svg", package = "gt"),
+#'     file_pattern = "metro_{x}.svg"
+#'   ) |>
+#'   fmt_image(
+#'     columns = connect_rer,
+#'     path = system.file("metro_svg", package = "gt"),
+#'     file_pattern = "rer_{x}.svg"
+#'   ) |>
+#'   cols_label(
+#'     name = "Station",
+#'     lines = "Lines",
+#'     connect_rer = "RER"
+#'   ) |>
+#'   cols_align(align = "left") |>
+#'   tab_style(
+#'     style = cell_borders(
+#'       sides = c("left", "right"),
+#'       weight = px(1),
+#'       color = "gray85"
+#'     ),
+#'     locations = cells_body(columns = lines)
+#'   ) |>
+#'   opt_stylize(style = 6, color = "blue") |>
+#'   opt_all_caps() |>
+#'   opt_horizontal_padding(scale = 1.75)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_image_1.png")`
+#' }}
+#'
+#' @family data formatting functions
+#' @section Function ID:
+#' 3-19
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @import rlang
+#' @export
+fmt_image <- function(
+    data,
+    columns = everything(),
+    rows = everything(),
+    height = "2em",
+    sep = " ",
+    path = NULL,
+    file_pattern = "{x}",
+    encode = TRUE
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    fns = list(
+      html = function(x) {
+
+        # Generate an vector of empty strings that will eventually
+        # contain all of the link text
+        x_str <- character(length(x))
+
+        x_str_non_missing <- x[!is.na(x)]
+
+        x_str_non_missing <-
+          vapply(
+            seq_along(x_str_non_missing),
+            FUN.VALUE = character(1),
+            USE.NAMES = FALSE,
+            FUN = function(x) {
+
+              if (grepl(",", x_str_non_missing[x])) {
+                files <- unlist(strsplit(x_str_non_missing[x], ",\\s*"))
+              } else {
+                files <- x_str_non_missing[x]
+              }
+
+              # Automatically append `px` length unit when `height`
+              # is given as a number
+              if (is.numeric(height)) {
+                height <- paste0(height, "px")
+              }
+
+              # Handle formatting of `file_pattern`
+              files <-
+                apply_pattern_fmt_x(
+                  pattern = file_pattern,
+                  values = files
+                )
+
+              out <- c()
+
+              for (y in seq_along(files)) {
+
+                if (
+                  (!is.null(path) && grepl("https?://", path)) ||
+                  grepl("https?://", files[y])
+                ) {
+
+                  if (!is.null(path)) {
+
+                    # Normalize ending of `path`
+                    path <- gsub("/\\s+$", "", path)
+                    uri <- paste0(path, "/", files[y])
+                  } else {
+                    uri <- files[y]
+                  }
+
+                  # Place the `uri` value it within an <img>, setting the
+                  # height and always preferring vertical alignment as 'middle'
+                  out_y <-
+                    paste0(
+                      "<img src=\"", uri, "\" ",
+                      "style=\"height:", height, ";",
+                      "vertical-align:middle;\">"
+                    )
+
+                } else {
+
+                  # Compose and normalize the local file path
+                  filename <- gtsave_filename(path = path, filename = files[y])
+                  filename <- path_expand(filename)
+
+                  # Create the image URI; this uses the logical value of
+                  # `encode` to either perform or bypass Base64 encoding
+                  if (encode) {
+                    uri <- get_image_uri(filename)
+                  } else {
+                    uri <- filename
+                  }
+
+                  # Place the `uri` value it within an <img>, setting the
+                  # height and always preferring vertical alignment as 'middle'
+                  out_y <-
+                    paste0(
+                      "<img src=\"", uri, "\" ",
+                      "style=\"height:", height, ";",
+                      "vertical-align:middle;\">"
+                    )
+                }
+
+                out <- c(out, out_y)
+              }
+
+              paste0(
+                "<span style=\"white-space:nowrap;\">",
+                paste0(out, collapse = sep),
+                "</span>"
+              )
+            }
+          )
+
+        x_str[!is.na(x)] <- x_str_non_missing
+        x_str[is.na(x)] <- as.character(NA_character_)
+        x_str
+      },
+      latex = function(x) {
+        x
+      },
+      rtf = function(x) {
+        x
+      },
+      word = function(x) {
+        x
+      },
+      default = function(x) {
+        x
+      }
+    )
+  )
+}
+
+#' Generate flag icons for countries from their country codes
+#'
+#' While it is fairly straightforward to insert images into body cells (using
+#' [fmt_image()] is one way to it), there is often the need to incorporate
+#' specialized types of graphics within a table. One such group of graphics
+#' involves iconography representing different countries, and the `fmt_flag()`
+#' function helps with inserting a flag icon (or multiple) in body cells. To
+#' make this work seamlessly, the input cells need to contain some reference to
+#' a country, and this is in the form of a 2-letter ISO 3166-1 country code
+#' (e.g., Egypt has the `"EG"` country code). This function will parse the
+#' targeted body cells for those codes (and the [countrypops] dataset contains
+#' all of them) and insert the appropriate flag graphics. Multiple flags can be
+#' included per cell by separating country codes with commas (e.g., `"GB,TT"`).
+#' The `sep` argument allows for a common separator to be applied between flag
+#' icons.
+#'
+#' @inheritParams fmt_number
+#' @param height The absolute height of the flag icon in the table cell. By
+#'   default, this is set to `"1em"`.
+#' @param sep In the output of flag icons within a body cell, `sep` provides the
+#'   separator between each icon. By default, this is a single space character
+#'   (`" "`).
+#' @param use_title An option to display a tooltip for the country name when
+#'   hovering over the flag icon. By default this is `TRUE`.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Targeting cells with `columns` and `rows`:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to target a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value of 100,000 (excluding
+#' `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given formatting function
+#' will be skipped over, like `character` values and numeric `fmt_*()`
+#' functions. So it's safe to select all columns with a particular formatting
+#' function (only those values that can be formatted will be formatted), but,
+#' you may not want that. One strategy is to format the bulk of cell values with
+#' one formatting function and then constrain the columns for later passes with
+#' other types of formatting (the last formatting done to a cell is what you get
+#' in the final output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
+#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
+#' the input data (the indices won't necessarily match those of rearranged rows
+#' if row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector. This is nice if you want to base
+#' formatting on values in the column or another column, or, you'd like to use a
+#' more complex predicate expression.
+#'
+#' @section Examples:
+#'
+#' Use the [`countrypops`] dataset to create a **gt** table. We will only
+#' include a few columns and rows from that table. The `country_code_2` column
+#' has 2-letter country codes in the format required for `fmt_flag()` and using
+#' that function transforms the codes in circular flag icons.
+#'
+#' ```r
+#' countrypops |>
+#'   dplyr::filter(year == 2021) |>
+#'   dplyr::filter(grepl("^S", country_name)) |>
+#'   dplyr::arrange(country_name) |>
+#'   dplyr::select(-country_code_3, -year) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt() |>
+#'   cols_move_to_start(columns = country_code_2) |>
+#'   fmt_integer() |>
+#'   fmt_flag(columns = country_code_2) |>
+#'   cols_label(
+#'     country_code_2 = "",
+#'     country_name = "Country",
+#'     population = "Population (2021)"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_flag_1.png")`
+#' }}
+#'
+#' Using [`countrypops`] we can generate a table that provides populations
+#' every five years for the Benelux countries (`"BE"`, `"NU"`, and `"LU"`).
+#' This requires some manipulation with **dplyr** and **tidyr** before
+#' introducing the table to **gt**. With `fmt_flag()` we can obtain flag icons
+#' in the `country_code_2` column. After that, we can merge the flag icons into
+#' the stub column, generating row labels that have a combination of icon and
+#' text.
+#'
+#' ```r
+#' countrypops |>
+#'   dplyr::filter(country_code_2 %in% c("BE", "NU", "LU")) |>
+#'   dplyr::filter(year %% 10 == 0) |>
+#'   dplyr::select(country_name, country_code_2, year, population) |>
+#'   tidyr::pivot_wider(names_from = year, values_from = population) |>
+#'   dplyr::slice(1, 3, 2) |>
+#'   gt(rowname_col = "country_name") |>
+#'   tab_header(title = "Populations of the Benelux Countries") |>
+#'   tab_spanner(columns = everything(), label = "Year") |>
+#'   fmt_integer() |>
+#'   fmt_flag(columns = country_code_2) |>
+#'   cols_merge(
+#'     columns = c(country_name, country_code_2),
+#'     pattern = "{2} {1}"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_flag_2.png")`
+#' }}
+#'
+#' The `fmt_flag()` function works well even when there are multiple country
+#' codes within the same cell. It can operate on comma-separated codes without
+#' issue. When rendered to HTML, hovering over each of the flag icons results in
+#' tooltip text showing the name of the country.
+#'
+#' ```r
+#' countrypops |>
+#'   dplyr::filter(year == 2021, population < 100000) |>
+#'   dplyr::select(country_code_2, population) |>
+#'   dplyr::mutate(population_class = cut(
+#'     population,
+#'     breaks = scales::breaks_pretty(n = 5)(population)
+#'     )
+#'   ) |>
+#'   dplyr::group_by(population_class) |>
+#'   dplyr::summarize(
+#'     countries = paste0(country_code_2, collapse = ",")
+#'   ) |>
+#'   dplyr::arrange(desc(population_class)) |>
+#'   gt() |>
+#'   tab_header(title = "Countries with Small Populations") |>
+#'   fmt_flag(columns = countries) |>
+#'   fmt_bins(
+#'     columns = population_class,
+#'     fmt = ~ fmt_integer(., suffixing = TRUE)
+#'   ) |>
+#'   cols_label(
+#'     population_class = "Population Range",
+#'     countries = "Countries"
+#'   ) |>
+#'   cols_width(population_class ~ px(150))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_flag_3.png")`
+#' }}
+#'
+#' @family data formatting functions
+#' @section Function ID:
+#' 3-20
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @import rlang
+#' @export
+fmt_flag <- function(
+    data,
+    columns = everything(),
+    rows = everything(),
+    height = "1em",
+    sep = " ",
+    use_title = TRUE
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    fns = list(
+      html = function(x) {
+
+        # Generate an vector of empty strings that will eventually
+        # contain all of the link text
+        x_str <- character(length(x))
+
+        x_str_non_missing <- x[!is.na(x)]
+
+        x_str_non_missing <-
+          vapply(
+            seq_along(x_str_non_missing),
+            FUN.VALUE = character(1),
+            USE.NAMES = FALSE,
+            FUN = function(x) {
+
+              if (grepl(",", x_str_non_missing[x])) {
+                countries <-
+                  toupper(unlist(strsplit(x_str_non_missing[x], ",\\s*")))
+              } else {
+                countries <- toupper(x_str_non_missing[x])
+              }
+
+              # Automatically append `px` length unit when `height`
+              # is given as a number
+              if (is.numeric(height)) {
+                height <- paste0(height, "px")
+              }
+
+              # TODO: Parse to ensure that `country_code` values are valid
+
+              out <- c()
+
+              for (y in seq_along(countries)) {
+
+                flag_svg <-
+                  flag_tbl[
+                    flag_tbl[["country_code"]] == countries[y],
+                  ][["country_flag"]]
+
+                if (use_title) {
+                  flag_title <-
+                    flag_tbl[
+                      flag_tbl[["country_code"]] == countries[y],
+                    ][["country_name"]]
+                }
+
+                out_y <-
+                  gsub(
+                    "<svg.*?>",
+                    paste0(
+                      "<svg xmlns=\"http://www.w3.org/2000/svg\" ",
+                      "aria-hidden=\"true\" role=\"img\" ",
+                      "width=\"512\" height=\"512\" ",
+                      "viewBox=\"0 0 512 512\" ",
+                      "style=\"vertical-align:-0.125em;",
+                      "image-rendering:optimizeQuality;",
+                      "height:", height, ";",
+                      "width:", height, ";",
+                      "\"",
+                      ">",
+                      if (use_title) {
+                        paste0("<title>", flag_title, "</title>")
+                      } else {
+                        NULL
+                      }
+                    ),
+                    flag_svg
+                  )
+
+                out <- c(out, out_y)
+              }
+
+              paste0(
+                "<span style=\"white-space:nowrap;\">",
+                paste0(out, collapse = sep),
+                "</span>"
+              )
+            }
           )
 
         x_str[!is.na(x)] <- x_str_non_missing
@@ -6335,6 +7243,11 @@ fmt_url <- function(
 #' appropriate output type during render when using `fmt_markdown()`.
 #'
 #' @inheritParams fmt_number
+#' @param md_engine The engine preference for Markdown rendering. By default,
+#'   this is set to `"auto"` where **gt** will choose the **markdown** package
+#'   if it is available in the user library, otherwise functions from the
+#'   **commonmark** package will be used. You can explicitly choose one or the
+#'   other with the `"markdown"` or `"commonmark"` keyword option.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -6433,7 +7346,7 @@ fmt_url <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-18
+#' 3-21
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -6446,11 +7359,15 @@ fmt_url <- function(
 fmt_markdown <- function(
     data,
     columns = everything(),
-    rows = everything()
+    rows = everything(),
+    md_engine = c("auto", "markdown", "commonmark")
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
+
+  # Ensure that arguments are matched
+  md_engine <- rlang::arg_match(md_engine)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -6460,10 +7377,10 @@ fmt_markdown <- function(
     rows = {{ rows }},
     fns = list(
       html = function(x) {
-        md_to_html(x)
+        md_to_html(x, md_engine = md_engine)
       },
       latex = function(x) {
-        markdown_to_latex(x)
+        markdown_to_latex(x, md_engine = md_engine)
       },
       rtf = function(x) {
         markdown_to_rtf(x)
@@ -6567,7 +7484,7 @@ fmt_markdown <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-19
+#' 3-22
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -6583,7 +7500,7 @@ fmt_passthrough <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions (as a function list) to `fmt()`
@@ -6668,15 +7585,15 @@ fmt_passthrough <- function(
 #'
 #' @description
 #'
-#' The `fmt_auto()` function will automatic applying formatting of various types
-#' in a way that best suits the data table provided. The function will attempt
-#' format numbers such that they are condensed to an optimal width, either with
-#' scientific notation or large number suffixing. Currency values are detected
-#' by currency codes embedded in the column name and formatted in the correct
-#' way. Although the functionality here is comprehensive it's still possible to
-#' reduce the scope of automatic formatting with the `scope` argument and also
-#' by choosing a subset of columns and rows to which the formatting will be
-#' applied.
+#' The `fmt_auto()` function will automatically apply formatting of various
+#' types in a way that best suits the data table provided. The function will
+#' attempt to format numbers such that they are condensed to an optimal width,
+#' either with scientific notation or large-number suffixing. Currency values
+#' are detected by currency codes embedded in the column name and formatted in
+#' the correct way. Although the functionality here is comprehensive it's still
+#' possible to reduce the scope of automatic formatting with the `scope`
+#' argument and also by choosing a subset of columns and rows to which the
+#' formatting will be applied.
 #'
 #' @inheritParams fmt_number
 #' @param scope The scope of automatic formatting. By default this includes
@@ -6763,11 +7680,12 @@ fmt_passthrough <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-20
+#' 3-23
 #'
 #' @section Function Introduced:
 #' *In Development*
 #'
+#' @import rlang
 #' @export
 fmt_auto <- function(
     data,
@@ -6779,7 +7697,7 @@ fmt_auto <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Ensure that arguments are matched
   lg_num_pref <- rlang::arg_match(lg_num_pref)
@@ -7069,7 +7987,7 @@ fmt_auto <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-21
+#' 3-24
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -7085,7 +8003,7 @@ fmt <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   #
   # Resolution of columns and rows as character vectors

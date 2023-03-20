@@ -290,7 +290,7 @@
 #'
 #' @family row addition/modification functions
 #' @section Function ID:
-#' 5-1
+#' 6-1
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -309,7 +309,7 @@ summary_rows <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Get the correct `side` value
   side <- rlang::arg_match(side)
@@ -687,7 +687,7 @@ summary_rows <- function(
 #'
 #' @family row addition/modification functions
 #' @section Function ID:
-#' 5-2
+#' 6-2
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -705,7 +705,7 @@ grand_summary_rows <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Get the correct `side` value
   side <- rlang::arg_match(side)

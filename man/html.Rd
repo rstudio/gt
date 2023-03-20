@@ -40,7 +40,7 @@ Use \code{\link{exibble}} to create a \strong{gt} table. When adding a title, us
 
 \section{Function ID}{
 
-7-2
+8-2
 }
 
 \section{Function Introduced}{

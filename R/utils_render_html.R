@@ -16,7 +16,11 @@ footnote_mark_to_html <- function(mark) {
   }
 
   as.character(
-    htmltools::tags$span(class = sup_class, htmltools::tags$sup(mark))
+    htmltools::tags$span(
+      class = sup_class,
+      style = htmltools::css(`white-space` = "nowrap"),
+      htmltools::tags$sup(mark)
+    )
   )
 }
 
@@ -57,6 +61,7 @@ cell_style_to_html.default <- function(style) {
 
 # Upgrade `_styles` to gain a `html_style` column with CSS style rules
 add_css_styles <- function(data) {
+
   styles_tbl <- dt_styles_get(data = data)
 
   styles_tbl$html_style <- vapply(styles_tbl$styles, styles_to_html, character(1))
@@ -81,6 +86,7 @@ coalesce_marks <- function(
 
 # Get the attributes for the table tag
 get_table_defs <- function(data) {
+
   boxh <- dt_boxhead_get(data = data)
 
   # Get the `table-layout` value, which is set in `_options`
@@ -289,6 +295,7 @@ create_heading_component_h <- function(data) {
 
   title_row <-
     htmltools::tags$tr(
+      class = "gt_heading",
       htmltools::tags$td(
         colspan = n_cols_total,
         class = paste(title_classes, collapse = " "),
@@ -303,6 +310,7 @@ create_heading_component_h <- function(data) {
 
     subtitle_row <-
       htmltools::tags$tr(
+        class = "gt_heading",
         htmltools::tags$td(
           colspan = n_cols_total,
           class = paste(subtitle_classes, collapse = " "),
@@ -317,8 +325,7 @@ create_heading_component_h <- function(data) {
     subtitle_row <- ""
   }
 
-  htmltools::tags$thead(
-    class = "gt_header",
+  htmltools::tagList(
     title_row,
     subtitle_row
   )
@@ -466,7 +473,7 @@ create_columns_component_h <- function(data) {
         )
     }
 
-    table_col_headings <- htmltools::tags$tr(table_col_headings)
+    table_col_headings <- htmltools::tags$tr(class = "gt_col_headings", table_col_headings)
   }
 
   if (spanner_row_count > 0) {
@@ -628,11 +635,11 @@ create_columns_component_h <- function(data) {
     solo_headings <- headings_vars[is.na(spanner_ids[level_1_index, ])]
     remaining_headings <- headings_vars[!(headings_vars %in% solo_headings)]
 
+    remaining_headings_labels <- dt_boxhead_get(data = data)
     remaining_headings_labels <-
-      dt_boxhead_get(data = data) %>%
-      dplyr::filter(var %in% remaining_headings) %>%
-      dplyr::pull(column_label) %>%
-      unlist()
+      dplyr::filter(remaining_headings_labels, var %in% remaining_headings)
+    remaining_headings_labels <-
+      unlist(dplyr::pull(remaining_headings_labels, column_label))
 
     col_alignment <- col_alignment[-1][!(headings_vars %in% solo_headings)]
 
@@ -678,14 +685,24 @@ create_columns_component_h <- function(data) {
 
       table_col_headings <-
         htmltools::tagList(
-          htmltools::tags$tr(class = "gt_spanner_row", level_1_spanners),
-          htmltools::tags$tr(spanned_column_labels)
+          htmltools::tags$tr(
+            class = "gt_col_headings gt_spanner_row",
+            level_1_spanners
+          ),
+          htmltools::tags$tr(
+            class = "gt_col_headings",
+            spanned_column_labels
+          )
         )
 
     } else {
 
       # Create the `table_col_headings` HTML component
-      table_col_headings <- htmltools::tags$tr(class = "gt_spanner_row", level_1_spanners)
+      table_col_headings <-
+        htmltools::tags$tr(
+          class = "gt_col_headings gt_spanner_row",
+          level_1_spanners
+        )
     }
   }
 
@@ -776,7 +793,11 @@ create_columns_component_h <- function(data) {
       higher_spanner_rows <-
         htmltools::tagList(
           higher_spanner_rows,
-          htmltools::tagList(htmltools::tags$tr(class = "gt_spanner_row", level_i_spanners))
+          htmltools::tagList(
+            htmltools::tags$tr(
+              class = "gt_col_headings gt_spanner_row",
+              level_i_spanners)
+          )
         )
     }
 
@@ -787,10 +808,7 @@ create_columns_component_h <- function(data) {
       )
   }
 
-  htmltools::tags$thead(
-    class = "gt_col_headings",
-    table_col_headings
-  )
+  table_col_headings
 }
 
 #' Create the table body component (HTML)

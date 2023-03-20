@@ -6,11 +6,18 @@
 \usage{
 vec_fmt_markdown(
   x,
+  md_engine = c("auto", "markdown", "commonmark"),
   output = c("auto", "plain", "html", "latex", "rtf", "word")
 )
 }
 \arguments{
 \item{x}{A numeric vector.}
+
+\item{md_engine}{The engine preference for Markdown rendering. By default,
+this is set to \code{"auto"} where \strong{gt} will choose the \strong{markdown} package
+if it is available in the user library, otherwise functions from the
+\strong{commonmark} package will be used. You can explicitly choose one or the
+other with the \code{"markdown"} or \code{"commonmark"} keyword option.}
 
 \item{output}{The output style of the resulting character vector. This can
 either be \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"},

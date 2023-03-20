@@ -3347,6 +3347,11 @@ vec_fmt_duration <- function(
 #' appropriate output type.
 #'
 #' @inheritParams vec_fmt_number
+#' @param md_engine The engine preference for Markdown rendering. By default,
+#'   this is set to `"auto"` where **gt** will choose the **markdown** package
+#'   if it is available in the user library, otherwise functions from the
+#'   **commonmark** package will be used. You can explicitly choose one or the
+#'   other with the `"markdown"` or `"commonmark"` keyword option.
 #'
 #' @return A character vector.
 #'
@@ -3396,11 +3401,13 @@ vec_fmt_duration <- function(
 #' @export
 vec_fmt_markdown <- function(
     x,
+    md_engine = c("auto", "markdown", "commonmark"),
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `output` is matched correctly to one option
+  # Ensure that arguments are matched
   output <- rlang::arg_match(output)
+  md_engine <- rlang::arg_match(md_engine)
 
   if (output == "auto") {
     output <- determine_output_format()
@@ -3414,7 +3421,8 @@ vec_fmt_markdown <- function(
       fmt_markdown(
         gt_one_col(x),
         columns = "x",
-        rows = everything()
+        rows = everything(),
+        md_engine = md_engine
       ),
       output = output
     )

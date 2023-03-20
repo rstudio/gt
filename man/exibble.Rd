@@ -8,18 +8,16 @@
 A tibble with 8 rows and 9 variables:
 \describe{
 \item{num}{A numeric column ordered with increasingly larger values.}
-\item{char}{A character column composed of names of fruits from \code{a} to
-\code{h}.}
+\item{char}{A character column composed of names of fruits from \code{a} to \code{h}.}
 \item{fctr}{A factor column with numbers from \code{1} to \code{8}, written out.}
 \item{date, time, datetime}{Character columns with dates, times, and
 datetimes.}
 \item{currency}{A numeric column that is useful for testing currency-based
 formatting.}
-\item{row}{A character column in the format \code{row_X} which can be
-useful for testing with row captions in a table stub.}
-\item{group}{A character column with four \code{grp_a} values and four
-\code{grp_b} values which can be useful for testing tables that contain
-row groups.}
+\item{row}{A character column in the format \code{row_X} which can be useful for
+testing with row captions in a table stub.}
+\item{group}{A character column with four \code{grp_a} values and four \code{grp_b}
+values which can be useful for testing tables that contain row groups.}
 }
 }
 \usage{
@@ -39,7 +37,7 @@ character-based dates/times in the familiar ISO 8601 format. The \code{row} and
 \section{Examples}{
 
 
-Here is the \code{exibble}.
+Here is the entirety of the \code{exibble} table.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble
 #> # A tibble: 8 x 9
@@ -56,15 +54,25 @@ Here is the \code{exibble}.
 }\if{html}{\out{</div>}}
 }
 
-\section{Function ID}{
+\section{Dataset ID and Badge}{
 
-16-6
+DATA-6
+
+\if{html}{\out{
+<div align="center"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_exibble.png" alt="This image of that of a dataset badge." style="width:50\%;padding-bottom:20px;"></div>
+}}
+}
+
+\section{Dataset Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
 Other datasets: 
 \code{\link{countrypops}},
 \code{\link{gtcars}},
+\code{\link{metro}},
 \code{\link{pizzaplace}},
 \code{\link{rx_addv}},
 \code{\link{rx_adsl}},

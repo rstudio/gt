@@ -59,7 +59,7 @@
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-1
+#' 10-1
 #'
 #' @section Function Introduced:
 #' `v0.7.0` (Aug 25, 2022)
@@ -73,7 +73,7 @@ opt_stylize <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   if (!(length(style) == 1 && style %in% 1:6)) {
     cli::cli_abort("The `style` value must be a number in the range of 1 to 6.")
@@ -234,7 +234,7 @@ get_colorized_params <- function(
 #' towny |>
 #'   dplyr::select(name, census_div, starts_with("population")) |>
 #'   gt() |>
-#'   fmt_auto() |>
+#'   fmt_integer() |>
 #'   cols_label_with(fn = function(x) sub("population_", "", x)) |>
 #'   cols_width(
 #'     name ~ px(200),
@@ -252,9 +252,34 @@ get_colorized_params <- function(
 #' `r man_get_image_tag(file = "man_opt_interactive_1.png")`
 #' }}
 #'
+#' Interactive tables can have styled body cells. Here, we use the [`gtcars`]
+#' dataset to create an interactive **gt** table. Using [tab_style()] and
+#' [data_color()] we can flexibly style body cells throughout the table.
+#'
+#' ```r
+#' gtcars |>
+#'   gt() |>
+#'   cols_width(everything() ~ px(130)) |>
+#'   tab_style(
+#'     style = cell_fill(color = "gray95"),
+#'     locations = cells_body(columns = c(mfr, model))
+#'   ) |>
+#'   data_color(
+#'     columns = c(starts_with("hp"), starts_with("trq")),
+#'     method = "numeric",
+#'     palette = "viridis"
+#'   ) |>
+#'   cols_hide(columns = trim) |>
+#'   opt_interactive()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_opt_interactive_2.png")`
+#' }}
+#'
 #' @family table option functions
 #' @section Function ID:
-#' 9-2
+#' 10-2
 #'
 #' @section Function Introduced:
 #' *In Development*
@@ -278,7 +303,7 @@ opt_interactive <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   pagination_type <- rlang::arg_match(pagination_type)
 
@@ -329,7 +354,7 @@ opt_interactive <- function(
 #'
 #' - `"numbers"`: numeric marks, they begin from 1 and these marks are not
 #' subject to recycling behavior
-#' - `"letters"`: miniscule alphabetic marks, internally uses the `letters`
+#' - `"letters"`: minuscule alphabetic marks, internally uses the `letters`
 #' vector which contains 26 lowercase letters of the Roman alphabet
 #' - `"LETTERS"`: majuscule alphabetic marks, using the `LETTERS` vector
 #' which has 26 uppercase letters of the Roman alphabet
@@ -391,7 +416,7 @@ opt_interactive <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-3
+#' 10-3
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -403,7 +428,7 @@ opt_footnote_marks <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Validate input for `marks`
   validate_marks(marks)
@@ -462,7 +487,7 @@ opt_footnote_marks <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-4
+#' 10-4
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -474,7 +499,7 @@ opt_row_striping <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   tab_options(
     data = data,
@@ -534,7 +559,7 @@ opt_row_striping <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-5
+#' 10-5
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -546,7 +571,7 @@ opt_align_table_header <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   align <- rlang::arg_match(align)
 
@@ -617,7 +642,7 @@ opt_align_table_header <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-6
+#' 10-6
 #'
 #' @section Function Introduced:
 #' `v0.4.0` (February 15, 2022)
@@ -700,7 +725,7 @@ opt_vertical_padding <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-7
+#' 10-7
 #'
 #' @section Function Introduced:
 #' `v0.4.0` (February 15, 2022)
@@ -818,7 +843,7 @@ get_padding_option_value_list <- function(scale, type) {
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-8
+#' 10-8
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -831,7 +856,7 @@ opt_all_caps <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Ensure that all named locations are valid
   if (!all(locations %in% c("column_labels", "stub", "row_group"))) {
@@ -923,7 +948,7 @@ opt_all_caps <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-9
+#' 10-9
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -935,7 +960,7 @@ opt_table_lines <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   extent <- rlang::arg_match(extent)
 
@@ -1023,7 +1048,7 @@ opt_table_lines <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-10
+#' 10-10
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1037,7 +1062,7 @@ opt_table_outline <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   if (style == "none") {
     width <- NULL
@@ -1165,7 +1190,7 @@ opt_table_outline <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-11
+#' 10-11
 #'
 #' @section Function Introduced:
 #' `v0.2.2` (August 5, 2020)
@@ -1180,7 +1205,7 @@ opt_table_font <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   existing_fonts <-
     dt_options_get_value(
@@ -1298,7 +1323,7 @@ opt_table_font <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 9-12
+#' 10-12
 #'
 #' @section Function Introduced:
 #' `v0.2.2` (August 5, 2020)
@@ -1312,7 +1337,7 @@ opt_css <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   existing_additional_css <-
     dt_options_get_value(

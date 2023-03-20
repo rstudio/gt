@@ -4,7 +4,12 @@
 \alias{fmt_markdown}
 \title{Format Markdown text}
 \usage{
-fmt_markdown(data, columns = everything(), rows = everything())
+fmt_markdown(
+  data,
+  columns = everything(),
+  rows = everything(),
+  md_engine = c("auto", "markdown", "commonmark")
+)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -23,6 +28,12 @@ functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with
 \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
 to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
+
+\item{md_engine}{The engine preference for Markdown rendering. By default,
+this is set to \code{"auto"} where \strong{gt} will choose the \strong{markdown} package
+if it is available in the user library, otherwise functions from the
+\strong{commonmark} package will be used. You can explicitly choose one or the
+other with the \code{"markdown"} or \code{"commonmark"} keyword option.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -128,7 +139,7 @@ then, create a \strong{gt} table and format all columns with \code{fmt_markdown(
 
 \section{Function ID}{
 
-3-18
+3-21
 }
 
 \section{Function Introduced}{
@@ -143,13 +154,16 @@ The vector-formatting version of this function:
 Other data formatting functions: 
 \code{\link{data_color}()},
 \code{\link{fmt_auto}()},
+\code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
 \code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
+\code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_image}()},
 \code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_number}()},
@@ -166,7 +180,6 @@ Other data formatting functions:
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},
 \code{\link{sub_values}()},
-\code{\link{sub_zero}()},
-\code{\link{text_transform}()}
+\code{\link{sub_zero}()}
 }
 \concept{data formatting functions}

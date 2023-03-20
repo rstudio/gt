@@ -109,7 +109,7 @@ summary stub cell with with the \code{\link[=tab_style]{tab_style()}} and
 
 \section{Function ID}{
 
-7-16
+8-16
 }
 
 \section{Function Introduced}{
