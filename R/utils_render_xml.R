@@ -946,6 +946,7 @@ create_table_caption_component_xml <- function(
 create_heading_component_xml <- function(
     data,
     split = FALSE,
+    align = "center",
     keep_with_next = TRUE
 ) {
 
@@ -959,6 +960,13 @@ create_heading_component_xml <- function(
   styles_tbl <- dt_styles_get(data = data)
   stub_components <- dt_stub_components(data = data)
   subtitle_defined <- dt_heading_has_subtitle(data = data)
+
+  header_title_style <- styles_tbl %>%
+    dplyr::filter(
+      locname == "title"
+    ) %>%
+    dplyr::pull("styles") %>%
+    .[1] %>% .[[1]]
 
   # Obtain the number of visible columns in the built table
   n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
@@ -979,7 +987,7 @@ create_heading_component_xml <- function(
   heading_border_bottom_color <- dt_options_get_value(data, option = "heading_border_bottom_color")
 
   # Get the footnote marks for the title
-  title_caption_string <- parse_to_xml(heading$title)
+  title_caption <- parse_to_xml(heading$title)
 
   # Get the footnote marks for the title
   if ("title" %in% footnotes_tbl$locname) {
@@ -995,89 +1003,14 @@ create_heading_component_xml <- function(
       as_xml_node() %>%
       .[[1]]
 
-    title_caption_string %>%
+    title_caption %>%
       xml_add_child(
         footnote_title_marks
       )
 
   }
 
-  title_caption_string <- as.character(title_caption_string) %>%
-    paste0("<md_container>",.,"</md_container>")
-
-
-  title_caption_xml <- process_cell_content(
-    x = title_caption_string,
-    font = header_title_style[["cell_text"]][["font"]] %||% "Calibri",
-    size = header_title_style[["cell_text"]][["size"]] %||% 24,
-    whitespace = header_title_style[["cell_text"]][["whitespace"]],
-    paragraph_style = "caption",
-    color = header_title_style[["cell_text"]][["color"]] %||% table_font_color,
-    align = header_title_style[["cell_text"]][["align"]] %||% align,
-    keep_with_next = keep_with_next
-  ) %>%
-    as_xml_node()
-
-  autonum_node_xml <- xml_table_autonum(
-    font = xml_r_font(header_title_style[["cell_text"]][["font"]] %||% "Calibri"),
-    size = xml_sz(val = header_title_style[["cell_text"]][["size"]] %||% 24)
-  ) %>%
-    as_xml_node()
-
-  for(autonum_node in rev(autonum_node_xml)){
-    title_caption_xml %>%
-      xml_add_child(
-        autonum_node,
-        .where = 1
-      )
-  }
-
-  title_caption <- as.character(title_caption_xml)
-
-  header_title_style <- styles_tbl %>%
-    dplyr::filter(
-      locname == "title"
-    ) %>%
-    dplyr::pull("styles") %>%
-    .[1] %>% .[[1]]
-
-
-
-
-  title_section <- htmltools::tagList(xml_tr(
-    xml_trPr(if (!split) {
-      xml_cantSplit()
-    },
-    xml_tbl_header()),
-    xml_table_cell(
-      content = title_caption,
-      size = header_title_style[["cell_text"]][["size"]] %||% 20,
-      color = header_title_style[["cell_text"]][["color"]] %||% table_font_color,
-      align = header_title_style[["cell_text"]][["align"]] %||% "center",
-      col_span = n_cols,
-      whitespace = header_title_style[["cell_text"]][["whitespace"]],
-      border = if (table_border_top_include) {
-        c(
-          list(
-            "top" = cell_border(
-              type = "single",
-              size = 16,
-              color = heading_border_bottom_color
-            )),
-          if(!subtitle_defined) {
-            list(
-              "bottom" = cell_border(
-                type = "single",
-                size = 16,
-                color = heading_border_bottom_color
-              )
-            )
-          }
-        )
-      },
-      keep_with_next = TRUE
-    )
-  ))
+  title_caption <- as.character(title_caption)
 
   if (subtitle_defined) {
 
@@ -1105,10 +1038,6 @@ create_heading_component_xml <- function(
 
     }
 
-    subtitle_caption_string <- as.character(subtitle_caption_string) %>%
-      paste0("<md_container>",.,"</md_container>")
-
-
     header_subtitle_style <- styles_tbl %>%
       dplyr::filter(
         locname == "subtitle"
@@ -1116,36 +1045,63 @@ create_heading_component_xml <- function(
       dplyr::pull("styles") %>%
       .[1] %>% .[[1]]
 
-    subtitle_row <- xml_tr(
-      xml_trPr(if (!split) {
-        xml_cantSplit()
-      },
-      xml_tbl_header()),
-      xml_table_cell(
-        content = subtitle_caption_string,
-        size = header_subtitle_style[["cell_text"]][["size"]] %||% 20,
+    subtitle_caption_string <- as.character(subtitle_caption_string) %>%
+      paste0("<md_container>",.,"</md_container>") %>%
+      process_cell_content(
+        size = header_subtitle_style[["cell_text"]][["size"]] %||% 16,
         color = header_subtitle_style[["cell_text"]][["color"]] %||% table_font_color,
         align = header_subtitle_style[["cell_text"]][["align"]] %||% "center",
         col_span = n_cols,
         whitespace = header_subtitle_style[["cell_text"]][["whitespace"]],
-        border = if (table_border_top_include) {
+        keep_with_next = keep_with_next
+      )
+
+    title_caption <- paste0(
+      title_caption,
+      subtitle_caption_string
+    )
+
+  }
+
+  title_caption <- title_caption %>%
+    paste0("<md_container>",.,"</md_container>")
+
+  title_section <- htmltools::tagList(xml_tr(
+    xml_trPr(if (!split) {
+      xml_cantSplit()
+    },
+    xml_tbl_header()),
+    xml_table_cell(
+      content = title_caption,
+      font = header_title_style[["cell_text"]][["font"]] %||% "Calibri",
+      size = header_title_style[["cell_text"]][["size"]] %||% 24,
+      whitespace = header_title_style[["cell_text"]][["whitespace"]],
+      paragraph_style = "caption",
+      color = header_title_style[["cell_text"]][["color"]] %||% table_font_color,
+      align = header_title_style[["cell_text"]][["align"]] %||% align,
+      col_span = n_cols,
+      border = if (table_border_top_include) {
+        c(
           list(
-            "bottom" = cell_border(
+            "top" = cell_border(
               type = "single",
               size = 16,
               color = heading_border_bottom_color
+            )),
+          if(!subtitle_defined) {
+            list(
+              "bottom" = cell_border(
+                type = "single",
+                size = 16,
+                color = heading_border_bottom_color
+              )
             )
-          )
-        },
-        keep_with_next = TRUE
-      )
+          }
+        )
+      },
+      keep_with_next = TRUE
     )
-
-    title_section <- htmltools::tagList(
-      title_section[[1]],
-      subtitle_row
-    )
-  }
+  ))
 
   title_section
 
@@ -2148,7 +2104,7 @@ white_space_in_text <- function(x, whitespace = NULL){
   ## general behavior based on: https://developer.mozilla.org/en-US/docs/Web/CSS/white-space
 
   ## collapse white spaces unless preserving it
-  if(!isTRUE(x %in% c( "pre", "pre-wrap", "break-spaces"))){
+  if(!isTRUE(whitespace %in% c( "pre", "pre-wrap", "break-spaces"))){
     x <- gsub("\\s+|\\t+"," ",x)
   }
 
@@ -2172,6 +2128,7 @@ xml_table_cell <- function(
     weight = NULL,
     stretch = NULL,
     whitespace = NULL,
+    paragraph_style = NULL,
     align = NULL,
     v_align = NULL,
     col_span = NULL,
@@ -2213,6 +2170,7 @@ xml_table_cell <- function(
       size = size %||% 20,
       color = color,
       style = style,
+      paragraph_style = paragraph_style,
       weight = weight,
       whitespace = whitespace,
       align = align,
@@ -2232,7 +2190,8 @@ process_cell_content <- function(x, ...){
     process_cell_content_ooxml_p(...) %>%
     process_white_space_br_in_xml(...) %>%
     process_drop_empty_styling_nodes() %>%
-    as.character()
+    as.character() %>%
+    paste0(collapse = "")
 }
 
 
@@ -2292,10 +2251,9 @@ process_cell_content_ooxml_r<- function(x,..., font = NULL, size = NULL, color =
       new_cell_styles <- which(!cell_styles_types %in% run_style_children_types)
 
       for(cell_style_idx in new_cell_styles){
-          xml_add_sibling(
-            run_style_children,
-            cell_styles[[cell_style_idx]],
-            .where = "after"
+        xml_add_child(
+          run_style,
+          cell_styles[[cell_style_idx]][[1]]
           )
       }
   }
@@ -2355,9 +2313,9 @@ process_cell_content_ooxml_p <- function(x, ..., align = NULL, col_span = NULL, 
     new_cell_styles <- which(!cell_styles_types %in% paragraph_style_children_types)
 
     for(cell_style_idx in new_cell_styles){
-      paragraph_style %>%
         xml_add_child(
-          cell_styles[[cell_style_idx]]
+          paragraph_style,
+          cell_styles[[cell_style_idx]][[1]]
         )
     }
 
@@ -2478,6 +2436,26 @@ add_text_style.shiny.tag <- function(x, style){
 parse_to_xml <- function(x,...){
   ##check if wrapped in ooxml
   ## get what it starts with and assign
+
+  if(is.null(x)){
+    x <- xml_p(
+      xml_pPr(
+        xml_spacing(before = 0, after = 60)
+      ),
+      xml_r(
+        xml_rPr(),
+        xml_t()
+      )
+    )
+
+    x <- x %>%
+      as.character() %>%
+      paste0("<md_container>", ., "</md_container>")
+  }
+
+  if(length(x) > 1){
+    browser()
+  }
 
   if(!grepl("^<md_container>.*</md_container>$", x)){
 
