@@ -663,7 +663,7 @@ markdown_to_xml <- function(text) {
                   .frequency_id = "gt_commonmark_unknown_element"
                 )
 
-                apply_rules(xml2::xml_contents(x))
+                apply_rules(xml2::xml_children(x))
 
               } else if (is.function(rule)) {
 
@@ -672,11 +672,11 @@ markdown_to_xml <- function(text) {
               }
             }
 
-          output
+          paste0(output, collapse = "")
          }
-       }
+        }
 
-        lapply(children, apply_rules) %>%
+        lapply(children, apply_rules)%>%
           vapply(FUN = as.character,
                  FUN.VALUE = character(1)) %>%
           paste0(collapse = "") %>%
@@ -725,7 +725,8 @@ cmark_rules_xml <- list(
     fs <- heading_sizes[as.numeric(xml2::xml_attr(x, attr = "level"))]
     x <- process(xml2::xml_children(x))
     add_text_style(x, style = xml_sz(val = fs)) %>%
-      xml_p(xml_pPr(),.)
+      xml_p(xml_pPr(),.) %>%
+      as.character()
   },
   thematic_break = function(x, process, ...) {
     xml_p(
@@ -738,8 +739,7 @@ cmark_rules_xml <- list(
       )
     ) %>% as.character()
   },
-
-  list = function(x, process, ..., indent_level = 0) {
+  list = function(x, process, ..., indent_level = 0, type = "bullet") {
 
     type <- xml2::xml_attr(x, attr = "type")
     children <- xml2::xml_children(x)
@@ -749,45 +749,54 @@ cmark_rules_xml <- list(
 
     paste(
         lapply(
-          children,
-          FUN = function(child) {
+          seq_along(children),
+          FUN = function(child_idx) {
 
-            li_content <- process(child, indent_level = indent_level + 1)
+            child <- children[[child_idx]]
 
-            ## only update first tag
-            li_to_update <- li_content[[1]]
+            li_content <- process(child, indent_level = indent_level + 1, type = type) %>%
+              as_xml_node(create_ns = TRUE)
 
-            paragraph_style <- li_to_update %>% tag_pull("w:pPr")
+            ## get first pPr tag
+            paragraph_style <- li_content %>% xml_find_first(".//w:pPr") %>% .[[1]]
 
             ## check
+            list_style_format <- xml_pStyle(val = "ListParagraph") %>%
+              as_xml_node() %>%
+              .[[1]]
 
-            paragraph_style <- paragraph_style %>%
-              tag_add_child(
-                as.character(xml_pStyle(val = "ListParagraph"))
-              ) %>%
-              tag_add_child(
-                as.character(
-                  xml_numPr(
-                    xml_ilvl(val = indent_level),
-                    xml_numId(val = ifelse(type != "ordered", 4, 2))
-                    )
-                  )
-                )
-
-            if(type == "bullet"){
-
-              paragraph_style <- paragraph_style %>%
-                tag_add_child(
-                  as.character(xml_pStyle(val = "ListParagraph"))
-                )
-            }
-
-            li_to_update <-li_to_update %>%
-              tag_replace_child(
-                paragraph_style,idx = 1
+            paragraph_style %>%
+              xml_add_child(
+                list_style_format
               )
 
-            li_content[[1]] <- li_to_update
+            list_bullet_style <- xml_numPr(
+              xml_ilvl(val = indent_level)#,
+              # ifelse(type == "ordered", xml_numId(val = 2), xml_numId(val = 1))
+            ) %>%
+              as_xml_node() %>%
+              .[[1]]
+
+            paragraph_style %>%
+              xml_add_child(
+                list_bullet_style
+              )
+
+
+            list_symbol <- ifelse(type == "bullet", "-", paste0( child_idx, "."))
+
+              bullet_insert <- xml_r(
+                  xml_t(xml_space = "preserve", paste(c(rep("\t", times = indent_level),list_symbol,"\t"), collapse = ""))
+                ) %>%
+                as_xml_node()%>%
+                .[[1]]
+
+              ## must be nodes not nodesets
+              paragraph_style %>%
+                xml_add_sibling(
+                  bullet_insert,
+                  .where = "after"
+              )
 
             paste0(li_content, collapse = "")
 
@@ -796,7 +805,6 @@ cmark_rules_xml <- list(
         collapse = ""
     )
   },
-
   item = function(x, process, ...) {
 
     item_contents <- lapply(
@@ -812,7 +820,8 @@ cmark_rules_xml <- list(
   ## code sections
   code = function(x, process, ...) {
     xml_r(xml_rPr(xml_rStyle(val = "Macro Text")),
-          xml_t(xml2::xml_text(x), xml_space = "preserve"))
+          xml_t(xml2::xml_text(x), xml_space = "preserve")) %>%
+      as.character()
 
   },
   code_block = function(x, process, ...) {
@@ -828,7 +837,8 @@ cmark_rules_xml <- list(
                          FUN = paste,
                          FUN.VALUE = character(1)),
                   collapse = "<w:br/>"
-                )))
+                ))) %>%
+      as.character()
   },
 
   ## line breaks
@@ -906,7 +916,11 @@ cmark_rules_xml <- list(
   link = function(x, process, ...) {
     # NOTE: Links are difficult to insert in OOXML documents because
     # a relationship must be provided in the 'document.xml.rels' file
-    xml_r(xml_rPr(),xml_t(xml2::xml_text(x)))
+    # xml_hyperlink(
+    #   url =xml_attr(x, "destination"),
+      xml_r(xml_rPr(xml_rStyle(val = "Hyperlink")),xml_t(xml2::xml_text(x))) %>%
+      as.character()
+    # )
   },
 
   block_quote = function(x, process, ...) {
@@ -915,25 +929,6 @@ cmark_rules_xml <- list(
   }
 )
 
-add_text_style <- function(x, style){
-  UseMethod("add_text_style",x)
-}
-
-add_text_style.character <- function(x, style){
-  run_style_tag <- x %>% tag_pull("w:rPr")
-  run_style_tag <- tag_add_child(run_style_tag, child = as.character(style))
-  tag_replace_child(x,run_style_tag,idx = 1)
-}
-
-# add_text_style.xml_text <- function(x, style){
-#   x <- xml_r(xml_rPr(style),xml_t(as.character(x)))
-#   x
-# }
-
-add_text_style.shiny.tag <- function(x, style){
-  x <- x %>% as.character() %>% tag_pull("w:rPr")
-  add_text_style.character(x, style = style)
-}
 
 
 

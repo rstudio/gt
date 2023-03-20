@@ -415,6 +415,18 @@ xml_spacing <- function(
   )
 }
 
+# hyperlink
+
+xml_hyperlink <- function(..., url, app = "word"){
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("hyperlink", app),
+    varArgs = list(
+      `r:id` = url,
+      htmltools::HTML(paste0(...))
+      )
+  )
+}
+
 # Text run
 xml_r <- function(..., app = "word") {
 
@@ -2439,184 +2451,25 @@ process_drop_empty_styling_nodes <- function(x){
 
 }
 
+add_text_style <- function(x, style){
+  UseMethod("add_text_style",x)
+}
 
-## functions to work with ooxml like xml (kinda)
-tag_pull <- function(x, tag){
-  tag_regex <- paste0(
-    "(?:(<",tag,".*?>).*?(<\\/",tag,">)|^(<\\/<",tag,">)*$)"
+add_text_style.character <- function(x, style){
+  x <- x %>% as_xml_node(create_ns = TRUE)
+  style_to_add <- style %>% as_xml_node()
+  run_style_tag <- x %>% xml_find_all("./w:rPr")
+  xml_add_child(
+    run_style_tag,
+    style_to_add
   )
-  stringr::str_extract_all(as.character(x),tag_regex)[[1]]
+  as.character(x)
 }
 
-tag_type <- function(x){
-  x %>%
-    stringr::str_extract("^<.+?(\\s(.*?))*>") %>%
-    stringr::str_replace("^<(.+?)(\\s+(.*?))*>",replacement = "\\1")
+add_text_style.shiny.tag <- function(x, style){
+  x <- x %>% as.character()
+  add_text_style.character(x, style = style)
 }
-
-tag_content <- function(x){
-
-  tag_start <- x %>%
-    stringr::str_extract("^<.+?(\\s(.*?))*>")
-  tag_type <- tag_start %>%
-    stringr::str_replace("^<(.+?)(\\s+(.*?))*>",replacement = "\\1")
-  tag_end <- paste0("</",tag_type,">")
-
-  x %>%
-    ## remove parent
-    stringr::str_remove(paste0("^",tag_start))%>%
-    stringr::str_remove(paste0(tag_end,"$"))
-}
-
-tag_attrs <- function(x){
-
-  tag_attr_contents <- x %>%
-    stringr::str_extract("^<.+?\\s*(.*?)>") %>%
-    stringr::str_replace(
-      pattern = "^<.+?((\\s+.*?)*)>",
-      replacement = "\\1"
-    ) %>%
-    trimws()
-
-  if(! identical("", tag_attr_contents)){
-    tag_attr_contents %>%
-      stringr::str_split("\\s(?!=)(?=(?:[^\'\"]*(\'|\")([^\'\"])*(\'|\"))*[^\'\"]*\\Z)") %>%
-      .[[1]] %>%
-      lapply(function(.x) {
-        split <- stringr::str_split(.x, "=", 2, simplify = TRUE)
-        attr_value <- split[[2]] %>%stringr::str_remove_all("(\"|'$|(?<==[\\s+]?)'|'(?=\\s+))")
-        attr_name <- split[[1]]
-        setNames(attr_value, attr_name)
-      }) %>%
-      do.call('c',.)
-  }else{
-    character(0)
-  }
-
-}
-
-tag_add_attrs <- function(x, attrs, replace = FALSE){
-
-  existing_attrs <- tag_attrs(x)
-
-  for(attr_to_add in names(attrs)){
-    if(!(attr_to_add %in% names(existing_attrs)) | replace){
-      existing_attrs[[attr_to_add]] <-
-        attrs[[attr_to_add]]
-    }
-  }
-
-  new_tag_attrs <- paste0(
-    names(existing_attrs),"=\"",existing_attrs,"\"", collapse = " "
-  )
-
-  stringr::str_replace(
-    string = x,
-    pattern = "^<(.+?)((\\s+.*?)*)>",
-    replacement = paste0("<\\1 ",new_tag_attrs,">")
-  )
-
-}
-
-tag_get_children <- function(x) {
-
-  tag_sans_parent <- tag_content(x)
-
-  children <- c()
-
-  if(length(tag_sans_parent) == 0){
-    return(children)
-  }
-
-  ## split tags
-  while (tag_sans_parent != "") {
-    child_type <- tag_type(tag_sans_parent)
-    child_tag <- tag_pull(tag_sans_parent, tag = child_type)[1]
-    children[length(children) + 1] <- child_tag
-    tag_sans_parent <-
-      tag_sans_parent %>% stringr::str_remove(stringr::fixed(child_tag))
-  }
-
-  children
-
-}
-
-tag_add_child <- function(x, child, where = "last"){
-
-  stopifnot(where %in% c("last","first") | is.numeric(where))
-
-  tag_start <- x %>%
-    stringr::str_extract("^<.+?(\\s(.*?))*>")
-  tag_type <- tag_start %>%
-    stringr::str_replace("^<(.+?)(\\s+(.*?))*>",replacement = "\\1")
-  tag_end <- paste0("</",tag_type,">")
-
-  children <- tag_get_children(x)
-
-  if(is.null(children)){
-    children <- child
-  }else{
-
-    if(where == "last"){
-      children <- c(children,child)
-    }else if(where == "first"){
-      children <- c(child, children)
-    }else{
-      if(where > length(children)){
-        warning("Child xml to be added as last element")
-        where <- length(children) +1
-      }
-      if(where < 1){
-        warning("Child xml to be added as first element")
-        where <- 1
-      }
-
-      leading_set <- seq_len(where - 1)
-      ending_set <- setdiff(seq_len(length(children)),leading_set)
-
-      children <- c(children[leading_set],child,children[ending_set])
-
-    }
-  }
-
-
-  paste0(c(tag_start,
-           children,
-           tag_end),
-         collapse = "")
-
-}
-
-tag_replace_child <- function(x, child, idx = 1){
-
-  stopifnot(is.numeric(idx))
-
-  tag_start <- x %>%
-    stringr::str_extract("^<.+?(\\s(.*?))*>")
-  tag_type <- tag_start %>%
-    stringr::str_replace("^<(.+?)(\\s+(.*?))*>",replacement = "\\1")
-  tag_end <- paste0("</",tag_type,">")
-
-  children <- tag_get_children(x)
-
-  if(idx > length(children)){
-    warning("Child xml will replace last element")
-    idx <- length(children) +1
-  }
-  if(idx < 1){
-    warning("Child xml will replace first element")
-    idx <- 1
-  }
-
-  children[idx] <- child
-
-  paste0(c(tag_start,
-           children,
-           tag_end),
-         collapse = "")
-
-}
-
 
 ## character to xml conversion
 
@@ -2671,15 +2524,23 @@ as_xml_node <- function(x, create_ns = FALSE){
 }
 
 add_ns <- function(x){
-  tag_add_attrs(
+
+  x <- x %>%
+    as_xml_node() %>%
+    suppressWarnings()
+
+
+  xml2::xml_set_attrs(
     x,
-    list(
+    c(
       `xmlns:r` = "http://schemas.openxmlformats.org/officeDocument/2006/relationships",
       `xmlns:w` = "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
       `xmlns:w14` = "http://schemas.microsoft.com/office/word/2010/wordml",
       `xmlns:wp` = "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
     )
   )
+
+  as.character(x)
 }
 
 
