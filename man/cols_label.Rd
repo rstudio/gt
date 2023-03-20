@@ -10,7 +10,7 @@ cols_label(.data, ..., .list = list2(...))
 \item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{...}{Expressions for the assignment of column labels for the table
-columns in \code{.data}. Two-sided formulas (e.g, \verb{<LHS> ~ <RHS>}) can be used,
+columns in \code{.data}. Two-sided formulas (e.g., \verb{<LHS> ~ <RHS>}) can be used,
 where the left-hand side corresponds to selections of columns and the
 right-hand side evaluates to single-length values for the label to apply.
 Column names should be enclosed in \code{\link[=c]{c()}}. Select helpers like
