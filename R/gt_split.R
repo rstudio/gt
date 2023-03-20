@@ -8,8 +8,11 @@
 #'
 #' @param data A **gt** table object (`gt_tbl`) that is created using the [gt()]
 #'   function.
-#' @param every_n_rows A directive to split at every *n* number of rows. This
+#' @param row_every_n A directive to split at every *n* number of rows. This
 #'   argument expects a single numerical value.
+#' @param row_slice_i An argument for splitting at specific row indices. Here,
+#'   we expect either a vector of index values or a function that evaluates to a
+#'   numeric vector.
 #'
 #' @return An object of class `gt_group`.
 #'
@@ -44,27 +47,45 @@
 #' @export
 gt_split <- function(
     data,
-    every_n_rows = NULL
+    row_every_n = NULL,
+    row_slice_i = NULL
 ) {
 
   gt_tbl_built <- build_data(data = data, context = "html")
 
   # Get row count for table (data rows)
-  # Get various row number counts
   n_rows_data <- nrow(gt_tbl_built[["_stub_df"]])
 
-  if (!is.null(every_n_rows)) {
+  row_slice_vec <- rep(1L, n_rows_data)
 
-    # Get list of row ranges for each table to be generated
-    range_list <-
-      split(
-        seq_len(n_rows_data),
-        ceiling(seq_len(n_rows_data) / every_n_rows)
-      )
-
-  } else {
-    return(gt_group(data, .use_grp_opts = FALSE))
+  row_every_n_idx <- c()
+  if (!is.null(row_every_n)) {
+    row_every_n_idx <- seq_len(n_rows_data)[seq(0, n_rows_data, row_every_n)]
   }
+
+  row_slice_i_idx <- c()
+  if (!is.null(row_slice_i)) {
+    row_slice_i_idx <- row_slice_i
+  }
+
+  row_idx <- sort(unique(c(row_every_n_idx, row_slice_i_idx)))
+
+  group_i <- 0L
+
+  for (i in seq_along(row_slice_vec)) {
+
+    if (i %in% (row_idx + 1)) {
+      group_i <- group_i + 1L
+    }
+
+    row_slice_vec[i] <- row_slice_vec[i] + group_i
+  }
+
+  range_list <-
+    split(
+      seq_len(n_rows_data),
+      row_slice_vec
+    )
 
   gt_tbl_main <- data
 
