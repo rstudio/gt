@@ -4,7 +4,7 @@
 \alias{gt_split}
 \title{Split a table into a group of tables (a \code{gt_group})}
 \usage{
-gt_split(data, row_every_n = NULL, row_slice_i = NULL)
+gt_split(data, row_every_n = NULL, row_slice_i = NULL, col_slice_at = NULL)
 }
 \arguments{
 \item{data}{A \strong{gt} table object (\code{gt_tbl}) that is created using the \code{\link[=gt]{gt()}}
@@ -16,6 +16,9 @@ argument expects a single numerical value.}
 \item{row_slice_i}{An argument for splitting at specific row indices. Here,
 we expect either a vector of index values or a function that evaluates to a
 numeric vector.}
+
+\item{col_slice_at}{A vector of column names where column splitting should
+occur. The splits occur to the right of the included column names.}
 }
 \value{
 An object of class \code{gt_group}.
