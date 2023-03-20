@@ -36,17 +36,19 @@ render_as_ihtml <- function(data, id) {
     lang <- gsub("(.)?_.*", "\\1", locale)
   }
 
-  # Obtain the rendered HTML table body
-  html_body <- dt_body_get(data = data)
+  # Obtain the underlying data table
+  data_tbl <- dt_data_get(data = data)
 
   #
   # Only preserve columns that are not hidden
   #
 
-  html_body_vars <- dt_boxhead_get_vars_default(data = data)
-  html_body <- html_body[, html_body_vars, drop = FALSE]
+  data_tbl_vars <- dt_boxhead_get_vars_default(data = data)
+  data_tbl <- data_tbl[, data_tbl_vars, drop = FALSE]
 
-  if (ncol(html_body) < 1) {
+  # Stop function if there are no visible columns
+  if (ncol(data_tbl) < 1) {
+
     cli::cli_abort(c(
       "When displaying an interactive gt table, there must be at least one visible column.",
       "*" = "Check that the input data table has at least one column,",
@@ -121,7 +123,15 @@ render_as_ihtml <- function(data, id) {
     lapply(
       seq_along(column_names),
       FUN = function(x) {
+
+        formatted_cells <-
+          extract_cells(
+            data = data,
+            columns = column_names[x]
+          )
+
         reactable::colDef(
+          cell = function(value, index) formatted_cells[index],
           name = column_labels[x],
           align = column_alignments[x],
           headerStyle = list(`font-weight` = "normal"),
@@ -292,7 +302,7 @@ render_as_ihtml <- function(data, id) {
   # Create the htmlwidget
   x <-
     reactable::reactable(
-      data = html_body,
+      data = data_tbl,
       columns = col_defs,
       columnGroups = NULL,
       rownames = NULL,
