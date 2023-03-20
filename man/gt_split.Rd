@@ -4,14 +4,18 @@
 \alias{gt_split}
 \title{Split a table into a group of tables (a \code{gt_group})}
 \usage{
-gt_split(data, every_n_rows = NULL)
+gt_split(data, row_every_n = NULL, row_slice_i = NULL)
 }
 \arguments{
 \item{data}{A \strong{gt} table object (\code{gt_tbl}) that is created using the \code{\link[=gt]{gt()}}
 function.}
 
-\item{every_n_rows}{A directive to split at every \emph{n} number of rows. This
+\item{row_every_n}{A directive to split at every \emph{n} number of rows. This
 argument expects a single numerical value.}
+
+\item{row_slice_i}{An argument for splitting at specific row indices. Here,
+we expect either a vector of index values or a function that evaluates to a
+numeric vector.}
 }
 \value{
 An object of class \code{gt_group}.
