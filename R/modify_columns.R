@@ -548,7 +548,7 @@ cols_width <- function(
 #'
 #' @param .data A table object that is created using the [gt()] function.
 #' @param ... Expressions for the assignment of column labels for the table
-#'   columns in `.data`. Two-sided formulas (e.g, `<LHS> ~ <RHS>`) can be used,
+#'   columns in `.data`. Two-sided formulas (e.g., `<LHS> ~ <RHS>`) can be used,
 #'   where the left-hand side corresponds to selections of columns and the
 #'   right-hand side evaluates to single-length values for the label to apply.
 #'   Column names should be enclosed in [c()]. Select helpers like

@@ -6957,14 +6957,16 @@ fmt_image <- function(
 #' (e.g., Egypt has the `"EG"` country code). This function will parse the
 #' targeted body cells for those codes (and the [countrypops] dataset contains
 #' all of them) and insert the appropriate flag graphics. Multiple flags can be
-#' included per cell by separating image references by commas. The `sep`
-#' argument allows for a common separator to be applied between flag images.
+#' included per cell by separating country codes with commas (e.g., `"GB,TT"`).
+#' The `sep` argument allows for a common separator to be applied between flag
+#' icons.
 #'
 #' @inheritParams fmt_number
 #' @param height The absolute height of the flag icon in the table cell. By
 #'   default, this is set to `"1em"`.
 #' @param sep In the output of flag icons within a body cell, `sep` provides the
-#'   separator between each icon.
+#'   separator between each icon. By default, this is a single space character
+#'   (`" "`).
 #' @param use_title An option to display a tooltip for the country name when
 #'   hovering over the flag icon. By default this is `TRUE`.
 #'
@@ -7583,15 +7585,15 @@ fmt_passthrough <- function(
 #'
 #' @description
 #'
-#' The `fmt_auto()` function will automatic applying formatting of various types
-#' in a way that best suits the data table provided. The function will attempt
-#' format numbers such that they are condensed to an optimal width, either with
-#' scientific notation or large number suffixing. Currency values are detected
-#' by currency codes embedded in the column name and formatted in the correct
-#' way. Although the functionality here is comprehensive it's still possible to
-#' reduce the scope of automatic formatting with the `scope` argument and also
-#' by choosing a subset of columns and rows to which the formatting will be
-#' applied.
+#' The `fmt_auto()` function will automatically apply formatting of various
+#' types in a way that best suits the data table provided. The function will
+#' attempt to format numbers such that they are condensed to an optimal width,
+#' either with scientific notation or large-number suffixing. Currency values
+#' are detected by currency codes embedded in the column name and formatted in
+#' the correct way. Although the functionality here is comprehensive it's still
+#' possible to reduce the scope of automatic formatting with the `scope`
+#' argument and also by choosing a subset of columns and rows to which the
+#' formatting will be applied.
 #'
 #' @inheritParams fmt_number
 #' @param scope The scope of automatic formatting. By default this includes
