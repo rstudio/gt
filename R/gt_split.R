@@ -17,8 +17,8 @@
 #'
 #' Use a subset of the [`gtcars`] dataset to create a **gt** table. Format the
 #' `msrp` column to display numbers as currency values, set column widths with
-#' [cols_width()] and split the table at every five rows with `gt_splitter()`.
-#' This creates a `gt_group` object containing two tables. Printing this object
+#' [cols_width()] and split the table at every five rows with `gt_split()`. This
+#' creates a `gt_group` object containing two tables. Printing this object
 #' yields two tables separated by a line break.
 #'
 #' ```r
@@ -31,18 +31,18 @@
 #'     year ~ px(80),
 #'     everything() ~ px(150)
 #'   ) |>
-#'   gt_splitter(every_n_rows = 5)
+#'   gt_split(every_n_rows = 5)
 #' ```
 #'
 #' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_gt_splitter_1.png")`
+#' `r man_get_image_tag(file = "man_gt_split_1.png")`
 #' }}
 #'
 #' @section Function Introduced:
 #' *In Development*
 #'
 #' @export
-gt_splitter <- function(
+gt_split <- function(
     data,
     every_n_rows = NULL
 ) {
