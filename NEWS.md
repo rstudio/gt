@@ -2,13 +2,13 @@
 
 ## New features
 
-* `summary_rows()` and `grand_summary_rows()` improvements, including option to place summary rows at top or bottom of group or table (#177, #270, #292, #545, #581, #784, #785, #840). (#1159, #1171)
+* The `summary_rows()` and `grand_summary_rows()` functions have been rewritten extensively to allow more flexibility in providing aggregation information to `fns`. The documentation for both functions will walk you through all the new ways you can express your aggregations. The formatting of cells in new summary rows is now easier thanks to the new `fmt` argument. We can provide a single formatting expression or a number of them in a list. The dedicated documentation section for formatting can walk you through all of this. Furthermore, we now have the option to place summary rows at top or bottom of a group (in `summary_rows()`) or table (in `grand_summary_rows()`) with the new `side` argument (#177, #270, #292, #545, #581, #784, #785, #840). (#1159, #1171)
 
-* `data_color()` improvements (#116, #633, #637, #1103, #1119). (#1147)
+* The `data_color()` function has been completely overhauled to make it easier to use and also more powerful. It gains a `rows` argument to better constrain where the colorization should take place. Instead of having to use functions from **scales** to define the coloring scheme, you can now use the `method` argument to handle most cases (otherwise, the new `fn` argument allows for a color-mapping function to be used). The new `palette` argument allows for flexible input of color palettes. One or more adjacent columns can receive the coloring treatment by way of the new `target_columns` argument. Coloring can now also be applied in a row-wise fashion by using `direction = "row"`. Despite all of these changes, older code should still work with the revamped function (#116, #633, #637, #1103, #1119). (#1147)
 
-* `cols_merge()` improvements, including a better `pattern` syntax (#1167). (#1168)
+* We now have a much improved `cols_merge()` function! It has gained a `rows` argument for limiting which body cells get merged together. The `pattern` argument now has a more advanced syntax. It now has the following delimiters and rules: (1) `{ }` for arranging single column values in a row-wise fashion, and (2) the `<< >>` to surround spans of text that will be removed if any of the contained `{ }` yields a missing value. The new `<< >>` delimiters will help in cases where `NA` values are present and should be omitted during the merging process (#1167). (#1168)
 
-* `cols_label()` improvements. (#1255, #1256)
+* The `cols_label()` function has been improved by allowing formula expressions to be given to `...`. With two-sided formulas (e.g., `<LHS> ~ <RHS>`), the left-hand side corresponds to selections of columns and the right-hand side evaluates to single-length values for the label to apply. Named arguments in the format of `<column name> = <label>` are still also valid as input for simple mappings of column name to label text. (#1255, #1256)
 
 * A new function, `cols_label_with()`, has been added for relabeling columns via functions. It allows for such functions to be applied to arbitrary sets of columns, taking advantage of **tidyselect**. It's like `dplyr::rename_with()` for your **gt** table, but it doesn't need unique names for labeling (#701). (#1158, thank you @christopherkenny!)
 
@@ -25,29 +25,29 @@ diacritical marks). (#1189)
 
 * With `fmt_bins()`, you can format bin or interval syntax (returned from `cut()`) to a form that presents better in a display table. It's possible to format the values of the intervals with the `fmt` argument, and, the separator can be modified with the `sep` argument. (#1250)
 
-* The new `fmt_auto()` function has been added to automatically apply formatting of various types in a way that best suits the data table provided. For example, the function will attempt format numbers such that they are condensed to an optimal width and currency values can be detected (by currency codes embedded in the column name) and formatted in the correct way (#248). (#1176)
+* The new `fmt_auto()` function has been added to automatically apply formatting of various types in a way that best suits the data table provided. For example, the function will attempt to format numbers such that they are condensed to an optimal width, and, currency values can be detected (by currency codes embedded in the column name) and formatted in the correct way (#248). (#1176)
 
 * Three `text_*()` functions were added to better enable transformations of formatted text in various table locations: `text_replace()`, `text_case_when()`, and `text_case_match()`. (#1238)
 
-* Interactive HTML tables are now possible to generate in **gt**. Options for enabling interactive table rendering are available in `tab_options()` and also in `opt_interactive()` (#207). (#902)
+* Interactive HTML tables are now possible to generate in **gt**. Options for enabling interactive table rendering are available in `tab_options()` and also in `opt_interactive()`. The collection of `use_*` arguments in `opt_interactive()` allow for control of pagination, global search, filtering, sorting, and more. The documentation within `opt_interactive()` demonstrates how to generate HTML tables with interactive elements (#207). (#902, #1252)
 
-* Multi-table functions. Introduce `gt_group()`, the `grp_*()` functions, and `gt_splitter()`. (#1216, #1219, #1226, #1248, #1249)
+* We now have a new family of functions that let you deal with a multitude of **gt** tables, all at once. You can create a `gt_group` object with multiple tables via the `gt_group()` function, or, split a single table into multiple with `gt_splitter()`. There are some advantages to having a group of tables bundled together like this. You could apply options that pertain to all tables yet still access the individual tables to give them their own specialized modifications. They all print together at once too! For HTML, each table will be separated by a line break whereas in paginated formats (e.g., RTF, Word, etc.) the tables are separated by page breaks. (#1216, #1219, #1226, #1248, #1249)
 
-* The `towny` dataset was added (#1184, #1199).
+* The `towny` dataset was added. It provides a fun, population-based dataset with place names, URLs, coordinate information, and population figures with repetition (values for different census years). (#1184, #1199)
 
-* The `metro` dataset is new (#1231).
+* The `metro` dataset is new. It has 308 rows, where each corresponds to a different Paris Metro station (#1231).
 
-* The `rx_adsl` and `rx_addv` datasets have been added (#1145, #1200; thank you @alex-lauer!).
+* The `rx_adsl` and `rx_addv` datasets have been added. These clinical trial toy datasets are both featured in a new vignette that explains how **gt** can be used for table generation in the Pharma space (#1145, #1200; thank you @alex-lauer!).
 
-* We now have better right-to-left (RTL) text handling through detection of RTL script characters within certain Unicode blocks (prioritizing those that correspond to modern RTL scripts); with that new detection scheme, **gt** will set the appropriate alignment for RTL text in HTML output (#697). (#1202)
+* We now have right-to-left (RTL) text handling and **gt** will automatically set the appropriate alignment for RTL text in HTML output. This is done through detection of RTL script characters. (#697). (#1202)
 
-* Use labeled columns’ labels as column labels (#656). (#1230)
+* For any columns that are labeled (i.e., have a `label` attribute), **gt** will automatically use those labels as column labels (#656). (#1230)
 
 * There is now a choice of which Markdown engine to use for Markdown rendering (in `fmt_markdown()` and `vec_fmt_markdown()`) and a default default choice. The **markdown** package can be chosen instead of **commonmark** to perform conversions of Markdown to HTML and LaTeX (and it's now the default). One of many benefits to this change is the parsing of subscripts and superscripts (#725). (#1254)
 
 ## Documentation enhancements
 
-* Addition of a new vignette (*gt Clinical Tables*) that uses `rx_adsl` and `rx_addv` datasets. (#1145, #1217, #1224; all contributed by @alex-lauer)
+* Addition of a new vignette (*gt Clinical Tables*) that uses the `rx_adsl` and `rx_addv` datasets. (#1145, #1217, #1224; all contributed by @alex-lauer)
 
 * All examples in the documentation were modernized by using the `|>` instead of the `%>%`. A lot of explanatory text was improved through rewriting. The ordering of documentation sections was improved. And functions that had very little documentation (like `text_transform()`) were greatly improved (#1087). (#1166, #1185, #1192)
 
@@ -57,25 +57,25 @@ diacritical marks). (#1189)
 
 ## Minor improvements and bug fixes
 
-* Enhancements to `fmt_scientific()` and `fmt_engineering()` (and their `vec_fmt_*()` analogues. (#1178)
+* The `fmt_scientific()` and `fmt_engineering()` (and their `vec_fmt_*()` analogues) now have a `exp_style` argument for defining the exponent notation. By default this is `"x10n"` but other options include using a single letter (e.g., "e", "E", etc.), a letter followed by a "1" to signal a minimum digit width of one, or "low-ten" for using a stylized "10" marker. These functions now also have the `force_sign_m` and `force_sign_n` arguments for forcing `+` signs in the mantissa or the exponent. (#1178)
 
-* The `countrypops` dataset has been updated (#1191).
+* Added the `"double"` option for a border style in `cell_borders()` (#1132). (#1137)
 
-* Improvements for W3C validation of HTML output tables (#1235). (#1237)
+* The `countrypops` dataset was updated with recent (as of January 2023) World Bank data that revises population estimates and brings the final year up to 2021. All examples, tests, and articles using the dataset were also updated. (#1191)
 
-* CSS fix for superscripted footnote marks. (#1210)
+* Fixed a conflict between `tab_spanner_delim()` and `cols_label()` (#1130). (#1173)
 
-* Fix conflict between `tab_spanner_delim()` and `cols_label()` (#1130). (#1173)
+* Add a fix for a `summary_rows()` problem where summary rows generated with only a single group would not display the summary rows at all. (#1188)
 
-* Fix for a `summary_rows()` problem where summary rows generated with only a single group would not display the summary rows at all. (#1188)
+* HTML output tables no longer have contain two `<thead>` elements they display a header and column labels (#1235). (#1237)
 
-* Fix for hidden columns not being hidden in interactive tables (i.e., through `opt_interactive()`). (#1252)
+* Incorporated a CSS fix for superscripted footnote marks. Prior to the change, footnote marks were never styled within **gt** tables rendered in Quarto documents. (#1210)
 
-* Remove **knitr** flags when saving an RTF file through the `gtsave()` function (#674). (#1153)
+* We now remove **knitr** flags when saving an RTF file through the `gtsave()` function (#674). (#1153)
 
 * Fixed some border-related issues for **gt** tables published in R Markdown and Quarto documents (#1120). (#1234)
 
-* Use **juicyjuice** as a soft dependency (#1179). (#1229)
+* The **juicyjuice** package is now a soft dependency. The previous hard requirement presented some problems for users in environments where the installation of the package was difficult (because of its own dependency on **V8**) (#1179). (#1229)
 
 * Added the `quarto.use_bootstrap` and `quarto.disable_processing` options in `tab_options()` to control whether Quarto will add Bootstrap classes to a **gt** table or ignore a **gt** table. (#1222, #1227)
 
@@ -84,8 +84,6 @@ diacritical marks). (#1189)
 * Fixed the SCSS class `.gt_footnote_marks` to ensure that the footnote mark is at a consistent height from the baseline in different CSS environments. (#1187)
 
 * Added frequency levels to `cli_abort()` warnings throughout package (#1160). (#1169)
-
-* Added the `"double"` option for a border style in `cell_borders()` (#1132). (#1137)
 
 # gt 0.8.0
 
