@@ -13,6 +13,8 @@
 #' @param row_slice_i An argument for splitting at specific row indices. Here,
 #'   we expect either a vector of index values or a function that evaluates to a
 #'   numeric vector.
+#' @param col_slice_at A vector of column names where column splitting should
+#'   occur. The splits occur to the right of the included column names.
 #'
 #' @return An object of class `gt_group`.
 #'
@@ -48,7 +50,8 @@
 gt_split <- function(
     data,
     row_every_n = NULL,
-    row_slice_i = NULL
+    row_slice_i = NULL,
+    col_slice_at = NULL
 ) {
 
   gt_tbl_built <- build_data(data = data, context = "html")
@@ -81,7 +84,7 @@ gt_split <- function(
     row_slice_vec[i] <- row_slice_vec[i] + group_i
   }
 
-  range_list <-
+  row_range_list <-
     split(
       seq_len(n_rows_data),
       row_slice_vec
@@ -91,14 +94,66 @@ gt_split <- function(
 
   gt_group <- gt_group(.use_grp_opts = FALSE)
 
-  for (i in seq_along(range_list)) {
+  for (i in seq_along(row_range_list)) {
 
     gt_tbl_i <- gt_tbl_main
 
-    gt_tbl_i[["_data"]] <- gt_tbl_i[["_data"]][range_list[[i]], ]
-    gt_tbl_i[["_stub_df"]] <- gt_tbl_i[["_stub_df"]][range_list[[i]], ]
+    gt_tbl_i[["_data"]] <- gt_tbl_i[["_data"]][row_range_list[[i]], ]
+    gt_tbl_i[["_stub_df"]] <- gt_tbl_i[["_stub_df"]][row_range_list[[i]], ]
 
-    gt_group <- grp_add(gt_group, gt_tbl_i)
+    if (!is.null(col_slice_at)) {
+
+      # Get all visible vars in their finalized order
+      visible_col_vars <- dt_boxhead_get_vars_default(data = data)
+
+      # Stop function if any of the columns to split at aren't visible columns
+      if (any(!(col_slice_at %in% visible_col_vars))) {
+        cli::cli_abort(
+          "All values provided in `col_slice_at` must correspond to visible columns."
+        )
+      }
+
+      # TODO: ensure this works at multiple splitting points
+      col_idx <- which(visible_col_vars %in% col_slice_at)
+
+      col_slice_vec <- rep(1L, length(visible_col_vars))
+
+      group_j <- 0L
+
+      for (i in seq_along(col_slice_vec)) {
+
+        if (i %in% (col_idx + 1)) {
+          group_j <- group_j + 1L
+        }
+
+        col_slice_vec[i] <- col_slice_vec[i] + group_j
+      }
+
+      col_range_list <-
+        split(
+          seq_len(length(visible_col_vars)),
+          col_slice_vec
+        )
+
+      for (j in seq_along(col_range_list)) {
+
+        gt_tbl_j <- gt_tbl_i
+
+        gt_tbl_j[["_data"]] <-
+          gt_tbl_j[["_data"]][, visible_col_vars[col_range_list[[j]]]]
+
+        gt_tbl_j[["_boxhead"]] <-
+          gt_tbl_j[["_boxhead"]][
+            gt_tbl_j[["_boxhead"]]$var %in% visible_col_vars[col_range_list[[j]]],
+          ]
+
+        gt_group <- grp_add(gt_group, gt_tbl_j)
+      }
+
+
+    } else {
+      gt_group <- grp_add(gt_group, gt_tbl_i)
+    }
   }
 
   gt_group
