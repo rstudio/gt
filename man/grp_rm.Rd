@@ -26,7 +26,7 @@ index value for the \strong{gt} table within the \code{gt_group} object.
 }
 \section{Function ID}{
 
-14-6
+14-7
 }
 
 \section{Function Introduced}{
@@ -35,12 +35,13 @@ index value for the \strong{gt} table within the \code{gt_group} object.
 }
 
 \seealso{
-Other multiple-table functions: 
+Other table group functions: 
 \code{\link{grp_add}()},
 \code{\link{grp_clone}()},
 \code{\link{grp_options}()},
 \code{\link{grp_pull}()},
 \code{\link{grp_replace}()},
-\code{\link{gt_group}()}
+\code{\link{gt_group}()},
+\code{\link{gt_split}()}
 }
-\concept{multiple-table functions}
+\concept{table group functions}

@@ -27,16 +27,16 @@ An object of class \code{gt_group}.
 With a \strong{gt} table, you can split it into multiple tables and get that
 collection in a \code{gt_group} object. This function is useful for those cases
 where you want to section up a table in a specific way and print those
-smaller tables across multiple pages, or with breaks between them (i.e., when
-the output context in HTML).
+smaller tables across multiple pages (in RTF and Word outputs, primarily via
+\code{\link[=gtsave]{gtsave()}}), or, with breaks between them when the output context is HTML.
 }
 \section{Examples}{
 
 
 Use a subset of the \code{\link{gtcars}} dataset to create a \strong{gt} table. Format the
 \code{msrp} column to display numbers as currency values, set column widths with
-\code{\link[=cols_width]{cols_width()}} and split the table at every five rows with \code{gt_split()}. This
-creates a \code{gt_group} object containing two tables. Printing this object
+\code{\link[=cols_width]{cols_width()}}, and split the table at every five rows with \code{gt_split()}.
+This creates a \code{gt_group} object containing two tables. Printing this object
 yields two tables separated by a line break.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
@@ -50,6 +50,10 @@ yields two tables separated by a line break.
   ) |>
   gt_split(row_every_n = 5)
 }\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_gt_split_1.png" alt="This image of a table was generated from the first code example in the `gt_split()` help file." style="width:100\%;">
+}}
 
 Use a smaller subset of the \code{\link{gtcars}} dataset to create a \strong{gt} table.
 Format the \code{msrp} column to display numbers as currency values, set the table
@@ -71,8 +75,24 @@ a vertical split. Printing this object yields two tables of the same width.
 }}
 }
 
+\section{Function ID}{
+
+14-2
+}
+
 \section{Function Introduced}{
 
 \emph{In Development}
 }
 
+\seealso{
+Other table group functions: 
+\code{\link{grp_add}()},
+\code{\link{grp_clone}()},
+\code{\link{grp_options}()},
+\code{\link{grp_pull}()},
+\code{\link{grp_replace}()},
+\code{\link{grp_rm}()},
+\code{\link{gt_group}()}
+}
+\concept{table group functions}

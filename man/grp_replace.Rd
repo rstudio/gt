@@ -31,7 +31,7 @@ tables provided must equal the number of indices for tables present in the
 }
 \section{Function ID}{
 
-14-5
+14-6
 }
 
 \section{Function Introduced}{
@@ -40,12 +40,13 @@ tables provided must equal the number of indices for tables present in the
 }
 
 \seealso{
-Other multiple-table functions: 
+Other table group functions: 
 \code{\link{grp_add}()},
 \code{\link{grp_clone}()},
 \code{\link{grp_options}()},
 \code{\link{grp_pull}()},
 \code{\link{grp_rm}()},
-\code{\link{gt_group}()}
+\code{\link{gt_group}()},
+\code{\link{gt_split}()}
 }
-\concept{multiple-table functions}
+\concept{table group functions}

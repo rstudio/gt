@@ -33,7 +33,7 @@ add one or more new \strong{gt} tables, returning a refreshed \code{gt_group} ob
 }
 \section{Function ID}{
 
-14-3
+14-4
 }
 
 \section{Function Introduced}{
@@ -42,12 +42,13 @@ add one or more new \strong{gt} tables, returning a refreshed \code{gt_group} ob
 }
 
 \seealso{
-Other multiple-table functions: 
+Other table group functions: 
 \code{\link{grp_clone}()},
 \code{\link{grp_options}()},
 \code{\link{grp_pull}()},
 \code{\link{grp_replace}()},
 \code{\link{grp_rm}()},
-\code{\link{gt_group}()}
+\code{\link{gt_group}()},
+\code{\link{gt_split}()}
 }
-\concept{multiple-table functions}
+\concept{table group functions}
