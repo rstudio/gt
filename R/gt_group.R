@@ -17,7 +17,7 @@
 #'
 #' @return An object of class `gt_group`.
 #'
-#' @family multiple-table functions
+#' @family table group functions
 #' @section Function ID:
 #' 14-1
 #'
@@ -79,9 +79,9 @@ gt_group <- function(
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @family multiple-table functions
+#' @family table group functions
 #' @section Function ID:
-#' 14-2
+#' 14-3
 #'
 #' @section Function Introduced:
 #' *In Development*
@@ -131,9 +131,9 @@ grp_pull <- function(
 #'
 #' @return An object of class `gt_group`.
 #'
-#' @family multiple-table functions
+#' @family table group functions
 #' @section Function ID:
-#' 14-3
+#' 14-4
 #'
 #' @section Function Introduced:
 #' *In Development*
@@ -267,9 +267,9 @@ grp_add <- function(
 #'
 #' @return An object of class `gt_group`.
 #'
-#' @family multiple-table functions
+#' @family table group functions
 #' @section Function ID:
-#' 14-4
+#' 14-5
 #'
 #' @section Function Introduced:
 #' *In Development*
@@ -389,9 +389,9 @@ grp_clone <- function(
 #'
 #' @return An object of class `gt_group`.
 #'
-#' @family multiple-table functions
+#' @family table group functions
 #' @section Function ID:
-#' 14-5
+#' 14-6
 #'
 #' @section Function Introduced:
 #' *In Development*
@@ -458,9 +458,9 @@ grp_replace <- function(
 #'
 #' @return An object of class `gt_group`.
 #'
-#' @family multiple-table functions
+#' @family table group functions
 #' @section Function ID:
-#' 14-6
+#' 14-7
 #'
 #' @section Function Introduced:
 #' *In Development*
@@ -488,9 +488,9 @@ grp_rm <- function(
 #'
 #' @return An object of class `gt_group`.
 #'
-#' @family multiple-table functions
+#' @family table group functions
 #' @section Function ID:
-#' 14-7
+#' 14-8
 #'
 #' @section Function Introduced:
 #' *In Development*
