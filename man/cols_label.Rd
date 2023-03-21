@@ -23,7 +23,7 @@ values.}
 
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
 
-\item{.fn}{An option to provide a function that will be applied to all
+\item{.fn}{An option to specify a function that will be applied to all of the
 provided label values.}
 }
 \value{
