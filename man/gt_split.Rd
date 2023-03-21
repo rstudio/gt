@@ -48,11 +48,26 @@ yields two tables separated by a line break.
     year ~ px(80),
     everything() ~ px(150)
   ) |>
-  gt_split(every_n_rows = 5)
+  gt_split(row_every_n = 5)
+}\if{html}{\out{</div>}}
+
+Use a smaller subset of the \code{\link{gtcars}} dataset to create a \strong{gt} table.
+Format the \code{msrp} column to display numbers as currency values, set the table
+width with \code{\link[=tab_options]{tab_options()}} and split the table at the \code{model} column This
+creates a \code{gt_group} object again containing two tables but this time we get
+a vertical split. Printing this object yields two tables of the same width.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::slice_head(n = 5) |>
+  dplyr::select(mfr, model, year, msrp) |>
+  gt() |>
+  fmt_currency(columns = msrp) |>
+  tab_options(table.width = px(400)) |>
+  gt_split(col_slice_at = "model")
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_gt_split_1.png" alt="This image of a table was generated from the first code example in the `gt_split()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_gt_split_2.png" alt="This image of a table was generated from the second code example in the `gt_split()` help file." style="width:100\%;">
 }}
 }
 
