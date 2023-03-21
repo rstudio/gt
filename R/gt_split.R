@@ -1,10 +1,12 @@
 #' Split a table into a group of tables (a `gt_group`)
 #'
+#' @description
+#'
 #' With a **gt** table, you can split it into multiple tables and get that
 #' collection in a `gt_group` object. This function is useful for those cases
 #' where you want to section up a table in a specific way and print those
-#' smaller tables across multiple pages, or with breaks between them (i.e., when
-#' the output context in HTML).
+#' smaller tables across multiple pages (in RTF and Word outputs, primarily via
+#' [gtsave()]), or, with breaks between them when the output context is HTML.
 #'
 #' @param data A **gt** table object (`gt_tbl`) that is created using the [gt()]
 #'   function.
@@ -22,8 +24,8 @@
 #'
 #' Use a subset of the [`gtcars`] dataset to create a **gt** table. Format the
 #' `msrp` column to display numbers as currency values, set column widths with
-#' [cols_width()] and split the table at every five rows with `gt_split()`. This
-#' creates a `gt_group` object containing two tables. Printing this object
+#' [cols_width()], and split the table at every five rows with `gt_split()`.
+#' This creates a `gt_group` object containing two tables. Printing this object
 #' yields two tables separated by a line break.
 #'
 #' ```r
@@ -38,6 +40,10 @@
 #'   ) |>
 #'   gt_split(row_every_n = 5)
 #' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_gt_split_1.png")`
+#' }}
 #'
 #' Use a smaller subset of the [`gtcars`] dataset to create a **gt** table.
 #' Format the `msrp` column to display numbers as currency values, set the table
@@ -58,6 +64,10 @@
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_gt_split_2.png")`
 #' }}
+#'
+#' @family table group functions
+#' @section Function ID:
+#' 14-2
 #'
 #' @section Function Introduced:
 #' *In Development*

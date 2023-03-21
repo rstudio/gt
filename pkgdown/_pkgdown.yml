@@ -276,7 +276,7 @@ reference:
     - extract_summary
     - extract_cells
 
-  - title: Multiple-table Functions
+  - title: Table Group Functions
     desc: >
       Sometimes you want to deal with a multitude of **gt** tables, all at once.
       There are some advantages to having a group of tables bundled together in
