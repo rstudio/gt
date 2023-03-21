@@ -13,8 +13,8 @@
 #' @param row_slice_i An argument for splitting at specific row indices. Here,
 #'   we expect either a vector of index values or a function that evaluates to a
 #'   numeric vector.
-#' @param col_slice_at A vector of column names where column splitting should
-#'   occur. The splits occur to the right of the included column names.
+#' @param col_slice_at Any columns where vertical splitting across should occur.
+#'   The splits occur to the right of the resolved column names.
 #'
 #' @return An object of class `gt_group`.
 #'
@@ -69,6 +69,16 @@ gt_split <- function(
     row_slice_i = NULL,
     col_slice_at = NULL
 ) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  # Resolution of columns as character vectors
+  col_slice_at <-
+    resolve_cols_c(
+      expr = {{ col_slice_at }},
+      data = data
+    )
 
   gt_tbl_built <- build_data(data = data, context = "html")
 
@@ -129,7 +139,7 @@ gt_split <- function(
         )
       }
 
-      # TODO: ensure this works at multiple splitting points
+      # Obtain all of the column indices for vertical splitting
       col_idx <- which(visible_col_vars %in% col_slice_at)
 
       col_slice_vec <- rep(1L, length(visible_col_vars))
