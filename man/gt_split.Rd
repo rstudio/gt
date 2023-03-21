@@ -17,8 +17,8 @@ argument expects a single numerical value.}
 we expect either a vector of index values or a function that evaluates to a
 numeric vector.}
 
-\item{col_slice_at}{A vector of column names where column splitting should
-occur. The splits occur to the right of the included column names.}
+\item{col_slice_at}{Any columns where vertical splitting across should occur.
+The splits occur to the right of the resolved column names.}
 }
 \value{
 An object of class \code{gt_group}.
