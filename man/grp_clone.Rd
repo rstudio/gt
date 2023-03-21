@@ -30,7 +30,7 @@ either the \code{before} or \code{after} arguments.
 }
 \section{Function ID}{
 
-14-4
+14-5
 }
 
 \section{Function Introduced}{
@@ -39,12 +39,13 @@ either the \code{before} or \code{after} arguments.
 }
 
 \seealso{
-Other multiple-table functions: 
+Other table group functions: 
 \code{\link{grp_add}()},
 \code{\link{grp_options}()},
 \code{\link{grp_pull}()},
 \code{\link{grp_replace}()},
 \code{\link{grp_rm}()},
-\code{\link{gt_group}()}
+\code{\link{gt_group}()},
+\code{\link{gt_split}()}
 }
-\concept{multiple-table functions}
+\concept{table group functions}
