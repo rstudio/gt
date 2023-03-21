@@ -77,7 +77,8 @@ gt_split <- function(
   col_slice_at <-
     resolve_cols_c(
       expr = {{ col_slice_at }},
-      data = data
+      data = data,
+      null_means = "nothing"
     )
 
   gt_tbl_built <- build_data(data = data, context = "html")
