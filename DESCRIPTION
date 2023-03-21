@@ -102,7 +102,7 @@ Collate:
     'gt.R'
     'gt_group.R'
     'gt_preview.R'
-    'gt_splitter.R'
+    'gt_split.R'
     'helpers.R'
     'image.R'
     'info_tables.R'

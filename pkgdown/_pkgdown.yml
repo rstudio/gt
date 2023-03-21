@@ -287,7 +287,7 @@ reference:
       are separated by page breaks.
     contents:
     - gt_group
-    - gt_splitter
+    - gt_split
     - grp_pull
     - grp_add
     - grp_clone
