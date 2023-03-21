@@ -36,11 +36,27 @@
 #'     year ~ px(80),
 #'     everything() ~ px(150)
 #'   ) |>
-#'   gt_split(every_n_rows = 5)
+#'   gt_split(row_every_n = 5)
+#' ```
+#'
+#' Use a smaller subset of the [`gtcars`] dataset to create a **gt** table.
+#' Format the `msrp` column to display numbers as currency values, set the table
+#' width with [tab_options()] and split the table at the `model` column This
+#' creates a `gt_group` object again containing two tables but this time we get
+#' a vertical split. Printing this object yields two tables of the same width.
+#'
+#' ```r
+#' gtcars |>
+#'   dplyr::slice_head(n = 5) |>
+#'   dplyr::select(mfr, model, year, msrp) |>
+#'   gt() |>
+#'   fmt_currency(columns = msrp) |>
+#'   tab_options(table.width = px(400)) |>
+#'   gt_split(col_slice_at = "model")
 #' ```
 #'
 #' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_gt_split_1.png")`
+#' `r man_get_image_tag(file = "man_gt_split_2.png")`
 #' }}
 #'
 #' @section Function Introduced:
