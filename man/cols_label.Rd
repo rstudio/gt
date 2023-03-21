@@ -4,7 +4,7 @@
 \alias{cols_label}
 \title{Relabel one or more columns}
 \usage{
-cols_label(.data, ..., .list = list2(...))
+cols_label(.data, ..., .list = list2(...), .fn = NULL)
 }
 \arguments{
 \item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -22,6 +22,9 @@ the columns assigned previously will result in overwriting column width
 values.}
 
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
+
+\item{.fn}{An option to provide a function that will be applied to all
+provided label values.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -95,6 +98,32 @@ either a \code{=} or a \code{~} between the column name and the label text.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_2.png" alt="This image of a table was generated from the second code example in the `cols_label()` help file." style="width:100\%;">
 }}
 
+With the \code{\link{metro}} dataset, let's create a small \strong{gt} table with three
+columns. We'd like to provide column labels that have line breaks. For that,
+we can use \verb{<br>} to indicate where the line breaks should be. We also need
+to use the \code{\link[=md]{md()}} helper function to signal to \strong{gt} that this
+text should be interpreted as Markdown. Instead of calling \code{\link[=md]{md()}} on each of
+labels as before, we can more conveniently use the \code{.fn} argument and provide
+the bare function there (it will be applied to each label).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{metro |>
+  dplyr::select(name, lines, passengers, connect_other) |>
+  dplyr::arrange(desc(passengers)) |>
+  dplyr::slice_head(n = 10) |>
+  gt() |>
+  cols_hide(columns = passengers) |>
+  cols_label(
+    name = "Name of<br>Metro Station",
+    lines = "Metro<br>Lines",
+    connect_other = "Train<br>Services",
+    .fn = md
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_3.png" alt="This image of a table was generated from the third code example in the `cols_label()` help file." style="width:100\%;">
+}}
+
 Using \code{\link{towny}}, we can create an interesting \strong{gt} table. First, only
 certain columns are selected from the dataset, some filtering of rows is
 done, rows are sorted, and then only the first 10 rows are kept. When
@@ -127,7 +156,7 @@ a single column name, we must use formula syntax (i.e., with the \code{~}).
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_3.png" alt="This image of a table was generated from the third code example in the `cols_label()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_4.png" alt="This image of a table was generated from the fourth code example in the `cols_label()` help file." style="width:100\%;">
 }}
 }
 
