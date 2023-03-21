@@ -1015,11 +1015,10 @@ cmark_rules_xml <- list(
   link = function(x, process, ...) {
     # NOTE: Links are difficult to insert in OOXML documents because
     # a relationship must be provided in the 'document.xml.rels' file
-    # xml_hyperlink(
-    #   url =xml_attr(x, "destination"),
-      xml_r(xml_rPr(xml_rStyle(val = "Hyperlink")),xml_t(xml2::xml_text(x))) %>%
-      as.character()
-    # )
+    xml_hyperlink(
+      url =xml_attr(x, "destination"),
+      xml_r(xml_rPr(xml_rStyle(val = "Hyperlink")),xml_t(xml2::xml_text(x)))
+    ) %>% as.character()
   },
 
   block_quote = function(x, process, ...) {

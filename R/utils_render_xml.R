@@ -2548,3 +2548,97 @@ paste_footnote_xml <- function(text, footmark_xml, position = "right"){
   as.character(text_xml) %>%
     paste0("<md_container>",.,"</md_container>")
 }
+
+## if hyperlinks are in gt, postprocessing will be necessary
+needs_gt_as_word_post_processing <- function(x){
+  grepl("<w:hyperlink", x)
+}
+
+## apply postprocessing
+## at this point, only url relationship rId updating, but can expand to more in the future
+gt_as_word_post_processing <- function(path){
+
+  ## unzip doc
+  tmp_word_dir <- tempfile(pattern = "word_dir")
+  unzip(zipfile = path, exdir = tmp_word_dir)
+
+  ## load docx
+  content_doc_path <- file.path(tmp_word_dir,"word/document.xml")
+  docx <- read_xml(content_doc_path)
+
+  ## load rels
+  rels_doc_path <- file.path(tmp_word_dir,"word/_rels/document.xml.rels")
+  rels <- read_xml(rels_doc_path)
+
+  ## update hyperlinks
+  update_hyperlink_node_id(docx, rels)
+
+
+  ## write updates
+  xml2::write_xml(rels, rels_doc_path)
+  xml2::write_xml(docx, content_doc_path)
+
+  ## unzip contents
+  wd <- getwd()
+  zip_temp_word_doc(path, tmp_word_dir, wd)
+}
+
+
+update_hyperlink_node_id <- function(docx, rels){
+
+  rels_relationships <- rels %>% xml_children()
+  rels_ids <- rels_relationships %>% xml_attr("Id")
+  max_id <- max(as.numeric(gsub("rId","",rels_ids)))
+
+  ## get all hyperlink nodes
+  hyperlink_nodes <- docx %>% xml_find_all("//w:hyperlink[@r:id]")
+
+  ## identify nodes needing updating
+  hyperlink_nodes <- hyperlink_nodes[!grepl("^rId\\d+$", xml_attr(hyperlink_nodes, "id"))]
+
+  for(hl_node in hyperlink_nodes){
+
+    max_id <- max_id + 1
+    url <- xml_attr(hl_node, "id")
+    new_id <- paste0("rId", max_id)
+
+    xml2::xml_add_child(
+      rels,
+      xml_relationship(id = new_id, target = url)
+    )
+
+    xml_attr(hl_node, "r:id") <- new_id
+  }
+
+}
+
+## conveniently zip up word doc temp folder
+zip_temp_word_doc <- function(path, temp_dir, cur_dir = getwd()){
+  setwd(temp_dir)
+  on.exit(setwd(cur_dir))
+  zip(zipfile = path, files = list.files(path = ".", recursive = TRUE, all.files = FALSE),flags = "-r9X -q")
+}
+
+xml_relationship <- function(id,  target, type = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink", target_mode = "External"){
+
+  htmltools::tag(
+    `_tag_name` = "Relationship",
+    varArgs = list(
+      `Id` = id,
+      `Type` = type,
+      `Target` = target,
+      `TargetMode` = target_mode)
+  ) %>%
+    as.character() %>%
+    read_xml()
+
+}
+
+
+
+
+
+
+
+
+

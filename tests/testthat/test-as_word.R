@@ -1970,3 +1970,55 @@ There's a quick reference [here](https://commonmark.org/help/).
 
 
 })
+
+
+test_that("markdown with urls work",{
+
+  skip_on_ci()
+  check_suggests_xml()
+
+  text_sample <- "
+  Hyperlink [here](https://commonmark.org/help/) and to [google](https://www.google.com)
+  "
+
+  markdown_gt <- dplyr::tribble(
+     ~url,
+     text_sample
+    ) %>%
+    gt() %>%
+    fmt_markdown(columns = everything())
+
+  temp_docx <- tempfile(fileext = ".docx")
+
+  gtsave(markdown_gt, filename = temp_docx)
+
+  ## Programmatic Review
+  docx <- officer::read_docx(temp_docx)
+
+  ## get docx table contents
+  docx_contents <- xml2::xml_children(xml2::xml_children(docx$doc_obj$get()))
+
+  ## extract table hyperlinks
+  docx_table_hyperlinks <-
+    docx_contents[1] %>%
+    xml2::xml_find_all(".//w:hyperlink")
+
+  ## hyperlinks are preserved and updated to be rId
+  expect_equal(length(docx_table_hyperlinks), 2)
+  expect_true(all(grepl("^rId\\d+$",xml_attr(docx_table_hyperlinks, "id"))))
+
+  # first should be commonmark URL
+  expect_equal(
+    docx$doc_obj$rel_df()$target[ docx$doc_obj$rel_df()$id == xml_attr(docx_table_hyperlinks[1], "id")],
+    "https://commonmark.org/help/"
+  )
+
+  # second should be google URL
+  expect_equal(
+    docx$doc_obj$rel_df()$target[ docx$doc_obj$rel_df()$id == xml_attr(docx_table_hyperlinks[2], "id")],
+    "https://www.google.com"
+  )
+
+
+})
+
