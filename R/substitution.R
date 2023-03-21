@@ -335,7 +335,12 @@ sub_zero <- function(
 #' Wherever there is numerical data that are very small in value, replacement
 #' text may be better for explanatory purposes. The `sub_small_vals()` function
 #' allows for this replacement through specification of a `threshold`, a
-#' `small_pattern`, and the sign of the values to be considered.
+#' `small_pattern`, and the sign of the values to be considered. The
+#' substitution will occur for those values found to be between `0` and the
+#' threshold value. This is possible for small positive and small negative
+#' values (this can be explicitly set by the `sign` option). Note that the
+#' interval does not include the `0` or the `threshold` value. Should you need
+#' to include zero values, use the [sub_zero()] function.
 #'
 #' @inheritParams fmt_number
 #' @param columns Optional columns for constraining the targeting process.
