@@ -559,7 +559,7 @@ cols_width <- function(
 #'   the columns assigned previously will result in overwriting column width
 #'   values.
 #' @param .list Allows for the use of a list as an input alternative to `...`.
-#' @param .fn An option to provide a function that will be applied to all
+#' @param .fn An option to specify a function that will be applied to all of the
 #'   provided label values.
 #'
 #' @return An object of class `gt_tbl`.
