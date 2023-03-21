@@ -85,7 +85,7 @@ helper functions for rendering column labels from Markdown or using HTML.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cols_label</span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span>, .list <span class="op">=</span> <span class="fu">list2</span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cols_label</span><span class="op">(</span><span class="va">.data</span>, <span class="va">...</span>, .list <span class="op">=</span> <span class="fu">list2</span><span class="op">(</span><span class="va">...</span><span class="op">)</span>, .fn <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -110,6 +110,11 @@ values.</p></dd>
 
 <dt>.list</dt>
 <dd><p>Allows for the use of a list as an input alternative to <code>...</code>.</p></dd>
+
+
+<dt>.fn</dt>
+<dd><p>An option to specify a function that will be applied to all of the
+provided label values.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -168,6 +173,26 @@ either a <code>=</code> or a <code>~</code> between the column name and the labe
 <span>    <span class="va">population</span> <span class="op">~</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span><span class="st">"**Population**"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_2.png" alt="This image of a table was generated from the second code example in the `cols_label()` help file." style="width:100%;"></p>
+<p>With the <code><a href="metro.html">metro</a></code> dataset, let's create a small <strong>gt</strong> table with three
+columns. We'd like to provide column labels that have line breaks. For that,
+we can use <code>&lt;br&gt;</code> to indicate where the line breaks should be. We also need
+to use the <code><a href="md.html">md()</a></code> helper function to signal to <strong>gt</strong> that this
+text should be interpreted as Markdown. Instead of calling <code><a href="md.html">md()</a></code> on each of
+labels as before, we can more conveniently use the <code>.fn</code> argument and provide
+the bare function there (it will be applied to each label).</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">metro</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">lines</span>, <span class="va">passengers</span>, <span class="va">connect_other</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">passengers</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_hide.html">cols_hide</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">passengers</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_label.html">cols_label</a></span><span class="op">(</span></span>
+<span>    name <span class="op">=</span> <span class="st">"Name of&lt;br&gt;Metro Station"</span>,</span>
+<span>    lines <span class="op">=</span> <span class="st">"Metro&lt;br&gt;Lines"</span>,</span>
+<span>    connect_other <span class="op">=</span> <span class="st">"Train&lt;br&gt;Services"</span>,</span>
+<span>    .fn <span class="op">=</span> <span class="va">md</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_3.png" alt="This image of a table was generated from the third code example in the `cols_label()` help file." style="width:100%;"></p>
 <p>Using <code><a href="towny.html">towny</a></code>, we can create an interesting <strong>gt</strong> table. First, only
 certain columns are selected from the dataset, some filtering of rows is
 done, rows are sorted, and then only the first 10 rows are kept. When
@@ -196,7 +221,7 @@ a single column name, we must use formula syntax (i.e., with the <code>~</code>)
 <span>    <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches</a></span><span class="op">(</span><span class="st">"change"</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span><span class="st">"Population Change,&lt;br&gt;2001 to 2006"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/cols_width.html">cols_width</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">120</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
-<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_3.png" alt="This image of a table was generated from the third code example in the `cols_label()` help file." style="width:100%;"></p>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_4.png" alt="This image of a table was generated from the fourth code example in the `cols_label()` help file." style="width:100%;"></p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
