@@ -496,10 +496,12 @@ test_that("The `gtsave()` fn creates docx files even when a table has special ch
 
   # addresses issue raised in gh issue #121
 
-  gt_exibble <- data.frame(
-    a = c("<", "b"),
-    b = 1:2,
-    stringsAsFactors = FALSE) %>%
+  gt_exibble <-
+    data.frame(
+      a = c("<", "b"),
+      b = 1:2,
+      stringsAsFactors = FALSE
+    ) %>%
     gt()
 
   temp_docx <- file.path(tempdir(),"test.docx")
