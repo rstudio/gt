@@ -137,6 +137,8 @@ tab_options(
   footnotes.border.lr.width = NULL,
   footnotes.border.lr.color = NULL,
   footnotes.marks = NULL,
+  footnotes.spec_ref = NULL,
+  footnotes.spec_ftr = NULL,
   footnotes.multiline = NULL,
   footnotes.sep = NULL,
   source_notes.background.color = NULL,
@@ -359,6 +361,10 @@ want to use numeric marks). We can use lowercase \code{"letters"} or uppercase
 \code{"LETTERS"}. There is the option for using a traditional symbol set where
 \code{"standard"} provides four symbols, and, \code{"extended"} adds two more
 symbols, making six.}
+
+\item{footnotes.spec_ref, footnotes.spec_ftr}{Optional specifications for
+formatting of footnote references (\code{footnotes.spec_ref}) and their
+associated marks the footer section (\code{footnotes.spec_ftr}).}
 
 \item{footnotes.multiline, source_notes.multiline}{An option to either put
 footnotes and source notes in separate lines (the default, or \code{TRUE}) or
