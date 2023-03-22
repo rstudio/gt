@@ -35,13 +35,15 @@ data <-
     columns = c(hp, wt, qsec),
     fns = list(
       ~mean(., na.rm = TRUE),
-      ~sum(., na.rm = TRUE))
+      ~sum(., na.rm = TRUE)
+    )
   ) %>%
   grand_summary_rows(
     columns = c(hp, wt),
     fns = list(
       ~mean(., na.rm = TRUE),
-      ~sum(., na.rm = TRUE))
+      ~sum(., na.rm = TRUE)
+    )
   )
 
 # Create a table from `gtcars` that has footnotes
@@ -96,32 +98,37 @@ data_3 <-
     columns = "msrp",
     fns = list(
       ~mean(., na.rm = TRUE),
-      ~min(., na.rm = TRUE))
+      ~min(., na.rm = TRUE)
+    )
   ) %>%
   grand_summary_rows(
     columns = "msrp",
     fns = list(
       ~min(., na.rm = TRUE),
-      ~max(., na.rm = TRUE))
+      ~max(., na.rm = TRUE)
+    )
   ) %>%
   tab_footnote(
     footnote = "Average price for BMW and Audi.",
     locations = cells_summary(
       groups = c("BMW", "Audi"),
       columns = "msrp",
-      rows = starts_with("me"))
+      rows = starts_with("me")
+    )
   ) %>%
   tab_footnote(
     footnote = "Maximum price across all cars.",
     locations = cells_grand_summary(
       columns = "msrp",
-      rows = starts_with("ma"))
+      rows = starts_with("ma")
+    )
   ) %>%
   tab_footnote(
     footnote = "Minimum price across all cars.",
     locations = cells_grand_summary(
       columns = "msrp",
-      rows = starts_with("mi"))
+      rows = starts_with("mi")
+    )
   )
 
 # Create a table from `sp500` that has footnotes
@@ -132,9 +139,7 @@ data_4 <-
     date >= "2015-01-05" &
       date <= "2015-01-10"
   ) %>%
-  dplyr::select(
-    -c(adj_close, volume, high, low)
-  ) %>%
+  dplyr::select(-c(adj_close, volume, high, low)) %>%
   gt() %>%
   tab_header(
     title = "S&P 500",
@@ -142,15 +147,11 @@ data_4 <-
   ) %>%
   tab_footnote(
     footnote = "All values in USD.",
-    locations = list(
-      cells_title(groups = "subtitle")
-    )
+    locations = list(cells_title(groups = "subtitle"))
   ) %>%
   tab_footnote(
     footnote = "Standard and Poor 500.",
-    locations = list(
-      cells_title(groups = "title")
-    )
+    locations = list(cells_title(groups = "title"))
   )
 
 # Function to skip tests if Suggested packages not available on system
