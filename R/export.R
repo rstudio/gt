@@ -403,6 +403,11 @@ gt_save_docx <- function(
     input = word_md_file,
     output = filename
   )
+
+  if(needs_gt_as_word_post_processing(word_md_text)){
+    gt_as_word_post_processing(filename)
+  }
+
 }
 
 #' Get the lowercase extension from a filename

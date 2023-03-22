@@ -58,14 +58,16 @@ body_add_gt <- function(
     header_xml <- as_word_tbl_header_caption(data = value, align = caption_align, split = split, keep_with_next = keep_with_next)
     if (!identical(header_xml,c(""))) {
       for (header_component in header_xml) {
-        x <- officer::body_add_xml(x, str = header_component, pos)
+        x <- officer::body_add_xml(x, str = header_component, pos) %>%
+          suppressWarnings()
       }
     }
   }
 
   ## Create and add the table to the docxr. If the
   tbl_xml <- as_word_tbl_body(data = value, align = align, split = split, keep_with_next = keep_with_next, embedded_heading = identical(caption_location, "embed"))
-  x <- officer::body_add_xml(x, str = tbl_xml, pos)
+  x <- officer::body_add_xml(x, str = tbl_xml, pos) %>%
+    suppressWarnings()
 
   ## Create and add table caption if it is to come after the table
   if (caption_location %in% c("bottom")) {
@@ -73,7 +75,8 @@ body_add_gt <- function(
     header_xml <- as_word_tbl_header_caption(data = value, align = caption_align, split = split, keep_with_next = FALSE)
     if (!identical(header_xml,c(""))) {
       for (header_component in header_xml) {
-        x <- officer::body_add_xml(x, str = header_component, pos)
+        x <- officer::body_add_xml(x, str = header_component, pos)%>%
+          suppressWarnings()
       }
     }
   }
@@ -221,7 +224,8 @@ test_that("word ooxml can be generated from gt object", {
     as_word()
 
   gt_exibble_min_sha1 <- digest::sha1(gt_exibble_min)
-  expect_equal(gt_exibble_min_sha1, "b59b268fb04465cdbf341513a49c110e077ce773")
+  expect_equal(gt_exibble_min_sha1, "02a08c1cd57afd63d1e8a670579b59a3fffda177")
+
 })
 
 test_that("word ooxml escapes special characters in gt object", {
@@ -852,7 +856,7 @@ test_that("tables with footnotes can be added to a word doc", {
       xml2::xml_find_all(".//w:p") %>%
       xml2::xml_text(),
     c(
-      "numtrue1false", "chartrue2false", "fctr", "date", "time",
+      "num1", "char2", "fctr", "date", "time",
       "datetime", "currency", "row", "group"
     )
   )
@@ -887,8 +891,8 @@ test_that("tables with footnotes can be added to a word doc", {
         "row_2",
         "grp_a"
       ),
-      c("true1this is a footer example"),
-      c("true2this is a second footer example")
+      c("1this is a footer example"),
+      c("2this is a second footer example")
     )
   )
 })
@@ -1460,7 +1464,7 @@ test_that("tables with cell & text coloring can be added to a word doc - with so
   expect_equal(
     docx_table_meta_info %>% lapply(function(x) x %>% xml2::xml_find_all(".//w:t") %>% xml2::xml_text()),
     list(
-      c("", "My Footnote"),
+      c("My Footnote"),
       c("1", "My Footnote 2"),
       c("My Source Note")
     )
@@ -1472,7 +1476,7 @@ test_that("tables with cell & text coloring can be added to a word doc - with so
         y %>% xml2::xml_find_all(".//w:color") %>% xml2::xml_attr(attr = "val")
       })}),
     list(
-      list(c("A020F0", "A020F0")),
+      list("A020F0"),
       list(c("A020F0", "A020F0")),
       list("FFA500")
       )
@@ -1708,7 +1712,7 @@ test_that("tables preserves spaces in text & can be added to a word doc", {
     ),
     list(
       c("num","5 Spaces Before","5 Spaces After","5 Spaces Before - preserve","5 Spaces After - preserve"),
-      c("0.1111","     Preserve","Preserve     ","     Preserve","Preserve     ")
+      c("0.1111"," Preserve","Preserve ","     Preserve","Preserve     ")
     )
   )
 
@@ -1756,7 +1760,7 @@ test_that("tables respects column and cell alignment and can be added to a word 
       location = cells_body(columns = c(`wide column number 1`), rows = 2)
     ) %>%
     tab_style(
-      cell_text(align = "left"),
+      cell_text(align = "right"),
       location = cells_column_labels(columns = c(tcn4))
     )
 
@@ -1816,8 +1820,8 @@ test_that("tables respects column and cell alignment and can be added to a word 
         lapply(FUN = function(y) xml2::xml_attr(xml2::xml_find_all(y,".//w:jc"),"val"))
     ),
     list(
-      ## styling only on 4th column of header
-      list(character(0), character(0), character(0), "start"),
+      ## styling only on 1st and 4th column of header (stub and 3rd column) is right aligned
+      list("end", "start", "start", "end"),
 
       ## styling as applied or as default from gt
       list("end", "start", "start", "end"),
@@ -1825,3 +1829,196 @@ test_that("tables respects column and cell alignment and can be added to a word 
   )
 
 })
+
+test_that("markdown in the tables works out",{
+
+  skip_on_ci()
+  check_suggests_xml()
+
+  text_1a <- "
+### This is Markdown.
+
+Markdown's syntax is comprised entirely of
+punctuation characters, which punctuation
+characters have been carefully chosen so as
+to look like what they mean... assuming
+you've ever used email.
+
+
+this is a line break test
+
+"
+
+  text_1b <- "
+Info on **Markdown** _syntax_ can `be found` at [a website](https://daringfireball.net/projects/markdown/).
+"
+
+  text_2a <- "
+- `countrypops`
+- `sza`
+    - indented col
+
+
+1. newval
+2. another val
+3. will this work
+"
+
+  text_2b <- "
+There's a quick reference [here](https://commonmark.org/help/).
+"
+
+  markdown_gt <- dplyr::tribble(
+    ~Markdown, ~md,
+    text_1a,   text_2a,
+    text_1b,   text_2b
+  ) %>%
+    gt() %>%
+    fmt_markdown(columns = everything()) %>%
+    tab_footnote(
+      "This is text",
+      locations = cells_column_labels(columns = md)
+    )
+
+  temp_docx <- tempfile(fileext = ".docx")
+
+  gtsave(markdown_gt, filename = temp_docx)
+
+  ## Programmatic Review
+  docx <- officer::read_docx(temp_docx)
+
+  ## get docx table contents
+  docx_contents <- xml2::xml_children(xml2::xml_children(docx$doc_obj$get()))
+
+  ## extract table contents
+  docx_table_body_contents <-
+    docx_contents[1] %>%
+    xml2::xml_find_all(".//w:tr")
+
+  ## text is preserved
+  expect_equal(
+    lapply(
+      docx_table_body_contents,
+      FUN = function(x) {xml2::xml_find_all(x, ".//w:tc") %>%
+        lapply(function(x){ xml2::xml_text(xml2::xml_find_all(x,".//w:p"))})
+      }
+    ),
+    list(
+      list("Markdown", "md1"),
+      list(c("This is Markdown.",
+             "Markdown's syntax is comprised entirely of punctuation characters, which punctuation characters have been carefully chosen so as to look like what they mean... assuming you've ever used email.",
+             "this is a line break test"),
+           c("- countrypops",
+             "- sza",
+             "  -   indented col",
+             "1.    newval",
+             "2.    another val",
+             "3.    will this work")
+           ),
+      list(
+        "Info on Markdown syntax can be found at a website.",
+        "There's a quick reference here."),
+      list(
+        "1This is text"))
+  )
+
+  ## check styling in first row first column (Header)
+  styling_cell_text <- docx_table_body_contents[[2]] %>%
+    xml2::xml_find_all(".//w:tc") %>%
+    .[[1]] %>%
+    xml2::xml_find_all(".//w:rPr")
+
+  expect_equal(
+    as.character(styling_cell_text),
+    c(
+      "<w:rPr>\n  <w:sz w:val=\"28\"/>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n</w:rPr>",
+      "<w:rPr>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>",
+      "<w:rPr>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>",
+      "<w:rPr>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>",
+      "<w:rPr>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>",
+      "<w:rPr>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>",
+      "<w:rPr>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>",
+      "<w:rPr>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>",
+      "<w:rPr>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>",
+      "<w:rPr>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>",
+      "<w:rPr>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>"
+    )
+  )
+
+  ## check styling in second row first column (bold, italics, code, and website url styling)
+  styling_cell_text <- docx_table_body_contents[[3]] %>%
+    xml2::xml_find_all(".//w:tc") %>%
+    .[[1]] %>%
+    xml2::xml_find_all(".//w:rPr")
+
+  expect_equal(
+    as.character(styling_cell_text),
+    c(
+      "<w:rPr>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>",
+      "<w:rPr>\n  <w:b w:val=\"true\"/>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>",
+      "<w:rPr>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>",
+      "<w:rPr>\n  <w:i/>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>",
+      "<w:rPr>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>",
+      "<w:rPr>\n  <w:rStyle w:val=\"Macro Text\"/>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>",
+      "<w:rPr>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>",
+      "<w:rPr>\n  <w:rStyle w:val=\"Hyperlink\"/>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>",
+      "<w:rPr>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>"
+    )
+  )
+
+
+
+
+})
+
+
+test_that("markdown with urls work",{
+
+  skip_on_ci()
+  check_suggests_xml()
+
+  text_sample <- "
+  Hyperlink [here](https://commonmark.org/help/) and to [google](https://www.google.com)
+  "
+
+  markdown_gt <- dplyr::tribble(
+     ~url,
+     text_sample
+    ) %>%
+    gt() %>%
+    fmt_markdown(columns = everything())
+
+  temp_docx <- tempfile(fileext = ".docx")
+
+  gtsave(markdown_gt, filename = temp_docx)
+
+  ## Programmatic Review
+  docx <- officer::read_docx(temp_docx)
+
+  ## get docx table contents
+  docx_contents <- xml2::xml_children(xml2::xml_children(docx$doc_obj$get()))
+
+  ## extract table hyperlinks
+  docx_table_hyperlinks <-
+    docx_contents[1] %>%
+    xml2::xml_find_all(".//w:hyperlink")
+
+  ## hyperlinks are preserved and updated to be rId
+  expect_equal(length(docx_table_hyperlinks), 2)
+  expect_true(all(grepl("^rId\\d+$",xml_attr(docx_table_hyperlinks, "id"))))
+
+  # first should be commonmark URL
+  expect_equal(
+    docx$doc_obj$rel_df()$target[ docx$doc_obj$rel_df()$id == xml_attr(docx_table_hyperlinks[1], "id")],
+    "https://commonmark.org/help/"
+  )
+
+  # second should be google URL
+  expect_equal(
+    docx$doc_obj$rel_df()$target[ docx$doc_obj$rel_df()$id == xml_attr(docx_table_hyperlinks[2], "id")],
+    "https://www.google.com"
+  )
+
+
+})
+
