@@ -28,9 +28,7 @@ add_summary_location_row <- function(
     data,
     style,
     placement = NULL,
-    df_type = "styles_df",
-    spec_ref,
-    spec_ftr
+    df_type = "styles_df"
 ) {
 
   stub_df <- dt_stub_df_get(data = data)
@@ -122,9 +120,7 @@ add_summary_location_row <- function(
           locnum = 5,
           rownum = rows,
           footnotes = style,
-          placement = placement,
-          spec_ref = spec_ref,
-          spec_ftr = spec_ftr
+          placement = placement
         )
 
     } else {
@@ -150,9 +146,7 @@ add_grand_summary_location_row <- function(
     data,
     style,
     placement = NULL,
-    df_type = "styles_df",
-    spec_ref,
-    spec_ftr
+    df_type = "styles_df"
 ) {
 
   summary_data <- dt_summary_get(data = data)
@@ -218,9 +212,7 @@ add_grand_summary_location_row <- function(
         locnum = 6,
         rownum = rows,
         footnotes = style,
-        placement = placement,
-        spec_ref = spec_ref,
-        spec_ftr = spec_ftr
+        placement = placement
       )
 
   } else {
