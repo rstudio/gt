@@ -618,7 +618,7 @@ apply_footnotes_to_output <- function(data, context = "html") {
               gsub("<div class='gt_from_md'><p>", "", text, fixed = TRUE)
             )
 
-        } else if (context == "word"){
+        } else if (context == "word") {
           text <- apply_footnotes_method[[context]](text, mark, position = "left")
         } else {
           text <- paste0(mark, if (context == "html") "\U000A0" else " ", text)
