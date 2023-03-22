@@ -1031,6 +1031,8 @@ tab_stub_indent <- function(
 #'   absolute left or right of the cell content. By default, however, this is
 #'   set to `"auto"` whereby **gt** will choose a preferred left-or-right
 #'   placement depending on the alignment of the cell content.
+#' @param spec_ref,spec_ftr Optional specifications for footnote marks in the
+#'   table and in the footer section.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -1093,7 +1095,9 @@ tab_footnote <- function(
     data,
     footnote,
     locations = NULL,
-    placement = c("auto", "right", "left")
+    placement = c("auto", "right", "left"),
+    spec_ref = "auto",
+    spec_ftr = "auto"
 ) {
 
   placement <- rlang::arg_match(placement)
@@ -1116,7 +1120,9 @@ tab_footnote <- function(
         locnum = 0,
         rownum = NA_integer_,
         footnotes = footnote,
-        placement = placement
+        placement = placement,
+        spec_ref = spec_ref,
+        spec_ftr = spec_ftr
       )
 
     return(data)
@@ -1134,18 +1140,27 @@ tab_footnote <- function(
         loc = loc,
         data = data,
         footnote = footnote,
-        placement = placement
+        placement = placement,
+        spec_ref = spec_ref,
+        spec_ftr = spec_ftr
       )
   }
 
   data
 }
 
-set_footnote <- function(loc, data, footnote, placement) {
+set_footnote <- function(loc, data, footnote, placement, spec_ref, spec_ftr) {
   UseMethod("set_footnote")
 }
 
-set_footnote.cells_title <- function(loc, data, footnote, placement) {
+set_footnote.cells_title <- function(
+    loc,
+    data,
+    footnote,
+    placement,
+    spec_ref,
+    spec_ftr
+) {
 
   title_components <- rlang::eval_tidy(loc$groups)
 
@@ -1160,7 +1175,9 @@ set_footnote.cells_title <- function(loc, data, footnote, placement) {
         locnum = 1,
         rownum = NA_integer_,
         footnotes = footnote,
-        placement = placement
+        placement = placement,
+        spec_ref = spec_ref,
+        spec_ftr = spec_ftr
       )
   }
 
@@ -1175,14 +1192,23 @@ set_footnote.cells_title <- function(loc, data, footnote, placement) {
         locnum = 2,
         rownum = NA_integer_,
         footnotes = footnote,
-        placement = placement
+        placement = placement,
+        spec_ref = spec_ref,
+        spec_ftr = spec_ftr
       )
   }
 
   data
 }
 
-set_footnote.cells_stubhead <- function(loc, data, footnote, placement) {
+set_footnote.cells_stubhead <- function(
+    loc,
+    data,
+    footnote,
+    placement,
+    spec_ref,
+    spec_ftr
+) {
 
   data <-
     dt_footnotes_add(
@@ -1193,13 +1219,22 @@ set_footnote.cells_stubhead <- function(loc, data, footnote, placement) {
       locnum = 2.5,
       rownum = NA_integer_,
       footnotes = footnote,
-      placement = placement
+      placement = placement,
+      spec_ref = spec_ref,
+      spec_ftr = spec_ftr
     )
 
   data
 }
 
-set_footnote.cells_column_labels <- function(loc, data, footnote, placement) {
+set_footnote.cells_column_labels <- function(
+    loc,
+    data,
+    footnote,
+    placement,
+    spec_ref,
+    spec_ftr
+) {
 
   resolved <- resolve_cells_column_labels(data = data, object = loc)
 
@@ -1216,13 +1251,22 @@ set_footnote.cells_column_labels <- function(loc, data, footnote, placement) {
       locnum = 4,
       rownum = NA_integer_,
       footnotes = footnote,
-      placement = placement
+      placement = placement,
+      spec_ref = spec_ref,
+      spec_ftr = spec_ftr
     )
 
   data
 }
 
-set_footnote.cells_column_spanners <- function(loc, data, footnote, placement) {
+set_footnote.cells_column_spanners <- function(
+    loc,
+    data,
+    footnote,
+    placement,
+    spec_ref,
+    spec_ftr
+) {
 
   resolved <- resolve_cells_column_spanners(data = data, object = loc)
 
@@ -1237,13 +1281,22 @@ set_footnote.cells_column_spanners <- function(loc, data, footnote, placement) {
       locnum = 3,
       rownum = NA_integer_,
       footnotes = footnote,
-      placement = placement
+      placement = placement,
+      spec_ref = spec_ref,
+      spec_ftr = spec_ftr
     )
 
   data
 }
 
-set_footnote.cells_row_groups <- function(loc, data, footnote, placement) {
+set_footnote.cells_row_groups <- function(
+    loc,
+    data,
+    footnote,
+    placement,
+    spec_ref,
+    spec_ftr
+) {
 
   row_groups <- dt_row_groups_get(data = data)
 
@@ -1266,13 +1319,22 @@ set_footnote.cells_row_groups <- function(loc, data, footnote, placement) {
       locnum = 5,
       rownum = NA_integer_,
       footnotes = footnote,
-      placement = placement
+      placement = placement,
+      spec_ref = spec_ref,
+      spec_ftr = spec_ftr
     )
 
   data
 }
 
-set_footnote.cells_body <- function(loc, data, footnote, placement) {
+set_footnote.cells_body <- function(
+    loc,
+    data,
+    footnote,
+    placement,
+    spec_ref,
+    spec_ftr
+) {
 
   resolved <- resolve_cells_body(data = data, object = loc)
 
@@ -1289,13 +1351,22 @@ set_footnote.cells_body <- function(loc, data, footnote, placement) {
       locnum = 5,
       rownum = rows,
       footnotes = footnote,
-      placement = placement
+      placement = placement,
+      spec_ref = spec_ref,
+      spec_ftr = spec_ftr
     )
 
   data
 }
 
-set_footnote.cells_stub <- function(loc, data, footnote, placement) {
+set_footnote.cells_stub <- function(
+    loc,
+    data,
+    footnote,
+    placement,
+    spec_ref,
+    spec_ftr
+) {
 
   resolved <- resolve_cells_stub(data = data, object = loc)
 
@@ -1310,68 +1381,114 @@ set_footnote.cells_stub <- function(loc, data, footnote, placement) {
       locnum = 5,
       rownum = rows,
       footnotes = footnote,
-      placement = placement
+      placement = placement,
+      spec_ref = spec_ref,
+      spec_ftr = spec_ftr
     )
 
   data
 }
 
-set_footnote.cells_summary <- function(loc, data, footnote, placement) {
+set_footnote.cells_summary <- function(
+    loc,
+    data,
+    footnote,
+    placement,
+    spec_ref,
+    spec_ftr
+) {
 
   add_summary_location_row(
     loc = loc,
     data = data,
     style = footnote,
     placement = placement,
-    df_type = "footnotes_df"
+    df_type = "footnotes_df",
+    spec_ref = spec_ref,
+    spec_ftr = spec_ftr
   )
 }
 
-set_footnote.cells_grand_summary <- function(loc, data, footnote, placement) {
+set_footnote.cells_grand_summary <- function(
+    loc,
+    data,
+    footnote,
+    placement,
+    spec_ref,
+    spec_ftr
+) {
 
   add_grand_summary_location_row(
     loc = loc,
     data = data,
     style = footnote,
     placement = placement,
-    df_type = "footnotes_df"
+    df_type = "footnotes_df",
+    spec_ref = spec_ref,
+    spec_ftr = spec_ftr
   )
 }
 
-set_footnote.cells_stub_summary <- function(loc, data, footnote, placement) {
+set_footnote.cells_stub_summary <- function(
+    loc,
+    data,
+    footnote,
+    placement,
+    spec_ref,
+    spec_ftr
+) {
 
   add_summary_location_row(
     loc = loc,
     data = data,
     style = footnote,
     placement = placement,
-    df_type = "footnotes_df"
+    df_type = "footnotes_df",
+    spec_ref = spec_ref,
+    spec_ftr = spec_ftr
   )
 }
 
-set_footnote.cells_stub_grand_summary <- function(loc, data, footnote, placement) {
+set_footnote.cells_stub_grand_summary <- function(
+    loc,
+    data,
+    footnote,
+    placement,
+    spec_ref,
+    spec_ftr
+) {
 
   add_grand_summary_location_row(
     loc = loc,
     data = data,
     style = footnote,
     placement = placement,
-    df_type = "footnotes_df"
+    df_type = "footnotes_df",
+    spec_ref = spec_ref,
+    spec_ftr = spec_ftr
   )
 }
 
-set_footnote.cells_source_notes <- function(loc, data, footnote, placement) {
-
+set_footnote.cells_source_notes <- function(
+    loc,
+    data,
+    footnote,
+    placement,
+    spec_ref,
+    spec_ftr
+) {
   cli::cli_abort("Footnotes cannot be applied to source notes.")
-
-  data
 }
 
-set_footnote.cells_footnotes <- function(loc, data, footnote, placement) {
-
+set_footnote.cells_footnotes <- function(
+    loc,
+    data,
+    footnote,
+    placement,
+    spec_ref,
+    spec_ftr
+) {
   cli::cli_abort("Footnotes cannot be applied to other footnotes.")
-
-  data
 }
 
 #' Add a source note citation
