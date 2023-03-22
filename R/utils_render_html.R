@@ -46,7 +46,7 @@ footnote_mark_to_html <- function(
   paste0(
     "<span ",
     if (is_sup) {
-      paste0("class=\"", sup_class, "\"")
+      paste0("class=\"", sup_class, "\" ")
     } else {
       NULL
     },
