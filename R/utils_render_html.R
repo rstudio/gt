@@ -19,7 +19,7 @@ footnote_mark_to_html <- function(
   }
 
   if (is.null(spec)) {
-    spec <- "^xi"
+    spec <- "^i"
   }
 
   is_sup <- grepl("\\^", spec)
@@ -42,14 +42,21 @@ footnote_mark_to_html <- function(
     font_weight <- "normal"
   }
 
+
   paste0(
-    "<span style=\"",
+    "<span ",
+    if (is_sup) {
+      paste0("class=\"", sup_class, "\"")
+    } else {
+      NULL
+    },
+    "style=\"",
     "white-space:nowrap;",
     "font-style:", font_style, ";",
     "font-weight:", font_weight, ";",
     "\">",
     if (is_sup) {
-      paste0("<sup class=\"", sup_class, "\">", mark, "</sup>")
+      paste0("<sup>", mark, "</sup>")
     } else {
       mark
     },
