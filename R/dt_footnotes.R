@@ -33,9 +33,7 @@ dt_footnotes_add <- function(
     locnum,
     rownum,
     footnotes,
-    placement,
-    spec_ref,
-    spec_ftr
+    placement
 ) {
 
   grid <-
@@ -55,9 +53,7 @@ dt_footnotes_add <- function(
       rownum = grid$rownum,
       colnum = NA_integer_,
       footnotes = list(footnotes),
-      placement = placement,
-      spec_ref = spec_ref,
-      spec_ftr = spec_ftr
+      placement = placement
     )
 
   dt_footnotes_set(
