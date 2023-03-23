@@ -9,7 +9,14 @@ latex_packages <- function() {
 }
 
 # Transform a footnote mark to a LaTeX representation as a superscript
-footnote_mark_to_latex <- function(mark) {
+footnote_mark_to_latex <- function(
+    data,
+    mark,
+    location = c("ref", "ftr")
+) {
+
+  location <- match.arg(location)
+
   ifelse(is.na(mark), "", paste0("\\textsuperscript{", mark, "}"))
 }
 
@@ -116,7 +123,10 @@ create_heading_component_l <- function(data) {
       )
 
     footnote_title_marks <-
-      footnote_mark_to_latex(mark = footnote_title_marks$fs_id_c)
+      footnote_mark_to_latex(
+        data = data,
+        mark = footnote_title_marks$fs_id_c
+      )
 
   } else {
     footnote_title_marks <- ""
@@ -132,7 +142,10 @@ create_heading_component_l <- function(data) {
       )
 
     footnote_subtitle_marks <-
-      footnote_mark_to_latex(mark = footnote_subtitle_marks$fs_id_c)
+      footnote_mark_to_latex(
+        data = data,
+        mark = footnote_subtitle_marks$fs_id_c
+      )
 
   } else {
     footnote_subtitle_marks <- ""
@@ -673,7 +686,11 @@ create_footer_component_l <- function(data) {
     # Create a vector of formatted footnotes
     footnotes <-
       paste0(
-        footnote_mark_to_latex(footnotes_tbl[["fs_id"]]),
+        footnote_mark_to_latex(
+          data = data,
+          mark = footnotes_tbl[["fs_id"]],
+          location = "ftr"
+        ),
         vapply(
           footnotes_tbl[["footnotes"]],
           FUN.VALUE = character(1),
