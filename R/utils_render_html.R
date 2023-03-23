@@ -9,14 +9,14 @@ footnote_mark_to_html <- function(
 
   location <- match.arg(location)
 
-  if (location == "ref") {
-    spec <- dt_options_get_value(data = data, option = "footnotes_spec_ref")
-  } else {
-    spec <- dt_options_get_value(data = data, option = "footnotes_spec_ftr")
-  }
-
   if (is.na(mark)) {
     return("")
+  }
+
+  spec <- get_footnote_spec_by_location(data = data, location = location)
+
+  if (is.null(spec)) {
+    spec <- "^i"
   }
 
   # Generate the CSS classes needed on the basis of whether the
@@ -25,10 +25,6 @@ footnote_mark_to_html <- function(
     sup_class <- "gt_footnote_marks"
   } else {
     sup_class <- "gt_footnote_marks gt_asterisk"
-  }
-
-  if (is.null(spec)) {
-    spec <- "^i"
   }
 
   is_sup <- grepl("\\^", spec)
