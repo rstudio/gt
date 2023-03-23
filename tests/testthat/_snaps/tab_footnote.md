@@ -204,7 +204,7 @@
     Code
       .
     Output
-      [1] "\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlcrrrrll}\n\\toprule\nnum & char & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\n\\textsuperscript{1} 0.1111 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.95 & row\\_1 & grp\\_a \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nA footnote.\\\\\n\\textsuperscript{1}A footnote.\\\\\n\\end{minipage}\n"
+      [1] "\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlcrrrrll}\n\\toprule\nnum & char & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\n\\textsuperscript{\\textit{1}} 0.1111 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.95 & row\\_1 & grp\\_a \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\textsuperscript{\\textit{NA}}A footnote.\\\\\n\\textsuperscript{\\textit{1}}A footnote.\\\\\n\\end{minipage}\n"
 
 ---
 
@@ -301,7 +301,7 @@
     Code
       .
     Output
-      [1] "\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlcrrrrll}\n\\toprule\nnum & char & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\n\\textsuperscript{1} 0.1111 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.95 & row\\_1 & grp\\_a \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\nA footnote. A second footnote. \\textsuperscript{1}location note\\\\\n\\end{minipage}\n"
+      [1] "\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rlcrrrrll}\n\\toprule\nnum & char & fctr & date & time & datetime & currency & row & group \\\\ \n\\midrule\n\\textsuperscript{\\textit{1}} 0.1111 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.95 & row\\_1 & grp\\_a \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\textsuperscript{\\textit{NA}}A footnote. \\textsuperscript{\\textit{NA}}A second footnote. \\textsuperscript{\\textit{1}}location note\\\\\n\\end{minipage}\n"
 
 ---
 
@@ -412,7 +412,7 @@
     Code
       .
     Output
-      [1] "\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|l|r}\n\\toprule\n\\multicolumn{2}{l}{} & Pizzas Sold \\\\ \n\\midrule\npeppr\\_salami\\textsuperscript{1} & L & 696 \\\\ \n & M & 428 \\\\ \n & S & 322 \\\\ \n\\cmidrule(l{-0.05em}r){2-3}\n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{sum} & $1,446$ \\\\ \n\\midrule\nsoppressata & L & 405 \\\\ \n & M & 268 \\\\ \n & S & 288 \\\\ \n\\cmidrule(l{-0.05em}r){2-3}\n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{sum} & $961$ \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\textsuperscript{1}The Pepper-Salami.\\\\\n\\end{minipage}\n"
+      [1] "\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{l|l|r}\n\\toprule\n\\multicolumn{2}{l}{} & Pizzas Sold \\\\ \n\\midrule\npeppr\\_salami\\textsuperscript{\\textit{1}} & L & 696 \\\\ \n & M & 428 \\\\ \n & S & 322 \\\\ \n\\cmidrule(l{-0.05em}r){2-3}\n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{sum} & $1,446$ \\\\ \n\\midrule\nsoppressata & L & 405 \\\\ \n & M & 268 \\\\ \n & S & 288 \\\\ \n\\cmidrule(l{-0.05em}r){2-3}\n\\multicolumn{1}{l|}{} & \\multicolumn{1}{l|}{sum} & $961$ \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\textsuperscript{\\textit{1}}The Pepper-Salami.\\\\\n\\end{minipage}\n"
 
 ---
 
