@@ -2199,7 +2199,7 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   the `footnotes` location.
 #' @param footnotes.marks The set of sequential marks used to reference and
 #'   identify each of the footnotes (same input as the [opt_footnote_marks()]
-#'   function. We can supply a vector that represents the series of footnote
+#'   function). We can supply a vector that represents the series of footnote
 #'   marks. This vector is recycled when its usage goes beyond the length of the
 #'   set. At each cycle, the marks are simply combined (e.g., `*` -> `**` ->
 #'   `***`). The option exists for providing keywords for certain types of
@@ -2210,7 +2210,12 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   symbols, making six.
 #' @param footnotes.spec_ref,footnotes.spec_ftr Optional specifications for
 #'   formatting of footnote references (`footnotes.spec_ref`) and their
-#'   associated marks the footer section (`footnotes.spec_ftr`).
+#'   associated marks the footer section (`footnotes.spec_ftr`) (same input as
+#'   the [opt_footnote_spec()] function). This is a string containing
+#'   specification control characters. The default is the spec string `"^i"`,
+#'   which is superscript text set in italics. Other control characters that can
+#'   be used are: (1) `"b"` for bold text, and (2) `"("` / `")"` for the
+#'   enclosure of footnote marks in parentheses.
 #' @param footnotes.multiline,source_notes.multiline An option to either put
 #'   footnotes and source notes in separate lines (the default, or `TRUE`) or
 #'   render them as a continuous line of text with `footnotes.sep` providing the
