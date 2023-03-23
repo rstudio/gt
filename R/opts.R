@@ -458,19 +458,29 @@ opt_footnote_marks <- function(
 #'
 #' @section Specification rules for the formatting of footnote marks:
 #'
-#' Footnote marks can have the following types of formatting:
+#' A footnote spec consists of a string containing control characters for
+#' formatting. Not every type of formatting makes sense for footnote marks so
+#' the specification is purposefully constrained to the following:
 #'
-#' - as superscript text (use `"^"` character in spec) or regular-sized text
-#' residing on the baseline
+#' - as superscript text (with the `"^"` control character) or regular-sized
+#' text residing on the baseline
 #' - bold text (with `"b"`), italicized text (with `"i"`), or unstyled text
-#' (don't use `"b"` or `"i"`)
-#' - enclosure in parentheses (use `"("` character in spec) or square brackets
-#' (use `"["`)
+#' (don't use either of the `"b"` or `"i"` control characters)
+#' - enclosure in parentheses (use `"("` / `")"`) or square brackets (with
+#' `"["` / `"]"`)
+#' - a period following the mark (using `"."`); this is most commonly used in
+#' the table footer
+#'
+#' With the aforementioned control characters we could, for instance, format
+#' the footnote marks to be superscript text in bold type with `"^b"`. We might
+#' want the marks in the footer to be regular-sized text in parentheses, so the
+#' spec could be either `"()"` or `"(x)"` (you can optionally use `"x"` as a
+#' helpful placeholder for the marks).
 #'
 #' @section Examples:
 #'
 #' Use [`sza`] to create a **gt** table, adding three footnotes. Call
-#' `opt_footnote_marks()` to specify which footnote marks to use.
+#' `opt_footnote_spec()` to specify how to format the footnote marks.
 #'
 #' ```r
 #' sza |>
