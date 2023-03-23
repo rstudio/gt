@@ -479,50 +479,39 @@ opt_footnote_marks <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`sza`] to create a **gt** table, adding three footnotes. Call
-#' `opt_footnote_spec()` to specify how to format the footnote marks.
+#' Use [`sp500`] to create a **gt** table, adding two footnotes. We can call
+#' `opt_footnote_spec()` to specify that the marks of the footnote reference
+#' should be superscripts in bold, and, the marks in the footer section should
+#' be enclosed in parentheses.
 #'
 #' ```r
-#' sza |>
-#'   dplyr::filter(latitude == 30) |>
-#'   dplyr::group_by(tst) |>
-#'   dplyr::summarize(
-#'     SZA.Max = if (
-#'       all(is.na(sza))) {
-#'       NA
-#'     } else {
-#'       max(sza, na.rm = TRUE)
-#'     },
-#'     SZA.Min = if (
-#'       all(is.na(sza))) {
-#'       NA
-#'     } else {
-#'       min(sza, na.rm = TRUE)
-#'     },
-#'     .groups = "drop"
-#'   ) |>
-#'   gt(rowname_col = "tst") |>
-#'   tab_spanner_delim(delim = ".") |>
-#'   sub_missing(
-#'     columns = everything(),
-#'     missing_text = "90+"
-#'   ) |>
-#'   tab_stubhead(label = "TST") |>
-#'   tab_footnote(
-#'     footnote = "True solar time.",
-#'     locations = cells_stubhead()
+#' sp500 |>
+#'   dplyr::filter(date >= "1987-10-14" & date <= "1987-10-25") |>
+#'   dplyr::select(date, open, close, volume) |>
+#'   dplyr::mutate(difference = close - open) |>
+#'   dplyr::mutate(change = (close - open) / open) |>
+#'   dplyr::mutate(day = vec_fmt_datetime(date, format = "E")) |>
+#'   dplyr::arrange(-dplyr::row_number()) |>
+#'   gt(rowname_col = "date") |>
+#'   fmt_currency() |>
+#'   fmt_number(columns = volume, suffixing = TRUE) |>
+#'   fmt_percent(columns = change) |>
+#'   cols_move_to_start(columns = day) |>
+#'   cols_width(
+#'     stub() ~ px(130),
+#'     day ~ px(50),
+#'     everything() ~ px(100)
 #'   ) |>
 #'   tab_footnote(
-#'     footnote = "Solar zenith angle.",
-#'     locations = cells_column_spanners(
-#'       spanners = "spanner-SZA.Max"
-#'     )
+#'     footnote = "Commerce report on trade deficit.",
+#'     locations = cells_stub(rows = 1)
 #'   ) |>
 #'   tab_footnote(
-#'     footnote = "The Lowest SZA.",
-#'     locations = cells_stub(rows = "1200")
+#'     footnote = "Black Monday market crash, representing the greatest
+#'     one-day percentage decline in U.S. stock market history.",
+#'     locations = cells_body(columns = change, rows = change < -0.15)
 #'   ) |>
-#'   opt_footnote_marks(marks = "standard")
+#'   opt_footnote_spec(spec_ref = "^xb", spec_ftr = "(x)")
 #' ```
 #'
 #' \if{html}{\out{
