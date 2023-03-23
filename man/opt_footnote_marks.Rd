@@ -4,7 +4,7 @@
 \alias{opt_footnote_marks}
 \title{Option to modify the set of footnote marks}
 \usage{
-opt_footnote_marks(data, marks)
+opt_footnote_marks(data, marks = "numbers")
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -25,7 +25,9 @@ Either a vector of marks can be provided (including Unicode characters), or,
 a specific keyword could be used to signify a preset sequence. This function
 serves as a shortcut for using \code{tab_options(footnotes.marks = {marks})}
 }
-\details{
+\section{Specification of footnote marks}{
+
+
 We can supply a vector of that will represent the series of marks.
 The series of footnote marks is recycled when its usage goes beyond the
 length of the set. At each cycle, the marks are simply doubled, tripled, and
@@ -43,6 +45,7 @@ which has 26 uppercase letters of the Roman alphabet
 more symbols, making six
 }
 }
+
 \section{Examples}{
 
 
@@ -111,6 +114,7 @@ Other table option functions:
 \code{\link{opt_align_table_header}()},
 \code{\link{opt_all_caps}()},
 \code{\link{opt_css}()},
+\code{\link{opt_footnote_spec}()},
 \code{\link{opt_horizontal_padding}()},
 \code{\link{opt_interactive}()},
 \code{\link{opt_row_striping}()},
