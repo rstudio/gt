@@ -757,7 +757,14 @@ rtf_raw <- function(...) {
 }
 
 # Transform a footnote mark to an RTF representation as a superscript
-footnote_mark_to_rtf <- function(mark) {
+footnote_mark_to_rtf <- function(
+    data,
+    mark,
+    location = c("ref", "ftr")
+) {
+
+  location <- match.arg(location)
+
   stopifnot(length(mark) == 1)
 
   if (is.na(mark)) {
@@ -1791,6 +1798,7 @@ create_footer_component_rtf <- function(data) {
   # Generate a list containing formatted footnotes and source notes
   notes_list <-
     generate_notes_list(
+      data = data,
       footnotes_tbl = footnotes_tbl,
       source_notes_vec = source_notes_vec,
       footnotes_multiline = footnotes_multiline,
@@ -1861,6 +1869,7 @@ create_page_footer_component_rtf <- function(data) {
   # Generate a list containing formatted footnotes and source notes
   notes_list <-
     generate_notes_list(
+      data = data,
       footnotes_tbl = footnotes_tbl,
       source_notes_vec = source_notes_vec,
       footnotes_multiline = footnotes_multiline,
@@ -1879,6 +1888,7 @@ create_page_footer_component_rtf <- function(data) {
 }
 
 generate_notes_list <- function(
+    data,
     footnotes_tbl,
     source_notes_vec,
     footnotes_multiline,
@@ -1913,7 +1923,11 @@ generate_notes_list <- function(
         c(
           footnotes,
           rtf_paste0(
-            footnote_mark_to_rtf(footnote_mark[i]),
+            footnote_mark_to_rtf(
+              data = data,
+              mark = footnote_mark[i],
+              location = "ftr"
+            ),
             rtf_raw(footnote_text[i])
           )
         )
