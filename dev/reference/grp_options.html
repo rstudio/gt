@@ -203,6 +203,8 @@ element that can adjusted.</p>
 <span>  footnotes.border.lr.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  footnotes.border.lr.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  footnotes.marks <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  footnotes.spec_ref <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  footnotes.spec_ftr <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  footnotes.multiline <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  footnotes.sep <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  source_notes.background.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -490,7 +492,7 @@ the <code>footnotes</code> location.</p></dd>
 <dt>footnotes.marks</dt>
 <dd><p>The set of sequential marks used to reference and
 identify each of the footnotes (same input as the <code><a href="opt_footnote_marks.html">opt_footnote_marks()</a></code>
-function. We can supply a vector that represents the series of footnote
+function). We can supply a vector that represents the series of footnote
 marks. This vector is recycled when its usage goes beyond the length of the
 set. At each cycle, the marks are simply combined (e.g., <code>*</code> -&gt; <code>**</code> -&gt;
 <code>***</code>). The option exists for providing keywords for certain types of
@@ -499,6 +501,17 @@ want to use numeric marks). We can use lowercase <code>"letters"</code> or upper
 <code>"LETTERS"</code>. There is the option for using a traditional symbol set where
 <code>"standard"</code> provides four symbols, and, <code>"extended"</code> adds two more
 symbols, making six.</p></dd>
+
+
+<dt>footnotes.spec_ref, footnotes.spec_ftr</dt>
+<dd><p>Optional specifications for
+formatting of footnote references (<code>footnotes.spec_ref</code>) and their
+associated marks the footer section (<code>footnotes.spec_ftr</code>) (same input as
+the <code><a href="opt_footnote_spec.html">opt_footnote_spec()</a></code> function). This is a string containing
+specification control characters. The default is the spec string <code>"^i"</code>,
+which is superscript text set in italics. Other control characters that can
+be used are: (1) <code>"b"</code> for bold text, and (2) <code>"("</code> / <code>")"</code> for the
+enclosure of footnote marks in parentheses.</p></dd>
 
 
 <dt>footnotes.multiline, source_notes.multiline</dt>
