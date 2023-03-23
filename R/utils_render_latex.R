@@ -17,7 +17,27 @@ footnote_mark_to_latex <- function(
 
   location <- match.arg(location)
 
-  ifelse(is.na(mark), "", paste0("\\textsuperscript{", mark, "}"))
+  if (length(mark) == 1 && is.na(mark)) {
+    return("")
+  }
+
+  spec <- get_footnote_spec_by_location(data = data, location = location)
+
+  if (is.null(spec)) {
+    spec <- "^i"
+  }
+
+  if (grepl("\\.", spec)) mark <- paste0(mark, ".")
+  if (grepl("b", spec)) mark <- paste0("\\textbf{", mark, "}")
+  if (grepl("i", spec)) mark <- paste0("\\textit{", mark, "}")
+  if (grepl("\\(|\\[", spec)) mark <- paste0("(", mark)
+  if (grepl("\\)|\\]", spec)) mark <- paste0(mark, ")")
+
+  if (grepl("\\^", spec)) {
+    mark <- paste0("\\textsuperscript{", mark, "}")
+  }
+
+  mark
 }
 
 #' @noRd
