@@ -2,9 +2,18 @@
 #'
 #' @noRd
 footnote_mark_to_html <- function(
+    data,
     mark,
-    spec = NULL
+    location = c("ref", "ftr")
 ) {
+
+  location <- match.arg(location)
+
+  if (location == "ref") {
+    spec <- dt_options_get_value(data = data, option = "footnotes_spec_ref")
+  } else {
+    spec <- dt_options_get_value(data = data, option = "footnotes_spec_ftr")
+  }
 
   if (is.na(mark)) {
     return("")
@@ -41,7 +50,6 @@ footnote_mark_to_html <- function(
   } else {
     font_weight <- "normal"
   }
-
 
   paste0(
     "<span ",
@@ -273,7 +281,10 @@ create_heading_component_h <- function(data) {
       )
 
     footnote_title_marks <-
-      footnote_mark_to_html(mark = footnote_title_marks$fs_id_c)
+      footnote_mark_to_html(
+        data = data,
+        mark = footnote_title_marks$fs_id_c
+      )
 
   } else {
     footnote_title_marks <- ""
@@ -304,7 +315,10 @@ create_heading_component_h <- function(data) {
       )
 
     footnote_subtitle_marks <-
-      footnote_mark_to_html(mark = footnote_subtitle_marks$fs_id_c)
+      footnote_mark_to_html(
+        data = data,
+        mark = footnote_subtitle_marks$fs_id_c
+      )
 
   } else {
     footnote_subtitle_marks <- ""
@@ -1558,7 +1572,11 @@ create_footnotes_component_h <- function(data) {
             htmltools::tagList(
               htmltools::HTML(
                 paste0(
-                  footnote_mark_to_html(mark = x),
+                  footnote_mark_to_html(
+                    data = data,
+                    mark = x,
+                    location = "ftr"
+                  ),
                   " ",
                   process_text(footnote_text, context = "html")
                 ),
