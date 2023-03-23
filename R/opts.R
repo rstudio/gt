@@ -344,7 +344,7 @@ opt_interactive <- function(
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @details
+#' @section Specification of footnote marks:
 #'
 #' We can supply a vector of that will represent the series of marks.
 #' The series of footnote marks is recycled when its usage goes beyond the
@@ -424,7 +424,7 @@ opt_interactive <- function(
 #' @export
 opt_footnote_marks <- function(
     data,
-    marks
+    marks = "numbers"
 ) {
 
   # Perform input object validation
@@ -434,6 +434,117 @@ opt_footnote_marks <- function(
   validate_marks(marks)
 
   tab_options(data = data, footnotes.marks = marks)
+}
+
+#' Option to specify the formatting of footnote marks
+#'
+#' @description
+#'
+#' Modify the way footnote marks are formatted. This can be performed for those
+#' footnote marks that alight to the targeted text in cells in various locations
+#' in the table or the footnote marks that appear in the table footer. A simple
+#' specification string can be provided for either or both types of marks in
+#' `opt_footnote_spec()` . This function serves as a shortcut for using either
+#' of `tab_options(footnotes.spec_ref = {spec})` or
+#' `tab_options(footnotes.spec_ftr = {spec})`.
+#'
+#' @inheritParams fmt_number
+#' @param spec_ref,spec_ftr Specification of the footnote marks when behaving as
+#'   footnote references and as marks in the footer section of the table. This
+#'   is a string containing spec characters. The default is the spec string
+#'   `"^i"`, which is superscript text set in italics.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Specification rules for the formatting of footnote marks:
+#'
+#' Footnote marks can have the following types of formatting:
+#'
+#' - as superscript text (use `"^"` character in spec) or regular-sized text
+#' residing on the baseline
+#' - bold text (with `"b"`), italicized text (with `"i"`), or unstyled text
+#' (don't use `"b"` or `"i"`)
+#' - enclosure in parentheses (use `"("` character in spec) or square brackets
+#' (use `"["`)
+#'
+#' @section Examples:
+#'
+#' Use [`sza`] to create a **gt** table, adding three footnotes. Call
+#' `opt_footnote_marks()` to specify which footnote marks to use.
+#'
+#' ```r
+#' sza |>
+#'   dplyr::filter(latitude == 30) |>
+#'   dplyr::group_by(tst) |>
+#'   dplyr::summarize(
+#'     SZA.Max = if (
+#'       all(is.na(sza))) {
+#'       NA
+#'     } else {
+#'       max(sza, na.rm = TRUE)
+#'     },
+#'     SZA.Min = if (
+#'       all(is.na(sza))) {
+#'       NA
+#'     } else {
+#'       min(sza, na.rm = TRUE)
+#'     },
+#'     .groups = "drop"
+#'   ) |>
+#'   gt(rowname_col = "tst") |>
+#'   tab_spanner_delim(delim = ".") |>
+#'   sub_missing(
+#'     columns = everything(),
+#'     missing_text = "90+"
+#'   ) |>
+#'   tab_stubhead(label = "TST") |>
+#'   tab_footnote(
+#'     footnote = "True solar time.",
+#'     locations = cells_stubhead()
+#'   ) |>
+#'   tab_footnote(
+#'     footnote = "Solar zenith angle.",
+#'     locations = cells_column_spanners(
+#'       spanners = "spanner-SZA.Max"
+#'     )
+#'   ) |>
+#'   tab_footnote(
+#'     footnote = "The Lowest SZA.",
+#'     locations = cells_stub(rows = "1200")
+#'   ) |>
+#'   opt_footnote_marks(marks = "standard")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_opt_footnote_spec_1.png")`
+#' }}
+#'
+#' @family table option functions
+#' @section Function ID:
+#' 10-4
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @export
+opt_footnote_spec <- function(
+    data,
+    spec_ref = NULL,
+    spec_ftr = NULL
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  if (!is.null(spec_ref)) {
+    data <- tab_options(data = data, footnotes.spec_ref = spec_ref)
+  }
+
+  if (!is.null(spec_ftr)) {
+    data <- tab_options(data = data, footnotes.spec_ftr = spec_ftr)
+  }
+
+  data
 }
 
 #' Option to add or remove row striping
@@ -487,7 +598,7 @@ opt_footnote_marks <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 10-4
+#' 10-5
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -559,7 +670,7 @@ opt_row_striping <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 10-5
+#' 10-6
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -642,7 +753,7 @@ opt_align_table_header <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 10-6
+#' 10-7
 #'
 #' @section Function Introduced:
 #' `v0.4.0` (February 15, 2022)
@@ -725,7 +836,7 @@ opt_vertical_padding <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 10-7
+#' 10-8
 #'
 #' @section Function Introduced:
 #' `v0.4.0` (February 15, 2022)
@@ -843,7 +954,7 @@ get_padding_option_value_list <- function(scale, type) {
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 10-8
+#' 10-9
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -948,7 +1059,7 @@ opt_all_caps <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 10-9
+#' 10-10
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1048,7 +1159,7 @@ opt_table_lines <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 10-10
+#' 10-11
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1190,7 +1301,7 @@ opt_table_outline <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 10-11
+#' 10-12
 #'
 #' @section Function Introduced:
 #' `v0.2.2` (August 5, 2020)
@@ -1323,7 +1434,7 @@ opt_table_font <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 10-12
+#' 10-13
 #'
 #' @section Function Introduced:
 #' `v0.2.2` (August 5, 2020)
