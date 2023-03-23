@@ -708,11 +708,27 @@ footnote_mark_to_xml <- function(
 
   location <- match.arg(location)
 
+  if (length(mark) == 1 && is.na(mark)) {
+    return("")
+  }
+
+  spec <- get_footnote_spec_by_location(data = data, location = location)
+
+  if (is.null(spec)) {
+    spec <- "^i"
+  }
+
+  if (grepl("\\(|\\[", spec)) mark <- paste0("(", mark)
+  if (grepl("\\)|\\]", spec)) mark <- paste0(mark, ")")
+
   as.character(
     xml_r(
       xml_rPr(
-        xml_baseline_adj(v_align = "superscript"),
-        xml_i(active = TRUE)
+        xml_baseline_adj(
+          v_align = if (grepl("\\^", spec)) "superscript" else "baseline"
+        ),
+        if (grepl("i", spec)) xml_i(active = TRUE) else NULL,
+        if (grepl("b", spec)) xml_b(active = TRUE) else NULL
       ),
       xml_t(mark)
     )
@@ -927,8 +943,11 @@ create_table_caption_component_xml <- function(
     }
 
     subtitle_caption_string <-
-      as.character(subtitle_caption_string) %>%
-      paste0("<md_container>",.,"</md_container>")
+      paste0(
+        "<md_container>",
+        as.character(subtitle_caption_string),
+        "</md_container>"
+      )
 
     subtitle_caption <-
       process_cell_content(
@@ -1867,6 +1886,20 @@ create_footnotes_component_xml <- function(
   footnote_ids <- footnotes_tbl[["fs_id"]]
   footnote_text <- footnotes_tbl[["footnotes"]]
 
+  footnote_ids <-
+    vapply(
+      footnote_ids,
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
+      FUN = function(x) {
+        footnote_mark_to_xml(
+          data = data,
+          mark = x,
+          location = "ftr"
+        )
+      }
+    )
+
   footnote_rows <-
     lapply(
       seq_along(footnote_ids),
@@ -1877,25 +1910,24 @@ create_footnotes_component_xml <- function(
         # Get the footnote marks for the subtitle
         if (!is.na(footnote_ids[x])) {
 
-          footnote_id_xml <- xml_r(
-            xml_rPr(
-              if (!is.null(cell_style[["cell_text"]][["font"]])) {
-                xml_r_font(
-                  ascii_font = cell_style[["cell_text"]][["font"]],
-                  ansi_font = cell_style[["cell_text"]][["font"]]
-                )
-              },
-              if (!is.null(cell_style[["cell_text"]][["color"]])) {
-                xml_color(color = cell_style[["cell_text"]][["color"]])
-              },
-              if (!is.null(cell_style[["cell_text"]][["size"]])) {
-                xml_sz(val = cell_style[["cell_text"]][["size"]])
-              },
-              xml_i(),
-              xml_baseline_adj(v_align = "superscript")
-            ),
-            xml_t(footnote_ids[x])
-          ) %>%
+          footnote_id_xml <-
+            xml_r(
+              xml_rPr(
+                if (!is.null(cell_style[["cell_text"]][["font"]])) {
+                  xml_r_font(
+                    ascii_font = cell_style[["cell_text"]][["font"]],
+                    ansi_font = cell_style[["cell_text"]][["font"]]
+                  )
+                },
+                if (!is.null(cell_style[["cell_text"]][["color"]])) {
+                  xml_color(color = cell_style[["cell_text"]][["color"]])
+                },
+                if (!is.null(cell_style[["cell_text"]][["size"]])) {
+                  xml_sz(val = cell_style[["cell_text"]][["size"]])
+                }
+              ),
+              xml_r(xml_raw(footnote_ids[x]))
+            ) %>%
             as_xml_node() %>%
             .[[1]]
 
@@ -1904,11 +1936,13 @@ create_footnotes_component_xml <- function(
               footnote_id_xml,
               .where = 1
             )
-
         }
-
-        footnote_content <- as.character(footnote_text_xml) %>%
-          paste0("<md_container>", ., "</md_container>")
+        footnote_content <-
+          paste0(
+            "<md_container>",
+            as.character(footnote_text_xml),
+            "</md_container>"
+          )
 
         as.character(
           xml_tr(
@@ -1936,7 +1970,6 @@ create_footnotes_component_xml <- function(
     )
 
   paste0(unlist(footnote_rows), collapse = "\n")
-
 }
 
 summary_rows_xml <- function(
