@@ -29,22 +29,32 @@ of \code{tab_options(footnotes.spec_ref = {spec})} or
 \section{Specification rules for the formatting of footnote marks}{
 
 
-Footnote marks can have the following types of formatting:
+A footnote spec consists of a string containing control characters for
+formatting. Not every type of formatting makes sense for footnote marks so
+the specification is purposefully constrained to the following:
 \itemize{
-\item as superscript text (use \code{"^"} character in spec) or regular-sized text
-residing on the baseline
+\item as superscript text (with the \code{"^"} control character) or regular-sized
+text residing on the baseline
 \item bold text (with \code{"b"}), italicized text (with \code{"i"}), or unstyled text
-(don't use \code{"b"} or \code{"i"})
-\item enclosure in parentheses (use \code{"("} character in spec) or square brackets
-(use \code{"["})
+(don't use either of the \code{"b"} or \code{"i"} control characters)
+\item enclosure in parentheses (use \code{"("} / \code{")"}) or square brackets (with
+\code{"["} / \code{"]"})
+\item a period following the mark (using \code{"."}); this is most commonly used in
+the table footer
 }
+
+With the aforementioned control characters we could, for instance, format
+the footnote marks to be superscript text in bold type with \code{"^b"}. We might
+want the marks in the footer to be regular-sized text in parentheses, so the
+spec could be either \code{"()"} or \code{"(x)"} (you can optionally use \code{"x"} as a
+helpful placeholder for the marks).
 }
 
 \section{Examples}{
 
 
 Use \code{\link{sza}} to create a \strong{gt} table, adding three footnotes. Call
-\code{opt_footnote_marks()} to specify which footnote marks to use.
+\code{opt_footnote_spec()} to specify how to format the footnote marks.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sza |>
   dplyr::filter(latitude == 30) |>
