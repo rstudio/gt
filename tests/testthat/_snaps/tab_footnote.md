@@ -89,7 +89,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0 {\f0\fs20 A footnote.}}\cell
+      \intbl {\f0 {\f0\fs20  A footnote.}}\cell
       
       \row
       
@@ -186,7 +186,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0 {\f0\fs20 A footnote.}}\cell
+      \intbl {\f0 {\f0\fs20  A footnote.}}\cell
       
       \row
       
@@ -283,7 +283,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0 {\f0\fs20 A footnote.\line {\super \i 1}A footnote.}}\cell
+      \intbl {\f0 {\f0\fs20  A footnote.\line {\super \i 1} A footnote.}}\cell
       
       \row
       
@@ -380,7 +380,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0 {\f0\fs20 A footnote. A second footnote. {\super \i 1}location note}}\cell
+      \intbl {\f0 {\f0\fs20  A footnote.  A second footnote. {\super \i 1} location note}}\cell
       
       \row
       
@@ -546,7 +546,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0 {\f0\fs20 {\super \i 1}The Pepper-Salami.}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} The Pepper-Salami.}}\cell
       
       \row
       
