@@ -765,13 +765,31 @@ footnote_mark_to_rtf <- function(
 
   location <- match.arg(location)
 
-  stopifnot(length(mark) == 1)
-
-  if (is.na(mark)) {
-    ""
-  } else {
-    rtf_paste0(rtf_raw("{\\super \\i "), mark, rtf_raw("}"))
+  if (length(mark) == 1 && is.na(mark)) {
+    return("")
   }
+
+  spec <- get_footnote_spec_by_location(data = data, location = location)
+
+  if (is.null(spec)) {
+    spec <- "^i"
+  }
+
+  if (grepl("\\(|\\[", spec)) mark <- paste0("(", mark)
+  if (grepl("\\)|\\]", spec)) mark <- paste0(mark, ")")
+
+  rtf_paste0(
+    rtf_raw(
+      paste0(
+      "{",
+      if (grepl("\\^", spec)) "\\super " else NULL,
+      if (grepl("i", spec)) "\\i " else NULL,
+      if (grepl("b", spec)) "\\b " else NULL
+      )
+    ),
+    mark,
+    rtf_raw("}")
+  )
 }
 
 escape_rtf <- function(text) {
@@ -1928,6 +1946,7 @@ generate_notes_list <- function(
               mark = footnote_mark[i],
               location = "ftr"
             ),
+            " ",
             rtf_raw(footnote_text[i])
           )
         )
