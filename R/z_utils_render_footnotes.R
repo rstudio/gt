@@ -439,7 +439,8 @@ set_footnote_marks_columns <- function(data, context = "html") {
           apply_footnotes_method[[context]](
             text,
             footnotes_dispatch[[context]](
-              footnotes_columns_group_marks$fs_id_coalesced[i]
+              data = data,
+              mark = footnotes_columns_group_marks$fs_id_coalesced[i]
             )
           )
 
@@ -472,7 +473,8 @@ set_footnote_marks_columns <- function(data, context = "html") {
             boxh$column_label[
               boxh$var == footnotes_columns_column_marks$colname[i]][[1]],
             footnotes_dispatch[[context]](
-              footnotes_columns_column_marks$fs_id_coalesced[i]
+              data = data,
+              mark = footnotes_columns_column_marks$fs_id_coalesced[i]
             )
           )
 
@@ -520,9 +522,13 @@ set_footnote_marks_stubhead <- function(data, context = "html") {
 
 
       label <-
-        paste0(label, footnotes_dispatch[[context]](footnotes_stubhead_marks))
-
-      # label <- apply_footnotes_method[[context]](label, footnotes_dispatch[[context]](footnotes_stubhead_marks))
+        paste0(
+          label,
+          footnotes_dispatch[[context]](
+            data = data,
+            mark = footnotes_stubhead_marks
+          )
+        )
     }
   }
 
@@ -584,7 +590,10 @@ apply_footnotes_to_output <- function(data, context = "html") {
         )
 
       mark <-
-        footnotes_dispatch[[context]](footnotes_data_marks$fs_id_coalesced[i])
+        footnotes_dispatch[[context]](
+          data = data,
+          mark = footnotes_data_marks$fs_id_coalesced[i]
+        )
 
       if (footnote_placement == "right") {
 
@@ -651,8 +660,6 @@ set_footnote_marks_row_groups <- function(data, context = "html") {
       dplyr::select(grpname, fs_id_coalesced) %>%
       dplyr::distinct()
 
-    fn <- footnotes_dispatch[[context]]
-
     for (i in seq(nrow(footnotes_row_groups_marks))) {
 
       row_index <-
@@ -661,7 +668,10 @@ set_footnote_marks_row_groups <- function(data, context = "html") {
       groups_rows_df[row_index, "group_label"] <-
         apply_footnotes_method[[context]](
           groups_rows_df[row_index, "group_label"],
-          fn(footnotes_row_groups_marks$fs_id_coalesced[i])
+          footnotes_dispatch[[context]](
+            data = data,
+            mark = footnotes_row_groups_marks$fs_id_coalesced[i]
+          )
         )
     }
   }
@@ -703,7 +713,10 @@ apply_footnotes_to_summary <- function(data, context = "html") {
         apply_footnotes_method[[context]](
           summary_df_list[[footnotes_data_marks[i, ][["grpname"]]]][[
             footnotes_data_marks$row[i], footnotes_data_marks$colname[i]]],
-          footnotes_dispatch[[context]](footnotes_data_marks$fs_id_coalesced[i])
+          footnotes_dispatch[[context]](
+            data = data,
+            mark = footnotes_data_marks$fs_id_coalesced[i]
+          )
         )
     }
 
@@ -727,11 +740,16 @@ apply_footnotes_to_summary <- function(data, context = "html") {
     for (i in seq(nrow(footnotes_data_marks))) {
 
       summary_df_list[[grand_summary_col]][[
-        footnotes_data_marks$rownum[i], footnotes_data_marks$colname[i]]] <-
+        footnotes_data_marks$rownum[i], footnotes_data_marks$colname[i]
+      ]] <-
         apply_footnotes_method[[context]](
           summary_df_list[[grand_summary_col]][[
             footnotes_data_marks$rownum[i], footnotes_data_marks$colname[i]]],
-          footnotes_dispatch[[context]](footnotes_data_marks$fs_id_coalesced[i]))
+          footnotes_dispatch[[context]](
+            data = data,
+            mark = footnotes_data_marks$fs_id_coalesced[i]
+          )
+        )
     }
 
     list_of_summaries$summary_df_display_list[[grand_summary_col]] <-
