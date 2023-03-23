@@ -29,21 +29,11 @@ footnote_mark_to_html <- function(
 
   is_sup <- grepl("\\^", spec)
 
-  if (grepl("\\.", spec)) {
-    mark <- paste0(mark, ".")
-  }
-
-  if (grepl("\\(", spec)) {
-    mark <- paste0("(", mark)
-  } else if (grepl("\\[", spec)) {
-    mark <- paste0("[", mark)
-  }
-
-  if (grepl("\\)", spec)) {
-    mark <- paste0(mark, ")")
-  } else if (grepl("\\]", spec)) {
-    mark <- paste0(mark, "]")
-  }
+  if (grepl("\\.", spec)) mark <- paste0(mark, ".")
+  if (grepl("\\(", spec)) mark <- paste0("(", mark)
+  if (grepl("\\[", spec)) mark <- paste0("[", mark)
+  if (grepl("\\)", spec)) mark <- paste0(mark, ")")
+  if (grepl("\\]", spec)) mark <- paste0(mark, "]")
 
   if (grepl("i", spec)) {
     font_style <- "italic"
