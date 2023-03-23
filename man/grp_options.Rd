@@ -137,6 +137,8 @@ grp_options(
   footnotes.border.lr.width = NULL,
   footnotes.border.lr.color = NULL,
   footnotes.marks = NULL,
+  footnotes.spec_ref = NULL,
+  footnotes.spec_ftr = NULL,
   footnotes.multiline = NULL,
   footnotes.sep = NULL,
   source_notes.background.color = NULL,
@@ -349,7 +351,7 @@ the \code{footnotes} location.}
 
 \item{footnotes.marks}{The set of sequential marks used to reference and
 identify each of the footnotes (same input as the \code{\link[=opt_footnote_marks]{opt_footnote_marks()}}
-function. We can supply a vector that represents the series of footnote
+function). We can supply a vector that represents the series of footnote
 marks. This vector is recycled when its usage goes beyond the length of the
 set. At each cycle, the marks are simply combined (e.g., \code{*} -> \verb{**} ->
 \verb{***}). The option exists for providing keywords for certain types of
@@ -358,6 +360,15 @@ want to use numeric marks). We can use lowercase \code{"letters"} or uppercase
 \code{"LETTERS"}. There is the option for using a traditional symbol set where
 \code{"standard"} provides four symbols, and, \code{"extended"} adds two more
 symbols, making six.}
+
+\item{footnotes.spec_ref, footnotes.spec_ftr}{Optional specifications for
+formatting of footnote references (\code{footnotes.spec_ref}) and their
+associated marks the footer section (\code{footnotes.spec_ftr}) (same input as
+the \code{\link[=opt_footnote_spec]{opt_footnote_spec()}} function). This is a string containing
+specification control characters. The default is the spec string \code{"^i"},
+which is superscript text set in italics. Other control characters that can
+be used are: (1) \code{"b"} for bold text, and (2) \code{"("} / \code{")"} for the
+enclosure of footnote marks in parentheses.}
 
 \item{footnotes.multiline, source_notes.multiline}{An option to either put
 footnotes and source notes in separate lines (the default, or \code{TRUE}) or

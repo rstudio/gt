@@ -1145,7 +1145,12 @@ set_footnote <- function(loc, data, footnote, placement) {
   UseMethod("set_footnote")
 }
 
-set_footnote.cells_title <- function(loc, data, footnote, placement) {
+set_footnote.cells_title <- function(
+    loc,
+    data,
+    footnote,
+    placement
+) {
 
   title_components <- rlang::eval_tidy(loc$groups)
 
@@ -1182,7 +1187,12 @@ set_footnote.cells_title <- function(loc, data, footnote, placement) {
   data
 }
 
-set_footnote.cells_stubhead <- function(loc, data, footnote, placement) {
+set_footnote.cells_stubhead <- function(
+    loc,
+    data,
+    footnote,
+    placement
+) {
 
   data <-
     dt_footnotes_add(
@@ -1199,7 +1209,12 @@ set_footnote.cells_stubhead <- function(loc, data, footnote, placement) {
   data
 }
 
-set_footnote.cells_column_labels <- function(loc, data, footnote, placement) {
+set_footnote.cells_column_labels <- function(
+    loc,
+    data,
+    footnote,
+    placement
+) {
 
   resolved <- resolve_cells_column_labels(data = data, object = loc)
 
@@ -1222,7 +1237,12 @@ set_footnote.cells_column_labels <- function(loc, data, footnote, placement) {
   data
 }
 
-set_footnote.cells_column_spanners <- function(loc, data, footnote, placement) {
+set_footnote.cells_column_spanners <- function(
+    loc,
+    data,
+    footnote,
+    placement
+) {
 
   resolved <- resolve_cells_column_spanners(data = data, object = loc)
 
@@ -1243,7 +1263,12 @@ set_footnote.cells_column_spanners <- function(loc, data, footnote, placement) {
   data
 }
 
-set_footnote.cells_row_groups <- function(loc, data, footnote, placement) {
+set_footnote.cells_row_groups <- function(
+    loc,
+    data,
+    footnote,
+    placement
+) {
 
   row_groups <- dt_row_groups_get(data = data)
 
@@ -1272,7 +1297,12 @@ set_footnote.cells_row_groups <- function(loc, data, footnote, placement) {
   data
 }
 
-set_footnote.cells_body <- function(loc, data, footnote, placement) {
+set_footnote.cells_body <- function(
+    loc,
+    data,
+    footnote,
+    placement
+) {
 
   resolved <- resolve_cells_body(data = data, object = loc)
 
@@ -1295,7 +1325,12 @@ set_footnote.cells_body <- function(loc, data, footnote, placement) {
   data
 }
 
-set_footnote.cells_stub <- function(loc, data, footnote, placement) {
+set_footnote.cells_stub <- function(
+    loc,
+    data,
+    footnote,
+    placement
+) {
 
   resolved <- resolve_cells_stub(data = data, object = loc)
 
@@ -1316,7 +1351,12 @@ set_footnote.cells_stub <- function(loc, data, footnote, placement) {
   data
 }
 
-set_footnote.cells_summary <- function(loc, data, footnote, placement) {
+set_footnote.cells_summary <- function(
+    loc,
+    data,
+    footnote,
+    placement
+) {
 
   add_summary_location_row(
     loc = loc,
@@ -1327,7 +1367,12 @@ set_footnote.cells_summary <- function(loc, data, footnote, placement) {
   )
 }
 
-set_footnote.cells_grand_summary <- function(loc, data, footnote, placement) {
+set_footnote.cells_grand_summary <- function(
+    loc,
+    data,
+    footnote,
+    placement
+) {
 
   add_grand_summary_location_row(
     loc = loc,
@@ -1338,7 +1383,12 @@ set_footnote.cells_grand_summary <- function(loc, data, footnote, placement) {
   )
 }
 
-set_footnote.cells_stub_summary <- function(loc, data, footnote, placement) {
+set_footnote.cells_stub_summary <- function(
+    loc,
+    data,
+    footnote,
+    placement
+) {
 
   add_summary_location_row(
     loc = loc,
@@ -1349,7 +1399,12 @@ set_footnote.cells_stub_summary <- function(loc, data, footnote, placement) {
   )
 }
 
-set_footnote.cells_stub_grand_summary <- function(loc, data, footnote, placement) {
+set_footnote.cells_stub_grand_summary <- function(
+    loc,
+    data,
+    footnote,
+    placement
+) {
 
   add_grand_summary_location_row(
     loc = loc,
@@ -1360,18 +1415,22 @@ set_footnote.cells_stub_grand_summary <- function(loc, data, footnote, placement
   )
 }
 
-set_footnote.cells_source_notes <- function(loc, data, footnote, placement) {
-
+set_footnote.cells_source_notes <- function(
+    loc,
+    data,
+    footnote,
+    placement
+) {
   cli::cli_abort("Footnotes cannot be applied to source notes.")
-
-  data
 }
 
-set_footnote.cells_footnotes <- function(loc, data, footnote, placement) {
-
+set_footnote.cells_footnotes <- function(
+    loc,
+    data,
+    footnote,
+    placement
+) {
   cli::cli_abort("Footnotes cannot be applied to other footnotes.")
-
-  data
 }
 
 #' Add a source note citation
@@ -2140,7 +2199,7 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   the `footnotes` location.
 #' @param footnotes.marks The set of sequential marks used to reference and
 #'   identify each of the footnotes (same input as the [opt_footnote_marks()]
-#'   function. We can supply a vector that represents the series of footnote
+#'   function). We can supply a vector that represents the series of footnote
 #'   marks. This vector is recycled when its usage goes beyond the length of the
 #'   set. At each cycle, the marks are simply combined (e.g., `*` -> `**` ->
 #'   `***`). The option exists for providing keywords for certain types of
@@ -2149,6 +2208,14 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   `"LETTERS"`. There is the option for using a traditional symbol set where
 #'   `"standard"` provides four symbols, and, `"extended"` adds two more
 #'   symbols, making six.
+#' @param footnotes.spec_ref,footnotes.spec_ftr Optional specifications for
+#'   formatting of footnote references (`footnotes.spec_ref`) and their
+#'   associated marks the footer section (`footnotes.spec_ftr`) (same input as
+#'   the [opt_footnote_spec()] function). This is a string containing
+#'   specification control characters. The default is the spec string `"^i"`,
+#'   which is superscript text set in italics. Other control characters that can
+#'   be used are: (1) `"b"` for bold text, and (2) `"("` / `")"` for the
+#'   enclosure of footnote marks in parentheses.
 #' @param footnotes.multiline,source_notes.multiline An option to either put
 #'   footnotes and source notes in separate lines (the default, or `TRUE`) or
 #'   render them as a continuous line of text with `footnotes.sep` providing the
@@ -2507,6 +2574,8 @@ tab_options <- function(
     footnotes.border.lr.width = NULL,
     footnotes.border.lr.color = NULL,
     footnotes.marks = NULL,
+    footnotes.spec_ref = NULL,
+    footnotes.spec_ftr = NULL,
     footnotes.multiline = NULL,
     footnotes.sep = NULL,
     source_notes.background.color = NULL,

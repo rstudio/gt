@@ -629,6 +629,8 @@ grp_options <- function(
     footnotes.border.lr.width = NULL,
     footnotes.border.lr.color = NULL,
     footnotes.marks = NULL,
+    footnotes.spec_ref = NULL,
+    footnotes.spec_ftr = NULL,
     footnotes.multiline = NULL,
     footnotes.sep = NULL,
     source_notes.background.color = NULL,
