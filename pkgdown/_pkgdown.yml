@@ -240,7 +240,7 @@ reference:
       (`info_paletteer()`), on currencies (`info_currencies()`), on
       all of the different locales supported in the formatter functions
       (`info_locales()`), and on our recommendations for which Google Fonts
-      to try in your tables.
+      to try in your tables (`info_google_fonts()`).
     contents:
     - info_date_style
     - info_time_style
