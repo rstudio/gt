@@ -24,9 +24,9 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/case-study-clinical-tables.html">Case Study: Clinical Tables</a>
     <a class="dropdown-item" href="../articles/case-study-gtcars.html">Case Study: gtcars</a>
     <a class="dropdown-item" href="../articles/creating-summary-lines.html">Creating Summary Lines</a>
-    <a class="dropdown-item" href="../articles/gt-clinicaltables.html">gt Clinical Tables</a>
     <a class="dropdown-item" href="../articles/gt-datasets.html">gt Datasets</a>
     <a class="dropdown-item" href="../articles/intro-creating-gt-tables.html">Introduction to Creating gt Tables</a>
   </div>
@@ -156,7 +156,7 @@
       </dl></div><div class="section level2">
       <h2 id="format-data">Format Data<a class="anchor" aria-label="anchor" href="#format-data"></a></h2>
       
-      <p class="section-desc"></p><p>Columns of data can be formatted with the <code>fmt_*()</code> functions. We can specify the rows of these columns quite precisely with the <code>rows</code> argument. We get to apply these functions exactly once to each data cell (last call wins). Need to do custom formatting? Use the <code><a href="../reference/fmt.html">fmt()</a></code> function and define your own formatter within (or, create a wrapper with <code><a href="../reference/fmt.html">fmt()</a></code> if you prefer).</p>
+      <p class="section-desc"></p><p>Columns of data can be formatted with the <code>fmt_*()</code> functions. We can specify the rows of these columns quite precisely with the <code>rows</code> argument. We get to apply these functions exactly once to each data cell (last call wins). Need to do custom formatting? Use the <code><a href="../reference/fmt.html">fmt()</a></code> function and define your own formatter within (or, create a wrapper with <code><a href="../reference/fmt.html">fmt()</a></code> if you prefer). The <code>sub_*()</code> functions allow you to perform substitution operations and <code><a href="../reference/data_color.html">data_color()</a></code> provides a lot of power for colorizing body cells based on their data values.</p>
 
       
     </div><div id="" class="section level2">
@@ -348,7 +348,7 @@
       </dl></div><div class="section level2">
       <h2 id="modify-columns">Modify Columns<a class="anchor" aria-label="anchor" href="#modify-columns"></a></h2>
       
-      <p class="section-desc"></p><p>The <code>cols_*()</code> functions allow for modifications that act on entire columns. This includes alignment of the data in columns (<code><a href="../reference/cols_align.html">cols_align()</a></code>), hiding columns from view (<code><a href="../reference/cols_hide.html">cols_hide()</a></code>), re-labeling the column labels (<code><a href="../reference/cols_label.html">cols_label()</a></code>), merging two columns together (<code>cols_merge*()</code>), moving columns around (<code>cols_move*()</code>).</p>
+      <p class="section-desc"></p><p>The <code>cols_*()</code> functions allow for modifications that act on entire columns. This includes alignment of the data in columns (<code><a href="../reference/cols_align.html">cols_align()</a></code>), hiding columns from view (<code><a href="../reference/cols_hide.html">cols_hide()</a></code>), re-labeling the column labels (<code><a href="../reference/cols_label.html">cols_label()</a></code>), merging two columns together (the <code>cols_merge*()</code> functions), and moving columns around (the <code>cols_move*()</code> functions).</p>
 
       
     </div><div id="" class="section level2">
@@ -496,7 +496,7 @@
       </dl></div><div class="section level2">
       <h2 id="helper-functions">Helper Functions<a class="anchor" aria-label="anchor" href="#helper-functions"></a></h2>
       
-      <p class="section-desc"></p><p>An assortment of helper functions is available in the <strong>gt</strong> package. The various <code>cells_*()</code> functions are used for targeting cells with the <code>locations</code> argument in the <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code>, <code><a href="../reference/tab_style.html">tab_style()</a></code>, and <code><a href="../reference/text_transform.html">text_transform()</a></code> functions. The <code>cells_styles()</code> function is used exclusively with <code><a href="../reference/tab_style.html">tab_style()</a></code>’s <code>style</code> argument (and the <code><a href="../reference/px.html">px()</a></code> &amp; <code><a href="../reference/pct.html">pct()</a></code> functions may be useful there for specifying units in pixels or percentages). The <code><a href="../reference/md.html">md()</a></code> and <code><a href="../reference/html.html">html()</a></code> helpers can used be during label creation with the <code><a href="../reference/tab_header.html">tab_header()</a></code>, <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code>, <code><a href="../reference/tab_spanner.html">tab_spanner()</a></code>, <code>tab_stubhead_label()</code>, and <code><a href="../reference/tab_source_note.html">tab_source_note()</a></code> functions.</p>
+      <p class="section-desc"></p><p>An assortment of helper functions is available in the <strong>gt</strong> package. The various <code>cells_*()</code> functions are used for targeting cells with the <code>locations</code> argument in the <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code>, <code><a href="../reference/tab_style.html">tab_style()</a></code>, and <code><a href="../reference/text_transform.html">text_transform()</a></code> functions. The <code>cell_*()</code> functions are used exclusively with <code><a href="../reference/tab_style.html">tab_style()</a></code>’s <code>style</code> argument. The <code><a href="../reference/px.html">px()</a></code> &amp; <code><a href="../reference/pct.html">pct()</a></code> functions are useful there for specifying units in pixels or percentages. The <code><a href="../reference/md.html">md()</a></code> and <code><a href="../reference/html.html">html()</a></code> helpers can used be during label creation with the <code><a href="../reference/tab_header.html">tab_header()</a></code>, <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code>, <code><a href="../reference/tab_spanner.html">tab_spanner()</a></code>, <code>tab_stubhead_label()</code>, and <code><a href="../reference/tab_source_note.html">tab_source_note()</a></code> functions.</p>
 
       
     </div><div id="" class="section level2">
@@ -678,7 +678,7 @@
       </dl></div><div class="section level2">
       <h2 id="table-option-functions">Table Option Functions<a class="anchor" aria-label="anchor" href="#table-option-functions"></a></h2>
       
-      <p class="section-desc"></p><p>With the <code>opt_*()</code> functions, we have an easy way to set commonly-used table options without having to use <code><a href="../reference/tab_options.html">tab_options()</a></code> directly. For instance, we can modify the set of marks to use with footnotes, turn on row striping, change the alignment of the table header, and much more.</p>
+      <p class="section-desc"></p><p>With the <code>opt_*()</code> functions, we have an easy way to set commonly-used table options without having to use <code><a href="../reference/tab_options.html">tab_options()</a></code> directly. Like, we can quickly add a stylizing theme with <code><a href="../reference/opt_stylize.html">opt_stylize()</a></code>, get an interactive HTML table with <code><a href="../reference/opt_interactive.html">opt_interactive()</a></code>, modify the appearance of footnote marks with <code><a href="../reference/opt_footnote_marks.html">opt_footnote_marks()</a></code> and <code><a href="../reference/opt_footnote_spec.html">opt_footnote_spec()</a></code>, turn on row striping, change the alignment of the table header, and so much more.</p>
 
       
     </div><div id="" class="section level2">
@@ -754,7 +754,7 @@
       </dl></div><div class="section level2">
       <h2 id="information-functions">Information Functions<a class="anchor" aria-label="anchor" href="#information-functions"></a></h2>
       
-      <p class="section-desc"></p><p>These <code>info_*()</code> functions present us with <strong>gt</strong> tables containing useful information. So far, we can get reference information on date styles (<code><a href="../reference/info_date_style.html">info_date_style()</a></code>), on time styles (<code><a href="../reference/info_time_style.html">info_time_style()</a></code>), on a huge number of color palettes (<code><a href="../reference/info_paletteer.html">info_paletteer()</a></code>), on currencies (<code><a href="../reference/info_currencies.html">info_currencies()</a></code>), on all of the different locales supported in the formatter functions (<code><a href="../reference/info_locales.html">info_locales()</a></code>), and on our recommendations for which Google Fonts to try in your tables.</p>
+      <p class="section-desc"></p><p>These <code>info_*()</code> functions present us with <strong>gt</strong> tables containing useful information. So far, we can get reference information on date styles (<code><a href="../reference/info_date_style.html">info_date_style()</a></code>), on time styles (<code><a href="../reference/info_time_style.html">info_time_style()</a></code>), on a huge number of color palettes (<code><a href="../reference/info_paletteer.html">info_paletteer()</a></code>), on currencies (<code><a href="../reference/info_currencies.html">info_currencies()</a></code>), on all of the different locales supported in the formatter functions (<code><a href="../reference/info_locales.html">info_locales()</a></code>), and on our recommendations for which Google Fonts to try in your tables (<code><a href="../reference/info_google_fonts.html">info_google_fonts()</a></code>).</p>
 
       
     </div><div id="" class="section level2">
@@ -816,7 +816,7 @@
       </dl></div><div class="section level2">
       <h2 id="export-functions">Export Functions<a class="anchor" aria-label="anchor" href="#export-functions"></a></h2>
       
-      <p class="section-desc"></p><p>There may come a day when you need to export a <strong>gt</strong> table to some specific format. A great function for that is <code><a href="../reference/gtsave.html">gtsave()</a></code>, which allows us to save as an HTML file or an image file. Some other functions give us table code as a character vector (e.g., <code><a href="../reference/as_raw_html.html">as_raw_html()</a></code>). Did you use the <code><a href="../reference/summary_rows.html">summary_rows()</a></code> function and wish you had that summary data in a tibble? You can get it out with <code><a href="../reference/extract_summary.html">extract_summary()</a></code>.</p>
+      <p class="section-desc"></p><p>There may come a day when you need to export a <strong>gt</strong> table to some specific format. A great function for that is <code><a href="../reference/gtsave.html">gtsave()</a></code>, which allows us to save as an HTML file or an image file. Some other functions give us table code as a character vector (e.g., <code><a href="../reference/as_raw_html.html">as_raw_html()</a></code>). Did you use the <code><a href="../reference/summary_rows.html">summary_rows()</a></code> function and wish you had that summary data in a tibble? You can get it out with <code><a href="../reference/extract_summary.html">extract_summary()</a></code>. Want to extract already-formatted cells from the table into a vector? Do it with <code><a href="../reference/extract_cells.html">extract_cells()</a></code>!</p>
 
       
     </div><div id="" class="section level2">
@@ -862,7 +862,7 @@
       </dl></div><div class="section level2">
       <h2 id="table-group-functions">Table Group Functions<a class="anchor" aria-label="anchor" href="#table-group-functions"></a></h2>
       
-      <p class="section-desc"></p><p>Sometimes you want to deal with a multitude of <strong>gt</strong> tables, all at once. There are some advantages to having a group of tables bundled together in a <code>gt_group</code> object. You could apply options that pertain to all tables yet still access the individual tables to give them their own specialized modifications. They all print together at once too! For HTML, each table will be separated by a line break whereas in paginated formats the tables are separated by page breaks.</p>
+      <p class="section-desc"></p><p>Sometimes you want to deal with a multitude of <strong>gt</strong> tables, all at once. There are some advantages to having a group of tables bundled together in a <code>gt_group</code> object. You could apply options that pertain to all tables yet still access the individual tables to give them their own specialized modifications. They all print altogether at once too! For HTML, each table will be separated by a line break whereas in paginated formats the tables are separated by page breaks.</p>
 
       
     </div><div id="" class="section level2">
