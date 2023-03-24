@@ -25,7 +25,7 @@ within the \code{gt_group} object.
 }
 \section{Function ID}{
 
-14-2
+14-3
 }
 
 \section{Function Introduced}{
@@ -34,12 +34,13 @@ within the \code{gt_group} object.
 }
 
 \seealso{
-Other multiple-table functions: 
+Other table group functions: 
 \code{\link{grp_add}()},
 \code{\link{grp_clone}()},
 \code{\link{grp_options}()},
 \code{\link{grp_replace}()},
 \code{\link{grp_rm}()},
-\code{\link{gt_group}()}
+\code{\link{gt_group}()},
+\code{\link{gt_split}()}
 }
-\concept{multiple-table functions}
+\concept{table group functions}

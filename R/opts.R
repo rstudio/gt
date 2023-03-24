@@ -344,7 +344,7 @@ opt_interactive <- function(
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @details
+#' @section Specification of footnote marks:
 #'
 #' We can supply a vector of that will represent the series of marks.
 #' The series of footnote marks is recycled when its usage goes beyond the
@@ -424,7 +424,7 @@ opt_interactive <- function(
 #' @export
 opt_footnote_marks <- function(
     data,
-    marks
+    marks = "numbers"
 ) {
 
   # Perform input object validation
@@ -434,6 +434,116 @@ opt_footnote_marks <- function(
   validate_marks(marks)
 
   tab_options(data = data, footnotes.marks = marks)
+}
+
+#' Option to specify the formatting of footnote marks
+#'
+#' @description
+#'
+#' Modify the way footnote marks are formatted. This can be performed for those
+#' footnote marks that alight to the targeted text in cells in various locations
+#' in the table or the footnote marks that appear in the table footer. A simple
+#' specification string can be provided for either or both types of marks in
+#' `opt_footnote_spec()` . This function serves as a shortcut for using either
+#' of `tab_options(footnotes.spec_ref = {spec})` or
+#' `tab_options(footnotes.spec_ftr = {spec})`.
+#'
+#' @inheritParams fmt_number
+#' @param spec_ref,spec_ftr Specification of the footnote marks when behaving as
+#'   footnote references and as marks in the footer section of the table. This
+#'   is a string containing spec characters. The default is the spec string
+#'   `"^i"`, which is superscript text set in italics.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Specification rules for the formatting of footnote marks:
+#'
+#' A footnote spec consists of a string containing control characters for
+#' formatting. Not every type of formatting makes sense for footnote marks so
+#' the specification is purposefully constrained to the following:
+#'
+#' - as superscript text (with the `"^"` control character) or regular-sized
+#' text residing on the baseline
+#' - bold text (with `"b"`), italicized text (with `"i"`), or unstyled text
+#' (don't use either of the `"b"` or `"i"` control characters)
+#' - enclosure in parentheses (use `"("` / `")"`) or square brackets (with
+#' `"["` / `"]"`)
+#' - a period following the mark (using `"."`); this is most commonly used in
+#' the table footer
+#'
+#' With the aforementioned control characters we could, for instance, format
+#' the footnote marks to be superscript text in bold type with `"^b"`. We might
+#' want the marks in the footer to be regular-sized text in parentheses, so the
+#' spec could be either `"()"` or `"(x)"` (you can optionally use `"x"` as a
+#' helpful placeholder for the marks).
+#'
+#' @section Examples:
+#'
+#' Use [`sp500`] to create a **gt** table, adding two footnotes. We can call
+#' `opt_footnote_spec()` to specify that the marks of the footnote reference
+#' should be superscripts in bold, and, the marks in the footer section should
+#' be enclosed in parentheses.
+#'
+#' ```r
+#' sp500 |>
+#'   dplyr::filter(date >= "1987-10-14" & date <= "1987-10-25") |>
+#'   dplyr::select(date, open, close, volume) |>
+#'   dplyr::mutate(difference = close - open) |>
+#'   dplyr::mutate(change = (close - open) / open) |>
+#'   dplyr::mutate(day = vec_fmt_datetime(date, format = "E")) |>
+#'   dplyr::arrange(-dplyr::row_number()) |>
+#'   gt(rowname_col = "date") |>
+#'   fmt_currency() |>
+#'   fmt_number(columns = volume, suffixing = TRUE) |>
+#'   fmt_percent(columns = change) |>
+#'   cols_move_to_start(columns = day) |>
+#'   cols_width(
+#'     stub() ~ px(130),
+#'     day ~ px(50),
+#'     everything() ~ px(100)
+#'   ) |>
+#'   tab_footnote(
+#'     footnote = "Commerce report on trade deficit.",
+#'     locations = cells_stub(rows = 1)
+#'   ) |>
+#'   tab_footnote(
+#'     footnote = "Black Monday market crash, representing the greatest
+#'     one-day percentage decline in U.S. stock market history.",
+#'     locations = cells_body(columns = change, rows = change < -0.15)
+#'   ) |>
+#'   opt_footnote_spec(spec_ref = "^xb", spec_ftr = "(x)")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_opt_footnote_spec_1.png")`
+#' }}
+#'
+#' @family table option functions
+#' @section Function ID:
+#' 10-4
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @export
+opt_footnote_spec <- function(
+    data,
+    spec_ref = NULL,
+    spec_ftr = NULL
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  if (!is.null(spec_ref)) {
+    data <- tab_options(data = data, footnotes.spec_ref = spec_ref)
+  }
+
+  if (!is.null(spec_ftr)) {
+    data <- tab_options(data = data, footnotes.spec_ftr = spec_ftr)
+  }
+
+  data
 }
 
 #' Option to add or remove row striping
@@ -487,7 +597,7 @@ opt_footnote_marks <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 10-4
+#' 10-5
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -559,7 +669,7 @@ opt_row_striping <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 10-5
+#' 10-6
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -642,7 +752,7 @@ opt_align_table_header <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 10-6
+#' 10-7
 #'
 #' @section Function Introduced:
 #' `v0.4.0` (February 15, 2022)
@@ -725,7 +835,7 @@ opt_vertical_padding <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 10-7
+#' 10-8
 #'
 #' @section Function Introduced:
 #' `v0.4.0` (February 15, 2022)
@@ -843,7 +953,7 @@ get_padding_option_value_list <- function(scale, type) {
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 10-8
+#' 10-9
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -948,7 +1058,7 @@ opt_all_caps <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 10-9
+#' 10-10
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1048,7 +1158,7 @@ opt_table_lines <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 10-10
+#' 10-11
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1190,7 +1300,7 @@ opt_table_outline <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 10-11
+#' 10-12
 #'
 #' @section Function Introduced:
 #' `v0.2.2` (August 5, 2020)
@@ -1323,7 +1433,7 @@ opt_table_font <- function(
 #'
 #' @family table option functions
 #' @section Function ID:
-#' 10-12
+#' 10-13
 #'
 #' @section Function Introduced:
 #' `v0.2.2` (August 5, 2020)

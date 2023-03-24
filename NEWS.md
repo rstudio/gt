@@ -10,6 +10,8 @@
 
 * The `cols_label()` function has been improved by allowing formula expressions to be given to `...`. With two-sided formulas (e.g., `<LHS> ~ <RHS>`), the left-hand side corresponds to selections of columns and the right-hand side evaluates to single-length values for the label to apply. Named arguments in the format of `<column name> = <label>` are still also valid as input for simple mappings of column name to label text. (#1255, #1256)
 
+* Added the footnote formatting options `footnotes.spec_ref` and `footnotes.spec_ftr` in `tab_options()` and exposed these options further in a new function called `opt_footnote_spec()`. Specifications for footnote formatting can be produced for the footnote marks that alight to the targeted text within cells from various locations in the table, or, for the footnote marks that appear in the table footer. (#1268)
+
 * A new function, `cols_label_with()`, has been added for relabeling columns via functions. It allows for such functions to be applied to arbitrary sets of columns, taking advantage of **tidyselect**. It's like `dplyr::rename_with()` for your **gt** table, but it doesn't need unique names for labeling (#701). (#1158, thank you @christopherkenny!)
 
 * We added `fmt_spelled_num()` and `vec_fmt_spelled_num()` so that numeric values could be transformed to spelled out numbers. Any values from `0` to `100` can be spelled out according to a given `locale` value. For example, the value `23` will be rendered as `"twenty-three"` if the locale is an English-language one (or, not provided at all); should a Swedish locale be provided (e.g., `"sv"`), the output will instead be `"tjugotre"`. (#1198)
@@ -31,7 +33,7 @@ diacritical marks). (#1189)
 
 * Interactive HTML tables are now possible to generate in **gt**. Options for enabling interactive table rendering are available in `tab_options()` and also in `opt_interactive()`. The collection of `use_*` arguments in `opt_interactive()` allow for control of pagination, global search, filtering, sorting, and more. The documentation within `opt_interactive()` demonstrates how to generate HTML tables with interactive elements (#207). (#902, #1252)
 
-* We now have a new family of functions that let you deal with a multitude of **gt** tables, all at once. You can create a `gt_group` object with multiple tables via the `gt_group()` function, or, split a single table into multiple with `gt_splitter()`. There are some advantages to having a group of tables bundled together like this. You could apply options that pertain to all tables yet still access the individual tables to give them their own specialized modifications. They all print together at once too! For HTML, each table will be separated by a line break whereas in paginated formats (e.g., RTF, Word, etc.) the tables are separated by page breaks. (#1216, #1219, #1226, #1248, #1249)
+* We now have a new family of functions that let you deal with a multitude of **gt** tables, all at once. You can create a `gt_group` object with multiple tables via the `gt_group()` function, or, split a single table into multiple with `gt_split()`. There are some advantages to having a group of tables bundled together like this. You could apply options that pertain to all tables yet still access the individual tables to give them their own specialized modifications. They all print together at once too! For HTML, each table will be separated by a line break whereas in paginated formats (e.g., RTF, Word, etc.) the tables are separated by page breaks. (#1216, #1219, #1226, #1248, #1249, #1264)
 
 * The `towny` dataset was added. It provides a fun, population-based dataset with place names, URLs, coordinate information, and population figures with repetition (values for different census years). (#1184, #1199)
 
@@ -43,7 +45,7 @@ diacritical marks). (#1189)
 
 * For any columns that are labeled (i.e., have a `label` attribute), **gt** will automatically use those labels as column labels (#656). (#1230)
 
-* There is now a choice of which Markdown engine to use for Markdown rendering (in `fmt_markdown()` and `vec_fmt_markdown()`) and a default default choice. The **markdown** package can be chosen instead of **commonmark** to perform conversions of Markdown to HTML and LaTeX (and it's now the default). One of many benefits to this change is the parsing of subscripts and superscripts (#725). (#1254)
+* There is now a choice of which Markdown engine to use for Markdown rendering (in `fmt_markdown()` and `vec_fmt_markdown()`) and a default default choice. The **markdown** package can be chosen instead of **commonmark** to perform conversions of Markdown to HTML and LaTeX (and it's now the default). One of many benefits to this change is the parsing of subscripts (using `~x~`) and superscripts (using `^x^`) (#725). (#1254)
 
 ## Documentation enhancements
 
@@ -51,7 +53,7 @@ diacritical marks). (#1189)
 
 * All examples in the documentation were modernized by using the `|>` instead of the `%>%`. A lot of explanatory text was improved through rewriting. The ordering of documentation sections was improved. And functions that had very little documentation (like `text_transform()`) were greatly improved (#1087). (#1166, #1185, #1192)
 
-* Several small documentation and housekeeping updates. (#1134, #1135, #1136, #1190, #1206, #1242, #1246, #1258)
+* Several small documentation and housekeeping updates. (#1134, #1135, #1136, #1190, #1206, #1242, #1246, #1258, #1266, #1270)
 
 * Added a citation file for the package. (#1128)
 
@@ -59,13 +61,15 @@ diacritical marks). (#1189)
 
 * The `fmt_scientific()` and `fmt_engineering()` (and their `vec_fmt_*()` analogues) now have a `exp_style` argument for defining the exponent notation. By default this is `"x10n"` but other options include using a single letter (e.g., "e", "E", etc.), a letter followed by a "1" to signal a minimum digit width of one, or "low-ten" for using a stylized "10" marker. These functions now also have the `force_sign_m` and `force_sign_n` arguments for forcing `+` signs in the mantissa or the exponent. (#1178)
 
+* Tables in the Word output format now have much better Markdown support (#1057, #1067). (#1263)
+
 * Added the `"double"` option for a border style in `cell_borders()` (#1132). (#1137)
 
 * The `countrypops` dataset was updated with recent (as of January 2023) World Bank data that revises population estimates and brings the final year up to 2021. All examples, tests, and articles using the dataset were also updated. (#1191)
 
 * Fixed a conflict between `tab_spanner_delim()` and `cols_label()` (#1130). (#1173)
 
-* Add a fix for a `summary_rows()` problem where summary rows generated with only a single group would not display the summary rows at all. (#1188)
+* Added a fix for a `summary_rows()` problem where summary rows that were generated with only a single group would not display the summary rows at all. (#1188)
 
 * HTML output tables no longer have contain two `<thead>` elements they display a header and column labels (#1235). (#1237)
 

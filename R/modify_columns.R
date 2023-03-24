@@ -559,6 +559,8 @@ cols_width <- function(
 #'   the columns assigned previously will result in overwriting column width
 #'   values.
 #' @param .list Allows for the use of a list as an input alternative to `...`.
+#' @param .fn An option to specify a function that will be applied to all of the
+#'   provided label values.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -620,6 +622,33 @@ cols_width <- function(
 #' `r man_get_image_tag(file = "man_cols_label_2.png")`
 #' }}
 #'
+#' With the [`metro`] dataset, let's create a small **gt** table with three
+#' columns. We'd like to provide column labels that have line breaks. For that,
+#' we can use `<br>` to indicate where the line breaks should be. We also need
+#' to use the [md()] helper function to signal to **gt** that this
+#' text should be interpreted as Markdown. Instead of calling [md()] on each of
+#' labels as before, we can more conveniently use the `.fn` argument and provide
+#' the bare function there (it will be applied to each label).
+#'
+#' ```r
+#' metro |>
+#'   dplyr::select(name, lines, passengers, connect_other) |>
+#'   dplyr::arrange(desc(passengers)) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt() |>
+#'   cols_hide(columns = passengers) |>
+#'   cols_label(
+#'     name = "Name of<br>Metro Station",
+#'     lines = "Metro<br>Lines",
+#'     connect_other = "Train<br>Services",
+#'     .fn = md
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_label_3.png")`
+#' }}
+#'
 #' Using [`towny`], we can create an interesting **gt** table. First, only
 #' certain columns are selected from the dataset, some filtering of rows is
 #' done, rows are sorted, and then only the first 10 rows are kept. When
@@ -653,7 +682,7 @@ cols_width <- function(
 #' ```
 #'
 #' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_cols_label_3.png")`
+#' `r man_get_image_tag(file = "man_cols_label_4.png")`
 #' }}
 #'
 #' @family column modification functions
@@ -668,7 +697,8 @@ cols_width <- function(
 cols_label <- function(
     .data,
     ...,
-    .list = list2(...)
+    .list = list2(...),
+    .fn = NULL
 ) {
 
   # Perform input object validation
@@ -738,6 +768,12 @@ cols_label <- function(
         )
 
       new_label <- rlang::eval_tidy(rlang::f_rhs(label_i))
+    }
+
+    if (!is.null(.fn)) {
+
+      # Invoke the supplied function on the `new_label` vector
+      new_label <- .fn(new_label)
     }
 
     for (j in seq_along(columns)) {

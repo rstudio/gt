@@ -60,7 +60,7 @@ can possibly be lines.
 
 \section{Function ID}{
 
-10-9
+10-10
 }
 
 \section{Function Introduced}{
@@ -74,6 +74,7 @@ Other table option functions:
 \code{\link{opt_all_caps}()},
 \code{\link{opt_css}()},
 \code{\link{opt_footnote_marks}()},
+\code{\link{opt_footnote_spec}()},
 \code{\link{opt_horizontal_padding}()},
 \code{\link{opt_interactive}()},
 \code{\link{opt_row_striping}()},

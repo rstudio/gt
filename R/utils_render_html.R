@@ -1,10 +1,22 @@
 #' Transform a footnote mark to an HTML representation
 #'
 #' @noRd
-footnote_mark_to_html <- function(mark) {
+footnote_mark_to_html <- function(
+    data,
+    mark,
+    location = c("ref", "ftr")
+) {
+
+  location <- match.arg(location)
 
   if (is.na(mark)) {
     return("")
+  }
+
+  spec <- get_footnote_spec_by_location(data = data, location = location)
+
+  if (is.null(spec)) {
+    spec <- "^i"
   }
 
   # Generate the CSS classes needed on the basis of whether the
@@ -15,12 +27,44 @@ footnote_mark_to_html <- function(mark) {
     sup_class <- "gt_footnote_marks gt_asterisk"
   }
 
-  as.character(
-    htmltools::tags$span(
-      class = sup_class,
-      style = htmltools::css(`white-space` = "nowrap"),
-      htmltools::tags$sup(mark)
-    )
+  is_sup <- grepl("\\^", spec)
+
+  if (grepl("\\.", spec)) mark <- paste0(mark, ".")
+  if (grepl("\\(", spec)) mark <- paste0("(", mark)
+  if (grepl("\\[", spec)) mark <- paste0("[", mark)
+  if (grepl("\\)", spec)) mark <- paste0(mark, ")")
+  if (grepl("\\]", spec)) mark <- paste0(mark, "]")
+
+  if (grepl("i", spec)) {
+    font_style <- "italic"
+  } else {
+    font_style <- "normal"
+  }
+
+  if (grepl("b", spec)) {
+    font_weight <- "bold"
+  } else {
+    font_weight <- "normal"
+  }
+
+  paste0(
+    "<span ",
+    if (is_sup) {
+      paste0("class=\"", sup_class, "\" ")
+    } else {
+      NULL
+    },
+    "style=\"",
+    "white-space:nowrap;",
+    "font-style:", font_style, ";",
+    "font-weight:", font_weight, ";",
+    "\">",
+    if (is_sup) {
+      paste0("<sup>", mark, "</sup>")
+    } else {
+      mark
+    },
+    "</span>"
   )
 }
 
@@ -232,7 +276,11 @@ create_heading_component_h <- function(data) {
         locname = "title"
       )
 
-    footnote_title_marks <- footnote_mark_to_html(mark = footnote_title_marks$fs_id_c)
+    footnote_title_marks <-
+      footnote_mark_to_html(
+        data = data,
+        mark = footnote_title_marks$fs_id_c
+      )
 
   } else {
     footnote_title_marks <- ""
@@ -263,7 +311,10 @@ create_heading_component_h <- function(data) {
       )
 
     footnote_subtitle_marks <-
-      footnote_mark_to_html(mark = footnote_subtitle_marks$fs_id_c)
+      footnote_mark_to_html(
+        data = data,
+        mark = footnote_subtitle_marks$fs_id_c
+      )
 
   } else {
     footnote_subtitle_marks <- ""
@@ -1517,7 +1568,11 @@ create_footnotes_component_h <- function(data) {
             htmltools::tagList(
               htmltools::HTML(
                 paste0(
-                  footnote_mark_to_html(x),
+                  footnote_mark_to_html(
+                    data = data,
+                    mark = x,
+                    location = "ftr"
+                  ),
                   " ",
                   process_text(footnote_text, context = "html")
                 ),

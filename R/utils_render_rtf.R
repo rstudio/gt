@@ -757,14 +757,39 @@ rtf_raw <- function(...) {
 }
 
 # Transform a footnote mark to an RTF representation as a superscript
-footnote_mark_to_rtf <- function(mark) {
-  stopifnot(length(mark) == 1)
+footnote_mark_to_rtf <- function(
+    data,
+    mark,
+    location = c("ref", "ftr")
+) {
 
-  if (is.na(mark)) {
-    ""
-  } else {
-    rtf_paste0(rtf_raw("{\\super \\i "), mark, rtf_raw("}"))
+  location <- match.arg(location)
+
+  if (length(mark) == 1 && is.na(mark)) {
+    return("")
   }
+
+  spec <- get_footnote_spec_by_location(data = data, location = location)
+
+  if (is.null(spec)) {
+    spec <- "^i"
+  }
+
+  if (grepl("\\(|\\[", spec)) mark <- paste0("(", mark)
+  if (grepl("\\)|\\]", spec)) mark <- paste0(mark, ")")
+
+  rtf_paste0(
+    rtf_raw(
+      paste0(
+      "{",
+      if (grepl("\\^", spec)) "\\super " else NULL,
+      if (grepl("i", spec)) "\\i " else NULL,
+      if (grepl("b", spec)) "\\b " else NULL
+      )
+    ),
+    mark,
+    rtf_raw("}")
+  )
 }
 
 escape_rtf <- function(text) {
@@ -1791,6 +1816,7 @@ create_footer_component_rtf <- function(data) {
   # Generate a list containing formatted footnotes and source notes
   notes_list <-
     generate_notes_list(
+      data = data,
       footnotes_tbl = footnotes_tbl,
       source_notes_vec = source_notes_vec,
       footnotes_multiline = footnotes_multiline,
@@ -1861,6 +1887,7 @@ create_page_footer_component_rtf <- function(data) {
   # Generate a list containing formatted footnotes and source notes
   notes_list <-
     generate_notes_list(
+      data = data,
       footnotes_tbl = footnotes_tbl,
       source_notes_vec = source_notes_vec,
       footnotes_multiline = footnotes_multiline,
@@ -1879,6 +1906,7 @@ create_page_footer_component_rtf <- function(data) {
 }
 
 generate_notes_list <- function(
+    data,
     footnotes_tbl,
     source_notes_vec,
     footnotes_multiline,
@@ -1913,7 +1941,12 @@ generate_notes_list <- function(
         c(
           footnotes,
           rtf_paste0(
-            footnote_mark_to_rtf(footnote_mark[i]),
+            footnote_mark_to_rtf(
+              data = data,
+              mark = footnote_mark[i],
+              location = "ftr"
+            ),
+            " ",
             rtf_raw(footnote_text[i])
           )
         )

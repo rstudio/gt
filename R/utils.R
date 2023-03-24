@@ -512,7 +512,9 @@ process_text <- function(text, context = "html") {
           as.character(text),
           FUN.VALUE = character(1),
           USE.NAMES = FALSE,
-          FUN = md_engine_fn[[1]]
+          FUN = function(x) {
+            md_engine_fn[[1]](text = x)
+          }
         )
 
       text <- gsub("^<p>|</p>\n$", "", text)
@@ -648,7 +650,9 @@ md_to_html <- function(x, md_engine) {
         as.character(x[!is.na(x)]),
         FUN.VALUE = character(1),
         USE.NAMES = FALSE,
-        FUN = md_engine_fn[[1]]
+        FUN = function(x) {
+          md_engine_fn[[1]](text = x)
+        }
       )
 
     non_na_x <- tidy_gsub(non_na_x, "^", "<div class='gt_from_md'>")
@@ -703,9 +707,9 @@ markdown_to_latex <- function(text, md_engine) {
           }
 
           if (names(md_engine_fn) == "commonmark") {
-            tidy_gsub(md_engine_fn[[1]](x), "\\n$", "")
+            tidy_gsub(md_engine_fn[[1]](text = x), "\\n$", "")
           } else {
-            tidy_gsub(md_engine_fn[[1]](x, format = "latex"), "\\n$", "")
+            tidy_gsub(md_engine_fn[[1]](text = x, format = "latex"), "\\n$", "")
           }
         }
       )
@@ -2121,6 +2125,20 @@ column_classes_are_valid <- function(data, columns, valid_classes) {
 #
 #   print(x)
 # }
+
+get_footnote_spec_by_location <- function(
+    data,
+    location
+) {
+
+  if (location == "ref") {
+    spec <- dt_options_get_value(data = data, option = "footnotes_spec_ref")
+  } else {
+    spec <- dt_options_get_value(data = data, option = "footnotes_spec_ftr")
+  }
+
+  spec
+}
 
 man_get_image_tag <- function(file, dir = "images") {
 
