@@ -1471,18 +1471,90 @@ test_that("tables with cell & text coloring can be added to a word doc - with so
   )
 
   # TODO: fails due to PR#1268
-  # expect_equal(
-  #   lapply(docx_table_meta_info, function(x) {
-  #     x %>% xml2::xml_find_all(".//w:tc") %>% lapply(function(y) {
-  #       y %>% xml2::xml_find_all(".//w:color") %>% xml2::xml_attr(attr = "val")
-  #     })}),
-  #   list(
-  #     list("A020F0"),
-  #     list(c("A020F0", "A020F0")),
-  #     list("FFA500")
-  #     )
-  # )
+  expect_equal(
+    lapply(docx_table_meta_info, function(x) {
+      x %>% xml2::xml_find_all(".//w:tc") %>% lapply(function(y) {
+        y %>% xml2::xml_find_all(".//w:color") %>% xml2::xml_attr(attr = "val")
+      })}),
+    list(
+      list("A020F0"),
+      list(c("A020F0", "A020F0")),
+      list("FFA500")
+      )
+  )
+
 })
+
+test_that("footnotes styling gets applied to footer marks", {
+
+  check_suggests_xml()
+
+  ## simple table
+  gt_exibble_min <- exibble[1:2,] %>%
+    gt() %>%
+    tab_footnote("My Footnote") %>%
+    tab_footnote("My Footnote 2", locations = cells_column_labels(1)) %>%
+    opt_footnote_spec(spec_ftr = "(b)")
+
+  if (!testthat::is_testing() & interactive()) {
+    print(gt_exibble_min)
+  }
+
+  ## Add table to empty word document
+  word_doc <- officer::read_docx() %>%
+    body_add_gt(
+      gt_exibble_min,
+      align = "center"
+    )
+
+  ## save word doc to temporary file
+  temp_word_file <- tempfile(fileext = ".docx")
+  print(word_doc,target = temp_word_file)
+
+  ## Manual Review
+  if (!testthat::is_testing() & interactive()) {
+    shell.exec(temp_word_file)
+  }
+
+  ## Programmatic Review
+  docx <- officer::read_docx(temp_word_file)
+
+  ## get docx table contents
+  docx_contents <- docx$doc_obj$get() %>%
+    xml2::xml_children() %>%
+    xml2::xml_children()
+
+  docx_table_body_header <- docx_contents[1] %>%
+    xml2::xml_find_all(".//w:tblHeader/ancestor::w:tr")
+
+  docx_table_meta_info <- docx_contents[1] %>%
+    xml2::xml_find_all(".//w:tr") %>%
+    setdiff(docx_table_body_header) %>%
+    tail(2)
+
+  ## footer
+  expect_equal(
+    docx_table_meta_info %>% lapply(function(x) x %>% xml2::xml_find_all(".//w:t") %>% xml2::xml_text()),
+    list(
+      c("My Footnote"),
+      c("(1)", "My Footnote 2")
+    )
+  )
+
+  # Styling applied to bold text of footnote mark
+  expect_equal(
+    docx_table_meta_info[[2]] %>%
+      xml2::xml_find_all(".//w:tc") %>%
+      .[[1]] %>%
+      xml2::xml_find_all(".//w:rPr") %>%
+      .[[1]] %>%
+      as.character()
+    ,
+    "<w:rPr>\n  <w:vertAlign w:val=\"baseline\"/>\n  <w:b w:val=\"true\"/>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>"
+  )
+
+})
+
 
 test_that("tables with cell & text coloring can be added to a word doc - with summaries (grand/group)", {
 

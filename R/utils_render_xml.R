@@ -1886,20 +1886,6 @@ create_footnotes_component_xml <- function(
   footnote_ids <- footnotes_tbl[["fs_id"]]
   footnote_text <- footnotes_tbl[["footnotes"]]
 
-  footnote_ids <-
-    vapply(
-      footnote_ids,
-      FUN.VALUE = character(1),
-      USE.NAMES = FALSE,
-      FUN = function(x) {
-        footnote_mark_to_xml(
-          data = data,
-          mark = x,
-          location = "ftr"
-        )
-      }
-    )
-
   footnote_rows <-
     lapply(
       seq_along(footnote_ids),
@@ -1907,29 +1893,16 @@ create_footnotes_component_xml <- function(
 
         footnote_text_xml <- parse_to_xml(footnote_text[[x]])
 
-        # Get the footnote marks for the subtitle
-        if (!is.na(footnote_ids[x])) {
+        # Get the footnote marks for the subtitle. Don't write
+        # marks when footnote value is NA or ""
+        if (!is.na(footnote_ids[x]) & !identical(footnote_ids[x], "")) {
 
-          footnote_id_xml <-
-            xml_r(
-              xml_rPr(
-                if (!is.null(cell_style[["cell_text"]][["font"]])) {
-                  xml_r_font(
-                    ascii_font = cell_style[["cell_text"]][["font"]],
-                    ansi_font = cell_style[["cell_text"]][["font"]]
-                  )
-                },
-                if (!is.null(cell_style[["cell_text"]][["color"]])) {
-                  xml_color(color = cell_style[["cell_text"]][["color"]])
-                },
-                if (!is.null(cell_style[["cell_text"]][["size"]])) {
-                  xml_sz(val = cell_style[["cell_text"]][["size"]])
-                }
-              ),
-              xml_r(xml_raw(footnote_ids[x]))
+          footnote_id_xml <- footnote_mark_to_xml(
+            data = data,
+            mark = footnote_ids[x],
+            location = "ftr"
             ) %>%
-            as_xml_node() %>%
-            .[[1]]
+            as_xml_node()
 
           footnote_text_xml %>%
             xml_add_child(
@@ -1937,6 +1910,7 @@ create_footnotes_component_xml <- function(
               .where = 1
             )
         }
+
         footnote_content <-
           paste0(
             "<md_container>",
