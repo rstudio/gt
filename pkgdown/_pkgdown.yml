@@ -267,7 +267,9 @@ reference:
       us to save as an HTML file or an image file. Some other functions give us
       table code as a character vector (e.g., `as_raw_html()`). Did you use the
       `summary_rows()` function and wish you had that summary data in a tibble?
-      You can get it out with `extract_summary()`.
+      You can get it out with `extract_summary()`. Want to extract
+      already-formatted cells from the table into a vector? Do it with
+      `extract_cells()`!
     contents:
     - gtsave
     - as_raw_html
