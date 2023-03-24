@@ -54,8 +54,6 @@ from the included `sp500` dataset:
 
 ``` r
 library(gt)
-library(tidyverse)
-library(glue)
 
 # Define the start and end dates for the data range
 start_date <- "2010-06-07"
@@ -63,46 +61,42 @@ end_date <- "2010-06-14"
 
 # Create a gt table based on preprocessed
 # `sp500` table data
-sp500 %>%
-  filter(date >= start_date & date <= end_date) %>%
-  select(-adj_close) %>%
-  gt() %>%
+sp500 |>
+  dplyr::filter(date >= start_date & date <= end_date) |>
+  dplyr::select(-adj_close) |>
+  gt() |>
   tab_header(
     title = "S&P 500",
-    subtitle = glue("{start_date} to {end_date}")
-  ) %>%
-  fmt_date(
-    columns = date,
-    date_style = 3
-  ) %>%
-  fmt_currency(
-    columns = c(open, high, low, close),
-    currency = "USD"
-  ) %>%
-  fmt_number(
-    columns = volume,
-    suffixing = TRUE
-  )
+    subtitle = glue::glue("{start_date} to {end_date}")
+  ) |>
+  fmt_currency() |>
+  fmt_date(columns = date, date_style = "wd_m_day_year") |>
+  fmt_number(columns = volume, suffixing = TRUE)
 ```
 
 <div align="center">
 <img src="man/figures/gt_sp500_table.svg" width="800px">
 </div>
 
-There are six datasets included in **gt**: `countrypops`, `sza`,
-`gtcars`, `sp500`, `pizzaplace`, and `exibble`. All of them are useful
-for experimenting with **gt**’s functions.
+There are six datasets provided by **gt**: `countrypops`, `sza`, `gtcars`, `sp500`, `pizzaplace`, and `exibble`. They're useful for experimenting with **gt**’s functions and the package documentation makes extensive use of them in the *Examples* section within each function's documentation.
 
 Beyond this simple example, there are many functions available in **gt**
 for creating super-customized tables. For much more information on these, visit the
-[documentation website](https://gt.rstudio.com/) or take
-a *Test Drive* in the [Posit Cloud project](https://rstudio.cloud/project/779965).
+[documentation website](https://gt.rstudio.com/) (or, the [in-development version of the site](https://gt.rstudio.com/dev)).
+
+With the **gt** *Test Drive*, you can try **gt** in the *Posit Cloud* environment that features the RStudio IDE and a large collection of ready-to-run examples. Visit the publicly available [*Posit Cloud* project](https://rstudio.cloud/project/779965) and try out the package in your browser. There's no charge to use this platform and you'll learn **a lot** about what the package can do!
 
 ## DISCUSSIONS
 
-Let's talk about making tables with **gt** in
-[*Discussions*](https://github.com/rstudio/gt/discussions)!
-It's a great place to ask questions about how to use the package, discuss
+Let's talk about making tables with **gt**! There are a few locations where there is much potential for discussion.
+
+One such place is in [*GitHub Discussions*](https://github.com/rstudio/gt/discussions). This discussion board is especially great for Q&A, and many people have had their problems solved in there.
+
+Another fine venue for discussion is in the [`gt_package` *Discord server*](https://discord.gg/Ux7nrcXHVV). This is a good option for asking about the development of **gt**, pitching ideas that may become features, and sharing your table creations!
+
+Finally, there is the [`gt_package` *Twitter account*](https://twitter.com/gt_package). There you'll find tweets about **gt** (including sneak previews about in-development features) and other table-generation packages.
+
+These are all great places to ask questions about how to use the package, discuss
 some ideas, engage with others, and much more!
 
 ## INSTALLATION
@@ -156,20 +150,25 @@ table-making **R** packages, with links to their respective project
 pages:
 
   - **knitr** ([GITHUB](https://github.com/yihui/knitr), [WEBSITE](https://yihui.org/knitr/))
-  - **kableExtra** ([GITHUB](https://github.com/haozhu233/kableExtra), [WEBSITE](https://haozhu233.github.io/kableExtra/))
-  - **formattable** ([GITHUB](https://github.com/renkun-ken/formattable), [WEBSITE](https://renkun-ken.github.io/formattable/))
   - **DT** ([GITHUB](https://github.com/rstudio/DT), [WEBSITE](https://rstudio.github.io/DT/))
-  - **pander** ([GITHUB](https://github.com/Rapporter/pander), [WEBSITE](http://rapporter.github.io/pander/))
-  - **huxtable** ([GITHUB](https://github.com/hughjonesd/huxtable), [WEBSITE](https://hughjonesd.github.io/huxtable/))
   - **reactable** ([GITHUB](https://github.com/glin/reactable), [WEBSITE](https://glin.github.io/reactable/))
   - **flextable** ([GITHUB](https://github.com/davidgohel/flextable), [WEBSITE](https://davidgohel.github.io/flextable/))
+  - **kableExtra** ([GITHUB](https://github.com/haozhu233/kableExtra), [WEBSITE](https://haozhu233.github.io/kableExtra/))
+  - **formattable** ([GITHUB](https://github.com/renkun-ken/formattable), [WEBSITE](https://renkun-ken.github.io/formattable/))
+  - **huxtable** ([GITHUB](https://github.com/hughjonesd/huxtable), [WEBSITE](https://hughjonesd.github.io/huxtable/))
   - **ftextra** ([GITHUB](https://github.com/atusy/ftExtra), [WEBSITE](https://ftextra.atusy.net/))
-  - **pixiedust** ([GITHUB](https://github.com/nutterb/pixiedust))
-  - **tangram** ([GITHUB](https://github.com/spgarbet/tangram))
-  - **ztable** ([GITHUB](https://github.com/cardiomoon/ztable))
-  - **condformat** ([GITHUB](https://github.com/zeehio/condformat))
-  - **stargazer** ([CRAN](https://CRAN.R-project.org/package=stargazer))
-  - **xtable** ([CRAN](https://CRAN.R-project.org/package=xtable))
+
+## Packages that use or extend **gt**
+
+There are several **R** packages that either use **gt** to generate tabular outputs or extend **gt** in amazing ways. Here is a short list of some of these great packages:
+
+  - **gtsummary** ([GITHUB](https://github.com/ddsjoberg/gtsummary), [WEBSITE](https://www.danieldsjoberg.com/gtsummary/))
+  - **gtExtras** ([GITHUB](https://github.com/jthomasmock/gtExtras), [WEBSITE](https://jthomasmock.github.io/gtExtras/))
+  - **pointblank** ([GITHUB](https://github.com/rich-iannone/pointblank), [WEBSITE](https://rich-iannone.github.io/pointblank/))
+  - **tfrmt** ([GITHUB](https://github.com/GSK-Biostatistics/tfrmt), [WEBSITE](https://gsk-biostatistics.github.io/tfrmt/))
+  - **gto** ([GITHUB](https://github.com/GSK-Biostatistics/gto))
+
+-----
 
 ## Code of Conduct
 
