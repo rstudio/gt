@@ -61,7 +61,9 @@ reference:
       argument. We get to apply these functions exactly once to each data
       cell (last call wins). Need to do custom formatting? Use the `fmt()`
       function and define your own formatter within (or, create a wrapper
-      with `fmt()` if you prefer).
+      with `fmt()` if you prefer). The `sub_*()` functions allow you to perform
+      substitution operations and `data_color()` provides a lot of power for
+      colorizing body cells based on their data values.
     contents:
     - fmt_number
     - fmt_integer
@@ -114,7 +116,8 @@ reference:
       columns. This includes alignment of the data in columns
       (`cols_align()`), hiding columns from view (`cols_hide()`),
       re-labeling the column labels (`cols_label()`), merging two columns
-      together (`cols_merge*()`), moving columns around (`cols_move*()`).
+      together (the `cols_merge*()` functions), and moving columns around
+      (the `cols_move*()` functions).
     contents:
     - cols_align
     - cols_align_decimal
@@ -161,10 +164,10 @@ reference:
       An assortment of helper functions is available in the **gt** package.
       The various `cells_*()` functions are used for targeting cells with the
       `locations` argument in the `tab_footnote()`, `tab_style()`, and
-      `text_transform()` functions. The `cells_styles()` function is used
-      exclusively with `tab_style()`'s `style` argument (and the `px()` &
-      `pct()` functions may be useful there for specifying units in pixels or
-      percentages). The `md()` and `html()` helpers can used be during label
+      `text_transform()` functions. The `cell_*()` functions are used
+      exclusively with `tab_style()`'s `style` argument. The `px()` &
+      `pct()` functions are useful there for specifying units in pixels or
+      percentages. The `md()` and `html()` helpers can used be during label
       creation with the `tab_header()`, `tab_footnote()`, `tab_spanner()`,
       `tab_stubhead_label()`, and `tab_source_note()` functions.
     contents:
@@ -213,9 +216,11 @@ reference:
   - title: Table Option Functions
     desc: >
       With the `opt_*()` functions, we have an easy way to set commonly-used
-      table options without having to use `tab_options()` directly. For
-      instance, we can modify the set of marks to use with footnotes, turn on
-      row striping, change the alignment of the table header, and much more.
+      table options without having to use `tab_options()` directly. Like, we can
+      quickly add a stylizing theme with `opt_stylize()`, get an interactive
+      HTML table with `opt_interactive()`, modify the appearance of footnote
+      marks with `opt_footnote_marks()` and `opt_footnote_spec()`, turn on
+      row striping, change the alignment of the table header, and so much more.
     contents:
     - opt_stylize
     - opt_interactive
