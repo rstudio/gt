@@ -714,13 +714,373 @@ footnote_mark_to_xml <- function(mark) {
   )
 }
 
-# Mark the given text as being XML, meaning, it should not be escaped if passed
-# to xml_text
-xml_raw <- function(...) {
-  text <- paste0(..., collapse = "")
-  class(text) <- "xml_text"
-  text
+# Images in ooxml ----
+
+#' Image ooxml container
+#'
+#' To be inserted as part of a run
+#'
+xml_image <- function(src, height = 1, width = 1, units = "in", alt_text = ""){
+
+  xml_drawing(
+    xml_wp_inline(
+      xml_wp_extent(
+        cx = width,
+        cy = height,
+        units = units
+      ),
+      xml_wp_effectExtent(),
+      xml_wp_docPr(id = 1, description = alt_text),
+      xml_wp_cNvGraphicFramePr(
+        xml_a_graphic_frame_locks()
+      ),
+      xml_a_graphic(
+        xml_a_graphicData(
+          xml_pic_pic(
+            xml_pic_nvPicPr(
+              xml_pic_cNvPr(id = 0),
+              xml_pic_cNvPicPr(
+                xml_a_pic_locks(noChangeAspect = TRUE, noChangeArrowheads = TRUE)
+              )
+            ),
+            xml_pic_blipFill(
+              xml_a_blip(
+                src = src
+              ),
+              xml_a_srcRect(),
+              xml_a_stretch_rect()
+            ),
+            xml_pic_spPr(
+              bwMode = "auto",
+              xml_a_xfrm(height = height, width = width, offx = 0, offy = 0),
+              xml_a_prstGeom_rect(),
+              xml_a_noFill(),
+              xml_a_ln(
+                xml_a_noFill()
+              )
+            )
+          )
+        )
+      )
+    )
+  )
+
 }
+
+xml_drawing <- function(..., app = "word"){
+
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("drawing", app),
+    varArgs = list(
+      `xmlns:r` = "http://schemas.openxmlformats.org/officeDocument/2006/relationships",
+      ...
+      )
+  )
+
+}
+
+## Defines the image as being "inline" with text (in run)
+xml_wp_inline <- function(..., distT=0, distB=0, distL=0, distR=0){
+
+  htmltools::tag(
+    `_tag_name` = "wp:inline",
+    varArgs = list(
+      ...,
+      distT=distT,
+      distB=distB,
+      distL=distL,
+      distR=distR
+    )
+  )
+}
+
+## Define height and width of graphic object
+xml_wp_extent <- function(cx, cy, units = "in"){
+
+  htmltools::tag(
+    `_tag_name` = "wp:extent",
+    varArgs = list(
+      cx = convert_to_emu(cx, units = units),
+      cy = convert_to_emu(cy, units = units)
+    )
+  )
+}
+
+convert_to_emu <- function(x, units = "in"){
+  ## a px is
+  emu_conversion <- c(
+    "in" = 914400, # https://startbigthinksmall.wordpress.com/2010/01/04/points-inches-and-emus-measuring-units-in-office-open-xml/
+    "cm" = 360000,
+    "px"= 9525 # https://stackoverflow.com/questions/66541210/convert-google-slides-emu-units-to-pixels-api
+    )[[units]]
+
+  x * emu_conversion
+}
+
+xml_wp_effectExtent <- function(l = 0, r = 0, t = 0, b = 0){
+
+  htmltools::tag(
+    `_tag_name` = "wp:effectExtent",
+    varArgs = list(
+      l = l,
+      r = r,
+      t = t,
+      b = b
+    )
+  )
+
+}
+
+# Place ot define DrawingML properties
+xml_wp_docPr <- function(id = "", name = "", description = ""){
+
+  htmltools::tag(
+    `_tag_name` = "wp:docPr",
+    varArgs = list(
+      id= id,
+      name=name,
+      descr=description
+    )
+  )
+}
+
+## describe locking properties. Not usually used except to define that the
+## aspect ratio shouldnt change
+xml_wp_cNvGraphicFramePr <- function(...){
+  htmltools::tag(
+    `_tag_name` = "wp:cNvGraphicFramePr",
+    varArgs = list(
+      ...
+    )
+  )
+}
+
+xml_a_graphic_frame_locks <- function(noChangeAspect = TRUE, noCrop = FALSE, noRot = FALSE, noSelect = FALSE){
+
+  locks <- c(noChangeAspect = noChangeAspect, noCrop = noCrop, noRot = noRot, noSelect = noSelect)
+  locks <- locks[locks == TRUE]
+
+  locks_list <- lapply(locks, as.numeric)
+
+  htmltools::tag(
+    `_tag_name` = "a:graphicFrameLocks",
+    varArgs = as.list(c(
+      `xmlns:a`="http://schemas.openxmlformats.org/drawingml/2006/main",
+      locks_list
+    ))
+  )
+
+}
+
+## graphic object
+xml_a_graphic <- function(...){
+  htmltools::tag(
+    `_tag_name` = "a:graphic",
+    varArgs = list(
+      `xmlns:a` = "http://schemas.openxmlformats.org/drawingml/2006/main",
+      ...
+    )
+  )
+}
+
+## graphic object data
+xml_a_graphicData <- function(...){
+  htmltools::tag(
+    `_tag_name` = "a:graphicData",
+    varArgs = list(
+      `uri` = "http://schemas.openxmlformats.org/drawingml/2006/picture",
+      ...
+    )
+  )
+}
+
+## picture object
+xml_pic_pic <- function(...){
+  htmltools::tag(
+    `_tag_name` = "pic:pic",
+    varArgs = list(
+      `xmlns:pic`="http://schemas.openxmlformats.org/drawingml/2006/picture",
+      ...
+    )
+  )
+
+}
+
+## Picture non-visual properties (locking, name, id, title, hidden/not)
+xml_pic_nvPicPr <- function(...){
+  htmltools::tag(
+    `_tag_name` = "pic:nvPicPr",
+    varArgs = list(
+      ...
+    )
+  )
+
+}
+
+xml_pic_cNvPr <- function(id = "", name = ""){
+  htmltools::tag(
+    `_tag_name` = "pic:cNvPr",
+    varArgs = list(
+      `id` = id,
+      `name` = name
+    )
+  )
+}
+
+xml_pic_cNvPicPr <- function(...){
+  htmltools::tag(
+    `_tag_name` = "pic:cNvPicPr",
+    varArgs = list(
+      ...
+    )
+  )
+}
+
+xml_a_pic_locks <- function(noChangeAspect = TRUE, noChangeArrowheads = TRUE, noCrop = FALSE, noMove = FALSE, noResize = FALSE, noRot = FALSE, noSelect = FALSE){
+
+  locks <-
+    c(
+      "noChangeAspect" = noChangeAspect,
+      "noChangeArrowheads" = noChangeArrowheads,
+      "noCrop" = noCrop,
+      "noMove" = noMove,
+      "noResize" = noResize,
+      "noRot" = noRot,
+      "noSelect" = noSelect
+    )
+  locks <- locks[locks == TRUE]
+
+  locks_list <- lapply(locks, as.numeric)
+
+  htmltools::tag(
+    `_tag_name` = "a:picLocks",
+    varArgs = as.list(c(
+      locks_list
+    ))
+  )
+
+}
+
+## Define the picture fill that the picture has and contains element of blip
+xml_pic_blipFill <- function(...){
+  htmltools::tag(
+    `_tag_name` = "pic:blipFill",
+    varArgs = list(
+      ...
+    )
+  )
+}
+
+### reference the actual picture in relationship
+xml_a_blip <- function(src){
+
+
+
+  htmltools::tag(
+    `_tag_name` = "a:blip",
+    varArgs = list(
+      `r:embed` = src
+    )
+  )
+}
+
+### reference how to display image - stretch to fit
+xml_a_stretch_rect <- function(){
+  htmltools::tag(
+    `_tag_name` = "a:stretch",
+    varArgs = list(
+      htmltools::tag(
+        `_tag_name` = "a:fillRect",varArgs = list()
+      )
+    )
+  )
+}
+
+## cropping
+
+xml_a_srcRect <- function(left = NA, right = NA, top = NA, bottom = NA){
+
+  crop <-
+    c(
+      "l" = left,
+      "r" = right,
+      "t" = top,
+      "b" = bottom
+    )
+  crop <- crop[!is.na(crop)]
+
+  htmltools::tag(
+    `_tag_name` = "a:srcRect",
+    varArgs = as.list(crop)
+  )
+}
+
+## Contains Visual shape properties of picture
+xml_pic_spPr <- function(..., bwMode = "auto"){
+  htmltools::tag(
+    `_tag_name` = "pic:spPr",
+    varArgs = list(
+      bwMode = bwMode,
+      ...
+    )
+  )
+}
+
+xml_a_xfrm <- function(height, width, offx, offy){
+
+  htmltools::tag(
+    `_tag_name` = "a:xfrm",
+    varArgs = list(
+      htmltools::tag(
+        `_tag_name` = "a:off",
+        varArgs = list(
+          x = offx,
+          y = offy
+        )
+      ),
+      htmltools::tag(
+        `_tag_name` = "a:ext",
+        varArgs = list(
+          cx = convert_to_emu(width)/72, ## EMU to pixels?
+          cy = convert_to_emu(height)/72
+        )
+      )
+    )
+  )
+}
+
+xml_a_prstGeom_rect <- function(){
+
+  htmltools::tag(
+    `_tag_name` = "a:prstGeom",
+    varArgs = list(
+      `prst` = "rect",
+      htmltools::tag(
+        `_tag_name` = "a:avLst",
+        varArgs = list()
+      )
+    )
+  )
+
+}
+
+xml_a_noFill <- function(){
+  htmltools::tag(
+    `_tag_name` = "a:noFill",
+    varArgs = list()
+  )
+}
+
+xml_a_ln <- function(...){
+  htmltools::tag(
+    `_tag_name` = "a:ln",
+    varArgs = list(...)
+  )
+}
+
+
+# Major Table Components ----
+
 
 # TODO: make table widths work for XML
 # Get the attributes for the table tag
@@ -2011,6 +2371,9 @@ summary_rows_xml <- function(
   summary_row_lines
 }
 
+
+# Constructing Table Cells ----
+
 cell_border <- function(
     color = "#D3D3D3",
     size = NULL,
@@ -2181,6 +2544,8 @@ xml_table_cell <- function(
   )
 }
 
+# Table Cell content management/Processing ----
+
 process_cell_content <- function(x, ...){
 
   x %>%
@@ -2193,7 +2558,6 @@ process_cell_content <- function(x, ...){
     as.character() %>%
     paste0(collapse = "")
 }
-
 
 #' @importFrom xml2 xml_find_all xml_text xml_attr `xml_attr<-` `xml_text<-`
 process_cell_content_ooxml_t <- function(x, ..., whitespace = NULL) {
@@ -2242,19 +2606,32 @@ process_cell_content_ooxml_r<- function(x,..., font = NULL, size = NULL, color =
 
   for(run in run_tags){
 
+      run_image <- run %>% xml_find_first(".//w:drawing")
       run_style <- run %>% xml_find_first(".//w:rPr")
 
-      run_style_children <- run_style %>% xml_children()
-      run_style_children_types <- sapply(run_style_children,xml_name, ns = xml_ns(x))
+      if(length(run_image) > 0){
 
-      ## which styles are new. Add those. Respect ones that already exist and do not update
-      new_cell_styles <- which(!cell_styles_types %in% run_style_children_types)
+        if(length(run %>% xml_find_first(".//w:noProof")) == 0){
+          xml_add_child(
+            run_style,
+            as_xml_node(xml_noProof())[[1]]
+            )
+        }
 
-      for(cell_style_idx in new_cell_styles){
-        xml_add_child(
-          run_style,
-          cell_styles[[cell_style_idx]][[1]]
-          )
+      }else{
+
+        run_style_children <- run_style %>% xml_children()
+        run_style_children_types <- sapply(run_style_children,xml_name, ns = xml_ns(x))
+
+        ## which styles are new. Add those. Respect ones that already exist and do not update
+        new_cell_styles <- which(!cell_styles_types %in% run_style_children_types)
+
+        for(cell_style_idx in new_cell_styles){
+          xml_add_child(
+            run_style,
+            cell_styles[[cell_style_idx]][[1]]
+            )
+        }
       }
   }
 
@@ -2303,6 +2680,12 @@ process_cell_content_ooxml_p <- function(x, ..., align = NULL, col_span = NULL, 
   }
 
   for(paragraph in paragraph_tags){
+
+    paragraph_image <- paragraph %>% xml_find_first(".//w:drawing")
+
+    if(length(paragraph_image) > 0){
+      next
+    }
 
     paragraph_style <- paragraph %>% xml_find_all(".//w:pPr")
 
@@ -2429,7 +2812,7 @@ add_text_style.shiny.tag <- function(x, style){
   add_text_style.character(x, style = style)
 }
 
-## character to xml conversion
+# character to xml conversion ----
 
 ## if wrapped in xml, convert to html
 #' @importFrom xml2 read_xml xml_children
@@ -2549,9 +2932,13 @@ paste_footnote_xml <- function(text, footmark_xml, position = "right"){
     paste0("<md_container>",.,"</md_container>")
 }
 
+
+# Post-Processing word documents as needed -----
+
 ## if hyperlinks are in gt, postprocessing will be necessary
 needs_gt_as_word_post_processing <- function(x){
-  grepl("<w:hyperlink", x)
+  any(grepl("<w:hyperlink", x)) |
+    any(grepl("<a:blip", x))
 }
 
 ## apply postprocessing
@@ -2570,9 +2957,9 @@ gt_as_word_post_processing <- function(path){
   rels_doc_path <- file.path(tmp_word_dir,"word/_rels/document.xml.rels")
   rels <- read_xml(rels_doc_path)
 
-  ## update hyperlinks
+  ## update hyperlinks & blips
   update_hyperlink_node_id(docx, rels)
-
+  update_blip_node_id(docx, rels, tmp_word_dir)
 
   ## write updates
   xml2::write_xml(rels, rels_doc_path)
@@ -2612,6 +2999,70 @@ update_hyperlink_node_id <- function(docx, rels){
 
 }
 
+update_blip_node_id <- function(docx, rels, tmp_word_dir){
+
+  rels_relationships <- rels %>% xml_children()
+  rels_ids <- rels_relationships %>% xml_attr("Id")
+  max_id <- max(as.numeric(gsub("rId","",rels_ids)))
+
+  ## get all blip nodes (binary li)
+  blip_nodes <- docx %>% xml_find_all("//a:blip[@r:embed]")
+
+  ## identify nodes needing updating
+  blip_nodes <- blip_nodes[!grepl("^rId\\d+$", xml_attr(blip_nodes, "embed"))]
+
+  if(length(blip_nodes) > 0){
+
+    tmp_word_dir_media <- file.path(tmp_word_dir,"word","media")
+
+    if(!dir.exists(tmp_word_dir_media)){
+      dir.create(tmp_word_dir_media, showWarnings = FALSE)
+    }
+
+    for(blip_node in blip_nodes){
+
+      max_id <- max_id + 1
+      src <- xml_attr(blip_node, "embed")
+      src_rel <- file.path("media",basename_clean(src))
+
+      new_id <- paste0("rId", max_id)
+
+      #copy to media folder
+      copy_to_media(src, tmp_word_dir_media)
+
+      # add relationship
+      xml2::xml_add_child(
+        rels,
+        xml_relationship(id = new_id, target = src_rel, type = "image",target_mode = NA)
+      )
+
+      xml_attr(blip_node, "r:embed") <- new_id
+    }
+  }
+
+}
+
+copy_to_media <- function(path, media_dir){
+
+  if(grepl("https?://", path)){
+    download.file(
+      url = path,
+      destfile = file.path(media_dir, basename_clean(path))
+    )
+  }else{
+    file.copy(
+      from = path,
+      to = file.path(media_dir, basename_clean(path))
+    )
+  }
+}
+
+basename_clean <- function(x){
+  basename(x) %>%
+    tidy_gsub("\\s+","") %>%
+    tidy_gsub("_","")
+}
+
 ## conveniently zip up word doc temp folder
 zip_temp_word_doc <- function(path, temp_dir, cur_dir = getwd()){
   setwd(temp_dir)
@@ -2619,15 +3070,23 @@ zip_temp_word_doc <- function(path, temp_dir, cur_dir = getwd()){
   zip(zipfile = path, files = list.files(path = ".", recursive = TRUE, all.files = FALSE),flags = "-r9X -q")
 }
 
-xml_relationship <- function(id,  target, type = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink", target_mode = "External"){
+xml_relationship <- function(id,  target, type = c("hyperlink","image"), target_mode = "External"){
+
+  type <- match.arg(type)
+
+  type <- file.path("http://schemas.openxmlformats.org/officeDocument/2006/relationships",type)
+
+  varArgs <- list(
+    `Id` = id,
+    `Type` = type,
+    `Target` = target,
+    `TargetMode` = target_mode)
+
+  varArgs <- varArgs[!sapply(varArgs, is.na)]
 
   htmltools::tag(
     `_tag_name` = "Relationship",
-    varArgs = list(
-      `Id` = id,
-      `Type` = type,
-      `Target` = target,
-      `TargetMode` = target_mode)
+    varArgs = varArgs
   ) %>%
     as.character() %>%
     read_xml()
