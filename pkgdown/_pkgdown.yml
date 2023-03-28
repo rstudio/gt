@@ -197,8 +197,9 @@ reference:
     - random_id
     - escape_latex
     - gt_latex_dependencies
-    - default_fonts
     - google_font
+    - default_fonts
+    - system_fonts
 
   - title: Image Addition Functions
     desc: >
