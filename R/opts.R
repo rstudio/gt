@@ -1209,19 +1209,27 @@ opt_table_outline <- function(
   )
 }
 
-#' Option to define a custom font for the table
+#' Options to define font choices for the entire table
 #'
 #' @description
 #'
-#' The `opt_table_font()` function makes it possible to define a custom font for
-#' the entire **gt** table. The standard fallback fonts are still set by default
-#' but the font defined here will take precedence. You could still have
-#' different fonts in select locations in the table, and for that you would need
-#' to use [tab_style()] in conjunction with the [cell_text()] helper function.
+#' The `opt_table_font()` function makes it possible to define fonts used for an
+#' entire **gt** table. Any font names supplied in `font` will (by default, with
+#' `add = TRUE`) be placed before the names present in the existing font stack
+#' (i.e., they will take precedence). You can choose to base the font stack on
+#' those provided by [system_fonts()] by providing a valid keyword for a themed
+#' set and optionally prepending `font` values to that.
+#'
+#' Take note that you could still have entirely different fonts in specific
+#' locations of the table. For that you would need to use [tab_style()] or
+#' [tab_style_body()] in conjunction with the [cell_text()] helper function.
 #'
 #' @inheritParams fmt_number
 #' @param font Either the name of a font available in the user system or a call
 #'   to [google_font()], which has a large selection of typefaces.
+#' @param stack A keyword that represents the name of a font stack (obtained via
+#'   the [system_fonts()] helper function). If provided, this new stack will
+#'   replace any defined fonts and any `font` values will be prepended.
 #' @param style The text style. Can be one of either `"normal"`, `"italic"`, or
 #'   `"oblique"`.
 #' @param weight The weight of the font. Can be a text-based keyword such as
@@ -1234,11 +1242,38 @@ opt_table_outline <- function(
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @details
+#' @section Possibilities for the `font` argument:
 #'
-#' We have the option to supply either a system font for the `font_name`, or, a
-#' font available at the Google Fonts service by use of the [google_font()]
-#' helper function.
+#' We have the option to supply one or more font names for the `font` argument.
+#' They can be enclosed in `c()` or a `list()`. You can generate this list or
+#' vector with a combination of font names, and you can freely use the
+#' [google_font()], [default_fonts()], and [system_fonts()] functions to help
+#' compose your font family.
+#'
+#' @section Possibilities for the `stack` argument:
+#'
+#' There are several themed font stacks available via the [system_fonts()]
+#' helper function. That function can be used to generate all or a segment of
+#' a vector supplied to the `font` argument. However, using the `stack` argument
+#' with one of the keywords for the font stacks available in [system_fonts()],
+#' we could be sure that the typeface class will work across multiple computer
+#' systems. The following keywords can be used:
+#'
+#' - `"system-ui"`
+#' - `"transitional"`
+#' - `"old-style"`
+#' - `"humanist"`
+#' - `"geometric-humanist"`
+#' - `"classical-humanist"`
+#' - `"neo-grotesque"`
+#' - `"monospace-slab-serif"`
+#' - `"monospace-code"`
+#' - `"industrial"`
+#' - `"rounded-sans"`
+#' - `"slab-serif"`
+#' - `"antique"`
+#' - `"didone"`
+#' - `"handwritten"`
 #'
 #' @section Examples:
 #'
@@ -1308,7 +1343,8 @@ opt_table_outline <- function(
 #' @export
 opt_table_font <- function(
     data,
-    font,
+    font = NULL,
+    stack = NULL,
     weight = NULL,
     style = NULL,
     add = TRUE
@@ -1329,21 +1365,36 @@ opt_table_font <- function(
       option = "table_additional_css"
     )
 
-  font <- normalize_font_input(font_input = font)
+  if (!is.null(font)) {
 
-  additional_css <- c(font$import_stmt, existing_additional_css)
+    font <- normalize_font_input(font_input = font)
+    additional_css <- c(font$import_stmt, existing_additional_css)
 
-  data <-
-    tab_options(
-      data = data,
-      table.font.names = c(font$name, if (add) existing_fonts)
-    )
+    data <-
+      tab_options(
+        data = data,
+        table.additional_css = additional_css
+      )
+  }
 
-  data <-
-    tab_options(
-      data = data,
-      table.additional_css = additional_css
-    )
+  if (!is.null(stack)) {
+
+    font_stack <- system_fonts(name = stack)
+
+    data <-
+      tab_options(
+        data = data,
+        table.font.names = c(font$name, font_stack)
+      )
+
+  } else {
+
+    data <-
+      tab_options(
+        data = data,
+        table.font.names = c(font$name, if (add) existing_fonts)
+      )
+  }
 
   if (!is.null(weight)) {
 
