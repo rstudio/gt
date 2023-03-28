@@ -42,7 +42,7 @@ labels in the stub.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
   dplyr::group_by(type, size) |>
   dplyr::summarize(
-    sold = n(),
+    sold = dplyr::n(),
     income = sum(price),
     .groups = "drop"
   ) |>

@@ -4,7 +4,7 @@
 \alias{opt_table_font}
 \title{Option to define a custom font for the table}
 \usage{
-opt_table_font(data, font, weight = NULL, style = NULL, add = TRUE)
+opt_table_font(data, font = NULL, weight = NULL, style = NULL, add = TRUE)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
@@ -28,11 +28,14 @@ the list serves as fallbacks when certain fonts are not available.}
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{opt_table_font()} function makes it possible to define a custom font for
-the entire \strong{gt} table. The standard fallback fonts are still set by default
-but the font defined here will take precedence. You could still have
-different fonts in select locations in the table, and for that you would need
-to use \code{\link[=tab_style]{tab_style()}} in conjunction with the \code{\link[=cell_text]{cell_text()}} helper function.
+The \code{opt_table_font()} function makes it possible to define fonts used for an
+entire \strong{gt} table. Any font names supplied will (by default, with
+\code{add = TRUE}) be placed before the names present in the existing font stack
+(i.e., they will take precedence).
+
+Take note that you could still have entirely different fonts in specific
+locations of the table. For that you would need to use \code{\link[=tab_style]{tab_style()}} or
+\code{\link[=tab_style_body]{tab_style_body()}} in conjunction with the \code{\link[=cell_text]{cell_text()}} helper function.
 }
 \details{
 We have the option to supply either a system font for the \code{font_name}, or, a
