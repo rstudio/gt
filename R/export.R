@@ -395,7 +395,7 @@ gt_save_docx <- function(
   word_md_file <- tempfile(fileext = ".md")
 
   writeChar(
-    word_md_text,
+    iconv(word_md_text, to = "UTF-8"),
     con = word_md_file
   )
 
