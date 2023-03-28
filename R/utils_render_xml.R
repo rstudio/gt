@@ -1567,6 +1567,8 @@ create_body_component_xml <- function(
       dplyr::mutate(group_label = gsub("^NA", "\u2014", group_label))
   }
 
+  browser()
+
   body_rows <-
     lapply(
       seq_len(n_rows),
@@ -1595,6 +1597,7 @@ create_body_component_xml <- function(
             .[1] %>% .[[1]]
 
 
+          browser()
 
           group_heading_row <-
             xml_tr(
@@ -2596,7 +2599,7 @@ gt_as_word_post_processing <- function(path){
 
   ## unzip doc
   tmp_word_dir <- tempfile(pattern = "word_dir")
-  unzip(zipfile = path, exdir = tmp_word_dir)
+  utils::unzip(zipfile = path, exdir = tmp_word_dir)
 
   ## load docx
   content_doc_path <- file.path(tmp_word_dir,"word/document.xml")
