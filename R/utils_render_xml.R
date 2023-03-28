@@ -2484,7 +2484,13 @@ parse_to_xml <- function(x,...){
   }
 
   if(length(x) > 1){
-    browser()
+    if(all(grepl("^<md_container>.*</md_container>$", x))){
+      x <- gsub("^<md_container>(.*)</md_container>$", "\\1",x) %>%
+        paste0(collapse = "") %>%
+        paste0("<md_container>",.,"</md_container>")
+    }else{
+      x <- x %>% paste0(collapse = "")
+    }
   }
 
   if(!grepl("^<md_container>.*</md_container>$", x)){
