@@ -317,23 +317,30 @@ test_that("The `opt_table_font()` function sets the correct options", {
 
   # Expect that a desired system font is placed at the
   # head of the `font-family` font listing
-  tbl %>% opt_table_font(font = "Courier") %>%
-    compile_scss() %>% as.character() %>%
+  tbl %>%
+    opt_table_font(font = "Courier") %>%
+    compile_scss() %>%
+    as.character() %>%
     html_fragment_within(
-      ".gt_table {", "font-family: Courier, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;", "}"
+      "table {", "font-family: Courier, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"
     ) %>% expect_true()
 
   # Expect a replacement of the table's default
   # `font-family` values when `add = FALSE`
-  tbl %>% opt_table_font(font = "Courier", add = FALSE) %>%
-    compile_scss() %>% as.character() %>%
+  tbl %>%
+    opt_table_font(font = "Courier", add = FALSE) %>%
+    compile_scss() %>%
+    as.character() %>%
     html_fragment_within(
-      ".gt_table {", "font-family: Courier;", "}"
-    ) %>% expect_true()
+      ".gt_table {", "font-family: Courier;"
+    ) %>%
+    expect_true()
 
   # Expect that `weight` and `style` options are passed as CSS values
-  tbl %>% opt_table_font(font = "Courier", weight = "bold", style = "italic") %>%
-    compile_scss() %>% as.character() %>%
+  tbl %>%
+    opt_table_font(font = "Courier", weight = "bold", style = "italic") %>%
+    compile_scss() %>%
+    as.character() %>%
     html_fragment_within(
       "font-weight: bold;",
       "font-style: italic;"
@@ -341,12 +348,15 @@ test_that("The `opt_table_font()` function sets the correct options", {
 
   # Expect that adding a font from the Google Fonts service
   # is possible with the `google_font()` function
-  tbl %>% opt_table_font(font = google_font(name = "Dancing Script")) %>%
-    compile_scss() %>% as.character() %>%
+  tbl %>%
+    opt_table_font(font = google_font(name = "Dancing Script")) %>%
+    compile_scss() %>%
+    as.character() %>%
     html_fragment_within(
       "@import url(\"https://fonts.googleapis.com/css2?family=Dancing+Script:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap\");",
-      ".gt_table {", "font-family: 'Dancing Script', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;", "}"
-    ) %>% expect_true()
+      ".gt_table {", "font-family: 'Dancing Script', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"
+    ) %>%
+    expect_true()
 
   # Expect that equally valid inputs include wrapping in a list or `c()`
   expect_equal(
@@ -361,49 +371,61 @@ test_that("The `opt_table_font()` function sets the correct options", {
     ignore_attr = TRUE
   )
 
-  # Expect `google_font()` with system fonts inside of
-  # a list or `c()`
-  tbl %>% opt_table_font(font = list(google_font(name = "Dancing Script"), "serif")) %>%
-    compile_scss() %>% as.character() %>%
+  # Expect `google_font()` with system fonts inside of a list or `c()`
+  tbl %>%
+    opt_table_font(font = list(google_font(name = "Dancing Script"), "serif")) %>%
+    compile_scss() %>%
+    as.character() %>%
     html_fragment_within(
       "@import url(\"https://fonts.googleapis.com/css2?family=Dancing+Script:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap\");",
-      ".gt_table {", "font-family: 'Dancing Script', serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;", "}"
-    ) %>% expect_true()
+      ".gt_table {", "font-family: 'Dancing Script', serif, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"
+    ) %>%
+    expect_true()
 
-  tbl %>% opt_table_font(font = c(google_font(name = "Dancing Script"), "serif")) %>%
-    compile_scss() %>% as.character() %>%
+  tbl %>%
+    opt_table_font(font = c(google_font(name = "Dancing Script"), "serif")) %>%
+    compile_scss() %>%
+    as.character() %>%
     html_fragment_within(
       "@import url(\"https://fonts.googleapis.com/css2?family=Dancing+Script:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap\");",
-      ".gt_table {", "font-family: 'Dancing Script', serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;", "}"
-    ) %>% expect_true()
+      ".gt_table {", "font-family: 'Dancing Script', serif, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"
+    ) %>%
+    expect_true()
 
   # Expect any combination of vectors and `google_font()` calls inside
   # of a list or `c()`
   tbl %>% opt_table_font(font = list("serif", google_font(name = "Dancing Script"), "Courier", google_font(name = "Exo 2"))) %>%
-    compile_scss() %>% as.character() %>%
+    compile_scss() %>%
+    as.character() %>%
     html_fragment_within(
       "@import url(\"https://fonts.googleapis.com/css2?family=Dancing+Script:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap\");",
       "@import url(\"https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap\");",
-      ".gt_table {", "font-family: serif, 'Dancing Script', Courier, 'Exo 2', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;", "}"
-    ) %>% expect_true()
+      ".gt_table {", "font-family: serif, 'Dancing Script', Courier, 'Exo 2', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"
+    ) %>%
+    expect_true()
 
-  tbl %>% opt_table_font(font = c("serif", google_font(name = "Dancing Script"), "Courier", google_font(name = "Exo 2"))) %>%
-    compile_scss() %>% as.character() %>%
+  tbl %>%
+    opt_table_font(font = c("serif", google_font(name = "Dancing Script"), "Courier", google_font(name = "Exo 2"))) %>%
+    compile_scss() %>%
+    as.character() %>%
     html_fragment_within(
       "@import url(\"https://fonts.googleapis.com/css2?family=Dancing+Script:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap\");",
       "@import url(\"https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap\");",
-      ".gt_table {", "font-family: serif, 'Dancing Script', Courier, 'Exo 2', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;", "}"
-    ) %>% expect_true()
+      ".gt_table {", "font-family: serif, 'Dancing Script', Courier, 'Exo 2', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"
+    ) %>%
+    expect_true()
 
   # Expect that font names are de-duplicated
-  tbl %>% opt_table_font(font = list(google_font(name = "Dancing Script"), "Courier", "Oxygen", "Courier")) %>%
-    compile_scss() %>% as.character() %>%
+  tbl %>%
+    opt_table_font(font = list(google_font(name = "Dancing Script"), "Courier", "Oxygen", "Courier")) %>%
+    compile_scss() %>%
+    as.character() %>%
     html_fragment_within(
       "@import url(\"https://fonts.googleapis.com/css2?family=Dancing+Script:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap\");",
       ".gt_table {",
-      "font-family: 'Dancing Script', Courier, Oxygen, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;",
-      "}"
-    ) %>% expect_true()
+      "font-family: 'Dancing Script', Courier, Oxygen, system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';"
+    ) %>%
+    expect_true()
 
   # Expect that weights given as numbers or strings create the
   # same outputs (e.g., 500 and "500")
@@ -421,4 +443,3 @@ test_that("The `opt_table_font()` function sets the correct options", {
   expect_error(regexp = NA, tbl %>% opt_table_font(font = list("Courier", "Comic Sans MS")))
   expect_error(regexp = NA, tbl %>% opt_table_font(font = LETTERS))
 })
-
