@@ -1567,8 +1567,6 @@ create_body_component_xml <- function(
       dplyr::mutate(group_label = gsub("^NA", "\u2014", group_label))
   }
 
-  browser()
-
   body_rows <-
     lapply(
       seq_len(n_rows),
@@ -1596,8 +1594,6 @@ create_body_component_xml <- function(
             dplyr::pull("styles") %>%
             .[1] %>% .[[1]]
 
-
-          browser()
 
           group_heading_row <-
             xml_tr(
@@ -2655,7 +2651,7 @@ update_hyperlink_node_id <- function(docx, rels){
 zip_temp_word_doc <- function(path, temp_dir, cur_dir = getwd()){
   setwd(temp_dir)
   on.exit(setwd(cur_dir))
-  zip(zipfile = path, files = list.files(path = ".", recursive = TRUE, all.files = FALSE),flags = "-r9X -q")
+  utils::zip(zipfile = path, files = list.files(path = ".", recursive = TRUE, all.files = FALSE),flags = "-r9X -q")
 }
 
 xml_relationship <- function(id,  target, type = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink", target_mode = "External"){
