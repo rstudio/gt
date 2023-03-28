@@ -1595,7 +1595,6 @@ create_body_component_xml <- function(
             .[1] %>% .[[1]]
 
 
-
           group_heading_row <-
             xml_tr(
               xml_trPr(
@@ -2484,7 +2483,13 @@ parse_to_xml <- function(x,...){
   }
 
   if(length(x) > 1){
-    browser()
+    if(all(grepl("^<md_container>.*</md_container>$", x))){
+      x <- gsub("^<md_container>(.*)</md_container>$", "\\1",x) %>%
+        paste0(collapse = "") %>%
+        paste0("<md_container>",.,"</md_container>")
+    }else{
+      x <- x %>% paste0(collapse = "")
+    }
   }
 
   if(!grepl("^<md_container>.*</md_container>$", x)){
@@ -2590,7 +2595,7 @@ gt_as_word_post_processing <- function(path){
 
   ## unzip doc
   tmp_word_dir <- tempfile(pattern = "word_dir")
-  unzip(zipfile = path, exdir = tmp_word_dir)
+  utils::unzip(zipfile = path, exdir = tmp_word_dir)
 
   ## load docx
   content_doc_path <- file.path(tmp_word_dir,"word/document.xml")
@@ -2646,7 +2651,7 @@ update_hyperlink_node_id <- function(docx, rels){
 zip_temp_word_doc <- function(path, temp_dir, cur_dir = getwd()){
   setwd(temp_dir)
   on.exit(setwd(cur_dir))
-  zip(zipfile = path, files = list.files(path = ".", recursive = TRUE, all.files = FALSE),flags = "-r9X -q")
+  utils::zip(zipfile = path, files = list.files(path = ".", recursive = TRUE, all.files = FALSE),flags = "-r9X -q")
 }
 
 xml_relationship <- function(id,  target, type = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink", target_mode = "External"){
