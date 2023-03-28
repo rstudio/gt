@@ -27,9 +27,8 @@ dt_options_get_value <- function(data, option) {
 
 default_fonts_vec <-
   c(
-    "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Helvetica Neue", "Fira Sans",
-    "Droid Sans", "Arial", "sans-serif"
+    "system-ui", "Segoe UI", "Roboto", "Helvetica", "Arial", "sans-serif",
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"
   )
 
 default_page_size_vec <- c(10, 25, 50, 100)
