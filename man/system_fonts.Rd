@@ -6,31 +6,49 @@
 \usage{
 system_fonts(name)
 }
+\arguments{
+\item{name}{A keyword from the set of \code{"system-ui"}, \code{"transitional"},
+\code{"old-style"}, \code{"humanist"}, \code{"geometric-humanist"}, \code{"classical-humanist"},
+\code{"neo-grotesque"}, \code{"monospace-slab-serif"}, \code{"monospace-code"},
+\code{"industrial"}, \code{"rounded-sans"}, \code{"slab-serif"}, \code{"antique"}, \code{"didone"},
+and \code{"handwritten"}.}
+}
 \value{
 A character vector of font names.
 }
 \description{
-The vector of fonts given by \code{default_fonts()} should be used with a \strong{gt}
-table that is rendered to HTML. We can specify additional fonts to use but
-this default set should be placed after that to act as fallbacks. This is
-useful when specifying \code{font} values in the \code{\link[=cell_text]{cell_text()}} function (itself
-used in the \code{\link[=tab_style]{tab_style()}} function). If using \code{\link[=opt_table_font]{opt_table_font()}} (which also
-has a \code{font} argument) we probably don't need to specify this vector of fonts
-since it is handled by its \code{add} option (which is \code{TRUE} by default).
+A font stack can be obtained from \code{system_fonts()} using one or various
+keywords such as \code{"system-ui"}, \code{"old-style"}, and \code{"humanist"} (there are 15
+in total). These sets comprise a themed font family that has been tested to
+work across a wide range of computer systems. This is useful when specifying
+\code{font} values in the \code{\link[=cell_text]{cell_text()}} function (itself used in the \code{\link[=tab_style]{tab_style()}}
+function). If using \code{\link[=opt_table_font]{opt_table_font()}} we can invoke this function in its
+\code{stack} argument.
 }
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table.
+Use \code{\link{sp500}} to create a \strong{gt} table with 10 rows. For the \code{date} column
+and the column labels, let's use a different font stack (the \code{"industrial"}
+one). The system fonts used in this particular stack are \code{"Bahnschrift"},
+\code{"DIN Alternate"}, \code{"Franklin Gothic Medium"}, and \code{"Nimbus Sans Narrow"}
+(the generic \code{"sans-serif-condensed"} and \code{"sans-serif"} are used if the
+aforementioned fonts aren't available).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
-  dplyr::select(char, time) |>
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
+  dplyr::slice(1:10) |>
+  dplyr::select(-volume, -adj_close) |>
   gt() |>
+  fmt_currency() |>
   tab_style(
     style = cell_text(
-      font = system_fonts(name = "didone")
+      font = system_fonts(name = "industrial"),
+      size = px(18)
     ),
-    locations = cells_body(columns = time)
+    locations = list(
+      cells_body(columns = date),
+      cells_column_labels()
+    )
   )
 }\if{html}{\out{</div>}}
 
