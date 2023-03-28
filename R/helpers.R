@@ -2857,17 +2857,23 @@ google_font <- function(name) {
   font_list
 }
 
-#' A vector of default fonts for use with **gt** tables
+#' Provide a vector of sensible system fonts for use with **gt** tables
 #'
 #' @description
 #'
-#' The vector of fonts given by `default_fonts()` should be used with a **gt**
-#' table that is rendered to HTML. We can specify additional fonts to use but
-#' this default set should be placed after that to act as fallbacks. This is
-#' useful when specifying `font` values in the [cell_text()] function (itself
-#' used in the [tab_style()] function). If using [opt_table_font()] (which also
-#' has a `font` argument) we probably don't need to specify this vector of fonts
-#' since it is handled by its `add` option (which is `TRUE` by default).
+#' The vector of fonts given by `default_fonts()` can be safely used with a
+#' **gt** table rendered as HTML since the font stack is expected to be
+#' available across a wide set of systems. We can always specify additional
+#' fonts to use and place them higher in precedence order, done through
+#' prepending to this vector (i.e., this font stack should be placed after that
+#' to act as a set of fallbacks).
+#'
+#' This vector of fonts is useful when specifying `font` values in the
+#' [cell_text()] function (itself usable in the [tab_style()] and
+#' [tab_style_body()] functions). If using [opt_table_font()] (which also has a
+#' `font` argument) we probably don't need to specify this vector of fonts since
+#' that function prepends font names (this is handled by its `add` option, which
+#' is `TRUE` by default).
 #'
 #' @return A character vector of font names.
 #'
@@ -2908,8 +2914,70 @@ google_font <- function(name) {
 #' @export
 default_fonts <- function() {
   c(
-    "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Helvetica Neue", "Fira Sans",
-    "Droid Sans", "Arial", "sans-serif"
+    "system-ui", "Segoe UI", "Roboto", "Helvetica", "Arial", "sans-serif",
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"
   )
+}
+
+#' Get a themed font stack that works well across systems
+#'
+#' @description
+#'
+#' A font stack can be obtained from `system_fonts()` using one or various
+#' keywords such as `"system-ui"`, `"old-style"`, and `"humanist"` (there are 15
+#' in total). These sets comprise a themed font family that has been tested to
+#' work across a wide range of computer systems. This is useful when specifying
+#' `font` values in the [cell_text()] function (itself used in the [tab_style()]
+#' function). If using [opt_table_font()] we can invoke this function in its
+#' `stack` argument.
+#'
+#' @param name A keyword from the set of `"system-ui"`, `"transitional"`,
+#' `"old-style"`, `"humanist"`, `"geometric-humanist"`, `"classical-humanist"`,
+#' `"neo-grotesque"`, `"monospace-slab-serif"`, `"monospace-code"`,
+#' `"industrial"`, `"rounded-sans"`, `"slab-serif"`, `"antique"`, `"didone"`,
+#' and `"handwritten"`.
+#'
+#' @return A character vector of font names.
+#'
+#' @section Examples:
+#'
+#' Use [`sp500`] to create a **gt** table with 10 rows. For the `date` column
+#' and the column labels, let's use a different font stack (the `"industrial"`
+#' one). The system fonts used in this particular stack are `"Bahnschrift"`,
+#' `"DIN Alternate"`, `"Franklin Gothic Medium"`, and `"Nimbus Sans Narrow"`
+#' (the generic `"sans-serif-condensed"` and `"sans-serif"` are used if the
+#' aforementioned fonts aren't available).
+#'
+#' ```r
+#' sp500 |>
+#'   dplyr::slice(1:10) |>
+#'   dplyr::select(-volume, -adj_close) |>
+#'   gt() |>
+#'   fmt_currency() |>
+#'   tab_style(
+#'     style = cell_text(
+#'       font = system_fonts(name = "industrial"),
+#'       size = px(18)
+#'     ),
+#'     locations = list(
+#'       cells_body(columns = date),
+#'       cells_column_labels()
+#'     )
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_system_fonts_1.png")`
+#' }}
+#'
+#' @family helper functions
+#' @section Function ID:
+#' 8-29
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @export
+system_fonts <- function(name) {
+  get_font_stack(name = name, add_emoji = TRUE)
 }
