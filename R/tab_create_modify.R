@@ -882,7 +882,7 @@ tab_stubhead <- function(
 #' pizzaplace |>
 #'   dplyr::group_by(type, size) |>
 #'   dplyr::summarize(
-#'     sold = n(),
+#'     sold = dplyr::n(),
 #'     income = sum(price),
 #'     .groups = "drop"
 #'   ) |>
