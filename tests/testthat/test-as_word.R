@@ -2034,8 +2034,9 @@ test_that("markdown with img refs work",{
   "
 
   markdown_gt <- dplyr::tribble(
-    ~img,
-    text_sample
+    ~md,
+    text_sample,
+    "this is **bold**, and this is [Rich Iannone's website](https://github.com/rich-iannone)"
   ) %>%
     gt() %>%
     fmt_markdown(columns = everything())

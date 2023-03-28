@@ -3013,12 +3013,20 @@ gt_as_word_post_processing <- function(path){
   rels_doc_path <- file.path(tmp_word_dir,"word/_rels/document.xml.rels")
   rels <- read_xml(rels_doc_path)
 
+  ## load content_types
+  content_type_doc_path <- file.path(tmp_word_dir,"[Content_Types].xml")
+  content_types <- read_xml(content_type_doc_path)
+
+  ## update docx_ns
+  # docx <- update_docx_ns(docx)
+
   ## update hyperlinks & blips
   update_hyperlink_node_id(docx, rels)
-  update_blip_node_id(docx, rels, tmp_word_dir)
+  update_blip_node_id(docx, rels, content_types, tmp_word_dir)
 
   ## write updates
   xml2::write_xml(rels, rels_doc_path)
+  xml2::write_xml(content_types, content_type_doc_path)
   xml2::write_xml(docx, content_doc_path)
 
   ## unzip contents
@@ -3026,6 +3034,22 @@ gt_as_word_post_processing <- function(path){
   zip_temp_word_doc(path, tmp_word_dir, wd)
 }
 
+update_docx_ns <- function(docx){
+
+
+  ## add ns to document?
+  xml2::xml_attrs(docx) <- c(
+    xml2::xml_attrs(docx),
+    `xmlns:wpc`="http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas",
+    `xmlns:cx`="http://schemas.microsoft.com/office/drawing/2014/chartex"
+  )
+
+  tmp_docx <- tempfile(fileext = ".xml")
+
+  xml2::write_xml(docx, tmp_docx)
+  read_xml(tmp_docx)
+
+}
 
 update_hyperlink_node_id <- function(docx, rels){
 
@@ -3055,8 +3079,9 @@ update_hyperlink_node_id <- function(docx, rels){
 
 }
 
-update_blip_node_id <- function(docx, rels, tmp_word_dir){
+update_blip_node_id <- function(docx, rels, content_types, tmp_word_dir){
 
+  ## get relationships
   rels_relationships <- rels %>% xml_children()
   rels_ids <- rels_relationships %>% xml_attr("Id")
   max_id <- max(as.numeric(gsub("rId","",rels_ids)))
@@ -3066,6 +3091,7 @@ update_blip_node_id <- function(docx, rels, tmp_word_dir){
 
   ## identify nodes needing updating
   blip_nodes <- blip_nodes[!grepl("^rId\\d+$", xml_attr(blip_nodes, "embed"))]
+
 
   if(length(blip_nodes) > 0){
 
@@ -3094,7 +3120,22 @@ update_blip_node_id <- function(docx, rels, tmp_word_dir){
 
       xml_attr(blip_node, "r:embed") <- new_id
     }
+
+
+    all_uid <- xml_find_all(docx, "//*[@id]")
+
+    for (z in seq_along(all_uid)) {
+        xml_attr(all_uid[[z]], "id") <- z
+    }
+
+
+    ## add all content types
+
+    xml_add_all_content_types(content_types)
+
   }
+
+
 
 }
 
@@ -3128,13 +3169,11 @@ zip_temp_word_doc <- function(path, temp_dir, cur_dir = getwd()){
 
 xml_relationship <- function(id,  target, type = c("hyperlink","image"), target_mode = "External"){
 
-  type <- match.arg(type)
-
-  type <- file.path("http://schemas.openxmlformats.org/officeDocument/2006/relationships",type)
+  type <- paste0("http://schemas.openxmlformats.org/officeDocument/2006/relationships/", match.arg(type))
 
   varArgs <- list(
-    `Id` = id,
     `Type` = type,
+    `Id` = id,
     `Target` = target,
     `TargetMode` = target_mode)
 
@@ -3149,7 +3188,69 @@ xml_relationship <- function(id,  target, type = c("hyperlink","image"), target_
 
 }
 
+xml_add_all_content_types <- function(content_types){
 
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_ext(Extension = "jpeg", ContentType = "image/jpeg"),
+    .where = 3
+  )
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_ext(Extension = "gif", ContentType = "image/gif"),
+    .where = 3
+  )
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_ext(Extension = "svg", ContentType = "image/svg+xml"),
+    .where = 3
+  )
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_ext(Extension = "png", ContentType = "image/png"),
+    .where = 3
+  )
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_ext(Extension = "bmp", ContentType = "image/bmp"),
+    .where = 3
+  )
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_ext(Extension = "emf", ContentType = "image/x-emf"),
+    .where = 3
+  )
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_ext(Extension = "jpg", ContentType = "application/octet-stream"),
+    .where = 3
+  )
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_ext(Extension = "wmf", ContentType = "image/x-wmf"),
+    .where = 3
+  )
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_ext(Extension = "tiff", ContentType = "image/tiff"),
+    .where = 3
+  )
+
+}
+
+xml_content_type_ext <- function(Extension, ContentType){
+
+  htmltools::tag(
+    `_tag_name` = "Default",
+    varArgs = list(
+      Extention = Extension,
+      ContentType = ContentType
+    )
+  ) %>%
+    as.character() %>%
+    read_xml()
+
+}
 
 
 
