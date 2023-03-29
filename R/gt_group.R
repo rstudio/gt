@@ -1,4 +1,4 @@
-#' Create a `gt_group` container for multiple **gt** table objects
+#' Create a `gt_group` container for holding multiple **gt** table objects
 #'
 #' @description
 #'
