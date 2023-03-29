@@ -116,6 +116,14 @@ render_as_ihtml <- function(data, id) {
   column_labels_border_bottom_width <- opt_val(data = data, option = "column_labels_border_bottom_width")
   column_labels_border_bottom_color <- opt_val(data = data, option = "column_labels_border_bottom_color")
 
+  emoji_symbol_fonts <-
+    c(
+      "Apple Color Emoji", "Segoe UI Emoji",
+      "Segoe UI Symbol", "Noto Color Emoji"
+    )
+
+  table_font_names <- base::setdiff(table_font_names, emoji_symbol_fonts)
+
   font_family_str <-
     as_css_font_family_attr(
       font_vec = table_font_names,
