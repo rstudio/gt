@@ -170,7 +170,8 @@
 #' @section Examples:
 #'
 #' Use [`exibble`] to create a **gt** table. Format the `num` column as numeric
-#' with three decimal places and with no use of digit separators.
+#' with three decimal places and omit the use of digit separators (with
+#' `use_seps = FALSE`).
 #'
 #' ```r
 #' exibble |>
@@ -202,6 +203,25 @@
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_fmt_number_2.png")`
+#' }}
+#'
+#' In a variation of the previous table, we can combine large-number suffixing
+#' with a declaration of the number of significant digits to use. With things
+#' like population figures, `n_sigfig = 3` is a very good option.
+#'
+#' ```r
+#' countrypops |>
+#'   dplyr::select(country_code_3, year, population) |>
+#'   dplyr::filter(country_code_3 %in% c("CHN", "IND", "USA", "PAK", "IDN")) |>
+#'   dplyr::filter(year > 1975 & year %% 5 == 0) |>
+#'   tidyr::spread(year, population) |>
+#'   dplyr::arrange(desc(`2015`)) |>
+#'   gt(rowname_col = "country_code_3") |>
+#'   fmt_number(suffixing = TRUE, n_sigfig = 3)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_number_3.png")`
 #' }}
 #'
 #' @family data formatting functions
