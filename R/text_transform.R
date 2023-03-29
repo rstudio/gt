@@ -106,7 +106,7 @@ text_replace <- function(
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' #' @section Examples:
+#' @section Examples:
 #'
 #' Use [`metro`] to create a **gt** table. In the `connect_rer` column,
 #' perform a count of pattern matches with `stringr::str_count()` and determine
