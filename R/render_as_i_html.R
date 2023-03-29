@@ -106,7 +106,7 @@ render_as_ihtml <- function(data, id) {
 
   table_width <- opt_val(data = data, option = "table_width")
   table_background_color <- opt_val(data = data, option = "table_background_color")
-  table_font_style <- opt_val(data = data, option = "table_font_names")
+  table_font_names <- opt_val(data = data, option = "table_font_names")
   table_font_color <- opt_val(data = data, option = "table_font_color")
 
   column_labels_border_top_style <- opt_val(data = data, option = "column_labels_border_top_style")
@@ -115,6 +115,12 @@ render_as_ihtml <- function(data, id) {
   column_labels_border_bottom_style <- opt_val(data = data, option = "column_labels_border_bottom_style")
   column_labels_border_bottom_width <- opt_val(data = data, option = "column_labels_border_bottom_width")
   column_labels_border_bottom_color <- opt_val(data = data, option = "column_labels_border_bottom_color")
+
+  font_family_str <-
+    as_css_font_family_attr(
+      font_vec = table_font_names,
+      value_only = TRUE
+    )
 
   if (table_width == "auto") table_width <- NULL
 
@@ -196,6 +202,7 @@ render_as_ihtml <- function(data, id) {
     heading_component <-
       htmltools::div(
         style = htmltools::css(
+          `font-family` = font_family_str,
           `border-top-style` = "solid",
           `border-top-width` = "2px",
           `border-top-color` = "#D3D3D3",
@@ -237,6 +244,7 @@ render_as_ihtml <- function(data, id) {
     footer_component <-
       htmltools::div(
         style = htmltools::css(
+          `font-family` = font_family_str,
           `border-top-style` = "solid",
           `border-top-width` = "2px",
           `border-top-color` = "#D3D3D3",
@@ -267,7 +275,7 @@ render_as_ihtml <- function(data, id) {
       highlightColor = NULL,
       cellPadding = NULL,
       style = list(
-        fontFamily = table_font_style
+        fontFamily = font_family_str
       ),
       tableStyle = NULL,
       headerStyle = list(
