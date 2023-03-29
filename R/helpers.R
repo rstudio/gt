@@ -2483,11 +2483,12 @@ cell_style_structure <- function(name, obj, subclass = name) {
 #'
 #' @description
 #'
-#' This function can brighten or darken a palette of colors by an arbitrary
-#' number of steps, which is defined by a real number between -2.0 and 2.0. The
-#' transformation of a palette by a fixed step in this function will tend to
-#' apply greater darkening or lightening for those colors in the midrange
-#' compared to any very dark or very light colors in the input palette.
+#' The `adjust_luminance()` function can brighten or darken a palette of colors
+#' by an arbitrary number of steps, which is defined by a real number between
+#' -2.0 and 2.0. The transformation of a palette by a fixed step in this
+#' function will tend to apply greater darkening or lightening for those colors
+#' in the midrange compared to any very dark or very light colors in the input
+#' palette.
 #'
 #' @details
 #'
@@ -2608,8 +2609,9 @@ adjust_luminance <- function(
 #'
 #' @description
 #'
-#' This helper function can be used to create a random, character-based ID
-#' value argument of variable length (the default is 10 letters).
+#' The `random_id()` helper function can be used to create a random,
+#' character-based ID value argument of variable length (the default is 10
+#' letters).
 #'
 #' @param n The number of lowercase letters to use for the random ID.
 #'
@@ -2645,9 +2647,9 @@ latex_special_chars <- c(
 #'
 #' @description
 #'
-#' Text may contain several characters with special meanings in LaTeX. This
-#' function will transform a character vector so that it is safe to use within
-#' LaTeX tables.
+#' Text may contain several characters with special meanings in LaTeX. The
+#' `escape_latex()` function will transform a character vector so that it is
+#' safe to use within LaTeX tables.
 #'
 #' @param text A character vector containing the text that is to be
 #'   LaTeX-escaped.
