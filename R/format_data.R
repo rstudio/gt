@@ -1906,7 +1906,7 @@ fmt_partsper <- function(
   )
 }
 
-#' Format values as a mixed fractions
+#' Format values as mixed fractions
 #'
 #' @description
 #'
@@ -3143,7 +3143,7 @@ get_letters_from_div <- function(x, set) {
   paste(set[result], collapse = "")
 }
 
-#' Format values to spelled out numbers
+#' Format values to spelled-out numbers
 #'
 #' @description
 #'
