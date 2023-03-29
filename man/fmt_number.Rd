@@ -216,7 +216,8 @@ useful reference on which locales are supported, we can use the
 
 
 Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{num} column as numeric
-with three decimal places and with no use of digit separators.
+with three decimal places and omit the use of digit separators (with
+\code{use_seps = FALSE}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   gt() |>
@@ -246,6 +247,24 @@ large-number suffixing with the \code{suffixing = TRUE} option.
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_number_2.png" alt="This image of a table was generated from the second code example in the `fmt_number()` help file." style="width:100\%;">
+}}
+
+In a variation of the previous table, we can combine large-number suffixing
+with a declaration of the number of significant digits to use. With things
+like population figures, \code{n_sigfig = 3} is a very good option.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::select(country_code_3, year, population) |>
+  dplyr::filter(country_code_3 \%in\% c("CHN", "IND", "USA", "PAK", "IDN")) |>
+  dplyr::filter(year > 1975 & year \%\% 5 == 0) |>
+  tidyr::spread(year, population) |>
+  dplyr::arrange(desc(`2015`)) |>
+  gt(rowname_col = "country_code_3") |>
+  fmt_number(suffixing = TRUE, n_sigfig = 3)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_number_3.png" alt="This image of a table was generated from the third code example in the `fmt_number()` help file." style="width:100\%;">
 }}
 }
 
