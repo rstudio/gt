@@ -422,11 +422,11 @@ to the \code{population} column with the \code{"numeric"} method, use a domain b
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_data_color_4.png" alt="This image of a table was generated from the fourth code example in the `data_color()` help file." style="width:100\%;">
 }}
 
-We can alternatively use the \code{fn} for supplying the \strong{scales}-based function
-\code{\link[scales:col_numeric]{scales::col_numeric()}}. That function call will return a function (which is
-what the \code{fn} argument requires) that takes a vector of numeric values and
-returns color values. Here is the more complex version of the code that
-returns the same table as in the previous example.
+We can alternatively use the \code{fn} argument for supplying the \strong{scales}-based
+function \code{\link[scales:col_numeric]{scales::col_numeric()}}. That function call will itself return a
+function (which is what the \code{fn} argument actually requires) that takes a
+vector of numeric values and returns color values. Here is the more complex
+version of the code that returns the same table as in the previous example.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::filter(country_name == "Mongolia") |>

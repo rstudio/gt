@@ -2,7 +2,7 @@
 % Please edit documentation in R/format_data.R
 \name{fmt_fraction}
 \alias{fmt_fraction}
-\title{Format values as a mixed fractions}
+\title{Format values as mixed fractions}
 \usage{
 fmt_fraction(
   data,

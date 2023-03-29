@@ -22,7 +22,7 @@ with \code{\link[=text_transform]{text_transform()}}. The function is expressly 
 functions' \code{locations} argument. The 'body' location is present by default in
 every \strong{gt} table.
 }
-\section{Overview of Location Helper Functions}{
+\section{Overview of location helper functions}{
 
 
 Location helper functions can be used to target cells with virtually any

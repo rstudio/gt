@@ -30,7 +30,7 @@ groups will be considered. Providing the ID values (in quotes) of row groups
 in \code{c()} will serve to constrain the targeting to that subset of groups.
 }
 
-\section{Overview of Location Helper Functions}{
+\section{Overview of location helper functions}{
 
 
 Location helper functions can be used to target cells with virtually any

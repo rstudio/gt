@@ -2,7 +2,7 @@
 % Please edit documentation in R/format_data.R
 \name{fmt_spelled_num}
 \alias{fmt_spelled_num}
-\title{Format values to spelled out numbers}
+\title{Format values to spelled-out numbers}
 \usage{
 fmt_spelled_num(
   data,

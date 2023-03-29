@@ -20,7 +20,7 @@ with \code{\link[=tab_style]{tab_style()}}. The function is expressly used in ea
 functions' \code{locations} argument. The 'column_labels' location is present by
 default in every \strong{gt} table.
 }
-\section{Overview of Location Helper Functions}{
+\section{Overview of location helper functions}{
 
 
 Location helper functions can be used to target cells with virtually any
