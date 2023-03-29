@@ -12,6 +12,7 @@
   .gt_table {
     display: table;
     border-collapse: collapse;
+    line-height: normal;
     margin-left: $table_margin_left; // table.margin.left
     margin-right: $table_margin_right; // table.margin.right
     color: font-color($table_background_color);

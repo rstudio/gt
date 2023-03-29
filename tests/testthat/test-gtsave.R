@@ -31,7 +31,7 @@ test_that("The `gtsave()` function creates an HTML file based on the extension",
   # Expect that CSS styles are not inlined
   (path_1 %>%
       readLines()) %>% paste(collapse = "\n") %>%
-    tidy_grepl("<style>html \\{") %>%
+    tidy_grepl("<style>#[a-z]{10} table \\{") %>%
     expect_true()
 
   # Create a filename with path, having the
@@ -62,7 +62,7 @@ test_that("The `gtsave()` function creates an HTML file based on the extension",
   # Expect that CSS styles are not inlined
   (path_2 %>%
       readLines()) %>% paste(collapse = "\n") %>%
-    tidy_grepl("<style>html \\{") %>%
+    tidy_grepl("<style>#[a-z]{10} table \\{") %>%
     expect_true()
 
   # Create a filename with path, having the
@@ -90,7 +90,7 @@ test_that("The `gtsave()` function creates an HTML file based on the extension",
   # Expect that CSS styles are inlined
   (path_3 %>%
       readLines()) %>% paste(collapse = "\n") %>%
-    tidy_grepl("<style>body\\{") %>%
+    tidy_grepl("style=\"-webkit-font-smoothing: antialiased;") %>%
     expect_true()
 
   # Create a filename with path, having the
@@ -122,7 +122,7 @@ test_that("The `gtsave()` function creates an HTML file based on the extension",
   # Expect that CSS styles are inlined
   (path_4 %>%
       readLines()) %>% paste(collapse = "\n") %>%
-    tidy_grepl("<style>body\\{") %>%
+    tidy_grepl("style=\"-webkit-font-smoothing: antialiased;") %>%
     expect_true()
 })
 

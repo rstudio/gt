@@ -2,15 +2,26 @@
 % Please edit documentation in R/opts.R
 \name{opt_table_font}
 \alias{opt_table_font}
-\title{Option to define a custom font for the table}
+\title{Options to define font choices for the entire table}
 \usage{
-opt_table_font(data, font, weight = NULL, style = NULL, add = TRUE)
+opt_table_font(
+  data,
+  font = NULL,
+  stack = NULL,
+  weight = NULL,
+  style = NULL,
+  add = TRUE
+)
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{font}{Either the name of a font available in the user system or a call
 to \code{\link[=google_font]{google_font()}}, which has a large selection of typefaces.}
+
+\item{stack}{A keyword that represents the name of a font stack (obtained via
+the \code{\link[=system_fonts]{system_fonts()}} helper function). If provided, this new stack will
+replace any defined fonts and any \code{font} values will be prepended.}
 
 \item{weight}{The weight of the font. Can be a text-based keyword such as
 \code{"normal"}, \code{"bold"}, \code{"lighter"}, \code{"bolder"}, or, a numeric value between
@@ -28,17 +39,55 @@ the list serves as fallbacks when certain fonts are not available.}
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{opt_table_font()} function makes it possible to define a custom font for
-the entire \strong{gt} table. The standard fallback fonts are still set by default
-but the font defined here will take precedence. You could still have
-different fonts in select locations in the table, and for that you would need
-to use \code{\link[=tab_style]{tab_style()}} in conjunction with the \code{\link[=cell_text]{cell_text()}} helper function.
+The \code{opt_table_font()} function makes it possible to define fonts used for an
+entire \strong{gt} table. Any font names supplied in \code{font} will (by default, with
+\code{add = TRUE}) be placed before the names present in the existing font stack
+(i.e., they will take precedence). You can choose to base the font stack on
+those provided by \code{\link[=system_fonts]{system_fonts()}} by providing a valid keyword for a themed
+set and optionally prepending \code{font} values to that.
+
+Take note that you could still have entirely different fonts in specific
+locations of the table. For that you would need to use \code{\link[=tab_style]{tab_style()}} or
+\code{\link[=tab_style_body]{tab_style_body()}} in conjunction with the \code{\link[=cell_text]{cell_text()}} helper function.
 }
-\details{
-We have the option to supply either a system font for the \code{font_name}, or, a
-font available at the Google Fonts service by use of the \code{\link[=google_font]{google_font()}}
-helper function.
+\section{Possibilities for the \code{font} argument}{
+
+
+We have the option to supply one or more font names for the \code{font} argument.
+They can be enclosed in \code{c()} or a \code{list()}. You can generate this list or
+vector with a combination of font names, and you can freely use the
+\code{\link[=google_font]{google_font()}}, \code{\link[=default_fonts]{default_fonts()}}, and \code{\link[=system_fonts]{system_fonts()}} functions to help
+compose your font family.
 }
+
+\section{Possibilities for the \code{stack} argument}{
+
+
+There are several themed font stacks available via the \code{\link[=system_fonts]{system_fonts()}}
+helper function. That function can be used to generate all or a segment of
+a vector supplied to the \code{font} argument. However, using the \code{stack} argument
+with one of the keywords for the font stacks available in \code{\link[=system_fonts]{system_fonts()}},
+we could be sure that the typeface class will work across multiple computer
+systems. The following keywords can be used:
+\itemize{
+\item \code{"system-ui"}
+\item \code{"transitional"}
+\item \code{"old-style"}
+\item \code{"humanist"}
+\item \code{"geometric-humanist"}
+\item \code{"classical-humanist"}
+\item \code{"neo-grotesque"}
+\item \code{"monospace-slab-serif"}
+\item \code{"monospace-code"}
+\item \code{"industrial"}
+\item \code{"rounded-sans"}
+\item \code{"slab-serif"}
+\item \code{"antique"}
+\item \code{"didone"}
+\item \code{"handwritten"}
+}
+}
+
 \section{Examples}{
 
 
