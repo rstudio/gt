@@ -41,7 +41,7 @@ compile_scss <- function(data, id = NULL) {
       glue::glue(
         .open = "<<", .close = ">>",
         "
-        <<ifelse(has_id, 'html', '.gt_table')>> {
+        <<ifelse(has_id, 'html, :host', '.gt_table')>> {
           <<font_family_attr>>
         }
 
