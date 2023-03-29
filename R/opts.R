@@ -1226,21 +1226,22 @@ opt_table_outline <- function(
 #'
 #' @inheritParams fmt_number
 #' @param font One or more font names available as system or web fonts. These
-#'   are combined with with `c()` or a `list()`. To choose fonts from the
+#'   can be combined with a `c()` or a `list()`. To choose fonts from the
 #'   *Google Fonts* service, we can call the [google_font()] helper function.
 #' @param stack A keyword that represents the name of a font stack (obtained via
-#'   the [system_fonts()] helper function). If provided, this new stack will
-#'   replace any defined fonts and any `font` values will be prepended.
+#'   internally via the [system_fonts()] helper function). If provided, this new
+#'   stack will replace any defined fonts and any `font` values will be
+#'   prepended.
 #' @param style An option to modify the text style. Can be one of either
 #'   `"normal"`, `"italic"`, or `"oblique"`.
 #' @param weight Option to set the weight of the font. Can be a text-based
 #'   keyword such as `"normal"`, `"bold"`, `"lighter"`, `"bolder"`, or, a
 #'   numeric value between `1` and `1000`, inclusive. Please note that typefaces
 #'   have varying support for the numeric mapping of weight.
-#' @param add Should this font be added to the beginning of the already-defined
+#' @param add Should this font be added to the beginning of any already-defined
 #'   fonts for the table? By default, this is `TRUE` and is recommended since
-#'   those fonts already specified can serve as fallbacks when anything
-#'   specified in `font` is not available. If a `stack` is provided then `add`
+#'   those fonts already present can serve as fallbacks when everything
+#'   specified in `font` is not available. If a `stack` is provided, then `add`
 #'   will automatically set to `FALSE`.
 #'
 #' @return An object of class `gt_tbl`.
