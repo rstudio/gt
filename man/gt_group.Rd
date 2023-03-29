@@ -2,7 +2,7 @@
 % Please edit documentation in R/gt_group.R
 \name{gt_group}
 \alias{gt_group}
-\title{Create a \code{gt_group} container for multiple \strong{gt} table objects}
+\title{Create a \code{gt_group} container for holding multiple \strong{gt} table objects}
 \usage{
 gt_group(..., .list = list2(...), .use_grp_opts = FALSE)
 }

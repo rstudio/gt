@@ -19,11 +19,12 @@ adjusted. Must be a number between \code{-2.0} and \code{2.0}.}
 A vector of color values.
 }
 \description{
-This function can brighten or darken a palette of colors by an arbitrary
-number of steps, which is defined by a real number between -2.0 and 2.0. The
-transformation of a palette by a fixed step in this function will tend to
-apply greater darkening or lightening for those colors in the midrange
-compared to any very dark or very light colors in the input palette.
+The \code{adjust_luminance()} function can brighten or darken a palette of colors
+by an arbitrary number of steps, which is defined by a real number between
+-2.0 and 2.0. The transformation of a palette by a fixed step in this
+function will tend to apply greater darkening or lightening for those colors
+in the midrange compared to any very dark or very light colors in the input
+palette.
 }
 \details{
 This function can be useful when combined with the \code{\link[=data_color]{data_color()}} function's

@@ -45,8 +45,8 @@ incantation like
 
 \code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
 
-which targets numeric columns that have a maximum value of 100,000 (excluding
-\code{NA}s from consideration).
+which targets numeric columns that have a maximum value greater than
+1,000,000 (excluding any \code{NA}s from consideration).
 
 Once the groups and columns are targeted, we may also target the \code{rows} of
 the summary. Summary cells in the stub will have ID values that can be used
@@ -57,7 +57,7 @@ use row indices (e.g., \code{c(3, 5, 6)}) that correspond to the row number of a
 summary row in a row group (numbering restarts with every row group).
 }
 
-\section{Overview of Location Helper Functions}{
+\section{Overview of location helper functions}{
 
 
 Location helper functions can be used to target cells with virtually any

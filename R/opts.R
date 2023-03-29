@@ -1225,20 +1225,24 @@ opt_table_outline <- function(
 #' [tab_style_body()] in conjunction with the [cell_text()] helper function.
 #'
 #' @inheritParams fmt_number
-#' @param font Either the name of a font available in the user system or a call
-#'   to [google_font()], which has a large selection of typefaces.
+#' @param font One or more font names available as system or web fonts. These
+#'   can be combined with a `c()` or a `list()`. To choose fonts from the
+#'   *Google Fonts* service, we can call the [google_font()] helper function.
 #' @param stack A keyword that represents the name of a font stack (obtained via
-#'   the [system_fonts()] helper function). If provided, this new stack will
-#'   replace any defined fonts and any `font` values will be prepended.
-#' @param style The text style. Can be one of either `"normal"`, `"italic"`, or
-#'   `"oblique"`.
-#' @param weight The weight of the font. Can be a text-based keyword such as
-#'   `"normal"`, `"bold"`, `"lighter"`, `"bolder"`, or, a numeric value between
-#'   `1` and `1000`, inclusive. Note that only variable fonts may support the
-#'   numeric mapping of weight.
-#' @param add Should this font be added to the front of the already-defined
+#'   internally via the [system_fonts()] helper function). If provided, this new
+#'   stack will replace any defined fonts and any `font` values will be
+#'   prepended.
+#' @param style An option to modify the text style. Can be one of either
+#'   `"normal"`, `"italic"`, or `"oblique"`.
+#' @param weight Option to set the weight of the font. Can be a text-based
+#'   keyword such as `"normal"`, `"bold"`, `"lighter"`, `"bolder"`, or, a
+#'   numeric value between `1` and `1000`, inclusive. Please note that typefaces
+#'   have varying support for the numeric mapping of weight.
+#' @param add Should this font be added to the beginning of any already-defined
 #'   fonts for the table? By default, this is `TRUE` and is recommended since
-#'   the list serves as fallbacks when certain fonts are not available.
+#'   those fonts already present can serve as fallbacks when everything
+#'   specified in `font` is not available. If a `stack` is provided, then `add`
+#'   will automatically set to `FALSE`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -1253,11 +1257,11 @@ opt_table_outline <- function(
 #' @section Possibilities for the `stack` argument:
 #'
 #' There are several themed font stacks available via the [system_fonts()]
-#' helper function. That function can be used to generate all or a segment of
-#' a vector supplied to the `font` argument. However, using the `stack` argument
-#' with one of the keywords for the font stacks available in [system_fonts()],
-#' we could be sure that the typeface class will work across multiple computer
-#' systems. The following keywords can be used:
+#' helper function. That function can be used to generate all or a segment of a
+#' vector supplied to the `font` argument. However, using the `stack` argument
+#' with one of the 15 keywords for the font stacks available in
+#' [system_fonts()], we could be sure that the typeface class will work across
+#' multiple computer systems. Any of the following keywords can be used:
 #'
 #' - `"system-ui"`
 #' - `"transitional"`
@@ -1280,8 +1284,8 @@ opt_table_outline <- function(
 #' Use [`sp500`] to create a small **gt** table, using [fmt_currency()] to
 #' provide a dollar sign for the first row of monetary values. Then, set a
 #' larger font size for the table and use the `"Merriweather"` font (from
-#' *Google Fonts*, via [google_font()]) with two font fallbacks (`"Cochin"` and
-#' the catchall `"Serif"` group).
+#' *Google Fonts*, via [google_font()]) with two system font fallbacks
+#' (`"Cochin"` and the generic `"serif"`).
 #'
 #' ```r
 #' sp500 |>
@@ -1289,16 +1293,13 @@ opt_table_outline <- function(
 #'   dplyr::select(-volume, -adj_close) |>
 #'   gt() |>
 #'   fmt_currency(
-#'     columns = 2:5,
 #'     rows = 1,
-#'     currency = "USD",
 #'     use_seps = FALSE
 #'   ) |>
-#'   tab_options(table.font.size = px(18)) |>
 #'   opt_table_font(
 #'     font = list(
 #'       google_font(name = "Merriweather"),
-#'       "Cochin", "Serif"
+#'       "Cochin", "serif"
 #'     )
 #'   )
 #' ```
@@ -1320,12 +1321,7 @@ opt_table_outline <- function(
 #'   ) |>
 #'   dplyr::select(-latitude, -month) |>
 #'   gt() |>
-#'   opt_table_font(
-#'     font = c(
-#'       "Helvetica Neue", "Segoe UI",
-#'       default_fonts()[-c(1:3)]
-#'     )
-#'   ) |>
+#'   opt_table_font(stack = "rounded-sans") |>
 #'   opt_all_caps()
 #' ```
 #'

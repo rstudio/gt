@@ -2,7 +2,7 @@
 % Please edit documentation in R/format_vec.R
 \name{vec_fmt_spelled_num}
 \alias{vec_fmt_spelled_num}
-\title{Format a vector as spelled out numbers}
+\title{Format a vector as spelled-out numbers}
 \usage{
 vec_fmt_spelled_num(
   x,

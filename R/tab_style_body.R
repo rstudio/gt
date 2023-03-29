@@ -24,11 +24,12 @@
 #' - the cell borders ([cell_borders()])
 #'
 #' @inheritParams fmt_number
-#' @param style a vector of styles to use. The [cell_text()], [cell_fill()], and
-#'   [cell_borders()] helper functions can be used here to more easily generate
-#'   valid styles. If using more than one helper function to define styles, all
-#'   calls must be enclosed in a [list()]. Custom CSS declarations can be used
-#'   for HTML output by including a [css()]-based statement as a list item.
+#' @param style The styles to use for the targeted cells. The [cell_text()],
+#'   [cell_fill()], and [cell_borders()] helper functions can be used here to
+#'   more easily generate valid styles. If using more than one helper function
+#'   to define styles, all calls must be enclosed in a [list()]. Custom CSS
+#'   declarations can be used for HTML output by including a [css()]-based
+#'   statement as a list item.
 #' @param columns Optional columns for constraining the targeting process.
 #'   Providing [everything()] (the default) results in cells in all `columns`
 #'   being targeting (this can be limited by `rows` however). Can either be a
@@ -65,6 +66,42 @@
 #'   styling into the stub.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @section Targeting cells with `columns` and `rows`:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to constrain a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given search will be
+#' skipped over. So it's safe to select all columns with a type of search (only
+#' those values that can be formatted will be formatted), but, you may not want
+#' that. One strategy is to format the bulk of cell values with one formatting
+#' function and then constrain the columns for later passes with other types of
+#' formatting (the last formatting done to a cell is what you get in the final
+#' output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
+#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
+#' the input data (the indices won't necessarily match those of rearranged rows
+#' if row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector.
 #'
 #' @section Examples:
 #'

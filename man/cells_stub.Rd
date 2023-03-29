@@ -23,7 +23,7 @@ might be available in a \strong{gt} table: (1) through specification of a
 \code{\link[=grand_summary_rows]{grand_summary_rows()}} with neither of the previous two conditions being
 true.
 }
-\section{Overview of Location Helper Functions}{
+\section{Overview of location helper functions}{
 
 
 Location helper functions can be used to target cells with virtually any

@@ -40,8 +40,8 @@
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given substitution
@@ -229,8 +229,8 @@ fmt_missing <- function(
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given substitution
@@ -380,8 +380,8 @@ sub_zero <- function(
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given substitution
@@ -632,8 +632,8 @@ sub_small_vals <- function(
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given substitution
@@ -904,8 +904,8 @@ check_sub_fn_sign <- function(sign) {
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given substitution

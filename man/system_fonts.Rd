@@ -8,10 +8,10 @@ system_fonts(name)
 }
 \arguments{
 \item{name}{A keyword from the set of \code{"system-ui"}, \code{"transitional"},
-\code{"old-style"}, \code{"humanist"}, \code{"geometric-humanist"}, \code{"classical-humanist"},
-\code{"neo-grotesque"}, \code{"monospace-slab-serif"}, \code{"monospace-code"},
-\code{"industrial"}, \code{"rounded-sans"}, \code{"slab-serif"}, \code{"antique"}, \code{"didone"},
-and \code{"handwritten"}.}
+\code{"old-style"}, \code{"humanist"}, \code{"geometric-humanist"},
+\code{"classical-humanist"}, \code{"neo-grotesque"}, \code{"monospace-slab-serif"},
+\code{"monospace-code"}, \code{"industrial"}, \code{"rounded-sans"}, \code{"slab-serif"},
+\code{"antique"}, \code{"didone"}, and \code{"handwritten"}.}
 }
 \value{
 A character vector of font names.
@@ -25,6 +25,177 @@ work across a wide range of computer systems. This is useful when specifying
 function). If using \code{\link[=opt_table_font]{opt_table_font()}} we can invoke this function in its
 \code{stack} argument.
 }
+\section{The font stacks and the individual fonts used by platform}{
+
+\subsection{System UI (\code{"system-ui"})}{
+
+\if{html}{\out{<div class="sourceCode css">}}\preformatted{font-family: system-ui, sans-serif;
+}\if{html}{\out{</div>}}
+
+The operating system interface's default typefaces are known as system UI
+fonts. They contain a variety of font weights, are quite readable at small
+sizes, and are perfect for UI elements. These typefaces serve as a great
+starting point for text in data tables and so this font stack is the default
+for \strong{gt}.
+}
+
+\subsection{Transitional (\code{"transitional"})}{
+
+\if{html}{\out{<div class="sourceCode css">}}\preformatted{font-family: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif;
+}\if{html}{\out{</div>}}
+
+The Enlightenment saw the development of transitional typefaces, which
+combine Old Style and Modern typefaces. \emph{Times New Roman}, a transitional
+typeface created for the Times of London newspaper, is among the most
+well-known instances of this style.
+}
+
+\subsection{Old Style (\code{"old-style"})}{
+
+\if{html}{\out{<div class="sourceCode css">}}\preformatted{font-family: 'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', P052, serif;
+}\if{html}{\out{</div>}}
+
+Old style typefaces were created during the Renaissance and are distinguished
+by diagonal stress, a lack of contrast between thick and thin strokes, and
+rounded serifs. \emph{Garamond} is among the most well-known instances of an antique
+typeface.
+}
+
+\subsection{Humanist (\code{"humanist"})}{
+
+\if{html}{\out{<div class="sourceCode css">}}\preformatted{font-family: Seravek, 'Gill Sans Nova', Ubuntu, Calibri, 'DejaVu Sans', source-sans-pro, sans-serif;
+}\if{html}{\out{</div>}}
+
+Low contrast between thick and thin strokes and organic, calligraphic forms
+are traits of humanist typefaces. These typefaces, which draw their
+inspiration from Renaissance calligraphy, are frequently regarded as being
+more readable and easier to read than other sans serif typefaces.
+}
+
+\subsection{Geometric Humanist (\code{"geometric-humanist"})}{
+
+\if{html}{\out{<div class="sourceCode css">}}\preformatted{font-family: Avenir, 'Avenir Next LT Pro', Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
+}\if{html}{\out{</div>}}
+
+Clean, geometric forms and consistent stroke widths are characteristics of
+geometric humanist typefaces. These typefaces, which are frequently used for
+headlines and other display purposes, are frequently thought to be
+contemporary and slick in appearance. A well-known example of this
+classification is \emph{Futura}.
+}
+
+\subsection{Classical Humanist (\code{"classical-humanist"})}{
+
+\if{html}{\out{<div class="sourceCode css">}}\preformatted{font-family: Optima, Candara, 'Noto Sans', source-sans-pro, sans-serif;
+}\if{html}{\out{</div>}}
+
+The way the strokes gradually widen as they approach the stroke terminals
+without ending in a serif is what distinguishes classical humanist typefaces.
+The stone carving on Renaissance-era tombstones and classical Roman capitals
+served as inspiration for these typefaces.
+}
+
+\subsection{Neo-Grotesque (\code{"neo-grotesque"})}{
+
+\if{html}{\out{<div class="sourceCode css">}}\preformatted{font-family: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
+}\if{html}{\out{</div>}}
+
+Neo-grotesque typefaces are a form of sans serif that originated in the late
+19th and early 20th centuries. They are distinguished by their crisp,
+geometric shapes and regular stroke widths. \emph{Helvetica} is among the most
+well-known examples of a Neo-grotesque typeface.
+}
+
+\subsection{Monospace Slab Serif (\code{"monospace-slab-serif"})}{
+
+\if{html}{\out{<div class="sourceCode css">}}\preformatted{font-family: 'Nimbus Mono PS', 'Courier New', 'Cutive Mono', monospace;
+}\if{html}{\out{</div>}}
+
+Monospace slab serif typefaces are distinguished by their fixed-width
+letters, which are the same width irrespective of their shape, and their
+straightforward, geometric forms. For reports, tabular work, and technical
+documentation, this technique is used to simulate typewriter output.
+}
+
+\subsection{Monospace Code (\code{"monospace-code"})}{
+
+\if{html}{\out{<div class="sourceCode css">}}\preformatted{font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+}\if{html}{\out{</div>}}
+
+Specifically created for use in programming and other technical applications,
+monospace code typefaces are used in these fields. These typefaces are
+distinguished by their clear, readable forms and monospaced design, which
+ensures that all letters and characters are the same width.
+}
+
+\subsection{Industrial (\code{"industrial"})}{
+
+\if{html}{\out{<div class="sourceCode css">}}\preformatted{font-family: Bahnschrift, 'DIN Alternate', 'Franklin Gothic Medium', 'Nimbus Sans Narrow', sans-serif-condensed, sans-serif;
+}\if{html}{\out{</div>}}
+
+The development of industrial typefaces began in the late 19th century and
+was greatly influenced by the industrial and technological advancements of
+the time. Industrial typefaces are distinguished by their strong sans serif
+letterforms, straightforward appearance, and use of geometric shapes and
+straight lines.
+}
+
+\subsection{Rounded Sans (\code{"rounded-sans"})}{
+
+\if{html}{\out{<div class="sourceCode css">}}\preformatted{font-family: ui-rounded, 'Hiragino Maru Gothic ProN', Quicksand, Comfortaa, Manjari, 'Arial Rounded MT Bold', Calibri, source-sans-pro, sans-serif;
+}\if{html}{\out{</div>}}
+
+The rounded, curved letterforms that define rounded typefaces give them a
+softer, friendlier appearance. The typeface's rounded edges give it a more
+natural and playful feel, making it appropriate for use in casual or
+kid-friendly designs. Since the 1950s, the rounded sans-serif design has
+gained popularity and is still frequently used in branding, graphic design,
+and other fields.
+}
+
+\subsection{Slab Serif (\code{"slab-serif"})}{
+
+\if{html}{\out{<div class="sourceCode css">}}\preformatted{font-family: Rockwell, 'Rockwell Nova', 'Roboto Slab', 'DejaVu Serif', 'Sitka Small', serif;
+}\if{html}{\out{</div>}}
+
+Slab Serif typefaces are distinguished by the thick, block-like serifs that
+appear at the ends of each letterform. Typically, these serifs are
+unbracketed, which means that they do not have any curved or tapered
+transitions to the letter's main stroke.
+}
+
+\subsection{Antique (\code{"antique"})}{
+
+\if{html}{\out{<div class="sourceCode css">}}\preformatted{font-family: Superclarendon, 'Bookman Old Style', 'URW Bookman', 'URW Bookman L', 'Georgia Pro', Georgia, serif;
+}\if{html}{\out{</div>}}
+
+Serif typefaces that were popular in the 19th century include antique
+typefaces, also referred to as Egyptians. They are distinguished by their
+thick, uniform stroke weight and block-like serifs.
+}
+
+\subsection{Didone (\code{"didone"})}{
+
+\if{html}{\out{<div class="sourceCode css">}}\preformatted{font-family: Didot, 'Bodoni MT', 'Noto Serif Display', 'URW Palladio L', P052, Sylfaen, serif;
+}\if{html}{\out{</div>}}
+
+Didone typefaces, also referred to as Modern typefaces, are distinguished by
+their vertical stress, sharp contrast between thick and thin strokes, and
+hairline serifs without bracketing. The Didone style first appeared in the
+late 18th century and became well-known in the early 19th century.
+}
+
+\subsection{Handwritten (\code{"handwritten"})}{
+
+\if{html}{\out{<div class="sourceCode css">}}\preformatted{font-family: 'Segoe Print', 'Bradley Hand', Chilanka, TSCu_Comic, casual, cursive;
+}\if{html}{\out{</div>}}
+
+The appearance and feel of handwriting are replicated by handwritten
+typefaces. Although there are a wide variety of handwriting styles, this font
+stack tends to use a more casual and commonplace style.
+}
+}
+
 \section{Examples}{
 
 

@@ -16,7 +16,7 @@ when applying a footnote with \code{\link[=tab_footnote]{tab_footnote()}} or add
 \code{locations} argument. The 'stubhead' location is always present alongside the
 'stub' location.
 }
-\section{Overview of Location Helper Functions}{
+\section{Overview of location helper functions}{
 
 
 Location helper functions can be used to target cells with virtually any

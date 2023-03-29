@@ -14,9 +14,9 @@ LaTeX-escaped.}
 A character vector.
 }
 \description{
-Text may contain several characters with special meanings in LaTeX. This
-function will transform a character vector so that it is safe to use within
-LaTeX tables.
+Text may contain several characters with special meanings in LaTeX. The
+\code{escape_latex()} function will transform a character vector so that it is
+safe to use within LaTeX tables.
 }
 \section{Function ID}{
 

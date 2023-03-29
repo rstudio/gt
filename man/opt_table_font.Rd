@@ -16,24 +16,28 @@ opt_table_font(
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{font}{Either the name of a font available in the user system or a call
-to \code{\link[=google_font]{google_font()}}, which has a large selection of typefaces.}
+\item{font}{One or more font names available as system or web fonts. These
+can be combined with a \code{c()} or a \code{list()}. To choose fonts from the
+\emph{Google Fonts} service, we can call the \code{\link[=google_font]{google_font()}} helper function.}
 
 \item{stack}{A keyword that represents the name of a font stack (obtained via
-the \code{\link[=system_fonts]{system_fonts()}} helper function). If provided, this new stack will
-replace any defined fonts and any \code{font} values will be prepended.}
+internally via the \code{\link[=system_fonts]{system_fonts()}} helper function). If provided, this new
+stack will replace any defined fonts and any \code{font} values will be
+prepended.}
 
-\item{weight}{The weight of the font. Can be a text-based keyword such as
-\code{"normal"}, \code{"bold"}, \code{"lighter"}, \code{"bolder"}, or, a numeric value between
-\code{1} and \code{1000}, inclusive. Note that only variable fonts may support the
-numeric mapping of weight.}
+\item{weight}{Option to set the weight of the font. Can be a text-based
+keyword such as \code{"normal"}, \code{"bold"}, \code{"lighter"}, \code{"bolder"}, or, a
+numeric value between \code{1} and \code{1000}, inclusive. Please note that typefaces
+have varying support for the numeric mapping of weight.}
 
-\item{style}{The text style. Can be one of either \code{"normal"}, \code{"italic"}, or
-\code{"oblique"}.}
+\item{style}{An option to modify the text style. Can be one of either
+\code{"normal"}, \code{"italic"}, or \code{"oblique"}.}
 
-\item{add}{Should this font be added to the front of the already-defined
+\item{add}{Should this font be added to the beginning of any already-defined
 fonts for the table? By default, this is \code{TRUE} and is recommended since
-the list serves as fallbacks when certain fonts are not available.}
+those fonts already present can serve as fallbacks when everything
+specified in \code{font} is not available. If a \code{stack} is provided, then \code{add}
+will automatically set to \code{FALSE}.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -64,11 +68,11 @@ compose your font family.
 
 
 There are several themed font stacks available via the \code{\link[=system_fonts]{system_fonts()}}
-helper function. That function can be used to generate all or a segment of
-a vector supplied to the \code{font} argument. However, using the \code{stack} argument
-with one of the keywords for the font stacks available in \code{\link[=system_fonts]{system_fonts()}},
-we could be sure that the typeface class will work across multiple computer
-systems. The following keywords can be used:
+helper function. That function can be used to generate all or a segment of a
+vector supplied to the \code{font} argument. However, using the \code{stack} argument
+with one of the 15 keywords for the font stacks available in
+\code{\link[=system_fonts]{system_fonts()}}, we could be sure that the typeface class will work across
+multiple computer systems. Any of the following keywords can be used:
 \itemize{
 \item \code{"system-ui"}
 \item \code{"transitional"}
@@ -94,24 +98,21 @@ systems. The following keywords can be used:
 Use \code{\link{sp500}} to create a small \strong{gt} table, using \code{\link[=fmt_currency]{fmt_currency()}} to
 provide a dollar sign for the first row of monetary values. Then, set a
 larger font size for the table and use the \code{"Merriweather"} font (from
-\emph{Google Fonts}, via \code{\link[=google_font]{google_font()}}) with two font fallbacks (\code{"Cochin"} and
-the catchall \code{"Serif"} group).
+\emph{Google Fonts}, via \code{\link[=google_font]{google_font()}}) with two system font fallbacks
+(\code{"Cochin"} and the generic \code{"serif"}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
   dplyr::slice(1:10) |>
   dplyr::select(-volume, -adj_close) |>
   gt() |>
   fmt_currency(
-    columns = 2:5,
     rows = 1,
-    currency = "USD",
     use_seps = FALSE
   ) |>
-  tab_options(table.font.size = px(18)) |>
   opt_table_font(
     font = list(
       google_font(name = "Merriweather"),
-      "Cochin", "Serif"
+      "Cochin", "serif"
     )
   )
 }\if{html}{\out{</div>}}
@@ -132,12 +133,7 @@ a preferred list of sans-serif fonts that are commonly available in macOS
   ) |>
   dplyr::select(-latitude, -month) |>
   gt() |>
-  opt_table_font(
-    font = c(
-      "Helvetica Neue", "Segoe UI",
-      default_fonts()[-c(1:3)]
-    )
-  ) |>
+  opt_table_font(stack = "rounded-sans") |>
   opt_all_caps()
 }\if{html}{\out{</div>}}
 

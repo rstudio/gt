@@ -532,7 +532,7 @@ as_raw_html <- function(
   htmltools::HTML(html_table)
 }
 
-#' Output a gt object as LaTeX
+#' Output a **gt** object as LaTeX
 #'
 #' @description
 #'

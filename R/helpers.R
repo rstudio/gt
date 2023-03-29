@@ -278,7 +278,7 @@ stub <- function() {
 #'
 #' @return A list object of classes `cells_title` and `location_cells`.
 #'
-#' @section Overview of Location Helper Functions:
+#' @section Overview of location helper functions:
 #'
 #' Location helper functions can be used to target cells with virtually any
 #' function that has a `locations` argument. Here is a listing of all of the
@@ -388,7 +388,7 @@ cells_title <- function(groups = c("title", "subtitle")) {
 #'
 #' @return A list object with the classes `cells_stubhead` and `location_cells`.
 #'
-#' @section Overview of Location Helper Functions:
+#' @section Overview of location helper functions:
 #'
 #' Location helper functions can be used to target cells with virtually any
 #' function that has a `locations` argument. Here is a listing of all of the
@@ -486,7 +486,7 @@ cells_stubhead <- function() {
 #' @return A list object with the classes `cells_column_spanners` and
 #' `location_cells`.
 #'
-#' @section Overview of Location Helper Functions:
+#' @section Overview of location helper functions:
 #'
 #' Location helper functions can be used to target cells with virtually any
 #' function that has a `locations` argument. Here is a listing of all of the
@@ -589,7 +589,7 @@ cells_column_spanners <- function(spanners = everything()) {
 #' @return A list object with the classes `cells_column_labels` and
 #'   `location_cells`.
 #'
-#' @section Overview of Location Helper Functions:
+#' @section Overview of location helper functions:
 #'
 #' Location helper functions can be used to target cells with virtually any
 #' function that has a `locations` argument. Here is a listing of all of the
@@ -639,8 +639,8 @@ cells_column_spanners <- function(spanners = everything()) {
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' @section Examples:
 #'
@@ -719,7 +719,7 @@ cells_column_labels <- function(columns = everything()) {
 #' groups will be considered. Providing the ID values (in quotes) of row groups
 #' in `c()` will serve to constrain the targeting to that subset of groups.
 #'
-#' @section Overview of Location Helper Functions:
+#' @section Overview of location helper functions:
 #'
 #' Location helper functions can be used to target cells with virtually any
 #' function that has a `locations` argument. Here is a listing of all of the
@@ -850,7 +850,7 @@ cells_group <- function(groups = everything()) {
 #'
 #' @return A list object with the classes `cells_stub` and `location_cells`.
 #'
-#' @section Overview of Location Helper Functions:
+#' @section Overview of location helper functions:
 #'
 #' Location helper functions can be used to target cells with virtually any
 #' function that has a `locations` argument. Here is a listing of all of the
@@ -955,7 +955,7 @@ cells_stub <- function(rows = everything()) {
 #'
 #' @return A list object with the classes `cells_body` and `location_cells`.
 #'
-#' @section Overview of Location Helper Functions:
+#' @section Overview of location helper functions:
 #'
 #' Location helper functions can be used to target cells with virtually any
 #' function that has a `locations` argument. Here is a listing of all of the
@@ -1007,8 +1007,8 @@ cells_stub <- function(rows = everything()) {
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' Once the columns are targeted, we may also target the `rows` within those
 #' columns. This can be done in a variety of ways. If a stub is present, then we
@@ -1111,8 +1111,8 @@ cells_body <- function(
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' Once the groups and columns are targeted, we may also target the `rows` of
 #' the summary. Summary cells in the stub will have ID values that can be used
@@ -1122,7 +1122,7 @@ cells_body <- function(
 #' use row indices (e.g., `c(3, 5, 6)`) that correspond to the row number of a
 #' summary row in a row group (numbering restarts with every row group).
 #'
-#' @section Overview of Location Helper Functions:
+#' @section Overview of location helper functions:
 #'
 #' Location helper functions can be used to target cells with virtually any
 #' function that has a `locations` argument. Here is a listing of all of the
@@ -1265,7 +1265,7 @@ cells_summary <- function(
 #' @return A list object with the classes `cells_grand_summary` and
 #'   `location_cells`.
 #'
-#' @section Overview of Location Helper Functions:
+#' @section Overview of location helper functions:
 #'
 #' Location helper functions can be used to target cells with virtually any
 #' function that has a `locations` argument. Here is a listing of all of the
@@ -1317,8 +1317,8 @@ cells_summary <- function(
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' Once the columns are targeted, we may also target the `rows` of the grand
 #' summary. Grand summary cells in the stub will have ID values that can be used
@@ -1410,7 +1410,7 @@ cells_grand_summary <- function(
 #' @return A list object with the classes `cells_stub_summary` and
 #'   `location_cells`.
 #'
-#' @section Overview of Location Helper Functions:
+#' @section Overview of location helper Functions:
 #'
 #' Location helper functions can be used to target cells with virtually any
 #' function that has a `locations` argument. Here is a listing of all of the
@@ -1565,7 +1565,7 @@ cells_stub_summary <- function(
 #' use row indices (e.g., `c(3, 5, 6)`) that correspond to the row number of a
 #' grand summary row.
 #'
-#' @section Overview of Location Helper Functions:
+#' @section Overview of location helper functions:
 #'
 #' Location helper functions can be used to target cells with virtually any
 #' function that has a `locations` argument. Here is a listing of all of the
@@ -1673,7 +1673,7 @@ cells_stub_grand_summary <- function(rows = everything()) {
 #' @return A list object with the classes `cells_footnotes` and
 #'   `location_cells`.
 #'
-#' @section Overview of Location Helper Functions:
+#' @section Overview of location helper functions:
 #'
 #' Location helper functions can be used to target cells with virtually any
 #' function that has a `locations` argument. Here is a listing of all of the
@@ -1785,7 +1785,7 @@ cells_footnotes <- function() {
 #' @return A list object with the classes `cells_source_notes` and
 #'   `location_cells`.
 #'
-#' @section Overview of Location Helper Functions:
+#' @section Overview of location helper functions:
 #'
 #' Location helper functions can be used to target cells with virtually any
 #' function that has a `locations` argument. Here is a listing of all of the
@@ -2483,11 +2483,12 @@ cell_style_structure <- function(name, obj, subclass = name) {
 #'
 #' @description
 #'
-#' This function can brighten or darken a palette of colors by an arbitrary
-#' number of steps, which is defined by a real number between -2.0 and 2.0. The
-#' transformation of a palette by a fixed step in this function will tend to
-#' apply greater darkening or lightening for those colors in the midrange
-#' compared to any very dark or very light colors in the input palette.
+#' The `adjust_luminance()` function can brighten or darken a palette of colors
+#' by an arbitrary number of steps, which is defined by a real number between
+#' -2.0 and 2.0. The transformation of a palette by a fixed step in this
+#' function will tend to apply greater darkening or lightening for those colors
+#' in the midrange compared to any very dark or very light colors in the input
+#' palette.
 #'
 #' @details
 #'
@@ -2608,8 +2609,9 @@ adjust_luminance <- function(
 #'
 #' @description
 #'
-#' This helper function can be used to create a random, character-based ID
-#' value argument of variable length (the default is 10 letters).
+#' The `random_id()` helper function can be used to create a random,
+#' character-based ID value argument of variable length (the default is 10
+#' letters).
 #'
 #' @param n The number of lowercase letters to use for the random ID.
 #'
@@ -2645,9 +2647,9 @@ latex_special_chars <- c(
 #'
 #' @description
 #'
-#' Text may contain several characters with special meanings in LaTeX. This
-#' function will transform a character vector so that it is safe to use within
-#' LaTeX tables.
+#' Text may contain several characters with special meanings in LaTeX. The
+#' `escape_latex()` function will transform a character vector so that it is
+#' safe to use within LaTeX tables.
 #'
 #' @param text A character vector containing the text that is to be
 #'   LaTeX-escaped.
@@ -2932,12 +2934,182 @@ default_fonts <- function() {
 #' `stack` argument.
 #'
 #' @param name A keyword from the set of `"system-ui"`, `"transitional"`,
-#' `"old-style"`, `"humanist"`, `"geometric-humanist"`, `"classical-humanist"`,
-#' `"neo-grotesque"`, `"monospace-slab-serif"`, `"monospace-code"`,
-#' `"industrial"`, `"rounded-sans"`, `"slab-serif"`, `"antique"`, `"didone"`,
-#' and `"handwritten"`.
+#'   `"old-style"`, `"humanist"`, `"geometric-humanist"`,
+#'   `"classical-humanist"`, `"neo-grotesque"`, `"monospace-slab-serif"`,
+#'   `"monospace-code"`, `"industrial"`, `"rounded-sans"`, `"slab-serif"`,
+#'   `"antique"`, `"didone"`, and `"handwritten"`.
 #'
 #' @return A character vector of font names.
+#'
+#' @section The font stacks and the individual fonts used by platform:
+#'
+#' ## System UI (`"system-ui"`)
+#'
+#' ```css
+#' font-family: system-ui, sans-serif;
+#' ```
+#'
+#' The operating system interface's default typefaces are known as system UI
+#' fonts. They contain a variety of font weights, are quite readable at small
+#' sizes, and are perfect for UI elements. These typefaces serve as a great
+#' starting point for text in data tables and so this font stack is the default
+#' for **gt**.
+#'
+#' ## Transitional (`"transitional"`)
+#'
+#' ```css
+#' font-family: Charter, 'Bitstream Charter', 'Sitka Text', Cambria, serif;
+#' ```
+#'
+#' The Enlightenment saw the development of transitional typefaces, which
+#' combine Old Style and Modern typefaces. *Times New Roman*, a transitional
+#' typeface created for the Times of London newspaper, is among the most
+#' well-known instances of this style.
+#'
+#' ## Old Style (`"old-style"`)
+#'
+#' ```css
+#' font-family: 'Iowan Old Style', 'Palatino Linotype', 'URW Palladio L', P052, serif;
+#' ```
+#'
+#' Old style typefaces were created during the Renaissance and are distinguished
+#' by diagonal stress, a lack of contrast between thick and thin strokes, and
+#' rounded serifs. *Garamond* is among the most well-known instances of an antique
+#' typeface.
+#'
+#' ## Humanist (`"humanist"`)
+#'
+#' ```css
+#' font-family: Seravek, 'Gill Sans Nova', Ubuntu, Calibri, 'DejaVu Sans', source-sans-pro, sans-serif;
+#' ```
+#'
+#' Low contrast between thick and thin strokes and organic, calligraphic forms
+#' are traits of humanist typefaces. These typefaces, which draw their
+#' inspiration from Renaissance calligraphy, are frequently regarded as being
+#' more readable and easier to read than other sans serif typefaces.
+#'
+#' ## Geometric Humanist (`"geometric-humanist"`)
+#'
+#' ```css
+#' font-family: Avenir, 'Avenir Next LT Pro', Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
+#' ```
+#'
+#' Clean, geometric forms and consistent stroke widths are characteristics of
+#' geometric humanist typefaces. These typefaces, which are frequently used for
+#' headlines and other display purposes, are frequently thought to be
+#' contemporary and slick in appearance. A well-known example of this
+#' classification is *Futura*.
+#'
+#' ## Classical Humanist (`"classical-humanist"`)
+#'
+#' ```css
+#' font-family: Optima, Candara, 'Noto Sans', source-sans-pro, sans-serif;
+#' ```
+#'
+#' The way the strokes gradually widen as they approach the stroke terminals
+#' without ending in a serif is what distinguishes classical humanist typefaces.
+#' The stone carving on Renaissance-era tombstones and classical Roman capitals
+#' served as inspiration for these typefaces.
+#'
+#' ## Neo-Grotesque (`"neo-grotesque"`)
+#'
+#' ```css
+#' font-family: Inter, Roboto, 'Helvetica Neue', 'Arial Nova', 'Nimbus Sans', Arial, sans-serif;
+#' ```
+#'
+#' Neo-grotesque typefaces are a form of sans serif that originated in the late
+#' 19th and early 20th centuries. They are distinguished by their crisp,
+#' geometric shapes and regular stroke widths. *Helvetica* is among the most
+#' well-known examples of a Neo-grotesque typeface.
+#'
+#' ## Monospace Slab Serif (`"monospace-slab-serif"`)
+#'
+#' ```css
+#' font-family: 'Nimbus Mono PS', 'Courier New', 'Cutive Mono', monospace;
+#' ```
+#'
+#' Monospace slab serif typefaces are distinguished by their fixed-width
+#' letters, which are the same width irrespective of their shape, and their
+#' straightforward, geometric forms. For reports, tabular work, and technical
+#' documentation, this technique is used to simulate typewriter output.
+#'
+#' ## Monospace Code (`"monospace-code"`)
+#'
+#' ```css
+#' font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+#' ```
+#'
+#' Specifically created for use in programming and other technical applications,
+#' monospace code typefaces are used in these fields. These typefaces are
+#' distinguished by their clear, readable forms and monospaced design, which
+#' ensures that all letters and characters are the same width.
+#'
+#' ## Industrial (`"industrial"`)
+#'
+#' ```css
+#' font-family: Bahnschrift, 'DIN Alternate', 'Franklin Gothic Medium', 'Nimbus Sans Narrow', sans-serif-condensed, sans-serif;
+#' ```
+#'
+#' The development of industrial typefaces began in the late 19th century and
+#' was greatly influenced by the industrial and technological advancements of
+#' the time. Industrial typefaces are distinguished by their strong sans serif
+#' letterforms, straightforward appearance, and use of geometric shapes and
+#' straight lines.
+#'
+#' ## Rounded Sans (`"rounded-sans"`)
+#'
+#' ```css
+#' font-family: ui-rounded, 'Hiragino Maru Gothic ProN', Quicksand, Comfortaa, Manjari, 'Arial Rounded MT Bold', Calibri, source-sans-pro, sans-serif;
+#' ```
+#'
+#' The rounded, curved letterforms that define rounded typefaces give them a
+#' softer, friendlier appearance. The typeface's rounded edges give it a more
+#' natural and playful feel, making it appropriate for use in casual or
+#' kid-friendly designs. Since the 1950s, the rounded sans-serif design has
+#' gained popularity and is still frequently used in branding, graphic design,
+#' and other fields.
+#'
+#' ## Slab Serif (`"slab-serif"`)
+#'
+#' ```css
+#' font-family: Rockwell, 'Rockwell Nova', 'Roboto Slab', 'DejaVu Serif', 'Sitka Small', serif;
+#' ```
+#'
+#' Slab Serif typefaces are distinguished by the thick, block-like serifs that
+#' appear at the ends of each letterform. Typically, these serifs are
+#' unbracketed, which means that they do not have any curved or tapered
+#' transitions to the letter's main stroke.
+#'
+#' ## Antique (`"antique"`)
+#'
+#' ```css
+#' font-family: Superclarendon, 'Bookman Old Style', 'URW Bookman', 'URW Bookman L', 'Georgia Pro', Georgia, serif;
+#' ```
+#'
+#' Serif typefaces that were popular in the 19th century include antique
+#' typefaces, also referred to as Egyptians. They are distinguished by their
+#' thick, uniform stroke weight and block-like serifs.
+#'
+#' ## Didone (`"didone"`)
+#'
+#' ```css
+#' font-family: Didot, 'Bodoni MT', 'Noto Serif Display', 'URW Palladio L', P052, Sylfaen, serif;
+#' ```
+#'
+#' Didone typefaces, also referred to as Modern typefaces, are distinguished by
+#' their vertical stress, sharp contrast between thick and thin strokes, and
+#' hairline serifs without bracketing. The Didone style first appeared in the
+#' late 18th century and became well-known in the early 19th century.
+#'
+#' ## Handwritten (`"handwritten"`)
+#'
+#' ```css
+#' font-family: 'Segoe Print', 'Bradley Hand', Chilanka, TSCu_Comic, casual, cursive;
+#' ```
+#'
+#' The appearance and feel of handwriting are replicated by handwritten
+#' typefaces. Although there are a wide variety of handwriting styles, this font
+#' stack tends to use a more casual and commonplace style.
 #'
 #' @section Examples:
 #'

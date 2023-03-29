@@ -33,7 +33,7 @@ use row indices (e.g., \code{c(3, 5, 6)}) that correspond to the row number of a
 grand summary row.
 }
 
-\section{Overview of Location Helper Functions}{
+\section{Overview of location helper functions}{
 
 
 Location helper functions can be used to target cells with virtually any

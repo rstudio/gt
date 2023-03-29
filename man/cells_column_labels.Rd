@@ -20,7 +20,7 @@ with \code{\link[=tab_style]{tab_style()}}. The function is expressly used in ea
 functions' \code{locations} argument. The 'column_labels' location is present by
 default in every \strong{gt} table.
 }
-\section{Overview of Location Helper Functions}{
+\section{Overview of location helper functions}{
 
 
 Location helper functions can be used to target cells with virtually any
@@ -74,8 +74,8 @@ more complex incantation like
 
 \code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
 
-which targets numeric columns that have a maximum value of 100,000 (excluding
-\code{NA}s from consideration).
+which targets numeric columns that have a maximum value greater than
+1,000,000 (excluding any \code{NA}s from consideration).
 }
 
 \section{Examples}{

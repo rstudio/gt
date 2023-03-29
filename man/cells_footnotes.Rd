@@ -19,7 +19,7 @@ function. This location helper function cannot be used for the \code{locations}
 argument of \code{\link[=tab_footnote]{tab_footnote()}} and doing so will result in a warning (with no
 change made to the table).
 }
-\section{Overview of Location Helper Functions}{
+\section{Overview of location helper functions}{
 
 
 Location helper functions can be used to target cells with virtually any

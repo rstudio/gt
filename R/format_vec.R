@@ -1643,7 +1643,7 @@ vec_fmt_index <- function(
   )
 }
 
-#' Format a vector as spelled out numbers
+#' Format a vector as spelled-out numbers
 #'
 #' @description
 #'

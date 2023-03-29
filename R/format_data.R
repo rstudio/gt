@@ -125,8 +125,8 @@
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given formatting function
@@ -170,7 +170,8 @@
 #' @section Examples:
 #'
 #' Use [`exibble`] to create a **gt** table. Format the `num` column as numeric
-#' with three decimal places and with no use of digit separators.
+#' with three decimal places and omit the use of digit separators (with
+#' `use_seps = FALSE`).
 #'
 #' ```r
 #' exibble |>
@@ -202,6 +203,25 @@
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_fmt_number_2.png")`
+#' }}
+#'
+#' In a variation of the previous table, we can combine large-number suffixing
+#' with a declaration of the number of significant digits to use. With things
+#' like population figures, `n_sigfig = 3` is a very good option.
+#'
+#' ```r
+#' countrypops |>
+#'   dplyr::select(country_code_3, year, population) |>
+#'   dplyr::filter(country_code_3 %in% c("CHN", "IND", "USA", "PAK", "IDN")) |>
+#'   dplyr::filter(year > 1975 & year %% 5 == 0) |>
+#'   tidyr::spread(year, population) |>
+#'   dplyr::arrange(desc(`2015`)) |>
+#'   gt(rowname_col = "country_code_3") |>
+#'   fmt_number(suffixing = TRUE, n_sigfig = 3)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_number_3.png")`
 #' }}
 #'
 #' @family data formatting functions
@@ -414,8 +434,8 @@ fmt_number <- function(
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given formatting function
@@ -586,8 +606,8 @@ fmt_integer <- function(
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given formatting function
@@ -953,8 +973,8 @@ fmt_scientific <- function(
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given formatting function
@@ -1453,8 +1473,8 @@ fmt_symbol <- function(
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given formatting function
@@ -1685,8 +1705,8 @@ fmt_percent <- function(
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given formatting function
@@ -1886,7 +1906,7 @@ fmt_partsper <- function(
   )
 }
 
-#' Format values as a mixed fractions
+#' Format values as mixed fractions
 #'
 #' @description
 #'
@@ -1947,8 +1967,8 @@ fmt_partsper <- function(
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given formatting function
@@ -2508,8 +2528,8 @@ round_gt <- function(x, digits = 0) {
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given formatting function
@@ -2723,8 +2743,8 @@ fmt_currency <- function(
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given formatting function
@@ -2898,8 +2918,8 @@ fmt_roman <- function(
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given formatting function
@@ -3123,7 +3143,7 @@ get_letters_from_div <- function(x, set) {
   paste(set[result], collapse = "")
 }
 
-#' Format values to spelled out numbers
+#' Format values to spelled-out numbers
 #'
 #' @description
 #'
@@ -3158,8 +3178,8 @@ get_letters_from_div <- function(x, set) {
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given formatting function
@@ -3377,8 +3397,8 @@ fmt_spelled_num <- function(
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given formatting function
@@ -3628,8 +3648,8 @@ fmt_bytes <- function(
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given formatting function
@@ -3914,8 +3934,8 @@ fmt_date <- function(
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given formatting function
@@ -4204,8 +4224,8 @@ fmt_time <- function(
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given formatting function
@@ -5220,8 +5240,8 @@ fmt_datetime <- function(
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given formatting function
@@ -5992,8 +6012,8 @@ extract_duration_pattern <- function(
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given formatting function
@@ -6253,8 +6273,8 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given formatting function
@@ -6710,8 +6730,8 @@ fmt_url <- function(
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given formatting function
@@ -6984,8 +7004,8 @@ fmt_image <- function(
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given formatting function
@@ -7263,8 +7283,8 @@ fmt_flag <- function(
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given formatting function
@@ -7434,8 +7454,8 @@ fmt_markdown <- function(
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given formatting function
@@ -7617,8 +7637,8 @@ fmt_passthrough <- function(
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given formatting function
@@ -7937,8 +7957,8 @@ fmt_auto <- function(
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given formatting function
