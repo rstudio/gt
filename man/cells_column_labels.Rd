@@ -74,8 +74,8 @@ more complex incantation like
 
 \code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
 
-which targets numeric columns that have a maximum value of 100,000 (excluding
-\code{NA}s from consideration).
+which targets numeric columns that have a maximum value greater than
+1,000,000 (excluding any \code{NA}s from consideration).
 }
 
 \section{Examples}{

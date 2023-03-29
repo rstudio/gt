@@ -164,6 +164,44 @@ that won't typically provide you the type of colorization you really need.
 You can however safely iterate through a collection of different options
 without running into too many errors.
 }
+\section{Targeting cells with \code{columns} and \code{rows}}{
+
+
+Targeting of values is done through \code{columns} and additionally by \code{rows} (if
+nothing is provided for \code{rows} then entire columns are selected). The
+\code{columns} argument allows us to target a subset of cells contained in the
+resolved columns. We say resolved because aside from declaring column names
+in \code{c()} (with bare column names or names in quotes) we can use
+\strong{tidyselect}-style expressions. This can be as basic as supplying a select
+helper like \code{starts_with()}, or, providing a more complex incantation like
+
+\code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
+
+which targets numeric columns that have a maximum value greater than
+1,000,000 (excluding any \code{NA}s from consideration).
+
+By default all columns and rows are selected (with the \code{everything()}
+defaults). Cell values that are incompatible with a given coloring
+function/method will be skipped over. One strategy is to color the bulk of
+cell values with one formatting function and then constrain the columns for
+later passes (the last coloring done to a cell is what you get in the final
+output).
+
+Once the columns are targeted, we may also target the \code{rows} within those
+columns. This can be done in a variety of ways. If a stub is present, then we
+potentially have row identifiers. Those can be used much like column names in
+the \code{columns}-targeting scenario. We can use simpler \strong{tidyselect}-style
+expressions (the select helpers should work well here) and we can use quoted
+row identifiers in \code{c()}. It's also possible to use row indices (e.g.,
+\code{c(3, 5, 6)}) though these index values must correspond to the row numbers of
+the input data (the indices won't necessarily match those of rearranged rows
+if row groups are present). One more type of expression is possible, an
+expression that takes column values (can involve any of the available columns
+in the table) and returns a logical vector. This is nice if you want to base
+formatting on values in the column or another column, or, you'd like to use a
+more complex predicate expression.
+}
+
 \section{Color computation methods}{
 
 
@@ -319,9 +357,9 @@ use the \code{"numeric"} method and character or factor values will use the
 \code{"factor"} method. The text color will be undergo modification automatically
 to maximize contrast (since \code{autocolor_text} is \code{TRUE} by default).
 
-You can one of several methods and \strong{gt} will only apply color to the
-compatible values. Let's use the \code{"numeric"} method and supply \code{palette}
-values of \code{"red"} and \code{"green"}.
+You can use any of the available \code{method} keywords and \strong{gt} will only apply
+color to the compatible values. Let's use the \code{"numeric"} method and supply
+\code{palette} values of \code{"red"} and \code{"green"}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   gt() |>
@@ -361,11 +399,11 @@ cases). Here, the domain will be set as \code{domain = c(0, 50)}.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_data_color_3.png" alt="This image of a table was generated from the third code example in the `data_color()` help file." style="width:100\%;">
 }}
 
-We can use any of the \strong{RColorBrewer} and \strong{viridis} palettes. Let's make a
-new \strong{gt} table from a subset of the \code{\link{countrypops}} dataset. Then, through
-\code{data_color()}, we'll apply coloring to the \code{population} column with the
-\code{"numeric"} method, use a domain between 2.5 and 3.4 million, and specify
-\code{palette = "viridis"}.
+We can use any of the palettes available in the \strong{RColorBrewer} and
+\strong{viridis} packages. Let's make a new \strong{gt} table from a subset of the
+\code{\link{countrypops}} dataset. Then, through \code{data_color()}, we'll apply coloring
+to the \code{population} column with the \code{"numeric"} method, use a domain between
+2.5 and 3.4 million, and specify \code{palette = "viridis"}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::filter(country_name == "Mongolia") |>
