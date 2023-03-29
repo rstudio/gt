@@ -117,6 +117,42 @@
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @section Targeting cells with `columns` and `rows`:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to target a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given coloring
+#' function/method will be skipped over. One strategy is to color the bulk of
+#' cell values with one formatting function and then constrain the columns for
+#' later passes (the last coloring done to a cell is what you get in the final
+#' output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
+#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
+#' the input data (the indices won't necessarily match those of rearranged rows
+#' if row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector. This is nice if you want to base
+#' formatting on values in the column or another column, or, you'd like to use a
+#' more complex predicate expression.
+#'
 #' @section Color computation methods:
 #'
 #' The `data_color()` function offers four distinct methods for computing color
@@ -261,9 +297,9 @@
 #' `"factor"` method. The text color will be undergo modification automatically
 #' to maximize contrast (since `autocolor_text` is `TRUE` by default).
 #'
-#' You can one of several methods and **gt** will only apply color to the
-#' compatible values. Let's use the `"numeric"` method and supply `palette`
-#' values of `"red"` and `"green"`.
+#' You can use any of the available `method` keywords and **gt** will only apply
+#' color to the compatible values. Let's use the `"numeric"` method and supply
+#' `palette` values of `"red"` and `"green"`.
 #'
 #' ```r
 #' exibble |>
@@ -305,11 +341,11 @@
 #' `r man_get_image_tag(file = "man_data_color_3.png")`
 #' }}
 #'
-#' We can use any of the **RColorBrewer** and **viridis** palettes. Let's make a
-#' new **gt** table from a subset of the [`countrypops`] dataset. Then, through
-#' `data_color()`, we'll apply coloring to the `population` column with the
-#' `"numeric"` method, use a domain between 2.5 and 3.4 million, and specify
-#' `palette = "viridis"`.
+#' We can use any of the palettes available in the **RColorBrewer** and
+#' **viridis** packages. Let's make a new **gt** table from a subset of the
+#' [`countrypops`] dataset. Then, through `data_color()`, we'll apply coloring
+#' to the `population` column with the `"numeric"` method, use a domain between
+#' 2.5 and 3.4 million, and specify `palette = "viridis"`.
 #'
 #' ```r
 #' countrypops |>
@@ -329,11 +365,11 @@
 #' `r man_get_image_tag(file = "man_data_color_4.png")`
 #' }}
 #'
-#' We can alternatively use the `fn` for supplying the **scales**-based function
-#' [scales::col_numeric()]. That function call will return a function (which is
-#' what the `fn` argument requires) that takes a vector of numeric values and
-#' returns color values. Here is the more complex version of the code that
-#' returns the same table as in the previous example.
+#' We can alternatively use the `fn` argument for supplying the **scales**-based
+#' function [scales::col_numeric()]. That function call will itself return a
+#' function (which is what the `fn` argument actually requires) that takes a
+#' vector of numeric values and returns color values. Here is the more complex
+#' version of the code that returns the same table as in the previous example.
 #'
 #' ```r
 #' countrypops |>
