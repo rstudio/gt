@@ -278,7 +278,7 @@ stub <- function() {
 #'
 #' @return A list object of classes `cells_title` and `location_cells`.
 #'
-#' @section Overview of Location Helper Functions:
+#' @section Overview of location helper functions:
 #'
 #' Location helper functions can be used to target cells with virtually any
 #' function that has a `locations` argument. Here is a listing of all of the
@@ -388,7 +388,7 @@ cells_title <- function(groups = c("title", "subtitle")) {
 #'
 #' @return A list object with the classes `cells_stubhead` and `location_cells`.
 #'
-#' @section Overview of Location Helper Functions:
+#' @section Overview of location helper functions:
 #'
 #' Location helper functions can be used to target cells with virtually any
 #' function that has a `locations` argument. Here is a listing of all of the
@@ -486,7 +486,7 @@ cells_stubhead <- function() {
 #' @return A list object with the classes `cells_column_spanners` and
 #' `location_cells`.
 #'
-#' @section Overview of Location Helper Functions:
+#' @section Overview of location helper functions:
 #'
 #' Location helper functions can be used to target cells with virtually any
 #' function that has a `locations` argument. Here is a listing of all of the
@@ -589,7 +589,7 @@ cells_column_spanners <- function(spanners = everything()) {
 #' @return A list object with the classes `cells_column_labels` and
 #'   `location_cells`.
 #'
-#' @section Overview of Location Helper Functions:
+#' @section Overview of location helper functions:
 #'
 #' Location helper functions can be used to target cells with virtually any
 #' function that has a `locations` argument. Here is a listing of all of the
@@ -719,7 +719,7 @@ cells_column_labels <- function(columns = everything()) {
 #' groups will be considered. Providing the ID values (in quotes) of row groups
 #' in `c()` will serve to constrain the targeting to that subset of groups.
 #'
-#' @section Overview of Location Helper Functions:
+#' @section Overview of location helper functions:
 #'
 #' Location helper functions can be used to target cells with virtually any
 #' function that has a `locations` argument. Here is a listing of all of the
@@ -850,7 +850,7 @@ cells_group <- function(groups = everything()) {
 #'
 #' @return A list object with the classes `cells_stub` and `location_cells`.
 #'
-#' @section Overview of Location Helper Functions:
+#' @section Overview of location helper functions:
 #'
 #' Location helper functions can be used to target cells with virtually any
 #' function that has a `locations` argument. Here is a listing of all of the
@@ -955,7 +955,7 @@ cells_stub <- function(rows = everything()) {
 #'
 #' @return A list object with the classes `cells_body` and `location_cells`.
 #'
-#' @section Overview of Location Helper Functions:
+#' @section Overview of location helper functions:
 #'
 #' Location helper functions can be used to target cells with virtually any
 #' function that has a `locations` argument. Here is a listing of all of the
@@ -1122,7 +1122,7 @@ cells_body <- function(
 #' use row indices (e.g., `c(3, 5, 6)`) that correspond to the row number of a
 #' summary row in a row group (numbering restarts with every row group).
 #'
-#' @section Overview of Location Helper Functions:
+#' @section Overview of location helper functions:
 #'
 #' Location helper functions can be used to target cells with virtually any
 #' function that has a `locations` argument. Here is a listing of all of the
@@ -1265,7 +1265,7 @@ cells_summary <- function(
 #' @return A list object with the classes `cells_grand_summary` and
 #'   `location_cells`.
 #'
-#' @section Overview of Location Helper Functions:
+#' @section Overview of location helper functions:
 #'
 #' Location helper functions can be used to target cells with virtually any
 #' function that has a `locations` argument. Here is a listing of all of the
@@ -1410,7 +1410,7 @@ cells_grand_summary <- function(
 #' @return A list object with the classes `cells_stub_summary` and
 #'   `location_cells`.
 #'
-#' @section Overview of Location Helper Functions:
+#' @section Overview of location helper Functions:
 #'
 #' Location helper functions can be used to target cells with virtually any
 #' function that has a `locations` argument. Here is a listing of all of the
@@ -1565,7 +1565,7 @@ cells_stub_summary <- function(
 #' use row indices (e.g., `c(3, 5, 6)`) that correspond to the row number of a
 #' grand summary row.
 #'
-#' @section Overview of Location Helper Functions:
+#' @section Overview of location helper functions:
 #'
 #' Location helper functions can be used to target cells with virtually any
 #' function that has a `locations` argument. Here is a listing of all of the
@@ -1673,7 +1673,7 @@ cells_stub_grand_summary <- function(rows = everything()) {
 #' @return A list object with the classes `cells_footnotes` and
 #'   `location_cells`.
 #'
-#' @section Overview of Location Helper Functions:
+#' @section Overview of location helper functions:
 #'
 #' Location helper functions can be used to target cells with virtually any
 #' function that has a `locations` argument. Here is a listing of all of the
@@ -1785,7 +1785,7 @@ cells_footnotes <- function() {
 #' @return A list object with the classes `cells_source_notes` and
 #'   `location_cells`.
 #'
-#' @section Overview of Location Helper Functions:
+#' @section Overview of location helper functions:
 #'
 #' Location helper functions can be used to target cells with virtually any
 #' function that has a `locations` argument. Here is a listing of all of the
