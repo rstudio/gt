@@ -93,7 +93,7 @@ default in every <strong>gt</strong> table.</p>
 <code>location_cells</code>.</p>
     </div>
     <div class="section level2">
-    <h2 id="overview-of-location-helper-functions">Overview of Location Helper Functions<a class="anchor" aria-label="anchor" href="#overview-of-location-helper-functions"></a></h2>
+    <h2 id="overview-of-location-helper-functions">Overview of location helper functions<a class="anchor" aria-label="anchor" href="#overview-of-location-helper-functions"></a></h2>
     
 
 
@@ -143,8 +143,8 @@ names in quotes) or we can use <strong>tidyselect</strong>-style expressions. Th
 as basic as supplying a select helper like <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, or, providing a
 more complex incantation like</p>
 <p><code>where(~ is.numeric(.x) &amp;&amp; max(.x, na.rm = TRUE) &gt; 1E6)</code></p>
-<p>which targets numeric columns that have a maximum value of 100,000 (excluding
-<code>NA</code>s from consideration).</p>
+<p>which targets numeric columns that have a maximum value greater than
+1,000,000 (excluding any <code>NA</code>s from consideration).</p>
     </div>
     <div class="section level2">
     <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>

@@ -120,9 +120,10 @@ wish to make the transformation happen at different locations.</p></dd>
     
 
 <p>An object of class <code>gt_tbl</code>.</p>
-
-
-<p>#' @section Examples:</p>
+    </div>
+    <div class="section level2">
+    <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
+    
 
 
 <p>Use <code><a href="metro.html">metro</a></code> to create a <strong>gt</strong> table. In the <code>connect_rer</code> column,
@@ -130,8 +131,6 @@ perform a count of pattern matches with <code><a href="https://stringr.tidyverse
 which cells have 1, 2, or 3 matched patterns. For each of these cases,
 provide descriptive replacement text. Here, we use a <code>.default</code> to replace
 the non-matched cases with an empty string.</p>
-
-
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">metro</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">passengers</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">lines</span>, <span class="va">connect_rer</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -148,12 +147,7 @@ the non-matched cases with an empty string.</p>
 <span>    lines <span class="op">=</span> <span class="st">"Lines Serviced"</span>,</span>
 <span>    connect_rer <span class="op">=</span> <span class="st">"RER Connections"</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
-
-
-
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_text_case_when_1.png" alt="This image of a table was generated from the first code example in the `text_case_when()` help file." style="width:100%;"></p>
-
-
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>

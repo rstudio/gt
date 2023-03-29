@@ -335,6 +335,41 @@ Accessibility Guidelines).</p></dd>
 <p>An object of class <code>gt_tbl</code>.</p>
     </div>
     <div class="section level2">
+    <h2 id="targeting-cells-with-columns-and-rows">Targeting cells with <code>columns</code> and <code>rows</code><a class="anchor" aria-label="anchor" href="#targeting-cells-with-columns-and-rows"></a></h2>
+    
+
+
+<p>Targeting of values is done through <code>columns</code> and additionally by <code>rows</code> (if
+nothing is provided for <code>rows</code> then entire columns are selected). The
+<code>columns</code> argument allows us to target a subset of cells contained in the
+resolved columns. We say resolved because aside from declaring column names
+in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> (with bare column names or names in quotes) we can use
+<strong>tidyselect</strong>-style expressions. This can be as basic as supplying a select
+helper like <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, or, providing a more complex incantation like</p>
+<p><code>where(~ is.numeric(.x) &amp;&amp; max(.x, na.rm = TRUE) &gt; 1E6)</code></p>
+<p>which targets numeric columns that have a maximum value greater than
+1,000,000 (excluding any <code>NA</code>s from consideration).</p>
+<p>By default all columns and rows are selected (with the <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>
+defaults). Cell values that are incompatible with a given coloring
+function/method will be skipped over. One strategy is to color the bulk of
+cell values with one formatting function and then constrain the columns for
+later passes (the last coloring done to a cell is what you get in the final
+output).</p>
+<p>Once the columns are targeted, we may also target the <code>rows</code> within those
+columns. This can be done in a variety of ways. If a stub is present, then we
+potentially have row identifiers. Those can be used much like column names in
+the <code>columns</code>-targeting scenario. We can use simpler <strong>tidyselect</strong>-style
+expressions (the select helpers should work well here) and we can use quoted
+row identifiers in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>. It's also possible to use row indices (e.g.,
+<code>c(3, 5, 6)</code>) though these index values must correspond to the row numbers of
+the input data (the indices won't necessarily match those of rearranged rows
+if row groups are present). One more type of expression is possible, an
+expression that takes column values (can involve any of the available columns
+in the table) and returns a logical vector. This is nice if you want to base
+formatting on values in the column or another column, or, you'd like to use a
+more complex predicate expression.</p>
+    </div>
+    <div class="section level2">
     <h2 id="color-computation-methods">Color computation methods<a class="anchor" aria-label="anchor" href="#color-computation-methods"></a></h2>
     
 
@@ -455,9 +490,9 @@ The default method for applying color is <code>"auto"</code>, where numeric valu
 use the <code>"numeric"</code> method and character or factor values will use the
 <code>"factor"</code> method. The text color will be undergo modification automatically
 to maximize contrast (since <code>autocolor_text</code> is <code>TRUE</code> by default).</p>
-<p>You can one of several methods and <strong>gt</strong> will only apply color to the
-compatible values. Let's use the <code>"numeric"</code> method and supply <code>palette</code>
-values of <code>"red"</code> and <code>"green"</code>.</p>
+<p>You can use any of the available <code>method</code> keywords and <strong>gt</strong> will only apply
+color to the compatible values. Let's use the <code>"numeric"</code> method and supply
+<code>palette</code> values of <code>"red"</code> and <code>"green"</code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/data_color.html">data_color</a></span><span class="op">(</span></span>
@@ -484,11 +519,11 @@ cases). Here, the domain will be set as <code>domain = c(0, 50)</code>.</p>
 <span>    domain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">50</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_data_color_3.png" alt="This image of a table was generated from the third code example in the `data_color()` help file." style="width:100%;"></p>
-<p>We can use any of the <strong>RColorBrewer</strong> and <strong>viridis</strong> palettes. Let's make a
-new <strong>gt</strong> table from a subset of the <code><a href="countrypops.html">countrypops</a></code> dataset. Then, through
-<code>data_color()</code>, we'll apply coloring to the <code>population</code> column with the
-<code>"numeric"</code> method, use a domain between 2.5 and 3.4 million, and specify
-<code>palette = "viridis"</code>.</p>
+<p>We can use any of the palettes available in the <strong>RColorBrewer</strong> and
+<strong>viridis</strong> packages. Let's make a new <strong>gt</strong> table from a subset of the
+<code><a href="countrypops.html">countrypops</a></code> dataset. Then, through <code>data_color()</code>, we'll apply coloring
+to the <code>population</code> column with the <code>"numeric"</code> method, use a domain between
+2.5 and 3.4 million, and specify <code>palette = "viridis"</code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">countrypops</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">country_name</span> <span class="op">==</span> <span class="st">"Mongolia"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"code"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -501,11 +536,11 @@ new <strong>gt</strong> table from a subset of the <code><a href="countrypops.ht
 <span>    domain <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.5E6</span>, <span class="fl">3.4E6</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_data_color_4.png" alt="This image of a table was generated from the fourth code example in the `data_color()` help file." style="width:100%;"></p>
-<p>We can alternatively use the <code>fn</code> for supplying the <strong>scales</strong>-based function
-<code><a href="https://scales.r-lib.org/reference/col_numeric.html" class="external-link">scales::col_numeric()</a></code>. That function call will return a function (which is
-what the <code>fn</code> argument requires) that takes a vector of numeric values and
-returns color values. Here is the more complex version of the code that
-returns the same table as in the previous example.</p>
+<p>We can alternatively use the <code>fn</code> argument for supplying the <strong>scales</strong>-based
+function <code><a href="https://scales.r-lib.org/reference/col_numeric.html" class="external-link">scales::col_numeric()</a></code>. That function call will itself return a
+function (which is what the <code>fn</code> argument actually requires) that takes a
+vector of numeric values and returns color values. Here is the more complex
+version of the code that returns the same table as in the previous example.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">countrypops</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">country_name</span> <span class="op">==</span> <span class="st">"Mongolia"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"code"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
