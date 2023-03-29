@@ -639,8 +639,8 @@ cells_column_spanners <- function(spanners = everything()) {
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' @section Examples:
 #'
@@ -1007,8 +1007,8 @@ cells_stub <- function(rows = everything()) {
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' Once the columns are targeted, we may also target the `rows` within those
 #' columns. This can be done in a variety of ways. If a stub is present, then we
@@ -1111,8 +1111,8 @@ cells_body <- function(
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' Once the groups and columns are targeted, we may also target the `rows` of
 #' the summary. Summary cells in the stub will have ID values that can be used
@@ -1317,8 +1317,8 @@ cells_summary <- function(
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' Once the columns are targeted, we may also target the `rows` of the grand
 #' summary. Grand summary cells in the stub will have ID values that can be used
