@@ -17,12 +17,13 @@ opt_table_font(
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
 \item{font}{One or more font names available as system or web fonts. These
-are combined with with \code{c()} or a \code{list()}. To choose fonts from the
+can be combined with a \code{c()} or a \code{list()}. To choose fonts from the
 \emph{Google Fonts} service, we can call the \code{\link[=google_font]{google_font()}} helper function.}
 
 \item{stack}{A keyword that represents the name of a font stack (obtained via
-the \code{\link[=system_fonts]{system_fonts()}} helper function). If provided, this new stack will
-replace any defined fonts and any \code{font} values will be prepended.}
+internally via the \code{\link[=system_fonts]{system_fonts()}} helper function). If provided, this new
+stack will replace any defined fonts and any \code{font} values will be
+prepended.}
 
 \item{weight}{Option to set the weight of the font. Can be a text-based
 keyword such as \code{"normal"}, \code{"bold"}, \code{"lighter"}, \code{"bolder"}, or, a
@@ -32,10 +33,10 @@ have varying support for the numeric mapping of weight.}
 \item{style}{An option to modify the text style. Can be one of either
 \code{"normal"}, \code{"italic"}, or \code{"oblique"}.}
 
-\item{add}{Should this font be added to the beginning of the already-defined
+\item{add}{Should this font be added to the beginning of any already-defined
 fonts for the table? By default, this is \code{TRUE} and is recommended since
-those fonts already specified can serve as fallbacks when anything
-specified in \code{font} is not available. If a \code{stack} is provided then \code{add}
+those fonts already present can serve as fallbacks when everything
+specified in \code{font} is not available. If a \code{stack} is provided, then \code{add}
 will automatically set to \code{FALSE}.}
 }
 \value{
