@@ -1572,11 +1572,12 @@ tab_caption <- function(
 #' - the cell borders ([cell_borders()])
 #'
 #' @inheritParams fmt_number
-#' @param style a vector of styles to use. The [cell_text()], [cell_fill()], and
-#'   [cell_borders()] helper functions can be used here to more easily generate
-#'   valid styles.  If using more than one helper function to define styles, all
-#'   calls must be enclosed in a [list()]. Custom CSS declarations can be used
-#'   for HTML output by including a [css()]-based statement as a list item.
+#' @param style The styles to use for the cells at the targeted `locations`. The
+#'   [cell_text()], [cell_fill()], and [cell_borders()] helper functions can be
+#'   used here to more easily generate valid styles. If using more than one
+#'   helper function to define styles, all calls must be enclosed in a [list()].
+#'   Custom CSS declarations can be used for HTML output by including a
+#'   [css()]-based statement as a list item.
 #' @param locations the cell or set of cells to be associated with the style.
 #'   Supplying any of the `cells_*()` helper functions is a useful way to target
 #'   the location cells that are associated with the styling. These helper
