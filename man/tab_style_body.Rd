@@ -19,11 +19,12 @@ tab_style_body(
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{style}{a vector of styles to use. The \code{\link[=cell_text]{cell_text()}}, \code{\link[=cell_fill]{cell_fill()}}, and
-\code{\link[=cell_borders]{cell_borders()}} helper functions can be used here to more easily generate
-valid styles. If using more than one helper function to define styles, all
-calls must be enclosed in a \code{\link[=list]{list()}}. Custom CSS declarations can be used
-for HTML output by including a \code{\link[=css]{css()}}-based statement as a list item.}
+\item{style}{The styles to use for the targeted cells. The \code{\link[=cell_text]{cell_text()}},
+\code{\link[=cell_fill]{cell_fill()}}, and \code{\link[=cell_borders]{cell_borders()}} helper functions can be used here to
+more easily generate valid styles. If using more than one helper function
+to define styles, all calls must be enclosed in a \code{\link[=list]{list()}}. Custom CSS
+declarations can be used for HTML output by including a \code{\link[=css]{css()}}-based
+statement as a list item.}
 
 \item{columns}{Optional columns for constraining the targeting process.
 Providing \code{\link[=everything]{everything()}} (the default) results in cells in all \code{columns}
