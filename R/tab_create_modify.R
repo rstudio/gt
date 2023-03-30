@@ -2280,6 +2280,9 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' @param ihtml.use_compact_mode For interactive HTML output, an option to
 #'   reduce vertical padding and thus make the table consume less vertical
 #'   space. By default, this is `FALSE`.
+#' @param ihtml.use_text_wrapping For interactive HTML output, an option to
+#'   control text wrapping. By default (`TRUE`), text will be wrapped to
+#'   multiple lines; if `FALSE`, text will be truncated to a single line.
 #' @param ihtml.use_page_size_select,ihtml.page_size_default,ihtml.page_size_values
 #'   For interactive HTML output, `ihtml.use_page_size_select` provides the
 #'   option to display a dropdown menu for the number of rows to show per page
@@ -2609,6 +2612,7 @@ tab_options <- function(
     ihtml.use_resizers = NULL,
     ihtml.use_highlight = NULL,
     ihtml.use_compact_mode = NULL,
+    ihtml.use_text_wrapping = NULL,
     ihtml.use_page_size_select = NULL,
     ihtml.page_size_default = NULL,
     ihtml.page_size_values = NULL,
