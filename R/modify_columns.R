@@ -1724,7 +1724,6 @@ cols_merge <- function(
       excl_stub = FALSE
     )
 
-
   if (is.null(pattern)) {
     pattern <- paste0("{", seq_along(columns), "}", collapse = " ")
   }
