@@ -333,6 +333,12 @@ reorder_styles <- function(data) {
 
 resolve_secondary_pattern <- function(x) {
 
+  #
+  # Preprocessing
+  #
+
+  x <- gsub("<br>", "[[br]]", x, fixed = TRUE)
+
   while (grepl("<<.*?>>", x)) {
 
     m <- gregexpr("<<[^<]*?>>", x, perl = TRUE)
@@ -364,6 +370,12 @@ resolve_secondary_pattern <- function(x) {
         )
     }
   }
+
+  #
+  # Postprocessing
+  #
+
+  x <- gsub("[[br]]", "<br>", x, fixed = TRUE)
 
   x
 }
