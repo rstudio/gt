@@ -77,6 +77,15 @@ that the text is the URL. In the latter case the URL is also used as the
 label but there is the option to use the \code{label} argument to modify that
 text.
 }
+\section{Compatibility of formatting function with data values}{
+
+
+The \code{fmt_url()} formatting function is compatible with body cells that are
+of the \code{"character"} or \code{"factor"} types. Any other types of body cells are
+ignored during formatting. This is to say that cells of incompatible data
+types may be targeted, but there will be no attempt to format them.
+}
+
 \section{Targeting cells with \code{columns} and \code{rows}}{
 
 
