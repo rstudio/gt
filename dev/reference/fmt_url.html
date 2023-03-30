@@ -177,6 +177,16 @@ appropriate fill, width, and outline values.</p></dd>
 <p>An object of class <code>gt_tbl</code>.</p>
     </div>
     <div class="section level2">
+    <h2 id="compatibility-of-formatting-function-with-data-values">Compatibility of formatting function with data values<a class="anchor" aria-label="anchor" href="#compatibility-of-formatting-function-with-data-values"></a></h2>
+    
+
+
+<p>The <code>fmt_url()</code> formatting function is compatible with body cells that are
+of the <code>"character"</code> or <code>"factor"</code> types. Any other types of body cells are
+ignored during formatting. This is to say that cells of incompatible data
+types may be targeted, but there will be no attempt to format them.</p>
+    </div>
+    <div class="section level2">
     <h2 id="targeting-cells-with-columns-and-rows">Targeting cells with <code>columns</code> and <code>rows</code><a class="anchor" aria-label="anchor" href="#targeting-cells-with-columns-and-rows"></a></h2>
     
 
