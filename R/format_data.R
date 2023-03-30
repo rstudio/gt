@@ -6000,6 +6000,13 @@ extract_duration_pattern <- function(
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @section Compatibility of formatting function with data values:
+#'
+#' The `fmt_bins()` formatting function is compatible with body cells that are
+#' of the `"character"` or `"factor"` types. Any other types of body cells are
+#' ignored during formatting. This is to say that cells of incompatible data
+#' types may be targeted, but there will be no attempt to format them.
+#'
 #' @section Targeting cells with `columns` and `rows`:
 #'
 #' Targeting of values is done through `columns` and additionally by `rows` (if
@@ -6120,6 +6127,27 @@ fmt_bins <- function(
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
+
+  # Declare formatting function compatibility
+  compat <- c("character", "factor")
+
+  # In this case where strict mode is being used (with the option
+  # called "gt.strict_column_fmt"), stop the function if any of the
+  # resolved columns have data that is incompatible with this formatter
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = compat
+    )
+  ) {
+    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
+      cli::cli_abort(
+        "The `fmt_bins()` function can only be used on `columns`
+      with character or factor data."
+      )
+    }
+  }
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -6260,6 +6288,13 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #'   appropriate fill, width, and outline values.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @section Compatibility of formatting function with data values:
+#'
+#' The `fmt_url()` formatting function is compatible with body cells that are
+#' of the `"character"` or `"factor"` types. Any other types of body cells are
+#' ignored during formatting. This is to say that cells of incompatible data
+#' types may be targeted, but there will be no attempt to format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -6466,6 +6501,27 @@ fmt_url <- function(
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
+
+  # Declare formatting function compatibility
+  compat <- c("character", "factor")
+
+  # In this case where strict mode is being used (with the option
+  # called "gt.strict_column_fmt"), stop the function if any of the
+  # resolved columns have data that is incompatible with this formatter
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = compat
+    )
+  ) {
+    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
+      cli::cli_abort(
+        "The `fmt_url()` function can only be used on `columns`
+      with character or factor data."
+      )
+    }
+  }
 
   if (as_button) {
 
@@ -6992,6 +7048,13 @@ fmt_image <- function(
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @section Compatibility of formatting function with data values:
+#'
+#' The `fmt_flag()` formatting function is compatible with body cells that are
+#' of the `"character"` or `"factor"` types. Any other types of body cells are
+#' ignored during formatting. This is to say that cells of incompatible data
+#' types may be targeted, but there will be no attempt to format them.
+#'
 #' @section Targeting cells with `columns` and `rows`:
 #'
 #' Targeting of values is done through `columns` and additionally by `rows` (if
@@ -7147,6 +7210,27 @@ fmt_flag <- function(
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
+
+  # Declare formatting function compatibility
+  compat <- c("character", "factor")
+
+  # In this case where strict mode is being used (with the option
+  # called "gt.strict_column_fmt"), stop the function if any of the
+  # resolved columns have data that is incompatible with this formatter
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = compat
+    )
+  ) {
+    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
+      cli::cli_abort(
+        "The `fmt_flag()` function can only be used on `columns`
+      with character or factor data."
+      )
+    }
+  }
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
