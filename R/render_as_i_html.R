@@ -96,6 +96,7 @@ render_as_ihtml <- function(data, id) {
   use_resizers <- opt_val(data = data, option = "ihtml_use_resizers")
   use_highlight <- opt_val(data = data, option = "ihtml_use_highlight")
   use_compact_mode <- opt_val(data = data, option = "ihtml_use_compact_mode")
+  use_text_wrapping <- opt_val(data = data, option = "ihtml_use_text_wrapping")
   use_page_size_select <- opt_val(data = data, option = "ihtml_use_page_size_select")
   page_size_default <- opt_val(data = data, option = "ihtml_page_size_default")
   page_size_values <- opt_val(data = data, option = "ihtml_page_size_values")
@@ -200,7 +201,10 @@ render_as_ihtml <- function(data, id) {
       collapse = ""
     )
 
-  default_col_def <- reactable::colDef(style = reactable::JS(body_style_js_str))
+  default_col_def <-
+    reactable::colDef(
+      style = reactable::JS(body_style_js_str)
+    )
 
   # Generate the table header if there are any heading components
   if (has_header_section) {
@@ -353,7 +357,7 @@ render_as_ihtml <- function(data, id) {
       borderless = FALSE,
       striped = use_row_striping,
       compact = use_compact_mode,
-      wrap = TRUE,
+      wrap = use_text_wrapping,
       showSortIcon = TRUE,
       showSortable = TRUE,
       class = NULL,
