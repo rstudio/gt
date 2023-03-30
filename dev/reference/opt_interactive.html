@@ -135,6 +135,7 @@ filtering, sorting, and more.</p>
 <span>  use_resizers <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  use_highlight <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  use_compact_mode <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  use_text_wrapping <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  use_page_size_select <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  page_size_default <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>  page_size_values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">25</span>, <span class="fl">50</span>, <span class="fl">100</span><span class="op">)</span>,</span>
@@ -196,6 +197,13 @@ upon hover. By default, this is <code>FALSE</code>.</p></dd>
 <dd><p>To reduce vertical padding and thus make the table
 consume less vertical space the <code>use_compact_mode</code> option can be used. By
 default, this is <code>FALSE</code>.</p></dd>
+
+
+<dt>use_text_wrapping</dt>
+<dd><p>The <code>use_text_wrapping</code> option controls whether
+text wrapping occurs throughout the table. This is <code>TRUE</code> by default and
+with that text will be wrapped to multiple lines. If <code>FALSE</code>, text will be
+truncated to a single line.</p></dd>
 
 
 <dt>use_page_size_select, page_size_default, page_size_values</dt>

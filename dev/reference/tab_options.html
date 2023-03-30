@@ -234,6 +234,7 @@ components, the subcomponents, and the element that can adjusted.</p>
 <span>  ihtml.use_resizers <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ihtml.use_highlight <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ihtml.use_compact_mode <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  ihtml.use_text_wrapping <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ihtml.use_page_size_select <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ihtml.page_size_default <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ihtml.page_size_values <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -621,6 +622,12 @@ individual rows upon hover. By default, this is <code>FALSE</code>.</p></dd>
 <dd><p>For interactive HTML output, an option to
 reduce vertical padding and thus make the table consume less vertical
 space. By default, this is <code>FALSE</code>.</p></dd>
+
+
+<dt>ihtml.use_text_wrapping</dt>
+<dd><p>For interactive HTML output, an option to
+control text wrapping. By default (<code>TRUE</code>), text will be wrapped to
+multiple lines; if <code>FALSE</code>, text will be truncated to a single line.</p></dd>
 
 
 <dt>ihtml.use_page_size_select, ihtml.page_size_default, ihtml.page_size_values</dt>
