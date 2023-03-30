@@ -236,9 +236,10 @@ gt_save_webshot <- function(
   # not present, stop with a message
   if (!requireNamespace("webshot2", quietly = TRUE)) {
 
-    cli::cli_abort(
-      "The `webshot2` package is required for saving images of gt tables."
-    )
+    cli::cli_abort(c(
+      "The `webshot2` package is required for saving images of gt tables.",
+      "*" = "It can be installed with `install.packages(\"webshot2\")`."
+    ))
 
   } else {
 
@@ -501,8 +502,7 @@ as_raw_html <- function(
     if (!requireNamespace("juicyjuice", quietly = TRUE)) {
 
       cli::cli_abort(c(
-        "Using `as_raw_html(... , inline_css = TRUE)` requires the juicyjuice
-        package.",
+        "Using `as_raw_html(... , inline_css = TRUE)` requires the `juicyjuice` package.",
         "*" = "It can be installed with `install.packages(\"juicyjuice\")`."
       ))
     }

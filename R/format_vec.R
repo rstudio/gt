@@ -3467,7 +3467,7 @@ determine_output_format <- function() {
 
     cli::cli_abort(c(
       "Automatically detecting the output context with `output = \"auto\"`
-      requires the knitr package.",
+      requires the `knitr` package.",
       "*" = "It can be installed with `install.packages(\"knitr\")`."
     ))
   }

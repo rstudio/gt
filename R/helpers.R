@@ -2753,9 +2753,10 @@ gt_latex_dependencies <- function() {
     )
 
   } else {
-    cli::cli_abort(
-      "The `knitr` package is required for getting the LaTeX dependency headers."
-    )
+    cli::cli_abort(c(
+      "The `knitr` package is required for getting the LaTeX dependency headers.",
+      "*" = "It can be installed with `install.packages(\"knitr\")`."
+    ))
   }
 }
 

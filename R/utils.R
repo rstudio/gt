@@ -432,7 +432,7 @@ get_markdown_engine_fn <- function(
     if (!requireNamespace("markdown", quietly = TRUE)) {
 
       cli::cli_abort(c(
-        "Using the \"markdown\"` engine preference requires the markdown package.",
+        "Using the \"markdown\"` engine preference requires the `markdown` package.",
         "*" = "It can be installed with `install.packages(\"markdown\")`."
       ))
     }

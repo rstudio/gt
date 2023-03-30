@@ -3,9 +3,9 @@ latex_group <- function(...) {
   paste0("{", ..., "}")
 }
 
-# Create a vector of LaTeX packages to use as table dependencies
+# Get a vector of LaTeX packages to use as table dependencies
 latex_packages <- function() {
-  c("amsmath", "booktabs", "caption", "longtable")
+  getOption("gt.latex_packages")
 }
 
 # Transform a footnote mark to a LaTeX representation as a superscript

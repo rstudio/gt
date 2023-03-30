@@ -131,10 +131,17 @@ utils::globalVariables(
 #'
 #' **gt** uses the following [options()] to configure behavior:
 #'
+#' - `gt.row_group.sep`: A separator between groups for the row group label. By
+#' default this is `" - "`.
 #' - `gt.html_tag_check`: A logical scalar indicating whether or not to print a
-#'   warning when HTML tags are found in a table that is being rendered to LaTeX.
-#' - `gt.row_group.sep`: A separator between groups for the row group
-#'   label.
+#' warning when HTML tags are found in a table that is being rendered to LaTeX.
+#' The default for this is `TRUE`.
+#' - `gt.strict_column_fmt`: A logical scalar that controls whether formatting
+#' via the `fmt_*()` functions should fail if attempting to format data that is
+#' incompatible with the function. This is `FALSE` by default.
+#' - `gt.latex_packages`: A vector of LaTeX package names to use when generating
+#' tables in the LaTeX output context. The set of packages loaded is controlled
+#' by this default vector: `c("booktabs", "caption", "longtable")`.
 #'
 #' @keywords internal
 #' @name gt-options
@@ -143,7 +150,8 @@ NULL
 gt_default_options <- list(
   gt.row_group.sep = " - ",
   gt.html_tag_check = TRUE,
-  gt.strict_column_fmt = FALSE
+  gt.strict_column_fmt = FALSE,
+  gt.latex_packages = c("booktabs", "caption", "longtable")
 )
 
 # R 3.5 and earlier have a bug on Windows where if x is latin1 or unknown and
