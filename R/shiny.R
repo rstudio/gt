@@ -33,6 +33,8 @@
 #'   call to [gt_output()] when `render_gt()` is used in an interactive R
 #'   Markdown document.
 #'
+#' @return An object of class `shiny.render.function`.
+#'
 #' @section Examples:
 #'
 #' Here is a Shiny app (contained within a single file) that (1) prepares a
@@ -157,6 +159,8 @@ render_gt <- function(
 #' Shiny apps can be found at the \href{https://shiny.rstudio.com}{Shiny Site}.
 #'
 #' @param outputId An output variable from which to read the table.
+#'
+#' @return An object of class `shiny.tag`.
 #'
 #' @section Examples:
 #'
