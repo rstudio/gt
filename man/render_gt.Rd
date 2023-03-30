@@ -38,6 +38,9 @@ if you want to save an expression in a variable.}
 call to \code{\link[=gt_output]{gt_output()}} when \code{render_gt()} is used in an interactive R
 Markdown document.}
 }
+\value{
+An object of class \code{shiny.render.function}.
+}
 \description{
 With \code{render_gt()} we can create a reactive \strong{gt} table that works
 wonderfully once assigned to an output slot (with \code{\link[=gt_output]{gt_output()}}). This
