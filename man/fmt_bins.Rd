@@ -54,6 +54,15 @@ be used to format that syntax to a form that presents better in a display
 table. It's possible to format the values of the intervals with the \code{fmt}
 argument, and, the separator can be modified with the \code{sep} argument.
 }
+\section{Compatibility of formatting function with data values}{
+
+
+The \code{fmt_bins()} formatting function is compatible with body cells that are
+of the \code{"character"} or \code{"factor"} types. Any other types of body cells are
+ignored during formatting. This is to say that cells of incompatible data
+types may be targeted, but there will be no attempt to format them.
+}
+
 \section{Targeting cells with \code{columns} and \code{rows}}{
 
 
