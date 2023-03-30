@@ -1,4 +1,4 @@
-# gt (development version)
+# gt 0.9.0
 
 ## New features
 
