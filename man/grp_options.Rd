@@ -171,6 +171,7 @@ grp_options(
   ihtml.use_resizers = NULL,
   ihtml.use_highlight = NULL,
   ihtml.use_compact_mode = NULL,
+  ihtml.use_text_wrapping = NULL,
   ihtml.use_page_size_select = NULL,
   ihtml.page_size_default = NULL,
   ihtml.page_size_values = NULL,
@@ -446,6 +447,10 @@ individual rows upon hover. By default, this is \code{FALSE}.}
 \item{ihtml.use_compact_mode}{For interactive HTML output, an option to
 reduce vertical padding and thus make the table consume less vertical
 space. By default, this is \code{FALSE}.}
+
+\item{ihtml.use_text_wrapping}{For interactive HTML output, an option to
+control text wrapping. By default (\code{TRUE}), text will be wrapped to
+multiple lines; if \code{FALSE}, text will be truncated to a single line.}
 
 \item{ihtml.use_page_size_select, ihtml.page_size_default, ihtml.page_size_values}{For interactive HTML output, \code{ihtml.use_page_size_select} provides the
 option to display a dropdown menu for the number of rows to show per page

@@ -663,6 +663,7 @@ grp_options <- function(
     ihtml.use_resizers = NULL,
     ihtml.use_highlight = NULL,
     ihtml.use_compact_mode = NULL,
+    ihtml.use_text_wrapping = NULL,
     ihtml.use_page_size_select = NULL,
     ihtml.page_size_default = NULL,
     ihtml.page_size_values = NULL,

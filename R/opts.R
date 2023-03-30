@@ -207,6 +207,10 @@ get_colorized_params <- function(
 #' @param use_compact_mode To reduce vertical padding and thus make the table
 #'   consume less vertical space the `use_compact_mode` option can be used. By
 #'   default, this is `FALSE`.
+#' @param use_text_wrapping The `use_text_wrapping` option controls whether
+#'   text wrapping occurs throughout the table. This is `TRUE` by default and
+#'   with that text will be wrapped to multiple lines. If `FALSE`, text will be
+#'   truncated to a single line.
 #' @param use_page_size_select,page_size_default,page_size_values The
 #'   `use_page_size_select` option lets us display a dropdown menu for the
 #'   number of rows to show per page of data. By default, this is the vector
@@ -296,6 +300,7 @@ opt_interactive <- function(
     use_resizers = FALSE,
     use_highlight = FALSE,
     use_compact_mode = FALSE,
+    use_text_wrapping = TRUE,
     use_page_size_select = FALSE,
     page_size_default = 10,
     page_size_values = c(10, 25, 50, 100),
@@ -318,6 +323,7 @@ opt_interactive <- function(
     ihtml.use_resizers = use_resizers,
     ihtml.use_highlight = use_highlight,
     ihtml.use_compact_mode = use_compact_mode,
+    ihtml.use_text_wrapping = use_text_wrapping,
     ihtml.use_page_size_select = use_page_size_select,
     ihtml.page_size_default = page_size_default,
     ihtml.page_size_values = page_size_values,

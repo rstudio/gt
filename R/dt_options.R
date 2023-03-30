@@ -207,6 +207,7 @@ dt_options_tbl <-
     "ihtml_use_resizers",                FALSE,  "interactive",      "logical", FALSE,
     "ihtml_use_highlight",               FALSE,  "interactive",      "logical", FALSE,
     "ihtml_use_compact_mode",            FALSE,  "interactive",      "logical", FALSE,
+    "ihtml_use_text_wrapping",           FALSE,  "interactive",      "logical", TRUE,
     "ihtml_use_page_size_select",        FALSE,  "interactive",      "logical", FALSE,
     "ihtml_page_size_default",           FALSE,  "interactive",      "values",  10,
     "ihtml_page_size_values",            FALSE,  "interactive",      "values",  default_page_size_vec,
