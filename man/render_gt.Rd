@@ -38,6 +38,9 @@ if you want to save an expression in a variable.}
 call to \code{\link[=gt_output]{gt_output()}} when \code{render_gt()} is used in an interactive R
 Markdown document.}
 }
+\value{
+An object of class \code{shiny.render.function}.
+}
 \description{
 With \code{render_gt()} we can create a reactive \strong{gt} table that works
 wonderfully once assigned to an output slot (with \code{\link[=gt_output]{gt_output()}}). This
@@ -65,22 +68,27 @@ expression.
 gt_tbl <-
   gtcars |>
   gt() |>
-  cols_hide(columns = contains("_"))
+  fmt_currency(columns = msrp, decimals = 0) |>
+  cols_hide(columns = -c(mfr, model, year, mpg_c, msrp)) |>
+  cols_label_with(columns = everything(), fn = toupper) |>
+  data_color(columns = msrp, method = "numeric", palette = "viridis") |>
+  sub_missing() |>
+  opt_interactive(use_compact_mode = TRUE)
 
 ui <- fluidPage(
   gt_output(outputId = "table")
 )
 
 server <- function(input, output, session) \{
-
-  output$table <-
-    render_gt(
-      expr = gt_tbl,
-      height = px(600),
-      width = px(600)
-    )
+  output$table <- render_gt(expr = gt_tbl)
 \}
+
+shinyApp(ui = ui, server = server)
 }\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_render_gt_1.png" alt="This image of a table was generated from the first code example in the `render_gt()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
