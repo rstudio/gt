@@ -9,6 +9,9 @@ gt_output(outputId)
 \arguments{
 \item{outputId}{An output variable from which to read the table.}
 }
+\value{
+An object of class \code{shiny.tag}.
+}
 \description{
 Using \code{gt_output()} we can render a reactive \strong{gt} table, a process
 initiated by using the \code{\link[=render_gt]{render_gt()}} function in the \code{server} component of a
