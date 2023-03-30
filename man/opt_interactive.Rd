@@ -15,6 +15,7 @@ opt_interactive(
   use_resizers = FALSE,
   use_highlight = FALSE,
   use_compact_mode = FALSE,
+  use_text_wrapping = TRUE,
   use_page_size_select = FALSE,
   page_size_default = 10,
   page_size_values = c(10, 25, 50, 100),
@@ -55,6 +56,11 @@ upon hover. By default, this is \code{FALSE}.}
 \item{use_compact_mode}{To reduce vertical padding and thus make the table
 consume less vertical space the \code{use_compact_mode} option can be used. By
 default, this is \code{FALSE}.}
+
+\item{use_text_wrapping}{The \code{use_text_wrapping} option controls whether
+text wrapping occurs throughout the table. This is \code{TRUE} by default and
+with that text will be wrapped to multiple lines. If \code{FALSE}, text will be
+truncated to a single line.}
 
 \item{use_page_size_select, page_size_default, page_size_values}{The
 \code{use_page_size_select} option lets us display a dropdown menu for the
