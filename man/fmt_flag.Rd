@@ -59,6 +59,15 @@ included per cell by separating country codes with commas (e.g., \code{"GB,TT"})
 The \code{sep} argument allows for a common separator to be applied between flag
 icons.
 }
+\section{Compatibility of formatting function with data values}{
+
+
+The \code{fmt_flag()} formatting function is compatible with body cells that are
+of the \code{"character"} or \code{"factor"} types. Any other types of body cells are
+ignored during formatting. This is to say that cells of incompatible data
+types may be targeted, but there will be no attempt to format them.
+}
+
 \section{Targeting cells with \code{columns} and \code{rows}}{
 
 
