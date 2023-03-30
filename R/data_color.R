@@ -660,7 +660,7 @@ data_color <- function(
       if (!requireNamespace("paletteer", quietly = TRUE)) {
 
         cli::cli_abort(c(
-          "The paletteer package is required for accessing palettes with
+          "The `paletteer` package is required for accessing palettes with
           the `<package>::<palette>` syntax.",
           "*" = "It can be installed with `install.packages(\"paletteer\")`."
         ))
