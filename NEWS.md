@@ -50,7 +50,7 @@
 
 * All examples in the documentation were modernized by using the `|>` instead of the `%>%`. A lot of explanatory text was improved through rewriting. The ordering of documentation sections was improved. And functions that had very little documentation (like `text_transform()`) were greatly improved (#1087). (#1166, #1185, #1192)
 
-* Several small documentation and housekeeping updates. (#1133, #1134, #1135, #1136, #1190, #1206, #1218, #1242, #1246, #1258, #1260, #1266, #1270, #1276)
+* Several small documentation and housekeeping updates. (#1133, #1134, #1135, #1136, #1190, #1206, #1218, #1242, #1246, #1258, #1260, #1266, #1270, #1276, #1281)
 
 * Added a citation file for the package. (#1128, #1277)
 
