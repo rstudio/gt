@@ -167,8 +167,8 @@ sza |>
   pivot_wider(names_from = "tst", values_from = sza) |>
   gt(rowname_col = "month") |>
   sub_missing(missing_text = "") |>
-  tab_stubhead(label = html("month<br>(20&deg;N)")) |>
-  tab_header(title = html("&#x2600; Solar Zenith Angles &#x2600;")) |>
+  tab_stubhead(label = md("month<br>(20&deg;N)")) |>
+  tab_header(title = md("&#x2600; Solar Zenith Angles &#x2600;")) |>
   tab_options(
     column_labels.font.size = "smaller",
     table.font.size = "smaller",
@@ -229,7 +229,7 @@ The table that we'll create from `gtcars` will meet these requirements:
 6. capitalize the `drivetrain` text
 7. format the prices as USD currency with commas and no decimal places shown
 8. relabel the column headings to provide nicer labels
-9. add two footnotes that explain the `drivetrain` abbreviations and that state the currency of the `msrp` prices; ensure that the footnote marks are lowercase letters 
+9. add two footnotes to explain the `drivetrain` abbreviations and to specify the currency of the `msrp` prices; ensure that the footnote marks are lowercase letters 
 
 ```{r gtcars}
 # Create a gt table based on a preprocessed `gtcars`
@@ -246,10 +246,7 @@ gtcars |>
     locations = cells_body(columns = drivetrain),
     fn = function(x) toupper(x)
   ) |>
-  fmt_currency(
-    columns = msrp,
-    decimals = 0
-  ) |>
+  fmt_currency(decimals = 0) |>
   cols_label(
     mfr = "Car",
     drivetrain = "Drivetrain",
@@ -310,7 +307,7 @@ The table that we'll create from `sp500` will meet these requirements:
 4. put the column labels in title case
 5. format the `date` column to appear as '2 Jun 2010'
 6. have the price columns (`open`, `high`, `low`, `close`) appear in USD
-7. the large numbers in `volume` will be shown as billions (with the `B` suffix)
+7. the large numbers in `volume` should be shown as billions (with the `B` suffix)
 8. up- and down-pointing triangles (in green and red) will be added alongside the `close` price as appropriate
 
 ```{r sp500}
@@ -338,15 +335,12 @@ sp500 |>
     date_style = "day_m_year"
   ) |>
   fmt_currency(columns = c(open, high, low, close)) |>
-  fmt_number(
-    columns = volume,
-    scale_by = 1 / 1E9,
-    pattern = "{x}B"
-  ) |>
+  fmt_number(columns = volume, suffixing = TRUE) |>
   text_transform(
     locations = cells_body(
       columns = close,
-      rows = close > open),
+      rows = close > open
+    ),
     fn = function(x) paste(x, up_arrow)
   ) |>
   text_transform(
@@ -356,13 +350,9 @@ sp500 |>
     ),
     fn = function(x) paste(x, down_arrow)
   ) |>
-  cols_label(
-    date = "Date",
-    open = "Open",
-    high = "High",
-    low = "Low",
-    close = "Close",
-    volume = "Volume"
+  cols_label_with(
+    columns = everything(),
+    fn = ~ paste0(toupper(substr(., 1, 1)), substr(., 2, nchar(.)))
   )
 ```
 
