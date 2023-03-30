@@ -144,7 +144,7 @@ Here is a glimpse at the pizza data available in \code{pizzaplace}.
 DATA-5
 
 \if{html}{\out{
-<div align="center"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_pizzaplace.png" alt="This image of that of a dataset badge." style="width:50\%;padding-bottom:20px;"></div>
+<div style="text-align:center;"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_pizzaplace.png" alt="This image of that of a dataset badge." style="width:50\%;padding-bottom:20px;"></div>
 }}
 }
 
