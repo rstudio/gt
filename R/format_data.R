@@ -7348,10 +7348,9 @@ fmt_flag <- function(
 #'
 #' @inheritParams fmt_number
 #' @param md_engine The engine preference for Markdown rendering. By default,
-#'   this is set to `"auto"` where **gt** will choose the **markdown** package
-#'   if it is available in the user library, otherwise functions from the
-#'   **commonmark** package will be used. You can explicitly choose one or the
-#'   other with the `"markdown"` or `"commonmark"` keyword option.
+#'   this is set to `"markdown"` where **gt** will use the **markdown** package
+#'   for Markdown conversion to HTML and LaTeX. The other option is
+#'   `"commonmark"` and with that the **commonmark** package will be used.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -7464,7 +7463,7 @@ fmt_markdown <- function(
     data,
     columns = everything(),
     rows = everything(),
-    md_engine = c("auto", "markdown", "commonmark")
+    md_engine = c("markdown", "commonmark")
 ) {
 
   # Perform input object validation

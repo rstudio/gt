@@ -1,4 +1,4 @@
-# gt (development version)
+# gt 0.9.0
 
 ## New features
 
@@ -81,8 +81,6 @@
 * Fixed LaTeX rendering of tables using the `xelatex` engine by removing the unneeded `"amsmath"` LaTeX package from the default set of LaTeX dependencies. This set is now modifiable through the `gt.latex_packages` option (#751). (#1279)
 
 * Fixed some border-related issues for **gt** tables published in R Markdown and Quarto documents (#1120). (#1234)
-
-* The **juicyjuice** package is now a soft dependency. The previous hard requirement presented some problems for users in environments where the installation of the package was difficult (because of its own dependency on **V8**) (#1179). (#1229)
 
 * Added the `quarto.use_bootstrap` and `quarto.disable_processing` options in `tab_options()` to control whether Quarto will add Bootstrap classes to a **gt** table or ignore a **gt** table. (#1222, #1227)
 

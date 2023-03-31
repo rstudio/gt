@@ -298,6 +298,14 @@ ggplot_image <- function(
     aspect_ratio = 1.0
 ) {
 
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+
+    cli::cli_abort(c(
+      "Using the `ggplot_image()` function requires the `ggplot2` package.",
+      "*" = "It can be installed with `install.packages(\"ggplot2\")`."
+    ))
+  }
+
   if (is.numeric(height)) {
     height <- paste0(height, "px")
   }
