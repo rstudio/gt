@@ -12,7 +12,7 @@ appropriate output type during render when using fmt_markdown()."><meta property
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.8.0.9000</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="In-development version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,7 +71,7 @@ appropriate output type during render when using <code>fmt_markdown()</code>.</p
 <span>  <span class="va">data</span>,</span>
 <span>  columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  md_engine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"auto"</span>, <span class="st">"markdown"</span>, <span class="st">"commonmark"</span><span class="op">)</span></span>
+<span>  md_engine <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"markdown"</span>, <span class="st">"commonmark"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -102,10 +102,9 @@ to filter down to the rows we need (e.g.,
 
 <dt>md_engine</dt>
 <dd><p>The engine preference for Markdown rendering. By default,
-this is set to <code>"auto"</code> where <strong>gt</strong> will choose the <strong>markdown</strong> package
-if it is available in the user library, otherwise functions from the
-<strong>commonmark</strong> package will be used. You can explicitly choose one or the
-other with the <code>"markdown"</code> or <code>"commonmark"</code> keyword option.</p></dd>
+this is set to <code>"markdown"</code> where <strong>gt</strong> will use the <strong>markdown</strong> package
+for Markdown conversion to HTML and LaTeX. The other option is
+<code>"commonmark"</code> and with that the <strong>commonmark</strong> package will be used.</p></dd>
 
 </dl></div>
     <div class="section level2">
