@@ -78,7 +78,7 @@ sp500 |>
 <img src="man/figures/gt_sp500_table.svg" width="800px">
 </div>
 
-There are six datasets provided by **gt**: `countrypops`, `sza`, `gtcars`, `sp500`, `pizzaplace`, and `exibble`. They're useful for experimenting with **gt**’s functions and the package documentation makes extensive use of them in the *Examples* section within each function's documentation.
+There are ten datasets provided by **gt**: `countrypops`, `sza`, `gtcars`, `sp500`, `pizzaplace`, `exibble`, `towny`, `metro`, `rx_adsl`, and `rx_addv`. They're useful for experimenting with **gt**’s functions and the package documentation makes extensive use of them in the *Examples* section within each function's documentation.
 
 Beyond this simple example, there are many functions available in **gt**
 for creating super-customized tables. For much more information on these, visit the
