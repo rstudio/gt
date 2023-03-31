@@ -8,7 +8,7 @@ fmt_markdown(
   data,
   columns = everything(),
   rows = everything(),
-  md_engine = c("auto", "markdown", "commonmark")
+  md_engine = c("markdown", "commonmark")
 )
 }
 \arguments{
@@ -30,10 +30,9 @@ to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{md_engine}{The engine preference for Markdown rendering. By default,
-this is set to \code{"auto"} where \strong{gt} will choose the \strong{markdown} package
-if it is available in the user library, otherwise functions from the
-\strong{commonmark} package will be used. You can explicitly choose one or the
-other with the \code{"markdown"} or \code{"commonmark"} keyword option.}
+this is set to \code{"markdown"} where \strong{gt} will use the \strong{markdown} package
+for Markdown conversion to HTML and LaTeX. The other option is
+\code{"commonmark"} and with that the \strong{commonmark} package will be used.}
 }
 \value{
 An object of class \code{gt_tbl}.
