@@ -5,7 +5,7 @@ and either: (1) a single uncertainty column, or (2) two columns representing
 lower and upper uncertainty bounds. These columns will be essentially merged
 in a single column (that of col_val). What results is a column with values
 and associated uncertainties (e.g., 12.0 ± 0.1), and any columns specified
-in col_uncert are hidden from appearing the output table."><title>Merge columns to a value-with-uncertainty column — cols_merge_uncert • gt</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Merge columns to a value-with-uncertainty column — cols_merge_uncert"><meta property="og:description" content="The cols_merge_uncert() function is a specialized variant of the
+in col_uncert are hidden from appearing the output table."><title>Merge columns to a value-with-uncertainty column — cols_merge_uncert • gt</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Merge columns to a value-with-uncertainty column — cols_merge_uncert"><meta property="og:description" content="The cols_merge_uncert() function is a specialized variant of the
 cols_merge() function. It takes as input a base value column (col_val)
 and either: (1) a single uncertainty column, or (2) two columns representing
 lower and upper uncertainty bounds. These columns will be essentially merged
@@ -22,7 +22,7 @@ in col_uncert are hidden from appearing the output table."><meta property="og:im
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.8.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,6 +36,7 @@ in col_uncert are hidden from appearing the output table."><meta property="og:im
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/case-study-clinical-tables.html">Case Study: Clinical Tables</a>
     <a class="dropdown-item" href="../articles/case-study-gtcars.html">Case Study: gtcars</a>
     <a class="dropdown-item" href="../articles/creating-summary-lines.html">Creating Summary Lines</a>
     <a class="dropdown-item" href="../articles/gt-datasets.html">gt Datasets</a>
@@ -81,7 +82,14 @@ in <code>col_uncert</code> are hidden from appearing the output table.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cols_merge_uncert</span><span class="op">(</span><span class="va">data</span>, <span class="va">col_val</span>, <span class="va">col_uncert</span>, sep <span class="op">=</span> <span class="st">" +/- "</span>, autohide <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cols_merge_uncert</span><span class="op">(</span></span>
+<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">col_val</span>,</span>
+<span>  <span class="va">col_uncert</span>,</span>
+<span>  rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  sep <span class="op">=</span> <span class="st">" +/- "</span>,</span>
+<span>  autohide <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -106,6 +114,17 @@ uncertainty value columns in the output table, we can automatically hide
 any <code>col_uncert</code> columns through the <code>autohide</code> option.</p></dd>
 
 
+<dt>rows</dt>
+<dd><p>Rows that will participate in the merging process. Providing
+<code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code> (the default) results in all rows in <code>columns</code> undergoing
+merging. Alternatively, we can supply a vector of row identifiers within
+<code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of row indices, or a helper function focused on selections.
+The select helper functions are: <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>,
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/one_of.html" class="external-link">one_of()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">num_range()</a></code>, and <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>.
+We can also use a standalone predicate expression to filter down to the
+rows we need (e.g., <code>[colname_1] &gt; 100 &amp; [colname_2] &lt; 50</code>).</p></dd>
+
+
 <dt>sep</dt>
 <dd><p>The separator text that contains the uncertainty mark for a single
 uncertainty value. The default value of <code>" +/- "</code> indicates that an
@@ -128,8 +147,11 @@ By default, this is set to <code>TRUE</code>.</p></dd>
 <p>An object of class <code>gt_tbl</code>.</p>
     </div>
     <div class="section level2">
-    <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
-    <p>This function could be somewhat replicated using <code><a href="cols_merge.html">cols_merge()</a></code> in the case
+    <h2 id="comparison-with-other-column-merging-functions">Comparison with other column-merging functions<a class="anchor" aria-label="anchor" href="#comparison-with-other-column-merging-functions"></a></h2>
+    
+
+
+<p>This function could be somewhat replicated using <code><a href="cols_merge.html">cols_merge()</a></code> in the case
 where a single column is supplied for <code>col_uncert</code>, however,
 <code>cols_merge_uncert()</code> employs the following specialized semantics for <code>NA</code>
 handling:</p><ol><li><p><code>NA</code>s in <code>col_val</code> result in missing values for the merged column (e.g.,
@@ -141,7 +163,7 @@ merged column (e.g., <code>NA</code> + <code>NA</code> = <code>NA</code>)</p></l
 </ol><p>Any resulting <code>NA</code> values in the <code>col_val</code> column following the merge
 operation can be easily formatted using the <code><a href="sub_missing.html">sub_missing()</a></code> function.</p>
 <p>This function is part of a set of four column-merging functions. The other
-two are the general <code><a href="cols_merge.html">cols_merge()</a></code> function and the specialized
+three are the general <code><a href="cols_merge.html">cols_merge()</a></code> function and the specialized
 <code><a href="cols_merge_range.html">cols_merge_range()</a></code> and <code><a href="cols_merge_n_pct.html">cols_merge_n_pct()</a></code> functions. These functions
 operate similarly, where the non-target columns can be optionally hidden from
 the output table through the <code>hide_columns</code> or <code>autohide</code> options.</p>
@@ -154,19 +176,19 @@ the output table through the <code>hide_columns</code> or <code>autohide</code> 
 <p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table, keeping only the <code>currency</code> and
 <code>num</code> columns. Merge columns into one with a base value and uncertainty
 (after formatting the <code>num</code> column) using the <code>cols_merge_uncert()</code> function.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">currency</span>, <span class="va">num</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">currency</span>, <span class="va">num</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">num</span>,</span>
 <span>    decimals <span class="op">=</span> <span class="fl">3</span>,</span>
 <span>    use_seps <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/cols_merge_uncert.html">cols_merge_uncert</a></span><span class="op">(</span></span>
 <span>    col_val <span class="op">=</span> <span class="va">currency</span>,</span>
 <span>    col_uncert <span class="op">=</span> <span class="va">num</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/cols_label.html">cols_label</a></span><span class="op">(</span>currency <span class="op">=</span> <span class="st">"value + uncert."</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_merge_uncert_1.png" alt="This image of a table was generated from the first code example in the `cols_merge_uncert()` help file." style="width:100%;"></p>
     </div>
@@ -174,7 +196,13 @@ the output table through the <code>hide_columns</code> or <code>autohide</code> 
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
     
 
-<p>4-10</p>
+<p>5-12</p>
+    </div>
+    <div class="section level2">
+    <h2 id="function-introduced">Function Introduced<a class="anchor" aria-label="anchor" href="#function-introduced"></a></h2>
+    
+
+<p><code>v0.2.0.5</code> (March 31, 2020)</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -182,6 +210,7 @@ the output table through the <code>hide_columns</code> or <code>autohide</code> 
 <code><a href="cols_align_decimal.html">cols_align_decimal</a>()</code>,
 <code><a href="cols_align.html">cols_align</a>()</code>,
 <code><a href="cols_hide.html">cols_hide</a>()</code>,
+<code><a href="cols_label_with.html">cols_label_with</a>()</code>,
 <code><a href="cols_label.html">cols_label</a>()</code>,
 <code><a href="cols_merge_n_pct.html">cols_merge_n_pct</a>()</code>,
 <code><a href="cols_merge_range.html">cols_merge_range</a>()</code>,
@@ -198,11 +227,11 @@ the output table through the <code>hide_columns</code> or <code>autohide</code> 
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, Ellis Hughes, <a href="https://jooyoungseo.github.io/" class="external-link">JooYoung Seo</a>, RStudio.</p>
+  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, Ellis Hughes, Alexandra Lauer, <a href="https://jooyoungseo.github.io/" class="external-link">JooYoung Seo</a>, Posit Software, PBC.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
     </footer></div>

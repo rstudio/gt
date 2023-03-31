@@ -5,7 +5,7 @@ cells. Specifically, the call to cell_borders() should be bound to the
 styles argument of tab_style(). The selection argument is where we
 define which borders should be modified (e.g., "left", "right", etc.).
 With that selection, the color, style, and weight of the selected
-borders can then be modified.'><title>Helper for defining custom borders for table cells — cell_borders • gt</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Helper for defining custom borders for table cells — cell_borders"><meta property="og:description" content='The cell_borders() helper function is to be used with the tab_style()
+borders can then be modified.'><title>Helper for defining custom borders for table cells — cell_borders • gt</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Helper for defining custom borders for table cells — cell_borders"><meta property="og:description" content='The cell_borders() helper function is to be used with the tab_style()
 function, which itself allows for the setting of custom styles to one or more
 cells. Specifically, the call to cell_borders() should be bound to the
 styles argument of tab_style(). The selection argument is where we
@@ -22,7 +22,7 @@ borders can then be modified.'><meta property="og:image" content="https://gt.rst
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.8.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,6 +36,7 @@ borders can then be modified.'><meta property="og:image" content="https://gt.rst
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/case-study-clinical-tables.html">Case Study: Clinical Tables</a>
     <a class="dropdown-item" href="../articles/case-study-gtcars.html">Case Study: gtcars</a>
     <a class="dropdown-item" href="../articles/creating-summary-lines.html">Creating Summary Lines</a>
     <a class="dropdown-item" href="../articles/gt-datasets.html">gt Datasets</a>
@@ -96,11 +97,11 @@ selected cells, we can use the <code>"all"</code> option.</p></dd>
 <dd><p>The border color, style, and weight. The <code>color</code>
 can be defined with a color name or with a hexadecimal color code. The
 default <code>color</code> value is <code>"#000000"</code> (black). The <code>style</code> can be one of
-either <code>"solid"</code> (the default), <code>"dashed"</code>, <code>"dotted"</code>, or <code>"hidden"</code>.
-The <code>weight</code> of the border lines is to be given in pixel values (the
-<code><a href="px.html">px()</a></code> helper function is useful for this. The default value for <code>weight</code>
-is <code>"1px"</code>. Borders for any defined <code>sides</code> can be removed by supplying
-<code>NULL</code> to any of <code>color</code>, <code>style</code>, or <code>weight</code>.</p></dd>
+either <code>"solid"</code> (the default), <code>"dashed"</code>, <code>"dotted"</code>, <code>"hidden"</code>, or
+<code>"double"</code>. The <code>weight</code> of the border lines is to be given in pixel values
+(the <code><a href="px.html">px()</a></code> helper function is useful for this. The default value for
+<code>weight</code> is <code>"1px"</code>. Borders for any defined <code>sides</code> can be removed by
+supplying <code>NULL</code> to any of <code>color</code>, <code>style</code>, or <code>weight</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -116,9 +117,8 @@ is <code>"1px"</code>. Borders for any defined <code>sides</code> can be removed
 
 <p>Add horizontal border lines for all table body rows in <code><a href="exibble.html">exibble</a></code> using
 <code><a href="tab_style.html">tab_style()</a></code> and <code>cell_borders()</code>.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>row.striping.include_table_body <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
 <span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_borders.html">cell_borders</a></span><span class="op">(</span></span>
 <span>      sides <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"top"</span>, <span class="st">"bottom"</span><span class="op">)</span>,</span>
@@ -135,8 +135,8 @@ is <code>"1px"</code>. Borders for any defined <code>sides</code> can be removed
 <p>Incorporate different horizontal and vertical borders at several locations.
 This uses multiple <code>cell_borders()</code> and <code><a href="cells_body.html">cells_body()</a></code> calls within
 <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>s.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
 <span>    style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>      <span class="fu"><a href="../reference/cell_borders.html">cell_borders</a></span><span class="op">(</span></span>
@@ -167,7 +167,13 @@ This uses multiple <code>cell_borders()</code> and <code><a href="cells_body.htm
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
     
 
-<p>7-22</p>
+<p>8-22</p>
+    </div>
+    <div class="section level2">
+    <h2 id="function-introduced">Function Introduced<a class="anchor" aria-label="anchor" href="#function-introduced"></a></h2>
+    
+
+<p><code>v0.2.0.5</code> (March 31, 2020)</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -198,7 +204,8 @@ This uses multiple <code>cell_borders()</code> and <code><a href="cells_body.htm
 <code><a href="pct.html">pct</a>()</code>,
 <code><a href="px.html">px</a>()</code>,
 <code><a href="random_id.html">random_id</a>()</code>,
-<code><a href="stub.html">stub</a>()</code></p></div>
+<code><a href="stub.html">stub</a>()</code>,
+<code><a href="system_fonts.html">system_fonts</a>()</code></p></div>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -206,11 +213,11 @@ This uses multiple <code>cell_borders()</code> and <code><a href="cells_body.htm
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, Ellis Hughes, <a href="https://jooyoungseo.github.io/" class="external-link">JooYoung Seo</a>, RStudio.</p>
+  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, Ellis Hughes, Alexandra Lauer, <a href="https://jooyoungseo.github.io/" class="external-link">JooYoung Seo</a>, Posit Software, PBC.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
     </footer></div>

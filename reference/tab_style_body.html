@@ -18,7 +18,7 @@ the alignment and indentation of text (cell_text(): align and
 indent)
 the cell borders (cell_borders())
 
-"><title>Target cells in the table body and style accordingly — tab_style_body • gt</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Target cells in the table body and style accordingly — tab_style_body"><meta property="og:description" content="With the tab_style_body() function we can target cells though value, regex,
+"><title>Target cells in the table body and style accordingly — tab_style_body • gt</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Target cells in the table body and style accordingly — tab_style_body"><meta property="og:description" content="With the tab_style_body() function we can target cells though value, regex,
 and custom matching rules and apply styles to them and their surrounding
 context (i.e., styling an entire row or column wherein the match is found).
 Just as with the general tab_style() function, this function is focused on
@@ -48,7 +48,7 @@ the cell borders (cell_borders())
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.8.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -62,6 +62,7 @@ the cell borders (cell_borders())
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/case-study-clinical-tables.html">Case Study: Clinical Tables</a>
     <a class="dropdown-item" href="../articles/case-study-gtcars.html">Case Study: gtcars</a>
     <a class="dropdown-item" href="../articles/creating-summary-lines.html">Creating Summary Lines</a>
     <a class="dropdown-item" href="../articles/gt-datasets.html">gt Datasets</a>
@@ -137,11 +138,12 @@ bold text (the degree of choice is greater with variable fonts)</p></li>
 
 
 <dt>style</dt>
-<dd><p>a vector of styles to use. The <code><a href="cell_text.html">cell_text()</a></code>, <code><a href="cell_fill.html">cell_fill()</a></code>, and
-<code><a href="cell_borders.html">cell_borders()</a></code> helper functions can be used here to more easily generate
-valid styles. If using more than one helper function to define styles, all
-calls must be enclosed in a <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>. Custom CSS declarations can be used
-for HTML output by including a <code><a href="https://rdrr.io/pkg/htmltools/man/css.html" class="external-link">css()</a></code>-based statement as a list item.</p></dd>
+<dd><p>The styles to use for the targeted cells. The <code><a href="cell_text.html">cell_text()</a></code>,
+<code><a href="cell_fill.html">cell_fill()</a></code>, and <code><a href="cell_borders.html">cell_borders()</a></code> helper functions can be used here to
+more easily generate valid styles. If using more than one helper function
+to define styles, all calls must be enclosed in a <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>. Custom CSS
+declarations can be used for HTML output by including a <code><a href="https://rstudio.github.io/htmltools/reference/css.html" class="external-link">css()</a></code>-based
+statement as a list item.</p></dd>
 
 
 <dt>columns</dt>
@@ -206,6 +208,41 @@ styling into the stub.</p></dd>
 <p>An object of class <code>gt_tbl</code>.</p>
     </div>
     <div class="section level2">
+    <h2 id="targeting-cells-with-columns-and-rows">Targeting cells with <code>columns</code> and <code>rows</code><a class="anchor" aria-label="anchor" href="#targeting-cells-with-columns-and-rows"></a></h2>
+    
+
+
+<p>Targeting of values is done through <code>columns</code> and additionally by <code>rows</code> (if
+nothing is provided for <code>rows</code> then entire columns are selected). The
+<code>columns</code> argument allows us to constrain a subset of cells contained in the
+resolved columns. We say resolved because aside from declaring column names
+in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> (with bare column names or names in quotes) we can use
+<strong>tidyselect</strong>-style expressions. This can be as basic as supplying a select
+helper like <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, or, providing a more complex incantation like</p>
+<p><code>where(~ is.numeric(.x) &amp;&amp; max(.x, na.rm = TRUE) &gt; 1E6)</code></p>
+<p>which targets numeric columns that have a maximum value greater than
+1,000,000 (excluding any <code>NA</code>s from consideration).</p>
+<p>By default all columns and rows are selected (with the <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>
+defaults). Cell values that are incompatible with a given search will be
+skipped over. So it's safe to select all columns with a type of search (only
+those values that can be formatted will be formatted), but, you may not want
+that. One strategy is to format the bulk of cell values with one formatting
+function and then constrain the columns for later passes with other types of
+formatting (the last formatting done to a cell is what you get in the final
+output).</p>
+<p>Once the columns are targeted, we may also target the <code>rows</code> within those
+columns. This can be done in a variety of ways. If a stub is present, then we
+potentially have row identifiers. Those can be used much like column names in
+the <code>columns</code>-targeting scenario. We can use simpler <strong>tidyselect</strong>-style
+expressions (the select helpers should work well here) and we can use quoted
+row identifiers in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>. It's also possible to use row indices (e.g.,
+<code>c(3, 5, 6)</code>) though these index values must correspond to the row numbers of
+the input data (the indices won't necessarily match those of rearranged rows
+if row groups are present). One more type of expression is possible, an
+expression that takes column values (can involve any of the available columns
+in the table) and returns a logical vector.</p>
+    </div>
+    <div class="section level2">
     <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     
 
@@ -214,7 +251,7 @@ styling into the stub.</p></dd>
 contains an assortment of values that could potentially undergo some styling
 via <code>tab_style_body()</code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op">&lt;-</span></span>
-<span>  <span class="va">exibble</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="va">exibble</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span></span>
 <span>    rowname_col <span class="op">=</span> <span class="st">"row"</span>,</span>
 <span>    groupname_col <span class="op">=</span> <span class="st">"group"</span></span>
@@ -223,7 +260,7 @@ via <code>tab_style_body()</code>.</p>
 in the <code>values</code> argument of <code>tab_style_body()</code>. It's okay to search for
 numerical, character, or logical values across all columns. Let's target the
 values <code>49.95</code> and <code>33.33</code> and style those cells with an orange fill.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_style_body.html">tab_style_body</a></span><span class="op">(</span></span>
 <span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_fill.html">cell_fill</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"orange"</span><span class="op">)</span>,</span>
 <span>    values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">49.95</span>, <span class="fl">33.33</span><span class="op">)</span></span>
@@ -231,7 +268,7 @@ values <code>49.95</code> and <code>33.33</code> and style those cells with an o
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_body_1.png" alt="This image of a table was generated from the first code example in the `tab_style_body()` help file." style="width:100%;"></p>
 <p>Multiple styles can be combined in a <code>list</code>, here's an example of that using
 the same cell targets:</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_style_body.html">tab_style_body</a></span><span class="op">(</span></span>
 <span>    style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>      <span class="fu"><a href="../reference/cell_text.html">cell_text</a></span><span class="op">(</span>font <span class="op">=</span> <span class="fu"><a href="../reference/google_font.html">google_font</a></span><span class="op">(</span><span class="st">"Inter"</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span>,</span>
@@ -249,12 +286,12 @@ the same cell targets:</p>
 with those specific keywords in the <code>targets</code> argument. For the <code>49.95</code> value
 we will style the entire row and with <code>33.33</code> the entire column will get the
 same styling.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_style_body.html">tab_style_body</a></span><span class="op">(</span></span>
 <span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_fill.html">cell_fill</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"lightblue"</span><span class="op">)</span>,</span>
 <span>    values <span class="op">=</span> <span class="fl">49.95</span>,</span>
 <span>    targets <span class="op">=</span> <span class="st">"row"</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_style_body.html">tab_style_body</a></span><span class="op">(</span></span>
 <span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_fill.html">cell_fill</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"lightblue"</span><span class="op">)</span>,</span>
 <span>    values <span class="op">=</span> <span class="fl">33.33</span>,</span>
@@ -266,13 +303,13 @@ styling to other locations, or, entirely project the styling elsewhere. This
 is done with the <code>extents</code> argument. Valid keywords that can be included in
 the vector are: <code>"body"</code> (the default) and <code>"stub"</code>. Let's take the previous
 example and extend the styling of the row into the stub.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_style_body.html">tab_style_body</a></span><span class="op">(</span></span>
 <span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_fill.html">cell_fill</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"lightblue"</span><span class="op">)</span>,</span>
 <span>    values <span class="op">=</span> <span class="fl">49.95</span>,</span>
 <span>    targets <span class="op">=</span> <span class="st">"row"</span>,</span>
 <span>    extents <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"body"</span>, <span class="st">"stub"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_style_body.html">tab_style_body</a></span><span class="op">(</span></span>
 <span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_fill.html">cell_fill</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"lightblue"</span><span class="op">)</span>,</span>
 <span>    values <span class="op">=</span> <span class="fl">33.33</span>,</span>
@@ -282,7 +319,7 @@ example and extend the styling of the row into the stub.</p>
 <p>We can also use the <code>pattern</code> argument to target cell values in
 <code>character</code>-based columns. The <code>"fctr"</code> column is skipped because it is in
 fact a factor-based column.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_style_body.html">tab_style_body</a></span><span class="op">(</span></span>
 <span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_fill.html">cell_fill</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"green"</span><span class="op">)</span>,</span>
 <span>    pattern <span class="op">=</span> <span class="st">"ne|na"</span></span>
@@ -293,7 +330,7 @@ The function you give to <code>fn</code> will be invoked separately on all cells
 <code>columns</code> argument of <code>tab_style_body()</code> might be useful to limit which cells
 should be evaluated. For this next example, the supplied function should only
 be used on numeric values and we can make sure of this by using <code>columns = where(is.numeric)</code>.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_style_body.html">tab_style_body</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="fu">where</span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span>,</span>
 <span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_fill.html">cell_fill</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"pink"</span><span class="op">)</span>,</span>
@@ -306,6 +343,12 @@ be used on numeric values and we can make sure of this by using <code>columns = 
     
 
 <p>2-11</p>
+    </div>
+    <div class="section level2">
+    <h2 id="function-introduced">Function Introduced<a class="anchor" aria-label="anchor" href="#function-introduced"></a></h2>
+    
+
+<p><code>v0.8.0</code> (November 16, 2022)</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -329,11 +372,11 @@ be used on numeric values and we can make sure of this by using <code>columns = 
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, Ellis Hughes, <a href="https://jooyoungseo.github.io/" class="external-link">JooYoung Seo</a>, RStudio.</p>
+  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, Ellis Hughes, Alexandra Lauer, <a href="https://jooyoungseo.github.io/" class="external-link">JooYoung Seo</a>, Posit Software, PBC.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
     </footer></div>

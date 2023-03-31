@@ -16,7 +16,7 @@ mixed fractions
 locale-based formatting: providing a locale ID will result in number
 formatting specific to the chosen locale
 
-"><title>Format a vector as mixed fractions — vec_fmt_fraction • gt</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Format a vector as mixed fractions — vec_fmt_fraction"><meta property="og:description" content="With numeric values in vector, we can perform mixed-fraction-based
+"><title>Format a vector as mixed fractions — vec_fmt_fraction • gt</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Format a vector as mixed fractions — vec_fmt_fraction"><meta property="og:description" content="With numeric values in vector, we can perform mixed-fraction-based
 formatting. There are several options for setting the accuracy of the
 fractions. Furthermore, there is an option for choosing a layout (i.e.,
 typesetting style) for the mixed-fraction output.
@@ -44,7 +44,7 @@ formatting specific to the chosen locale
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.8.0</small>
+    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,6 +58,7 @@ formatting specific to the chosen locale
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/case-study-clinical-tables.html">Case Study: Clinical Tables</a>
     <a class="dropdown-item" href="../articles/case-study-gtcars.html">Case Study: gtcars</a>
     <a class="dropdown-item" href="../articles/creating-summary-lines.html">Creating Summary Lines</a>
     <a class="dropdown-item" href="../articles/gt-datasets.html">gt Datasets</a>
@@ -173,10 +174,10 @@ of <code>1,000</code>).</p></dd>
 
 
 <dt>locale</dt>
-<dd><p>An optional locale ID that can be used for formatting the value
-according the locale's rules. Examples include <code>"en"</code> for English (United
-States) and <code>"fr"</code> for French (France). The use of a valid locale ID will
-override any values provided in <code>sep_mark</code> and <code>dec_mark</code>. We can use the
+<dd><p>An optional locale identifier that can be used for formatting
+the value according the locale's rules. Examples include <code>"en"</code> for English
+(United States) and <code>"fr"</code> for French (France). The use of a locale ID will
+override any locale-specific values provided. We can use the
 <code><a href="info_locales.html">info_locales()</a></code> function as a useful reference for all of the locales that
 are supported.</p></dd>
 
@@ -206,32 +207,41 @@ or <code>"word"</code>. In <strong>knitr</strong> rendering (i.e., Quarto or R M
 unless specified in the <code>output</code> argument (here, it is of the <code>"plain"</code>
 output type).</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/vec_fmt_fraction.html">vec_fmt_fraction</a></span><span class="op">(</span><span class="va">num_vals</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1"></a><span class="co">#&gt; [1] "0" "1/9" "0" "-5/9" "NA"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "0" "1/9" "0" "-5/9" "NA"</span></span></code></pre><p></p></div>
 <p>There are many options for formatting as fractions. If you'd like a higher
 degree of accuracy in the computation of fractions we can supply the <code>"med"</code>
 or <code>"high"</code> keywords to the <code>accuracy</code> argument:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/vec_fmt_fraction.html">vec_fmt_fraction</a></span><span class="op">(</span><span class="va">num_vals</span>, accuracy <span class="op">=</span> <span class="st">"high"</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1"></a><span class="co">#&gt; [1] "1/200" "2/25" "0" "-107/200" "NA"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "1/200" "2/25" "0" "-107/200" "NA"</span></span></code></pre><p></p></div>
 <p>As a last example, one can wrap the values in a pattern with the <code>pattern</code>
 argument. Note here that <code>NA</code> values won't have the pattern applied.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/vec_fmt_fraction.html">vec_fmt_fraction</a></span><span class="op">(</span><span class="va">num_vals</span>, accuracy <span class="op">=</span> <span class="fl">8</span>, pattern <span class="op">=</span> <span class="st">"[{x}]"</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1"></a><span class="co">#&gt; [1] "[0]" "[1/8]" "[0]" "[-1/2]" "NA"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "[0]" "[1/8]" "[0]" "[-1/2]" "NA"</span></span></code></pre><p></p></div>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
     
 
-<p>14-7</p>
+<p>15-7</p>
+    </div>
+    <div class="section level2">
+    <h2 id="function-introduced">Function Introduced<a class="anchor" aria-label="anchor" href="#function-introduced"></a></h2>
+    
+
+<p><code>v0.7.0</code> (Aug 25, 2022)</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
-    <div class="dont-index"><p>Other vector formatting functions: 
+    <div class="dont-index"><p>The variant function intended for formatting <strong>gt</strong> table data:
+<code><a href="fmt_fraction.html">fmt_fraction()</a></code>.</p>
+<p>Other vector formatting functions: 
 <code><a href="vec_fmt_bytes.html">vec_fmt_bytes</a>()</code>,
 <code><a href="vec_fmt_currency.html">vec_fmt_currency</a>()</code>,
 <code><a href="vec_fmt_datetime.html">vec_fmt_datetime</a>()</code>,
 <code><a href="vec_fmt_date.html">vec_fmt_date</a>()</code>,
 <code><a href="vec_fmt_duration.html">vec_fmt_duration</a>()</code>,
 <code><a href="vec_fmt_engineering.html">vec_fmt_engineering</a>()</code>,
+<code><a href="vec_fmt_index.html">vec_fmt_index</a>()</code>,
 <code><a href="vec_fmt_integer.html">vec_fmt_integer</a>()</code>,
 <code><a href="vec_fmt_markdown.html">vec_fmt_markdown</a>()</code>,
 <code><a href="vec_fmt_number.html">vec_fmt_number</a>()</code>,
@@ -239,6 +249,7 @@ argument. Note here that <code>NA</code> values won't have the pattern applied.<
 <code><a href="vec_fmt_percent.html">vec_fmt_percent</a>()</code>,
 <code><a href="vec_fmt_roman.html">vec_fmt_roman</a>()</code>,
 <code><a href="vec_fmt_scientific.html">vec_fmt_scientific</a>()</code>,
+<code><a href="vec_fmt_spelled_num.html">vec_fmt_spelled_num</a>()</code>,
 <code><a href="vec_fmt_time.html">vec_fmt_time</a>()</code></p></div>
     </div>
 
@@ -247,11 +258,11 @@ argument. Note here that <code>NA</code> values won't have the pattern applied.<
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, Ellis Hughes, <a href="https://jooyoungseo.github.io/" class="external-link">JooYoung Seo</a>, RStudio.</p>
+  <p></p><p>Developed by Richard Iannone, Joe Cheng, Barret Schloerke, Ellis Hughes, Alexandra Lauer, <a href="https://jooyoungseo.github.io/" class="external-link">JooYoung Seo</a>, Posit Software, PBC.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
     </footer></div>
