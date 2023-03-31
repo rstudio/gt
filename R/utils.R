@@ -405,18 +405,9 @@ get_markdown_engine_fn <- function(
 
   context <- match.arg(context)
 
-  md_engine_name <-
-    switch(
-      md_engine_pref,
-      auto = ,
-      markdown = "markdown",
-      commonmark = "commonmark"
-    )
-
   md_engine_fn <-
     switch(
       md_engine_pref,
-      auto = ,
       markdown = markdown::mark,
       commonmark = if (context == "html") {
         commonmark::markdown_html
@@ -425,39 +416,8 @@ get_markdown_engine_fn <- function(
       }
     )
 
-  # Stop function if user explicitly chose the `markdown` package as
-  # the Markdown engine but the package is not available
-  if (md_engine_pref == "markdown") {
-
-    if (!requireNamespace("markdown", quietly = TRUE)) {
-
-      cli::cli_abort(c(
-        "Using the \"markdown\"` engine preference requires the `markdown` package.",
-        "*" = "It can be installed with `install.packages(\"markdown\")`."
-      ))
-    }
-  }
-
-  # If the Markdown engine preference was set to 'auto' (the default) and
-  # the `markdown` is not available, use the `commonmark` package as a
-  # fallback; the situation is that `commonmark` is a hard dependency whereas
-  # `markdown` is a soft dependency (though commonly present in user libraries)
-  if (
-    md_engine_pref == "auto" &&
-    !requireNamespace("markdown", quietly = TRUE)
-  ) {
-
-    if (context == "html") {
-      md_engine_fn <- commonmark::markdown_html
-    } else {
-      md_engine_fn <- commonmark::markdown_latex
-    }
-
-    md_engine_name <- "commonmark"
-  }
-
   md_engine_fn <- c(md_engine_fn)
-  names(md_engine_fn) <- md_engine_name
+  names(md_engine_fn) <- md_engine_pref
   md_engine_fn
 }
 
@@ -474,10 +434,7 @@ process_text <- function(text, context = "html") {
   # When processing text globally (outside of the `fmt_markdown()`
   # function) we will use the 'markdown' package if it is available,
   # otherwise the 'commonmark' package
-  if (
-    requireNamespace("markdown", quietly = TRUE) &&
-    utils::packageVersion("markdown") >= "1.5"
-  ) {
+  if (utils::packageVersion("markdown") >= "1.5") {
     md_engine <- "markdown"
   } else {
     md_engine <- "commonmark"
