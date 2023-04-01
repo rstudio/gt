@@ -121,7 +121,7 @@ We can replace matches on the LHS with Fontawesome icons furnished by the
 
 \section{Function Introduced}{
 
-\emph{In Development}
+\code{v0.9.0} (Mar 31, 2023)
 }
 
 \seealso{

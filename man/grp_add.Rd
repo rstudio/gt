@@ -38,7 +38,7 @@ add one or more new \strong{gt} tables, returning a refreshed \code{gt_group} ob
 
 \section{Function Introduced}{
 
-\emph{In Development}
+\code{v0.9.0} (Mar 31, 2023)
 }
 
 \seealso{

@@ -211,7 +211,7 @@ tooltip text showing the name of the country.
 
 \section{Function Introduced}{
 
-\emph{In Development}
+\code{v0.9.0} (Mar 31, 2023)
 }
 
 \seealso{

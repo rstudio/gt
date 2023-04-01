@@ -99,7 +99,7 @@ DATA-10
 
 \section{Dataset Introduced}{
 
-\emph{In Development}
+\code{v0.9.0} (Mar 31, 2023)
 }
 
 \seealso{

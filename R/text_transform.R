@@ -55,7 +55,7 @@
 #' 4-1
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @export
 text_replace <- function(
@@ -142,7 +142,7 @@ text_replace <- function(
 #' 4-2
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @import rlang
 #' @export
@@ -304,7 +304,7 @@ text_case_when <- function(
 #' 4-3
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @import rlang
 #' @export

@@ -1592,7 +1592,7 @@ vec_fmt_roman <- function(
 #' 15-10
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
 #'   [fmt_index()].
@@ -1707,7 +1707,7 @@ vec_fmt_index <- function(
 #' 15-11
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @seealso The variant function intended for formatting **gt** table data:
 #'   [fmt_spelled_num()].

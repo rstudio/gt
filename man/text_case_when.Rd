@@ -76,7 +76,7 @@ the non-matched cases with an empty string.
 
 \section{Function Introduced}{
 
-\emph{In Development}
+\code{v0.9.0} (Mar 31, 2023)
 }
 
 \seealso{

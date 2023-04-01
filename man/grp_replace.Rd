@@ -36,7 +36,7 @@ tables provided must equal the number of indices for tables present in the
 
 \section{Function Introduced}{
 
-\emph{In Development}
+\code{v0.9.0} (Mar 31, 2023)
 }
 
 \seealso{

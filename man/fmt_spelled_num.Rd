@@ -145,7 +145,7 @@ column of numbers-as-words is given cell background colors via \code{\link[=data
 
 \section{Function Introduced}{
 
-\emph{In Development}
+\code{v0.9.0} (Mar 31, 2023)
 }
 
 \seealso{

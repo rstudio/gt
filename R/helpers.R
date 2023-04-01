@@ -3148,7 +3148,7 @@ default_fonts <- function() {
 #' 8-29
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @export
 system_fonts <- function(name) {

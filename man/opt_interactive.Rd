@@ -166,7 +166,7 @@ dataset to create an interactive \strong{gt} table. Using \code{\link[=tab_style
 
 \section{Function Introduced}{
 
-\emph{In Development}
+\code{v0.9.0} (Mar 31, 2023)
 }
 
 \seealso{
