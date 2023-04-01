@@ -82,7 +82,7 @@ There are ten datasets provided by **gt**: `countrypops`, `sza`, `gtcars`, `sp50
 
 Beyond this simple example, there are many functions available in **gt**
 for creating super-customized tables. For much more information on these, visit the
-[documentation website](https://gt.rstudio.com/) (or, the [in-development version of the site](https://gt.rstudio.com/dev)).
+[documentation website](https://gt.rstudio.com/).
 
 With the **gt** *Test Drive*, you can try **gt** in the *Posit Cloud* environment that features the RStudio IDE and a large collection of ready-to-run examples. Visit the publicly available [*Posit Cloud* project](https://rstudio.cloud/project/779965) and try out the package in your browser. There's no charge to use this platform and you'll learn **a lot** about what the package can do!
 

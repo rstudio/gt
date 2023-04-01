@@ -274,7 +274,7 @@ you to handle them with \code{\link[=sub_missing]{sub_missing()}}. Here's an exa
 
 \section{Function Introduced}{
 
-\emph{In Development}
+\code{v0.9.0} (Mar 31, 2023)
 }
 
 \seealso{

@@ -462,7 +462,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 "towny"
 
@@ -537,7 +537,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 "metro"
 
@@ -607,7 +607,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 "rx_adsl"
 
@@ -680,6 +680,6 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 "rx_addv"

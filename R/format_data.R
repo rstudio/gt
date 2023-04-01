@@ -2988,7 +2988,7 @@ fmt_roman <- function(
 #' 3-10
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @seealso The vector-formatting version of this function: [vec_fmt_index()].
 #'
@@ -3244,7 +3244,7 @@ get_letters_from_div <- function(x, set) {
 #' 3-11
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @seealso The vector-formatting version of this function:
 #'   [vec_fmt_spelled_num()].
@@ -6113,7 +6113,7 @@ extract_duration_pattern <- function(
 #' 3-17
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @import rlang
 #' @export
@@ -6482,7 +6482,7 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #' 3-18
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @import rlang
 #' @export
@@ -6880,7 +6880,7 @@ fmt_url <- function(
 #' 3-19
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @import rlang
 #' @export
@@ -7195,7 +7195,7 @@ fmt_image <- function(
 #' 3-20
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @import rlang
 #' @export
@@ -7786,7 +7786,7 @@ fmt_passthrough <- function(
 #' 3-23
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @import rlang
 #' @export

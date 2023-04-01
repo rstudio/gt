@@ -22,7 +22,7 @@
 #' 14-1
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @import rlang
 #' @export
@@ -84,7 +84,7 @@ gt_group <- function(
 #' 14-3
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @export
 grp_pull <- function(
@@ -136,7 +136,7 @@ grp_pull <- function(
 #' 14-4
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @import rlang
 #' @export
@@ -272,7 +272,7 @@ grp_add <- function(
 #' 14-5
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @import rlang
 #' @export
@@ -394,7 +394,7 @@ grp_clone <- function(
 #' 14-6
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @export
 grp_replace <- function(
@@ -463,7 +463,7 @@ grp_replace <- function(
 #' 14-7
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @export
 grp_rm <- function(
@@ -493,7 +493,7 @@ grp_rm <- function(
 #' 14-8
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @export
 grp_options <- function(
