@@ -64,9 +64,4 @@ test_that("The `fmt_bins()` function works correctly", {
     na_col_tbl %>%
       fmt_bins(columns = a, rows = 1:5) %>% as_raw_html()
   )
-  expect_error(
-    regexp = NA,
-    na_col_tbl %>%
-      fmt_roman(columns = a, pattern = "a{x}b") %>% as_raw_html()
-  )
 })
