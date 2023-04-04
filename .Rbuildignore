@@ -31,12 +31,14 @@ tests/testthat/test-data_color.R
 tests/testthat/test-escaping.R
 tests/testthat/test-extract_cells.R
 tests/testthat/test-fmt_auto.R
+tests/testthat/test-fmt_bins.R
 tests/testthat/test-fmt_bytes.R
 tests/testthat/test-fmt_currency.R
 tests/testthat/test-fmt_date_time.R
 tests/testthat/test-fmt_duration.R
 tests/testthat/test-fmt_engineering.R
 tests/testthat/test-fmt_fraction.R
+tests/testthat/test-gt_split.R
 tests/testthat/test-fmt_index.R
 tests/testthat/test-fmt_integer.R
 tests/testthat/test-fmt_markdown.R
@@ -52,6 +54,7 @@ tests/testthat/test-group_column_label.R
 tests/testthat/test-gt_group.R
 tests/testthat/test-gtsave.R
 tests/testthat/test-h_md_html.R
+tests/testthat/test-i_html.R
 tests/testthat/test-image.R
 tests/testthat/test-info_tables.R
 tests/testthat/test-input_data_validation.R
