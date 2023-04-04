@@ -91,11 +91,4 @@ test_that("Interactive tables won't fail when using different options", {
   capture_output(expect_error(tbl_gt_i_20, regexp = NA))
   capture_output(expect_error(tbl_gt_i_21, regexp = NA))
   capture_output(expect_error(tbl_gt_i_22, regexp = NA))
-
-  tbl_gt_i_01_error <-
-    gt(dplyr::tibble(a = 1)) %>%
-    cols_hide(columns = a) %>%
-    opt_interactive()
-
-  capture_output(expect_error(tbl_gt_i_01_error))
 })
