@@ -1,3 +1,6 @@
+
+#nocov start
+
 #' A **gt** display table render function for use in Shiny
 #'
 #' @description
@@ -223,3 +226,6 @@ check_shiny <- function() {
     ))
   }
 }
+
+#nocov end
+

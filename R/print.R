@@ -51,6 +51,8 @@ print.gt_group <- function(x, ..., view = interactive()) {
   print(html_tbls, browse = view, ...)
 }
 
+#nocov start
+
 #' Knit print a **gt** table
 #'
 #' This facilitates printing of the HTML table within a knitr code chunk.
@@ -140,6 +142,8 @@ knit_print.gt_group <- function(x, ...) {
   # Use `knit_print()` to print in a code chunk
   knitr::knit_print(x, ...)
 }
+
+#nocov end
 
 #' Convert a **gt** table to an **htmltools** `tagList`
 #'

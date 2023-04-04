@@ -16,6 +16,8 @@ dt_has_built <- function(data) {
   isTRUE(dt_has_built_get(data = data))
 }
 
+#nocov start
+
 dt_has_built_assert <- function(data) {
 
   if (!dt_has_built(data = data)) {
@@ -25,3 +27,5 @@ dt_has_built_assert <- function(data) {
     ))
   }
 }
+
+#nocov end

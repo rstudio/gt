@@ -1,3 +1,5 @@
+#nocov start
+
 #' Transform a **gt** object to a data frame
 #'
 #' This facilitates conversion of the `gt_tbl` object to a data frame.
@@ -30,3 +32,5 @@ as.data.frame.gt_tbl <- function(x, ...) {
 
   ret
 }
+
+#nocov end

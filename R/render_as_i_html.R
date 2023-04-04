@@ -46,6 +46,8 @@ render_as_ihtml <- function(data, id) {
   data_tbl_vars <- dt_boxhead_get_vars_default(data = data)
   data_tbl <- data_tbl[, data_tbl_vars, drop = FALSE]
 
+  #nocov start
+
   # Stop function if there are no visible columns
   if (ncol(data_tbl) < 1) {
 
@@ -55,6 +57,8 @@ render_as_ihtml <- function(data, id) {
       "*" = "Failing that, look at whether all columns have been inadvertently hidden."
     ))
   }
+
+  #nocov end
 
   # Obtain column label attributes
   column_names  <- dt_boxhead_get_vars_default(data = data)
@@ -373,6 +377,8 @@ render_as_ihtml <- function(data, id) {
       static = FALSE
     )
 
+  #nocov start
+
   # Prepend the `heading_component` to the widget content
   if (!is.null(heading_component)) {
     x <- htmlwidgets::prependContent(x, heading_component)
@@ -382,6 +388,8 @@ render_as_ihtml <- function(data, id) {
   if (!is.null(footer_component)) {
     x <- htmlwidgets::appendContent(x, footer_component)
   }
+
+  #nocov end
 
   x
 }

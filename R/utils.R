@@ -1224,6 +1224,8 @@ markdown_to_rtf <- function(text) {
   text
 }
 
+#nocov start
+
 rtf_wrap <- function(control, x, process) {
   content <- paste0("", process(xml2::xml_contents(x))) # coerce even NULL to string
   paste0("\\", control, " ", content, "\\", control, "0 ")
@@ -1262,6 +1264,8 @@ markdown_to_text <- function(text) {
     )
   )
 }
+
+#nocov end
 
 #' Handle formatting of a pattern in a `fmt_*()` function
 #'
@@ -2085,6 +2089,8 @@ get_footnote_spec_by_location <- function(
   spec
 }
 
+#nocov start
+
 man_get_image_tag <- function(file, dir = "images") {
 
   repo_url <- "https://raw.githubusercontent.com/rstudio/gt/master"
@@ -2140,3 +2146,5 @@ data_get_image_tag <- function(file, dir = "images") {
     "</div>"
   )
 }
+
+#nocov end
