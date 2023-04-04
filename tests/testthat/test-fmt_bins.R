@@ -42,6 +42,12 @@ test_that("The `fmt_bins()` function works correctly", {
        render_formats_test(context = "html"))[["a"]],
     c("0/10", "10/15", "15/20", "20/ 40")
   )
+  expect_equal(
+    (tab %>%
+       fmt_bins(columns = a, sep = "/", fmt = ~ fmt_number(., decimals = 3)) %>%
+       render_formats_test(context = "html"))[["a"]],
+    c("0.000/10.000", "10.000/15.000", "15.000/20.000", "20.000/40.000")
+  )
 
   # Expect that a column with NAs will work fine with `fmt_bins()`,
   # it'll just produce NA values
