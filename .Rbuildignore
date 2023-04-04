@@ -80,6 +80,7 @@ tests/testthat/test-tab_spanner_delim.R
 tests/testthat/test-tab_spanner.R
 tests/testthat/test-tab_stub_indent.R
 tests/testthat/test-tab_style.R
+tests/testthat/test-tab_style_body.R
 tests/testthat/test-table_parts.R
 tests/testthat/test-text_transform.R
 tests/testthat/test-util_functions.R
