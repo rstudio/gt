@@ -13,7 +13,7 @@ authors:
     href: "https://jooyoungseo.github.io/"
 
 development:
-  mode: auto
+  mode: devel
 
 reference:
   - title: Creating a table
