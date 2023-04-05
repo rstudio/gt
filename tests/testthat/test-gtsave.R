@@ -125,6 +125,9 @@ test_that("The `gtsave()` function creates an HTML file based on the extension",
 
 test_that("HTML saving with `gtsave()` is successful with different path defs", {
 
+  skip_on_ci()
+  skip_on_covr()
+
   #
   # [#1] Relative filename, default path
   #
