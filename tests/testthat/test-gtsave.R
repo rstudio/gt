@@ -1,6 +1,3 @@
-skip_on_ci()
-skip_on_covr()
-
 test_that("The `gtsave()` function creates an HTML file based on the extension", {
 
   # Create a filename with path, having the
@@ -473,6 +470,9 @@ test_that("The `gtsave()` function stops in some cases", {
 
 test_that("The `gtsave()` function creates docx files as expected", {
 
+  skip_on_ci()
+  skip_on_covr()
+
   gt_exibble <- exibble %>% gt()
 
   temp_docx <- file.path(tempdir(),"test.docx")
@@ -493,6 +493,9 @@ test_that("The `gtsave()` function creates docx files as expected", {
 })
 
 test_that("The `gtsave()` fn creates docx files even when a table has special characters", {
+
+  skip_on_ci()
+  skip_on_covr()
 
   # addresses issue raised in gh issue #121
 
