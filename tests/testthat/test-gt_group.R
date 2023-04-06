@@ -42,7 +42,7 @@ test_that("The `gt_group()` function can be used to contain gt tables", {
   expect_s3_class(gt_tbls_1[["gt_tbl_options"]], "tbl_df")
 })
 
-test_that("The `gt_pull()` function can be used to extract a table from a group", {
+test_that("The `grp_pull()` function can be used to extract a table from a group", {
 
   # Create two different `gt_tbl` table objects
   gt_tbl_1 <- gt(exibble)
@@ -90,7 +90,7 @@ test_that("The `gt_pull()` function can be used to extract a table from a group"
   expect_equal(gt_tbl_2[["_options"]][["value"]][[7]], "#FFFFFF")
 })
 
-test_that("The `gt_add()` function can be used to add a table to a group", {
+test_that("The `grp_add()` function can be used to add a table to a group", {
 
   # Create three different `gt_tbl` table objects
   gt_tbl_1 <- gt(exibble)
@@ -224,4 +224,95 @@ test_that("The `gt_add()` function can be used to add a table to a group", {
   # or `.after` values are not integer-like
   expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 2.01))
   expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 2.99))
+})
+
+test_that("The `grp_replace()` function can be used to add a table to a group", {
+
+  # Create three different `gt_tbl` table objects
+  gt_tbl_1 <- gt(exibble)
+  gt_tbl_2 <- gt(gtcars)
+  gt_tbl_3 <- gt(towny)
+  gt_tbl_4 <- gt(metro)
+
+  # Create a table group with the first three tables within it
+  gt_tbls_1 <- gt_group(gt_tbl_1, gt_tbl_2, gt_tbl_3)
+
+  # Expect that the three tables are in the expected order
+  gt_tbl_1_pulled <- grp_pull(gt_tbls_1, which = 1)
+  expect_equal(gt_tbl_1, gt_tbl_1_pulled)
+
+  gt_tbl_2_pulled <- grp_pull(gt_tbls_1, which = 2)
+  expect_equal(gt_tbl_2, gt_tbl_2_pulled)
+
+  gt_tbl_3_pulled <- grp_pull(gt_tbls_1, which = 3)
+  expect_equal(gt_tbl_3, gt_tbl_3_pulled)
+
+  # Replace the first table with `gt_tbl_4`
+  gt_tbls_2 <-
+    gt_tbls_1 %>%
+    grp_replace(gt_tbl_4, .which = 1)
+
+  gt_tbl_1_pulled <- grp_pull(gt_tbls_2, which = 1)
+  expect_equal(gt_tbl_4, gt_tbl_1_pulled)
+
+  gt_tbl_2_pulled <- grp_pull(gt_tbls_2, which = 2)
+  expect_equal(gt_tbl_2, gt_tbl_2_pulled)
+
+  gt_tbl_3_pulled <- grp_pull(gt_tbls_2, which = 3)
+  expect_equal(gt_tbl_3, gt_tbl_3_pulled)
+
+  # Replace the second table with `gt_tbl_4`
+  gt_tbls_3 <-
+    gt_tbls_2 %>%
+    grp_replace(gt_tbl_4, .which = 2)
+
+  gt_tbl_1_pulled <- grp_pull(gt_tbls_3, which = 1)
+  expect_equal(gt_tbl_4, gt_tbl_1_pulled)
+
+  gt_tbl_2_pulled <- grp_pull(gt_tbls_3, which = 2)
+  expect_equal(gt_tbl_4, gt_tbl_2_pulled)
+
+  gt_tbl_3_pulled <- grp_pull(gt_tbls_3, which = 3)
+  expect_equal(gt_tbl_3, gt_tbl_3_pulled)
+
+  # Replace the third table with `gt_tbl_4`
+  gt_tbls_4 <-
+    gt_tbls_3 %>%
+    grp_replace(gt_tbl_4, .which = 3)
+
+  gt_tbl_1_pulled <- grp_pull(gt_tbls_4, which = 1)
+  expect_equal(gt_tbl_4, gt_tbl_1_pulled)
+
+  gt_tbl_2_pulled <- grp_pull(gt_tbls_4, which = 2)
+  expect_equal(gt_tbl_4, gt_tbl_2_pulled)
+
+  gt_tbl_3_pulled <- grp_pull(gt_tbls_4, which = 3)
+  expect_equal(gt_tbl_4, gt_tbl_3_pulled)
+
+  # Replace the all tables with `gt_tbl_1`
+  gt_tbls_5 <-
+    gt_tbls_4 %>%
+    grp_replace(gt_tbl_1, gt_tbl_1, gt_tbl_1, .which = 1:3)
+
+  gt_tbl_1_pulled <- grp_pull(gt_tbls_5, which = 1)
+  expect_equal(gt_tbl_1, gt_tbl_1_pulled)
+
+  gt_tbl_2_pulled <- grp_pull(gt_tbls_5, which = 2)
+  expect_equal(gt_tbl_1, gt_tbl_2_pulled)
+
+  gt_tbl_3_pulled <- grp_pull(gt_tbls_5, which = 3)
+  expect_equal(gt_tbl_1, gt_tbl_3_pulled)
+
+  # Expect function to stop if no data is supplied
+  expect_error(gt_tbls_5 %>% grp_replace())
+
+  # Expect function to stop if an invalid index is supplied
+  expect_error(gt_tbls_5 %>% grp_replace(gt_tbl_1, .which = 4))
+
+  # Expect function to stop if number of indices doesn't match the
+  # number of tables to replace
+  expect_error(gt_tbls_5 %>% grp_replace(gt_tbl_2, .which = 1:2))
+  expect_error(gt_tbls_5 %>% grp_replace(gt_tbl_3, .which = 2:3))
+  expect_error(gt_tbls_5 %>% grp_replace(gt_tbl_1, gt_tbl_2, .which = 1))
+  expect_error(gt_tbls_5 %>% grp_replace(gt_tbl_1, gt_tbl_1, .which = 1:3))
 })
