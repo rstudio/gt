@@ -42,7 +42,7 @@ test_that("The `gt_group()` function can be used to contain gt tables", {
   expect_s3_class(gt_tbls_1[["gt_tbl_options"]], "tbl_df")
 })
 
-test_that("The `gt_pull()` function can be used extact a table from a group", {
+test_that("The `gt_pull()` function can be used to extract a table from a group", {
 
   # Create two different `gt_tbl` table objects
   gt_tbl_1 <- gt(exibble)
@@ -66,7 +66,6 @@ test_that("The `gt_pull()` function can be used extact a table from a group", {
   gt_tbl_2_pulled <- grp_pull(gt_tbls_1, which = 2)
   expect_equal(gt_tbl_2, gt_tbl_2_pulled)
 
-
   # Create another `gt_group` object with `gt_group()`
   gt_tbls_2 <- gt_group(gt_tbl_1, gt_tbl_2, .use_grp_opts = TRUE)
 
@@ -89,4 +88,140 @@ test_that("The `gt_pull()` function can be used extact a table from a group", {
   gt_tbl_2_pulled_2 <- grp_pull(gt_tbls_2, which = 2)
   expect_equal(gt_tbl_2_pulled_2[["_options"]][["value"]][[1]], "lightgreen")
   expect_equal(gt_tbl_2[["_options"]][["value"]][[7]], "#FFFFFF")
+})
+
+test_that("The `gt_add()` function can be used to add a table to a group", {
+
+  # Create three different `gt_tbl` table objects
+  gt_tbl_1 <- gt(exibble)
+  gt_tbl_2 <- gt(gtcars)
+  gt_tbl_3 <- gt(towny)
+  gt_tbl_4 <- gt(metro)
+
+  # Create an empty table group
+  gt_tbls_1 <- gt_group()
+
+  # Verify that the table group has no gt tables
+  expect_equal(nrow(gt_tbls_1[["gt_tbls"]]), 0)
+
+  # Expect that adding nothing via `grp_add()` doesn't error but also
+  # it doesn't change the `gt_tbls_1` object
+  expect_error(regexp = NA, gt_tbls_1 %>% grp_add())
+  expect_equal(gt_tbls_1, gt_tbls_1 %>% grp_add())
+
+  # Add a table to the empty table group; expect that the table group
+  # contains a single gt table
+  gt_tbls_1 <-
+    gt_tbls_1 %>%
+    grp_add(gt_tbl_1)
+
+  expect_equal(nrow(gt_tbls_1[["gt_tbls"]]), 1)
+
+  # Pull the table (based on `exibble`) from the group object and
+  # expect that the table pulled matches the table added to the group
+  gt_tbl_1_pulled <- grp_pull(gt_tbls_1, which = 1)
+  expect_equal(gt_tbl_1, gt_tbl_1_pulled)
+  expect_equal(nrow(gt_tbls_1[["gt_tbls"]]), 1)
+  expect_true(inherits(gt_tbls_1[["gt_tbls"]][["gt_tbl"]][[1]], "gt_tbl"))
+
+  # Add a second table to the table group; expect that the table group now
+  # contains two gt tables
+  gt_tbls_2 <-
+    gt_tbls_1 %>%
+    grp_add(gt_tbl_2)
+
+  expect_equal(nrow(gt_tbls_2[["gt_tbls"]]), 2)
+  expect_true(inherits(gt_tbls_2[["gt_tbls"]][["gt_tbl"]][[1]], "gt_tbl"))
+  expect_true(inherits(gt_tbls_2[["gt_tbls"]][["gt_tbl"]][[2]], "gt_tbl"))
+
+  # Pull both tables (first is based on `exibble`, the second on `gtcars`)
+  # from the group object and expect that second table added was added to the
+  # end of the table series
+  gt_tbl_1_pulled <- grp_pull(gt_tbls_2, which = 1)
+  expect_equal(gt_tbl_1, gt_tbl_1_pulled)
+
+  gt_tbl_2_pulled <- grp_pull(gt_tbls_2, which = 2)
+  expect_equal(gt_tbl_2, gt_tbl_2_pulled)
+
+  # Add a third table to the table group, but use the `.before` argument to
+  # insert it at the beginning; expect that the table group now contains
+  # three gt tables
+  gt_tbls_3 <-
+    gt_tbls_2 %>%
+    grp_add(gt_tbl_3, .before = 1)
+
+  expect_equal(nrow(gt_tbls_3[["gt_tbls"]]), 3)
+  expect_true(inherits(gt_tbls_3[["gt_tbls"]][["gt_tbl"]][[1]], "gt_tbl"))
+  expect_true(inherits(gt_tbls_3[["gt_tbls"]][["gt_tbl"]][[2]], "gt_tbl"))
+  expect_true(inherits(gt_tbls_3[["gt_tbls"]][["gt_tbl"]][[3]], "gt_tbl"))
+
+  # Pull all three tables, this is the expected ordering:
+  # 1. based on `towny` (`gt_tbl_3`)
+  # 2. based on `exibble` (`gt_tbl_1`)
+  # 3. based on `gtcars` (`gt_tbl_2`)
+
+  gt_tbl_1_pulled <- grp_pull(gt_tbls_3, which = 1)
+  expect_equal(gt_tbl_3, gt_tbl_1_pulled)
+
+  gt_tbl_2_pulled <- grp_pull(gt_tbls_3, which = 2)
+  expect_equal(gt_tbl_1, gt_tbl_2_pulled)
+
+  gt_tbl_3_pulled <- grp_pull(gt_tbls_3, which = 3)
+  expect_equal(gt_tbl_2, gt_tbl_3_pulled)
+
+  # Add a fourth table to the table group, but use the `.after` argument to
+  # insert it at second position; expect that the table group now contains
+  # four gt tables
+  gt_tbls_4 <-
+    gt_tbls_3 %>%
+    grp_add(gt_tbl_4, .after = 1)
+
+  expect_equal(nrow(gt_tbls_4[["gt_tbls"]]), 4)
+  expect_true(inherits(gt_tbls_4[["gt_tbls"]][["gt_tbl"]][[1]], "gt_tbl"))
+  expect_true(inherits(gt_tbls_4[["gt_tbls"]][["gt_tbl"]][[2]], "gt_tbl"))
+  expect_true(inherits(gt_tbls_4[["gt_tbls"]][["gt_tbl"]][[3]], "gt_tbl"))
+  expect_true(inherits(gt_tbls_4[["gt_tbls"]][["gt_tbl"]][[4]], "gt_tbl"))
+
+  # Pull all four tables, this is the expected ordering:
+  # 1. based on `towny` (`gt_tbl_3`)
+  # 2. based on `metro` (`gt_tbl_4`)
+  # 3. based on `exibble` (`gt_tbl_1`)
+  # 4. based on `gtcars` (`gt_tbl_2`)
+
+  gt_tbl_1_pulled <- grp_pull(gt_tbls_4, which = 1)
+  expect_equal(gt_tbl_3, gt_tbl_1_pulled)
+
+  gt_tbl_2_pulled <- grp_pull(gt_tbls_4, which = 2)
+  expect_equal(gt_tbl_4, gt_tbl_2_pulled)
+
+  gt_tbl_3_pulled <- grp_pull(gt_tbls_4, which = 3)
+  expect_equal(gt_tbl_1, gt_tbl_3_pulled)
+
+  gt_tbl_4_pulled <- grp_pull(gt_tbls_4, which = 4)
+  expect_equal(gt_tbl_2, gt_tbl_4_pulled)
+
+  # Expect the `grp_add()` to stop if both the `.before`
+  # and `.after` arguments contain an index
+  expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 2, .before = 3))
+
+  # Expect the `grp_add()` to stop if either the `.before`
+  # or `.after` values are not valid indices
+  expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 0))
+  expect_error(regexp = NA, gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 1))
+  expect_error(regexp = NA, gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 2))
+  expect_error(regexp = NA, gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 3))
+  expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 4))
+  expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = -1))
+
+  expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 0))
+  expect_error(regexp = NA, gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 1))
+  expect_error(regexp = NA, gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 2))
+  expect_error(regexp = NA, gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 3))
+  expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 4))
+  expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = -1))
+
+  # Expect the `grp_add()` to stop if either the `.before`
+  # or `.after` values are not integer-like
+  expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 2.01))
+  expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 2.99))
 })
