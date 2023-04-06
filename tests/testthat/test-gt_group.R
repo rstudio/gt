@@ -41,3 +41,52 @@ test_that("The `gt_group()` function can be used to contain gt tables", {
   expect_s3_class(gt_tbls_1[["gt_tbls"]], "tbl_df")
   expect_s3_class(gt_tbls_1[["gt_tbl_options"]], "tbl_df")
 })
+
+test_that("The `gt_pull()` function can be used extact a table from a group", {
+
+  # Create two different `gt_tbl` table objects
+  gt_tbl_1 <- gt(exibble)
+  gt_tbl_2 <- gt(gtcars)
+
+  # Create a `gt_group` object with `gt_group()`
+  gt_tbls_1 <- gt_group(gt_tbl_1, gt_tbl_2)
+
+  # Expect that the `gt_tbls` object produced by `gt_group()`
+  # has the 'gt_group' class
+  expect_s3_class(gt_tbls_1, "gt_group")
+  expect_type(gt_tbls_1, "list")
+
+  # Pull the first table (based on `exibble`) from the group object
+  # expect that the table pulled matches the first table added to the group
+  gt_tbl_1_pulled <- grp_pull(gt_tbls_1, which = 1)
+  expect_equal(gt_tbl_1, gt_tbl_1_pulled)
+
+  # Pull the second table (based on `gtcars`) from the group object
+  # expect that the table pulled matches the second table added to the group
+  gt_tbl_2_pulled <- grp_pull(gt_tbls_1, which = 2)
+  expect_equal(gt_tbl_2, gt_tbl_2_pulled)
+
+
+  # Create another `gt_group` object with `gt_group()`
+  gt_tbls_2 <- gt_group(gt_tbl_1, gt_tbl_2, .use_grp_opts = TRUE)
+
+  # Set some group options on the entire grouping of tables
+  gt_tbls_2 <-
+    gt_tbls_2 %>%
+    grp_options(table.background.color = "lightgreen")
+
+  # Pull the first table (based on `exibble`) from the group object and
+  # expect that the table pulled has a background color of `"lightgreen"`;
+  # this mirrors the `grp_options()` setting
+  # Note that this value is the first in the `_options` table because any
+  # modified (non-default) options are placed at the top of that table
+  gt_tbl_1_pulled_2 <- grp_pull(gt_tbls_2, which = 1)
+  expect_equal(gt_tbl_1_pulled_2[["_options"]][["value"]][[1]], "lightgreen")
+  expect_equal(gt_tbl_1[["_options"]][["value"]][[7]], "#FFFFFF")
+
+  # Pull the second table (based on `gtcars`) from the group object and
+  # expect that the table pulled has the same background color
+  gt_tbl_2_pulled_2 <- grp_pull(gt_tbls_2, which = 2)
+  expect_equal(gt_tbl_2_pulled_2[["_options"]][["value"]][[1]], "lightgreen")
+  expect_equal(gt_tbl_2[["_options"]][["value"]][[7]], "#FFFFFF")
+})
