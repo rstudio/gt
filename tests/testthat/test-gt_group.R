@@ -228,7 +228,7 @@ test_that("The `grp_add()` function can be used to add a table to a group", {
 
 test_that("The `grp_replace()` function can be used to add a table to a group", {
 
-  # Create three different `gt_tbl` table objects
+  # Create four different `gt_tbl` table objects
   gt_tbl_1 <- gt(exibble)
   gt_tbl_2 <- gt(gtcars)
   gt_tbl_3 <- gt(towny)
@@ -315,4 +315,109 @@ test_that("The `grp_replace()` function can be used to add a table to a group", 
   expect_error(gt_tbls_5 %>% grp_replace(gt_tbl_3, .which = 2:3))
   expect_error(gt_tbls_5 %>% grp_replace(gt_tbl_1, gt_tbl_2, .which = 1))
   expect_error(gt_tbls_5 %>% grp_replace(gt_tbl_1, gt_tbl_1, .which = 1:3))
+})
+
+test_that("The `grp_rm()` function can be used to remove a table from a group", {
+
+  # Create three different `gt_tbl` table objects
+  gt_tbl_1 <- gt(exibble)
+  gt_tbl_2 <- gt(gtcars)
+  gt_tbl_3 <- gt(towny)
+
+  # Create a table group with all these tables within it
+  gt_tbls_1 <- gt_group(gt_tbl_1, gt_tbl_2, gt_tbl_3)
+
+  # Expect that the three tables are in the expected order
+  gt_tbl_1_pulled <- grp_pull(gt_tbls_1, which = 1)
+  expect_equal(gt_tbl_1, gt_tbl_1_pulled)
+
+  gt_tbl_2_pulled <- grp_pull(gt_tbls_1, which = 2)
+  expect_equal(gt_tbl_2, gt_tbl_2_pulled)
+
+  gt_tbl_3_pulled <- grp_pull(gt_tbls_1, which = 3)
+  expect_equal(gt_tbl_3, gt_tbl_3_pulled)
+
+  # Remove the second table from the group with `grp_rm()`; expect that the
+  # table group now contains two gt tables
+  gt_tbls_2 <-
+    gt_tbls_1 %>%
+    grp_rm(which = 2)
+
+  expect_equal(nrow(gt_tbls_2[["gt_tbls"]]), 2)
+
+  # Expect that the indices have been reset (these are in the `i` column
+  # of the `gt_tbls` list component)
+  expect_equal(gt_tbls_2$gt_tbls$i, 1:2)
+
+  # Expect that the two tables left are the previous first and last tables
+  gt_tbl_1_pulled <- grp_pull(gt_tbls_2, which = 1)
+  expect_equal(gt_tbl_1, gt_tbl_1_pulled)
+
+  gt_tbl_2_pulled <- grp_pull(gt_tbls_2, which = 2)
+  expect_equal(gt_tbl_3, gt_tbl_2_pulled)
+
+  # Remove the first table from the group with `grp_rm()`; expect that the
+  # table group now contains a single gt table
+  gt_tbls_3 <-
+    gt_tbls_2 %>%
+    grp_rm(which = 1)
+
+  expect_equal(nrow(gt_tbls_3[["gt_tbls"]]), 1)
+
+  # Expect that the indices have been reset (these are in the `i` column
+  # of the `gt_tbls` list component)
+  expect_equal(gt_tbls_3$gt_tbls$i, 1)
+
+  # Expect that the remaining table is the previous last table
+  gt_tbl_1_pulled <- grp_pull(gt_tbls_3, which = 1)
+  expect_equal(gt_tbl_3, gt_tbl_1_pulled)
+})
+
+test_that("The `grp_options()` function can be used to set options for a group", {
+
+  # Create two different `gt_tbl` table objects
+  gt_tbl_1 <- gt(exibble)
+  gt_tbl_2 <- gt(gtcars[1:8, ])
+
+  # Create a `gt_group` object with `gt_group()`; ensure that this group
+  # utilizes the options
+  gt_tbls_1 <- gt_group(gt_tbl_1, gt_tbl_2, .use_grp_opts = TRUE)
+
+  # Set several group options that apply to the tables
+  gt_tbls_2 <-
+    gt_tbls_1 %>%
+    grp_options(
+      table.width = px(1100),
+      table.background.color = "gray95", table.font.color = "gray10"
+    )
+
+  # Pull out the individual tables
+  gt_tbl_1_alt <- gt_tbls_2 %>% grp_pull(which = 1)
+  gt_tbl_2_alt <- gt_tbls_2 %>% grp_pull(which = 2)
+
+  # Expect the default text and background colors for the input gt tables
+  expect_true(
+    gt_tbl_1 %>%
+      as_raw_html() %>%
+      grepl("<table .* color: #333333;.*?bgcolor=\"#FFFFFF\">", .)
+  )
+  expect_true(
+    gt_tbl_2 %>%
+      as_raw_html() %>%
+      grepl("<table .* color: #333333;.*?bgcolor=\"#FFFFFF\">", .)
+  )
+
+  # Expect the changed text and background colors for the input gt tables
+  # that were pulled from the group that had group options applied (and
+  # activated via `.use_grp_opts = TRUE`)
+  expect_true(
+    gt_tbl_1_alt %>%
+      as_raw_html() %>%
+      grepl("<table .* color: #1A1A1A;.*?bgcolor=\"#F2F2F2\">", .)
+  )
+  expect_true(
+    gt_tbl_2_alt %>%
+      as_raw_html() %>%
+      grepl("<table .* color: #1A1A1A;.*?bgcolor=\"#F2F2F2\">", .)
+  )
 })
