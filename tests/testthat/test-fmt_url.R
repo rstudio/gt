@@ -6,7 +6,8 @@ test_that("The `fmt_url()` function works correctly", {
       a = c(
         "http://www.example.com",
         "https://developer.mozilla.org/en-US/docs/Learn/",
-        "https://developer.mozilla.org/en-US/search?q=URL"
+        "https://developer.mozilla.org/en-US/search?q=URL",
+        NA
       ),
       stringsAsFactors = FALSE
     )
@@ -32,7 +33,8 @@ test_that("The `fmt_url()` function works correctly", {
     c(
       "<a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">http://www.example.com</a>",
       "<a href=\"https://developer.mozilla.org/en-US/docs/Learn/\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">https://developer.mozilla.org/en-US/docs/Learn/</a>",
-      "<a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">https://developer.mozilla.org/en-US/search?q=URL</a>"
+      "<a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">https://developer.mozilla.org/en-US/search?q=URL</a>",
+      "NA"
     )
   )
   expect_equal(
@@ -42,7 +44,8 @@ test_that("The `fmt_url()` function works correctly", {
     c(
       "<a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">static label</a>",
       "<a href=\"https://developer.mozilla.org/en-US/docs/Learn/\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">static label</a>",
-      "<a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">static label</a>"
+      "<a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">static label</a>",
+      "NA"
     )
   )
   expect_equal(
@@ -52,7 +55,8 @@ test_that("The `fmt_url()` function works correctly", {
     c(
       "<a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#FFFFFF;text-decoration:none;display: inline-block;background-color: #4682B4;padding: 8px 12px;outline-style: solid; outline-color: auto; outline-width: 2px;\">http://www.example.com</a>",
       "<a href=\"https://developer.mozilla.org/en-US/docs/Learn/\" target=\"_blank\" style=\"color:#FFFFFF;text-decoration:none;display: inline-block;background-color: #4682B4;padding: 8px 12px;outline-style: solid; outline-color: auto; outline-width: 2px;\">https://developer.mozilla.org/en-US/docs/Learn/</a>",
-      "<a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#FFFFFF;text-decoration:none;display: inline-block;background-color: #4682B4;padding: 8px 12px;outline-style: solid; outline-color: auto; outline-width: 2px;\">https://developer.mozilla.org/en-US/search?q=URL</a>"
+      "<a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#FFFFFF;text-decoration:none;display: inline-block;background-color: #4682B4;padding: 8px 12px;outline-style: solid; outline-color: auto; outline-width: 2px;\">https://developer.mozilla.org/en-US/search?q=URL</a>",
+      "NA"
     )
   )
   expect_equal(
@@ -62,7 +66,8 @@ test_that("The `fmt_url()` function works correctly", {
     c(
       "<a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#228B22;text-decoration:underline;text-underline-position: under;display: inline-block;\">http://www.example.com</a>",
       "<a href=\"https://developer.mozilla.org/en-US/docs/Learn/\" target=\"_blank\" style=\"color:#228B22;text-decoration:underline;text-underline-position: under;display: inline-block;\">https://developer.mozilla.org/en-US/docs/Learn/</a>",
-      "<a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#228B22;text-decoration:underline;text-underline-position: under;display: inline-block;\">https://developer.mozilla.org/en-US/search?q=URL</a>"
+      "<a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#228B22;text-decoration:underline;text-underline-position: under;display: inline-block;\">https://developer.mozilla.org/en-US/search?q=URL</a>",
+      "NA"
     )
   )
   expect_equal(
@@ -72,7 +77,8 @@ test_that("The `fmt_url()` function works correctly", {
     c(
       "<a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#008B8B;text-decoration:none;display: inline-block;\">http://www.example.com</a>",
       "<a href=\"https://developer.mozilla.org/en-US/docs/Learn/\" target=\"_blank\" style=\"color:#008B8B;text-decoration:none;display: inline-block;\">https://developer.mozilla.org/en-US/docs/Learn/</a>",
-      "<a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#008B8B;text-decoration:none;display: inline-block;\">https://developer.mozilla.org/en-US/search?q=URL</a>"
+      "<a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#008B8B;text-decoration:none;display: inline-block;\">https://developer.mozilla.org/en-US/search?q=URL</a>",
+      "NA"
     )
   )
   expect_equal(
@@ -82,7 +88,8 @@ test_that("The `fmt_url()` function works correctly", {
     c(
       "<a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#FFFFFF;text-decoration:underline;text-underline-position: under;display: inline-block;background-color: #4682B4;padding: 8px 12px;outline-style: solid; outline-color: auto; outline-width: 2px;\">http://www.example.com</a>",
       "<a href=\"https://developer.mozilla.org/en-US/docs/Learn/\" target=\"_blank\" style=\"color:#FFFFFF;text-decoration:underline;text-underline-position: under;display: inline-block;background-color: #4682B4;padding: 8px 12px;outline-style: solid; outline-color: auto; outline-width: 2px;\">https://developer.mozilla.org/en-US/docs/Learn/</a>",
-      "<a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#FFFFFF;text-decoration:underline;text-underline-position: under;display: inline-block;background-color: #4682B4;padding: 8px 12px;outline-style: solid; outline-color: auto; outline-width: 2px;\">https://developer.mozilla.org/en-US/search?q=URL</a>"
+      "<a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#FFFFFF;text-decoration:underline;text-underline-position: under;display: inline-block;background-color: #4682B4;padding: 8px 12px;outline-style: solid; outline-color: auto; outline-width: 2px;\">https://developer.mozilla.org/en-US/search?q=URL</a>",
+      "NA"
     )
   )
   expect_equal(
@@ -92,7 +99,8 @@ test_that("The `fmt_url()` function works correctly", {
     c(
       "<a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#FFFFFF;text-decoration:none;display: inline-block;background-color: #FF0000;padding: 8px 12px;outline-style: none; outline-color: #DFDFDF; outline-width: 2px;\">http://www.example.com</a>",
       "<a href=\"https://developer.mozilla.org/en-US/docs/Learn/\" target=\"_blank\" style=\"color:#FFFFFF;text-decoration:none;display: inline-block;background-color: #FF0000;padding: 8px 12px;outline-style: none; outline-color: #DFDFDF; outline-width: 2px;\">https://developer.mozilla.org/en-US/docs/Learn/</a>",
-      "<a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#FFFFFF;text-decoration:none;display: inline-block;background-color: #FF0000;padding: 8px 12px;outline-style: none; outline-color: #DFDFDF; outline-width: 2px;\">https://developer.mozilla.org/en-US/search?q=URL</a>"
+      "<a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#FFFFFF;text-decoration:none;display: inline-block;background-color: #FF0000;padding: 8px 12px;outline-style: none; outline-color: #DFDFDF; outline-width: 2px;\">https://developer.mozilla.org/en-US/search?q=URL</a>",
+      "NA"
     )
   )
   expect_equal(
@@ -102,7 +110,8 @@ test_that("The `fmt_url()` function works correctly", {
     c(
       "<a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: red;padding: 8px 12px;outline-style: solid; outline-color: auto; outline-width: 2px;\">http://www.example.com</a>",
       "<a href=\"https://developer.mozilla.org/en-US/docs/Learn/\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: red;padding: 8px 12px;outline-style: solid; outline-color: auto; outline-width: 2px;\">https://developer.mozilla.org/en-US/docs/Learn/</a>",
-      "<a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: red;padding: 8px 12px;outline-style: solid; outline-color: auto; outline-width: 2px;\">https://developer.mozilla.org/en-US/search?q=URL</a>"
+      "<a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: red;padding: 8px 12px;outline-style: solid; outline-color: auto; outline-width: 2px;\">https://developer.mozilla.org/en-US/search?q=URL</a>",
+      "NA"
     )
   )
   expect_equal(
@@ -112,7 +121,8 @@ test_that("The `fmt_url()` function works correctly", {
     c(
       "<a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: red;padding: 8px 12px;width: 500px; text-align: center;outline-style: solid; outline-color: auto; outline-width: 2px;\">http://www.example.com</a>",
       "<a href=\"https://developer.mozilla.org/en-US/docs/Learn/\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: red;padding: 8px 12px;width: 500px; text-align: center;outline-style: solid; outline-color: auto; outline-width: 2px;\">https://developer.mozilla.org/en-US/docs/Learn/</a>",
-      "<a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: red;padding: 8px 12px;width: 500px; text-align: center;outline-style: solid; outline-color: auto; outline-width: 2px;\">https://developer.mozilla.org/en-US/search?q=URL</a>"
+      "<a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: red;padding: 8px 12px;width: 500px; text-align: center;outline-style: solid; outline-color: auto; outline-width: 2px;\">https://developer.mozilla.org/en-US/search?q=URL</a>",
+      "NA"
     )
   )
   expect_equal(
@@ -122,7 +132,63 @@ test_that("The `fmt_url()` function works correctly", {
     c(
       "<a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: red;padding: 8px 12px;width: 80%; text-align: center;outline-style: solid; outline-color: auto; outline-width: 2px;\">http://www.example.com</a>",
       "<a href=\"https://developer.mozilla.org/en-US/docs/Learn/\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: red;padding: 8px 12px;width: 80%; text-align: center;outline-style: solid; outline-color: auto; outline-width: 2px;\">https://developer.mozilla.org/en-US/docs/Learn/</a>",
-      "<a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: red;padding: 8px 12px;width: 80%; text-align: center;outline-style: solid; outline-color: auto; outline-width: 2px;\">https://developer.mozilla.org/en-US/search?q=URL</a>"
+      "<a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: red;padding: 8px 12px;width: 80%; text-align: center;outline-style: solid; outline-color: auto; outline-width: 2px;\">https://developer.mozilla.org/en-US/search?q=URL</a>",
+      "NA"
+    )
+  )
+  expect_equal(
+    (tab %>%
+       fmt_url(columns = a, as_button = TRUE, button_fill = "auto", color = "black") %>%
+       render_formats_test(context = "html"))[["a"]],
+    c(
+      "<a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: #ADD8E6;padding: 8px 12px;outline-style: none; outline-color: #BEBEBE; outline-width: 2px;\">http://www.example.com</a>",
+      "<a href=\"https://developer.mozilla.org/en-US/docs/Learn/\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: #ADD8E6;padding: 8px 12px;outline-style: none; outline-color: #BEBEBE; outline-width: 2px;\">https://developer.mozilla.org/en-US/docs/Learn/</a>",
+      "<a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: #ADD8E6;padding: 8px 12px;outline-style: none; outline-color: #BEBEBE; outline-width: 2px;\">https://developer.mozilla.org/en-US/search?q=URL</a>",
+      "NA"
+    )
+  )
+  expect_equal(
+    (tab %>%
+       fmt_url(columns = a, as_button = TRUE, button_fill = "auto", color = "#FFFADF") %>%
+       render_formats_test(context = "html"))[["a"]],
+    c(
+      "<a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#FFFADF;text-decoration:none;display: inline-block;background-color: #00008B;padding: 8px 12px;outline-style: none; outline-color: #BEBEBE; outline-width: 2px;\">http://www.example.com</a>",
+      "<a href=\"https://developer.mozilla.org/en-US/docs/Learn/\" target=\"_blank\" style=\"color:#FFFADF;text-decoration:none;display: inline-block;background-color: #00008B;padding: 8px 12px;outline-style: none; outline-color: #BEBEBE; outline-width: 2px;\">https://developer.mozilla.org/en-US/docs/Learn/</a>",
+      "<a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#FFFADF;text-decoration:none;display: inline-block;background-color: #00008B;padding: 8px 12px;outline-style: none; outline-color: #BEBEBE; outline-width: 2px;\">https://developer.mozilla.org/en-US/search?q=URL</a>",
+      "NA"
+    )
+  )
+  expect_equal(
+    (tab %>%
+       fmt_url(columns = a, as_button = TRUE, button_fill = "auto", color = "#FFFADF", button_outline = "pink") %>%
+       render_formats_test(context = "html"))[["a"]],
+    c(
+      "<a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#FFFADF;text-decoration:none;display: inline-block;background-color: #00008B;padding: 8px 12px;outline-style: solid; outline-color: pink; outline-width: 2px;\">http://www.example.com</a>",
+      "<a href=\"https://developer.mozilla.org/en-US/docs/Learn/\" target=\"_blank\" style=\"color:#FFFADF;text-decoration:none;display: inline-block;background-color: #00008B;padding: 8px 12px;outline-style: solid; outline-color: pink; outline-width: 2px;\">https://developer.mozilla.org/en-US/docs/Learn/</a>",
+      "<a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#FFFADF;text-decoration:none;display: inline-block;background-color: #00008B;padding: 8px 12px;outline-style: solid; outline-color: pink; outline-width: 2px;\">https://developer.mozilla.org/en-US/search?q=URL</a>",
+      "NA"
+    )
+  )
+  expect_equal(
+    (tab %>%
+       fmt_url(columns = a, as_button = TRUE, button_fill = "#FFFFFF", button_outline = "auto") %>%
+       render_formats_test(context = "html"))[["a"]],
+    c(
+      "<a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: #FFFFFF;padding: 8px 12px;outline-style: solid; outline-color: #DFDFDF; outline-width: 2px;\">http://www.example.com</a>",
+      "<a href=\"https://developer.mozilla.org/en-US/docs/Learn/\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: #FFFFFF;padding: 8px 12px;outline-style: solid; outline-color: #DFDFDF; outline-width: 2px;\">https://developer.mozilla.org/en-US/docs/Learn/</a>",
+      "<a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: #FFFFFF;padding: 8px 12px;outline-style: solid; outline-color: #DFDFDF; outline-width: 2px;\">https://developer.mozilla.org/en-US/search?q=URL</a>",
+      "NA"
+    )
+  )
+  expect_equal(
+    (tab %>%
+       fmt_url(columns = a, as_button = TRUE, button_fill = "#FAD5EF", button_outline = "auto") %>%
+       render_formats_test(context = "html"))[["a"]],
+    c(
+      "<a href=\"http://www.example.com\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: #FAD5EF;padding: 8px 12px;outline-style: none; outline-color: #DFDFDF; outline-width: 2px;\">http://www.example.com</a>",
+      "<a href=\"https://developer.mozilla.org/en-US/docs/Learn/\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: #FAD5EF;padding: 8px 12px;outline-style: none; outline-color: #DFDFDF; outline-width: 2px;\">https://developer.mozilla.org/en-US/docs/Learn/</a>",
+      "<a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: #FAD5EF;padding: 8px 12px;outline-style: none; outline-color: #DFDFDF; outline-width: 2px;\">https://developer.mozilla.org/en-US/search?q=URL</a>",
+      "NA"
     )
   )
 
