@@ -5679,3 +5679,372 @@ test_that("The `vec_fmt_time()` function works", {
       )
     )
 })
+
+test_that("The `vec_fmt_datetime()` function works", {
+
+  vec_fmt_datetime(
+    datetimes,
+    date_style = 2,
+    time_style = 1,
+    output = "html"
+  ) %>%
+    expect_equal(
+      c(
+        "Sunday, January 5, 2020 15:35:00",
+        "Saturday, February 6, 2021 16:36:01",
+        "Monday, March 7, 2022 17:37:02",
+        "Saturday, April 8, 2023 18:38:03",
+        "Thursday, May 9, 2024 19:39:04"
+      )
+    )
+  vec_fmt_datetime(
+    datetimes,
+    date_style = "wday_month_day_year",
+    time_style = "iso",
+    output = "html"
+  ) %>%
+    expect_equal(
+      c(
+        "Sunday, January 5, 2020 15:35:00",
+        "Saturday, February 6, 2021 16:36:01",
+        "Monday, March 7, 2022 17:37:02",
+        "Saturday, April 8, 2023 18:38:03",
+        "Thursday, May 9, 2024 19:39:04"
+      )
+    )
+  expect_equal(
+    vec_fmt_datetime(
+      datetimes,
+      date_style = "wday_month_day_year",
+      time_style = "iso",
+      output = "html"
+    ),
+    vec_fmt_datetime(
+      datetimes,
+      date_style = "wday_month_day_year",
+      time_style = "iso",
+      output = "latex"
+    )
+  )
+  expect_equal(
+    vec_fmt_datetime(
+      datetimes,
+      date_style = "wday_month_day_year",
+      time_style = "iso",
+      output = "html"
+    ),
+    vec_fmt_datetime(
+      datetimes,
+      date_style = "wday_month_day_year",
+      time_style = "iso",
+      output = "rtf"
+    )
+  )
+  expect_equal(
+    vec_fmt_datetime(
+      datetimes,
+      date_style = "wday_month_day_year",
+      time_style = "iso",
+      output = "html"
+    ),
+    vec_fmt_datetime(
+      datetimes,
+      date_style = "wday_month_day_year",
+      time_style = "iso",
+      output = "plain"
+    )
+  )
+
+  vec_fmt_datetime(
+    datetimes,
+    date_style = "yMMMEd",
+    time_style = "Hms",
+    output = "html"
+  ) %>%
+    expect_equal(
+      c(
+        "Sun, Jan 5, 2020 15:35:00",
+        "Sat, Feb 6, 2021 16:36:01",
+        "Mon, Mar 7, 2022 17:37:02",
+        "Sat, Apr 8, 2023 18:38:03",
+        "Thu, May 9, 2024 19:39:04"
+      )
+    )
+
+  vec_fmt_datetime(
+    datetimes,
+    date_style = "yMMMEd",
+    time_style = "Hms",
+    locale = "fr",
+    output = "html"
+  ) %>%
+    expect_equal(
+      c(
+        "dim. 5 janv. 2020 15:35:00",
+        "sam. 6 févr. 2021 16:36:01",
+        "lun. 7 mars 2022 17:37:02",
+        "sam. 8 avr. 2023 18:38:03",
+        "jeu. 9 mai 2024 19:39:04"
+      )
+    )
+
+  vec_fmt_datetime(
+    datetimes,
+    date_style = 3,
+    time_style = 3,
+    sep = " / ",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Sun, Jan 5, 2020 / 3:35:00 PM", "Sat, Feb 6, 2021 / 4:36:01 PM",
+        "Mon, Mar 7, 2022 / 5:37:02 PM", "Sat, Apr 8, 2023 / 6:38:03 PM",
+        "Thu, May 9, 2024 / 7:39:04 PM"
+      )
+    )
+
+  vec_fmt_datetime(
+    datetimes,
+    format = "EEEE, MMMM d, y, h:mm a",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Sunday, January 5, 2020, 3:35 PM",
+        "Saturday, February 6, 2021, 4:36 PM",
+        "Monday, March 7, 2022, 5:37 PM",
+        "Saturday, April 8, 2023, 6:38 PM",
+        "Thursday, May 9, 2024, 7:39 PM"
+      )
+    )
+
+  vec_fmt_datetime(
+    datetimes,
+    format = "EEEE, MMMM d, y, h:mm a",
+    pattern = "[ {x} ]",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "[ Sunday, January 5, 2020, 3:35 PM ]",
+        "[ Saturday, February 6, 2021, 4:36 PM ]",
+        "[ Monday, March 7, 2022, 5:37 PM ]",
+        "[ Saturday, April 8, 2023, 6:38 PM ]",
+        "[ Thursday, May 9, 2024, 7:39 PM ]"
+      )
+    )
+
+  vec_fmt_datetime(
+    datetimes,
+    format = "EEEE, MMMM d, y, h:mm a",
+    locale = "fr",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "dimanche, janvier 5, 2020, 3:35 PM",
+        "samedi, février 6, 2021, 4:36 PM",
+        "lundi, mars 7, 2022, 5:37 PM",
+        "samedi, avril 8, 2023, 6:38 PM",
+        "jeudi, mai 9, 2024, 7:39 PM"
+      )
+    )
+
+  # Create a short vector with string-based datetime values
+  str_vals <- c("2022-06-13 18:36", "2019-01-25 01:08", NA)
+
+  vec_fmt_datetime(
+    str_vals,
+    format = "EEEE, MMMM d, y, h:mm a",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Monday, June 13, 2022, 6:36 PM",
+        "Friday, January 25, 2019, 1:08 AM",
+        NA
+      )
+    )
+
+  vec_fmt_datetime(
+    str_vals,
+    format = "EEEE, MMMM d, y, h:mm a",
+    tz = "America/Toronto",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Monday, June 13, 2022, 6:36 PM",
+        "Friday, January 25, 2019, 1:08 AM",
+        NA
+      )
+    )
+
+  vec_fmt_datetime(
+    str_vals,
+    format = "EEEE, MMMM d, y, h:mm a (ZZZ)",
+    tz = "America/Toronto",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Monday, June 13, 2022, 6:36 PM (-0400)",
+        "Friday, January 25, 2019, 1:08 AM (-0500)",
+        NA
+      )
+    )
+
+  vec_fmt_datetime(
+    str_vals,
+    format = "EEEE, MMMM d, y, h:mm a (V)",
+    tz = "America/Toronto",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Monday, June 13, 2022, 6:36 PM (cator)",
+        "Friday, January 25, 2019, 1:08 AM (cator)",
+        NA
+      )
+    )
+
+  vec_fmt_datetime(
+    str_vals,
+    format = "EEEE, MMMM d, y, h:mm a (VV)",
+    tz = "America/Toronto",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Monday, June 13, 2022, 6:36 PM (America/Toronto)",
+        "Friday, January 25, 2019, 1:08 AM (America/Toronto)",
+        NA
+      )
+    )
+
+  vec_fmt_datetime(
+    str_vals,
+    format = "EEEE, MMMM d, y, h:mm a (VVV)",
+    tz = "America/Toronto",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Monday, June 13, 2022, 6:36 PM (Toronto)",
+        "Friday, January 25, 2019, 1:08 AM (Toronto)",
+        NA
+      )
+    )
+
+  vec_fmt_datetime(
+    str_vals,
+    format = "EEEE, MMMM d, y, h:mm a (VVVV)",
+    tz = "America/Toronto",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Monday, June 13, 2022, 6:36 PM (Toronto Time)",
+        "Friday, January 25, 2019, 1:08 AM (Toronto Time)",
+        NA
+      )
+    )
+
+  vec_fmt_datetime(
+    str_vals,
+    format = "EEEE, MMMM d, y, h:mm a (v)",
+    tz = "America/Toronto",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Monday, June 13, 2022, 6:36 PM (ET)",
+        "Friday, January 25, 2019, 1:08 AM (ET)",
+        NA
+      )
+    )
+
+  vec_fmt_datetime(
+    str_vals,
+    format = "EEEE, MMMM d, y, h:mm a (vvvv)",
+    tz = "America/Toronto",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Monday, June 13, 2022, 6:36 PM (Eastern Time)",
+        "Friday, January 25, 2019, 1:08 AM (Eastern Time)",
+        NA
+      )
+    )
+
+  vec_fmt_datetime(
+    str_vals,
+    format = "EEEE, MMMM d, y, h:mm a (O)",
+    tz = "America/Toronto",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Monday, June 13, 2022, 6:36 PM (GMT-4)",
+        "Friday, January 25, 2019, 1:08 AM (GMT-5)",
+        NA
+      )
+    )
+
+  vec_fmt_datetime(
+    str_vals,
+    format = "EEEE, MMMM d, y, h:mm a (OOOO)",
+    tz = "America/Toronto",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Monday, June 13, 2022, 6:36 PM (GMT-04:00)",
+        "Friday, January 25, 2019, 1:08 AM (GMT-05:00)",
+        NA
+      )
+    )
+
+  vec_fmt_datetime(
+    str_vals,
+    format = "EEEE, MMMM d, y, h:mm a (z)",
+    tz = "America/Toronto",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Monday, June 13, 2022, 6:36 PM (EDT)",
+        "Friday, January 25, 2019, 1:08 AM (EST)",
+        NA
+      )
+    )
+
+  vec_fmt_datetime(
+    str_vals,
+    format = "EEEE, MMMM d, y, h:mm a (zzzz)",
+    tz = "America/Toronto",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Monday, June 13, 2022, 6:36 PM (Eastern Daylight Time)",
+        "Friday, January 25, 2019, 1:08 AM (Eastern Standard Time)",
+        NA
+      )
+    )
+
+  vec_fmt_datetime(
+    str_vals,
+    format = "EEEE, MMMM d, y, h:mm a (Z)",
+    tz = "America/Toronto",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Monday, June 13, 2022, 6:36 PM (-0400)",
+        "Friday, January 25, 2019, 1:08 AM (-0500)",
+        NA
+      )
+    )
+})
