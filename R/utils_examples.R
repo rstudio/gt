@@ -170,6 +170,15 @@ write_gt_examples_qmd_files <- function(
       )
   }
 
+  if (!dir.exists(paths = output_dir)) {
+
+    dir.create(path = output_dir, showWarnings = FALSE)
+
+    if (!dir.exists(paths = output_dir)) {
+      stop("The directory `", output_dir, "` could not be created.")
+    }
+  }
+
   for (topic in topics) {
 
     writeLines(
