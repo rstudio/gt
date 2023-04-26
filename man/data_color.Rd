@@ -51,14 +51,15 @@ or \code{"factor"}. The \code{"auto"} method will automatically choose the
 \code{"numeric"} method for numerical input data or the \code{"factor"} method for
 any non-numeric inputs.}
 
-\item{palette}{A vector of color names, the name of an \strong{RColorBrewer}
-palette, the name of a \strong{viridis} palette, or a discrete palette
-accessible from the \strong{paletteer} package using the \verb{<package>::<palette>}
-syntax (e.g., \code{"wesanderson::IsleofDogs1"}). If providing a vector of
-colors as a palette, each color value provided must either be a color name
-(Only R/X11 color names or CSS 3.0 color names) or a hexadecimal string in
-the form of \code{"#RRGGBB"} or \code{"#RRGGBBAA"}. If nothing is provided here, the
-default R color palette is used (i.e., the colors from \code{palette()}).}
+\item{palette}{A vector of color names, a color class that can be cast to a
+vector of color names, the name of an \strong{RColorBrewer} palette, the name of
+a \strong{viridis} palette, or a discrete palette accessible from the
+\strong{paletteer} package using the \verb{<package>::<palette>} syntax (e.g.,
+\code{"wesanderson::IsleofDogs1"}). If providing a vector of colors as a
+palette, each color value provided must either be a color name (Only R/X11
+color names or CSS 3.0 color names) or a hexadecimal string in the form of
+\code{"#RRGGBB"} or \code{"#RRGGBBAA"}. If nothing is provided here, the default R
+color palette is used (i.e., the colors from \code{palette()}).}
 
 \item{domain}{The possible values that can be mapped. For the \code{"numeric"} and
 \code{"bin"} methods, this can be a numeric range specified with a length of two
