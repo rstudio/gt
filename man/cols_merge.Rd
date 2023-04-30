@@ -48,14 +48,14 @@ An object of class \code{gt_tbl}.
 }
 \description{
 This function takes input from two or more columns and allows the contents to
-be merged them into a single column, using a pattern that specifies the
+be merged into a single column by using a pattern that specifies the
 arrangement. We can specify which columns to merge together in the \code{columns}
-argument. The string-combining pattern is given in the \code{pattern} argument.
-The first column in the \code{columns} series operates as the target column (i.e.,
-will undergo mutation) whereas all following \code{columns} will be untouched.
-There is the option to hide the non-target columns (i.e., second and
-subsequent columns given in \code{columns}). The formatting of values in different
-columns will be preserved upon merging.
+argument. The string-combining pattern is to be provided in the \code{pattern}
+argument. The first column in the \code{columns} series operates as the target
+column (i.e., the column that will undergo mutation) whereas all following
+\code{columns} will be untouched. There is the option to hide the non-target
+columns (i.e., second and subsequent columns given in \code{columns}). The
+formatting of values in different columns will be preserved upon merging.
 }
 \section{How the \code{pattern} works}{
 
