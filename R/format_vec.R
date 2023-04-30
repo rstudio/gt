@@ -473,11 +473,11 @@ vec_fmt_integer <- function(
 #' #> [1] "3,24 × 10^-4" "8,65" "1,36 × 10^6" "-5,90 × 10^4" "NA"
 #' ```
 #'
-#' Should you need to have positive and negative signs on each of the output
-#' values, use `force_sign = TRUE`:
+#' Should you need to have positive and negative signs for the mantissa
+#' component of a given value, use `force_sign_m = TRUE`:
 #'
 #' ```r
-#' vec_fmt_scientific(num_vals, force_sign = TRUE)
+#' vec_fmt_scientific(num_vals, force_sign_m = TRUE)
 #' ```
 #' ```
 #' #> [1] "+3.24 × 10^-4" "+8.65" "+1.36 × 10^6" "-5.90 × 10^4" "NA"
@@ -635,11 +635,11 @@ vec_fmt_scientific <- function(
 #' #> [1] "324,00 × 10^-6" "8,65" "1,36 × 10^6" "-59,03 × 10^3" "NA"
 #' ```
 #'
-#' Should you need to have positive and negative signs on each of the output
-#' values, use `force_sign = TRUE`:
+#' Should you need to have positive and negative signs for the mantissa
+#' component of a given value, use `force_sign_m = TRUE`:
 #'
 #' ```r
-#' vec_fmt_engineering(num_vals, force_sign = TRUE)
+#' vec_fmt_engineering(num_vals, force_sign_m = TRUE)
 #' ```
 #' ```
 #' #> [1] "+324.00 × 10^-6" "+8.65" "+1.36 × 10^6" "-59.03 × 10^3" "NA"
