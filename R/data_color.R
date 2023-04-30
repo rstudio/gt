@@ -318,8 +318,8 @@
 #' of every column with the default palette in R (accessed through `palette()`).
 #' The default method for applying color is `"auto"`, where numeric values will
 #' use the `"numeric"` method and character or factor values will use the
-#' `"factor"` method. The text color will be undergo modification automatically
-#' to maximize contrast (since `autocolor_text` is `TRUE` by default).
+#' `"factor"` method. The text color undergoes an automatic modification that
+#' maximizes contrast (since `autocolor_text` is `TRUE` by default).
 #'
 #' You can use any of the available `method` keywords and **gt** will only apply
 #' color to the compatible values. Let's use the `"numeric"` method and supply
