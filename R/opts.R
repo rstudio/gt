@@ -1338,9 +1338,11 @@ opt_table_outline <- function(
 #' `r man_get_image_tag(file = "man_opt_table_font_1.png")`
 #' }}
 #'
-#' Use [`sza`] to create an eleven-row table. Within `opt_table_font()`, set up
-#' a preferred list of sans-serif fonts that are commonly available in macOS
-#' (using part of the [default_fonts()] vector as a fallback).
+#' Use the [`sza`] dataset to create an eleven-row table, two-column table.
+#' Within `opt_table_font()`, use the `stack` argument to define the use of the
+#' `"rounded-sans"` font stack. This sets up a family of fonts with rounded,
+#' curved letterforms that should be locally available in different computing
+#' environments.
 #'
 #' ```r
 #' sza |>
