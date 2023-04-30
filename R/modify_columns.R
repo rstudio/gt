@@ -1582,14 +1582,14 @@ cols_unhide <- function(
 #' @description
 #'
 #' This function takes input from two or more columns and allows the contents to
-#' be merged them into a single column, using a pattern that specifies the
+#' be merged into a single column by using a pattern that specifies the
 #' arrangement. We can specify which columns to merge together in the `columns`
-#' argument. The string-combining pattern is given in the `pattern` argument.
-#' The first column in the `columns` series operates as the target column (i.e.,
-#' will undergo mutation) whereas all following `columns` will be untouched.
-#' There is the option to hide the non-target columns (i.e., second and
-#' subsequent columns given in `columns`). The formatting of values in different
-#' columns will be preserved upon merging.
+#' argument. The string-combining pattern is to be provided in the `pattern`
+#' argument. The first column in the `columns` series operates as the target
+#' column (i.e., the column that will undergo mutation) whereas all following
+#' `columns` will be untouched. There is the option to hide the non-target
+#' columns (i.e., second and subsequent columns given in `columns`). The
+#' formatting of values in different columns will be preserved upon merging.
 #'
 #' @inheritParams cols_align
 #' @param columns The columns that will participate in the merging process. The
