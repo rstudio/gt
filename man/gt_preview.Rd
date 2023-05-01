@@ -39,8 +39,9 @@ deactivated by setting \code{incl_rownums} to \code{FALSE}.
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table preview (with only a few of its
-columns). You'll see the first five rows and the last row.
+With three columns from the \code{\link{gtcars}} dataset, let's create a \strong{gt} table
+preview with the \code{gt_preview()} function. You'll get only the first five rows
+and the last row.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
   dplyr::select(mfr, model, year) |>

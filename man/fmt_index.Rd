@@ -115,12 +115,12 @@ more complex predicate expression.
 \section{Examples}{
 
 
-Use the \code{\link{towny}} dataset to create a \strong{gt} table. After some summarizing
-and filtering, the \code{fmt_index()} function is used to transform incremental
-integer values into capitalized letters (in the \code{ranking} column). That
-formatted column of \code{"A"} to \code{"E"} values is merged with the \code{census_div}
-column to create an indexed listing of census subdivisions, here ordered by
-increasing total municipal population.
+Using a summarized version of the \code{\link{towny}} dataset, let's create a \strong{gt}
+table. Here, the \code{fmt_index()} function is used to transform incremental
+integer values into capitalized letters (in the \code{ranking} column). With
+\code{\link[=cols_merge]{cols_merge()}} that formatted column of \code{"A"} to \code{"E"} values is merged with
+the \code{census_div} column to create an indexed listing of census subdivisions,
+here ordered by increasing total municipal population.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
   dplyr::select(name, csd_type, census_div, population_2021) |>

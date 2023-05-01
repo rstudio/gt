@@ -41,10 +41,10 @@ instead of explicit ID values.
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. With the \code{\link[=tab_spanner]{tab_spanner()}} function,
-we can group several related columns together under spanner column labels. In
-this example, that is done with several calls of \code{\link[=tab_spanner]{tab_spanner()}} in order to
-create two levels of spanner column labels.
+Use a portion of the \code{\link{gtcars}} dataset to create a \strong{gt} table. With the
+\code{\link[=tab_spanner]{tab_spanner()}} function, we can group several related columns together under
+a spanner column. In this example, that is done with several calls of
+\code{\link[=tab_spanner]{tab_spanner()}} in order to create two levels of spanner column labels.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
   gtcars |>

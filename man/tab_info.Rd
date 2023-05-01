@@ -31,10 +31,12 @@ retrieval of the necessary values.
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. Use the \code{\link[=tab_spanner]{tab_spanner()}} function to
-group two columns together under a spanner column with the ID and label
-\code{"performance"}. Finally, use the \code{tab_info()} function to get a table that
-summarizes the ID values and their label text for all parts of the table.
+Let's use a portion of the \code{\link{gtcars}} dataset to create a \strong{gt} table. We'll
+use the \code{\link[=tab_spanner]{tab_spanner()}} function to group two columns together under a
+spanner column with the ID and label \code{"performance"}. Finally, we can use the
+\code{tab_info()} function in a separate, interactive statement so that we can
+inspect a table that summarizes the ID values any associated label text for
+all parts of the table.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
   gtcars |>

@@ -65,8 +65,11 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \section{Examples}{
 
 
-Use \code{\link{sza}} to create a \strong{gt} table. Color the \code{sza} column using the
-\code{data_color()} function, add a footnote and also style the footnotes section.
+Using a subset of the \code{\link{sza}} dataset, let's create a \strong{gt} table. We'd like
+to color the \code{sza} column so that's done with the \code{\link[=data_color]{data_color()}} function. We
+can add a footnote through the \code{\link[=tab_footnote]{tab_footnote()}} function and we can also
+style the footnotes section. The styling is done through the use of the
+\code{\link[=tab_style]{tab_style()}} function and to target the footnotes we use \code{locations = cells_footnotes()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sza |>
   dplyr::filter(

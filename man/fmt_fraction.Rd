@@ -173,8 +173,12 @@ useful reference on which locales are supported, we can use the
 \section{Examples}{
 
 
-Use \code{\link{pizzaplace}} to create a \strong{gt} table. Format the \code{f_sold} and
-\code{f_income} columns to display fractions.
+Using a summarized version of the \code{\link{pizzaplace}} dataset, let's create a
+\strong{gt} table. With the \code{fmt_fraction()} function we can format the \code{f_sold}
+and \code{f_income} columns to display fractions. As for how the fractions are
+represented, we are electing to use \code{accuracy = 10}. This gives all fractions
+as tenths. We won't simplify the fractions (by using \code{simplify = FALSE}) and
+this means that a fraction like \code{5/10} won't become \code{1/2}. With \code{layout = "diagonal"}, we get a diagonal display of all fractions.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
   dplyr::group_by(type, size) |>

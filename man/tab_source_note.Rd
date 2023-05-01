@@ -26,8 +26,10 @@ or, if the table is intended for HTML output, we can include HTML formatting.
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. Use \code{tab_source_note()} to add a
-source note to the table footer that cites the data source.
+With three columns from the \code{\link{gtcars}} dataset, let's create a \strong{gt} table.
+We can use the \code{tab_source_note()} function to add a source note to the table
+footer. Here we are citing the data source but this function can be used for
+any text you'd prefer to display in the footer section.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
   dplyr::select(mfr, model, msrp) |>

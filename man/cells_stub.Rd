@@ -69,8 +69,9 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \section{Examples}{
 
 
-Use \code{\link{sza}} to create a \strong{gt} table. Color all of the \code{month} values in the
-table stub with \code{\link[=tab_style]{tab_style()}}, using \code{cells_stub()} in \code{locations}.
+Using a transformed version of the \code{\link{sza}} dataset, let's create a \strong{gt}
+table. Color all of the \code{month} values in the table stub with \code{\link[=tab_style]{tab_style()}},
+using \code{cells_stub()} in \code{locations}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sza |>
   dplyr::filter(latitude == 20 & tst <= "1000") |>

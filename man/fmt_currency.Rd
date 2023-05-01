@@ -266,8 +266,9 @@ display as currency values in euros (\code{"EUR"}).
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_currency_1.png" alt="This image of a table was generated from the first code example in the `fmt_currency()` help file." style="width:100\%;">
 }}
 
-Use the \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{num} and \code{currency},
-columns, then, format those columns using the \code{"CNY"} and \code{"GBP"} currencies.
+Use the \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{num} and
+\code{currency}, columns, then, format those columns using the \code{"CNY"} and \code{"GBP"}
+currencies.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(num, currency) |>

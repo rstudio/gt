@@ -25,9 +25,11 @@ convenient shortcut for \verb{<gt_tbl> |> tab_options(heading.align = <align>)}.
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table with a number of table parts added.
-The header (consisting of the title and the subtitle) are to be aligned to
-the left with the \code{opt_align_table_header()} function.
+Use the \code{\link{exibble}} dataset to create a \strong{gt} table with a number of table
+parts added (using functions like \code{\link[=summary_rows]{summary_rows()}}, \code{\link[=grand_summary_rows]{grand_summary_rows()}},
+and more). Following that, we'll align the header contents (consisting of the
+title and the subtitle) to the left with the \code{opt_align_table_header()}
+function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   gt(rowname_col = "row", groupname_col = "group") |>

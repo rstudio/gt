@@ -76,10 +76,11 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \section{Examples}{
 
 
-Use \code{\link{pizzaplace}} to create a \strong{gt} table with grouped data. Add a summary
-with the \code{\link[=summary_rows]{summary_rows()}} function and then add a footnote to the
-\code{"peppr_salami"} row group label with \code{\link[=tab_footnote]{tab_footnote()}} and with
-\code{cells_row_groups()} in \code{locations}.
+Let's use a summarized version of the \code{\link{pizzaplace}} dataset to create a
+\strong{gt} table with grouped data. Add a summary with the \code{\link[=summary_rows]{summary_rows()}}
+function and then add a footnote to the \code{"peppr_salami"} row group label with
+\code{\link[=tab_footnote]{tab_footnote()}}; the targeting is done with \code{cells_row_groups()} in the
+\code{locations} argument.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
   dplyr::filter(name \%in\% c("soppressata", "peppr_salami")) |>

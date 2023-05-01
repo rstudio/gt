@@ -34,9 +34,9 @@ values.
 \section{Examples}{
 
 
-Use \code{\link{sza}} to create a \strong{gt} table. Color the \code{sza} column using the
-\code{\link[=data_color]{data_color()}} function, then, use \code{\link[=tab_footnote]{tab_footnote()}} twice to add two
-footnotes (each one targeting a different column label).
+Use a subset of the \code{\link{sza}} dataset to create a \strong{gt} table. Color the \code{sza}
+column using the \code{\link[=data_color]{data_color()}} function, then, use \code{\link[=tab_footnote]{tab_footnote()}} twice to
+add two footnotes (each one targeting a different column label).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
   sza |>

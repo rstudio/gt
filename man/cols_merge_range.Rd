@@ -80,10 +80,12 @@ the output table through the \code{hide_columns} or \code{autohide} options.
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table, keeping only the \code{model}, \code{mpg_c},
-and \code{mpg_h} columns. Merge the \code{"mpg*"} columns together as a single range
-column (which is labeled as MPG, in italics) using the \code{cols_merge_range()}
-function.
+Let's use a subset of the \code{\link{gtcars}} dataset to create a \strong{gt} table,
+keeping only the \code{model}, \code{mpg_c}, and \code{mpg_h} columns. Merge the \code{"mpg*"}
+columns together as a single range column (which is labeled as MPG, in
+italics) using the \code{cols_merge_range()} function. After the merging process,
+the column label for the \code{mpg_c} column is updated with \code{\link[=cols_label]{cols_label()}} to
+better describe the content.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
   dplyr::select(model, starts_with("mpg")) |>

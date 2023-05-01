@@ -96,8 +96,10 @@ more complex predicate expression.
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Format the numeric values in the
-\code{num} column with a function supplied to the \code{fns} argument.
+Use the \code{\link{exibble}} dataset to create a \strong{gt} table. Using the \code{fmt()}
+function, we'll format the numeric values in the \code{num} column with a function
+supplied to the \code{fns} argument. This supplied function will take values in
+the column (\code{x}), multiply them by 1000, and exclose them in single quotes.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(-row, -group) |>

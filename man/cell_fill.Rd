@@ -27,16 +27,17 @@ cells. Specifically, the call to \code{cell_fill()} should be bound to the
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Add styles with \code{\link[=tab_style]{tab_style()}} and
-the \code{cell_fill()} helper function.
+Let's use the \code{\link{exibble}} dataset to create a simple, two-column \strong{gt} table
+(keeping only the \code{num} and \code{currency} columns). Styles are added with
+\code{\link[=tab_style]{tab_style()}} in two separate calls (targeting different body cells with the
+\code{\link[=cells_body]{cells_body()}} helper function). With the \code{cell_fill()} helper funciton we
+define cells with a \code{"lightblue"} background in one instance, and \code{"gray85"}
+in the other.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(num, currency) |>
   gt() |>
-  fmt_number(
-    columns = c(num, currency),
-    decimals = 1
-  ) |>
+  fmt_number(decimals = 1) |>
   tab_style(
     style = cell_fill(color = "lightblue"),
     locations = cells_body(

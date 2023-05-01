@@ -37,8 +37,9 @@ warnings or messages when changing the state of already-invisible columns.
 \section{Examples}{
 
 
-Use \code{\link{countrypops}} to create a \strong{gt} table. Hide the \code{country_code_2} and
-\code{country_code_3} columns with \code{cols_hide()}.
+Use a small portion of the \code{\link{countrypops}} dataset to create a \strong{gt} table.
+We can hide the \code{country_code_2} and \code{country_code_3} columns with the
+\code{cols_hide()} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::filter(country_name == "Mongolia") |>
@@ -51,10 +52,11 @@ Use \code{\link{countrypops}} to create a \strong{gt} table. Hide the \code{coun
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_hide_1.png" alt="This image of a table was generated from the first code example in the `cols_hide()` help file." style="width:100\%;">
 }}
 
-Use \code{\link{countrypops}} to create a \strong{gt} table. Use the \code{population} column to
-provide the conditional placement of footnotes, then hide that column and one
-other. Note that the order of the \code{cols_hide()} and \code{\link[=tab_footnote]{tab_footnote()}}
-statements has no effect.
+Using another \code{\link{countrypops}}-based \strong{gt} table, we can use the \code{population}
+column to provide the conditional placement of footnotes. Then, we'll hide
+that column along with the \code{country_code_3} column. Note that the order of
+the \code{cols_hide()} and \code{\link[=tab_footnote]{tab_footnote()}} statements has no effect on the final
+display of the table.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::filter(country_name == "Mongolia") |>

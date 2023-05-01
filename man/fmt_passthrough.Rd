@@ -94,15 +94,17 @@ more complex predicate expression.
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{char} column. Pass
-the data in that column through but apply a simple pattern that adds an \code{"s"}
-to the non-\code{NA} values.
+Use the \code{\link{exibble}} dataset to create a single-column \strong{gt} table (with only
+the \code{char} column). Pass the data in that column through the 'non-formatter'
+that is \code{fmt_passthrough()}. While the the function doesn't do any explicit
+formatting it has features common to all other formatting functions it has
+the \code{pattern} argument; that's what we'll use in this example, applying a
+simple pattern to the non-\code{NA} values that adds an \code{"s"} character.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(char) |>
   gt() |>
   fmt_passthrough(
-    columns = char,
     rows = !is.na(char),
     pattern = "\{x\}s"
   )

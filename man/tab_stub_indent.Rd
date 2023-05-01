@@ -35,9 +35,10 @@ level, or, by way of an indentation directive using keywords.
 \section{Examples}{
 
 
-Use \code{\link{pizzaplace}} to create a \strong{gt} table with summary rows at the top of
-each row group. With \code{tab_stub_indent()} we can add indentation to the row
-labels in the stub.
+Let's use a summarized version of the \code{\link{pizzaplace}} dataset to create a
+\strong{gt} table with row groups and row labels. With the \code{\link[=summary_rows]{summary_rows()}}
+function, we'll generate summary rows at the top of each row group. With
+\code{tab_stub_indent()} we can add indentation to the row labels in the stub.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
   dplyr::group_by(type, size) |>

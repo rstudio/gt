@@ -198,8 +198,9 @@ useful reference on which locales are supported, we can use the
 \section{Examples}{
 
 
-Use \code{\link{pizzaplace}} to create a \strong{gt} table. Format the \code{frac_of_quota}
-column to display values as percentages.
+Use a summarized version of the \code{\link{pizzaplace}} dataset to create a \strong{gt}
+table. With the \code{fmt_percent()} function, we can format the \code{frac_of_quota}
+column to display values as percentages (to one decimal place).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
   dplyr::mutate(month = as.numeric(substr(date, 6, 7))) |>

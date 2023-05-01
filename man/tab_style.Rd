@@ -54,16 +54,19 @@ bold text (the degree of choice is greater with variable fonts)
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Add styles that are to be applied
-to data cells that satisfy a condition (using \code{tab_style()}).
+Let's use the \code{\link{exibble}} dataset to create a simple, two-column \strong{gt} table
+(keeping only the \code{num} and \code{currency} columns). With the \code{\link[=tab_style]{tab_style()}}
+function (called twice), we'll selectively add style to the values formatted
+by \code{\link[=fmt_number]{fmt_number()}}. In the \code{style} argument of each \code{tab_style()} call, we
+can define multiple types of styling with the \code{\link[=cell_fill]{cell_fill()}} and \code{\link[=cell_text]{cell_text()}}
+helper functions (enclosed in a list). The cells to be targeted for styling
+require the use of helper functions like \code{\link[=cells_body]{cells_body()}}, which is used here
+with different columns and rows being targeted.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(num, currency) |>
   gt() |>
-  fmt_number(
-    columns = c(num, currency),
-    decimals = 1
-  ) |>
+  fmt_number(decimals = 1) |>
   tab_style(
     style = list(
       cell_fill(color = "lightcyan"),
@@ -90,8 +93,10 @@ to data cells that satisfy a condition (using \code{tab_style()}).
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_1.png" alt="This image of a table was generated from the first code example in the `tab_style()` help file." style="width:100\%;">
 }}
 
-Use a subset of the \code{\link{sp500}} dataset to create a \strong{gt} table. Color entire
-rows of cells based on values in a particular column.
+Let's use a subset of the \code{\link{sp500}} dataset to create a different \strong{gt}
+table. Here, we'll color the background of entire rows of body cells and do
+so on the basis of value expressions involving the \code{open} and \code{close}
+columns.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
   dplyr::filter(
@@ -117,9 +122,12 @@ rows of cells based on values in a particular column.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_2.png" alt="This image of a table was generated from the second code example in the `tab_style()` help file." style="width:100\%;">
 }}
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Replace missing values with the
-\code{\link[=sub_missing]{sub_missing()}} function and then add styling to the \code{char} column with
-\code{\link[=cell_fill]{cell_fill()}} and with a CSS style declaration.
+With another two-column table based on the \code{\link{exibble}} dataset, let's create
+a \strong{gt} table. First, we'll replace missing values with the \code{\link[=sub_missing]{sub_missing()}}
+function. Next, we'll add styling to the \code{char} column. This styling will be
+HTML-specific and involves (within a list): (1) a \code{\link[=cell_fill]{cell_fill()}} call (to set
+a \code{"lightcyan"} background), and (2) a string containing with a CSS style
+declaration (\code{"font-variant: small-caps;"}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(char, fctr) |>

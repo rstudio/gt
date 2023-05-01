@@ -62,8 +62,10 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \section{Examples}{
 
 
-Use \code{\link{pizzaplace}} to create a \strong{gt} table. Add a stubhead label with
-\code{\link[=tab_stubhead]{tab_stubhead()}} and then style it with \code{\link[=tab_style]{tab_style()}} and \code{cells_stubhead()}.
+Using a summarized version of the \code{\link{pizzaplace}} dataset, let's create a
+\strong{gt} table. Add a stubhead label with \code{\link[=tab_stubhead]{tab_stubhead()}} and then style it
+with \code{\link[=tab_style]{tab_style()}} in conjunction with the use of \code{cells_stubhead()} in the
+\code{locations} argument.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
   dplyr::mutate(month = as.numeric(substr(date, 6, 7))) |>

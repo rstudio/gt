@@ -71,15 +71,15 @@ the \code{\link[=vec_fmt_date]{vec_fmt_date()}} and \code{\link[=vec_fmt_datetim
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_text_transform_1.png" alt="This image of a table was generated from the first code example in the `text_transform()` help file." style="width:100\%;">
 }}
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. First, the numeric values in the \code{n}
-column are formatted as spelled-out numbers with \code{\link[=fmt_spelled_num]{fmt_spelled_num()}}. The
-output values are indeed spelled out but exclusively with lowercase letters.
-We actually want these words to begin with a capital letter and end with a
-period. To make this possible, the \code{text_transform()} function will be used
-since it can modify already-formatted text. Through the \code{fn} argument, we
-provide a custom function that uses R's \code{toTitleCase()} operating on \code{x} (the
-numbers-as-text strings) within a \code{paste0()} so that a period can be properly
-placed.
+Let's use a summarized version of the \code{\link{gtcars}} dataset to create a \strong{gt}
+table. First, the numeric values in the \code{n} column are formatted as
+spelled-out numbers with \code{\link[=fmt_spelled_num]{fmt_spelled_num()}}. The output values are indeed
+spelled out but exclusively with lowercase letters. We actually want these
+words to begin with a capital letter and end with a period. To make this
+possible, the \code{text_transform()} function will be used since it can modify
+already-formatted text. Through the \code{fn} argument, we provide a custom
+function that uses R's \code{toTitleCase()} operating on \code{x} (the numbers-as-text
+strings) within a \code{paste0()} so that a period can be properly placed.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
   dplyr::select(mfr, ctry_origin) |>

@@ -109,9 +109,11 @@ This function serves as a shortcut for setting the following options in
 \section{Examples}{
 
 
-Use the \code{\link{towny}} dataset to create a \strong{gt} table with a header and a source
-note. Next, we add interactive HTML features through \code{opt_interactive()}.
-It'll just be the default set of interactive options.
+Use select columns from the \code{\link{towny}} dataset to create a \strong{gt} table with a
+header (through \code{\link[=tab_header]{tab_header()}}) and a source note (through
+\code{\link[=tab_source_note]{tab_source_note()}}). Next, we will add interactive HTML features (and
+otherwise activate interactive HTML mode) through \code{opt_interactive()}. It'll
+just be the default set of interactive options.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
   dplyr::select(name, census_div, starts_with("population")) |>

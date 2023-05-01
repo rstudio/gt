@@ -66,9 +66,10 @@ and source note sections in the table footer.
 \section{Examples}{
 
 
-Use \code{\link{sza}} to create a \strong{gt} table. Color the \code{sza} column using the
-\code{\link[=data_color]{data_color()}} function, then, use \code{tab_footnote()} to add a footnote to the
-\code{sza} column label (explaining what the color scale signifies).
+Use a subset of the \code{\link{sza}} dataset to create a \strong{gt} table. Color the \code{sza}
+column using the \code{\link[=data_color]{data_color()}} function, then, use \code{tab_footnote()} to add a
+footnote to the \code{sza} column label (explaining what the color scale
+signifies).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sza |>
   dplyr::filter(

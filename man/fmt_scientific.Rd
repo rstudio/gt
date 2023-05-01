@@ -175,7 +175,7 @@ useful reference on which locales are supported, we can use the
 
 Use the \code{\link{exibble}} dataset to create a \strong{gt} table. Format the \code{num} column
 as partially numeric and partially in scientific notation. This is done with
-two separate calls of \code{fmt_number()} and \code{fmt_scientific()}. We'll use the
+two separate calls of \code{\link[=fmt_number]{fmt_number()}} and \code{fmt_scientific()}. We'll use the
 expressions \code{num > 500} and \code{num <= 500} in the functions' respective \code{rows}
 arguments.
 

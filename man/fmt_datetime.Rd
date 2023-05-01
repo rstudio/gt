@@ -832,15 +832,15 @@ can use the \code{\link[=info_locales]{info_locales()}} function to view an info
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{datetime} column.
-Format the column to have dates formatted with the \code{"month_day_year"} style
-and times with the \code{"h_m_s_p"} 12-hour time style.
+Use the \code{\link{exibble}} dataset to create a single-column \strong{gt} table (with only
+the \code{datetime} column). With \code{fmt_datetime()} we'll format the \code{datetime}
+column to have dates formatted with the \code{"month_day_year"} style and times
+with the \code{"h_m_s_p"} 12-hour time style.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(datetime) |>
   gt() |>
   fmt_datetime(
-    columns = datetime,
     date_style = "month_day_year",
     time_style = "h_m_s_p"
   )
@@ -850,22 +850,23 @@ and times with the \code{"h_m_s_p"} 12-hour time style.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_datetime_1.png" alt="This image of a table was generated from the first code example in the `fmt_datetime()` help file." style="width:100\%;">
 }}
 
-Using the same input table, we can use flexible date and time styles. Two
-that work well together are \code{"MMMEd"} and \code{"Hms"}. These will mutate
-depending on the locale. Let's use the default locale for the first 3 rows
-and the Danish locale (\code{"da"}) for the remaining rows.
+Using the same input table, we can use \code{fmt_datetime()} with flexible date
+and time styles. Two that work well together are \code{"MMMEd"} and \code{"Hms"}. These
+date and time styles will, being flexible, create outputs that conform to the
+locale value given to the \code{locale} argument. Let's use two calls of
+\code{fmt_datetime()}: the first will format all rows in \code{datetime} to the Danish
+locale (with \code{locale = "da"}) and the second call will target the first three
+rows with the same formatting, but in the default locale (which is \code{"en"}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(datetime) |>
   gt() |>
   fmt_datetime(
-    columns = datetime,
     date_style = "MMMEd",
     time_style = "Hms",
     locale = "da"
   ) |>
   fmt_datetime(
-    columns = datetime,
     rows = 1:3,
     date_style = "MMMEd",
     time_style = "Hms"
@@ -886,7 +887,6 @@ zone formatting. Let's provide a time zone ID (\code{"America/Vancouver"}) to th
   dplyr::select(datetime) |>
   gt() |>
   fmt_datetime(
-    columns = datetime,
     format = "EEEE, MMMM d, y 'at' h:mm a (zzzz)",
     tz = "America/Vancouver"
   )
