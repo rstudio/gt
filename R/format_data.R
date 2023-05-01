@@ -193,9 +193,10 @@
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. Format the `num` column as numeric
-#' with three decimal places and omit the use of digit separators (with
-#' `use_seps = FALSE`).
+#' Use the [`exibble`] dataset to create a **gt** table. With the `fmt_number()`
+#' function, we'll format the `num` column to have three decimal places (with
+#' `decimals = 3`) and omit the use of digit separators (with `use_seps =
+#' FALSE`).
 #'
 #' ```r
 #' exibble |>
@@ -211,8 +212,10 @@
 #' `r man_get_image_tag(file = "man_fmt_number_1.png")`
 #' }}
 #'
-#' Use [`countrypops`] to create a **gt** table. Format all columns to use
-#' large-number suffixing with the `suffixing = TRUE` option.
+#' Use a modified version of the [`countrypops`] dataset to create a **gt**
+#' table with row labels. Format all columns to use large-number suffixing
+#' (e.g., where `"10,000,000"` becomes `"10M"`) with the `suffixing = TRUE`
+#' option.
 #'
 #' ```r
 #' countrypops |>
@@ -502,17 +505,16 @@ fmt_number <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. format the `num` column as integer
-#' values having no digit separators (with the `use_seps = FALSE` option).
+#' For this example, we'll use two columns from the [`exibble`] dataset and
+#' create a simple **gt** table. With the `fmt_integer()` function, we'll format
+#' the `num` column as integer values having no digit separators (with the
+#' `use_seps = FALSE` option).
 #'
 #' ```r
 #' exibble |>
 #'   dplyr::select(num, char) |>
 #'   gt() |>
-#'   fmt_integer(
-#'     columns = num,
-#'     use_seps = FALSE
-#'   )
+#'   fmt_integer(use_seps = FALSE)
 #' ```
 #'
 #' \if{html}{\out{
@@ -674,9 +676,11 @@ fmt_integer <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. Format the `num` column as
-#' partially numeric  and partially in scientific notation (using the
-#' `num > 500` and `num <= 500` expressions in the respective `rows` arguments).
+#' Use the [`exibble`] dataset to create a **gt** table. Format the `num` column
+#' as partially numeric and partially in scientific notation. This is done with
+#' two separate calls of `fmt_number()` and `fmt_scientific()`. We'll use the
+#' expressions `num > 500` and `num <= 500` in the functions' respective `rows`
+#' arguments.
 #'
 #' ```r
 #' exibble |>
@@ -1041,8 +1045,9 @@ fmt_scientific <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. Format the `num` column in
-#' engineering notation.
+#' Use the [`exibble`] dataset to create a **gt** table. Format the `num` column
+#' to display values in engineering notation using the `fmt_engineering()`
+#' function.
 #'
 #' ```r
 #' exibble |>
@@ -2596,8 +2601,9 @@ round_gt <- function(x, digits = 0) {
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. Format the `currency` column to
-#' have currency values in euros (`"EUR"`).
+#' Use the [`exibble`] dataset to create a **gt** table. Using the
+#' `fmt_currency()` function, we'll format values in the `currency` column to
+#' display as currency values in euros (`"EUR"`).
 #'
 #' ```r
 #' exibble |>
@@ -2612,7 +2618,7 @@ round_gt <- function(x, digits = 0) {
 #' `r man_get_image_tag(file = "man_fmt_currency_1.png")`
 #' }}
 #'
-#' Use [`exibble`] to create a **gt** table. Keep only the `num` and `currency`,
+#' Use the [`exibble`] to create a **gt** table. Keep only the `num` and `currency`,
 #' columns, then, format those columns using the `"CNY"` and `"GBP"` currencies.
 #'
 #' ```r
@@ -3465,31 +3471,29 @@ fmt_spelled_num <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. Format the `num` column to have
-#' byte sizes in the decimal standard.
+#' Use a single column from the [`exibble`] dataset and create a simple **gt**
+#' table. We'll format the `num` column to display as byte sizes in the decimal
+#' standard through use of the `fmt_bytes()` function.
 #'
 #' ```r
 #' exibble |>
 #'   dplyr::select(num) |>
 #'   gt() |>
-#'   fmt_bytes(columns = num)
+#'   fmt_bytes()
 #' ```
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_fmt_bytes_1.png")`
 #' }}
 #'
-#' Create a similar table with the `fmt_bytes()` function, this time showing
-#' byte sizes as binary values.
+#' Let's create an analogous table again by using the `fmt_bytes()` function,
+#' this time showing byte sizes as binary values by using `standard = "binary"`.
 #'
 #' ```r
 #' exibble |>
 #'   dplyr::select(num) |>
 #'   gt() |>
-#'   fmt_bytes(
-#'     columns = num,
-#'     standard = "binary"
-#'   )
+#'   fmt_bytes(standard = "binary")
 #' ```
 #'
 #' \if{html}{\out{
@@ -3770,8 +3774,9 @@ fmt_bytes <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. Keep only the `date` and `time`
-#' columns. Format the `date` column to have dates formatted with the
+#' Let's use the [`exibble`] dataset to create a simple, two-column **gt** table
+#' (keeping only the `date` and `time` columns). With the `fmt_date()` function,
+#' we'll format the `date` column to display dates formatted with the
 #' `"month_day_year"` date style.
 #'
 #' ```r
@@ -3788,10 +3793,13 @@ fmt_bytes <- function(
 #' `r man_get_image_tag(file = "man_fmt_date_1.png")`
 #' }}
 #'
-#' Use [`exibble`] to create a **gt** table. Keep only the `date` and `time`
-#' columns. Format the `date` column to have mixed date formats (dates after
-#' April will be different than the others because of the expressions used
-#' in the `rows` argument).
+#' Again using the [`exibble`] dataset, let's format the `date` column to have
+#' mixed date formats, where dates after April 1st will be different than the
+#' others because of the expressions used in the `rows` argument. This will
+#' involve two calls of `fmt_date()` with different statements provided for
+#' `rows`. In the first call (dates after the 1st of April) the date style
+#' `"m_day_year"` is used; for the second call, `"day_m_year"` is the named
+#' date style supplied to `date_style`.
 #'
 #' ```r
 #' exibble |>
@@ -3813,17 +3821,16 @@ fmt_bytes <- function(
 #' `r man_get_image_tag(file = "man_fmt_date_2.png")`
 #' }}
 #'
-#' Use [`exibble`] to create another **gt** table, this time only with the
-#' `date` column. Format the `date` column to use the `"yMMMEd"` date style
-#' (which is one of the 'flexible' styles). Also, set the locale to `"nl"` to
-#' get the dates in Dutch.
+#' Use the [`exibble`] dataset to create a single-column **gt** table (with only
+#' the `date` column). Format the date values using the `"yMMMEd"` date style
+#' (which is one of the 'flexible' styles). Also, we'll set the locale to `"nl"`
+#' to get the dates in Dutch.
 #'
 #' ```r
 #' exibble |>
 #'   dplyr::select(date) |>
 #'   gt() |>
 #'   fmt_date(
-#'     columns = date,
 #'     date_style = "yMMMEd",
 #'     locale = "nl"
 #'   )
