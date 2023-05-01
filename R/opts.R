@@ -509,10 +509,11 @@ opt_footnote_marks <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`sp500`] to create a **gt** table, adding two footnotes. We can call
-#' `opt_footnote_spec()` to specify that the marks of the footnote reference
-#' should be superscripts in bold, and, the marks in the footer section should
-#' be enclosed in parentheses.
+#' Use a modified version of [`sp500`] the dataset to create a **gt** table with
+#' row labels. We'll add two footnotes using the `tab_footnote()` function. We
+#' can call `opt_footnote_spec()` to specify that the marks of the footnote
+#' reference should be superscripts in bold, and, the marks in the footer
+#' section should be enclosed in parentheses.
 #'
 #' ```r
 #' sp500 |>
@@ -1311,11 +1312,11 @@ opt_table_outline <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`sp500`] to create a small **gt** table, using [fmt_currency()] to
-#' provide a dollar sign for the first row of monetary values. Then, set a
-#' larger font size for the table and use the `"Merriweather"` font (from
-#' *Google Fonts*, via [google_font()]) with two system font fallbacks
-#' (`"Cochin"` and the generic `"serif"`).
+#' Use a subset of the [`sp500`] dataset to create a small **gt** table. We'll
+#' use the [fmt_currency()] function to display a dollar sign for the first row
+#' of monetary values. Then, set a larger font size for the table and use the
+#' `"Merriweather"` font (from *Google Fonts*, via [google_font()]) with two
+#' system font fallbacks (`"Cochin"` and the generic `"serif"`).
 #'
 #' ```r
 #' sp500 |>
