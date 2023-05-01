@@ -39,8 +39,9 @@
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. When adding a title, use the `md()`
-#' helper to use Markdown formatting.
+#' Use the [`exibble`] dataset to create a **gt** table. When adding a title
+#' through the [tab_header()] function, we'll use the `md()` helper to signify
+#' to **gt** that we're using Markdown formatting.
 #'
 #' ```r
 #' exibble |>
@@ -86,8 +87,9 @@ md <- function(text) {
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. When adding a title, use the
-#' `html()` helper to use HTML formatting.
+#' Use the [`exibble`] dataset to create a **gt** table. When adding a title
+#' through the [tab_header()] function, we'll use the `html()` helper to signify
+#' to **gt** that we're using HTML formatting.
 #'
 #' ```r
 #' exibble |>
@@ -145,8 +147,10 @@ is_rtf <- function(x) {
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. Use the `px()` helper to define the
-#' font size for the column labels.
+#' Use the [`exibble`] dataset to create a **gt** table. Inside of the
+#' [cell_text()] call (which is itself inside of [tab_style()]), we'll use the
+#' `px()` helper function to define the font size for the column labels in units
+#' of pixels.
 #'
 #' ```r
 #' exibble |>
@@ -199,8 +203,10 @@ px <- function(x) {
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. Use the `pct()` helper to define
-#' the font size for the column labels.
+#' Use the [`exibble`] dataset to create a **gt** table. Inside of the
+#' [cell_text()] call (which is itself inside of [tab_style()]), we'll use the
+#' `pct()` helper function to define the font size for the column labels as a
+#' percentage value.
 #'
 #' ```r
 #' exibble |>
@@ -454,8 +460,10 @@ cells_title <- function(groups = c("title", "subtitle")) {
 #'
 #' @section Examples:
 #'
-#' Use [`pizzaplace`] to create a **gt** table. Add a stubhead label with
-#' [tab_stubhead()] and then style it with [tab_style()] and `cells_stubhead()`.
+#' Using a summarized version of the [`pizzaplace`] dataset, let's create a
+#' **gt** table. Add a stubhead label with [tab_stubhead()] and then style it
+#' with [tab_style()] in conjunction with the use of `cells_stubhead()` in the
+#' `locations` argument.
 #'
 #' ```r
 #' pizzaplace |>
@@ -552,9 +560,11 @@ cells_stubhead <- function() {
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. Add a spanner column label over
-#' three column labels with [tab_spanner()] and then use [tab_style()] and
-#' `cells_column_spanners()` to make the spanner label text bold.
+#' Use the [`exibble`] dataset to create a **gt** table. We'll add a spanner
+#' column label over three columns (`date`, `time`, and `datetime`) with
+#' [tab_spanner()]. The spanner column label can be styled with [tab_style()] by
+#' using the `cells_column_spanners()` function in `locations`. In this example,
+#' we are making the text of the column spanner label appear as bold.
 #'
 #' ```r
 #' exibble |>
@@ -668,8 +678,9 @@ cells_column_spanners <- function(spanners = everything()) {
 #'
 #' @section Examples:
 #'
-#' Use [`sza`] to create a **gt** table. Add footnotes to the column labels with
-#' [tab_footnote()] and `cells_column_labels()` in `locations`.
+#' Let's use a small portion of the [`sza`] dataset to create a **gt** table.
+#' Add footnotes to the column labels with [tab_footnote()] and
+#' `cells_column_labels()` in `locations`.
 #'
 #' ```r
 #' sza |>
@@ -785,10 +796,11 @@ cells_column_labels <- function(columns = everything()) {
 #'
 #' @section Examples:
 #'
-#' Use [`pizzaplace`] to create a **gt** table with grouped data. Add a summary
-#' with the [summary_rows()] function and then add a footnote to the
-#' `"peppr_salami"` row group label with [tab_footnote()] and with
-#' `cells_row_groups()` in `locations`.
+#' Let's use a summarized version of the [`pizzaplace`] dataset to create a
+#' **gt** table with grouped data. Add a summary with the [summary_rows()]
+#' function and then add a footnote to the `"peppr_salami"` row group label with
+#' [tab_footnote()]; the targeting is done with `cells_row_groups()` in the
+#' `locations` argument.
 #'
 #' ```r
 #' pizzaplace |>
@@ -916,8 +928,9 @@ cells_group <- function(groups = everything()) {
 #'
 #' @section Examples:
 #'
-#' Use [`sza`] to create a **gt** table. Color all of the `month` values in the
-#' table stub with [tab_style()], using `cells_stub()` in `locations`.
+#' Using a transformed version of the [`sza`] dataset, let's create a **gt**
+#' table. Color all of the `month` values in the table stub with [tab_style()],
+#' using `cells_stub()` in `locations`.
 #'
 #' ```r
 #' sza |>
@@ -1048,9 +1061,10 @@ cells_stub <- function(rows = everything()) {
 #'
 #' @section Examples:
 #'
-#' Use [`gtcars`] to create a **gt** table. Add a footnote that targets a single
-#' data cell with [tab_footnote()], using `cells_body()` in `locations`
-#' (`rows = hp == max(hp)` will target a single row in the `hp` column).
+#' Let's use a subset of the [`gtcars`] dataset to create a **gt** table. Add a
+#' footnote (with [tab_footnote()]) that targets a single data cell via the use
+#' of `cells_body()` in `locations` (`rows = hp == max(hp)` will target a single
+#' row in the `hp` column).
 #'
 #' ```r
 #' gtcars |>
@@ -1188,8 +1202,9 @@ cells_body <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`countrypops`] to create a **gt** table. Add some styling to the summary
-#' data cells with with [tab_style()], using `cells_summary()` in `locations`.
+#' Use a portion of the [`countrypops`] dataset to create a **gt** table. Add
+#' some styling to the summary data cells with with [tab_style()], using
+#' `cells_summary()` in the `locations` argument.
 #'
 #' ```r
 #' countrypops |>
@@ -1354,8 +1369,9 @@ cells_summary <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`countrypops`] to create a **gt** table. Add some styling to a grand
-#' summary cell with with [tab_style()] and `cells_grand_summary()`.
+#' Use a portion of the [`countrypops`] dataset to create a **gt** table. Add
+#' some styling to a grand summary cells with the [tab_style()] function and
+#' `cells_grand_summary()` in the `locations` argument.
 #'
 #' ```r
 #' countrypops |>
@@ -1492,8 +1508,9 @@ cells_grand_summary <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`countrypops`] to create a **gt** table. Add some styling to the summary
-#' data stub cells with [tab_style()] and `cells_stub_summary()`.
+#' Use a portion of the [`countrypops`] dataset to create a **gt** table. Add
+#' some styling to the summary data stub cells with [tab_style()] and
+#' `cells_stub_summary()` in the `locations` argument.
 #'
 #' ```r
 #' countrypops |>
@@ -1631,9 +1648,9 @@ cells_stub_summary <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`countrypops`] to create a **gt** table. Add some styling to a grand
-#' summary stub cell with with the [tab_style()] and
-#' `cells_stub_grand_summary()` functions.
+#' Use a portion of the [`countrypops`] dataset to create a **gt** table. Add
+#' some styling to a grand summary stub cell with the [tab_style()] function and
+#' using `cells_stub_grand_summary()` in the `locations` argument.
 #'
 #' ```r
 #' countrypops |>
@@ -1739,8 +1756,12 @@ cells_stub_grand_summary <- function(rows = everything()) {
 #'
 #' @section Examples:
 #'
-#' Use [`sza`] to create a **gt** table. Color the `sza` column using the
-#' `data_color()` function, add a footnote and also style the footnotes section.
+#' Using a subset of the [`sza`] dataset, let's create a **gt** table. We'd like
+#' to color the `sza` column so that's done with the [data_color()] function. We
+#' can add a footnote through the [tab_footnote()] function and we can also
+#' style the footnotes section. The styling is done through the use of the
+#' [tab_style()] function and to target the footnotes we use `locations =
+#' cells_footnotes()`.
 #'
 #' ```r
 #' sza |>
@@ -1851,8 +1872,10 @@ cells_footnotes <- function() {
 #'
 #' @section Examples:
 #'
-#' Use [`gtcars`] to create a **gt** table. Add a source note and style the
-#' source notes section.
+#' Let's use a subset of the [`gtcars`] dataset to create a **gt** table. Add a
+#' source note (with [tab_source_note()]) and style the source notes section
+#' inside the [tab_style()] call by using the `cells_source_notes()` helper
+#' function for the targeting via the `locations` argument.
 #'
 #' ```r
 #' gtcars |>
@@ -1926,8 +1949,12 @@ cells_source_notes <- function() {
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. Format the `currency` column to
-#' have currency values in guilder (a defunct Dutch currency).
+#' Use the [`exibble`] dataset to create a **gt** table. Within the
+#' [fmt_currency()] call, we'll format the `currency` column to have currency
+#' values in guilder (a defunct Dutch currency). We can register this custom
+#' currency with the `currency()` helper function, supplying the `"&fnof;"` HTML
+#' entity for `html` outputs and using `"f"` for any other type of **gt**
+#' output.
 #'
 #' ```r
 #' exibble |>
@@ -2044,17 +2071,17 @@ currency <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. Add styles with [tab_style()] and
-#' the `cell_text()` helper function.
+#' Let's use the [`exibble`] dataset to create a simple, two-column **gt** table
+#' (keeping only the `num` and `currency` columns). With the [tab_style()]
+#' function (called twice), we'll selectively add style to the values formatted
+#' by [fmt_number()]. We do this by using the `cell_text()` helper function in
+#' the `style` argument of [tab_style()].
 #'
 #' ```r
 #' exibble |>
 #'   dplyr::select(num, currency) |>
 #'   gt() |>
-#'   fmt_number(
-#'     columns = c(num, currency),
-#'     decimals = 1
-#'   ) |>
+#'   fmt_number(decimals = 1) |>
 #'   tab_style(
 #'     style = cell_text(weight = "bold"),
 #'     locations = cells_body(
@@ -2223,17 +2250,18 @@ cell_style_to_html.cell_text <- function(style) {
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. Add styles with [tab_style()] and
-#' the `cell_fill()` helper function.
+#' Let's use the [`exibble`] dataset to create a simple, two-column **gt** table
+#' (keeping only the `num` and `currency` columns). Styles are added with
+#' [tab_style()] in two separate calls (targeting different body cells with the
+#' [cells_body()] helper function). With the `cell_fill()` helper funciton we
+#' define cells with a `"lightblue"` background in one instance, and `"gray85"`
+#' in the other.
 #'
 #' ```r
 #' exibble |>
 #'   dplyr::select(num, currency) |>
 #'   gt() |>
-#'   fmt_number(
-#'     columns = c(num, currency),
-#'     decimals = 1
-#'   ) |>
+#'   fmt_number(decimals = 1) |>
 #'   tab_style(
 #'     style = cell_fill(color = "lightblue"),
 #'     locations = cells_body(
@@ -2320,8 +2348,11 @@ cell_style_to_html.cell_fill <- function(style) {
 #'
 #' @section Examples:
 #'
-#' Add horizontal border lines for all table body rows in [`exibble`] using
-#' [tab_style()] and `cell_borders()`.
+#' We can add horizontal border lines for all table body rows in a **gt** table
+#' based on the [`exibble`] dataset. For this, we need to use [tab_style()]
+#' (targeting all cells in the table body with [cells_body()]) in conjunction
+#' with `cell_borders()` in the `style` argument. Both top and bottom borders
+#' will be added as `"solid"` and `"red"` lines with a line width of 1.5 px.
 #'
 #' ```r
 #' exibble |>
@@ -2333,10 +2364,7 @@ cell_style_to_html.cell_fill <- function(style) {
 #'       weight = px(1.5),
 #'       style = "solid"
 #'     ),
-#'     locations = cells_body(
-#'       columns = everything(),
-#'       rows = everything()
-#'     )
+#'     locations = cells_body()
 #'   )
 #' ```
 #'
@@ -2344,9 +2372,9 @@ cell_style_to_html.cell_fill <- function(style) {
 #' `r man_get_image_tag(file = "man_cell_borders_1.png")`
 #' }}
 #'
-#' Incorporate different horizontal and vertical borders at several locations.
-#' This uses multiple `cell_borders()` and [cells_body()] calls within
-#' `list()`s.
+#' It's possible to incorporate different horizontal and vertical (`"left"` and
+#' `"right"`) borders at several different locations. This uses multiple
+#' `cell_borders()` and [cells_body()] calls within their own respective lists.
 #'
 #' ```r
 #' exibble |>
@@ -2800,10 +2828,16 @@ gt_latex_dependencies <- function() {
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table of eight rows, replace missing values
-#' with em dashes. For text in the `time` column, we use the Google font
-#' `"IBM Plex Mono"` and set up the [default_fonts()] as fallbacks (just in case
-#' the webfont is not accessible).
+#' Use the [`exibble`] dataset to create a **gt** table of two columns and eight
+#' rows. We'll replace missing values with em dashes using the [sub_missing()]
+#' function. For text in the `time` column, we will use the font called `"IBM
+#' Plex Mono"` which is available in Google Fonts. This is defined in the
+#' `google_font()` function call, itself part of a vector that includes fonts
+#' returned by the [default_fonts()] function (those fonts will serve as
+#' fallbacks just in case the font supplied by Google Fonts is not accessible).
+#' In terms of placement, all of this is given to the `font` argument of the
+#' [cell_text()] helper function which is itself given to the `style` argument
+#' of [tab_style()].
 #'
 #' ```r
 #' exibble |>
@@ -2825,11 +2859,11 @@ gt_latex_dependencies <- function() {
 #' `r man_get_image_tag(file = "man_google_font_1.png")`
 #' }}
 #'
-#' Use a subset of the [`sp500`] dataset to create a small **gt** table. With
-#' [fmt_currency()], we can display a dollar sign for the first row of the
+#' We can use a subset of the [`sp500`] dataset to create a small **gt** table.
+#' With [fmt_currency()], we can display a dollar sign for the first row of the
 #' monetary values. Then, we'll set a larger font size for the table and opt to
 #' use the `"Merriweather"` font by calling `google_font()` within
-#' `opt_table_font()`. In cases where that font may not materialize, we include
+#' [opt_table_font()]. In cases where that font may not materialize, we include
 #' two font fallbacks: `"Cochin"` and the catchall `"Serif"` group.
 #'
 #' ```r
@@ -2838,7 +2872,6 @@ gt_latex_dependencies <- function() {
 #'   dplyr::select(-volume, -adj_close) |>
 #'   gt() |>
 #'   fmt_currency(
-#'     columns = 2:5,
 #'     rows = 1,
 #'     currency = "USD",
 #'     use_seps = FALSE
@@ -2907,11 +2940,13 @@ google_font <- function(name) {
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. Attempting to modify the fonts used
-#' for the `time` column is much safer if `default_fonts()` is appended to the
-#' end of the `font` listing in the `cell_text()` call (the `"Comic Sansa"` and
-#' `"Menloa"` fonts don't exist, but, we'll get the first available font from
-#' the `default_fonts()` set).
+#' Let's use the [`exibble`] dataset to create a simple, two-column **gt** table
+#' (keeping only the `char` and `time` columns). Attempting to modify the fonts
+#' used for the `time` column is much safer if `default_fonts()` is appended to
+#' the end of the `font` listing in the `cell_text()` call. What will happen,
+#' since the `"Comic Sansa"` and `"Menloa"` fonts shouldn't exist, is that we'll
+#' get the first available font from vector of fonts that `default_fonts()`
+#' provides.
 #'
 #' ```r
 #' exibble |>
@@ -2919,10 +2954,7 @@ google_font <- function(name) {
 #'   gt() |>
 #'   tab_style(
 #'     style = cell_text(
-#'       font = c(
-#'         "Comic Sansa", "Menloa",
-#'         default_fonts()
-#'       )
+#'       font = c("Comic Sansa", "Menloa", default_fonts())
 #'     ),
 #'     locations = cells_body(columns = time)
 #'   )
