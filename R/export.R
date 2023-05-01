@@ -83,8 +83,9 @@
 #'
 #' @section Examples:
 #'
-#' Use [`gtcars`] to create a **gt** table. Add a stubhead label with the
-#' [tab_stubhead()] function to describe what is in the stub.
+#' Using a small subset of the [`gtcars`] dataset, we can create a **gt** table
+#' with row labels. We'll add a stubhead label with the [tab_stubhead()]
+#' function to describe what is in the stub.
 #'
 #' ```r
 #' tab_1 <-
@@ -481,8 +482,9 @@ gtsave_filename <- function(path, filename) {
 #'
 #' @section Examples:
 #'
-#' Use [`gtcars`] to create a **gt** table. Add a header and then export as HTML
-#' code with inlined CSS styles.
+#' Use a subset of the [`gtcars`] dataset to create a **gt** table. Add a header
+#' with [tab_header()] and then export the table as HTML code with inlined CSS
+#' styles using the `as_raw_html()` function.
 #'
 #' ```r
 #' tab_html <-
@@ -583,8 +585,9 @@ as_raw_html <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`gtcars`] to create a **gt** table. Add a header and then export as an
-#' object with LaTeX code.
+#' Use a subset of the [`gtcars`] dataset to create a **gt** table. Add a header
+#' with [tab_header()] and then export the table as LaTeX code using the
+#' `as_latex()` function.
 #'
 #' ```r
 #' tab_latex <-
@@ -684,8 +687,9 @@ as_latex <- function(data) {
 #'
 #' @section Examples:
 #'
-#' Use [`gtcars`] to create a **gt** table. Add a header and then export as RTF
-#' code.
+#' Use a subset of the [`gtcars`] dataset to create a **gt** table. Add a header
+#' with [tab_header()] and then export the table as RTF code using the
+#' `as_rtf()` function.
 #'
 #' ```r
 #' tab_rtf <-
@@ -808,8 +812,9 @@ as_rtf <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`gtcars`] to create a **gt** table. Add a header and then export as
-#' OOXML code for Word.
+#' Use a subset of the [`gtcars`] dataset to create a **gt** table. Add a header
+#' with [tab_header()] and then export the table as OOXML code for Word using the
+#' `as_word()` function.
 #'
 #' ```r
 #' tab_rtf <-
