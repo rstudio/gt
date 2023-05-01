@@ -53,8 +53,9 @@
 #'
 #' @section Examples:
 #'
-#' Use [`gtcars`] to create a **gt** table preview (with only a few of its
-#' columns). You'll see the first five rows and the last row.
+#' With three columns from the [`gtcars`] dataset, let's create a **gt** table
+#' preview with the `gt_preview()` function. You'll get only the first five rows
+#' and the last row.
 #'
 #' ```r
 #' gtcars |>
