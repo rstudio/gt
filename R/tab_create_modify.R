@@ -1655,8 +1655,8 @@ tab_caption <- function(
 #' `r man_get_image_tag(file = "man_tab_style_1.png")`
 #' }}
 #'
-#' Use [`sp500`] to create a **gt** table. Color entire rows of cells based on
-#' values in a particular column.
+#' Use a subset of the [`sp500`] dataset to create a **gt** table. Color entire
+#' rows of cells based on values in a particular column.
 #'
 #' ```r
 #' sp500 |>
