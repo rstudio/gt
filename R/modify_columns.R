@@ -857,11 +857,11 @@ cols_label <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`sp500`] to create a **gt** table. We want all the column labels to be
-#' entirely capitalized versions of the default labels but, instead of using
-#' [cols_label()] and rewriting each label manually in capital letters we can
-#' use `cols_label_with()` and instruct it to apply the `toupper()` function to
-#' all column labels.
+#' Use a subset of the [`sp500`] dataset to create a **gt** table. We want all
+#' the column labels to be entirely capitalized versions of the default labels
+#' but, instead of using [cols_label()] and rewriting each label manually in
+#' capital letters we can use `cols_label_with()` and instruct it to apply the
+#' `toupper()` function to all column labels.
 #'
 #' ```r
 #' sp500 |>
@@ -1661,10 +1661,10 @@ cols_unhide <- function(
 #'
 #' @section Examples:
 #'
-#' Use a portion of [`sp500`] to create a **gt** table. Use the `cols_merge()`
-#' function to merge the `open` & `close` columns together, and, the `low` &
-#' `high` columns (putting an em dash between both). Relabel the columns with
-#' [cols_label()].
+#' Use a subset of the [`sp500`] dataset to create a **gt** table. Use the
+#' `cols_merge()` function to merge the `open` & `close` columns together, and,
+#' the `low` & `high` columns (putting an em dash between both). Relabel the
+#' columns with [cols_label()].
 #'
 #' ```r
 #' sp500 |>
