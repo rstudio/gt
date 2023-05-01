@@ -344,9 +344,9 @@ stub <- function() {
 #'
 #' @section Examples:
 #'
-#' Use [`sp500`] to create a **gt** table. Add a header with a title, and then
-#' add a footnote to the title with [tab_footnote()] and `cells_title()` (in
-#' `locations`).
+#' Use a subset of the [`sp500`] dataset to create a small **gt** table. Add a
+#' header with a title, and then add a footnote to the title with
+#' [tab_footnote()] and `cells_title()` (in `locations`).
 #'
 #' ```r
 #' sp500 |>
@@ -2825,11 +2825,12 @@ gt_latex_dependencies <- function() {
 #' `r man_get_image_tag(file = "man_google_font_1.png")`
 #' }}
 #'
-#' Use [`sp500`] to create a small **gt** table, using [fmt_currency()] to
-#' provide a dollar sign for the first row of monetary values. Then, set a
-#' larger font size for the table and use the `"Merriweather"` font using the
-#' `google_font()` function (with two font fallbacks: `"Cochin"` and the
-#' catchall `"Serif"` group).
+#' Use a subset of the [`sp500`] dataset to create a small **gt** table. With
+#' [fmt_currency()], we can display a dollar sign for the first row of the
+#' monetary values. Then, we'll set a larger font size for the table and opt to
+#' use the `"Merriweather"` font by calling `google_font()` within
+#' `opt_table_font()`. In cases where that font may not materialize, we include
+#' two font fallbacks: `"Cochin"` and the catchall `"Serif"` group.
 #'
 #' ```r
 #' sp500 |>
@@ -3138,12 +3139,12 @@ default_fonts <- function() {
 #'
 #' @section Examples:
 #'
-#' Use [`sp500`] to create a **gt** table with 10 rows. For the `date` column
-#' and the column labels, let's use a different font stack (the `"industrial"`
-#' one). The system fonts used in this particular stack are `"Bahnschrift"`,
-#' `"DIN Alternate"`, `"Franklin Gothic Medium"`, and `"Nimbus Sans Narrow"`
-#' (the generic `"sans-serif-condensed"` and `"sans-serif"` are used if the
-#' aforementioned fonts aren't available).
+#' Use a subset of the [`sp500`] dataset to create a **gt** table with 10 rows.
+#' For the `date` column and the column labels, let's use a different font stack
+#' (the `"industrial"` one). The system fonts used in this particular stack are
+#' `"Bahnschrift"`, `"DIN Alternate"`, `"Franklin Gothic Medium"`, and `"Nimbus
+#' Sans Narrow"` (the generic `"sans-serif-condensed"` and `"sans-serif"` are
+#' used if the aforementioned fonts aren't available).
 #'
 #' ```r
 #' sp500 |>
