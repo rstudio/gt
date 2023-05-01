@@ -254,9 +254,11 @@ get_colorized_params <- function(
 #'
 #' @section Examples:
 #'
-#' Use the [`towny`] dataset to create a **gt** table with a header and a source
-#' note. Next, we add interactive HTML features through `opt_interactive()`.
-#' It'll just be the default set of interactive options.
+#' Use select columns from the [`towny`] dataset to create a **gt** table with a
+#' header (through [tab_header()]) and a source note (through
+#' [tab_source_note()]). Next, we will add interactive HTML features (and
+#' otherwise activate interactive HTML mode) through `opt_interactive()`. It'll
+#' just be the default set of interactive options.
 #'
 #' ```r
 #' towny |>
@@ -394,8 +396,10 @@ opt_interactive <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`sza`] to create a **gt** table, adding three footnotes. Call
-#' `opt_footnote_marks()` to specify which footnote marks to use.
+#' Use a summarized version of the [`sza`] dataset to create a **gt** table,
+#' adding three footnotes (with three calls of [tab_foonote()]). We can modify
+#' the footnote marks to use with the `opt_footnote_marks()` function. With the
+#' keyword `"standard"` we get four commonly-used typographic marks.
 #'
 #' ```r
 #' sza |>
@@ -594,9 +598,10 @@ opt_footnote_spec <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table with a number of table parts added.
-#' Next, we add row striping to every second row with the `opt_row_striping()`
-#' function.
+#' Use the [`exibble`] dataset to create a **gt** table with a number of table
+#' parts added (using functions like [summary_rows()], [grand_summary_rows()],
+#' and more). Following that, we'll add row striping to every second row with
+#' the `opt_row_striping()` function.
 #'
 #' ```r
 #' exibble |>
@@ -666,9 +671,11 @@ opt_row_striping <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table with a number of table parts added.
-#' The header (consisting of the title and the subtitle) are to be aligned to
-#' the left with the `opt_align_table_header()` function.
+#' Use the [`exibble`] dataset to create a **gt** table with a number of table
+#' parts added (using functions like [summary_rows()], [grand_summary_rows()],
+#' and more). Following that, we'll align the header contents (consisting of the
+#' title and the subtitle) to the left with the `opt_align_table_header()`
+#' function.
 #'
 #' ```r
 #' exibble |>
@@ -748,9 +755,12 @@ opt_align_table_header <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table with a number of table parts added.
-#' Contract the vertical padding across the entire table with
-#' `opt_vertical_padding()`.
+#' Use the [`exibble`] dataset to create a **gt** table with a number of table
+#' parts added (using functions like [summary_rows()], [grand_summary_rows()],
+#' and more). Following that, we'll lessen the amount of vertical padding across
+#' the entire table with `opt_vertical_padding()`. Using a `scale` value of
+#' `0.25` (down from the default of `1`) means the the vertical space will be
+#' greatly reduced, resulting in a more compact table.
 #'
 #'
 #' ```r
@@ -832,9 +842,12 @@ opt_vertical_padding <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table with a number of table parts added.
-#' Expand the horizontal padding across the entire table with
-#' `opt_horizontal_padding()`.
+#' Use the [`exibble`] dataset to create a **gt** table with a number of table
+#' parts added (using functions like [summary_rows()], [grand_summary_rows()],
+#' and more). Following that, we'll increase the amount of horizontal padding
+#' across the entire table with `opt_horizontal_padding()`. Using a `scale`
+#' value of `3` (up from the default of `1`) means the the horizontal space will
+#' be greatly increased, resulting in a more spacious table.
 #'
 #' ```r
 #' exibble |>
@@ -950,9 +963,11 @@ get_padding_option_value_list <- function(scale, type) {
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table with a number of table parts added.
-#' All text in the column labels, the stub, and in all row groups is to be
-#' transformed to all caps using `opt_all_caps()`.
+#' Use the [`exibble`] dataset to create a **gt** table with a number of table
+#' parts added (using functions like [summary_rows()], [grand_summary_rows()],
+#' and more). Following that, we'll ensure that all text in the column labels,
+#' the stub, and in all row groups is transformed to all caps using
+#' `opt_all_caps()`.
 #'
 #' ```r
 #' exibble |>
@@ -1055,9 +1070,11 @@ opt_all_caps <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table with a number of table parts added.
-#' Then, use the `opt_table_lines()` function to haves lines everywhere there
-#' can possibly be lines.
+#' Use the [`exibble`] dataset to create a **gt** table with a number of table
+#' parts added (using functions like [summary_rows()], [grand_summary_rows()],
+#' and more). Following that, we'll use the `opt_table_lines()` function to
+#' generate lines everywhere there can possibly be lines (the default for the
+#' `extent` argument is `"all"`).
 #'
 #' ```r
 #' exibble |>
@@ -1143,8 +1160,10 @@ opt_table_lines <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table with a number of table parts added.
-#' Have an outline wrap around the entire table by using `opt_table_outline()`.
+#' Use the [`exibble`] dataset to create a **gt** table with a number of table
+#' parts added (using functions like [summary_rows()], [grand_summary_rows()],
+#' and more). Following that, let's make it so that we have an outline wrap
+#' around the entire table by using the `opt_table_outline()` function.
 #'
 #' ```r
 #' tab_1 <-
@@ -1479,9 +1498,11 @@ opt_table_font <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table and format the data in both columns.
-#' With `opt_css()`, insert CSS rulesets as as string and be sure to set the
-#' table ID explicitly (here as `"one"`).
+#' Let's use the [`exibble`] dataset to create a simple, two-column **gt** table
+#' (keeping only the `num` and `currency` columns). Through use of the
+#' `opt_css()` function, we can insert CSS rulesets as as string. We need to
+#' ensure that the the table ID is set explicitly (we've done so here with the
+#' ID value of `"one"`, setting it in the [gt()] function).
 #'
 #' ```r
 #' exibble |>
