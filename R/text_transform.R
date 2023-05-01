@@ -441,11 +441,11 @@ text_case_match <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`sp500`] to create a **gt** table. Transform the text in the
-#' `date` column using a function supplied to `text_transform()` (via the `fn`
-#' argument). Note that the `x` in the `fn = function (x)` part consists
-#' entirely of ISO 8601 date strings (which are acceptable as input to the
-#' [vec_fmt_date()] and [vec_fmt_datetime()] functions).
+#' Use a subset of the [`sp500`] dataset to create a **gt** table. Transform the
+#' text in the `date` column using a function supplied to `text_transform()`
+#' (via the `fn` argument). Note that the `x` in the `fn = function (x)` part
+#' consists entirely of ISO 8601 date strings (which are acceptable as input to
+#' the [vec_fmt_date()] and [vec_fmt_datetime()] functions).
 #'
 #' ```r
 #' sp500 |>
