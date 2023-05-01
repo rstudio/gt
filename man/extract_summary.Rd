@@ -21,9 +21,10 @@ descriptive stub labels for the summary rows.
 \section{Examples}{
 
 
-Use \code{\link{sp500}} to create a \strong{gt} table with row groups. Create summary rows
-labeled as \code{min}, \code{max}, and \code{avg} for every row group with \code{\link[=summary_rows]{summary_rows()}}.
-Then, extract the summary rows as a list object.
+Use a modified version of \code{\link{sp500}} the dataset to create a \strong{gt} table with
+row groups and row labels. Create summary rows labeled as \code{min}, \code{max}, and
+\code{avg} for every row group with \code{\link[=summary_rows]{summary_rows()}}. Then, extract the summary
+rows as a list object.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{summary_extracted <-
   sp500 |>

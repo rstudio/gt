@@ -90,8 +90,8 @@ to data cells that satisfy a condition (using \code{tab_style()}).
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_1.png" alt="This image of a table was generated from the first code example in the `tab_style()` help file." style="width:100\%;">
 }}
 
-Use \code{\link{sp500}} to create a \strong{gt} table. Color entire rows of cells based on
-values in a particular column.
+Use a subset of the \code{\link{sp500}} dataset to create a \strong{gt} table. Color entire
+rows of cells based on values in a particular column.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
   dplyr::filter(

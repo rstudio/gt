@@ -95,11 +95,11 @@ multiple computer systems. Any of the following keywords can be used:
 \section{Examples}{
 
 
-Use \code{\link{sp500}} to create a small \strong{gt} table, using \code{\link[=fmt_currency]{fmt_currency()}} to
-provide a dollar sign for the first row of monetary values. Then, set a
-larger font size for the table and use the \code{"Merriweather"} font (from
-\emph{Google Fonts}, via \code{\link[=google_font]{google_font()}}) with two system font fallbacks
-(\code{"Cochin"} and the generic \code{"serif"}).
+Use a subset of the \code{\link{sp500}} dataset to create a small \strong{gt} table. We'll
+use the \code{\link[=fmt_currency]{fmt_currency()}} function to display a dollar sign for the first row
+of monetary values. Then, set a larger font size for the table and use the
+\code{"Merriweather"} font (from \emph{Google Fonts}, via \code{\link[=google_font]{google_font()}}) with two
+system font fallbacks (\code{"Cochin"} and the generic \code{"serif"}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
   dplyr::slice(1:10) |>

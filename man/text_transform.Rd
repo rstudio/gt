@@ -36,11 +36,11 @@ character vector of the same length as the input. Using the construction
 \section{Examples}{
 
 
-Use \code{\link{sp500}} to create a \strong{gt} table. Transform the text in the
-\code{date} column using a function supplied to \code{text_transform()} (via the \code{fn}
-argument). Note that the \code{x} in the \verb{fn = function (x)} part consists
-entirely of ISO 8601 date strings (which are acceptable as input to the
-\code{\link[=vec_fmt_date]{vec_fmt_date()}} and \code{\link[=vec_fmt_datetime]{vec_fmt_datetime()}} functions).
+Use a subset of the \code{\link{sp500}} dataset to create a \strong{gt} table. Transform the
+text in the \code{date} column using a function supplied to \code{text_transform()}
+(via the \code{fn} argument). Note that the \code{x} in the \verb{fn = function (x)} part
+consists entirely of ISO 8601 date strings (which are acceptable as input to
+the \code{\link[=vec_fmt_date]{vec_fmt_date()}} and \code{\link[=vec_fmt_datetime]{vec_fmt_datetime()}} functions).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
   dplyr::slice_head(n = 10) |>

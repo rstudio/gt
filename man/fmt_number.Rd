@@ -215,9 +215,9 @@ useful reference on which locales are supported, we can use the
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{num} column as numeric
-with three decimal places and omit the use of digit separators (with
-\code{use_seps = FALSE}).
+Use the \code{\link{exibble}} dataset to create a \strong{gt} table. With the \code{fmt_number()}
+function, we'll format the \code{num} column to have three decimal places (with
+\code{decimals = 3}) and omit the use of digit separators (with \code{use_seps = FALSE}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   gt() |>
@@ -232,8 +232,10 @@ with three decimal places and omit the use of digit separators (with
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_number_1.png" alt="This image of a table was generated from the first code example in the `fmt_number()` help file." style="width:100\%;">
 }}
 
-Use \code{\link{countrypops}} to create a \strong{gt} table. Format all columns to use
-large-number suffixing with the \code{suffixing = TRUE} option.
+Use a modified version of the \code{\link{countrypops}} dataset to create a \strong{gt}
+table with row labels. Format all columns to use large-number suffixing
+(e.g., where \code{"10,000,000"} becomes \code{"10M"}) with the \code{suffixing = TRUE}
+option.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(country_code_3, year, population) |>

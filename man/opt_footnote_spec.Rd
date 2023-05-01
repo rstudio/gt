@@ -53,10 +53,11 @@ helpful placeholder for the marks).
 \section{Examples}{
 
 
-Use \code{\link{sp500}} to create a \strong{gt} table, adding two footnotes. We can call
-\code{opt_footnote_spec()} to specify that the marks of the footnote reference
-should be superscripts in bold, and, the marks in the footer section should
-be enclosed in parentheses.
+Use a modified version of \code{\link{sp500}} the dataset to create a \strong{gt} table with
+row labels. We'll add two footnotes using the \code{tab_footnote()} function. We
+can call \code{opt_footnote_spec()} to specify that the marks of the footnote
+reference should be superscripts in bold, and, the marks in the footer
+section should be enclosed in parentheses.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
   dplyr::filter(date >= "1987-10-14" & date <= "1987-10-25") |>

@@ -252,9 +252,10 @@ rows were added via \code{summary_rows()} or \code{\link[=grand_summary_rows]{gr
 \section{Examples}{
 
 
-Use \code{\link{sp500}} to create a \strong{gt} table with row groups. Create the summary
-rows labeled \code{min}, \code{max}, and \code{avg} by row group (where each each row group
-is a week number) with the \code{summary_rows()} function.
+Use a modified version of \code{\link{sp500}} dataset to create a \strong{gt} table with row
+groups and row labels. Create the summary rows labeled \code{min}, \code{max}, and
+\code{avg} by row group (where each each row group is a week number) with the
+\code{summary_rows()} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
   dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") |>

@@ -46,11 +46,12 @@ the webfont is not accessible).
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_google_font_1.png" alt="This image of a table was generated from the first code example in the `google_font()` help file." style="width:100\%;">
 }}
 
-Use \code{\link{sp500}} to create a small \strong{gt} table, using \code{\link[=fmt_currency]{fmt_currency()}} to
-provide a dollar sign for the first row of monetary values. Then, set a
-larger font size for the table and use the \code{"Merriweather"} font using the
-\code{google_font()} function (with two font fallbacks: \code{"Cochin"} and the
-catchall \code{"Serif"} group).
+Use a subset of the \code{\link{sp500}} dataset to create a small \strong{gt} table. With
+\code{\link[=fmt_currency]{fmt_currency()}}, we can display a dollar sign for the first row of the
+monetary values. Then, we'll set a larger font size for the table and opt to
+use the \code{"Merriweather"} font by calling \code{google_font()} within
+\code{opt_table_font()}. In cases where that font may not materialize, we include
+two font fallbacks: \code{"Cochin"} and the catchall \code{"Serif"} group.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
   dplyr::slice(1:10) |>

@@ -250,8 +250,9 @@ useful reference on which locales are supported, we can use the
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{currency} column to
-have currency values in euros (\code{"EUR"}).
+Use the \code{\link{exibble}} dataset to create a \strong{gt} table. Using the
+\code{fmt_currency()} function, we'll format values in the \code{currency} column to
+display as currency values in euros (\code{"EUR"}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   gt() |>
@@ -265,7 +266,7 @@ have currency values in euros (\code{"EUR"}).
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_currency_1.png" alt="This image of a table was generated from the first code example in the `fmt_currency()` help file." style="width:100\%;">
 }}
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{num} and \code{currency},
+Use the \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{num} and \code{currency},
 columns, then, format those columns using the \code{"CNY"} and \code{"GBP"} currencies.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>

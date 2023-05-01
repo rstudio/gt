@@ -51,11 +51,11 @@ labels once they have been relabeled.
 \section{Examples}{
 
 
-Use \code{\link{sp500}} to create a \strong{gt} table. We want all the column labels to be
-entirely capitalized versions of the default labels but, instead of using
-\code{\link[=cols_label]{cols_label()}} and rewriting each label manually in capital letters we can
-use \code{cols_label_with()} and instruct it to apply the \code{toupper()} function to
-all column labels.
+Use a subset of the \code{\link{sp500}} dataset to create a \strong{gt} table. We want all
+the column labels to be entirely capitalized versions of the default labels
+but, instead of using \code{\link[=cols_label]{cols_label()}} and rewriting each label manually in
+capital letters we can use \code{cols_label_with()} and instruct it to apply the
+\code{toupper()} function to all column labels.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
   dplyr::filter(
