@@ -1011,9 +1011,10 @@ as_word_tbl_body <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`sp500`] to create a **gt** table with row groups. Create summary rows
-#' labeled as `min`, `max`, and `avg` for every row group with [summary_rows()].
-#' Then, extract the summary rows as a list object.
+#' Use a modified version of [`sp500`] the dataset to create a **gt** table with
+#' row groups and row labels. Create summary rows labeled as `min`, `max`, and
+#' `avg` for every row group with [summary_rows()]. Then, extract the summary
+#' rows as a list object.
 #'
 #' ```{r}
 #' summary_extracted <-
