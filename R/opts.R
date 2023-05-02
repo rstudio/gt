@@ -397,7 +397,7 @@ opt_interactive <- function(
 #' @section Examples:
 #'
 #' Use a summarized version of the [`sza`] dataset to create a **gt** table,
-#' adding three footnotes (with three calls of [tab_foonote()]). We can modify
+#' adding three footnotes (with three calls of [tab_footnote()]). We can modify
 #' the footnote marks to use with the `opt_footnote_marks()` function. With the
 #' keyword `"standard"` we get four commonly-used typographic marks.
 #'
