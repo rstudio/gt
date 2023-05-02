@@ -20,7 +20,7 @@ object to gt_preview()."><meta property="og:image" content="https://gt.rstudio.c
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -122,8 +122,9 @@ deactivated by setting <code>incl_rownums</code> to <code>FALSE</code>.</p>
     
 
 
-<p>Use <code><a href="gtcars.html">gtcars</a></code> to create a <strong>gt</strong> table preview (with only a few of its
-columns). You'll see the first five rows and the last row.</p>
+<p>With three columns from the <code><a href="gtcars.html">gtcars</a></code> dataset, let's create a <strong>gt</strong> table
+preview with the <code>gt_preview()</code> function. You'll get only the first five rows
+and the last row.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">gtcars</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">mfr</span>, <span class="va">model</span>, <span class="va">year</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt_preview.html">gt_preview</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>

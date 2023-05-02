@@ -22,7 +22,7 @@ in col_uncert are hidden from appearing the output table."><meta property="og:im
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -173,11 +173,15 @@ the output table through the <code>hide_columns</code> or <code>autohide</code> 
     
 
 
-<p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table, keeping only the <code>currency</code> and
-<code>num</code> columns. Merge columns into one with a base value and uncertainty
-(after formatting the <code>num</code> column) using the <code>cols_merge_uncert()</code> function.</p>
+<p>Let's use the <code><a href="exibble.html">exibble</a></code> dataset to create a simple, two-column <strong>gt</strong> table
+(keeping only the <code>num</code> and <code>currency</code> columns). We'll format the <code>num</code>
+column with the <code><a href="fmt_number.html">fmt_number()</a></code> function. Next we merge the <code>currency</code> and
+<code>num</code> columns into the <code>currency</code> column; this will contain a base value and
+an uncertainty and it's all done using the <code>cols_merge_uncert()</code> function.
+After the merging process, the column label for the <code>currency</code> column is
+updated with <code><a href="cols_label.html">cols_label()</a></code> to better describe the content.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">currency</span>, <span class="va">num</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">num</span>, <span class="va">currency</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">7</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span></span>

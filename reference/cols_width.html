@@ -22,7 +22,7 @@ dimension."><meta property="og:image" content="https://gt.rstudio.com/logo.svg">
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -132,10 +132,10 @@ and <code>container.width</code> arguments within <code><a href="tab_options.htm
     
 
 
-<p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table. We can specify the widths of
-columns with <code>cols_width()</code>. This is done with named arguments in <code>...</code>,
-specifying the exact widths for table columns (using <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code> at the
-end will capture all remaining columns).</p>
+<p>Use select columns from the <code><a href="exibble.html">exibble</a></code> dataset to create a <strong>gt</strong> table. We
+can specify the widths of columns with <code>cols_width()</code>. This is done with
+named arguments in <code>...</code>, specifying the exact widths for table columns
+(using <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code> at the end will capture all remaining columns).</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span></span>
 <span>    <span class="va">num</span>, <span class="va">char</span>, <span class="va">date</span>,</span>

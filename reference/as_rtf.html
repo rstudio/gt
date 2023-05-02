@@ -14,7 +14,7 @@ file that can be opened by RTF readers."><meta property="og:image" content="http
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -112,8 +112,9 @@ default, this is <code>TRUE</code>.</p></dd>
     
 
 
-<p>Use <code><a href="gtcars.html">gtcars</a></code> to create a <strong>gt</strong> table. Add a header and then export as RTF
-code.</p>
+<p>Use a subset of the <code><a href="gtcars.html">gtcars</a></code> dataset to create a <strong>gt</strong> table. Add a header
+with <code><a href="tab_header.html">tab_header()</a></code> and then export the table as RTF code using the
+<code>as_rtf()</code> function.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">tab_rtf</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">gtcars</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">mfr</span>, <span class="va">model</span><span class="op">)</span> <span class="op">|&gt;</span></span>

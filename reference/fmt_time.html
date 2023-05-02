@@ -16,7 +16,7 @@ always results in the formatting of 00:00:00)."><meta property="og:image" conten
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -218,9 +218,10 @@ can use the <code><a href="info_locales.html">info_locales()</a></code> function
     
 
 
-<p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table. Keep only the <code>date</code> and <code>time</code>
-columns. Format the <code>time</code> column to have times formatted as <code>hms_p</code> (time
-style <code>3</code>).</p>
+<p>Let's use the <code><a href="exibble.html">exibble</a></code> dataset to create a simple, two-column <strong>gt</strong> table
+(keeping only the <code>date</code> and <code>time</code> columns). Format the <code>time</code> column with
+the <code>fmt_time()</code> function to display times formatted with the <code>"h_m_s_p"</code>
+time style.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">time</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -229,10 +230,12 @@ style <code>3</code>).</p>
 <span>    time_style <span class="op">=</span> <span class="st">"h_m_s_p"</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_time_1.png" alt="This image of a table was generated from the first code example in the `fmt_time()` help file." style="width:100%;"></p>
-<p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table. Keep only the <code>date</code> and <code>time</code>
-columns. Format the <code>time</code> column to have mixed time formats (times after
-16:00 will be different than the others because of the expressions used
-in the <code>rows</code> argument).</p>
+<p>Again using the <code><a href="exibble.html">exibble</a></code> dataset, let's format the <code>time</code> column to have
+mixed time formats, where times after 16:00 will be different than the others
+because of the expressions used in the <code>rows</code> argument. This will involve two
+calls of <code>fmt_time()</code> with different statements provided for <code>rows</code>. In the
+first call (times after 16:00) the time style <code>"h_m_s_p"</code> is used; for the
+second call, <code>"h_m_p"</code> is the named time style supplied to <code>time_style</code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">time</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -247,10 +250,10 @@ in the <code>rows</code> argument).</p>
 <span>    time_style <span class="op">=</span> <span class="st">"h_m_p"</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_time_2.png" alt="This image of a table was generated from the second code example in the `fmt_time()` help file." style="width:100%;"></p>
-<p>Use <code><a href="exibble.html">exibble</a></code> to create another <strong>gt</strong> table, this time only with the
-<code>time</code> column. Format the <code>time</code> column to use the <code>"EBhms"</code> time style
-(which is one of the 'flexible' styles). Also, set the locale to <code>"sv"</code> to
-get the dates in Swedish.</p>
+<p>Use the <code><a href="exibble.html">exibble</a></code> dataset to create a single-column <strong>gt</strong> table (with only
+the <code>time</code> column). Format the time values using the <code>"EBhms"</code> time style
+(which is one of the 'flexible' styles). Also, we'll set the locale to <code>"sv"</code>
+to get the times in Swedish.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">time</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>

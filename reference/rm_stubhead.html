@@ -22,7 +22,7 @@ use even if there is no stubhead label in the input gt_tbl object."><meta proper
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -102,9 +102,9 @@ use even if there is no stubhead label in the input <code>gt_tbl</code> object.<
     
 
 
-<p>Use <code><a href="gtcars.html">gtcars</a></code> to create a <strong>gt</strong> table. With <code><a href="tab_stubhead.html">tab_stubhead()</a></code>, it's possible
-to add a stubhead label. This appears in the top-left and can be used to
-describe what is in the stub.</p>
+<p>Using the <code><a href="gtcars.html">gtcars</a></code> datset, we'll create a <strong>gt</strong> table. With the
+<code><a href="tab_stubhead.html">tab_stubhead()</a></code> function, it's possible to add a stubhead label. This
+appears in the top-left and can be used to describe what is in the stub.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">gtcars</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">year</span>, <span class="va">hp</span>, <span class="va">trq</span><span class="op">)</span> <span class="op">|&gt;</span></span>

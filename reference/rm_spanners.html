@@ -30,7 +30,7 @@ instead of explicit ID values."><meta property="og:image" content="https://gt.rs
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -130,10 +130,10 @@ removed. Any input given to <code>level</code> will mean that <code>spanners</co
     
 
 
-<p>Use <code><a href="gtcars.html">gtcars</a></code> to create a <strong>gt</strong> table. With the <code><a href="tab_spanner.html">tab_spanner()</a></code> function,
-we can group several related columns together under spanner column labels. In
-this example, that is done with several calls of <code><a href="tab_spanner.html">tab_spanner()</a></code> in order to
-create two levels of spanner column labels.</p>
+<p>Use a portion of the <code><a href="gtcars.html">gtcars</a></code> dataset to create a <strong>gt</strong> table. With the
+<code><a href="tab_spanner.html">tab_spanner()</a></code> function, we can group several related columns together under
+a spanner column. In this example, that is done with several calls of
+<code><a href="tab_spanner.html">tab_spanner()</a></code> in order to create two levels of spanner column labels.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">gtcars</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span></span>

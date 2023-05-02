@@ -22,7 +22,7 @@ argument of fmt_currency() will take precedence."><meta property="og:image" cont
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -120,8 +120,12 @@ required each and every context.</p>
     
 
 
-<p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table. Format the <code>currency</code> column to
-have currency values in guilder (a defunct Dutch currency).</p>
+<p>Use the <code><a href="exibble.html">exibble</a></code> dataset to create a <strong>gt</strong> table. Within the
+<code><a href="fmt_currency.html">fmt_currency()</a></code> call, we'll format the <code>currency</code> column to have currency
+values in guilder (a defunct Dutch currency). We can register this custom
+currency with the <code>currency()</code> helper function, supplying the <code>"&amp;fnof;"</code> HTML
+entity for <code>html</code> outputs and using <code>"f"</code> for any other type of <strong>gt</strong>
+output.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_currency.html">fmt_currency</a></span><span class="op">(</span></span>

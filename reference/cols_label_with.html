@@ -30,7 +30,7 @@ function (e.g., function(x) tools::toTitleCase(x))."><meta property="og:image" c
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -142,11 +142,11 @@ labels once they have been relabeled.</p>
     
 
 
-<p>Use <code><a href="sp500.html">sp500</a></code> to create a <strong>gt</strong> table. We want all the column labels to be
-entirely capitalized versions of the default labels but, instead of using
-<code><a href="cols_label.html">cols_label()</a></code> and rewriting each label manually in capital letters we can
-use <code>cols_label_with()</code> and instruct it to apply the <code><a href="https://rdrr.io/r/base/chartr.html" class="external-link">toupper()</a></code> function to
-all column labels.</p>
+<p>Use a subset of the <code><a href="sp500.html">sp500</a></code> dataset to create a <strong>gt</strong> table. We want all
+the column labels to be entirely capitalized versions of the default labels
+but, instead of using <code><a href="cols_label.html">cols_label()</a></code> and rewriting each label manually in
+capital letters we can use <code>cols_label_with()</code> and instruct it to apply the
+<code><a href="https://rdrr.io/r/base/chartr.html" class="external-link">toupper()</a></code> function to all column labels.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">sp500</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span></span>
 <span>    <span class="va">date</span> <span class="op">&gt;=</span> <span class="st">"2015-12-01"</span> <span class="op">&amp;</span></span>
@@ -156,13 +156,13 @@ all column labels.</p>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/cols_label_with.html">cols_label_with</a></span><span class="op">(</span>fn <span class="op">=</span> <span class="va">toupper</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_with_1.png" alt="This image of a table was generated from the first code example in the `cols_label_with()` help file." style="width:100%;"></p>
-<p>Use <code><a href="countrypops.html">countrypops</a></code> to create a <strong>gt</strong> table. To improve the presentation of
-the table, we are again going to change the default column labels via
-function calls supplied within <code>cols_label_with()</code>. We can, if we prefer,
-apply multiple types of column label changes in sequence with multiple calls
-of <code>cols_label_with()</code>. Here, we use the <code>make_clean_names()</code> functions from
-the <strong>janitor</strong> package and follow up with the removal of a numeral with
-<code><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub()</a></code>.</p>
+<p>Use the <code><a href="countrypops.html">countrypops</a></code> dataset to create a <strong>gt</strong> table. To improve the
+presentation of the table, we are again going to change the default column
+labels via function calls supplied within <code>cols_label_with()</code>. We can, if we
+prefer, apply multiple types of column label changes in sequence with
+multiple calls of <code>cols_label_with()</code>. Here, we use the <code>make_clean_names()</code>
+functions from the <strong>janitor</strong> package and follow up with the removal of a
+numeral with <code><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub()</a></code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">countrypops</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">year</span> <span class="op">==</span> <span class="fl">2021</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"^C"</span>, <span class="va">country_code_3</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>

@@ -52,7 +52,7 @@ formatting specific to the chosen locale
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -333,8 +333,9 @@ useful reference on which locales are supported, we can use the
     
 
 
-<p>Use <code><a href="pizzaplace.html">pizzaplace</a></code> to create a <strong>gt</strong> table. Format the <code>frac_of_quota</code>
-column to display values as percentages.</p>
+<p>Use a summarized version of the <code><a href="pizzaplace.html">pizzaplace</a></code> dataset to create a <strong>gt</strong>
+table. With the <code>fmt_percent()</code> function, we can format the <code>frac_of_quota</code>
+column to display values as percentages (to one decimal place).</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">pizzaplace</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>month <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substr</a></span><span class="op">(</span><span class="va">date</span>, <span class="fl">6</span>, <span class="fl">7</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span> <span class="op">|&gt;</span></span>

@@ -22,7 +22,7 @@ to the table)."><meta property="og:image" content="https://gt.rstudio.com/logo.s
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -137,8 +137,10 @@ can be targeted by enclosing several <code>cells_*()</code> helper functions in 
     
 
 
-<p>Use <code><a href="gtcars.html">gtcars</a></code> to create a <strong>gt</strong> table. Add a source note and style the
-source notes section.</p>
+<p>Let's use a subset of the <code><a href="gtcars.html">gtcars</a></code> dataset to create a <strong>gt</strong> table. Add a
+source note (with <code><a href="tab_source_note.html">tab_source_note()</a></code>) and style the source notes section
+inside the <code><a href="tab_style.html">tab_style()</a></code> call by using the <code>cells_source_notes()</code> helper
+function for the targeting via the <code>locations</code> argument.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">gtcars</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">mfr</span>, <span class="va">model</span>, <span class="va">msrp</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span></span>

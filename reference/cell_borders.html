@@ -22,7 +22,7 @@ borders can then be modified.'><meta property="og:image" content="https://gt.rst
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -115,8 +115,11 @@ supplying <code>NULL</code> to any of <code>color</code>, <code>style</code>, or
     
 
 
-<p>Add horizontal border lines for all table body rows in <code><a href="exibble.html">exibble</a></code> using
-<code><a href="tab_style.html">tab_style()</a></code> and <code>cell_borders()</code>.</p>
+<p>We can add horizontal border lines for all table body rows in a <strong>gt</strong> table
+based on the <code><a href="exibble.html">exibble</a></code> dataset. For this, we need to use <code><a href="tab_style.html">tab_style()</a></code>
+(targeting all cells in the table body with <code><a href="cells_body.html">cells_body()</a></code>) in conjunction
+with <code>cell_borders()</code> in the <code>style</code> argument. Both top and bottom borders
+will be added as <code>"solid"</code> and <code>"red"</code> lines with a line width of 1.5 px.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
@@ -126,15 +129,12 @@ supplying <code>NULL</code> to any of <code>color</code>, <code>style</code>, or
 <span>      weight <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">1.5</span><span class="op">)</span>,</span>
 <span>      style <span class="op">=</span> <span class="st">"solid"</span></span>
 <span>    <span class="op">)</span>,</span>
-<span>    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span></span>
-<span>      columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>      rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span></span>
-<span>    <span class="op">)</span></span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cell_borders_1.png" alt="This image of a table was generated from the first code example in the `cell_borders()` help file." style="width:100%;"></p>
-<p>Incorporate different horizontal and vertical borders at several locations.
-This uses multiple <code>cell_borders()</code> and <code><a href="cells_body.html">cells_body()</a></code> calls within
-<code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>s.</p>
+<p>It's possible to incorporate different horizontal and vertical (<code>"left"</code> and
+<code>"right"</code>) borders at several different locations. This uses multiple
+<code>cell_borders()</code> and <code><a href="cells_body.html">cells_body()</a></code> calls within their own respective lists.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>

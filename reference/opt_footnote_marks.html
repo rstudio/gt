@@ -16,7 +16,7 @@ serves as a shortcut for using tab_options(footnotes.marks = {marks})"><meta pro
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -121,8 +121,10 @@ more symbols, making six</p></li>
     
 
 
-<p>Use <code><a href="sza.html">sza</a></code> to create a <strong>gt</strong> table, adding three footnotes. Call
-<code>opt_footnote_marks()</code> to specify which footnote marks to use.</p>
+<p>Use a summarized version of the <code><a href="sza.html">sza</a></code> dataset to create a <strong>gt</strong> table,
+adding three footnotes (with three calls of <code><a href="tab_footnote.html">tab_footnote()</a></code>). We can modify
+the footnote marks to use with the <code>opt_footnote_marks()</code> function. With the
+keyword <code>"standard"</code> we get four commonly-used typographic marks.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">sza</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">latitude</span> <span class="op">==</span> <span class="fl">30</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">tst</span><span class="op">)</span> <span class="op">|&gt;</span></span>

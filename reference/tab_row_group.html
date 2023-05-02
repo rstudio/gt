@@ -28,7 +28,7 @@ tab_options(row_group.default_label = &quot;&quot;) can be used."><meta property
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -144,9 +144,10 @@ function will stop if <code>id</code> isn't unique).</p></dd>
     
 
 
-<p>Use <code><a href="gtcars.html">gtcars</a></code> to create a <strong>gt</strong> table and use <code>tab_row_group()</code> to add two
-row groups with the labels: <code>numbered</code> and <code>NA</code>. The row group with the <code>NA</code>
-label ends up being rendered without a label at all.</p>
+<p>Use the <code><a href="gtcars.html">gtcars</a></code> dataset to create a <strong>gt</strong> table. With the
+<code>tab_row_group()</code> function we can add two row groups with the labels
+<code>"numbered"</code> and <code>NA</code>. The row group with the <code>NA</code> label ends up being
+rendered without a label at all.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">gtcars</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">year</span>, <span class="va">hp</span>, <span class="va">trq</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -156,9 +157,10 @@ label ends up being rendered without a label at all.</p>
 <span>    rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches</a></span><span class="op">(</span><span class="st">"^[0-9]"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_row_group_1.png" alt="This image of a table was generated from the first code example in the `tab_row_group()` help file." style="width:100%;"></p>
-<p>Use <code><a href="gtcars.html">gtcars</a></code> to create a <strong>gt</strong> table. Add two row groups with the labels
-<code>powerful</code> and <code>super powerful</code>. The distinction between the groups is
-whether <code>hp</code> is lesser or greater than <code>600</code> (governed by the expressions
+<p>Use the <code><a href="gtcars.html">gtcars</a></code> dataset to create a <strong>gt</strong> table. Add two row groups with
+the labels <code>"powerful"</code> and <code>"super powerful"</code> (done with two calls of
+<code>tab_row_group()</code>). The distinction between the groups is whether <code>hp</code> is
+lesser or greater than <code>600</code> (and this is governed by the expressions
 provided to the <code>rows</code> argument).</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">gtcars</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">year</span>, <span class="va">hp</span>, <span class="va">trq</span><span class="op">)</span> <span class="op">|&gt;</span></span>

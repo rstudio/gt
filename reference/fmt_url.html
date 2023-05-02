@@ -32,7 +32,7 @@ text."><meta property="og:image" content="https://gt.rstudio.com/logo.svg"><!-- 
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -229,11 +229,10 @@ more complex predicate expression.</p>
     
 
 
-<p>Use the <code><a href="towny.html">towny</a></code> dataset to create a <strong>gt</strong> table. After some major
-<strong>dplyr</strong>ing to get a nicely formatted data table, we use the <code>fmt_url()</code>
-function on the <code>website</code> column to generate navigable links to websites.
-By default the links are underlined and the color will be chosen for you
-(it's dark cyan).</p>
+<p>Using a portion of the <code><a href="towny.html">towny</a></code> dataset, let's create a <strong>gt</strong> table. We can
+use the <code>fmt_url()</code> function on the <code>website</code> column to generate navigable
+links to websites. By default the links are underlined and the color will be
+chosen for you (it's dark cyan).</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">towny</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">csd_type</span> <span class="op">==</span> <span class="st">"city"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">population_2021</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -352,7 +351,7 @@ you to handle them with <code><a href="sub_missing.html">sub_missing()</a></code
     <h2 id="function-introduced">Function Introduced<a class="anchor" aria-label="anchor" href="#function-introduced"></a></h2>
     
 
-<p><em>In Development</em></p>
+<p><code>v0.9.0</code> (Mar 31, 2023)</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

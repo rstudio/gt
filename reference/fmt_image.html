@@ -30,7 +30,7 @@ separator to be applied between images."><meta property="og:image" content="http
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -205,17 +205,17 @@ more complex predicate expression.</p>
     
 
 
-<p>Use the <code><a href="metro.html">metro</a></code> dataset to create a <strong>gt</strong> table. We will only include a
-few columns and rows from that table. The <code>lines</code> and <code>connect_rer</code> columns
-have comma-separated listings of numbers/letters (corresponding to lines
-served at each station). We have a directory SVG graphics for all of these
-lines in the package (the path for the image directory can be accessed via
-<code>system.file("metro_svg", package = "gt")</code>), and the filenames roughly
-correspond to the data in those two columns. The <code>fmt_image()</code> function can
-be used with these inputs since the <code>path</code> and <code>file_pattern</code> arguments allow
-us to compose complete and valid file locations. What you get from this are
-sequences of images in the table cells, taken from the referenced graphics
-files on disk.</p>
+<p>Using a small portion of <code><a href="metro.html">metro</a></code> dataset, let's create a <strong>gt</strong> table. We
+will only include a few columns and rows from that table. The <code>lines</code> and
+<code>connect_rer</code> columns have comma-separated listings of numbers/letters
+(corresponding to lines served at each station). We have a directory SVG
+graphics for all of these lines in the package (the path for the image
+directory can be accessed via <code>system.file("metro_svg", package = "gt")</code>),
+and the filenames roughly correspond to the data in those two columns. The
+<code>fmt_image()</code> function can be used with these inputs since the <code>path</code> and
+<code>file_pattern</code> arguments allow us to compose complete and valid file
+locations. What you get from this are sequences of images in the table cells,
+taken from the referenced graphics files on disk.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">metro</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">caption</span>, <span class="va">lines</span>, <span class="va">connect_rer</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -269,7 +269,7 @@ files on disk.</p>
     <h2 id="function-introduced">Function Introduced<a class="anchor" aria-label="anchor" href="#function-introduced"></a></h2>
     
 
-<p><em>In Development</em></p>
+<p><code>v0.9.0</code> (Mar 31, 2023)</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

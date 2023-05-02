@@ -18,7 +18,7 @@ function pct()."><meta property="og:image" content="https://gt.rstudio.com/logo.
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -98,8 +98,10 @@ pixels (e.g., <code>table.font.size</code>).</p></dd>
     
 
 
-<p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table. Use the <code>px()</code> helper to define the
-font size for the column labels.</p>
+<p>Use the <code><a href="exibble.html">exibble</a></code> dataset to create a <strong>gt</strong> table. Inside of the
+<code><a href="cell_text.html">cell_text()</a></code> call (which is itself inside of <code><a href="tab_style.html">tab_style()</a></code>), we'll use the
+<code>px()</code> helper function to define the font size for the column labels in units
+of pixels.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>

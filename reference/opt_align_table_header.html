@@ -18,7 +18,7 @@ convenient shortcut for &amp;lt;gt_tbl&amp;gt; |&amp;gt; tab_options(heading.ali
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -101,9 +101,11 @@ header. Options are <code>"left"</code> (the default), <code>"center"</code>, or
     
 
 
-<p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table with a number of table parts added.
-The header (consisting of the title and the subtitle) are to be aligned to
-the left with the <code>opt_align_table_header()</code> function.</p>
+<p>Use the <code><a href="exibble.html">exibble</a></code> dataset to create a <strong>gt</strong> table with a number of table
+parts added (using functions like <code><a href="summary_rows.html">summary_rows()</a></code>, <code><a href="grand_summary_rows.html">grand_summary_rows()</a></code>,
+and more). Following that, we'll align the header contents (consisting of the
+title and the subtitle) to the left with the <code>opt_align_table_header()</code>
+function.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"row"</span>, groupname_col <span class="op">=</span> <span class="st">"group"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/summary_rows.html">summary_rows</a></span><span class="op">(</span></span>

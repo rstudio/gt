@@ -24,7 +24,7 @@ undergoing transformation, you need to use the x variable."><meta property="og:i
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -126,11 +126,14 @@ wish to make the transformation happen at different locations.</p></dd>
     
 
 
-<p>Use <code><a href="metro.html">metro</a></code> to create a <strong>gt</strong> table. In the <code>connect_rer</code> column,
-perform a count of pattern matches with <code><a href="https://stringr.tidyverse.org/reference/str_count.html" class="external-link">stringr::str_count()</a></code> and determine
-which cells have 1, 2, or 3 matched patterns. For each of these cases,
-provide descriptive replacement text. Here, we use a <code>.default</code> to replace
-the non-matched cases with an empty string.</p>
+<p>Use a portion of the <code><a href="metro.html">metro</a></code> dataset to create a <strong>gt</strong> table. We'll use
+the <code>text_case_when()</code> function to supply pairs of predicate statements and
+replacement text. For the <code>connect_rer</code> column, we will perform a count of
+pattern matches with <code><a href="https://stringr.tidyverse.org/reference/str_count.html" class="external-link">stringr::str_count()</a></code> and determine which cells have 1,
+2, or 3 matched patterns. For each of these cases, descriptive replacement
+text is provided. Here, we use a <code>.default</code> value to replace the non-matched
+cases with an empty string (<code>""</code>). Finally, we use <code><a href="cols_label.html">cols_label()</a></code> to modify
+the labels of the three columns.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">metro</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">passengers</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">lines</span>, <span class="va">connect_rer</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -159,7 +162,7 @@ the non-matched cases with an empty string.</p>
     <h2 id="function-introduced">Function Introduced<a class="anchor" aria-label="anchor" href="#function-introduced"></a></h2>
     
 
-<p><em>In Development</em></p>
+<p><code>v0.9.0</code> (Mar 31, 2023)</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

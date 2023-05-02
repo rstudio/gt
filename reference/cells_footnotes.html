@@ -22,7 +22,7 @@ change made to the table)."><meta property="og:image" content="https://gt.rstudi
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -137,8 +137,11 @@ can be targeted by enclosing several <code>cells_*()</code> helper functions in 
     
 
 
-<p>Use <code><a href="sza.html">sza</a></code> to create a <strong>gt</strong> table. Color the <code>sza</code> column using the
-<code><a href="data_color.html">data_color()</a></code> function, add a footnote and also style the footnotes section.</p>
+<p>Using a subset of the <code><a href="sza.html">sza</a></code> dataset, let's create a <strong>gt</strong> table. We'd like
+to color the <code>sza</code> column so that's done with the <code><a href="data_color.html">data_color()</a></code> function. We
+can add a footnote through the <code><a href="tab_footnote.html">tab_footnote()</a></code> function and we can also
+style the footnotes section. The styling is done through the use of the
+<code><a href="tab_style.html">tab_style()</a></code> function and to target the footnotes we use <code>locations = cells_footnotes()</code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">sza</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span></span>
 <span>    <span class="va">latitude</span> <span class="op">==</span> <span class="fl">20</span> <span class="op">&amp;</span></span>

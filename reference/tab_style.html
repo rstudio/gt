@@ -44,7 +44,7 @@ the cell borders (cell_borders())
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -155,15 +155,18 @@ title, etc.).</p></dd>
     
 
 
-<p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table. Add styles that are to be applied
-to data cells that satisfy a condition (using <code>tab_style()</code>).</p>
+<p>Let's use the <code><a href="exibble.html">exibble</a></code> dataset to create a simple, two-column <strong>gt</strong> table
+(keeping only the <code>num</code> and <code>currency</code> columns). With the <code>tab_style()</code>
+function (called twice), we'll selectively add style to the values formatted
+by <code><a href="fmt_number.html">fmt_number()</a></code>. In the <code>style</code> argument of each <code>tab_style()</code> call, we
+can define multiple types of styling with the <code><a href="cell_fill.html">cell_fill()</a></code> and <code><a href="cell_text.html">cell_text()</a></code>
+helper functions (enclosed in a list). The cells to be targeted for styling
+require the use of helper functions like <code><a href="cells_body.html">cells_body()</a></code>, which is used here
+with different columns and rows being targeted.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">num</span>, <span class="va">currency</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">num</span>, <span class="va">currency</span><span class="op">)</span>,</span>
-<span>    decimals <span class="op">=</span> <span class="fl">1</span></span>
-<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span>decimals <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
 <span>    style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
 <span>      <span class="fu"><a href="../reference/cell_fill.html">cell_fill</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"lightcyan"</span><span class="op">)</span>,</span>
@@ -185,8 +188,10 @@ to data cells that satisfy a condition (using <code>tab_style()</code>).</p>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_1.png" alt="This image of a table was generated from the first code example in the `tab_style()` help file." style="width:100%;"></p>
-<p>Use <code><a href="sp500.html">sp500</a></code> to create a <strong>gt</strong> table. Color entire rows of cells based on
-values in a particular column.</p>
+<p>Let's use a subset of the <code><a href="sp500.html">sp500</a></code> dataset to create a different <strong>gt</strong>
+table. Here, we'll color the background of entire rows of body cells and do
+so on the basis of value expressions involving the <code>open</code> and <code>close</code>
+columns.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">sp500</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span></span>
 <span>    <span class="va">date</span> <span class="op">&gt;=</span> <span class="st">"2015-12-01"</span> <span class="op">&amp;</span></span>
@@ -206,9 +211,12 @@ values in a particular column.</p>
 <span>    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span>rows <span class="op">=</span> <span class="va">open</span> <span class="op">&gt;</span> <span class="va">close</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_2.png" alt="This image of a table was generated from the second code example in the `tab_style()` help file." style="width:100%;"></p>
-<p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table. Replace missing values with the
-<code><a href="sub_missing.html">sub_missing()</a></code> function and then add styling to the <code>char</code> column with
-<code><a href="cell_fill.html">cell_fill()</a></code> and with a CSS style declaration.</p>
+<p>With another two-column table based on the <code><a href="exibble.html">exibble</a></code> dataset, let's create
+a <strong>gt</strong> table. First, we'll replace missing values with the <code><a href="sub_missing.html">sub_missing()</a></code>
+function. Next, we'll add styling to the <code>char</code> column. This styling will be
+HTML-specific and involves (within a list): (1) a <code><a href="cell_fill.html">cell_fill()</a></code> call (to set
+a <code>"lightcyan"</code> background), and (2) a string containing with a CSS style
+declaration (<code>"font-variant: small-caps;"</code>).</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">char</span>, <span class="va">fctr</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>

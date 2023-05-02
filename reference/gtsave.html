@@ -14,7 +14,7 @@ filename, producing either an HTML, PDF, PNG, LaTeX, or RTF file."><meta propert
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -141,8 +141,9 @@ package needs to be installed before attempting to save any table as a
     
 
 
-<p>Use <code><a href="gtcars.html">gtcars</a></code> to create a <strong>gt</strong> table. Add a stubhead label with the
-<code><a href="tab_stubhead.html">tab_stubhead()</a></code> function to describe what is in the stub.</p>
+<p>Using a small subset of the <code><a href="gtcars.html">gtcars</a></code> dataset, we can create a <strong>gt</strong> table
+with row labels. We'll add a stubhead label with the <code><a href="tab_stubhead.html">tab_stubhead()</a></code>
+function to describe what is in the stub.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">tab_1</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">gtcars</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">year</span>, <span class="va">hp</span>, <span class="va">trq</span><span class="op">)</span> <span class="op">|&gt;</span></span>

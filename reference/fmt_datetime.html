@@ -18,7 +18,7 @@ in the ISO 8601 form of YYYY-MM-DD HH:MM:SS or YYYY-MM-DD)."><meta property="og:
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -698,33 +698,34 @@ can use the <code><a href="info_locales.html">info_locales()</a></code> function
     
 
 
-<p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table. Keep only the <code>datetime</code> column.
-Format the column to have dates formatted with the <code>"month_day_year"</code> style
-and times with the <code>"h_m_s_p"</code> 12-hour time style.</p>
+<p>Use the <code><a href="exibble.html">exibble</a></code> dataset to create a single-column <strong>gt</strong> table (with only
+the <code>datetime</code> column). With <code>fmt_datetime()</code> we'll format the <code>datetime</code>
+column to have dates formatted with the <code>"month_day_year"</code> style and times
+with the <code>"h_m_s_p"</code> 12-hour time style.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">datetime</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_datetime.html">fmt_datetime</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="va">datetime</span>,</span>
 <span>    date_style <span class="op">=</span> <span class="st">"month_day_year"</span>,</span>
 <span>    time_style <span class="op">=</span> <span class="st">"h_m_s_p"</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_datetime_1.png" alt="This image of a table was generated from the first code example in the `fmt_datetime()` help file." style="width:100%;"></p>
-<p>Using the same input table, we can use flexible date and time styles. Two
-that work well together are <code>"MMMEd"</code> and <code>"Hms"</code>. These will mutate
-depending on the locale. Let's use the default locale for the first 3 rows
-and the Danish locale (<code>"da"</code>) for the remaining rows.</p>
+<p>Using the same input table, we can use <code>fmt_datetime()</code> with flexible date
+and time styles. Two that work well together are <code>"MMMEd"</code> and <code>"Hms"</code>. These
+date and time styles will, being flexible, create outputs that conform to the
+locale value given to the <code>locale</code> argument. Let's use two calls of
+<code>fmt_datetime()</code>: the first will format all rows in <code>datetime</code> to the Danish
+locale (with <code>locale = "da"</code>) and the second call will target the first three
+rows with the same formatting, but in the default locale (which is <code>"en"</code>).</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">datetime</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_datetime.html">fmt_datetime</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="va">datetime</span>,</span>
 <span>    date_style <span class="op">=</span> <span class="st">"MMMEd"</span>,</span>
 <span>    time_style <span class="op">=</span> <span class="st">"Hms"</span>,</span>
 <span>    locale <span class="op">=</span> <span class="st">"da"</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_datetime.html">fmt_datetime</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="va">datetime</span>,</span>
 <span>    rows <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,</span>
 <span>    date_style <span class="op">=</span> <span class="st">"MMMEd"</span>,</span>
 <span>    time_style <span class="op">=</span> <span class="st">"Hms"</span></span>
@@ -739,7 +740,6 @@ zone formatting. Let's provide a time zone ID (<code>"America/Vancouver"</code>)
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">datetime</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_datetime.html">fmt_datetime</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="va">datetime</span>,</span>
 <span>    format <span class="op">=</span> <span class="st">"EEEE, MMMM d, y 'at' h:mm a (zzzz)"</span>,</span>
 <span>    tz <span class="op">=</span> <span class="st">"America/Vancouver"</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>

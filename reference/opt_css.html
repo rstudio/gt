@@ -16,7 +16,7 @@ as a vector of lines or as a single string."><meta property="og:image" content="
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -112,9 +112,11 @@ already-defined CSS.</p></dd>
     
 
 
-<p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table and format the data in both columns.
-With <code>opt_css()</code>, insert CSS rulesets as as string and be sure to set the
-table ID explicitly (here as <code>"one"</code>).</p>
+<p>Let's use the <code><a href="exibble.html">exibble</a></code> dataset to create a simple, two-column <strong>gt</strong> table
+(keeping only the <code>num</code> and <code>currency</code> columns). Through use of the
+<code>opt_css()</code> function, we can insert CSS rulesets as as string. We need to
+ensure that the the table ID is set explicitly (we've done so here with the
+ID value of <code>"one"</code>, setting it in the <code><a href="gt.html">gt()</a></code> function).</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">num</span>, <span class="va">currency</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>id <span class="op">=</span> <span class="st">"one"</span><span class="op">)</span> <span class="op">|&gt;</span></span>

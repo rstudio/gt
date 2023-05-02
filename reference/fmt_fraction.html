@@ -44,7 +44,7 @@ formatting specific to the chosen locale
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -287,8 +287,12 @@ useful reference on which locales are supported, we can use the
     
 
 
-<p>Use <code><a href="pizzaplace.html">pizzaplace</a></code> to create a <strong>gt</strong> table. Format the <code>f_sold</code> and
-<code>f_income</code> columns to display fractions.</p>
+<p>Using a summarized version of the <code><a href="pizzaplace.html">pizzaplace</a></code> dataset, let's create a
+<strong>gt</strong> table. With the <code>fmt_fraction()</code> function we can format the <code>f_sold</code>
+and <code>f_income</code> columns to display fractions. As for how the fractions are
+represented, we are electing to use <code>accuracy = 10</code>. This gives all fractions
+as tenths. We won't simplify the fractions (by using <code>simplify = FALSE</code>) and
+this means that a fraction like <code>5/10</code> won't become <code>1/2</code>. With <code>layout = "diagonal"</code>, we get a diagonal display of all fractions.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">pizzaplace</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">type</span>, <span class="va">size</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span></span>

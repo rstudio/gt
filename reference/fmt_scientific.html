@@ -48,7 +48,7 @@ formatting specific to the chosen locale
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -293,9 +293,11 @@ useful reference on which locales are supported, we can use the
     
 
 
-<p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table. Format the <code>num</code> column as
-partially numeric  and partially in scientific notation (using the
-<code>num &gt; 500</code> and <code>num &lt;= 500</code> expressions in the respective <code>rows</code> arguments).</p>
+<p>Use the <code><a href="exibble.html">exibble</a></code> dataset to create a <strong>gt</strong> table. Format the <code>num</code> column
+as partially numeric and partially in scientific notation. This is done with
+two separate calls of <code><a href="fmt_number.html">fmt_number()</a></code> and <code>fmt_scientific()</code>. We'll use the
+expressions <code>num &gt; 500</code> and <code>num &lt;= 500</code> in the functions' respective <code>rows</code>
+arguments.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span></span>

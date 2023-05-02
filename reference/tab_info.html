@@ -34,7 +34,7 @@ retrieval of the necessary values."><meta property="og:image" content="https://g
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -120,10 +120,12 @@ retrieval of the necessary values.</p>
     
 
 
-<p>Use <code><a href="gtcars.html">gtcars</a></code> to create a <strong>gt</strong> table. Use the <code><a href="tab_spanner.html">tab_spanner()</a></code> function to
-group two columns together under a spanner column with the ID and label
-<code>"performance"</code>. Finally, use the <code>tab_info()</code> function to get a table that
-summarizes the ID values and their label text for all parts of the table.</p>
+<p>Let's use a portion of the <code><a href="gtcars.html">gtcars</a></code> dataset to create a <strong>gt</strong> table. We'll
+use the <code><a href="tab_spanner.html">tab_spanner()</a></code> function to group two columns together under a
+spanner column with the ID and label <code>"performance"</code>. Finally, we can use the
+<code>tab_info()</code> function in a separate, interactive statement so that we can
+inspect a table that summarizes the ID values any associated label text for
+all parts of the table.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">gtcars</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">year</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"hp"</span><span class="op">)</span>, <span class="va">msrp</span><span class="op">)</span> <span class="op">|&gt;</span></span>

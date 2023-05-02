@@ -22,7 +22,7 @@ stack argument.'><meta property="og:image" content="https://gt.rstudio.com/logo.
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -279,12 +279,11 @@ stack tends to use a more casual and commonplace style.</p>
     
 
 
-<p>Use <code><a href="sp500.html">sp500</a></code> to create a <strong>gt</strong> table with 10 rows. For the <code>date</code> column
-and the column labels, let's use a different font stack (the <code>"industrial"</code>
-one). The system fonts used in this particular stack are <code>"Bahnschrift"</code>,
-<code>"DIN Alternate"</code>, <code>"Franklin Gothic Medium"</code>, and <code>"Nimbus Sans Narrow"</code>
-(the generic <code>"sans-serif-condensed"</code> and <code>"sans-serif"</code> are used if the
-aforementioned fonts aren't available).</p>
+<p>Use a subset of the <code><a href="sp500.html">sp500</a></code> dataset to create a <strong>gt</strong> table with 10 rows.
+For the <code>date</code> column and the column labels, let's use a different font stack
+(the <code>"industrial"</code> one). The system fonts used in this particular stack are
+<code>"Bahnschrift"</code>, <code>"DIN Alternate"</code>, <code>"Franklin Gothic Medium"</code>, and <code>"Nimbus Sans Narrow"</code> (the generic <code>"sans-serif-condensed"</code> and <code>"sans-serif"</code> are
+used if the aforementioned fonts aren't available).</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">sp500</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">volume</span>, <span class="op">-</span><span class="va">adj_close</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -312,7 +311,7 @@ aforementioned fonts aren't available).</p>
     <h2 id="function-introduced">Function Introduced<a class="anchor" aria-label="anchor" href="#function-introduced"></a></h2>
     
 
-<p><em>In Development</em></p>
+<p><code>v0.9.0</code> (Mar 31, 2023)</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

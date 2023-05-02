@@ -18,7 +18,7 @@ default in every gt table."><meta property="og:image" content="https://gt.rstudi
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -151,8 +151,9 @@ more complex incantation like</p>
     
 
 
-<p>Use <code><a href="sza.html">sza</a></code> to create a <strong>gt</strong> table. Add footnotes to the column labels with
-<code><a href="tab_footnote.html">tab_footnote()</a></code> and <code>cells_column_labels()</code> in <code>locations</code>.</p>
+<p>Let's use a small portion of the <code><a href="sza.html">sza</a></code> dataset to create a <strong>gt</strong> table.
+Add footnotes to the column labels with <code><a href="tab_footnote.html">tab_footnote()</a></code> and
+<code>cells_column_labels()</code> in <code>locations</code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">sza</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span></span>
 <span>    <span class="va">latitude</span> <span class="op">==</span> <span class="fl">20</span> <span class="op">&amp;</span> <span class="va">month</span> <span class="op">==</span> <span class="st">"jan"</span> <span class="op">&amp;</span></span>

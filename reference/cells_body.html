@@ -20,7 +20,7 @@ every gt table."><meta property="og:image" content="https://gt.rstudio.com/logo.
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -170,9 +170,10 @@ in the table) and returns a logical vector.</p>
     
 
 
-<p>Use <code><a href="gtcars.html">gtcars</a></code> to create a <strong>gt</strong> table. Add a footnote that targets a single
-data cell with <code><a href="tab_footnote.html">tab_footnote()</a></code>, using <code>cells_body()</code> in <code>locations</code>
-(<code>rows = hp == max(hp)</code> will target a single row in the <code>hp</code> column).</p>
+<p>Let's use a subset of the <code><a href="gtcars.html">gtcars</a></code> dataset to create a <strong>gt</strong> table. Add a
+footnote (with <code><a href="tab_footnote.html">tab_footnote()</a></code>) that targets a single data cell via the use
+of <code>cells_body()</code> in <code>locations</code> (<code>rows = hp == max(hp)</code> will target a single
+row in the <code>hp</code> column).</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">gtcars</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">ctry_origin</span> <span class="op">==</span> <span class="st">"United Kingdom"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">mfr</span>, <span class="va">model</span>, <span class="va">year</span>, <span class="va">hp</span><span class="op">)</span> <span class="op">|&gt;</span></span>

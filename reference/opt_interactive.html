@@ -52,7 +52,7 @@ ihtml.pagination_type
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -237,9 +237,11 @@ provides an input field with a stepper for the page number. With
     
 
 
-<p>Use the <code><a href="towny.html">towny</a></code> dataset to create a <strong>gt</strong> table with a header and a source
-note. Next, we add interactive HTML features through <code>opt_interactive()</code>.
-It'll just be the default set of interactive options.</p>
+<p>Use select columns from the <code><a href="towny.html">towny</a></code> dataset to create a <strong>gt</strong> table with a
+header (through <code><a href="tab_header.html">tab_header()</a></code>) and a source note (through
+<code><a href="tab_source_note.html">tab_source_note()</a></code>). Next, we will add interactive HTML features (and
+otherwise activate interactive HTML mode) through <code>opt_interactive()</code>. It'll
+just be the default set of interactive options.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">towny</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">census_div</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"population"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -285,7 +287,7 @@ dataset to create an interactive <strong>gt</strong> table. Using <code><a href=
     <h2 id="function-introduced">Function Introduced<a class="anchor" aria-label="anchor" href="#function-introduced"></a></h2>
     
 
-<p><em>In Development</em></p>
+<p><code>v0.9.0</code> (Mar 31, 2023)</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

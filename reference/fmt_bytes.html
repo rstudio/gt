@@ -48,7 +48,7 @@ formatting specific to the chosen locale
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -311,22 +311,20 @@ useful reference on which locales are supported, we can use the
     
 
 
-<p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table. Format the <code>num</code> column to have
-byte sizes in the decimal standard.</p>
+<p>Use a single column from the <code><a href="exibble.html">exibble</a></code> dataset and create a simple <strong>gt</strong>
+table. We'll format the <code>num</code> column to display as byte sizes in the decimal
+standard through use of the <code>fmt_bytes()</code> function.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">num</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/fmt_bytes.html">fmt_bytes</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">num</span><span class="op">)</span></span></code></pre><p></p></div>
+<span>  <span class="fu"><a href="../reference/fmt_bytes.html">fmt_bytes</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_bytes_1.png" alt="This image of a table was generated from the first code example in the `fmt_bytes()` help file." style="width:100%;"></p>
-<p>Create a similar table with the <code>fmt_bytes()</code> function, this time showing
-byte sizes as binary values.</p>
+<p>Let's create an analogous table again by using the <code>fmt_bytes()</code> function,
+this time showing byte sizes as binary values by using <code>standard = "binary"</code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">num</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/fmt_bytes.html">fmt_bytes</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="va">num</span>,</span>
-<span>    standard <span class="op">=</span> <span class="st">"binary"</span></span>
-<span>  <span class="op">)</span></span></code></pre><p></p></div>
+<span>  <span class="fu"><a href="../reference/fmt_bytes.html">fmt_bytes</a></span><span class="op">(</span>standard <span class="op">=</span> <span class="st">"binary"</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_bytes_2.png" alt="This image of a table was generated from the second code example in the `fmt_bytes()` help file." style="width:100%;"></p>
     </div>
     <div class="section level2">

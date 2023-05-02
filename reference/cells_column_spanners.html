@@ -20,7 +20,7 @@ tab_spanner() function or the tab_spanner_delim() function."><meta property="og:
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -140,9 +140,11 @@ can be targeted by enclosing several <code>cells_*()</code> helper functions in 
     
 
 
-<p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table. Add a spanner column label over
-three column labels with <code><a href="tab_spanner.html">tab_spanner()</a></code> and then use <code><a href="tab_style.html">tab_style()</a></code> and
-<code>cells_column_spanners()</code> to make the spanner label text bold.</p>
+<p>Use the <code><a href="exibble.html">exibble</a></code> dataset to create a <strong>gt</strong> table. We'll add a spanner
+column label over three columns (<code>date</code>, <code>time</code>, and <code>datetime</code>) with
+<code><a href="tab_spanner.html">tab_spanner()</a></code>. The spanner column label can be styled with <code><a href="tab_style.html">tab_style()</a></code> by
+using the <code>cells_column_spanners()</code> function in <code>locations</code>. In this example,
+we are making the text of the column spanner label appear as bold.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">fctr</span>, <span class="op">-</span><span class="va">currency</span>, <span class="op">-</span><span class="va">group</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"row"</span><span class="op">)</span> <span class="op">|&gt;</span></span>

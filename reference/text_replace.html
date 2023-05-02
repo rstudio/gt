@@ -18,7 +18,7 @@ that is done, the remaining two values to supply are for the regex pattern
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -113,13 +113,17 @@ wish to make the transformation happen at different locations.</p></dd>
     
 
 
-<p>Use <code><a href="metro.html">metro</a></code> to create a <strong>gt</strong> table. Merge the <code>name</code> and <code>caption</code>
-columns together but only if <code>caption</code> doesn't have an <code>NA</code> value (the
-special <code>pattern</code> syntax of <code>"{1}&lt;&lt; ({2})&gt;&gt;"</code> takes care of this). This
-merged content is now part of the <code>name</code> column. We'd like to modify this
-further wherever there is text in parentheses: (1) make that text italicized,
-and (2) introduce a line break before the text in parentheses. We can do this
-with the <code>text_replace()</code> function.</p>
+<p>Use the <code><a href="metro.html">metro</a></code> dataset to create a <strong>gt</strong> table. With the <code><a href="cols_merge.html">cols_merge()</a></code>
+function, we'll merge the <code>name</code> and <code>caption</code> columns together but only if
+<code>caption</code> doesn't have an <code>NA</code> value (the special <code>pattern</code> syntax of <code>"{1}&lt;&lt; ({2})&gt;&gt;"</code> takes care of this). This merged content is now part of the <code>name</code>
+column. We'd like to modify this further wherever there is text in
+parentheses: (1) make that text italicized, and (2) introduce a line break
+before the text in parentheses. We can do this with the <code>text_replace()</code>
+function. The <code>pattern</code> value of <code>"\\((.*?)\\)"</code> will match on text between
+parentheses, and the inner <code>"(.*?)"</code> is a capture group. The <code>replacement</code>
+value of <code>"&lt;br&gt;(&lt;em&gt;\\1&lt;/em&gt;)"</code> puts the capture group text <code>"\\1"</code> within
+<code>&lt;em&gt;</code> tags, wraps literal parentheses around it, and prepends a line break
+tag.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">metro</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">caption</span>, <span class="va">lines</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">110</span><span class="op">:</span><span class="fl">120</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -145,7 +149,7 @@ with the <code>text_replace()</code> function.</p>
     <h2 id="function-introduced">Function Introduced<a class="anchor" aria-label="anchor" href="#function-introduced"></a></h2>
     
 
-<p><em>In Development</em></p>
+<p><code>v0.9.0</code> (Mar 31, 2023)</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

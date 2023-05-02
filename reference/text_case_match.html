@@ -32,7 +32,7 @@ strategy with the alternate option."><meta property="og:image" content="https://
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -155,11 +155,15 @@ wish to make the transformation happen at different locations.</p></dd>
     
 
 
-<p>Use <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table. In the <code>char</code> column, transform the
-<code>NA</code> value to <code>"elderberry"</code>. Over in the <code>fctr</code> column, perform some
-sophisticated matches on spelled-out numbers and replace with descriptive
-text. Here, we use a <code>.default</code> to replace text for any of those non-matched
-cases.</p>
+<p>Let's use the <code><a href="exibble.html">exibble</a></code> dataset to create a simple, two-column <strong>gt</strong> table
+(keeping only the <code>char</code> and <code>fctr</code> columns). In the <code>char</code> column, we'll
+transform the <code>NA</code> value to <code>"elderberry"</code> using the <code>text_case_match()</code>
+function. Over in the <code>fctr</code> column, some more sophisticated matches will be
+performed using <code>text_case_match()</code>. That column has spelled out numbers and
+we can produce these on the LHS with help from the <code><a href="vec_fmt_spelled_num.html">vec_fmt_spelled_num()</a></code>
+function. The replacements will contain descriptive text. In this last call
+of <code>text_case_match()</code>, we use a <code>.default</code> to replace text for any of those
+non-matched cases.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">char</span>, <span class="va">fctr</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -174,10 +178,10 @@ cases.</p>
 <span>    .locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">fctr</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_text_case_match_1.png" alt="This image of a table was generated from the first code example in the `text_case_match()` help file." style="width:100%;"></p>
-<p>Use <code><a href="towny.html">towny</a></code> to create a <strong>gt</strong> table. Transform the text in the
-<code>csd_type</code> column using two-sided formulas supplied to <code>text_case_match()</code>.
-We can replace matches on the LHS with Fontawesome icons furnished by the
-<strong>fontawesome</strong> R package.</p>
+<p>Next, let's use a transformed version of the <code><a href="towny.html">towny</a></code> dataset to create a
+<strong>gt</strong> table. Transform the text in the <code>csd_type</code> column using two-sided
+formulas supplied to <code>text_case_match()</code>. We can replace matches on the LHS
+with Fontawesome icons furnished by the <strong>fontawesome</strong> R package.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">towny</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">csd_type</span>, <span class="va">population_2021</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">csd_type</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"city"</span>, <span class="st">"town"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -208,7 +212,7 @@ We can replace matches on the LHS with Fontawesome icons furnished by the
     <h2 id="function-introduced">Function Introduced<a class="anchor" aria-label="anchor" href="#function-introduced"></a></h2>
     
 
-<p><em>In Development</em></p>
+<p><code>v0.9.0</code> (Mar 31, 2023)</p>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>

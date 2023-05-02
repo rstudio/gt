@@ -22,7 +22,7 @@ tab_row_group() function."><meta property="og:image" content="https://gt.rstudio
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -152,10 +152,11 @@ can be targeted by enclosing several <code>cells_*()</code> helper functions in 
     
 
 
-<p>Use <code><a href="pizzaplace.html">pizzaplace</a></code> to create a <strong>gt</strong> table with grouped data. Add a summary
-with the <code><a href="summary_rows.html">summary_rows()</a></code> function and then add a footnote to the
-<code>"peppr_salami"</code> row group label with <code><a href="tab_footnote.html">tab_footnote()</a></code> and with
-<code>cells_row_groups()</code> in <code>locations</code>.</p>
+<p>Let's use a summarized version of the <code><a href="pizzaplace.html">pizzaplace</a></code> dataset to create a
+<strong>gt</strong> table with grouped data. Add a summary with the <code><a href="summary_rows.html">summary_rows()</a></code>
+function and then add a footnote to the <code>"peppr_salami"</code> row group label with
+<code><a href="tab_footnote.html">tab_footnote()</a></code>; the targeting is done with <code>cells_row_groups()</code> in the
+<code>locations</code> argument.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">pizzaplace</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">name</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"soppressata"</span>, <span class="st">"peppr_salami"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">size</span><span class="op">)</span> <span class="op">|&gt;</span></span>

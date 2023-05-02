@@ -20,7 +20,7 @@ intended for HTML output, we can use HTML for the stubhead label."><meta propert
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-default me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -105,9 +105,11 @@ retain HTML elements in the text.</p></dd>
     
 
 
-<p>Use <code><a href="gtcars.html">gtcars</a></code> to create a <strong>gt</strong> table. With <code>tab_stubhead()</code> we can add a
-stubhead label. This appears in the top-left and can be used to describe what
-is in the stub.</p>
+<p>Using a small subset of the <code><a href="gtcars.html">gtcars</a></code> dataset, we can create a <strong>gt</strong> table
+with row labels. Since we have row labels in the stub (via use of
+<code>rowname_col = "model"</code> in the <code><a href="gt.html">gt()</a></code> function call) we have a stubhead, so,
+let's add a stubhead label (<code>"car"</code>) with the <code>tab_stubhead()</code> function to
+describe what's in the stub.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">gtcars</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">year</span>, <span class="va">hp</span>, <span class="va">trq</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span></span>
