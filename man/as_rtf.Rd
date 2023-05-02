@@ -37,8 +37,9 @@ file that can be opened by RTF readers.
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header and then export as RTF
-code.
+Use a subset of the \code{\link{gtcars}} dataset to create a \strong{gt} table. Add a header
+with \code{\link[=tab_header]{tab_header()}} and then export the table as RTF code using the
+\code{as_rtf()} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_rtf <-
   gtcars |>

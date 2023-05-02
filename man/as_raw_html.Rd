@@ -25,8 +25,9 @@ emailing context.
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header and then export as HTML
-code with inlined CSS styles.
+Use a subset of the \code{\link{gtcars}} dataset to create a \strong{gt} table. Add a header
+with \code{\link[=tab_header]{tab_header()}} and then export the table as HTML code with inlined CSS
+styles using the \code{as_raw_html()} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_html <-
   gtcars |>

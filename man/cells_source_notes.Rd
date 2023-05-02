@@ -65,8 +65,10 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. Add a source note and style the
-source notes section.
+Let's use a subset of the \code{\link{gtcars}} dataset to create a \strong{gt} table. Add a
+source note (with \code{\link[=tab_source_note]{tab_source_note()}}) and style the source notes section
+inside the \code{\link[=tab_style]{tab_style()}} call by using the \code{cells_source_notes()} helper
+function for the targeting via the \code{locations} argument.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
   dplyr::select(mfr, model, msrp) |>

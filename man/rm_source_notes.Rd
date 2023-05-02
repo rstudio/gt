@@ -34,8 +34,10 @@ integer values.
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. Use \code{tab_source_note()} to add a
-source note to the table footer that cites the data source.
+Use a subset of the \code{\link{gtcars}} dataset to create a \strong{gt} table. The
+\code{\link[=tab_source_note]{tab_source_note()}} function is used to add a source note to the table footer
+that cites the data source (or, it could just be arbitrary text). We'll use
+the function twice, in effect adding two source notes to the footer.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
   gtcars |>

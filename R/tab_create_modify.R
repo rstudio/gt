@@ -44,8 +44,9 @@
 #'
 #' @section Examples:
 #'
-#' Use [`gtcars`] to create a **gt** table. Add a header part with the
-#' `tab_header()` function so that we get a title and a subtitle for the table.
+#' Use the [`gtcars`] dataset to create a **gt** table. Add a header part with
+#' the `tab_header()` function so that we get a title and a subtitle for the
+#' table.
 #'
 #' ```r
 #' gtcars |>
@@ -127,9 +128,9 @@ tab_header <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`gtcars`] to create a **gt** table. Use the `tab_spanner()` function to
-#' effectively group several columns related to car performance under a spanner
-#' column with the label `"performance"`.
+#' Use the [`gtcars`] dataset to create a **gt** table. With the `tab_spanner()`
+#' function, we can effectively group together several columns related to car
+#' performance under a spanner column with the label `"performance"`.
 #'
 #' ```r
 #' gtcars |>
@@ -668,9 +669,10 @@ tab_spanner_delim <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`gtcars`] to create a **gt** table and use `tab_row_group()` to add two
-#' row groups with the labels: `numbered` and `NA`. The row group with the `NA`
-#' label ends up being rendered without a label at all.
+#' Use the [`gtcars`] dataset to create a **gt** table. With the
+#' `tab_row_group()` function we can add two row groups with the labels
+#' `"numbered"` and `NA`. The row group with the `NA` label ends up being
+#' rendered without a label at all.
 #'
 #' ```r
 #' gtcars |>
@@ -687,9 +689,10 @@ tab_spanner_delim <- function(
 #' `r man_get_image_tag(file = "man_tab_row_group_1.png")`
 #' }}
 #'
-#' Use [`gtcars`] to create a **gt** table. Add two row groups with the labels
-#' `powerful` and `super powerful`. The distinction between the groups is
-#' whether `hp` is lesser or greater than `600` (governed by the expressions
+#' Use the [`gtcars`] dataset to create a **gt** table. Add two row groups with
+#' the labels `"powerful"` and `"super powerful"` (done with two calls of
+#' `tab_row_group()`). The distinction between the groups is whether `hp` is
+#' lesser or greater than `600` (and this is governed by the expressions
 #' provided to the `rows` argument).
 #'
 #' ```r
@@ -836,9 +839,11 @@ tab_row_group <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`gtcars`] to create a **gt** table. With `tab_stubhead()` we can add a
-#' stubhead label. This appears in the top-left and can be used to describe what
-#' is in the stub.
+#' Using a small subset of the [`gtcars`] dataset, we can create a **gt** table
+#' with row labels. Since we have row labels in the stub (via use of
+#' `rowname_col = "model"` in the [gt()] function call) we have a stubhead, so,
+#' let's add a stubhead label (`"car"`) with the `tab_stubhead()` function to
+#' describe what's in the stub.
 #'
 #' ```r
 #' gtcars |>
@@ -898,9 +903,10 @@ tab_stubhead <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`pizzaplace`] to create a **gt** table with summary rows at the top of
-#' each row group. With `tab_stub_indent()` we can add indentation to the row
-#' labels in the stub.
+#' Let's use a summarized version of the [`pizzaplace`] dataset to create a
+#' **gt** table with row groups and row labels. With the [summary_rows()]
+#' function, we'll generate summary rows at the top of each row group. With
+#' `tab_stub_indent()` we can add indentation to the row labels in the stub.
 #'
 #' ```r
 #' pizzaplace |>
@@ -1075,9 +1081,10 @@ tab_stub_indent <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`sza`] to create a **gt** table. Color the `sza` column using the
-#' [data_color()] function, then, use `tab_footnote()` to add a footnote to the
-#' `sza` column label (explaining what the color scale signifies).
+#' Use a subset of the [`sza`] dataset to create a **gt** table. Color the `sza`
+#' column using the [data_color()] function, then, use `tab_footnote()` to add a
+#' footnote to the `sza` column label (explaining what the color scale
+#' signifies).
 #'
 #' ```r
 #' sza |>
@@ -1476,8 +1483,10 @@ set_footnote.cells_footnotes <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`gtcars`] to create a **gt** table. Use `tab_source_note()` to add a
-#' source note to the table footer that cites the data source.
+#' With three columns from the [`gtcars`] dataset, let's create a **gt** table.
+#' We can use the `tab_source_note()` function to add a source note to the table
+#' footer. Here we are citing the data source but this function can be used for
+#' any text you'd prefer to display in the footer section.
 #'
 #' ```r
 #' gtcars |>
@@ -1531,8 +1540,9 @@ tab_source_note <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`gtcars`] to create a **gt** table. Add a header part with the
-#' [tab_header()] function, and, add a caption as well with `tab_caption()`.
+#' With three columns from the [`gtcars`] dataset, let's create a **gt** table.
+#' First, we'll add a header part with the [tab_header()] function. After that,
+#' a caption is added through use of `tab_caption()`.
 #'
 #' ```r
 #' gtcars |>
@@ -1618,17 +1628,20 @@ tab_caption <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. Add styles that are to be applied
-#' to data cells that satisfy a condition (using `tab_style()`).
+#' Let's use the [`exibble`] dataset to create a simple, two-column **gt** table
+#' (keeping only the `num` and `currency` columns). With the [tab_style()]
+#' function (called twice), we'll selectively add style to the values formatted
+#' by [fmt_number()]. In the `style` argument of each `tab_style()` call, we
+#' can define multiple types of styling with the [cell_fill()] and [cell_text()]
+#' helper functions (enclosed in a list). The cells to be targeted for styling
+#' require the use of helper functions like [cells_body()], which is used here
+#' with different columns and rows being targeted.
 #'
 #' ```r
 #' exibble |>
 #'   dplyr::select(num, currency) |>
 #'   gt() |>
-#'   fmt_number(
-#'     columns = c(num, currency),
-#'     decimals = 1
-#'   ) |>
+#'   fmt_number(decimals = 1) |>
 #'   tab_style(
 #'     style = list(
 #'       cell_fill(color = "lightcyan"),
@@ -1655,8 +1668,10 @@ tab_caption <- function(
 #' `r man_get_image_tag(file = "man_tab_style_1.png")`
 #' }}
 #'
-#' Use [`sp500`] to create a **gt** table. Color entire rows of cells based on
-#' values in a particular column.
+#' Let's use a subset of the [`sp500`] dataset to create a different **gt**
+#' table. Here, we'll color the background of entire rows of body cells and do
+#' so on the basis of value expressions involving the `open` and `close`
+#' columns.
 #'
 #' ```r
 #' sp500 |>
@@ -1683,9 +1698,12 @@ tab_caption <- function(
 #' `r man_get_image_tag(file = "man_tab_style_2.png")`
 #' }}
 #'
-#' Use [`exibble`] to create a **gt** table. Replace missing values with the
-#' [sub_missing()] function and then add styling to the `char` column with
-#' [cell_fill()] and with a CSS style declaration.
+#' With another two-column table based on the [`exibble`] dataset, let's create
+#' a **gt** table. First, we'll replace missing values with the [sub_missing()]
+#' function. Next, we'll add styling to the `char` column. This styling will be
+#' HTML-specific and involves (within a list): (1) a [cell_fill()] call (to set
+#' a `"lightcyan"` background), and (2) a string containing with a CSS style
+#' declaration (`"font-variant: small-caps;"`).
 #'
 #' ```r
 #' exibble |>
@@ -2355,9 +2373,11 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table with all the main parts added. We
-#' can use this **gt** object going forward to demo some of what's available in
-#' the `tab_options()` function.
+#' Use select columns from the [`exibble`] dataset to create a **gt** table with
+#' a number of table parts added (using functions like [summary_rows()],
+#' [grand_summary_rows()], and more). We can use this **gt** object going
+#' forward to demo some of the features available in the `tab_options()`
+#' function.
 #'
 #' ```r
 #' tab_1 <-
@@ -2399,8 +2419,9 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' `r man_get_image_tag(file = "man_tab_options_1.png")`
 #' }}
 #'
-#' Modify the table width to be 100% (which spans the entire content width
-#' area).
+#' We can modify the table width to be set as '100%'. In effect, this spans the
+#' table to entirely fill the content width area. This is done with the
+#' `table.width` option and we take advantage of the [pct()] helper function.
 #'
 #' ```r
 #' tab_1 |> tab_options(table.width = pct(100))
@@ -2409,7 +2430,8 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' `r man_get_image_tag(file = "man_tab_options_2.png")`
 #' }}
 #'
-#' Modify the table's background color to be `"lightcyan"`.
+#' With the `table.background.color` option, we can modify the table's
+#' background color. Here, we want that to be `"lightcyan"`.
 #'
 #' ```r
 #' tab_1 |> tab_options(table.background.color = "lightcyan")
@@ -2419,14 +2441,20 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' `r man_get_image_tag(file = "man_tab_options_3.png")`
 #' }}
 #'
-#' Use letters as the marks for footnote references. Also, separate footnotes in
-#' the footer by spaces instead of newlines.
+#' We have footnotes residing in the footer section of `tab_1`. By default, each
+#' footnote takes up a new line of text. This can be changed with the
+#' `footnotes.multiline` option. Using `FALSE` with that means that all
+#' footnotes will be placed into one continuous span of text. Speaking of
+#' footnotes, we can change the 'marks' used to identify them. Here, we'll use
+#' letters as the marks for footnote references (instead of the default, which
+#' is numbers). This is accomplished with the `footnotes.marks` option, and we
+#' are going to supply the `letters` vector to that.
 #'
 #' ```r
 #' tab_1 |>
 #'   tab_options(
-#'     footnotes.marks = letters,
-#'     footnotes.multiline = FALSE
+#'     footnotes.multiline = FALSE,
+#'     footnotes.marks = letters
 #'   )
 #' ```
 #'
@@ -2434,20 +2462,24 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' `r man_get_image_tag(file = "man_tab_options_4.png")`
 #' }}
 #'
-#' Change the padding of data rows to 5 px.
+#' The data rows of a table typically take up the most physical space but we
+#' have some control over the extent of that. With the `data_row.padding`
+#' option, it's possible to modify the top and bottom padding of data rows.
+#' We'll do just that in the following example, reducing the padding to a value
+#' of 5 px (note that we are using the [px()] helper function here).
 #'
 #' ```r
 #' tab_1 |>
-#'   tab_options(
-#'     data_row.padding = px(5)
-#'   )
+#'   tab_options(data_row.padding = px(5))
 #' ```
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_tab_options_5.png")`
 #' }}
 #'
-#' Reduce the size of the title and the subtitle text.
+#' The size of the title and the subtitle text in the header of the table can be
+#' altered with the `heading.title.font.size` and `heading.subtitle.font.size`
+#' options. Here, we'll use the `"small"` keyword as a value for both options.
 #'
 #' ```r
 #' tab_1 |>

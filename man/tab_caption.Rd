@@ -25,8 +25,9 @@ in each of these system.
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header part with the
-\code{\link[=tab_header]{tab_header()}} function, and, add a caption as well with \code{tab_caption()}.
+With three columns from the \code{\link{gtcars}} dataset, let's create a \strong{gt} table.
+First, we'll add a header part with the \code{\link[=tab_header]{tab_header()}} function. After that,
+a caption is added through use of \code{tab_caption()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
   dplyr::select(mfr, model, msrp) |>

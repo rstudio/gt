@@ -51,9 +51,10 @@ labels for row groups not explicitly assigned a group,
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table and use \code{tab_row_group()} to add two
-row groups with the labels: \code{numbered} and \code{NA}. The row group with the \code{NA}
-label ends up being rendered without a label at all.
+Use the \code{\link{gtcars}} dataset to create a \strong{gt} table. With the
+\code{tab_row_group()} function we can add two row groups with the labels
+\code{"numbered"} and \code{NA}. The row group with the \code{NA} label ends up being
+rendered without a label at all.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
   dplyr::select(model, year, hp, trq) |>
@@ -69,9 +70,10 @@ label ends up being rendered without a label at all.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_row_group_1.png" alt="This image of a table was generated from the first code example in the `tab_row_group()` help file." style="width:100\%;">
 }}
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. Add two row groups with the labels
-\code{powerful} and \verb{super powerful}. The distinction between the groups is
-whether \code{hp} is lesser or greater than \code{600} (governed by the expressions
+Use the \code{\link{gtcars}} dataset to create a \strong{gt} table. Add two row groups with
+the labels \code{"powerful"} and \code{"super powerful"} (done with two calls of
+\code{tab_row_group()}). The distinction between the groups is whether \code{hp} is
+lesser or greater than \code{600} (and this is governed by the expressions
 provided to the \code{rows} argument).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>

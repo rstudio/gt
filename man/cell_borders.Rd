@@ -35,8 +35,11 @@ borders can then be modified.
 \section{Examples}{
 
 
-Add horizontal border lines for all table body rows in \code{\link{exibble}} using
-\code{\link[=tab_style]{tab_style()}} and \code{cell_borders()}.
+We can add horizontal border lines for all table body rows in a \strong{gt} table
+based on the \code{\link{exibble}} dataset. For this, we need to use \code{\link[=tab_style]{tab_style()}}
+(targeting all cells in the table body with \code{\link[=cells_body]{cells_body()}}) in conjunction
+with \code{cell_borders()} in the \code{style} argument. Both top and bottom borders
+will be added as \code{"solid"} and \code{"red"} lines with a line width of 1.5 px.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   gt() |>
@@ -47,10 +50,7 @@ Add horizontal border lines for all table body rows in \code{\link{exibble}} usi
       weight = px(1.5),
       style = "solid"
     ),
-    locations = cells_body(
-      columns = everything(),
-      rows = everything()
-    )
+    locations = cells_body()
   )
 }\if{html}{\out{</div>}}
 
@@ -58,9 +58,9 @@ Add horizontal border lines for all table body rows in \code{\link{exibble}} usi
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cell_borders_1.png" alt="This image of a table was generated from the first code example in the `cell_borders()` help file." style="width:100\%;">
 }}
 
-Incorporate different horizontal and vertical borders at several locations.
-This uses multiple \code{cell_borders()} and \code{\link[=cells_body]{cells_body()}} calls within
-\code{list()}s.
+It's possible to incorporate different horizontal and vertical (\code{"left"} and
+\code{"right"}) borders at several different locations. This uses multiple
+\code{cell_borders()} and \code{\link[=cells_body]{cells_body()}} calls within their own respective lists.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   gt() |>

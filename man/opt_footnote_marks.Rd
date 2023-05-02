@@ -49,8 +49,10 @@ more symbols, making six
 \section{Examples}{
 
 
-Use \code{\link{sza}} to create a \strong{gt} table, adding three footnotes. Call
-\code{opt_footnote_marks()} to specify which footnote marks to use.
+Use a summarized version of the \code{\link{sza}} dataset to create a \strong{gt} table,
+adding three footnotes (with three calls of \code{\link[=tab_footnote]{tab_footnote()}}). We can modify
+the footnote marks to use with the \code{opt_footnote_marks()} function. With the
+keyword \code{"standard"} we get four commonly-used typographic marks.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sza |>
   dplyr::filter(latitude == 30) |>

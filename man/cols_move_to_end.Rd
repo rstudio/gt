@@ -33,7 +33,7 @@ column.
 \section{Examples}{
 
 
-Use \code{\link{countrypops}} to create a \strong{gt} table. With the remaining columns,
+Use a portion of the \code{\link{countrypops}} dataset to create a \strong{gt} table. Let's
 move the \code{year} column to the end of the column series with the
 \code{cols_move_to_end()} function.
 
@@ -49,8 +49,8 @@ move the \code{year} column to the end of the column series with the
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_move_to_end_1.png" alt="This image of a table was generated from the first code example in the `cols_move_to_end()` help file." style="width:100\%;">
 }}
 
-Use \code{\link{countrypops}} to create a \strong{gt} table. With the remaining columns,
-move \code{year} and \code{country_name} to the end of the column series.
+Let's again use \code{\link{countrypops}} for a \strong{gt} example table. This time we'll
+move the \code{year} and \code{country_name} columns to the end of the column series.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>

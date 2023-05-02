@@ -27,8 +27,10 @@ will remove any present outline.
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table with a number of table parts added.
-Have an outline wrap around the entire table by using \code{opt_table_outline()}.
+Use the \code{\link{exibble}} dataset to create a \strong{gt} table with a number of table
+parts added (using functions like \code{\link[=summary_rows]{summary_rows()}}, \code{\link[=grand_summary_rows]{grand_summary_rows()}},
+and more). Following that, let's make it so that we have an outline wrap
+around the entire table by using the \code{opt_table_outline()} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
   exibble |>

@@ -46,13 +46,18 @@
 #'
 #' @section Examples:
 #'
-#' Use [`metro`] to create a **gt** table. Merge the `name` and `caption`
-#' columns together but only if `caption` doesn't have an `NA` value (the
-#' special `pattern` syntax of `"{1}<< ({2})>>"` takes care of this). This
-#' merged content is now part of the `name` column. We'd like to modify this
-#' further wherever there is text in parentheses: (1) make that text italicized,
-#' and (2) introduce a line break before the text in parentheses. We can do this
-#' with the `text_replace()` function.
+#' Use the [`metro`] dataset to create a **gt** table. With the [cols_merge()]
+#' function, we'll merge the `name` and `caption` columns together but only if
+#' `caption` doesn't have an `NA` value (the special `pattern` syntax of `"{1}<<
+#' ({2})>>"` takes care of this). This merged content is now part of the `name`
+#' column. We'd like to modify this further wherever there is text in
+#' parentheses: (1) make that text italicized, and (2) introduce a line break
+#' before the text in parentheses. We can do this with the `text_replace()`
+#' function. The `pattern` value of `"\\((.*?)\\)"` will match on text between
+#' parentheses, and the inner `"(.*?)"` is a capture group. The `replacement`
+#' value of `"<br>(<em>\\1</em>)"` puts the capture group text `"\\1"` within
+#' `<em>` tags, wraps literal parentheses around it, and prepends a line break
+#' tag.
 #'
 #' ```r
 #' metro |>
@@ -132,11 +137,14 @@ text_replace <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`metro`] to create a **gt** table. In the `connect_rer` column,
-#' perform a count of pattern matches with `stringr::str_count()` and determine
-#' which cells have 1, 2, or 3 matched patterns. For each of these cases,
-#' provide descriptive replacement text. Here, we use a `.default` to replace
-#' the non-matched cases with an empty string.
+#' Use a portion of the [`metro`] dataset to create a **gt** table. We'll use
+#' the `text_case_when()` function to supply pairs of predicate statements and
+#' replacement text. For the `connect_rer` column, we will perform a count of
+#' pattern matches with `stringr::str_count()` and determine which cells have 1,
+#' 2, or 3 matched patterns. For each of these cases, descriptive replacement
+#' text is provided. Here, we use a `.default` value to replace the non-matched
+#' cases with an empty string (`""`). Finally, we use [cols_label()] to modify
+#' the labels of the three columns.
 #'
 #' ```r
 #' metro |>
@@ -267,11 +275,15 @@ text_case_when <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. In the `char` column, transform the
-#' `NA` value to `"elderberry"`. Over in the `fctr` column, perform some
-#' sophisticated matches on spelled-out numbers and replace with descriptive
-#' text. Here, we use a `.default` to replace text for any of those non-matched
-#' cases.
+#' Let's use the [`exibble`] dataset to create a simple, two-column **gt** table
+#' (keeping only the `char` and `fctr` columns). In the `char` column, we'll
+#' transform the `NA` value to `"elderberry"` using the `text_case_match()`
+#' function. Over in the `fctr` column, some more sophisticated matches will be
+#' performed using `text_case_match()`. That column has spelled out numbers and
+#' we can produce these on the LHS with help from the [vec_fmt_spelled_num()]
+#' function. The replacements will contain descriptive text. In this last call
+#' of `text_case_match()`, we use a `.default` to replace text for any of those
+#' non-matched cases.
 #'
 #' ```r
 #' exibble |>
@@ -293,10 +305,10 @@ text_case_when <- function(
 #' `r man_get_image_tag(file = "man_text_case_match_1.png")`
 #' }}
 #'
-#' Use [`towny`] to create a **gt** table. Transform the text in the
-#' `csd_type` column using two-sided formulas supplied to `text_case_match()`.
-#' We can replace matches on the LHS with Fontawesome icons furnished by the
-#' **fontawesome** R package.
+#' Next, let's use a transformed version of the [`towny`] dataset to create a
+#' **gt** table. Transform the text in the `csd_type` column using two-sided
+#' formulas supplied to `text_case_match()`. We can replace matches on the LHS
+#' with Fontawesome icons furnished by the **fontawesome** R package.
 #'
 #' ```r
 #' towny |>
@@ -441,11 +453,11 @@ text_case_match <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`sp500`] to create a **gt** table. Transform the text in the
-#' `date` column using a function supplied to `text_transform()` (via the `fn`
-#' argument). Note that the `x` in the `fn = function (x)` part consists
-#' entirely of ISO 8601 date strings (which are acceptable as input to the
-#' [vec_fmt_date()] and [vec_fmt_datetime()] functions).
+#' Use a subset of the [`sp500`] dataset to create a **gt** table. Transform the
+#' text in the `date` column using a function supplied to `text_transform()`
+#' (via the `fn` argument). Note that the `x` in the `fn = function (x)` part
+#' consists entirely of ISO 8601 date strings (which are acceptable as input to
+#' the [vec_fmt_date()] and [vec_fmt_datetime()] functions).
 #'
 #' ```r
 #' sp500 |>
@@ -477,15 +489,15 @@ text_case_match <- function(
 #' `r man_get_image_tag(file = "man_text_transform_1.png")`
 #' }}
 #'
-#' Use [`gtcars`] to create a **gt** table. First, the numeric values in the `n`
-#' column are formatted as spelled-out numbers with [fmt_spelled_num()]. The
-#' output values are indeed spelled out but exclusively with lowercase letters.
-#' We actually want these words to begin with a capital letter and end with a
-#' period. To make this possible, the `text_transform()` function will be used
-#' since it can modify already-formatted text. Through the `fn` argument, we
-#' provide a custom function that uses R's `toTitleCase()` operating on `x` (the
-#' numbers-as-text strings) within a `paste0()` so that a period can be properly
-#' placed.
+#' Let's use a summarized version of the [`gtcars`] dataset to create a **gt**
+#' table. First, the numeric values in the `n` column are formatted as
+#' spelled-out numbers with [fmt_spelled_num()]. The output values are indeed
+#' spelled out but exclusively with lowercase letters. We actually want these
+#' words to begin with a capital letter and end with a period. To make this
+#' possible, the `text_transform()` function will be used since it can modify
+#' already-formatted text. Through the `fn` argument, we provide a custom
+#' function that uses R's `toTitleCase()` operating on `x` (the numbers-as-text
+#' strings) within a `paste0()` so that a period can be properly placed.
 #'
 #' ```r
 #' gtcars |>

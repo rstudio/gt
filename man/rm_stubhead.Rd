@@ -25,9 +25,9 @@ use even if there is no stubhead label in the input \code{gt_tbl} object.
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. With \code{\link[=tab_stubhead]{tab_stubhead()}}, it's possible
-to add a stubhead label. This appears in the top-left and can be used to
-describe what is in the stub.
+Using the \code{\link{gtcars}} datset, we'll create a \strong{gt} table. With the
+\code{\link[=tab_stubhead]{tab_stubhead()}} function, it's possible to add a stubhead label. This
+appears in the top-left and can be used to describe what is in the stub.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
   gtcars |>

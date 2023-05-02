@@ -49,10 +49,10 @@ and \code{container.width} arguments within \code{\link[=tab_options]{tab_option
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. We can specify the widths of
-columns with \code{cols_width()}. This is done with named arguments in \code{...},
-specifying the exact widths for table columns (using \code{everything()} at the
-end will capture all remaining columns).
+Use select columns from the \code{\link{exibble}} dataset to create a \strong{gt} table. We
+can specify the widths of columns with \code{cols_width()}. This is done with
+named arguments in \code{...}, specifying the exact widths for table columns
+(using \code{everything()} at the end will capture all remaining columns).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(

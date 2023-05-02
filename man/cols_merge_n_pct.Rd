@@ -75,10 +75,11 @@ the output table through the \code{hide_columns} or \code{autohide} options.
 \section{Examples}{
 
 
-Use \code{\link{pizzaplace}} to create a \strong{gt} table that displays the counts and
-percentages of the top 3 pizzas sold by pizza category in 2015. The
-\code{cols_merge_n_pct()} function is used to merge the \code{n} and \code{frac} columns
-(and the \code{frac} column is formatted using \code{\link[=fmt_percent]{fmt_percent()}}).
+Using a summarized version of the \code{\link{pizzaplace}} dataset, let's create a
+\strong{gt} table that displays the counts and percentages of the top 3 pizzas
+sold by pizza category in 2015. The \code{cols_merge_n_pct()} function is used to
+merge the \code{n} and \code{frac} columns (and the \code{frac} column is formatted using
+\code{\link[=fmt_percent]{fmt_percent()}}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
   dplyr::group_by(name, type, price) |>

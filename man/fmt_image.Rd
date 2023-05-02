@@ -108,17 +108,17 @@ more complex predicate expression.
 \section{Examples}{
 
 
-Use the \code{\link{metro}} dataset to create a \strong{gt} table. We will only include a
-few columns and rows from that table. The \code{lines} and \code{connect_rer} columns
-have comma-separated listings of numbers/letters (corresponding to lines
-served at each station). We have a directory SVG graphics for all of these
-lines in the package (the path for the image directory can be accessed via
-\code{system.file("metro_svg", package = "gt")}), and the filenames roughly
-correspond to the data in those two columns. The \code{fmt_image()} function can
-be used with these inputs since the \code{path} and \code{file_pattern} arguments allow
-us to compose complete and valid file locations. What you get from this are
-sequences of images in the table cells, taken from the referenced graphics
-files on disk.
+Using a small portion of \code{\link{metro}} dataset, let's create a \strong{gt} table. We
+will only include a few columns and rows from that table. The \code{lines} and
+\code{connect_rer} columns have comma-separated listings of numbers/letters
+(corresponding to lines served at each station). We have a directory SVG
+graphics for all of these lines in the package (the path for the image
+directory can be accessed via \code{system.file("metro_svg", package = "gt")}),
+and the filenames roughly correspond to the data in those two columns. The
+\code{fmt_image()} function can be used with these inputs since the \code{path} and
+\code{file_pattern} arguments allow us to compose complete and valid file
+locations. What you get from this are sequences of images in the table cells,
+taken from the referenced graphics files on disk.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{metro |>
   dplyr::select(name, caption, lines, connect_rer) |>

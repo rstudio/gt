@@ -82,16 +82,16 @@ also define several styles within a single call of \code{cell_text()} and
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Add styles with \code{\link[=tab_style]{tab_style()}} and
-the \code{cell_text()} helper function.
+Let's use the \code{\link{exibble}} dataset to create a simple, two-column \strong{gt} table
+(keeping only the \code{num} and \code{currency} columns). With the \code{\link[=tab_style]{tab_style()}}
+function (called twice), we'll selectively add style to the values formatted
+by \code{\link[=fmt_number]{fmt_number()}}. We do this by using the \code{cell_text()} helper function in
+the \code{style} argument of \code{\link[=tab_style]{tab_style()}}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(num, currency) |>
   gt() |>
-  fmt_number(
-    columns = c(num, currency),
-    decimals = 1
-  ) |>
+  fmt_number(decimals = 1) |>
   tab_style(
     style = cell_text(weight = "bold"),
     locations = cells_body(

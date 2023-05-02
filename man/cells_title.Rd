@@ -67,9 +67,9 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \section{Examples}{
 
 
-Use \code{\link{sp500}} to create a \strong{gt} table. Add a header with a title, and then
-add a footnote to the title with \code{\link[=tab_footnote]{tab_footnote()}} and \code{cells_title()} (in
-\code{locations}).
+Use a subset of the \code{\link{sp500}} dataset to create a small \strong{gt} table. Add a
+header with a title, and then add a footnote to the title with
+\code{\link[=tab_footnote]{tab_footnote()}} and \code{cells_title()} (in \code{locations}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
   dplyr::filter(date >= "2015-01-05" & date <="2015-01-10") |>

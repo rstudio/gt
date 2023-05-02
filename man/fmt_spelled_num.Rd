@@ -106,8 +106,8 @@ more complex predicate expression.
 \section{Examples}{
 
 
-Use the \code{\link{gtcars}} dataset to create a \strong{gt} table. After some summarizing
-and arranging of rows, the \code{fmt_spelled_num()} function is used to transform
+Let's use a summarized version of the \code{\link{gtcars}} dataset to create a
+\strong{gt} table. The \code{fmt_spelled_num()} function is used to transform
 integer values into spelled-out numbering (in the \code{n} column). That formatted
 column of numbers-as-words is given cell background colors via \code{\link[=data_color]{data_color()}}
 (the underlying numerical values are always available).

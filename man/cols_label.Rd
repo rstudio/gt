@@ -56,10 +56,10 @@ labels once they have been relabeled.
 \section{Examples}{
 
 
-Use \code{\link{countrypops}} to create a \strong{gt} table. Relabel all the table's columns
-with the \code{cols_label()} function to improve its presentation. In this simple
-case we are supplying the name of the column on the left-hand side, and the
-label text on the right-hand side.
+Let's use a portion of the \code{\link{countrypops}} dataset to create a \strong{gt} table.
+Relabel all the table's columns with the \code{cols_label()} function to improve
+its presentation. In this simple case we are supplying the name of the column
+on the left-hand side, and the label text on the right-hand side.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>
@@ -77,10 +77,10 @@ label text on the right-hand side.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_1.png" alt="This image of a table was generated from the first code example in the `cols_label()` help file." style="width:100\%;">
 }}
 
-Using \code{\link{countrypops}} again to create a \strong{gt} table, we label columns just
-as before but this time make the column labels bold through Markdown
-formatting (with the \code{\link[=md]{md()}} helper function). It's possible here to use
-either a \code{=} or a \code{~} between the column name and the label text.
+Using the \code{\link{countrypops}} dataset again, we label columns similarly to before
+but this time making the column labels be bold through Markdown formatting
+(with the \code{\link[=md]{md()}} helper function). It's possible here to use either a \code{=} or
+a \code{~} between the column name and the label text.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>
@@ -98,13 +98,14 @@ either a \code{=} or a \code{~} between the column name and the label text.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_2.png" alt="This image of a table was generated from the second code example in the `cols_label()` help file." style="width:100\%;">
 }}
 
-With the \code{\link{metro}} dataset, let's create a small \strong{gt} table with three
-columns. We'd like to provide column labels that have line breaks. For that,
-we can use \verb{<br>} to indicate where the line breaks should be. We also need
-to use the \code{\link[=md]{md()}} helper function to signal to \strong{gt} that this
-text should be interpreted as Markdown. Instead of calling \code{\link[=md]{md()}} on each of
-labels as before, we can more conveniently use the \code{.fn} argument and provide
-the bare function there (it will be applied to each label).
+With a select portion of the \code{\link{metro}} dataset, let's create a small \strong{gt}
+table with three columns. Within \code{cols_label()} we'd like to provide column
+labels that contain line breaks. For that, we can use \verb{<br>} to indicate
+where the line breaks should be. We also need to use the \code{\link[=md]{md()}} helper
+function to signal to \strong{gt} that this text should be interpreted as
+Markdown. Instead of calling \code{\link[=md]{md()}} on each of labels as before, we can more
+conveniently use the \code{.fn} argument and provide the bare function there (it
+will be applied to each label defined in the \code{cols_label()} call).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{metro |>
   dplyr::select(name, lines, passengers, connect_other) |>
@@ -124,16 +125,17 @@ the bare function there (it will be applied to each label).
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_3.png" alt="This image of a table was generated from the third code example in the `cols_label()` help file." style="width:100\%;">
 }}
 
-Using \code{\link{towny}}, we can create an interesting \strong{gt} table. First, only
-certain columns are selected from the dataset, some filtering of rows is
-done, rows are sorted, and then only the first 10 rows are kept. When
-introduced to \code{\link[=gt]{gt()}}, we apply some spanner column labels through two calls
-of \code{\link[=tab_spanner]{tab_spanner()}} all the table's columns. Below those spanners, we want to
-label the columns by the years of interest. Using \code{cols_label()} and select
-expressions on the left side of the formulas, we can easily relabel multiple
-columns with common label text. Note that we cannot use an \code{=} sign in any
-of the expressions within \code{cols_label()}; because the left-hand side is not
-a single column name, we must use formula syntax (i.e., with the \code{~}).
+Using a subset of the \code{\link{towny}} dataset, we can create an interesting \strong{gt}
+table. First, only certain columns are selected from the dataset, some
+filtering of rows is done, rows are sorted, and then only the first 10 rows
+are kept. When introduced to \code{\link[=gt]{gt()}}, we apply some spanner column labels
+through two calls of \code{\link[=tab_spanner]{tab_spanner()}} all the table's columns. Below those
+spanners, we want to label the columns by the years of interest. Using
+\code{cols_label()} and select expressions on the left side of the formulas, we
+can easily relabel multiple columns with common label text. Note that we
+cannot use an \code{=} sign in any of the expressions within \code{cols_label()};
+because the left-hand side is not a single column name, we must use formula
+syntax (i.e., with the \code{~}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
   dplyr::select(

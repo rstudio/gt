@@ -34,9 +34,9 @@ column.
 \section{Examples}{
 
 
-Use \code{\link{countrypops}} to create a \strong{gt} table. With the remaining columns,
-move the \code{year} column to the start of the column series with
-\code{cols_move_to_start()}.
+Use a portion of the \code{\link{countrypops}} dataset to create a \strong{gt} table. Let's
+move the \code{year} column to the start of the column series with the
+\code{cols_move_to_start()} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>
@@ -50,8 +50,9 @@ move the \code{year} column to the start of the column series with
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_move_to_start_1.png" alt="This image of a table was generated from the first code example in the `cols_move_to_start()` help file." style="width:100\%;">
 }}
 
-Use \code{\link{countrypops}} to create a \strong{gt} table. With the remaining columns,
-move \code{year} and \code{population} to the start.
+Use a portion of the \code{\link{countrypops}} dataset to create a \strong{gt} table. Let's
+move both the \code{year} and \code{population} columns to the start of the column
+series.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>

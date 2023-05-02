@@ -59,11 +59,15 @@ strategy with the alternate option.
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. In the \code{char} column, transform the
-\code{NA} value to \code{"elderberry"}. Over in the \code{fctr} column, perform some
-sophisticated matches on spelled-out numbers and replace with descriptive
-text. Here, we use a \code{.default} to replace text for any of those non-matched
-cases.
+Let's use the \code{\link{exibble}} dataset to create a simple, two-column \strong{gt} table
+(keeping only the \code{char} and \code{fctr} columns). In the \code{char} column, we'll
+transform the \code{NA} value to \code{"elderberry"} using the \code{text_case_match()}
+function. Over in the \code{fctr} column, some more sophisticated matches will be
+performed using \code{text_case_match()}. That column has spelled out numbers and
+we can produce these on the LHS with help from the \code{\link[=vec_fmt_spelled_num]{vec_fmt_spelled_num()}}
+function. The replacements will contain descriptive text. In this last call
+of \code{text_case_match()}, we use a \code{.default} to replace text for any of those
+non-matched cases.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(char, fctr) |>
@@ -84,10 +88,10 @@ cases.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_text_case_match_1.png" alt="This image of a table was generated from the first code example in the `text_case_match()` help file." style="width:100\%;">
 }}
 
-Use \code{\link{towny}} to create a \strong{gt} table. Transform the text in the
-\code{csd_type} column using two-sided formulas supplied to \code{text_case_match()}.
-We can replace matches on the LHS with Fontawesome icons furnished by the
-\strong{fontawesome} R package.
+Next, let's use a transformed version of the \code{\link{towny}} dataset to create a
+\strong{gt} table. Transform the text in the \code{csd_type} column using two-sided
+formulas supplied to \code{text_case_match()}. We can replace matches on the LHS
+with Fontawesome icons furnished by the \strong{fontawesome} R package.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
   dplyr::select(name, csd_type, population_2021) |>

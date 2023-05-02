@@ -85,8 +85,10 @@ use a more complex predicate expression.
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. The \code{NA} values in different
-columns will be given replacement text with two calls of \code{sub_missing()}.
+Use select columns from the \code{\link{exibble}} dataset to create a \strong{gt} table. The
+\code{NA} values in different columns (here, we are using column indices in
+\code{columns}) will be given two variations of replacement text with two separate
+calls of \code{sub_missing()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(-row, -group) |>

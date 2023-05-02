@@ -172,8 +172,9 @@ useful reference on which locales are supported, we can use the
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{num} column in
-engineering notation.
+Use the \code{\link{exibble}} dataset to create a \strong{gt} table. Format the \code{num} column
+to display values in engineering notation using the \code{fmt_engineering()}
+function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   gt() |>
