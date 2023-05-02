@@ -50,7 +50,7 @@ more symbols, making six
 
 
 Use a summarized version of the \code{\link{sza}} dataset to create a \strong{gt} table,
-adding three footnotes (with three calls of \code{\link[=tab_foonote]{tab_foonote()}}). We can modify
+adding three footnotes (with three calls of \code{\link[=tab_footnote]{tab_footnote()}}). We can modify
 the footnote marks to use with the \code{opt_footnote_marks()} function. With the
 keyword \code{"standard"} we get four commonly-used typographic marks.
 
