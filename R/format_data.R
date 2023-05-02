@@ -7164,7 +7164,7 @@ fmt_image <- function(
 #' }}
 #'
 #' Using [`countrypops`] we can generate a table that provides populations
-#' every five years for the Benelux countries (`"BE"`, `"NU"`, and `"LU"`).
+#' every five years for the Benelux countries (`"BE"`, `"NL"`, and `"LU"`).
 #' This requires some manipulation with **dplyr** and **tidyr** before
 #' introducing the table to **gt**. With `fmt_flag()` we can obtain flag icons
 #' in the `country_code_2` column. After that, we can merge the flag icons into
@@ -7173,7 +7173,7 @@ fmt_image <- function(
 #'
 #' ```r
 #' countrypops |>
-#'   dplyr::filter(country_code_2 %in% c("BE", "NU", "LU")) |>
+#'   dplyr::filter(country_code_2 %in% c("BE", "NL", "LU")) |>
 #'   dplyr::filter(year %% 10 == 0) |>
 #'   dplyr::select(country_name, country_code_2, year, population) |>
 #'   tidyr::pivot_wider(names_from = year, values_from = population) |>
