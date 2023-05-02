@@ -139,7 +139,7 @@ that function transforms the codes in circular flag icons.
 }}
 
 Using \code{\link{countrypops}} we can generate a table that provides populations
-every five years for the Benelux countries (\code{"BE"}, \code{"NU"}, and \code{"LU"}).
+every five years for the Benelux countries (\code{"BE"}, \code{"NL"}, and \code{"LU"}).
 This requires some manipulation with \strong{dplyr} and \strong{tidyr} before
 introducing the table to \strong{gt}. With \code{fmt_flag()} we can obtain flag icons
 in the \code{country_code_2} column. After that, we can merge the flag icons into
@@ -147,7 +147,7 @@ the stub column, generating row labels that have a combination of icon and
 text.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
-  dplyr::filter(country_code_2 \%in\% c("BE", "NU", "LU")) |>
+  dplyr::filter(country_code_2 \%in\% c("BE", "NL", "LU")) |>
   dplyr::filter(year \%\% 10 == 0) |>
   dplyr::select(country_name, country_code_2, year, population) |>
   tidyr::pivot_wider(names_from = year, values_from = population) |>

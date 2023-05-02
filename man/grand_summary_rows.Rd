@@ -256,7 +256,7 @@ aggregation function (expressed as \code{"sum"}, which \strong{gt} recognizes as
 row with \code{\link[=tab_style]{tab_style()}}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
-  dplyr::filter(country_code_2 \%in\% c("BE", "NU", "LU")) |>
+  dplyr::filter(country_code_2 \%in\% c("BE", "NL", "LU")) |>
   dplyr::filter(year \%\% 10 == 0) |>
   dplyr::select(country_name, year, population) |>
   tidyr::pivot_wider(names_from = year, values_from = population) |>

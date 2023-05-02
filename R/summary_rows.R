@@ -687,7 +687,7 @@ summary_rows <- function(
 #'
 #' ```r
 #' countrypops |>
-#'   dplyr::filter(country_code_2 %in% c("BE", "NU", "LU")) |>
+#'   dplyr::filter(country_code_2 %in% c("BE", "NL", "LU")) |>
 #'   dplyr::filter(year %% 10 == 0) |>
 #'   dplyr::select(country_name, year, population) |>
 #'   tidyr::pivot_wider(names_from = year, values_from = population) |>
