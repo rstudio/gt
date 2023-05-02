@@ -8,16 +8,12 @@ flag_file_countries <-
   sub(".svg", "", ., fixed = TRUE) %>%
   toupper()
 
-countrypops_countries <-
-  countrypops$country_code_2 %>%
-  unique()
+flag_file_two_lett <-
+  flag_file_countries[grepl("^[A-Z]{2}$", flag_file_countries)]
 
-countrypops_country_lookup <-
-  countrypops %>%
-  dplyr::select(country_code_2, country_name) %>%
-  dplyr::distinct()
-
-files_to_delete <- base::setdiff(flag_file_countries, countrypops_countries)
+files_to_delete <-
+  tolower(base::setdiff(flag_file_countries, flag_file_two_lett)) |>
+  paste0(".svg")
 
 if (length(files_to_delete) > 0) {
 
