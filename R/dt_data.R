@@ -119,12 +119,23 @@ dt_data_add_rows <- function(
 
   } else if (is.null(before) && !is.null(after)) {
 
-    updated_data_tbl <-
-      dplyr::bind_rows(
-        data_tbl[1:after, ],
-        row_data_tbl,
-        data_tbl[(after + 1):nrow(data_tbl), ]
-      )
+    if (after == nrow(data_tbl)) {
+
+      updated_data_tbl <-
+        dplyr::bind_rows(
+          data_tbl,
+          row_data_tbl
+        )
+
+    } else {
+
+      updated_data_tbl <-
+        dplyr::bind_rows(
+          data_tbl[1:after, ],
+          row_data_tbl,
+          data_tbl[(after + 1):nrow(data_tbl), ]
+        )
+    }
   }
 
   var_stub <- dt_boxhead_get_var_stub(data = data)
@@ -210,12 +221,23 @@ dt_data_add_rows <- function(
 
   } else if (is.null(before) && !is.null(after)) {
 
+    if (after == nrow(data_tbl)) {
+
+      stub_df_updated <-
+        dplyr::bind_rows(
+          stub_df,
+          stub_df_add
+        )
+
+    } else {
+
     stub_df_updated <-
       dplyr::bind_rows(
         stub_df[1:after, ],
         stub_df_add,
         stub_df[(after + 1):nrow(data_tbl), ]
       )
+    }
   }
 
   # Re-index `rownum_i`
