@@ -293,6 +293,7 @@ row with \code{\link[=tab_style]{tab_style()}}.
 \seealso{
 Other row addition/modification functions: 
 \code{\link{row_group_order}()},
+\code{\link{rows_add}()},
 \code{\link{summary_rows}()}
 }
 \concept{row addition/modification functions}
