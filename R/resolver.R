@@ -342,6 +342,7 @@ translate_legacy_resolver_expr <- function(quo, null_means) {
       rlang::quo_set_expr(quo = quo, expr = quote(everything()))
 
     } else {
+
       rlang::quo_set_expr(quo = quo, expr = quote(NULL))
     }
 
@@ -363,7 +364,11 @@ translate_legacy_resolver_expr <- function(quo, null_means) {
   }
 }
 
-resolve_rows_l <- function(expr, data) {
+resolve_rows_l <- function(
+    expr,
+    data,
+    null_means
+) {
 
   if (is_gt_tbl(data = data)) {
     row_names <- dt_stub_df_get(data = data)$row_id
@@ -384,14 +389,20 @@ resolve_rows_l <- function(expr, data) {
 
   if (is.null(resolved)) {
 
-    cli::cli_warn(c(
-      "Since gt v0.3.0, the use of `NULL` for `rows` has been deprecated.",
-      "*" = "Please use `TRUE` instead."
-    ))
+    if (null_means == "everything") {
 
-    # Modify the NULL value of `resolved` to `TRUE` (which is
-    # fully supported for selecting all rows)
-    resolved <- TRUE
+      cli::cli_warn(c(
+        "Since gt v0.3.0, the use of `NULL` for `rows` has been deprecated.",
+        "*" = "Please use `TRUE` instead."
+      ))
+
+      # Modify the NULL value of `resolved` to `TRUE` (which is
+      # fully supported for selecting all rows)
+      resolved <- TRUE
+
+    } else {
+      return(NULL)
+    }
   }
 
   resolved <-
@@ -404,8 +415,26 @@ resolve_rows_l <- function(expr, data) {
   resolved
 }
 
-resolve_rows_i <- function(expr, data) {
-  which(resolve_rows_l(expr = {{ expr }}, data = data))
+resolve_rows_i <- function(
+    expr,
+    data,
+    null_means = c("everything", "nothing")
+) {
+
+  null_means <- rlang::arg_match(null_means)
+
+  resolved_rows <-
+    resolve_rows_l(
+      expr = {{ expr }},
+      data = data,
+      null_means = null_means
+    )
+
+  if (!is.null(resolved_rows)) {
+    return(which(resolved_rows))
+  } else {
+    return(NULL)
+  }
 }
 
 resolve_vector_l <- function(
