@@ -51,6 +51,27 @@
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @section Examples:
+#'
+#' Let's make a simple **gt** table with the [`exibble`] dataset, using the
+#' `row` column for labels in the stub. We'll add a single row to the bottom of
+#' the table with `rows_add()`. With name-value pairs, it's possible to add
+#' values for the body cells corresponding to columns available in the table.
+#' For any columns that are missed, the corresponding body cells receive `NA`
+#' values.
+#'
+#' ```r
+#' exibble |>
+#'   gt(rowname_col = "row") |>
+#'   rows_add(
+#'     row = "row_9",
+#'     num = 9.999E7,
+#'     char = "ilama",
+#'     fctr = "nine",
+#'     group = "grp_b"
+#'   )
+#' ```
+#'
 #' @family row addition/modification functions
 #' @section Function ID:
 #' 6-4
@@ -79,6 +100,9 @@ rows_add <- function(
     return(.data)
   }
 
+  # Get the column names from the internal dataset
+  data_tbl <- dt_data_get(data = .data)
+
   if (!is.null(.n_empty)) {
 
     # Ensure that `.n_empty` is an integer if anything is provided
@@ -96,9 +120,6 @@ rows_add <- function(
       cli::cli_abort("The value for `.n_empty` cannot be negative.")
     }
 
-    # Get the column names from the internal dataset
-    data_tbl <- dt_data_get(data = .data)
-
     # Generate empty rows with `NA` values
     row_data_list <-
       lapply(
@@ -106,6 +127,14 @@ rows_add <- function(
         FUN = function(x) rep(NA, .n_empty)
       )
     names(row_data_list) <- colnames(data_tbl)
+
+  } else {
+
+    # Ensure that the column names resolved belong to the internal
+    # data table of `data_tbl`
+    if (any(!(names(row_data_list) %in% colnames(data_tbl)))) {
+      cli::cli_abort("All column names referenced must be present in the data.")
+    }
   }
 
   resolved_rows_before_idx <-
