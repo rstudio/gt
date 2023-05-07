@@ -1042,3 +1042,46 @@ test_that("rows can be added to a table in a variety of ways", {
   gt_tbl_g_add2_a8 %>% render_as_html() %>% expect_snapshot()
   expect_error(gt_tbl_g %>% rows_add(.n_empty = 2, .after = 9))
 })
+
+test_that("adding rows can only involve columns already present in the table", {
+
+  gt_tbl <- gt(exibble)
+
+  expect_error(regexp = NA, gt_tbl %>% rows_add())
+  expect_error(regexp = NA, gt_tbl %>% rows_add(char = "elderberry"))
+  expect_error(gt_tbl %>% rows_add(char_none = "elderberry"))
+  expect_error(gt_tbl %>% rows_add(char = "elderberry", char_none = "watermelon"))
+
+  gt_tbl_2 <- gt(exibble, rowname_col = "row")
+
+  expect_error(regexp = NA, gt_tbl_2 %>% rows_add())
+  expect_error(regexp = NA, gt_tbl_2 %>% rows_add(char = "elderberry"))
+  expect_error(gt_tbl_2 %>% rows_add(char_none = "elderberry"))
+  expect_error(gt_tbl_2 %>% rows_add(char = "elderberry", char_none = "watermelon"))
+
+  gt_tbl_3 <- gt(exibble, rowname_col = "row", groupname_col = "group")
+
+  expect_error(regexp = NA, gt_tbl_3 %>% rows_add())
+  expect_error(regexp = NA, gt_tbl_3 %>% rows_add(char = "elderberry"))
+  expect_error(gt_tbl_3 %>% rows_add(char_none = "elderberry"))
+  expect_error(gt_tbl_3 %>% rows_add(char = "elderberry", char_none = "watermelon"))
+
+  gt_tbl_4 <- gt(exibble, groupname_col = "group")
+
+  expect_error(regexp = NA, gt_tbl_4 %>% rows_add())
+  expect_error(regexp = NA, gt_tbl_4 %>% rows_add(char = "elderberry"))
+  expect_error(gt_tbl_4 %>% rows_add(char_none = "elderberry"))
+  expect_error(gt_tbl_4 %>% rows_add(char = "elderberry", char_none = "watermelon"))
+})
+
+test_that("adding rows can only be done with compatible data", {
+
+  gt_tbl <- gt(exibble)
+
+  expect_error(regexp = NA, gt_tbl %>% rows_add(char = "elderberry"))
+  expect_error(gt_tbl %>% rows_add(char = 2))
+  expect_error(gt_tbl %>% rows_add(char = list("two")))
+  expect_error(gt_tbl %>% rows_add(char = "elderberry", time = 600))
+  expect_error(regexp = NA, gt_tbl %>% rows_add(fctr = "nine"))
+  expect_error(regexp = NA, gt_tbl %>% rows_add(fctr = factor("nine")))
+})
