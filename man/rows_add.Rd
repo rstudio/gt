@@ -35,7 +35,8 @@ nothing is provided for either argument the new rows will be placed at the
 bottom.}
 
 \item{.n_empty}{An option to add empty rows in lieu of rows containing data
-that would otherwise be supplied to \code{...} or \code{.list}.}
+that would otherwise be supplied to \code{...} or \code{.list}. If the option is
+taken, provide an integer value here.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -44,6 +45,28 @@ An object of class \code{gt_tbl}.
 It's possible to add new rows to your table with \code{rows_add()} by supplying
 the new row data through name value pairs.
 }
+\section{Examples}{
+
+
+Let's make a simple \strong{gt} table with the \code{\link{exibble}} dataset, using the
+\code{row} column for labels in the stub. We'll add a single row to the bottom of
+the table with \code{rows_add()}. With name-value pairs, it's possible to add
+values for the body cells corresponding to columns available in the table.
+For any columns that are missed, the corresponding body cells receive \code{NA}
+values.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt(rowname_col = "row") |>
+  rows_add(
+    row = "row_9",
+    num = 9.999E7,
+    char = "ilama",
+    fctr = "nine",
+    group = "grp_b"
+  )
+}\if{html}{\out{</div>}}
+}
+
 \section{Function ID}{
 
 6-4
