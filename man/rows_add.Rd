@@ -16,15 +16,15 @@ rows_add(
 \arguments{
 \item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{...}{Expressions for the assignment of cell values to the new rows
-by column name in \code{.data}. Name-value pairs, in the form of
-\verb{<column> = <value vector>} will work, so long as the \verb{<column>} value
-exists in the table. Two-sided formulas with column-resolving expressions
-(e.g, \verb{<expr> ~ <value vector>}) can also be used, where the left-hand side
-corresponds to selections of columns. The length of the longest vector in
-\verb{<value vector>} determines how many new rows will be added. Single values
-in \verb{<value vector>} will be repeated down in cases where there are multiple
-rows to be added.}
+\item{...}{Expressions for the assignment of cell values to the new rows by
+column name in \code{.data}. Name-value pairs, in the form of \verb{<column> = <value vector>} will work, so long as the \verb{<column>} value exists in the table.
+Two-sided formulas with column-resolving expressions (e.g, \verb{<expr> ~ <value vector>}) can also be used, where the left-hand side corresponds to
+selections of columns. Column names should be enclosed in \code{\link[=c]{c()}} and select
+helpers like \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}} can be used in the LHS. The length of the
+longest vector in \verb{<value vector>} determines how many new rows will be
+added. Single values in \verb{<value vector>} will be repeated down in cases
+where there are multiple rows to be added.}
 
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
 
@@ -154,6 +154,71 @@ of the row label.
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rows_add_4.png" alt="This image of a table was generated from the fourth code example in the `rows_add()` help file." style="width:100\%;">
 }}
+
+Another application is starting from nothing (really just the definition of
+columns) and building up a table using nothing but \code{rows_add()}. This might
+be useful in interactive or programmatic applications. Here's an example
+where two columns are defined with \strong{dplyr}'s \code{tibble()} function but no
+rows are present initially; with two calls of \code{rows_add()}, two separate rows
+are added.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
+  time = lubridate::POSIXct(),
+  event = character(0)
+) |>
+  gt() |>
+  rows_add(
+    time = lubridate::ymd_hms("2022-01-23 12:36:10"),
+    event = "start"
+  ) |>
+  rows_add(
+    time = lubridate::ymd_hms("2022-01-23 13:41:26"),
+    event = "completed"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rows_add_5.png" alt="This image of a table was generated from the fifth code example in the `rows_add()` help file." style="width:100\%;">
+}}
+
+It's possible to use formula syntax in \code{rows_add()} to perform column
+resolution along with attaching values for new rows. If we wanted to use an
+equivalent value for two columns, a valid input would be in the form of
+\verb{<expr> ~ <value vector>}. In the following example, we create a simple table
+with six columns (the rendered \strong{gt} table, displays four columns and a stub
+column since the \code{group} column is used for row group labels). Let's add a
+single row where some of the cell values added correspond to columns are
+resolved on the LHS of the formula expressions:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
+  group = c("Group A", "Group B", "Group B"),
+  id = c("WG-025360", "WG-025361", "WG-025362"),
+  a = c(1, 6, 2),
+  b = c(2, 6, 2),
+  quantity_x = c(83.58, 282.71, 92.20),
+  quantity_y = c(36.82, 282.71, 87.34)
+) |>
+  gt(rowname_col = "id", groupname_col = "group") |>
+  rows_add(
+    starts_with("gr") ~ "Group A",
+    id = "WG-025363",
+    c(a, b) ~ 5,
+    starts_with("quantity") ~ 72.63
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rows_add_6.png" alt="This image of a table was generated from the sixth code example in the `rows_add()` help file." style="width:100\%;">
+}}
+
+We can see that using \code{starts_with("gr")} yields a successful match to the
+\code{group} column with the tangible result being an addition of a row to the
+\code{"Group A"} group (the added row is the second one in the rendered \strong{gt}
+table). Through the use of \code{c(a, b)}, it was possible to add the value \code{5} to
+both the \code{a} and \code{b} columns. A similar approach was taken with adding the
+\code{72.63} value to the \code{quantity_x} and \code{quantity_y} columns though we used the
+\code{starts_with("quantity")} expression to get \strong{gt} to resolve those two
+columns.
 }
 
 \section{Function ID}{
