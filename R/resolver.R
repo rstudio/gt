@@ -206,6 +206,7 @@ resolve_cols_c <- function(
     data,
     strict = TRUE,
     excl_stub = TRUE,
+    excl_group = TRUE,
     null_means = c("everything", "nothing")
 ) {
 
@@ -217,6 +218,7 @@ resolve_cols_c <- function(
       data = data,
       strict = strict,
       excl_stub = excl_stub,
+      excl_group = excl_group,
       null_means = null_means
     )
   )
@@ -236,6 +238,7 @@ resolve_cols_i <- function(
     data,
     strict = TRUE,
     excl_stub = TRUE,
+    excl_group = TRUE,
     null_means = c("everything", "nothing")
 ) {
   quo <- rlang::enquo(expr)
@@ -273,11 +276,18 @@ resolve_cols_i <- function(
         NULL
       }
 
-    # The columns that represent the group rows are always
-    # excluded (i.e., included in the `col_excl` vector)
-    group_rows_vars <- dt_boxhead_get_vars_groups(data = data)
+    # The columns that represent the group rows are usually
+    # always excluded but in certain cases (i.e., `rows_add()`)
+    # we may want to include this column
+    group_var <-
+      if (excl_group) {
+        dt_boxhead_get_vars_groups(data = data)[1]
+      } else {
+        NULL
+      }
 
-    cols_excl <- c(stub_var, group_rows_vars)
+
+    cols_excl <- c(stub_var, group_var)
 
     data <- dt_data_get(data = data)
   }
