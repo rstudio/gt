@@ -43,7 +43,11 @@ An object of class \code{gt_tbl}.
 }
 \description{
 It's possible to add new rows to your table with \code{rows_add()} by supplying
-the new row data through name value pairs.
+the new row data through name value pairs. The new rows are added to the
+bottom of the table by default but can be added internally though by using
+either the \code{.before} or \code{.after} arguments. If entirely empty rows need to
+be added, the \code{.n_empty} option provides a means to specify the number of
+blank (i.e., all \code{NA}) rows to be inserted into the table.
 }
 \section{Examples}{
 
