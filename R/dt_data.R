@@ -68,11 +68,6 @@ dt_data_add_rows <- function(
 
   data_tbl <- dt_data_get(data = data)
 
-  # Get column names for the existing data table and for
-  # the rows to be inserted
-  data_tbl_columns <- colnames(data_tbl)
-  data_list_columns <- names(row_data_list)
-
   # Get the `_stub_df` table
   stub_df <- dt_stub_df_get(data = data)
 
@@ -82,9 +77,6 @@ dt_data_add_rows <- function(
   } else {
     next_i <- 1L
   }
-
-  # TODO: stop function if names in `data_list_columns` are not in the
-  # set of existing column names
 
   # TODO: stop function if data classes in `row_data_list` don't match
   # that of the `data_tbl`
@@ -163,9 +155,12 @@ dt_data_add_rows <- function(
       built_group_label = rep(NA_character_, nrow_row_data_tbl)
     )
 
-  # TODO: `group_label` was set to NULL but should get the value for any
-  # groups it is a part of (make use of a lookup table with `group_id` and
-  # `group_label` and insert the correct `group_label` through a join)
+  #
+  # In the above, `group_label` was set to NULL but should it get the value for
+  # any groups it is a part of; so, we need to make use of a lookup table with
+  # `group_id` and `group_label` and insert the correct `group_label` value
+  #
+
   stub_df_group_lookup <-
     dplyr::distinct(dplyr::select(stub_df, dplyr::all_of(c("group_id", "group_label"))))
 
@@ -199,7 +194,7 @@ dt_data_add_rows <- function(
   # Bind the `stub_df_add` table to the existing `stub_df`
   #
 
-  # TODO: if `.before` or `.after` is provided then the binding
+  # If `.before` or `.after` is provided then the binding
   # must be done in a certain order
 
   if (is.null(before) && is.null(after)) {
