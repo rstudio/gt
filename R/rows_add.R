@@ -34,15 +34,17 @@
 #' blank (i.e., all `NA`) rows to be inserted into the table.
 #'
 #' @param .data A table object that is created using the [gt()] function.
-#' @param ... Expressions for the assignment of cell values to the new rows
-#'   by column name in `.data`. Name-value pairs, in the form of
-#'   `<column> = <value vector>` will work, so long as the `<column>` value
-#'   exists in the table. Two-sided formulas with column-resolving expressions
-#'   (e.g, `<expr> ~ <value vector>`) can also be used, where the left-hand side
-#'   corresponds to selections of columns. The length of the longest vector in
-#'   `<value vector>` determines how many new rows will be added. Single values
-#'   in `<value vector>` will be repeated down in cases where there are multiple
-#'   rows to be added.
+#' @param ... Expressions for the assignment of cell values to the new rows by
+#'   column name in `.data`. Name-value pairs, in the form of `<column> = <value
+#'   vector>` will work, so long as the `<column>` value exists in the table.
+#'   Two-sided formulas with column-resolving expressions (e.g, `<expr> ~ <value
+#'   vector>`) can also be used, where the left-hand side corresponds to
+#'   selections of columns. Column names should be enclosed in [c()] and select
+#'   helpers like [starts_with()], [ends_with()], [contains()], [matches()],
+#'   [one_of()], and [everything()] can be used in the LHS. The length of the
+#'   longest vector in `<value vector>` determines how many new rows will be
+#'   added. Single values in `<value vector>` will be repeated down in cases
+#'   where there are multiple rows to be added.
 #' @param .list Allows for the use of a list as an input alternative to `...`.
 #' @param .before,.after A single row-resolving expression or row index can be
 #'   given to either `.before` or `.after`. This specifies where the new rows
@@ -164,6 +166,73 @@
 #' `r man_get_image_tag(file = "man_rows_add_4.png")`
 #' }}
 #'
+#' Another application is starting from nothing (really just the definition of
+#' columns) and building up a table using nothing but `rows_add()`. This might
+#' be useful in interactive or programmatic applications. Here's an example
+#' where two columns are defined with **dplyr**'s `tibble()` function but no
+#' rows are present initially; with two calls of `rows_add()`, two separate rows
+#' are added.
+#'
+#' ```r
+#' dplyr::tibble(
+#'   time = lubridate::POSIXct(),
+#'   event = character(0)
+#' ) |>
+#'   gt() |>
+#'   rows_add(
+#'     time = lubridate::ymd_hms("2022-01-23 12:36:10"),
+#'     event = "start"
+#'   ) |>
+#'   rows_add(
+#'     time = lubridate::ymd_hms("2022-01-23 13:41:26"),
+#'     event = "completed"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_rows_add_5.png")`
+#' }}
+#'
+#' It's possible to use formula syntax in `rows_add()` to perform column
+#' resolution along with attaching values for new rows. If we wanted to use an
+#' equivalent value for two columns, a valid input would be in the form of
+#' `<expr> ~ <value vector>`. In the following example, we create a simple table
+#' with six columns (the rendered **gt** table, displays four columns and a stub
+#' column since the `group` column is used for row group labels). Let's add a
+#' single row where some of the cell values added correspond to columns are
+#' resolved on the LHS of the formula expressions:
+#'
+#' ```r
+#' dplyr::tibble(
+#'   group = c("Group A", "Group B", "Group B"),
+#'   id = c("WG-025360", "WG-025361", "WG-025362"),
+#'   a = c(1, 6, 2),
+#'   b = c(2, 6, 2),
+#'   quantity_x = c(83.58, 282.71, 92.20),
+#'   quantity_y = c(36.82, 282.71, 87.34)
+#' ) |>
+#'   gt(rowname_col = "id", groupname_col = "group") |>
+#'   rows_add(
+#'     starts_with("gr") ~ "Group A",
+#'     id = "WG-025363",
+#'     c(a, b) ~ 5,
+#'     starts_with("quantity") ~ 72.63
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_rows_add_6.png")`
+#' }}
+#'
+#' We can see that using `starts_with("gr")` yields a successful match to the
+#' `group` column with the tangible result being an addition of a row to the
+#' `"Group A"` group (the added row is the second one in the rendered **gt**
+#' table). Through the use of `c(a, b)`, it was possible to add the value `5` to
+#' both the `a` and `b` columns. A similar approach was taken with adding the
+#' `72.63` value to the `quantity_x` and `quantity_y` columns though we used the
+#' `starts_with("quantity")` expression to get **gt** to resolve those two
+#' columns.
+#'
 #' @family row addition/modification functions
 #' @section Function ID:
 #' 6-4
@@ -188,6 +257,7 @@ rows_add <- function(
   # Collect a list of new row data
   row_data_list <- .list
 
+  # Return data unchanged if `row_data_list` is empty and `.n_empty` is NULL
   if (length(row_data_list) < 1 && is.null(.n_empty)) {
     return(.data)
   }
@@ -221,6 +291,68 @@ rows_add <- function(
     names(row_data_list) <- colnames(data_tbl)
 
   } else {
+
+    #
+    # Take two-sided formula inputs and normalize to name-value pairs
+    #
+
+    normalized_row_data_items <- list()
+    row_data_items_to_remove <- c()
+
+    for (i in seq_along(row_data_list)) {
+
+      if (!(rlang::is_formula(row_data_list[[i]]))) {
+        next
+      }
+
+      row_data_items_to_remove <- c(row_data_items_to_remove, i)
+
+      # Obtain the LHS and RHS of the formula
+      lhs <- rlang::f_lhs(row_data_list[[i]])
+      rhs <- rlang::eval_tidy(rlang::f_rhs(row_data_list[[i]]))
+
+      # Stop function if LHS of formula isn't present
+      if (is.null(lhs)) {
+        cli::cli_abort("If using a formula, it must be two-sided.")
+      }
+
+      resolved_columns <-
+        resolve_cols_c(
+          expr = {{ lhs }},
+          data = .data,
+          excl_stub = FALSE,
+          excl_group = FALSE
+        )
+
+      # If nothing is resolved, go to next iteration
+      if (length(resolved_columns) < 1) {
+        next
+      }
+
+      # Generate normalized rows with `rhs` values
+      row_data_list_i <-
+        lapply(
+          seq_along(resolved_columns),
+          FUN = function(x) rhs
+        )
+      names(row_data_list_i) <- resolved_columns
+
+      normalized_row_data_items <-
+        c(
+          normalized_row_data_items,
+          row_data_list_i
+        )
+    }
+
+    # Remove items from `row_data_list`
+    if (length(row_data_items_to_remove) > 0) {
+      row_data_list <- row_data_list[-row_data_items_to_remove]
+    }
+
+    # Add in items from `normalized_row_data_items`
+    if (length(normalized_row_data_items) > 0) {
+      row_data_list <- c(row_data_list, normalized_row_data_items)
+    }
 
     # Ensure that the column names resolved belong to the internal
     # data table of `data_tbl`
