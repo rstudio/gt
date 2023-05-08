@@ -72,6 +72,94 @@
 #'   )
 #' ```
 #'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_rows_add_1.png")`
+#' }}
+#'
+#' If you wanted to place a row somewhere in the middle of the table, we can use
+#' either of the `.before` or `.after` arguments in `rows_add()`:
+#'
+#' ```r
+#' exibble |>
+#'   gt(rowname_col = "row") |>
+#'   rows_add(
+#'     row = "row_4.5",
+#'     num = 9.923E3,
+#'     char = "elderberry",
+#'     fctr = "eighty",
+#'     group = "grp_a",
+#'     .after = "row_4"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_rows_add_2.png")`
+#' }}
+#'
+#' Putting a row at the beginning requires the use of the `.before` argument. We
+#' can use an index value for the row as in `.before = 1` for maximum easiness:
+#'
+#' ```r
+#' exibble |>
+#'   gt(rowname_col = "row") |>
+#'   rows_add(
+#'     row = "row_0",
+#'     num = 0,
+#'     char = "apple",
+#'     fctr = "zero",
+#'     group = "grp_a",
+#'     .before = 1
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_rows_add_3.png")`
+#' }}
+#'
+#' Again with [`exibble`], we can create an example where we insert 'spacer'
+#' rows. These are rows without any content and merely serve to add extra
+#' rowwise space to the table. In this case, we'll have a stub with row names
+#' and row groups (set up in the [gt()] call). The two rows being added will
+#' occupy the bottom row of each group. The only data defined for the two rows
+#' involves values for the `row` and `group` columns. It's important that the
+#' data for `group` uses the group names already present in the data (`"grp_a"`
+#' and `"grp_b"`). The corresponding values for `row` will be `"row_a_end"` and
+#' `"row_b_end"`, these will be used later expressions for targeting the rows.
+#' Here's the code needed to generate spacer rows at the end of each row group:
+#'
+#' ```r
+#' exibble |>
+#'   gt(rowname_col = "row", groupname_col = "group") |>
+#'   rows_add(
+#'     row = c("row_a_end", "row_b_end"),
+#'     group = c("grp_a", "grp_b")
+#'   ) |>
+#'   tab_style(
+#'     style = cell_borders(sides = "top", style = "hidden"),
+#'     locations = list(
+#'       cells_body(rows = ends_with("end")),
+#'       cells_stub(rows = ends_with("end"))
+#'     )
+#'   ) |>
+#'   sub_missing(missing_text = "") |>
+#'   text_case_when(
+#'     grepl("end", x) ~ "",
+#'     .locations = cells_stub()
+#'   ) |>
+#'   opt_vertical_padding(scale = 0.5)
+#' ```
+#'
+#' All missing values are substituted with an empty string (`""`) using the
+#' [sub_missing()] function. We removed the top border of the new rows with a
+#' call to [tab_style()], targeting those rows where the row labels end with
+#' `"end"`. Finally, we get rid of the row labels with the use of the
+#' [text_case_when()] function, using a similar strategy of targeting the name
+#' of the row label.
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_rows_add_4.png")`
+#' }}
+#'
 #' @family row addition/modification functions
 #' @section Function ID:
 #' 6-4
