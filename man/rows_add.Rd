@@ -65,6 +65,91 @@ values.
     group = "grp_b"
   )
 }\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rows_add_1.png" alt="This image of a table was generated from the first code example in the `rows_add()` help file." style="width:100\%;">
+}}
+
+If you wanted to place a row somewhere in the middle of the table, we can use
+either of the \code{.before} or \code{.after} arguments in \code{rows_add()}:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt(rowname_col = "row") |>
+  rows_add(
+    row = "row_4.5",
+    num = 9.923E3,
+    char = "elderberry",
+    fctr = "eighty",
+    group = "grp_a",
+    .after = "row_4"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rows_add_2.png" alt="This image of a table was generated from the second code example in the `rows_add()` help file." style="width:100\%;">
+}}
+
+Putting a row at the beginning requires the use of the \code{.before} argument. We
+can use an index value for the row as in \code{.before = 1} for maximum easiness:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt(rowname_col = "row") |>
+  rows_add(
+    row = "row_0",
+    num = 0,
+    char = "apple",
+    fctr = "zero",
+    group = "grp_a",
+    .before = 1
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rows_add_3.png" alt="This image of a table was generated from the third code example in the `rows_add()` help file." style="width:100\%;">
+}}
+
+Again with \code{\link{exibble}}, we can create an example where we insert 'spacer'
+rows. These are rows without any content and merely serve to add extra
+rowwise space to the table. In this case, we'll have a stub with row names
+and row groups (set up in the \code{\link[=gt]{gt()}} call). The two rows being added will
+occupy the bottom row of each group. The only data defined for the two rows
+involves values for the \code{row} and \code{group} columns. It's important that the
+data for \code{group} uses the group names already present in the data (\code{"grp_a"}
+and \code{"grp_b"}). The corresponding values for \code{row} will be \code{"row_a_end"} and
+\code{"row_b_end"}, these will be used later expressions for targeting the rows.
+Here's the code needed to generate spacer rows at the end of each row group:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt(rowname_col = "row", groupname_col = "group") |>
+  rows_add(
+    row = c("row_a_end", "row_b_end"),
+    group = c("grp_a", "grp_b")
+  ) |>
+  tab_style(
+    style = cell_borders(sides = "top", style = "hidden"),
+    locations = list(
+      cells_body(rows = ends_with("end")),
+      cells_stub(rows = ends_with("end"))
+    )
+  ) |>
+  sub_missing(missing_text = "") |>
+  text_case_when(
+    grepl("end", x) ~ "",
+    .locations = cells_stub()
+  ) |>
+  opt_vertical_padding(scale = 0.5)
+}\if{html}{\out{</div>}}
+
+All missing values are substituted with an empty string (\code{""}) using the
+\code{\link[=sub_missing]{sub_missing()}} function. We removed the top border of the new rows with a
+call to \code{\link[=tab_style]{tab_style()}}, targeting those rows where the row labels end with
+\code{"end"}. Finally, we get rid of the row labels with the use of the
+\code{\link[=text_case_when]{text_case_when()}} function, using a similar strategy of targeting the name
+of the row label.
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rows_add_4.png" alt="This image of a table was generated from the fourth code example in the `rows_add()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
