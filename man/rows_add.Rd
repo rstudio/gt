@@ -28,11 +28,13 @@ where there are multiple rows to be added.}
 
 \item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
 
-\item{.before, .after}{A single row-resolving expression or row index can be
+\item{.before, .after}{A single row-resolving expression (i.e.,
+\strong{tidyselect}-style expressions like \code{starts_with()}) or row index can be
 given to either \code{.before} or \code{.after}. This specifies where the new rows
-should be positioned among the existing rows in the input data table. If
-nothing is provided for either argument the new rows will be placed at the
-bottom.}
+should be positioned among the existing rows in the input data table.
+Importantly, only a single row must be resolved (otherwise, the function
+will be stopped). If nothing is provided for either argument then any new
+rows will be placed at the bottom of the table.}
 
 \item{.n_empty}{An option to add empty rows in lieu of rows containing data
 that would otherwise be supplied to \code{...} or \code{.list}. If the option is
@@ -43,21 +45,38 @@ An object of class \code{gt_tbl}.
 }
 \description{
 It's possible to add new rows to your table with \code{rows_add()} by supplying
-the new row data through name value pairs. The new rows are added to the
-bottom of the table by default but can be added internally though by using
-either the \code{.before} or \code{.after} arguments. If entirely empty rows need to
-be added, the \code{.n_empty} option provides a means to specify the number of
-blank (i.e., all \code{NA}) rows to be inserted into the table.
+the new row data through name-value pairs or two-sided formula expressions.
+The new rows are added to the bottom of the table by default but can be added
+internally though by using either the \code{.before} or \code{.after} arguments. If
+entirely empty rows need to be added, the \code{.n_empty} option provides a means
+to specify the number of blank (i.e., all \code{NA}) rows to be inserted into the
+table.
 }
+\section{Targeting the row for insertion with \code{.before} or \code{.after}}{
+
+
+The targeting of a rows for insertion is done through the \code{.before} or
+\code{.after} arguments (only one of these options should be be used). This can be
+done in a variety of ways. If a stub is present, then we potentially have row
+identifiers. This is the ideal method to use for establishing a row target.
+We can use \strong{tidyselect}-style expressions to target a row. It's also
+possible to use row indices (e.g., \code{c(3, 5, 6)}) though these index values
+must correspond to the row numbers of the input data (the indices won't
+necessarily match those of rearranged rows if row groups are present). One
+more type of expression is possible, an expression that takes column values
+(can involve any of the available columns in the table) and returns a
+logical vector.
+}
+
 \section{Examples}{
 
 
 Let's make a simple \strong{gt} table with the \code{\link{exibble}} dataset, using the
 \code{row} column for labels in the stub. We'll add a single row to the bottom of
 the table with \code{rows_add()}. With name-value pairs, it's possible to add
-values for the body cells corresponding to columns available in the table.
-For any columns that are missed, the corresponding body cells receive \code{NA}
-values.
+values for the new body cells that correspond to columns available in the
+table. For any columns that are missed, the related body cells will receive
+\code{NA} values.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   gt(rowname_col = "row") |>
@@ -114,14 +133,15 @@ can use an index value for the row as in \code{.before = 1} for maximum easiness
 
 Again with \code{\link{exibble}}, we can create an example where we insert 'spacer'
 rows. These are rows without any content and merely serve to add extra
-rowwise space to the table. In this case, we'll have a stub with row names
-and row groups (set up in the \code{\link[=gt]{gt()}} call). The two rows being added will
-occupy the bottom row of each group. The only data defined for the two rows
-involves values for the \code{row} and \code{group} columns. It's important that the
-data for \code{group} uses the group names already present in the data (\code{"grp_a"}
-and \code{"grp_b"}). The corresponding values for \code{row} will be \code{"row_a_end"} and
-\code{"row_b_end"}, these will be used later expressions for targeting the rows.
-Here's the code needed to generate spacer rows at the end of each row group:
+vertical space to the table in specific locations. In this case, we'll have a
+stub with row names and row groups (set up in the \code{\link[=gt]{gt()}} call). The two rows
+being added will occupy the bottom row of each group. The only data defined
+for the two rows involves values for the \code{row} and \code{group} columns. It's
+important that the data for \code{group} uses the group names already present in
+the data (\code{"grp_a"} and \code{"grp_b"}). The corresponding values for \code{row} will
+be \code{"row_a_end"} and \code{"row_b_end"}, these will be used later expressions for
+targeting the rows. Here's the code needed to generate spacer rows at the end
+of each row group:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   gt(rowname_col = "row", groupname_col = "group") |>
@@ -144,23 +164,23 @@ Here's the code needed to generate spacer rows at the end of each row group:
   opt_vertical_padding(scale = 0.5)
 }\if{html}{\out{</div>}}
 
-All missing values are substituted with an empty string (\code{""}) using the
-\code{\link[=sub_missing]{sub_missing()}} function. We removed the top border of the new rows with a
-call to \code{\link[=tab_style]{tab_style()}}, targeting those rows where the row labels end with
-\code{"end"}. Finally, we get rid of the row labels with the use of the
-\code{\link[=text_case_when]{text_case_when()}} function, using a similar strategy of targeting the name
-of the row label.
-
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rows_add_4.png" alt="This image of a table was generated from the fourth code example in the `rows_add()` help file." style="width:100\%;">
 }}
 
+All missing values were substituted with an empty string (\code{""}), and that was
+done by using the \code{\link[=sub_missing]{sub_missing()}} function. We removed the top border of the
+new rows with a call to \code{\link[=tab_style]{tab_style()}}, targeting those rows where the row
+labels end with \code{"end"}. Finally, we get rid of the row labels with the use
+of the \code{\link[=text_case_when]{text_case_when()}} function, using a similar strategy of targeting the
+name of the row label.
+
 Another application is starting from nothing (really just the definition of
-columns) and building up a table using nothing but \code{rows_add()}. This might
-be useful in interactive or programmatic applications. Here's an example
-where two columns are defined with \strong{dplyr}'s \code{tibble()} function but no
-rows are present initially; with two calls of \code{rows_add()}, two separate rows
-are added.
+columns) and building up a table using several invocations of \code{rows_add()}.
+This might be useful in interactive or programmatic applications. Here's an
+example where two columns are defined with \strong{dplyr}'s \code{tibble()} function
+(and no rows are present initially); with two calls of \code{rows_add()}, two
+separate rows are added.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
   time = lubridate::POSIXct(),
@@ -183,12 +203,12 @@ are added.
 
 It's possible to use formula syntax in \code{rows_add()} to perform column
 resolution along with attaching values for new rows. If we wanted to use an
-equivalent value for two columns, a valid input would be in the form of
-\verb{<expr> ~ <value vector>}. In the following example, we create a simple table
-with six columns (the rendered \strong{gt} table, displays four columns and a stub
-column since the \code{group} column is used for row group labels). Let's add a
-single row where some of the cell values added correspond to columns are
-resolved on the LHS of the formula expressions:
+equivalent value for multiple cells in a new row, a valid input would be in
+the form of \verb{<expr> ~ <value vector>}. In the following example, we create a
+simple table with six columns (the rendered \strong{gt} table displays four
+columns and a stub column since the \code{group} column is used for row group
+labels). Let's add a single row where some of the cell values added
+correspond to columns are resolved on the LHS of the formula expressions:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
   group = c("Group A", "Group B", "Group B"),
