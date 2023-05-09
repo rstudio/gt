@@ -27,11 +27,12 @@
 #' @description
 #'
 #' It's possible to add new rows to your table with `rows_add()` by supplying
-#' the new row data through name value pairs. The new rows are added to the
-#' bottom of the table by default but can be added internally though by using
-#' either the `.before` or `.after` arguments. If entirely empty rows need to
-#' be added, the `.n_empty` option provides a means to specify the number of
-#' blank (i.e., all `NA`) rows to be inserted into the table.
+#' the new row data through name-value pairs or two-sided formula expressions.
+#' The new rows are added to the bottom of the table by default but can be added
+#' internally though by using either the `.before` or `.after` arguments. If
+#' entirely empty rows need to be added, the `.n_empty` option provides a means
+#' to specify the number of blank (i.e., all `NA`) rows to be inserted into the
+#' table.
 #'
 #' @param .data A table object that is created using the [gt()] function.
 #' @param ... Expressions for the assignment of cell values to the new rows by
@@ -46,25 +47,41 @@
 #'   added. Single values in `<value vector>` will be repeated down in cases
 #'   where there are multiple rows to be added.
 #' @param .list Allows for the use of a list as an input alternative to `...`.
-#' @param .before,.after A single row-resolving expression or row index can be
+#' @param .before,.after A single row-resolving expression (i.e.,
+#'   **tidyselect**-style expressions like `starts_with()`) or row index can be
 #'   given to either `.before` or `.after`. This specifies where the new rows
-#'   should be positioned among the existing rows in the input data table. If
-#'   nothing is provided for either argument the new rows will be placed at the
-#'   bottom.
+#'   should be positioned among the existing rows in the input data table.
+#'   Importantly, only a single row must be resolved (otherwise, the function
+#'   will be stopped). If nothing is provided for either argument then any new
+#'   rows will be placed at the bottom of the table.
 #' @param .n_empty An option to add empty rows in lieu of rows containing data
 #'   that would otherwise be supplied to `...` or `.list`. If the option is
 #'   taken, provide an integer value here.
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @section Targeting the row for insertion with `.before` or `.after`:
+#'
+#' The targeting of a rows for insertion is done through the `.before` or
+#' `.after` arguments (only one of these options should be be used). This can be
+#' done in a variety of ways. If a stub is present, then we potentially have row
+#' identifiers. This is the ideal method to use for establishing a row target.
+#' We can use **tidyselect**-style expressions to target a row. It's also
+#' possible to use row indices (e.g., `c(3, 5, 6)`) though these index values
+#' must correspond to the row numbers of the input data (the indices won't
+#' necessarily match those of rearranged rows if row groups are present). One
+#' more type of expression is possible, an expression that takes column values
+#' (can involve any of the available columns in the table) and returns a
+#' logical vector.
+#'
 #' @section Examples:
 #'
 #' Let's make a simple **gt** table with the [`exibble`] dataset, using the
 #' `row` column for labels in the stub. We'll add a single row to the bottom of
 #' the table with `rows_add()`. With name-value pairs, it's possible to add
-#' values for the body cells corresponding to columns available in the table.
-#' For any columns that are missed, the corresponding body cells receive `NA`
-#' values.
+#' values for the new body cells that correspond to columns available in the
+#' table. For any columns that are missed, the related body cells will receive
+#' `NA` values.
 #'
 #' ```r
 #' exibble |>
@@ -124,14 +141,15 @@
 #'
 #' Again with [`exibble`], we can create an example where we insert 'spacer'
 #' rows. These are rows without any content and merely serve to add extra
-#' rowwise space to the table. In this case, we'll have a stub with row names
-#' and row groups (set up in the [gt()] call). The two rows being added will
-#' occupy the bottom row of each group. The only data defined for the two rows
-#' involves values for the `row` and `group` columns. It's important that the
-#' data for `group` uses the group names already present in the data (`"grp_a"`
-#' and `"grp_b"`). The corresponding values for `row` will be `"row_a_end"` and
-#' `"row_b_end"`, these will be used later expressions for targeting the rows.
-#' Here's the code needed to generate spacer rows at the end of each row group:
+#' vertical space to the table in specific locations. In this case, we'll have a
+#' stub with row names and row groups (set up in the [gt()] call). The two rows
+#' being added will occupy the bottom row of each group. The only data defined
+#' for the two rows involves values for the `row` and `group` columns. It's
+#' important that the data for `group` uses the group names already present in
+#' the data (`"grp_a"` and `"grp_b"`). The corresponding values for `row` will
+#' be `"row_a_end"` and `"row_b_end"`, these will be used later expressions for
+#' targeting the rows. Here's the code needed to generate spacer rows at the end
+#' of each row group:
 #'
 #' ```r
 #' exibble |>
@@ -155,23 +173,23 @@
 #'   opt_vertical_padding(scale = 0.5)
 #' ```
 #'
-#' All missing values are substituted with an empty string (`""`) using the
-#' [sub_missing()] function. We removed the top border of the new rows with a
-#' call to [tab_style()], targeting those rows where the row labels end with
-#' `"end"`. Finally, we get rid of the row labels with the use of the
-#' [text_case_when()] function, using a similar strategy of targeting the name
-#' of the row label.
-#'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_rows_add_4.png")`
 #' }}
 #'
+#' All missing values were substituted with an empty string (`""`), and that was
+#' done by using the [sub_missing()] function. We removed the top border of the
+#' new rows with a call to [tab_style()], targeting those rows where the row
+#' labels end with `"end"`. Finally, we get rid of the row labels with the use
+#' of the [text_case_when()] function, using a similar strategy of targeting the
+#' name of the row label.
+#'
 #' Another application is starting from nothing (really just the definition of
-#' columns) and building up a table using nothing but `rows_add()`. This might
-#' be useful in interactive or programmatic applications. Here's an example
-#' where two columns are defined with **dplyr**'s `tibble()` function but no
-#' rows are present initially; with two calls of `rows_add()`, two separate rows
-#' are added.
+#' columns) and building up a table using several invocations of `rows_add()`.
+#' This might be useful in interactive or programmatic applications. Here's an
+#' example where two columns are defined with **dplyr**'s `tibble()` function
+#' (and no rows are present initially); with two calls of `rows_add()`, two
+#' separate rows are added.
 #'
 #' ```r
 #' dplyr::tibble(
@@ -195,12 +213,12 @@
 #'
 #' It's possible to use formula syntax in `rows_add()` to perform column
 #' resolution along with attaching values for new rows. If we wanted to use an
-#' equivalent value for two columns, a valid input would be in the form of
-#' `<expr> ~ <value vector>`. In the following example, we create a simple table
-#' with six columns (the rendered **gt** table, displays four columns and a stub
-#' column since the `group` column is used for row group labels). Let's add a
-#' single row where some of the cell values added correspond to columns are
-#' resolved on the LHS of the formula expressions:
+#' equivalent value for multiple cells in a new row, a valid input would be in
+#' the form of `<expr> ~ <value vector>`. In the following example, we create a
+#' simple table with six columns (the rendered **gt** table displays four
+#' columns and a stub column since the `group` column is used for row group
+#' labels). Let's add a single row where some of the cell values added
+#' correspond to columns are resolved on the LHS of the formula expressions:
 #'
 #' ```r
 #' dplyr::tibble(
@@ -368,12 +386,45 @@ rows_add <- function(
       null_means = "nothing"
     )
 
+  if (
+    !is.null(resolved_rows_before_idx) &&
+    length(resolved_rows_before_idx) != 1
+  ) {
+
+    if (length(resolved_rows_before_idx) < 1) {
+      cli::cli_abort("The expression used for `.before` did not resolve a row.")
+    }
+
+    if (length(resolved_rows_before_idx) > 1) {
+      cli::cli_abort("The expression used for `.before` resolved multiple rows.")
+    }
+  }
+
   resolved_rows_after_idx <-
     resolve_rows_i(
       expr = {{ .after }},
       data = .data,
       null_means = "nothing"
     )
+
+  if (
+    !is.null(resolved_rows_after_idx) &&
+    length(resolved_rows_after_idx) != 1
+  ) {
+
+    if (length(resolved_rows_after_idx) < 1) {
+      cli::cli_abort("The expression used for `.after` did not resolve a row.")
+    }
+
+    if (length(resolved_rows_after_idx) > 1) {
+      cli::cli_abort("The expression used for `.after` resolved multiple rows.")
+    }
+  }
+
+  # Stop function if expressions are given to both `.before` and `.after`
+  if (!is.null(resolved_rows_before_idx) && !is.null(resolved_rows_after_idx)) {
+    cli::cli_abort("Expressions cannot be given to both `.before` and `.after`.")
+  }
 
   dt_data_add_rows(
     data = .data,
