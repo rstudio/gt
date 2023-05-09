@@ -1041,6 +1041,54 @@ test_that("rows can be added to a table with name-value pairs", {
   gt_tbl_g_add2_a8 <- gt_tbl_g %>% rows_add(.n_empty = 2, .after = 8)
   gt_tbl_g_add2_a8 %>% render_as_html() %>% expect_snapshot()
   expect_error(gt_tbl_g %>% rows_add(.n_empty = 2, .after = 9))
+
+  # Expect an error if using both `.before` and `.after`
+  expect_error(
+    gt_tbl_e %>%
+      rows_add(.before = 2, .after = 5, .n_empty = 2)
+  )
+  expect_error(
+    gt_tbl_e %>%
+      rows_add(.before = 3, .after = 2, .n_empty = 2)
+  )
+
+  # Expect that targeting rows should only resolve to a single row
+  expect_error(
+    gt_tbl_e %>%
+      rows_add(.before = c(2, 5), .n_empty = 2)
+  )
+  expect_error(
+    gt_tbl_e %>%
+      rows_add(.after = c(2, 5), .n_empty = 2)
+  )
+  expect_error(
+    gt_tbl_e %>%
+      rows_add(.before = c("row_2", "row_5"), .n_empty = 2)
+  )
+  expect_error(
+    gt_tbl_e %>%
+      rows_add(.after = c("row_2", "row_5"), .n_empty = 2)
+  )
+  expect_error(
+    gt_tbl_e %>%
+      rows_add(.before = matches("5|6"), .n_empty = 2)
+  )
+  expect_error(
+    gt_tbl_e %>%
+      rows_add(.after = matches("5|6"), .n_empty = 2)
+  )
+  expect_error(
+    gt_tbl_e %>%
+      rows_add(.after = matches("5|6"), .before = 3, .n_empty = 2)
+  )
+  expect_error(
+    gt_tbl_e %>%
+      rows_add(.before = matches("5|6"), .after = 3, .n_empty = 2)
+  )
+  expect_error(
+    gt_tbl_e %>%
+      rows_add(.before = matches("5"), .after = matches("6"), .n_empty = 2)
+  )
 })
 
 test_that("adding rows can be done using formula-based expressions", {
