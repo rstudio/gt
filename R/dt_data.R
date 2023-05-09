@@ -78,9 +78,6 @@ dt_data_add_rows <- function(
     next_i <- 1L
   }
 
-  # TODO: stop function if data classes in `row_data_list` don't match
-  # that of the `data_tbl`
-
   # Generate a tibble from the `row_data_list`
   row_data_tbl <- dplyr::as_tibble(row_data_list)
 
