@@ -44,9 +44,10 @@
 #'
 #' @section Examples:
 #'
-#' Use the [`gtcars`] dataset to create a **gt** table. Add a header part with
-#' the `tab_header()` function so that we get a title and a subtitle for the
-#' table.
+#' Use the [`gtcars`] dataset to create a **gt** table. Add a header part to the
+#' table with the `tab_header()` function. We'll add a title and the optional
+#' subtitle as well. With the [md()] helper function, we can make sure the
+#' Markdown formatting is interpreted and transformed.
 #'
 #' ```r
 #' gtcars |>
@@ -61,6 +62,57 @@
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_tab_header_1.png")`
+#' }}
+#'
+#' If the table is intended solely as an HTML table, you could introduce your
+#' own HTML elements into the header. You can even use the **htmltools** package
+#' to help arrange and generate the HTML. Here's an example of that, where two
+#' `<div>` elements are placed in a `htmltools::tagList()`.
+#'
+#' ```r
+#' gtcars |>
+#'   dplyr::select(mfr, model, msrp) |>
+#'   dplyr::slice(1:5) |>
+#'   gt() |>
+#'   tab_header(
+#'     title =
+#'       htmltools::tagList(
+#'         htmltools::tags$div(
+#'           style = htmltools::css(
+#'             `text-align` = "center"
+#'           ),
+#'           htmltools::HTML(
+#'             web_image("https://www.r-project.org/logo/Rlogo.png")
+#'           )
+#'         ),
+#'         htmltools::tags$div(
+#'           "Data listing from ",
+#'           htmltools::tags$strong("gtcars")
+#'         )
+#'       )
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_header_2.png")`
+#' }}
+#'
+#' If using HTML but doing something far simpler, we can use the [html()] helper
+#' function to declare that the text provided is HTML.
+#'
+#' ```r
+#' gtcars |>
+#'   dplyr::select(mfr, model, msrp) |>
+#'   dplyr::slice(1:5) |>
+#'   gt() |>
+#'   tab_header(
+#'     title = html("Data listing from <strong>gtcars</strong>"),
+#'     subtitle = html("From <span style='color:red;'>gtcars</span>")
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_header_3.png")`
 #' }}
 #'
 #' @family part creation/modification functions
