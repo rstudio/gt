@@ -62,6 +62,10 @@
 #'   Markdown, Quarto, or **bookdown**.
 #' @param rownames_to_stub An option to take rownames from the input `data`
 #'   table as row captions in the display table stub.
+#' @param row_group_as_column An option that alters the display of row group
+#'   labels. By default this is `FALSE` and row group labels will appear in
+#'   dedicated rows above their respective groups of rows. If `TRUE`, row group
+#'   labels will occupy a secondary column in the table stub.
 #' @param auto_align Optionally have column data be aligned depending on the
 #'   content contained in each column of the input `data`. Internally, this
 #'   calls `cols_align(align = "auto")` for all columns.
@@ -81,45 +85,151 @@
 #'
 #' @section Examples:
 #'
-#' Create a **gt** table object using the [`exibble`] dataset. Use the `row` and
-#' `group` columns to add a stub and row groups via the `rowname_col` and
-#' `groupname_col` arguments.
+#' Let's use the [`exibble`] dataset for the next few examples, we'll learn how
+#' to make simple **gt** tables with the `gt()` function. The most basic thing
+#' to do is to just use `gt()` with the dataset as the input.
 #'
 #' ```r
-#' tab_1 <-
-#'   exibble |>
-#'   gt(
-#'     rowname_col = "row",
-#'     groupname_col = "group"
-#'   )
-#'
-#' tab_1
+#' exibble |> gt()
 #' ```
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_gt_1.png")`
 #' }}
 #'
-#' The resulting **gt** table object can be used in transformations with a
-#' variety of `tab_*()`, `fmt_*()`, `cols_*()`, and even more functions
-#' available in the package.
+#' This dataset has the `row` and `group` columns. The former contains unique
+#' values that are ideal for labeling rows, and this often happens in what is
+#' called the 'stub' (a reserved area that serves to label rows). With the
+#' `gt()` function, we can immediately place the contents of the `row` column
+#' into the stub column. To do this, we use the `rowname_col` argument with the
+#' name of the column to use in quotes.
 #'
 #' ```r
-#' tab_1 |>
-#'   tab_header(
-#'     title = "Table Title",
-#'     subtitle = "Subtitle"
-#'   ) |>
-#'   fmt_number(
-#'     columns = num,
-#'     decimals = 2
-#'   ) |>
-#'   cols_label(num = "number")
+#' exibble |> gt(rowname_col = "row")
 #' ```
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_gt_2.png")`
 #' }}
+#'
+#' This sets up a table with a stub, the row labels are placed within the stub
+#' column, and a vertical dividing line has been placed on the right-hand side.
+#'
+#' The `group` column can be used to divide the rows into discrete groups.
+#' Within that column, we see repetitions of the values `grp_a` and `grp_b`.
+#' These serve both as ID values and the initial label for the groups. With the
+#' `groupname_col` argument in `gt()`, we can set up the row groups immediately
+#' upon creation of the table.
+#'
+#' ```r
+#' exibble |>
+#'   gt(
+#'     rowname_col = "row",
+#'     groupname_col = "group"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_gt_3.png")`
+#' }}
+#'
+#' If you'd rather perform the set up of row groups later (i.e., not in the
+#' `gt()` call), this is possible with use of the [tab_row_group()] function
+#' (and [row_group_order()] can help with the arrangement of row groups).
+#'
+#' One more thing to consider with row groups is their layout. By default, row
+#' group labels reside in separate rows the appear above the group. However,
+#' we can use the `row_group_as_column = TRUE` option to put the row group
+#' labels within a secondary column within the table stub.
+#'
+#' ```r
+#' exibble |>
+#'   gt(
+#'     rowname_col = "row",
+#'     groupname_col = "group",
+#'     row_group_as_column = TRUE
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_gt_4.png")`
+#' }}
+#'
+#' This could be done later if need be, and using
+#' `tab_options(row_group.as_column = TRUE)` would be the way to do it outside
+#' of the `gt()` call.
+#'
+#' Some datasets have rownames built in; `mtcars` famously has the car model
+#' names as the rownames. To use those rownames as row labels in the stub, the
+#' `rownames_to_stub = TRUE` option will prove to be useful.
+#'
+#' ```r
+#' head(mtcars, 10) |> gt(rownames_to_stub = TRUE)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_gt_5.png")`
+#' }}
+#'
+#' By default, values in the body of a **gt** table (and their column labels)
+#' are automatically aligned. The alignment is governed by the types of values
+#' in a column. If you'd like to disable this form of auto-alignment, the
+#' `auto_align = FALSE` option can be taken.
+#'
+#' ```r
+#' exibble |> gt(rowname_col = "row", auto_align = FALSE)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_gt_6.png")`
+#' }}
+#'
+#' What you'll get from that is center-alignment of all table body values and
+#' all column labels. Note that row labels in the the stub are still
+#' left-aligned; and `auto_align` has no effect on alignment within the table
+#' stub.
+#'
+#' However which way you generate the initial **gt** table object, you can use
+#' it with a huge variety of functions in the package to further customize the
+#' presentation. Formatting body cells is commonly done with the family of
+#' formatting functions (e.g., [fmt_number()], [fmt_date()], etc.). The package
+#' supports formatting with internationalization ('i18n' features) and so
+#' locale-aware functions come with a `locale` argument. To avoid having to use
+#' that argument repeatedly, the `gt()` function has its own `locale` argument.
+#' Setting a locale in that will make it available globally. Here's an example
+#' of how that works in practice when setting `locale = "fr"` in `gt()` and
+#' using formatting functions:
+#'
+#' ```r
+#' exibble |>
+#'   gt(
+#'     rowname_col = "row",
+#'     groupname_col = "group",
+#'     locale = "fr"
+#'   ) |>
+#'   fmt_number() |>
+#'   fmt_date(
+#'     columns = date,
+#'     date_style = "yMEd"
+#'   ) |>
+#'   fmt_datetime(
+#'     columns = datetime,
+#'     format = "EEEE, MMMM d, y",
+#'     locale = "en"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_gt_7.png")`
+#' }}
+#'
+#' In this example, the [fmt_number()] and [fmt_date()] functions understand
+#' that the locale for this table is `"fr"` (French), so the appropriate
+#' formatting for that locale is apparent in the `num`, `currency`, and `date`
+#' columns. However in the [fmt_datetime()] call, we explicitly use the `"en"`
+#' (English) locale. This overrides the `"fr"` default set for this table and
+#' the end result is dates formatted with the English locale in the `datetime`
+#' column.
 #'
 #' @family table creation functions
 #' @section Function ID:
@@ -136,12 +246,12 @@ gt <- function(
     process_md = FALSE,
     caption = NULL,
     rownames_to_stub = FALSE,
+    row_group_as_column = FALSE,
     auto_align = TRUE,
     id = NULL,
     locale = NULL,
     row_group.sep = getOption("gt.row_group.sep", " - ")
 ) {
-
 
   # Stop function if the supplied `id` doesn't conform
   # to character(1) input or isn't NULL
@@ -213,6 +323,18 @@ gt <- function(
         data = data,
         option = "table_id",
         value = id
+      )
+  }
+
+  # If taking the option to display row group labels as a column
+  # in the stub (with `row_group_as_column = TRUE`) set that option
+  if (row_group_as_column) {
+
+    data <-
+      dt_options_set_value(
+        data = data,
+        option = "row_group_as_column",
+        value = TRUE
       )
   }
 
