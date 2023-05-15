@@ -2837,8 +2837,7 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' of 5 px (note that we are using the [px()] helper function here).
 #'
 #' ```r
-#' tab_1 |>
-#'   tab_options(data_row.padding = px(5))
+#' tab_1 |> tab_options(data_row.padding = px(5))
 #' ```
 #'
 #' \if{html}{\out{
