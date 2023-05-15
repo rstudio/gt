@@ -44,9 +44,10 @@
 #'
 #' @section Examples:
 #'
-#' Use the [`gtcars`] dataset to create a **gt** table. Add a header part with
-#' the `tab_header()` function so that we get a title and a subtitle for the
-#' table.
+#' Use the [`gtcars`] dataset to create a **gt** table. Add a header part to the
+#' table with the `tab_header()` function. We'll add a title and the optional
+#' subtitle as well. With the [md()] helper function, we can make sure the
+#' Markdown formatting is interpreted and transformed.
 #'
 #' ```r
 #' gtcars |>
@@ -61,6 +62,57 @@
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_tab_header_1.png")`
+#' }}
+#'
+#' If the table is intended solely as an HTML table, you could introduce your
+#' own HTML elements into the header. You can even use the **htmltools** package
+#' to help arrange and generate the HTML. Here's an example of that, where two
+#' `<div>` elements are placed in a `htmltools::tagList()`.
+#'
+#' ```r
+#' gtcars |>
+#'   dplyr::select(mfr, model, msrp) |>
+#'   dplyr::slice(1:5) |>
+#'   gt() |>
+#'   tab_header(
+#'     title =
+#'       htmltools::tagList(
+#'         htmltools::tags$div(
+#'           style = htmltools::css(
+#'             `text-align` = "center"
+#'           ),
+#'           htmltools::HTML(
+#'             web_image("https://www.r-project.org/logo/Rlogo.png")
+#'           )
+#'         ),
+#'         htmltools::tags$div(
+#'           "Data listing from ",
+#'           htmltools::tags$strong("gtcars")
+#'         )
+#'       )
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_header_2.png")`
+#' }}
+#'
+#' If using HTML but doing something far simpler, we can use the [html()] helper
+#' function to declare that the text provided is HTML.
+#'
+#' ```r
+#' gtcars |>
+#'   dplyr::select(mfr, model, msrp) |>
+#'   dplyr::slice(1:5) |>
+#'   gt() |>
+#'   tab_header(
+#'     title = html("Data listing from <strong>gtcars</strong>"),
+#'     subtitle = html("From <span style='color:red;'>gtcars</span>")
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_header_3.png")`
 #' }}
 #'
 #' @family part creation/modification functions
@@ -128,9 +180,11 @@ tab_header <- function(
 #'
 #' @section Examples:
 #'
-#' Use the [`gtcars`] dataset to create a **gt** table. With the `tab_spanner()`
-#' function, we can effectively group together several columns related to car
-#' performance under a spanner column with the label `"performance"`.
+#' Let's create a **gt** table using a small portion of the [`gtcars`] dataset.
+#' Over several columns (`hp`, `hp_rpm`, `trq`, `trq_rpm`, `mpg_c`, `mpg_h`)
+#' we'll use `tab_spanner()` to add a spanner with the label `"performance"`.
+#' This effectively groups together several columns related to car performance
+#' under a unifying label.
 #'
 #' ```r
 #' gtcars |>
@@ -143,8 +197,7 @@ tab_header <- function(
 #'   tab_spanner(
 #'     label = "performance",
 #'     columns = c(
-#'       hp, hp_rpm, trq, trq_rpm,
-#'       mpg_c, mpg_h
+#'       hp, hp_rpm, trq, trq_rpm, mpg_c, mpg_h
 #'     )
 #'   )
 #' ```
@@ -152,6 +205,177 @@ tab_header <- function(
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_tab_spanner_1.png")`
 #' }}
+#'
+#' With the default `gather = TRUE` option, columns selected for a particular
+#' spanner will be moved so that there is no separation between them. This can
+#' be seen with the example below that uses a subset of the [`towny`] dataset.
+#' The starting column order is `name`, `latitude`, `longitude`,
+#' `population_2016`, `density_2016`, `population_2021`, and `density_2021`. The
+#' first two uses of `tab_spanner()` deal with making separate spanners for the
+#' two population and two density columns. After their use, the columns are
+#' moved to this new ordering: `name`, `latitude`, `longitude`,
+#' `population_2016`, `population_2021`, `density_2016`, and `density_2021`. The
+#' third and final call of `tab_spanner()` doesn't further affect the ordering
+#' of columns.
+#'
+#' ```r
+#' towny |>
+#'   dplyr::arrange(desc(population_2021)) |>
+#'   dplyr::slice_head(n = 5) |>
+#'   dplyr::select(
+#'     name, latitude, longitude,
+#'     ends_with("2016"), ends_with("2021")
+#'   ) |>
+#'   gt() |>
+#'   tab_spanner(
+#'     columns = starts_with("pop"),
+#'     label = "Population"
+#'   ) |>
+#'   tab_spanner(
+#'     columns = starts_with("den"),
+#'     label = "Density"
+#'   ) |>
+#'   tab_spanner(
+#'     columns = ends_with("itude"),
+#'     label = md("*Location*"),
+#'     id = "loc"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_spanner_2.png")`
+#' }}
+#'
+#' While columns are moved, it is only the minimal amount of moving required
+#' (pulling in columns from the right) to ensure that columns are gathered under
+#' the appropriate spanners. With the last call, there are two more things to
+#' note: (1) `label` values can use the [md()] (or [html()]) helper functions to
+#' help create styled text, and (2) an `id` value may be supplied for reference
+#' later (e.g., for styling with [tab_style()] or applying footnotes with
+#' [tab_footnote()]).
+#'
+#' It's possible to stack multiple spanners atop each other with consecutive
+#' calls of `tab_spanner()`. It's a bit like playing Tetris: putting a spanner
+#' down anywhere there is another spanner (i.e., there are one or more shared
+#' columns) means that second spanner will reside a level above prior. Let's
+#' look at a few examples at how this works, and we'll also explore a few
+#' lesser-known placement tricks. Let's use a cut down version of [`exibble`]
+#' for this, set up a few level-one spanners, and then place a level two spanner
+#' over two other spanners.
+#'
+#' ```r
+#' exibble_narrow <- exibble |> dplyr::slice_head(n = 3)
+#'
+#' exibble_narrow |>
+#'   gt() |>
+#'   tab_spanner(
+#'     label = "Row Information",
+#'     columns = c(row, group)
+#'   ) |>
+#'   tab_spanner(
+#'     label = "Numeric Values",
+#'     columns = where(is.numeric),
+#'     id = "num_spanner"
+#'   ) |>
+#'   tab_spanner(
+#'     label = "Text Values",
+#'     columns = c(char, fctr),
+#'     id = "text_spanner"
+#'   ) |>
+#'   tab_spanner(
+#'     label = "Numbers and Text",
+#'     spanners = c("num_spanner", "text_spanner")
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_spanner_3.png")`
+#' }}
+#'
+#' In the above example, we used the `spanners` argument to define where the
+#' `"Numbers and Text"`-labeled spanner should reside. For that, we supplied the
+#' `"num_spanner"` and `"text_spanner"` ID values for the two spanners
+#' associated with the `num`, `currency`, `char`, and `fctr` columns.
+#' Alternatively, we could have given those column names to the `columns`
+#' argument and achieved the same result. You could actually use a combination
+#' of `spanners` and `columns` to define where the spanner should be placed.
+#' Here is an example of just that:
+#'
+#' ```r
+#' exibble_narrow_gt <-
+#'   exibble_narrow |>
+#'   gt() |>
+#'   tab_spanner(
+#'     label = "Numeric Values",
+#'     columns = where(is.numeric),
+#'     id = "num_spanner"
+#'   ) |>
+#'   tab_spanner(
+#'     label = "Text Values",
+#'     columns = c(char, fctr),
+#'     id = "text_spanner"
+#'   ) |>
+#'   tab_spanner(
+#'     label = "Text, Dates, Times, Datetimes",
+#'     columns = contains(c("date", "time")),
+#'     spanners = "text_spanner"
+#'   )
+#'
+#' exibble_narrow_gt
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_spanner_4.png")`
+#' }}
+#'
+#' And, again, we could have solely supplied all of the column names to
+#' `columns` instead of using this hybrid approach, but it is interesting to
+#' express the definition of spanners with this flexible combination.
+#'
+#' What if you wanted to extend the above example and place a spanner above the
+#' `date`, `time`, and `datetime` columns? If you tried that in the manner as
+#' exemplified above, the spanner will be placed in the third level of spanners:
+#'
+#' ```r
+#' exibble_narrow_gt |>
+#'   tab_spanner(
+#'     label = "Date and Time Columns",
+#'     columns = contains(c("date", "time")),
+#'     id = "date_time_spanner"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_spanner_5.png")`
+#' }}
+#'
+#' Remember that the approach taken by `tab_spanner()` is to keep stacking atop
+#' existing spanners. But, there is space next to the `"Text Values"` spanner on
+#' the first level. You can either revise the order of `tab_spanner()` calls,
+#' or, use the `level` argument to force the spanner into that level (so long
+#' as there is space).
+#'
+#' ```r
+#' exibble_narrow_gt |>
+#'   tab_spanner(
+#'     label = "Date and Time Columns",
+#'     columns = contains(c("date", "time")),
+#'     level = 1,
+#'     id = "date_time_spanner"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_spanner_6.png")`
+#' }}
+#'
+#' That puts the spanner in the intended level. If there aren't free locations
+#' available in the `level` specified you'll get an error stating which columns
+#' cannot be used for the new spanner (this can be circumvented, if necessary,
+#' with the `replace = TRUE` option). If you choose a level higher than the
+#' maximum occupied, then the spanner will be dropped down. Again, these
+#' behaviors are indicative of Tetris-like rules though they tend to work well
+#' for the application of spanners.
 #'
 #' @family part creation/modification functions
 #' @section Function ID:
@@ -392,21 +616,68 @@ resolve_spanned_column_names <- function(
 #'
 #' @section Examples:
 #'
-#' Use `iris` to create a **gt** table and use the `tab_spanner_delim()`
-#' function to automatically generate column spanner labels. This splits any
-#' columns that are dot-separated between column spanner labels (first part) and
-#' column labels (second part).
+#' With a subset of the [`towny`] dataset, we can create a **gt** table and then
+#' use the `tab_spanner_delim()` function to automatically generate column
+#' spanner labels. In this case we have some column names in the form
+#' `population_<year>`. The underscore character is the delimiter that separates
+#' a common word `"population"` and a year value. In this default way of
+#' splitting, fragments to the right are lowest (really they become new column
+#' labels) and moving left we get spanners. Let's have a look at how
+#' `tab_spanner_delim()` handles these column names:
 #'
 #' ```r
-#' iris |>
-#'   dplyr::group_by(Species) |>
-#'   dplyr::slice(1:4) |>
+#' towny_subset_gt <-
+#'   towny |>
+#'   dplyr::select(name, starts_with("population")) |>
+#'   dplyr::filter(grepl("^F", name)) |>
 #'   gt() |>
-#'   tab_spanner_delim(delim = ".")
+#'   tab_spanner_delim(delim = "_") |>
+#'   fmt_integer()
+#'
+#' towny_subset_gt
 #' ```
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_tab_spanner_delim_1.png")`
+#' }}
+#'
+#' The spanner created through this use of `tab_spanner_delim()` is
+#' automatically given an ID value by **gt**. Because it's hard to know what the
+#' ID value is, we can use [tab_info()] to inspect the table's indices and ID
+#' values.
+#'
+#' ```r
+#' towny_subset_gt |> tab_info()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_spanner_delim_2.png")`
+#' }}
+#'
+#' From this informational table, we see that the ID for the spanner is
+#' `"spanner-population_1996"`. Also, the columns are still accessible by the
+#' original column names (`tab_spanner_delim()` did change their labels though).
+#' Let's use [tab_style()] to add some styles to the `towny_subset_gt` table.
+#'
+#' ```r
+#' towny |>
+#'   dplyr::select(name, starts_with("population")) |>
+#'   dplyr::filter(grepl("^F", name)) |>
+#'   gt() |>
+#'   tab_spanner_delim(delim = "_") |>
+#'   fmt_integer() |>
+#'   tab_style(
+#'     style = cell_fill(color = "aquamarine"),
+#'     locations = cells_body(columns = population_2021)
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(transform = "capitalize"),
+#'     locations = cells_column_spanners(spanners = "spanner-population_1996")
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_spanner_delim_3.png")`
 #' }}
 #'
 #' @family part creation/modification functions
@@ -669,10 +940,11 @@ tab_spanner_delim <- function(
 #'
 #' @section Examples:
 #'
-#' Use the [`gtcars`] dataset to create a **gt** table. With the
-#' `tab_row_group()` function we can add two row groups with the labels
-#' `"numbered"` and `NA`. The row group with the `NA` label ends up being
-#' rendered without a label at all.
+#' Using a subset of the [`gtcars`] dataset, let's create a simple **gt** table
+#' with row labels (from the `model` column) inside of a stub. This eight-row
+#' table begins with no row groups at all but with a single use of the
+#' `tab_row_group()` function, we can specify a row group that will contain any
+#' rows where the car model begins with a number.
 #'
 #' ```r
 #' gtcars |>
@@ -689,10 +961,87 @@ tab_spanner_delim <- function(
 #' `r man_get_image_tag(file = "man_tab_row_group_1.png")`
 #' }}
 #'
-#' Use the [`gtcars`] dataset to create a **gt** table. Add two row groups with
-#' the labels `"powerful"` and `"super powerful"` (done with two calls of
-#' `tab_row_group()`). The distinction between the groups is whether `hp` is
-#' lesser or greater than `600` (and this is governed by the expressions
+#' This actually makes two row groups since there are row labels that don't
+#' begin with a number. That second row group is a catch-all `NA` group, and it
+#' doesn't display a label at all. Rather, it is set off from the other group
+#' with a double line. This may be a preferable way to display the arrangement
+#' of one distinct group and an 'others' or default group. If that's the case
+#' but you'd like the order reversed, the [row_group_order()] function can be
+#' used for that.
+#'
+#' ```r
+#' gtcars |>
+#'   dplyr::select(model, year, hp, trq) |>
+#'   dplyr::slice(1:8) |>
+#'   gt(rowname_col = "model") |>
+#'   tab_row_group(
+#'     label = "numbered",
+#'     rows = matches("^[0-9]")
+#'   ) |>
+#'   row_group_order(groups = c(NA, "numbered"))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_row_group_2.png")`
+#' }}
+#'
+#' Two more options include: (1) setting a default label for the 'others' group
+#' (done through [tab_options()]), and (2) creating row groups until there are
+#' no more unaccounted for rows. Let's try the first option in the next example:
+#'
+#' ```r
+#' gtcars |>
+#'   dplyr::select(model, year, hp, trq) |>
+#'   dplyr::slice(1:8) |>
+#'   gt(rowname_col = "model") |>
+#'   tab_row_group(
+#'     label = "numbered",
+#'     rows = matches("^[0-9]")
+#'   ) |>
+#'   row_group_order(groups = c(NA, "numbered")) |>
+#'   tab_options(row_group.default_label = "others")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_row_group_3.png")`
+#' }}
+#'
+#' The above use of the `row_group.default_label` in [tab_options()] gets the
+#' job done and provides a default label. One drawback is that the default/`NA`
+#' group doesn't have an ID, so it can't as easily be styled with [tab_style()];
+#' however, row groups have indices and the index for the `"others"` group here
+#' is `1`.
+#'
+#' ```r
+#' gtcars |>
+#'   dplyr::select(model, year, hp, trq) |>
+#'   dplyr::slice(1:8) |>
+#'   gt(rowname_col = "model") |>
+#'   tab_row_group(
+#'     label = "numbered",
+#'     rows = matches("^[0-9]")
+#'   ) |>
+#'   row_group_order(groups = c(NA, "numbered")) |>
+#'   tab_options(row_group.default_label = "others") |>
+#'   tab_style(
+#'     style = cell_fill(color = "bisque"),
+#'     locations = cells_row_groups(groups = 1)
+#'   ) |>
+#'   tab_style(
+#'     style = cell_fill(color = "lightgreen"),
+#'     locations = cells_row_groups(groups = "numbered")
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_row_group_4.png")`
+#' }}
+#'
+#' Now let's try using `tab_row_group()` with our [`gtcars`]-based table such
+#' that all rows are formally assigned to different row groups. We'll define two
+#' row groups with the (Markdown-infused) labels `"**Powerful Cars**"` and
+#' `"**Super Powerful Cars**"`. The distinction between the groups is whether
+#' `hp` is lesser or greater than `600` (and this is governed by the expressions
 #' provided to the `rows` argument).
 #'
 #' ```r
@@ -701,18 +1050,37 @@ tab_spanner_delim <- function(
 #'   dplyr::slice(1:8) |>
 #'   gt(rowname_col = "model") |>
 #'   tab_row_group(
-#'     label = "powerful",
-#'     rows = hp <= 600
+#'     label = md("**Powerful Cars**"),
+#'     rows = hp < 600,
+#'     id = "powerful"
 #'   ) |>
 #'   tab_row_group(
-#'     label = "super powerful",
-#'     rows = hp > 600
+#'     label = md("**Super Powerful Cars**"),
+#'     rows = hp >= 600,
+#'     id = "v_powerful"
+#'   ) |>
+#'   tab_style(
+#'     style = cell_fill(color = "gray85"),
+#'     locations = cells_row_groups(groups = "powerful")
+#'   ) |>
+#'   tab_style(
+#'     style = list(
+#'       cell_fill(color = "gray95"),
+#'       cell_text(size = "larger")
+#'     ),
+#'     locations = cells_row_groups(groups = "v_powerful")
 #'   )
 #' ```
 #'
 #' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_tab_row_group_2.png")`
+#' `r man_get_image_tag(file = "man_tab_row_group_5.png")`
 #' }}
+#'
+#' Setting the `id` values for each of the row groups makes things easier since
+#' you will have clean, markup-free ID values to reference in later calls (as
+#' was done with the [tab_style()] invocations in the example above). The use of
+#' the [md()] helper function makes it so that any Markdown provided for the
+#' `label` of a row group is faithfully rendered.
 #'
 #' @family part creation/modification functions
 #' @section Function ID:
@@ -2469,8 +2837,7 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' of 5 px (note that we are using the [px()] helper function here).
 #'
 #' ```r
-#' tab_1 |>
-#'   tab_options(data_row.padding = px(5))
+#' tab_1 |> tab_options(data_row.padding = px(5))
 #' ```
 #'
 #' \if{html}{\out{

@@ -30,9 +30,10 @@ output, we can use HTML in either of the title or subtitle.
 \section{Examples}{
 
 
-Use the \code{\link{gtcars}} dataset to create a \strong{gt} table. Add a header part with
-the \code{tab_header()} function so that we get a title and a subtitle for the
-table.
+Use the \code{\link{gtcars}} dataset to create a \strong{gt} table. Add a header part to the
+table with the \code{tab_header()} function. We'll add a title and the optional
+subtitle as well. With the \code{\link[=md]{md()}} helper function, we can make sure the
+Markdown formatting is interpreted and transformed.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
   dplyr::select(mfr, model, msrp) |>
@@ -46,6 +47,55 @@ table.
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_header_1.png" alt="This image of a table was generated from the first code example in the `tab_header()` help file." style="width:100\%;">
+}}
+
+If the table is intended solely as an HTML table, you could introduce your
+own HTML elements into the header. You can even use the \strong{htmltools} package
+to help arrange and generate the HTML. Here's an example of that, where two
+\verb{<div>} elements are placed in a \code{htmltools::tagList()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::select(mfr, model, msrp) |>
+  dplyr::slice(1:5) |>
+  gt() |>
+  tab_header(
+    title =
+      htmltools::tagList(
+        htmltools::tags$div(
+          style = htmltools::css(
+            `text-align` = "center"
+          ),
+          htmltools::HTML(
+            web_image("https://www.r-project.org/logo/Rlogo.png")
+          )
+        ),
+        htmltools::tags$div(
+          "Data listing from ",
+          htmltools::tags$strong("gtcars")
+        )
+      )
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_header_2.png" alt="This image of a table was generated from the second code example in the `tab_header()` help file." style="width:100\%;">
+}}
+
+If using HTML but doing something far simpler, we can use the \code{\link[=html]{html()}} helper
+function to declare that the text provided is HTML.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::select(mfr, model, msrp) |>
+  dplyr::slice(1:5) |>
+  gt() |>
+  tab_header(
+    title = html("Data listing from <strong>gtcars</strong>"),
+    subtitle = html("From <span style='color:red;'>gtcars</span>")
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_header_3.png" alt="This image of a table was generated from the third code example in the `tab_header()` help file." style="width:100\%;">
 }}
 }
 

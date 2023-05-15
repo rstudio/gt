@@ -112,6 +112,10 @@ md <- function(text) {
 #' @export
 html <- function(text, ...) {
 
+  if (inherits(text, "shiny.tag.list")) {
+    text <- as.character(text)
+  }
+
   htmltools::HTML(text, ...)
 }
 
