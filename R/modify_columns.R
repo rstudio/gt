@@ -973,13 +973,14 @@ cols_label_with <- function(
   if (length(resolved_columns) < 1) {
     return(data)
   }
-
   # Obtain `boxh_df` table and filter to the rows with resolved column names
   boxh_df <- dt_boxhead_get(data = data)
   boxh_df <- boxh_df[boxh_df[["var"]] %in% resolved_columns, ]
 
-  # Obtain a list of current labels for the resolved columns
+  # Obtain a list of current labels for the resolved columns and ensure
+  # that the var names are included as names for each of the list components
   old_label_list <- boxh_df[["column_label"]]
+  names(old_label_list) <- boxh_df[["var"]]
 
   # Apply the function call to each element of `old_label_list`
   new_label_list <- lapply(old_label_list, FUN = fn)
@@ -1008,7 +1009,7 @@ cols_label_with <- function(
     data <-
       dt_boxhead_edit_column_label(
         data = data,
-        var = resolved_columns[i],
+        var = names(new_label_list)[i],
         column_label = new_label_list[[i]]
       )
   }

@@ -163,6 +163,92 @@ test_that("The function `cols_label_with()` works correctly", {
     tbl_html_5 %>% render_as_html()
   )
 
+  #
+  # Ensure that new labels are applied to columns correctly, no matter how
+  # the column resolution occurs
+  #
+
+  towny_gt_tbl <-
+    towny %>%
+    dplyr::arrange(desc(population_2021)) %>%
+    dplyr::slice_head(n = 5) %>%
+    dplyr::select(name, latitude, longitude, ends_with("2016"), ends_with("2021")) %>%
+    gt() %>%
+    tab_spanner(columns = starts_with("pop"), label = "Population") %>%
+    tab_spanner(columns = starts_with("den"), label = "Density")
+
+  expect_equal(
+    towny_gt_tbl %>%
+      cols_label_with(
+        fn = function(x) gsub(".*_(.*)", "\\1", x)
+      ) %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      selection_text("[class='gt_col_heading gt_columns_bottom_border gt_right']"),
+    towny_gt_tbl %>%
+      cols_label_with(
+        columns = c(population_2016, population_2021, density_2016, density_2021),
+        fn = function(x) gsub(".*_(.*)", "\\1", x)
+      ) %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      selection_text("[class='gt_col_heading gt_columns_bottom_border gt_right']")
+  )
+
+  expect_equal(
+    towny_gt_tbl %>%
+      cols_label_with(
+        fn = function(x) gsub(".*_(.*)", "\\1", x)
+      ) %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      selection_text("[class='gt_col_heading gt_columns_bottom_border gt_right']"),
+    towny_gt_tbl %>%
+      cols_label_with(
+        columns =  c(population_2016, density_2016, population_2021, density_2021),
+        fn = function(x) gsub(".*_(.*)", "\\1", x)
+      ) %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      selection_text("[class='gt_col_heading gt_columns_bottom_border gt_right']")
+  )
+
+  expect_equal(
+    towny_gt_tbl %>%
+      cols_label_with(
+        fn = function(x) gsub(".*_(.*)", "\\1", x)
+      ) %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      selection_text("[class='gt_col_heading gt_columns_bottom_border gt_right']"),
+    towny_gt_tbl %>%
+      cols_label_with(
+        columns = c(starts_with("pop"), starts_with("den")),
+        fn = function(x) gsub(".*_(.*)", "\\1", x)
+      ) %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      selection_text("[class='gt_col_heading gt_columns_bottom_border gt_right']")
+  )
+
+  expect_equal(
+    towny_gt_tbl %>%
+      cols_label_with(
+        fn = function(x) gsub(".*_(.*)", "\\1", x)
+      ) %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      selection_text("[class='gt_col_heading gt_columns_bottom_border gt_right']"),
+    towny_gt_tbl %>%
+      cols_label_with(
+        columns = c(starts_with("den"), starts_with("pop")),
+        fn = function(x) gsub(".*_(.*)", "\\1", x)
+      ) %>%
+      render_as_html() %>%
+      xml2::read_html() %>%
+      selection_text("[class='gt_col_heading gt_columns_bottom_border gt_right']")
+  )
+
   # Expect an error if `fn` is missing
   expect_error(gt(tbl) %>% cols_label_with(fn = NULL))
 
