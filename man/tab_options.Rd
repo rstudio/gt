@@ -606,8 +606,7 @@ option, it's possible to modify the top and bottom padding of data rows.
 We'll do just that in the following example, reducing the padding to a value
 of 5 px (note that we are using the \code{\link[=px]{px()}} helper function here).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |>
-  tab_options(data_row.padding = px(5))
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |> tab_options(data_row.padding = px(5))
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
