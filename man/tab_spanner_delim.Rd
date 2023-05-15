@@ -52,20 +52,65 @@ rendered output table).
 \section{Examples}{
 
 
-Use \code{iris} to create a \strong{gt} table and use the \code{tab_spanner_delim()}
-function to automatically generate column spanner labels. This splits any
-columns that are dot-separated between column spanner labels (first part) and
-column labels (second part).
+With a subset of the \code{\link{towny}} dataset, we can create a \strong{gt} table and then
+use the \code{tab_spanner_delim()} function to automatically generate column
+spanner labels. In this case we have some column names in the form
+\verb{population_<year>}. The underscore character is the delimiter that separates
+a common word \code{"population"} and a year value. In this default way of
+splitting, fragments to the right are lowest (really they become new column
+labels) and moving left we get spanners. Let's have a look at how
+\code{tab_spanner_delim()} handles these column names:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{iris |>
-  dplyr::group_by(Species) |>
-  dplyr::slice(1:4) |>
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny_subset_gt <-
+  towny |>
+  dplyr::select(name, starts_with("population")) |>
+  dplyr::filter(grepl("^F", name)) |>
   gt() |>
-  tab_spanner_delim(delim = ".")
+  tab_spanner_delim(delim = "_") |>
+  fmt_integer()
+
+towny_subset_gt
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_spanner_delim_1.png" alt="This image of a table was generated from the first code example in the `tab_spanner_delim()` help file." style="width:100\%;">
+}}
+
+The spanner created through this use of \code{tab_spanner_delim()} is
+automatically given an ID value by \strong{gt}. Because it's hard to know what the
+ID value is, we can use \code{\link[=tab_info]{tab_info()}} to inspect the table's indices and ID
+values.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny_subset_gt |> tab_info()
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_spanner_delim_2.png" alt="This image of a table was generated from the second code example in the `tab_spanner_delim()` help file." style="width:100\%;">
+}}
+
+From this informational table, we see that the ID for the spanner is
+\code{"spanner-population_1996"}. Also, the columns are still accessible by the
+original column names (\code{tab_spanner_delim()} did change their labels though).
+Let's use \code{\link[=tab_style]{tab_style()}} to add some styles to the \code{towny_subset_gt} table.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
+  dplyr::select(name, starts_with("population")) |>
+  dplyr::filter(grepl("^F", name)) |>
+  gt() |>
+  tab_spanner_delim(delim = "_") |>
+  fmt_integer() |>
+  tab_style(
+    style = cell_fill(color = "aquamarine"),
+    locations = cells_body(columns = population_2021)
+  ) |>
+  tab_style(
+    style = cell_text(transform = "capitalize"),
+    locations = cells_column_spanners(spanners = "spanner-population_1996")
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_spanner_delim_3.png" alt="This image of a table was generated from the third code example in the `tab_spanner_delim()` help file." style="width:100\%;">
 }}
 }
 
