@@ -133,16 +133,49 @@ rendered output table).</p>
     
 
 
-<p>Use <code>iris</code> to create a <strong>gt</strong> table and use the <code>tab_spanner_delim()</code>
-function to automatically generate column spanner labels. This splits any
-columns that are dot-separated between column spanner labels (first part) and
-column labels (second part).</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">iris</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">Species</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<p>With a subset of the <code><a href="towny.html">towny</a></code> dataset, we can create a <strong>gt</strong> table and then
+use the <code>tab_spanner_delim()</code> function to automatically generate column
+spanner labels. In this case we have some column names in the form
+<code>population_&lt;year&gt;</code>. The underscore character is the delimiter that separates
+a common word <code>"population"</code> and a year value. In this default way of
+splitting, fragments to the right are lowest (really they become new column
+labels) and moving left we get spanners. Let's have a look at how
+<code>tab_spanner_delim()</code> handles these column names:</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">towny_subset_gt</span> <span class="op">&lt;-</span></span>
+<span>  <span class="va">towny</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">name</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"population"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"^F"</span>, <span class="va">name</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/tab_spanner_delim.html">tab_spanner_delim</a></span><span class="op">(</span>delim <span class="op">=</span> <span class="st">"."</span><span class="op">)</span></span></code></pre><p></p></div>
+<span>  <span class="fu"><a href="../reference/tab_spanner_delim.html">tab_spanner_delim</a></span><span class="op">(</span>delim <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_integer.html">fmt_integer</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">towny_subset_gt</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_spanner_delim_1.png" alt="This image of a table was generated from the first code example in the `tab_spanner_delim()` help file." style="width:100%;"></p>
+<p>The spanner created through this use of <code>tab_spanner_delim()</code> is
+automatically given an ID value by <strong>gt</strong>. Because it's hard to know what the
+ID value is, we can use <code><a href="tab_info.html">tab_info()</a></code> to inspect the table's indices and ID
+values.</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">towny_subset_gt</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/tab_info.html">tab_info</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_spanner_delim_2.png" alt="This image of a table was generated from the second code example in the `tab_spanner_delim()` help file." style="width:100%;"></p>
+<p>From this informational table, we see that the ID for the spanner is
+<code>"spanner-population_1996"</code>. Also, the columns are still accessible by the
+original column names (<code>tab_spanner_delim()</code> did change their labels though).
+Let's use <code><a href="tab_style.html">tab_style()</a></code> to add some styles to the <code>towny_subset_gt</code> table.</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">towny</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">name</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"population"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"^F"</span>, <span class="va">name</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_spanner_delim.html">tab_spanner_delim</a></span><span class="op">(</span>delim <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_integer.html">fmt_integer</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_fill.html">cell_fill</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"aquamarine"</span><span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">population_2021</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_text.html">cell_text</a></span><span class="op">(</span>transform <span class="op">=</span> <span class="st">"capitalize"</span><span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_column_spanners.html">cells_column_spanners</a></span><span class="op">(</span>spanners <span class="op">=</span> <span class="st">"spanner-population_1996"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_spanner_delim_3.png" alt="This image of a table was generated from the third code example in the `tab_spanner_delim()` help file." style="width:100%;"></p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>

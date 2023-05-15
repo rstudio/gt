@@ -144,10 +144,11 @@ function will stop if <code>id</code> isn't unique).</p></dd>
     
 
 
-<p>Use the <code><a href="gtcars.html">gtcars</a></code> dataset to create a <strong>gt</strong> table. With the
-<code>tab_row_group()</code> function we can add two row groups with the labels
-<code>"numbered"</code> and <code>NA</code>. The row group with the <code>NA</code> label ends up being
-rendered without a label at all.</p>
+<p>Using a subset of the <code><a href="gtcars.html">gtcars</a></code> dataset, let's create a simple <strong>gt</strong> table
+with row labels (from the <code>model</code> column) inside of a stub. This eight-row
+table begins with no row groups at all but with a single use of the
+<code>tab_row_group()</code> function, we can specify a row group that will contain any
+rows where the car model begins with a number.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">gtcars</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">year</span>, <span class="va">hp</span>, <span class="va">trq</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -157,24 +158,98 @@ rendered without a label at all.</p>
 <span>    rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches</a></span><span class="op">(</span><span class="st">"^[0-9]"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_row_group_1.png" alt="This image of a table was generated from the first code example in the `tab_row_group()` help file." style="width:100%;"></p>
-<p>Use the <code><a href="gtcars.html">gtcars</a></code> dataset to create a <strong>gt</strong> table. Add two row groups with
-the labels <code>"powerful"</code> and <code>"super powerful"</code> (done with two calls of
-<code>tab_row_group()</code>). The distinction between the groups is whether <code>hp</code> is
-lesser or greater than <code>600</code> (and this is governed by the expressions
+<p>This actually makes two row groups since there are row labels that don't
+begin with a number. That second row group is a catch-all <code>NA</code> group, and it
+doesn't display a label at all. Rather, it is set off from the other group
+with a double line. This may be a preferable way to display the arrangement
+of one distinct group and an 'others' or default group. If that's the case
+but you'd like the order reversed, the <code><a href="row_group_order.html">row_group_order()</a></code> function can be
+used for that.</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">gtcars</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">year</span>, <span class="va">hp</span>, <span class="va">trq</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"model"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_row_group.html">tab_row_group</a></span><span class="op">(</span></span>
+<span>    label <span class="op">=</span> <span class="st">"numbered"</span>,</span>
+<span>    rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches</a></span><span class="op">(</span><span class="st">"^[0-9]"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/row_group_order.html">row_group_order</a></span><span class="op">(</span>groups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="st">"numbered"</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_row_group_2.png" alt="This image of a table was generated from the second code example in the `tab_row_group()` help file." style="width:100%;"></p>
+<p>Two more options include: (1) setting a default label for the 'others' group
+(done through <code><a href="tab_options.html">tab_options()</a></code>), and (2) creating row groups until there are
+no more unaccounted for rows. Let's try the first option in the next example:</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">gtcars</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">year</span>, <span class="va">hp</span>, <span class="va">trq</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"model"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_row_group.html">tab_row_group</a></span><span class="op">(</span></span>
+<span>    label <span class="op">=</span> <span class="st">"numbered"</span>,</span>
+<span>    rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches</a></span><span class="op">(</span><span class="st">"^[0-9]"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/row_group_order.html">row_group_order</a></span><span class="op">(</span>groups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="st">"numbered"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>row_group.default_label <span class="op">=</span> <span class="st">"others"</span><span class="op">)</span></span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_row_group_3.png" alt="This image of a table was generated from the third code example in the `tab_row_group()` help file." style="width:100%;"></p>
+<p>The above use of the <code>row_group.default_label</code> in <code><a href="tab_options.html">tab_options()</a></code> gets the
+job done and provides a default label. One drawback is that the default/<code>NA</code>
+group doesn't have an ID, so it can't as easily be styled with <code><a href="tab_style.html">tab_style()</a></code>;
+however, row groups have indices and the index for the <code>"others"</code> group here
+is <code>1</code>.</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">gtcars</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">year</span>, <span class="va">hp</span>, <span class="va">trq</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"model"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_row_group.html">tab_row_group</a></span><span class="op">(</span></span>
+<span>    label <span class="op">=</span> <span class="st">"numbered"</span>,</span>
+<span>    rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches</a></span><span class="op">(</span><span class="st">"^[0-9]"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/row_group_order.html">row_group_order</a></span><span class="op">(</span>groups <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="st">"numbered"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>row_group.default_label <span class="op">=</span> <span class="st">"others"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_fill.html">cell_fill</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"bisque"</span><span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_row_groups.html">cells_row_groups</a></span><span class="op">(</span>groups <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_fill.html">cell_fill</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"lightgreen"</span><span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_row_groups.html">cells_row_groups</a></span><span class="op">(</span>groups <span class="op">=</span> <span class="st">"numbered"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_row_group_4.png" alt="This image of a table was generated from the fourth code example in the `tab_row_group()` help file." style="width:100%;"></p>
+<p>Now let's try using <code>tab_row_group()</code> with our <code><a href="gtcars.html">gtcars</a></code>-based table such
+that all rows are formally assigned to different row groups. We'll define two
+row groups with the (Markdown-infused) labels <code>"**Powerful Cars**"</code> and
+<code>"**Super Powerful Cars**"</code>. The distinction between the groups is whether
+<code>hp</code> is lesser or greater than <code>600</code> (and this is governed by the expressions
 provided to the <code>rows</code> argument).</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">gtcars</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">year</span>, <span class="va">hp</span>, <span class="va">trq</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">8</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"model"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_row_group.html">tab_row_group</a></span><span class="op">(</span></span>
-<span>    label <span class="op">=</span> <span class="st">"powerful"</span>,</span>
-<span>    rows <span class="op">=</span> <span class="va">hp</span> <span class="op">&lt;=</span> <span class="fl">600</span></span>
+<span>    label <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span><span class="st">"**Powerful Cars**"</span><span class="op">)</span>,</span>
+<span>    rows <span class="op">=</span> <span class="va">hp</span> <span class="op">&lt;</span> <span class="fl">600</span>,</span>
+<span>    id <span class="op">=</span> <span class="st">"powerful"</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_row_group.html">tab_row_group</a></span><span class="op">(</span></span>
-<span>    label <span class="op">=</span> <span class="st">"super powerful"</span>,</span>
-<span>    rows <span class="op">=</span> <span class="va">hp</span> <span class="op">&gt;</span> <span class="fl">600</span></span>
+<span>    label <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span><span class="st">"**Super Powerful Cars**"</span><span class="op">)</span>,</span>
+<span>    rows <span class="op">=</span> <span class="va">hp</span> <span class="op">&gt;=</span> <span class="fl">600</span>,</span>
+<span>    id <span class="op">=</span> <span class="st">"v_powerful"</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_fill.html">cell_fill</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"gray85"</span><span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_row_groups.html">cells_row_groups</a></span><span class="op">(</span>groups <span class="op">=</span> <span class="st">"powerful"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      <span class="fu"><a href="../reference/cell_fill.html">cell_fill</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"gray95"</span><span class="op">)</span>,</span>
+<span>      <span class="fu"><a href="../reference/cell_text.html">cell_text</a></span><span class="op">(</span>size <span class="op">=</span> <span class="st">"larger"</span><span class="op">)</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_row_groups.html">cells_row_groups</a></span><span class="op">(</span>groups <span class="op">=</span> <span class="st">"v_powerful"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
-<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_row_group_2.png" alt="This image of a table was generated from the second code example in the `tab_row_group()` help file." style="width:100%;"></p>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_row_group_5.png" alt="This image of a table was generated from the fifth code example in the `tab_row_group()` help file." style="width:100%;"></p>
+<p>Setting the <code>id</code> values for each of the row groups makes things easier since
+you will have clean, markup-free ID values to reference in later calls (as
+was done with the <code><a href="tab_style.html">tab_style()</a></code> invocations in the example above). The use of
+the <code><a href="md.html">md()</a></code> helper function makes it so that any Markdown provided for the
+<code>label</code> of a row group is faithfully rendered.</p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>

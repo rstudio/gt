@@ -779,8 +779,7 @@ have some control over the extent of that. With the <code>data_row.padding</code
 option, it's possible to modify the top and bottom padding of data rows.
 We'll do just that in the following example, reducing the padding to a value
 of 5 px (note that we are using the <code><a href="px.html">px()</a></code> helper function here).</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">tab_1</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>data_row.padding <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">tab_1</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>data_row.padding <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_5.png" alt="This image of a table was generated from the fifth code example in the `tab_options()` help file." style="width:100%;"></p>
 <p>The size of the title and the subtitle text in the header of the table can be
 altered with the <code>heading.title.font.size</code> and <code>heading.subtitle.font.size</code>
