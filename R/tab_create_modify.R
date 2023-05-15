@@ -940,10 +940,11 @@ tab_spanner_delim <- function(
 #'
 #' @section Examples:
 #'
-#' Use the [`gtcars`] dataset to create a **gt** table. With the
-#' `tab_row_group()` function we can add two row groups with the labels
-#' `"numbered"` and `NA`. The row group with the `NA` label ends up being
-#' rendered without a label at all.
+#' Using a subset of the [`gtcars`] dataset, let's create a simple **gt** table
+#' with row labels (from the `model` column) inside of a stub. This eight-row
+#' table begins with no row groups at all but with a single use of the
+#' `tab_row_group()` function, we can specify a row group that will contain any
+#' rows where the car model begins with a number.
 #'
 #' ```r
 #' gtcars |>
@@ -960,10 +961,87 @@ tab_spanner_delim <- function(
 #' `r man_get_image_tag(file = "man_tab_row_group_1.png")`
 #' }}
 #'
-#' Use the [`gtcars`] dataset to create a **gt** table. Add two row groups with
-#' the labels `"powerful"` and `"super powerful"` (done with two calls of
-#' `tab_row_group()`). The distinction between the groups is whether `hp` is
-#' lesser or greater than `600` (and this is governed by the expressions
+#' This actually makes two row groups since there are row labels that don't
+#' begin with a number. That second row group is a catch-all `NA` group, and it
+#' doesn't display a label at all. Rather, it is set off from the other group
+#' with a double line. This may be a preferable way to display the arrangement
+#' of one distinct group and an 'others' or default group. If that's the case
+#' but you'd like the order reversed, the [row_group_order()] function can be
+#' used for that.
+#'
+#' ```r
+#' gtcars |>
+#'   dplyr::select(model, year, hp, trq) |>
+#'   dplyr::slice(1:8) |>
+#'   gt(rowname_col = "model") |>
+#'   tab_row_group(
+#'     label = "numbered",
+#'     rows = matches("^[0-9]")
+#'   ) |>
+#'   row_group_order(groups = c(NA, "numbered"))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_row_group_2.png")`
+#' }}
+#'
+#' Two more options include: (1) setting a default label for the 'others' group
+#' (done through [tab_options()]), and (2) creating row groups until there are
+#' no more unaccounted for rows. Let's try the first option in the next example:
+#'
+#' ```r
+#' gtcars |>
+#'   dplyr::select(model, year, hp, trq) |>
+#'   dplyr::slice(1:8) |>
+#'   gt(rowname_col = "model") |>
+#'   tab_row_group(
+#'     label = "numbered",
+#'     rows = matches("^[0-9]")
+#'   ) |>
+#'   row_group_order(groups = c(NA, "numbered")) |>
+#'   tab_options(row_group.default_label = "others")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_row_group_3.png")`
+#' }}
+#'
+#' The above use of the `row_group.default_label` in [tab_options()] gets the
+#' job done and provides a default label. One drawback is that the default/`NA`
+#' group doesn't have an ID, so it can't as easily be styled with [tab_style()];
+#' however, row groups have indices and the index for the `"others"` group here
+#' is `1`.
+#'
+#' ```r
+#' gtcars |>
+#'   dplyr::select(model, year, hp, trq) |>
+#'   dplyr::slice(1:8) |>
+#'   gt(rowname_col = "model") |>
+#'   tab_row_group(
+#'     label = "numbered",
+#'     rows = matches("^[0-9]")
+#'   ) |>
+#'   row_group_order(groups = c(NA, "numbered")) |>
+#'   tab_options(row_group.default_label = "others") |>
+#'   tab_style(
+#'     style = cell_fill(color = "bisque"),
+#'     locations = cells_row_groups(groups = 1)
+#'   ) |>
+#'   tab_style(
+#'     style = cell_fill(color = "lightgreen"),
+#'     locations = cells_row_groups(groups = "numbered")
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_row_group_4.png")`
+#' }}
+#'
+#' Now let's try using `tab_row_group()` with our [`gtcars`]-based table such
+#' that all rows are formally assigned to different row groups. We'll define two
+#' row groups with the (Markdown-infused) labels `"**Powerful Cars**"` and
+#' `"**Super Powerful Cars**"`. The distinction between the groups is whether
+#' `hp` is lesser or greater than `600` (and this is governed by the expressions
 #' provided to the `rows` argument).
 #'
 #' ```r
@@ -972,18 +1050,37 @@ tab_spanner_delim <- function(
 #'   dplyr::slice(1:8) |>
 #'   gt(rowname_col = "model") |>
 #'   tab_row_group(
-#'     label = "powerful",
-#'     rows = hp <= 600
+#'     label = md("**Powerful Cars**"),
+#'     rows = hp < 600,
+#'     id = "powerful"
 #'   ) |>
 #'   tab_row_group(
-#'     label = "super powerful",
-#'     rows = hp > 600
+#'     label = md("**Super Powerful Cars**"),
+#'     rows = hp >= 600,
+#'     id = "v_powerful"
+#'   ) |>
+#'   tab_style(
+#'     style = cell_fill(color = "gray85"),
+#'     locations = cells_row_groups(groups = "powerful")
+#'   ) |>
+#'   tab_style(
+#'     style = list(
+#'       cell_fill(color = "gray95"),
+#'       cell_text(size = "larger")
+#'     ),
+#'     locations = cells_row_groups(groups = "v_powerful")
 #'   )
 #' ```
 #'
 #' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_tab_row_group_2.png")`
+#' `r man_get_image_tag(file = "man_tab_row_group_5.png")`
 #' }}
+#'
+#' Setting the `id` values for each of the row groups makes things easier since
+#' you will have clean, markup-free ID values to reference in later calls (as
+#' was done with the [tab_style()] invocations in the example above). The use of
+#' the [md()] helper function makes it so that any Markdown provided for the
+#' `label` of a row group is faithfully rendered.
 #'
 #' @family part creation/modification functions
 #' @section Function ID:
