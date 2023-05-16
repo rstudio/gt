@@ -680,6 +680,49 @@ resolve_spanned_column_names <- function(
 #' `r man_get_image_tag(file = "man_tab_spanner_delim_3.png")`
 #' }}
 #'
+#' We can plan ahead a bit and refashion the column names with **dplyr** before
+#' introducing the table to [gt()] and `tab_spanner_delim()`. Here the column
+#' labels have underscore delimiters where splitting is not wanted (so a period
+#' or space character is used instead). The usage of `tab_spanner_delim()` gives
+#' two levels of spanners. We can further touch up the labels after that with
+#' [cols_label_with()] and [text_transform()].
+#'
+#' ```r
+#' towny |>
+#'   dplyr::arrange(desc(population_2021)) |>
+#'   dplyr::slice_head(n = 5) |>
+#'   dplyr::select(name, ends_with("pct")) |>
+#'   dplyr::rename_with(
+#'     .fn = function(x) {
+#'       x |>
+#'         gsub("(.*?)_(\\d{4})", "\\1.\\2", x = _) |>
+#'         gsub("pop_change", "Population Change", x = _)
+#'     }
+#'   ) |>
+#'   gt(rowname_col = "name") |>
+#'   tab_spanner_delim(delim = "_") |>
+#'   fmt_number(decimals = 1, scale_by = 100) |>
+#'   cols_label_with(
+#'     fn = function(x) gsub("pct", "%", x)
+#'   ) |>
+#'   text_transform(
+#'     fn = function(x) gsub("\\.", " - ", x),
+#'     locations = cells_column_spanners()
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(align = "center"),
+#'     locations = cells_column_labels()
+#'   ) |>
+#'   tab_style(
+#'     style = "padding-right: 36px;",
+#'     locations = cells_body()
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_spanner_delim_4.png")`
+#' }}
+#'
 #' @family part creation/modification functions
 #' @section Function ID:
 #' 2-3
