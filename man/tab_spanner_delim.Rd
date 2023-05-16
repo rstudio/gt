@@ -8,7 +8,8 @@ tab_spanner_delim(
   data,
   delim,
   columns = everything(),
-  split = c("last", "first")
+  split = c("last", "first"),
+  limit = NULL
 )
 }
 \arguments{
