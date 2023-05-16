@@ -16,9 +16,10 @@ resolved in locations.}
 
 \item{locations}{The cell or set of cells to be associated with the text
 transformation. Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}},
-\code{\link[=cells_column_labels]{cells_column_labels()}}, and \code{\link[=cells_row_groups]{cells_row_groups()}} helper functions can be
-used here. We can enclose several of these calls within a \code{list()} if we
-wish to make the transformation happen at different locations.}
+\code{\link[=cells_row_groups]{cells_row_groups()}}, \code{\link[=cells_column_labels]{cells_column_labels()}}, and
+\code{\link[=cells_column_spanners]{cells_column_spanners()}} helper functions can be used here. We can enclose
+several of these calls within a \code{list()} if we wish to make the
+transformation happen at different locations.}
 }
 \value{
 An object of class \code{gt_tbl}.
