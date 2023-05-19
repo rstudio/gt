@@ -577,7 +577,7 @@ resolve_spanned_column_names <- function(
   unique(column_names)
 }
 
-#' Create column labels and spanners via delimited names
+#' Create column labels and spanners via delimited column names
 #'
 #' @description
 #'
@@ -618,9 +618,10 @@ resolve_spanned_column_names <- function(
 #' @param split Should the delimiter splitting occur from the `"last"` instance
 #'   of the `delim` character or from the `"first"`? The default here uses the
 #'   `"last"` keyword, and splitting begins at the last instance of the
-#'   delimiter. This option only has consequence when there is a `limit` value
-#'   applied that is lesser than the number of delimiter characters for a given
-#'   column name (i.e., number of splits is not the maximum possible number).
+#'   delimiter in the column name. This option only has some consequence when
+#'   there is a `limit` value applied that is lesser than the number of
+#'   delimiter characters for a given column name (i.e., number of splits is not
+#'   the maximum possible number).
 #' @param limit An optional limit to place on the splitting procedure. The
 #'   default `NULL` means that a column name will be split as many times are
 #'   there are delimiter characters. In other words, the default is no limit. If
@@ -633,18 +634,45 @@ resolve_spanned_column_names <- function(
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @details
+#' @section Details on column splitting:
 #'
-#' If we look to the column names in the `iris` dataset as an example of how
-#' `tab_spanner_delim()` might be useful, we find the names `Sepal.Length`,
-#' `Sepal.Width`, `Petal.Length`, `Petal.Width`. From this naming system, it's
-#' easy to see that the `Sepal` and `Petal` can group together the repeated
-#' common `Length` and `Width` values. In your own datasets, we can avoid a
-#' lengthy relabeling with [cols_label()] if column names can be fashioned
-#' beforehand to contain both the spanner column label and the column label. An
-#' additional advantage is that the column names in the input table data remain
-#' unique even though there may eventually be repeated column labels in the
-#' rendered output table).
+#' If we take a hypothetical table that includes the column names
+#' `province.NL_ZH.pop`, `province.NL_ZH.gdp`, `province.NL_NH.pop`, and
+#' `province.NL_NH.gdp`, we can see that we have a naming system that has a
+#' well-defined structure. We start with the more general to the left
+#' (`"province"`) and move to the more specific on the right (`"pop"`). If the
+#' columns are in the table in this exact order, then things are in an ideal
+#' state as the eventual spanner column labels will form from this neighboring.
+#' When using `tab_spanner_delim()` here with `delim` set as `"."` we get the
+#' following text fragments:
+#'
+#' - `province.NL_ZH.pop` -> `"province"`, `"NL_ZH"`, `"pop"`
+#' - `province.NL_ZH.gdp` -> `"province"`, `"NL_ZH"`, `"gdp"`
+#' - `province.NL_NH.pop` -> `"province"`, `"NL_NH"`, `"pop"`
+#' - `province.NL_NH.gdp` -> `"province"`, `"NL_NH"`, `"gdp"`
+#'
+#' This gives us the following arrangement of column labels and spanner labels:
+#'
+#' ```
+#' --------- `"province"` ---------- <- level 2 spanner
+#' ---`"NL_ZH"`--- | ---`"NL_NH"`--- <- level 1 spanners
+#' `"pop"`|`"gdp"` | `"pop"`|`"gdp"` <- column labels
+#' ---------------------------------
+#' ```
+#'
+#' There might be situations where the same delimiter is used throughout but
+#' only the last instance requires a splitting. With a pair of column names like
+#' `north_holland_pop` and `north_holland_area` you would only want `"pop"` and
+#' `"area"` to be column labels underneath a single spanner (`"north_holland"`).
+#' To achieve this, the `split` and `limit` arguments are used and the values
+#' for each need to be `split = "last"` and `limit = 1`. This will give us
+#' the following arrangement:
+#'
+#' ```
+#' --`"north_holland"`-- <- level 1 spanner
+#'  `"pop"`  |  `"area"` <- column labels
+#' ---------------------
+#' ```
 #'
 #' @section Examples:
 #'
@@ -753,6 +781,46 @@ resolve_spanned_column_names <- function(
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_tab_spanner_delim_4.png")`
+#' }}
+#'
+#' With a summarized, filtered, and pivoted version of the [`pizzaplace`]
+#' dataset, we can create another **gt** table and then use the
+#' `tab_spanner_delim()` function with the same delimiter/separator that was
+#' used in the **tidyr** `pivot_wider()` call. We can also process the generated
+#' column labels with [cols_label_with()].
+#'
+#' ```r
+#' pizzaplace |>
+#'   select(name, date, type, price) |>
+#'   group_by(name, date, type) |>
+#'   summarize(revenue = sum(price), sold = n(), .groups = "drop") |>
+#'   filter(date %in% c("2015-01-01", "2015-01-02", "2015-01-03")) |>
+#'   filter(type %in% c("classic", "veggie")) |>
+#'   pivot_wider(
+#'     names_from = date,
+#'     names_sep = ".",
+#'     values_from = c(revenue, sold),
+#'     values_fn = sum,
+#'     names_sort = TRUE
+#'   ) |>
+#'   gt(rowname_col = "name", groupname_col = "type") |>
+#'   tab_spanner_delim(delim = ".") |>
+#'   sub_missing(missing_text = "") |>
+#'   fmt_currency(columns = starts_with("revenue")) |>
+#'   data_color(
+#'     columns = starts_with("revenue"),
+#'     method = "numeric",
+#'     palette = c("white", "lightgreen")
+#'   ) |>
+#'   cols_label_with(
+#'     fn = function(x) {
+#'       paste0(x, " (", vec_fmt_datetime(x, format = "E"), ")")
+#'     }
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_spanner_delim_5.png")`
 #' }}
 #'
 #' @family part creation/modification functions
