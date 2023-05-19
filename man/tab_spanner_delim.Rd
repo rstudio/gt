@@ -9,17 +9,15 @@ tab_spanner_delim(
   delim,
   columns = everything(),
   split = c("last", "first"),
-  limit = NULL
+  limit = NULL,
+  reverse = FALSE
 )
 }
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{delim}{The delimiter to use to split an input column name. The
-delimiter supplied will be autoescaped for the internal splitting
-procedure. The first component of the split will become the spanner column
-label (and its ID value, used for styling or for the addition of footnotes
-in those locations) and the second component will be the column label.}
+\item{delim}{The delimiter to use to split an input column name. This should
+be a single character (e.g., \code{"_"}, \code{"."}, etc.).}
 
 \item{columns}{An optional vector of column names that this operation should
 be limited to. The default is to consider all columns in the table.}
@@ -27,6 +25,17 @@ be limited to. The default is to consider all columns in the table.}
 \item{split}{Should the delimiter splitting occur from the \code{"last"} instance
 of the \code{delim} character or from the \code{"first"}? By default, column name
 splitting begins at the last instance of the delimiter.}
+
+\item{limit}{An optional limit to place on the splitting procedure. The
+default \code{NULL} means that a column name will be split as many times are
+there are delimiter characters. In other words, the default is no limit. If
+an integer value is given to \code{limit} then splitting will cease at the
+iteration given by \code{limit}. This works in tandem with \code{split} since we can
+adjust the number of splits from either the right side (\code{split = "last"})
+or left side (\code{split = "first"}) of the column name.}
+
+\item{reverse}{Should the order of split names be reversed? By default, this
+is \code{FALSE}.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -112,6 +121,48 @@ Let's use \code{\link[=tab_style]{tab_style()}} to add some styles to the \code{
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_spanner_delim_3.png" alt="This image of a table was generated from the third code example in the `tab_spanner_delim()` help file." style="width:100\%;">
+}}
+
+We can plan ahead a bit and refashion the column names with \strong{dplyr} before
+introducing the table to \code{\link[=gt]{gt()}} and \code{tab_spanner_delim()}. Here the column
+labels have underscore delimiters where splitting is not wanted (so a period
+or space character is used instead). The usage of \code{tab_spanner_delim()} gives
+two levels of spanners. We can further touch up the labels after that with
+\code{\link[=cols_label_with]{cols_label_with()}} and \code{\link[=text_transform]{text_transform()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
+  dplyr::arrange(desc(population_2021)) |>
+  dplyr::slice_head(n = 5) |>
+  dplyr::select(name, ends_with("pct")) |>
+  dplyr::rename_with(
+    .fn = function(x) \{
+      x |>
+        gsub("(.*?)_(\\\\d\{4\})", "\\\\1.\\\\2", x = _) |>
+        gsub("pop_change", "Population Change", x = _)
+    \}
+  ) |>
+  gt(rowname_col = "name") |>
+  tab_spanner_delim(delim = "_") |>
+  fmt_number(decimals = 1, scale_by = 100) |>
+  cols_label_with(
+    fn = function(x) gsub("pct", "\%", x)
+  ) |>
+  text_transform(
+    fn = function(x) gsub("\\\\.", " - ", x),
+    locations = cells_column_spanners()
+  ) |>
+  tab_style(
+    style = cell_text(align = "center"),
+    locations = cells_column_labels()
+  ) |>
+  tab_style(
+    style = "padding-right: 36px;",
+    locations = cells_body()
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_spanner_delim_4.png" alt="This image of a table was generated from the fourth code example in the `tab_spanner_delim()` help file." style="width:100\%;">
 }}
 }
 
