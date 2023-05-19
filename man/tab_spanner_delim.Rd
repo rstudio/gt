@@ -19,12 +19,20 @@ tab_spanner_delim(
 \item{delim}{The delimiter to use to split an input column name. This should
 be a single character (e.g., \code{"_"}, \code{"."}, etc.).}
 
-\item{columns}{An optional vector of column names that this operation should
-be limited to. The default is to consider all columns in the table.}
+\item{columns}{The columns to consider for the splitting, relabeling, and
+spanner setting operations. This can either be a series of column names
+provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
+focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
+\code{\link[=everything]{everything()}}. By default, we consider all columns in the table through
+the use of \code{\link[=everything]{everything()}}.}
 
 \item{split}{Should the delimiter splitting occur from the \code{"last"} instance
-of the \code{delim} character or from the \code{"first"}? By default, column name
-splitting begins at the last instance of the delimiter.}
+of the \code{delim} character or from the \code{"first"}? The default here uses the
+\code{"last"} keyword, and splitting begins at the last instance of the
+delimiter. This option only has consequence when there is a \code{limit} value
+applied that is lesser than the number of delimiter characters for a given
+column name (i.e., number of splits is not the maximum possible number).}
 
 \item{limit}{An optional limit to place on the splitting procedure. The
 default \code{NULL} means that a column name will be split as many times are
@@ -41,11 +49,30 @@ is \code{FALSE}.}
 An object of class \code{gt_tbl}.
 }
 \description{
-This function will split selected delimited column names such that the first
-components (LHS) are promoted to being spanner column labels, and the
-secondary components (RHS) will become the column labels. Please note that
-reference to individual columns must continue to be the column names from the
-input table data (which are unique by necessity).
+The \code{cols_spanner_delim()} function can take specially-crafted column names
+and generate one or more spanner column labels (along with relabeling the
+column labels). This is done by splitting the column name by a specified
+delimiter character (this is the \code{delim}) and placing the fragments from top
+to bottom (i.e., higher-level spanners to the column labels). Furthermore,
+the neighboring text fragments on different spanner levels will be coalesced
+together to put the span back into spanner. For instance, having the three
+side-by-side column names \code{rating_1}, \code{rating_2}, and \code{rating_3} will (in the
+default case at least) result in a spanner with the label \code{"rating"} above
+columns with the labels \code{"1"}, \code{"2"}, and \code{"3"}. There are many options in
+\code{cols_spanner_delim()} to slice and dice delimited column names in different
+ways:
+\itemize{
+\item the delimiter: choose which delimiter to use for the fragmentation of
+column names into spanners with the \code{delim} argument
+\item direction and amount of splitting: we can choose to split \emph{n} times
+according to a \code{limit} argument, and, we get to specify from which side of
+the column name the splitting should occur
+\item reversal of fragments: we can reverse the order the fragments we get from
+the splitting procedure
+\item column constraints: define which columns in a \strong{gt} table that should
+participate in spanner creation using vectors or \strong{tidyselect}-style
+expressions
+}
 }
 \details{
 If we look to the column names in the \code{iris} dataset as an example of how
