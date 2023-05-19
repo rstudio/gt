@@ -38,9 +38,10 @@
 #' @param replacement The replacement text for any matched text fragments.
 #' @param locations The cell or set of cells to be associated with the text
 #'   transformation. Only the [cells_body()], [cells_stub()],
-#'   [cells_column_labels()], and [cells_row_groups()] helper functions can be
-#'   used here. We can enclose several of these calls within a `list()` if we
-#'   wish to make the transformation happen at different locations.
+#'   [cells_row_groups()], [cells_column_labels()], and
+#'   [cells_column_spanners()] helper functions can be used here. We can enclose
+#'   several of these calls within a `list()` if we wish to make the
+#'   transformation happen at different locations.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -129,9 +130,10 @@ text_replace <- function(
 #'   be used.
 #' @param .locations The cell or set of cells to be associated with the text
 #'   transformation. Only the [cells_body()], [cells_stub()],
-#'   [cells_column_labels()], and [cells_row_groups()] helper functions can be
-#'   used here. We can enclose several of these calls within a `list()` if we
-#'   wish to make the transformation happen at different locations.
+#'   [cells_row_groups()], [cells_column_labels()], and
+#'   [cells_column_spanners()] helper functions can be used here. We can enclose
+#'   several of these calls within a `list()` if we wish to make the
+#'   transformation happen at different locations.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -267,9 +269,10 @@ text_case_when <- function(
 #'   act on those matched substrings.
 #' @param .locations The cell or set of cells to be associated with the text
 #'   transformation. Only the [cells_body()], [cells_stub()],
-#'   [cells_column_labels()], and [cells_row_groups()] helper functions can be
-#'   used here. We can enclose several of these calls within a `list()` if we
-#'   wish to make the transformation happen at different locations.
+#'   [cells_row_groups()], [cells_column_labels()], and
+#'   [cells_column_spanners()] helper functions can be used here. We can enclose
+#'   several of these calls within a `list()` if we wish to make the
+#'   transformation happen at different locations.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -445,9 +448,10 @@ text_case_match <- function(
 #'   input `x`.
 #' @param locations The cell or set of cells to be associated with the text
 #'   transformation. Only the [cells_body()], [cells_stub()],
-#'   [cells_column_labels()], and [cells_row_groups()] helper functions can be
-#'   used here. We can enclose several of these calls within a `list()` if we
-#'   wish to make the transformation happen at different locations.
+#'   [cells_row_groups()], [cells_column_labels()], and
+#'   [cells_column_spanners()] helper functions can be used here. We can enclose
+#'   several of these calls within a `list()` if we wish to make the
+#'   transformation happen at different locations.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -563,6 +567,7 @@ text_transform_at_location <- function(loc, data, fn = identity) {
   UseMethod("text_transform_at_location")
 }
 
+# Text transformation using `cells_body()`
 text_transform_at_location.cells_body <- function(
     loc,
     data,
@@ -588,6 +593,7 @@ text_transform_at_location.cells_body <- function(
   dt_body_set(data = data, body = body)
 }
 
+# Text transformation using `cells_stub()`
 text_transform_at_location.cells_stub <- function(
     loc,
     data,
@@ -609,6 +615,7 @@ text_transform_at_location.cells_stub <- function(
   dt_body_set(data = data, body = body)
 }
 
+# Text transformation using `cells_column_labels()`
 text_transform_at_location.cells_column_labels <- function(
     loc,
     data,
@@ -638,6 +645,34 @@ text_transform_at_location.cells_column_labels <- function(
   data
 }
 
+# Text transformation using `cells_column_spanners()`
+text_transform_at_location.cells_column_spanners <- function(
+    loc,
+    data,
+    fn = identity
+) {
+
+  spanners_df <- dt_spanners_get(data = data)
+
+  spanner_id_vec <- spanners_df[["spanner_id"]]
+
+  loc <- to_output_location(loc = loc, data = data)
+
+  for (spanner in loc$spanners) {
+
+    if (spanner %in% spanner_id_vec) {
+
+      spanners_df[spanners_df[["spanner_id"]] == spanner, ][["spanner_label"]] <-
+        as.list(fn(spanners_df[spanners_df[["spanner_id"]] == spanner, ][["spanner_label"]]))
+
+      data <- dt_spanners_set(data = data, spanners = spanners_df)
+    }
+  }
+
+  data
+}
+
+# Text transformation using `cells_row_groups()`
 text_transform_at_location.cells_row_groups <- function(
     loc,
     data,
