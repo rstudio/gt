@@ -2,7 +2,7 @@
 % Please edit documentation in R/tab_create_modify.R
 \name{tab_spanner_delim}
 \alias{tab_spanner_delim}
-\title{Create column labels and spanners via delimited names}
+\title{Create column labels and spanners via delimited column names}
 \usage{
 tab_spanner_delim(
   data,
@@ -30,9 +30,10 @@ the use of \code{\link[=everything]{everything()}}.}
 \item{split}{Should the delimiter splitting occur from the \code{"last"} instance
 of the \code{delim} character or from the \code{"first"}? The default here uses the
 \code{"last"} keyword, and splitting begins at the last instance of the
-delimiter. This option only has consequence when there is a \code{limit} value
-applied that is lesser than the number of delimiter characters for a given
-column name (i.e., number of splits is not the maximum possible number).}
+delimiter in the column name. This option only has some consequence when
+there is a \code{limit} value applied that is lesser than the number of
+delimiter characters for a given column name (i.e., number of splits is not
+the maximum possible number).}
 
 \item{limit}{An optional limit to place on the splitting procedure. The
 default \code{NULL} means that a column name will be split as many times are
@@ -74,18 +75,47 @@ participate in spanner creation using vectors or \strong{tidyselect}-style
 expressions
 }
 }
-\details{
-If we look to the column names in the \code{iris} dataset as an example of how
-\code{tab_spanner_delim()} might be useful, we find the names \code{Sepal.Length},
-\code{Sepal.Width}, \code{Petal.Length}, \code{Petal.Width}. From this naming system, it's
-easy to see that the \code{Sepal} and \code{Petal} can group together the repeated
-common \code{Length} and \code{Width} values. In your own datasets, we can avoid a
-lengthy relabeling with \code{\link[=cols_label]{cols_label()}} if column names can be fashioned
-beforehand to contain both the spanner column label and the column label. An
-additional advantage is that the column names in the input table data remain
-unique even though there may eventually be repeated column labels in the
-rendered output table).
+\section{Details on column splitting}{
+
+
+If we take a hypothetical table that includes the column names
+\code{province.NL_ZH.pop}, \code{province.NL_ZH.gdp}, \code{province.NL_NH.pop}, and
+\code{province.NL_NH.gdp}, we can see that we have a naming system that has a
+well-defined structure. We start with the more general to the left
+(\code{"province"}) and move to the more specific on the right (\code{"pop"}). If the
+columns are in the table in this exact order, then things are in an ideal
+state as the eventual spanner column labels will form from this neighboring.
+When using \code{tab_spanner_delim()} here with \code{delim} set as \code{"."} we get the
+following text fragments:
+\itemize{
+\item \code{province.NL_ZH.pop} -> \code{"province"}, \code{"NL_ZH"}, \code{"pop"}
+\item \code{province.NL_ZH.gdp} -> \code{"province"}, \code{"NL_ZH"}, \code{"gdp"}
+\item \code{province.NL_NH.pop} -> \code{"province"}, \code{"NL_NH"}, \code{"pop"}
+\item \code{province.NL_NH.gdp} -> \code{"province"}, \code{"NL_NH"}, \code{"gdp"}
 }
+
+This gives us the following arrangement of column labels and spanner labels:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{--------- `"province"` ---------- <- level 2 spanner
+---`"NL_ZH"`--- | ---`"NL_NH"`--- <- level 1 spanners
+`"pop"`|`"gdp"` | `"pop"`|`"gdp"` <- column labels
+---------------------------------
+}\if{html}{\out{</div>}}
+
+There might be situations where the same delimiter is used throughout but
+only the last instance requires a splitting. With a pair of column names like
+\code{north_holland_pop} and \code{north_holland_area} you would only want \code{"pop"} and
+\code{"area"} to be column labels underneath a single spanner (\code{"north_holland"}).
+To achieve this, the \code{split} and \code{limit} arguments are used and the values
+for each need to be \code{split = "last"} and \code{limit = 1}. This will give us
+the following arrangement:
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{--`"north_holland"`-- <- level 1 spanner
+ `"pop"`  |  `"area"` <- column labels
+---------------------
+}\if{html}{\out{</div>}}
+}
+
 \section{Examples}{
 
 
@@ -190,6 +220,45 @@ two levels of spanners. We can further touch up the labels after that with
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_spanner_delim_4.png" alt="This image of a table was generated from the fourth code example in the `tab_spanner_delim()` help file." style="width:100\%;">
+}}
+
+With a summarized, filtered, and pivoted version of the \code{\link{pizzaplace}}
+dataset, we can create another \strong{gt} table and then use the
+\code{tab_spanner_delim()} function with the same delimiter/separator that was
+used in the \strong{tidyr} \code{pivot_wider()} call. We can also process the generated
+column labels with \code{\link[=cols_label_with]{cols_label_with()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
+  select(name, date, type, price) |>
+  group_by(name, date, type) |>
+  summarize(revenue = sum(price), sold = n(), .groups = "drop") |>
+  filter(date \%in\% c("2015-01-01", "2015-01-02", "2015-01-03")) |>
+  filter(type \%in\% c("classic", "veggie")) |>
+  pivot_wider(
+    names_from = date,
+    names_sep = ".",
+    values_from = c(revenue, sold),
+    values_fn = sum,
+    names_sort = TRUE
+  ) |>
+  gt(rowname_col = "name", groupname_col = "type") |>
+  tab_spanner_delim(delim = ".") |>
+  sub_missing(missing_text = "") |>
+  fmt_currency(columns = starts_with("revenue")) |>
+  data_color(
+    columns = starts_with("revenue"),
+    method = "numeric",
+    palette = c("white", "lightgreen")
+  ) |>
+  cols_label_with(
+    fn = function(x) \{
+      paste0(x, " (", vec_fmt_datetime(x, format = "E"), ")")
+    \}
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_spanner_delim_5.png" alt="This image of a table was generated from the fifth code example in the `tab_spanner_delim()` help file." style="width:100\%;">
 }}
 }
 
