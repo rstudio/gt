@@ -577,42 +577,102 @@ resolve_spanned_column_names <- function(
   unique(column_names)
 }
 
-#' Create column labels and spanners via delimited names
+#' Create column labels and spanners via delimited column names
 #'
 #' @description
 #'
-#' This function will split selected delimited column names such that the first
-#' components (LHS) are promoted to being spanner column labels, and the
-#' secondary components (RHS) will become the column labels. Please note that
-#' reference to individual columns must continue to be the column names from the
-#' input table data (which are unique by necessity).
+#' The `cols_spanner_delim()` function can take specially-crafted column names
+#' and generate one or more spanner column labels (along with relabeling the
+#' column labels). This is done by splitting the column name by a specified
+#' delimiter character (this is the `delim`) and placing the fragments from top
+#' to bottom (i.e., higher-level spanners to the column labels). Furthermore,
+#' the neighboring text fragments on different spanner levels will be coalesced
+#' together to put the span back into spanner. For instance, having the three
+#' side-by-side column names `rating_1`, `rating_2`, and `rating_3` will (in the
+#' default case at least) result in a spanner with the label `"rating"` above
+#' columns with the labels `"1"`, `"2"`, and `"3"`. There are many options in
+#' `cols_spanner_delim()` to slice and dice delimited column names in different
+#' ways:
+#'
+#' - the delimiter: choose which delimiter to use for the fragmentation of
+#' column names into spanners with the `delim` argument
+#' - direction and amount of splitting: we can choose to split *n* times
+#' according to a `limit` argument, and, we get to specify from which side of
+#' the column name the splitting should occur
+#' - reversal of fragments: we can reverse the order the fragments we get from
+#' the splitting procedure
+#' - column constraints: define which columns in a **gt** table that should
+#' participate in spanner creation using vectors or **tidyselect**-style
+#' expressions
 #'
 #' @inheritParams tab_spanner
-#' @param delim The delimiter to use to split an input column name. The
-#'   delimiter supplied will be autoescaped for the internal splitting
-#'   procedure. The first component of the split will become the spanner column
-#'   label (and its ID value, used for styling or for the addition of footnotes
-#'   in those locations) and the second component will be the column label.
-#' @param columns An optional vector of column names that this operation should
-#'   be limited to. The default is to consider all columns in the table.
+#' @param delim The delimiter to use to split an input column name. This should
+#'   be a single character (e.g., `"_"`, `"."`, etc.).
+#' @param columns The columns to consider for the splitting, relabeling, and
+#'   spanner setting operations. This can either be a series of column names
+#'   provided in [c()], a vector of column indices, or a helper function
+#'   focused on selections. The select helper functions are: [starts_with()],
+#'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
+#'   [everything()]. By default, we consider all columns in the table through
+#'   the use of [everything()].
 #' @param split Should the delimiter splitting occur from the `"last"` instance
-#'   of the `delim` character or from the `"first"`? By default, column name
-#'   splitting begins at the last instance of the delimiter.
+#'   of the `delim` character or from the `"first"`? The default here uses the
+#'   `"last"` keyword, and splitting begins at the last instance of the
+#'   delimiter in the column name. This option only has some consequence when
+#'   there is a `limit` value applied that is lesser than the number of
+#'   delimiter characters for a given column name (i.e., number of splits is not
+#'   the maximum possible number).
+#' @param limit An optional limit to place on the splitting procedure. The
+#'   default `NULL` means that a column name will be split as many times are
+#'   there are delimiter characters. In other words, the default is no limit. If
+#'   an integer value is given to `limit` then splitting will cease at the
+#'   iteration given by `limit`. This works in tandem with `split` since we can
+#'   adjust the number of splits from either the right side (`split = "last"`)
+#'   or left side (`split = "first"`) of the column name.
+#' @param reverse Should the order of split names be reversed? By default, this
+#'   is `FALSE`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @details
+#' @section Details on column splitting:
 #'
-#' If we look to the column names in the `iris` dataset as an example of how
-#' `tab_spanner_delim()` might be useful, we find the names `Sepal.Length`,
-#' `Sepal.Width`, `Petal.Length`, `Petal.Width`. From this naming system, it's
-#' easy to see that the `Sepal` and `Petal` can group together the repeated
-#' common `Length` and `Width` values. In your own datasets, we can avoid a
-#' lengthy relabeling with [cols_label()] if column names can be fashioned
-#' beforehand to contain both the spanner column label and the column label. An
-#' additional advantage is that the column names in the input table data remain
-#' unique even though there may eventually be repeated column labels in the
-#' rendered output table).
+#' If we take a hypothetical table that includes the column names
+#' `province.NL_ZH.pop`, `province.NL_ZH.gdp`, `province.NL_NH.pop`, and
+#' `province.NL_NH.gdp`, we can see that we have a naming system that has a
+#' well-defined structure. We start with the more general to the left
+#' (`"province"`) and move to the more specific on the right (`"pop"`). If the
+#' columns are in the table in this exact order, then things are in an ideal
+#' state as the eventual spanner column labels will form from this neighboring.
+#' When using `tab_spanner_delim()` here with `delim` set as `"."` we get the
+#' following text fragments:
+#'
+#' - `province.NL_ZH.pop` -> `"province"`, `"NL_ZH"`, `"pop"`
+#' - `province.NL_ZH.gdp` -> `"province"`, `"NL_ZH"`, `"gdp"`
+#' - `province.NL_NH.pop` -> `"province"`, `"NL_NH"`, `"pop"`
+#' - `province.NL_NH.gdp` -> `"province"`, `"NL_NH"`, `"gdp"`
+#'
+#' This gives us the following arrangement of column labels and spanner labels:
+#'
+#' ```
+#' --------- `"province"` ---------- <- level 2 spanner
+#' ---`"NL_ZH"`--- | ---`"NL_NH"`--- <- level 1 spanners
+#' `"pop"`|`"gdp"` | `"pop"`|`"gdp"` <- column labels
+#' ---------------------------------
+#' ```
+#'
+#' There might be situations where the same delimiter is used throughout but
+#' only the last instance requires a splitting. With a pair of column names like
+#' `north_holland_pop` and `north_holland_area` you would only want `"pop"` and
+#' `"area"` to be column labels underneath a single spanner (`"north_holland"`).
+#' To achieve this, the `split` and `limit` arguments are used and the values
+#' for each need to be `split = "last"` and `limit = 1`. This will give us
+#' the following arrangement:
+#'
+#' ```
+#' --`"north_holland"`-- <- level 1 spanner
+#'  `"pop"`  |  `"area"` <- column labels
+#' ---------------------
+#' ```
 #'
 #' @section Examples:
 #'
@@ -680,6 +740,89 @@ resolve_spanned_column_names <- function(
 #' `r man_get_image_tag(file = "man_tab_spanner_delim_3.png")`
 #' }}
 #'
+#' We can plan ahead a bit and refashion the column names with **dplyr** before
+#' introducing the table to [gt()] and `tab_spanner_delim()`. Here the column
+#' labels have underscore delimiters where splitting is not wanted (so a period
+#' or space character is used instead). The usage of `tab_spanner_delim()` gives
+#' two levels of spanners. We can further touch up the labels after that with
+#' [cols_label_with()] and [text_transform()].
+#'
+#' ```r
+#' towny |>
+#'   dplyr::arrange(desc(population_2021)) |>
+#'   dplyr::slice_head(n = 5) |>
+#'   dplyr::select(name, ends_with("pct")) |>
+#'   dplyr::rename_with(
+#'     .fn = function(x) {
+#'       x |>
+#'         gsub("(.*?)_(\\d{4})", "\\1.\\2", x = _) |>
+#'         gsub("pop_change", "Population Change", x = _)
+#'     }
+#'   ) |>
+#'   gt(rowname_col = "name") |>
+#'   tab_spanner_delim(delim = "_") |>
+#'   fmt_number(decimals = 1, scale_by = 100) |>
+#'   cols_label_with(
+#'     fn = function(x) gsub("pct", "%", x)
+#'   ) |>
+#'   text_transform(
+#'     fn = function(x) gsub("\\.", " - ", x),
+#'     locations = cells_column_spanners()
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(align = "center"),
+#'     locations = cells_column_labels()
+#'   ) |>
+#'   tab_style(
+#'     style = "padding-right: 36px;",
+#'     locations = cells_body()
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_spanner_delim_4.png")`
+#' }}
+#'
+#' With a summarized, filtered, and pivoted version of the [`pizzaplace`]
+#' dataset, we can create another **gt** table and then use the
+#' `tab_spanner_delim()` function with the same delimiter/separator that was
+#' used in the **tidyr** `pivot_wider()` call. We can also process the generated
+#' column labels with [cols_label_with()].
+#'
+#' ```r
+#' pizzaplace |>
+#'   select(name, date, type, price) |>
+#'   group_by(name, date, type) |>
+#'   summarize(revenue = sum(price), sold = n(), .groups = "drop") |>
+#'   filter(date %in% c("2015-01-01", "2015-01-02", "2015-01-03")) |>
+#'   filter(type %in% c("classic", "veggie")) |>
+#'   pivot_wider(
+#'     names_from = date,
+#'     names_sep = ".",
+#'     values_from = c(revenue, sold),
+#'     values_fn = sum,
+#'     names_sort = TRUE
+#'   ) |>
+#'   gt(rowname_col = "name", groupname_col = "type") |>
+#'   tab_spanner_delim(delim = ".") |>
+#'   sub_missing(missing_text = "") |>
+#'   fmt_currency(columns = starts_with("revenue")) |>
+#'   data_color(
+#'     columns = starts_with("revenue"),
+#'     method = "numeric",
+#'     palette = c("white", "lightgreen")
+#'   ) |>
+#'   cols_label_with(
+#'     fn = function(x) {
+#'       paste0(x, " (", vec_fmt_datetime(x, format = "E"), ")")
+#'     }
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_spanner_delim_5.png")`
+#' }}
+#'
 #' @family part creation/modification functions
 #' @section Function ID:
 #' 2-3
@@ -693,7 +836,9 @@ tab_spanner_delim <- function(
     data,
     delim,
     columns = everything(),
-    split = c("last", "first")
+    split = c("last", "first"),
+    limit = NULL,
+    reverse = FALSE
 ) {
 
   # Perform input object validation
@@ -701,6 +846,35 @@ tab_spanner_delim <- function(
 
   # Ensure that arguments are matched
   split <- rlang::arg_match(split)
+
+  # Perform various input checks for `limit` if it is provided
+  if (!is.null(limit)) {
+
+    if (length(limit) != 1) {
+      cli::cli_abort("If provided, `limit` must be a single value.")
+    }
+
+    if (!rlang::is_integerish(limit)) {
+      cli::cli_abort("An integer value should be supplied for `limit`.")
+    }
+
+    if (limit < 1) {
+      cli::cli_abort("The value supplied for `limit` should be `1` or greater.")
+    }
+  }
+
+  # Perform checks on `delim`
+  if (!rlang::is_character(delim)) {
+    cli::cli_abort("The value supplied for `delim` must be of type `character`.")
+  }
+
+  if (length(delim) != 1) {
+    cli::cli_abort("`delim` must be a single value.")
+  }
+
+  if (nchar(delim) != 1) {
+    cli::cli_abort("The value supplied for `delim` must be a single character.")
+  }
 
   # Get all of the columns in the dataset
   all_cols <- dt_boxhead_get_vars(data = data)
@@ -724,24 +898,7 @@ tab_spanner_delim <- function(
     return(data)
   }
 
-  if (split == "first") {
-
-    colnames_spanners_ordered <-
-      vapply(
-        colnames_spanners,
-        FUN.VALUE = character(1),
-        USE.NAMES = FALSE,
-        FUN = function(x) {
-          paste(
-            rev(unlist(strsplit(x, split = delim, fixed = TRUE))),
-            collapse = delim
-          )
-        }
-      )
-
-  } else {
-    colnames_spanners_ordered <- colnames_spanners
-  }
+  colnames_spanners_ordered <- colnames_spanners
 
   #
   # Determine the highest spanner level from these column names
@@ -752,7 +909,15 @@ tab_spanner_delim <- function(
       vapply(
         colnames_spanners_ordered,
         FUN.VALUE = integer(1), FUN = function(x) {
-          length(unlist(strsplit(x, split = delim, fixed = TRUE)))
+          length(
+            str_split_across(
+              x,
+              delim = delim,
+              n = limit,
+              split = split,
+              reverse = reverse
+            )
+          )
         }
       ),
       na.rm = TRUE
@@ -770,7 +935,14 @@ tab_spanner_delim <- function(
 
       col_name <- colnames_spanners_ordered[colnames_spanners %in% col]
 
-      elements <- unlist(strsplit(col_name, split = delim, fixed = TRUE))
+      elements <-
+        str_split_across(
+          x = col_name,
+          delim = delim,
+          n = limit,
+          split = split,
+          reverse = reverse
+        )
 
       elements_n <- length(elements)
 
@@ -866,10 +1038,8 @@ tab_spanner_delim <- function(
   # Re-label column labels included in `colnames_spanners`
   #
 
-  new_labels <- strsplit(colnames_spanners_ordered, split = delim, fixed = TRUE)
-  new_labels <- vapply(new_labels, FUN.VALUE = character(1), utils::tail, 1)
-
-  new_label_list <- stats::setNames(as.list(new_labels), colnames_spanners)
+  new_labels <- spanner_matrix[nrow(spanner_matrix), ]
+  new_label_list <- stats::setNames(as.list(new_labels), all_cols)
 
   #
   # Merge any column labels previously set by `cols_label()`
@@ -898,6 +1068,104 @@ tab_spanner_delim <- function(
   # Conclude by invoking `cols_label()` on the data
   cols_label(data, .list = new_label_list)
 }
+
+str_split_across <- function(
+    x,
+    delim,
+    n = NULL,
+    split = "last",
+    reverse = FALSE
+) {
+
+  if (is.null(n)) {
+
+    x_split <- unlist(strsplit(x, split = delim, fixed = TRUE))
+
+    if (reverse) {
+      x_split <- rev(x_split)
+    }
+
+    # Remove empty strings
+    x_split <- x_split[x_split != ""]
+
+    if (length(x_split) < 1) {
+      x_split <- x
+    }
+
+    return(x_split)
+  }
+
+  x_delim_chars <-
+    as.integer(
+      unlist(gregexpr(pattern = delim, text = x, fixed = TRUE)[[1]])
+    )
+
+  if (length(x_delim_chars) == 1 && x_delim_chars == -1) {
+    return(x)
+  }
+
+  x_split <- x
+
+  for (i in seq_len(n)) {
+
+    if (split == "last") {
+
+      x_split_i <- x_split[1]
+      x_split <- x_split[-1]
+
+      delim_chars <-
+        as.integer(
+          unlist(gregexpr(pattern = delim, text = x_split_i, fixed = TRUE)[[1]])
+        )
+
+      if (length(delim_chars) == 1 && delim_chars == -1) break
+
+      split_delim <- max(delim_chars)
+
+      x_split_n <- nchar(x_split_i)
+      x_split_1 <- substr(x_split_i, start = 1, stop = split_delim - 1)
+      x_split_2 <- substr(x_split_i, start = split_delim + 1, x_split_n)
+
+      x_split <- c(x_split_1, x_split_2, x_split)
+
+    } else {
+
+      x_split_i <- x_split[length(x_split)]
+      x_split <- x_split[-length(x_split)]
+
+      delim_chars <-
+        as.integer(
+          unlist(gregexpr(pattern = delim, text = x_split_i, fixed = TRUE)[[1]])
+        )
+
+      if (length(delim_chars) == 1 && delim_chars == -1) break
+
+      split_delim <- min(delim_chars)
+
+      x_split_n <- nchar(x_split_i)
+      x_split_1 <- substr(x_split_i, start = 1, stop = split_delim - 1)
+      x_split_2 <- substr(x_split_i, start = split_delim + 1, x_split_n)
+
+      x_split <- c(x_split, x_split_1, x_split_2)
+    }
+
+    if (length(delim_chars) == 1) break
+  }
+
+  if (reverse) {
+    x_split <- rev(x_split)
+  }
+
+  # Remove empty strings
+  x_split <- x_split[x_split != ""]
+
+  if (length(x_split) < 1) {
+    x_split <- x
+  }
+
+  x_split
+}
+
 
 #' Add a row group to a **gt** table
 #'

@@ -306,6 +306,17 @@ resolve_location.cells_column_labels <- function(loc, data) {
   loc
 }
 
+resolve_location.cells_column_spanners <- function(loc, data) {
+
+  resolved <- resolve_cells_column_spanners(data = data, object = loc)
+
+  loc$spanners <- resolved$spanners
+
+  class(loc) <- c("resolved", class(loc))
+
+  loc
+}
+
 resolve_location.cells_stub <- function(loc, data) {
 
   resolved <- resolve_cells_stub(data = data, object = loc)
