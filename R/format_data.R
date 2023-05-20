@@ -3328,11 +3328,11 @@ get_letters_from_div <- function(x, set) {
 #'   opt_all_caps() |>
 #'   cols_align(columns = -rank, align = "center") |>
 #'   cols_width(
-#'     rank ~ px(100),
-#'     everything() ~ px(90)
+#'     rank ~ px(120),
+#'     everything() ~ px(100)
 #'   ) |>
 #'   opt_table_font(stack = "rounded-sans") |>
-#'   tab_options(table.font.size = px(12))
+#'   tab_options(table.font.size = px(14))
 #' ```
 #'
 #' \if{html}{\out{
