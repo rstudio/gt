@@ -166,6 +166,40 @@ column of numbers-as-words is given cell background colors via \code{\link[=data
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_spelled_num_1.png" alt="This image of a table was generated from the first code example in the `fmt_spelled_num()` help file." style="width:100\%;">
 }}
+
+With a considerable amount of \strong{dplyr} and \strong{tidyr} work done to the
+\code{\link{pizzaplace}} dataset, we can create a new \strong{gt} table. The
+\code{fmt_spelled_num()} function will be used here to transform the integer
+values in the \code{rank} column. We'll do so with a special \code{pattern} that puts
+the word 'Number' in front of every spelled-out number.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
+  dplyr::mutate(month = lubridate::month(date, label = TRUE)) |>
+  dplyr::filter(month \%in\% month.abb[1:6]) |>
+  dplyr::group_by(name, month) |>
+  dplyr::summarize(sum = sum(price), .groups = "drop") |>
+  dplyr::arrange(month, desc(sum)) |>
+  dplyr::group_by(month) |>
+  dplyr::slice_head(n = 5) |>
+  dplyr::mutate(rank = dplyr::row_number()) |>
+  dplyr::ungroup() |>
+  dplyr::select(-sum) |>
+  tidyr::pivot_wider(names_from = month, values_from = c(name)) |>
+  gt() |>
+  fmt_spelled_num(columns = rank, pattern = "Number \{x\}") |>
+  opt_all_caps() |>
+  cols_align(columns = -rank, align = "center") |>
+  cols_width(
+    rank ~ px(100),
+    everything() ~ px(90)
+  ) |>
+  opt_table_font(stack = "rounded-sans") |>
+  tab_options(table.font.size = px(12))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_spelled_num_2.png" alt="This image of a table was generated from the second code example in the `fmt_spelled_num()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
