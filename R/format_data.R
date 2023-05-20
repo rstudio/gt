@@ -3304,6 +3304,41 @@ get_letters_from_div <- function(x, set) {
 #' `r man_get_image_tag(file = "man_fmt_spelled_num_1.png")`
 #' }}
 #'
+#' With a considerable amount of **dplyr** and **tidyr** work done to the
+#' [`pizzaplace`] dataset, we can create a new **gt** table. The
+#' `fmt_spelled_num()` function will be used here to transform the integer
+#' values in the `rank` column. We'll do so with a special `pattern` that puts
+#' the word 'Number' in front of every spelled-out number.
+#'
+#' ```r
+#' pizzaplace |>
+#'   dplyr::mutate(month = lubridate::month(date, label = TRUE)) |>
+#'   dplyr::filter(month %in% month.abb[1:6]) |>
+#'   dplyr::group_by(name, month) |>
+#'   dplyr::summarize(sum = sum(price), .groups = "drop") |>
+#'   dplyr::arrange(month, desc(sum)) |>
+#'   dplyr::group_by(month) |>
+#'   dplyr::slice_head(n = 5) |>
+#'   dplyr::mutate(rank = dplyr::row_number()) |>
+#'   dplyr::ungroup() |>
+#'   dplyr::select(-sum) |>
+#'   tidyr::pivot_wider(names_from = month, values_from = c(name)) |>
+#'   gt() |>
+#'   fmt_spelled_num(columns = rank, pattern = "Number {x}") |>
+#'   opt_all_caps() |>
+#'   cols_align(columns = -rank, align = "center") |>
+#'   cols_width(
+#'     rank ~ px(100),
+#'     everything() ~ px(90)
+#'   ) |>
+#'   opt_table_font(stack = "rounded-sans") |>
+#'   tab_options(table.font.size = px(12))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_spelled_num_2.png")`
+#' }}
+#'
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-11
