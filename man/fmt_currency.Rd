@@ -149,12 +149,12 @@ An object of class \code{gt_tbl}.
 }
 \description{
 With numeric values in a \strong{gt} table, we can perform currency-based
-formatting. This function supports both automatic formatting with a
-three-letter or numeric currency code. We can also specify a custom currency
-that is formatted according to the output context with the \code{\link[=currency]{currency()}}
-helper function. Numeric formatting facilitated through the use of a locale
-ID. We have fine control over the conversion from numeric values to currency
-values, where we could take advantage of the following options:
+formatting with the \code{fmt_currency()} function. The function supports both
+automatic formatting with either a three-letter or a numeric currency code.
+We can also specify a custom currency that is formatted according to one or
+more output contexts with the \code{\link[=currency]{currency()}} helper function. We have fine
+control over the conversion from numeric values to currency values, where we
+could take advantage of the following options:
 \itemize{
 \item the currency: providing a currency code or common currency name will
 procure the correct currency symbol and number of currency subunits; we could
@@ -163,7 +163,7 @@ also use the \code{\link[=currency]{currency()}} helper function to specify a cu
 or after the values
 \item decimals/subunits: choice of the number of decimal places, and a
 choice of the decimal symbol, and an option on whether to include or exclude
-the currency subunits (decimal portion)
+the currency subunits (the decimal portion)
 \item negative values: choice of a negative sign or parentheses for values
 less than zero
 \item digit grouping separators: options to enable/disable digit separators
@@ -173,8 +173,8 @@ and provide a choice of separator symbol
 be autoscaled and decorated with the appropriate suffixes
 \item pattern: option to use a text pattern for decoration of the formatted
 currency values
-\item locale-based formatting: providing a locale ID will result in
-currency formatting specific to the chosen locale
+\item locale-based formatting: providing a locale ID will result in currency
+formatting specific to the chosen locale
 }
 
 We can use the \code{\link[=info_currencies]{info_currencies()}} function for a useful reference on all of
