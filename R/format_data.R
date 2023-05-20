@@ -2485,12 +2485,12 @@ round_gt <- function(x, digits = 0) {
 #' @description
 #'
 #' With numeric values in a **gt** table, we can perform currency-based
-#' formatting. This function supports both automatic formatting with a
-#' three-letter or numeric currency code. We can also specify a custom currency
-#' that is formatted according to the output context with the [currency()]
-#' helper function. Numeric formatting facilitated through the use of a locale
-#' ID. We have fine control over the conversion from numeric values to currency
-#' values, where we could take advantage of the following options:
+#' formatting with the `fmt_currency()` function. The function supports both
+#' automatic formatting with either a three-letter or a numeric currency code.
+#' We can also specify a custom currency that is formatted according to one or
+#' more output contexts with the [currency()] helper function. We have fine
+#' control over the conversion from numeric values to currency values, where we
+#' could take advantage of the following options:
 #'
 #' - the currency: providing a currency code or common currency name will
 #' procure the correct currency symbol and number of currency subunits; we could
@@ -2499,7 +2499,7 @@ round_gt <- function(x, digits = 0) {
 #' or after the values
 #' - decimals/subunits: choice of the number of decimal places, and a
 #' choice of the decimal symbol, and an option on whether to include or exclude
-#' the currency subunits (decimal portion)
+#' the currency subunits (the decimal portion)
 #' - negative values: choice of a negative sign or parentheses for values
 #' less than zero
 #' - digit grouping separators: options to enable/disable digit separators
@@ -2509,8 +2509,8 @@ round_gt <- function(x, digits = 0) {
 #' be autoscaled and decorated with the appropriate suffixes
 #' - pattern: option to use a text pattern for decoration of the formatted
 #' currency values
-#' - locale-based formatting: providing a locale ID will result in
-#' currency formatting specific to the chosen locale
+#' - locale-based formatting: providing a locale ID will result in currency
+#' formatting specific to the chosen locale
 #'
 #' We can use the [info_currencies()] function for a useful reference on all of
 #' the possible inputs to the `currency` argument.
@@ -3185,11 +3185,13 @@ get_letters_from_div <- function(x, set) {
 #' @description
 #'
 #' With numeric values in a **gt** table we can transform those to numbers that
-#' are spelled out. Any values from `0` to `100` can be spelled out according to
-#' the specified locale. For example, the value `23` will be rendered as
-#' `"twenty-three"` if the locale is an English-language one (or, not provided
-#' at all); should a Swedish locale be provided (e.g., `"sv"`), the output will
-#' instead be `"tjugotre"`.
+#' are spelled out with the `fmt_spelled_num()` function. Any values from `0` to
+#' `100` can be spelled out so, for example, the value `23` will be formatted as
+#' `"twenty-three"`. Providing a locale ID will result in the number spelled out
+#' in the locale's language rules. For example, should a Swedish locale (`"sv"`)
+#' be provided, the input value `23` will yield `"tjugotre"`. In addition to
+#' this, we can optionally use the `pattern` argument for decoration of the
+#' formatted values.
 #'
 #' @inheritParams fmt_number
 #'
@@ -3242,6 +3244,32 @@ get_letters_from_div <- function(x, set) {
 #' formatting on values in the column or another column, or, you'd like to use a
 #' more complex predicate expression.
 #'
+#' @section Supported locales:
+#'
+#' The following 80 locales are supported in the `locale` argument of
+#' `fmt_spelled_num()`: `"af"` (Afrikaans), `"ak"` (Akan), `"am"` (Amharic),
+#' `"ar"` (Arabic), `"az"` (Azerbaijani), `"be"` (Belarusian), `"bg"`
+#' (Bulgarian), `"bs"` (Bosnian), `"ca"` (Catalan), `"ccp"` (Chakma), `"chr"`
+#' (Cherokee), `"cs"` (Czech), `"cy"` (Welsh), `"da"` (Danish), `"de"` (German),
+#' `"de-CH"` (German (Switzerland)), `"ee"` (Ewe), `"el"` (Greek), `"en"`
+#' (English), `"eo"` (Esperanto), `"es"` (Spanish), `"et"` (Estonian), `"fa"`
+#' (Persian), `"ff"` (Fulah), `"fi"` (Finnish), `"fil"` (Filipino), `"fo"`
+#' (Faroese), `"fr"` (French), `"fr-BE"` (French (Belgium)), `"fr-CH"` (French
+#' (Switzerland)), `"ga"` (Irish), `"he"` (Hebrew), `"hi"` (Hindi), `"hr"`
+#' (Croatian), `"hu"` (Hungarian), `"hy"` (Armenian), `"id"` (Indonesian),
+#' `"is"` (Icelandic), `"it"` (Italian), `"ja"` (Japanese), `"ka"` (Georgian),
+#' `"kk"` (Kazakh), `"kl"` (Kalaallisut), `"km"` (Khmer), `"ko"` (Korean),
+#' `"ky"` (Kyrgyz), `"lb"` (Luxembourgish), `"lo"` (Lao), `"lrc"` (Northern
+#' Luri), `"lt"` (Lithuanian), `"lv"` (Latvian), `"mk"` (Macedonian), `"ms"`
+#' (Malay), `"mt"` (Maltese), `"my"` (Burmese), `"ne"` (Nepali), `"nl"` (Dutch),
+#' `"nn"` (Norwegian Nynorsk), `"no"` (Norwegian), `"pl"` (Polish), `"pt"`
+#' (Portuguese), `"qu"` (Quechua), `"ro"` (Romanian), `"ru"` (Russian), `"se"`
+#' (Northern Sami), `"sk"` (Slovak), `"sl"` (Slovenian), `"sq"` (Albanian),
+#' `"sr"` (Serbian), `"sr-Latn"` (Serbian (Latin)), `"su"` (Sundanese), `"sv"`
+#' (Swedish), `"sw"` (Swahili), `"ta"` (Tamil), `"th"` (Thai), `"tr"` (Turkish),
+#' `"uk"` (Ukrainian), `"vi"` (Vietnamese), `"yue"` (Cantonese), and `"zh"`
+#' (Chinese).
+#'
 #' @section Examples:
 #'
 #' Let's use a summarized version of the [`gtcars`] dataset to create a
@@ -3274,6 +3302,41 @@ get_letters_from_div <- function(x, set) {
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_fmt_spelled_num_1.png")`
+#' }}
+#'
+#' With a considerable amount of **dplyr** and **tidyr** work done to the
+#' [`pizzaplace`] dataset, we can create a new **gt** table. The
+#' `fmt_spelled_num()` function will be used here to transform the integer
+#' values in the `rank` column. We'll do so with a special `pattern` that puts
+#' the word 'Number' in front of every spelled-out number.
+#'
+#' ```r
+#' pizzaplace |>
+#'   dplyr::mutate(month = lubridate::month(date, label = TRUE)) |>
+#'   dplyr::filter(month %in% month.abb[1:6]) |>
+#'   dplyr::group_by(name, month) |>
+#'   dplyr::summarize(sum = sum(price), .groups = "drop") |>
+#'   dplyr::arrange(month, desc(sum)) |>
+#'   dplyr::group_by(month) |>
+#'   dplyr::slice_head(n = 5) |>
+#'   dplyr::mutate(rank = dplyr::row_number()) |>
+#'   dplyr::ungroup() |>
+#'   dplyr::select(-sum) |>
+#'   tidyr::pivot_wider(names_from = month, values_from = c(name)) |>
+#'   gt() |>
+#'   fmt_spelled_num(columns = rank, pattern = "Number {x}") |>
+#'   opt_all_caps() |>
+#'   cols_align(columns = -rank, align = "center") |>
+#'   cols_width(
+#'     rank ~ px(120),
+#'     everything() ~ px(100)
+#'   ) |>
+#'   opt_table_font(stack = "rounded-sans") |>
+#'   tab_options(table.font.size = px(14))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_spelled_num_2.png")`
 #' }}
 #'
 #' @family data formatting functions
@@ -7550,11 +7613,11 @@ fmt_markdown <- function(
 #'
 #' @description
 #'
-#' Format by passing data through no other transformation other than: (1)
-#' coercing to `character` (as all the `fmt_*()` functions do), and (2) applying
-#' text via the `pattern` argument (the default is to apply nothing). All of
-#' this is useful when don't want to modify the input data other than to
-#' decorate it within a pattern.
+#' We can format values with the `fmt_passthrough()` function, which does little
+#' more than: (1) coercing to `character` (as all the `fmt_*()` functions do),
+#' and (2) applying decorator text via the `pattern` argument (the default is to
+#' apply nothing). This foramtting function is useful when don't want to modify
+#' the input data other than to decorate it within a pattern.
 #'
 #' @inheritParams fmt_number
 #' @param escape An option to escape text according to the final output format
@@ -7606,12 +7669,13 @@ fmt_markdown <- function(
 #'
 #' @section Examples:
 #'
-#' Use the [`exibble`] dataset to create a single-column **gt** table (with only
-#' the `char` column). Pass the data in that column through the 'non-formatter'
-#' that is `fmt_passthrough()`. While the the function doesn't do any explicit
-#' formatting it has features common to all other formatting functions it has
-#' the `pattern` argument; that's what we'll use in this example, applying a
-#' simple pattern to the non-`NA` values that adds an `"s"` character.
+#' Let's use the [`exibble`] dataset to create a single-column **gt** table
+#' (with only the `char` column). Now we can pass the data in that column
+#' through the 'non-formatter' that is `fmt_passthrough()`. While the the
+#' function doesn't do any explicit formatting it has a feature common to all
+#' other formatting functions: the `pattern` argument. So that's what we'll use
+#' in this example, applying a simple pattern to the non-`NA` values that adds
+#' an `"s"` character.
 #'
 #' ```r
 #' exibble |>
