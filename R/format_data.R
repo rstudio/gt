@@ -2485,12 +2485,12 @@ round_gt <- function(x, digits = 0) {
 #' @description
 #'
 #' With numeric values in a **gt** table, we can perform currency-based
-#' formatting. This function supports both automatic formatting with a
-#' three-letter or numeric currency code. We can also specify a custom currency
-#' that is formatted according to the output context with the [currency()]
-#' helper function. Numeric formatting facilitated through the use of a locale
-#' ID. We have fine control over the conversion from numeric values to currency
-#' values, where we could take advantage of the following options:
+#' formatting with the `fmt_currency()` function. The function supports both
+#' automatic formatting with either a three-letter or a numeric currency code.
+#' We can also specify a custom currency that is formatted according to one or
+#' more output contexts with the [currency()] helper function. We have fine
+#' control over the conversion from numeric values to currency values, where we
+#' could take advantage of the following options:
 #'
 #' - the currency: providing a currency code or common currency name will
 #' procure the correct currency symbol and number of currency subunits; we could
@@ -2499,7 +2499,7 @@ round_gt <- function(x, digits = 0) {
 #' or after the values
 #' - decimals/subunits: choice of the number of decimal places, and a
 #' choice of the decimal symbol, and an option on whether to include or exclude
-#' the currency subunits (decimal portion)
+#' the currency subunits (the decimal portion)
 #' - negative values: choice of a negative sign or parentheses for values
 #' less than zero
 #' - digit grouping separators: options to enable/disable digit separators
@@ -2509,8 +2509,8 @@ round_gt <- function(x, digits = 0) {
 #' be autoscaled and decorated with the appropriate suffixes
 #' - pattern: option to use a text pattern for decoration of the formatted
 #' currency values
-#' - locale-based formatting: providing a locale ID will result in
-#' currency formatting specific to the chosen locale
+#' - locale-based formatting: providing a locale ID will result in currency
+#' formatting specific to the chosen locale
 #'
 #' We can use the [info_currencies()] function for a useful reference on all of
 #' the possible inputs to the `currency` argument.
@@ -7613,11 +7613,11 @@ fmt_markdown <- function(
 #'
 #' @description
 #'
-#' Format by passing data through no other transformation other than: (1)
-#' coercing to `character` (as all the `fmt_*()` functions do), and (2) applying
-#' text via the `pattern` argument (the default is to apply nothing). All of
-#' this is useful when don't want to modify the input data other than to
-#' decorate it within a pattern.
+#' We can format values with the `fmt_passthrough()` function, which does little
+#' more than: (1) coercing to `character` (as all the `fmt_*()` functions do),
+#' and (2) applying decorator text via the `pattern` argument (the default is to
+#' apply nothing). This foramtting function is useful when don't want to modify
+#' the input data other than to decorate it within a pattern.
 #'
 #' @inheritParams fmt_number
 #' @param escape An option to escape text according to the final output format
@@ -7669,12 +7669,13 @@ fmt_markdown <- function(
 #'
 #' @section Examples:
 #'
-#' Use the [`exibble`] dataset to create a single-column **gt** table (with only
-#' the `char` column). Pass the data in that column through the 'non-formatter'
-#' that is `fmt_passthrough()`. While the the function doesn't do any explicit
-#' formatting it has features common to all other formatting functions it has
-#' the `pattern` argument; that's what we'll use in this example, applying a
-#' simple pattern to the non-`NA` values that adds an `"s"` character.
+#' Let's use the [`exibble`] dataset to create a single-column **gt** table
+#' (with only the `char` column). Now we can pass the data in that column
+#' through the 'non-formatter' that is `fmt_passthrough()`. While the the
+#' function doesn't do any explicit formatting it has a feature common to all
+#' other formatting functions: the `pattern` argument. So that's what we'll use
+#' in this example, applying a simple pattern to the non-`NA` values that adds
+#' an `"s"` character.
 #'
 #' ```r
 #' exibble |>
