@@ -46,11 +46,13 @@ An object of class \code{gt_tbl}.
 }
 \description{
 With numeric values in a \strong{gt} table we can transform those to numbers that
-are spelled out. Any values from \code{0} to \code{100} can be spelled out according to
-the specified locale. For example, the value \code{23} will be rendered as
-\code{"twenty-three"} if the locale is an English-language one (or, not provided
-at all); should a Swedish locale be provided (e.g., \code{"sv"}), the output will
-instead be \code{"tjugotre"}.
+are spelled out with the \code{fmt_spelled_num()} function. Any values from \code{0} to
+\code{100} can be spelled out so, for example, the value \code{23} will be formatted as
+\code{"twenty-three"}. Providing a locale ID will result in the number spelled out
+in the locale's language rules. For example, should a Swedish locale (\code{"sv"})
+be provided, the input value \code{23} will yield \code{"tjugotre"}. In addition to
+this, we can optionally use the \code{pattern} argument for decoration of the
+formatted values.
 }
 \section{Compatibility of formatting function with data values}{
 
@@ -103,6 +105,34 @@ formatting on values in the column or another column, or, you'd like to use a
 more complex predicate expression.
 }
 
+\section{Supported locales}{
+
+
+The following 80 locales are supported in the \code{locale} argument of
+\code{fmt_spelled_num()}: \code{"af"} (Afrikaans), \code{"ak"} (Akan), \code{"am"} (Amharic),
+\code{"ar"} (Arabic), \code{"az"} (Azerbaijani), \code{"be"} (Belarusian), \code{"bg"}
+(Bulgarian), \code{"bs"} (Bosnian), \code{"ca"} (Catalan), \code{"ccp"} (Chakma), \code{"chr"}
+(Cherokee), \code{"cs"} (Czech), \code{"cy"} (Welsh), \code{"da"} (Danish), \code{"de"} (German),
+\code{"de-CH"} (German (Switzerland)), \code{"ee"} (Ewe), \code{"el"} (Greek), \code{"en"}
+(English), \code{"eo"} (Esperanto), \code{"es"} (Spanish), \code{"et"} (Estonian), \code{"fa"}
+(Persian), \code{"ff"} (Fulah), \code{"fi"} (Finnish), \code{"fil"} (Filipino), \code{"fo"}
+(Faroese), \code{"fr"} (French), \code{"fr-BE"} (French (Belgium)), \code{"fr-CH"} (French
+(Switzerland)), \code{"ga"} (Irish), \code{"he"} (Hebrew), \code{"hi"} (Hindi), \code{"hr"}
+(Croatian), \code{"hu"} (Hungarian), \code{"hy"} (Armenian), \code{"id"} (Indonesian),
+\code{"is"} (Icelandic), \code{"it"} (Italian), \code{"ja"} (Japanese), \code{"ka"} (Georgian),
+\code{"kk"} (Kazakh), \code{"kl"} (Kalaallisut), \code{"km"} (Khmer), \code{"ko"} (Korean),
+\code{"ky"} (Kyrgyz), \code{"lb"} (Luxembourgish), \code{"lo"} (Lao), \code{"lrc"} (Northern
+Luri), \code{"lt"} (Lithuanian), \code{"lv"} (Latvian), \code{"mk"} (Macedonian), \code{"ms"}
+(Malay), \code{"mt"} (Maltese), \code{"my"} (Burmese), \code{"ne"} (Nepali), \code{"nl"} (Dutch),
+\code{"nn"} (Norwegian Nynorsk), \code{"no"} (Norwegian), \code{"pl"} (Polish), \code{"pt"}
+(Portuguese), \code{"qu"} (Quechua), \code{"ro"} (Romanian), \code{"ru"} (Russian), \code{"se"}
+(Northern Sami), \code{"sk"} (Slovak), \code{"sl"} (Slovenian), \code{"sq"} (Albanian),
+\code{"sr"} (Serbian), \code{"sr-Latn"} (Serbian (Latin)), \code{"su"} (Sundanese), \code{"sv"}
+(Swedish), \code{"sw"} (Swahili), \code{"ta"} (Tamil), \code{"th"} (Thai), \code{"tr"} (Turkish),
+\code{"uk"} (Ukrainian), \code{"vi"} (Vietnamese), \code{"yue"} (Cantonese), and \code{"zh"}
+(Chinese).
+}
+
 \section{Examples}{
 
 
@@ -135,6 +165,40 @@ column of numbers-as-words is given cell background colors via \code{\link[=data
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_spelled_num_1.png" alt="This image of a table was generated from the first code example in the `fmt_spelled_num()` help file." style="width:100\%;">
+}}
+
+With a considerable amount of \strong{dplyr} and \strong{tidyr} work done to the
+\code{\link{pizzaplace}} dataset, we can create a new \strong{gt} table. The
+\code{fmt_spelled_num()} function will be used here to transform the integer
+values in the \code{rank} column. We'll do so with a special \code{pattern} that puts
+the word 'Number' in front of every spelled-out number.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
+  dplyr::mutate(month = lubridate::month(date, label = TRUE)) |>
+  dplyr::filter(month \%in\% month.abb[1:6]) |>
+  dplyr::group_by(name, month) |>
+  dplyr::summarize(sum = sum(price), .groups = "drop") |>
+  dplyr::arrange(month, desc(sum)) |>
+  dplyr::group_by(month) |>
+  dplyr::slice_head(n = 5) |>
+  dplyr::mutate(rank = dplyr::row_number()) |>
+  dplyr::ungroup() |>
+  dplyr::select(-sum) |>
+  tidyr::pivot_wider(names_from = month, values_from = c(name)) |>
+  gt() |>
+  fmt_spelled_num(columns = rank, pattern = "Number \{x\}") |>
+  opt_all_caps() |>
+  cols_align(columns = -rank, align = "center") |>
+  cols_width(
+    rank ~ px(120),
+    everything() ~ px(100)
+  ) |>
+  opt_table_font(stack = "rounded-sans") |>
+  tab_options(table.font.size = px(14))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_spelled_num_2.png" alt="This image of a table was generated from the second code example in the `fmt_spelled_num()` help file." style="width:100\%;">
 }}
 }
 
