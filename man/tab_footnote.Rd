@@ -40,12 +40,30 @@ An object of class \code{gt_tbl}.
 }
 \description{
 The \code{tab_footnote()} function can make it a painless process to add a
-footnote to a \strong{gt} table. There are two components to a footnote: (1) a
-footnote mark that is attached to the targeted cell text, and (2) the
-footnote text (that starts with the corresponding footnote mark) that is
-placed in the table's footer area. Each call of \code{tab_footnote()} will add a
-different note, and one or more cells can be targeted via the location helper
-functions (e.g., \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_column_labels]{cells_column_labels()}}, etc.).
+footnote to a \strong{gt} table. There are commonly two components to a footnote:
+(1) a footnote mark that is attached to the targeted cell content, and (2)
+the footnote text itself that is placed in the table's footer area. Each unit
+of footnote text in the footer is linked to an element of text or otherwise
+through the footnote mark. The footnote system in \strong{gt} presents footnotes
+in a way that matches the usual expectations, where:
+\enumerate{
+\item footnote marks have a sequence, whether they are symbols, numbers, or
+letters
+\item multiple footnotes can be applied to the same content (and marks are
+always presented in an ordered fashion)
+\item footnote text in the footer is never exactly repeated, \strong{gt} reuses
+footnote marks where needed throughout the table
+\item footnote marks are ordered across the table in a consistent manner (left
+to right, top to bottom)
+}
+
+Each call of \code{tab_footnote()} will either add a different footnote or reuse
+existing footnote text. One or more cells are targeted using the \verb{cells_*()}
+helper functions (e.g., \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_column_labels]{cells_column_labels()}}, etc.). You
+can choose to not attach a footnote mark not specifying a location at all. By
+default, \strong{gt} will choose which side of the text to place the footnote mark
+(with the \code{placement = "auto"} option) but you can always choose the
+placement of the footnote mark.
 }
 \details{
 The formatting of the footnotes can be controlled through the use of various
