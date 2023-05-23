@@ -9,7 +9,7 @@ tab_stubhead(data, label)
 \arguments{
 \item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
 
-\item{label}{The text to be used as the stubhead label We can optionally use
+\item{label}{The text to be used as the stubhead label. We can optionally use
 the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} functions to style the text as Markdown or to
 retain HTML elements in the text.}
 }
@@ -17,12 +17,14 @@ retain HTML elements in the text.}
 An object of class \code{gt_tbl}.
 }
 \description{
-Add a label to the stubhead of a \strong{gt} table. The stubhead is the lone
-element that is positioned left of the column labels, and above the stub. If
-a stub does not exist, then there is no stubhead (so no change will be made
-when using this function in that case). We have the flexibility to use
-Markdown formatting for the stubhead label. Furthermore, if the table is
-intended for HTML output, we can use HTML for the stubhead label.
+We can add a label to the stubhead of a \strong{gt} table with the
+\code{tab_stubhead()} function. The stubhead is the lone part of the table that is
+positioned left of the column labels, and above the stub. If a stub does not
+exist, then there is no stubhead (so no visible change will be made when
+using this function in that case). We have the flexibility to use Markdown
+formatting for the stubhead label via the \code{\link[=md]{md()}} helper function.
+Furthermore, if the table is intended for HTML output, we can use HTML inside
+of \code{\link[=html]{html()}} for the stubhead label.
 }
 \section{Examples}{
 
@@ -42,6 +44,21 @@ describe what's in the stub.
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_stubhead_1.png" alt="This image of a table was generated from the first code example in the `tab_stubhead()` help file." style="width:100\%;">
+}}
+
+The stuhead can contain all sorts of interesting content. How about an icon
+for a car? We can make this happen with help from the \strong{fontawesome}
+package.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::select(model, year, hp, trq) |>
+  dplyr::slice(1:5) |>
+  gt(rowname_col = "model") |>
+  tab_stubhead(label = fontawesome::fa("car"))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_stubhead_2.png" alt="This image of a table was generated from the second code example in the `tab_stubhead()` help file." style="width:100\%;">
 }}
 }
 

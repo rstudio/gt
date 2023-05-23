@@ -96,7 +96,7 @@ following text fragments:
 
 This gives us the following arrangement of column labels and spanner labels:
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{--------- `"province"` ---------- <- level 2 spanner
+\if{html}{\out{<div class="sourceCode default">}}\preformatted{--------- `"province"` ---------- <- level 2 spanner
 ---`"NL_ZH"`--- | ---`"NL_NH"`--- <- level 1 spanners
 `"pop"`|`"gdp"` | `"pop"`|`"gdp"` <- column labels
 ---------------------------------
@@ -110,7 +110,7 @@ To achieve this, the \code{split} and \code{limit} arguments are used and the va
 for each need to be \code{split = "last"} and \code{limit = 1}. This will give us
 the following arrangement:
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{--`"north_holland"`-- <- level 1 spanner
+\if{html}{\out{<div class="sourceCode default">}}\preformatted{--`"north_holland"`-- <- level 1 spanner
  `"pop"`  |  `"area"` <- column labels
 ---------------------
 }\if{html}{\out{</div>}}
@@ -273,6 +273,9 @@ column labels with \code{\link[=cols_label_with]{cols_label_with()}}.
 }
 
 \seealso{
+\code{\link[=tab_spanner]{tab_spanner()}} to manually create spanners with more control over
+spanner column labels.
+
 Other part creation/modification functions: 
 \code{\link{tab_caption}()},
 \code{\link{tab_footnote}()},

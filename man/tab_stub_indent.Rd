@@ -29,8 +29,8 @@ An object of class \code{gt_tbl}.
 \description{
 Indentation of row labels is an effective way for establishing structure in a
 table stub. The \code{tab_stub_indent()} function allows for fine control over
-row label indentation through either explicit definition of an indentation
-level, or, by way of an indentation directive using keywords.
+row label indentation in the stub. We can use an explicit definition of an
+indentation level, or, employ an indentation directive using keywords.
 }
 \section{Examples}{
 
