@@ -20,10 +20,16 @@ tab_spanner(
 
 \item{label}{The text to use for the spanner column label.}
 
-\item{columns}{The columns to be components of the spanner heading.}
+\item{columns}{The columns to serve as components of the spanner. Can either
+be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,
+or a helper function focused on selections. The select helper functions
+are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. This argument works in tandem with the
+\code{spanner} argument.}
 
 \item{spanners}{The spanners that should be spanned over, should they already
-be defined.}
+be defined. One or more spanner ID values (in quotes) can be supplied here.
+This argument works in tandem with the \code{columns} argument.}
 
 \item{level}{An explicit level to which the spanner should be placed. If not
 provided, \strong{gt} will choose the level based on the inputs provided within
@@ -31,15 +37,15 @@ provided, \strong{gt} will choose the level based on the inputs provided within
 first spanner level (right above the column labels) is \code{1}.}
 
 \item{id}{The ID for the spanner column label. When accessing a spanner
-column label through \code{\link[=cells_column_spanners]{cells_column_spanners()}} (when using \code{\link[=tab_style]{tab_style()}} or
-\code{\link[=tab_footnote]{tab_footnote()}}) the \code{id} value is used as the reference (and not the
-\code{label}). If an \code{id} is not explicitly provided here, it will be taken from
-the \code{label} value. It is advisable to set an explicit \code{id} value if you
-plan to access this cell in a later function call and the label text is
-complicated (e.g., contains markup, is lengthy, or both). Finally, when
-providing an \code{id} value you must ensure that it is unique across all ID
-values set for column spanner labels (the function will stop if \code{id} isn't
-unique).}
+through the \code{spanners} argument of \code{tab_spanner()} or
+\code{\link[=cells_column_spanners]{cells_column_spanners()}} (when using \code{\link[=tab_style]{tab_style()}} or \code{\link[=tab_footnote]{tab_footnote()}})
+the \code{id} value is used as the reference (and not the \code{label}). If an \code{id}
+is not explicitly provided here, it will be taken from the \code{label} value.
+It is advisable to set an explicit \code{id} value if you plan to access this
+cell in a later function call and the label text is complicated (e.g.,
+contains markup, is lengthy, or both). Finally, when providing an \code{id}
+value you must ensure that it is unique across all ID values set for column
+spanner labels (the function will stop if \code{id} isn't unique).}
 
 \item{gather}{An option to move the specified \code{columns} such that they are
 unified under the spanner column label. Ordering of the moved-into-place
@@ -54,10 +60,76 @@ occur if some replacement is attempted.}
 An object of class \code{gt_tbl}.
 }
 \description{
-Set a spanner column label by mapping it to columns already in the table.
-This label is placed above one or more column labels, spanning the width of
-those columns and column labels.
+With the \code{tab_spanner()} function, you can insert a spanner in the column
+labels part of a \strong{gt} table. This part of the table contains, at a minimum,
+column labels and, optionally, an unlimited number of levels for spanners. A
+spanner will occupy space over any number of contiguous column labels and it
+will have an associated label and ID value. This function allows for mapping
+to be defined by column names, existing spanner ID values, or a mixture of
+both. The spanners are placed in the order of calling \code{tab_spanner()} so if a
+later call uses the same columns in its definition (or even a subset) as the
+first invocation, the second spanner will be overlaid atop the first. Options
+exist for forcibly inserting a spanner underneath other (with \code{level} as
+space permits) and with \code{replace}, which allows for full or partial spanner
+replacement.
 }
+\section{Targeting columns with the \code{columns} argument}{
+
+
+The \code{columns} argument allows us to target a subset of columns contained in
+the table. We can declare column names in \code{c()} (with bare column names or
+names in quotes) or we can use \strong{tidyselect}-style expressions. This can be
+as basic as supplying a select helper like \code{starts_with()}, or, providing a
+more complex incantation like
+
+\code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
+
+which targets numeric columns that have a maximum value greater than
+1,000,000 (excluding any \code{NA}s from consideration).
+}
+
+\section{Details on spanner placement}{
+
+
+Let's take a hypothetical table that includes the following column names in
+order from left to right: \code{year}, \code{len.pop}, \code{m.pop}, \code{len.dens}, and
+\code{m.dens}. We'd like to have some useful spanners, but don't want to have any
+over the \code{year} column (so we'll avoid using that column when defining
+spanners). Let's start by creating a schematic representation of what is
+wanted in terms of spanners:
+
+\if{html}{\out{<div class="sourceCode default">}}\preformatted{       | ------- `"Two Provinces of Ireland"` ------ <- level 2 spanner
+       | ---- `"Leinster"` ---- | --- `"Munster"` -- <- level 1 spanners
+`year` | `len.pop` | `len.dens` | `m.pop` | `m.dens` <- column names
+----------------------------------------------------
+}\if{html}{\out{</div>}}
+
+To make this arrangement happen, we need three separate calls of
+\code{tab_spanner()}:
+\itemize{
+\item \code{tab_spanner(., label = "Leinster", columns = starts_with("len"))}
+\item \code{tab_spanner(., label = "Munster", columns = starts_with("m"))}
+\item \code{tab_spanner(., label = "Two Provinces of Ireland", columns = -year)}
+}
+
+This will give us the spanners we need with the appropriate labels. The ID
+values will be derived from the labels in this case, but they can directly
+supplied via the \code{id} argument.
+
+An important thing to keep aware of is that the order of calls matters. The
+first two can be in any order but the third one \emph{must} happen last since we
+build spanners from the bottom up. Also note that the first calls will
+rearrange columns! This is by design as the \code{gather = TRUE} default will
+purposefully gather columns together so that the columns will be united under
+a single spanner. More complex definitions of spanners can be performed and
+the \emph{Examples} sections demonstrates some more advanced calls of
+\code{tab_spanner()}.
+
+As a final note, the column labels (by default deriving from the column
+names) will likely need to change and that's especially true in the above
+case. This can be done with either of \code{\link[=cols_label]{cols_label()}} or \code{\link[=cols_label_with]{cols_label_with()}}.
+}
+
 \section{Examples}{
 
 
@@ -107,16 +179,16 @@ of columns.
   ) |>
   gt() |>
   tab_spanner(
-    columns = starts_with("pop"),
-    label = "Population"
+    label = "Population",
+    columns = starts_with("pop")
   ) |>
   tab_spanner(
-    columns = starts_with("den"),
-    label = "Density"
+    label = "Density",
+    columns = starts_with("den")
   ) |>
   tab_spanner(
-    columns = ends_with("itude"),
     label = md("*Location*"),
+    columns = ends_with("itude"),
     id = "loc"
   )
 }\if{html}{\out{</div>}}
@@ -264,6 +336,9 @@ for the application of spanners.
 }
 
 \seealso{
+\code{\link[=tab_spanner_delim]{tab_spanner_delim()}} to create spanners and new column labels with
+delimited column names.
+
 Other part creation/modification functions: 
 \code{\link{tab_caption}()},
 \code{\link{tab_footnote}()},
