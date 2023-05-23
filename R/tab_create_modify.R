@@ -1764,12 +1764,29 @@ tab_stub_indent <- function(
 #' @description
 #'
 #' The `tab_footnote()` function can make it a painless process to add a
-#' footnote to a **gt** table. There are two components to a footnote: (1) a
-#' footnote mark that is attached to the targeted cell text, and (2) the
-#' footnote text (that starts with the corresponding footnote mark) that is
-#' placed in the table's footer area. Each call of `tab_footnote()` will add a
-#' different note, and one or more cells can be targeted via the location helper
-#' functions (e.g., [cells_body()], [cells_column_labels()], etc.).
+#' footnote to a **gt** table. There are commonly two components to a footnote:
+#' (1) a footnote mark that is attached to the targeted cell content, and (2)
+#' the footnote text itself that is placed in the table's footer area. Each unit
+#' of footnote text in the footer is linked to an element of text or otherwise
+#' through the footnote mark. The footnote system in **gt** presents footnotes
+#' in a way that matches the usual expectations, where:
+#'
+#' 1. footnote marks have a sequence, whether they are symbols, numbers, or
+#' letters
+#' 2. multiple footnotes can be applied to the same content (and marks are
+#' always presented in an ordered fashion)
+#' 2. footnote text in the footer is never exactly repeated, **gt** reuses
+#' footnote marks where needed throughout the table
+#' 3. footnote marks are ordered across the table in a consistent manner (left
+#' to right, top to bottom)
+#'
+#' Each call of `tab_footnote()` will either add a different footnote or reuse
+#' existing footnote text. One or more cells are targeted using the `cells_*()`
+#' helper functions (e.g., [cells_body()], [cells_column_labels()], etc.). You
+#' can choose to not attach a footnote mark not specifying a location at all. By
+#' default, **gt** will choose which side of the text to place the footnote mark
+#' (with the `placement = "auto"` option) but you can always choose the
+#' placement of the footnote mark.
 #'
 #' @inheritParams fmt_number
 #' @param footnote The text to be used in the footnote. We can optionally use
