@@ -27,10 +27,10 @@
 #' @description
 #'
 #' We can add a table header to the **gt** table with a title and even a
-#' subtitle. A table header is an optional table part that is positioned above
-#' the column labels. We have the flexibility to use Markdown formatting for the
-#' header's title and subtitle. Furthermore, if the table is intended for HTML
-#' output, we can use HTML in either of the title or subtitle.
+#' subtitle using the `tab_header()` function. A table header is an optional
+#' table part that is positioned just above the column labels table part. We
+#' have the flexibility to use Markdown or HTML formatting for the header's
+#' title and subtitle with the [md()] and [html()] helper functions.
 #'
 #' @inheritParams fmt_number
 #' @param title,subtitle Text to be used in the table title and, optionally, for
@@ -44,10 +44,11 @@
 #'
 #' @section Examples:
 #'
-#' Use the [`gtcars`] dataset to create a **gt** table. Add a header part to the
-#' table with the `tab_header()` function. We'll add a title and the optional
-#' subtitle as well. With the [md()] helper function, we can make sure the
-#' Markdown formatting is interpreted and transformed.
+#' Let's use a small portion of the [`gtcars`] dataset to create a **gt** table.
+#' A header part can be added to the table with the `tab_header()` function.
+#' We'll add a title and the optional subtitle as well. With the [md()] helper
+#' function, we can make sure the Markdown formatting is interpreted and
+#' transformed.
 #'
 #' ```r
 #' gtcars |>
@@ -145,29 +146,44 @@ tab_header <- function(
 #'
 #' @description
 #'
-#' Set a spanner column label by mapping it to columns already in the table.
-#' This label is placed above one or more column labels, spanning the width of
-#' those columns and column labels.
+#' With the `tab_spanner()` function, you can insert a spanner in the column
+#' labels part of a **gt** table. This part of the table contains, at a minimum,
+#' column labels and, optionally, an unlimited number of levels for spanners. A
+#' spanner will occupy space over any number of contiguous column labels and it
+#' will have an associated label and ID value. This function allows for mapping
+#' to be defined by column names, existing spanner ID values, or a mixture of
+#' both. The spanners are placed in the order of calling `tab_spanner()` so if a
+#' later call uses the same columns in its definition (or even a subset) as the
+#' first invocation, the second spanner will be overlaid atop the first. Options
+#' exist for forcibly inserting a spanner underneath other (with `level` as
+#' space permits) and with `replace`, which allows for full or partial spanner
+#' replacement.
 #'
 #' @inheritParams fmt_number
 #' @param label The text to use for the spanner column label.
-#' @param columns The columns to be components of the spanner heading.
+#' @param columns The columns to serve as components of the spanner. Can either
+#'   be a series of column names provided in [c()], a vector of column indices,
+#'   or a helper function focused on selections. The select helper functions
+#'   are: [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
+#'   [num_range()], and [everything()]. This argument works in tandem with the
+#'   `spanner` argument.
 #' @param spanners The spanners that should be spanned over, should they already
-#'   be defined.
+#'   be defined. One or more spanner ID values (in quotes) can be supplied here.
+#'   This argument works in tandem with the `columns` argument.
 #' @param level An explicit level to which the spanner should be placed. If not
 #'   provided, **gt** will choose the level based on the inputs provided within
 #'   `columns` and `spanners`, placing the spanner label where it will fit. The
 #'   first spanner level (right above the column labels) is `1`.
 #' @param id The ID for the spanner column label. When accessing a spanner
-#'   column label through [cells_column_spanners()] (when using [tab_style()] or
-#'   [tab_footnote()]) the `id` value is used as the reference (and not the
-#'   `label`). If an `id` is not explicitly provided here, it will be taken from
-#'   the `label` value. It is advisable to set an explicit `id` value if you
-#'   plan to access this cell in a later function call and the label text is
-#'   complicated (e.g., contains markup, is lengthy, or both). Finally, when
-#'   providing an `id` value you must ensure that it is unique across all ID
-#'   values set for column spanner labels (the function will stop if `id` isn't
-#'   unique).
+#'   through the `spanners` argument of `tab_spanner()` or
+#'   [cells_column_spanners()] (when using [tab_style()] or [tab_footnote()])
+#'   the `id` value is used as the reference (and not the `label`). If an `id`
+#'   is not explicitly provided here, it will be taken from the `label` value.
+#'   It is advisable to set an explicit `id` value if you plan to access this
+#'   cell in a later function call and the label text is complicated (e.g.,
+#'   contains markup, is lengthy, or both). Finally, when providing an `id`
+#'   value you must ensure that it is unique across all ID values set for column
+#'   spanner labels (the function will stop if `id` isn't unique).
 #' @param gather An option to move the specified `columns` such that they are
 #'   unified under the spanner column label. Ordering of the moved-into-place
 #'   columns will be preserved in all cases. By default, this is set to `TRUE`.
@@ -177,6 +193,58 @@ tab_header <- function(
 #'   occur if some replacement is attempted.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @section Targeting columns with the `columns` argument:
+#'
+#' The `columns` argument allows us to target a subset of columns contained in
+#' the table. We can declare column names in `c()` (with bare column names or
+#' names in quotes) or we can use **tidyselect**-style expressions. This can be
+#' as basic as supplying a select helper like `starts_with()`, or, providing a
+#' more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
+#'
+#' @section Details on spanner placement:
+#'
+#' Let's take a hypothetical table that includes the following column names in
+#' order from left to right: `year`, `len.pop`, `m.pop`, `len.dens`, and
+#' `m.dens`. We'd like to have some useful spanners, but don't want to have any
+#' over the `year` column (so we'll avoid using that column when defining
+#' spanners). Let's start by creating a schematic representation of what is
+#' wanted in terms of spanners:
+#'
+#' ```{verbatim}
+#'        | ------- `"Two Provinces of Ireland"` ------ <- level 2 spanner
+#'        | ---- `"Leinster"` ---- | --- `"Munster"` -- <- level 1 spanners
+#' `year` | `len.pop` | `len.dens` | `m.pop` | `m.dens` <- column names
+#' ----------------------------------------------------
+#' ```
+#' To make this arrangement happen, we need three separate calls of
+#' `tab_spanner()`:
+#'
+#' - `tab_spanner(., label = "Leinster", columns = starts_with("len"))`
+#' - `tab_spanner(., label = "Munster", columns = starts_with("m"))`
+#' - `tab_spanner(., label = "Two Provinces of Ireland", columns = -year)`
+#'
+#' This will give us the spanners we need with the appropriate labels. The ID
+#' values will be derived from the labels in this case, but they can directly
+#' supplied via the `id` argument.
+#'
+#' An important thing to keep aware of is that the order of calls matters. The
+#' first two can be in any order but the third one *must* happen last since we
+#' build spanners from the bottom up. Also note that the first calls will
+#' rearrange columns! This is by design as the `gather = TRUE` default will
+#' purposefully gather columns together so that the columns will be united under
+#' a single spanner. More complex definitions of spanners can be performed and
+#' the *Examples* sections demonstrates some more advanced calls of
+#' `tab_spanner()`.
+#'
+#' As a final note, the column labels (by default deriving from the column
+#' names) will likely need to change and that's especially true in the above
+#' case. This can be done with either of [cols_label()] or [cols_label_with()].
 #'
 #' @section Examples:
 #'
@@ -228,16 +296,16 @@ tab_header <- function(
 #'   ) |>
 #'   gt() |>
 #'   tab_spanner(
-#'     columns = starts_with("pop"),
-#'     label = "Population"
+#'     label = "Population",
+#'     columns = starts_with("pop")
 #'   ) |>
 #'   tab_spanner(
-#'     columns = starts_with("den"),
-#'     label = "Density"
+#'     label = "Density",
+#'     columns = starts_with("den")
 #'   ) |>
 #'   tab_spanner(
-#'     columns = ends_with("itude"),
 #'     label = md("*Location*"),
+#'     columns = ends_with("itude"),
 #'     id = "loc"
 #'   )
 #' ```
@@ -383,6 +451,9 @@ tab_header <- function(
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
+#'
+#' @seealso [tab_spanner_delim()] to create spanners and new column labels with
+#'   delimited column names.
 #'
 #' @import rlang
 #' @export
@@ -653,7 +724,7 @@ resolve_spanned_column_names <- function(
 #'
 #' This gives us the following arrangement of column labels and spanner labels:
 #'
-#' ```
+#' ```{verbatim}
 #' --------- `"province"` ---------- <- level 2 spanner
 #' ---`"NL_ZH"`--- | ---`"NL_NH"`--- <- level 1 spanners
 #' `"pop"`|`"gdp"` | `"pop"`|`"gdp"` <- column labels
@@ -668,7 +739,7 @@ resolve_spanned_column_names <- function(
 #' for each need to be `split = "last"` and `limit = 1`. This will give us
 #' the following arrangement:
 #'
-#' ```
+#' ```{verbatim}
 #' --`"north_holland"`-- <- level 1 spanner
 #'  `"pop"`  |  `"area"` <- column labels
 #' ---------------------
@@ -829,6 +900,9 @@ resolve_spanned_column_names <- function(
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
+#'
+#' @seealso [tab_spanner()] to manually create spanners with more control over
+#'   spanner column labels.
 #'
 #' @import rlang
 #' @export
@@ -1171,10 +1245,11 @@ str_split_across <- function(
 #'
 #' @description
 #'
-#' Create a row group with a collection of rows. This requires specification of
-#' the rows to be included, either by supplying row labels, row indices, or
-#' through use of a select helper function like [starts_with()]. To modify the
-#' order of row groups, use the [row_group_order()] function.
+#' We can create a row group from a collection of rows with the
+#' `tab_row_group()` function. This requires specification of the rows to be
+#' included, either by supplying row labels, row indices, or through use of a
+#' select helper function like [starts_with()]. To modify the order of row
+#' groups, use the [row_group_order()] function.
 #'
 #' To set a default row group label for any rows not formally placed in a row
 #' group, we can use a separate call to `tab_options(row_group.default_label =
@@ -1459,15 +1534,17 @@ tab_row_group <- function(
 #'
 #' @description
 #'
-#' Add a label to the stubhead of a **gt** table. The stubhead is the lone
-#' element that is positioned left of the column labels, and above the stub. If
-#' a stub does not exist, then there is no stubhead (so no change will be made
-#' when using this function in that case). We have the flexibility to use
-#' Markdown formatting for the stubhead label. Furthermore, if the table is
-#' intended for HTML output, we can use HTML for the stubhead label.
+#' We can add a label to the stubhead of a **gt** table with the
+#' `tab_stubhead()` function. The stubhead is the lone part of the table that is
+#' positioned left of the column labels, and above the stub. If a stub does not
+#' exist, then there is no stubhead (so no visible change will be made when
+#' using this function in that case). We have the flexibility to use Markdown
+#' formatting for the stubhead label via the [md()] helper function.
+#' Furthermore, if the table is intended for HTML output, we can use HTML inside
+#' of [html()] for the stubhead label.
 #'
 #' @inheritParams fmt_number
-#' @param label The text to be used as the stubhead label We can optionally use
+#' @param label The text to be used as the stubhead label. We can optionally use
 #'   the [md()] and [html()] functions to style the text as Markdown or to
 #'   retain HTML elements in the text.
 #'
@@ -1491,6 +1568,22 @@ tab_row_group <- function(
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_tab_stubhead_1.png")`
+#' }}
+#'
+#' The stuhead can contain all sorts of interesting content. How about an icon
+#' for a car? We can make this happen with help from the **fontawesome**
+#' package.
+#'
+#' ```r
+#' gtcars |>
+#'   dplyr::select(model, year, hp, trq) |>
+#'   dplyr::slice(1:5) |>
+#'   gt(rowname_col = "model") |>
+#'   tab_stubhead(label = fontawesome::fa("car"))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_stubhead_2.png")`
 #' }}
 #'
 #' @family part creation/modification functions
@@ -1518,8 +1611,8 @@ tab_stubhead <- function(
 #'
 #' Indentation of row labels is an effective way for establishing structure in a
 #' table stub. The `tab_stub_indent()` function allows for fine control over
-#' row label indentation through either explicit definition of an indentation
-#' level, or, by way of an indentation directive using keywords.
+#' row label indentation in the stub. We can use an explicit definition of an
+#' indentation level, or, employ an indentation directive using keywords.
 #'
 #' @inheritParams fmt_number
 #' @param rows The rows to consider for the indentation change. Can either be a

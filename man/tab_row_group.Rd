@@ -36,10 +36,11 @@ function will stop if \code{id} isn't unique).}
 An object of class \code{gt_tbl}.
 }
 \description{
-Create a row group with a collection of rows. This requires specification of
-the rows to be included, either by supplying row labels, row indices, or
-through use of a select helper function like \code{\link[=starts_with]{starts_with()}}. To modify the
-order of row groups, use the \code{\link[=row_group_order]{row_group_order()}} function.
+We can create a row group from a collection of rows with the
+\code{tab_row_group()} function. This requires specification of the rows to be
+included, either by supplying row labels, row indices, or through use of a
+select helper function like \code{\link[=starts_with]{starts_with()}}. To modify the order of row
+groups, use the \code{\link[=row_group_order]{row_group_order()}} function.
 
 To set a default row group label for any rows not formally placed in a row
 group, we can use a separate call to \verb{tab_options(row_group.default_label = <label>)}. If this is not done and there are rows that haven't been placed

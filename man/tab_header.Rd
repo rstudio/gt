@@ -22,18 +22,19 @@ An object of class \code{gt_tbl}.
 }
 \description{
 We can add a table header to the \strong{gt} table with a title and even a
-subtitle. A table header is an optional table part that is positioned above
-the column labels. We have the flexibility to use Markdown formatting for the
-header's title and subtitle. Furthermore, if the table is intended for HTML
-output, we can use HTML in either of the title or subtitle.
+subtitle using the \code{tab_header()} function. A table header is an optional
+table part that is positioned just above the column labels table part. We
+have the flexibility to use Markdown or HTML formatting for the header's
+title and subtitle with the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} helper functions.
 }
 \section{Examples}{
 
 
-Use the \code{\link{gtcars}} dataset to create a \strong{gt} table. Add a header part to the
-table with the \code{tab_header()} function. We'll add a title and the optional
-subtitle as well. With the \code{\link[=md]{md()}} helper function, we can make sure the
-Markdown formatting is interpreted and transformed.
+Let's use a small portion of the \code{\link{gtcars}} dataset to create a \strong{gt} table.
+A header part can be added to the table with the \code{tab_header()} function.
+We'll add a title and the optional subtitle as well. With the \code{\link[=md]{md()}} helper
+function, we can make sure the Markdown formatting is interpreted and
+transformed.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
   dplyr::select(mfr, model, msrp) |>
