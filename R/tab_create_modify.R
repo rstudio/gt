@@ -239,7 +239,7 @@ tab_header <- function(
 #' rearrange columns! This is by design as the `gather = TRUE` default will
 #' purposefully gather columns together so that the columns will be united under
 #' a single spanner. More complex definitions of spanners can be performed and
-#' the *Examples* sections demonstrates some more advanced calls of
+#' the *Examples* section demonstrates some of the more advanced calls of
 #' `tab_spanner()`.
 #'
 #' As a final note, the column labels (by default deriving from the column
@@ -325,7 +325,7 @@ tab_header <- function(
 #' It's possible to stack multiple spanners atop each other with consecutive
 #' calls of `tab_spanner()`. It's a bit like playing Tetris: putting a spanner
 #' down anywhere there is another spanner (i.e., there are one or more shared
-#' columns) means that second spanner will reside a level above prior. Let's
+#' columns) means that second spanner will reside a level above the prior. Let's
 #' look at a few examples at how this works, and we'll also explore a few
 #' lesser-known placement tricks. Let's use a cut down version of [`exibble`]
 #' for this, set up a few level-one spanners, and then place a level two spanner
