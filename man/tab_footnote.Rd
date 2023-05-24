@@ -75,12 +75,12 @@ exposed in their own \verb{opt_*()} functions.
 \subsection{Choosing the footnote marks}{
 
 We can modify the set of footnote marks with
-\code{tab_options(..., footnotes.marks)} or \link{opt_footnote_marks(..., )}. What that argument needs is a vector
-that will represent the series of marks. The series of footnote marks is
-recycled when its usage goes beyond the length of the set. At each cycle, the
-marks are simply doubled, tripled, and so on (e.g., \code{*} -> \verb{**} -> \verb{***}).
-The option exists for providing keywords for certain types of footnote marks.
-The keywords are:
+\code{tab_options(..., footnotes.marks)} or \code{opt_footnote_marks(..., )}. What that
+argument needs is a vector that will represent the series of marks. The
+series of footnote marks is recycled when its usage goes beyond the length of
+the set. At each cycle, the marks are simply doubled, tripled, and so on
+(e.g., \code{*} -> \verb{**} -> \verb{***}). The option exists for providing keywords for
+certain types of footnote marks. The keywords are:
 \itemize{
 \item \code{"numbers"}: numeric marks, they begin from \code{1} and these marks are not
 subject to recycling behavior (this is the default)
@@ -317,7 +317,7 @@ whatsoever. This is done by not providing anything to \code{locations}. These
 }}
 
 Aside from changing the footnote marks to be \code{"LETTERS"}, we've also changed
-the way the marks are formatted. In \code{\link[=opt_foonote_spec]{opt_foonote_spec()}} the \code{spec_ref}
+the way the marks are formatted. In \code{\link[=opt_footnote_spec]{opt_footnote_spec()}} the \code{spec_ref}
 option, governing the footnote marks across the table, describes marks that
 are italicized and set between square brackets (\code{"i[x]"}). The \code{spec_ftr}
 argument is for the footer representation of the footnote marks and as
