@@ -102,11 +102,11 @@ sequence of marks. The valid keywords are: <code>"numbers"</code> (for numeric m
     
 
 
-<p>We can supply a vector of that will represent the series of marks.
-The series of footnote marks is recycled when its usage goes beyond the
-length of the set. At each cycle, the marks are simply doubled, tripled, and
-so on (e.g., <code>*</code> -&gt; <code>**</code> -&gt; <code>***</code>). The option exists for providing keywords
-for certain types of footnote marks. The keywords are:</p><ul><li><p><code>"numbers"</code>: numeric marks, they begin from 1 and these marks are not
+<p>We can supply a vector that will represent the series of marks. The series of
+footnote marks is recycled when its usage goes beyond the length of the set.
+At each cycle, the marks are simply doubled, tripled, and so on (e.g., <code>*</code> -&gt;
+<code>**</code> -&gt; <code>***</code>). The option exists for providing keywords for certain types of
+footnote marks. The keywords are:</p><ul><li><p><code>"numbers"</code>: numeric marks, they begin from 1 and these marks are not
 subject to recycling behavior</p></li>
 <li><p><code>"letters"</code>: minuscule alphabetic marks, internally uses the <code>letters</code>
 vector which contains 26 lowercase letters of the Roman alphabet</p></li>
@@ -115,7 +115,10 @@ which has 26 uppercase letters of the Roman alphabet</p></li>
 <li><p><code>"standard"</code>: symbolic marks, four symbols in total</p></li>
 <li><p><code>"extended"</code>: symbolic marks, extends the standard set by adding two
 more symbols, making six</p></li>
-</ul></div>
+</ul><p>The symbolic marks are the: (1) Asterisk, (2) Dagger, (3) Double Dagger,
+(4) Section Sign, (5) Double Vertical Line, and (6) Paragraph Sign; the
+<code>"standard"</code> set has the first four, <code>"extended"</code> contains all.</p>
+    </div>
     <div class="section level2">
     <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     
