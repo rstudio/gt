@@ -28,11 +28,11 @@ serves as a shortcut for using \code{tab_options(footnotes.marks = {marks})}
 \section{Specification of footnote marks}{
 
 
-We can supply a vector of that will represent the series of marks.
-The series of footnote marks is recycled when its usage goes beyond the
-length of the set. At each cycle, the marks are simply doubled, tripled, and
-so on (e.g., \code{*} -> \verb{**} -> \verb{***}). The option exists for providing keywords
-for certain types of footnote marks. The keywords are:
+We can supply a vector that will represent the series of marks. The series of
+footnote marks is recycled when its usage goes beyond the length of the set.
+At each cycle, the marks are simply doubled, tripled, and so on (e.g., \code{*} ->
+\verb{**} -> \verb{***}). The option exists for providing keywords for certain types of
+footnote marks. The keywords are:
 \itemize{
 \item \code{"numbers"}: numeric marks, they begin from 1 and these marks are not
 subject to recycling behavior
@@ -44,6 +44,10 @@ which has 26 uppercase letters of the Roman alphabet
 \item \code{"extended"}: symbolic marks, extends the standard set by adding two
 more symbols, making six
 }
+
+The symbolic marks are the: (1) Asterisk, (2) Dagger, (3) Double Dagger,
+(4) Section Sign, (5) Double Vertical Line, and (6) Paragraph Sign; the
+\code{"standard"} set has the first four, \code{"extended"} contains all.
 }
 
 \section{Examples}{
