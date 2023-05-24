@@ -1820,12 +1820,12 @@ tab_stub_indent <- function(
 #' ## Choosing the footnote marks
 #'
 #' We can modify the set of footnote marks with
-#' `tab_options(..., footnotes.marks)` or [opt_footnote_marks(..., )]. What that argument needs is a vector
-#' that will represent the series of marks. The series of footnote marks is
-#' recycled when its usage goes beyond the length of the set. At each cycle, the
-#' marks are simply doubled, tripled, and so on (e.g., `*` -> `**` -> `***`).
-#' The option exists for providing keywords for certain types of footnote marks.
-#' The keywords are:
+#' `tab_options(..., footnotes.marks)` or `opt_footnote_marks(..., )`. What that
+#' argument needs is a vector that will represent the series of marks. The
+#' series of footnote marks is recycled when its usage goes beyond the length of
+#' the set. At each cycle, the marks are simply doubled, tripled, and so on
+#' (e.g., `*` -> `**` -> `***`). The option exists for providing keywords for
+#' certain types of footnote marks. The keywords are:
 #'
 #' - `"numbers"`: numeric marks, they begin from `1` and these marks are not
 #' subject to recycling behavior (this is the default)
@@ -2059,7 +2059,7 @@ tab_stub_indent <- function(
 #' }}
 #'
 #' Aside from changing the footnote marks to be `"LETTERS"`, we've also changed
-#' the way the marks are formatted. In [opt_foonote_spec()] the `spec_ref`
+#' the way the marks are formatted. In [opt_footnote_spec()] the `spec_ref`
 #' option, governing the footnote marks across the table, describes marks that
 #' are italicized and set between square brackets (`"i[x]"`). The `spec_ftr`
 #' argument is for the footer representation of the footnote marks and as
