@@ -62,13 +62,7 @@ print.gt_group <- function(x, ..., view = interactive()) {
   for (i in seq_tbls) {
 
     html_tbl_i <- as.tags.gt_tbl(grp_pull(x, which = i), ...)
-
-    html_tbls <-
-      htmltools::tagList(
-        html_tbls,
-        html_tbl_i,
-        if (i != max(seq_tbls)) htmltools::HTML("<br />")
-      )
+    html_tbls <- htmltools::tagList(html_tbls, html_tbl_i)
   }
 
   # Use `print()` to print to the console
@@ -157,10 +151,17 @@ knit_print.gt_group <- function(x, ...) {
 
   } else {
 
-    # TODO: make this work for HTML
+    html_tbls <- htmltools::tagList()
 
-    # Default to HTML output
-    x <- as.tags.gt_tbl(x, ...)
+    seq_tbls <- seq_len(nrow(x$gt_tbls))
+
+    for (i in seq_tbls) {
+
+      html_tbl_i <- as.tags.gt_tbl(grp_pull(x, which = i), ...)
+      html_tbls <- htmltools::tagList(html_tbls, html_tbl_i)
+    }
+
+    return(knitr::knit_print(html_tbls, ...))
   }
 
   # Use `knit_print()` to print in a code chunk
