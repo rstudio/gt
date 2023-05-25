@@ -1,13 +1,37 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2023 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 # Function to get the package docs RdDB for any package
-get_package_docs <- function(pkg) {
-  help_dir <- system.file("help", package = pkg)
-  db_path <- file.path(help_dir, pkg)
+get_package_docs <- function() {
+  help_dir <- system.file("help", package = "gt")
+  db_path <- file.path(help_dir, "gt")
   tools:::fetchRdDB(db_path)
 }
 
-get_topic_names <- function(pkg) {
+get_topic_names <- function() {
 
-  topic_names <- names(get_package_docs(pkg = "gt"))
+  topic_names <- names(get_package_docs())
 
   # Exclude any topics that have `.` or `-` characters within their names,
   # and, exclude the 'pipe' and 'reexports' topic
@@ -19,9 +43,9 @@ get_topic_names <- function(pkg) {
   ]
 }
 
-get_example_text <- function(pkg, topic) {
+get_example_text <- function(topic) {
 
-  topic_names <- names(get_package_docs(pkg = "gt"))
+  topic_names <- names(get_package_docs())
 
   examples_out <- c()
 
@@ -32,7 +56,7 @@ get_example_text <- function(pkg, topic) {
     }
 
     topic_idx <- which(topic_names == topic[i])
-    topic_docs <- get_package_docs(pkg = "gt")[[topic_idx]]
+    topic_docs <- get_package_docs()[[topic_idx]]
     help_file_lines <- as.character(attr(topic_docs, which = "srcref"))
 
     if (any(grepl("Function ID", help_file_lines))) {
@@ -96,7 +120,7 @@ get_example_text <- function(pkg, topic) {
 
 generate_gt_examples_tbl <- function() {
 
-  topic_names <- get_topic_names(pkg = "gt")
+  topic_names <- get_topic_names()
 
   topic_examples <- c()
 
@@ -105,7 +129,7 @@ generate_gt_examples_tbl <- function() {
     topic_examples <-
       c(
         topic_examples,
-        get_example_text(pkg = "gt", topic = topic_names[i])
+        get_example_text(topic = topic_names[i])
       )
   }
 
@@ -154,7 +178,7 @@ write_gt_examples_qmd_files <- function(
 
     topics <-
       base::setdiff(
-        get_topic_names(pkg = "gt"),
+        get_topic_names(),
         c(
           "countrypops",
           "sza",
@@ -195,7 +219,7 @@ write_gt_examples_qmd_files <- function(
         "",
         paste0("## The `", topic, "()` function"),
         "",
-        get_example_text(pkg = "gt", topic = topic)
+        get_example_text(topic = topic)
       ),
       con = paste0(output_dir, "/gt-", topic, ".qmd")
     )
