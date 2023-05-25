@@ -117,6 +117,7 @@ Collate:
     'render_as_html.R'
     'render_as_i_html.R'
     'resolver.R'
+    'rows_add.R'
     'shiny.R'
     'substitution.R'
     'summary_rows.R'

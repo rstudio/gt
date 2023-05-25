@@ -60,6 +60,7 @@ new ordering in \code{groups}.
 \seealso{
 Other row addition/modification functions: 
 \code{\link{grand_summary_rows}()},
+\code{\link{rows_add}()},
 \code{\link{summary_rows}()}
 }
 \concept{row addition/modification functions}

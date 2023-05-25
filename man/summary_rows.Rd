@@ -341,6 +341,7 @@ summary rows with \code{\link[=tab_style]{tab_style()}}.
 \seealso{
 Other row addition/modification functions: 
 \code{\link{grand_summary_rows}()},
-\code{\link{row_group_order}()}
+\code{\link{row_group_order}()},
+\code{\link{rows_add}()}
 }
 \concept{row addition/modification functions}
