@@ -24,9 +24,10 @@ body. This function serves as a convenient shortcut for
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table with a number of table parts added.
-Next, we add row striping to every second row with the \code{opt_row_striping()}
-function.
+Use the \code{\link{exibble}} dataset to create a \strong{gt} table with a number of table
+parts added (using functions like \code{\link[=summary_rows]{summary_rows()}}, \code{\link[=grand_summary_rows]{grand_summary_rows()}},
+and more). Following that, we'll add row striping to every second row with
+the \code{opt_row_striping()} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   gt(rowname_col = "row", groupname_col = "group") |>

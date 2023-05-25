@@ -92,8 +92,10 @@
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. The `NA` values in different
-#' columns will be given replacement text with two calls of `sub_missing()`.
+#' Use select columns from the [`exibble`] dataset to create a **gt** table. The
+#' `NA` values in different columns (here, we are using column indices in
+#' `columns`) will be given two variations of replacement text with two separate
+#' calls of `sub_missing()`.
 #'
 #' ```r
 #' exibble |>

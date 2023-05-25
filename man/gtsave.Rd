@@ -68,8 +68,9 @@ package needs to be installed before attempting to save any table as a
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. Add a stubhead label with the
-\code{\link[=tab_stubhead]{tab_stubhead()}} function to describe what is in the stub.
+Using a small subset of the \code{\link{gtcars}} dataset, we can create a \strong{gt} table
+with row labels. We'll add a stubhead label with the \code{\link[=tab_stubhead]{tab_stubhead()}}
+function to describe what is in the stub.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
   gtcars |>

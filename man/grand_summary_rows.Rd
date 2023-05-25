@@ -218,9 +218,9 @@ rows were added via \code{grand_summary_rows()} or \code{\link[=summary_rows]{su
 \section{Examples}{
 
 
-Use \code{\link{sp500}} to create a \strong{gt} table with row groups. Create the grand
-summary rows \code{min}, \code{max}, and \code{avg} for the table with the
-\code{grand_summary_rows()} function.
+Use a modified version of the \code{\link{sp500}} dataset to create a \strong{gt} table with
+row groups and row labels. Create the grand summary rows \code{min}, \code{max}, and
+\code{avg} for the table with the \code{grand_summary_rows()} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
   dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") |>
@@ -256,7 +256,7 @@ aggregation function (expressed as \code{"sum"}, which \strong{gt} recognizes as
 row with \code{\link[=tab_style]{tab_style()}}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
-  dplyr::filter(country_code_2 \%in\% c("BE", "NU", "LU")) |>
+  dplyr::filter(country_code_2 \%in\% c("BE", "NL", "LU")) |>
   dplyr::filter(year \%\% 10 == 0) |>
   dplyr::select(country_name, year, population) |>
   tidyr::pivot_wider(names_from = year, values_from = population) |>

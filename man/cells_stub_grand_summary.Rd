@@ -79,9 +79,9 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \section{Examples}{
 
 
-Use \code{\link{countrypops}} to create a \strong{gt} table. Add some styling to a grand
-summary stub cell with with the \code{\link[=tab_style]{tab_style()}} and
-\code{cells_stub_grand_summary()} functions.
+Use a portion of the \code{\link{countrypops}} dataset to create a \strong{gt} table. Add
+some styling to a grand summary stub cell with the \code{\link[=tab_style]{tab_style()}} function and
+using \code{cells_stub_grand_summary()} in the \code{locations} argument.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::filter(country_name == "Spain", year < 1970) |>

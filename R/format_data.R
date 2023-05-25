@@ -193,9 +193,10 @@
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. Format the `num` column as numeric
-#' with three decimal places and omit the use of digit separators (with
-#' `use_seps = FALSE`).
+#' Use the [`exibble`] dataset to create a **gt** table. With the `fmt_number()`
+#' function, we'll format the `num` column to have three decimal places (with
+#' `decimals = 3`) and omit the use of digit separators (with `use_seps =
+#' FALSE`).
 #'
 #' ```r
 #' exibble |>
@@ -211,8 +212,10 @@
 #' `r man_get_image_tag(file = "man_fmt_number_1.png")`
 #' }}
 #'
-#' Use [`countrypops`] to create a **gt** table. Format all columns to use
-#' large-number suffixing with the `suffixing = TRUE` option.
+#' Use a modified version of the [`countrypops`] dataset to create a **gt**
+#' table with row labels. Format all columns to use large-number suffixing
+#' (e.g., where `"10,000,000"` becomes `"10M"`) with the `suffixing = TRUE`
+#' option.
 #'
 #' ```r
 #' countrypops |>
@@ -502,17 +505,16 @@ fmt_number <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. format the `num` column as integer
-#' values having no digit separators (with the `use_seps = FALSE` option).
+#' For this example, we'll use two columns from the [`exibble`] dataset and
+#' create a simple **gt** table. With the `fmt_integer()` function, we'll format
+#' the `num` column as integer values having no digit separators (with the
+#' `use_seps = FALSE` option).
 #'
 #' ```r
 #' exibble |>
 #'   dplyr::select(num, char) |>
 #'   gt() |>
-#'   fmt_integer(
-#'     columns = num,
-#'     use_seps = FALSE
-#'   )
+#'   fmt_integer(use_seps = FALSE)
 #' ```
 #'
 #' \if{html}{\out{
@@ -674,9 +676,11 @@ fmt_integer <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. Format the `num` column as
-#' partially numeric  and partially in scientific notation (using the
-#' `num > 500` and `num <= 500` expressions in the respective `rows` arguments).
+#' Use the [`exibble`] dataset to create a **gt** table. Format the `num` column
+#' as partially numeric and partially in scientific notation. This is done with
+#' two separate calls of [fmt_number()] and `fmt_scientific()`. We'll use the
+#' expressions `num > 500` and `num <= 500` in the functions' respective `rows`
+#' arguments.
 #'
 #' ```r
 #' exibble |>
@@ -1041,8 +1045,9 @@ fmt_scientific <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. Format the `num` column in
-#' engineering notation.
+#' Use the [`exibble`] dataset to create a **gt** table. Format the `num` column
+#' to display values in engineering notation using the `fmt_engineering()`
+#' function.
 #'
 #' ```r
 #' exibble |>
@@ -1541,8 +1546,9 @@ fmt_symbol <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`pizzaplace`] to create a **gt** table. Format the `frac_of_quota`
-#' column to display values as percentages.
+#' Use a summarized version of the [`pizzaplace`] dataset to create a **gt**
+#' table. With the `fmt_percent()` function, we can format the `frac_of_quota`
+#' column to display values as percentages (to one decimal place).
 #'
 #' ```r
 #' pizzaplace |>
@@ -2035,8 +2041,13 @@ fmt_partsper <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`pizzaplace`] to create a **gt** table. Format the `f_sold` and
-#' `f_income` columns to display fractions.
+#' Using a summarized version of the [`pizzaplace`] dataset, let's create a
+#' **gt** table. With the `fmt_fraction()` function we can format the `f_sold`
+#' and `f_income` columns to display fractions. As for how the fractions are
+#' represented, we are electing to use `accuracy = 10`. This gives all fractions
+#' as tenths. We won't simplify the fractions (by using `simplify = FALSE`) and
+#' this means that a fraction like `5/10` won't become `1/2`. With `layout =
+#' "diagonal"`, we get a diagonal display of all fractions.
 #'
 #' ```r
 #' pizzaplace |>
@@ -2474,12 +2485,12 @@ round_gt <- function(x, digits = 0) {
 #' @description
 #'
 #' With numeric values in a **gt** table, we can perform currency-based
-#' formatting. This function supports both automatic formatting with a
-#' three-letter or numeric currency code. We can also specify a custom currency
-#' that is formatted according to the output context with the [currency()]
-#' helper function. Numeric formatting facilitated through the use of a locale
-#' ID. We have fine control over the conversion from numeric values to currency
-#' values, where we could take advantage of the following options:
+#' formatting with the `fmt_currency()` function. The function supports both
+#' automatic formatting with either a three-letter or a numeric currency code.
+#' We can also specify a custom currency that is formatted according to one or
+#' more output contexts with the [currency()] helper function. We have fine
+#' control over the conversion from numeric values to currency values, where we
+#' could take advantage of the following options:
 #'
 #' - the currency: providing a currency code or common currency name will
 #' procure the correct currency symbol and number of currency subunits; we could
@@ -2488,7 +2499,7 @@ round_gt <- function(x, digits = 0) {
 #' or after the values
 #' - decimals/subunits: choice of the number of decimal places, and a
 #' choice of the decimal symbol, and an option on whether to include or exclude
-#' the currency subunits (decimal portion)
+#' the currency subunits (the decimal portion)
 #' - negative values: choice of a negative sign or parentheses for values
 #' less than zero
 #' - digit grouping separators: options to enable/disable digit separators
@@ -2498,8 +2509,8 @@ round_gt <- function(x, digits = 0) {
 #' be autoscaled and decorated with the appropriate suffixes
 #' - pattern: option to use a text pattern for decoration of the formatted
 #' currency values
-#' - locale-based formatting: providing a locale ID will result in
-#' currency formatting specific to the chosen locale
+#' - locale-based formatting: providing a locale ID will result in currency
+#' formatting specific to the chosen locale
 #'
 #' We can use the [info_currencies()] function for a useful reference on all of
 #' the possible inputs to the `currency` argument.
@@ -2596,8 +2607,9 @@ round_gt <- function(x, digits = 0) {
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. Format the `currency` column to
-#' have currency values in euros (`"EUR"`).
+#' Use the [`exibble`] dataset to create a **gt** table. Using the
+#' `fmt_currency()` function, we'll format values in the `currency` column to
+#' display as currency values in euros (`"EUR"`).
 #'
 #' ```r
 #' exibble |>
@@ -2612,8 +2624,9 @@ round_gt <- function(x, digits = 0) {
 #' `r man_get_image_tag(file = "man_fmt_currency_1.png")`
 #' }}
 #'
-#' Use [`exibble`] to create a **gt** table. Keep only the `num` and `currency`,
-#' columns, then, format those columns using the `"CNY"` and `"GBP"` currencies.
+#' Use the [`exibble`] to create a **gt** table. Keep only the `num` and
+#' `currency`, columns, then, format those columns using the `"CNY"` and `"GBP"`
+#' currencies.
 #'
 #' ```r
 #' exibble |>
@@ -2971,12 +2984,12 @@ fmt_roman <- function(
 #'
 #' @section Examples:
 #'
-#' Use the [`towny`] dataset to create a **gt** table. After some summarizing
-#' and filtering, the `fmt_index()` function is used to transform incremental
-#' integer values into capitalized letters (in the `ranking` column). That
-#' formatted column of `"A"` to `"E"` values is merged with the `census_div`
-#' column to create an indexed listing of census subdivisions, here ordered by
-#' increasing total municipal population.
+#' Using a summarized version of the [`towny`] dataset, let's create a **gt**
+#' table. Here, the `fmt_index()` function is used to transform incremental
+#' integer values into capitalized letters (in the `ranking` column). With
+#' [cols_merge()] that formatted column of `"A"` to `"E"` values is merged with
+#' the `census_div` column to create an indexed listing of census subdivisions,
+#' here ordered by increasing total municipal population.
 #'
 #' ```r
 #' towny |>
@@ -3172,11 +3185,13 @@ get_letters_from_div <- function(x, set) {
 #' @description
 #'
 #' With numeric values in a **gt** table we can transform those to numbers that
-#' are spelled out. Any values from `0` to `100` can be spelled out according to
-#' the specified locale. For example, the value `23` will be rendered as
-#' `"twenty-three"` if the locale is an English-language one (or, not provided
-#' at all); should a Swedish locale be provided (e.g., `"sv"`), the output will
-#' instead be `"tjugotre"`.
+#' are spelled out with the `fmt_spelled_num()` function. Any values from `0` to
+#' `100` can be spelled out so, for example, the value `23` will be formatted as
+#' `"twenty-three"`. Providing a locale ID will result in the number spelled out
+#' in the locale's language rules. For example, should a Swedish locale (`"sv"`)
+#' be provided, the input value `23` will yield `"tjugotre"`. In addition to
+#' this, we can optionally use the `pattern` argument for decoration of the
+#' formatted values.
 #'
 #' @inheritParams fmt_number
 #'
@@ -3229,10 +3244,36 @@ get_letters_from_div <- function(x, set) {
 #' formatting on values in the column or another column, or, you'd like to use a
 #' more complex predicate expression.
 #'
+#' @section Supported locales:
+#'
+#' The following 80 locales are supported in the `locale` argument of
+#' `fmt_spelled_num()`: `"af"` (Afrikaans), `"ak"` (Akan), `"am"` (Amharic),
+#' `"ar"` (Arabic), `"az"` (Azerbaijani), `"be"` (Belarusian), `"bg"`
+#' (Bulgarian), `"bs"` (Bosnian), `"ca"` (Catalan), `"ccp"` (Chakma), `"chr"`
+#' (Cherokee), `"cs"` (Czech), `"cy"` (Welsh), `"da"` (Danish), `"de"` (German),
+#' `"de-CH"` (German (Switzerland)), `"ee"` (Ewe), `"el"` (Greek), `"en"`
+#' (English), `"eo"` (Esperanto), `"es"` (Spanish), `"et"` (Estonian), `"fa"`
+#' (Persian), `"ff"` (Fulah), `"fi"` (Finnish), `"fil"` (Filipino), `"fo"`
+#' (Faroese), `"fr"` (French), `"fr-BE"` (French (Belgium)), `"fr-CH"` (French
+#' (Switzerland)), `"ga"` (Irish), `"he"` (Hebrew), `"hi"` (Hindi), `"hr"`
+#' (Croatian), `"hu"` (Hungarian), `"hy"` (Armenian), `"id"` (Indonesian),
+#' `"is"` (Icelandic), `"it"` (Italian), `"ja"` (Japanese), `"ka"` (Georgian),
+#' `"kk"` (Kazakh), `"kl"` (Kalaallisut), `"km"` (Khmer), `"ko"` (Korean),
+#' `"ky"` (Kyrgyz), `"lb"` (Luxembourgish), `"lo"` (Lao), `"lrc"` (Northern
+#' Luri), `"lt"` (Lithuanian), `"lv"` (Latvian), `"mk"` (Macedonian), `"ms"`
+#' (Malay), `"mt"` (Maltese), `"my"` (Burmese), `"ne"` (Nepali), `"nl"` (Dutch),
+#' `"nn"` (Norwegian Nynorsk), `"no"` (Norwegian), `"pl"` (Polish), `"pt"`
+#' (Portuguese), `"qu"` (Quechua), `"ro"` (Romanian), `"ru"` (Russian), `"se"`
+#' (Northern Sami), `"sk"` (Slovak), `"sl"` (Slovenian), `"sq"` (Albanian),
+#' `"sr"` (Serbian), `"sr-Latn"` (Serbian (Latin)), `"su"` (Sundanese), `"sv"`
+#' (Swedish), `"sw"` (Swahili), `"ta"` (Tamil), `"th"` (Thai), `"tr"` (Turkish),
+#' `"uk"` (Ukrainian), `"vi"` (Vietnamese), `"yue"` (Cantonese), and `"zh"`
+#' (Chinese).
+#'
 #' @section Examples:
 #'
-#' Use the [`gtcars`] dataset to create a **gt** table. After some summarizing
-#' and arranging of rows, the `fmt_spelled_num()` function is used to transform
+#' Let's use a summarized version of the [`gtcars`] dataset to create a
+#' **gt** table. The `fmt_spelled_num()` function is used to transform
 #' integer values into spelled-out numbering (in the `n` column). That formatted
 #' column of numbers-as-words is given cell background colors via [data_color()]
 #' (the underlying numerical values are always available).
@@ -3261,6 +3302,41 @@ get_letters_from_div <- function(x, set) {
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_fmt_spelled_num_1.png")`
+#' }}
+#'
+#' With a considerable amount of **dplyr** and **tidyr** work done to the
+#' [`pizzaplace`] dataset, we can create a new **gt** table. The
+#' `fmt_spelled_num()` function will be used here to transform the integer
+#' values in the `rank` column. We'll do so with a special `pattern` that puts
+#' the word 'Number' in front of every spelled-out number.
+#'
+#' ```r
+#' pizzaplace |>
+#'   dplyr::mutate(month = lubridate::month(date, label = TRUE)) |>
+#'   dplyr::filter(month %in% month.abb[1:6]) |>
+#'   dplyr::group_by(name, month) |>
+#'   dplyr::summarize(sum = sum(price), .groups = "drop") |>
+#'   dplyr::arrange(month, desc(sum)) |>
+#'   dplyr::group_by(month) |>
+#'   dplyr::slice_head(n = 5) |>
+#'   dplyr::mutate(rank = dplyr::row_number()) |>
+#'   dplyr::ungroup() |>
+#'   dplyr::select(-sum) |>
+#'   tidyr::pivot_wider(names_from = month, values_from = c(name)) |>
+#'   gt() |>
+#'   fmt_spelled_num(columns = rank, pattern = "Number {x}") |>
+#'   opt_all_caps() |>
+#'   cols_align(columns = -rank, align = "center") |>
+#'   cols_width(
+#'     rank ~ px(120),
+#'     everything() ~ px(100)
+#'   ) |>
+#'   opt_table_font(stack = "rounded-sans") |>
+#'   tab_options(table.font.size = px(14))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_spelled_num_2.png")`
 #' }}
 #'
 #' @family data formatting functions
@@ -3465,31 +3541,29 @@ fmt_spelled_num <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. Format the `num` column to have
-#' byte sizes in the decimal standard.
+#' Use a single column from the [`exibble`] dataset and create a simple **gt**
+#' table. We'll format the `num` column to display as byte sizes in the decimal
+#' standard through use of the `fmt_bytes()` function.
 #'
 #' ```r
 #' exibble |>
 #'   dplyr::select(num) |>
 #'   gt() |>
-#'   fmt_bytes(columns = num)
+#'   fmt_bytes()
 #' ```
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_fmt_bytes_1.png")`
 #' }}
 #'
-#' Create a similar table with the `fmt_bytes()` function, this time showing
-#' byte sizes as binary values.
+#' Let's create an analogous table again by using the `fmt_bytes()` function,
+#' this time showing byte sizes as binary values by using `standard = "binary"`.
 #'
 #' ```r
 #' exibble |>
 #'   dplyr::select(num) |>
 #'   gt() |>
-#'   fmt_bytes(
-#'     columns = num,
-#'     standard = "binary"
-#'   )
+#'   fmt_bytes(standard = "binary")
 #' ```
 #'
 #' \if{html}{\out{
@@ -3770,8 +3844,9 @@ fmt_bytes <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. Keep only the `date` and `time`
-#' columns. Format the `date` column to have dates formatted with the
+#' Let's use the [`exibble`] dataset to create a simple, two-column **gt** table
+#' (keeping only the `date` and `time` columns). With the `fmt_date()` function,
+#' we'll format the `date` column to display dates formatted with the
 #' `"month_day_year"` date style.
 #'
 #' ```r
@@ -3788,10 +3863,13 @@ fmt_bytes <- function(
 #' `r man_get_image_tag(file = "man_fmt_date_1.png")`
 #' }}
 #'
-#' Use [`exibble`] to create a **gt** table. Keep only the `date` and `time`
-#' columns. Format the `date` column to have mixed date formats (dates after
-#' April will be different than the others because of the expressions used
-#' in the `rows` argument).
+#' Again using the [`exibble`] dataset, let's format the `date` column to have
+#' mixed date formats, where dates after April 1st will be different than the
+#' others because of the expressions used in the `rows` argument. This will
+#' involve two calls of `fmt_date()` with different statements provided for
+#' `rows`. In the first call (dates after the 1st of April) the date style
+#' `"m_day_year"` is used; for the second call, `"day_m_year"` is the named
+#' date style supplied to `date_style`.
 #'
 #' ```r
 #' exibble |>
@@ -3813,17 +3891,16 @@ fmt_bytes <- function(
 #' `r man_get_image_tag(file = "man_fmt_date_2.png")`
 #' }}
 #'
-#' Use [`exibble`] to create another **gt** table, this time only with the
-#' `date` column. Format the `date` column to use the `"yMMMEd"` date style
-#' (which is one of the 'flexible' styles). Also, set the locale to `"nl"` to
-#' get the dates in Dutch.
+#' Use the [`exibble`] dataset to create a single-column **gt** table (with only
+#' the `date` column). Format the date values using the `"yMMMEd"` date style
+#' (which is one of the 'flexible' styles). Also, we'll set the locale to `"nl"`
+#' to get the dates in Dutch.
 #'
 #' ```r
 #' exibble |>
 #'   dplyr::select(date) |>
 #'   gt() |>
 #'   fmt_date(
-#'     columns = date,
 #'     date_style = "yMMMEd",
 #'     locale = "nl"
 #'   )
@@ -4041,9 +4118,10 @@ fmt_date <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. Keep only the `date` and `time`
-#' columns. Format the `time` column to have times formatted as `hms_p` (time
-#' style `3`).
+#' Let's use the [`exibble`] dataset to create a simple, two-column **gt** table
+#' (keeping only the `date` and `time` columns). Format the `time` column with
+#' the `fmt_time()` function to display times formatted with the `"h_m_s_p"`
+#' time style.
 #'
 #' ```r
 #' exibble |>
@@ -4059,10 +4137,12 @@ fmt_date <- function(
 #' `r man_get_image_tag(file = "man_fmt_time_1.png")`
 #' }}
 #'
-#' Use [`exibble`] to create a **gt** table. Keep only the `date` and `time`
-#' columns. Format the `time` column to have mixed time formats (times after
-#' 16:00 will be different than the others because of the expressions used
-#' in the `rows` argument).
+#' Again using the [`exibble`] dataset, let's format the `time` column to have
+#' mixed time formats, where times after 16:00 will be different than the others
+#' because of the expressions used in the `rows` argument. This will involve two
+#' calls of `fmt_time()` with different statements provided for `rows`. In the
+#' first call (times after 16:00) the time style `"h_m_s_p"` is used; for the
+#' second call, `"h_m_p"` is the named time style supplied to `time_style`.
 #'
 #' ```r
 #' exibble |>
@@ -4084,10 +4164,10 @@ fmt_date <- function(
 #' `r man_get_image_tag(file = "man_fmt_time_2.png")`
 #' }}
 #'
-#' Use [`exibble`] to create another **gt** table, this time only with the
-#' `time` column. Format the `time` column to use the `"EBhms"` time style
-#' (which is one of the 'flexible' styles). Also, set the locale to `"sv"` to
-#' get the dates in Swedish.
+#' Use the [`exibble`] dataset to create a single-column **gt** table (with only
+#' the `time` column). Format the time values using the `"EBhms"` time style
+#' (which is one of the 'flexible' styles). Also, we'll set the locale to `"sv"`
+#' to get the times in Swedish.
 #'
 #' ```r
 #' exibble |>
@@ -4918,16 +4998,16 @@ fmt_time <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. Keep only the `datetime` column.
-#' Format the column to have dates formatted with the `"month_day_year"` style
-#' and times with the `"h_m_s_p"` 12-hour time style.
+#' Use the [`exibble`] dataset to create a single-column **gt** table (with only
+#' the `datetime` column). With `fmt_datetime()` we'll format the `datetime`
+#' column to have dates formatted with the `"month_day_year"` style and times
+#' with the `"h_m_s_p"` 12-hour time style.
 #'
 #' ```r
 #' exibble |>
 #'   dplyr::select(datetime) |>
 #'   gt() |>
 #'   fmt_datetime(
-#'     columns = datetime,
 #'     date_style = "month_day_year",
 #'     time_style = "h_m_s_p"
 #'   )
@@ -4937,23 +5017,24 @@ fmt_time <- function(
 #' `r man_get_image_tag(file = "man_fmt_datetime_1.png")`
 #' }}
 #'
-#' Using the same input table, we can use flexible date and time styles. Two
-#' that work well together are `"MMMEd"` and `"Hms"`. These will mutate
-#' depending on the locale. Let's use the default locale for the first 3 rows
-#' and the Danish locale (`"da"`) for the remaining rows.
+#' Using the same input table, we can use `fmt_datetime()` with flexible date
+#' and time styles. Two that work well together are `"MMMEd"` and `"Hms"`. These
+#' date and time styles will, being flexible, create outputs that conform to the
+#' locale value given to the `locale` argument. Let's use two calls of
+#' `fmt_datetime()`: the first will format all rows in `datetime` to the Danish
+#' locale (with `locale = "da"`) and the second call will target the first three
+#' rows with the same formatting, but in the default locale (which is `"en"`).
 #'
 #' ```r
 #' exibble |>
 #'   dplyr::select(datetime) |>
 #'   gt() |>
 #'   fmt_datetime(
-#'     columns = datetime,
 #'     date_style = "MMMEd",
 #'     time_style = "Hms",
 #'     locale = "da"
 #'   ) |>
 #'   fmt_datetime(
-#'     columns = datetime,
 #'     rows = 1:3,
 #'     date_style = "MMMEd",
 #'     time_style = "Hms"
@@ -4975,7 +5056,6 @@ fmt_time <- function(
 #'   dplyr::select(datetime) |>
 #'   gt() |>
 #'   fmt_datetime(
-#'     columns = datetime,
 #'     format = "EEEE, MMMM d, y 'at' h:mm a (zzzz)",
 #'     tz = "America/Vancouver"
 #'   )
@@ -6361,11 +6441,10 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #'
 #' @section Examples:
 #'
-#' Use the [`towny`] dataset to create a **gt** table. After some major
-#' **dplyr**ing to get a nicely formatted data table, we use the `fmt_url()`
-#' function on the `website` column to generate navigable links to websites.
-#' By default the links are underlined and the color will be chosen for you
-#' (it's dark cyan).
+#' Using a portion of the [`towny`] dataset, let's create a **gt** table. We can
+#' use the `fmt_url()` function on the `website` column to generate navigable
+#' links to websites. By default the links are underlined and the color will be
+#' chosen for you (it's dark cyan).
 #'
 #' ```r
 #' towny |>
@@ -6839,17 +6918,17 @@ fmt_url <- function(
 #'
 #' @section Examples:
 #'
-#' Use the [`metro`] dataset to create a **gt** table. We will only include a
-#' few columns and rows from that table. The `lines` and `connect_rer` columns
-#' have comma-separated listings of numbers/letters (corresponding to lines
-#' served at each station). We have a directory SVG graphics for all of these
-#' lines in the package (the path for the image directory can be accessed via
-#' `system.file("metro_svg", package = "gt")`), and the filenames roughly
-#' correspond to the data in those two columns. The `fmt_image()` function can
-#' be used with these inputs since the `path` and `file_pattern` arguments allow
-#' us to compose complete and valid file locations. What you get from this are
-#' sequences of images in the table cells, taken from the referenced graphics
-#' files on disk.
+#' Using a small portion of [`metro`] dataset, let's create a **gt** table. We
+#' will only include a few columns and rows from that table. The `lines` and
+#' `connect_rer` columns have comma-separated listings of numbers/letters
+#' (corresponding to lines served at each station). We have a directory SVG
+#' graphics for all of these lines in the package (the path for the image
+#' directory can be accessed via `system.file("metro_svg", package = "gt")`),
+#' and the filenames roughly correspond to the data in those two columns. The
+#' `fmt_image()` function can be used with these inputs since the `path` and
+#' `file_pattern` arguments allow us to compose complete and valid file
+#' locations. What you get from this are sequences of images in the table cells,
+#' taken from the referenced graphics files on disk.
 #'
 #' ```r
 #' metro |>
@@ -7148,7 +7227,7 @@ fmt_image <- function(
 #' }}
 #'
 #' Using [`countrypops`] we can generate a table that provides populations
-#' every five years for the Benelux countries (`"BE"`, `"NU"`, and `"LU"`).
+#' every five years for the Benelux countries (`"BE"`, `"NL"`, and `"LU"`).
 #' This requires some manipulation with **dplyr** and **tidyr** before
 #' introducing the table to **gt**. With `fmt_flag()` we can obtain flag icons
 #' in the `country_code_2` column. After that, we can merge the flag icons into
@@ -7157,7 +7236,7 @@ fmt_image <- function(
 #'
 #' ```r
 #' countrypops |>
-#'   dplyr::filter(country_code_2 %in% c("BE", "NU", "LU")) |>
+#'   dplyr::filter(country_code_2 %in% c("BE", "NL", "LU")) |>
 #'   dplyr::filter(year %% 10 == 0) |>
 #'   dplyr::select(country_name, country_code_2, year, population) |>
 #'   tidyr::pivot_wider(names_from = year, values_from = population) |>
@@ -7534,11 +7613,11 @@ fmt_markdown <- function(
 #'
 #' @description
 #'
-#' Format by passing data through no other transformation other than: (1)
-#' coercing to `character` (as all the `fmt_*()` functions do), and (2) applying
-#' text via the `pattern` argument (the default is to apply nothing). All of
-#' this is useful when don't want to modify the input data other than to
-#' decorate it within a pattern.
+#' We can format values with the `fmt_passthrough()` function, which does little
+#' more than: (1) coercing to `character` (as all the `fmt_*()` functions do),
+#' and (2) applying decorator text via the `pattern` argument (the default is to
+#' apply nothing). This foramtting function is useful when don't want to modify
+#' the input data other than to decorate it within a pattern.
 #'
 #' @inheritParams fmt_number
 #' @param escape An option to escape text according to the final output format
@@ -7590,16 +7669,19 @@ fmt_markdown <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. Keep only the `char` column. Pass
-#' the data in that column through but apply a simple pattern that adds an `"s"`
-#' to the non-`NA` values.
+#' Let's use the [`exibble`] dataset to create a single-column **gt** table
+#' (with only the `char` column). Now we can pass the data in that column
+#' through the 'non-formatter' that is `fmt_passthrough()`. While the the
+#' function doesn't do any explicit formatting it has a feature common to all
+#' other formatting functions: the `pattern` argument. So that's what we'll use
+#' in this example, applying a simple pattern to the non-`NA` values that adds
+#' an `"s"` character.
 #'
 #' ```r
 #' exibble |>
 #'   dplyr::select(char) |>
 #'   gt() |>
 #'   fmt_passthrough(
-#'     columns = char,
 #'     rows = !is.na(char),
 #'     pattern = "{x}s"
 #'   )
@@ -7773,8 +7855,8 @@ fmt_passthrough <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. Format the columns automatically
-#' with `fmt_auto()`.
+#' Use the [`exibble`] dataset to create a **gt** table. Format all of the
+#' columns automatically with the `fmt_auto()` function.
 #'
 #' ```r
 #' exibble |>
@@ -7786,9 +7868,10 @@ fmt_passthrough <- function(
 #' `r man_get_image_tag(file = "man_fmt_auto_1.png")`
 #' }}
 #'
-#' Let's now use [`countrypops`] to create another **gt** table. Automatically
-#' format all columns with `fmt_auto()` but elect to use large-number suffixing
-#' instead of scientific notation with the `lg_num_pref = "suf"` option.
+#' Let's now use the [`countrypops`] dataset to create another **gt** table.
+#' We'll again use `fmt_auto()` to automatically format all columns but this
+#' time the choice will be made to opt for large-number suffixing instead of
+#' scientific notation. This is done by using the `lg_num_pref = "suf"` option.
 #'
 #' ```r
 #' countrypops |>
@@ -8093,8 +8176,10 @@ fmt_auto <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. Format the numeric values in the
-#' `num` column with a function supplied to the `fns` argument.
+#' Use the [`exibble`] dataset to create a **gt** table. Using the `fmt()`
+#' function, we'll format the numeric values in the `num` column with a function
+#' supplied to the `fns` argument. This supplied function will take values in
+#' the column (`x`), multiply them by 1000, and exclose them in single quotes.
 #'
 #' ```r
 #' exibble |>

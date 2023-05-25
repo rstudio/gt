@@ -39,8 +39,12 @@ required each and every context.
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{currency} column to
-have currency values in guilder (a defunct Dutch currency).
+Use the \code{\link{exibble}} dataset to create a \strong{gt} table. Within the
+\code{\link[=fmt_currency]{fmt_currency()}} call, we'll format the \code{currency} column to have currency
+values in guilder (a defunct Dutch currency). We can register this custom
+currency with the \code{currency()} helper function, supplying the \code{"&fnof;"} HTML
+entity for \code{html} outputs and using \code{"f"} for any other type of \strong{gt}
+output.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   gt() |>

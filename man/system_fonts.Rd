@@ -199,12 +199,11 @@ stack tends to use a more casual and commonplace style.
 \section{Examples}{
 
 
-Use \code{\link{sp500}} to create a \strong{gt} table with 10 rows. For the \code{date} column
-and the column labels, let's use a different font stack (the \code{"industrial"}
-one). The system fonts used in this particular stack are \code{"Bahnschrift"},
-\code{"DIN Alternate"}, \code{"Franklin Gothic Medium"}, and \code{"Nimbus Sans Narrow"}
-(the generic \code{"sans-serif-condensed"} and \code{"sans-serif"} are used if the
-aforementioned fonts aren't available).
+Use a subset of the \code{\link{sp500}} dataset to create a \strong{gt} table with 10 rows.
+For the \code{date} column and the column labels, let's use a different font stack
+(the \code{"industrial"} one). The system fonts used in this particular stack are
+\code{"Bahnschrift"}, \code{"DIN Alternate"}, \code{"Franklin Gothic Medium"}, and \code{"Nimbus Sans Narrow"} (the generic \code{"sans-serif-condensed"} and \code{"sans-serif"} are
+used if the aforementioned fonts aren't available).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
   dplyr::slice(1:10) |>

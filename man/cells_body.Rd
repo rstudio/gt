@@ -97,9 +97,10 @@ in the table) and returns a logical vector.
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. Add a footnote that targets a single
-data cell with \code{\link[=tab_footnote]{tab_footnote()}}, using \code{cells_body()} in \code{locations}
-(\code{rows = hp == max(hp)} will target a single row in the \code{hp} column).
+Let's use a subset of the \code{\link{gtcars}} dataset to create a \strong{gt} table. Add a
+footnote (with \code{\link[=tab_footnote]{tab_footnote()}}) that targets a single data cell via the use
+of \code{cells_body()} in \code{locations} (\code{rows = hp == max(hp)} will target a single
+row in the \code{hp} column).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
   dplyr::filter(ctry_origin == "United Kingdom") |>

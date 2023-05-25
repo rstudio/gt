@@ -41,8 +41,9 @@ The \code{gt_packages.sty} file would then contain the listed dependencies above
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header and then export as an
-object with LaTeX code.
+Use a subset of the \code{\link{gtcars}} dataset to create a \strong{gt} table. Add a header
+with \code{\link[=tab_header]{tab_header()}} and then export the table as LaTeX code using the
+\code{as_latex()} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_latex <-
   gtcars |>

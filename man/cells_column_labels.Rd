@@ -81,8 +81,9 @@ which targets numeric columns that have a maximum value greater than
 \section{Examples}{
 
 
-Use \code{\link{sza}} to create a \strong{gt} table. Add footnotes to the column labels with
-\code{\link[=tab_footnote]{tab_footnote()}} and \code{cells_column_labels()} in \code{locations}.
+Let's use a small portion of the \code{\link{sza}} dataset to create a \strong{gt} table.
+Add footnotes to the column labels with \code{\link[=tab_footnote]{tab_footnote()}} and
+\code{cells_column_labels()} in \code{locations}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sza |>
   dplyr::filter(

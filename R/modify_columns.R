@@ -431,10 +431,10 @@ align_to_char <- function(x, align_at = ".") {
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. We can specify the widths of
-#' columns with `cols_width()`. This is done with named arguments in `...`,
-#' specifying the exact widths for table columns (using `everything()` at the
-#' end will capture all remaining columns).
+#' Use select columns from the [`exibble`] dataset to create a **gt** table. We
+#' can specify the widths of columns with `cols_width()`. This is done with
+#' named arguments in `...`, specifying the exact widths for table columns
+#' (using `everything()` at the end will capture all remaining columns).
 #'
 #' ```r
 #' exibble |>
@@ -602,10 +602,10 @@ cols_width <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`countrypops`] to create a **gt** table. Relabel all the table's columns
-#' with the `cols_label()` function to improve its presentation. In this simple
-#' case we are supplying the name of the column on the left-hand side, and the
-#' label text on the right-hand side.
+#' Let's use a portion of the [`countrypops`] dataset to create a **gt** table.
+#' Relabel all the table's columns with the `cols_label()` function to improve
+#' its presentation. In this simple case we are supplying the name of the column
+#' on the left-hand side, and the label text on the right-hand side.
 #'
 #' ```r
 #' countrypops |>
@@ -624,10 +624,10 @@ cols_width <- function(
 #' `r man_get_image_tag(file = "man_cols_label_1.png")`
 #' }}
 #'
-#' Using [`countrypops`] again to create a **gt** table, we label columns just
-#' as before but this time make the column labels bold through Markdown
-#' formatting (with the [md()] helper function). It's possible here to use
-#' either a `=` or a `~` between the column name and the label text.
+#' Using the [`countrypops`] dataset again, we label columns similarly to before
+#' but this time making the column labels be bold through Markdown formatting
+#' (with the [md()] helper function). It's possible here to use either a `=` or
+#' a `~` between the column name and the label text.
 #'
 #' ```r
 #' countrypops |>
@@ -646,13 +646,14 @@ cols_width <- function(
 #' `r man_get_image_tag(file = "man_cols_label_2.png")`
 #' }}
 #'
-#' With the [`metro`] dataset, let's create a small **gt** table with three
-#' columns. We'd like to provide column labels that have line breaks. For that,
-#' we can use `<br>` to indicate where the line breaks should be. We also need
-#' to use the [md()] helper function to signal to **gt** that this
-#' text should be interpreted as Markdown. Instead of calling [md()] on each of
-#' labels as before, we can more conveniently use the `.fn` argument and provide
-#' the bare function there (it will be applied to each label).
+#' With a select portion of the [`metro`] dataset, let's create a small **gt**
+#' table with three columns. Within `cols_label()` we'd like to provide column
+#' labels that contain line breaks. For that, we can use `<br>` to indicate
+#' where the line breaks should be. We also need to use the [md()] helper
+#' function to signal to **gt** that this text should be interpreted as
+#' Markdown. Instead of calling [md()] on each of labels as before, we can more
+#' conveniently use the `.fn` argument and provide the bare function there (it
+#' will be applied to each label defined in the `cols_label()` call).
 #'
 #' ```r
 #' metro |>
@@ -673,16 +674,17 @@ cols_width <- function(
 #' `r man_get_image_tag(file = "man_cols_label_3.png")`
 #' }}
 #'
-#' Using [`towny`], we can create an interesting **gt** table. First, only
-#' certain columns are selected from the dataset, some filtering of rows is
-#' done, rows are sorted, and then only the first 10 rows are kept. When
-#' introduced to [gt()], we apply some spanner column labels through two calls
-#' of [tab_spanner()] all the table's columns. Below those spanners, we want to
-#' label the columns by the years of interest. Using `cols_label()` and select
-#' expressions on the left side of the formulas, we can easily relabel multiple
-#' columns with common label text. Note that we cannot use an `=` sign in any
-#' of the expressions within `cols_label()`; because the left-hand side is not
-#' a single column name, we must use formula syntax (i.e., with the `~`).
+#' Using a subset of the [`towny`] dataset, we can create an interesting **gt**
+#' table. First, only certain columns are selected from the dataset, some
+#' filtering of rows is done, rows are sorted, and then only the first 10 rows
+#' are kept. When introduced to [gt()], we apply some spanner column labels
+#' through two calls of [tab_spanner()] all the table's columns. Below those
+#' spanners, we want to label the columns by the years of interest. Using
+#' `cols_label()` and select expressions on the left side of the formulas, we
+#' can easily relabel multiple columns with common label text. Note that we
+#' cannot use an `=` sign in any of the expressions within `cols_label()`;
+#' because the left-hand side is not a single column name, we must use formula
+#' syntax (i.e., with the `~`).
 #'
 #' ```r
 #' towny |>
@@ -857,11 +859,11 @@ cols_label <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`sp500`] to create a **gt** table. We want all the column labels to be
-#' entirely capitalized versions of the default labels but, instead of using
-#' [cols_label()] and rewriting each label manually in capital letters we can
-#' use `cols_label_with()` and instruct it to apply the `toupper()` function to
-#' all column labels.
+#' Use a subset of the [`sp500`] dataset to create a **gt** table. We want all
+#' the column labels to be entirely capitalized versions of the default labels
+#' but, instead of using [cols_label()] and rewriting each label manually in
+#' capital letters we can use `cols_label_with()` and instruct it to apply the
+#' `toupper()` function to all column labels.
 #'
 #' ```r
 #' sp500 |>
@@ -878,13 +880,13 @@ cols_label <- function(
 #' `r man_get_image_tag(file = "man_cols_label_with_1.png")`
 #' }}
 #'
-#' Use [`countrypops`] to create a **gt** table. To improve the presentation of
-#' the table, we are again going to change the default column labels via
-#' function calls supplied within `cols_label_with()`. We can, if we prefer,
-#' apply multiple types of column label changes in sequence with multiple calls
-#' of `cols_label_with()`. Here, we use the `make_clean_names()` functions from
-#' the **janitor** package and follow up with the removal of a numeral with
-#' `gsub()`.
+#' Use the [`countrypops`] dataset to create a **gt** table. To improve the
+#' presentation of the table, we are again going to change the default column
+#' labels via function calls supplied within `cols_label_with()`. We can, if we
+#' prefer, apply multiple types of column label changes in sequence with
+#' multiple calls of `cols_label_with()`. Here, we use the `make_clean_names()`
+#' functions from the **janitor** package and follow up with the removal of a
+#' numeral with `gsub()`.
 #'
 #' ```r
 #' countrypops |>
@@ -971,13 +973,14 @@ cols_label_with <- function(
   if (length(resolved_columns) < 1) {
     return(data)
   }
-
   # Obtain `boxh_df` table and filter to the rows with resolved column names
   boxh_df <- dt_boxhead_get(data = data)
   boxh_df <- boxh_df[boxh_df[["var"]] %in% resolved_columns, ]
 
-  # Obtain a list of current labels for the resolved columns
+  # Obtain a list of current labels for the resolved columns and ensure
+  # that the var names are included as names for each of the list components
   old_label_list <- boxh_df[["column_label"]]
+  names(old_label_list) <- boxh_df[["var"]]
 
   # Apply the function call to each element of `old_label_list`
   new_label_list <- lapply(old_label_list, FUN = fn)
@@ -1006,7 +1009,7 @@ cols_label_with <- function(
     data <-
       dt_boxhead_edit_column_label(
         data = data,
-        var = resolved_columns[i],
+        var = names(new_label_list)[i],
         column_label = new_label_list[[i]]
       )
   }
@@ -1046,8 +1049,9 @@ cols_label_with <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`countrypops`] to create a **gt** table. With the remaining columns,
-#' position `population` after `country_name` with the `cols_move()` function.
+#' Use the [`countrypops`] dataset to create a **gt** table. We'll choose to
+#' position the `population` column after the `country_name` column by using the
+#' `cols_move()` function.
 #'
 #' ```r
 #' countrypops |>
@@ -1167,9 +1171,9 @@ cols_move <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`countrypops`] to create a **gt** table. With the remaining columns,
-#' move the `year` column to the start of the column series with
-#' `cols_move_to_start()`.
+#' Use a portion of the [`countrypops`] dataset to create a **gt** table. Let's
+#' move the `year` column to the start of the column series with the
+#' `cols_move_to_start()` function.
 #'
 #' ```r
 #' countrypops |>
@@ -1185,8 +1189,9 @@ cols_move <- function(
 #' }}
 #'
 #'
-#' Use [`countrypops`] to create a **gt** table. With the remaining columns,
-#' move `year` and `population` to the start.
+#' Use a portion of the [`countrypops`] dataset to create a **gt** table. Let's
+#' move both the `year` and `population` columns to the start of the column
+#' series.
 #'
 #' ```r
 #' countrypops |>
@@ -1277,7 +1282,7 @@ cols_move_to_start <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`countrypops`] to create a **gt** table. With the remaining columns,
+#' Use a portion of the [`countrypops`] dataset to create a **gt** table. Let's
 #' move the `year` column to the end of the column series with the
 #' `cols_move_to_end()` function.
 #'
@@ -1294,8 +1299,8 @@ cols_move_to_start <- function(
 #' `r man_get_image_tag(file = "man_cols_move_to_end_1.png")`
 #' }}
 #'
-#' Use [`countrypops`] to create a **gt** table. With the remaining columns,
-#' move `year` and `country_name` to the end of the column series.
+#' Let's again use [`countrypops`] for a **gt** example table. This time we'll
+#' move the `year` and `country_name` columns to the end of the column series.
 #'
 #' ```r
 #' countrypops |>
@@ -1390,8 +1395,9 @@ cols_move_to_end <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`countrypops`] to create a **gt** table. Hide the `country_code_2` and
-#' `country_code_3` columns with `cols_hide()`.
+#' Use a small portion of the [`countrypops`] dataset to create a **gt** table.
+#' We can hide the `country_code_2` and `country_code_3` columns with the
+#' `cols_hide()` function.
 #'
 #' ```r
 #' countrypops |>
@@ -1405,10 +1411,11 @@ cols_move_to_end <- function(
 #' `r man_get_image_tag(file = "man_cols_hide_1.png")`
 #' }}
 #'
-#' Use [`countrypops`] to create a **gt** table. Use the `population` column to
-#' provide the conditional placement of footnotes, then hide that column and one
-#' other. Note that the order of the `cols_hide()` and [tab_footnote()]
-#' statements has no effect.
+#' Using another [`countrypops`]-based **gt** table, we can use the `population`
+#' column to provide the conditional placement of footnotes. Then, we'll hide
+#' that column along with the `country_code_3` column. Note that the order of
+#' the `cols_hide()` and [tab_footnote()] statements has no effect on the final
+#' display of the table.
 #'
 #' ```r
 #' countrypops |>
@@ -1502,8 +1509,9 @@ cols_hide <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`countrypops`] to create a **gt** table. Hide the `country_code_2` and
-#' `country_code_3` columns with [cols_hide()].
+#' Let's use a small portion of the [`countrypops`] dataset to create a **gt**
+#' table. We'll hide the `country_code_2` and `country_code_3` columns with the
+#' [cols_hide()] function.
 #'
 #' ```r
 #' tab_1 <-
@@ -1582,14 +1590,14 @@ cols_unhide <- function(
 #' @description
 #'
 #' This function takes input from two or more columns and allows the contents to
-#' be merged them into a single column, using a pattern that specifies the
+#' be merged into a single column by using a pattern that specifies the
 #' arrangement. We can specify which columns to merge together in the `columns`
-#' argument. The string-combining pattern is given in the `pattern` argument.
-#' The first column in the `columns` series operates as the target column (i.e.,
-#' will undergo mutation) whereas all following `columns` will be untouched.
-#' There is the option to hide the non-target columns (i.e., second and
-#' subsequent columns given in `columns`). The formatting of values in different
-#' columns will be preserved upon merging.
+#' argument. The string-combining pattern is to be provided in the `pattern`
+#' argument. The first column in the `columns` series operates as the target
+#' column (i.e., the column that will undergo mutation) whereas all following
+#' `columns` will be untouched. There is the option to hide the non-target
+#' columns (i.e., second and subsequent columns given in `columns`). The
+#' formatting of values in different columns will be preserved upon merging.
 #'
 #' @inheritParams cols_align
 #' @param columns The columns that will participate in the merging process. The
@@ -1661,10 +1669,10 @@ cols_unhide <- function(
 #'
 #' @section Examples:
 #'
-#' Use a portion of [`sp500`] to create a **gt** table. Use the `cols_merge()`
-#' function to merge the `open` & `close` columns together, and, the `low` &
-#' `high` columns (putting an em dash between both). Relabel the columns with
-#' [cols_label()].
+#' Use a subset of the [`sp500`] dataset to create a **gt** table. Use the
+#' `cols_merge()` function to merge the `open` & `close` columns together, and,
+#' the `low` & `high` columns (putting an em dash between both). Relabel the
+#' columns with [cols_label()].
 #'
 #' ```r
 #' sp500 |>
@@ -1878,13 +1886,17 @@ cols_merge <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table, keeping only the `currency` and
-#' `num` columns. Merge columns into one with a base value and uncertainty
-#' (after formatting the `num` column) using the `cols_merge_uncert()` function.
+#' Let's use the [`exibble`] dataset to create a simple, two-column **gt** table
+#' (keeping only the `num` and `currency` columns). We'll format the `num`
+#' column with the [fmt_number()] function. Next we merge the `currency` and
+#' `num` columns into the `currency` column; this will contain a base value and
+#' an uncertainty and it's all done using the `cols_merge_uncert()` function.
+#' After the merging process, the column label for the `currency` column is
+#' updated with [cols_label()] to better describe the content.
 #'
 #' ```r
 #' exibble |>
-#'   dplyr::select(currency, num) |>
+#'   dplyr::select(num, currency) |>
 #'   dplyr::slice(1:7) |>
 #'   gt() |>
 #'   fmt_number(
@@ -2030,10 +2042,12 @@ cols_merge_uncert <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`gtcars`] to create a **gt** table, keeping only the `model`, `mpg_c`,
-#' and `mpg_h` columns. Merge the `"mpg*"` columns together as a single range
-#' column (which is labeled as MPG, in italics) using the `cols_merge_range()`
-#' function.
+#' Let's use a subset of the [`gtcars`] dataset to create a **gt** table,
+#' keeping only the `model`, `mpg_c`, and `mpg_h` columns. Merge the `"mpg*"`
+#' columns together as a single range column (which is labeled as MPG, in
+#' italics) using the `cols_merge_range()` function. After the merging process,
+#' the column label for the `mpg_c` column is updated with [cols_label()] to
+#' better describe the content.
 #'
 #' ```r
 #' gtcars |>
@@ -2207,10 +2221,11 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #'
 #' @section Examples:
 #'
-#' Use [`pizzaplace`] to create a **gt** table that displays the counts and
-#' percentages of the top 3 pizzas sold by pizza category in 2015. The
-#' `cols_merge_n_pct()` function is used to merge the `n` and `frac` columns
-#' (and the `frac` column is formatted using [fmt_percent()]).
+#' Using a summarized version of the [`pizzaplace`] dataset, let's create a
+#' **gt** table that displays the counts and percentages of the top 3 pizzas
+#' sold by pizza category in 2015. The `cols_merge_n_pct()` function is used to
+#' merge the `n` and `frac` columns (and the `frac` column is formatted using
+#' [fmt_percent()]).
 #'
 #' ```r
 #' pizzaplace |>

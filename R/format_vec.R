@@ -473,11 +473,11 @@ vec_fmt_integer <- function(
 #' #> [1] "3,24 × 10^-4" "8,65" "1,36 × 10^6" "-5,90 × 10^4" "NA"
 #' ```
 #'
-#' Should you need to have positive and negative signs on each of the output
-#' values, use `force_sign = TRUE`:
+#' Should you need to have positive and negative signs for the mantissa
+#' component of a given value, use `force_sign_m = TRUE`:
 #'
 #' ```r
-#' vec_fmt_scientific(num_vals, force_sign = TRUE)
+#' vec_fmt_scientific(num_vals, force_sign_m = TRUE)
 #' ```
 #' ```
 #' #> [1] "+3.24 × 10^-4" "+8.65" "+1.36 × 10^6" "-5.90 × 10^4" "NA"
@@ -635,11 +635,11 @@ vec_fmt_scientific <- function(
 #' #> [1] "324,00 × 10^-6" "8,65" "1,36 × 10^6" "-59,03 × 10^3" "NA"
 #' ```
 #'
-#' Should you need to have positive and negative signs on each of the output
-#' values, use `force_sign = TRUE`:
+#' Should you need to have positive and negative signs for the mantissa
+#' component of a given value, use `force_sign_m = TRUE`:
 #'
 #' ```r
-#' vec_fmt_engineering(num_vals, force_sign = TRUE)
+#' vec_fmt_engineering(num_vals, force_sign_m = TRUE)
 #' ```
 #' ```
 #' #> [1] "+324.00 × 10^-6" "+8.65" "+1.36 × 10^6" "-59.03 × 10^3" "NA"
@@ -1677,6 +1677,32 @@ vec_fmt_index <- function(
 #' `"twenty-three"` if the locale is an English-language one (or, not provided
 #' at all); should a Swedish locale be provided (e.g., `"sv"`), the output will
 #' instead be `"tjugotre"`.
+#'
+#' @section Supported locales:
+#'
+#' The following 80 locales are supported in the `locale` argument of
+#' `vec_fmt_spelled_num()`: `"af"` (Afrikaans), `"ak"` (Akan), `"am"` (Amharic),
+#' `"ar"` (Arabic), `"az"` (Azerbaijani), `"be"` (Belarusian), `"bg"`
+#' (Bulgarian), `"bs"` (Bosnian), `"ca"` (Catalan), `"ccp"` (Chakma), `"chr"`
+#' (Cherokee), `"cs"` (Czech), `"cy"` (Welsh), `"da"` (Danish), `"de"` (German),
+#' `"de-CH"` (German (Switzerland)), `"ee"` (Ewe), `"el"` (Greek), `"en"`
+#' (English), `"eo"` (Esperanto), `"es"` (Spanish), `"et"` (Estonian), `"fa"`
+#' (Persian), `"ff"` (Fulah), `"fi"` (Finnish), `"fil"` (Filipino), `"fo"`
+#' (Faroese), `"fr"` (French), `"fr-BE"` (French (Belgium)), `"fr-CH"` (French
+#' (Switzerland)), `"ga"` (Irish), `"he"` (Hebrew), `"hi"` (Hindi), `"hr"`
+#' (Croatian), `"hu"` (Hungarian), `"hy"` (Armenian), `"id"` (Indonesian),
+#' `"is"` (Icelandic), `"it"` (Italian), `"ja"` (Japanese), `"ka"` (Georgian),
+#' `"kk"` (Kazakh), `"kl"` (Kalaallisut), `"km"` (Khmer), `"ko"` (Korean),
+#' `"ky"` (Kyrgyz), `"lb"` (Luxembourgish), `"lo"` (Lao), `"lrc"` (Northern
+#' Luri), `"lt"` (Lithuanian), `"lv"` (Latvian), `"mk"` (Macedonian), `"ms"`
+#' (Malay), `"mt"` (Maltese), `"my"` (Burmese), `"ne"` (Nepali), `"nl"` (Dutch),
+#' `"nn"` (Norwegian Nynorsk), `"no"` (Norwegian), `"pl"` (Polish), `"pt"`
+#' (Portuguese), `"qu"` (Quechua), `"ro"` (Romanian), `"ru"` (Russian), `"se"`
+#' (Northern Sami), `"sk"` (Slovak), `"sl"` (Slovenian), `"sq"` (Albanian),
+#' `"sr"` (Serbian), `"sr-Latn"` (Serbian (Latin)), `"su"` (Sundanese), `"sv"`
+#' (Swedish), `"sw"` (Swahili), `"ta"` (Tamil), `"th"` (Thai), `"tr"` (Turkish),
+#' `"uk"` (Ukrainian), `"vi"` (Vietnamese), `"yue"` (Cantonese), and `"zh"`
+#' (Chinese).
 #'
 #' @inheritParams vec_fmt_number
 #'

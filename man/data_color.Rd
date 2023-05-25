@@ -354,8 +354,8 @@ What's happened is that \code{data_color()} applies background colors to all cel
 of every column with the default palette in R (accessed through \code{palette()}).
 The default method for applying color is \code{"auto"}, where numeric values will
 use the \code{"numeric"} method and character or factor values will use the
-\code{"factor"} method. The text color will be undergo modification automatically
-to maximize contrast (since \code{autocolor_text} is \code{TRUE} by default).
+\code{"factor"} method. The text color undergoes an automatic modification that
+maximizes contrast (since \code{autocolor_text} is \code{TRUE} by default).
 
 You can use any of the available \code{method} keywords and \strong{gt} will only apply
 color to the compatible values. Let's use the \code{"numeric"} method and supply

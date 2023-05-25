@@ -39,8 +39,9 @@ end of the column series then use \code{\link[=cols_move_to_end]{cols_move_to_en
 \section{Examples}{
 
 
-Use \code{\link{countrypops}} to create a \strong{gt} table. With the remaining columns,
-position \code{population} after \code{country_name} with the \code{cols_move()} function.
+Use the \code{\link{countrypops}} dataset to create a \strong{gt} table. We'll choose to
+position the \code{population} column after the \code{country_name} column by using the
+\code{cols_move()} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>

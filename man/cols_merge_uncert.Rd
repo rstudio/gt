@@ -89,12 +89,16 @@ the output table through the \code{hide_columns} or \code{autohide} options.
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table, keeping only the \code{currency} and
-\code{num} columns. Merge columns into one with a base value and uncertainty
-(after formatting the \code{num} column) using the \code{cols_merge_uncert()} function.
+Let's use the \code{\link{exibble}} dataset to create a simple, two-column \strong{gt} table
+(keeping only the \code{num} and \code{currency} columns). We'll format the \code{num}
+column with the \code{\link[=fmt_number]{fmt_number()}} function. Next we merge the \code{currency} and
+\code{num} columns into the \code{currency} column; this will contain a base value and
+an uncertainty and it's all done using the \code{cols_merge_uncert()} function.
+After the merging process, the column label for the \code{currency} column is
+updated with \code{\link[=cols_label]{cols_label()}} to better describe the content.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
-  dplyr::select(currency, num) |>
+  dplyr::select(num, currency) |>
   dplyr::slice(1:7) |>
   gt() |>
   fmt_number(

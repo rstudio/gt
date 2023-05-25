@@ -104,8 +104,8 @@ more complex predicate expression.
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Format the columns automatically
-with \code{fmt_auto()}.
+Use the \code{\link{exibble}} dataset to create a \strong{gt} table. Format all of the
+columns automatically with the \code{fmt_auto()} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   gt() |>
@@ -116,9 +116,10 @@ with \code{fmt_auto()}.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_auto_1.png" alt="This image of a table was generated from the first code example in the `fmt_auto()` help file." style="width:100\%;">
 }}
 
-Let's now use \code{\link{countrypops}} to create another \strong{gt} table. Automatically
-format all columns with \code{fmt_auto()} but elect to use large-number suffixing
-instead of scientific notation with the \code{lg_num_pref = "suf"} option.
+Let's now use the \code{\link{countrypops}} dataset to create another \strong{gt} table.
+We'll again use \code{fmt_auto()} to automatically format all columns but this
+time the choice will be made to opt for large-number suffixing instead of
+scientific notation. This is done by using the \code{lg_num_pref = "suf"} option.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(country_code_3, year, population) |>

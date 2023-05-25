@@ -236,9 +236,10 @@
 #'
 #' @section Examples:
 #'
-#' Use [`sp500`] to create a **gt** table with row groups. Create the summary
-#' rows labeled `min`, `max`, and `avg` by row group (where each each row group
-#' is a week number) with the `summary_rows()` function.
+#' Use a modified version of [`sp500`] dataset to create a **gt** table with row
+#' groups and row labels. Create the summary rows labeled `min`, `max`, and
+#' `avg` by row group (where each each row group is a week number) with the
+#' `summary_rows()` function.
 #'
 #' ```r
 #' sp500 |>
@@ -646,9 +647,9 @@ summary_rows <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`sp500`] to create a **gt** table with row groups. Create the grand
-#' summary rows `min`, `max`, and `avg` for the table with the
-#' `grand_summary_rows()` function.
+#' Use a modified version of the [`sp500`] dataset to create a **gt** table with
+#' row groups and row labels. Create the grand summary rows `min`, `max`, and
+#' `avg` for the table with the `grand_summary_rows()` function.
 #'
 #' ```r
 #' sp500 |>
@@ -686,7 +687,7 @@ summary_rows <- function(
 #'
 #' ```r
 #' countrypops |>
-#'   dplyr::filter(country_code_2 %in% c("BE", "NU", "LU")) |>
+#'   dplyr::filter(country_code_2 %in% c("BE", "NL", "LU")) |>
 #'   dplyr::filter(year %% 10 == 0) |>
 #'   dplyr::select(country_name, year, population) |>
 #'   tidyr::pivot_wider(names_from = year, values_from = population) |>

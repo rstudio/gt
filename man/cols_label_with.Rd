@@ -51,11 +51,11 @@ labels once they have been relabeled.
 \section{Examples}{
 
 
-Use \code{\link{sp500}} to create a \strong{gt} table. We want all the column labels to be
-entirely capitalized versions of the default labels but, instead of using
-\code{\link[=cols_label]{cols_label()}} and rewriting each label manually in capital letters we can
-use \code{cols_label_with()} and instruct it to apply the \code{toupper()} function to
-all column labels.
+Use a subset of the \code{\link{sp500}} dataset to create a \strong{gt} table. We want all
+the column labels to be entirely capitalized versions of the default labels
+but, instead of using \code{\link[=cols_label]{cols_label()}} and rewriting each label manually in
+capital letters we can use \code{cols_label_with()} and instruct it to apply the
+\code{toupper()} function to all column labels.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
   dplyr::filter(
@@ -71,13 +71,13 @@ all column labels.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_with_1.png" alt="This image of a table was generated from the first code example in the `cols_label_with()` help file." style="width:100\%;">
 }}
 
-Use \code{\link{countrypops}} to create a \strong{gt} table. To improve the presentation of
-the table, we are again going to change the default column labels via
-function calls supplied within \code{cols_label_with()}. We can, if we prefer,
-apply multiple types of column label changes in sequence with multiple calls
-of \code{cols_label_with()}. Here, we use the \code{make_clean_names()} functions from
-the \strong{janitor} package and follow up with the removal of a numeral with
-\code{gsub()}.
+Use the \code{\link{countrypops}} dataset to create a \strong{gt} table. To improve the
+presentation of the table, we are again going to change the default column
+labels via function calls supplied within \code{cols_label_with()}. We can, if we
+prefer, apply multiple types of column label changes in sequence with
+multiple calls of \code{cols_label_with()}. Here, we use the \code{make_clean_names()}
+functions from the \strong{janitor} package and follow up with the removal of a
+numeral with \code{gsub()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::filter(year == 2021) |>

@@ -95,11 +95,11 @@ multiple computer systems. Any of the following keywords can be used:
 \section{Examples}{
 
 
-Use \code{\link{sp500}} to create a small \strong{gt} table, using \code{\link[=fmt_currency]{fmt_currency()}} to
-provide a dollar sign for the first row of monetary values. Then, set a
-larger font size for the table and use the \code{"Merriweather"} font (from
-\emph{Google Fonts}, via \code{\link[=google_font]{google_font()}}) with two system font fallbacks
-(\code{"Cochin"} and the generic \code{"serif"}).
+Use a subset of the \code{\link{sp500}} dataset to create a small \strong{gt} table. We'll
+use the \code{\link[=fmt_currency]{fmt_currency()}} function to display a dollar sign for the first row
+of monetary values. Then, set a larger font size for the table and use the
+\code{"Merriweather"} font (from \emph{Google Fonts}, via \code{\link[=google_font]{google_font()}}) with two
+system font fallbacks (\code{"Cochin"} and the generic \code{"serif"}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
   dplyr::slice(1:10) |>
@@ -121,9 +121,11 @@ larger font size for the table and use the \code{"Merriweather"} font (from
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_opt_table_font_1.png" alt="This image of a table was generated from the first code example in the `opt_table_font()` help file." style="width:100\%;">
 }}
 
-Use \code{\link{sza}} to create an eleven-row table. Within \code{opt_table_font()}, set up
-a preferred list of sans-serif fonts that are commonly available in macOS
-(using part of the \code{\link[=default_fonts]{default_fonts()}} vector as a fallback).
+Use the \code{\link{sza}} dataset to create an eleven-row table, two-column table.
+Within \code{opt_table_font()}, use the \code{stack} argument to define the use of the
+\code{"rounded-sans"} font stack. This sets up a family of fonts with rounded,
+curved letterforms that should be locally available in different computing
+environments.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sza |>
   dplyr::filter(

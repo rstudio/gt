@@ -17,9 +17,9 @@
 #'
 #' @section Examples:
 #'
-#' Use [`gtcars`] to create a **gt** table. Add a header part with the
-#' [tab_header()] function; with that, we get a title and a subtitle for the
-#' table.
+#' Let's use a subset of the [`gtcars`] dataset to create a **gt** table. A
+#' header part can be added with the [tab_header()] function; with that, we get
+#' a title and a subtitle for the table.
 #'
 #' ```r
 #' gt_tbl <-
@@ -86,9 +86,9 @@ rm_header <- function(data) {
 #'
 #' @section Examples:
 #'
-#' Use [`gtcars`] to create a **gt** table. With [tab_stubhead()], it's possible
-#' to add a stubhead label. This appears in the top-left and can be used to
-#' describe what is in the stub.
+#' Using the [`gtcars`] datset, we'll create a **gt** table. With the
+#' [tab_stubhead()] function, it's possible to add a stubhead label. This
+#' appears in the top-left and can be used to describe what is in the stub.
 #'
 #' ```r
 #' gt_tbl <-
@@ -166,10 +166,10 @@ rm_stubhead <- function(data) {
 #'
 #' @section Examples:
 #'
-#' Use [`gtcars`] to create a **gt** table. With the [tab_spanner()] function,
-#' we can group several related columns together under spanner column labels. In
-#' this example, that is done with several calls of [tab_spanner()] in order to
-#' create two levels of spanner column labels.
+#' Use a portion of the [`gtcars`] dataset to create a **gt** table. With the
+#' [tab_spanner()] function, we can group several related columns together under
+#' a spanner column. In this example, that is done with several calls of
+#' [tab_spanner()] in order to create two levels of spanner column labels.
 #'
 #' ```r
 #' gt_tbl <-
@@ -359,9 +359,9 @@ rm_spanners <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`sza`] to create a **gt** table. Color the `sza` column using the
-#' [data_color()] function, then, use [tab_footnote()] twice to add two
-#' footnotes (each one targeting a different column label).
+#' Use a subset of the [`sza`] dataset to create a **gt** table. Color the `sza`
+#' column using the [data_color()] function, then, use [tab_footnote()] twice to
+#' add two footnotes (each one targeting a different column label).
 #'
 #' ```r
 #' gt_tbl <-
@@ -521,8 +521,10 @@ rm_footnotes <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`gtcars`] to create a **gt** table. Use `tab_source_note()` to add a
-#' source note to the table footer that cites the data source.
+#' Use a subset of the [`gtcars`] dataset to create a **gt** table. The
+#' [tab_source_note()] function is used to add a source note to the table footer
+#' that cites the data source (or, it could just be arbitrary text). We'll use
+#' the function twice, in effect adding two source notes to the footer.
 #'
 #' ```r
 #' gt_tbl <-
@@ -652,8 +654,9 @@ rm_source_notes <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`gtcars`] to create a **gt** table. Add a header part with the
-#' [tab_header()] function, and, add a caption as well with [tab_caption()].
+#' Use a portion of the [`gtcars`] dataset to create a **gt** table. We'll add a
+#' header part with the [tab_header()] function, and, a caption will also be
+#' added via the [tab_caption()] function.
 #'
 #' ```r
 #' gt_tbl <-

@@ -182,8 +182,9 @@ can use the \code{\link[=info_locales]{info_locales()}} function to view an info
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{date} and \code{time}
-columns. Format the \code{date} column to have dates formatted with the
+Let's use the \code{\link{exibble}} dataset to create a simple, two-column \strong{gt} table
+(keeping only the \code{date} and \code{time} columns). With the \code{fmt_date()} function,
+we'll format the \code{date} column to display dates formatted with the
 \code{"month_day_year"} date style.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
@@ -199,10 +200,13 @@ columns. Format the \code{date} column to have dates formatted with the
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_date_1.png" alt="This image of a table was generated from the first code example in the `fmt_date()` help file." style="width:100\%;">
 }}
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{date} and \code{time}
-columns. Format the \code{date} column to have mixed date formats (dates after
-April will be different than the others because of the expressions used
-in the \code{rows} argument).
+Again using the \code{\link{exibble}} dataset, let's format the \code{date} column to have
+mixed date formats, where dates after April 1st will be different than the
+others because of the expressions used in the \code{rows} argument. This will
+involve two calls of \code{fmt_date()} with different statements provided for
+\code{rows}. In the first call (dates after the 1st of April) the date style
+\code{"m_day_year"} is used; for the second call, \code{"day_m_year"} is the named
+date style supplied to \code{date_style}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(date, time) |>
@@ -223,16 +227,15 @@ in the \code{rows} argument).
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_date_2.png" alt="This image of a table was generated from the second code example in the `fmt_date()` help file." style="width:100\%;">
 }}
 
-Use \code{\link{exibble}} to create another \strong{gt} table, this time only with the
-\code{date} column. Format the \code{date} column to use the \code{"yMMMEd"} date style
-(which is one of the 'flexible' styles). Also, set the locale to \code{"nl"} to
-get the dates in Dutch.
+Use the \code{\link{exibble}} dataset to create a single-column \strong{gt} table (with only
+the \code{date} column). Format the date values using the \code{"yMMMEd"} date style
+(which is one of the 'flexible' styles). Also, we'll set the locale to \code{"nl"}
+to get the dates in Dutch.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(date) |>
   gt() |>
   fmt_date(
-    columns = date,
     date_style = "yMMMEd",
     locale = "nl"
   )

@@ -25,8 +25,9 @@ there is no table caption set in the input \code{gt_tbl} object.
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header part with the
-\code{\link[=tab_header]{tab_header()}} function, and, add a caption as well with \code{\link[=tab_caption]{tab_caption()}}.
+Use a portion of the \code{\link{gtcars}} dataset to create a \strong{gt} table. We'll add a
+header part with the \code{\link[=tab_header]{tab_header()}} function, and, a caption will also be
+added via the \code{\link[=tab_caption]{tab_caption()}} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
   gtcars |>

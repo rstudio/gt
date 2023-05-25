@@ -86,8 +86,9 @@ row in a row group (numbering restarts with every row group).
 \section{Examples}{
 
 
-Use \code{\link{countrypops}} to create a \strong{gt} table. Add some styling to the summary
-data stub cells with \code{\link[=tab_style]{tab_style()}} and \code{cells_stub_summary()}.
+Use a portion of the \code{\link{countrypops}} dataset to create a \strong{gt} table. Add
+some styling to the summary data stub cells with \code{\link[=tab_style]{tab_style()}} and
+\code{cells_stub_summary()} in the \code{locations} argument.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::filter(country_name == "Japan", year < 1970) |>

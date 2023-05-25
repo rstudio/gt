@@ -514,9 +514,11 @@ components, the subcomponents, and the element that can adjusted.
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table with all the main parts added. We
-can use this \strong{gt} object going forward to demo some of what's available in
-the \code{tab_options()} function.
+Use select columns from the \code{\link{exibble}} dataset to create a \strong{gt} table with
+a number of table parts added (using functions like \code{\link[=summary_rows]{summary_rows()}},
+\code{\link[=grand_summary_rows]{grand_summary_rows()}}, and more). We can use this \strong{gt} object going
+forward to demo some of the features available in the \code{tab_options()}
+function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
   exibble |>
@@ -557,8 +559,9 @@ tab_1
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_1.png" alt="This image of a table was generated from the first code example in the `tab_options()` help file." style="width:100\%;">
 }}
 
-Modify the table width to be 100\% (which spans the entire content width
-area).
+We can modify the table width to be set as '100\%'. In effect, this spans the
+table to entirely fill the content width area. This is done with the
+\code{table.width} option and we take advantage of the \code{\link[=pct]{pct()}} helper function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |> tab_options(table.width = pct(100))
 }\if{html}{\out{</div>}}
@@ -567,7 +570,8 @@ area).
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_2.png" alt="This image of a table was generated from the second code example in the `tab_options()` help file." style="width:100\%;">
 }}
 
-Modify the table's background color to be \code{"lightcyan"}.
+With the \code{table.background.color} option, we can modify the table's
+background color. Here, we want that to be \code{"lightcyan"}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |> tab_options(table.background.color = "lightcyan")
 }\if{html}{\out{</div>}}
@@ -576,13 +580,19 @@ Modify the table's background color to be \code{"lightcyan"}.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_3.png" alt="This image of a table was generated from the third code example in the `tab_options()` help file." style="width:100\%;">
 }}
 
-Use letters as the marks for footnote references. Also, separate footnotes in
-the footer by spaces instead of newlines.
+We have footnotes residing in the footer section of \code{tab_1}. By default, each
+footnote takes up a new line of text. This can be changed with the
+\code{footnotes.multiline} option. Using \code{FALSE} with that means that all
+footnotes will be placed into one continuous span of text. Speaking of
+footnotes, we can change the 'marks' used to identify them. Here, we'll use
+letters as the marks for footnote references (instead of the default, which
+is numbers). This is accomplished with the \code{footnotes.marks} option, and we
+are going to supply the \code{letters} vector to that.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |>
   tab_options(
-    footnotes.marks = letters,
-    footnotes.multiline = FALSE
+    footnotes.multiline = FALSE,
+    footnotes.marks = letters
   )
 }\if{html}{\out{</div>}}
 
@@ -590,19 +600,22 @@ the footer by spaces instead of newlines.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_4.png" alt="This image of a table was generated from the fourth code example in the `tab_options()` help file." style="width:100\%;">
 }}
 
-Change the padding of data rows to 5 px.
+The data rows of a table typically take up the most physical space but we
+have some control over the extent of that. With the \code{data_row.padding}
+option, it's possible to modify the top and bottom padding of data rows.
+We'll do just that in the following example, reducing the padding to a value
+of 5 px (note that we are using the \code{\link[=px]{px()}} helper function here).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |>
-  tab_options(
-    data_row.padding = px(5)
-  )
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |> tab_options(data_row.padding = px(5))
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_options_5.png" alt="This image of a table was generated from the fifth code example in the `tab_options()` help file." style="width:100\%;">
 }}
 
-Reduce the size of the title and the subtitle text.
+The size of the title and the subtitle text in the header of the table can be
+altered with the \code{heading.title.font.size} and \code{heading.subtitle.font.size}
+options. Here, we'll use the \code{"small"} keyword as a value for both options.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |>
   tab_options(

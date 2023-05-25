@@ -130,10 +130,10 @@ and \strong{gt} will handle any locale-specific formatting options:
 \if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3,24 × 10^-4" "8,65" "1,36 × 10^6" "-5,90 × 10^4" "NA"
 }\if{html}{\out{</div>}}
 
-Should you need to have positive and negative signs on each of the output
-values, use \code{force_sign = TRUE}:
+Should you need to have positive and negative signs for the mantissa
+component of a given value, use \code{force_sign_m = TRUE}:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_scientific(num_vals, force_sign = TRUE)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_scientific(num_vals, force_sign_m = TRUE)
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "+3.24 × 10^-4" "+8.65" "+1.36 × 10^6" "-5.90 × 10^4" "NA"

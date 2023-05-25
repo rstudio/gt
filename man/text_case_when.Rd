@@ -20,9 +20,10 @@ be used.}
 
 \item{.locations}{The cell or set of cells to be associated with the text
 transformation. Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}},
-\code{\link[=cells_column_labels]{cells_column_labels()}}, and \code{\link[=cells_row_groups]{cells_row_groups()}} helper functions can be
-used here. We can enclose several of these calls within a \code{list()} if we
-wish to make the transformation happen at different locations.}
+\code{\link[=cells_row_groups]{cells_row_groups()}}, \code{\link[=cells_column_labels]{cells_column_labels()}}, and
+\code{\link[=cells_column_spanners]{cells_column_spanners()}} helper functions can be used here. We can enclose
+several of these calls within a \code{list()} if we wish to make the
+transformation happen at different locations.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -40,11 +41,14 @@ undergoing transformation, you need to use the \code{x} variable.
 \section{Examples}{
 
 
-Use \code{\link{metro}} to create a \strong{gt} table. In the \code{connect_rer} column,
-perform a count of pattern matches with \code{stringr::str_count()} and determine
-which cells have 1, 2, or 3 matched patterns. For each of these cases,
-provide descriptive replacement text. Here, we use a \code{.default} to replace
-the non-matched cases with an empty string.
+Use a portion of the \code{\link{metro}} dataset to create a \strong{gt} table. We'll use
+the \code{text_case_when()} function to supply pairs of predicate statements and
+replacement text. For the \code{connect_rer} column, we will perform a count of
+pattern matches with \code{stringr::str_count()} and determine which cells have 1,
+2, or 3 matched patterns. For each of these cases, descriptive replacement
+text is provided. Here, we use a \code{.default} value to replace the non-matched
+cases with an empty string (\code{""}). Finally, we use \code{\link[=cols_label]{cols_label()}} to modify
+the labels of the three columns.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{metro |>
   dplyr::arrange(desc(passengers)) |>

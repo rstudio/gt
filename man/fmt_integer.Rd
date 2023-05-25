@@ -183,16 +183,15 @@ useful reference on which locales are supported, we can use the
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. format the \code{num} column as integer
-values having no digit separators (with the \code{use_seps = FALSE} option).
+For this example, we'll use two columns from the \code{\link{exibble}} dataset and
+create a simple \strong{gt} table. With the \code{fmt_integer()} function, we'll format
+the \code{num} column as integer values having no digit separators (with the
+\code{use_seps = FALSE} option).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(num, char) |>
   gt() |>
-  fmt_integer(
-    columns = num,
-    use_seps = FALSE
-  )
+  fmt_integer(use_seps = FALSE)
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{

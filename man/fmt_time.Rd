@@ -167,9 +167,10 @@ can use the \code{\link[=info_locales]{info_locales()}} function to view an info
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{date} and \code{time}
-columns. Format the \code{time} column to have times formatted as \code{hms_p} (time
-style \code{3}).
+Let's use the \code{\link{exibble}} dataset to create a simple, two-column \strong{gt} table
+(keeping only the \code{date} and \code{time} columns). Format the \code{time} column with
+the \code{fmt_time()} function to display times formatted with the \code{"h_m_s_p"}
+time style.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(date, time) |>
@@ -184,10 +185,12 @@ style \code{3}).
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_time_1.png" alt="This image of a table was generated from the first code example in the `fmt_time()` help file." style="width:100\%;">
 }}
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{date} and \code{time}
-columns. Format the \code{time} column to have mixed time formats (times after
-16:00 will be different than the others because of the expressions used
-in the \code{rows} argument).
+Again using the \code{\link{exibble}} dataset, let's format the \code{time} column to have
+mixed time formats, where times after 16:00 will be different than the others
+because of the expressions used in the \code{rows} argument. This will involve two
+calls of \code{fmt_time()} with different statements provided for \code{rows}. In the
+first call (times after 16:00) the time style \code{"h_m_s_p"} is used; for the
+second call, \code{"h_m_p"} is the named time style supplied to \code{time_style}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(date, time) |>
@@ -208,10 +211,10 @@ in the \code{rows} argument).
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_time_2.png" alt="This image of a table was generated from the second code example in the `fmt_time()` help file." style="width:100\%;">
 }}
 
-Use \code{\link{exibble}} to create another \strong{gt} table, this time only with the
-\code{time} column. Format the \code{time} column to use the \code{"EBhms"} time style
-(which is one of the 'flexible' styles). Also, set the locale to \code{"sv"} to
-get the dates in Swedish.
+Use the \code{\link{exibble}} dataset to create a single-column \strong{gt} table (with only
+the \code{time} column). Format the time values using the \code{"EBhms"} time style
+(which is one of the 'flexible' styles). Also, we'll set the locale to \code{"sv"}
+to get the times in Swedish.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(time) |>

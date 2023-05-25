@@ -44,11 +44,11 @@ characters are taken to be string literals.}
 An object of class \code{gt_tbl}.
 }
 \description{
-Format by passing data through no other transformation other than: (1)
-coercing to \code{character} (as all the \verb{fmt_*()} functions do), and (2) applying
-text via the \code{pattern} argument (the default is to apply nothing). All of
-this is useful when don't want to modify the input data other than to
-decorate it within a pattern.
+We can format values with the \code{fmt_passthrough()} function, which does little
+more than: (1) coercing to \code{character} (as all the \verb{fmt_*()} functions do),
+and (2) applying decorator text via the \code{pattern} argument (the default is to
+apply nothing). This foramtting function is useful when don't want to modify
+the input data other than to decorate it within a pattern.
 }
 \section{Targeting cells with \code{columns} and \code{rows}}{
 
@@ -94,15 +94,18 @@ more complex predicate expression.
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{char} column. Pass
-the data in that column through but apply a simple pattern that adds an \code{"s"}
-to the non-\code{NA} values.
+Let's use the \code{\link{exibble}} dataset to create a single-column \strong{gt} table
+(with only the \code{char} column). Now we can pass the data in that column
+through the 'non-formatter' that is \code{fmt_passthrough()}. While the the
+function doesn't do any explicit formatting it has a feature common to all
+other formatting functions: the \code{pattern} argument. So that's what we'll use
+in this example, applying a simple pattern to the non-\code{NA} values that adds
+an \code{"s"} character.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(char) |>
   gt() |>
   fmt_passthrough(
-    columns = char,
     rows = !is.na(char),
     pattern = "\{x\}s"
   )

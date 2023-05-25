@@ -67,9 +67,11 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Add a spanner column label over
-three column labels with \code{\link[=tab_spanner]{tab_spanner()}} and then use \code{\link[=tab_style]{tab_style()}} and
-\code{cells_column_spanners()} to make the spanner label text bold.
+Use the \code{\link{exibble}} dataset to create a \strong{gt} table. We'll add a spanner
+column label over three columns (\code{date}, \code{time}, and \code{datetime}) with
+\code{\link[=tab_spanner]{tab_spanner()}}. The spanner column label can be styled with \code{\link[=tab_style]{tab_style()}} by
+using the \code{cells_column_spanners()} function in \code{locations}. In this example,
+we are making the text of the column spanner label appear as bold.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(-fctr, -currency, -group) |>

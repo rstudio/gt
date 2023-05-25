@@ -185,29 +185,27 @@ useful reference on which locales are supported, we can use the
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{num} column to have
-byte sizes in the decimal standard.
+Use a single column from the \code{\link{exibble}} dataset and create a simple \strong{gt}
+table. We'll format the \code{num} column to display as byte sizes in the decimal
+standard through use of the \code{fmt_bytes()} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(num) |>
   gt() |>
-  fmt_bytes(columns = num)
+  fmt_bytes()
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_bytes_1.png" alt="This image of a table was generated from the first code example in the `fmt_bytes()` help file." style="width:100\%;">
 }}
 
-Create a similar table with the \code{fmt_bytes()} function, this time showing
-byte sizes as binary values.
+Let's create an analogous table again by using the \code{fmt_bytes()} function,
+this time showing byte sizes as binary values by using \code{standard = "binary"}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(num) |>
   gt() |>
-  fmt_bytes(
-    columns = num,
-    standard = "binary"
-  )
+  fmt_bytes(standard = "binary")
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{

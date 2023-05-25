@@ -16,9 +16,10 @@ resolved in locations.}
 
 \item{locations}{The cell or set of cells to be associated with the text
 transformation. Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}},
-\code{\link[=cells_column_labels]{cells_column_labels()}}, and \code{\link[=cells_row_groups]{cells_row_groups()}} helper functions can be
-used here. We can enclose several of these calls within a \code{list()} if we
-wish to make the transformation happen at different locations.}
+\code{\link[=cells_row_groups]{cells_row_groups()}}, \code{\link[=cells_column_labels]{cells_column_labels()}}, and
+\code{\link[=cells_column_spanners]{cells_column_spanners()}} helper functions can be used here. We can enclose
+several of these calls within a \code{list()} if we wish to make the
+transformation happen at different locations.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -33,13 +34,17 @@ that is done, the remaining two values to supply are for the regex pattern
 \section{Examples}{
 
 
-Use \code{\link{metro}} to create a \strong{gt} table. Merge the \code{name} and \code{caption}
-columns together but only if \code{caption} doesn't have an \code{NA} value (the
-special \code{pattern} syntax of \code{"{1}<< ({2})>>"} takes care of this). This
-merged content is now part of the \code{name} column. We'd like to modify this
-further wherever there is text in parentheses: (1) make that text italicized,
-and (2) introduce a line break before the text in parentheses. We can do this
-with the \code{text_replace()} function.
+Use the \code{\link{metro}} dataset to create a \strong{gt} table. With the \code{\link[=cols_merge]{cols_merge()}}
+function, we'll merge the \code{name} and \code{caption} columns together but only if
+\code{caption} doesn't have an \code{NA} value (the special \code{pattern} syntax of \code{"{1}<< ({2})>>"} takes care of this). This merged content is now part of the \code{name}
+column. We'd like to modify this further wherever there is text in
+parentheses: (1) make that text italicized, and (2) introduce a line break
+before the text in parentheses. We can do this with the \code{text_replace()}
+function. The \code{pattern} value of \code{"\\\\((.*?)\\\\)"} will match on text between
+parentheses, and the inner \code{"(.*?)"} is a capture group. The \code{replacement}
+value of \code{"<br>(<em>\\\\1</em>)"} puts the capture group text \code{"\\\\1"} within
+\verb{<em>} tags, wraps literal parentheses around it, and prepends a line break
+tag.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{metro |>
   dplyr::select(name, caption, lines) |>

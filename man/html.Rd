@@ -24,8 +24,9 @@ rendered... to HTML.
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. When adding a title, use the
-\code{html()} helper to use HTML formatting.
+Use the \code{\link{exibble}} dataset to create a \strong{gt} table. When adding a title
+through the \code{\link[=tab_header]{tab_header()}} function, we'll use the \code{html()} helper to signify
+to \strong{gt} that we're using HTML formatting.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(currency, char) |>

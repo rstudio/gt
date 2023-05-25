@@ -35,9 +35,11 @@ This function serves as a convenient shortcut for \verb{<gt_tbl> |> tab_options(
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table with a number of table parts added.
-All text in the column labels, the stub, and in all row groups is to be
-transformed to all caps using \code{opt_all_caps()}.
+Use the \code{\link{exibble}} dataset to create a \strong{gt} table with a number of table
+parts added (using functions like \code{\link[=summary_rows]{summary_rows()}}, \code{\link[=grand_summary_rows]{grand_summary_rows()}},
+and more). Following that, we'll ensure that all text in the column labels,
+the stub, and in all row groups is transformed to all caps using
+\code{opt_all_caps()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   gt(rowname_col = "row", groupname_col = "group") |>

@@ -33,8 +33,9 @@ already-visible columns.
 \section{Examples}{
 
 
-Use \code{\link{countrypops}} to create a \strong{gt} table. Hide the \code{country_code_2} and
-\code{country_code_3} columns with \code{\link[=cols_hide]{cols_hide()}}.
+Let's use a small portion of the \code{\link{countrypops}} dataset to create a \strong{gt}
+table. We'll hide the \code{country_code_2} and \code{country_code_3} columns with the
+\code{\link[=cols_hide]{cols_hide()}} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
   countrypops |>
