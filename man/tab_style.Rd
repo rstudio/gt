@@ -93,7 +93,7 @@ with different columns and rows being targeted.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_1.png" alt="This image of a table was generated from the first code example in the `tab_style()` help file." style="width:100\%;">
 }}
 
-Let's use a subset of the \code{\link{sp500}} dataset to create a different \strong{gt}
+With a subset of the \code{\link{sp500}} dataset, we'll create a different \strong{gt}
 table. Here, we'll color the background of entire rows of body cells and do
 so on the basis of value expressions involving the \code{open} and \code{close}
 columns.
@@ -125,9 +125,9 @@ columns.
 With another two-column table based on the \code{\link{exibble}} dataset, let's create
 a \strong{gt} table. First, we'll replace missing values with the \code{\link[=sub_missing]{sub_missing()}}
 function. Next, we'll add styling to the \code{char} column. This styling will be
-HTML-specific and involves (within a list): (1) a \code{\link[=cell_fill]{cell_fill()}} call (to set
-a \code{"lightcyan"} background), and (2) a string containing with a CSS style
-declaration (\code{"font-variant: small-caps;"}).
+HTML-specific and it will involve (all within a list): (1) a \code{\link[=cell_fill]{cell_fill()}}
+call (to set a \code{"lightcyan"} background), and (2) a string containing a CSS
+style declaration (\code{"font-variant: small-caps;"}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(char, fctr) |>
@@ -144,6 +144,101 @@ declaration (\code{"font-variant: small-caps;"}).
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_3.png" alt="This image of a table was generated from the third code example in the `tab_style()` help file." style="width:100\%;">
+}}
+
+In the following table based on the \code{\link{towny}} dataset, we'll use a larger
+number of \code{tab_style()} calls with the aim of styling each location available
+in the table. Over six separate uses of \code{tab_style()}, different body cells
+are styled with background colors, the header and the footer also receive
+background color fills, borders are applied to a column of body cells and
+also to the column labels, and, the row labels in the stub receive a custom
+text treatment.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
+  dplyr::filter(csd_type == "city") |>
+  dplyr::arrange(desc(population_2021)) |>
+  dplyr::select(
+    name, land_area_km2, density_2016, density_2021,
+    population_2016, population_2021
+  ) |>
+  dplyr::slice_head(n = 5) |>
+  gt(rowname_col = "name") |>
+  tab_header(
+    title = md(paste("Largest Five", fontawesome::fa("city") , "in `towny`")),
+    subtitle = "Changes in vital numbers from 2016 to 2021."
+  ) |>
+  fmt_number(
+    columns = starts_with("population"),
+    n_sigfig = 3,
+    suffixing = TRUE
+  ) |>
+  fmt_integer(columns = starts_with("density")) |>
+  fmt_number(columns = land_area_km2, decimals = 1) |>
+  cols_merge(
+    columns = starts_with("density"),
+    pattern = paste("\{1\}", fontawesome::fa("arrow-right"), "\{2\}")
+  ) |>
+  cols_merge(
+    columns = starts_with("population"),
+    pattern = paste("\{1\}", fontawesome::fa("arrow-right"), "\{2\}")
+  ) |>
+  cols_label(
+    land_area_km2 = md("Area, km^2^"),
+    starts_with("density") ~ md("Density, ppl/km^2^"),
+    starts_with("population") ~ "Population"
+  ) |>
+  cols_align(align = "center", columns = -name) |>
+  cols_width(
+    stub() ~ px(125),
+    everything() ~ px(150)
+  ) |>
+  tab_footnote(
+    footnote = "Data was used from their respective census-year publications.",
+    locations = cells_title(groups = "subtitle")
+  ) |>
+  tab_source_note(source_note = md(
+    "All figures are compiled in the `towny` dataset (in the **gt** package)."
+  )) |>
+  opt_footnote_marks(marks = "letters") |>
+  tab_style(
+    style = list(
+      cell_fill(color = "gray95"),
+      cell_borders(sides = c("l", "r"), color = "gray50", weight = px(3))
+    ),
+    locations = cells_body(columns = land_area_km2)
+  ) |>
+  tab_style(
+    style = cell_fill(color = "lightblue" |> adjust_luminance(steps = 2)),
+    locations = cells_body(columns = -land_area_km2)
+  ) |>
+  tab_style(
+    style = list(cell_fill(color = "gray35"), cell_text(color = "white")),
+    locations = list(cells_footnotes(), cells_source_notes())
+  ) |>
+  tab_style(
+    style = cell_fill(color = "gray98"),
+    locations = cells_title()
+  ) |>
+  tab_style(
+    style = cell_text(
+      size = "smaller",
+      weight = "bold",
+      transform = "uppercase"
+    ),
+    locations = cells_stub()
+  ) |>
+  tab_style(
+    style = cell_borders(
+      sides = c("t", "b"),
+      color = "powderblue",
+      weight = px(3)
+    ),
+    locations = list(cells_column_labels(), cells_stubhead())
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_4.png" alt="This image of a table was generated from the fourth code example in the `tab_style()` help file." style="width:100\%;">
 }}
 }
 

@@ -1803,10 +1803,10 @@ tab_stub_indent <- function(
 #'   the footnote text to different types of locations (e.g., body cells, row
 #'   group labels, the table title, etc.).
 #' @param placement Where to affix footnote marks to the table content. Two
-#'   options for this are `"left` or `"right"`, where the placement is to the
-#'   absolute left or right of the cell content. By default, however, this is
-#'   set to `"auto"` whereby **gt** will choose a preferred left-or-right
-#'   placement depending on the alignment of the cell content.
+#'   options for this are `"left` or `"right"`, where the placement is either to
+#'   the absolute left or right of the cell content. By default, however, this
+#'   option is set to `"auto"` whereby **gt** will choose a preferred
+#'   left-or-right placement depending on the alignment of the cell content.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -1874,17 +1874,19 @@ tab_stub_indent <- function(
 #'
 #' Within [tab_options()] there are two arguments that control the typesetting
 #' of footnotes. With `footnotes.multiline`, we have a setting that determines
-#' whether each footnotes will start on a new line or whether they are combined
+#' whether each footnote will start on a new line, or, whether they are combined
 #' into a single block of text. The default for this is `TRUE`, but, if `FALSE`
-#' we can control the separator between the footnotes with the `footnotes.sep`
-#' argument. By default, this is set to a single space character `" "`.
+#' we can control the separator between consecutive footnotes with the
+#' `footnotes.sep` argument. By default, this is set to a single space character
+#' (`" "`).
 #'
 #' @section Examples:
 #'
 #' Using a subset of the [`sza`] dataset, let's create a new **gt** table. The
-#' `sza` will get a background fills according to data values with
-#' [data_color()] and then the use of `tab_footnote()` let's us add a footnote
-#' to the `sza` column label (explaining what the color gradient signifies).
+#' body cells in the `sza` column will receive background color fills according
+#' to their data values (with the [data_color()] function). After that, the use
+#' of `tab_footnote()` lets us add a footnote to the `sza` column label
+#' (explaining what the color gradient signifies).
 #'
 #' ```r
 #' sza |>
@@ -1951,12 +1953,13 @@ tab_stub_indent <- function(
 #' }}
 #'
 #' Text in the footer (both from footnotes and also from source notes) tends to
-#' widen the table and all the columns within in. We can limit that setting
-#' column widths, which is what was done above with [cols_width()]. There can
-#' also be a correspondingly large amount of vertical space taken up by the
-#' footer since footnotes will, by default, each start on a new line. In the
-#' above example, we used `tab_options(footnotes.multiline = FALSE)` to make it
-#' so that all footer text is contained in a single block of text.
+#' widen the table and, by extension, all the columns within it. We can limit
+#' that by explicitly setting column width values, which is what was done above
+#' with [cols_width()]. There can also be a correspondingly large amount of
+#' vertical space taken up by the footer since footnotes will, by default, each
+#' start on a new line. In the above example, we used
+#' `tab_options(footnotes.multiline = FALSE)` to make it so that all footer text
+#' is contained in a single block of text.
 #'
 #' Let's move on to another footnote-laden table, this one based on the
 #' [`towny`] dataset. We have a header part, with a title and a subtitle. We
@@ -2059,11 +2062,12 @@ tab_stub_indent <- function(
 #' }}
 #'
 #' Aside from changing the footnote marks to be `"LETTERS"`, we've also changed
-#' the way the marks are formatted. In [opt_footnote_spec()] the `spec_ref`
-#' option, governing the footnote marks across the table, describes marks that
-#' are italicized and set between square brackets (`"i[x]"`). The `spec_ftr`
-#' argument is for the footer representation of the footnote marks and as
-#' described in the call with `"x."`, it'll be the mark followed by a period.
+#' the way the marks are formatted. In [opt_footnote_spec()], the `spec_ref`
+#' option governs the footnote marks across the table. Here, we describe marks
+#' that are italicized and set between square brackets (with `"i[x]"`). The
+#' `spec_ftr` argument is used for the footer representation of the footnote
+#' marks. As described in the example with `"x."`, it will be rendered as the
+#' footnote mark followed by a period.
 #'
 #' @family part creation/modification functions
 #' @section Function ID:
@@ -2621,7 +2625,7 @@ tab_caption <- function(
 #' `r man_get_image_tag(file = "man_tab_style_1.png")`
 #' }}
 #'
-#' Let's use a subset of the [`sp500`] dataset to create a different **gt**
+#' With a subset of the [`sp500`] dataset, we'll create a different **gt**
 #' table. Here, we'll color the background of entire rows of body cells and do
 #' so on the basis of value expressions involving the `open` and `close`
 #' columns.
@@ -2654,9 +2658,9 @@ tab_caption <- function(
 #' With another two-column table based on the [`exibble`] dataset, let's create
 #' a **gt** table. First, we'll replace missing values with the [sub_missing()]
 #' function. Next, we'll add styling to the `char` column. This styling will be
-#' HTML-specific and involves (within a list): (1) a [cell_fill()] call (to set
-#' a `"lightcyan"` background), and (2) a string containing with a CSS style
-#' declaration (`"font-variant: small-caps;"`).
+#' HTML-specific and it will involve (all within a list): (1) a [cell_fill()]
+#' call (to set a `"lightcyan"` background), and (2) a string containing a CSS
+#' style declaration (`"font-variant: small-caps;"`).
 #'
 #' ```r
 #' exibble |>
@@ -2674,6 +2678,102 @@ tab_caption <- function(
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_tab_style_3.png")`
+#' }}
+#'
+#' In the following table based on the [`towny`] dataset, we'll use a larger
+#' number of `tab_style()` calls with the aim of styling each location available
+#' in the table. Over six separate uses of `tab_style()`, different body cells
+#' are styled with background colors, the header and the footer also receive
+#' background color fills, borders are applied to a column of body cells and
+#' also to the column labels, and, the row labels in the stub receive a custom
+#' text treatment.
+#'
+#' ```r
+#' towny |>
+#'   dplyr::filter(csd_type == "city") |>
+#'   dplyr::arrange(desc(population_2021)) |>
+#'   dplyr::select(
+#'     name, land_area_km2, density_2016, density_2021,
+#'     population_2016, population_2021
+#'   ) |>
+#'   dplyr::slice_head(n = 5) |>
+#'   gt(rowname_col = "name") |>
+#'   tab_header(
+#'     title = md(paste("Largest Five", fontawesome::fa("city") , "in `towny`")),
+#'     subtitle = "Changes in vital numbers from 2016 to 2021."
+#'   ) |>
+#'   fmt_number(
+#'     columns = starts_with("population"),
+#'     n_sigfig = 3,
+#'     suffixing = TRUE
+#'   ) |>
+#'   fmt_integer(columns = starts_with("density")) |>
+#'   fmt_number(columns = land_area_km2, decimals = 1) |>
+#'   cols_merge(
+#'     columns = starts_with("density"),
+#'     pattern = paste("{1}", fontawesome::fa("arrow-right"), "{2}")
+#'   ) |>
+#'   cols_merge(
+#'     columns = starts_with("population"),
+#'     pattern = paste("{1}", fontawesome::fa("arrow-right"), "{2}")
+#'   ) |>
+#'   cols_label(
+#'     land_area_km2 = md("Area, km^2^"),
+#'     starts_with("density") ~ md("Density, ppl/km^2^"),
+#'     starts_with("population") ~ "Population"
+#'   ) |>
+#'   cols_align(align = "center", columns = -name) |>
+#'   cols_width(
+#'     stub() ~ px(125),
+#'     everything() ~ px(150)
+#'   ) |>
+#'   tab_footnote(
+#'     footnote = "Data was used from their respective census-year publications.",
+#'     locations = cells_title(groups = "subtitle")
+#'   ) |>
+#'   tab_source_note(source_note = md(
+#'     "All figures are compiled in the `towny` dataset (in the **gt** package)."
+#'   )) |>
+#'   opt_footnote_marks(marks = "letters") |>
+#'   tab_style(
+#'     style = list(
+#'       cell_fill(color = "gray95"),
+#'       cell_borders(sides = c("l", "r"), color = "gray50", weight = px(3))
+#'     ),
+#'     locations = cells_body(columns = land_area_km2)
+#'   ) |>
+#'   tab_style(
+#'     style = cell_fill(color = "lightblue" |> adjust_luminance(steps = 2)),
+#'     locations = cells_body(columns = -land_area_km2)
+#'   ) |>
+#'   tab_style(
+#'     style = list(cell_fill(color = "gray35"), cell_text(color = "white")),
+#'     locations = list(cells_footnotes(), cells_source_notes())
+#'   ) |>
+#'   tab_style(
+#'     style = cell_fill(color = "gray98"),
+#'     locations = cells_title()
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(
+#'       size = "smaller",
+#'       weight = "bold",
+#'       transform = "uppercase"
+#'     ),
+#'     locations = cells_stub()
+#'   ) |>
+#'   tab_style(
+#'     style = cell_borders(
+#'       sides = c("t", "b"),
+#'       color = "powderblue",
+#'       weight = px(3)
+#'     ),
+#'     locations = list(cells_column_labels(), cells_stubhead())
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_style_4.png")`
 #' }}
 #'
 #' @family part creation/modification functions
