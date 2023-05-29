@@ -188,7 +188,7 @@ with different columns and rows being targeted.</p>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_1.png" alt="This image of a table was generated from the first code example in the `tab_style()` help file." style="width:100%;"></p>
-<p>Let's use a subset of the <code><a href="sp500.html">sp500</a></code> dataset to create a different <strong>gt</strong>
+<p>With a subset of the <code><a href="sp500.html">sp500</a></code> dataset, we'll create a different <strong>gt</strong>
 table. Here, we'll color the background of entire rows of body cells and do
 so on the basis of value expressions involving the <code>open</code> and <code>close</code>
 columns.</p>
@@ -214,9 +214,9 @@ columns.</p>
 <p>With another two-column table based on the <code><a href="exibble.html">exibble</a></code> dataset, let's create
 a <strong>gt</strong> table. First, we'll replace missing values with the <code><a href="sub_missing.html">sub_missing()</a></code>
 function. Next, we'll add styling to the <code>char</code> column. This styling will be
-HTML-specific and involves (within a list): (1) a <code><a href="cell_fill.html">cell_fill()</a></code> call (to set
-a <code>"lightcyan"</code> background), and (2) a string containing with a CSS style
-declaration (<code>"font-variant: small-caps;"</code>).</p>
+HTML-specific and it will involve (all within a list): (1) a <code><a href="cell_fill.html">cell_fill()</a></code>
+call (to set a <code>"lightcyan"</code> background), and (2) a string containing a CSS
+style declaration (<code>"font-variant: small-caps;"</code>).</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">char</span>, <span class="va">fctr</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -229,6 +229,95 @@ declaration (<code>"font-variant: small-caps;"</code>).</p>
 <span>    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">char</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_3.png" alt="This image of a table was generated from the third code example in the `tab_style()` help file." style="width:100%;"></p>
+<p>In the following table based on the <code><a href="towny.html">towny</a></code> dataset, we'll use a larger
+number of <code>tab_style()</code> calls with the aim of styling each location available
+in the table. Over six separate uses of <code>tab_style()</code>, different body cells
+are styled with background colors, the header and the footer also receive
+background color fills, borders are applied to a column of body cells and
+also to the column labels, and, the row labels in the stub receive a custom
+text treatment.</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">towny</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">csd_type</span> <span class="op">==</span> <span class="st">"city"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">population_2021</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span></span>
+<span>    <span class="va">name</span>, <span class="va">land_area_km2</span>, <span class="va">density_2016</span>, <span class="va">density_2021</span>,</span>
+<span>    <span class="va">population_2016</span>, <span class="va">population_2021</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"name"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_header.html">tab_header</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Largest Five"</span>, <span class="fu">fontawesome</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/fontawesome/reference/fa.html" class="external-link">fa</a></span><span class="op">(</span><span class="st">"city"</span><span class="op">)</span> , <span class="st">"in `towny`"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    subtitle <span class="op">=</span> <span class="st">"Changes in vital numbers from 2016 to 2021."</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"population"</span><span class="op">)</span>,</span>
+<span>    n_sigfig <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>    suffixing <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_integer.html">fmt_integer</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"density"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">land_area_km2</span>, decimals <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_merge.html">cols_merge</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"density"</span><span class="op">)</span>,</span>
+<span>    pattern <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"{1}"</span>, <span class="fu">fontawesome</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/fontawesome/reference/fa.html" class="external-link">fa</a></span><span class="op">(</span><span class="st">"arrow-right"</span><span class="op">)</span>, <span class="st">"{2}"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_merge.html">cols_merge</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"population"</span><span class="op">)</span>,</span>
+<span>    pattern <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"{1}"</span>, <span class="fu">fontawesome</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/fontawesome/reference/fa.html" class="external-link">fa</a></span><span class="op">(</span><span class="st">"arrow-right"</span><span class="op">)</span>, <span class="st">"{2}"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_label.html">cols_label</a></span><span class="op">(</span></span>
+<span>    land_area_km2 <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span><span class="st">"Area, km^2^"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"density"</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span><span class="st">"Density, ppl/km^2^"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"population"</span><span class="op">)</span> <span class="op">~</span> <span class="st">"Population"</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_align.html">cols_align</a></span><span class="op">(</span>align <span class="op">=</span> <span class="st">"center"</span>, columns <span class="op">=</span> <span class="op">-</span><span class="va">name</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_width.html">cols_width</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="../reference/stub.html">stub</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">125</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">150</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_footnote.html">tab_footnote</a></span><span class="op">(</span></span>
+<span>    footnote <span class="op">=</span> <span class="st">"Data was used from their respective census-year publications."</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_title.html">cells_title</a></span><span class="op">(</span>groups <span class="op">=</span> <span class="st">"subtitle"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_source_note.html">tab_source_note</a></span><span class="op">(</span>source_note <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span></span>
+<span>    <span class="st">"All figures are compiled in the `towny` dataset (in the **gt** package)."</span></span>
+<span>  <span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/opt_footnote_marks.html">opt_footnote_marks</a></span><span class="op">(</span>marks <span class="op">=</span> <span class="st">"letters"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      <span class="fu"><a href="../reference/cell_fill.html">cell_fill</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"gray95"</span><span class="op">)</span>,</span>
+<span>      <span class="fu"><a href="../reference/cell_borders.html">cell_borders</a></span><span class="op">(</span>sides <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"l"</span>, <span class="st">"r"</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"gray50"</span>, weight <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">land_area_km2</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_fill.html">cell_fill</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"lightblue"</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/adjust_luminance.html">adjust_luminance</a></span><span class="op">(</span>steps <span class="op">=</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="op">-</span><span class="va">land_area_km2</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/cell_fill.html">cell_fill</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"gray35"</span><span class="op">)</span>, <span class="fu"><a href="../reference/cell_text.html">cell_text</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/cells_footnotes.html">cells_footnotes</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="../reference/cells_source_notes.html">cells_source_notes</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_fill.html">cell_fill</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"gray98"</span><span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_title.html">cells_title</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_text.html">cell_text</a></span><span class="op">(</span></span>
+<span>      size <span class="op">=</span> <span class="st">"smaller"</span>,</span>
+<span>      weight <span class="op">=</span> <span class="st">"bold"</span>,</span>
+<span>      transform <span class="op">=</span> <span class="st">"uppercase"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_stub.html">cells_stub</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_borders.html">cell_borders</a></span><span class="op">(</span></span>
+<span>      sides <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"t"</span>, <span class="st">"b"</span><span class="op">)</span>,</span>
+<span>      color <span class="op">=</span> <span class="st">"powderblue"</span>,</span>
+<span>      weight <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/cells_column_labels.html">cells_column_labels</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="../reference/cells_stubhead.html">cells_stubhead</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_4.png" alt="This image of a table was generated from the fourth code example in the `tab_style()` help file." style="width:100%;"></p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>

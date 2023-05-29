@@ -165,10 +165,10 @@ group labels, the table title, etc.).</p></dd>
 
 <dt>placement</dt>
 <dd><p>Where to affix footnote marks to the table content. Two
-options for this are <code>"left</code> or <code>"right"</code>, where the placement is to the
-absolute left or right of the cell content. By default, however, this is
-set to <code>"auto"</code> whereby <strong>gt</strong> will choose a preferred left-or-right
-placement depending on the alignment of the cell content.</p></dd>
+options for this are <code>"left</code> or <code>"right"</code>, where the placement is either to
+the absolute left or right of the cell content. By default, however, this
+option is set to <code>"auto"</code> whereby <strong>gt</strong> will choose a preferred
+left-or-right placement depending on the alignment of the cell content.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -242,10 +242,11 @@ helpful placeholder for the marks).</p>
 
 <p>Within <code><a href="tab_options.html">tab_options()</a></code> there are two arguments that control the typesetting
 of footnotes. With <code>footnotes.multiline</code>, we have a setting that determines
-whether each footnotes will start on a new line or whether they are combined
+whether each footnote will start on a new line, or, whether they are combined
 into a single block of text. The default for this is <code>TRUE</code>, but, if <code>FALSE</code>
-we can control the separator between the footnotes with the <code>footnotes.sep</code>
-argument. By default, this is set to a single space character <code>" "</code>.</p>
+we can control the separator between consecutive footnotes with the
+<code>footnotes.sep</code> argument. By default, this is set to a single space character
+(<code>" "</code>).</p>
 </div>
 
     </div>
@@ -255,9 +256,10 @@ argument. By default, this is set to a single space character <code>" "</code>.<
 
 
 <p>Using a subset of the <code><a href="sza.html">sza</a></code> dataset, let's create a new <strong>gt</strong> table. The
-<code>sza</code> will get a background fills according to data values with
-<code><a href="data_color.html">data_color()</a></code> and then the use of <code>tab_footnote()</code> let's us add a footnote
-to the <code>sza</code> column label (explaining what the color gradient signifies).</p>
+body cells in the <code>sza</code> column will receive background color fills according
+to their data values (with the <code><a href="data_color.html">data_color()</a></code> function). After that, the use
+of <code>tab_footnote()</code> lets us add a footnote to the <code>sza</code> column label
+(explaining what the color gradient signifies).</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">sza</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span></span>
 <span>    <span class="va">latitude</span> <span class="op">==</span> <span class="fl">20</span> <span class="op">&amp;</span></span>
@@ -310,12 +312,13 @@ observe the effect in the footer).</p>
 <span>  <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>footnotes.multiline <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_footnote_2.png" alt="This image of a table was generated from the second code example in the `tab_footnote()` help file." style="width:100%;"></p>
 <p>Text in the footer (both from footnotes and also from source notes) tends to
-widen the table and all the columns within in. We can limit that setting
-column widths, which is what was done above with <code><a href="cols_width.html">cols_width()</a></code>. There can
-also be a correspondingly large amount of vertical space taken up by the
-footer since footnotes will, by default, each start on a new line. In the
-above example, we used <code>tab_options(footnotes.multiline = FALSE)</code> to make it
-so that all footer text is contained in a single block of text.</p>
+widen the table and, by extension, all the columns within it. We can limit
+that by explicitly setting column width values, which is what was done above
+with <code><a href="cols_width.html">cols_width()</a></code>. There can also be a correspondingly large amount of
+vertical space taken up by the footer since footnotes will, by default, each
+start on a new line. In the above example, we used
+<code>tab_options(footnotes.multiline = FALSE)</code> to make it so that all footer text
+is contained in a single block of text.</p>
 <p>Let's move on to another footnote-laden table, this one based on the
 <code><a href="towny.html">towny</a></code> dataset. We have a header part, with a title and a subtitle. We
 can choose which of these could be associated with a footnote and in this
@@ -402,11 +405,12 @@ whatsoever. This is done by not providing anything to <code>locations</code>. Th
 <span>  <span class="fu"><a href="../reference/opt_footnote_spec.html">opt_footnote_spec</a></span><span class="op">(</span>spec_ref <span class="op">=</span> <span class="st">"i[x]"</span>, spec_ftr <span class="op">=</span> <span class="st">"x."</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_footnote_4.png" alt="This image of a table was generated from the fourth code example in the `tab_footnote()` help file." style="width:100%;"></p>
 <p>Aside from changing the footnote marks to be <code>"LETTERS"</code>, we've also changed
-the way the marks are formatted. In <code><a href="opt_footnote_spec.html">opt_footnote_spec()</a></code> the <code>spec_ref</code>
-option, governing the footnote marks across the table, describes marks that
-are italicized and set between square brackets (<code>"i[x]"</code>). The <code>spec_ftr</code>
-argument is for the footer representation of the footnote marks and as
-described in the call with <code>"x."</code>, it'll be the mark followed by a period.</p>
+the way the marks are formatted. In <code><a href="opt_footnote_spec.html">opt_footnote_spec()</a></code>, the <code>spec_ref</code>
+option governs the footnote marks across the table. Here, we describe marks
+that are italicized and set between square brackets (with <code>"i[x]"</code>). The
+<code>spec_ftr</code> argument is used for the footer representation of the footnote
+marks. As described in the example with <code>"x."</code>, it will be rendered as the
+footnote mark followed by a period.</p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
