@@ -7378,13 +7378,13 @@ fmt_flag <- function(
 
                 flag_svg <-
                   flag_tbl[
-                    flag_tbl[["country_code"]] == countries[y],
+                    flag_tbl[["country_code_2"]] == countries[y],
                   ][["country_flag"]]
 
                 if (use_title) {
                   flag_title <-
                     flag_tbl[
-                      flag_tbl[["country_code"]] == countries[y],
+                      flag_tbl[["country_code_2"]] == countries[y],
                     ][["country_name"]]
                 }
 
