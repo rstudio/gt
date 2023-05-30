@@ -682,7 +682,7 @@ data_color <- function(
       # function if it is not present
       rlang::check_installed(
         "paletteer",
-        reason = "for accessing paletttes with the <package>::<palette> syntax"
+        reason = "for accessing palettes with the <package>::<palette> syntax."
         )
 
       # Parse the `palette` string and extract the two different

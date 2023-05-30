@@ -134,7 +134,7 @@ dt_boxhead_add_var <- function(
 
   if (add_where == "top") {
     dt_boxhead <- dplyr::bind_rows(dt_boxhead_row, dt_boxhead)
-  } else if(add_where == "bottom") {
+  } else if (add_where == "bottom") {
     dt_boxhead <- dplyr::bind_rows(dt_boxhead, dt_boxhead_row)
   }
 
