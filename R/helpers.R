@@ -259,7 +259,7 @@ pct <- function(x) {
 #'
 #' ```r
 #' tbl <-
-#'   dplyr::tibble(
+#'   tibble::tibble(
 #'     row = 1:6,
 #'     group = c(rep("Group A", 3), rep("Group B", 3)),
 #'     vals = 1:6
@@ -2582,7 +2582,7 @@ cell_style_structure <- function(name, obj, subclass = name) {
 #' of increasingly darker palettes (with [data_color()]).
 #'
 #' ```r
-#' dplyr::tibble(a = 1:8, b = 1:8, c = 1:8) |>
+#' tibble::tibble(a = 1:8, b = 1:8, c = 1:8) |>
 #'   gt() |>
 #'   data_color(
 #'     columns = a,

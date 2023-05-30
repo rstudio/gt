@@ -723,7 +723,7 @@ grp_options <- function(
   arg_vals <- set_super_options(arg_vals = arg_vals)
 
   new_df <-
-    dplyr::tibble(
+    tibble::tibble(
       parameter = tidy_gsub(names(arg_vals), ".", "_", fixed = TRUE),
       value = unname(arg_vals)
     )
@@ -801,7 +801,7 @@ init_gt_group_list <- function() {
 
 generate_gt_tbl_tbl_0 <- function() {
 
-  dplyr::tibble(
+  tibble::tibble(
     i = NA_integer_,
     gt_tbl = list(),
     column_names = list(),
@@ -824,7 +824,7 @@ generate_gt_tbl_tbl_i <- function(i, gt_tbl, active = TRUE) {
 
   gt_tbl_info_list <- generate_gt_tbl_info_list(gt_tbl = gt_tbl)
 
-  dplyr::tibble(
+  tibble::tibble(
     i = i,
     gt_tbl = list(gt_tbl),
     column_names = list(gt_tbl_info_list$column_names),

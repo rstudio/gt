@@ -3758,7 +3758,7 @@ tab_options <- function(
   arg_vals <- set_super_options(arg_vals = arg_vals)
 
   new_df <-
-    dplyr::tibble(
+    tibble::tibble(
       parameter = tidy_gsub(names(arg_vals), ".", "_", fixed = TRUE),
       value = unname(arg_vals)
     )

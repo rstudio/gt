@@ -35,7 +35,7 @@ dt_spanners_set <- function(data, spanners) {
 dt_spanners_init <- function(data) {
 
   spanners <-
-    dplyr::tibble(
+    tibble::tibble(
       # Column names that are part of the spanner
       vars = list(),
       # The spanner label
@@ -87,7 +87,7 @@ dt_spanners_add <- function(
   spanners <-
     dplyr::bind_rows(
       spanners,
-      dplyr::tibble(
+      tibble::tibble(
         vars = list(vars),
         spanner_label = list(spanner_label),
         spanner_id = as.character(spanner_id),

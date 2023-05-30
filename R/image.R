@@ -97,7 +97,7 @@
 #' and five times in the subtitle.
 #'
 #' ```r
-#' dplyr::tibble(
+#' tibble::tibble(
 #'   pixels = px(seq(10, 35, 5)),
 #'   image = seq(10, 35, 5)
 #' ) |>
@@ -183,7 +183,7 @@ web_image <- function(
 #' various sizes.
 #'
 #' ```r
-#' dplyr::tibble(
+#' tibble::tibble(
 #'   pixels = px(seq(10, 35, 5)),
 #'   image = seq(10, 35, 5)
 #' ) |>
@@ -290,7 +290,7 @@ local_image <- function(
 #' function.
 #'
 #' ```r
-#' dplyr::tibble(
+#' tibble::tibble(
 #'   text = "Here is a ggplot:",
 #'   ggplot = NA
 #' ) |>

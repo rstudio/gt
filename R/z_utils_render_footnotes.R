@@ -236,7 +236,7 @@ resolve_footnotes_styles <- function(data, tbl_type) {
 
     tbl_column_cells <- tmp %>%
       dplyr::inner_join(
-        dplyr::tibble(
+        tibble::tibble(
           colnum = seq(default_vars),
           colname = default_vars,
           rownum = -1L
@@ -308,7 +308,7 @@ resolve_footnotes_styles <- function(data, tbl_type) {
     }
 
     spanner_label_df <-
-      dplyr::tibble(
+      tibble::tibble(
         grpname = spanner_id,
         colname = spanner_start_colname,
         colnum = spanner_start_colnum,
@@ -348,7 +348,7 @@ resolve_footnotes_styles <- function(data, tbl_type) {
     # Generate a lookup table with ID'd footnote
     # text elements (that are distinct)
     # tmp <- unique(tbl$footnotes[tbl$locname != "none"])
-    # lookup_tbl <- dplyr::tibble(footnotes = tmp, fs_id = rownames(tmp))
+    # lookup_tbl <- tibble::tibble(footnotes = tmp, fs_id = rownames(tmp))
 
     lookup_tbl <-
       dplyr::filter(tbl, locname != "none") %>%

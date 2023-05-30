@@ -287,7 +287,7 @@ fmt_missing <- function(
 #' values that could potentially undergo some substitution.
 #'
 #' ```{r}
-#' tbl <- dplyr::tibble(num = c(10^(-1:2), 0, 0, 10^(4:6)))
+#' tbl <- tibble::tibble(num = c(10^(-1:2), 0, 0, 10^(4:6)))
 #'
 #' tbl
 #' ```
@@ -438,7 +438,7 @@ sub_zero <- function(
 #' values that could potentially undergo some substitution.
 #'
 #' ```{r}
-#' tbl <- dplyr::tibble(num = c(10^(-4:2), 0, NA))
+#' tbl <- tibble::tibble(num = c(10^(-4:2), 0, NA))
 #'
 #' tbl
 #' ```
@@ -690,7 +690,7 @@ sub_small_vals <- function(
 #' values that could potentially undergo some substitution.
 #'
 #' ```{r}
-#' tbl <- dplyr::tibble(num = c(0, NA, 10^(8:14)))
+#' tbl <- tibble::tibble(num = c(0, NA, 10^(8:14)))
 #'
 #' tbl
 #' ```
@@ -964,7 +964,7 @@ check_sub_fn_sign <- function(sign) {
 #'
 #' ```{r}
 #' tbl <-
-#'   dplyr::tibble(
+#'   tibble::tibble(
 #'     num_1 = c(-0.01, 74, NA, 0, 500, 0.001, 84.3),
 #'     int_1 = c(1L, -100000L, 800L, 5L, NA, 1L, -32L),
 #'     lett = LETTERS[1:7]

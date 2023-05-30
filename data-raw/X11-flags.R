@@ -31,7 +31,7 @@ if (length(base::setdiff(flag_file_countries, flag_file_two_lett)) > 0) {
 flag_files <- list.files(flags_dir, full.names = TRUE)
 
 flag_tbl <-
-  dplyr::tibble(
+  tibble::tibble(
     country_code_2 = character(0),
     country_code_3 = character(0),
     country_name = character(0),
@@ -66,7 +66,7 @@ for (i in seq_along(flag_files)) {
   country_flag_i <- paste(flag_file_lines_i, collapse = "")
 
   flag_tbl_i <-
-    dplyr::tibble(
+    tibble::tibble(
       country_code_2 = country_code_2_i,
       country_code_3 = country_code_3_i,
       country_name = country_name_i,

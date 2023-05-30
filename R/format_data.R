@@ -1784,7 +1784,7 @@ fmt_percent <- function(
 #' format the `b` column as *per mille* values with `fmt_partsper()`.
 #'
 #' ```r
-#' dplyr::tibble(x = 0:-5, a = 10^(0:-5), b = a) |>
+#' tibble::tibble(x = 0:-5, a = 10^(0:-5), b = a) |>
 #'   gt(rowname_col = "x") |>
 #'   fmt_scientific(a, decimals = 0) |>
 #'   fmt_partsper(
@@ -2813,7 +2813,7 @@ fmt_currency <- function(
 #' the `roman` column to appear as Roman numerals with `fmt_roman()`.
 #'
 #' ```r
-#' dplyr::tibble(arabic = c(1, 8, 24, 85), roman = arabic) |>
+#' tibble::tibble(arabic = c(1, 8, 24, 85), roman = arabic) |>
 #'   gt(rowname_col = "arabic") |>
 #'   fmt_roman(columns = roman)
 #' ```
@@ -5792,7 +5792,7 @@ values_to_durations <- function(
   for (i in seq_along(x)) {
 
     x_df_i <-
-      dplyr::tibble(
+      tibble::tibble(
         value = numeric(0),
         time_part = character(0),
         formatted = character(0)
@@ -5807,7 +5807,7 @@ values_to_durations <- function(
       x_df_i <-
         dplyr::bind_rows(
           x_df_i,
-          dplyr::tibble(
+          tibble::tibble(
             value = time_part_val,
             time_part = time_p,
             formatted = NA_character_
@@ -6315,7 +6315,7 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 
     # Format the LHS and RHS values
     val_tbl <-
-      dplyr::tibble(
+      tibble::tibble(
         left = as.numeric(x_str_lhs),
         right = as.numeric(x_str_rhs)
       )

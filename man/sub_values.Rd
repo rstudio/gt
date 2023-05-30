@@ -114,7 +114,7 @@ of values that could potentially undergo some substitution via
 \code{sub_values()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <-
-  dplyr::tibble(
+  tibble::tibble(
     num_1 = c(-0.01, 74, NA, 0, 500, 0.001, 84.3),
     int_1 = c(1L, -100000L, 800L, 5L, NA, 1L, -32L),
     lett = LETTERS[1:7]

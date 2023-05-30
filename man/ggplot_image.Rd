@@ -66,7 +66,7 @@ image), then, create a \strong{gt} table. Use the \code{text_transform()} functi
 insert the plot using by calling \code{ggplot_object()} within the user- defined
 function.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tibble::tibble(
   text = "Here is a ggplot:",
   ggplot = NA
 ) |>

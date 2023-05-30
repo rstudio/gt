@@ -182,7 +182,7 @@ example where two columns are defined with \strong{dplyr}'s \code{tibble()} func
 (and no rows are present initially); with two calls of \code{rows_add()}, two
 separate rows are added.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tibble::tibble(
   time = lubridate::POSIXct(),
   event = character(0)
 ) |>
@@ -210,7 +210,7 @@ columns and a stub column since the \code{group} column is used for row group
 labels). Let's add a single row where some of the cell values added
 correspond to columns are resolved on the LHS of the formula expressions:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tibble::tibble(
   group = c("Group A", "Group B", "Group B"),
   id = c("WG-025360", "WG-025361", "WG-025362"),
   a = c(1, 6, 2),

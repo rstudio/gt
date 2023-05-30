@@ -35,7 +35,7 @@ dt_styles_set <- function(data, styles) {
 dt_styles_init <- function(data) {
 
   styles_tbl <-
-    dplyr::tibble(
+    tibble::tibble(
       locname = character(0),
       grpname = character(0),
       colname = character(0),
@@ -67,7 +67,7 @@ dt_styles_add <- function(
     )
 
   result <-
-    dplyr::tibble(
+    tibble::tibble(
       locname = locname,
       grpname = grid$grpname,
       colname = grid$colname,

@@ -21,7 +21,7 @@ Create a tibble that has a \code{row} column (values from \code{1} to \code{6}),
 column, and a \code{vals} column (containing the same values as in \code{row}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <-
-  dplyr::tibble(
+  tibble::tibble(
     row = 1:6,
     group = c(rep("Group A", 3), rep("Group B", 3)),
     vals = 1:6

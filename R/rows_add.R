@@ -192,7 +192,7 @@
 #' separate rows are added.
 #'
 #' ```r
-#' dplyr::tibble(
+#' tibble::tibble(
 #'   time = lubridate::POSIXct(),
 #'   event = character(0)
 #' ) |>
@@ -221,7 +221,7 @@
 #' correspond to columns are resolved on the LHS of the formula expressions:
 #'
 #' ```r
-#' dplyr::tibble(
+#' tibble::tibble(
 #'   group = c("Group A", "Group B", "Group B"),
 #'   id = c("WG-025360", "WG-025361", "WG-025362"),
 #'   a = c(1, 6, 2),

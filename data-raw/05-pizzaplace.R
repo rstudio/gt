@@ -475,7 +475,7 @@ origin <- as.Date(paste0(2015, "-01-01"), tz = "UTC") - lubridate::days(1)
 
 # Create a table with order numbers for the entire 2015 year
 orders_year <-
-  dplyr::tibble(date = as.Date(1:365, origin = origin, tz = "UTC")) %>%
+  tibble::tibble(date = as.Date(1:365, origin = origin, tz = "UTC")) %>%
   dplyr::mutate(dow = wday(date, label = TRUE)) %>%
   dplyr::mutate(busy_day = ifelse(!(dow %in% c("Sat", "Sun")), TRUE, FALSE)) %>%
   dplyr::mutate(busy_night = ifelse(dow %in% c("Fri", "Sat"), TRUE, FALSE)) %>%

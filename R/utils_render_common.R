@@ -285,7 +285,7 @@ get_row_reorder_df <- function(groups, stub_df) {
     indices <- seq_len(nrow(stub_df))
 
     return(
-      dplyr::tibble(
+      tibble::tibble(
         rownum_start = indices,
         rownum_final = indices
       )
@@ -297,7 +297,7 @@ get_row_reorder_df <- function(groups, stub_df) {
   indices <- unlist(indices)
   indices <- order(indices)
 
-  dplyr::tibble(
+  tibble::tibble(
     rownum_start = seq_along(indices),
     rownum_final = indices
   )

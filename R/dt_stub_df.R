@@ -44,7 +44,7 @@ dt_stub_df_init <- function(
 
   # Create the `stub_df` table
   stub_df <-
-    dplyr::tibble(
+    tibble::tibble(
       rownum_i = seq_len(nrow(data_tbl)),
       row_id = rep(NA_character_, nrow(data_tbl)),
       group_id = rep(NA_character_, nrow(data_tbl)),

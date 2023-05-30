@@ -3485,7 +3485,7 @@ vec_fmt_markdown <- function(
 }
 
 gt_one_col <- function(x) {
-  gt(dplyr::tibble(x = x), auto_align = FALSE, process_md = FALSE)
+  gt(tibble::tibble(x = x), auto_align = FALSE, process_md = FALSE)
 }
 
 stop_if_not_vector <- function(x) {

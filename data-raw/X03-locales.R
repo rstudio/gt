@@ -85,7 +85,7 @@ parse_locale <- function(locale) {
 #
 
 locale_metadata_tbl <-
-  dplyr::tibble(
+  tibble::tibble(
     locale = NA_character_,
     lang_name = NA_character_,
     lang_desc = NA_character_,
@@ -102,7 +102,7 @@ for (i in seq_along(all_locales)) {
   locale_metadata_list <- parse_locale(locale = all_locales[i])
 
   locale_metadata_tbl_i <-
-    dplyr::tibble(
+    tibble::tibble(
       locale = all_locales[i],
       lang_name = locale_metadata_list$lang_name,
       lang_desc = locale_metadata_list$lang_desc,
@@ -122,7 +122,7 @@ for (i in seq_along(all_locales)) {
 #
 
 chr_index_tbl <-
-  dplyr::tibble(
+  tibble::tibble(
     locale = NA_character_,
     chr_index = list(letters)
   )[0, ]
@@ -149,7 +149,7 @@ for (i in seq_along(all_locales)) {
   }
 
   chr_index_tbl_i <-
-    dplyr::tibble(
+    tibble::tibble(
       locale = all_locales[i],
       chr_index = list(index_chr)
     )
