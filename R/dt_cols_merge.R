@@ -43,9 +43,7 @@ dt_col_merge_add <- function(data, col_merge) {
 
 dt_col_merge_entry <- function(vars, rows, type, pattern = NULL, ...) {
 
-  if (!(type %in% c("merge", "merge_range", "merge_uncert", "merge_n_pct"))) {
-    cli::cli_abort("Invalid `type` provided.")
-  }
+  arg_match0(type, values = c("merge", "merge_range", "merge_uncert", "merge_n_pct"))
 
   list(
     vars = vars,

@@ -394,7 +394,7 @@ cells_title <- function(groups = c("title", "subtitle")) {
     any(duplicated(groups))
   ) {
     cli::cli_abort(
-      "The input to `groups` must be either \"title\", \"subtitle\", or both."
+      "`groups` must be either {.val title}, {.val subtitle}, or both."
     )
   }
 
@@ -2795,25 +2795,17 @@ escape_latex <- function(text) {
 #'
 #' @export
 gt_latex_dependencies <- function() {
+  check_installed("knitr", "for getting the LaTeX dependency headers.")
 
-  if (requireNamespace("knitr", quietly = TRUE)) {
-
-    knitr::asis_output(
-      paste(
-        "",
-        "% gt packages",
-        paste0("\\usepackage{", latex_packages(), "}", collapse = "\n"),
-        "",
-        sep = "\n"
-      )
+  knitr::asis_output(
+    paste(
+      "",
+      "% gt packages",
+      paste0("\\usepackage{", latex_packages(), "}", collapse = "\n"),
+      "",
+      sep = "\n"
     )
-
-  } else {
-    cli::cli_abort(c(
-      "The `knitr` package is required for getting the LaTeX dependency headers.",
-      "*" = "It can be installed with `install.packages(\"knitr\")`."
-    ))
-  }
+  )
 }
 
 #' Helper function for specifying a font from the *Google Fonts* service

@@ -182,7 +182,7 @@ dt_stub_groupname_has_na <- function(data) {
 
   stub_df <- dt_stub_df_get(data = data)
 
-  any(is.na(stub_df$group_id))
+  anyNA(stub_df$group_id)
 }
 
 dt_stub_components <- function(data) {

@@ -115,7 +115,7 @@ render_gt <- function(
 ) {
 
   # Ensure that the shiny package is available
-  check_shiny()
+  rlang::check_installed("shiny", "to use `render_gt()`.")
 
   # Install the expression as a function
   func <-
@@ -234,21 +234,9 @@ render_gt <- function(
 gt_output <- function(outputId) {
 
   # Ensure that the shiny package is available
-  check_shiny()
+  rlang::check_installed("shiny", "to use `gt_output()`.")
 
   shiny::htmlOutput(outputId)
 }
-
-check_shiny <- function() {
-
-  if (!requireNamespace("shiny", quietly = TRUE)) {
-
-    cli::cli_abort(c(
-      "Please install the `shiny` package before using this function.",
-      "*" = "It can be installed with `install.packages(\"shiny\")`."
-    ))
-  }
-}
-
 #nocov end
 
