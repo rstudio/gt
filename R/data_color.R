@@ -83,14 +83,15 @@
 #'   or `"factor"`. The `"auto"` method will automatically choose the
 #'   `"numeric"` method for numerical input data or the `"factor"` method for
 #'   any non-numeric inputs.
-#' @param palette A vector of color names, the name of an **RColorBrewer**
-#'   palette, the name of a **viridis** palette, or a discrete palette
-#'   accessible from the **paletteer** package using the `<package>::<palette>`
-#'   syntax (e.g., `"wesanderson::IsleofDogs1"`). If providing a vector of
-#'   colors as a palette, each color value provided must either be a color name
-#'   (Only R/X11 color names or CSS 3.0 color names) or a hexadecimal string in
-#'   the form of `"#RRGGBB"` or `"#RRGGBBAA"`. If nothing is provided here, the
-#'   default R color palette is used (i.e., the colors from `palette()`).
+#' @param palette A vector of color names, a color class that can be cast to a
+#'   vector of color names, the name of an **RColorBrewer** palette, the name of
+#'   a **viridis** palette, or a discrete palette accessible from the
+#'   **paletteer** package using the `<package>::<palette>` syntax (e.g.,
+#'   `"wesanderson::IsleofDogs1"`). If providing a vector of colors as a
+#'   palette, each color value provided must either be a color name (Only R/X11
+#'   color names or CSS 3.0 color names) or a hexadecimal string in the form of
+#'   `"#RRGGBB"` or `"#RRGGBBAA"`. If nothing is provided here, the default R
+#'   color palette is used (i.e., the colors from `palette()`).
 #' @param domain The possible values that can be mapped. For the `"numeric"` and
 #'   `"bin"` methods, this can be a numeric range specified with a length of two
 #'   vector. Representative numeric data is needed for the `"quantile"` method
@@ -734,9 +735,16 @@ data_color <- function(
 
       # Getting to this stage means the palette exists in the user's
       # installation of paletteer; extract the palette with the
-      # `paletteer::paletteer_d()` and coerce to a character vector
-      palette <- as.character(paletteer::paletteer_d(palette = palette))
+      # `paletteer::paletteer_d()`
+      palette <- paletteer::paletteer_d(palette = palette)
     }
+
+    # Cast the palette to a character vector for compatibility with
+    # scales:::toPaletteFunc(), which does not have methods for classed color
+    # vectors (such as those in the paletteer package). Casting is done here so
+    # classed color vectors from packages other than paletteer can also be used
+    # with `palette`.
+    palette <- as.character(palette)
   }
 
   # Get the internal data table
