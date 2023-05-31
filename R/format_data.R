@@ -43,90 +43,187 @@
 #' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
 #'
-#' @param data A table object that is created using the [gt()] function.
-#' @param columns The columns to format. Can either be a series of column names
-#'   provided in [c()], a vector of column indices, or a helper function
-#'   focused on selections. The select helper functions are: [starts_with()],
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
+#' @param columns *Columns to target*
+#'
+#'   `<column-targeting expression>` --- *default:* `everything()`
+#'
+#'   Can either be a series of column names provided in [c()], a vector of
+#'   column indices, or a select helper function. Examples of select helper
+#'   functions include [starts_with()], [ends_with()], [contains()],
+#'   [matches()], [one_of()], [num_range()], and [everything()].
+#'
+#' @param rows *Rows to target*
+#'
+#'   `<row-targeting expression>` --- *default:* `everything()`
+#'
+#'   In conjunction with `columns`, we can specify which of their rows should
+#'   undergo formatting. The default [everything()] results in all rows in
+#'   `columns` being formatted. Alternatively, we can supply a vector of row
+#'   captions within [c()], a vector of row indices, or a select helper
+#'   function. Examples of select helper functions include [starts_with()],
 #'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
-#'   [everything()].
-#' @param rows Optional rows to format. Providing [everything()] (the
-#'   default) results in all rows in `columns` being formatted. Alternatively,
-#'   we can supply a vector of row captions within [c()], a vector of row
-#'   indices, or a helper function focused on selections. The select helper
-#'   functions are: [starts_with()], [ends_with()], [contains()], [matches()],
-#'   [one_of()], [num_range()], and [everything()]. We can also use expressions
-#'   to filter down to the rows we need (e.g.,
-#'   `[colname_1] > 100 & [colname_2] < 50`).
-#' @param decimals An option to specify the exact number of decimal places to
-#'   use. The default number of decimal places is `2`.
-#' @param n_sigfig A option to format numbers to *n* significant figures. By
-#'   default, this is `NULL` and thus number values will be formatted according
-#'   to the number of decimal places set via `decimals`. If opting to format
-#'   according to the rules of significant figures, `n_sigfig` must be a number
-#'   greater than or equal to `1`. Any values passed to the `decimals` and
-#'   `drop_trailing_zeros` arguments will be ignored.
-#' @param drop_trailing_zeros A logical value that allows for removal of
-#'   trailing zeros (those redundant zeros after the decimal mark).
-#' @param drop_trailing_dec_mark A logical value that determines whether decimal
-#'   marks should always appear even if there are no decimal digits to display
-#'   after formatting (e.g, `23` becomes `23.`). The default for this is `TRUE`,
-#'   which means that trailing decimal marks are not shown.
-#' @param use_seps An option to use digit group separators. The type of digit
-#'   group separator is set by `sep_mark` and overridden if a locale ID is
-#'   provided to `locale`. This setting is `TRUE` by default.
-#' @param accounting An option to use accounting style for values. With `FALSE`
-#'   (the default), negative values will be shown with a minus sign. Using
-#'   `accounting = TRUE` will put negative values in parentheses.
-#' @param scale_by A value to scale the input. The default is `1.0`. All numeric
-#'   values will be multiplied by this value first before undergoing formatting.
-#'   This value will be ignored if using any of the `suffixing` options (i.e.,
-#'   where `suffixing` is not set to `FALSE`).
-#' @param suffixing An option to scale and apply suffixes to larger numbers
-#'   (e.g., `1924000` can be transformed to `1.92M`). This option can accept a
-#'   logical value, where `FALSE` (the default) will not perform this
-#'   transformation and `TRUE` will apply thousands (`K`), millions (`M`),
-#'   billions (`B`), and trillions (`T`) suffixes after automatic value scaling.
-#'   We can also specify which symbols to use for each of the value ranges by
-#'   using a character vector of the preferred symbols to replace the defaults
-#'   (e.g., `c("k", "Ml", "Bn", "Tr")`).
+#'   [everything()]. We can also use expressions to filter down to the rows we
+#'   need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'
+#' @param decimals *Number of decimal places*
+#'
+#'   `scalar<numeric|integer>(val>=0)` --- *default:* `2`
+#'
+#'   This corresponds to the exact number of decimal places to use. A value
+#'   such as `2.34` can, for example, be formatted with `0` decimal places and
+#'   it would result in `"2"`. With `4` decimal places, the formatted value
+#'   becomes `"2.3400"`. The trailing zeros can be removed with
+#'   `drop_trailing_zeros = TRUE`. If you always need `decimals = 0`, the
+#'   [fmt_integer()] function should be considered.
+#'
+#' @param n_sigfig *Number of significant figures*
+#'
+#'   `scalar<numeric|integer>(val>=1)` --- *default:* `NULL` (`optional`)
+#'
+#'   A option to format numbers to *n* significant figures. By default, this is
+#'   `NULL` and thus number values will be formatted according to the number of
+#'   decimal places set via `decimals`. If opting to format according to the
+#'   rules of significant figures, `n_sigfig` must be a number greater than or
+#'   equal to `1`. Any values passed to the `decimals` and `drop_trailing_zeros`
+#'   arguments will be ignored.
+#'
+#' @param drop_trailing_zeros *Drop any trailing zeros*
+#'
+#'   `scalar<logical>` --- *default:* `FALSE`
+#'
+#'   A logical value that allows for removal of trailing zeros (those redundant
+#'   zeros after the decimal mark).
+#'
+#' @param drop_trailing_dec_mark *Drop the trailing decimal mark*
+#'
+#'   `scalar<logical>` --- *default:* `TRUE`
+#'
+#'   A logical value that determines whether decimal marks should always appear
+#'   even if there are no decimal digits to display after formatting (e.g., `23`
+#'   becomes `23.` if `FALSE`). By default trailing decimal marks are not shown.
+#'
+#' @param use_seps *Use digit group separators*
+#'
+#'   `scalar<logical>` --- *default:* `TRUE`
+#'
+#'   An option to use digit group separators. The type of digit group separator
+#'   is set by `sep_mark` and overridden if a locale ID is provided to `locale`.
+#'   This setting is `TRUE` by default.
+#'
+#' @param accounting *Use accounting style*
+#'
+#'   `scalar<logical>` --- *default:* `FALSE`
+#'
+#'   An option to use accounting style for values. Normally, negative values
+#'   will be shown with a minus sign but using accounting style will instead put
+#'   any negative values in parentheses.
+#'
+#' @param scale_by *Scale values by a fixed multiplier*
+#'
+#'   `scalar<numeric|integer>` --- *default:* `1`
+#'
+#'   All numeric values will be multiplied by the `scale_by` value before
+#'   undergoing formatting. Since the `default` value is `1`, no values will be
+#'   changed unless a different multiplier value is supplied. This value will be
+#'   ignored if using any of the `suffixing` options (i.e., where `suffixing` is
+#'   not set to `FALSE`).
+#'
+#' @param suffixing *Specification for large-number suffixing*
+#'
+#'   `scalar<logical>|vector<character>` --- *default:* `FALSE`
+#'
+#'   The `suffixing` option allows us to scale and apply suffixes to larger
+#'   numbers (e.g., `1924000` can be transformed to `1.92M`). This option can
+#'   accept a logical value, where `FALSE` (the default) will not perform this
+#'   transformation and `TRUE` will apply thousands (`"K"`), millions (`"M"`),
+#'   billions (`"B"`), and trillions (`"T"`) suffixes after automatic value
+#'   scaling.
+#'
+#'   We can alternatively provide a character vector that serves as a
+#'   specification for which symbols are to used for each of the value ranges.
+#'   These preferred symbols will replace the defaults (e.g.,
+#'   `c("k", "Ml", "Bn", "Tr")` replaces `"K"`, `"M"`, `"B"`, and `"T"`).
 #'
 #'   Including `NA` values in the vector will ensure that the particular range
-#'   will either not be included in the transformation (e.g, `c(NA, "M", "B",
-#'   "T")` won't modify numbers in the thousands range) or the range will
-#'   inherit a previous suffix (e.g., with `c("K", "M", NA, "T")`, all numbers
-#'   in the range of millions and billions will be in terms of millions).
+#'   will either not be included in the transformation (e.g.,
+#'   `c(NA, "M", "B", "T")` won't modify numbers at all in the thousands range)
+#'   or the range will inherit a previous suffix (e.g., with
+#'   `c("K", "M", NA, "T")`, all numbers in the range of millions and billions
+#'   will be in terms of millions).
 #'
 #'   Any use of `suffixing` (where it is not set expressly as `FALSE`) means
 #'   that any value provided to `scale_by` will be ignored.
 #'
 #'   If using `system = "ind"` then the default suffix set provided by
-#'   `suffixing = TRUE` will be `c(NA, "L", "Cr")`. This doesn't apply suffixes
-#'   to the thousands range, but does express values in lakhs and crores.
+#'   `suffixing = TRUE` will be the equivalent of `c(NA, "L", "Cr")`. This
+#'   doesn't apply suffixes to the thousands range, but does express values in
+#'   *lakhs* and *crores*.
 #'
-#' @param pattern A formatting pattern that allows for decoration of the
-#'   formatted value. The value itself is represented by `{x}` and all other
-#'   characters are taken to be string literals.
-#' @param sep_mark The mark to use as a separator between groups of digits
-#'   (e.g., using `sep_mark = ","` with `1000` would result in a formatted value
-#'   of `1,000`).
-#' @param dec_mark The character to use as a decimal mark (e.g., using `dec_mark
-#'   = ","` with `0.152` would result in a formatted value of `0,152`).
-#' @param force_sign Should the positive sign be shown for positive values
-#'   (effectively showing a sign for all values except zero)? If so, use `TRUE`
-#'   for this option. The default is `FALSE`, where only negative numbers will
-#'   display a minus sign. This option is disregarded when using accounting
-#'   notation with `accounting = TRUE`.
-#' @param system The numbering system to use. By default, this is the
-#'   international numbering system (`"intl"`) whereby grouping separators
-#'   (i.e., `sep_mark`) are separated by three digits. The alternative system,
-#'   the Indian numbering system (`"ind"`) uses grouping separators that
-#'   correspond to thousand, lakh, crore, and higher quantities.
-#' @param locale An optional locale identifier that can be used for formatting
-#'   the value according the locale's rules. Examples include `"en"` for English
-#'   (United States) and `"fr"` for French (France). The use of a locale ID will
-#'   override any locale-specific values provided. We can use the
-#'   [info_locales()] function as a useful reference for all of the locales that
-#'   are supported.
+#' @param pattern *Specification of the formatting pattern*
+#'
+#'   `scalar<character>` --- *default:* `"{x}"`
+#'
+#'   A formatting pattern that allows for decoration of the formatted value. The
+#'   formatted value is represented by the `{x}` (which can be used multiple
+#'   times, if needed) and all other characters will be interpreted as string
+#'   literals.
+#'
+#' @param sep_mark *Separator mark for digit grouping*
+#'
+#'   `scalar<character>` --- *default:* `","`
+#'
+#'   The string to use as a separator between groups of digits. For example,
+#'   using `sep_mark = ","` with a value of `1000` would result in a formatted
+#'   value of `"1,000"`. This argument is ignored if a `locale` is supplied
+#'   (i.e., is not `NULL`).
+#'
+#' @param dec_mark *Decimal mark*
+#'
+#'   `scalar<character>` --- *default:* `"."`
+#'
+#'   The string to be used as the decimal mark. For example, using
+#'   `dec_mark = ","` with the value `0.152` would result in a formatted value
+#'   of `"0,152"`). This argument is ignored if a `locale` is supplied (i.e., is
+#'   not `NULL`).
+#'
+#' @param force_sign *Forcing the display of a positive sign*
+#'
+#'   `scalar<logical>` --- *default:* `FALSE`
+#'
+#'   Should the positive sign be shown for positive values (effectively showing
+#'   a sign for all values except zero)? If so, use `TRUE` for this option. The
+#'   default is `FALSE`, where only negative numbers will display a minus sign.
+#'   This option is disregarded when using accounting notation with
+#'   `accounting = TRUE`.
+#'
+#' @param system *Numbering system for grouping separators*
+#'
+#'   `singl-kw:[intl|ind]` --- *default:* `"intl"`
+#'
+#'   The international numbering system (keyword: `"intl"`) is widely used and
+#'   its grouping separators (i.e., `sep_mark`) are always separated by three
+#'   digits. The alternative system, the Indian numbering system (keyword:
+#'   `"ind"`), uses grouping separators that correspond to thousand, lakh,
+#'   crore, and higher quantities.
+#'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can use the [info_locales()]
+#'   function as a useful reference for all of the locales that are supported. A
+#'   locale ID can be also set in the initial [gt()] function call (where it
+#'   would be used automatically by any function with a `locale` argument) but a
+#'   `locale` value provided here will override that global locale.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -422,23 +519,36 @@ fmt_number <- function(
 #' formatting specific to the chosen locale
 #'
 #' @inheritParams fmt_number
-#' @param suffixing An option to scale and apply suffixes to larger numbers
-#'   (e.g., `1924000` can be transformed to `2M`). This option can accept a
-#'   logical value, where `FALSE` (the default) will not perform this
+#'
+#' @param suffixing *Specification for large-number suffixing*
+#'
+#'   `scalar<logical>|vector<character>` --- *default:* `FALSE`
+#'
+#'   The `suffixing` option allows us to scale and apply suffixes to larger
+#'   numbers (e.g., `1924000` can be transformed to `2M`). This option can
+#'   accept a logical value, where `FALSE` (the default) will not perform this
 #'   transformation and `TRUE` will apply thousands (`K`), millions (`M`),
 #'   billions (`B`), and trillions (`T`) suffixes after automatic value scaling.
-#'   We can also specify which symbols to use for each of the value ranges by
-#'   using a character vector of the preferred symbols to replace the defaults
-#'   (e.g., `c("k", "Ml", "Bn", "Tr")`).
+#'
+#'   We can alternatively provide a character vector that serves as a
+#'   specification for which symbols are to used for each of the value ranges.
+#'   These preferred symbols will replace the defaults (e.g.,
+#'   `c("k", "Ml", "Bn", "Tr")` replaces `"K"`, `"M"`, `"B"`, and `"T"`).
 #'
 #'   Including `NA` values in the vector will ensure that the particular range
-#'   will either not be included in the transformation (e.g, `c(NA, "M", "B",
-#'   "T")` won't modify numbers in the thousands range) or the range will
-#'   inherit a previous suffix (e.g., with `c("K", "M", NA, "T")`, all numbers
-#'   in the range of millions and billions will be in terms of millions).
+#'   will either not be included in the transformation (e.g.,
+#'   `c(NA, "M", "B", "T")` won't modify numbers at all in the thousands range)
+#'   or the range will inherit a previous suffix (e.g., with
+#'   `c("K", "M", NA, "T")`, all numbers in the range of millions and billions
+#'   will be in terms of millions).
 #'
 #'   Any use of `suffixing` (where it is not set expressly as `FALSE`) means
 #'   that any value provided to `scale_by` will be ignored.
+#'
+#'   If using `system = "ind"` then the default suffix set provided by
+#'   `suffixing = TRUE` will be the equivalent of `c(NA, "L", "Cr")`. This
+#'   doesn't apply suffixes to the thousands range, but does express values in
+#'   *lakhs* and *crores*.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -597,15 +707,31 @@ fmt_integer <- function(
 #' formatting specific to the chosen locale
 #'
 #' @inheritParams fmt_number
-#' @param scale_by A value to scale the input. The default is `1.0`. All numeric
-#'   values will be multiplied by this value first before undergoing formatting.
-#' @param exp_style Style of formatting to use for the scientific notation
-#'   formatting. By default this is `"x10n"` but other options include using
-#'   a single letter (e.g., `"e"`, `"E"`, etc.), a letter followed by a `"1"` to
-#'   signal a minimum digit width of one, or `"low-ten"` for using a stylized
-#'   `"10"` marker.
-#' @param force_sign_m,force_sign_n Should the plus sign be shown for positive
-#'   values of the mantissa (first component) or the exponent? This would
+#'
+#' @param scale_by *Scale values by a fixed multiplier*
+#'
+#'   `scalar<numeric|integer>` --- *default:* `1`
+#'
+#'   All numeric values will be multiplied by the `scale_by` value before
+#'   undergoing formatting. Since the `default` value is `1`, no values will be
+#'   changed unless a different multiplier value is supplied.
+#'
+#' @param exp_style *Style declaration for exponent formatting*
+#'
+#'   `scalar<character>` --- *default:* `"x10n"`
+#'
+#'   Style of formatting to use for the scientific notation formatting. By
+#'   default this is `"x10n"` but other options include using a single letter
+#'   (e.g., `"e"`, `"E"`, etc.), a letter followed by a `"1"` to signal a
+#'   minimum digit width of one, or `"low-ten"` for using a stylized `"10"`
+#'   marker.
+#'
+#' @param force_sign_m,force_sign_n *Forcing the display of a positive sign*
+#'
+#'   `scalar<logical>` --- *default:* `FALSE`
+#'
+#'   Should the plus sign be shown for positive values of the mantissa (first
+#'   component, `force_sign_m`) or the exponent (`force_sign_n`)? This would
 #'   effectively show a sign for all values except zero on either of those
 #'   numeric components of the notation. If so, use `TRUE` for either one of
 #'   these options. The default for both is `FALSE`, where only negative numbers
@@ -965,15 +1091,31 @@ fmt_scientific <- function(
 #' formatting specific to the chosen locale
 #'
 #' @inheritParams fmt_number
-#' @param scale_by A value to scale the input. The default is `1.0`. All numeric
-#'   values will be multiplied by this value first before undergoing formatting.
-#' @param exp_style Style of formatting to use for the engineering notation
-#'   formatting. By default this is `"x10n"` but other options include using
-#'   a single letter (e.g., `"e"`, `"E"`, etc.), a letter followed by a `"1"` to
-#'   signal a minimum digit width of one, or `"low-ten"` for using a stylized
-#'   `"10"` marker.
-#' @param force_sign_m,force_sign_n Should the plus sign be shown for positive
-#'   values of the mantissa (first component) or the exponent? This would
+#'
+#' @param scale_by *Scale values by a fixed multiplier*
+#'
+#'   `scalar<numeric|integer>` --- *default:* `1`
+#'
+#'   All numeric values will be multiplied by the `scale_by` value before
+#'   undergoing formatting. Since the `default` value is `1`, no values will be
+#'   changed unless a different multiplier value is supplied.
+#'
+#' @param exp_style *Style declaration for exponent formatting*
+#'
+#'   `scalar<character>` --- *default:* `"x10n"`
+#'
+#'   Style of formatting to use for the scientific notation formatting. By
+#'   default this is `"x10n"` but other options include using a single letter
+#'   (e.g., `"e"`, `"E"`, etc.), a letter followed by a `"1"` to signal a
+#'   minimum digit width of one, or `"low-ten"` for using a stylized `"10"`
+#'   marker.
+#'
+#' @param force_sign_m,force_sign_n *Forcing the display of a positive sign*
+#'
+#'   `scalar<logical>` --- *default:* `FALSE`
+#'
+#'   Should the plus sign be shown for positive values of the mantissa (first
+#'   component, `force_sign_m`) or the exponent (`force_sign_n`)? This would
 #'   effectively show a sign for all values except zero on either of those
 #'   numeric components of the notation. If so, use `TRUE` for either one of
 #'   these options. The default for both is `FALSE`, where only negative numbers
@@ -1472,14 +1614,29 @@ fmt_symbol <- function(
 #' formatting specific to the chosen locale
 #'
 #' @inheritParams fmt_number
-#' @param scale_values Should the values be scaled through multiplication by
-#'   100? By default this is `TRUE` since the expectation is that normally
-#'   values are proportions. Setting to `FALSE` signifies that the values are
+#'
+#' @param scale_values *Multiply input values by 100*
+#'
+#'   `scalar<logical>` --- *default:* `TRUE`
+#'
+#'   Should the values be scaled through multiplication by 100? By default this
+#'   scaling is performed since the expectation is that incoming values are
+#'   usually proportional. Setting to `FALSE` signifies that the values are
 #'   already scaled and require only the percent sign when formatted.
-#' @param incl_space An option for whether to include a space between the value
-#'   and the percent sign. The default is to not introduce a space character.
-#' @param placement The placement of the percent sign. This can be either be
-#'   `right` (the default) or `left`.
+#'
+#' @param incl_space *Include a space between the value and the % sign*
+#'
+#'   `scalar<logical>` --- *default:* `FALSE`
+#'
+#'   An option for whether to include a space between the value and the percent
+#'   sign. The default is to not introduce a space character.
+#'
+#' @param placement *Percent sign placement*
+#'
+#'   `scalar<character>` --- *default:* `"right"`
+#'
+#'   This option governs the placement of the percent sign. This can be either
+#'   be `right` (the default) or `left`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -1697,22 +1854,42 @@ fmt_percent <- function(
 #' formatting specific to the chosen locale
 #'
 #' @inheritParams fmt_number
-#' @param to_units A keyword that signifies the desired output quantity. This
-#'   can be any from the following set: `"per-mille"`, `"per-myriad"`, `"pcm"`,
-#'   `"ppm"`, `"ppb"`, `"ppt"`, or `"ppq"`.
-#' @param symbol The symbol/units to use for the quantity. By default, this is
-#'   set to `"auto"` and **gt** will choose the appropriate symbol based on the
+#'
+#' @param to_units *Output Quantity*
+#'
+#'   `singl-kw:[per-mille|per-myriad|pcm|ppm|ppb|ppt|ppq]` --- *default:* `"per-mille"`
+#'
+#'   A keyword that signifies the desired output quantity. This can be any from
+#'   the following set: `"per-mille"`, `"per-myriad"`, `"pcm"`, `"ppm"`,
+#'   `"ppb"`, `"ppt"`, or `"ppq"`.
+#'
+#' @param symbol *Symbol or units to use in output display*
+#'
+#'   `scalar<character>` --- *default:* `"auto"`
+#'
+#'   The symbol/units to use for the quantity. By default, this is set to
+#'   `"auto"` and **gt** will choose the appropriate symbol based on the
 #'   `to_units` keyword and the output context. However, this can be changed by
 #'   supplying a string (e.g, using `symbol = "ppbV"` when `to_units = "ppb"`).
-#' @param scale_values Should the values be scaled through multiplication
-#'   according to the keyword set in `to_units`? By default this is `TRUE` since
-#'   the expectation is that normally values are proportions. Setting to `FALSE`
-#'   signifies that the values are already scaled and require only the
-#'   appropriate symbol/units when formatted.
-#' @param incl_space An option for whether to include a space between the value
-#'   and the symbol/units. The default is `"auto"` which provides spacing
-#'   dependent on the mark itself. This can be directly controlled by using
-#'   either `TRUE` or `FALSE`.
+#'
+#' @param scale_values *Scale input values accordingly*
+#'
+#'   `scalar<logical>` --- *default:* `TRUE`
+#'
+#'   Should the values be scaled through multiplication according to the keyword
+#'   set in `to_units`? By default this is `TRUE` since the expectation is that
+#'   normally values are proportions. Setting to `FALSE` signifies that the
+#'   values are already scaled and require only the appropriate symbol/units
+#'   when formatted.
+#'
+#' @param incl_space *Include a space between the value and the symbol/units*
+#'
+#'   `scalar<character>|scalar<logical>` --- *default:* `"auto"`
+#'
+#'   An option for whether to include a space between the value and the
+#'   symbol/units. The default is `"auto"` which provides spacing dependent on
+#'   the mark itself. This can be directly controlled by using either `TRUE` or
+#'   `FALSE`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -1960,21 +2137,36 @@ fmt_partsper <- function(
 #' formatting specific to the chosen locale
 #'
 #' @inheritParams fmt_number
-#' @param accuracy The type of fractions to generate. This can either be one of
-#'   the keywords `"low"`, `"med"`, or `"high"` (to generate fractions with
-#'   denominators of up to 1, 2, or 3 digits, respectively) or an integer value
-#'   greater than zero to obtain fractions with a fixed denominator (`2` yields
-#'   halves, `3` is for thirds, `4` is quarters, etc.). For the latter option,
-#'   using `simplify = TRUE` will simplify fractions where possible (e.g., `2/4`
-#'   will be simplified as `1/2`). By default, the `"low"` option is used.
-#' @param simplify If choosing to provide a numeric value for `accuracy`, the
-#'   option to simplify the fraction (where possible) can be taken with `TRUE`
-#'   (the default). With `FALSE`, denominators in fractions will be fixed to the
+#'
+#' @param accuracy *Accuracy of fractions*
+#'
+#'   `singl-kw:[low|med|high]|scalar<numeric|integer>(val>=1)` --- *default:* `"low"`
+#'
+#'   The type of fractions to generate. This can either be one of the keywords
+#'   `"low"`, `"med"`, or `"high"` (to generate fractions with denominators of
+#'   up to 1, 2, or 3 digits, respectively) or an integer value greater than
+#'   zero to obtain fractions with a fixed denominator (`2` yields halves, `3`
+#'   is for thirds, `4` is quarters, etc.). For the latter option, using
+#'   `simplify = TRUE` will simplify fractions where possible (e.g., `2/4` will
+#'   be simplified as `1/2`). By default, the `"low"` option is used.
+#'
+#' @param simplify *Simplify the fraction*
+#'
+#'   `scalar<logical>` --- *default:* `TRUE`
+#'
+#'   If choosing to provide a numeric value for `accuracy`, the option to
+#'   simplify the fraction (where possible) can be taken with `TRUE` (the
+#'   default). With `FALSE`, denominators in fractions will be fixed to the
 #'   value provided in `accuracy`.
-#' @param layout For HTML output, the `"inline"` layout is the default. This
-#'   layout places the numerals of the fraction on the baseline and uses a
-#'   standard slash character. The `"diagonal"` layout will generate fractions
-#'   that are typeset with raised/lowered numerals and a virgule.
+#'
+#' @param layout *Layout of fractions in HTML output*
+#'
+#'   `singl-kw:[inline|diagonal]` --- *default:* `"inline"`
+#'
+#'   For HTML output, the `"inline"` layout is the default. This layout places
+#'   the numerals of the fraction on the baseline and uses a standard slash
+#'   character. The `"diagonal"` layout will generate fractions that are typeset
+#'   with raised/lowered numerals and a virgule.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -2516,7 +2708,12 @@ round_gt <- function(x, digits = 0) {
 #' the possible inputs to the `currency` argument.
 #'
 #' @inheritParams fmt_number
-#' @param currency The currency to use for the numeric value. This input can be
+#'
+#' @param currency *Currency to use*
+#'
+#'   `scalar<character>|obj:<gt_currency>` --- *default:* `"USD"`
+#'
+#'   The currency to use for the numeric value. This input can be
 #'   supplied as a 3-letter currency code (e.g., `"USD"` for U.S. Dollars,
 #'   `"EUR"` for the Euro currency). Use [info_currencies()] to get an
 #'   information table with all of the valid currency codes and examples of
@@ -2533,14 +2730,28 @@ round_gt <- function(x, digits = 0) {
 #'   the letter "f" in all other output contexts). Please note that `decimals`
 #'   will default to `2` when using the [currency()] helper function.
 #'
-#'   If nothing is provided to `currency` then `"USD"` (U.S. dollars) will be
-#'   used.
-#' @param use_subunits An option for whether the subunits portion of a currency
-#'   value should be displayed. By default, this is `TRUE`.
-#' @param placement The placement of the currency symbol. This can be either be
-#'   `left` (the default) or `right`.
-#' @param incl_space An option for whether to include a space between the value
-#'   and the currency symbol. The default is to not introduce a space character.
+#' @param use_subunits *Show or hide currency subunits*
+#'
+#'   `scalar<logical>` --- *default:* `TRUE`
+#'
+#'   An option for whether the subunits portion of a currency value should be
+#'   displayed. For example, with an input value of `273.81`, the default
+#'   formatting will produce `"$273.81"`. Removing the subunits (with
+#'   `use_subunits = FALSE`) will give us `"$273"`.
+#'
+#' @param placement *Currency symbol placement*
+#'
+#'   `scalar<character>` --- *default:* `"left"`
+#'
+#'   The placement of the currency symbol. This can be either be `left` (as
+#'   in `"$450"`) or `right` (which yields `"450$"`).
+#'
+#' @param incl_space *Include a space between the value and the currency symbol*
+#'
+#'   `scalar<logical>` --- *default:* `FALSE`
+#'
+#'   An option for whether to include a space between the value and the currency
+#'   symbol. The default is to not introduce a space character.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -2756,8 +2967,13 @@ fmt_currency <- function(
 #' numerals, rounding values as necessary.
 #'
 #' @inheritParams fmt_number
-#' @param case Should Roman numerals should be rendered as uppercase (`"upper"`)
-#'   or lowercase (`"lower"`) letters? By default, this is set to `"upper"`.
+#'
+#' @param case *Use uppercase or lowercase letters*
+#'
+#'   `singl-kw:[upper|lower]` --- *default:* `"upper"`
+#'
+#'   Should Roman numerals should be rendered as uppercase (`"upper"`) or
+#'   lowercase (`"lower"`) letters? By default, this is set to `"upper"`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -2925,14 +3141,23 @@ fmt_roman <- function(
 #' diacritical marks).
 #'
 #' @inheritParams fmt_number
-#' @param case Should resulting index characters be rendered as uppercase
-#'   (`"upper"`) or lowercase (`"lower"`) letters? By default, this is set to
-#'   `"upper"`.
-#' @param index_algo The indexing algorithm for handling the recycling of the
-#'   index character set. By default, the `"repeat"` option is used where
-#'   characters are doubled, tripled, and so on, when moving past the character
-#'   set limit. The alternative is the `"excel"` option, where Excel-based
-#'   column naming is adapted and used here (e.g., `[..., Y, Z, AA, AB, ...]`).
+#'
+#' @param case *Use uppercase or lowercase letters*
+#'
+#'   `singl-kw:[upper|lower]` --- *default:* `"upper"`
+#'
+#'   Should the resulting index characters be rendered as uppercase (`"upper"`)
+#'   or lowercase (`"lower"`) letters? By default, this is set to `"upper"`.
+#'
+#' @param index_algo *Indexing algorithm*
+#'
+#'   `singl-kw:[repeat|excel]` --- *default:* `"repeat"`
+#'
+#'   The indexing algorithm handles the recycling of the index character set. By
+#'   default, the `"repeat"` option is used where characters are doubled,
+#'   tripled, and so on, when moving past the character set limit. The
+#'   alternative is the `"excel"` option, where Excel-based column naming is
+#'   adapted and used here (e.g., `[..., Y, Z, AA, AB, ...]`).
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -3466,15 +3691,39 @@ fmt_spelled_num <- function(
 #' formatting specific to the chosen locale
 #'
 #' @inheritParams fmt_number
-#' @param standard The way to express large byte sizes.
-#' @param decimals An option to specify the exact number of decimal places to
-#'   use. The default number of decimal places is `1`.
-#' @param incl_space An option for whether to include a space between the value
-#'   and the units. The default of `TRUE` uses a space character for separation.
-#' @param force_sign Should the positive sign be shown for positive numbers
-#'   (effectively showing a sign for all numbers except zero)? If so, use `TRUE`
-#'   for this option. The default is `FALSE`, where only negative numbers will
-#'   display a minus sign.
+#'
+#' @param standard *Standard used to express byte sizes*
+#'
+#'   `singl-kw:[decimal|binary]` --- *default:* `"decimal"`
+#'
+#'   The form of expressing large byte sizes is divided between: (1) decimal
+#'   units (powers of 1000; e.g., `"kB"` and `"MB"`), and (2) binary units
+#'   (powers of 1024; e.g., `"KiB"` and `"MiB"`).
+#'
+#' @param decimals *Number of decimal places*
+#'
+#'   `scalar<numeric|integer>(val>=0)` --- *default:* `1`
+#'
+#'   This corresponds to the exact number of decimal places to use. A value
+#'   such as `2.34` can, for example, be formatted with `0` decimal places and
+#'   it would result in `"2"`. With `4` decimal places, the formatted value
+#'   becomes `"2.3400"`. The trailing zeros can be removed with
+#'   `drop_trailing_zeros = TRUE`.
+#'
+#' @param force_sign *Forcing the display of a positive sign*
+#'
+#'   `scalar<logical>` --- *default:* `FALSE`
+#'
+#'   Should the positive sign be shown for positive numbers (effectively showing
+#'   a sign for all numbers except zero)? If so, use `TRUE` for this option. The
+#'   default is `FALSE`, where only negative numbers will display a minus sign.
+#'
+#' @param incl_space *Include a space between the value and the units*
+#'
+#'   `scalar<logical>` --- *default:* `TRUE`
+#'
+#'   An option for whether to include a space between the value and the units.
+#'   The default is to use a space character for separation.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -3720,9 +3969,14 @@ fmt_bytes <- function(
 #' `YYYY-MM-DD`).
 #'
 #' @inheritParams fmt_number
-#' @param date_style The date style to use. By default this is `"iso"` which
-#'   corresponds to ISO 8601 date formatting. The other date styles can be
-#'   viewed using [info_date_style()].
+#'
+#' @param date_style *Predefined style for dates*
+#'
+#'   `scalar<character>|scalar<numeric|integer>(1<=val<=41)` --- *default:* `"iso"`
+#'
+#'   The date style to use. By default this is the short name `"iso"` which
+#'   corresponds to ISO 8601 date formatting. There are 41 date styles in total
+#'   and their short names can be viewed using [info_date_style()].
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -4009,9 +4263,15 @@ fmt_date <- function(
 #' always results in the formatting of `00:00:00`).
 #'
 #' @inheritParams fmt_number
-#' @param time_style The time style to use. By default this is `"iso"` which
-#'   corresponds to how times are formatted within ISO 8601 datetime values. The
-#'   other time styles can be viewed using [info_time_style()].
+#'
+#' @param time_style *Predefined style for times*
+#'
+#'   `scalar<character>|scalar<numeric|integer>(1<=val<=25)` --- *default:* `"iso"`
+#'
+#'   The time style to use. By default this is the short name `"iso"` which
+#'   corresponds to how times are formatted within ISO 8601 datetime values.
+#'   There are 25 time styles in total and their short names can be viewed using
+#'   [info_time_style()].
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -4291,16 +4551,33 @@ fmt_time <- function(
 #' in the ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or `YYYY-MM-DD`).
 #'
 #' @inheritParams fmt_number
+#'
 #' @inheritParams fmt_date
+#'
 #' @inheritParams fmt_time
-#' @param sep The separator string to use between the date and time components.
-#'   By default, this is a single space character (`" "`). Only used when not
+#'
+#' @param sep *Separator between date and time components*
+#'
+#'   `scalar<character>` --- *default:* `" "`
+#'
+#'   The separator string to use between the date and time components. By
+#'   default, this is a single space character (`" "`). Only used when not
 #'   specifying a `format` code.
-#' @param format An optional formatting string used for generating custom
-#'   dates/times. If used then the arguments governing preset styles
-#'   (`date_style` and `time_style`) will be ignored in favor of formatting via
-#'   the `format` string.
-#' @param tz The time zone for printing dates/times (i.e., the output). The
+#'
+#' @param format *Date/time formatting string*
+#'
+#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'
+#'   An optional formatting string used for generating custom dates/times. If
+#'   used then the arguments governing preset styles (`date_style` and
+#'   `time_style`) will be ignored in favor of formatting via the `format`
+#'   string.
+#'
+#' @param tz *Time zone*
+#'
+#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'
+#'   The time zone for printing dates/times (i.e., the output). The
 #'   default of `NULL` will preserve the time zone of the input data in the
 #'   output. If providing a time zone, it must be one that is recognized by the
 #'   user's operating system (a vector of all valid `tz` values can be produced
@@ -5282,45 +5559,74 @@ fmt_datetime <- function(
 #' which is `c("days", "hours", "minutes", "seconds")`
 #'
 #' @inheritParams fmt_number
-#' @param input_units If one or more selected columns contains numeric values, a
-#'   keyword must be provided for `input_units` for **gt** to determine how
-#'   those values are to be interpreted in terms of duration. The accepted units
-#'   are: `"seconds"`, `"minutes"`, `"hours"`, `"days"`, and `"weeks"`.
-#' @param output_units Controls the output time units. The default, `NULL`,
-#'   means that **gt** will automatically choose time units based on the input
-#'   duration value. To control which time units are to be considered for output
-#'   (before trimming with `trim_zero_units`) we can specify a vector of one or
-#'   more of the following keywords: `"weeks"`, `"days"`, `"hours"`,
-#'   `"minutes"`, or `"seconds"`.
-#' @param duration_style A choice of four formatting styles for the output
-#'   duration values. With `"narrow"` (the default style), duration values will
-#'   be formatted with single letter time-part units (e.g., 1.35 days will be
-#'   styled as `"1d 8h 24m`). With `"wide"`, this example value will be expanded
-#'   to `"1 day 8 hours 24 minutes"` after formatting. The `"colon-sep"` style
-#'   will put days, hours, minutes, and seconds in the `"([D]/)[HH]:[MM]:[SS]"`
+#'
+#' @param input_units *Declaration of duration units for numerical values*
+#'
+#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'
+#'   If one or more selected columns contains numeric values (not `difftime`
+#'   values, which contain the duration units), a keyword must be provided for
+#'   `input_units` for **gt** to determine how those values are to be
+#'   interpreted in terms of duration. The accepted units are: `"seconds"`,
+#'   `"minutes"`, `"hours"`, `"days"`, and `"weeks"`.
+#'
+#' @param output_units *Choice of output units*
+#'
+#'   `mult-kw:[weeks|days|hours|minutes|seconds]` --- *default:* `NULL` (`optional`)
+#'
+#'   Controls the output time units. The default, `NULL`, means that **gt** will
+#'   automatically choose time units based on the input duration value. To
+#'   control which time units are to be considered for output (before trimming
+#'   with `trim_zero_units`) we can specify a vector of one or more of the
+#'   following keywords: `"weeks"`, `"days"`, `"hours"`, `"minutes"`, or
+#'   `"seconds"`.
+#'
+#' @param duration_style *Style for representing duration values*
+#'
+#'   `singl-kw:[narrow|wide|colon-sep|iso]` --- *default:* `"narrow"`
+#'
+#'   A choice of four formatting styles for the output duration values. With
+#'   `"narrow"` (the default style), duration values will be formatted with
+#'   single letter time-part units (e.g., 1.35 days will be styled as
+#'   `"1d 8h 24m"`). With `"wide"`, this example value will be expanded to
+#'   `"1 day 8 hours 24 minutes"` after formatting. The `"colon-sep"` style will
+#'   put days, hours, minutes, and seconds in the `"([D]/)[HH]:[MM]:[SS]"`
 #'   format. The `"iso"` style will produce a value that conforms to the ISO
 #'   8601 rules for duration values (e.g., 1.35 days will become `"P1DT8H24M"`).
-#' @param trim_zero_units Provides methods to remove output time units that have
-#'   zero values. By default this is `TRUE` and duration values that might
-#'   otherwise be formatted as `"0w 1d 0h 4m 19s"` with
-#'   `trim_zero_units = FALSE` are instead displayed as `"1d 4m 19s"`. Aside
-#'   from using `TRUE`/`FALSE` we could provide a vector of keywords for more
-#'   precise control. These keywords are: (1) `"leading"`, to omit all leading
-#'   zero-value time units (e.g., `"0w 1d"` -> `"1d"`), (2) `"trailing"`, to
-#'   omit all trailing zero-value time units (e.g., `"3d 5h 0s"` -> `"3d 5h"`),
-#'   and `"internal"`, which removes all internal zero-value time units (e.g.,
-#'   `"5d 0h 33m"` -> `"5d 33m"`).
-#' @param max_output_units If `output_units` is `NULL`, where the output time
-#'   units are unspecified and left to **gt** to handle, a numeric value
-#'   provided for `max_output_units` will be taken as the maximum number of time
-#'   units to display in all output time duration values. By default, this is
-#'   `NULL` and all possible time units will be displayed. This option has no
-#'   effect when `duration_style = "colon-sep"` (only `output_units` can be used
-#'   to customize that type of duration output).
-#' @param force_sign Should the positive sign be shown for positive values
-#'   (effectively showing a sign for all values except zero)? If so, use `TRUE`
-#'   for this option. The default is `FALSE`, where only negative value will
-#'   display a minus sign.
+#'
+#' @param trim_zero_units *Trimming of zero values*
+#'
+#'   `scalar<logical>|mult-kw:[leading|trailing|internal]` --- *default:* `TRUE`
+#'
+#'   Provides methods to remove output time units that have zero values. By
+#'   default this is `TRUE` and duration values that might otherwise be
+#'   formatted as `"0w 1d 0h 4m 19s"` with `trim_zero_units = FALSE` are instead
+#'   displayed as `"1d 4m 19s"`. Aside from using `TRUE`/`FALSE` we could
+#'   provide a vector of keywords for more precise control. These keywords are:
+#'   (1) `"leading"`, to omit all leading zero-value time units (e.g., `"0w 1d"`
+#'   -> `"1d"`), (2) `"trailing"`, to omit all trailing zero-value time units
+#'   (e.g., `"3d 5h 0s"` -> `"3d 5h"`), and `"internal"`, which removes all
+#'   internal zero-value time units (e.g., `"5d 0h 33m"` -> `"5d 33m"`).
+#'
+#' @param max_output_units *Maximum number of time units to display*
+#'
+#'   `scalar<numeric|integer>(val>=1)` --- *default:* `NULL` (`optional`)
+#'
+#'   If `output_units` is `NULL`, where the output time units are unspecified
+#'   and left to **gt** to handle, a numeric value provided for
+#'   `max_output_units` will be taken as the maximum number of time units to
+#'   display in all output time duration values. By default, this is `NULL` and
+#'   all possible time units will be displayed. This option has no effect when
+#'   `duration_style = "colon-sep"` (only `output_units` can be used to
+#'   customize that type of duration output).
+#'
+#' @param force_sign *Forcing the display of a positive sign*
+#'
+#'   `scalar<logical>` --- *default:* `FALSE`
+#'
+#'   Should the positive sign be shown for positive values (effectively showing
+#'   a sign for all values except zero)? If so, use `TRUE` for this option. By
+#'   default only negative values will display a minus sign.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -6093,13 +6399,23 @@ extract_duration_pattern <- function(
 #' argument, and, the separator can be modified with the `sep` argument.
 #'
 #' @inheritParams fmt_number
-#' @param sep The separator text that indicates the values are ranged. The
-#'   default value of `"--"` indicates that an en dash will be used for the
-#'   range separator. Using `"---"` will be taken to mean that an em dash should
-#'   be used. Should you want these special symbols to be taken literally, they
-#'   can be supplied within the base [I()] function.
-#' @param fmt Formatting expressions in formula form. The RHS of `~` should
-#'   contain a formatting call (e.g.,
+#'
+#' @param sep *Separator between values*
+#'
+#'   `scalar<character>` --- *default:* `"--"`
+#'
+#'   The separator text that indicates the values are ranged. The default value
+#'   of `"--"` indicates that an en dash will be used for the range separator.
+#'   Using `"---"` will be taken to mean that an em dash should be used. Should
+#'   you want these special symbols to be taken literally, they can be supplied
+#'   within the base [I()] function.
+#'
+#' @param fmt *Formatting expressions*
+#'
+#'   `<single expression>` --- *default:* `NULL` (`optional`)
+#'
+#'   An optional formatting expression in formula form. If used, the RHS of `~`
+#'   should contain a formatting call (e.g.,
 #'   `~ fmt_number(., decimals = 3, use_seps = FALSE`).
 #'
 #' @return An object of class `gt_tbl`.
@@ -6371,25 +6687,49 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #' text.
 #'
 #' @inheritParams fmt_number
-#' @param label The visible 'label' to use for the link. If `NULL` (the default)
+#'
+#' @param label *Link label*
+#'
+#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'
+#'   The visible 'label' to use for the link. If `NULL` (the default)
 #'   the URL will serve as the label. There are two non-`NULL` options: (1) a
 #'   static text can be used for the label by providing a string, and (2) a
 #'   function can be provided to fashion a label from every URL.
-#' @param as_button An option to style the link as a button. By default, this is
+#'
+#' @param as_button *Style link as a button*
+#'
+#'   `scalar<logical>` --- *default:* `FALSE`
+#'
+#'   An option to style the link as a button. By default, this is
 #'   `FALSE`. If this option is chosen then the `button_fill` argument becomes
 #'   usable.
-#' @param color The color used for the resulting link and its underline. This is
+#'
+#' @param color *Link color*
+#'
+#'   `scalar<character>` --- *default:* `"auto"`
+#'
+#'   The color used for the resulting link and its underline. This is
 #'   `"auto"` by default; this allows **gt** to choose an appropriate color
-#'   based on various factors (e.g., background `button_fill` when `as_button`
-#'   is `TRUE`).
-#' @param show_underline Should the link be decorated with an underline? By
+#'   based on various factors (such as the background `button_fill` when
+#'   `as_button` is `TRUE`).
+#'
+#' @param show_underline *Show the link underline*
+#'
+#'   `scalar<character>|scalar<logical>` --- *default:* `"auto"`
+#'
+#'   Should the link be decorated with an underline? By
 #'   default this is `"auto"` which means that **gt** will choose `TRUE` when
 #'   `as_button = FALSE` and `FALSE` in the other case. The link underline will
 #'   be the same color as that set in the `color` option.
-#' @param button_fill,button_width,button_outline Options for styling a
-#'   link-as-button (and only applies if `as_button = TRUE`). All of these
-#'   options are by default set to `"auto"`, allowing **gt** to choose
-#'   appropriate fill, width, and outline values.
+#'
+#' @param button_fill,button_width,button_outline *Button options*
+#'
+#'   `scalar<character>` --- *default:* `"auto"`
+#'
+#'   Options for styling a link-as-button (and only applies if
+#'   `as_button = TRUE`). All of these options are by default set to `"auto"`,
+#'   allowing **gt** to choose appropriate fill, width, and outline values.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -6864,16 +7204,42 @@ fmt_url <- function(
 #' separator to be applied between images.
 #'
 #' @inheritParams fmt_number
-#' @param height The absolute height of the image in the table cell. By default,
-#'   this is set to `"1em"`.
-#' @param sep In the output of images within a body cell, `sep` provides the
-#'   separator between each image.
-#' @param path An optional path to local image files (this is combined with all
+#'
+#' @param height *Height of image*
+#'
+#'   `scalar<character>` --- *default:* `"1em"`
+#'
+#'   The absolute height of the image in the table cell. By default, this is set
+#'   to `"1em"`.
+#'
+#' @param sep *Separator between images*
+#'
+#'   `scalar<character>` --- *default:* `" "`
+#'
+#'   In the output of images within a body cell, `sep` provides the separator
+#'   between each image.
+#'
+#' @param path *Path to image files*
+#'
+#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'
+#'   An optional path to local image files (this is combined with all
 #'   filenames).
-#' @param file_pattern The pattern to use for mapping input values in the body
-#'   cells to the names of the graphics files.
-#' @param encode The option to always use Base64 encoding for image paths that
-#'   are determined to be local. By default, this is `TRUE`.
+#'
+#' @param file_pattern *File pattern specification*
+#'
+#'   `scalar<character>` --- *default:* `"{x}"`
+#'
+#'   The pattern to use for mapping input values in the body cells to the names
+#'   of the graphics files. The string supplied should use `"{x}"` in the
+#'   pattern to map filename fragments to input strings.
+#'
+#' @param encode *Use Base64 encoding*
+#'
+#'   `scalar<logical>` --- *default:* `TRUE`
+#'
+#'   The option to always use Base64 encoding for image paths that are
+#'   determined to be local. By default, this is `TRUE`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -7141,13 +7507,28 @@ fmt_image <- function(
 #' icons.
 #'
 #' @inheritParams fmt_number
-#' @param height The absolute height of the flag icon in the table cell. By
-#'   default, this is set to `"1em"`.
-#' @param sep In the output of flag icons within a body cell, `sep` provides the
+#'
+#' @param height *Height of flag*
+#'
+#'   `scalar<character>` --- *default:* `"1em"`
+#'
+#'   The absolute height of the flag icon in the table cell. By default, this is
+#'   set to `"1em"`.
+#'
+#' @param sep *Separator between flags*
+#'
+#'   `scalar<character>` --- *default:* `" "`
+#'
+#'   In the output of flag icons within a body cell, `sep` provides the
 #'   separator between each icon. By default, this is a single space character
 #'   (`" "`).
-#' @param use_title An option to display a tooltip for the country name when
-#'   hovering over the flag icon. By default this is `TRUE`.
+#'
+#' @param use_title *Display country name on hover*
+#'
+#'   `scalar<logical>` --- *default:* `TRUE`
+#'
+#'   An option to display a tooltip for the country name (in English) when
+#'   hovering over the flag icon.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -7450,10 +7831,15 @@ fmt_flag <- function(
 #' appropriate output type during render when using `fmt_markdown()`.
 #'
 #' @inheritParams fmt_number
-#' @param md_engine The engine preference for Markdown rendering. By default,
-#'   this is set to `"markdown"` where **gt** will use the **markdown** package
-#'   for Markdown conversion to HTML and LaTeX. The other option is
-#'   `"commonmark"` and with that the **commonmark** package will be used.
+#'
+#' @param md_engine *Choice of Markdown engine*
+#'
+#'   `singl-kw:[markdown|commonmark]` --- *default:* `"markdown"`
+#'
+#'   The engine preference for Markdown rendering. By default, this is set to
+#'   `"markdown"` where **gt** will use the **markdown** package for Markdown
+#'   conversion to HTML and LaTeX. The other option is `"commonmark"` and with
+#'   that the **commonmark** package will be used.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -7620,11 +8006,16 @@ fmt_markdown <- function(
 #' the input data other than to decorate it within a pattern.
 #'
 #' @inheritParams fmt_number
-#' @param escape An option to escape text according to the final output format
-#'   of the table. For example, if a LaTeX table is to be generated then LaTeX
-#'   escaping would be performed during rendering. By default this is set to
-#'   `TRUE` and setting to `FALSE` would be useful in the case where text is
-#'   crafted for a specific output format in mind.
+#'
+#' @param escape *Text escaping*
+#'
+#'   `scalar<logical>` --- *default:* `TRUE`
+#'
+#'   An option to escape text according to the final output format of the table.
+#'   For example, if a LaTeX table is to be generated then LaTeX escaping would
+#'   be performed during rendering. By default this is set to `TRUE` but setting
+#'   as `FALSE` would be useful in the case where text is crafted for a specific
+#'   output format in mind.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -7805,12 +8196,23 @@ fmt_passthrough <- function(
 #' formatting will be applied.
 #'
 #' @inheritParams fmt_number
-#' @param scope The scope of automatic formatting. By default this includes
-#'   `"numbers"`-type values and `"currency"`-type values though the scope can
-#'   be reduced to a single type of value to format.
-#' @param lg_num_pref The preference toward either scientific notation for very
-#'   small and very large values (`"sci"`, the default option), or, suffixed
-#'   numbers (`"suf"`, for large values only).
+#'
+#' @param scope *Scope of automatic formatting*
+#'
+#'   `mult-kw:[numbers|currency]` --- *default:* `c("numbers", "currency")`
+#'
+#'   By default, the function will format both `"numbers"`-type values and
+#'   `"currency"`-type values though the scope can be reduced to a single type
+#'   of value to format.
+#'
+#' @param lg_num_pref *Large-number preference*
+#'
+#'   `singl-kw:[sci|suf]` --- *default:* `"sci"`
+#'
+#'   When large numbers are present, there can be a fixed preference toward how
+#'   they are formatted. Choices are scientific notation for very small and very
+#'   large values (`"sci"`), or, the use of suffixed numbers (`"suf"`, for large
+#'   values only).
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -8129,9 +8531,19 @@ fmt_auto <- function(
 #' fallback if all contexts aren't provided.
 #'
 #' @inheritParams fmt_number
-#' @param fns Either a single formatting function or a named list of functions.
-#' @param compat An optional vector that provides the compatible classes for the
-#' formatter. By default this is `NULL`.
+#'
+#' @param compat *Formatting compatibility*
+#'
+#'   `vector<character>` --- *default:* `NULL` (`optional`)
+#'
+#'   An optional vector that provides the compatible classes for the formatting.
+#'   By default this is `NULL`.
+#'
+#' @param fns *Formatting functions*
+#'
+#'   `function|list of functions` --- **required**
+#'
+#'   Either a single formatting function or a named list of functions.
 #'
 #' @return An object of class `gt_tbl`.
 #'
