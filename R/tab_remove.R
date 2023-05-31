@@ -11,7 +11,12 @@
 #' the table not contain a header. This function is safe to use even if there is
 #' no header part in the input `gt_tbl` object.
 #'
-#' @param data A table object of class `gt_tbl`.
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -80,7 +85,12 @@ rm_header <- function(data) {
 #' the table not contain any content in the stubhead. This function is safe to
 #' use even if there is no stubhead label in the input `gt_tbl` object.
 #'
-#' @param data A table object of class `gt_tbl`.
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -150,7 +160,13 @@ rm_stubhead <- function(data) {
 #' so long as select helpers (such as the default `everything()`) are used
 #' instead of explicit ID values.
 #'
-#' @param data A table object of class `gt_tbl`.
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
 #' @param spanners A specification of which spanner column labels should be
 #'   removed. Those to be removed can be given as a vector of spanner ID values
 #'   (every spanner column label has one, either set by the user or by **gt**
@@ -348,7 +364,13 @@ rm_spanners <- function(
 #' (such as the default `everything()`) are used instead of explicit integer
 #' values.
 #'
-#' @param data A table object of class `gt_tbl`.
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
 #' @param footnotes A specification of which footnotes should be removed.
 #'   The footnotes to be removed can be given as a vector of integer values
 #'   (they are stored as integer positions, in order of creation, starting at
@@ -510,7 +532,13 @@ rm_footnotes <- function(
 #' helpers (such as the default `everything()`) are used instead of explicit
 #' integer values.
 #'
-#' @param data A table object of class `gt_tbl`.
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
 #' @param source_notes A specification of which source notes should be removed.
 #'   The source notes to be removed can be given as a vector of integer values
 #'   (they are stored as integer positions, in order of creation, starting at
@@ -648,7 +676,12 @@ rm_source_notes <- function(
 #' the table not have a caption at all. This function is safe to use even if
 #' there is no table caption set in the input `gt_tbl` object.
 #'
-#' @param data A table object of class `gt_tbl`.
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
 #'
 #' @return An object of class `gt_tbl`.
 #'
