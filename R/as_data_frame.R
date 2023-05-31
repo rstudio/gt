@@ -28,8 +28,19 @@
 #'
 #' This facilitates conversion of the `gt_tbl` object to a data frame.
 #'
-#' @param x An object of class `gt_tbl`.
-#' @param ... Any additional parameters.
+#' @param x *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
+#' @param ... *Optional parameters*
+#'
+#'   `<multiple expressions>` --- (`optional`)
+#'
+#'   Anything provided here in `...` will be passed to internal function calls
+#'   that can consume it.
 #'
 #' @keywords internal
 #'
