@@ -32,7 +32,13 @@
 #' that is done, the remaining two values to supply are for the regex pattern
 #' (`pattern`) and the replacement for all matched text (`replacement`).
 #'
-#' @param data A table object that is created using the [gt()] function.
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
 #' @param pattern A regex pattern used to target text fragments in the cells
 #'   resolved in locations.
 #' @param replacement The replacement text for any matched text fragments.
@@ -120,7 +126,13 @@ text_replace <- function(
 #' vector of length one (i.e., either `TRUE` or `FALSE`). To refer to the values
 #' undergoing transformation, you need to use the `x` variable.
 #'
-#' @param .data A table object that is created using the [gt()] function.
+#' @param .data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
 #' @param ... A sequence of two-sided formulas. The left hand side (LHS)
 #'   determines which values match this case. The right hand side (RHS) provides
 #'   the replacement text (it must resolve to a value of the `character` class).
@@ -251,7 +263,13 @@ text_case_when <- function(
 #' those strings. This can be changed to a partial matching and replacement
 #' strategy with the alternate option.
 #'
-#' @param .data A table object that is created using the [gt()] function.
+#' @param .data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
 #' @param ... A sequence of two-sided formulas matching this general
 #'   construction: `<old_text> ~ <new_text>`. The left hand side (LHS)
 #'   determines which values to match on and it can be any length (allowing for
@@ -442,7 +460,13 @@ text_case_match <- function(
 #' character vector of the same length as the input. Using the construction
 #' `function(x) { .. }` for the function is recommended.
 #'
-#' @param data A table object that is created using the [gt()] function.
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
 #' @param fn The function to use for text transformation. It should include `x`
 #'   as an argument and return a character vector of the same length as the
 #'   input `x`.
