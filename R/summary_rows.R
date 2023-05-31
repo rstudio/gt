@@ -33,14 +33,23 @@
 #' `fmt`.
 #'
 #' @inheritParams fmt_number
+#'
 #' @param groups The groups to consider for generation of group-wise summary
 #'   rows. By default this is set to `everything()`, which means that all
 #'   available groups will obtain summary rows. Providing the ID values (in
 #'   quotes) of row groups in `c()` will generate summary rows for those
 #'   specified groups.
-#' @param columns The columns for which the summaries should be calculated. By
-#'   default, this is every column that has data cells (given by
-#'   `everything()`).
+#'
+#' @param columns *Columns to target*
+#'
+#'   `<column-targeting expression>` --- *default:* `everything()`
+#'
+#'   The columns for which the summaries should be calculated. Can either
+#'   be a series of column names provided in [c()], a vector of column indices,
+#'   or a select helper function. Examples of select helper functions include
+#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
+#'   [num_range()], and [everything()].
+#'
 #' @param fns Functions used for aggregations. This can include base functions
 #'   like `mean`, `min`, `max`, `median`, `sd`, or `sum` or any other
 #'   user-defined aggregation function. Multiple functions, each of which would
@@ -50,21 +59,26 @@
 #'   `minimum ~ min(.)`) where the LHS could be used to supply the summary row
 #'   label and id values. More information on this can be found in the
 #'   *Aggregation expressions for `fns`* section.
+#'
 #' @param fmt Formatting expressions in formula form. The RHS of `~` should
 #'   contain a formatting call (e.g.,
 #'   `~ fmt_number(., decimals = 3, use_seps = FALSE`). Optionally, the LHS
 #'   could contain a group-targeting expression (e.g.,
 #'   `"group_a" ~ fmt_number(.)`). More information on this can be found in the
 #'   *Formatting expressions for `fmt`* section.
+#'
 #' @param side Should the summary rows be placed at the `"bottom"` (the default)
 #'   or the `"top"` of the row group?
+#'
 #' @param missing_text The text to be used in place of `NA` values in summary
 #'   cells with no data outputs.
+#'
 #' @param formatter Deprecated, please use `fmt` instead. This was previously
 #'   used as a way to input a formatting function name, which could be any of
 #'   the `fmt_*()` functions available in the package (e.g., [fmt_number()],
 #'   [fmt_percent()], etc.), or a custom function using [fmt()]. The options of
 #'   a formatter can be accessed through `...`.
+#'
 #' @param ... Deprecated (along with `formatter`) but otherwise used for
 #'   argument values for a formatting function supplied in `formatter`. For
 #'   example, if using `formatter = fmt_number`, options such as `decimals = 1`,
@@ -505,6 +519,7 @@ summary_rows <- function(
 #' cells by use of formatting expressions in `fmt`.
 #'
 #' @inheritParams summary_rows
+#'
 #' @param side Should the grand summary rows be placed at the `"bottom"` (the
 #'   default) or the `"top"` of the table?
 #'
