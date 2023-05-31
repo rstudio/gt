@@ -7,7 +7,12 @@
 opt_align_table_header(data, align = c("left", "center", "right"))
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
+
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
 \item{align}{The alignment of the title and subtitle elements in the table
 header. Options are \code{"left"} (the default), \code{"center"}, or \code{"right"}.}

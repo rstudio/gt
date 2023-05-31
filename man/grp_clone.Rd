@@ -7,8 +7,13 @@
 grp_clone(data, which = NULL, before = NULL, after = NULL)
 }
 \arguments{
-\item{data}{A \code{gt_group} container object, typically generated through use
-of the \code{\link[=gt_group]{gt_group()}} function along with one or more \code{gt_tbl} objects.}
+\item{data}{\emph{The gt table group object}
+
+\verb{obj:<gt_group>} --- \strong{required}
+
+This is a \code{gt_group} container object. It is typically generated through
+use of the \code{\link[=gt_group]{gt_group()}} function along with one or more \code{gt_tbl} objects,
+or, made by splitting a \strong{gt} table with \code{\link[=gt_split]{gt_split()}}.}
 
 \item{which}{A vector of index values denoting which \code{gt_tbl} tables should
 be cloned inside of the \code{gt_group} object.}

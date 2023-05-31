@@ -7,15 +7,26 @@
 tab_row_group(data, label, rows, id = label, others_label = NULL, group = NULL)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
+
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
 \item{label}{The text to use for the row group label.}
 
-\item{rows}{The rows to be made components of the row group. Can either be a
-vector of row captions provided in \code{c()}, a vector of row indices, or a
-helper function focused on selections. The select helper functions are:
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and
-\code{\link[=everything]{everything()}}.}
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} --- \strong{required}
+
+The rows to be made components of the row group. The default \code{\link[=everything]{everything()}}
+results in all rows in \code{columns} being formatted. Alternatively, we can
+supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row indices, or a
+select helper function. Examples of select helper functions include
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions to filter
+down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{id}{The ID for the row group. When accessing a row group through
 \code{\link[=cells_row_groups]{cells_row_groups()}} (when using \code{\link[=tab_style]{tab_style()}} or \code{\link[=tab_footnote]{tab_footnote()}}) the

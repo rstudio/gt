@@ -7,7 +7,12 @@
 row_group_order(data, groups)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
+
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
 \item{groups}{A character vector of row group ID values corresponding to the
 revised ordering. While this vector must contain valid group ID values, it

@@ -7,8 +7,12 @@
 system_fonts(name)
 }
 \arguments{
-\item{name}{A keyword from the set of \code{"system-ui"}, \code{"transitional"},
-\code{"old-style"}, \code{"humanist"}, \code{"geometric-humanist"},
+\item{name}{\emph{Name of font stack}
+
+\verb{scalar<character>} --- \strong{required}
+
+The name of a font stack. Must be drawn from the set of \code{"system-ui"},
+\code{"transitional"}, \code{"old-style"}, \code{"humanist"}, \code{"geometric-humanist"},
 \code{"classical-humanist"}, \code{"neo-grotesque"}, \code{"monospace-slab-serif"},
 \code{"monospace-code"}, \code{"industrial"}, \code{"rounded-sans"}, \code{"slab-serif"},
 \code{"antique"}, \code{"didone"}, and \code{"handwritten"}.}

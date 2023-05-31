@@ -7,7 +7,12 @@
 rm_footnotes(data, footnotes = everything())
 }
 \arguments{
-\item{data}{A table object of class \code{gt_tbl}.}
+\item{data}{\emph{The gt table data object}
+
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
 \item{footnotes}{A specification of which footnotes should be removed.
 The footnotes to be removed can be given as a vector of integer values

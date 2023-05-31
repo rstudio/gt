@@ -191,48 +191,68 @@ grp_options(
 )
 }
 \arguments{
-\item{data}{A \code{gt_group} container object, typically generated through use of
-the \code{\link[=gt_group]{gt_group()}} function along with one or more \code{gt_tbl} objects.}
+\item{data}{\emph{The gt table group object}
 
-\item{table.width}{The width of the table. Can be specified as a
-single-length character with units of pixels or as a percentage. If
-provided as a single-length numeric vector, it is assumed that the value is
-given in units of pixels. The \code{\link[=px]{px()}} and \code{\link[=pct]{pct()}} helper functions can also
-be used to pass in numeric values and obtain values as pixel or percent
-units.}
+\verb{obj:<gt_group>} --- \strong{required}
 
-\item{table.layout}{The value for the \code{table-layout} CSS style in the HTML
-output context. By default, this is \code{"fixed"} but another valid option is
+This is \code{gt_group} container object. It is typically generated through use
+of the \code{\link[=gt_group]{gt_group()}} function along with one or more \code{gt_tbl} objects, or,
+made by splitting a \strong{gt} table with \code{\link[=gt_split]{gt_split()}}.}
+
+\item{table.width}{\emph{Table width}
+
+The table width can be specified as a single-length character with units of
+pixels or as a percentage. If provided as a single-length numeric vector,
+it is assumed that the value is given in units of pixels. The \code{\link[=px]{px()}} and
+\code{\link[=pct]{pct()}} helper functions can also be used to pass in numeric values and
+obtain values as pixel or percent units.}
+
+\item{table.layout}{\emph{The table-layout property}
+
+This is the value for the \code{table-layout} CSS style in the HTML output
+context. By default, this is \code{"fixed"} but another valid option is
 \code{"auto"}.}
 
-\item{table.align}{The horizontal alignment of the table in its container. By
-default, this is \code{"center"}. Other options are \code{"left"} and \code{"right"}. This
-will automatically set \code{table.margin.left} and \code{table.margin.right} to the
-appropriate values.}
+\item{table.align}{\emph{Horizontal alignment of table}
 
-\item{table.margin.left, table.margin.right}{The size of the margins on the
-left and right of the table within the container. Can be specified as a
-single-length character with units of pixels or as a percentage. If
-provided as a single-length numeric vector, it is assumed that the value is
-given in units of pixels. The \code{\link[=px]{px()}} and \code{\link[=pct]{pct()}} helper functions can also
-be used to pass in numeric values and obtain values as pixel or percent
-units. Using \code{table.margin.left} or \code{table.margin.right} will overwrite any
-values set by \code{table.align}.}
+The \code{table.align} option lets us set the horizontal alignment of the table
+in its container. By default, this is \code{"center"}. Other options are
+\code{"left"} and \code{"right"}. This will automatically set \code{table.margin.left} and
+\code{table.margin.right} to the appropriate values.}
 
-\item{table.background.color, heading.background.color, column_labels.background.color, row_group.background.color, stub.background.color, summary_row.background.color, grand_summary_row.background.color, footnotes.background.color, source_notes.background.color}{Background colors for the parent element \code{table} and the following child
-elements: \code{heading}, \code{column_labels}, \code{row_group}, \code{stub}, \code{summary_row},
-\code{grand_summary_row}, \code{footnotes}, and \code{source_notes}. A color name or a
-hexadecimal color code should be provided.}
+\item{table.margin.left, table.margin.right}{\emph{Left and right table margins}
 
-\item{table.additional_css}{This option can be used to supply an additional
-block of CSS rules to be applied after the automatically generated table
-CSS.}
+The size of the margins on the left and right of the table within the
+container can be set with \code{table.margin.left} and \code{table.margin.right}. Can
+be specified as a single-length character with units of pixels or as a
+percentage. If provided as a single-length numeric vector, it is assumed
+that the value is given in units of pixels. The \code{\link[=px]{px()}} and \code{\link[=pct]{pct()}} helper
+functions can also be used to pass in numeric values and obtain values as
+pixel or percent units. Using \code{table.margin.left} or \code{table.margin.right}
+will overwrite any values set by \code{table.align}.}
 
-\item{table.font.names}{The names of the fonts used for the table. This is
-a vector of several font names. If the first font isn't available, then
-the next font is tried (and so on).}
+\item{table.background.color, heading.background.color, column_labels.background.color, row_group.background.color, stub.background.color, summary_row.background.color, grand_summary_row.background.color, footnotes.background.color, source_notes.background.color}{\emph{Background colors}
 
-\item{table.font.size, heading.title.font.size, heading.subtitle.font.size, column_labels.font.size, row_group.font.size, stub.font.size, footnotes.font.size, source_notes.font.size}{The font sizes for the parent text element \code{table} and the following child
+These options govern background colors for the parent element \code{table} and
+the following child elements: \code{heading}, \code{column_labels}, \code{row_group},
+\code{stub}, \code{summary_row}, \code{grand_summary_row}, \code{footnotes}, and
+\code{source_notes}. A color name or a hexadecimal color code should be
+provided.}
+
+\item{table.additional_css}{\emph{Additional CSS}
+
+The \code{table.additional_css} option can be used to supply an additional block
+of CSS rules to be applied after the automatically generated table CSS.}
+
+\item{table.font.names}{\emph{Default table fonts}
+
+The names of the fonts used for the table can be supplied through
+\code{table.font.names}. This is a vector of several font names. If the first
+font isn't available, then the next font is tried (and so on).}
+
+\item{table.font.size, heading.title.font.size, heading.subtitle.font.size, column_labels.font.size, row_group.font.size, stub.font.size, footnotes.font.size, source_notes.font.size}{\emph{Table font sizes}
+
+The font sizes for the parent text element \code{table} and the following child
 elements: \code{heading.title}, \code{heading.subtitle}, \code{column_labels},
 \code{row_group}, \code{footnotes}, and \code{source_notes}. Can be specified as a
 single-length character vector with units of pixels (e.g., \verb{12px}) or as a
@@ -241,35 +261,49 @@ it is assumed that the value is given in units of pixels. The \code{\link[=px]{p
 \code{\link[=pct]{pct()}} helper functions can also be used to pass in numeric values and
 obtain values as pixel or percentage units.}
 
-\item{table.font.weight, heading.title.font.weight, heading.subtitle.font.weight, column_labels.font.weight, row_group.font.weight, stub.font.weight}{The font weights of the table, \code{heading.title}, \code{heading.subtitle},
+\item{table.font.weight, heading.title.font.weight, heading.subtitle.font.weight, column_labels.font.weight, row_group.font.weight, stub.font.weight}{\emph{Table font weights}
+
+The font weights of the table, \code{heading.title}, \code{heading.subtitle},
 \code{column_labels}, \code{row_group}, and \code{stub} text elements. Can be a text-based
 keyword such as \code{"normal"}, \code{"bold"}, \code{"lighter"}, \code{"bolder"}, or, a
 numeric value between \code{1} and \code{1000}, inclusive. Note that only variable
 fonts may support the numeric mapping of weight.}
 
-\item{table.font.style}{The font style for the table. Can be one of either
+\item{table.font.style}{\emph{Default table font style}
+
+This is the default font style for the table. Can be one of either
 \code{"normal"}, \code{"italic"}, or \code{"oblique"}.}
 
-\item{table.font.color, table.font.color.light}{The text color used throughout the table. There are two variants:
-\code{table.font.color} is for text overlaid on lighter background colors, and
-\code{table.font.color.light} is automatically used when text needs to be
-overlaid on darker background colors. A color name or a hexadecimal color
-code should be provided.}
+\item{table.font.color, table.font.color.light}{\emph{Default dark and light text for the table}
 
-\item{table.border.top.style, table.border.top.width, table.border.top.color, table.border.right.style, table.border.right.width, table.border.right.color, table.border.bottom.style, table.border.bottom.width, table.border.bottom.color, table.border.left.style, table.border.left.width, table.border.left.color}{The style, width, and color properties of the table's absolute top and
+These options define text colors used throughout the table. There are two
+variants: \code{table.font.color} is for text overlaid on lighter background
+colors, and \code{table.font.color.light} is automatically used when text needs
+to be overlaid on darker background colors. A color name or a hexadecimal
+color code should be provided.}
+
+\item{table.border.top.style, table.border.top.width, table.border.top.color, table.border.right.style, table.border.right.width, table.border.right.color, table.border.bottom.style, table.border.bottom.width, table.border.bottom.color, table.border.left.style, table.border.left.width, table.border.left.color}{\emph{Top border properties}
+
+The style, width, and color properties of the table's absolute top and
 absolute bottom borders.}
 
-\item{heading.align}{Controls the horizontal alignment of the heading title
-and subtitle. We can either use \code{"center"}, \code{"left"}, or \code{"right"}.}
+\item{heading.align}{\emph{Horizontal alignment in the table header}
 
-\item{heading.padding, column_labels.padding, data_row.padding, row_group.padding, summary_row.padding, grand_summary_row.padding, footnotes.padding, source_notes.padding}{The amount of vertical padding to incorporate in the \code{heading} (title and
+Controls the horizontal alignment of the heading title and subtitle. We can
+either use \code{"center"}, \code{"left"}, or \code{"right"}.}
+
+\item{heading.padding, column_labels.padding, data_row.padding, row_group.padding, summary_row.padding, grand_summary_row.padding, footnotes.padding, source_notes.padding}{\emph{Vertical padding throughout the table}
+
+The amount of vertical padding to incorporate in the \code{heading} (title and
 subtitle), the \code{column_labels} (this includes the column spanners), the row
 group labels (\code{row_group.padding}), in the body/stub rows
 (\code{data_row.padding}), in summary rows (\code{summary_row.padding} or
 \code{grand_summary_row.padding}), or in the footnotes and source notes
 (\code{footnotes.padding} and \code{source_notes.padding}).}
 
-\item{heading.padding.horizontal, column_labels.padding.horizontal, data_row.padding.horizontal, row_group.padding.horizontal, summary_row.padding.horizontal, grand_summary_row.padding.horizontal, footnotes.padding.horizontal, source_notes.padding.horizontal}{The amount of horizontal padding to incorporate in the \code{heading} (title and
+\item{heading.padding.horizontal, column_labels.padding.horizontal, data_row.padding.horizontal, row_group.padding.horizontal, summary_row.padding.horizontal, grand_summary_row.padding.horizontal, footnotes.padding.horizontal, source_notes.padding.horizontal}{\emph{Horizontal padding throughout the table}
+
+The amount of horizontal padding to incorporate in the \code{heading} (title and
 subtitle), the \code{column_labels} (this includes the column spanners), the row
 group labels (\code{row_group.padding.horizontal}), in the body/stub rows
 (\code{data_row.padding}), in summary rows (\code{summary_row.padding.horizontal} or
@@ -277,127 +311,180 @@ group labels (\code{row_group.padding.horizontal}), in the body/stub rows
 notes (\code{footnotes.padding.horizontal} and
 \code{source_notes.padding.horizontal}).}
 
-\item{heading.border.bottom.style, heading.border.bottom.width, heading.border.bottom.color}{The style, width, and color properties of the header's bottom border. This
+\item{heading.border.bottom.style, heading.border.bottom.width, heading.border.bottom.color}{\emph{Properties of the header's bottom border}
+
+The style, width, and color properties of the header's bottom border. This
 border shares space with that of the \code{column_labels} location. If the
 \code{width} of this border is larger, then it will be the visible border.}
 
-\item{heading.border.lr.style, heading.border.lr.width, heading.border.lr.color}{The style, width, and color properties for the left and right borders of
+\item{heading.border.lr.style, heading.border.lr.width, heading.border.lr.color}{\emph{Properties of the header's left and right borders}
+
+The style, width, and color properties for the left and right borders of
 the \code{heading} location.}
 
-\item{column_labels.text_transform, row_group.text_transform, stub.text_transform, summary_row.text_transform, grand_summary_row.text_transform}{Options to apply text transformations to the \code{column_labels}, \code{row_group},
+\item{column_labels.text_transform, row_group.text_transform, stub.text_transform, summary_row.text_transform, grand_summary_row.text_transform}{\emph{Text transforms throughout the table}
+
+Options to apply text transformations to the \code{column_labels}, \code{row_group},
 \code{stub}, \code{summary_row}, and \code{grand_summary_row} text elements. Either of the
 \code{"uppercase"}, \code{"lowercase"}, or \code{"capitalize"} keywords can be used.}
 
-\item{column_labels.vlines.style, column_labels.vlines.width, column_labels.vlines.color}{The style, width, and color properties for all vertical lines ('vlines')
+\item{column_labels.vlines.style, column_labels.vlines.width, column_labels.vlines.color}{\emph{Properties of all vertical lines by the column labels}
+
+The style, width, and color properties for all vertical lines ('vlines')
 of the the \code{column_labels}.}
 
-\item{column_labels.border.top.style, column_labels.border.top.width, column_labels.border.top.color}{The style, width, and color properties for the top border of the
+\item{column_labels.border.top.style, column_labels.border.top.width, column_labels.border.top.color}{\emph{Properties of the border above the column labels}
+
+The style, width, and color properties for the top border of the
 \code{column_labels} location. This border shares space with that of the
 \code{heading} location. If the \code{width} of this border is larger, then it will
 be the visible border.}
 
-\item{column_labels.border.bottom.style, column_labels.border.bottom.width, column_labels.border.bottom.color}{The style, width, and color properties for the bottom border of the
+\item{column_labels.border.bottom.style, column_labels.border.bottom.width, column_labels.border.bottom.color}{\emph{Properties of the border below the column labels}
+
+The style, width, and color properties for the bottom border of the
 \code{column_labels} location.}
 
-\item{column_labels.border.lr.style, column_labels.border.lr.width, column_labels.border.lr.color}{The style, width, and color properties for the left and right borders of
+\item{column_labels.border.lr.style, column_labels.border.lr.width, column_labels.border.lr.color}{\emph{Properties of the left and right borders next to the column labels}
+
+The style, width, and color properties for the left and right borders of
 the \code{column_labels} location.}
 
-\item{column_labels.hidden}{An option to hide the column labels. If providing
-\code{TRUE} then the entire \code{column_labels} location won't be seen and the table
-header (if present) will collapse downward.}
+\item{column_labels.hidden}{\emph{Hiding all column labels}
 
-\item{row_group.border.top.style, row_group.border.top.width, row_group.border.top.color, row_group.border.bottom.style, row_group.border.bottom.width, row_group.border.bottom.color, row_group.border.left.style, row_group.border.left.width, row_group.border.left.color, row_group.border.right.style, row_group.border.right.width, row_group.border.right.color}{The style, width, and color properties for all top, bottom, left, and right
+An option to hide the column labels. If providing \code{TRUE} then the entire
+\code{column_labels} location won't be seen and the table header (if present)
+will collapse downward.}
+
+\item{row_group.border.top.style, row_group.border.top.width, row_group.border.top.color, row_group.border.bottom.style, row_group.border.bottom.width, row_group.border.bottom.color, row_group.border.left.style, row_group.border.left.width, row_group.border.left.color, row_group.border.right.style, row_group.border.right.width, row_group.border.right.color}{\emph{Border properties associated with the \code{row_group} location}
+
+The style, width, and color properties for all top, bottom, left, and right
 borders of the \code{row_group} location.}
 
-\item{row_group.default_label}{An option to set a default row group label for
-any rows not formally placed in a row group named by \code{group} in any call of
-\code{tab_row_group()}. If this is set as \code{NA_character} and there are rows that
-haven't been placed into a row group (where one or more row groups already
-exist), those rows will be automatically placed into a row group without a
-label.}
+\item{row_group.default_label}{\emph{The default row group label}
 
-\item{row_group.as_column}{How should row groups be structured? By default,
-they are separate rows that lie above the each of the groups. Setting this
-to \code{TRUE} will structure row group labels are columns to the far left of
-the table.}
+An option to set a default row group label for any rows not formally placed
+in a row group named by \code{group} in any call of \code{\link[=tab_row_group]{tab_row_group()}}. If this
+is set as \code{NA_character_} and there are rows that haven't been placed into a
+row group (where one or more row groups already exist), those rows will be
+automatically placed into a row group without a label.}
 
-\item{table_body.hlines.style, table_body.hlines.width, table_body.hlines.color, table_body.vlines.style, table_body.vlines.width, table_body.vlines.color}{The style, width, and color properties for all horizontal lines ('hlines')
+\item{row_group.as_column}{\emph{Structure row groups with a column}
+
+How should row groups be structured? By default, they are separate rows
+that lie above the each of the groups. Setting this to \code{TRUE} will
+structure row group labels as a separate column in the table stub.}
+
+\item{table_body.hlines.style, table_body.hlines.width, table_body.hlines.color, table_body.vlines.style, table_body.vlines.width, table_body.vlines.color}{\emph{Properties of all horizontal and vertical lines in the table body}
+
+The style, width, and color properties for all horizontal lines ('hlines')
 and vertical lines ('vlines') in the \code{table_body}.}
 
-\item{table_body.border.top.style, table_body.border.top.width, table_body.border.top.color, table_body.border.bottom.style, table_body.border.bottom.width, table_body.border.bottom.color}{The style, width, and color properties for all top and bottom borders of
+\item{table_body.border.top.style, table_body.border.top.width, table_body.border.top.color, table_body.border.bottom.style, table_body.border.bottom.width, table_body.border.bottom.color}{\emph{Properties of top and bottom borders in the table body}
+
+The style, width, and color properties for all top and bottom borders of
 the \code{table_body} location.}
 
-\item{stub.border.style, stub.border.width, stub.border.color}{The style, width, and color properties for the vertical border of the table
+\item{stub.border.style, stub.border.width, stub.border.color}{\emph{Properties of the vertical border of the table stub}
+
+The style, width, and color properties for the vertical border of the table
 stub.}
 
-\item{stub.indent_length}{The width of each indentation level. By default
-this is \code{"5px"}.}
+\item{stub.indent_length}{\emph{Width of each indentation}
 
-\item{stub_row_group.font.size, stub_row_group.font.weight, stub_row_group.text_transform, stub_row_group.border.style, stub_row_group.border.width, stub_row_group.border.color}{Options for the row group column in the stub (made possible when using
-\code{row_group.as_column = TRUE}). The defaults for these options mirror that
-of the \verb{stub.*} variants (except for \code{stub_row_group.border.width}, which
-is \code{"1px"} instead of \code{"2px"}).}
+The width of each indentation level for row labels in the stub. The
+indentation can be set by using \code{\link[=tab_stub_indent]{tab_stub_indent()}}. By default this is
+\code{"5px"}.}
 
-\item{summary_row.border.style, summary_row.border.width, summary_row.border.color}{The style, width, and color properties for all horizontal borders of the
+\item{stub_row_group.font.size, stub_row_group.font.weight, stub_row_group.text_transform, stub_row_group.border.style, stub_row_group.border.width, stub_row_group.border.color}{\emph{Properties of the row group column in the table stub}
+
+Options for the row group column in the table stub (made possible when
+using \code{row_group.as_column = TRUE}). The defaults for these options mirror
+that of the \verb{stub.*} variants (except for \code{stub_row_group.border.width},
+which is \code{"1px"} instead of \code{"2px"}).}
+
+\item{summary_row.border.style, summary_row.border.width, summary_row.border.color}{\emph{Properties of horizontal borders belonging to summary rows}
+
+The style, width, and color properties for all horizontal borders of the
 \code{summary_row} location.}
 
-\item{grand_summary_row.border.style, grand_summary_row.border.width, grand_summary_row.border.color}{The style, width, and color properties for the top borders of the
+\item{grand_summary_row.border.style, grand_summary_row.border.width, grand_summary_row.border.color}{\emph{Properties of horizontal borders belonging to grand summary rows}
+
+The style, width, and color properties for the top borders of the
 \code{grand_summary_row} location.}
 
-\item{footnotes.border.bottom.style, footnotes.border.bottom.width, footnotes.border.bottom.color}{The style, width, and color properties for the bottom border of the
+\item{footnotes.border.bottom.style, footnotes.border.bottom.width, footnotes.border.bottom.color}{\emph{Properties of the bottom border belonging to the footnotes}
+
+The style, width, and color properties for the bottom border of the
 \code{footnotes} location.}
 
-\item{footnotes.border.lr.style, footnotes.border.lr.width, footnotes.border.lr.color}{The style, width, and color properties for the left and right borders of
+\item{footnotes.border.lr.style, footnotes.border.lr.width, footnotes.border.lr.color}{\emph{Properties of left and right borders belonging to the footnotes}
+
+The style, width, and color properties for the left and right borders of
 the \code{footnotes} location.}
 
-\item{footnotes.marks}{The set of sequential marks used to reference and
-identify each of the footnotes (same input as the \code{\link[=opt_footnote_marks]{opt_footnote_marks()}}
-function). We can supply a vector that represents the series of footnote
-marks. This vector is recycled when its usage goes beyond the length of the
-set. At each cycle, the marks are simply combined (e.g., \code{*} -> \verb{**} ->
-\verb{***}). The option exists for providing keywords for certain types of
-footnote marks. The keyword \code{"numbers"} (the default, indicating that we
-want to use numeric marks). We can use lowercase \code{"letters"} or uppercase
-\code{"LETTERS"}. There is the option for using a traditional symbol set where
-\code{"standard"} provides four symbols, and, \code{"extended"} adds two more
-symbols, making six.}
+\item{footnotes.marks}{\emph{Sequence of footnote marks}
 
-\item{footnotes.spec_ref, footnotes.spec_ftr}{Optional specifications for
-formatting of footnote references (\code{footnotes.spec_ref}) and their
-associated marks the footer section (\code{footnotes.spec_ftr}) (same input as
-the \code{\link[=opt_footnote_spec]{opt_footnote_spec()}} function). This is a string containing
-specification control characters. The default is the spec string \code{"^i"},
-which is superscript text set in italics. Other control characters that can
-be used are: (1) \code{"b"} for bold text, and (2) \code{"("} / \code{")"} for the
-enclosure of footnote marks in parentheses.}
+The set of sequential marks used to reference and identify each of the
+footnotes (same input as the \code{\link[=opt_footnote_marks]{opt_footnote_marks()}} function). We can
+supply a vector that represents the series of footnote marks. This vector
+is recycled when its usage goes beyond the length of the set. At each
+cycle, the marks are simply combined (e.g., \code{*} -> \verb{**} -> \verb{***}). The
+option exists for providing keywords for certain types of footnote marks.
+The keyword \code{"numbers"} (the default, indicating that we want to use
+numeric marks). We can use lowercase \code{"letters"} or uppercase \code{"LETTERS"}.
+There is the option for using a traditional symbol set where \code{"standard"}
+provides four symbols, and, \code{"extended"} adds two more symbols, making six.}
 
-\item{footnotes.multiline, source_notes.multiline}{An option to either put
-footnotes and source notes in separate lines (the default, or \code{TRUE}) or
-render them as a continuous line of text with \code{footnotes.sep} providing the
-separator (by default \code{" "}) between notes.}
+\item{footnotes.spec_ref, footnotes.spec_ftr}{\emph{Specifications for formatting of footnote marks}
 
-\item{footnotes.sep, source_notes.sep}{The separating characters between
-adjacent footnotes and source notes in their respective footer sections
-when rendered as a continuous line of text (when
-\code{footnotes.multiline == FALSE}). The default value is a single space
+Optional specifications for formatting of footnote references
+(\code{footnotes.spec_ref}) and their associated marks the footer section
+(\code{footnotes.spec_ftr}) (same input as the \code{\link[=opt_footnote_spec]{opt_footnote_spec()}} function).
+This is a string containing specification control characters. The default
+is the spec string \code{"^i"}, which is superscript text set in italics. Other
+control characters that can be used are: (1) \code{"b"} for bold text, and (2)
+\code{"("} / \code{")"} for the enclosure of footnote marks in parentheses.}
+
+\item{footnotes.multiline, source_notes.multiline}{\emph{Typesetting of multiple footnotes and source notes}
+
+An option to either put footnotes and source notes in separate lines (the
+default, or \code{TRUE}) or render them as a continuous line of text with
+\code{footnotes.sep} providing the separator (by default \code{" "}) between notes.}
+
+\item{footnotes.sep, source_notes.sep}{\emph{Separator characters between adjacent footnotes and source notes}
+
+The separating characters between adjacent footnotes and source notes in
+their respective footer sections when rendered as a continuous line of text
+(when \code{footnotes.multiline == FALSE}). The default value is a single space
 character (\code{" "}).}
 
-\item{source_notes.border.bottom.style, source_notes.border.bottom.width, source_notes.border.bottom.color}{The style, width, and color properties for the bottom border of the
+\item{source_notes.border.bottom.style, source_notes.border.bottom.width, source_notes.border.bottom.color}{\emph{Properties of the bottom border belonging to the source notes}
+
+The style, width, and color properties for the bottom border of the
 \code{source_notes} location.}
 
-\item{source_notes.border.lr.style, source_notes.border.lr.width, source_notes.border.lr.color}{The style, width, and color properties for the left and right borders of
+\item{source_notes.border.lr.style, source_notes.border.lr.width, source_notes.border.lr.color}{\emph{Properties of left and right borders belonging to the source notes}
+
+The style, width, and color properties for the left and right borders of
 the \code{source_notes} location.}
 
-\item{row.striping.background_color}{The background color for striped table
-body rows. A color name or a hexadecimal color code should be provided.}
+\item{row.striping.background_color}{\emph{Background color for row stripes}
 
-\item{row.striping.include_stub}{An option for whether to include the stub
-when striping rows.}
+The background color for striped table body rows. A color name or a
+hexadecimal color code should be provided.}
 
-\item{row.striping.include_table_body}{An option for whether to include the
-table body when striping rows.}
+\item{row.striping.include_stub}{\emph{Inclusion of the table stub for row stripes}
 
-\item{container.width, container.height, container.padding.x, container.padding.y}{The width and height of the table's container, and, the vertical and
+An option for whether to include the stub when striping rows.}
+
+\item{row.striping.include_table_body}{\emph{Inclusion of the table body for row stripes}
+
+An option for whether to include the table body when striping rows.}
+
+\item{container.width, container.height, container.padding.x, container.padding.y}{\emph{Table container dimensions and padding}
+
+The width and height of the table's container, and, the vertical and
 horizontal padding of the table's container. The container width and height
 can be specified with units of pixels or as a percentage. The padding is to
 be specified as a length with units of pixels. If provided as a numeric
@@ -405,54 +492,72 @@ value, it is assumed that the value is given in units of pixels. The \code{\link
 and \code{\link[=pct]{pct()}} helper functions can also be used to pass in numeric values and
 obtain values as pixel or percent units.}
 
-\item{container.overflow.x, container.overflow.y}{Options to enable scrolling
-in the horizontal and vertical directions when the table content overflows
-the container dimensions. Using \code{TRUE} (the default for both) means that
-horizontal or vertical scrolling is enabled to view the entire table in
-those directions. With \code{FALSE}, the table may be clipped if the table width
-or height exceeds the \code{container.width} or \code{container.height}.}
+\item{container.overflow.x, container.overflow.y}{\emph{Table container overflow}
 
-\item{ihtml.active}{The option for displaying an interactive version of an
-HTML table (rather than an otherwise 'static' table). This enables the use
-of controls for pagination, global search, filtering, and sorting. The
-individual features are controlled by the other \verb{table.*} options. By
-default, the pagination (\code{ihtml.use_pagination}) and sorting
-(\code{ihtml.use_sorting}) features are enabled. The \code{ihtml.active} option,
-however, is \code{FALSE} by default.}
+Options to enable scrolling in the horizontal and vertical directions when
+the table content overflows the container dimensions. Using \code{TRUE} (the
+default for both) means that horizontal or vertical scrolling is enabled to
+view the entire table in those directions. With \code{FALSE}, the table may be
+clipped if the table width or height exceeds the \code{container.width} or
+\code{container.height}.}
 
-\item{ihtml.use_pagination, ihtml.use_pagination_info}{For interactive HTML
-output, the option for using pagination controls (below the table body) can
-be controlled with \code{ihtml.use_pagination}. By default, this is \code{TRUE} and
-it will allow the use to page through table content. The informational
-display text regarding the current page can be set with
-\code{ihtml.use_pagination_info} (which is \code{TRUE} by default).}
+\item{ihtml.active}{\emph{Display interactive HTML table}
 
-\item{ihtml.use_sorting}{For interactive HTML output, the option to provide
-controls for sorting column values. By default, this is \code{TRUE}.}
+The option for displaying an interactive version of an HTML table (rather
+than an otherwise 'static' table). This enables the use of controls for
+pagination, global search, filtering, and sorting. The individual features
+are controlled by the other \verb{table.*} options. By default, the pagination
+(\code{ihtml.use_pagination}) and sorting (\code{ihtml.use_sorting}) features are
+enabled. The \code{ihtml.active} option, however, is \code{FALSE} by default.}
 
-\item{ihtml.use_search}{For interactive HTML output, an option that places a
-search field for globally filtering rows to the requested content. By
+\item{ihtml.use_pagination, ihtml.use_pagination_info}{\emph{Use pagination}
+
+For interactive HTML output, the option for using pagination controls
+(below the table body) can be controlled with \code{ihtml.use_pagination}. By
+default, this is \code{TRUE} and it will allow the use to page through table
+content. The informational display text regarding the current page can be
+set with \code{ihtml.use_pagination_info} (which is \code{TRUE} by default).}
+
+\item{ihtml.use_sorting}{\emph{Use sorting}
+
+For interactive HTML output, the option to provide controls for sorting
+column values. By default, this is \code{TRUE}.}
+
+\item{ihtml.use_search}{\emph{Use search field}
+
+For interactive HTML output, an option that places a search field for
+globally filtering rows to the requested content. By default, this is
+\code{FALSE}.}
+
+\item{ihtml.use_filters}{\emph{Use filtering field}
+
+For interactive HTML output, this places search fields below each column
+header and allows for filtering by column. By default, this is \code{FALSE}.}
+
+\item{ihtml.use_resizers}{\emph{Use column resizers}
+
+For interactive HTML output, this allows for interactive resizing of
+columns. By default, this is \code{FALSE}.}
+
+\item{ihtml.use_highlight}{\emph{Use row highlighting}
+
+For interactive HTML output, this highlights individual rows upon hover. By
 default, this is \code{FALSE}.}
 
-\item{ihtml.use_filters}{For interactive HTML output, this places search
-fields below each column header and allows for filtering by column. By
-default, this is \code{FALSE}.}
+\item{ihtml.use_compact_mode}{\emph{Use compact mode}
 
-\item{ihtml.use_resizers}{For interactive HTML output, this allows for
-interactive resizing of columns. By default, this is \code{FALSE}.}
+For interactive HTML output, an option to reduce vertical padding and thus
+make the table consume less vertical space. By default, this is \code{FALSE}.}
 
-\item{ihtml.use_highlight}{For interactive HTML output, this highlights
-individual rows upon hover. By default, this is \code{FALSE}.}
+\item{ihtml.use_text_wrapping}{\emph{Use text wrapping}
 
-\item{ihtml.use_compact_mode}{For interactive HTML output, an option to
-reduce vertical padding and thus make the table consume less vertical
-space. By default, this is \code{FALSE}.}
+For interactive HTML output, an option to control text wrapping. By default
+(\code{TRUE}), text will be wrapped to multiple lines; if \code{FALSE}, text will be
+truncated to a single line.}
 
-\item{ihtml.use_text_wrapping}{For interactive HTML output, an option to
-control text wrapping. By default (\code{TRUE}), text will be wrapped to
-multiple lines; if \code{FALSE}, text will be truncated to a single line.}
+\item{ihtml.use_page_size_select, ihtml.page_size_default, ihtml.page_size_values}{\emph{Change page size properties}
 
-\item{ihtml.use_page_size_select, ihtml.page_size_default, ihtml.page_size_values}{For interactive HTML output, \code{ihtml.use_page_size_select} provides the
+For interactive HTML output, \code{ihtml.use_page_size_select} provides the
 option to display a dropdown menu for the number of rows to show per page
 of data. By default, this is the vector \code{c(10, 25, 50, 100)} which
 corresponds to options for \code{10}, \code{25}, \code{50}, and \code{100} rows of data per
@@ -461,39 +566,53 @@ page. To modify these page-size options, provide a numeric vector to
 be modified with \code{ihtml.page_size_default} and this works whether or not
 \code{ihtml.use_page_size_select} is set to \code{TRUE}.}
 
-\item{ihtml.pagination_type}{For interactive HTML output and when using
-pagination, one of three options for presentation pagination controls. The
-default is \code{"numbers"}, where a series of page-number buttons is presented
-along with 'previous' and 'next' buttons. The \code{"jump"} option provides an
-input field with a stepper for the page number. With \code{"simple"}, only the
-'previous' and 'next' buttons are displayed.}
+\item{ihtml.pagination_type}{\emph{Change pagination mode}
 
-\item{page.orientation}{For RTF output, this provides an two options for page
+For interactive HTML output and when using pagination, one of three options
+for presentation pagination controls. The default is \code{"numbers"}, where a
+series of page-number buttons is presented along with 'previous' and 'next'
+buttons. The \code{"jump"} option provides an input field with a stepper for the
+page number. With \code{"simple"}, only the 'previous' and 'next' buttons are
+displayed.}
+
+\item{page.orientation}{\emph{Set RTF page orientation}
+
+For RTF output, this provides an two options for page
 orientation: \code{"portrait"} (the default) and \code{"landscape"}.}
 
-\item{page.numbering}{Within RTF output, should page numbering be displayed?
-By default, this is set to \code{FALSE} but if \code{TRUE} then page numbering text
-will be added to the document header.}
+\item{page.numbering}{\emph{Enable RTF page numbering}
 
-\item{page.header.use_tbl_headings}{If \code{TRUE} then RTF output tables will
-migrate all table headings (including the table title and all column
-labels) to the page header. This page header content will repeat across
-pages. By default, this is \code{FALSE}.}
+Within RTF output, should page numbering be displayed? By default, this is
+set to \code{FALSE} but if \code{TRUE} then page numbering text will be added to the
+document header.}
 
-\item{page.footer.use_tbl_notes}{If \code{TRUE} then RTF output tables will
-migrate all table footer content (this includes footnotes and source notes)
-to the page footer. This page footer content will repeat across pages. By
-default, this is \code{FALSE}.}
+\item{page.header.use_tbl_headings}{\emph{Place table headings in RTF page header}
 
-\item{page.width, page.height}{The page width and height in the standard
-portrait orientation. This is for RTF table output and the default
-values (in inches) are \verb{8.5in} and \verb{11.0in}.}
+If \code{TRUE} then RTF output tables will migrate all table headings (including
+the table title and all column labels) to the page header. This page header
+content will repeat across pages. By default, this is \code{FALSE}.}
 
-\item{page.margin.left, page.margin.right, page.margin.top, page.margin.bottom}{For RTF table output, these options correspond to the left, right, top, and
+\item{page.footer.use_tbl_notes}{\emph{Place table footer in RTF page footer}
+
+If \code{TRUE} then RTF output tables will migrate all table footer content
+(this includes footnotes and source notes) to the page footer. This page
+footer content will repeat across pages. By default, this is \code{FALSE}.}
+
+\item{page.width, page.height}{\emph{Set RTF page dimensions}
+
+The page width and height in the standard portrait orientation. This is for
+RTF table output and the default values (in inches) are \verb{8.5in} and
+\verb{11.0in}.}
+
+\item{page.margin.left, page.margin.right, page.margin.top, page.margin.bottom}{\emph{Set RTF page margins}
+
+For RTF table output, these options correspond to the left, right, top, and
 bottom page margins. The default values for each of these is \verb{1.0in}.}
 
-\item{page.header.height, page.footer.height}{The heights of the page header
-and footer for RTF table outputs. Default values for both are \verb{0.5in}.}
+\item{page.header.height, page.footer.height}{\emph{Set RTF page header and footer distances}
+
+The heights of the page header and footer for RTF table outputs. Default
+values for both are \verb{0.5in}.}
 }
 \value{
 An object of class \code{gt_group}.

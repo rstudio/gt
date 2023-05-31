@@ -16,20 +16,33 @@ tab_spanner(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
+
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
 \item{label}{The text to use for the spanner column label.}
 
-\item{columns}{The columns to serve as components of the spanner. Can either
-be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,
-or a helper function focused on selections. The select helper functions
-are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
-\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. This argument works in tandem with the
-\code{spanner} argument.}
+\item{columns}{\emph{Columns to target}
 
-\item{spanners}{The spanners that should be spanned over, should they already
-be defined. One or more spanner ID values (in quotes) can be supplied here.
-This argument works in tandem with the \code{columns} argument.}
+\verb{<column-targeting expression>} --- \emph{default:} \code{NULL} (\code{optional})
+
+The columns to serve as components of the spanner. Can either be a series
+of column names provided in \code{\link[=c]{c()}}, a vector of column indices, or a select
+helper function. Examples of select helper functions include
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. This argument works in tandem with the
+\code{spanners} argument.}
+
+\item{spanners}{\emph{Spanners to target}
+
+\verb{vector<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+The spanners that should be spanned over, should they already be defined.
+One or more spanner ID values (in quotes) can be supplied here. This
+argument works in tandem with the \code{columns} argument.}
 
 \item{level}{An explicit level to which the spanner should be placed. If not
 provided, \strong{gt} will choose the level based on the inputs provided within

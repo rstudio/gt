@@ -17,7 +17,12 @@ tab_style_body(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
+
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
 \item{style}{The styles to use for the targeted cells. The \code{\link[=cell_text]{cell_text()}},
 \code{\link[=cell_fill]{cell_fill()}}, and \code{\link[=cell_borders]{cell_borders()}} helper functions can be used here to
@@ -26,22 +31,29 @@ to define styles, all calls must be enclosed in a \code{\link[=list]{list()}}. C
 declarations can be used for HTML output by including a \code{\link[=css]{css()}}-based
 statement as a list item.}
 
-\item{columns}{Optional columns for constraining the targeting process.
-Providing \code{\link[=everything]{everything()}} (the default) results in cells in all \code{columns}
-being targeting (this can be limited by \code{rows} however). Can either be a
-series of column names provided in \code{\link[=c]{c()}}, a vector of column indices, or a
-helper function focused on selections. The select helper functions are:
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
-\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+\item{columns}{\emph{Columns to target}
 
-\item{rows}{Optional rows for constraining the targeting process. Providing
-\code{\link[=everything]{everything()}} (the default) results in all rows in \code{columns} being
-targeted. Alternatively, we can supply a vector of row captions within
-\code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on selections.
-The select helper functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
-\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.
-We can also use expressions to filter down to the rows we need (e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+
+The columns to which the targeting operations are constrained.  Can either
+be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,
+or a select helper function. Examples of select helper functions include
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. This argument works in tandem with the
+\code{spanners} argument.}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+form a constraint for targeting operations. The default \code{\link[=everything]{everything()}}
+results in all rows in \code{columns} being formatted. Alternatively, we can
+supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row indices, or a
+select helper function. Examples of select helper functions include
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions to filter
+down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{values}{The specific value or values that should be targeted for
 styling. If \code{pattern} is also supplied then \code{values} will be ignored.}

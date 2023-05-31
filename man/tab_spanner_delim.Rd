@@ -14,18 +14,26 @@ tab_spanner_delim(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
+
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
 \item{delim}{The delimiter to use to split an input column name. This should
 be a single character (e.g., \code{"_"}, \code{"."}, etc.).}
 
-\item{columns}{The columns to consider for the splitting, relabeling, and
-spanner setting operations. This can either be a series of column names
-provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
-focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}. By default, we consider all columns in the table through
-the use of \code{\link[=everything]{everything()}}.}
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+
+The columns to consider for the splitting, relabeling, and spanner setting
+operations. Can either be a series of column names provided in \code{\link[=c]{c()}}, a
+vector of column indices, or a select helper function. Examples of select
+helper functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. This argument
+works in tandem with the \code{spanners} argument.}
 
 \item{split}{Should the delimiter splitting occur from the \code{"last"} instance
 of the \code{delim} character or from the \code{"first"}? The default here uses the

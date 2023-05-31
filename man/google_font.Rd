@@ -7,7 +7,11 @@
 google_font(name)
 }
 \arguments{
-\item{name}{The complete name of a font available in \emph{Google Fonts}.}
+\item{name}{\emph{Google Font name}
+
+\verb{scalar<character>} --- \strong{required}
+
+The complete name of a font available in \emph{Google Fonts}.}
 }
 \value{
 An object of class \code{font_css}.

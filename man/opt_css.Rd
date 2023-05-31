@@ -7,7 +7,12 @@
 opt_css(data, css, add = TRUE, allow_duplicates = FALSE)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
+
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
 \item{css}{The CSS to include as part of the rendered table's \verb{<style>}
 element.}

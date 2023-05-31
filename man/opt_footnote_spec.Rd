@@ -7,7 +7,12 @@
 opt_footnote_spec(data, spec_ref = NULL, spec_ftr = NULL)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
+
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
 \item{spec_ref, spec_ftr}{Specification of the footnote marks when behaving as
 footnote references and as marks in the footer section of the table. This

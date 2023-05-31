@@ -14,7 +14,12 @@ as_rtf(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{gt()} function.}
+\item{data}{\emph{The gt table data object}
+
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
 \item{incl_open, incl_close}{Options that govern whether the opening or
 closing \code{"{"} and \code{"}"} should be included. By default, both options are

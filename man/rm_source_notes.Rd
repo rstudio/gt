@@ -7,7 +7,12 @@
 rm_source_notes(data, source_notes = everything())
 }
 \arguments{
-\item{data}{A table object of class \code{gt_tbl}.}
+\item{data}{\emph{The gt table data object}
+
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
 \item{source_notes}{A specification of which source notes should be removed.
 The source notes to be removed can be given as a vector of integer values

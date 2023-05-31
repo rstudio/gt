@@ -7,7 +7,12 @@
 gtsave(data, filename, path = NULL, ...)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
+
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
 \item{filename}{The file name to create on disk. Ensure that an extension
 compatible with the output types is provided (\code{.html}, \code{.tex}, \code{.ltx},

@@ -14,7 +14,12 @@ opt_table_font(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
+
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
 \item{font}{One or more font names available as system or web fonts. These
 can be combined with a \code{c()} or a \code{list()}. To choose fonts from the

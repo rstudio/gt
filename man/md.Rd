@@ -7,11 +7,15 @@
 md(text)
 }
 \arguments{
-\item{text}{The text that is understood to contain Markdown formatting.}
+\item{text}{\emph{Markdown text}
+
+\verb{scalar<character>} --- \strong{required}
+
+The text that is understood to contain Markdown formatting.}
 }
 \value{
 A character object of class \code{from_markdown}. It's tagged as being
-Markdown text and it will undergo conversion to HTML.
+Markdown text and it will undergo conversion to the desired output context.
 }
 \description{
 Markdown! It's a wonderful thing. We can use it in certain places (e.g.,

@@ -7,24 +7,39 @@
 cols_label(.data, ..., .list = list2(...), .fn = NULL)
 }
 \arguments{
-\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{.data}{\emph{The gt table data object}
 
-\item{...}{Expressions for the assignment of column labels for the table
-columns in \code{.data}. Two-sided formulas (e.g., \verb{<LHS> ~ <RHS>}) can be used,
-where the left-hand side corresponds to selections of columns and the
-right-hand side evaluates to single-length values for the label to apply.
-Column names should be enclosed in \code{\link[=c]{c()}}. Select helpers like
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and
-\code{\link[=everything]{everything()}} can be used in the LHS. Named arguments are also valid as
-input for simple mappings of column name to label text; they should be of
-the form \verb{<column name> = <label>}. Subsequent expressions that operate on
-the columns assigned previously will result in overwriting column width
-values.}
+\verb{obj:<gt_tbl>} --- \strong{required}
 
-\item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
-\item{.fn}{An option to specify a function that will be applied to all of the
-provided label values.}
+\item{...}{\emph{Column label assignments}
+
+\verb{<multiple expressions>} --- \strong{required} (or, use \code{.list})
+
+Expressions for the assignment of column labels for the table columns in
+\code{.data}. Two-sided formulas (e.g., \verb{<LHS> ~ <RHS>}) can be used, where the
+left-hand side corresponds to selections of columns and the right-hand side
+evaluates to single-length values for the label to apply. Column names
+should be enclosed in \code{\link[=c]{c()}}. Select helpers like \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}
+can be used in the LHS. Named arguments are also valid as input for simple
+mappings of column name to label text; they should be of the form \verb{<column name> = <label>}. Subsequent expressions that operate on the columns
+assigned previously will result in overwriting column width values.}
+
+\item{.list}{\emph{Alternative to \code{...}}
+
+\verb{<list of multiple expressions>} --- \strong{required} (or, use \code{...})
+
+Allows for the use of a list as an input alternative to \code{...}.}
+
+\item{.fn}{\emph{Function to apply}
+
+\code{function} --- \emph{default:} \code{NULL} (\code{optional})
+
+An option to specify a function that will be applied to all of the provided
+label values.}
 }
 \value{
 An object of class \code{gt_tbl}.

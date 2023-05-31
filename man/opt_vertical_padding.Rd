@@ -7,7 +7,12 @@
 opt_vertical_padding(data, scale = 1)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
+
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
 \item{scale}{A scale factor by which the vertical padding will be adjusted.
 Must be a number between \code{0} and \code{3}.}

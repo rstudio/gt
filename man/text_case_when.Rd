@@ -7,7 +7,12 @@
 text_case_when(.data, ..., .default = NULL, .locations = cells_body())
 }
 \arguments{
-\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{.data}{\emph{The gt table data object}
+
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
 \item{...}{A sequence of two-sided formulas. The left hand side (LHS)
 determines which values match this case. The right hand side (RHS) provides

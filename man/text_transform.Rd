@@ -7,7 +7,12 @@
 text_transform(data, fn, locations = cells_body())
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
+
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
 \item{fn}{The function to use for text transformation. It should include \code{x}
 as an argument and return a character vector of the same length as the

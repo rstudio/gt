@@ -7,8 +7,11 @@
 escape_latex(text)
 }
 \arguments{
-\item{text}{A character vector containing the text that is to be
-LaTeX-escaped.}
+\item{text}{\emph{LaTeX text}
+
+\verb{vector<character>} --- \strong{required}
+
+A character vector containing the text that is to be LaTeX-escaped.}
 }
 \value{
 A character vector.

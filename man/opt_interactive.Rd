@@ -23,7 +23,12 @@ opt_interactive(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
+
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
 \item{active}{The \code{active} option will either enable or disable interactive
 features for an HTML table. The individual features of an interactive HTML

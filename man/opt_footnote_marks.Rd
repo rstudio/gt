@@ -7,7 +7,12 @@
 opt_footnote_marks(data, marks = "numbers")
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
+
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
 \item{marks}{Either a character vector of length greater than 1 (that will
 represent the series of marks) or a single keyword that represents a preset

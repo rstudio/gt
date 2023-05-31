@@ -7,7 +7,14 @@
 cells_column_spanners(spanners = everything())
 }
 \arguments{
-\item{spanners}{The names of the spanners that are to be targeted.}
+\item{spanners}{\emph{Specification of spanner IDs}
+
+\verb{<spanner-targeting expression>} --- \emph{default:} \code{everything()}
+
+The spanners to which targeting operations are constrained. Can either be a
+series of spanner ID values provided in \code{\link[=c]{c()}} or a select helper function.
+Examples of select helper functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
 }
 \value{
 A list object with the classes \code{cells_column_spanners} and

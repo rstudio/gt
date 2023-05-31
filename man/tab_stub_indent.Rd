@@ -7,13 +7,24 @@
 tab_stub_indent(data, rows, indent = "increase")
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{rows}{The rows to consider for the indentation change. Can either be a
-vector of row captions provided in \code{c()}, a vector of row indices, or a
-helper function focused on selections. The select helper functions are:
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and
-\code{\link[=everything]{everything()}}.}
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} --- \strong{required}
+
+The rows to consider for the indentation change. The default \code{\link[=everything]{everything()}}
+results in all rows being targeted. Alternatively, we can supply a vector
+of row captions within \code{\link[=c]{c()}}, a vector of row indices, or a select helper
+function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
+\code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
+need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{indent}{An indentation directive either as a keyword describing the
 indentation change or as an explicit integer value for directly setting the

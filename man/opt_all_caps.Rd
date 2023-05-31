@@ -11,7 +11,12 @@ opt_all_caps(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
+
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
 \item{all_caps}{A logical value to indicate whether the text transformation
 to all caps should be performed (\code{TRUE}, the default) or reset to default
