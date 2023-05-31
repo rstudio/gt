@@ -69,7 +69,13 @@
 #' package needs to be installed before attempting to save any table as a
 #' `.docx` document.
 #'
-#' @param data A table object that is created using the [gt()] function.
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
 #' @param filename The file name to create on disk. Ensure that an extension
 #'   compatible with the output types is provided (`.html`, `.tex`, `.ltx`,
 #'   `.rtf`, `.docx`). If a custom save function is provided then the file
@@ -474,7 +480,13 @@ gtsave_filename <- function(path, filename) {
 #' tags. This option is preferable when using the output HTML table in an
 #' emailing context.
 #'
-#' @param data A table object that is created using the [gt()] function.
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
 #' @param inline_css An option to supply styles to table elements as inlined CSS
 #'   styles. This is useful when including the table HTML as part of an HTML
 #'   email message body, since inlined styles are largely supported in email
@@ -558,7 +570,12 @@ as_raw_html <- function(
 #' `as.character()` on the created object will result in a single-element vector
 #' containing the LaTeX code.
 #'
-#' @param data A table object that is created using the [gt()] function.
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
 #'
 #' @details
 #'
@@ -674,7 +691,13 @@ as_latex <- function(data) {
 #' vector. This object can be used with `writeLines()` to generate a valid .rtf
 #' file that can be opened by RTF readers.
 #'
-#' @param data A table object that is created using the `gt()` function.
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
 #' @param incl_open,incl_close Options that govern whether the opening or
 #'   closing `"{"` and `"}"` should be included. By default, both options are
 #'   `TRUE`.
@@ -797,7 +820,13 @@ as_rtf <- function(
 #' Get the Open Office XML table tag content from a `gt_tbl` object as as a
 #' single-element character vector.
 #'
-#' @param data A table object that is created using the `gt()` function.
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
 #' @param align An option for table alignment. Can either be `"center"` (the
 #'   default), `"left"`, or `"right"`.
 #' @param caption_location Determines where the caption should be positioned.
@@ -1010,7 +1039,12 @@ as_word_tbl_body <- function(
 #' contain the `group_id` and `rowname` columns, whereby `rowname` contains
 #' descriptive stub labels for the summary rows.
 #'
-#' @param data A table object that is created using the [gt()] function.
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
 #'
 #' @return A list of data frames containing summary data.
 #'
@@ -1125,24 +1159,43 @@ extract_summary <- function(data) {
 #' Get a vector of cell data from a `gt_tbl` object. The output vector will have
 #' cell data formatted in the same way as the table.
 #'
-#' @param data A table object that is created using the [gt()] function.
-#' @param columns The columns containing the cells to extract. Can either be a
-#'   series of column names provided in [c()], a vector of column indices, or a
-#'   helper function focused on selections. The select helper functions are:
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()].
-#' @param rows Optional rows to limit the extraction of cells. Providing
-#'   [everything()] (the default) results in all rows in `columns` being
-#'   formatted. Alternatively, we can supply a vector of row captions within
-#'   [c()], a vector of row indices, or a helper function focused on selections.
-#'   The select helper functions are: [starts_with()], [ends_with()],
-#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
-#'   We can also use expressions to filter down to the rows we need (e.g.,
-#'   `[colname_1] > 100 & [colname_2] < 50`).
-#' @param output The output style of the resulting character vector. This can
-#'   either be `"auto"` (the default), `"plain"`, `"html"`, `"latex"`, `"rtf"`,
-#'   or `"word"`. In **knitr** rendering (i.e., Quarto or R Markdown), the
-#'   `"auto"` option will choose the correct `output` value
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
+#' @param columns *Columns to target*
+#'
+#'   `<column-targeting expression>` --- *default:* `everything()`
+#'
+#'   Can either be a series of column names provided in [c()], a vector of
+#'   column indices, or a select helper function. Examples of select helper
+#'   functions include [starts_with()], [ends_with()], [contains()],
+#'   [matches()], [one_of()], [num_range()], and [everything()].
+#'
+#' @param rows *Rows to target*
+#'
+#'   `<row-targeting expression>` --- *default:* `everything()`
+#'
+#'   In conjunction with `columns`, we can specify which of their rows should
+#'   form a constraint for extraction. The default [everything()] results in all
+#'   rows in `columns` being formatted. Alternatively, we can supply a vector of
+#'   row captions within [c()], a vector of row indices, or a select helper
+#'   function. Examples of select helper functions include [starts_with()],
+#'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
+#'   [everything()]. We can also use expressions to filter down to the rows we
+#'   need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'
+#' @param output *Output format*
+#'
+#'   `singl-kw:[auto|plain|html|latex|rtf|word]` --- *default:* `"auto"`
+#'
+#'   The output style of the resulting character vector. This can either be
+#'   `"auto"` (the default), `"plain"`, `"html"`, `"latex"`, `"rtf"`, or
+#'   `"word"`. In **knitr** rendering (i.e., Quarto or R Markdown), the `"auto"`
+#'   option will choose the correct `output` value
 #'
 #' @return A vector of cell data extracted from a **gt** table.
 #'
