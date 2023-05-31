@@ -33,10 +33,12 @@
 #' title and subtitle with the [md()] and [html()] helper functions.
 #'
 #' @inheritParams fmt_number
+#'
 #' @param title,subtitle Text to be used in the table title and, optionally, for
 #'   the table subtitle. We can elect to use the [md()] and [html()] helper
 #'   functions to style the text as Markdown or to retain HTML elements in the
 #'   text.
+#'
 #' @param preheader Optional preheader content that is rendered above the table.
 #'   Can be supplied as a vector of text.
 #'
@@ -160,20 +162,33 @@ tab_header <- function(
 #' replacement.
 #'
 #' @inheritParams fmt_number
+#'
 #' @param label The text to use for the spanner column label.
-#' @param columns The columns to serve as components of the spanner. Can either
-#'   be a series of column names provided in [c()], a vector of column indices,
-#'   or a helper function focused on selections. The select helper functions
-#'   are: [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
+#'
+#' @param columns *Columns to target*
+#'
+#'   `<column-targeting expression>` --- *default:* `NULL` (`optional`)
+#'
+#'   The columns to serve as components of the spanner. Can either be a series
+#'   of column names provided in [c()], a vector of column indices, or a select
+#'   helper function. Examples of select helper functions include
+#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()]. This argument works in tandem with the
-#'   `spanner` argument.
-#' @param spanners The spanners that should be spanned over, should they already
-#'   be defined. One or more spanner ID values (in quotes) can be supplied here.
-#'   This argument works in tandem with the `columns` argument.
+#'   `spanners` argument.
+#'
+#' @param spanners *Spanners to target*
+#'
+#'   `vector<character>` --- *default:* `NULL` (`optional`)
+#'
+#'   The spanners that should be spanned over, should they already be defined.
+#'   One or more spanner ID values (in quotes) can be supplied here. This
+#'   argument works in tandem with the `columns` argument.
+#'
 #' @param level An explicit level to which the spanner should be placed. If not
 #'   provided, **gt** will choose the level based on the inputs provided within
 #'   `columns` and `spanners`, placing the spanner label where it will fit. The
 #'   first spanner level (right above the column labels) is `1`.
+#'
 #' @param id The ID for the spanner column label. When accessing a spanner
 #'   through the `spanners` argument of `tab_spanner()` or
 #'   [cells_column_spanners()] (when using [tab_style()] or [tab_footnote()])
@@ -184,9 +199,11 @@ tab_header <- function(
 #'   contains markup, is lengthy, or both). Finally, when providing an `id`
 #'   value you must ensure that it is unique across all ID values set for column
 #'   spanner labels (the function will stop if `id` isn't unique).
+#'
 #' @param gather An option to move the specified `columns` such that they are
 #'   unified under the spanner column label. Ordering of the moved-into-place
 #'   columns will be preserved in all cases. By default, this is set to `TRUE`.
+#'
 #' @param replace Should new spanners be allowed to partially or fully replace
 #'   existing spanners? (This is a possibility if setting spanners at an already
 #'   populated `level`.) By default, this is set to `FALSE` and an error will
@@ -677,15 +694,21 @@ resolve_spanned_column_names <- function(
 #' expressions
 #'
 #' @inheritParams tab_spanner
+#'
 #' @param delim The delimiter to use to split an input column name. This should
 #'   be a single character (e.g., `"_"`, `"."`, etc.).
-#' @param columns The columns to consider for the splitting, relabeling, and
-#'   spanner setting operations. This can either be a series of column names
-#'   provided in [c()], a vector of column indices, or a helper function
-#'   focused on selections. The select helper functions are: [starts_with()],
-#'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
-#'   [everything()]. By default, we consider all columns in the table through
-#'   the use of [everything()].
+#'
+#' @param columns *Columns to target*
+#'
+#'   `<column-targeting expression>` --- *default:* `everything()`
+#'
+#'   The columns to consider for the splitting, relabeling, and spanner setting
+#'   operations. Can either be a series of column names provided in [c()], a
+#'   vector of column indices, or a select helper function. Examples of select
+#'   helper functions include [starts_with()], [ends_with()], [contains()],
+#'   [matches()], [one_of()], [num_range()], and [everything()]. This argument
+#'   works in tandem with the `spanners` argument.
+#'
 #' @param split Should the delimiter splitting occur from the `"last"` instance
 #'   of the `delim` character or from the `"first"`? The default here uses the
 #'   `"last"` keyword, and splitting begins at the last instance of the
@@ -1260,12 +1283,21 @@ str_split_across <- function(
 #' `tab_options(row_group.default_label = "")` can be used.
 #'
 #' @inheritParams fmt_number
+#'
 #' @param label The text to use for the row group label.
-#' @param rows The rows to be made components of the row group. Can either be a
-#'   vector of row captions provided in `c()`, a vector of row indices, or a
-#'   helper function focused on selections. The select helper functions are:
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()], and
-#'   [everything()].
+#'
+#' @param rows *Rows to target*
+#'
+#'   `<row-targeting expression>` --- **required**
+#'
+#'   The rows to be made components of the row group. The default [everything()]
+#'   results in all rows in `columns` being formatted. Alternatively, we can
+#'   supply a vector of row captions within [c()], a vector of row indices, or a
+#'   select helper function. Examples of select helper functions include
+#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
+#'   [num_range()], and [everything()]. We can also use expressions to filter
+#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'
 #' @param id The ID for the row group. When accessing a row group through
 #'   [cells_row_groups()] (when using [tab_style()] or [tab_footnote()]) the
 #'   `id` value is used as the reference (and not the `label`). If an `id` is
@@ -1275,8 +1307,10 @@ str_split_across <- function(
 #'   markup, is lengthy, or both). Finally, when providing an `id` value you
 #'   must ensure that it is unique across all ID values set for row groups (the
 #'   function will stop if `id` isn't unique).
+#'
 #' @param others_label This argument is deprecated. Instead use
 #'   `tab_options(row_group.default_label = <label>)`.
+#'
 #' @param group This argument is deprecated. Instead use `label`.
 #'
 #' @return An object of class `gt_tbl`.
@@ -1544,6 +1578,7 @@ tab_row_group <- function(
 #' of [html()] for the stubhead label.
 #'
 #' @inheritParams fmt_number
+#'
 #' @param label The text to be used as the stubhead label. We can optionally use
 #'   the [md()] and [html()] functions to style the text as Markdown or to
 #'   retain HTML elements in the text.
@@ -1615,11 +1650,19 @@ tab_stubhead <- function(
 #' indentation level, or, employ an indentation directive using keywords.
 #'
 #' @inheritParams fmt_number
-#' @param rows The rows to consider for the indentation change. Can either be a
-#'   vector of row captions provided in `c()`, a vector of row indices, or a
-#'   helper function focused on selections. The select helper functions are:
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()], and
-#'   [everything()].
+#'
+#' @param rows *Rows to target*
+#'
+#'   `<row-targeting expression>` --- **required**
+#'
+#'   The rows to consider for the indentation change. The default [everything()]
+#'   results in all rows being targeted. Alternatively, we can supply a vector
+#'   of row captions within [c()], a vector of row indices, or a select helper
+#'   function. Examples of select helper functions include [starts_with()],
+#'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
+#'   [everything()]. We can also use expressions to filter down to the rows we
+#'   need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'
 #' @param indent An indentation directive either as a keyword describing the
 #'   indentation change or as an explicit integer value for directly setting the
 #'   indentation level. The keyword `"increase"` (the default) will increase the
@@ -1789,9 +1832,11 @@ tab_stub_indent <- function(
 #' placement of the footnote mark.
 #'
 #' @inheritParams fmt_number
+#'
 #' @param footnote The text to be used in the footnote. We can optionally use
 #'   the [md()] and [html()] functions to style the text as Markdown or to
 #'   retain HTML elements in the footnote text.
+#'
 #' @param locations The cell or set of cells to be associated with the footnote.
 #'   Supplying any of the `cells_*()` helper functions is a useful way to target
 #'   the location cells that are associated with the footnote text. These helper
@@ -1802,6 +1847,7 @@ tab_stub_indent <- function(
 #'   can enclose several `cells_*()` calls within a `list()` if we wish to link
 #'   the footnote text to different types of locations (e.g., body cells, row
 #'   group labels, the table title, etc.).
+#'
 #' @param placement Where to affix footnote marks to the table content. Two
 #'   options for this are `"left` or `"right"`, where the placement is either to
 #'   the absolute left or right of the cell content. By default, however, this
@@ -2432,6 +2478,7 @@ set_footnote.cells_footnotes <- function(
 #' or, if the table is intended for HTML output, we can include HTML formatting.
 #'
 #' @inheritParams fmt_number
+#'
 #' @param source_note Text to be used in the source note. We can optionally use
 #'   the [md()] and [html()] functions to style the text as Markdown or to
 #'   retain HTML elements in the text.
@@ -2490,6 +2537,7 @@ tab_source_note <- function(
 #' in each of these system.
 #'
 #' @inheritParams fmt_number
+#'
 #' @param caption The table caption to use for cross-referencing in R Markdown,
 #'   Quarto, or **bookdown**.
 #'
@@ -2563,12 +2611,14 @@ tab_caption <- function(
 #' - the cell borders ([cell_borders()])
 #'
 #' @inheritParams fmt_number
+#'
 #' @param style The styles to use for the cells at the targeted `locations`. The
 #'   [cell_text()], [cell_fill()], and [cell_borders()] helper functions can be
 #'   used here to more easily generate valid styles. If using more than one
 #'   helper function to define styles, all calls must be enclosed in a [list()].
 #'   Custom CSS declarations can be used for HTML output by including a
 #'   [css()]-based statement as a list item.
+#'
 #' @param locations the cell or set of cells to be associated with the style.
 #'   Supplying any of the `cells_*()` helper functions is a useful way to target
 #'   the location cells that are associated with the styling. These helper
@@ -3149,47 +3199,76 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' components, the subcomponents, and the element that can adjusted.
 #'
 #' @inheritParams fmt_number
-#' @param table.width The width of the table. Can be specified as a
-#'   single-length character with units of pixels or as a percentage. If
-#'   provided as a single-length numeric vector, it is assumed that the value is
-#'   given in units of pixels. The [px()] and [pct()] helper functions can also
-#'   be used to pass in numeric values and obtain values as pixel or percent
-#'   units.
-#' @param table.layout The value for the `table-layout` CSS style in the HTML
-#'   output context. By default, this is `"fixed"` but another valid option is
+#'
+#' @param table.width *Table width*
+#'
+#'   The table width can be specified as a single-length character with units of
+#'   pixels or as a percentage. If provided as a single-length numeric vector,
+#'   it is assumed that the value is given in units of pixels. The [px()] and
+#'   [pct()] helper functions can also be used to pass in numeric values and
+#'   obtain values as pixel or percent units.
+#'
+#' @param table.layout *The table-layout property*
+#'
+#'   This is the value for the `table-layout` CSS style in the HTML output
+#'   context. By default, this is `"fixed"` but another valid option is
 #'   `"auto"`.
-#' @param table.align The horizontal alignment of the table in its container. By
-#'   default, this is `"center"`. Other options are `"left"` and `"right"`. This
-#'   will automatically set `table.margin.left` and `table.margin.right` to the
-#'   appropriate values.
-#' @param table.margin.left,table.margin.right The size of the margins on the
-#'   left and right of the table within the container. Can be specified as a
-#'   single-length character with units of pixels or as a percentage. If
-#'   provided as a single-length numeric vector, it is assumed that the value is
-#'   given in units of pixels. The [px()] and [pct()] helper functions can also
-#'   be used to pass in numeric values and obtain values as pixel or percent
-#'   units. Using `table.margin.left` or `table.margin.right` will overwrite any
-#'   values set by `table.align`.
+#'
+#' @param table.align *Horizontal alignment of table*
+#'
+#'   The `table.align` option lets us set the horizontal alignment of the table
+#'   in its container. By default, this is `"center"`. Other options are
+#'   `"left"` and `"right"`. This will automatically set `table.margin.left` and
+#'   `table.margin.right` to the appropriate values.
+#'
+#' @param table.margin.left,table.margin.right *Left and right table margins*
+#'
+#'   The size of the margins on the left and right of the table within the
+#'   container can be set with `table.margin.left` and `table.margin.right`. Can
+#'   be specified as a single-length character with units of pixels or as a
+#'   percentage. If provided as a single-length numeric vector, it is assumed
+#'   that the value is given in units of pixels. The [px()] and [pct()] helper
+#'   functions can also be used to pass in numeric values and obtain values as
+#'   pixel or percent units. Using `table.margin.left` or `table.margin.right`
+#'   will overwrite any values set by `table.align`.
+#'
 #' @param table.background.color,heading.background.color,column_labels.background.color,row_group.background.color,stub.background.color,summary_row.background.color,grand_summary_row.background.color,footnotes.background.color,source_notes.background.color
-#'   Background colors for the parent element `table` and the following child
-#'   elements: `heading`, `column_labels`, `row_group`, `stub`, `summary_row`,
-#'   `grand_summary_row`, `footnotes`, and `source_notes`. A color name or a
-#'   hexadecimal color code should be provided.
-#' @param table.additional_css This option can be used to supply an additional
-#'   block of CSS rules to be applied after the automatically generated table
-#'   CSS.
-#' @param table.font.names The names of the fonts used for the table. This is
-#'   a vector of several font names. If the first font isn't available, then
-#'   the next font is tried (and so on).
-#' @param table.font.style The font style for the table. Can be one of either
+#'   *Background colors*
+#'
+#'   These options govern background colors for the parent element `table` and
+#'   the following child elements: `heading`, `column_labels`, `row_group`,
+#'   `stub`, `summary_row`, `grand_summary_row`, `footnotes`, and
+#'   `source_notes`. A color name or a hexadecimal color code should be
+#'   provided.
+#'
+#' @param table.additional_css *Additional CSS*
+#'
+#'   The `table.additional_css` option can be used to supply an additional block
+#'   of CSS rules to be applied after the automatically generated table CSS.
+#'
+#' @param table.font.names *Default table fonts*
+#'
+#'   The names of the fonts used for the table can be supplied through
+#'   `table.font.names`. This is a vector of several font names. If the first
+#'   font isn't available, then the next font is tried (and so on).
+#'
+#' @param table.font.style *Default table font style*
+#'
+#'   This is the default font style for the table. Can be one of either
 #'   `"normal"`, `"italic"`, or `"oblique"`.
+#'
 #' @param table.font.color,table.font.color.light
-#'   The text color used throughout the table. There are two variants:
-#'   `table.font.color` is for text overlaid on lighter background colors, and
-#'   `table.font.color.light` is automatically used when text needs to be
-#'   overlaid on darker background colors. A color name or a hexadecimal color
-#'   code should be provided.
+#'   *Default dark and light text for the table*
+#'
+#'   These options define text colors used throughout the table. There are two
+#'   variants: `table.font.color` is for text overlaid on lighter background
+#'   colors, and `table.font.color.light` is automatically used when text needs
+#'   to be overlaid on darker background colors. A color name or a hexadecimal
+#'   color code should be provided.
+#'
 #' @param table.font.size,heading.title.font.size,heading.subtitle.font.size,column_labels.font.size,row_group.font.size,stub.font.size,footnotes.font.size,source_notes.font.size
+#'   *Table font sizes*
+#'
 #'   The font sizes for the parent text element `table` and the following child
 #'   elements: `heading.title`, `heading.subtitle`, `column_labels`,
 #'   `row_group`, `footnotes`, and `source_notes`. Can be specified as a
@@ -3198,26 +3277,41 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   it is assumed that the value is given in units of pixels. The [px()] and
 #'   [pct()] helper functions can also be used to pass in numeric values and
 #'   obtain values as pixel or percentage units.
-#' @param heading.align Controls the horizontal alignment of the heading title
-#'   and subtitle. We can either use `"center"`, `"left"`, or `"right"`.
+#'
+#' @param heading.align *Horizontal alignment in the table header*
+#'
+#'   Controls the horizontal alignment of the heading title and subtitle. We can
+#'   either use `"center"`, `"left"`, or `"right"`.
+#'
 #' @param table.font.weight,heading.title.font.weight,heading.subtitle.font.weight,column_labels.font.weight,row_group.font.weight,stub.font.weight
+#'   *Table font weights*
+#'
 #'   The font weights of the table, `heading.title`, `heading.subtitle`,
 #'   `column_labels`, `row_group`, and `stub` text elements. Can be a text-based
 #'   keyword such as `"normal"`, `"bold"`, `"lighter"`, `"bolder"`, or, a
 #'   numeric value between `1` and `1000`, inclusive. Note that only variable
 #'   fonts may support the numeric mapping of weight.
+#'
 #' @param column_labels.text_transform,row_group.text_transform,stub.text_transform,summary_row.text_transform,grand_summary_row.text_transform
+#'   *Text transforms throughout the table*
+#'
 #'   Options to apply text transformations to the `column_labels`, `row_group`,
 #'   `stub`, `summary_row`, and `grand_summary_row` text elements. Either of the
 #'   `"uppercase"`, `"lowercase"`, or `"capitalize"` keywords can be used.
+#'
 #' @param heading.padding,column_labels.padding,data_row.padding,row_group.padding,summary_row.padding,grand_summary_row.padding,footnotes.padding,source_notes.padding
+#'   *Vertical padding throughout the table*
+#'
 #'   The amount of vertical padding to incorporate in the `heading` (title and
 #'   subtitle), the `column_labels` (this includes the column spanners), the row
 #'   group labels (`row_group.padding`), in the body/stub rows
 #'   (`data_row.padding`), in summary rows (`summary_row.padding` or
 #'   `grand_summary_row.padding`), or in the footnotes and source notes
 #'   (`footnotes.padding` and `source_notes.padding`).
+#'
 #' @param heading.padding.horizontal,column_labels.padding.horizontal,data_row.padding.horizontal,row_group.padding.horizontal,summary_row.padding.horizontal,grand_summary_row.padding.horizontal,footnotes.padding.horizontal,source_notes.padding.horizontal
+#'   *Horizontal padding throughout the table*
+#'
 #'   The amount of horizontal padding to incorporate in the `heading` (title and
 #'   subtitle), the `column_labels` (this includes the column spanners), the row
 #'   group labels (`row_group.padding.horizontal`), in the body/stub rows
@@ -3225,115 +3319,203 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   `grand_summary_row.padding.horizontal`), or in the footnotes and source
 #'   notes (`footnotes.padding.horizontal` and
 #'   `source_notes.padding.horizontal`).
+#'
 #' @param table.border.top.style,table.border.top.width,table.border.top.color,table.border.right.style,table.border.right.width,table.border.right.color,table.border.bottom.style,table.border.bottom.width,table.border.bottom.color,table.border.left.style,table.border.left.width,table.border.left.color
+#'   *Top border properties*
+#'
 #'   The style, width, and color properties of the table's absolute top and
 #'   absolute bottom borders.
+#'
 #' @param heading.border.bottom.style,heading.border.bottom.width,heading.border.bottom.color
+#'   *Properties of the header's bottom border*
+#'
 #'   The style, width, and color properties of the header's bottom border. This
 #'   border shares space with that of the `column_labels` location. If the
 #'   `width` of this border is larger, then it will be the visible border.
+#'
 #' @param heading.border.lr.style,heading.border.lr.width,heading.border.lr.color
+#'   *Properties of the header's left and right borders*
+#'
 #'   The style, width, and color properties for the left and right borders of
 #'   the `heading` location.
+#'
 #' @param column_labels.vlines.style,column_labels.vlines.width,column_labels.vlines.color
+#'   *Properties of all vertical lines by the column labels*
+#'
 #'   The style, width, and color properties for all vertical lines ('vlines')
 #'   of the the `column_labels`.
+#'
 #' @param column_labels.border.top.style,column_labels.border.top.width,column_labels.border.top.color
+#'   *Properties of the border above the column labels*
+#'
 #'   The style, width, and color properties for the top border of the
 #'   `column_labels` location. This border shares space with that of the
 #'   `heading` location. If the `width` of this border is larger, then it will
 #'   be the visible border.
+#'
 #' @param column_labels.border.bottom.style,column_labels.border.bottom.width,column_labels.border.bottom.color
+#'   *Properties of the border below the column labels*
+#'
 #'   The style, width, and color properties for the bottom border of the
 #'   `column_labels` location.
+#'
 #' @param column_labels.border.lr.style,column_labels.border.lr.width,column_labels.border.lr.color
+#'   *Properties of the left and right borders next to the column labels*
+#'
 #'   The style, width, and color properties for the left and right borders of
 #'   the `column_labels` location.
-#' @param column_labels.hidden An option to hide the column labels. If providing
-#'   `TRUE` then the entire `column_labels` location won't be seen and the table
-#'   header (if present) will collapse downward.
+#'
+#' @param column_labels.hidden *Hiding all column labels*
+#'
+#'   An option to hide the column labels. If providing `TRUE` then the entire
+#'   `column_labels` location won't be seen and the table header (if present)
+#'   will collapse downward.
+#'
 #' @param row_group.border.top.style,row_group.border.top.width,row_group.border.top.color,row_group.border.bottom.style,row_group.border.bottom.width,row_group.border.bottom.color,row_group.border.left.style,row_group.border.left.width,row_group.border.left.color,row_group.border.right.style,row_group.border.right.width,row_group.border.right.color
+#'   *Border properties associated with the `row_group` location*
+#'
 #'   The style, width, and color properties for all top, bottom, left, and right
 #'   borders of the `row_group` location.
+#'
 #' @param table_body.hlines.style,table_body.hlines.width,table_body.hlines.color,table_body.vlines.style,table_body.vlines.width,table_body.vlines.color
+#'   *Properties of all horizontal and vertical lines in the table body*
+#'
 #'   The style, width, and color properties for all horizontal lines ('hlines')
 #'   and vertical lines ('vlines') in the `table_body`.
+#'
 #' @param table_body.border.top.style,table_body.border.top.width,table_body.border.top.color,table_body.border.bottom.style,table_body.border.bottom.width,table_body.border.bottom.color
+#'   *Properties of top and bottom borders in the table body*
+#'
 #'   The style, width, and color properties for all top and bottom borders of
 #'   the `table_body` location.
+#'
 #' @param stub.border.style,stub.border.width,stub.border.color
+#'   *Properties of the vertical border of the table stub*
+#'
 #'   The style, width, and color properties for the vertical border of the table
 #'   stub.
+#'
 #' @param stub_row_group.font.size,stub_row_group.font.weight,stub_row_group.text_transform,stub_row_group.border.style,stub_row_group.border.width,stub_row_group.border.color
-#'   Options for the row group column in the stub (made possible when using
-#'   `row_group.as_column = TRUE`). The defaults for these options mirror that
-#'   of the `stub.*` variants (except for `stub_row_group.border.width`, which
-#'   is `"1px"` instead of `"2px"`).
-#' @param row_group.default_label An option to set a default row group label for
-#'   any rows not formally placed in a row group named by `group` in any call of
-#'   `tab_row_group()`. If this is set as `NA_character` and there are rows that
-#'   haven't been placed into a row group (where one or more row groups already
-#'   exist), those rows will be automatically placed into a row group without a
-#'   label.
-#' @param row_group.as_column How should row groups be structured? By default,
-#'   they are separate rows that lie above the each of the groups. Setting this
-#'   to `TRUE` will structure row group labels are columns to the far left of
-#'   the table.
-#' @param stub.indent_length The width of each indentation level. By default
-#'   this is `"5px"`.
+#'   *Properties of the row group column in the table stub*
+#'
+#'   Options for the row group column in the table stub (made possible when
+#'   using `row_group.as_column = TRUE`). The defaults for these options mirror
+#'   that of the `stub.*` variants (except for `stub_row_group.border.width`,
+#'   which is `"1px"` instead of `"2px"`).
+#'
+#' @param row_group.default_label *The default row group label*
+#'
+#'   An option to set a default row group label for any rows not formally placed
+#'   in a row group named by `group` in any call of [tab_row_group()]. If this
+#'   is set as `NA_character_` and there are rows that haven't been placed into a
+#'   row group (where one or more row groups already exist), those rows will be
+#'   automatically placed into a row group without a label.
+#'
+#' @param row_group.as_column *Structure row groups with a column*
+#'
+#'   How should row groups be structured? By default, they are separate rows
+#'   that lie above the each of the groups. Setting this to `TRUE` will
+#'   structure row group labels as a separate column in the table stub.
+#'
+#' @param stub.indent_length *Width of each indentation*
+#'
+#'   The width of each indentation level for row labels in the stub. The
+#'   indentation can be set by using [tab_stub_indent()]. By default this is
+#'   `"5px"`.
+#'
 #' @param summary_row.border.style,summary_row.border.width,summary_row.border.color
+#'   *Properties of horizontal borders belonging to summary rows*
+#'
 #'   The style, width, and color properties for all horizontal borders of the
 #'   `summary_row` location.
+#'
 #' @param grand_summary_row.border.style,grand_summary_row.border.width,grand_summary_row.border.color
+#'   *Properties of horizontal borders belonging to grand summary rows*
+#'
 #'   The style, width, and color properties for the top borders of the
 #'   `grand_summary_row` location.
+#'
 #' @param footnotes.border.bottom.style,footnotes.border.bottom.width,footnotes.border.bottom.color
+#'   *Properties of the bottom border belonging to the footnotes*
+#'
 #'   The style, width, and color properties for the bottom border of the
 #'   `footnotes` location.
+#'
 #' @param footnotes.border.lr.style,footnotes.border.lr.width,footnotes.border.lr.color
+#'   *Properties of left and right borders belonging to the footnotes*
+#'
 #'   The style, width, and color properties for the left and right borders of
 #'   the `footnotes` location.
-#' @param footnotes.marks The set of sequential marks used to reference and
-#'   identify each of the footnotes (same input as the [opt_footnote_marks()]
-#'   function). We can supply a vector that represents the series of footnote
-#'   marks. This vector is recycled when its usage goes beyond the length of the
-#'   set. At each cycle, the marks are simply combined (e.g., `*` -> `**` ->
-#'   `***`). The option exists for providing keywords for certain types of
-#'   footnote marks. The keyword `"numbers"` (the default, indicating that we
-#'   want to use numeric marks). We can use lowercase `"letters"` or uppercase
-#'   `"LETTERS"`. There is the option for using a traditional symbol set where
-#'   `"standard"` provides four symbols, and, `"extended"` adds two more
-#'   symbols, making six.
-#' @param footnotes.spec_ref,footnotes.spec_ftr Optional specifications for
-#'   formatting of footnote references (`footnotes.spec_ref`) and their
-#'   associated marks the footer section (`footnotes.spec_ftr`) (same input as
-#'   the [opt_footnote_spec()] function). This is a string containing
-#'   specification control characters. The default is the spec string `"^i"`,
-#'   which is superscript text set in italics. Other control characters that can
-#'   be used are: (1) `"b"` for bold text, and (2) `"("` / `")"` for the
-#'   enclosure of footnote marks in parentheses.
-#' @param footnotes.multiline,source_notes.multiline An option to either put
-#'   footnotes and source notes in separate lines (the default, or `TRUE`) or
-#'   render them as a continuous line of text with `footnotes.sep` providing the
-#'   separator (by default `" "`) between notes.
-#' @param footnotes.sep,source_notes.sep The separating characters between
-#'   adjacent footnotes and source notes in their respective footer sections
-#'   when rendered as a continuous line of text (when
-#'   `footnotes.multiline == FALSE`). The default value is a single space
+#'
+#' @param footnotes.marks *Sequence of footnote marks*
+#'
+#'   The set of sequential marks used to reference and identify each of the
+#'   footnotes (same input as the [opt_footnote_marks()] function). We can
+#'   supply a vector that represents the series of footnote marks. This vector
+#'   is recycled when its usage goes beyond the length of the set. At each
+#'   cycle, the marks are simply combined (e.g., `*` -> `**` -> `***`). The
+#'   option exists for providing keywords for certain types of footnote marks.
+#'   The keyword `"numbers"` (the default, indicating that we want to use
+#'   numeric marks). We can use lowercase `"letters"` or uppercase `"LETTERS"`.
+#'   There is the option for using a traditional symbol set where `"standard"`
+#'   provides four symbols, and, `"extended"` adds two more symbols, making six.
+#'
+#' @param footnotes.spec_ref,footnotes.spec_ftr
+#'   *Specifications for formatting of footnote marks*
+#'
+#'   Optional specifications for formatting of footnote references
+#'   (`footnotes.spec_ref`) and their associated marks the footer section
+#'   (`footnotes.spec_ftr`) (same input as the [opt_footnote_spec()] function).
+#'   This is a string containing specification control characters. The default
+#'   is the spec string `"^i"`, which is superscript text set in italics. Other
+#'   control characters that can be used are: (1) `"b"` for bold text, and (2)
+#'   `"("` / `")"` for the enclosure of footnote marks in parentheses.
+#'
+#' @param footnotes.multiline,source_notes.multiline
+#'   *Typesetting of multiple footnotes and source notes*
+#'
+#'   An option to either put footnotes and source notes in separate lines (the
+#'   default, or `TRUE`) or render them as a continuous line of text with
+#'   `footnotes.sep` providing the separator (by default `" "`) between notes.
+#'
+#' @param footnotes.sep,source_notes.sep
+#'   *Separator characters between adjacent footnotes and source notes*
+#'
+#'   The separating characters between adjacent footnotes and source notes in
+#'   their respective footer sections when rendered as a continuous line of text
+#'   (when `footnotes.multiline == FALSE`). The default value is a single space
 #'   character (`" "`).
+#'
 #' @param source_notes.border.bottom.style,source_notes.border.bottom.width,source_notes.border.bottom.color
+#'   *Properties of the bottom border belonging to the source notes*
+#'
 #'   The style, width, and color properties for the bottom border of the
 #'   `source_notes` location.
+#'
 #' @param source_notes.border.lr.style,source_notes.border.lr.width,source_notes.border.lr.color
+#'   *Properties of left and right borders belonging to the source notes*
+#'
 #'   The style, width, and color properties for the left and right borders of
 #'   the `source_notes` location.
-#' @param row.striping.background_color The background color for striped table
-#'   body rows. A color name or a hexadecimal color code should be provided.
-#' @param row.striping.include_stub An option for whether to include the stub
-#'   when striping rows.
-#' @param row.striping.include_table_body An option for whether to include the
-#'   table body when striping rows.
+#'
+#' @param row.striping.background_color *Background color for row stripes*
+#'
+#'   The background color for striped table body rows. A color name or a
+#'   hexadecimal color code should be provided.
+#'
+#' @param row.striping.include_stub
+#'   *Inclusion of the table stub for row stripes*
+#'
+#'   An option for whether to include the stub when striping rows.
+#'
+#' @param row.striping.include_table_body
+#'   *Inclusion of the table body for row stripes*
+#'
+#'   An option for whether to include the table body when striping rows.
+#'
 #' @param container.width,container.height,container.padding.x,container.padding.y
+#'   *Table container dimensions and padding*
+#'
 #'   The width and height of the table's container, and, the vertical and
 #'   horizontal padding of the table's container. The container width and height
 #'   can be specified with units of pixels or as a percentage. The padding is to
@@ -3341,44 +3523,73 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   value, it is assumed that the value is given in units of pixels. The [px()]
 #'   and [pct()] helper functions can also be used to pass in numeric values and
 #'   obtain values as pixel or percent units.
-#' @param container.overflow.x,container.overflow.y Options to enable scrolling
-#'   in the horizontal and vertical directions when the table content overflows
-#'   the container dimensions. Using `TRUE` (the default for both) means that
-#'   horizontal or vertical scrolling is enabled to view the entire table in
-#'   those directions. With `FALSE`, the table may be clipped if the table width
-#'   or height exceeds the `container.width` or `container.height`.
-#' @param ihtml.active The option for displaying an interactive version of an
-#'   HTML table (rather than an otherwise 'static' table). This enables the use
-#'   of controls for pagination, global search, filtering, and sorting. The
-#'   individual features are controlled by the other `table.*` options. By
-#'   default, the pagination (`ihtml.use_pagination`) and sorting
-#'   (`ihtml.use_sorting`) features are enabled. The `ihtml.active` option,
-#'   however, is `FALSE` by default.
-#' @param ihtml.use_pagination,ihtml.use_pagination_info For interactive HTML
-#'   output, the option for using pagination controls (below the table body) can
-#'   be controlled with `ihtml.use_pagination`. By default, this is `TRUE` and
-#'   it will allow the use to page through table content. The informational
-#'   display text regarding the current page can be set with
-#'   `ihtml.use_pagination_info` (which is `TRUE` by default).
-#' @param ihtml.use_sorting For interactive HTML output, the option to provide
-#'   controls for sorting column values. By default, this is `TRUE`.
-#' @param ihtml.use_search For interactive HTML output, an option that places a
-#'   search field for globally filtering rows to the requested content. By
+#'
+#' @param container.overflow.x,container.overflow.y *Table container overflow*
+#'
+#'   Options to enable scrolling in the horizontal and vertical directions when
+#'   the table content overflows the container dimensions. Using `TRUE` (the
+#'   default for both) means that horizontal or vertical scrolling is enabled to
+#'   view the entire table in those directions. With `FALSE`, the table may be
+#'   clipped if the table width or height exceeds the `container.width` or
+#'   `container.height`.
+#'
+#' @param ihtml.active *Display interactive HTML table*
+#'
+#'   The option for displaying an interactive version of an HTML table (rather
+#'   than an otherwise 'static' table). This enables the use of controls for
+#'   pagination, global search, filtering, and sorting. The individual features
+#'   are controlled by the other `table.*` options. By default, the pagination
+#'   (`ihtml.use_pagination`) and sorting (`ihtml.use_sorting`) features are
+#'   enabled. The `ihtml.active` option, however, is `FALSE` by default.
+#'
+#' @param ihtml.use_pagination,ihtml.use_pagination_info *Use pagination*
+#'
+#'   For interactive HTML output, the option for using pagination controls
+#'   (below the table body) can be controlled with `ihtml.use_pagination`. By
+#'   default, this is `TRUE` and it will allow the use to page through table
+#'   content. The informational display text regarding the current page can be
+#'   set with `ihtml.use_pagination_info` (which is `TRUE` by default).
+#'
+#' @param ihtml.use_sorting *Use sorting*
+#'
+#'   For interactive HTML output, the option to provide controls for sorting
+#'   column values. By default, this is `TRUE`.
+#'
+#' @param ihtml.use_search *Use search field*
+#'
+#'   For interactive HTML output, an option that places a search field for
+#'   globally filtering rows to the requested content. By default, this is
+#'   `FALSE`.
+#'
+#' @param ihtml.use_filters *Use filtering field*
+#'
+#'   For interactive HTML output, this places search fields below each column
+#'   header and allows for filtering by column. By default, this is `FALSE`.
+#'
+#' @param ihtml.use_resizers *Use column resizers*
+#'
+#'   For interactive HTML output, this allows for interactive resizing of
+#'   columns. By default, this is `FALSE`.
+#'
+#' @param ihtml.use_highlight *Use row highlighting*
+#'
+#'   For interactive HTML output, this highlights individual rows upon hover. By
 #'   default, this is `FALSE`.
-#' @param ihtml.use_filters For interactive HTML output, this places search
-#'   fields below each column header and allows for filtering by column. By
-#'   default, this is `FALSE`.
-#' @param ihtml.use_resizers For interactive HTML output, this allows for
-#'   interactive resizing of columns. By default, this is `FALSE`.
-#' @param ihtml.use_highlight For interactive HTML output, this highlights
-#'   individual rows upon hover. By default, this is `FALSE`.
-#' @param ihtml.use_compact_mode For interactive HTML output, an option to
-#'   reduce vertical padding and thus make the table consume less vertical
-#'   space. By default, this is `FALSE`.
-#' @param ihtml.use_text_wrapping For interactive HTML output, an option to
-#'   control text wrapping. By default (`TRUE`), text will be wrapped to
-#'   multiple lines; if `FALSE`, text will be truncated to a single line.
+#'
+#' @param ihtml.use_compact_mode *Use compact mode*
+#'
+#'   For interactive HTML output, an option to reduce vertical padding and thus
+#'   make the table consume less vertical space. By default, this is `FALSE`.
+#'
+#' @param ihtml.use_text_wrapping *Use text wrapping*
+#'
+#'   For interactive HTML output, an option to control text wrapping. By default
+#'   (`TRUE`), text will be wrapped to multiple lines; if `FALSE`, text will be
+#'   truncated to a single line.
+#'
 #' @param ihtml.use_page_size_select,ihtml.page_size_default,ihtml.page_size_values
+#'   *Change page size properties*
+#'
 #'   For interactive HTML output, `ihtml.use_page_size_select` provides the
 #'   option to display a dropdown menu for the number of rows to show per page
 #'   of data. By default, this is the vector `c(10, 25, 50, 100)` which
@@ -3387,40 +3598,76 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   `ihtml.page_size_values`. The default page size (initially set as `10`) can
 #'   be modified with `ihtml.page_size_default` and this works whether or not
 #'   `ihtml.use_page_size_select` is set to `TRUE`.
-#' @param ihtml.pagination_type For interactive HTML output and when using
-#'   pagination, one of three options for presentation pagination controls. The
-#'   default is `"numbers"`, where a series of page-number buttons is presented
-#'   along with 'previous' and 'next' buttons. The `"jump"` option provides an
-#'   input field with a stepper for the page number. With `"simple"`, only the
-#'   'previous' and 'next' buttons are displayed.
-#' @param page.orientation For RTF output, this provides an two options for page
+#'
+#' @param ihtml.pagination_type *Change pagination mode*
+#'
+#'   For interactive HTML output and when using pagination, one of three options
+#'   for presentation pagination controls. The default is `"numbers"`, where a
+#'   series of page-number buttons is presented along with 'previous' and 'next'
+#'   buttons. The `"jump"` option provides an input field with a stepper for the
+#'   page number. With `"simple"`, only the 'previous' and 'next' buttons are
+#'   displayed.
+#'
+#' @param page.orientation *Set RTF page orientation*
+#'
+#'   For RTF output, this provides an two options for page
 #'   orientation: `"portrait"` (the default) and `"landscape"`.
-#' @param page.numbering Within RTF output, should page numbering be displayed?
-#'   By default, this is set to `FALSE` but if `TRUE` then page numbering text
-#'   will be added to the document header.
-#' @param page.header.use_tbl_headings If `TRUE` then RTF output tables will
-#'   migrate all table headings (including the table title and all column
-#'   labels) to the page header. This page header content will repeat across
-#'   pages. By default, this is `FALSE`.
-#' @param page.footer.use_tbl_notes If `TRUE` then RTF output tables will
-#'   migrate all table footer content (this includes footnotes and source notes)
-#'   to the page footer. This page footer content will repeat across pages. By
-#'   default, this is `FALSE`.
-#' @param page.width,page.height The page width and height in the standard
-#'   portrait orientation. This is for RTF table output and the default
-#'   values (in inches) are `8.5in` and `11.0in`.
+#'
+#' @param page.numbering *Enable RTF page numbering*
+#'
+#'   Within RTF output, should page numbering be displayed? By default, this is
+#'   set to `FALSE` but if `TRUE` then page numbering text will be added to the
+#'   document header.
+#'
+#' @param page.header.use_tbl_headings
+#'
+#'   *Place table headings in RTF page header*
+#'
+#'   If `TRUE` then RTF output tables will migrate all table headings (including
+#'   the table title and all column labels) to the page header. This page header
+#'   content will repeat across pages. By default, this is `FALSE`.
+#'
+#' @param page.footer.use_tbl_notes
+#'
+#'   *Place table footer in RTF page footer*
+#'
+#'   If `TRUE` then RTF output tables will migrate all table footer content
+#'   (this includes footnotes and source notes) to the page footer. This page
+#'   footer content will repeat across pages. By default, this is `FALSE`.
+#'
+#' @param page.width,page.height
+#'
+#'   *Set RTF page dimensions*
+#'
+#'   The page width and height in the standard portrait orientation. This is for
+#'   RTF table output and the default values (in inches) are `8.5in` and
+#'   `11.0in`.
+#'
 #' @param page.margin.left,page.margin.right,page.margin.top,page.margin.bottom
+#'
+#'   *Set RTF page margins*
+#'
 #'   For RTF table output, these options correspond to the left, right, top, and
 #'   bottom page margins. The default values for each of these is `1.0in`.
-#' @param page.header.height,page.footer.height The heights of the page header
-#'   and footer for RTF table outputs. Default values for both are `0.5in`.
-#' @param quarto.use_bootstrap,quarto.disable_processing When rendering a **gt**
-#'   table with Quarto, the table can undergo transformations to support
-#'   advanced Quarto features. Setting `quarto.use_bootstrap` to `TRUE` (`FALSE`
-#'   by default) will allow Quarto to add Bootstrap classes to the table,
-#'   allowing those styles to permeate the table. Quarto performs other
-#'   alterations as well but they can all be deactivated with
-#'   `quarto.disable_processing = TRUE` (this option is `FALSE` by default).
+#'
+#' @param page.header.height,page.footer.height
+#'
+#'   *Set RTF page header and footer distances*
+#'
+#'   The heights of the page header and footer for RTF table outputs. Default
+#'   values for both are `0.5in`.
+#'
+#' @param quarto.use_bootstrap,quarto.disable_processing
+#'
+#'   *Modify Quarto properties*
+#'
+#'   When rendering a **gt** table with Quarto, the table can undergo
+#'   transformations to support advanced Quarto features. Setting
+#'   `quarto.use_bootstrap` to `TRUE` (`FALSE` by default) will allow Quarto to
+#'   add Bootstrap classes to the table, allowing those styles to permeate the
+#'   table. Quarto performs other alterations as well but they can all be
+#'   deactivated with `quarto.disable_processing = TRUE` (this option is `FALSE`
+#'   by default).
 #'
 #' @return An object of class `gt_tbl`.
 #'
