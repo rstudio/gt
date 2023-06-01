@@ -76,14 +76,26 @@
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
-#' @param filename The file name to create on disk. Ensure that an extension
-#'   compatible with the output types is provided (`.html`, `.tex`, `.ltx`,
-#'   `.rtf`, `.docx`). If a custom save function is provided then the file
-#'   extension is disregarded.
-#' @param path An optional path to which the file should be saved (combined with
-#'   filename).
-#' @param ... All other options passed to the appropriate internal saving
-#'   function.
+#' @param filename *Output filename*
+#'
+#'   `scalar<character>` --- **required**
+#'
+#'   The file name to create on disk. Ensure that an extension compatible with
+#'   the output types is provided (`.html`, `.tex`, `.ltx`, `.rtf`, `.docx`). If
+#'   a custom save function is provided then the file extension is disregarded.
+#'
+#' @param path *Output path*
+#'
+#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'
+#'   An optional path to which the file should be saved (combined with
+#'   `filename`).
+#'
+#' @param ... *Additional options*
+#'
+#'   `<named arguments>`
+#'
+#'   All other options passed to the appropriate internal saving function.
 #'
 #' @return Invisibly returns `TRUE` if the export process is successful.
 #'
@@ -436,7 +448,7 @@ gt_save_docx <- function(
     output = filename
   )
 
-  if(needs_gt_as_word_post_processing(word_md_text)){
+  if (needs_gt_as_word_post_processing(word_md_text)) {
     gt_as_word_post_processing(filename)
   }
 
@@ -487,10 +499,14 @@ gtsave_filename <- function(path, filename) {
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
-#' @param inline_css An option to supply styles to table elements as inlined CSS
-#'   styles. This is useful when including the table HTML as part of an HTML
-#'   email message body, since inlined styles are largely supported in email
-#'   clients over using CSS in a `<style>` block.
+#' @param inline_css *Use inline CSS*
+#'
+#'   `scalar<logical>` --- *default:* `TRUE`
+#'
+#'   An option to supply styles to table elements as inlined CSS styles. This is
+#'   useful when including the table HTML as part of an HTML email message body,
+#'   since inlined styles are largely supported in email clients over using CSS
+#'   in a `<style>` block.
 #'
 #' @section Examples:
 #'
@@ -698,15 +714,32 @@ as_latex <- function(data) {
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
-#' @param incl_open,incl_close Options that govern whether the opening or
-#'   closing `"{"` and `"}"` should be included. By default, both options are
+#' @param incl_open,incl_close *Include opening/closing braces*
+#'
+#'   `scalar<logical>` --- *default:* `TRUE`
+#'
+#'   Options that govern whether the opening or closing `"{"` and `"}"` should
+#'   be included. By default, both options are `TRUE`.
+#'
+#' @param incl_header *Include RTF header*
+#'
+#'   `scalar<logical>` --- *default:* `TRUE`
+#'
+#'   Should the RTF header be included in the output? By default, this is
 #'   `TRUE`.
-#' @param incl_header Should the RTF header be included in the output? By
-#'   default, this is `TRUE`.
-#' @param incl_page_info Should the RTF output include directives for the
-#'   document pages? This is `TRUE` by default.
-#' @param incl_body An option to include the body of RTF document. By
-#'   default, this is `TRUE`.
+#'
+#' @param incl_page_info *Include RTF page information*
+#'
+#'   `scalar<logical>` --- *default:* `TRUE`
+#'
+#'   Should the RTF output include directives for the document pages? This is
+#'   `TRUE` by default.
+#'
+#' @param incl_body *Include RTF body*
+#'
+#'   `scalar<logical>` --- *default:* `TRUE`
+#'
+#'   An option to include the body of RTF document. By default, this is `TRUE`.
 #'
 #' @section Examples:
 #'
@@ -817,7 +850,7 @@ as_rtf <- function(
 #'
 #' @description
 #'
-#' Get the Open Office XML table tag content from a `gt_tbl` object as as a
+#' Get the Open Office XML table tag content from a `gt_tbl` object as a
 #' single-element character vector.
 #'
 #' @param data *The gt table data object*
@@ -827,17 +860,39 @@ as_rtf <- function(
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
-#' @param align An option for table alignment. Can either be `"center"` (the
-#'   default), `"left"`, or `"right"`.
-#' @param caption_location Determines where the caption should be positioned.
-#'   This can either be `"top"` (the default), `"bottom"`, or `"embed"`.
-#' @param caption_align Determines the alignment of the caption. This is
+#' @param align *Table alignment*
+#'
+#'   `scalar<character>` --- *default:* `"center"`
+#'
+#'   An option for table alignment. Can either be `"center"`, `"left"`, or
+#'   `"right"`.
+#'
+#' @param caption_location *Caption location*
+#'
+#'   `singl-kw:[top|bottom|embed]` --- *default:* `"top"`
+#'
+#'   Determines where the caption should be positioned. This can either be
+#'   `"top"`, `"bottom"`, or `"embed"`.
+#'
+#' @param caption_align *Caption alignment*
+#'
+#'   Determines the alignment of the caption. This is
 #'   either `"left"` (the default), `"center"`, or `"right"`. This option is
 #'   only used when `caption_location` is not set as `"embed"`.
-#' @param split A `TRUE` or `FALSE` (the default) value that indicates whether
-#'   to activate the Word option `Allow row to break across pages`.
-#' @param keep_with_next A `TRUE` (the default) or `FALSE` value that indicates
-#'   whether a table should use Word option `keep rows together`.
+#'
+#' @param split *Allow splitting*
+#'
+#'   `scalar<logical>` --- *default:* `FALSE`
+#'
+#'   A logical value that indicates whether to activate the Word option
+#'   `Allow row to break across pages`.
+#'
+#' @param keep_with_next *Keeping rows together*
+#'
+#'   `scalar<logical>` --- *default:* `TRUE`
+#'
+#'   A logical value that indicates whether a table should use Word option
+#'   `keep rows together`.
 #'
 #' @section Examples:
 #'
