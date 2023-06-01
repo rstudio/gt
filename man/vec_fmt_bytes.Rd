@@ -22,63 +22,127 @@ vec_fmt_bytes(
 )
 }
 \arguments{
-\item{x}{A numeric vector.}
+\item{x}{\emph{The input vector}
 
-\item{standard}{The way to express large byte sizes.}
+\code{vector(numeric|integer)} --- \strong{required}
 
-\item{decimals}{An option to specify the exact number of decimal places to
-use. The default number of decimal places is \code{1}.}
+This is the input vector that will undergo transformation to a character
+vector of the same length. Values within the vector will be formatted.}
 
-\item{n_sigfig}{A option to format numbers to \emph{n} significant figures. By
-default, this is \code{NULL} and thus number values will be formatted according
-to the number of decimal places set via \code{decimals}. If opting to format
-according to the rules of significant figures, \code{n_sigfig} must be a number
-greater than or equal to \code{1}. Any values passed to the \code{decimals} and
-\code{drop_trailing_zeros} arguments will be ignored.}
+\item{standard}{\emph{Standard used to express byte sizes}
 
-\item{drop_trailing_zeros}{A logical value that allows for removal of
-trailing zeros (those redundant zeros after the decimal mark).}
+\verb{singl-kw:[decimal|binary]} --- \emph{default:} \code{"decimal"}
 
-\item{drop_trailing_dec_mark}{A logical value that determines whether decimal
-marks should always appear even if there are no decimal digits to display
-after formatting (e.g, \code{23} becomes \code{23.}). The default for this is \code{TRUE},
-which means that trailing decimal marks are not shown.}
+The form of expressing large byte sizes is divided between: (1) decimal
+units (powers of 1000; e.g., \code{"kB"} and \code{"MB"}), and (2) binary units
+(powers of 1024; e.g., \code{"KiB"} and \code{"MiB"}).}
 
-\item{use_seps}{An option to use digit group separators. The type of digit
-group separator is set by \code{sep_mark} and overridden if a locale ID is
-provided to \code{locale}. This setting is \code{TRUE} by default.}
+\item{decimals}{\emph{Number of decimal places}
 
-\item{pattern}{A formatting pattern that allows for decoration of the
-formatted value. The value itself is represented by \code{{x}} and all other
-characters are taken to be string literals.}
+\code{scalar<numeric|integer>(val>=0)} --- \emph{default:} \code{1}
 
-\item{sep_mark}{The mark to use as a separator between groups of digits
-(e.g., using \code{sep_mark = ","} with \code{1000} would result in a formatted value
-of \verb{1,000}).}
+This corresponds to the exact number of decimal places to use. A value
+such as \code{2.34} can, for example, be formatted with \code{0} decimal places and
+it would result in \code{"2"}. With \code{4} decimal places, the formatted value
+becomes \code{"2.3400"}. The trailing zeros can be removed with
+\code{drop_trailing_zeros = TRUE}.}
 
-\item{dec_mark}{The character to use as a decimal mark (e.g., using
-\code{dec_mark = ","} with \code{0.152} would result in a formatted value of
-\verb{0,152}).}
+\item{n_sigfig}{\emph{Number of significant figures}
 
-\item{force_sign}{Should the positive sign be shown for positive numbers
-(effectively showing a sign for all numbers except zero)? If so, use \code{TRUE}
-for this option. The default is \code{FALSE}, where only negative numbers will
-display a minus sign.}
+\code{scalar<numeric|integer>(val>=1)} --- \emph{default:} \code{NULL} (\code{optional})
 
-\item{incl_space}{An option for whether to include a space between the value
-and the units. The default of \code{TRUE} uses a space character for separation.}
+A option to format numbers to \emph{n} significant figures. By default, this is
+\code{NULL} and thus number values will be formatted according to the number of
+decimal places set via \code{decimals}. If opting to format according to the
+rules of significant figures, \code{n_sigfig} must be a number greater than or
+equal to \code{1}. Any values passed to the \code{decimals} and \code{drop_trailing_zeros}
+arguments will be ignored.}
 
-\item{locale}{An optional locale identifier that can be used for formatting
-the value according the locale's rules. Examples include \code{"en"} for English
-(United States) and \code{"fr"} for French (France). The use of a locale ID will
-override any locale-specific values provided. We can use the
-\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
-are supported.}
+\item{drop_trailing_zeros}{\emph{Drop any trailing zeros}
 
-\item{output}{The output style of the resulting character vector. This can
-either be \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"},
-or \code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the
-\code{"auto"} option will choose the correct \code{output} value}
+\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+
+A logical value that allows for removal of trailing zeros (those redundant
+zeros after the decimal mark).}
+
+\item{drop_trailing_dec_mark}{\emph{Drop the trailing decimal mark}
+
+\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+
+A logical value that determines whether decimal marks should always appear
+even if there are no decimal digits to display after formatting (e.g., \code{23}
+becomes \code{23.} if \code{FALSE}). By default trailing decimal marks are not shown.}
+
+\item{use_seps}{\emph{Use digit group separators}
+
+\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+
+An option to use digit group separators. The type of digit group separator
+is set by \code{sep_mark} and overridden if a locale ID is provided to \code{locale}.
+This setting is \code{TRUE} by default.}
+
+\item{pattern}{\emph{Specification of the formatting pattern}
+
+\verb{scalar<character>} --- \emph{default:} \code{"{x}"}
+
+A formatting pattern that allows for decoration of the formatted value. The
+formatted value is represented by the \code{{x}} (which can be used multiple
+times, if needed) and all other characters will be interpreted as string
+literals.}
+
+\item{sep_mark}{\emph{Separator mark for digit grouping}
+
+\verb{scalar<character>} --- \emph{default:} \code{","}
+
+The string to use as a separator between groups of digits. For example,
+using \code{sep_mark = ","} with a value of \code{1000} would result in a formatted
+value of \code{"1,000"}. This argument is ignored if a \code{locale} is supplied
+(i.e., is not \code{NULL}).}
+
+\item{dec_mark}{\emph{Decimal mark}
+
+\verb{scalar<character>} --- \emph{default:} \code{"."}
+
+The string to be used as the decimal mark. For example, using
+\code{dec_mark = ","} with the value \code{0.152} would result in a formatted value
+of \code{"0,152"}). This argument is ignored if a \code{locale} is supplied (i.e., is
+not \code{NULL}).}
+
+\item{force_sign}{\emph{Forcing the display of a positive sign}
+
+\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+
+Should the positive sign be shown for positive numbers (effectively showing
+a sign for all numbers except zero)? If so, use \code{TRUE} for this option. The
+default is \code{FALSE}, where only negative numbers will display a minus sign.}
+
+\item{incl_space}{\emph{Include a space between the value and the units}
+
+\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+
+An option for whether to include a space between the value and the units.
+The default is to use a space character for separation.}
+
+\item{locale}{\emph{Locale identifier}
+
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+An optional locale identifier that can be used for formatting values
+according the locale's rules. Examples include \code{"en"} for English (United
+States) and \code{"fr"} for French (France). We can use the \code{\link[=info_locales]{info_locales()}}
+function as a useful reference for all of the locales that are supported. A
+locale ID can be also set in the initial \code{\link[=gt]{gt()}} function call (where it
+would be used automatically by any function with a \code{locale} argument) but a
+\code{locale} value provided here will override that global locale.}
+
+\item{output}{\emph{Output format}
+
+\verb{singl-kw:[auto|plain|html|latex|rtf|word]} --- \emph{default:} \code{"auto"}
+
+The output style of the resulting character vector. This can either be
+\code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"}, or
+\code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the \code{"auto"}
+option will choose the correct \code{output} value}
 }
 \value{
 A character vector.

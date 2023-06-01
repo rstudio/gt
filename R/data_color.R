@@ -66,76 +66,180 @@
 #' without running into too many errors.
 #'
 #' @inheritParams fmt_number
-#' @param columns,rows The columns and rows to which cell data color operations
-#'   are constrained.
-#' @param direction Should the color computations be performed column-wise or
-#'   row-wise? By default this is set with the `"column"` keyword and colors
-#'   will be applied down columns. The alternative option with the `"row"`
-#'   keyword ensures that the color mapping works across rows.
-#' @param target_columns For indirect column coloring treatments, we can supply
-#'   the columns that will receive the styling. The necessary precondition is
-#'   that we must use `direction = "column"`. If `columns` resolves to a single
-#'   column then we may use one or more columns in `target_columns`. If on the
-#'   other hand `columns` resolves to multiple columns, then `target_columns`
-#'   must resolve to the same multiple.
-#' @param method A method for computing color based on the data within body
-#'   cells. Can be `"auto"` (the default), `"numeric"`, `"bin"`, `"quantile"`,
-#'   or `"factor"`. The `"auto"` method will automatically choose the
-#'   `"numeric"` method for numerical input data or the `"factor"` method for
-#'   any non-numeric inputs.
-#' @param palette A vector of color names, the name of an **RColorBrewer**
-#'   palette, the name of a **viridis** palette, or a discrete palette
-#'   accessible from the **paletteer** package using the `<package>::<palette>`
-#'   syntax (e.g., `"wesanderson::IsleofDogs1"`). If providing a vector of
-#'   colors as a palette, each color value provided must either be a color name
-#'   (Only R/X11 color names or CSS 3.0 color names) or a hexadecimal string in
-#'   the form of `"#RRGGBB"` or `"#RRGGBBAA"`. If nothing is provided here, the
-#'   default R color palette is used (i.e., the colors from `palette()`).
-#' @param domain The possible values that can be mapped. For the `"numeric"` and
-#'   `"bin"` methods, this can be a numeric range specified with a length of two
-#'   vector. Representative numeric data is needed for the `"quantile"` method
-#'   and categorical data must be used for the `"factor"` method. If `NULL` (the
+#'
+#' @param columns *Columns to target*
+#'
+#'   `<column-targeting expression>` --- *default:* `everything()`
+#'
+#'   The columns to which cell data color operations are constrained. Can either
+#'   be a series of column names provided in [c()], a vector of column indices,
+#'   or a select helper function. Examples of select helper functions include
+#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
+#'   [num_range()], and [everything()].
+#'
+#' @param rows *Rows to target*
+#'
+#'   `<row-targeting expression>` --- *default:* `everything()`
+#'
+#'   In conjunction with `columns`, we can specify which of their rows should
+#'   form a constraint for cell data color operations. The default
+#'   [everything()] results in all rows in `columns` being formatted.
+#'   Alternatively, we can supply a vector of row captions within [c()], a
+#'   vector of row indices, or a select helper function. Examples of select
+#'   helper functions include [starts_with()], [ends_with()], [contains()],
+#'   [matches()], [one_of()], [num_range()], and [everything()]. We can also use
+#'   expressions to filter down to the rows we need (e.g., `[colname_1] > 100 &
+#'   [colname_2] < 50`).
+#'
+#' @param direction *Color computation direction*
+#'
+#'   `singl-kw:[column|row]` --- *default:* `"column"`
+#'
+#'   Should the color computations be performed column-wise or row-wise? By
+#'   default this is set with the `"column"` keyword and colors will be applied
+#'   down columns. The alternative option with the `"row"` keyword ensures that
+#'   the color mapping works across rows.
+#'
+#' @param target_columns *Indirect columns to target*
+#'
+#'   `<row-targeting expression>` --- *default:* `NULL` `optional`
+#'
+#'   For indirect column coloring treatments, we can supply the columns that
+#'   will receive the styling. The necessary precondition is that we must use
+#'   `direction = "column"`. If `columns` resolves to a single column then we
+#'   may use one or more columns in `target_columns`. If on the other hand
+#'   `columns` resolves to multiple columns, then `target_columns` must resolve
+#'   to the same multiple.
+#'
+#' @param method *Color computation method*
+#'
+#'   `singl-kw:[auto|numeric|bin|quantile|factor]` --- *default:* `"auto"`
+#'
+#'   A method for computing color based on the data within body cells. Can be
+#'   `"auto"` (the default), `"numeric"`, `"bin"`, `"quantile"`, or `"factor"`.
+#'   The `"auto"` method will automatically choose the `"numeric"` method for
+#'   numerical input data or the `"factor"` method for any non-numeric inputs.
+#'
+#' @param palette *Color palette*
+#'
+#'   `vector<character>` --- *default:* `NULL` (`optional`)
+#'
+#'   A vector of color names, the name of an **RColorBrewer** palette, the name
+#'   of a **viridis** palette, or a discrete palette accessible from the
+#'   **paletteer** package using the `<package>::<palette>` syntax (e.g.,
+#'   `"wesanderson::IsleofDogs1"`). If providing a vector of colors as a
+#'   palette, each color value provided must either be a color name (Only R/X11
+#'   color names or CSS 3.0 color names) or a hexadecimal string in the form of
+#'   `"#RRGGBB"` or `"#RRGGBBAA"`. If nothing is provided here, the default R
+#'   color palette is used (i.e., the colors from `palette()`).
+#'
+#' @param domain *Value domain*
+#'
+#'   `vector<numeric|integer|character>` --- *default:* `NULL` (`optional`)
+#'
+#'   The possible values that can be mapped. For the `"numeric"` and `"bin"`
+#'   methods, this can be a numeric range specified with a length of two vector.
+#'   Representative numeric data is needed for the `"quantile"` method and
+#'   categorical data must be used for the `"factor"` method. If `NULL` (the
 #'   default value), the values in each column or row (depending on `direction`)
 #'   value will represent the domain.
-#' @param bins For `method = "bin"` this can either be a numeric vector of two
-#'   or more unique cut points, or, a single numeric value (greater than or
-#'   equal to `2`) giving the number of intervals into which the domain values
-#'   are to be cut. By default, this is `8`.
-#' @param quantiles For `method = "quantile"` this is the number of equal-size
-#'   quantiles to use. By default, this is set to `4`.
-#' @param levels For `method = "factor"` this allows for an alternate way of
-#'   specifying levels. If anything is provided here then any value supplied to
-#'   `domain` will be ignored. This should be a character vector of unique
-#'   values.
-#' @param ordered For `method = "factor"`, setting this to `TRUE` means that the
-#'   vector supplied to `domain` will be treated as being in the correct order
-#'   if that vector needs to be coerced to a factor. By default, this is
-#'   `FALSE`.
-#' @param na_color The color to use for missing values. By default (with
-#'   `na_color = NULL`) gray, `"#808080"`, will be used.
-#' @param alpha An optional, fixed alpha transparency value that will be applied
-#'   to all of the `colors` provided (regardless of whether a color palette was
-#'   directly supplied or generated through a color mapping function).
-#' @param reverse Should the colors computed operate in reverse order?
-#'   If `TRUE` then colors that normally change from red to blue will change in
-#'   the opposite direction. By default, this is `FALSE`.
-#' @param fn A color-mapping function. The function should be able to take a
-#'   vector of data values as input and return an equal-length vector of color
-#'   values. The `col_*()` functions provided in the **scales** package (i.e.,
+#'
+#' @param bins *Specification of bin number*
+#'
+#'   `scalar<numeric|integer>` --- *default:* `8`
+#'
+#'   For `method = "bin"` this can either be a numeric vector of two or more
+#'   unique cut points, or, a single numeric value (greater than or equal to
+#'   `2`) giving the number of intervals into which the domain values are to be
+#'   cut. By default, this is `8`.
+#'
+#' @param quantiles *Specification of quantile number*
+#'
+#'   `scalar<numeric|integer>` --- *default:* `4`
+#'
+#'   For `method = "quantile"` this is the number of equal-size quantiles to
+#'   use. By default, this is set to `4`.
+#'
+#' @param levels *Specification of factor levels*
+#'
+#'   `vector<character>` --- *default:* `NULL` (`optional`)
+#'
+#'   For `method = "factor"` this allows for an alternate way of specifying
+#'   levels. If anything is provided here then any value supplied to `domain`
+#'   will be ignored. This should be a character vector of unique values.
+#'
+#' @param ordered *Use an ordered factor*
+#'
+#'   `scalar<logical>` --- *default:* `FALSE`
+#'
+#'   For `method = "factor"`, setting this to `TRUE` means that the vector
+#'   supplied to `domain` will be treated as being in the correct order if that
+#'   vector needs to be coerced to a factor. By default, this is `FALSE`.
+#'
+#' @param na_color *Default color for `NA` values*
+#'
+#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'
+#'   The color to use for missing values. By default (with `na_color = NULL`),
+#'   the color gray (`"#808080"`) will be used. This option has no effect if
+#'   providing a color-mapping function to `fn`.
+#'
+#' @param alpha *Transparency value*
+#'
+#'   `scalar<numeric|integer>(0>=val>=1)` --- *default:* `NULL` (`optional`)
+#'
+#'   An optional, fixed alpha transparency value that will be applied to all of
+#'   the `colors` provided (regardless of whether a color palette was directly
+#'   supplied or generated through a color mapping function).
+#'
+#' @param reverse *Reverse order of computed colors*
+#'
+#'   `scalar<logical>` --- *default:* `FALSE`
+#'
+#'   Should the colors computed operate in the reverse order? If `TRUE` then
+#'   colors that normally change from red to blue will change in the opposite
+#'   direction.
+#'
+#' @param fn *Color-mapping function*
+#'
+#'   `function` --- *default:* `NULL` (`optional`)
+#'
+#'   A color-mapping function. The function should be able to take a vector of
+#'   data values as input and return an equal-length vector of color values. The
+#'   `col_*()` functions provided in the **scales** package (i.e.,
 #'   [scales::col_numeric()], [scales::col_bin()], and [scales::col_factor()])
 #'   can be invoked here with options, as those functions themselves return a
 #'   color-mapping function.
-#' @param apply_to Which style element should the colors be applied to? Options
-#'   include the cell background (the default, given as `"fill"`) or the cell
-#'   text (`"text"`).
-#' @param autocolor_text An option to let **gt** modify the coloring of text
-#'   within cells undergoing background coloring. This will result in better
-#'   text-to-background color contrast. By default, this is set to `TRUE`.
-#' @param contrast_algo The color contrast algorithm to use when
-#'   `autocolor_text = TRUE`. By default this is `"apca"` (Accessible Perceptual
-#'   Contrast Algorithm) and the alternative to this is `"wcag"` (Web Content
-#'   Accessibility Guidelines).
-#' @param colors Deprecated. Use the `fn` argument instead to provide a
+#'
+#' @param apply_to *How to apply color*
+#'
+#'   `singl-kw:[fill|text]` --- *default:* `"fill"`
+#'
+#'   Which style element should the colors be applied to? Options include the
+#'   cell background (the default, given as `"fill"`) or the cell text
+#'   (`"text"`).
+#'
+#' @param autocolor_text *Automatically recolor text*
+#'
+#'   `scalar<logical>` --- *default:* `TRUE`
+#'
+#'   An option to let **gt** modify the coloring of text within cells undergoing
+#'   background coloring. This will result in better text-to-background color
+#'   contrast. By default, this is set to `TRUE`.
+#'
+#' @param contrast_algo *Color contrast algorithm choice*
+#'
+#'   `singl-kw:[apca|wcag]` --- *default:* `"apca"`
+#'
+#'   The color contrast algorithm to use when `autocolor_text = TRUE`. By
+#'   default this is `"apca"` (Accessible Perceptual Contrast Algorithm) and the
+#'   alternative to this is `"wcag"` (Web Content Accessibility Guidelines).
+#'
+#' @param colors *[Deprecated] Color mapping function*
+#'
+#'   `function` --- *default:* `NULL` (`optional`)
+#'
+#'   This argument is deprecated. Use the `fn` argument instead to provide a
 #'   **scales**-based color-mapping function. If providing a palette, use the
 #'   `palette` argument.
 #'

@@ -7,18 +7,29 @@
 text_transform(data, fn, locations = cells_body())
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{fn}{The function to use for text transformation. It should include \code{x}
-as an argument and return a character vector of the same length as the
-input \code{x}.}
+\verb{obj:<gt_tbl>} --- \strong{required}
 
-\item{locations}{The cell or set of cells to be associated with the text
-transformation. Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}},
-\code{\link[=cells_row_groups]{cells_row_groups()}}, \code{\link[=cells_column_labels]{cells_column_labels()}}, and
-\code{\link[=cells_column_spanners]{cells_column_spanners()}} helper functions can be used here. We can enclose
-several of these calls within a \code{list()} if we wish to make the
-transformation happen at different locations.}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{fn}{\emph{Function for text transformation}
+
+\verb{<function>} --- \strong{required}
+
+The function to use for text transformation. It should include \code{x} as an
+argument and return a character vector of the same length as the input \code{x}.}
+
+\item{locations}{\emph{Locations to target}
+
+\verb{<locations expressions>} --- \emph{default:} \code{cells_body()}
+
+The cell or set of cells to be associated with the text transformation.
+Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_row_groups]{cells_row_groups()}},
+\code{\link[=cells_column_labels]{cells_column_labels()}}, and \code{\link[=cells_column_spanners]{cells_column_spanners()}} helper functions can
+be used here. We can enclose several of these calls within a \code{list()} if we
+wish to make the transformation happen at different locations.}
 }
 \value{
 An object of class \code{gt_tbl}.

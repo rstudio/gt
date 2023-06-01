@@ -7,13 +7,22 @@
 adjust_luminance(colors, steps)
 }
 \arguments{
-\item{colors}{A vector of colors that will undergo an adjustment in
-luminance. Each color value provided must either be a color name (in the
-set of colors provided by \code{grDevices::colors()}) or a hexadecimal string in
-the form of "#RRGGBB" or "#RRGGBBAA".}
+\item{colors}{\emph{Color vector}
 
-\item{steps}{A positive or negative factor by which the luminance will be
-adjusted. Must be a number between \code{-2.0} and \code{2.0}.}
+\verb{vector<character>} --- \strong{required}
+
+This is the vector of colors that will undergo an adjustment in luminance.
+Each color value provided must either be a color name (in the set of colors
+provided by \code{grDevices::colors()}) or a hexadecimal string in the form of
+"#RRGGBB" or "#RRGGBBAA".}
+
+\item{steps}{\emph{Adjustment level}
+
+\verb{scalar<numeric|integer>(-2>=val>=2)} --- \strong{required}
+
+A positive or negative factor by which the luminance of colors in the
+\code{colors} vector will be adjusted. Must be a number between \code{-2.0} and
+\code{2.0}.}
 }
 \value{
 A vector of color values.

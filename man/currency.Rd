@@ -7,10 +7,18 @@
 currency(..., .list = list2(...))
 }
 \arguments{
-\item{...}{One or more named arguments using output contexts as the names and
+\item{...}{\emph{Currency symbols by output context}
+
+\verb{<named arguments>} --- \strong{required} (or, use \code{.list})
+
+One or more named arguments using output contexts as the names and
 currency symbol text as the values.}
 
-\item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
+\item{.list}{\emph{Alternative to \code{...}}
+
+\verb{<list of multiple expressions>} --- \strong{required} (or, use \code{...})
+
+Allows for the use of a list as an input alternative to \code{...}.}
 }
 \value{
 A list object of class \code{gt_currency}.

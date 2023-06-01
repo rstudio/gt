@@ -7,9 +7,13 @@
 px(x)
 }
 \arguments{
-\item{x}{the numeric value to format as a string (e.g., \code{"12px"}) for
-some \code{\link[=tab_options]{tab_options()}} arguments that can take values as units of
-pixels (e.g., \code{table.font.size}).}
+\item{x}{\emph{Numeric length in pixels}
+
+\verb{scalar<numeric|integer>} --- \strong{required}
+
+The numeric value to format as a string (e.g., \code{"12px"}) for some
+\code{\link[=tab_options]{tab_options()}} arguments that can take values as units of pixels (e.g.,
+\code{table.font.size}).}
 }
 \value{
 A character vector with a single value in pixel units.

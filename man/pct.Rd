@@ -7,9 +7,12 @@
 pct(x)
 }
 \arguments{
-\item{x}{the numeric value to format as a string percentage for some
-\code{\link[=tab_options]{tab_options()}} arguments that can take percentage values
-(e.g., \code{table.width}).}
+\item{x}{\emph{Numeric value in percent}
+
+\verb{scalar<numeric|integer>} --- \strong{required}
+
+The numeric value to format as a string percentage for some \code{\link[=tab_options]{tab_options()}}
+arguments that can take percentage values (e.g., \code{table.width}).}
 }
 \value{
 A character vector with a single value in percentage units.

@@ -14,34 +14,57 @@ sub_small_vals(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{Optional columns for constraining the targeting process.
-Providing \code{\link[=everything]{everything()}} (the default) results in cells in all \code{columns}
-being targeting (this can be limited by \code{rows} however). Can either be a
-series of column names provided in \code{\link[=c]{c()}}, a vector of column indices, or a
-helper function focused on selections. The select helper functions are:
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+
+The columns to which substitution operations are constrained. Can either
+be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,
+or a select helper function. Examples of select helper functions include
 \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
 \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
 
-\item{rows}{Optional rows for constraining the targeting process. Providing
-\code{\link[=everything]{everything()}} (the default) results in all rows in \code{columns} being
-targeted. Alternatively, we can supply a vector of row captions within
-\code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on selections.
-The select helper functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
-\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.
-We can also use expressions to filter down to the rows we need (e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+\item{rows}{\emph{Rows to target}
 
-\item{threshold}{The threshold value with which values should be considered
-small enough for replacement.}
+\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
 
-\item{small_pattern}{The pattern text to be used in place of the suitably
-small values in the rendered table.}
+In conjunction with \code{columns}, we can specify which of their rows should
+form a constraint for targeting operations. The default \code{\link[=everything]{everything()}}
+results in all rows in \code{columns} being formatted. Alternatively, we can
+supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row indices, or a
+select helper function. Examples of select helper functions include
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions to filter
+down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{sign}{The sign of the numbers to be considered in the replacement. By
-default, we only consider positive values (\code{"+"}). The other option (\code{"-"})
-can be used to consider only negative values.}
+\item{threshold}{\emph{Threshold value}
+
+\verb{scalar<numeric|integer>} --- \emph{default:} \code{0.01}
+
+The threshold value with which values should be considered small enough for
+replacement.}
+
+\item{small_pattern}{\emph{Pattern specification for small values}
+
+\verb{scalar<character>} --- \emph{default:} \code{if (sign == "+") "<{x}" else md("<*abs*(-{x})")}
+
+The pattern text to be used in place of the suitably small values in the
+rendered table.}
+
+\item{sign}{\emph{Consider positive or negative values?}
+
+\verb{scalar<character>} --- \emph{default:} \code{"+"}
+
+The sign of the numbers to be considered in the replacement. By default, we
+only consider positive values (\code{"+"}). The other option (\code{"-"}) can be used
+to consider only negative values.}
 }
 \value{
 An object of class \code{gt_tbl}.

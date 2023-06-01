@@ -7,13 +7,33 @@
 cols_move(data, columns, after)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The column names to move to as a group to a different
-position. The order of the remaining columns will be preserved.}
+\verb{obj:<gt_tbl>} --- \strong{required}
 
-\item{after}{A column name used to anchor the insertion of the moved columns.
-All of the moved columns will be placed to the right of this column.}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+
+The columns for which the moving operations should be applied. Can either
+be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,
+or a select helper function. Examples of select helper functions include
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. The columns move as a group to a
+different position. The order of the remaining columns will be preserved.}
+
+\item{after}{\emph{Column used as anchor}
+
+\verb{<column-targeting expression>} --- \strong{required}
+
+The column used to anchor the insertion of the moved columns. All of the
+moved columns will be placed to the right of this column. While select
+helper functions such as \code{\link[=starts_with]{starts_with()}} and \code{\link[=ends_with]{ends_with()}} can be used for
+column targeting, it's recommended that a single column name be used. This
+is to ensure that exactly one column is provided here.}
 }
 \value{
 An object of class \code{gt_tbl}.

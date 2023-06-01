@@ -7,14 +7,34 @@
 tab_header(data, title, subtitle = NULL, preheader = NULL)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{title, subtitle}{Text to be used in the table title and, optionally, for
-the table subtitle. We can elect to use the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} helper
-functions to style the text as Markdown or to retain HTML elements in the
-text.}
+\verb{obj:<gt_tbl>} --- \strong{required}
 
-\item{preheader}{Optional preheader content that is rendered above the table.
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{title}{\emph{Header title}
+
+\verb{scalar<character>} --- \strong{required}
+
+Text to be used in the table title. We can elect to use the \code{\link[=md]{md()}} and
+\code{\link[=html]{html()}} helper functions to style the text as Markdown or to retain HTML
+elements in the text.}
+
+\item{subtitle}{\emph{Header subtitle}
+
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+Text to be used in the table subtitle. We can elect to use the \code{\link[=md]{md()}} and
+\code{\link[=html]{html()}} helper functions to style the text as Markdown or to retain HTML
+elements in the text.}
+
+\item{preheader}{\emph{RTF preheader text}
+
+\verb{vector<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+Optional preheader content that is rendered above the table for RTF output.
 Can be supplied as a vector of text.}
 }
 \value{

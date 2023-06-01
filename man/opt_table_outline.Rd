@@ -7,12 +7,33 @@
 opt_table_outline(data, style = "solid", width = px(3), color = "#D3D3D3")
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{style, width, color}{The style, width, and color properties for the table
-outline. By default, these are \code{"solid"}, \code{px(3)} (or, \code{"3px"}), and
-\code{"#D3D3D3"}. If \code{"none"} is used then the outline is removed and any values
-provided for \code{width} and \code{color} will be ignored (i.e., not set).}
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{style}{\emph{Outline style property}
+
+\verb{scalar<character>} --- \emph{default:} \code{"solid"}
+
+The style property for the table outline. By default, this is \code{"solid"}. If
+\code{"none"} is used then the outline is removed and any values provided for
+\code{width} and \code{color} will be ignored (i.e., not set).}
+
+\item{width}{\emph{Outline width value}
+
+\verb{scalar<character>} --- \emph{default:} \code{px(3)}
+
+The width property for the table outline. By default, this is \code{px(3)} (or,
+\code{"3px"}).}
+
+\item{color}{\emph{Color of outline}
+
+\verb{scalar<character>} --- \emph{default:} \code{"#D3D3D3"}
+
+The color of the table outline. By default, this is \code{"#D3D3D3"}.}
 }
 \value{
 An object of class \code{gt_tbl}.

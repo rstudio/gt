@@ -7,16 +7,31 @@
 cols_label_with(data, columns = everything(), fn)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The column names to which the function or function call in
-\code{fn} should be applied. By default this is set as \code{everything()} which
-select every column in the table.}
+\verb{obj:<gt_tbl>} --- \strong{required}
 
-\item{fn}{The function or function call to be applied to the column labels.
-This can take the form of a bare function (e.g., \code{tools::toTitleCase}), a
-function call as a RHS formula (e.g., \code{~ tools::toTitleCase(.)}), or an
-anonymous function as in \code{function(x) tools::toTitleCase(x)}.}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+
+The columns for which the column-labeling operations should be applied. Can
+either be a series of column names provided in \code{\link[=c]{c()}}, a vector of column
+indices, or a select helper function. Examples of select helper functions
+include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+
+\item{fn}{\emph{Function to apply}
+
+\verb{function|formula} --- \strong{required}
+
+The function or function call to be applied to the column labels. This can
+take the form of a bare function (e.g., \code{tools::toTitleCase}), a function
+call as a RHS formula (e.g., \code{~ tools::toTitleCase(.)}), or an anonymous
+function as in \code{function(x) tools::toTitleCase(x)}.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -39,13 +54,13 @@ function (e.g., \code{function(x) tools::toTitleCase(x)}).
 
 It's important to note that while columns can be freely relabeled, we
 continue to refer to columns by their original column names. Column names in
-a tibble or data frame must be unique whereas column labels in \strong{gt} have
-no requirement for uniqueness (which is useful for labeling columns as, say,
+a tibble or data frame must be unique whereas column labels in \strong{gt} have no
+requirement for uniqueness (which is useful for labeling columns as, say,
 measurement units that may be repeated several times---usually under
-different spanner column labels). Thus, we can still easily distinguish
-between columns in other \strong{gt} function calls (e.g., in all of the
-\verb{fmt*()} functions) even though we may lose distinguishability in column
-labels once they have been relabeled.
+different spanner labels). Thus, we can still easily distinguish between
+columns in other \strong{gt} function calls (e.g., in all of the \verb{fmt*()}
+functions) even though we may lose distinguishability in column labels once
+they have been relabeled.
 }
 
 \section{Examples}{

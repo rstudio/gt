@@ -7,7 +7,12 @@
 rm_caption(data)
 }
 \arguments{
-\item{data}{A table object of class \code{gt_tbl}.}
+\item{data}{\emph{The gt table data object}
+
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 }
 \value{
 An object of class \code{gt_tbl}.

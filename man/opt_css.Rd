@@ -7,20 +7,35 @@
 opt_css(data, css, add = TRUE, allow_duplicates = FALSE)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{css}{The CSS to include as part of the rendered table's \verb{<style>}
-element.}
+\verb{obj:<gt_tbl>} --- \strong{required}
 
-\item{add}{If \code{TRUE}, the default, the CSS is added to any already-defined
-CSS (typically from previous calls of \code{\link[=opt_table_font]{opt_table_font()}}, \code{opt_css()}, or,
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{css}{\emph{CSS declarations}
+
+\verb{scalar<character>} --- \strong{required}
+
+The CSS to include as part of the rendered table's \verb{<style>} element.}
+
+\item{add}{\emph{Add to existing CSS}
+
+\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+
+If \code{TRUE}, the default, the CSS is added to any already-defined CSS
+(typically from previous calls of \code{\link[=opt_table_font]{opt_table_font()}}, \code{opt_css()}, or,
 directly setting CSS the \code{table.additional_css} value in \code{\link[=tab_options]{tab_options()}}).
 If this is set to \code{FALSE}, the CSS provided here will replace any
 previously-stored CSS.}
 
-\item{allow_duplicates}{When this is \code{FALSE} (the default), the CSS provided
-here won't be added (provided that \code{add = TRUE}) if it is seen in the
-already-defined CSS.}
+\item{allow_duplicates}{\emph{Allow for CSS duplication}
+
+\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+
+When this is \code{FALSE} (the default), the CSS provided here won't be added
+(provided that \code{add = TRUE}) if it is seen in the already-defined CSS.}
 }
 \value{
 An object of class \code{gt_tbl}.

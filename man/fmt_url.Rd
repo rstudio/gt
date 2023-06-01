@@ -18,46 +18,77 @@ fmt_url(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The columns to format. Can either be a series of column names
-provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
-focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+
+Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
+column indices, or a select helper function. Examples of select helper
+functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
+\code{columns} being formatted. Alternatively, we can supply a vector of row
+captions within \code{\link[=c]{c()}}, a vector of row indices, or a select helper
+function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}.}
+\code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
+need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
-default) results in all rows in \code{columns} being formatted. Alternatively,
-we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
-indices, or a helper function focused on selections. The select helper
-functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
-\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
-to filter down to the rows we need (e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+\item{label}{\emph{Link label}
 
-\item{label}{The visible 'label' to use for the link. If \code{NULL} (the default)
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+The visible 'label' to use for the link. If \code{NULL} (the default)
 the URL will serve as the label. There are two non-\code{NULL} options: (1) a
 static text can be used for the label by providing a string, and (2) a
 function can be provided to fashion a label from every URL.}
 
-\item{as_button}{An option to style the link as a button. By default, this is
+\item{as_button}{\emph{Style link as a button}
+
+\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+
+An option to style the link as a button. By default, this is
 \code{FALSE}. If this option is chosen then the \code{button_fill} argument becomes
 usable.}
 
-\item{color}{The color used for the resulting link and its underline. This is
-\code{"auto"} by default; this allows \strong{gt} to choose an appropriate color
-based on various factors (e.g., background \code{button_fill} when \code{as_button}
-is \code{TRUE}).}
+\item{color}{\emph{Link color}
 
-\item{show_underline}{Should the link be decorated with an underline? By
+\verb{scalar<character>} --- \emph{default:} \code{"auto"}
+
+The color used for the resulting link and its underline. This is
+\code{"auto"} by default; this allows \strong{gt} to choose an appropriate color
+based on various factors (such as the background \code{button_fill} when
+\code{as_button} is \code{TRUE}).}
+
+\item{show_underline}{\emph{Show the link underline}
+
+\verb{scalar<character>|scalar<logical>} --- \emph{default:} \code{"auto"}
+
+Should the link be decorated with an underline? By
 default this is \code{"auto"} which means that \strong{gt} will choose \code{TRUE} when
 \code{as_button = FALSE} and \code{FALSE} in the other case. The link underline will
 be the same color as that set in the \code{color} option.}
 
-\item{button_fill, button_width, button_outline}{Options for styling a
-link-as-button (and only applies if \code{as_button = TRUE}). All of these
-options are by default set to \code{"auto"}, allowing \strong{gt} to choose
-appropriate fill, width, and outline values.}
+\item{button_fill, button_width, button_outline}{\emph{Button options}
+
+\verb{scalar<character>} --- \emph{default:} \code{"auto"}
+
+Options for styling a link-as-button (and only applies if
+\code{as_button = TRUE}). All of these options are by default set to \code{"auto"},
+allowing \strong{gt} to choose appropriate fill, width, and outline values.}
 }
 \value{
 An object of class \code{gt_tbl}.

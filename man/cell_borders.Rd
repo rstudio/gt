@@ -7,17 +7,36 @@
 cell_borders(sides = "all", color = "#000000", style = "solid", weight = px(1))
 }
 \arguments{
-\item{sides}{The border sides to be modified. Options include \code{"left"},
+\item{sides}{\emph{Border sides}
+
+\verb{vector<character>} --- \emph{default:} \code{"all"}
+
+The border sides to be modified. Options include \code{"left"},
 \code{"right"}, \code{"top"}, and \code{"bottom"}. For all borders surrounding the
 selected cells, we can use the \code{"all"} option.}
 
-\item{color, style, weight}{The border color, style, and weight. The \code{color}
-can be defined with a color name or with a hexadecimal color code. The
-default \code{color} value is \code{"#000000"} (black). The \code{style} can be one of
-either \code{"solid"} (the default), \code{"dashed"}, \code{"dotted"}, \code{"hidden"}, or
-\code{"double"}. The \code{weight} of the border lines is to be given in pixel values
-(the \code{\link[=px]{px()}} helper function is useful for this. The default value for
-\code{weight} is \code{"1px"}. Borders for any defined \code{sides} can be removed by
+\item{color}{\emph{Border color}
+
+\verb{scalar<character>|NULL} --- \emph{default:} \code{"#000000"}
+
+The border \code{color} can be defined with a color name or with a hexadecimal
+color code. The default \code{color} value is \code{"#000000"} (black). Borders for any
+defined \code{sides} can be removed by supplying \code{NULL} here.}
+
+\item{style}{\emph{Border line style}
+
+\verb{scalar<character>|NULL} --- \emph{default:} \code{"solid"}
+
+The border \code{style} can be one of either \code{"solid"} (the default),
+\code{"dashed"}, \code{"dotted"}, \code{"hidden"}, or \code{"double"}. Borders for any
+defined \code{sides} can be removed by supplying \code{NULL} here.}
+
+\item{weight}{\emph{Border weight}
+
+\verb{scalar<character>|NULL} --- \emph{default:} \code{px(1)}
+
+The default value for \code{weight} is \code{"1px"} and higher values will become
+more visually prominent. Borders for any defined \code{sides} can be removed by
 supplying \code{NULL} to any of \code{color}, \code{style}, or \code{weight}.}
 }
 \value{

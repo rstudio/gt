@@ -23,60 +23,122 @@ opt_interactive(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{active}{The \code{active} option will either enable or disable interactive
-features for an HTML table. The individual features of an interactive HTML
-table are controlled by the other options.}
+\verb{obj:<gt_tbl>} --- \strong{required}
 
-\item{use_pagination}{This is the option for using pagination controls (below
-the table body). By default, this is \code{TRUE} and it will allow the use to
-page through table content.}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
-\item{use_pagination_info}{If \code{use_pagination} is \code{TRUE} then the
-\code{use_pagination_info} option can be used to display informational text
-regarding the current page view (this is set to \code{TRUE} by default).}
+\item{active}{\emph{Display interactive HTML table}
 
-\item{use_sorting}{This option provides controls for sorting column values.
-By default, this is \code{TRUE}.}
+\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
 
-\item{use_search}{The \code{use_search} option places a search field for globally
-filtering rows to the requested content. By default, this is \code{FALSE}.}
+The \code{active} option will either enable or disable interactive features for
+an HTML table. The individual features of an interactive HTML table are
+controlled by the other options.}
 
-\item{use_filters}{The \code{use_filters} option places search fields below each
-column header and allows for filtering by column. By default, this is
-\code{FALSE}.}
+\item{use_pagination}{\emph{Display pagination controls}
 
-\item{use_resizers}{This option allows for the interactive resizing of
-columns. By default, this is \code{FALSE}.}
+\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
 
-\item{use_highlight}{The \code{use_highlight} option highlights individual rows
-upon hover. By default, this is \code{FALSE}.}
+This is the option for using pagination controls (below the table body). By
+default, this is \code{TRUE} and it will allow the use to page through table
+content.}
 
-\item{use_compact_mode}{To reduce vertical padding and thus make the table
-consume less vertical space the \code{use_compact_mode} option can be used. By
+\item{use_pagination_info}{\emph{Display pagination info}
+
+\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+
+If \code{use_pagination} is \code{TRUE} then the \code{use_pagination_info} option can be
+used to display informational text regarding the current page view (this is
+set to \code{TRUE} by default).}
+
+\item{use_sorting}{\emph{Provide column sorting controls}
+
+\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+
+This option provides controls for sorting column values. By default, this
+is \code{TRUE}.}
+
+\item{use_search}{\emph{Provide a global search field}
+
+\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+
+The \code{use_search} option places a search field for globally filtering rows
+to the requested content. By default, this is \code{FALSE}.}
+
+\item{use_filters}{\emph{Display filtering fields}
+
+\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+
+The \code{use_filters} option places search fields below each column header and
+allows for filtering by column. By default, this is \code{FALSE}.}
+
+\item{use_resizers}{\emph{Allow column resizing}
+
+\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+
+This option allows for the interactive resizing of columns. By default,
+this is \code{FALSE}.}
+
+\item{use_highlight}{\emph{Enable row highlighting on hover}
+
+\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+
+The \code{use_highlight} option highlights individual rows upon hover. By
 default, this is \code{FALSE}.}
 
-\item{use_text_wrapping}{The \code{use_text_wrapping} option controls whether
-text wrapping occurs throughout the table. This is \code{TRUE} by default and
-with that text will be wrapped to multiple lines. If \code{FALSE}, text will be
-truncated to a single line.}
+\item{use_compact_mode}{\emph{Use compact mode}
 
-\item{use_page_size_select, page_size_default, page_size_values}{The
-\code{use_page_size_select} option lets us display a dropdown menu for the
-number of rows to show per page of data. By default, this is the vector
-\code{c(10, 25, 50, 100)} which corresponds to options for \code{10}, \code{25}, \code{50}, and
-\code{100} rows of data per page. To modify these page-size options, provide a
-numeric vector to \code{page_size_values}. The default page size (initially set
-as \code{10}) can be modified with \code{page_size_default} and this works whether or
-not \code{use_page_size_select} is set to \code{TRUE}.}
+\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
 
-\item{pagination_type}{When using pagination the \code{pagination_type} option
-lets us select between one of three options for the layout of pagination
-controls. The default is \code{"numbers"}, where a series of page-number buttons
-is presented along with 'previous' and 'next' buttons. The \code{"jump"} option
-provides an input field with a stepper for the page number. With
-\code{"simple"}, only the 'previous' and 'next' buttons are displayed.}
+To reduce vertical padding and thus make the table consume less vertical
+space the \code{use_compact_mode} option can be used. By default, this is
+\code{FALSE}.}
+
+\item{use_text_wrapping}{\emph{Use text wrapping}
+
+\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+
+The \code{use_text_wrapping} option controls whether text wrapping occurs
+throughout the table. This is \code{TRUE} by default and with that text will be
+wrapped to multiple lines. If \code{FALSE}, text will be truncated to a single
+line.}
+
+\item{use_page_size_select}{\emph{Allow for page size selection}
+
+\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+
+The \code{use_page_size_select} option lets us display a dropdown menu for the
+number of rows to show per page of data.}
+
+\item{page_size_default}{\emph{Change the default page size}
+
+\verb{scalar<numeric|integer>} --- \emph{default:} \code{10}
+
+The default page size (initially set as \code{10}) can be modified with
+\code{page_size_default} and this works whether or not \code{use_page_size_select} is
+set to \code{TRUE}.}
+
+\item{page_size_values}{\emph{Set of page-size values}
+
+\verb{vector<numeric|integer>} --- \emph{default:} \code{c(10, 25, 50, 100)}
+
+By default, this is the vector \code{c(10, 25, 50, 100)} which corresponds to
+options for \code{10}, \code{25}, \code{50}, and \code{100} rows of data per page. To modify
+these page-size options, provide a numeric vector to \code{page_size_values}.}
+
+\item{pagination_type}{\emph{Change pagination mode}
+
+\verb{scalar<character>} --- \emph{default:} \code{"numbers"}
+
+When using pagination the \code{pagination_type} option lets us select between
+one of three options for the layout of pagination controls. The default is
+\code{"numbers"}, where a series of page-number buttons is presented along with
+'previous' and 'next' buttons. The \code{"jump"} option provides an input field
+with a stepper for the page number. With \code{"simple"}, only the 'previous'
+and 'next' buttons are displayed.}
 }
 \value{
 An object of class \code{gt_tbl}.

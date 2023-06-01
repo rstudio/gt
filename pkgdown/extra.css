@@ -1,0 +1,8 @@
+dt {
+  font-family: monospace;
+  border-top-style: dotted;
+  border-top-width: 2px;
+  border-top-color: lightgray;
+  margin-bottom: 5px;
+  padding-top: 5px;
+}
