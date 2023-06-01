@@ -167,16 +167,24 @@ rm_stubhead <- function(data) {
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
-#' @param spanners A specification of which spanner column labels should be
-#'   removed. Those to be removed can be given as a vector of spanner ID values
-#'   (every spanner column label has one, either set by the user or by **gt**
-#'   when using [tab_spanner_delim()]). A select helper can also be used and, by
-#'   default, this is `everything()` (whereby all spanner column labels will be
-#'   removed).
-#' @param levels Instead of removing spanner column labels by ID values, entire
-#'   levels of spanners can instead be removed. Supply a numeric vector of level
-#'   values (the first level is `1`) and, if they are present, they will be
-#'   removed. Any input given to `level` will mean that `spanners` is ignored.
+#' @param spanners *Spanners to remove*
+#'
+#'   `<spanner-targeting expression>` --- *default:* `everything()`
+#'
+#'   A specification of which spanner column labels should be removed. Those to
+#'   be removed can be given as a vector of spanner ID values (every spanner
+#'   column label has one, either set by the user or by **gt** when using
+#'   [tab_spanner_delim()]). A select helper can also be used and, by default,
+#'   this is `everything()` (whereby all spanner column labels will be removed).
+#'
+#' @param levels *Spanner levels to remove*
+#'
+#'   `scalar<numeric|integer>` --- *default:* `NULL` (`optional`)
+#'
+#'   Instead of removing spanner column labels by ID values, entire levels of
+#'   spanners can instead be removed. Supply a numeric vector of level values
+#'   (the first level is `1`) and, if they are present, they will be removed.
+#'   Any input given to `level` will mean that `spanners` is ignored.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -371,11 +379,15 @@ rm_spanners <- function(
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
-#' @param footnotes A specification of which footnotes should be removed.
-#'   The footnotes to be removed can be given as a vector of integer values
-#'   (they are stored as integer positions, in order of creation, starting at
-#'   `1`). A select helper can also be used and, by default, this is
-#'   `everything()` (whereby all footnotes will be removed).
+#' @param footnotes *Footnotes to remove*
+#'
+#'   `scalar<numeric|integer>|everything()` --- *default:* `everything()`
+#'
+#'   A specification of which footnotes should be removed. The footnotes to be
+#'   removed can be given as a vector of integer values (they are stored as
+#'   integer positions, in order of creation, starting at `1`). A select helper
+#'   can also be used and, by default, this is `everything()` (whereby all
+#'   footnotes will be removed).
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -539,11 +551,15 @@ rm_footnotes <- function(
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
-#' @param source_notes A specification of which source notes should be removed.
-#'   The source notes to be removed can be given as a vector of integer values
-#'   (they are stored as integer positions, in order of creation, starting at
-#'   `1`). A select helper can also be used and, by default, this is
-#'   `everything()` (whereby all source notes will be removed).
+#' @param source_notes *Source notes to remove*
+#'
+#'   `scalar<numeric|integer>|everything()` --- *default:* `everything()`
+#'
+#'   A specification of which source notes should be removed. The source notes
+#'   to be removed can be given as a vector of integer values (they are stored
+#'   as integer positions, in order of creation, starting at `1`). A select
+#'   helper can also be used and, by default, this is `everything()` (whereby
+#'   all source notes will be removed).
 #'
 #' @return An object of class `gt_tbl`.
 #'
