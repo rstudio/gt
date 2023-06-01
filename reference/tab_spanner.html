@@ -10,7 +10,7 @@ later call uses the same columns in its definition (or even a subset) as the
 first invocation, the second spanner will be overlaid atop the first. Options
 exist for forcibly inserting a spanner underneath other (with level as
 space permits) and with replace, which allows for full or partial spanner
-replacement."><title>Add a spanner column label — tab_spanner • gt</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Add a spanner column label — tab_spanner"><meta property="og:description" content="With the tab_spanner() function, you can insert a spanner in the column
+replacement."><title>Add a spanner label — tab_spanner • gt</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet"><meta property="og:title" content="Add a spanner label — tab_spanner"><meta property="og:description" content="With the tab_spanner() function, you can insert a spanner in the column
 labels part of a gt table. This part of the table contains, at a minimum,
 column labels and, optionally, an unlimited number of levels for spanners. A
 spanner will occupy space over any number of contiguous column labels and it
@@ -75,7 +75,7 @@ replacement."><meta property="og:image" content="https://gt.rstudio.com/logo.svg
 </nav><div class="container template-reference-topic">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="../logo.svg" class="logo" alt=""><h1>Add a spanner column label</h1>
+      <img src="../logo.svg" class="logo" alt=""><h1>Add a spanner label</h1>
       <small class="dont-index">Source: <a href="https://github.com/rstudio/gt/blob/HEAD/R/tab_create_modify.R" class="external-link"><code>R/tab_create_modify.R</code></a></small>
       <div class="d-none name"><code>tab_spanner.Rd</code></div>
     </div>
@@ -112,57 +112,76 @@ replacement.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
-<dd><p>A table object that is created using the <code><a href="gt.html">gt()</a></code> function.</p></dd>
+<dd><p><em>The gt table data object</em></p>
+<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong></p>
+<p>This is the <strong>gt</strong> table object that is commonly created through use of the
+<code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>label</dt>
-<dd><p>The text to use for the spanner column label.</p></dd>
+<dd><p><em>Spanner label text</em></p>
+<p><code>scalar&lt;character&gt;</code> --- <strong>required</strong></p>
+<p>The text to use for the spanner label. We can optionally use the <code><a href="md.html">md()</a></code> and
+<code><a href="html.html">html()</a></code> functions to style the text as Markdown or to retain HTML elements
+in the text.</p></dd>
 
 
 <dt>columns</dt>
-<dd><p>The columns to serve as components of the spanner. Can either
-be a series of column names provided in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of column indices,
-or a helper function focused on selections. The select helper functions
-are: <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/one_of.html" class="external-link">one_of()</a></code>,
+<dd><p><em>Columns to target</em></p>
+<p><code>&lt;column-targeting expression&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>The columns to serve as components of the spanner. Can either be a series
+of column names provided in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of column indices, or a select
+helper function. Examples of select helper functions include
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/one_of.html" class="external-link">one_of()</a></code>,
 <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">num_range()</a></code>, and <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>. This argument works in tandem with the
-<code>spanner</code> argument.</p></dd>
+<code>spanners</code> argument.</p></dd>
 
 
 <dt>spanners</dt>
-<dd><p>The spanners that should be spanned over, should they already
-be defined. One or more spanner ID values (in quotes) can be supplied here.
-This argument works in tandem with the <code>columns</code> argument.</p></dd>
+<dd><p><em>Spanners to target</em></p>
+<p><code>vector&lt;character&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>The spanners that should be spanned over, should they already be defined.
+One or more spanner ID values (in quotes) can be supplied here. This
+argument works in tandem with the <code>columns</code> argument.</p></dd>
 
 
 <dt>level</dt>
-<dd><p>An explicit level to which the spanner should be placed. If not
-provided, <strong>gt</strong> will choose the level based on the inputs provided within
-<code>columns</code> and <code>spanners</code>, placing the spanner label where it will fit. The
-first spanner level (right above the column labels) is <code>1</code>.</p></dd>
+<dd><p><em>Spanner level for insertion</em></p>
+<p><code>scalar&lt;numeric|integer&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>An explicit level to which the spanner should be placed. If not provided,
+<strong>gt</strong> will choose the level based on the inputs provided within <code>columns</code>
+and <code>spanners</code>, placing the spanner label where it will fit. The first
+spanner level (right above the column labels) is <code>1</code>.</p></dd>
 
 
 <dt>id</dt>
-<dd><p>The ID for the spanner column label. When accessing a spanner
-through the <code>spanners</code> argument of <code>tab_spanner()</code> or
-<code><a href="cells_column_spanners.html">cells_column_spanners()</a></code> (when using <code><a href="tab_style.html">tab_style()</a></code> or <code><a href="tab_footnote.html">tab_footnote()</a></code>)
-the <code>id</code> value is used as the reference (and not the <code>label</code>). If an <code>id</code>
-is not explicitly provided here, it will be taken from the <code>label</code> value.
-It is advisable to set an explicit <code>id</code> value if you plan to access this
-cell in a later function call and the label text is complicated (e.g.,
-contains markup, is lengthy, or both). Finally, when providing an <code>id</code>
-value you must ensure that it is unique across all ID values set for column
-spanner labels (the function will stop if <code>id</code> isn't unique).</p></dd>
+<dd><p><em>Spanner ID</em></p>
+<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>label</code></p>
+<p>The ID for the spanner. When accessing a spanner through the <code>spanners</code>
+argument of <code>tab_spanner()</code> or <code><a href="cells_column_spanners.html">cells_column_spanners()</a></code> (when using
+<code><a href="tab_style.html">tab_style()</a></code> or <code><a href="tab_footnote.html">tab_footnote()</a></code>) the <code>id</code> value is used as the reference
+(and not the <code>label</code>). If an <code>id</code> is not explicitly provided here, it will
+be taken from the <code>label</code> value. It is advisable to set an explicit <code>id</code>
+value if you plan to access this cell in a later function call and the
+label text is complicated (e.g., contains markup, is lengthy, or both).
+Finally, when providing an <code>id</code> value you must ensure that it is unique
+across all ID values set for column spanner labels (the function will stop
+if <code>id</code> isn't unique).</p></dd>
 
 
 <dt>gather</dt>
-<dd><p>An option to move the specified <code>columns</code> such that they are
-unified under the spanner column label. Ordering of the moved-into-place
-columns will be preserved in all cases. By default, this is set to <code>TRUE</code>.</p></dd>
+<dd><p><em>Gather columns together</em></p>
+<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>TRUE</code></p>
+<p>An option to move the specified <code>columns</code> such that they are unified under
+the spanner. Ordering of the moved-into-place columns will be preserved in
+all cases. By default, this is set to <code>TRUE</code>.</p></dd>
 
 
 <dt>replace</dt>
-<dd><p>Should new spanners be allowed to partially or fully replace
-existing spanners? (This is a possibility if setting spanners at an already
+<dd><p><em>Replace existing spanners</em></p>
+<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>FALSE</code></p>
+<p>Should new spanners be allowed to partially or fully replace existing
+spanners? (This is a possibility if setting spanners at an already
 populated <code>level</code>.) By default, this is set to <code>FALSE</code> and an error will
 occur if some replacement is attempted.</p></dd>
 

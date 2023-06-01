@@ -3,7 +3,7 @@
 suitable aggregation functions. Multiple summary rows can be added for
 selected groups via expressions given to fns. You can selectively format
 the values in the resulting summary cells by use of formatting expressions in
-fmt."><title>Add group-wise summary rows using aggregation functions — summary_rows • gt</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Add group-wise summary rows using aggregation functions — summary_rows"><meta property="og:description" content="Add summary rows to one or more row groups by using the table data and any
+fmt."><title>Add group-wise summary rows using aggregation functions — summary_rows • gt</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet"><meta property="og:title" content="Add group-wise summary rows using aggregation functions — summary_rows"><meta property="og:description" content="Add summary rows to one or more row groups by using the table data and any
 suitable aggregation functions. Multiple summary rows can be added for
 selected groups via expressions given to fns. You can selectively format
 the values in the resulting summary cells by use of formatting expressions in
@@ -92,67 +92,87 @@ the values in the resulting summary cells by use of formatting expressions in
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
-<dd><p>A table object that is created using the <code><a href="gt.html">gt()</a></code> function.</p></dd>
+<dd><p><em>The gt table data object</em></p>
+<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong></p>
+<p>This is the <strong>gt</strong> table object that is commonly created through use of the
+<code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>groups</dt>
-<dd><p>The groups to consider for generation of group-wise summary
-rows. By default this is set to <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>, which means that all
-available groups will obtain summary rows. Providing the ID values (in
-quotes) of row groups in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> will generate summary rows for those
-specified groups.</p></dd>
+<dd><p><em>Specification of row group IDs</em></p>
+<p><code>&lt;row-group-targeting expression&gt;</code> --- <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
+<p>The row groups to which targeting operations are constrained. Can either be
+a series of row group ID values provided in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> or a select helper
+function. Examples of select helper functions include <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>,
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/one_of.html" class="external-link">one_of()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">num_range()</a></code>, and
+<code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>. By default this is set to <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>, which means that
+all available groups will obtain summary rows.</p></dd>
 
 
 <dt>columns</dt>
-<dd><p>The columns for which the summaries should be calculated. By
-default, this is every column that has data cells (given by
-<code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>).</p></dd>
+<dd><p><em>Columns to target</em></p>
+<p><code>&lt;column-targeting expression&gt;</code> --- <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
+<p>The columns for which the summaries should be calculated. Can either
+be a series of column names provided in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of column indices,
+or a select helper function. Examples of select helper functions include
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/one_of.html" class="external-link">one_of()</a></code>,
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">num_range()</a></code>, and <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>.</p></dd>
 
 
 <dt>fns</dt>
-<dd><p>Functions used for aggregations. This can include base functions
-like <code>mean</code>, <code>min</code>, <code>max</code>, <code>median</code>, <code>sd</code>, or <code>sum</code> or any other
-user-defined aggregation function. Multiple functions, each of which would
-generate a different row, are to be supplied within a <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>. We can
-specify the functions by use of function names in quotes (e.g., <code>"sum"</code>),
-as bare functions (e.g., <code>sum</code>), or in formula form (e.g.,
-<code>minimum ~ min(.)</code>) where the LHS could be used to supply the summary row
-label and id values. More information on this can be found in the
+<dd><p><em>Aggregation Expressions</em></p>
+<p><code>&lt;expression|list of expressions&gt;</code></p>
+<p>Functions used for aggregations. This can include base functions like
+<code>mean</code>, <code>min</code>, <code>max</code>, <code>median</code>, <code>sd</code>, or <code>sum</code> or any other user-defined
+aggregation function. Multiple functions, each of which would generate a
+different row, are to be supplied within a <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>. We can specify the
+functions by use of function names in quotes (e.g., <code>"sum"</code>), as bare
+functions (e.g., <code>sum</code>), or in formula form (e.g., <code>minimum ~ min(.)</code>)
+where the LHS could be used to supply the summary row label and ID values.
+More information on this can be found in the
 <em>Aggregation expressions for <code>fns</code></em> section.</p></dd>
 
 
 <dt>fmt</dt>
-<dd><p>Formatting expressions in formula form. The RHS of <code>~</code> should
-contain a formatting call (e.g.,
-<code>~ fmt_number(., decimals = 3, use_seps = FALSE</code>). Optionally, the LHS
-could contain a group-targeting expression (e.g.,
+<dd><p><em>Formatting expressions</em></p>
+<p><code>&lt;expression|list of expressions&gt;</code></p>
+<p>Formatting expressions in formula form. The RHS of <code>~</code> should contain a
+formatting call (e.g., <code>~ fmt_number(., decimals = 3, use_seps = FALSE</code>).
+Optionally, the LHS could contain a group-targeting expression (e.g.,
 <code>"group_a" ~ fmt_number(.)</code>). More information on this can be found in the
 <em>Formatting expressions for <code>fmt</code></em> section.</p></dd>
 
 
 <dt>side</dt>
-<dd><p>Should the summary rows be placed at the <code>"bottom"</code> (the default)
-or the <code>"top"</code> of the row group?</p></dd>
+<dd><p><em>Side used for placement of summary rows</em></p>
+<p><code>singl-kw:[bottom|top]</code> --- <em>default:</em> <code>"bottom"</code></p>
+<p>Should the summary rows be placed at the <code>"bottom"</code> (the default) or the
+<code>"top"</code> of the row group?</p></dd>
 
 
 <dt>missing_text</dt>
-<dd><p>The text to be used in place of <code>NA</code> values in summary
-cells with no data outputs.</p></dd>
+<dd><p><em>Replacement text for <code>NA</code> values</em></p>
+<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>"---"</code></p>
+<p>The text to be used in place of <code>NA</code> values in summary cells with no data
+outputs.</p></dd>
 
 
 <dt>formatter</dt>
-<dd><p>Deprecated, please use <code>fmt</code> instead. This was previously
-used as a way to input a formatting function name, which could be any of
-the <code>fmt_*()</code> functions available in the package (e.g., <code><a href="fmt_number.html">fmt_number()</a></code>,
-<code><a href="fmt_percent.html">fmt_percent()</a></code>, etc.), or a custom function using <code><a href="fmt.html">fmt()</a></code>. The options of
-a formatter can be accessed through <code>...</code>.</p></dd>
+<dd><p><em><a href="https://rdrr.io/r/base/Deprecated.html" class="external-link">Deprecated</a> Formatting function</em></p>
+<p><code>&lt;expression&gt;</code></p>
+<p>Deprecated, please use <code>fmt</code> instead. This was previously used as a way to
+input a formatting function name, which could be any of the <code>fmt_*()</code>
+functions available in the package (e.g., <code><a href="fmt_number.html">fmt_number()</a></code>, <code><a href="fmt_percent.html">fmt_percent()</a></code>,
+etc.), or a custom function using <code><a href="fmt.html">fmt()</a></code>. The options of a formatter can
+be accessed through <code>...</code>.</p></dd>
 
 
 <dt>...</dt>
-<dd><p>Deprecated (along with <code>formatter</code>) but otherwise used for
-argument values for a formatting function supplied in <code>formatter</code>. For
-example, if using <code>formatter = fmt_number</code>, options such as <code>decimals = 1</code>,
-<code>use_seps = FALSE</code>, and the like can be used here.</p></dd>
+<dd><p><em><a href="https://rdrr.io/r/base/Deprecated.html" class="external-link">Deprecated</a> Formatting arguments</em></p>
+<p><code>&lt;Named arguments&gt;</code></p>
+<p>Deprecated (along with <code>formatter</code>) but otherwise used for argument values
+for a formatting function supplied in <code>formatter</code>. For example, if using
+<code>formatter = fmt_number</code>, options such as <code>decimals = 1</code>, <code>use_seps = FALSE</code>, and the like can be used here.</p></dd>
 
 </dl></div>
     <div class="section level2">

@@ -16,7 +16,7 @@ mixed fractions
 locale-based formatting: providing a locale ID will result in number
 formatting specific to the chosen locale
 
-"><title>Format values as mixed fractions — fmt_fraction • gt</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Format values as mixed fractions — fmt_fraction"><meta property="og:description" content="With numeric values in a gt table, we can perform mixed-fraction-based
+"><title>Format values as mixed fractions — fmt_fraction • gt</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet"><meta property="og:title" content="Format values as mixed fractions — fmt_fraction"><meta property="og:description" content="With numeric values in a gt table, we can perform mixed-fraction-based
 formatting. There are several options for setting the accuracy of the
 fractions. Furthermore, there is an option for choosing a layout (i.e.,
 typesetting style) for the mixed-fraction output.
@@ -130,85 +130,110 @@ formatting specific to the chosen locale</p></li>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
-<dd><p>A table object that is created using the <code><a href="gt.html">gt()</a></code> function.</p></dd>
+<dd><p><em>The gt table data object</em></p>
+<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong></p>
+<p>This is the <strong>gt</strong> table object that is commonly created through use of the
+<code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>columns</dt>
-<dd><p>The columns to format. Can either be a series of column names
-provided in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of column indices, or a helper function
-focused on selections. The select helper functions are: <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>,
-<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/one_of.html" class="external-link">one_of()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">num_range()</a></code>, and
-<code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>.</p></dd>
+<dd><p><em>Columns to target</em></p>
+<p><code>&lt;column-targeting expression&gt;</code> --- <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
+<p>Can either be a series of column names provided in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of
+column indices, or a select helper function. Examples of select helper
+functions include <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>,
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/one_of.html" class="external-link">one_of()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">num_range()</a></code>, and <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>.</p></dd>
 
 
 <dt>rows</dt>
-<dd><p>Optional rows to format. Providing <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code> (the
-default) results in all rows in <code>columns</code> being formatted. Alternatively,
-we can supply a vector of row captions within <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of row
-indices, or a helper function focused on selections. The select helper
-functions are: <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>,
-<code><a href="https://tidyselect.r-lib.org/reference/one_of.html" class="external-link">one_of()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">num_range()</a></code>, and <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>. We can also use expressions
-to filter down to the rows we need (e.g.,
-<code>[colname_1] &gt; 100 &amp; [colname_2] &lt; 50</code>).</p></dd>
+<dd><p><em>Rows to target</em></p>
+<p><code>&lt;row-targeting expression&gt;</code> --- <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
+<p>In conjunction with <code>columns</code>, we can specify which of their rows should
+undergo formatting. The default <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code> results in all rows in
+<code>columns</code> being formatted. Alternatively, we can supply a vector of row
+captions within <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of row indices, or a select helper
+function. Examples of select helper functions include <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>,
+<code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/one_of.html" class="external-link">one_of()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">num_range()</a></code>, and
+<code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>. We can also use expressions to filter down to the rows we
+need (e.g., <code>[colname_1] &gt; 100 &amp; [colname_2] &lt; 50</code>).</p></dd>
 
 
 <dt>accuracy</dt>
-<dd><p>The type of fractions to generate. This can either be one of
-the keywords <code>"low"</code>, <code>"med"</code>, or <code>"high"</code> (to generate fractions with
-denominators of up to 1, 2, or 3 digits, respectively) or an integer value
-greater than zero to obtain fractions with a fixed denominator (<code>2</code> yields
-halves, <code>3</code> is for thirds, <code>4</code> is quarters, etc.). For the latter option,
-using <code>simplify = TRUE</code> will simplify fractions where possible (e.g., <code>2/4</code>
-will be simplified as <code>1/2</code>). By default, the <code>"low"</code> option is used.</p></dd>
+<dd><p><em>Accuracy of fractions</em></p>
+<p><code>singl-kw:[low|med|high]|scalar&lt;numeric|integer&gt;(val&gt;=1)</code> --- <em>default:</em> <code>"low"</code></p>
+<p>The type of fractions to generate. This can either be one of the keywords
+<code>"low"</code>, <code>"med"</code>, or <code>"high"</code> (to generate fractions with denominators of
+up to 1, 2, or 3 digits, respectively) or an integer value greater than
+zero to obtain fractions with a fixed denominator (<code>2</code> yields halves, <code>3</code>
+is for thirds, <code>4</code> is quarters, etc.). For the latter option, using
+<code>simplify = TRUE</code> will simplify fractions where possible (e.g., <code>2/4</code> will
+be simplified as <code>1/2</code>). By default, the <code>"low"</code> option is used.</p></dd>
 
 
 <dt>simplify</dt>
-<dd><p>If choosing to provide a numeric value for <code>accuracy</code>, the
-option to simplify the fraction (where possible) can be taken with <code>TRUE</code>
-(the default). With <code>FALSE</code>, denominators in fractions will be fixed to the
+<dd><p><em>Simplify the fraction</em></p>
+<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>TRUE</code></p>
+<p>If choosing to provide a numeric value for <code>accuracy</code>, the option to
+simplify the fraction (where possible) can be taken with <code>TRUE</code> (the
+default). With <code>FALSE</code>, denominators in fractions will be fixed to the
 value provided in <code>accuracy</code>.</p></dd>
 
 
 <dt>layout</dt>
-<dd><p>For HTML output, the <code>"inline"</code> layout is the default. This
-layout places the numerals of the fraction on the baseline and uses a
-standard slash character. The <code>"diagonal"</code> layout will generate fractions
-that are typeset with raised/lowered numerals and a virgule.</p></dd>
+<dd><p><em>Layout of fractions in HTML output</em></p>
+<p><code>singl-kw:[inline|diagonal]</code> --- <em>default:</em> <code>"inline"</code></p>
+<p>For HTML output, the <code>"inline"</code> layout is the default. This layout places
+the numerals of the fraction on the baseline and uses a standard slash
+character. The <code>"diagonal"</code> layout will generate fractions that are typeset
+with raised/lowered numerals and a virgule.</p></dd>
 
 
 <dt>use_seps</dt>
-<dd><p>An option to use digit group separators. The type of digit
-group separator is set by <code>sep_mark</code> and overridden if a locale ID is
-provided to <code>locale</code>. This setting is <code>TRUE</code> by default.</p></dd>
+<dd><p><em>Use digit group separators</em></p>
+<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>TRUE</code></p>
+<p>An option to use digit group separators. The type of digit group separator
+is set by <code>sep_mark</code> and overridden if a locale ID is provided to <code>locale</code>.
+This setting is <code>TRUE</code> by default.</p></dd>
 
 
 <dt>pattern</dt>
-<dd><p>A formatting pattern that allows for decoration of the
-formatted value. The value itself is represented by <code>{x}</code> and all other
-characters are taken to be string literals.</p></dd>
+<dd><p><em>Specification of the formatting pattern</em></p>
+<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>"{x}"</code></p>
+<p>A formatting pattern that allows for decoration of the formatted value. The
+formatted value is represented by the <code>{x}</code> (which can be used multiple
+times, if needed) and all other characters will be interpreted as string
+literals.</p></dd>
 
 
 <dt>sep_mark</dt>
-<dd><p>The mark to use as a separator between groups of digits
-(e.g., using <code>sep_mark = ","</code> with <code>1000</code> would result in a formatted value
-of <code>1,000</code>).</p></dd>
+<dd><p><em>Separator mark for digit grouping</em></p>
+<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>","</code></p>
+<p>The string to use as a separator between groups of digits. For example,
+using <code>sep_mark = ","</code> with a value of <code>1000</code> would result in a formatted
+value of <code>"1,000"</code>. This argument is ignored if a <code>locale</code> is supplied
+(i.e., is not <code>NULL</code>).</p></dd>
 
 
 <dt>system</dt>
-<dd><p>The numbering system to use. By default, this is the
-international numbering system (<code>"intl"</code>) whereby grouping separators
-(i.e., <code>sep_mark</code>) are separated by three digits. The alternative system,
-the Indian numbering system (<code>"ind"</code>) uses grouping separators that
-correspond to thousand, lakh, crore, and higher quantities.</p></dd>
+<dd><p><em>Numbering system for grouping separators</em></p>
+<p><code>singl-kw:[intl|ind]</code> --- <em>default:</em> <code>"intl"</code></p>
+<p>The international numbering system (keyword: <code>"intl"</code>) is widely used and
+its grouping separators (i.e., <code>sep_mark</code>) are always separated by three
+digits. The alternative system, the Indian numbering system (keyword:
+<code>"ind"</code>), uses grouping separators that correspond to thousand, lakh,
+crore, and higher quantities.</p></dd>
 
 
 <dt>locale</dt>
-<dd><p>An optional locale identifier that can be used for formatting
-the value according the locale's rules. Examples include <code>"en"</code> for English
-(United States) and <code>"fr"</code> for French (France). The use of a locale ID will
-override any locale-specific values provided. We can use the
-<code><a href="info_locales.html">info_locales()</a></code> function as a useful reference for all of the locales that
-are supported.</p></dd>
+<dd><p><em>Locale identifier</em></p>
+<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>An optional locale identifier that can be used for formatting values
+according the locale's rules. Examples include <code>"en"</code> for English (United
+States) and <code>"fr"</code> for French (France). We can use the <code><a href="info_locales.html">info_locales()</a></code>
+function as a useful reference for all of the locales that are supported. A
+locale ID can be also set in the initial <code><a href="gt.html">gt()</a></code> function call (where it
+would be used automatically by any function with a <code>locale</code> argument) but a
+<code>locale</code> value provided here will override that global locale.</p></dd>
 
 </dl></div>
     <div class="section level2">

@@ -3,7 +3,7 @@
 date and time components or a formatting directive (this can either use a
 CLDR datetime pattern or strptime formatting). Input can be in the form
 of POSIXct (i.e., datetimes), the Date type, or character (must be in
-the ISO 8601 form of YYYY-MM-DD HH:MM:SS or YYYY-MM-DD)."><title>Format a vector as datetime values — vec_fmt_datetime • gt</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Format a vector as datetime values — vec_fmt_datetime"><meta property="og:description" content="Format values in a vector to datetime values using either presets for the
+the ISO 8601 form of YYYY-MM-DD HH:MM:SS or YYYY-MM-DD)."><title>Format a vector as datetime values — vec_fmt_datetime • gt</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet"><meta property="og:title" content="Format a vector as datetime values — vec_fmt_datetime"><meta property="og:description" content="Format values in a vector to datetime values using either presets for the
 date and time components or a formatting directive (this can either use a
 CLDR datetime pattern or strptime formatting). Input can be in the form
 of POSIXct (i.e., datetimes), the Date type, or character (must be in
@@ -92,36 +92,50 @@ the ISO 8601 form of <code>YYYY-MM-DD HH:MM:SS</code> or <code>YYYY-MM-DD</code>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
-<dd><p>A numeric vector.</p></dd>
+<dd><p><em>The input vector</em></p>
+<p><code>vector(numeric|integer)</code> --- <strong>required</strong></p>
+<p>This is the input vector that will undergo transformation to a character
+vector of the same length. Values within the vector will be formatted.</p></dd>
 
 
 <dt>date_style</dt>
-<dd><p>The date style to use. By default this is <code>"iso"</code> which
-corresponds to ISO 8601 date formatting. The other date styles can be
-viewed using <code><a href="info_date_style.html">info_date_style()</a></code>.</p></dd>
+<dd><p><em>Predefined style for dates</em></p>
+<p><code>scalar&lt;character&gt;|scalar&lt;numeric|integer&gt;(1&lt;=val&lt;=41)</code> --- <em>default:</em> <code>"iso"</code></p>
+<p>The date style to use. By default this is the short name <code>"iso"</code> which
+corresponds to ISO 8601 date formatting. There are 41 date styles in total
+and their short names can be viewed using <code><a href="info_date_style.html">info_date_style()</a></code>.</p></dd>
 
 
 <dt>time_style</dt>
-<dd><p>The time style to use. By default this is <code>"iso"</code> which
-corresponds to how times are formatted within ISO 8601 datetime values. The
-other time styles can be viewed using <code><a href="info_time_style.html">info_time_style()</a></code>.</p></dd>
+<dd><p><em>Predefined style for times</em></p>
+<p><code>scalar&lt;character&gt;|scalar&lt;numeric|integer&gt;(1&lt;=val&lt;=25)</code> --- <em>default:</em> <code>"iso"</code></p>
+<p>The time style to use. By default this is the short name <code>"iso"</code> which
+corresponds to how times are formatted within ISO 8601 datetime values.
+There are 25 time styles in total and their short names can be viewed using
+<code><a href="info_time_style.html">info_time_style()</a></code>.</p></dd>
 
 
 <dt>sep</dt>
-<dd><p>The separator string to use between the date and time components.
-By default, this is a single space character (<code>" "</code>). Only used when not
+<dd><p><em>Separator between date and time components</em></p>
+<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>" "</code></p>
+<p>The separator string to use between the date and time components. By
+default, this is a single space character (<code>" "</code>). Only used when not
 specifying a <code>format</code> code.</p></dd>
 
 
 <dt>format</dt>
-<dd><p>An optional format code used for generating custom dates/times.
-If used then the arguments governing preset styles (<code>date_style</code> and
+<dd><p><em>Date/time formatting string</em></p>
+<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>An optional formatting string used for generating custom dates/times. If
+used then the arguments governing preset styles (<code>date_style</code> and
 <code>time_style</code>) will be ignored in favor of formatting via the <code>format</code>
 string.</p></dd>
 
 
 <dt>tz</dt>
-<dd><p>The time zone for printing dates/times (i.e., the output). The
+<dd><p><em>Time zone</em></p>
+<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>The time zone for printing dates/times (i.e., the output). The
 default of <code>NULL</code> will preserve the time zone of the input data in the
 output. If providing a time zone, it must be one that is recognized by the
 user's operating system (a vector of all valid <code>tz</code> values can be produced
@@ -129,25 +143,33 @@ with <code><a href="https://rdrr.io/r/base/timezones.html" class="external-link"
 
 
 <dt>pattern</dt>
-<dd><p>A formatting pattern that allows for decoration of the
-formatted value. The value itself is represented by <code>{x}</code> and all other
-characters are taken to be string literals.</p></dd>
+<dd><p><em>Specification of the formatting pattern</em></p>
+<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>"{x}"</code></p>
+<p>A formatting pattern that allows for decoration of the formatted value. The
+formatted value is represented by the <code>{x}</code> (which can be used multiple
+times, if needed) and all other characters will be interpreted as string
+literals.</p></dd>
 
 
 <dt>locale</dt>
-<dd><p>An optional locale identifier that can be used for formatting
-the value according the locale's rules. Examples include <code>"en"</code> for English
-(United States) and <code>"fr"</code> for French (France). The use of a locale ID will
-override any locale-specific values provided. We can use the
-<code><a href="info_locales.html">info_locales()</a></code> function as a useful reference for all of the locales that
-are supported.</p></dd>
+<dd><p><em>Locale identifier</em></p>
+<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>An optional locale identifier that can be used for formatting values
+according the locale's rules. Examples include <code>"en"</code> for English (United
+States) and <code>"fr"</code> for French (France). We can use the <code><a href="info_locales.html">info_locales()</a></code>
+function as a useful reference for all of the locales that are supported. A
+locale ID can be also set in the initial <code><a href="gt.html">gt()</a></code> function call (where it
+would be used automatically by any function with a <code>locale</code> argument) but a
+<code>locale</code> value provided here will override that global locale.</p></dd>
 
 
 <dt>output</dt>
-<dd><p>The output style of the resulting character vector. This can
-either be <code>"auto"</code> (the default), <code>"plain"</code>, <code>"html"</code>, <code>"latex"</code>, <code>"rtf"</code>,
-or <code>"word"</code>. In <strong>knitr</strong> rendering (i.e., Quarto or R Markdown), the
-<code>"auto"</code> option will choose the correct <code>output</code> value</p></dd>
+<dd><p><em>Output format</em></p>
+<p><code>singl-kw:[auto|plain|html|latex|rtf|word]</code> --- <em>default:</em> <code>"auto"</code></p>
+<p>The output style of the resulting character vector. This can either be
+<code>"auto"</code> (the default), <code>"plain"</code>, <code>"html"</code>, <code>"latex"</code>, <code>"rtf"</code>, or
+<code>"word"</code>. In <strong>knitr</strong> rendering (i.e., Quarto or R Markdown), the <code>"auto"</code>
+option will choose the correct <code>output</code> value</p></dd>
 
 </dl></div>
     <div class="section level2">

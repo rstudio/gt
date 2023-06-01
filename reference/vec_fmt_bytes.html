@@ -18,7 +18,7 @@ values
 locale-based formatting: providing a locale ID will result in number
 formatting specific to the chosen locale
 
-'><title>Format a vector as values in terms of bytes — vec_fmt_bytes • gt</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Format a vector as values in terms of bytes — vec_fmt_bytes"><meta property="og:description" content='With numeric values in a vector, we can transform each into byte values with
+'><title>Format a vector as values in terms of bytes — vec_fmt_bytes • gt</title><!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png"><link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png"><link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png"><link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png"><link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png"><link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png"><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet"><meta property="og:title" content="Format a vector as values in terms of bytes — vec_fmt_bytes"><meta property="og:description" content='With numeric values in a vector, we can transform each into byte values with
 human readable units. The vec_fmt_bytes() function allows for the
 formatting of byte sizes to either of two common representations: (1) with
 decimal units (powers of 1000, examples being "kB" and "MB"), and (2)
@@ -139,89 +139,125 @@ formatting specific to the chosen locale</p></li>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
-<dd><p>A numeric vector.</p></dd>
+<dd><p><em>The input vector</em></p>
+<p><code>vector(numeric|integer)</code> --- <strong>required</strong></p>
+<p>This is the input vector that will undergo transformation to a character
+vector of the same length. Values within the vector will be formatted.</p></dd>
 
 
 <dt>standard</dt>
-<dd><p>The way to express large byte sizes.</p></dd>
+<dd><p><em>Standard used to express byte sizes</em></p>
+<p><code>singl-kw:[decimal|binary]</code> --- <em>default:</em> <code>"decimal"</code></p>
+<p>The form of expressing large byte sizes is divided between: (1) decimal
+units (powers of 1000; e.g., <code>"kB"</code> and <code>"MB"</code>), and (2) binary units
+(powers of 1024; e.g., <code>"KiB"</code> and <code>"MiB"</code>).</p></dd>
 
 
 <dt>decimals</dt>
-<dd><p>An option to specify the exact number of decimal places to
-use. The default number of decimal places is <code>1</code>.</p></dd>
+<dd><p><em>Number of decimal places</em></p>
+<p><code>scalar&lt;numeric|integer&gt;(val&gt;=0)</code> --- <em>default:</em> <code>1</code></p>
+<p>This corresponds to the exact number of decimal places to use. A value
+such as <code>2.34</code> can, for example, be formatted with <code>0</code> decimal places and
+it would result in <code>"2"</code>. With <code>4</code> decimal places, the formatted value
+becomes <code>"2.3400"</code>. The trailing zeros can be removed with
+<code>drop_trailing_zeros = TRUE</code>.</p></dd>
 
 
 <dt>n_sigfig</dt>
-<dd><p>A option to format numbers to <em>n</em> significant figures. By
-default, this is <code>NULL</code> and thus number values will be formatted according
-to the number of decimal places set via <code>decimals</code>. If opting to format
-according to the rules of significant figures, <code>n_sigfig</code> must be a number
-greater than or equal to <code>1</code>. Any values passed to the <code>decimals</code> and
-<code>drop_trailing_zeros</code> arguments will be ignored.</p></dd>
+<dd><p><em>Number of significant figures</em></p>
+<p><code>scalar&lt;numeric|integer&gt;(val&gt;=1)</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>A option to format numbers to <em>n</em> significant figures. By default, this is
+<code>NULL</code> and thus number values will be formatted according to the number of
+decimal places set via <code>decimals</code>. If opting to format according to the
+rules of significant figures, <code>n_sigfig</code> must be a number greater than or
+equal to <code>1</code>. Any values passed to the <code>decimals</code> and <code>drop_trailing_zeros</code>
+arguments will be ignored.</p></dd>
 
 
 <dt>drop_trailing_zeros</dt>
-<dd><p>A logical value that allows for removal of
-trailing zeros (those redundant zeros after the decimal mark).</p></dd>
+<dd><p><em>Drop any trailing zeros</em></p>
+<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>FALSE</code></p>
+<p>A logical value that allows for removal of trailing zeros (those redundant
+zeros after the decimal mark).</p></dd>
 
 
 <dt>drop_trailing_dec_mark</dt>
-<dd><p>A logical value that determines whether decimal
-marks should always appear even if there are no decimal digits to display
-after formatting (e.g, <code>23</code> becomes <code>23.</code>). The default for this is <code>TRUE</code>,
-which means that trailing decimal marks are not shown.</p></dd>
+<dd><p><em>Drop the trailing decimal mark</em></p>
+<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>TRUE</code></p>
+<p>A logical value that determines whether decimal marks should always appear
+even if there are no decimal digits to display after formatting (e.g., <code>23</code>
+becomes <code>23.</code> if <code>FALSE</code>). By default trailing decimal marks are not shown.</p></dd>
 
 
 <dt>use_seps</dt>
-<dd><p>An option to use digit group separators. The type of digit
-group separator is set by <code>sep_mark</code> and overridden if a locale ID is
-provided to <code>locale</code>. This setting is <code>TRUE</code> by default.</p></dd>
+<dd><p><em>Use digit group separators</em></p>
+<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>TRUE</code></p>
+<p>An option to use digit group separators. The type of digit group separator
+is set by <code>sep_mark</code> and overridden if a locale ID is provided to <code>locale</code>.
+This setting is <code>TRUE</code> by default.</p></dd>
 
 
 <dt>pattern</dt>
-<dd><p>A formatting pattern that allows for decoration of the
-formatted value. The value itself is represented by <code>{x}</code> and all other
-characters are taken to be string literals.</p></dd>
+<dd><p><em>Specification of the formatting pattern</em></p>
+<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>"{x}"</code></p>
+<p>A formatting pattern that allows for decoration of the formatted value. The
+formatted value is represented by the <code>{x}</code> (which can be used multiple
+times, if needed) and all other characters will be interpreted as string
+literals.</p></dd>
 
 
 <dt>sep_mark</dt>
-<dd><p>The mark to use as a separator between groups of digits
-(e.g., using <code>sep_mark = ","</code> with <code>1000</code> would result in a formatted value
-of <code>1,000</code>).</p></dd>
+<dd><p><em>Separator mark for digit grouping</em></p>
+<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>","</code></p>
+<p>The string to use as a separator between groups of digits. For example,
+using <code>sep_mark = ","</code> with a value of <code>1000</code> would result in a formatted
+value of <code>"1,000"</code>. This argument is ignored if a <code>locale</code> is supplied
+(i.e., is not <code>NULL</code>).</p></dd>
 
 
 <dt>dec_mark</dt>
-<dd><p>The character to use as a decimal mark (e.g., using
-<code>dec_mark = ","</code> with <code>0.152</code> would result in a formatted value of
-<code>0,152</code>).</p></dd>
+<dd><p><em>Decimal mark</em></p>
+<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>"."</code></p>
+<p>The string to be used as the decimal mark. For example, using
+<code>dec_mark = ","</code> with the value <code>0.152</code> would result in a formatted value
+of <code>"0,152"</code>). This argument is ignored if a <code>locale</code> is supplied (i.e., is
+not <code>NULL</code>).</p></dd>
 
 
 <dt>force_sign</dt>
-<dd><p>Should the positive sign be shown for positive numbers
-(effectively showing a sign for all numbers except zero)? If so, use <code>TRUE</code>
-for this option. The default is <code>FALSE</code>, where only negative numbers will
-display a minus sign.</p></dd>
+<dd><p><em>Forcing the display of a positive sign</em></p>
+<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>FALSE</code></p>
+<p>Should the positive sign be shown for positive numbers (effectively showing
+a sign for all numbers except zero)? If so, use <code>TRUE</code> for this option. The
+default is <code>FALSE</code>, where only negative numbers will display a minus sign.</p></dd>
 
 
 <dt>incl_space</dt>
-<dd><p>An option for whether to include a space between the value
-and the units. The default of <code>TRUE</code> uses a space character for separation.</p></dd>
+<dd><p><em>Include a space between the value and the units</em></p>
+<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>TRUE</code></p>
+<p>An option for whether to include a space between the value and the units.
+The default is to use a space character for separation.</p></dd>
 
 
 <dt>locale</dt>
-<dd><p>An optional locale identifier that can be used for formatting
-the value according the locale's rules. Examples include <code>"en"</code> for English
-(United States) and <code>"fr"</code> for French (France). The use of a locale ID will
-override any locale-specific values provided. We can use the
-<code><a href="info_locales.html">info_locales()</a></code> function as a useful reference for all of the locales that
-are supported.</p></dd>
+<dd><p><em>Locale identifier</em></p>
+<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>An optional locale identifier that can be used for formatting values
+according the locale's rules. Examples include <code>"en"</code> for English (United
+States) and <code>"fr"</code> for French (France). We can use the <code><a href="info_locales.html">info_locales()</a></code>
+function as a useful reference for all of the locales that are supported. A
+locale ID can be also set in the initial <code><a href="gt.html">gt()</a></code> function call (where it
+would be used automatically by any function with a <code>locale</code> argument) but a
+<code>locale</code> value provided here will override that global locale.</p></dd>
 
 
 <dt>output</dt>
-<dd><p>The output style of the resulting character vector. This can
-either be <code>"auto"</code> (the default), <code>"plain"</code>, <code>"html"</code>, <code>"latex"</code>, <code>"rtf"</code>,
-or <code>"word"</code>. In <strong>knitr</strong> rendering (i.e., Quarto or R Markdown), the
-<code>"auto"</code> option will choose the correct <code>output</code> value</p></dd>
+<dd><p><em>Output format</em></p>
+<p><code>singl-kw:[auto|plain|html|latex|rtf|word]</code> --- <em>default:</em> <code>"auto"</code></p>
+<p>The output style of the resulting character vector. This can either be
+<code>"auto"</code> (the default), <code>"plain"</code>, <code>"html"</code>, <code>"latex"</code>, <code>"rtf"</code>, or
+<code>"word"</code>. In <strong>knitr</strong> rendering (i.e., Quarto or R Markdown), the <code>"auto"</code>
+option will choose the correct <code>output</code> value</p></dd>
 
 </dl></div>
     <div class="section level2">
