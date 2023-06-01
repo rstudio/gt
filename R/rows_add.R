@@ -34,29 +34,56 @@
 #' to specify the number of blank (i.e., all `NA`) rows to be inserted into the
 #' table.
 #'
-#' @param .data A table object that is created using the [gt()] function.
-#' @param ... Expressions for the assignment of cell values to the new rows by
-#'   column name in `.data`. Name-value pairs, in the form of `<column> = <value
-#'   vector>` will work, so long as the `<column>` value exists in the table.
-#'   Two-sided formulas with column-resolving expressions (e.g, `<expr> ~ <value
-#'   vector>`) can also be used, where the left-hand side corresponds to
-#'   selections of columns. Column names should be enclosed in [c()] and select
-#'   helpers like [starts_with()], [ends_with()], [contains()], [matches()],
-#'   [one_of()], and [everything()] can be used in the LHS. The length of the
-#'   longest vector in `<value vector>` determines how many new rows will be
-#'   added. Single values in `<value vector>` will be repeated down in cases
-#'   where there are multiple rows to be added.
-#' @param .list Allows for the use of a list as an input alternative to `...`.
-#' @param .before,.after A single row-resolving expression (i.e.,
-#'   **tidyselect**-style expressions like `starts_with()`) or row index can be
-#'   given to either `.before` or `.after`. This specifies where the new rows
-#'   should be positioned among the existing rows in the input data table.
-#'   Importantly, only a single row must be resolved (otherwise, the function
-#'   will be stopped). If nothing is provided for either argument then any new
-#'   rows will be placed at the bottom of the table.
-#' @param .n_empty An option to add empty rows in lieu of rows containing data
-#'   that would otherwise be supplied to `...` or `.list`. If the option is
-#'   taken, provide an integer value here.
+#' @param .data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
+#' @param ... *Cell data assignments*
+#'
+#'   `<multiple expressions>` --- (or, use `.list`)
+#'
+#'   Expressions for the assignment of cell values to the new rows by column
+#'   name in `.data`. Name-value pairs, in the form of
+#'   `<column> = <value vector>` will work, so long as the `<column>` value
+#'   exists in the table. Two-sided formulas with column-resolving expressions
+#'   (e.g, `<expr> ~ <value vector>`) can also be used, where the left-hand side
+#'   corresponds to selections of columns. Column names should be enclosed in
+#'   [c()] and select helpers like [starts_with()], [ends_with()], [contains()],
+#'   [matches()], [one_of()], and [everything()] can be used in the LHS. The
+#'   length of the longest vector in `<value vector>` determines how many new
+#'   rows will be added. Single values in `<value vector>` will be repeated down
+#'   in cases where there are multiple rows to be added.
+#'
+#' @param .list *Alternative to `...`*
+#'
+#'   `<list of multiple expressions>` --- (or, use `...`)
+#'
+#'   Allows for the use of a list as an input alternative to `...`.
+#'
+#' @param .before,.after *Row used as anchor*
+#'
+#'   `<row-targeting expression>` --- *default:* `NULL` (`optional`)
+#'
+#'   A single row-resolving expression or row index an be given to either
+#'   `.before` or `.after`. The row specifies where the new rows should be
+#'   positioned among the existing rows in the input data table. While select
+#'   helper functions such as [starts_with()] and [ends_with()] can be used for
+#'   row targeting, it's recommended that a single row name or index be used.
+#'   This is to ensure that exactly one row is provided to either of these
+#'   arguments (otherwise, the function will be stopped). If nothing is provided
+#'   for either argument then any new rows will be placed at the bottom of the
+#'   table.
+#'
+#' @param .n_empty *Number of empty rows to add*
+#'
+#'   `scalar<numeric|integer>(val>=0)` --- *default:* `NULL` (`optional`)
+#'
+#'   An option to add empty rows in lieu of rows containing data that would
+#'   otherwise be supplied to `...` or `.list`. If the option is taken, provide
+#'   an integer value here.
 #'
 #' @return An object of class `gt_tbl`.
 #'

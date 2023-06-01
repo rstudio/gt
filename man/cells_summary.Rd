@@ -11,11 +11,39 @@ cells_summary(
 )
 }
 \arguments{
-\item{groups}{The names of the groups that the summary rows reside in.}
+\item{groups}{\emph{Specification of row group IDs}
 
-\item{columns}{The names of the columns that are to be targeted.}
+\verb{<row-group-targeting expression>} --- \emph{default:} \code{everything()}
 
-\item{rows}{The names of the rows that are to be targeted.}
+The row groups to which targeting operations are constrained. This aids in
+targeting the summary rows that reside in certain row groups. Can either be
+a series of row group ID values provided in \code{\link[=c]{c()}} or a select helper
+function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
+\code{\link[=everything]{everything()}}.}
+
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+
+The columns to which targeting operations are constrained. Can either
+be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,
+or a select helper function. Examples of select helper functions include
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+form a constraint for targeting operations. The default \code{\link[=everything]{everything()}}
+results in all rows in \code{columns} being formatted. Alternatively, we can
+supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row indices, or a
+select helper function. Examples of select helper functions include
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions to filter
+down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 }
 \value{
 A list object with the classes \code{cells_summary} and \code{location_cells}.

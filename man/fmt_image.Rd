@@ -16,37 +16,70 @@ fmt_image(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The columns to format. Can either be a series of column names
-provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
-focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+
+Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
+column indices, or a select helper function. Examples of select helper
+functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
+\code{columns} being formatted. Alternatively, we can supply a vector of row
+captions within \code{\link[=c]{c()}}, a vector of row indices, or a select helper
+function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}.}
+\code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
+need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
-default) results in all rows in \code{columns} being formatted. Alternatively,
-we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
-indices, or a helper function focused on selections. The select helper
-functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
-\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
-to filter down to the rows we need (e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+\item{height}{\emph{Height of image}
 
-\item{height}{The absolute height of the image in the table cell. By default,
-this is set to \code{"1em"}.}
+\verb{scalar<character>} --- \emph{default:} \code{"1em"}
 
-\item{sep}{In the output of images within a body cell, \code{sep} provides the
-separator between each image.}
+The absolute height of the image in the table cell. By default, this is set
+to \code{"1em"}.}
 
-\item{path}{An optional path to local image files (this is combined with all
+\item{sep}{\emph{Separator between images}
+
+\verb{scalar<character>} --- \emph{default:} \code{" "}
+
+In the output of images within a body cell, \code{sep} provides the separator
+between each image.}
+
+\item{path}{\emph{Path to image files}
+
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+An optional path to local image files (this is combined with all
 filenames).}
 
-\item{file_pattern}{The pattern to use for mapping input values in the body
-cells to the names of the graphics files.}
+\item{file_pattern}{\emph{File pattern specification}
 
-\item{encode}{The option to always use Base64 encoding for image paths that
-are determined to be local. By default, this is \code{TRUE}.}
+\verb{scalar<character>} --- \emph{default:} \code{"{x}"}
+
+The pattern to use for mapping input values in the body cells to the names
+of the graphics files. The string supplied should use \code{"{x}"} in the
+pattern to map filename fragments to input strings.}
+
+\item{encode}{\emph{Use Base64 encoding}
+
+\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+
+The option to always use Base64 encoding for image paths that are
+determined to be local. By default, this is \code{TRUE}.}
 }
 \value{
 An object of class \code{gt_tbl}.

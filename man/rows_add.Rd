@@ -14,31 +14,56 @@ rows_add(
 )
 }
 \arguments{
-\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{.data}{\emph{The gt table data object}
 
-\item{...}{Expressions for the assignment of cell values to the new rows by
-column name in \code{.data}. Name-value pairs, in the form of \verb{<column> = <value vector>} will work, so long as the \verb{<column>} value exists in the table.
-Two-sided formulas with column-resolving expressions (e.g, \verb{<expr> ~ <value vector>}) can also be used, where the left-hand side corresponds to
-selections of columns. Column names should be enclosed in \code{\link[=c]{c()}} and select
-helpers like \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
-\code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}} can be used in the LHS. The length of the
-longest vector in \verb{<value vector>} determines how many new rows will be
-added. Single values in \verb{<value vector>} will be repeated down in cases
-where there are multiple rows to be added.}
+\verb{obj:<gt_tbl>} --- \strong{required}
 
-\item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
-\item{.before, .after}{A single row-resolving expression (i.e.,
-\strong{tidyselect}-style expressions like \code{starts_with()}) or row index can be
-given to either \code{.before} or \code{.after}. This specifies where the new rows
-should be positioned among the existing rows in the input data table.
-Importantly, only a single row must be resolved (otherwise, the function
-will be stopped). If nothing is provided for either argument then any new
-rows will be placed at the bottom of the table.}
+\item{...}{\emph{Cell data assignments}
 
-\item{.n_empty}{An option to add empty rows in lieu of rows containing data
-that would otherwise be supplied to \code{...} or \code{.list}. If the option is
-taken, provide an integer value here.}
+\verb{<multiple expressions>} --- (or, use \code{.list})
+
+Expressions for the assignment of cell values to the new rows by column
+name in \code{.data}. Name-value pairs, in the form of
+\verb{<column> = <value vector>} will work, so long as the \verb{<column>} value
+exists in the table. Two-sided formulas with column-resolving expressions
+(e.g, \verb{<expr> ~ <value vector>}) can also be used, where the left-hand side
+corresponds to selections of columns. Column names should be enclosed in
+\code{\link[=c]{c()}} and select helpers like \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}} can be used in the LHS. The
+length of the longest vector in \verb{<value vector>} determines how many new
+rows will be added. Single values in \verb{<value vector>} will be repeated down
+in cases where there are multiple rows to be added.}
+
+\item{.list}{\emph{Alternative to \code{...}}
+
+\verb{<list of multiple expressions>} --- (or, use \code{...})
+
+Allows for the use of a list as an input alternative to \code{...}.}
+
+\item{.before, .after}{\emph{Row used as anchor}
+
+\verb{<row-targeting expression>} --- \emph{default:} \code{NULL} (\code{optional})
+
+A single row-resolving expression or row index an be given to either
+\code{.before} or \code{.after}. The row specifies where the new rows should be
+positioned among the existing rows in the input data table. While select
+helper functions such as \code{\link[=starts_with]{starts_with()}} and \code{\link[=ends_with]{ends_with()}} can be used for
+row targeting, it's recommended that a single row name or index be used.
+This is to ensure that exactly one row is provided to either of these
+arguments (otherwise, the function will be stopped). If nothing is provided
+for either argument then any new rows will be placed at the bottom of the
+table.}
+
+\item{.n_empty}{\emph{Number of empty rows to add}
+
+\code{scalar<numeric|integer>(val>=0)} --- \emph{default:} \code{NULL} (\code{optional})
+
+An option to add empty rows in lieu of rows containing data that would
+otherwise be supplied to \code{...} or \code{.list}. If the option is taken, provide
+an integer value here.}
 }
 \value{
 An object of class \code{gt_tbl}.

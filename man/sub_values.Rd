@@ -16,48 +16,76 @@ sub_values(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{Optional columns for constraining the targeting process.
-Providing \code{\link[=everything]{everything()}} (the default) results in cells in all \code{columns}
-being targeting (this can be limited by \code{rows} however). Can either be a
-series of column names provided in \code{\link[=c]{c()}}, a vector of column indices, or a
-helper function focused on selections. The select helper functions are:
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+
+The columns to which substitution operations are constrained. Can either
+be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,
+or a select helper function. Examples of select helper functions include
 \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
 \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
 
-\item{rows}{Optional rows for constraining the targeting process. Providing
-\code{\link[=everything]{everything()}} (the default) results in all rows in \code{columns} being
-targeted. Alternatively, we can supply a vector of row captions within
-\code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on selections.
-The select helper functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
-\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.
-We can also use expressions to filter down to the rows we need (e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+\item{rows}{\emph{Rows to target}
 
-\item{values}{The specific value or values that should be replaced with a
-\code{replacement} value. If \code{pattern} is also supplied then \code{values} will be
-ignored.}
+\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
 
-\item{pattern}{A regex pattern that can target solely those values in
-\code{character}-based columns. If \code{values} is also supplied, \code{pattern} will
-take precedence.}
+In conjunction with \code{columns}, we can specify which of their rows should
+form a constraint for targeting operations. The default \code{\link[=everything]{everything()}}
+results in all rows in \code{columns} being formatted. Alternatively, we can
+supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row indices, or a
+select helper function. Examples of select helper functions include
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions to filter
+down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{fn}{A supplied function that operates on \code{x} (the data in a column) and
-should return a logical vector that matches the length of \code{x} (i.e., number
-of rows in the input table). If either of \code{values} or \code{pattern} is also
+\item{values}{\emph{Values to match on}
+
+\verb{scalar<character|numeric|integer>} --- \emph{default:} \code{NULL} (\code{optional})
+
+The specific value or values that should be replaced with a \code{replacement}
+value. If \code{pattern} is also supplied then \code{values} will be ignored.}
+
+\item{pattern}{\emph{Regex pattern to match with}
+
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+A regex pattern that can target solely those values in \code{character}-based
+columns. If \code{values} is also supplied, \code{pattern} will take precedence.}
+
+\item{fn}{\emph{Function to return logical values}
+
+\verb{<function>} --- \emph{default:} \code{NULL} (\code{optional})
+
+A supplied function that operates on \code{x} (the data in a column) and should
+return a logical vector that matches the length of \code{x} (i.e., number of
+rows in the input table). If either of \code{values} or \code{pattern} is also
 supplied, \code{fn} will take precedence.}
 
-\item{replacement}{The replacement value for any cell values matched by
-either \code{values} or \code{pattern}. Must be a character or numeric vector of
-length 1.}
+\item{replacement}{\emph{Replacement value for matches}
 
-\item{escape}{An option to escape replacement text according to the final
-output format of the table. For example, if a LaTeX table is to be
-generated then LaTeX escaping would be performed on the replacements during
-rendering. By default this is set to \code{TRUE} but setting to \code{FALSE} would be
-useful in the case where replacement text is crafted for a specific output
-format in mind.}
+\verb{scalar<character|numeric|integer>} --- \emph{default:} \code{NULL} (\code{optional})
+
+The replacement value for any cell values matched by either \code{values} or
+\code{pattern}. Must be a character or numeric vector of length 1.}
+
+\item{escape}{\emph{Text escaping}
+
+\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+
+An option to escape replacement text according to the final output format
+of the table. For example, if a LaTeX table is to be generated then LaTeX
+escaping would be performed on the replacements during rendering. By
+default this is set to \code{TRUE} but setting to \code{FALSE} would be useful in the
+case where replacement text is crafted for a specific output format in
+mind.}
 }
 \value{
 An object of class \code{gt_tbl}.

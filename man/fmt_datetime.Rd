@@ -18,56 +18,99 @@ fmt_datetime(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The columns to format. Can either be a series of column names
-provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
-focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+
+Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
+column indices, or a select helper function. Examples of select helper
+functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
+\code{columns} being formatted. Alternatively, we can supply a vector of row
+captions within \code{\link[=c]{c()}}, a vector of row indices, or a select helper
+function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}.}
+\code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
+need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
-default) results in all rows in \code{columns} being formatted. Alternatively,
-we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
-indices, or a helper function focused on selections. The select helper
-functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
-\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
-to filter down to the rows we need (e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+\item{date_style}{\emph{Predefined style for dates}
 
-\item{date_style}{The date style to use. By default this is \code{"iso"} which
-corresponds to ISO 8601 date formatting. The other date styles can be
-viewed using \code{\link[=info_date_style]{info_date_style()}}.}
+\verb{scalar<character>|scalar<numeric|integer>(1<=val<=41)} --- \emph{default:} \code{"iso"}
 
-\item{time_style}{The time style to use. By default this is \code{"iso"} which
-corresponds to how times are formatted within ISO 8601 datetime values. The
-other time styles can be viewed using \code{\link[=info_time_style]{info_time_style()}}.}
+The date style to use. By default this is the short name \code{"iso"} which
+corresponds to ISO 8601 date formatting. There are 41 date styles in total
+and their short names can be viewed using \code{\link[=info_date_style]{info_date_style()}}.}
 
-\item{sep}{The separator string to use between the date and time components.
-By default, this is a single space character (\code{" "}). Only used when not
+\item{time_style}{\emph{Predefined style for times}
+
+\verb{scalar<character>|scalar<numeric|integer>(1<=val<=25)} --- \emph{default:} \code{"iso"}
+
+The time style to use. By default this is the short name \code{"iso"} which
+corresponds to how times are formatted within ISO 8601 datetime values.
+There are 25 time styles in total and their short names can be viewed using
+\code{\link[=info_time_style]{info_time_style()}}.}
+
+\item{sep}{\emph{Separator between date and time components}
+
+\verb{scalar<character>} --- \emph{default:} \code{" "}
+
+The separator string to use between the date and time components. By
+default, this is a single space character (\code{" "}). Only used when not
 specifying a \code{format} code.}
 
-\item{format}{An optional formatting string used for generating custom
-dates/times. If used then the arguments governing preset styles
-(\code{date_style} and \code{time_style}) will be ignored in favor of formatting via
-the \code{format} string.}
+\item{format}{\emph{Date/time formatting string}
 
-\item{tz}{The time zone for printing dates/times (i.e., the output). The
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+An optional formatting string used for generating custom dates/times. If
+used then the arguments governing preset styles (\code{date_style} and
+\code{time_style}) will be ignored in favor of formatting via the \code{format}
+string.}
+
+\item{tz}{\emph{Time zone}
+
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+The time zone for printing dates/times (i.e., the output). The
 default of \code{NULL} will preserve the time zone of the input data in the
 output. If providing a time zone, it must be one that is recognized by the
 user's operating system (a vector of all valid \code{tz} values can be produced
 with \code{\link[=OlsonNames]{OlsonNames()}}).}
 
-\item{pattern}{A formatting pattern that allows for decoration of the
-formatted value. The value itself is represented by \code{{x}} and all other
-characters are taken to be string literals.}
+\item{pattern}{\emph{Specification of the formatting pattern}
 
-\item{locale}{An optional locale identifier that can be used for formatting
-the value according the locale's rules. Examples include \code{"en"} for English
-(United States) and \code{"fr"} for French (France). The use of a locale ID will
-override any locale-specific values provided. We can use the
-\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
-are supported.}
+\verb{scalar<character>} --- \emph{default:} \code{"{x}"}
+
+A formatting pattern that allows for decoration of the formatted value. The
+formatted value is represented by the \code{{x}} (which can be used multiple
+times, if needed) and all other characters will be interpreted as string
+literals.}
+
+\item{locale}{\emph{Locale identifier}
+
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+An optional locale identifier that can be used for formatting values
+according the locale's rules. Examples include \code{"en"} for English (United
+States) and \code{"fr"} for French (France). We can use the \code{\link[=info_locales]{info_locales()}}
+function as a useful reference for all of the locales that are supported. A
+locale ID can be also set in the initial \code{\link[=gt]{gt()}} function call (where it
+would be used automatically by any function with a \code{locale} argument) but a
+\code{locale} value provided here will override that global locale.}
 }
 \value{
 An object of class \code{gt_tbl}.

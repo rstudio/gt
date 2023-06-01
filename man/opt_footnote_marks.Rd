@@ -7,12 +7,21 @@
 opt_footnote_marks(data, marks = "numbers")
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{marks}{Either a character vector of length greater than 1 (that will
-represent the series of marks) or a single keyword that represents a preset
-sequence of marks. The valid keywords are: \code{"numbers"} (for numeric marks),
-\code{"letters"} and \code{"LETTERS"} (for lowercase and uppercase alphabetic marks),
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{marks}{\emph{Sequence of footnote marks}
+
+\verb{vector<character>} --- \emph{default:} \code{"numbers"}
+
+Either a character vector of length greater than 1 (that will represent the
+series of marks) or a single keyword that represents a preset sequence of
+marks. The valid keywords are: \code{"numbers"} (for numeric marks), \code{"letters"}
+and \code{"LETTERS"} (for lowercase and uppercase alphabetic marks),
 \code{"standard"} (for a traditional set of four symbol marks), and \code{"extended"}
 (which adds two more symbols to the standard set).}
 }

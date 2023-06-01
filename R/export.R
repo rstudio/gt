@@ -69,15 +69,33 @@
 #' package needs to be installed before attempting to save any table as a
 #' `.docx` document.
 #'
-#' @param data A table object that is created using the [gt()] function.
-#' @param filename The file name to create on disk. Ensure that an extension
-#'   compatible with the output types is provided (`.html`, `.tex`, `.ltx`,
-#'   `.rtf`, `.docx`). If a custom save function is provided then the file
-#'   extension is disregarded.
-#' @param path An optional path to which the file should be saved (combined with
-#'   filename).
-#' @param ... All other options passed to the appropriate internal saving
-#'   function.
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
+#' @param filename *Output filename*
+#'
+#'   `scalar<character>` --- **required**
+#'
+#'   The file name to create on disk. Ensure that an extension compatible with
+#'   the output types is provided (`.html`, `.tex`, `.ltx`, `.rtf`, `.docx`). If
+#'   a custom save function is provided then the file extension is disregarded.
+#'
+#' @param path *Output path*
+#'
+#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'
+#'   An optional path to which the file should be saved (combined with
+#'   `filename`).
+#'
+#' @param ... *Additional options*
+#'
+#'   `<named arguments>`
+#'
+#'   All other options passed to the appropriate internal saving function.
 #'
 #' @return Invisibly returns `TRUE` if the export process is successful.
 #'
@@ -430,7 +448,7 @@ gt_save_docx <- function(
     output = filename
   )
 
-  if(needs_gt_as_word_post_processing(word_md_text)){
+  if (needs_gt_as_word_post_processing(word_md_text)) {
     gt_as_word_post_processing(filename)
   }
 
@@ -474,11 +492,21 @@ gtsave_filename <- function(path, filename) {
 #' tags. This option is preferable when using the output HTML table in an
 #' emailing context.
 #'
-#' @param data A table object that is created using the [gt()] function.
-#' @param inline_css An option to supply styles to table elements as inlined CSS
-#'   styles. This is useful when including the table HTML as part of an HTML
-#'   email message body, since inlined styles are largely supported in email
-#'   clients over using CSS in a `<style>` block.
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
+#' @param inline_css *Use inline CSS*
+#'
+#'   `scalar<logical>` --- *default:* `TRUE`
+#'
+#'   An option to supply styles to table elements as inlined CSS styles. This is
+#'   useful when including the table HTML as part of an HTML email message body,
+#'   since inlined styles are largely supported in email clients over using CSS
+#'   in a `<style>` block.
 #'
 #' @section Examples:
 #'
@@ -558,7 +586,12 @@ as_raw_html <- function(
 #' `as.character()` on the created object will result in a single-element vector
 #' containing the LaTeX code.
 #'
-#' @param data A table object that is created using the [gt()] function.
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
 #'
 #' @details
 #'
@@ -674,16 +707,39 @@ as_latex <- function(data) {
 #' vector. This object can be used with `writeLines()` to generate a valid .rtf
 #' file that can be opened by RTF readers.
 #'
-#' @param data A table object that is created using the `gt()` function.
-#' @param incl_open,incl_close Options that govern whether the opening or
-#'   closing `"{"` and `"}"` should be included. By default, both options are
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
+#' @param incl_open,incl_close *Include opening/closing braces*
+#'
+#'   `scalar<logical>` --- *default:* `TRUE`
+#'
+#'   Options that govern whether the opening or closing `"{"` and `"}"` should
+#'   be included. By default, both options are `TRUE`.
+#'
+#' @param incl_header *Include RTF header*
+#'
+#'   `scalar<logical>` --- *default:* `TRUE`
+#'
+#'   Should the RTF header be included in the output? By default, this is
 #'   `TRUE`.
-#' @param incl_header Should the RTF header be included in the output? By
-#'   default, this is `TRUE`.
-#' @param incl_page_info Should the RTF output include directives for the
-#'   document pages? This is `TRUE` by default.
-#' @param incl_body An option to include the body of RTF document. By
-#'   default, this is `TRUE`.
+#'
+#' @param incl_page_info *Include RTF page information*
+#'
+#'   `scalar<logical>` --- *default:* `TRUE`
+#'
+#'   Should the RTF output include directives for the document pages? This is
+#'   `TRUE` by default.
+#'
+#' @param incl_body *Include RTF body*
+#'
+#'   `scalar<logical>` --- *default:* `TRUE`
+#'
+#'   An option to include the body of RTF document. By default, this is `TRUE`.
 #'
 #' @section Examples:
 #'
@@ -794,21 +850,49 @@ as_rtf <- function(
 #'
 #' @description
 #'
-#' Get the Open Office XML table tag content from a `gt_tbl` object as as a
+#' Get the Open Office XML table tag content from a `gt_tbl` object as a
 #' single-element character vector.
 #'
-#' @param data A table object that is created using the `gt()` function.
-#' @param align An option for table alignment. Can either be `"center"` (the
-#'   default), `"left"`, or `"right"`.
-#' @param caption_location Determines where the caption should be positioned.
-#'   This can either be `"top"` (the default), `"bottom"`, or `"embed"`.
-#' @param caption_align Determines the alignment of the caption. This is
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
+#' @param align *Table alignment*
+#'
+#'   `scalar<character>` --- *default:* `"center"`
+#'
+#'   An option for table alignment. Can either be `"center"`, `"left"`, or
+#'   `"right"`.
+#'
+#' @param caption_location *Caption location*
+#'
+#'   `singl-kw:[top|bottom|embed]` --- *default:* `"top"`
+#'
+#'   Determines where the caption should be positioned. This can either be
+#'   `"top"`, `"bottom"`, or `"embed"`.
+#'
+#' @param caption_align *Caption alignment*
+#'
+#'   Determines the alignment of the caption. This is
 #'   either `"left"` (the default), `"center"`, or `"right"`. This option is
 #'   only used when `caption_location` is not set as `"embed"`.
-#' @param split A `TRUE` or `FALSE` (the default) value that indicates whether
-#'   to activate the Word option `Allow row to break across pages`.
-#' @param keep_with_next A `TRUE` (the default) or `FALSE` value that indicates
-#'   whether a table should use Word option `keep rows together`.
+#'
+#' @param split *Allow splitting*
+#'
+#'   `scalar<logical>` --- *default:* `FALSE`
+#'
+#'   A logical value that indicates whether to activate the Word option
+#'   `Allow row to break across pages`.
+#'
+#' @param keep_with_next *Keeping rows together*
+#'
+#'   `scalar<logical>` --- *default:* `TRUE`
+#'
+#'   A logical value that indicates whether a table should use Word option
+#'   `keep rows together`.
 #'
 #' @section Examples:
 #'
@@ -1010,7 +1094,12 @@ as_word_tbl_body <- function(
 #' contain the `group_id` and `rowname` columns, whereby `rowname` contains
 #' descriptive stub labels for the summary rows.
 #'
-#' @param data A table object that is created using the [gt()] function.
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
 #'
 #' @return A list of data frames containing summary data.
 #'
@@ -1125,24 +1214,43 @@ extract_summary <- function(data) {
 #' Get a vector of cell data from a `gt_tbl` object. The output vector will have
 #' cell data formatted in the same way as the table.
 #'
-#' @param data A table object that is created using the [gt()] function.
-#' @param columns The columns containing the cells to extract. Can either be a
-#'   series of column names provided in [c()], a vector of column indices, or a
-#'   helper function focused on selections. The select helper functions are:
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()].
-#' @param rows Optional rows to limit the extraction of cells. Providing
-#'   [everything()] (the default) results in all rows in `columns` being
-#'   formatted. Alternatively, we can supply a vector of row captions within
-#'   [c()], a vector of row indices, or a helper function focused on selections.
-#'   The select helper functions are: [starts_with()], [ends_with()],
-#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
-#'   We can also use expressions to filter down to the rows we need (e.g.,
-#'   `[colname_1] > 100 & [colname_2] < 50`).
-#' @param output The output style of the resulting character vector. This can
-#'   either be `"auto"` (the default), `"plain"`, `"html"`, `"latex"`, `"rtf"`,
-#'   or `"word"`. In **knitr** rendering (i.e., Quarto or R Markdown), the
-#'   `"auto"` option will choose the correct `output` value
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
+#' @param columns *Columns to target*
+#'
+#'   `<column-targeting expression>` --- *default:* `everything()`
+#'
+#'   Can either be a series of column names provided in [c()], a vector of
+#'   column indices, or a select helper function. Examples of select helper
+#'   functions include [starts_with()], [ends_with()], [contains()],
+#'   [matches()], [one_of()], [num_range()], and [everything()].
+#'
+#' @param rows *Rows to target*
+#'
+#'   `<row-targeting expression>` --- *default:* `everything()`
+#'
+#'   In conjunction with `columns`, we can specify which of their rows should
+#'   form a constraint for extraction. The default [everything()] results in all
+#'   rows in `columns` being formatted. Alternatively, we can supply a vector of
+#'   row captions within [c()], a vector of row indices, or a select helper
+#'   function. Examples of select helper functions include [starts_with()],
+#'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
+#'   [everything()]. We can also use expressions to filter down to the rows we
+#'   need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'
+#' @param output *Output format*
+#'
+#'   `singl-kw:[auto|plain|html|latex|rtf|word]` --- *default:* `"auto"`
+#'
+#'   The output style of the resulting character vector. This can either be
+#'   `"auto"` (the default), `"plain"`, `"html"`, `"latex"`, `"rtf"`, or
+#'   `"word"`. In **knitr** rendering (i.e., Quarto or R Markdown), the `"auto"`
+#'   option will choose the correct `output` value
 #'
 #' @return A vector of cell data extracted from a **gt** table.
 #'

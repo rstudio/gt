@@ -7,11 +7,20 @@
 tab_source_note(data, source_note)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{source_note}{Text to be used in the source note. We can optionally use
-the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} functions to style the text as Markdown or to
-retain HTML elements in the text.}
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{source_note}{\emph{Source note text}
+
+\verb{scalar<character>} --- \strong{required}
+
+Text to be used in the source note. We can optionally use the \code{\link[=md]{md()}} and
+\code{\link[=html]{html()}} functions to style the text as Markdown or to retain HTML elements
+in the text.}
 }
 \value{
 An object of class \code{gt_tbl}.

@@ -14,30 +14,54 @@ opt_table_font(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{font}{One or more font names available as system or web fonts. These
-can be combined with a \code{c()} or a \code{list()}. To choose fonts from the
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{font}{\emph{Default table fonts}
+
+\verb{vector<character>|list|obj:<font_css>} --- \emph{default:} \code{NULL} (\code{optional})
+
+One or more font names available as system or web fonts. These can be
+combined with a \code{c()} or a \code{list()}. To choose fonts from the
 \emph{Google Fonts} service, we can call the \code{\link[=google_font]{google_font()}} helper function.}
 
-\item{stack}{A keyword that represents the name of a font stack (obtained via
-internally via the \code{\link[=system_fonts]{system_fonts()}} helper function). If provided, this new
-stack will replace any defined fonts and any \code{font} values will be
-prepended.}
+\item{stack}{\emph{Name of font stack}
 
-\item{weight}{Option to set the weight of the font. Can be a text-based
-keyword such as \code{"normal"}, \code{"bold"}, \code{"lighter"}, \code{"bolder"}, or, a
-numeric value between \code{1} and \code{1000}, inclusive. Please note that typefaces
-have varying support for the numeric mapping of weight.}
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
 
-\item{style}{An option to modify the text style. Can be one of either
-\code{"normal"}, \code{"italic"}, or \code{"oblique"}.}
+A name that is representative of a font stack (obtained via internally via
+the \code{\link[=system_fonts]{system_fonts()}} helper function). If provided, this new stack will
+replace any defined fonts and any \code{font} values will be prepended.}
 
-\item{add}{Should this font be added to the beginning of any already-defined
-fonts for the table? By default, this is \code{TRUE} and is recommended since
-those fonts already present can serve as fallbacks when everything
-specified in \code{font} is not available. If a \code{stack} is provided, then \code{add}
-will automatically set to \code{FALSE}.}
+\item{weight}{\emph{Text weight}
+
+\verb{scalar<character|numeric|integer>} --- \emph{default:} \code{NULL} (\code{optional})
+
+Option to set the weight of the font. Can be a text-based keyword such as
+\code{"normal"}, \code{"bold"}, \code{"lighter"}, \code{"bolder"}, or, a numeric value between
+\code{1} and \code{1000}, inclusive. Please note that typefaces have varying support
+for the numeric mapping of weight.}
+
+\item{style}{\emph{Text style}
+
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+An option to modify the text style. Can be one of either \code{"normal"},
+\code{"italic"}, or \code{"oblique"}.}
+
+\item{add}{\emph{Add to existing fonts}
+
+\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+
+Should fonts be added to the beginning of any already-defined fonts for the
+table? By default, this is \code{TRUE} and is recommended since those fonts
+already present can serve as fallbacks when everything specified in \code{font}
+is not available. If a \code{stack} is provided, then \code{add} will automatically
+set to \code{FALSE}.}
 }
 \value{
 An object of class \code{gt_tbl}.
