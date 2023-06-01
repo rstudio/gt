@@ -34,12 +34,27 @@
 #'
 #' @inheritParams fmt_number
 #'
-#' @param title,subtitle Text to be used in the table title and, optionally, for
-#'   the table subtitle. We can elect to use the [md()] and [html()] helper
-#'   functions to style the text as Markdown or to retain HTML elements in the
-#'   text.
+#' @param title *Header title*
 #'
-#' @param preheader Optional preheader content that is rendered above the table.
+#'   `scalar<character>` --- **required**
+#'
+#'   Text to be used in the table title. We can elect to use the [md()] and
+#'   [html()] helper functions to style the text as Markdown or to retain HTML
+#'   elements in the text.
+#'
+#' @param title *Header subtitle*
+#'
+#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'
+#'   Text to be used in the table subtitle. We can elect to use the [md()] and
+#'   [html()] helper functions to style the text as Markdown or to retain HTML
+#'   elements in the text.
+#'
+#' @param preheader *RTF preheader text*
+#'
+#'   `vector<character>` --- *default:* `NULL` (`optional`)
+#'
+#'   Optional preheader content that is rendered above the table for RTF output.
 #'   Can be supplied as a vector of text.
 #'
 #' @return An object of class `gt_tbl`.
@@ -144,7 +159,7 @@ tab_header <- function(
   )
 }
 
-#' Add a spanner column label
+#' Add a spanner label
 #'
 #' @description
 #'
@@ -163,7 +178,13 @@ tab_header <- function(
 #'
 #' @inheritParams fmt_number
 #'
-#' @param label The text to use for the spanner column label.
+#' @param label *Spanner label text*
+#'
+#'   `scalar<character>` --- **required**
+#'
+#'   The text to use for the spanner label. We can optionally use the [md()] and
+#'   [html()] functions to style the text as Markdown or to retain HTML elements
+#'   in the text.
 #'
 #' @param columns *Columns to target*
 #'
@@ -184,28 +205,44 @@ tab_header <- function(
 #'   One or more spanner ID values (in quotes) can be supplied here. This
 #'   argument works in tandem with the `columns` argument.
 #'
-#' @param level An explicit level to which the spanner should be placed. If not
-#'   provided, **gt** will choose the level based on the inputs provided within
-#'   `columns` and `spanners`, placing the spanner label where it will fit. The
-#'   first spanner level (right above the column labels) is `1`.
+#' @param level *Spanner level for insertion*
 #'
-#' @param id The ID for the spanner column label. When accessing a spanner
-#'   through the `spanners` argument of `tab_spanner()` or
-#'   [cells_column_spanners()] (when using [tab_style()] or [tab_footnote()])
-#'   the `id` value is used as the reference (and not the `label`). If an `id`
-#'   is not explicitly provided here, it will be taken from the `label` value.
-#'   It is advisable to set an explicit `id` value if you plan to access this
-#'   cell in a later function call and the label text is complicated (e.g.,
-#'   contains markup, is lengthy, or both). Finally, when providing an `id`
-#'   value you must ensure that it is unique across all ID values set for column
-#'   spanner labels (the function will stop if `id` isn't unique).
+#'   `scalar<numeric|integer>` --- *default:* `NULL` (`optional`)
 #'
-#' @param gather An option to move the specified `columns` such that they are
-#'   unified under the spanner column label. Ordering of the moved-into-place
-#'   columns will be preserved in all cases. By default, this is set to `TRUE`.
+#'   An explicit level to which the spanner should be placed. If not provided,
+#'   **gt** will choose the level based on the inputs provided within `columns`
+#'   and `spanners`, placing the spanner label where it will fit. The first
+#'   spanner level (right above the column labels) is `1`.
 #'
-#' @param replace Should new spanners be allowed to partially or fully replace
-#'   existing spanners? (This is a possibility if setting spanners at an already
+#' @param id *Spanner ID*
+#'
+#'   `scalar<character>` --- *default:* `label`
+#'
+#'   The ID for the spanner. When accessing a spanner through the `spanners`
+#'   argument of `tab_spanner()` or [cells_column_spanners()] (when using
+#'   [tab_style()] or [tab_footnote()]) the `id` value is used as the reference
+#'   (and not the `label`). If an `id` is not explicitly provided here, it will
+#'   be taken from the `label` value. It is advisable to set an explicit `id`
+#'   value if you plan to access this cell in a later function call and the
+#'   label text is complicated (e.g., contains markup, is lengthy, or both).
+#'   Finally, when providing an `id` value you must ensure that it is unique
+#'   across all ID values set for column spanner labels (the function will stop
+#'   if `id` isn't unique).
+#'
+#' @param gather *Gather columns together*
+#'
+#'   `scalar<logical>` --- *default:* `TRUE`
+#'
+#'   An option to move the specified `columns` such that they are unified under
+#'   the spanner. Ordering of the moved-into-place columns will be preserved in
+#'   all cases. By default, this is set to `TRUE`.
+#'
+#' @param replace *Replace existing spanners*
+#'
+#'   `scalar<logical>` --- *default:* `FALSE`
+#'
+#'   Should new spanners be allowed to partially or fully replace existing
+#'   spanners? (This is a possibility if setting spanners at an already
 #'   populated `level`.) By default, this is set to `FALSE` and an error will
 #'   occur if some replacement is attempted.
 #'
@@ -547,7 +584,7 @@ tab_spanner <- function(
   }
 
   # Check new `id` against existing `id` values across column labels
-  # and spanner column labels and stop if necessary
+  # and spanner labels and stop if necessary
   check_spanner_id_unique(data = data, spanner_id = id)
 
   # Resolve the `column_names` that new spanner will span over
@@ -670,7 +707,7 @@ resolve_spanned_column_names <- function(
 #' @description
 #'
 #' The `cols_spanner_delim()` function can take specially-crafted column names
-#' and generate one or more spanner column labels (along with relabeling the
+#' and generate one or more spanners (along with relabeling the
 #' column labels). This is done by splitting the column name by a specified
 #' delimiter character (this is the `delim`) and placing the fragments from top
 #' to bottom (i.e., higher-level spanners to the column labels). Furthermore,
@@ -695,8 +732,12 @@ resolve_spanned_column_names <- function(
 #'
 #' @inheritParams tab_spanner
 #'
-#' @param delim The delimiter to use to split an input column name. This should
-#'   be a single character (e.g., `"_"`, `"."`, etc.).
+#' @param delim *Delimiter for splitting*
+#'
+#'   `scalar<character>` --- **required**
+#'
+#'   The delimiter to use to split an input column name. This should be a single
+#'   character (e.g., `"_"`, `"."`, etc.).
 #'
 #' @param columns *Columns to target*
 #'
@@ -709,22 +750,35 @@ resolve_spanned_column_names <- function(
 #'   [matches()], [one_of()], [num_range()], and [everything()]. This argument
 #'   works in tandem with the `spanners` argument.
 #'
-#' @param split Should the delimiter splitting occur from the `"last"` instance
-#'   of the `delim` character or from the `"first"`? The default here uses the
-#'   `"last"` keyword, and splitting begins at the last instance of the
-#'   delimiter in the column name. This option only has some consequence when
-#'   there is a `limit` value applied that is lesser than the number of
-#'   delimiter characters for a given column name (i.e., number of splits is not
-#'   the maximum possible number).
-#' @param limit An optional limit to place on the splitting procedure. The
-#'   default `NULL` means that a column name will be split as many times are
-#'   there are delimiter characters. In other words, the default is no limit. If
-#'   an integer value is given to `limit` then splitting will cease at the
+#' @param split *Splitting side*
+#'
+#'   `singl-kw:[last|first]` --- *default:* `"last"`
+#'
+#'   Should the delimiter splitting occur from the `"last"` instance of the
+#'   `delim` character or from the `"first"`? The default here uses the `"last"`
+#'   keyword, and splitting begins at the last instance of the delimiter in the
+#'   column name. This option only has some consequence when there is a `limit`
+#'   value applied that is lesser than the number of delimiter characters for a
+#'   given column name (i.e., number of splits is not the maximum possible
+#'   number).
+#'
+#' @param limit *Limit for splitting*
+#'
+#'   `scalar<numeric|integer|character>` --- *default:* `NULL` (`optional`)
+#'
+#'   An optional limit to place on the splitting procedure. The default `NULL`
+#'   means that a column name will be split as many times are there are
+#'   delimiter characters. In other words, the default means there is no limit.
+#'   If an integer value is given to `limit` then splitting will cease at the
 #'   iteration given by `limit`. This works in tandem with `split` since we can
 #'   adjust the number of splits from either the right side (`split = "last"`)
 #'   or left side (`split = "first"`) of the column name.
-#' @param reverse Should the order of split names be reversed? By default, this
-#'   is `FALSE`.
+#'
+#' @param reverse *Reverse vector of split names*
+#'
+#'   `scalar<logical>` --- *default:* `FALSE`
+#'
+#'   Should the order of split names be reversed? By default, this is `FALSE`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -736,7 +790,7 @@ resolve_spanned_column_names <- function(
 #' well-defined structure. We start with the more general to the left
 #' (`"province"`) and move to the more specific on the right (`"pop"`). If the
 #' columns are in the table in this exact order, then things are in an ideal
-#' state as the eventual spanner column labels will form from this neighboring.
+#' state as the eventual spanner labels will form from this neighboring.
 #' When using `tab_spanner_delim()` here with `delim` set as `"."` we get the
 #' following text fragments:
 #'
@@ -925,7 +979,7 @@ resolve_spanned_column_names <- function(
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @seealso [tab_spanner()] to manually create spanners with more control over
-#'   spanner column labels.
+#'   spanner labels.
 #'
 #' @import rlang
 #' @export
@@ -1284,7 +1338,13 @@ str_split_across <- function(
 #'
 #' @inheritParams fmt_number
 #'
-#' @param label The text to use for the row group label.
+#' @param label *Row group label text*
+#'
+#'   `scalar<character>` --- **required**
+#'
+#'   The text to use for the row group label. We can optionally use the [md()]
+#'   and [html()] functions to style the text as Markdown or to retain HTML
+#'   elements in the text.
 #'
 #' @param rows *Rows to target*
 #'
@@ -1298,7 +1358,11 @@ str_split_across <- function(
 #'   [num_range()], and [everything()]. We can also use expressions to filter
 #'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
-#' @param id The ID for the row group. When accessing a row group through
+#' @param id *Row group ID*
+#'
+#'   `scalar<character>` --- *default:* `label`
+#'
+#'   The ID for the row group. When accessing a row group through
 #'   [cells_row_groups()] (when using [tab_style()] or [tab_footnote()]) the
 #'   `id` value is used as the reference (and not the `label`). If an `id` is
 #'   not explicitly provided here, it will be taken from the `label` value. It
@@ -1308,10 +1372,18 @@ str_split_across <- function(
 #'   must ensure that it is unique across all ID values set for row groups (the
 #'   function will stop if `id` isn't unique).
 #'
-#' @param others_label This argument is deprecated. Instead use
+#' @param others_label *[Deprecated] Label for default row group*
+#'
+#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'
+#'   This argument is deprecated. Instead use
 #'   `tab_options(row_group.default_label = <label>)`.
 #'
-#' @param group This argument is deprecated. Instead use `label`.
+#' @param group *[Deprecated] The group label*
+#'
+#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'
+#'   This argument is deprecated. Instead use `label`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -1579,9 +1651,13 @@ tab_row_group <- function(
 #'
 #' @inheritParams fmt_number
 #'
-#' @param label The text to be used as the stubhead label. We can optionally use
-#'   the [md()] and [html()] functions to style the text as Markdown or to
-#'   retain HTML elements in the text.
+#' @param label *Stubhead label text*
+#'
+#'   `scalar<character>` --- **required**
+#'
+#'   The text to be used as the stubhead label. We can optionally use the [md()]
+#'   and [html()] functions to style the text as Markdown or to retain HTML
+#'   elements in the text.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -1663,13 +1739,16 @@ tab_stubhead <- function(
 #'   [everything()]. We can also use expressions to filter down to the rows we
 #'   need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
-#' @param indent An indentation directive either as a keyword describing the
-#'   indentation change or as an explicit integer value for directly setting the
-#'   indentation level. The keyword `"increase"` (the default) will increase the
-#'   indentation level by one; `"decrease"` will do the same in the reverse
-#'   direction. The starting indentation level of `0` means no indentation and
-#'   this values serves as a lower bound. The upper bound for indentation is at
-#'   level `5`.
+#' @param indent *Indentation directive*
+#'
+#'   `scalar<character|numeric|integer>` --- *default:* `"increase"`
+#'
+#'   An indentation directive either as a keyword describing the indentation
+#'   change or as an explicit integer value for directly setting the indentation
+#'   level. The keyword `"increase"` (the default) will increase the indentation
+#'   level by one; `"decrease"` will do the same in the reverse direction. The
+#'   starting indentation level of `0` means no indentation and this values
+#'   serves as a lower bound. The upper bound for indentation is at level `5`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -1833,26 +1912,38 @@ tab_stub_indent <- function(
 #'
 #' @inheritParams fmt_number
 #'
-#' @param footnote The text to be used in the footnote. We can optionally use
-#'   the [md()] and [html()] functions to style the text as Markdown or to
-#'   retain HTML elements in the footnote text.
+#' @param footnote *Footnote text*
 #'
-#' @param locations The cell or set of cells to be associated with the footnote.
-#'   Supplying any of the `cells_*()` helper functions is a useful way to target
-#'   the location cells that are associated with the footnote text. These helper
-#'   functions are: [cells_title()], [cells_stubhead()],
-#'   [cells_column_spanners()], [cells_column_labels()], [cells_row_groups()],
-#'   [cells_stub()], [cells_body()], [cells_summary()], [cells_grand_summary()],
+#'   `scalar<character>` --- **required**
+#'
+#'   The text to be used in the footnote. We can optionally use the [md()] and
+#'   [html()] functions to style the text as Markdown or to retain HTML elements
+#'   in the footnote text.
+#'
+#' @param locations *Locations to target*
+#'
+#'   `<locations expressions>` --- *default:* `NULL` (`optional`)
+#'
+#'   The cell or set of cells to be associated with the footnote. Supplying any
+#'   of the `cells_*()` helper functions is a useful way to target the location
+#'   cells that are associated with the footnote text. These helper functions
+#'   are: [cells_title()], [cells_stubhead()], [cells_column_spanners()],
+#'   [cells_column_labels()], [cells_row_groups()], [cells_stub()],
+#'   [cells_body()], [cells_summary()], [cells_grand_summary()],
 #'   [cells_stub_summary()], and [cells_stub_grand_summary()]. Additionally, we
 #'   can enclose several `cells_*()` calls within a `list()` if we wish to link
 #'   the footnote text to different types of locations (e.g., body cells, row
 #'   group labels, the table title, etc.).
 #'
-#' @param placement Where to affix footnote marks to the table content. Two
-#'   options for this are `"left` or `"right"`, where the placement is either to
-#'   the absolute left or right of the cell content. By default, however, this
-#'   option is set to `"auto"` whereby **gt** will choose a preferred
-#'   left-or-right placement depending on the alignment of the cell content.
+#' @param placement *Placement of footnote mark*
+#'
+#'   `singl-kw:[auto|right|left]` --- *default:* `"auto"`
+#'
+#'   Where to affix footnote marks to the table content. Two options for this
+#'   are `"left` or `"right"`, where the placement is either to the absolute
+#'   left or right of the cell content. By default, however, this option is set
+#'   to `"auto"` whereby **gt** will choose a preferred left-or-right placement
+#'   depending on the alignment of the cell content.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -2479,9 +2570,13 @@ set_footnote.cells_footnotes <- function(
 #'
 #' @inheritParams fmt_number
 #'
-#' @param source_note Text to be used in the source note. We can optionally use
-#'   the [md()] and [html()] functions to style the text as Markdown or to
-#'   retain HTML elements in the text.
+#' @param source_note *Source note text*
+#'
+#'   `scalar<character>` --- **required**
+#'
+#'   Text to be used in the source note. We can optionally use the [md()] and
+#'   [html()] functions to style the text as Markdown or to retain HTML elements
+#'   in the text.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -2538,8 +2633,12 @@ tab_source_note <- function(
 #'
 #' @inheritParams fmt_number
 #'
-#' @param caption The table caption to use for cross-referencing in R Markdown,
-#'   Quarto, or **bookdown**.
+#' @param caption *Table caption text*
+#'
+#'   `scalar<character>` --- **required**
+#'
+#'   The table caption to use for cross-referencing in R Markdown, Quarto, or
+#'   **bookdown**.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -2612,19 +2711,27 @@ tab_caption <- function(
 #'
 #' @inheritParams fmt_number
 #'
-#' @param style The styles to use for the cells at the targeted `locations`. The
+#' @param style *Style declarations*
+#'
+#'   `<style expressions>` --- **required**
+#'
+#'   The styles to use for the cells at the targeted `locations`. The
 #'   [cell_text()], [cell_fill()], and [cell_borders()] helper functions can be
 #'   used here to more easily generate valid styles. If using more than one
 #'   helper function to define styles, all calls must be enclosed in a [list()].
 #'   Custom CSS declarations can be used for HTML output by including a
 #'   [css()]-based statement as a list item.
 #'
-#' @param locations the cell or set of cells to be associated with the style.
-#'   Supplying any of the `cells_*()` helper functions is a useful way to target
-#'   the location cells that are associated with the styling. These helper
-#'   functions are: [cells_title()], [cells_stubhead()],
-#'   [cells_column_spanners()], [cells_column_labels()], [cells_row_groups()],
-#'   [cells_stub()], [cells_body()], [cells_summary()], [cells_grand_summary()],
+#' @param locations *Locations to target*
+#'
+#'   `<locations expressions>` --- **required**
+#'
+#'   The cell or set of cells to be associated with the style. Supplying any of
+#'   the `cells_*()` helper functions is a useful way to target the location
+#'   cells that are associated with the styling. These helper functions are:
+#'   [cells_title()], [cells_stubhead()], [cells_column_spanners()],
+#'   [cells_column_labels()], [cells_row_groups()], [cells_stub()],
+#'   [cells_body()], [cells_summary()], [cells_grand_summary()],
 #'   [cells_stub_summary()], [cells_stub_grand_summary()], [cells_footnotes()],
 #'   and [cells_source_notes()]. Additionally, we can enclose several
 #'   `cells_*()` calls within a `list()` if we wish to apply styling to
@@ -3550,28 +3657,28 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   content. The informational display text regarding the current page can be
 #'   set with `ihtml.use_pagination_info` (which is `TRUE` by default).
 #'
-#' @param ihtml.use_sorting *Use sorting*
+#' @param ihtml.use_sorting *Provide column sorting controls*
 #'
 #'   For interactive HTML output, the option to provide controls for sorting
 #'   column values. By default, this is `TRUE`.
 #'
-#' @param ihtml.use_search *Use search field*
+#' @param ihtml.use_search *Provide a global search field*
 #'
 #'   For interactive HTML output, an option that places a search field for
 #'   globally filtering rows to the requested content. By default, this is
 #'   `FALSE`.
 #'
-#' @param ihtml.use_filters *Use filtering field*
+#' @param ihtml.use_filters *Display filtering fields*
 #'
 #'   For interactive HTML output, this places search fields below each column
 #'   header and allows for filtering by column. By default, this is `FALSE`.
 #'
-#' @param ihtml.use_resizers *Use column resizers*
+#' @param ihtml.use_resizers *Allow column resizing*
 #'
 #'   For interactive HTML output, this allows for interactive resizing of
 #'   columns. By default, this is `FALSE`.
 #'
-#' @param ihtml.use_highlight *Use row highlighting*
+#' @param ihtml.use_highlight *Enable row highlighting on hover*
 #'
 #'   For interactive HTML output, this highlights individual rows upon hover. By
 #'   default, this is `FALSE`.
