@@ -25,12 +25,16 @@
 #'
 #' @inheritParams fmt_number
 #'
-#' @param style The styles to use for the targeted cells. The [cell_text()],
-#'   [cell_fill()], and [cell_borders()] helper functions can be used here to
-#'   more easily generate valid styles. If using more than one helper function
-#'   to define styles, all calls must be enclosed in a [list()]. Custom CSS
-#'   declarations can be used for HTML output by including a [css()]-based
-#'   statement as a list item.
+#' @param style *Style declarations*
+#'
+#'   `<style expressions>` --- **required**
+#'
+#'   The styles to use for the targeted cells. The [cell_text()], [cell_fill()],
+#'   and [cell_borders()] helper functions can be used here to more easily
+#'   generate valid styles. If using more than one helper function to define
+#'   styles, all calls must be enclosed in a [list()]. Custom CSS declarations
+#'   can be used for HTML output by including a [css()]-based statement as a
+#'   list item.
 #'
 #' @param columns *Columns to target*
 #'
@@ -56,29 +60,48 @@
 #'   [num_range()], and [everything()]. We can also use expressions to filter
 #'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
-#' @param values The specific value or values that should be targeted for
-#'   styling. If `pattern` is also supplied then `values` will be ignored.
+#' @param values *Values for targeting*
 #'
-#' @param pattern A regex pattern that can target solely those values in
-#'   `character`-based columns. If `values` is also supplied, `pattern` will
-#'   take precedence.
+#'   `vector<character|numeric|integer>` --- *default:* `NULL` (`optional`)
 #'
-#' @param fn A supplied function that operates on each cell of each column
-#'   specified through `columns` and `rows`. The function should be fashioned
-#'   such that a single logical value is returned. If either of `values` or
-#'   `pattern` is also supplied, `fn` will take precedence.
+#'   The specific value or values that should be targeted for styling. If
+#'   `pattern` is also supplied then `values` will be ignored.
 #'
-#' @param targets A vector of styling target keywords to contain or expand the
-#'   target of each cell. By default, this is a vector just containing `"cell"`.
-#'   However, the keywords `"row"` and `"column"` may be used separately or in
-#'   combination to style the target cells' associated rows or columns.
+#' @param pattern *Regex pattern for targeting*
 #'
-#' @param extents A vector of locations to project styling. By default, this is
-#'   a vector just containing `"body"`, whereby styled rows or columns
-#'   (facilitated via inclusion of the `"row"` and `"column"` keywords in
-#'   `targets`) will not permeate into the stub. The additional keyword `"stub"`
-#'   may be used alone or in conjunction with `"body"` to project or expand the
-#'   styling into the stub.
+#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'
+#'   A regex pattern that can target solely those values in `character`-based
+#'   columns. If `values` is also supplied, `pattern` will take precedence.
+#'
+#' @param fn *Function to return logical values*
+#'
+#'   `<function>` --- *default:* `NULL` (`optional`)
+#'
+#'   A supplied function that operates on each cell of each column specified
+#'   through `columns` and `rows`. The function should be fashioned such that a
+#'   single logical value is returned. If either of `values` or `pattern` is
+#'   also supplied, `fn` will take precedence.
+#'
+#' @param targets *Styling targets*
+#'
+#'   `vector<character>` --- *default:* `"cell"`
+#'
+#'   A vector of styling target keywords to contain or expand the target of each
+#'   cell. By default, this is a vector just containing `"cell"`. However, the
+#'   keywords `"row"` and `"column"` may be used separately or in combination to
+#'   style the target cells' associated rows or columns.
+#'
+#' @param extents *Styling extents*
+#'
+#'   `vector<character>` --- *default:* `"body"`
+#'
+#'   A vector of locations to project styling. By default, this is a vector just
+#'   containing `"body"`, whereby styled rows or columns (facilitated via
+#'   inclusion of the `"row"` and `"column"` keywords in `targets`) will not
+#'   permeate into the stub. The additional keyword `"stub"` may be used alone
+#'   or in conjunction with `"body"` to project or expand the styling into the
+#'   stub.
 #'
 #' @return An object of class `gt_tbl`.
 #'
