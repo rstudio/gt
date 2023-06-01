@@ -14,11 +14,15 @@ rm_source_notes(data, source_notes = everything())
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
-\item{source_notes}{A specification of which source notes should be removed.
-The source notes to be removed can be given as a vector of integer values
-(they are stored as integer positions, in order of creation, starting at
-\code{1}). A select helper can also be used and, by default, this is
-\code{everything()} (whereby all source notes will be removed).}
+\item{source_notes}{\emph{Source notes to remove}
+
+\verb{scalar<numeric|integer>|everything()} --- \emph{default:} \code{everything()}
+
+A specification of which source notes should be removed. The source notes
+to be removed can be given as a vector of integer values (they are stored
+as integer positions, in order of creation, starting at \code{1}). A select
+helper can also be used and, by default, this is \code{everything()} (whereby
+all source notes will be removed).}
 }
 \value{
 An object of class \code{gt_tbl}.

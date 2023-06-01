@@ -14,12 +14,19 @@ tab_header(data, title, subtitle = NULL, preheader = NULL)
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
-\item{title, subtitle}{Text to be used in the table title and, optionally, for
-the table subtitle. We can elect to use the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} helper
-functions to style the text as Markdown or to retain HTML elements in the
-text.}
+\item{title}{\emph{Header subtitle}
 
-\item{preheader}{Optional preheader content that is rendered above the table.
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+Text to be used in the table subtitle. We can elect to use the \code{\link[=md]{md()}} and
+\code{\link[=html]{html()}} helper functions to style the text as Markdown or to retain HTML
+elements in the text.}
+
+\item{preheader}{\emph{RTF preheader text}
+
+\verb{vector<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+Optional preheader content that is rendered above the table for RTF output.
 Can be supplied as a vector of text.}
 }
 \value{

@@ -14,7 +14,13 @@ tab_row_group(data, label, rows, id = label, others_label = NULL, group = NULL)
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
-\item{label}{The text to use for the row group label.}
+\item{label}{\emph{Row group label text}
+
+\verb{scalar<character>} --- \strong{required}
+
+The text to use for the row group label. We can optionally use the \code{\link[=md]{md()}}
+and \code{\link[=html]{html()}} functions to style the text as Markdown or to retain HTML
+elements in the text.}
 
 \item{rows}{\emph{Rows to target}
 
@@ -28,7 +34,11 @@ select helper function. Examples of select helper functions include
 \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions to filter
 down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{id}{The ID for the row group. When accessing a row group through
+\item{id}{\emph{Row group ID}
+
+\verb{scalar<character>} --- \emph{default:} \code{label}
+
+The ID for the row group. When accessing a row group through
 \code{\link[=cells_row_groups]{cells_row_groups()}} (when using \code{\link[=tab_style]{tab_style()}} or \code{\link[=tab_footnote]{tab_footnote()}}) the
 \code{id} value is used as the reference (and not the \code{label}). If an \code{id} is
 not explicitly provided here, it will be taken from the \code{label} value. It
@@ -38,10 +48,18 @@ markup, is lengthy, or both). Finally, when providing an \code{id} value you
 must ensure that it is unique across all ID values set for row groups (the
 function will stop if \code{id} isn't unique).}
 
-\item{others_label}{This argument is deprecated. Instead use
+\item{others_label}{\emph{\link{Deprecated} Label for default row group}
+
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+This argument is deprecated. Instead use
 \verb{tab_options(row_group.default_label = <label>)}.}
 
-\item{group}{This argument is deprecated. Instead use \code{label}.}
+\item{group}{\emph{\link{Deprecated} The group label}
+
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+This argument is deprecated. Instead use \code{label}.}
 }
 \value{
 An object of class \code{gt_tbl}.

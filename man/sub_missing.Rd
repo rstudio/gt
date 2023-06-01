@@ -42,8 +42,13 @@ select helper function. Examples of select helper functions include
 \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions to filter
 down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{missing_text}{The text to be used in place of \code{NA} values in the
-rendered table.}
+\item{missing_text}{\emph{Replacement text for \code{NA} values}
+
+\verb{scalar<character>} --- \emph{default:} \code{"---"}
+
+The text to be used in place of \code{NA} values in the rendered table. We can
+optionally use the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} functions to style the text as
+Markdown or to retain HTML elements in the text.}
 }
 \value{
 An object of class \code{gt_tbl}.

@@ -21,24 +21,42 @@ as_word(
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
-\item{align}{An option for table alignment. Can either be \code{"center"} (the
-default), \code{"left"}, or \code{"right"}.}
+\item{align}{\emph{Table alignment}
 
-\item{caption_location}{Determines where the caption should be positioned.
-This can either be \code{"top"} (the default), \code{"bottom"}, or \code{"embed"}.}
+\verb{scalar<character>} --- \emph{default:} \code{"center"}
 
-\item{caption_align}{Determines the alignment of the caption. This is
+An option for table alignment. Can either be \code{"center"}, \code{"left"}, or
+\code{"right"}.}
+
+\item{caption_location}{\emph{Caption location}
+
+\verb{singl-kw:[top|bottom|embed]} --- \emph{default:} \code{"top"}
+
+Determines where the caption should be positioned. This can either be
+\code{"top"}, \code{"bottom"}, or \code{"embed"}.}
+
+\item{caption_align}{\emph{Caption alignment}
+
+Determines the alignment of the caption. This is
 either \code{"left"} (the default), \code{"center"}, or \code{"right"}. This option is
 only used when \code{caption_location} is not set as \code{"embed"}.}
 
-\item{split}{A \code{TRUE} or \code{FALSE} (the default) value that indicates whether
-to activate the Word option \verb{Allow row to break across pages}.}
+\item{split}{\emph{Allow splitting}
 
-\item{keep_with_next}{A \code{TRUE} (the default) or \code{FALSE} value that indicates
-whether a table should use Word option \verb{keep rows together}.}
+\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+
+A logical value that indicates whether to activate the Word option
+\verb{Allow row to break across pages}.}
+
+\item{keep_with_next}{\emph{Keeping rows together}
+
+\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+
+A logical value that indicates whether a table should use Word option
+\verb{keep rows together}.}
 }
 \description{
-Get the Open Office XML table tag content from a \code{gt_tbl} object as as a
+Get the Open Office XML table tag content from a \code{gt_tbl} object as a
 single-element character vector.
 }
 \section{Examples}{

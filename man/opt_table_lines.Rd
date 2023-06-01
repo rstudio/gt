@@ -14,8 +14,12 @@ opt_table_lines(data, extent = c("all", "none", "default"))
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
-\item{extent}{The extent to which lines will be visible in the table. Options
-are \code{"all"}, \code{"none"}, or \code{"default"}.}
+\item{extent}{\emph{Extent of lines added}
+
+\verb{singl-kw:[all|none|default]} --- \emph{default:} \code{"all"}
+
+The extent to which lines will be visible in the table. Options are
+\code{"all"}, \code{"none"}, or \code{"default"}.}
 }
 \value{
 An object of class \code{gt_tbl}.

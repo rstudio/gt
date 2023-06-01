@@ -14,10 +14,14 @@ as_raw_html(data, inline_css = TRUE)
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
-\item{inline_css}{An option to supply styles to table elements as inlined CSS
-styles. This is useful when including the table HTML as part of an HTML
-email message body, since inlined styles are largely supported in email
-clients over using CSS in a \verb{<style>} block.}
+\item{inline_css}{\emph{Use inline CSS}
+
+\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+
+An option to supply styles to table elements as inlined CSS styles. This is
+useful when including the table HTML as part of an HTML email message body,
+since inlined styles are largely supported in email clients over using CSS
+in a \verb{<style>} block.}
 }
 \description{
 Get the HTML content from a \code{gt_tbl} object as a single-element character

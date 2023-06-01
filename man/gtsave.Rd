@@ -14,16 +14,26 @@ gtsave(data, filename, path = NULL, ...)
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
-\item{filename}{The file name to create on disk. Ensure that an extension
-compatible with the output types is provided (\code{.html}, \code{.tex}, \code{.ltx},
-\code{.rtf}, \code{.docx}). If a custom save function is provided then the file
-extension is disregarded.}
+\item{filename}{\emph{Output filename}
 
-\item{path}{An optional path to which the file should be saved (combined with
-filename).}
+\verb{scalar<character>} --- \strong{required}
 
-\item{...}{All other options passed to the appropriate internal saving
-function.}
+The file name to create on disk. Ensure that an extension compatible with
+the output types is provided (\code{.html}, \code{.tex}, \code{.ltx}, \code{.rtf}, \code{.docx}). If
+a custom save function is provided then the file extension is disregarded.}
+
+\item{path}{\emph{Output path}
+
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+An optional path to which the file should be saved (combined with
+\code{filename}).}
+
+\item{...}{\emph{Additional options}
+
+\verb{<named arguments>}
+
+All other options passed to the appropriate internal saving function.}
 }
 \value{
 Invisibly returns \code{TRUE} if the export process is successful.

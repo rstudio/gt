@@ -54,13 +54,13 @@ function (e.g., \code{function(x) tools::toTitleCase(x)}).
 
 It's important to note that while columns can be freely relabeled, we
 continue to refer to columns by their original column names. Column names in
-a tibble or data frame must be unique whereas column labels in \strong{gt} have
-no requirement for uniqueness (which is useful for labeling columns as, say,
+a tibble or data frame must be unique whereas column labels in \strong{gt} have no
+requirement for uniqueness (which is useful for labeling columns as, say,
 measurement units that may be repeated several times---usually under
-different spanner column labels). Thus, we can still easily distinguish
-between columns in other \strong{gt} function calls (e.g., in all of the
-\verb{fmt*()} functions) even though we may lose distinguishability in column
-labels once they have been relabeled.
+different spanner labels). Thus, we can still easily distinguish between
+columns in other \strong{gt} function calls (e.g., in all of the \verb{fmt*()}
+functions) even though we may lose distinguishability in column labels once
+they have been relabeled.
 }
 
 \section{Examples}{

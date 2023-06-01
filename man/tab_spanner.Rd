@@ -2,7 +2,7 @@
 % Please edit documentation in R/tab_create_modify.R
 \name{tab_spanner}
 \alias{tab_spanner}
-\title{Add a spanner column label}
+\title{Add a spanner label}
 \usage{
 tab_spanner(
   data,
@@ -23,7 +23,13 @@ tab_spanner(
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
-\item{label}{The text to use for the spanner column label.}
+\item{label}{\emph{Spanner label text}
+
+\verb{scalar<character>} --- \strong{required}
+
+The text to use for the spanner label. We can optionally use the \code{\link[=md]{md()}} and
+\code{\link[=html]{html()}} functions to style the text as Markdown or to retain HTML elements
+in the text.}
 
 \item{columns}{\emph{Columns to target}
 
@@ -44,28 +50,44 @@ The spanners that should be spanned over, should they already be defined.
 One or more spanner ID values (in quotes) can be supplied here. This
 argument works in tandem with the \code{columns} argument.}
 
-\item{level}{An explicit level to which the spanner should be placed. If not
-provided, \strong{gt} will choose the level based on the inputs provided within
-\code{columns} and \code{spanners}, placing the spanner label where it will fit. The
-first spanner level (right above the column labels) is \code{1}.}
+\item{level}{\emph{Spanner level for insertion}
 
-\item{id}{The ID for the spanner column label. When accessing a spanner
-through the \code{spanners} argument of \code{tab_spanner()} or
-\code{\link[=cells_column_spanners]{cells_column_spanners()}} (when using \code{\link[=tab_style]{tab_style()}} or \code{\link[=tab_footnote]{tab_footnote()}})
-the \code{id} value is used as the reference (and not the \code{label}). If an \code{id}
-is not explicitly provided here, it will be taken from the \code{label} value.
-It is advisable to set an explicit \code{id} value if you plan to access this
-cell in a later function call and the label text is complicated (e.g.,
-contains markup, is lengthy, or both). Finally, when providing an \code{id}
-value you must ensure that it is unique across all ID values set for column
-spanner labels (the function will stop if \code{id} isn't unique).}
+\verb{scalar<numeric|integer>} --- \emph{default:} \code{NULL} (\code{optional})
 
-\item{gather}{An option to move the specified \code{columns} such that they are
-unified under the spanner column label. Ordering of the moved-into-place
-columns will be preserved in all cases. By default, this is set to \code{TRUE}.}
+An explicit level to which the spanner should be placed. If not provided,
+\strong{gt} will choose the level based on the inputs provided within \code{columns}
+and \code{spanners}, placing the spanner label where it will fit. The first
+spanner level (right above the column labels) is \code{1}.}
 
-\item{replace}{Should new spanners be allowed to partially or fully replace
-existing spanners? (This is a possibility if setting spanners at an already
+\item{id}{\emph{Spanner ID}
+
+\verb{scalar<character>} --- \emph{default:} \code{label}
+
+The ID for the spanner. When accessing a spanner through the \code{spanners}
+argument of \code{tab_spanner()} or \code{\link[=cells_column_spanners]{cells_column_spanners()}} (when using
+\code{\link[=tab_style]{tab_style()}} or \code{\link[=tab_footnote]{tab_footnote()}}) the \code{id} value is used as the reference
+(and not the \code{label}). If an \code{id} is not explicitly provided here, it will
+be taken from the \code{label} value. It is advisable to set an explicit \code{id}
+value if you plan to access this cell in a later function call and the
+label text is complicated (e.g., contains markup, is lengthy, or both).
+Finally, when providing an \code{id} value you must ensure that it is unique
+across all ID values set for column spanner labels (the function will stop
+if \code{id} isn't unique).}
+
+\item{gather}{\emph{Gather columns together}
+
+\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+
+An option to move the specified \code{columns} such that they are unified under
+the spanner. Ordering of the moved-into-place columns will be preserved in
+all cases. By default, this is set to \code{TRUE}.}
+
+\item{replace}{\emph{Replace existing spanners}
+
+\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+
+Should new spanners be allowed to partially or fully replace existing
+spanners? (This is a possibility if setting spanners at an already
 populated \code{level}.) By default, this is set to \code{FALSE} and an error will
 occur if some replacement is attempted.}
 }

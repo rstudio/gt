@@ -14,17 +14,24 @@ rm_spanners(data, spanners = everything(), levels = NULL)
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
-\item{spanners}{A specification of which spanner column labels should be
-removed. Those to be removed can be given as a vector of spanner ID values
-(every spanner column label has one, either set by the user or by \strong{gt}
-when using \code{\link[=tab_spanner_delim]{tab_spanner_delim()}}). A select helper can also be used and, by
-default, this is \code{everything()} (whereby all spanner column labels will be
-removed).}
+\item{spanners}{\emph{Spanners to remove}
 
-\item{levels}{Instead of removing spanner column labels by ID values, entire
-levels of spanners can instead be removed. Supply a numeric vector of level
-values (the first level is \code{1}) and, if they are present, they will be
-removed. Any input given to \code{level} will mean that \code{spanners} is ignored.}
+\verb{<spanner-targeting expression>} --- \emph{default:} \code{everything()}
+
+A specification of which spanner column labels should be removed. Those to
+be removed can be given as a vector of spanner ID values (every spanner
+column label has one, either set by the user or by \strong{gt} when using
+\code{\link[=tab_spanner_delim]{tab_spanner_delim()}}). A select helper can also be used and, by default,
+this is \code{everything()} (whereby all spanner column labels will be removed).}
+
+\item{levels}{\emph{Spanner levels to remove}
+
+\verb{scalar<numeric|integer>} --- \emph{default:} \code{NULL} (\code{optional})
+
+Instead of removing spanner column labels by ID values, entire levels of
+spanners can instead be removed. Supply a numeric vector of level values
+(the first level is \code{1}) and, if they are present, they will be removed.
+Any input given to \code{level} will mean that \code{spanners} is ignored.}
 }
 \value{
 An object of class \code{gt_tbl}.

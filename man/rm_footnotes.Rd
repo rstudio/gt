@@ -14,11 +14,15 @@ rm_footnotes(data, footnotes = everything())
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
-\item{footnotes}{A specification of which footnotes should be removed.
-The footnotes to be removed can be given as a vector of integer values
-(they are stored as integer positions, in order of creation, starting at
-\code{1}). A select helper can also be used and, by default, this is
-\code{everything()} (whereby all footnotes will be removed).}
+\item{footnotes}{\emph{Footnotes to remove}
+
+\verb{scalar<numeric|integer>|everything()} --- \emph{default:} \code{everything()}
+
+A specification of which footnotes should be removed. The footnotes to be
+removed can be given as a vector of integer values (they are stored as
+integer positions, in order of creation, starting at \code{1}). A select helper
+can also be used and, by default, this is \code{everything()} (whereby all
+footnotes will be removed).}
 }
 \value{
 An object of class \code{gt_tbl}.

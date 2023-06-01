@@ -14,8 +14,12 @@ tab_caption(data, caption)
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
-\item{caption}{The table caption to use for cross-referencing in R Markdown,
-Quarto, or \strong{bookdown}.}
+\item{caption}{\emph{Table caption text}
+
+\verb{scalar<character>} --- \strong{required}
+
+The table caption to use for cross-referencing in R Markdown, Quarto, or
+\strong{bookdown}.}
 }
 \value{
 An object of class \code{gt_tbl}.

@@ -14,14 +14,25 @@ opt_stylize(data, style = 1, color = "blue", add_row_striping = TRUE)
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
-\item{style}{Six numbered styles are available. Simply provide a number from
-\code{1} (the default) to \code{6} to choose a distinct look.}
+\item{style}{\emph{Table style}
 
-\item{color}{There are six color variations: \code{"blue"} (the default),
-\code{"cyan"}, \code{"pink"}, \code{"green"}, \code{"red"}, and \code{"gray"}.}
+\verb{scalar<numeric|integer>(1>=val>=6)} --- \emph{default:} \code{1}
 
-\item{add_row_striping}{An option to enable row striping in the table body
-for the style chosen. By default, this is \code{TRUE}.}
+Six numbered styles are available. Simply provide a number from \code{1} (the
+default) to \code{6} to choose a distinct look.}
+
+\item{color}{\emph{Color variation}
+
+\verb{scalar<character>} --- \emph{default:} \code{"blue"}
+
+There are six color variations: \code{"blue"}, \code{"cyan"}, \code{"pink"}, \code{"green"},
+\code{"red"}, and \code{"gray"}.}
+
+\item{add_row_striping}{\emph{Allow row striping}
+
+\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+
+An option to enable row striping in the table body for the \code{style} chosen.}
 }
 \value{
 an object of class \code{gt_tbl}.

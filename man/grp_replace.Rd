@@ -15,13 +15,25 @@ This is a \code{gt_group} container object. It is typically generated through
 use of the \code{\link[=gt_group]{gt_group()}} function along with one or more \code{gt_tbl} objects,
 or, made by splitting a \strong{gt} table with \code{\link[=gt_split]{gt_split()}}.}
 
-\item{...}{One or more \strong{gt} table (\code{gt_tbl}) objects, typically generated
-via the \code{\link[=gt]{gt()}} function.}
+\item{...}{\emph{One or more gt table objects}
 
-\item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
+\verb{obj:<gt_tbl>} --- \strong{required} (or, use \code{...})
 
-\item{.which}{Index values denoting which \code{gt_tbl} tables should be replaced
-in the \code{gt_group} object.}
+One or more \strong{gt} table (\code{gt_tbl}) objects, typically generated via the
+\code{\link[=gt]{gt()}} function.}
+
+\item{.list}{\emph{Alternative to \code{...}}
+
+\verb{<list of multiple expressions>} --- (or, use \code{...})
+
+Allows for the use of a list as an input alternative to \code{...}.}
+
+\item{.which}{\emph{The tables to replace}
+
+\verb{vector<numeric|integer>} --- \emph{default:} \code{NULL} (\code{optional})
+
+A vector of index values denoting which \strong{gt} tables should be replaced
+inside of the \code{gt_group} object.}
 }
 \value{
 An object of class \code{gt_group}.

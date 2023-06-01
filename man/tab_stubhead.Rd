@@ -14,9 +14,13 @@ tab_stubhead(data, label)
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
-\item{label}{The text to be used as the stubhead label. We can optionally use
-the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} functions to style the text as Markdown or to
-retain HTML elements in the text.}
+\item{label}{\emph{Stubhead label text}
+
+\verb{scalar<character>} --- \strong{required}
+
+The text to be used as the stubhead label. We can optionally use the \code{\link[=md]{md()}}
+and \code{\link[=html]{html()}} functions to style the text as Markdown or to retain HTML
+elements in the text.}
 }
 \value{
 An object of class \code{gt_tbl}.

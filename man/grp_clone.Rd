@@ -15,13 +15,21 @@ This is a \code{gt_group} container object. It is typically generated through
 use of the \code{\link[=gt_group]{gt_group()}} function along with one or more \code{gt_tbl} objects,
 or, made by splitting a \strong{gt} table with \code{\link[=gt_split]{gt_split()}}.}
 
-\item{which}{A vector of index values denoting which \code{gt_tbl} tables should
-be cloned inside of the \code{gt_group} object.}
+\item{which}{\emph{The tables to clone}
 
-\item{before, after}{A single index for either \code{before} or \code{after},
-specifies where the cloned \code{gt_tbl} objects should be placed amongst the
-existing collection of \strong{gt} tables. If nothing is provided for either
-argument the incoming \code{gt_tbl} objects will be appended.}
+\verb{vector<numeric|integer>} --- \emph{default:} \code{NULL} (\code{optional})
+
+A vector of index values denoting which \strong{gt} tables should be cloned
+inside of the \code{gt_group} object.}
+
+\item{before, after}{\emph{Table used as anchor}
+
+\verb{scalar<numeric|integer>} --- \emph{default:} \code{NULL} (\code{optional})
+
+A single index for either \code{before} or \code{after}, specifies where the cloned
+\code{gt_tbl} objects should be placed amongst the existing collection of \strong{gt}
+tables. If nothing is provided for either argument, the incoming \code{gt_tbl}
+objects will be appended.}
 }
 \value{
 An object of class \code{gt_group}.

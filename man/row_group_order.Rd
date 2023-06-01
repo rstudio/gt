@@ -14,10 +14,14 @@ row_group_order(data, groups)
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
-\item{groups}{A character vector of row group ID values corresponding to the
-revised ordering. While this vector must contain valid group ID values, it
-is not required to have all of the row group IDs within it; any omitted
-values will be added to the end while preserving the original ordering.}
+\item{groups}{\emph{Specification of row group IDs}
+
+\verb{vector<character>} --- \strong{required}
+
+A character vector of row group ID values corresponding to the revised
+ordering. While this vector must contain valid group ID values, it is not
+required to have all of the row group IDs within it; any omitted values
+will be added to the end while preserving the original ordering.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -34,9 +38,9 @@ ordering.
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table with a stub and with row groups.
-Modify the order of the row groups with \code{row_group_order()}, specifying the
-new ordering in \code{groups}.
+Let's use \code{\link{exibble}} to create a \strong{gt} table with a stub and with row
+groups. We can modify the order of the row groups with \code{row_group_order()},
+specifying the new ordering in \code{groups}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(char, currency, row, group) |>

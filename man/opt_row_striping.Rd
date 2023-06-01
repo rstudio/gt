@@ -14,8 +14,12 @@ opt_row_striping(data, row_striping = TRUE)
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
-\item{row_striping}{A logical value to indicate whether row striping should
-be added or removed.}
+\item{row_striping}{\emph{Use alternating row stripes}
+
+\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+
+A logical value to indicate whether row striping should be added or
+removed.}
 }
 \value{
 An object of class \code{gt_tbl}.

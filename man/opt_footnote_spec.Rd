@@ -14,10 +14,14 @@ opt_footnote_spec(data, spec_ref = NULL, spec_ftr = NULL)
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
-\item{spec_ref, spec_ftr}{Specification of the footnote marks when behaving as
-footnote references and as marks in the footer section of the table. This
-is a string containing spec characters. The default is the spec string
-\code{"^i"}, which is superscript text set in italics.}
+\item{spec_ref, spec_ftr}{\emph{Specifications for formatting of footnote marks}
+
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+Specification of the footnote marks when behaving as footnote references
+and as marks in the footer section of the table. This is a string
+containing spec characters. The default is the spec string \code{"^i"}, which is
+superscript text set in italics.}
 }
 \value{
 An object of class \code{gt_tbl}.

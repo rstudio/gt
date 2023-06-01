@@ -14,19 +14,27 @@ tab_style(data, style, locations)
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
-\item{style}{The styles to use for the cells at the targeted \code{locations}. The
+\item{style}{\emph{Style declarations}
+
+\verb{<style expressions>} --- \strong{required}
+
+The styles to use for the cells at the targeted \code{locations}. The
 \code{\link[=cell_text]{cell_text()}}, \code{\link[=cell_fill]{cell_fill()}}, and \code{\link[=cell_borders]{cell_borders()}} helper functions can be
 used here to more easily generate valid styles. If using more than one
 helper function to define styles, all calls must be enclosed in a \code{\link[=list]{list()}}.
 Custom CSS declarations can be used for HTML output by including a
 \code{\link[=css]{css()}}-based statement as a list item.}
 
-\item{locations}{the cell or set of cells to be associated with the style.
-Supplying any of the \verb{cells_*()} helper functions is a useful way to target
-the location cells that are associated with the styling. These helper
-functions are: \code{\link[=cells_title]{cells_title()}}, \code{\link[=cells_stubhead]{cells_stubhead()}},
-\code{\link[=cells_column_spanners]{cells_column_spanners()}}, \code{\link[=cells_column_labels]{cells_column_labels()}}, \code{\link[=cells_row_groups]{cells_row_groups()}},
-\code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_summary]{cells_summary()}}, \code{\link[=cells_grand_summary]{cells_grand_summary()}},
+\item{locations}{\emph{Locations to target}
+
+\verb{<locations expressions>} --- \strong{required}
+
+The cell or set of cells to be associated with the style. Supplying any of
+the \verb{cells_*()} helper functions is a useful way to target the location
+cells that are associated with the styling. These helper functions are:
+\code{\link[=cells_title]{cells_title()}}, \code{\link[=cells_stubhead]{cells_stubhead()}}, \code{\link[=cells_column_spanners]{cells_column_spanners()}},
+\code{\link[=cells_column_labels]{cells_column_labels()}}, \code{\link[=cells_row_groups]{cells_row_groups()}}, \code{\link[=cells_stub]{cells_stub()}},
+\code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_summary]{cells_summary()}}, \code{\link[=cells_grand_summary]{cells_grand_summary()}},
 \code{\link[=cells_stub_summary]{cells_stub_summary()}}, \code{\link[=cells_stub_grand_summary]{cells_stub_grand_summary()}}, \code{\link[=cells_footnotes]{cells_footnotes()}},
 and \code{\link[=cells_source_notes]{cells_source_notes()}}. Additionally, we can enclose several
 \verb{cells_*()} calls within a \code{list()} if we wish to apply styling to

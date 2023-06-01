@@ -519,28 +519,28 @@ default, this is \code{TRUE} and it will allow the use to page through table
 content. The informational display text regarding the current page can be
 set with \code{ihtml.use_pagination_info} (which is \code{TRUE} by default).}
 
-\item{ihtml.use_sorting}{\emph{Use sorting}
+\item{ihtml.use_sorting}{\emph{Provide column sorting controls}
 
 For interactive HTML output, the option to provide controls for sorting
 column values. By default, this is \code{TRUE}.}
 
-\item{ihtml.use_search}{\emph{Use search field}
+\item{ihtml.use_search}{\emph{Provide a global search field}
 
 For interactive HTML output, an option that places a search field for
 globally filtering rows to the requested content. By default, this is
 \code{FALSE}.}
 
-\item{ihtml.use_filters}{\emph{Use filtering field}
+\item{ihtml.use_filters}{\emph{Display filtering fields}
 
 For interactive HTML output, this places search fields below each column
 header and allows for filtering by column. By default, this is \code{FALSE}.}
 
-\item{ihtml.use_resizers}{\emph{Use column resizers}
+\item{ihtml.use_resizers}{\emph{Allow column resizing}
 
 For interactive HTML output, this allows for interactive resizing of
 columns. By default, this is \code{FALSE}.}
 
-\item{ihtml.use_highlight}{\emph{Use row highlighting}
+\item{ihtml.use_highlight}{\emph{Enable row highlighting on hover}
 
 For interactive HTML output, this highlights individual rows upon hover. By
 default, this is \code{FALSE}.}

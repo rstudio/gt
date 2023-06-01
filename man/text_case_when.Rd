@@ -14,21 +14,31 @@ text_case_when(.data, ..., .default = NULL, .locations = cells_body())
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
-\item{...}{A sequence of two-sided formulas. The left hand side (LHS)
+\item{...}{\emph{Matching expressions}
+
+\verb{<multiple expressions>} --- \strong{required}
+
+A sequence of two-sided formulas. The left hand side (LHS)
 determines which values match this case. The right hand side (RHS) provides
 the replacement text (it must resolve to a value of the \code{character} class).
 The LHS inputs must evaluate to logical vectors.}
 
-\item{.default}{The replacement text to use when cell values aren't matched
-by any of the LHS inputs. If \code{NULL}, the default, no replacement text will
-be used.}
+\item{.default}{\emph{Default replacement text}
 
-\item{.locations}{The cell or set of cells to be associated with the text
-transformation. Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}},
-\code{\link[=cells_row_groups]{cells_row_groups()}}, \code{\link[=cells_column_labels]{cells_column_labels()}}, and
-\code{\link[=cells_column_spanners]{cells_column_spanners()}} helper functions can be used here. We can enclose
-several of these calls within a \code{list()} if we wish to make the
-transformation happen at different locations.}
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+The replacement text to use when cell values aren't matched by any of the
+LHS inputs. If \code{NULL}, the default, no replacement text will be used.}
+
+\item{.locations}{\emph{Locations to target}
+
+\verb{<locations expressions>} --- \emph{default:} \code{cells_body()}
+
+The cell or set of cells to be associated with the text transformation.
+Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_row_groups]{cells_row_groups()}},
+\code{\link[=cells_column_labels]{cells_column_labels()}}, and \code{\link[=cells_column_spanners]{cells_column_spanners()}} helper functions can
+be used here. We can enclose several of these calls within a \code{list()} if we
+wish to make the transformation happen at different locations.}
 }
 \value{
 An object of class \code{gt_tbl}.

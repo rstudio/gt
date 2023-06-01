@@ -18,13 +18,21 @@ opt_all_caps(
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
-\item{all_caps}{A logical value to indicate whether the text transformation
-to all caps should be performed (\code{TRUE}, the default) or reset to default
-values (\code{FALSE}) for the \code{locations} targeted.}
+\item{all_caps}{\emph{Use all-caps transformation}
 
-\item{locations}{Which locations should undergo this text transformation? By
-default it includes all of the \code{"column_labels"}, the \code{"stub"}, and the
-\code{"row_group"} locations. However, we could just choose one or two of those.}
+\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+
+A logical value to indicate whether the text transformation to all caps
+should be performed (\code{TRUE}, the default) or reset to default values
+(\code{FALSE}) for the \code{locations} targeted.}
+
+\item{locations}{\emph{Locations to target}
+
+\verb{mult-kw:[column_labels|stub|row_group]} --- \emph{default:} \code{c("column_labels", "stub", "row_group")}
+
+Which locations should undergo this text transformation? By default it
+includes all of the \code{"column_labels"}, the \code{"stub"}, and the \code{"row_group"}
+locations. However, we could just choose one or two of those.}
 }
 \value{
 An object of class \code{gt_tbl}.

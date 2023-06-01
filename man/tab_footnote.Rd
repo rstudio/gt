@@ -19,26 +19,38 @@ tab_footnote(
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
-\item{footnote}{The text to be used in the footnote. We can optionally use
-the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} functions to style the text as Markdown or to
-retain HTML elements in the footnote text.}
+\item{footnote}{\emph{Footnote text}
 
-\item{locations}{The cell or set of cells to be associated with the footnote.
-Supplying any of the \verb{cells_*()} helper functions is a useful way to target
-the location cells that are associated with the footnote text. These helper
-functions are: \code{\link[=cells_title]{cells_title()}}, \code{\link[=cells_stubhead]{cells_stubhead()}},
-\code{\link[=cells_column_spanners]{cells_column_spanners()}}, \code{\link[=cells_column_labels]{cells_column_labels()}}, \code{\link[=cells_row_groups]{cells_row_groups()}},
-\code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_summary]{cells_summary()}}, \code{\link[=cells_grand_summary]{cells_grand_summary()}},
+\verb{scalar<character>} --- \strong{required}
+
+The text to be used in the footnote. We can optionally use the \code{\link[=md]{md()}} and
+\code{\link[=html]{html()}} functions to style the text as Markdown or to retain HTML elements
+in the footnote text.}
+
+\item{locations}{\emph{Locations to target}
+
+\verb{<locations expressions>} --- \emph{default:} \code{NULL} (\code{optional})
+
+The cell or set of cells to be associated with the footnote. Supplying any
+of the \verb{cells_*()} helper functions is a useful way to target the location
+cells that are associated with the footnote text. These helper functions
+are: \code{\link[=cells_title]{cells_title()}}, \code{\link[=cells_stubhead]{cells_stubhead()}}, \code{\link[=cells_column_spanners]{cells_column_spanners()}},
+\code{\link[=cells_column_labels]{cells_column_labels()}}, \code{\link[=cells_row_groups]{cells_row_groups()}}, \code{\link[=cells_stub]{cells_stub()}},
+\code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_summary]{cells_summary()}}, \code{\link[=cells_grand_summary]{cells_grand_summary()}},
 \code{\link[=cells_stub_summary]{cells_stub_summary()}}, and \code{\link[=cells_stub_grand_summary]{cells_stub_grand_summary()}}. Additionally, we
 can enclose several \verb{cells_*()} calls within a \code{list()} if we wish to link
 the footnote text to different types of locations (e.g., body cells, row
 group labels, the table title, etc.).}
 
-\item{placement}{Where to affix footnote marks to the table content. Two
-options for this are \verb{"left} or \code{"right"}, where the placement is either to
-the absolute left or right of the cell content. By default, however, this
-option is set to \code{"auto"} whereby \strong{gt} will choose a preferred
-left-or-right placement depending on the alignment of the cell content.}
+\item{placement}{\emph{Placement of footnote mark}
+
+\verb{singl-kw:[auto|right|left]} --- \emph{default:} \code{"auto"}
+
+Where to affix footnote marks to the table content. Two options for this
+are \verb{"left} or \code{"right"}, where the placement is either to the absolute
+left or right of the cell content. By default, however, this option is set
+to \code{"auto"} whereby \strong{gt} will choose a preferred left-or-right placement
+depending on the alignment of the cell content.}
 }
 \value{
 An object of class \code{gt_tbl}.

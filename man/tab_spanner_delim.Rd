@@ -21,8 +21,12 @@ tab_spanner_delim(
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
-\item{delim}{The delimiter to use to split an input column name. This should
-be a single character (e.g., \code{"_"}, \code{"."}, etc.).}
+\item{delim}{\emph{Delimiter for splitting}
+
+\verb{scalar<character>} --- \strong{required}
+
+The delimiter to use to split an input column name. This should be a single
+character (e.g., \code{"_"}, \code{"."}, etc.).}
 
 \item{columns}{\emph{Columns to target}
 
@@ -35,31 +39,42 @@ helper functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[
 \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. This argument
 works in tandem with the \code{spanners} argument.}
 
-\item{split}{Should the delimiter splitting occur from the \code{"last"} instance
-of the \code{delim} character or from the \code{"first"}? The default here uses the
-\code{"last"} keyword, and splitting begins at the last instance of the
-delimiter in the column name. This option only has some consequence when
-there is a \code{limit} value applied that is lesser than the number of
-delimiter characters for a given column name (i.e., number of splits is not
-the maximum possible number).}
+\item{split}{\emph{Splitting side}
 
-\item{limit}{An optional limit to place on the splitting procedure. The
-default \code{NULL} means that a column name will be split as many times are
-there are delimiter characters. In other words, the default is no limit. If
-an integer value is given to \code{limit} then splitting will cease at the
+\verb{singl-kw:[last|first]} --- \emph{default:} \code{"last"}
+
+Should the delimiter splitting occur from the \code{"last"} instance of the
+\code{delim} character or from the \code{"first"}? The default here uses the \code{"last"}
+keyword, and splitting begins at the last instance of the delimiter in the
+column name. This option only has some consequence when there is a \code{limit}
+value applied that is lesser than the number of delimiter characters for a
+given column name (i.e., number of splits is not the maximum possible
+number).}
+
+\item{limit}{\emph{Limit for splitting}
+
+\verb{scalar<numeric|integer|character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+An optional limit to place on the splitting procedure. The default \code{NULL}
+means that a column name will be split as many times are there are
+delimiter characters. In other words, the default means there is no limit.
+If an integer value is given to \code{limit} then splitting will cease at the
 iteration given by \code{limit}. This works in tandem with \code{split} since we can
 adjust the number of splits from either the right side (\code{split = "last"})
 or left side (\code{split = "first"}) of the column name.}
 
-\item{reverse}{Should the order of split names be reversed? By default, this
-is \code{FALSE}.}
+\item{reverse}{\emph{Reverse vector of split names}
+
+\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+
+Should the order of split names be reversed? By default, this is \code{FALSE}.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
 The \code{cols_spanner_delim()} function can take specially-crafted column names
-and generate one or more spanner column labels (along with relabeling the
+and generate one or more spanners (along with relabeling the
 column labels). This is done by splitting the column name by a specified
 delimiter character (this is the \code{delim}) and placing the fragments from top
 to bottom (i.e., higher-level spanners to the column labels). Furthermore,
@@ -92,7 +107,7 @@ If we take a hypothetical table that includes the column names
 well-defined structure. We start with the more general to the left
 (\code{"province"}) and move to the more specific on the right (\code{"pop"}). If the
 columns are in the table in this exact order, then things are in an ideal
-state as the eventual spanner column labels will form from this neighboring.
+state as the eventual spanner labels will form from this neighboring.
 When using \code{tab_spanner_delim()} here with \code{delim} set as \code{"."} we get the
 following text fragments:
 \itemize{
@@ -282,7 +297,7 @@ column labels with \code{\link[=cols_label_with]{cols_label_with()}}.
 
 \seealso{
 \code{\link[=tab_spanner]{tab_spanner()}} to manually create spanners with more control over
-spanner column labels.
+spanner labels.
 
 Other part creation/modification functions: 
 \code{\link{tab_caption}()},

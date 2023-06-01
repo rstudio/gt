@@ -24,12 +24,16 @@ tab_style_body(
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
-\item{style}{The styles to use for the targeted cells. The \code{\link[=cell_text]{cell_text()}},
-\code{\link[=cell_fill]{cell_fill()}}, and \code{\link[=cell_borders]{cell_borders()}} helper functions can be used here to
-more easily generate valid styles. If using more than one helper function
-to define styles, all calls must be enclosed in a \code{\link[=list]{list()}}. Custom CSS
-declarations can be used for HTML output by including a \code{\link[=css]{css()}}-based
-statement as a list item.}
+\item{style}{\emph{Style declarations}
+
+\verb{<style expressions>} --- \strong{required}
+
+The styles to use for the targeted cells. The \code{\link[=cell_text]{cell_text()}}, \code{\link[=cell_fill]{cell_fill()}},
+and \code{\link[=cell_borders]{cell_borders()}} helper functions can be used here to more easily
+generate valid styles. If using more than one helper function to define
+styles, all calls must be enclosed in a \code{\link[=list]{list()}}. Custom CSS declarations
+can be used for HTML output by including a \code{\link[=css]{css()}}-based statement as a
+list item.}
 
 \item{columns}{\emph{Columns to target}
 
@@ -55,29 +59,48 @@ select helper function. Examples of select helper functions include
 \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions to filter
 down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{values}{The specific value or values that should be targeted for
-styling. If \code{pattern} is also supplied then \code{values} will be ignored.}
+\item{values}{\emph{Values for targeting}
 
-\item{pattern}{A regex pattern that can target solely those values in
-\code{character}-based columns. If \code{values} is also supplied, \code{pattern} will
-take precedence.}
+\verb{vector<character|numeric|integer>} --- \emph{default:} \code{NULL} (\code{optional})
 
-\item{fn}{A supplied function that operates on each cell of each column
-specified through \code{columns} and \code{rows}. The function should be fashioned
-such that a single logical value is returned. If either of \code{values} or
-\code{pattern} is also supplied, \code{fn} will take precedence.}
+The specific value or values that should be targeted for styling. If
+\code{pattern} is also supplied then \code{values} will be ignored.}
 
-\item{targets}{A vector of styling target keywords to contain or expand the
-target of each cell. By default, this is a vector just containing \code{"cell"}.
-However, the keywords \code{"row"} and \code{"column"} may be used separately or in
-combination to style the target cells' associated rows or columns.}
+\item{pattern}{\emph{Regex pattern for targeting}
 
-\item{extents}{A vector of locations to project styling. By default, this is
-a vector just containing \code{"body"}, whereby styled rows or columns
-(facilitated via inclusion of the \code{"row"} and \code{"column"} keywords in
-\code{targets}) will not permeate into the stub. The additional keyword \code{"stub"}
-may be used alone or in conjunction with \code{"body"} to project or expand the
-styling into the stub.}
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+A regex pattern that can target solely those values in \code{character}-based
+columns. If \code{values} is also supplied, \code{pattern} will take precedence.}
+
+\item{fn}{\emph{Function to return logical values}
+
+\verb{<function>} --- \emph{default:} \code{NULL} (\code{optional})
+
+A supplied function that operates on each cell of each column specified
+through \code{columns} and \code{rows}. The function should be fashioned such that a
+single logical value is returned. If either of \code{values} or \code{pattern} is
+also supplied, \code{fn} will take precedence.}
+
+\item{targets}{\emph{Styling targets}
+
+\verb{vector<character>} --- \emph{default:} \code{"cell"}
+
+A vector of styling target keywords to contain or expand the target of each
+cell. By default, this is a vector just containing \code{"cell"}. However, the
+keywords \code{"row"} and \code{"column"} may be used separately or in combination to
+style the target cells' associated rows or columns.}
+
+\item{extents}{\emph{Styling extents}
+
+\verb{vector<character>} --- \emph{default:} \code{"body"}
+
+A vector of locations to project styling. By default, this is a vector just
+containing \code{"body"}, whereby styled rows or columns (facilitated via
+inclusion of the \code{"row"} and \code{"column"} keywords in \code{targets}) will not
+permeate into the stub. The additional keyword \code{"stub"} may be used alone
+or in conjunction with \code{"body"} to project or expand the styling into the
+stub.}
 }
 \value{
 An object of class \code{gt_tbl}.

@@ -46,29 +46,46 @@ select helper function. Examples of select helper functions include
 \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions to filter
 down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{values}{The specific value or values that should be replaced with a
-\code{replacement} value. If \code{pattern} is also supplied then \code{values} will be
-ignored.}
+\item{values}{\emph{Values to match on}
 
-\item{pattern}{A regex pattern that can target solely those values in
-\code{character}-based columns. If \code{values} is also supplied, \code{pattern} will
-take precedence.}
+\verb{scalar<character|numeric|integer>} --- \emph{default:} \code{NULL} (\code{optional})
 
-\item{fn}{A supplied function that operates on \code{x} (the data in a column) and
-should return a logical vector that matches the length of \code{x} (i.e., number
-of rows in the input table). If either of \code{values} or \code{pattern} is also
+The specific value or values that should be replaced with a \code{replacement}
+value. If \code{pattern} is also supplied then \code{values} will be ignored.}
+
+\item{pattern}{\emph{Regex pattern to match with}
+
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+A regex pattern that can target solely those values in \code{character}-based
+columns. If \code{values} is also supplied, \code{pattern} will take precedence.}
+
+\item{fn}{\emph{Function to return logical values}
+
+\verb{<function>} --- \emph{default:} \code{NULL} (\code{optional})
+
+A supplied function that operates on \code{x} (the data in a column) and should
+return a logical vector that matches the length of \code{x} (i.e., number of
+rows in the input table). If either of \code{values} or \code{pattern} is also
 supplied, \code{fn} will take precedence.}
 
-\item{replacement}{The replacement value for any cell values matched by
-either \code{values} or \code{pattern}. Must be a character or numeric vector of
-length 1.}
+\item{replacement}{\emph{Replacement value for matches}
 
-\item{escape}{An option to escape replacement text according to the final
-output format of the table. For example, if a LaTeX table is to be
-generated then LaTeX escaping would be performed on the replacements during
-rendering. By default this is set to \code{TRUE} but setting to \code{FALSE} would be
-useful in the case where replacement text is crafted for a specific output
-format in mind.}
+\verb{scalar<character|numeric|integer>} --- \emph{default:} \code{NULL} (\code{optional})
+
+The replacement value for any cell values matched by either \code{values} or
+\code{pattern}. Must be a character or numeric vector of length 1.}
+
+\item{escape}{\emph{Text escaping}
+
+\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+
+An option to escape replacement text according to the final output format
+of the table. For example, if a LaTeX table is to be generated then LaTeX
+escaping would be performed on the replacements during rendering. By
+default this is set to \code{TRUE} but setting to \code{FALSE} would be useful in the
+case where replacement text is crafted for a specific output format in
+mind.}
 }
 \value{
 An object of class \code{gt_tbl}.

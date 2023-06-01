@@ -26,13 +26,16 @@ function. Examples of select helper functions include \code{\link[=starts_with]{
 \code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
 need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{indent}{An indentation directive either as a keyword describing the
-indentation change or as an explicit integer value for directly setting the
-indentation level. The keyword \code{"increase"} (the default) will increase the
-indentation level by one; \code{"decrease"} will do the same in the reverse
-direction. The starting indentation level of \code{0} means no indentation and
-this values serves as a lower bound. The upper bound for indentation is at
-level \code{5}.}
+\item{indent}{\emph{Indentation directive}
+
+\verb{scalar<character|numeric|integer>} --- \emph{default:} \code{"increase"}
+
+An indentation directive either as a keyword describing the indentation
+change or as an explicit integer value for directly setting the indentation
+level. The keyword \code{"increase"} (the default) will increase the indentation
+level by one; \code{"decrease"} will do the same in the reverse direction. The
+starting indentation level of \code{0} means no indentation and this values
+serves as a lower bound. The upper bound for indentation is at level \code{5}.}
 }
 \value{
 An object of class \code{gt_tbl}.
