@@ -14,7 +14,15 @@ tab_header(data, title, subtitle = NULL, preheader = NULL)
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
-\item{title}{\emph{Header subtitle}
+\item{title}{\emph{Header title}
+
+\verb{scalar<character>} --- \strong{required}
+
+Text to be used in the table title. We can elect to use the \code{\link[=md]{md()}} and
+\code{\link[=html]{html()}} helper functions to style the text as Markdown or to retain HTML
+elements in the text.}
+
+\item{subtitle}{\emph{Header subtitle}
 
 \verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
 
