@@ -42,7 +42,7 @@
 #'   [html()] helper functions to style the text as Markdown or to retain HTML
 #'   elements in the text.
 #'
-#' @param title *Header subtitle*
+#' @param subtitle *Header subtitle*
 #'
 #'   `scalar<character>` --- *default:* `NULL` (`optional`)
 #'
