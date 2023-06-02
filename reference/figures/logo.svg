@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="2521px" height="2911px" viewBox="0 0 2521 2911" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>gt_hex_logo copy@1x</title>
+<svg width="2521px" height="2911px" viewBox="0 -100 2521 3111" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
     <defs>
         <linearGradient x1="50%" y1="50%" x2="50%" y2="100%" id="linearGradient-1">
             <stop stop-color="#424242" stop-opacity="0.30114923" offset="0%"></stop>
@@ -159,9 +159,57 @@
             <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
             <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
         </filter>
+        <radialGradient id="Gradient1" cx="0.5" cy="0.5" r="0.5" fx="0.25" fy="0.25">
+      		<stop offset="0%" stop-color="#FFFF0060" />
+      		<stop offset="100%" stop-color="#00FFFF60" />
+    	</radialGradient>
+    	<radialGradient id="Gradient2" cx="0.5" cy="0.5" r="0.5" fx="0.25" fy="0.25">
+      		<stop offset="0%" stop-color="#FF000060" />
+      		<stop offset="100%" stop-color="#FFA50060" />
+    	</radialGradient>
+    	<filter id="backgroundblur">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="60" />
+        </filter>
     </defs>
     <g id="gt" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="gt_hex_logo-copy" transform="translate(0.430665, 0.282931)">
+
+
+<ellipse
+    	cx="1255"
+    	cy="1380"
+    	rx="1235"
+    	ry="1235"
+   		fill="url(#Gradient1)"
+   		filter="url(#backgroundblur)"
+   		>
+    	<animateTransform
+      	attributeName="transform"
+      	begin="0s"
+      	dur="2s"
+      	type="rotate"
+      	from="0 1255 1380"
+      	to="360 1255 1380"
+      	repeatCount="indefinite" />
+      	        </ellipse>
+      	        <ellipse
+    	cx="1255"
+    	cy="1530"
+    	rx="1235"
+    	ry="1235"
+   		fill="url(#Gradient2)"
+   		filter="url(#backgroundblur)"
+   		>
+    	<animateTransform
+      	attributeName="transform"
+      	begin="0s"
+      	dur="2s"
+      	type="rotate"
+      	from="0 1255 1530"
+      	to="360 1255 1530"
+      	repeatCount="indefinite" />
+      	</ellipse>
+
             <polygon id="Path" fill="#424242" points="2420.47564 669.684384 1467.38119 119.390454 1260.5 0 1053.61881 119.390454 100.52436 669.684384 0 727.664231 0 2183.33577 100.52436 2241.31562 1065.28375 2798.47107 1260.5 2911 1455.71625 2798.47107 2420.47564 2241.31562 2521 2183.33577 2521 727.664231"></polygon>
             <polygon id="Path" fill="#424242" points="2420.47564 2128.78668 1260.5 2798.47107 100.52436 2128.78668 100.52436 789.074838 1260.5 119.390454 2420.47564 789.074838"></polygon>
             <polygon id="Rectangle-6-black" fill="url(#linearGradient-1)" points="1262.15572 69.4664506 2418.24341 729.325671 1262.15572 1391.46238 103.138671 729.325671"></polygon>
@@ -305,9 +353,13 @@
                 <g id="Line-2-Copy-3" stroke-linecap="round">
                     <use fill="black" fill-opacity="1" filter="url(#filter-39)" xlink:href="#path-38"></use>
                     <use stroke-opacity="0.351392663" stroke="#FFFFFF" stroke-width="1" xlink:href="#path-38"></use>
+                                 
                 </g>
             </g>
             <line x1="1260.45109" y1="1454.85364" x2="1260.45109" y2="2908.57031" id="Path-3-Copy-2" stroke="#979797" stroke-width="3" stroke-linecap="round"></line>
+        
         </g>
+        
     </g>
+
 </svg>
