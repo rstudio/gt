@@ -1,8 +1,69 @@
+h1, .h1 {
+  font-size: 3rem;
+}
+
+h2, .h2 {
+  font-size: 2rem;
+}
+
+h3, .h3 {
+  font-size: 1.75rem;
+}
+
+h4, .h4 {
+  font-size: 1.25rem;
+}
+
 dt {
+  color: whitesmoke;
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-underline-offset: 4px;
   font-family: monospace;
   border-top-style: dotted;
-  border-top-width: 2px;
-  border-top-color: lightgray;
+  border-top-width: 1px;
+  border-top-color: gray;
   margin-bottom: 5px;
   padding-top: 5px;
+}
+
+img {
+  border-radius: 6px;
+}
+
+.roles {
+    color: rgb(164, 255, 164) !important;
+}
+
+.me-auto {
+    color: yellow !important;
+    animation: color-change 5s infinite !important;
+}
+
+@keyframes color-change {
+  0% { color: yellow; }
+  50% { color: aqua; }
+  100% { color: yellow; }
+}
+
+.active .nav-link {
+  color: white !important;
+}
+
+.text-muted {
+  color: rgb(32, 166, 182) !important
+}
+
+dd > p:nth-child(1) > em {
+  color: lightblue  !important;
+  margin-bottom: 4px !important
+}
+
+dd > p:nth-child(1) {
+  margin-bottom: -5px !important;
+  margin-left: -3px !important;
+}
+
+dd > p:nth-child(2) {
+  margin-left: -6px !important;
 }
