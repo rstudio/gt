@@ -1,8 +1,7 @@
 <div align="center">
 
-<hr style="color:transparent" />
 <a href='https://gt.rstudio.com/'><img src="man/figures/logo.svg" width="350px"/></a>
-<hr style="color:transparent"/>
+
 <!-- badges: start -->
 <a href="https://cran.r-project.org/package=gt"><img src="https://www.r-pkg.org/badges/version/gt" alt="CRAN status" /></a>
 <a href="https://github.com/rstudio/gt/actions/workflows/R-CMD-check.yaml"><img src="https://github.com/rstudio/gt/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R build status" /></a>
@@ -78,11 +77,26 @@ sp500 |>
 <img src="man/figures/gt_sp500_table.svg" width="800px">
 </div>
 
-There are ten datasets provided by **gt**: `countrypops`, `sza`, `gtcars`, `sp500`, `pizzaplace`, `exibble`, `towny`, `metro`, `rx_adsl`, and `rx_addv`. They're useful for experimenting with **gt**’s functions and the package documentation makes extensive use of them in the *Examples* section within each function's documentation.
+There are ten datasets provided by **gt**: `countrypops`, `sza`, `gtcars`, `sp500`, `pizzaplace`, `exibble`, `towny`, `metro`, `rx_adsl`, and `rx_addv`.
 
-Beyond this simple example, there are many functions available in **gt**
-for creating super-customized tables. For much more information on these, visit the
-[documentation website](https://gt.rstudio.com/).
+<div align="center" style="padding-top:20px">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_countrypops.svg" style="width:18%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_sza.svg" style="width:18%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_gtcars.svg" style="width:18%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_sp500.svg" style="width:18%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_pizzaplace.svg" style="width:18%;">
+</div>
+<div align="center" style="padding-bottom:20px">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_exibble.svg" style="width:18%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_towny.svg" style="width:18%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_metro.svg" style="width:18%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_rx_adsl.svg" style="width:18%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_rx_addv.svg" style="width:18%;">
+</div>
+
+All of this tabular data is great for experimenting with **gt**’s functions and we make extensive use of these datasets in our documentation.
+
+Beyond the functions shown in the simple `sp500`-based example, there are many functions available in **gt** for creating super-customized tables. Check out the [documentation website](https://gt.rstudio.com/) to get started via introductory articles for making **gt** tables. There's a handy *Reference* section that has detailed help for every function in the package.
 
 With the **gt** *Test Drive*, you can try **gt** in the *Posit Cloud* environment that features the RStudio IDE and a large collection of ready-to-run examples. Visit the publicly available [*Posit Cloud* project](https://rstudio.cloud/project/779965) and try out the package in your browser. There's no charge to use this platform and you'll learn **a lot** about what the package can do!
 
