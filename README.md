@@ -104,7 +104,11 @@ With the **gt** *Test Drive*, you can try **gt** in the *Posit Cloud* environmen
 
 [![Posit Cloud](https://img.shields.io/badge/Posit%20Cloud-gt%20Test%20Drive-blue?style=social&logo=rstudio&logoColor=75AADB)](https://rstudio.cloud/project/779965)
 
-## DISCUSSIONS
+<hr style="color:transparent" />
+
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/gt_table_examples.gif">
+
+<hr style="color:transparent" />
 
 Let's talk about making tables with **gt**! There are a few locations where there is much potential for discussion.
 
