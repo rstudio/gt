@@ -223,7 +223,7 @@
       	
       	<ellipse
     	cx="820"
-    	cy="700"
+    	cy="800"
     	rx="618"
     	ry="618"
    		fill="url(#Gradient3)"
@@ -234,14 +234,14 @@
       	begin="0s"
       	dur="6s"
       	type="rotate"
-      	from="0 820 680"
-      	to="360 820 720"
+      	from="0 820 780"
+      	to="360 820 820"
       	repeatCount="indefinite" />
       	</ellipse>
       	        
       	<ellipse
     	cx="1720"
-    	cy="700"
+    	cy="800"
     	rx="618"
     	ry="618"
    		fill="url(#Gradient3)"
@@ -253,14 +253,14 @@
       	begin="0s"
       	dur="6s"
       	type="rotate"
-      	from="0 1720 680"
-      	to="360 1720 720"
+      	from="0 1720 780"
+      	to="360 1720 820"
       	repeatCount="indefinite" />
       	</ellipse>
 
         <ellipse
     	cx="820"
-    	cy="2200"
+    	cy="2100"
     	rx="618"
     	ry="618"
    		fill="url(#Gradient4)"
@@ -271,14 +271,14 @@
       	begin="0s"
       	dur="6s"
       	type="rotate"
-      	from="0 820 2180"
-      	to="360 820 2220"
+      	from="0 820 2080"
+      	to="360 820 2120"
       	repeatCount="indefinite" />
       	</ellipse>
       	        
       	<ellipse
     	cx="1720"
-    	cy="2200"
+    	cy="2100"
     	rx="618"
     	ry="618"
    		fill="url(#Gradient4)"
@@ -290,8 +290,8 @@
       	begin="0s"
       	dur="6s"
       	type="rotate"
-      	from="0 1720 2180"
-      	to="360 1720 2220"
+      	from="0 1720 2080"
+      	to="360 1720 2120"
       	repeatCount="indefinite" />
       	</ellipse>
 
