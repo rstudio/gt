@@ -160,13 +160,24 @@
             <feColorMatrix values="0 0 0 0 1   0 0 0 0 1   0 0 0 0 1  0 0 0 1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
         </filter>
         <radialGradient id="Gradient1" cx="0.5" cy="0.5" r="0.5" fx="0.25" fy="0.25">
-      		<stop offset="0%" stop-color="#FFFF0060" />
-      		<stop offset="100%" stop-color="#00FFFF60" />
+      		<stop offset="0%" stop-color="#FFFF0090" />
+      		<stop offset="100%" stop-color="#00FFFF90" />
     	</radialGradient>
     	<radialGradient id="Gradient2" cx="0.5" cy="0.5" r="0.5" fx="0.25" fy="0.25">
-      		<stop offset="0%" stop-color="#FF000060" />
+      		<stop offset="0%" stop-color="#FF000090" />
+      		<stop offset="100%" stop-color="#FFA50090" />
+    	</radialGradient>
+    	
+        <radialGradient id="Gradient3" cx="0.5" cy="0.5" r="0.5" fx="0.25" fy="0.25">
+      		<stop offset="0%" stop-color="#AA00FF60" />
+      		<stop offset="100%" stop-color="#00FFFF60" />
+    	</radialGradient>
+    	<radialGradient id="Gradient4" cx="0.5" cy="0.5" r="0.5" fx="0.25" fy="0.25">
+      		<stop offset="0%" stop-color="#00FF3360" />
       		<stop offset="100%" stop-color="#FFA50060" />
     	</radialGradient>
+    	
+    	
     	<filter id="backgroundblur">
           <feGaussianBlur in="SourceGraphic" stdDeviation="60" />
         </filter>
@@ -174,8 +185,7 @@
     <g id="gt" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="gt_hex_logo-copy" transform="translate(0.430665, 0.282931)">
 
-
-<ellipse
+        <ellipse
     	cx="1255"
     	cy="1380"
     	rx="1235"
@@ -186,13 +196,14 @@
     	<animateTransform
       	attributeName="transform"
       	begin="0s"
-      	dur="2s"
+      	dur="3s"
       	type="rotate"
       	from="0 1255 1380"
       	to="360 1255 1380"
       	repeatCount="indefinite" />
-      	        </ellipse>
-      	        <ellipse
+      	</ellipse>
+      	
+      	<ellipse
     	cx="1255"
     	cy="1530"
     	rx="1235"
@@ -200,13 +211,87 @@
    		fill="url(#Gradient2)"
    		filter="url(#backgroundblur)"
    		>
-    	<animateTransform
+        <animateTransform
       	attributeName="transform"
       	begin="0s"
-      	dur="2s"
+      	dur="3s"
       	type="rotate"
       	from="0 1255 1530"
       	to="360 1255 1530"
+      	repeatCount="indefinite" />
+      	</ellipse>
+      	
+      	<ellipse
+    	cx="820"
+    	cy="700"
+    	rx="618"
+    	ry="618"
+   		fill="url(#Gradient3)"
+   		filter="url(#backgroundblur)"
+   		>
+    	<animateTransform
+      	attributeName="transform"
+      	begin="0s"
+      	dur="6s"
+      	type="rotate"
+      	from="0 820 680"
+      	to="360 820 720"
+      	repeatCount="indefinite" />
+      	</ellipse>
+      	        
+      	<ellipse
+    	cx="1720"
+    	cy="700"
+    	rx="618"
+    	ry="618"
+   		fill="url(#Gradient3)"
+   		filter="url(#backgroundblur)"
+   		transform="rotate(120deg)"
+   		>
+    	<animateTransform
+      	attributeName="transform"
+      	begin="0s"
+      	dur="6s"
+      	type="rotate"
+      	from="0 1720 680"
+      	to="360 1720 720"
+      	repeatCount="indefinite" />
+      	</ellipse>
+
+        <ellipse
+    	cx="820"
+    	cy="2200"
+    	rx="618"
+    	ry="618"
+   		fill="url(#Gradient4)"
+   		filter="url(#backgroundblur)"
+   		>
+    	<animateTransform
+      	attributeName="transform"
+      	begin="0s"
+      	dur="6s"
+      	type="rotate"
+      	from="0 820 2180"
+      	to="360 820 2220"
+      	repeatCount="indefinite" />
+      	</ellipse>
+      	        
+      	<ellipse
+    	cx="1720"
+    	cy="2200"
+    	rx="618"
+    	ry="618"
+   		fill="url(#Gradient4)"
+   		filter="url(#backgroundblur)"
+   		transform="rotate(120deg)"
+   		>
+    	<animateTransform
+      	attributeName="transform"
+      	begin="0s"
+      	dur="6s"
+      	type="rotate"
+      	from="0 1720 2180"
+      	to="360 1720 2220"
       	repeatCount="indefinite" />
       	</ellipse>
 
@@ -359,7 +444,5 @@
             <line x1="1260.45109" y1="1454.85364" x2="1260.45109" y2="2908.57031" id="Path-3-Copy-2" stroke="#979797" stroke-width="3" stroke-linecap="round"></line>
         
         </g>
-        
     </g>
-
 </svg>
