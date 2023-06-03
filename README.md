@@ -106,7 +106,9 @@ With the **gt** *Test Drive*, you can try **gt** in the *Posit Cloud* environmen
 
 <hr style="color:transparent" />
 
+<div align="center">
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/gt_table_examples.gif">
+</div>
 
 <hr style="color:transparent" />
 
