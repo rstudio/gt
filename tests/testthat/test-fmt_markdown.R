@@ -47,10 +47,7 @@ There's a quick reference [here](https://commonmark.org/help/).
 
   # Expect an error when attempting to format a column
   # that does not exist
-  expect_error(
-    tab %>%
-      fmt_markdown(columns = "column_3")
-  )
+  expect_error(tab %>% fmt_markdown(columns = "column_3"))
 
   #
   # Compare output of each table cell to the expected
@@ -63,8 +60,9 @@ There's a quick reference [here](https://commonmark.org/help/).
       "<div class='gt_from_md'><p>This is Markdown <em>text</em>",
       ".</p>\n<p>Markdown’s syntax is comprised entirely of\npunctuation ",
       "characters, which punctuation\ncharacters have been carefully chosen ",
-      "so as\nto look like what they mean...  assuming\nyou’ve ever ",
-      "used email.</p>\n</div>")
+      "so as\nto look like what they mean…  assuming\nyou’ve ever ",
+      "used email.</p>\n</div>"
+    )
   )
 
   expect_equal(
@@ -73,7 +71,8 @@ There's a quick reference [here](https://commonmark.org/help/).
     paste0(
       "<div class='gt_from_md'><p>Info on Markdown syntax can be ",
       "found\n<a href=\"https://daringfireball.net/projects/markdown/\">",
-      "here</a>.</p>\n</div>")
+      "here</a>.</p>\n</div>"
+    )
   )
 
   expect_equal(
@@ -84,14 +83,13 @@ There's a quick reference [here](https://commonmark.org/help/).
       "these datasets:</p>\n<ul>\n<li><code>countrypops</code></li>\n<li>",
       "<code>sza</code></li>\n<li><code>gtcars</code></li>\n<li><code>sp500",
       "</code></li>\n<li><code>pizzaplace</code></li>\n<li><code>exibble",
-      "</code></li>\n</ul>\n</div>")
+      "</code></li>\n</ul>\n</div>"
+    )
   )
 
   expect_equal(
     (tab %>%
        render_formats_test(context = "html"))[["column_2"]][[2]],
-    paste0(
-      "<div class='gt_from_md'><p>There's a quick reference <a ",
-      "href=\"https://commonmark.org/help/\">here</a>.</p>\n</div>")
+      "<div class='gt_from_md'><p>There’s a quick reference <a href=\"https://commonmark.org/help/\">here</a>.</p>\n</div>"
   )
 })

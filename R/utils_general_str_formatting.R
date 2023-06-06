@@ -1,3 +1,27 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2023 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 #' Flexibly split a string into two pieces
 #'
 #' @param x The string to split into a character vector of length 2.
@@ -520,3 +544,95 @@ create_unique_id_vals <- function(
 glue_gt <- function(.x, ...) {
   glue::glue_data(.x, ..., .transformer = get, .envir = emptyenv())
 }
+
+regexec_gt <- function(pattern, text, perl = FALSE) {
+
+  if (is.factor(text) && length(levels(text)) < length(text)) {
+
+    out <- regexec_gt(pattern, c(levels(text), NA_character_), perl)
+    outna <- out[length(out)]
+    out <- out[text]
+    out[is.na(text)] <- outna
+    return(out)
+  }
+
+  dat <- gregexpr(pattern = pattern, text = text, perl = perl)
+
+  if (perl) {
+
+    capt.attr <- c('capture.start', 'capture.length', 'capture.names')
+    process <- function(x) {
+
+      if (anyNA(x) || any(x < 0)) {
+
+        y <- x
+
+      } else {
+
+        y <- t(cbind(x, attr(x, "capture.start")))
+        attributes(y)[names(attributes(x))] <- attributes(x)
+        ml <- t(cbind(attr(x, "match.length"), attr(x, "capture.length")))
+        nm <- attr(x, 'capture.names')
+        dimnames(ml) <- dimnames(y) <- if (any(nzchar(nm))) list(c("", nm), NULL)
+        attr(y, "match.length") <- ml
+        y
+      }
+      attributes(y)[capt.attr] <- NULL
+      y
+    }
+    lapply(dat, process)
+
+  } else {
+
+    m1 <- lapply(regmatches(text, dat), regexec, pattern = pattern, perl = perl)
+    mlen <- lengths(m1)
+    res <- vector("list", length(m1))
+    im <- mlen > 0
+    res[!im] <- dat[!im]
+    res[im] <-
+      Map(
+        function(outer, inner) {
+          tmp <- do.call(cbind, inner)
+          attributes(tmp)[names(attributes(inner))] <- attributes(inner)
+          attr(tmp, 'match.length') <- do.call(cbind, lapply(inner, `attr`, 'match.length'))
+          attr(tmp, 'useBytes') <- attr(outer, 'useBytes')
+          attr(tmp, 'index.type') <- attr(outer, 'index.type')
+          tmp + rep(outer - 1L, each <- nrow(tmp))
+        },
+        dat[im],
+        m1[im]
+      )
+    res
+  }
+}
+
+# The Hebrew Unicode character set (112 code points)
+hebrew_unicode_charset <- "[\U00590-\U005FF]"
+
+# The Arabic Unicode character set (256 code points)
+arabic_unicode_charset <- "[\U00600-\U006FF]"
+
+# The Syriac Unicode character set (80 code points)
+syriac_unicode_charset <- "[\U00700-\U0074F]"
+
+# The Thaana Unicode character set (64 code points)
+thaana_unicode_charset <- "[\U00780-\U007BF]"
+
+# The Samaritan Unicode character set (61 code points)
+samaritan_unicode_charset <- "[\U00800-\U0083F]"
+
+# The Mandaic Unicode character set (32 code points)
+mandaic_unicode_charset <- "[\U00840-\U0085F]"
+
+# The combination of these RTL character sets
+rtl_modern_unicode_charset <-
+  paste(
+    hebrew_unicode_charset,
+    arabic_unicode_charset,
+    syriac_unicode_charset,
+    thaana_unicode_charset,
+    samaritan_unicode_charset,
+    mandaic_unicode_charset,sep = "|"
+  )
+
+

@@ -7,9 +7,18 @@
 local_image(filename, height = 30)
 }
 \arguments{
-\item{filename}{A path to an image file.}
+\item{filename}{\emph{Path to image file}
 
-\item{height}{The absolute height (px) of the image in the table cell.}
+\verb{scalar<character>} --- \strong{required}
+
+A local path to an image file on disk.}
+
+\item{height}{\emph{Height of image}
+
+\verb{scalar<numeric|integer>} --- \emph{default:} \code{30}
+
+The absolute height of the image in the table cell (in \code{"px"} units). By
+default, this is set to \code{"30px"}.}
 }
 \value{
 A character object with an HTML fragment that can be placed inside of
@@ -26,8 +35,7 @@ data cells to target and then include a \code{local_image()} call within the
 required user-defined function (for the \code{fn} argument). If we want to include
 an image in other places (e.g., in the header, within footnote text, etc.) we
 need to use \code{local_image()} within the \code{\link[=html]{html()}} helper function.
-}
-\details{
+
 By itself, the function creates an HTML image tag with an image URI embedded
 within. We can easily experiment with a local PNG or SVG image that's
 available in the \strong{gt} package using the \code{\link[=test_image]{test_image()}} function. Using
@@ -49,8 +57,8 @@ various sizes.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
   pixels = px(seq(10, 35, 5)),
   image = seq(10, 35, 5)
-) \%>\%
-  gt() \%>\%
+) |>
+  gt() |>
   text_transform(
     locations = cells_body(columns = image),
     fn = function(x) \{
@@ -69,7 +77,12 @@ various sizes.
 
 \section{Function ID}{
 
-8-2
+9-2
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{

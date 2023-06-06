@@ -14,47 +14,77 @@ fmt_auto(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The columns to format. Can either be a series of column names
-provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
-focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+
+Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
+column indices, or a select helper function. Examples of select helper
+functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
+\code{columns} being formatted. Alternatively, we can supply a vector of row
+captions within \code{\link[=c]{c()}}, a vector of row indices, or a select helper
+function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}.}
+\code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
+need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
-default) results in all rows in \code{columns} being formatted. Alternatively,
-we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
-indices, or a helper function focused on selections. The select helper
-functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
-\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
-to filter down to the rows we need (e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+\item{scope}{\emph{Scope of automatic formatting}
 
-\item{scope}{The scope of automatic formatting. By default this includes
-\code{"numbers"}-type values and \code{"currency"}-type values though the scope can
-be reduced to a single type of value to format.}
+\verb{mult-kw:[numbers|currency]} --- \emph{default:} \code{c("numbers", "currency")}
 
-\item{lg_num_pref}{The preference toward either scientific notation for very
-small and very large values (\code{"sci"}, the default option), or, suffixed
-numbers (\code{"suf"}, for large values only).}
+By default, the function will format both \code{"numbers"}-type values and
+\code{"currency"}-type values though the scope can be reduced to a single type
+of value to format.}
 
-\item{locale}{An optional locale ID that can be used for formatting values
-according to the locale's rules.}
+\item{lg_num_pref}{\emph{Large-number preference}
+
+\verb{singl-kw:[sci|suf]} --- \emph{default:} \code{"sci"}
+
+When large numbers are present, there can be a fixed preference toward how
+they are formatted. Choices are scientific notation for very small and very
+large values (\code{"sci"}), or, the use of suffixed numbers (\code{"suf"}, for large
+values only).}
+
+\item{locale}{\emph{Locale identifier}
+
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+An optional locale identifier that can be used for formatting values
+according the locale's rules. Examples include \code{"en"} for English (United
+States) and \code{"fr"} for French (France). We can use the \code{\link[=info_locales]{info_locales()}}
+function as a useful reference for all of the locales that are supported. A
+locale ID can be also set in the initial \code{\link[=gt]{gt()}} function call (where it
+would be used automatically by any function with a \code{locale} argument) but a
+\code{locale} value provided here will override that global locale.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{fmt_auto()} function will automatic applying formatting of various types
-in a way that best suits the data table provided. The function will attempt
-format numbers such that they are condensed to an optimal width, either with
-scientific notation or large number suffixing. Currency values are detected
-by currency codes embedded in the column name and formatted in the correct
-way. Although the functionality here is comprehensive it's still possible to
-reduce the scope of automatic formatting with the \code{scope} argument and also
-by choosing a subset of columns and rows to which the formatting will be
-applied.
+The \code{fmt_auto()} function will automatically apply formatting of various
+types in a way that best suits the data table provided. The function will
+attempt to format numbers such that they are condensed to an optimal width,
+either with scientific notation or large-number suffixing. Currency values
+are detected by currency codes embedded in the column name and formatted in
+the correct way. Although the functionality here is comprehensive it's still
+possible to reduce the scope of automatic formatting with the \code{scope}
+argument and also by choosing a subset of columns and rows to which the
+formatting will be applied.
 }
 \section{Targeting cells with \code{columns} and \code{rows}}{
 
@@ -69,8 +99,8 @@ helper like \code{starts_with()}, or, providing a more complex incantation like
 
 \code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
 
-which targets numeric columns that have a maximum value of 100,000 (excluding
-\code{NA}s from consideration).
+which targets numeric columns that have a maximum value greater than
+1,000,000 (excluding any \code{NA}s from consideration).
 
 By default all columns and rows are selected (with the \code{everything()}
 defaults). Cell values that are incompatible with a given formatting function
@@ -100,11 +130,11 @@ more complex predicate expression.
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Format the columns automatically
-with \code{fmt_auto()}.
+Use the \code{\link{exibble}} dataset to create a \strong{gt} table. Format all of the
+columns automatically with the \code{fmt_auto()} function.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt() |>
   fmt_auto()
 }\if{html}{\out{</div>}}
 
@@ -112,17 +142,18 @@ with \code{fmt_auto()}.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_auto_1.png" alt="This image of a table was generated from the first code example in the `fmt_auto()` help file." style="width:100\%;">
 }}
 
-Let's now use \code{\link{countrypops}} to create another \strong{gt} table. Automatically
-format all columns with \code{fmt_auto()} but elect to use large-number suffixing
-instead of scientific notation with the \code{lg_num_pref = "suf"} option.
+Let's now use the \code{\link{countrypops}} dataset to create another \strong{gt} table.
+We'll again use \code{fmt_auto()} to automatically format all columns but this
+time the choice will be made to opt for large-number suffixing instead of
+scientific notation. This is done by using the \code{lg_num_pref = "suf"} option.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::select(country_code_3, year, population) \%>\%
-  dplyr::filter(country_code_3 \%in\% c("CHN", "IND", "USA", "PAK", "IDN")) \%>\%
-  dplyr::filter(year > 1975 & year \%\% 5 == 0) \%>\%
-  tidyr::spread(year, population) \%>\%
-  dplyr::arrange(desc(`2015`)) \%>\%
-  gt(rowname_col = "country_code_3") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::select(country_code_3, year, population) |>
+  dplyr::filter(country_code_3 \%in\% c("CHN", "IND", "USA", "PAK", "IDN")) |>
+  dplyr::filter(year > 1975 & year \%\% 5 == 0) |>
+  tidyr::spread(year, population) |>
+  dplyr::arrange(desc(`2020`)) |>
+  gt(rowname_col = "country_code_3") |>
   fmt_auto(lg_num_pref = "suf")
 }\if{html}{\out{</div>}}
 
@@ -133,19 +164,28 @@ instead of scientific notation with the \code{lg_num_pref = "suf"} option.
 
 \section{Function ID}{
 
-3-17
+3-23
+}
+
+\section{Function Introduced}{
+
+\code{v0.9.0} (Mar 31, 2023)
 }
 
 \seealso{
 Other data formatting functions: 
 \code{\link{data_color}()},
+\code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
 \code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
+\code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_image}()},
+\code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},
@@ -154,13 +194,14 @@ Other data formatting functions:
 \code{\link{fmt_percent}()},
 \code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
+\code{\link{fmt_spelled_num}()},
 \code{\link{fmt_time}()},
+\code{\link{fmt_url}()},
 \code{\link{fmt}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},
 \code{\link{sub_values}()},
-\code{\link{sub_zero}()},
-\code{\link{text_transform}()}
+\code{\link{sub_zero}()}
 }
 \concept{data formatting functions}

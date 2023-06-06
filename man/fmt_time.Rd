@@ -14,33 +14,64 @@ fmt_time(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The columns to format. Can either be a series of column names
-provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
-focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+
+Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
+column indices, or a select helper function. Examples of select helper
+functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
+\code{columns} being formatted. Alternatively, we can supply a vector of row
+captions within \code{\link[=c]{c()}}, a vector of row indices, or a select helper
+function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}.}
+\code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
+need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
-default) results in all rows in \code{columns} being formatted. Alternatively,
-we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
-indices, or a helper function focused on selections. The select helper
-functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
-\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
-to filter down to the rows we need (e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+\item{time_style}{\emph{Predefined style for times}
 
-\item{time_style}{The time style to use. By default this is \code{"iso"} which
-corresponds to how times are formatted within ISO 8601 datetime values. The
-other time styles can be viewed using \code{\link[=info_time_style]{info_time_style()}}.}
+\verb{scalar<character>|scalar<numeric|integer>(1<=val<=25)} --- \emph{default:} \code{"iso"}
 
-\item{pattern}{A formatting pattern that allows for decoration of the
-formatted value. The value itself is represented by \code{{x}} and all other
-characters are taken to be string literals.}
+The time style to use. By default this is the short name \code{"iso"} which
+corresponds to how times are formatted within ISO 8601 datetime values.
+There are 25 time styles in total and their short names can be viewed using
+\code{\link[=info_time_style]{info_time_style()}}.}
 
-\item{locale}{An optional locale ID that can be used for formatting values
-according to the locale's rules.}
+\item{pattern}{\emph{Specification of the formatting pattern}
+
+\verb{scalar<character>} --- \emph{default:} \code{"{x}"}
+
+A formatting pattern that allows for decoration of the formatted value. The
+formatted value is represented by the \code{{x}} (which can be used multiple
+times, if needed) and all other characters will be interpreted as string
+literals.}
+
+\item{locale}{\emph{Locale identifier}
+
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+An optional locale identifier that can be used for formatting values
+according the locale's rules. Examples include \code{"en"} for English (United
+States) and \code{"fr"} for French (France). We can use the \code{\link[=info_locales]{info_locales()}}
+function as a useful reference for all of the locales that are supported. A
+locale ID can be also set in the initial \code{\link[=gt]{gt()}} function call (where it
+would be used automatically by any function with a \code{locale} argument) but a
+\code{locale} value provided here will override that global locale.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -74,8 +105,8 @@ helper like \code{starts_with()}, or, providing a more complex incantation like
 
 \code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
 
-which targets numeric columns that have a maximum value of 100,000 (excluding
-\code{NA}s from consideration).
+which targets numeric columns that have a maximum value greater than
+1,000,000 (excluding any \code{NA}s from consideration).
 
 By default all columns and rows are selected (with the \code{everything()}
 defaults). Cell values that are incompatible with a given formatting function
@@ -163,13 +194,14 @@ can use the \code{\link[=info_locales]{info_locales()}} function to view an info
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{date} and \code{time}
-columns. Format the \code{time} column to have times formatted as \code{hms_p} (time
-style \code{3}).
+Let's use the \code{\link{exibble}} dataset to create a simple, two-column \strong{gt} table
+(keeping only the \code{date} and \code{time} columns). Format the \code{time} column with
+the \code{fmt_time()} function to display times formatted with the \code{"h_m_s_p"}
+time style.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(date, time) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(date, time) |>
+  gt() |>
   fmt_time(
     columns = time,
     time_style = "h_m_s_p"
@@ -180,19 +212,21 @@ style \code{3}).
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_time_1.png" alt="This image of a table was generated from the first code example in the `fmt_time()` help file." style="width:100\%;">
 }}
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{date} and \code{time}
-columns. Format the \code{time} column to have mixed time formats (times after
-16:00 will be different than the others because of the expressions used
-in the \code{rows} argument).
+Again using the \code{\link{exibble}} dataset, let's format the \code{time} column to have
+mixed time formats, where times after 16:00 will be different than the others
+because of the expressions used in the \code{rows} argument. This will involve two
+calls of \code{fmt_time()} with different statements provided for \code{rows}. In the
+first call (times after 16:00) the time style \code{"h_m_s_p"} is used; for the
+second call, \code{"h_m_p"} is the named time style supplied to \code{time_style}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(date, time) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(date, time) |>
+  gt() |>
   fmt_time(
     columns = time,
     rows = time > "16:00",
     time_style = "h_m_s_p"
-  ) \%>\%
+  ) |>
   fmt_time(
     columns = time,
     rows = time <= "16:00",
@@ -204,14 +238,14 @@ in the \code{rows} argument).
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_time_2.png" alt="This image of a table was generated from the second code example in the `fmt_time()` help file." style="width:100\%;">
 }}
 
-Use \code{\link{exibble}} to create another \strong{gt} table, this time only with the
-\code{time} column. Format the \code{time} column to use the \code{"EBhms"} time style
-(which is one of the 'flexible' styles). Also, set the locale to \code{"sv"} to
-get the dates in Swedish.
+Use the \code{\link{exibble}} dataset to create a single-column \strong{gt} table (with only
+the \code{time} column). Format the time values using the \code{"EBhms"} time style
+(which is one of the 'flexible' styles). Also, we'll set the locale to \code{"sv"}
+to get the times in Swedish.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(time) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(time) |>
+  gt() |>
   fmt_time(
     columns = time,
     time_style = "EBhms",
@@ -226,7 +260,12 @@ get the dates in Swedish.
 
 \section{Function ID}{
 
-3-12
+3-14
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
@@ -235,13 +274,17 @@ The vector-formatting version of this function: \code{\link[=vec_fmt_time]{vec_f
 Other data formatting functions: 
 \code{\link{data_color}()},
 \code{\link{fmt_auto}()},
+\code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
 \code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
+\code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_image}()},
+\code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},
@@ -250,12 +293,13 @@ Other data formatting functions:
 \code{\link{fmt_percent}()},
 \code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
+\code{\link{fmt_spelled_num}()},
+\code{\link{fmt_url}()},
 \code{\link{fmt}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},
 \code{\link{sub_values}()},
-\code{\link{sub_zero}()},
-\code{\link{text_transform}()}
+\code{\link{sub_zero}()}
 }
 \concept{data formatting functions}

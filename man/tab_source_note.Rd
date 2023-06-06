@@ -7,11 +7,20 @@
 tab_source_note(data, source_note)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{source_note}{Text to be used in the source note. We can optionally use
-the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} functions to style the text as Markdown or to
-retain HTML elements in the text.}
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{source_note}{\emph{Source note text}
+
+\verb{scalar<character>} --- \strong{required}
+
+Text to be used in the source note. We can optionally use the \code{\link[=md]{md()}} and
+\code{\link[=html]{html()}} functions to style the text as Markdown or to retain HTML elements
+in the text.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -26,13 +35,15 @@ or, if the table is intended for HTML output, we can include HTML formatting.
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. Use \code{tab_source_note()} to add a
-source note to the table footer that cites the data source.
+With three columns from the \code{\link{gtcars}} dataset, let's create a \strong{gt} table.
+We can use the \code{tab_source_note()} function to add a source note to the table
+footer. Here we are citing the data source but this function can be used for
+any text you'd prefer to display in the footer section.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
-  dplyr::select(mfr, model, msrp) \%>\%
-  dplyr::slice(1:5) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::select(mfr, model, msrp) |>
+  dplyr::slice(1:5) |>
+  gt() |>
   tab_source_note(source_note = "From edmunds.com")
 }\if{html}{\out{</div>}}
 
@@ -44,6 +55,11 @@ source note to the table footer that cites the data source.
 \section{Function ID}{
 
 2-8
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{

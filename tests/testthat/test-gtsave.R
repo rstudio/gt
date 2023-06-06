@@ -1,6 +1,3 @@
-skip_on_ci()
-skip_on_covr()
-
 test_that("The `gtsave()` function creates an HTML file based on the extension", {
 
   # Create a filename with path, having the
@@ -31,7 +28,7 @@ test_that("The `gtsave()` function creates an HTML file based on the extension",
   # Expect that CSS styles are not inlined
   (path_1 %>%
       readLines()) %>% paste(collapse = "\n") %>%
-    tidy_grepl("<style>html \\{") %>%
+    tidy_grepl("<style>#[a-z]{10} table \\{") %>%
     expect_true()
 
   # Create a filename with path, having the
@@ -62,7 +59,7 @@ test_that("The `gtsave()` function creates an HTML file based on the extension",
   # Expect that CSS styles are not inlined
   (path_2 %>%
       readLines()) %>% paste(collapse = "\n") %>%
-    tidy_grepl("<style>html \\{") %>%
+    tidy_grepl("<style>#[a-z]{10} table \\{") %>%
     expect_true()
 
   # Create a filename with path, having the
@@ -90,7 +87,7 @@ test_that("The `gtsave()` function creates an HTML file based on the extension",
   # Expect that CSS styles are inlined
   (path_3 %>%
       readLines()) %>% paste(collapse = "\n") %>%
-    tidy_grepl("<style>body\\{") %>%
+    tidy_grepl("style=\"-webkit-font-smoothing: antialiased;") %>%
     expect_true()
 
   # Create a filename with path, having the
@@ -122,11 +119,14 @@ test_that("The `gtsave()` function creates an HTML file based on the extension",
   # Expect that CSS styles are inlined
   (path_4 %>%
       readLines()) %>% paste(collapse = "\n") %>%
-    tidy_grepl("<style>body\\{") %>%
+    tidy_grepl("style=\"-webkit-font-smoothing: antialiased;") %>%
     expect_true()
 })
 
-test_that("HTML saving with `gtsave()` is succesful with different path defs", {
+test_that("HTML saving with `gtsave()` is successful with different path defs", {
+
+  skip_on_ci()
+  skip_on_covr()
 
   #
   # [#1] Relative filename, default path
@@ -267,6 +267,9 @@ test_that("HTML saving with `gtsave()` is succesful with different path defs", {
 })
 
 test_that("HTML saving with `gt_save_html()` with different path defs works", {
+
+  skip_on_ci()
+  skip_on_covr()
 
   #
   # [#1] Relative filename, default path
@@ -473,6 +476,9 @@ test_that("The `gtsave()` function stops in some cases", {
 
 test_that("The `gtsave()` function creates docx files as expected", {
 
+  skip_on_ci()
+  skip_on_covr()
+
   gt_exibble <- exibble %>% gt()
 
   temp_docx <- file.path(tempdir(),"test.docx")
@@ -494,12 +500,17 @@ test_that("The `gtsave()` function creates docx files as expected", {
 
 test_that("The `gtsave()` fn creates docx files even when a table has special characters", {
 
+  skip_on_ci()
+  skip_on_covr()
+
   # addresses issue raised in gh issue #121
 
-  gt_exibble <- data.frame(
-    a = c("<", "b"),
-    b = 1:2,
-    stringsAsFactors = FALSE) %>%
+  gt_exibble <-
+    data.frame(
+      a = c("<", "b"),
+      b = 1:2,
+      stringsAsFactors = FALSE
+    ) %>%
     gt()
 
   temp_docx <- file.path(tempdir(),"test.docx")

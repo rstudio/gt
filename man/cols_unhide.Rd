@@ -7,10 +7,22 @@
 cols_unhide(data, columns)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The column names to unhide from the output display table.
-Values provided that do not correspond to column names will be disregarded.}
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+
+The columns to unhide in the output display table. Can either be a series
+of column names provided in \code{\link[=c]{c()}}, a vector of column indices, or a select
+helper function. Examples of select helper functions include
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -33,14 +45,15 @@ already-visible columns.
 \section{Examples}{
 
 
-Use \code{\link{countrypops}} to create a \strong{gt} table. Hide the \code{country_code_2} and
-\code{country_code_3} columns with \code{\link[=cols_hide]{cols_hide()}}.
+Let's use a small portion of the \code{\link{countrypops}} dataset to create a \strong{gt}
+table. We'll hide the \code{country_code_2} and \code{country_code_3} columns with the
+\code{\link[=cols_hide]{cols_hide()}} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
-  countrypops \%>\%
-  dplyr::filter(country_name == "Mongolia") \%>\%
-  tail(5) \%>\%
-  gt() \%>\%
+  countrypops |>
+  dplyr::filter(country_name == "Mongolia") |>
+  tail(5) |>
+  gt() |>
   cols_hide(columns = c(country_code_2, country_code_3))
 
 tab_1
@@ -54,7 +67,7 @@ If the \code{tab_1} object is provided without the code or source data to
 regenerate it, and, the user wants to reveal otherwise hidden columns then
 the \code{cols_unhide()} function becomes useful.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% cols_unhide(columns = country_code_2)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |> cols_unhide(columns = country_code_2)
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
@@ -64,7 +77,12 @@ the \code{cols_unhide()} function becomes useful.
 
 \section{Function ID}{
 
-4-10
+5-10
+}
+
+\section{Function Introduced}{
+
+\code{v0.3.0} (May 12, 2021)
 }
 
 \seealso{

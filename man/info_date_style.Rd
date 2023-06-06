@@ -31,7 +31,12 @@ by supplying a number code to the \code{\link[=fmt_date]{fmt_date()}} function).
 
 \section{Function ID}{
 
-10-1
+11-1
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{

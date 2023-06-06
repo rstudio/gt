@@ -197,8 +197,8 @@ test_that("Extraction of table cells works well", {
       fmt_markdown(columns = a) %>%
       extract_cells(columns = a, output = "word"),
     c(
-      "<w:rPr><w:i>true</w:i></w:rPr>hey<w:rPr><w:i>false</w:i></w:rPr>",
-      "<w:rPr><w:b w:val=\"true\"></w:b></w:rPr>there<w:rPr><w:b w:val=\"false\"></w:b></w:rPr>"
+      "<md_container><w:p><w:pPr></w:pPr><w:r>\n  <w:rPr>\n    <w:i/>\n  </w:rPr>\n  <w:t xml:space=\"preserve\">hey</w:t>\n</w:r></w:p></md_container>",
+      "<md_container><w:p><w:pPr></w:pPr><w:r>\n  <w:rPr>\n    <w:b w:val=\"true\"/>\n  </w:rPr>\n  <w:t xml:space=\"preserve\">there</w:t>\n</w:r></w:p></md_container>"
     )
   )
 

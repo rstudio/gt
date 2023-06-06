@@ -7,8 +7,12 @@
 test_image(type = c("png", "svg"))
 }
 \arguments{
-\item{type}{The type of the image, which can either be \code{png} (the default) or
-\code{svg}.}
+\item{type}{\emph{The image type}
+
+\verb{singl-kw:[png|svg]} --- \emph{default:} \code{"png"}
+
+The type of image to produce here can either be \code{"png"} (the default) or
+\code{"svg"}.}
 }
 \value{
 A character vector with a single path to an image file.
@@ -21,7 +25,12 @@ since we test various sizes of the test image within that function.
 }
 \section{Function ID}{
 
-8-4
+9-4
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{

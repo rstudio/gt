@@ -7,10 +7,19 @@
 opt_vertical_padding(data, scale = 1)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{scale}{A scale factor by which the vertical padding will be adjusted.
-Must be a number between \code{0} and \code{3}.}
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{scale}{\emph{Scale factor}
+
+\verb{scalar<numeric|integer>(0>=val>=3)} --- \emph{default:} \code{1}
+
+A scale factor by which the vertical padding will be adjusted. Must be a
+number between \code{0} and \code{3}.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -34,30 +43,33 @@ the following eight options in \code{\link[=tab_options]{tab_options()}}:
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table with a number of table parts added.
-Contract the vertical padding across the entire table with
-\code{opt_vertical_padding()}.
+Use the \code{\link{exibble}} dataset to create a \strong{gt} table with a number of table
+parts added (using functions like \code{\link[=summary_rows]{summary_rows()}}, \code{\link[=grand_summary_rows]{grand_summary_rows()}},
+and more). Following that, we'll lessen the amount of vertical padding across
+the entire table with \code{opt_vertical_padding()}. Using a \code{scale} value of
+\code{0.25} (down from the default of \code{1}) means the the vertical space will be
+greatly reduced, resulting in a more compact table.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  gt(rowname_col = "row", groupname_col = "group") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt(rowname_col = "row", groupname_col = "group") |>
   summary_rows(
     groups = "grp_a",
     columns = c(num, currency),
     fns = c("min", "max")
-  ) \%>\%
+  ) |>
   grand_summary_rows(
     columns = currency,
     fns = total ~ sum(., na.rm = TRUE)
-  ) \%>\%
-  tab_source_note(source_note = "This is a source note.") \%>\%
+  ) |>
+  tab_source_note(source_note = "This is a source note.") |>
   tab_footnote(
     footnote = "This is a footnote.",
     locations = cells_body(columns = 1, rows = 1)
-  ) \%>\%
+  ) |>
   tab_header(
     title = "The title of the table",
     subtitle = "The table's subtitle"
-  ) \%>\%
+  ) |>
   opt_vertical_padding(scale = 0.25)
 }\if{html}{\out{</div>}}
 
@@ -68,7 +80,12 @@ Contract the vertical padding across the entire table with
 
 \section{Function ID}{
 
-9-4
+10-7
+}
+
+\section{Function Introduced}{
+
+\code{v0.4.0} (February 15, 2022)
 }
 
 \seealso{
@@ -77,7 +94,9 @@ Other table option functions:
 \code{\link{opt_all_caps}()},
 \code{\link{opt_css}()},
 \code{\link{opt_footnote_marks}()},
+\code{\link{opt_footnote_spec}()},
 \code{\link{opt_horizontal_padding}()},
+\code{\link{opt_interactive}()},
 \code{\link{opt_row_striping}()},
 \code{\link{opt_stylize}()},
 \code{\link{opt_table_font}()},

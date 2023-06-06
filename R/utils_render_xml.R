@@ -1,3 +1,27 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2023 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 #
 # XML tag functions
 #
@@ -328,6 +352,53 @@ xml_pStyle <- function(
   )
 }
 
+# paragraph border
+
+xml_pBdr <- function(..., app = "word"){
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("pBdr", app),
+    varArgs = list(
+      htmltools::HTML(paste0(...))
+    )
+  )
+}
+
+xml_numPr <- function(..., app = "word"){
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("numPr", app),
+    varArgs = list(
+      htmltools::HTML(paste0(...))
+    )
+  )
+}
+
+xml_ilvl <- function(..., val, app = "word"){
+
+  stopifnot(is.numeric(val))
+
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("ilvl", app),
+    varArgs = list(
+      htmltools::HTML(paste0(...)),
+      `w:val` = val
+    )
+  )
+}
+
+xml_numId <- function(..., val, app = "word"){
+
+  stopifnot(is.numeric(val))
+  stopifnot(val > 0)
+
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("numId", app),
+    varArgs = list(
+      htmltools::HTML(paste0(...)),
+      `w:val` = val
+    )
+  )
+}
+
 # Paragraph alignment
 xml_jc <- function(
     val = c("left", "center", "right"),
@@ -368,6 +439,18 @@ xml_spacing <- function(
   )
 }
 
+# hyperlink
+
+xml_hyperlink <- function(..., url, app = "word"){
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("hyperlink", app),
+    varArgs = list(
+      `r:id` = url,
+      htmltools::HTML(paste0(...))
+      )
+  )
+}
+
 # Text run
 xml_r <- function(..., app = "word") {
 
@@ -383,6 +466,22 @@ xml_rPr <- function(..., app = "word") {
   htmltools::tag(
     `_tag_name` = xml_tag_type("rPr", app),
     varArgs = list(htmltools::HTML(paste0(...)))
+  )
+}
+
+# run style
+xml_rStyle <- function(
+  ...,
+  val = "Compact",
+  app = "word"
+) {
+
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("rStyle", app),
+    varArgs = list(
+      htmltools::HTML(paste0(...)),
+      `w:val` = val
+    )
   )
 }
 
@@ -458,7 +557,7 @@ xml_i <- function(active = TRUE, app = "word") {
 
   htmltools::tag(
     `_tag_name` = xml_tag_type("i", app),
-    varArgs = list(tolower(as.character(active)))
+    varArgs = list()
   )
 }
 
@@ -488,11 +587,14 @@ xml_shd <- function(fill = "auto", app = "word") {
 }
 
 # Text break
-xml_br <- function(app = "word") {
+xml_br <- function(type = "textWrapping", clear = "all", app = "word") {
 
   htmltools::tag(
     `_tag_name` = xml_tag_type("br", app),
-    varArgs = list()
+    varArgs = list(
+      `w:type` = type,
+      `w:clear` = clear
+    )
   )
 }
 
@@ -619,21 +721,40 @@ xml_table_autonum <- function(
   )
 }
 
-
 #' Transform a footnote mark to an XML representation
 #'
 #' @noRd
-footnote_mark_to_xml <- function(mark) {
+footnote_mark_to_xml <- function(
+    data,
+    mark,
+    location = c("ref", "ftr")
+) {
+
+  location <- match.arg(location)
+
+  if (length(mark) == 1 && is.na(mark)) {
+    return("")
+  }
+
+  spec <- get_footnote_spec_by_location(data = data, location = location)
+
+  if (is.null(spec)) {
+    spec <- "^i"
+  }
+
+  if (grepl("\\(|\\[", spec)) mark <- paste0("(", mark)
+  if (grepl("\\)|\\]", spec)) mark <- paste0(mark, ")")
 
   as.character(
-    htmltools::tagList(
+    xml_r(
       xml_rPr(
-        xml_baseline_adj(v_align = "superscript"),
-        xml_i(active = TRUE),
-        xml_t(mark),
-        xml_i(active = FALSE),
-        xml_baseline_adj(v_align = "baseline")
-      )
+        xml_baseline_adj(
+          v_align = if (grepl("\\^", spec)) "superscript" else "baseline"
+        ),
+        if (grepl("i", spec)) xml_i(active = TRUE) else NULL,
+        if (grepl("b", spec)) xml_b(active = TRUE) else NULL
+      ),
+      xml_t(mark)
     )
   )
 }
@@ -743,8 +864,17 @@ create_table_caption_component_xml <- function(
   styles_tbl <- dt_styles_get(data = data)
   subtitle_defined <- dt_heading_has_subtitle(data = data)
 
+  header_title_style <- styles_tbl %>%
+    dplyr::filter(
+      locname == "title"
+    ) %>%
+    dplyr::pull("styles") %>%
+    .[1] %>% .[[1]]
+
   # Get table options
   table_font_color <- dt_options_get_value(data, option = "table_font_color")
+
+  title_caption_string <- parse_to_xml(heading$title)
 
   # Get the footnote marks for the title
   if ("title" %in% footnotes_tbl$locname) {
@@ -756,39 +886,63 @@ create_table_caption_component_xml <- function(
       )
 
     footnote_title_marks <-
-      footnote_mark_to_xml(mark = footnote_title_marks$fs_id_c)
+      footnote_mark_to_xml(
+        data = data,
+        mark = footnote_title_marks$fs_id_c
+      ) %>%
+      as_xml_node() %>%
+      .[[1]]
 
-  } else {
-    footnote_title_marks <- ""
+    title_caption_string %>%
+      xml_add_child(
+        footnote_title_marks
+      )
   }
 
-  title_caption <-
-    as.character(
-      xml_p_ns(
-        xml_pPr(
-          xml_pStyle(val = "caption"),
-          xml_color(color = table_font_color),
-          xml_jc(val = align),
-          if (keep_with_next) { xml_keepNext() }
-        ),
-        xml_table_autonum(
-          font = xml_r_font(),
-          size = xml_sz(val = 24)
-        ),
-        xml_r(
-          xml_rPr(
-            xml_r_font(),
-            xml_sz(val = 24)
-          ),
-          xml_t(
-            paste0(heading$title, footnote_title_marks),
-            xml_space = "preserve"
-          )
-        )
+  title_caption_string <- as.character(title_caption_string) %>%
+    paste0("<md_container>",.,"</md_container>")
+
+  title_caption_xml <-
+    process_cell_content(
+      x = title_caption_string,
+      font = header_title_style[["cell_text"]][["font"]] %||% "Calibri",
+      size = header_title_style[["cell_text"]][["size"]] %||% 24,
+      whitespace = header_title_style[["cell_text"]][["whitespace"]],
+      paragraph_style = "caption",
+      color = header_title_style[["cell_text"]][["color"]] %||% table_font_color,
+      align = header_title_style[["cell_text"]][["align"]] %||% align,
+      keep_with_next = keep_with_next
+    ) %>%
+    as_xml_node()
+
+  autonum_node_xml <-
+    xml_table_autonum(
+      font = xml_r_font(header_title_style[["cell_text"]][["font"]] %||% "Calibri"),
+      size = xml_sz(val = header_title_style[["cell_text"]][["size"]] %||% 24)
+    ) %>%
+    as_xml_node()
+
+  for (autonum_node in rev(autonum_node_xml)) {
+
+    title_caption_xml %>%
+      xml_add_child(
+        autonum_node,
+        .where = 1
       )
-    )
+  }
+
+  title_caption <- as.character(title_caption_xml)
 
   if (subtitle_defined) {
+
+    header_subtitle_style <- styles_tbl %>%
+      dplyr::filter(
+        locname == "subtitle"
+      ) %>%
+      dplyr::pull("styles") %>%
+      .[1] %>% .[[1]]
+
+    subtitle_caption_string <- parse_to_xml(heading$subtitle)
 
     # Get the footnote marks for the subtitle
     if ("subtitle" %in% footnotes_tbl$locname) {
@@ -800,32 +954,35 @@ create_table_caption_component_xml <- function(
         )
 
       footnote_subtitle_marks <-
-        footnote_mark_to_xml(mark = footnote_subtitle_marks$fs_id_c)
+        footnote_mark_to_xml(
+          data = data,
+          mark = footnote_subtitle_marks$fs_id_c) %>%
+        as_xml_node() %>%
+        .[[1]]
 
-    } else {
-      footnote_subtitle_marks <- ""
+      subtitle_caption_string %>%
+        xml_add_child(
+          footnote_subtitle_marks
+        )
     }
 
+    subtitle_caption_string <-
+      paste0(
+        "<md_container>",
+        as.character(subtitle_caption_string),
+        "</md_container>"
+      )
+
     subtitle_caption <-
-      as.character(
-        xml_p_ns(
-          xml_pPr(
-            xml_pStyle(val = "caption"),
-            xml_color(color = table_font_color),
-            xml_jc(val = align),
-            if (keep_with_next) { xml_keepNext() }
-          ),
-          xml_r(
-            xml_rPr(
-              xml_r_font(),
-              xml_sz(val = 20)
-            ),
-            xml_t(
-              paste0(heading$subtitle, footnote_subtitle_marks),
-              xml_space = "preserve"
-            )
-          )
-        )
+      process_cell_content(
+        x = subtitle_caption_string,
+        font = header_subtitle_style[["cell_text"]][["font"]] %||% "Calibri",
+        size = header_subtitle_style[["cell_text"]][["size"]] %||% 20,
+        whitespace = header_subtitle_style[["cell_text"]][["whitespace"]],
+        paragraph_style = "caption",
+        align = header_subtitle_style[["cell_text"]][["align"]] %||% align,
+        keep_with_next = keep_with_next,
+        color = header_subtitle_style[["cell_text"]][["color"]] %||% table_font_color
       )
 
     title_caption <- c(title_caption, subtitle_caption)
@@ -844,6 +1001,7 @@ create_table_caption_component_xml <- function(
 create_heading_component_xml <- function(
     data,
     split = FALSE,
+    align = "center",
     keep_with_next = TRUE
 ) {
 
@@ -857,6 +1015,13 @@ create_heading_component_xml <- function(
   styles_tbl <- dt_styles_get(data = data)
   stub_components <- dt_stub_components(data = data)
   subtitle_defined <- dt_heading_has_subtitle(data = data)
+
+  header_title_style <- styles_tbl %>%
+    dplyr::filter(
+      locname == "title"
+    ) %>%
+    dplyr::pull("styles") %>%
+    .[1] %>% .[[1]]
 
   # Obtain the number of visible columns in the built table
   n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
@@ -877,6 +1042,9 @@ create_heading_component_xml <- function(
   heading_border_bottom_color <- dt_options_get_value(data, option = "heading_border_bottom_color")
 
   # Get the footnote marks for the title
+  title_caption <- parse_to_xml(heading$title)
+
+  # Get the footnote marks for the title
   if ("title" %in% footnotes_tbl$locname) {
 
     footnote_title_marks <-
@@ -886,79 +1054,123 @@ create_heading_component_xml <- function(
       )
 
     footnote_title_marks <-
-      footnote_mark_to_xml(mark = footnote_title_marks$fs_id_c)
+      footnote_mark_to_xml(
+        data = data,
+        mark = footnote_title_marks$fs_id_c
+      ) %>%
+      as_xml_node() %>%
+      .[[1]]
 
-  } else {
-    footnote_title_marks <- ""
-  }
-
-  # Get the footnote marks for the subtitle
-  if (subtitle_defined && "subtitle" %in% footnotes_tbl$locname) {
-
-    footnote_subtitle_marks <-
-      coalesce_marks(
-        fn_tbl = footnotes_tbl,
-        locname = "subtitle"
+    title_caption %>%
+      xml_add_child(
+        footnote_title_marks
       )
 
-    footnote_subtitle_marks <-
-      footnote_mark_to_xml(mark = footnote_subtitle_marks$fs_id_c)
-
-  } else {
-    footnote_subtitle_marks <- ""
   }
 
-  title_html <-
-    htmltools::tagList(
-      xml_t(
-        paste0(heading$title, footnote_title_marks)
-      ),
-      if (subtitle_defined) {
-        htmltools::tagList(
-          xml_br(),
-          xml_r(
-            xml_rPr(
-              xml_r_font(),
-              xml_sz(val = 16)
-            ),
-            xml_t(paste0(heading$subtitle, footnote_subtitle_marks),
-                  xml_space = "preserve")
-          )
+  title_caption <- as.character(title_caption)
+
+  if (subtitle_defined) {
+
+    # Get the footnote marks for the subtitle
+    subtitle_caption_string <- parse_to_xml(heading$subtitle)
+
+    # Get the footnote marks for the subtitle
+    if ("subtitle" %in% footnotes_tbl$locname) {
+
+      footnote_subtitle_marks <-
+        coalesce_marks(
+          fn_tbl = footnotes_tbl,
+          locname = "subtitle"
         )
-      }
-    )
 
-  title_row <-
-    xml_tr(
-      xml_trPr(
-        if (!split) { xml_cantSplit() },
-        xml_tbl_header()
-      ),
-      xml_table_cell(
-        text = title_html,
-        size = 24,
-        color = table_font_color,
-        align = "center",
+      footnote_subtitle_marks <-
+        footnote_mark_to_xml(
+          data = data,
+          mark = footnote_subtitle_marks$fs_id_c
+        ) %>%
+        as_xml_node() %>%
+        .[[1]]
+
+      subtitle_caption_string %>%
+        xml_add_child(
+          footnote_subtitle_marks
+        )
+    }
+
+    header_subtitle_style <-
+      styles_tbl %>%
+      dplyr::filter(
+        locname == "subtitle"
+      ) %>%
+      dplyr::pull("styles") %>%
+      .[1] %>% .[[1]]
+
+    subtitle_caption_string <-
+      as.character(subtitle_caption_string) %>%
+      paste0("<md_container>",.,"</md_container>") %>%
+      process_cell_content(
+        size = header_subtitle_style[["cell_text"]][["size"]] %||% 16,
+        color = header_subtitle_style[["cell_text"]][["color"]] %||% table_font_color,
+        align = header_subtitle_style[["cell_text"]][["align"]] %||% "center",
         col_span = n_cols,
-        border = if (table_border_top_include) {
-          list(
-            "top" = cell_border(
-              type = "single",
-              size = 16,
-              color = heading_border_bottom_color
-            ),
-            "bottom" = cell_border(
-              type = "single",
-              size = 16,
-              color = heading_border_bottom_color
+        whitespace = header_subtitle_style[["cell_text"]][["whitespace"]],
+        keep_with_next = keep_with_next
+      )
+
+    title_caption <- paste0(
+      title_caption,
+      subtitle_caption_string
+    )
+  }
+
+  title_caption <-
+    paste0("<md_container>", title_caption ,"</md_container>")
+
+  title_section <-
+    htmltools::tagList(
+      xml_tr(
+        xml_trPr(
+          if (!split) {
+            xml_cantSplit()
+          },
+          xml_tbl_header()
+        ),
+        xml_table_cell(
+          content = title_caption,
+          font = header_title_style[["cell_text"]][["font"]] %||% "Calibri",
+          size = header_title_style[["cell_text"]][["size"]] %||% 24,
+          whitespace = header_title_style[["cell_text"]][["whitespace"]],
+          paragraph_style = "caption",
+          color = header_title_style[["cell_text"]][["color"]] %||% table_font_color,
+          align = header_title_style[["cell_text"]][["align"]] %||% align,
+          col_span = n_cols,
+          border = if (table_border_top_include) {
+            c(
+              list(
+                "top" = cell_border(
+                  type = "single",
+                  size = 16,
+                  color = heading_border_bottom_color
+                )
+              ),
+              if (!subtitle_defined) {
+                list(
+                  "bottom" = cell_border(
+                    type = "single",
+                    size = 16,
+                    color = heading_border_bottom_color
+                  )
+                )
+              }
             )
-          )
-        },
-        keep_with_next = TRUE
+          },
+          keep_with_next = TRUE
+        )
       )
     )
 
-  htmltools::tagList(title_row)
+  title_section
 }
 
 #' Create the columns component of a table (OOXML)
@@ -1042,7 +1254,7 @@ create_columns_component_xml <- function(
 
       table_cell_vals[[length(table_cell_vals) + 1]] <-
         xml_table_cell(
-          text = headings_labels[1],
+          content = headings_labels[1],
           font = cell_style[["cell_text"]][["font"]],
           size = cell_style[["cell_text"]][["size"]] %||% 20,
           color = cell_style[["cell_text"]][["color"]],
@@ -1091,14 +1303,14 @@ create_columns_component_xml <- function(
 
     table_cell_vals[[length(table_cell_vals) + 1]] <-
       xml_table_cell(
-        text = headings_labels[i + stub_available],
+        content = headings_labels[i + stub_available],
         font = cell_style[["cell_text"]][["font"]],
         size = cell_style[["cell_text"]][["size"]] %||% 20,
         color = cell_style[["cell_text"]][["color"]],
         style = cell_style[["cell_text"]][["style"]],
         stretch = cell_style[["cell_text"]][["stretch"]],
         whitespace = cell_style[["cell_text"]][["whitespace"]],
-        align = cell_style[["cell_text"]][["align"]],
+        align = cell_style[["cell_text"]][["align"]] %||% col_alignment[i],
         v_align = cell_style[["cell_text"]][["v_align"]],
         fill = cell_style[["cell_fill"]][["color"]],
         border = list(
@@ -1163,7 +1375,7 @@ create_columns_component_xml <- function(
 
           spanner_cell_vals[[length(spanner_cell_vals) + 1]] <-
             xml_table_cell(
-              text = headings_labels[1],
+              content = headings_labels[1],
               font = cell_style[["cell_text"]][["font"]] %||% "Calibri",
               size = cell_style[["cell_text"]][["size"]] %||% 20,
               color = cell_style[["cell_text"]][["color"]],
@@ -1244,7 +1456,7 @@ create_columns_component_xml <- function(
             ## check if there are any open cells above to determine
             spanner_cell_vals[[length(spanner_cell_vals) + 1]] <-
               xml_table_cell(
-                text = spanner_row_values[i],
+                content = spanner_row_values[i],
                 font = cell_style[["cell_text"]][["font"]],
                 size = cell_style[["cell_text"]][["size"]] %||% 20,
                 color = cell_style[["cell_text"]][["color"]],
@@ -1406,13 +1618,14 @@ create_body_component_xml <- function(
             dplyr::pull("styles") %>%
             .[1] %>% .[[1]]
 
+
           group_heading_row <-
             xml_tr(
               xml_trPr(
                 if (!split) { xml_cantSplit() }
               ),
               xml_table_cell(
-                text = htmltools::HTML(group_label),
+                content = group_label,
                 font = cell_style[["cell_text"]][["font"]],
                 size = cell_style[["cell_text"]][["size"]] %||% 20,
                 color = cell_style[["cell_text"]][["color"]],
@@ -1463,7 +1676,7 @@ create_body_component_xml <- function(
 
           row_cells[[length(row_cells) + 1]] <-
             xml_table_cell(
-              text = output_df_row_as_vec(i)[y],
+              content = output_df_row_as_vec(i)[y],
               font = cell_style[["cell_text"]][["font"]],
               size = cell_style[["cell_text"]][["size"]],
               color = cell_style[["cell_text"]][["color"]],
@@ -1614,13 +1827,18 @@ create_source_notes_component_xml <- function(
       source_note,
       function(x) {
 
+        source_note_xml <- parse_to_xml(x)
+
+        source_note_content <- as.character(source_note_xml) %>%
+          paste0("<md_container>", ., "</md_container>")
+
         as.character(
           xml_tr(
             xml_trPr(
               if (!split) { xml_cantSplit() }
             ),
             xml_table_cell(
-              text = htmltools::HTML(x),
+              content = source_note_content,
               font = cell_style[["cell_text"]][["font"]],
               size = cell_style[["cell_text"]][["size"]] %||% 20,
               color = cell_style[["cell_text"]][["color"]],
@@ -1666,7 +1884,8 @@ create_footnotes_component_xml <- function(
       locname == "footnotes"
     ) %>%
     dplyr::pull("styles") %>%
-    .[1] %>% .[[1]]
+    .[1] %>%
+    .[[1]]
 
   n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
 
@@ -1694,44 +1913,48 @@ create_footnotes_component_xml <- function(
     lapply(
       seq_along(footnote_ids),
       function(x) {
+
+        footnote_text_xml <- parse_to_xml(footnote_text[[x]])
+
+        # Get the footnote marks for the subtitle. Don't write
+        # marks when footnote value is NA or ""
+        if (!is.na(footnote_ids[x]) & !identical(footnote_ids[x], "")) {
+
+          footnote_id_xml <- footnote_mark_to_xml(
+            data = data,
+            mark = footnote_ids[x],
+            location = "ftr"
+            ) %>%
+            as_xml_node()
+
+          footnote_text_xml %>%
+            xml_add_child(
+              footnote_id_xml,
+              .where = 1
+            )
+        }
+
+        footnote_content <-
+          paste0(
+            "<md_container>",
+            as.character(footnote_text_xml),
+            "</md_container>"
+          )
+
         as.character(
           xml_tr(
             xml_trPr(
-              if (!split) {xml_cantSplit() }
+              if (!split) { xml_cantSplit() }
             ),
             xml_table_cell(
-              paragraph_xml = htmltools::tagList(
-                xml_r(
-                  xml_rPr(
-                    xml_r_font(
-                      ascii_font = cell_style[["cell_text"]][["font"]] %||% "Calibri",
-                      ansi_font = cell_style[["cell_text"]][["font"]] %||% "Calibri"
-                    ),
-                    if (!is.null(cell_style[["cell_text"]][["color"]])) {
-                      xml_color(color = cell_style[["cell_text"]][["color"]])
-                    },
-                    xml_sz(val = cell_style[["cell_text"]][["size"]] %||% 20),
-                    xml_baseline_adj(v_align = "superscript"),
-                    xml_i()
-                  ),
-                  xml_t(if (!is.na(footnote_ids[x])) { footnote_ids[x] },xml_space = white_space_to_t_xml_space(cell_style[["cell_text"]][["whitespace"]]))
-                ),
-                xml_r(
-                  xml_rPr(
-                    xml_r_font(
-                      ascii_font = cell_style[["cell_text"]][["font"]] %||% "Calibri",
-                      ansi_font = cell_style[["cell_text"]][["font"]] %||% "Calibri"
-                    ),
-                    if (!is.null(cell_style[["cell_text"]][["color"]])) {
-                      xml_color(color = cell_style[["cell_text"]][["color"]])
-                    },
-                    xml_sz(val = cell_style[["cell_text"]][["size"]] %||% 20),
-                    xml_baseline_adj(v_align = "baseline")
-                  ),
-                  xml_t(footnote_text[x], xml_space = white_space_to_t_xml_space(cell_style[["cell_text"]][["whitespace"]]))
-                )
-              ),
+              content = footnote_content,
+              font = cell_style[["cell_text"]][["font"]],
+              size = cell_style[["cell_text"]][["size"]],
+              color = cell_style[["cell_text"]][["color"]],
+              style = cell_style[["cell_text"]][["style"]],
+              weight = cell_style[["cell_text"]][["weight"]],
               stretch = cell_style[["cell_text"]][["stretch"]],
+              whitespace = cell_style[["cell_text"]][["whitespace"]],
               align = cell_style[["cell_text"]][["align"]],
               v_align = cell_style[["cell_text"]][["v_align"]],
               col_span = n_cols,
@@ -1743,7 +1966,7 @@ create_footnotes_component_xml <- function(
       }
     )
 
-  paste0(unlist(footnote_rows), collapse = "")
+  paste0(unlist(footnote_rows), collapse = "\n")
 }
 
 summary_rows_xml <- function(
@@ -1796,7 +2019,7 @@ summary_rows_xml <- function(
 
         summary_row_cells[[length(summary_row_cells) + 1]] <-
           xml_table_cell(
-            text = summary_df_row(j)[y],
+            content = summary_df_row(j)[y],
             font = cell_style[["cell_text"]][["font"]],
             size = cell_style[["cell_text"]][["size"]],
             color = cell_style[["cell_text"]][["color"]],
@@ -1927,6 +2150,22 @@ white_space_to_t_xml_space <- function(x = NULL){
   spacing
 }
 
+white_space_in_text <- function(x, whitespace = NULL){
+
+  ##options for white space: normal, nowrap, pre, pre-wrap, pre-line, break-spaces
+  ## normal drops all newlines and collapse spaces
+  ## general behavior based on: https://developer.mozilla.org/en-US/docs/Web/CSS/white-space
+
+  ## collapse white spaces unless preserving it
+  if(!isTRUE(whitespace %in% c( "pre", "pre-wrap", "break-spaces"))){
+    x <- gsub("\\s+|\\t+"," ",x)
+  }
+
+  x
+
+}
+
+
 #' define ooxml table cells
 #'
 #' paragrah
@@ -1934,7 +2173,7 @@ white_space_to_t_xml_space <- function(x = NULL){
 #' @importFrom rlang `%||%`
 #' @noRd
 xml_table_cell <- function(
-    text = NULL,
+    content = NULL,
     size = NULL,
     font = NULL,
     color = NULL,
@@ -1942,6 +2181,7 @@ xml_table_cell <- function(
     weight = NULL,
     stretch = NULL,
     whitespace = NULL,
+    paragraph_style = NULL,
     align = NULL,
     v_align = NULL,
     col_span = NULL,
@@ -1949,8 +2189,7 @@ xml_table_cell <- function(
     fill = NULL,
     margins = NULL,
     border = NULL,
-    keep_with_next = TRUE,
-    paragraph_xml = NULL
+    keep_with_next = TRUE
 ) {
 
   xml_tc(
@@ -1973,47 +2212,492 @@ xml_table_cell <- function(
           if (!is.null(margins[["left"]])) { xml_width("left", width = margins[["left"]][["width"]], type = margins[["left"]][["type"]]) },
           if (!is.null(margins[["right"]])) { xml_width("right", width = margins[["right"]][["width"]], type = margins[["right"]][["type"]]) }
         )
+      },
+      if (!is.null(col_span)) {
+        as_xml_node(xml_gridSpan(val = as.character(col_span)))
       }
     ),
-    xml_p(
-      xml_pPr(
-        xml_spacing(before = 0, after = 60),
-        if (!is.null(col_span)) { xml_gridSpan(val = as.character(col_span)) },
-        if (keep_with_next) { xml_keepNext() },
-        if (!is.null(stretch)) {
-          xml_rPr(
-            xml_spacing(val = stretch_to_xml_stretch(stretch))
-          )
-        },
-        if (!is.null(align)) { xml_jc(val = align) }
-      ),
-      if (is.null(paragraph_xml)) {
-        xml_r(
-          xml_rPr(
-            xml_r_font(
-              ascii_font = font %||% "Calibri",
-              ansi_font = font %||% "Calibri"
-            ),
-            xml_sz(val = size %||% 20),
-            if (!is.null(color)) {
-              xml_color(color = color)
-            },
-            if (identical(style, "italic")) {
-              xml_i()
-            },
-            if (identical(weight, "bold")) {
-              xml_b()
-            }
-          ),
-          if (is.character(text)) {
-            xml_t(text, xml_space = white_space_to_t_xml_space(whitespace))
-          } else if (inherits(text, "shiny.tag.list")) {
-            text
-          }
-        )
-      } else {
-        paragraph_xml
-      }
+    process_cell_content(
+      content,
+      font = font %||% "Calibri",
+      size = size %||% 20,
+      color = color,
+      style = style,
+      paragraph_style = paragraph_style,
+      weight = weight,
+      whitespace = whitespace,
+      align = align,
+      col_span = col_span,
+      stretch = stretch,
+      keep_with_next = keep_with_next
     )
   )
 }
+
+process_cell_content <- function(x, ...){
+
+  x %>%
+    parse_to_xml() %>%
+    process_cell_content_ooxml_t(...) %>%
+    process_cell_content_ooxml_r(...) %>%
+    process_cell_content_ooxml_p(...) %>%
+    process_white_space_br_in_xml(...) %>%
+    process_drop_empty_styling_nodes() %>%
+    as.character() %>%
+    paste0(collapse = "")
+}
+
+
+#' @importFrom xml2 xml_find_all xml_text xml_attr `xml_attr<-` `xml_text<-`
+process_cell_content_ooxml_t <- function(x, ..., whitespace = NULL) {
+  text_tag <- x %>% xml_find_all("//w:t")
+  for (txt in text_tag) {
+    text_tag_content <- xml_text(txt)
+    text_tag_attr <- xml_attr(txt, "space")
+    ## if its already set to preserve, respect preservation
+    if (!text_tag_attr == "preserve") {
+      xml_text(txt) <- white_space_in_text(x = text_tag_content, whitespace = whitespace)
+      xml_attr(txt, attr = "xml:space") <- white_space_to_t_xml_space(whitespace)
+    }
+  }
+  x
+}
+
+#' @importFrom xml2 xml_find_all xml_find_first xml_children xml_add_sibling xml_remove xml_ns xml_name
+process_cell_content_ooxml_r<- function(x,..., font = NULL, size = NULL, color = NULL, style = NULL, weight = NULL){
+
+  ## cell level styles
+  cell_styles <- list(
+      as_xml_node(
+        xml_r_font(
+          ascii_font = font ,
+          ansi_font = font
+          )
+      ),
+      as_xml_node(xml_sz(val = size %||% 20)),
+      if (!is.null(color)) {
+        as_xml_node(xml_color(color = color))
+      },
+      if (identical(style, "italic")) {
+        as_xml_node(xml_i())
+      },
+      if (identical(weight, "bold")) {
+        as_xml_node(xml_b())
+      }
+    )
+
+  cell_styles <- cell_styles[!sapply(cell_styles, is.null)]
+
+  cell_styles_types <- sapply(cell_styles,xml_name)
+
+  ## pull run styles from x
+  run_tags <- x %>% xml_find_all("//w:r")
+
+  for(run in run_tags){
+
+      run_style <- run %>% xml_find_first(".//w:rPr")
+
+      run_style_children <- run_style %>% xml_children()
+      run_style_children_types <- sapply(run_style_children,xml_name, ns = xml_ns(x))
+
+      ## which styles are new. Add those. Respect ones that already exist and do not update
+      new_cell_styles <- which(!cell_styles_types %in% run_style_children_types)
+
+      for(cell_style_idx in new_cell_styles){
+        xml_add_child(
+          run_style,
+          cell_styles[[cell_style_idx]][[1]]
+          )
+      }
+  }
+
+  x
+}
+
+#' @importFrom xml2 xml_find_all xml_find_first xml_children xml_add_sibling xml_add_child xml_remove xml_ns xml_name
+process_cell_content_ooxml_p <- function(x, ..., align = NULL, col_span = NULL, stretch = NULL, keep_with_next = TRUE, whitespace = NULL, paragraph_style = NULL){
+
+  ## cell level styles
+  cell_styles <- list(
+    as_xml_node(
+      xml_spacing(before = 0, after = 60)
+    ),
+    if (keep_with_next) {
+      as_xml_node(xml_keepNext())
+    },
+    if (!is.null(stretch)) {
+      as_xml_node(xml_rPr(
+        xml_spacing(val = stretch_to_xml_stretch(stretch))
+      ))
+    },
+    if (!is.null(align)) {
+      as_xml_node(xml_jc(val = align))
+    },
+    if(!is.null(paragraph_style)){
+      as_xml_node(xml_pStyle(val = paragraph_style))
+    }
+  )
+
+  cell_styles <- cell_styles[!sapply(cell_styles, is.null)]
+
+  cell_styles_types <- sapply(cell_styles,xml_name)
+
+  ## pull run styles from x
+  paragraph_tags <- x %>% xml_find_all("//w:p")
+
+  if(length(paragraph_tags) == 0){
+
+    x <- xml_p(xml_pPr()) %>%
+      as_xml_node() %>%
+      xml_add_child(x)
+
+    paragraph_tags <- x %>% xml_find_all("//w:p")
+
+  }
+
+  for(paragraph in paragraph_tags){
+
+    paragraph_style <- paragraph %>% xml_find_all(".//w:pPr")
+
+    paragraph_style_children <- paragraph_style %>% xml_children()
+    paragraph_style_children_types <- sapply(paragraph_style_children,xml_name, xml_ns(x))
+
+    ## which styles are new?
+    new_cell_styles <- which(!cell_styles_types %in% paragraph_style_children_types)
+
+    for(cell_style_idx in new_cell_styles){
+        xml_add_child(
+          paragraph_style,
+          cell_styles[[cell_style_idx]][[1]]
+        )
+    }
+
+  }
+
+
+  x
+
+}
+
+#' @importFrom xml2 xml_find_all xml_find_first xml_children xml_child xml_add_sibling xml_remove xml_ns xml_name
+process_white_space_br_in_xml <- function(x, ..., whitespace = NULL){
+
+  ##options for white space: normal, nowrap, pre, pre-wrap, pre-line, break-spaces
+  ## normal drops all newlines and collapse spaces
+  ## general behavior based on: https://developer.mozilla.org/en-US/docs/Web/CSS/white-space
+
+  ## remove newlines (br) unless preserving it
+  if(!isTRUE(whitespace %in% c( "pre", "pre-wrap", "pre-line","break-spaces"))){
+
+    paragraphs <- x %>% xml_find_all("//w:p")
+
+    for(p in paragraphs){
+
+      paragraph_children <- p %>% xml_children()
+
+      break_tags_locs <- which(xml_name(paragraph_children, ns = xml_ns(x)) == "w:br")
+      run_tags_locs <-  which(xml_name(paragraph_children, ns = xml_ns(x)) == "w:r")
+
+      if(length(break_tags_locs) > 0){
+
+
+        for(break_tag_loc in break_tags_locs){
+
+          break_tag <- paragraph_children[[break_tag_loc]]
+
+          ## if the br is between two runs, replace with space
+          if(any(run_tags_locs > break_tag_loc) & any(run_tags_locs < break_tag_loc )){
+
+
+            replacement_br <- xml_r(xml_rPr(), xml_t(" ", xml_space = "preserve")) %>%
+              as_xml_node(create_ns = TRUE) %>%
+              process_cell_content_ooxml_t(...) %>%
+              process_cell_content_ooxml_r(...) %>%
+              .[[1]]
+
+            xml_add_sibling(
+              break_tag,
+              replacement_br,
+              .where = "after"
+            )
+
+          }
+
+
+          xml_remove(break_tag)
+
+        }
+      }
+    }
+  }
+
+  x
+}
+
+#' @importFrom xml2 xml_find_all xml_children xml_child xml_add_sibling xml_remove xml_ns xml_name
+
+process_drop_empty_styling_nodes <- function(x){
+
+  paragraph_styles <- x %>% xml_find_all(".//w:pPr")
+
+  for(p_style in paragraph_styles){
+    style_children <- p_style %>% xml_children()
+
+    if(length(style_children) == 0){
+      xml_remove(p_style)
+    }
+  }
+
+  run_styles <- x %>% xml_find_all(".//w:rPr")
+
+  for(r_style in run_styles){
+    style_children <- r_style %>% xml_children()
+
+    if(length(style_children) == 0){
+      xml_remove(r_style)
+    }
+  }
+
+  x
+
+}
+
+add_text_style <- function(x, style){
+  UseMethod("add_text_style",x)
+}
+
+add_text_style.character <- function(x, style){
+  x <- x %>% as_xml_node(create_ns = TRUE)
+  style_to_add <- style %>% as_xml_node()
+  run_style_tag <- x %>% xml_find_all("./w:rPr")
+  xml_add_child(
+    run_style_tag,
+    style_to_add
+  )
+  as.character(x)
+}
+
+add_text_style.shiny.tag <- function(x, style){
+  x <- x %>% as.character()
+  add_text_style.character(x, style = style)
+}
+
+## character to xml conversion
+
+## if wrapped in xml, convert to html
+#' @importFrom xml2 read_xml xml_children
+parse_to_xml <- function(x,...){
+  ##check if wrapped in ooxml
+  ## get what it starts with and assign
+
+  if(is.null(x)){
+    x <- xml_p(
+      xml_pPr(
+        xml_spacing(before = 0, after = 60)
+      ),
+      xml_r(
+        xml_rPr(),
+        xml_t()
+      )
+    )
+
+    x <- x %>%
+      as.character() %>%
+      paste0("<md_container>", ., "</md_container>")
+  }
+
+  if(length(x) > 1){
+    if(all(grepl("^<md_container>.*</md_container>$", x))){
+      x <- gsub("^<md_container>(.*)</md_container>$", "\\1",x) %>%
+        paste0(collapse = "") %>%
+        paste0("<md_container>",.,"</md_container>")
+    }else{
+      x <- x %>% paste0(collapse = "")
+    }
+  }
+
+  if(!grepl("^<md_container>.*</md_container>$", x)){
+
+    x <- xml_p(
+      xml_pPr(
+        xml_spacing(before = 0, after = 60)
+      ),
+      xml_r(
+        xml_rPr(),
+        xml_t(x)
+      )
+    )
+    x <- x %>%
+      as.character() %>%
+      paste0("<md_container>", ., "</md_container>")
+  }
+
+  parsed_xml_contents <- x %>%
+    ## add namespace for later processing
+    add_ns() %>%
+    xml2::read_xml() %>%
+    suppressWarnings()
+
+  parsed_xml_contents %>%
+    xml_children()
+}
+
+#' @importFrom xml2 as_xml_document xml_children
+as_xml_node <- function(x, create_ns = FALSE){
+  x <- paste(
+    "<node_container>",
+    as.character(x),
+    "</node_container>"
+  )
+
+  if(create_ns){
+    x <- add_ns(x)
+  }
+
+  x %>%
+    as_xml_document() %>%
+    xml_children() %>%
+    suppressWarnings()
+}
+
+add_ns <- function(x){
+
+  x <- x %>%
+    as_xml_node() %>%
+    suppressWarnings()
+
+
+  xml2::xml_set_attrs(
+    x,
+    c(
+      `xmlns:r` = "http://schemas.openxmlformats.org/officeDocument/2006/relationships",
+      `xmlns:w` = "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+      `xmlns:w14` = "http://schemas.microsoft.com/office/word/2010/wordml",
+      `xmlns:wp` = "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"
+    )
+  )
+
+  as.character(x)
+}
+
+
+paste_footnote_xml <- function(text, footmark_xml, position = "right"){
+
+  text_xml <- parse_to_xml(text)
+
+  position <- match.arg(position, c("left","right"))
+
+  footmark_xml <- footmark_xml %>%
+      as_xml_node() %>%
+      .[[1]]
+
+  if(position == "right"){
+    text_xml %>%
+      xml_add_child(
+        footmark_xml
+        )
+  }else{
+    text_xml %>%
+      xml_add_child(
+        footmark_xml,
+        .where = 1
+      )
+  }
+
+  as.character(text_xml) %>%
+    paste0("<md_container>",.,"</md_container>")
+}
+
+## if hyperlinks are in gt, postprocessing will be necessary
+needs_gt_as_word_post_processing <- function(x){
+  grepl("<w:hyperlink", x)
+}
+
+## apply postprocessing
+## at this point, only url relationship rId updating, but can expand to more in the future
+gt_as_word_post_processing <- function(path){
+
+  ## unzip doc
+  tmp_word_dir <- tempfile(pattern = "word_dir")
+  utils::unzip(zipfile = path, exdir = tmp_word_dir)
+
+  ## load docx
+  content_doc_path <- file.path(tmp_word_dir,"word/document.xml")
+  docx <- read_xml(content_doc_path)
+
+  ## load rels
+  rels_doc_path <- file.path(tmp_word_dir,"word/_rels/document.xml.rels")
+  rels <- read_xml(rels_doc_path)
+
+  ## update hyperlinks
+  update_hyperlink_node_id(docx, rels)
+
+
+  ## write updates
+  xml2::write_xml(rels, rels_doc_path)
+  xml2::write_xml(docx, content_doc_path)
+
+  ## unzip contents
+  wd <- getwd()
+  zip_temp_word_doc(path, tmp_word_dir, wd)
+}
+
+
+update_hyperlink_node_id <- function(docx, rels){
+
+  rels_relationships <- rels %>% xml_children()
+  rels_ids <- rels_relationships %>% xml_attr("Id")
+  max_id <- max(as.numeric(gsub("rId","",rels_ids)))
+
+  ## get all hyperlink nodes
+  hyperlink_nodes <- docx %>% xml_find_all("//w:hyperlink[@r:id]")
+
+  ## identify nodes needing updating
+  hyperlink_nodes <- hyperlink_nodes[!grepl("^rId\\d+$", xml_attr(hyperlink_nodes, "id"))]
+
+  for(hl_node in hyperlink_nodes){
+
+    max_id <- max_id + 1
+    url <- xml_attr(hl_node, "id")
+    new_id <- paste0("rId", max_id)
+
+    xml2::xml_add_child(
+      rels,
+      xml_relationship(id = new_id, target = url)
+    )
+
+    xml_attr(hl_node, "r:id") <- new_id
+  }
+
+}
+
+## conveniently zip up word doc temp folder
+zip_temp_word_doc <- function(path, temp_dir, cur_dir = getwd()){
+  setwd(temp_dir)
+  on.exit(setwd(cur_dir))
+  utils::zip(zipfile = path, files = list.files(path = ".", recursive = TRUE, all.files = FALSE),flags = "-r9X -q")
+}
+
+xml_relationship <- function(id,  target, type = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink", target_mode = "External"){
+
+  htmltools::tag(
+    `_tag_name` = "Relationship",
+    varArgs = list(
+      `Id` = id,
+      `Type` = type,
+      `Target` = target,
+      `TargetMode` = target_mode)
+  ) %>%
+    as.character() %>%
+    read_xml()
+
+}
+
+
+
+
+
+
+
+
+

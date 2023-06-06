@@ -12,95 +12,347 @@ tab_footnote(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{footnote}{The text to be used in the footnote. We can optionally use
-the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} functions to style the text as Markdown or to
-retain HTML elements in the footnote text.}
+\verb{obj:<gt_tbl>} --- \strong{required}
 
-\item{locations}{The cell or set of cells to be associated with the footnote.
-Supplying any of the \verb{cells_*()} helper functions is a useful way to target
-the location cells that are associated with the footnote text. These helper
-functions are: \code{\link[=cells_title]{cells_title()}}, \code{\link[=cells_stubhead]{cells_stubhead()}},
-\code{\link[=cells_column_spanners]{cells_column_spanners()}}, \code{\link[=cells_column_labels]{cells_column_labels()}}, \code{\link[=cells_row_groups]{cells_row_groups()}},
-\code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_summary]{cells_summary()}}, \code{\link[=cells_grand_summary]{cells_grand_summary()}},
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{footnote}{\emph{Footnote text}
+
+\verb{scalar<character>} --- \strong{required}
+
+The text to be used in the footnote. We can optionally use the \code{\link[=md]{md()}} and
+\code{\link[=html]{html()}} functions to style the text as Markdown or to retain HTML elements
+in the footnote text.}
+
+\item{locations}{\emph{Locations to target}
+
+\verb{<locations expressions>} --- \emph{default:} \code{NULL} (\code{optional})
+
+The cell or set of cells to be associated with the footnote. Supplying any
+of the \verb{cells_*()} helper functions is a useful way to target the location
+cells that are associated with the footnote text. These helper functions
+are: \code{\link[=cells_title]{cells_title()}}, \code{\link[=cells_stubhead]{cells_stubhead()}}, \code{\link[=cells_column_spanners]{cells_column_spanners()}},
+\code{\link[=cells_column_labels]{cells_column_labels()}}, \code{\link[=cells_row_groups]{cells_row_groups()}}, \code{\link[=cells_stub]{cells_stub()}},
+\code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_summary]{cells_summary()}}, \code{\link[=cells_grand_summary]{cells_grand_summary()}},
 \code{\link[=cells_stub_summary]{cells_stub_summary()}}, and \code{\link[=cells_stub_grand_summary]{cells_stub_grand_summary()}}. Additionally, we
 can enclose several \verb{cells_*()} calls within a \code{list()} if we wish to link
 the footnote text to different types of locations (e.g., body cells, row
 group labels, the table title, etc.).}
 
-\item{placement}{Where to affix footnote marks to the table content. Two
-options for this are \verb{"left} or \code{"right"}, where the placement is to the
-absolute left or right of the cell content. By default, however, this is
-set to \code{"auto"} whereby \strong{gt} will choose a preferred left-or-right
-placement depending on the alignment of the cell content.}
+\item{placement}{\emph{Placement of footnote mark}
+
+\verb{singl-kw:[auto|right|left]} --- \emph{default:} \code{"auto"}
+
+Where to affix footnote marks to the table content. Two options for this
+are \verb{"left} or \code{"right"}, where the placement is either to the absolute
+left or right of the cell content. By default, however, this option is set
+to \code{"auto"} whereby \strong{gt} will choose a preferred left-or-right placement
+depending on the alignment of the cell content.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
 The \code{tab_footnote()} function can make it a painless process to add a
-footnote to a \strong{gt} table. There are two components to a footnote: (1) a
-footnote mark that is attached to the targeted cell text, and (2) the
-footnote text (that starts with the corresponding footnote mark) that is
-placed in the table's footer area. Each call of \code{tab_footnote()} will add a
-different note, and one or more cells can be targeted via the location helper
-functions (e.g., \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_column_labels]{cells_column_labels()}}, etc.).
+footnote to a \strong{gt} table. There are commonly two components to a footnote:
+(1) a footnote mark that is attached to the targeted cell content, and (2)
+the footnote text itself that is placed in the table's footer area. Each unit
+of footnote text in the footer is linked to an element of text or otherwise
+through the footnote mark. The footnote system in \strong{gt} presents footnotes
+in a way that matches the usual expectations, where:
+\enumerate{
+\item footnote marks have a sequence, whether they are symbols, numbers, or
+letters
+\item multiple footnotes can be applied to the same content (and marks are
+always presented in an ordered fashion)
+\item footnote text in the footer is never exactly repeated, \strong{gt} reuses
+footnote marks where needed throughout the table
+\item footnote marks are ordered across the table in a consistent manner (left
+to right, top to bottom)
 }
-\details{
-The formatting of the footnotes can be controlled through the use of various
-parameters in the \code{\link[=tab_options]{tab_options()}} function:
+
+Each call of \code{tab_footnote()} will either add a different footnote or reuse
+existing footnote text. One or more cells are targeted using the \verb{cells_*()}
+helper functions (e.g., \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_column_labels]{cells_column_labels()}}, etc.). You
+can choose to not attach a footnote mark not specifying a location at all. By
+default, \strong{gt} will choose which side of the text to place the footnote mark
+(with the \code{placement = "auto"} option) but you can always choose the
+placement of the footnote mark.
+}
+\section{Formatting of footnote text and marks}{
+
+
+There are several options for controlling the formatting of the footnotes,
+their marks, and typesetting in the footer. All of these options are
+available within the \code{\link[=tab_options]{tab_options()}} function and a subset of these are
+exposed in their own \verb{opt_*()} functions.
+\subsection{Choosing the footnote marks}{
+
+We can modify the set of footnote marks with
+\code{tab_options(..., footnotes.marks)} or \code{opt_footnote_marks(..., )}. What that
+argument needs is a vector that will represent the series of marks. The
+series of footnote marks is recycled when its usage goes beyond the length of
+the set. At each cycle, the marks are simply doubled, tripled, and so on
+(e.g., \code{*} -> \verb{**} -> \verb{***}). The option exists for providing keywords for
+certain types of footnote marks. The keywords are:
 \itemize{
-\item \code{footnotes.multiline}: a setting that determines whether footnotes each
-start on a new line or are combined into a single block.
-\item \code{footnotes.sep}: allows for a choice of the separator between consecutive
-footnotes in the table footer. By default, this is set to a single space
-character.
-\item \code{footnotes.marks}: the set of sequential characters or numbers used to
-identify the footnotes.
-\item \code{footnotes.font.size}: the size of the font used in the footnote section.
-\item \code{footnotes.padding}: the amount of padding to apply between the footnote
-and source note sections in the table footer.
+\item \code{"numbers"}: numeric marks, they begin from \code{1} and these marks are not
+subject to recycling behavior (this is the default)
+\item \code{"letters"}: minuscule alphabetic marks, internally uses the \code{letters}
+vector which contains 26 lowercase letters of the Roman alphabet
+\item \code{"LETTERS"}: majuscule alphabetic marks, using the \code{LETTERS} vector
+which has 26 uppercase letters of the Roman alphabet
+\item \code{"standard"}: symbolic marks, four symbols in total
+\item \code{"extended"}: symbolic marks, extends the standard set by adding two
+more symbols, making six
+}
+
+The symbolic marks are the: (1) Asterisk, (2) Dagger, (3) Double Dagger,
+(4) Section Sign, (5) Double Vertical Line, and (6) Paragraph Sign; the
+\code{"standard"} set has the first four, \code{"extended"} contains all.
+}
+
+\subsection{Defining footnote specs}{
+
+A footnote spec consists of a string containing control characters for
+formatting. They are separately defined for footnote marks beside footnote
+text in the table footer (the \code{'spec_ftr'}) and for marks beside the targeted
+cell content (the \code{'spec_ref'}).
+
+Not every type of formatting makes sense for footnote marks so the
+specification is purposefully constrained to the following:
+\itemize{
+\item as superscript text (with the \code{"^"} control character) or regular-sized
+text residing on the baseline
+\item bold text (with \code{"b"}), italicized text (with \code{"i"}), or unstyled text
+(don't use either of the \code{"b"} or \code{"i"} control characters)
+\item enclosure in parentheses (use \code{"("} / \code{")"}) or square brackets (with
+\code{"["} / \code{"]"})
+\item a period following the mark (using \code{"."}); this is most commonly used in
+the table footer
+}
+
+With the aforementioned control characters we could, for instance, format
+the footnote marks to be superscript text in bold type with \code{"^b"}. We might
+want the marks in the footer to be regular-sized text in parentheses, so the
+spec could be either \code{"()"} or \code{"(x)"} (you can optionally use \code{"x"} as a
+helpful placeholder for the marks).
+
+These options can be set either in a \code{\link[=tab_options]{tab_options()}} call (with the
+\code{footnotes.spec_ref} and \code{footnotes.spec_ftr} arguments) or with
+\code{\link[=opt_footnote_spec]{opt_footnote_spec()}} (using \code{spec_ref} or \code{spec_ftr}).
+}
+
+\subsection{Typesetting of footnotes in the footer}{
+
+Within \code{\link[=tab_options]{tab_options()}} there are two arguments that control the typesetting
+of footnotes. With \code{footnotes.multiline}, we have a setting that determines
+whether each footnote will start on a new line, or, whether they are combined
+into a single block of text. The default for this is \code{TRUE}, but, if \code{FALSE}
+we can control the separator between consecutive footnotes with the
+\code{footnotes.sep} argument. By default, this is set to a single space character
+(\code{" "}).
 }
 }
+
 \section{Examples}{
 
 
-Use \code{\link{sza}} to create a \strong{gt} table. Color the \code{sza} column using the
-\code{\link[=data_color]{data_color()}} function, then, use \code{tab_footnote()} to add a footnote to the
-\code{sza} column label (explaining what the color scale signifies).
+Using a subset of the \code{\link{sza}} dataset, let's create a new \strong{gt} table. The
+body cells in the \code{sza} column will receive background color fills according
+to their data values (with the \code{\link[=data_color]{data_color()}} function). After that, the use
+of \code{tab_footnote()} lets us add a footnote to the \code{sza} column label
+(explaining what the color gradient signifies).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza |>
   dplyr::filter(
     latitude == 20 &
       month == "jan" &
       !is.na(sza)
-  ) \%>\%
-  dplyr::select(-latitude, -month) \%>\%
-  gt() \%>\%
+  ) |>
+  dplyr::select(-latitude, -month) |>
+  gt() |>
   data_color(
     columns = sza,
-    colors = scales::col_numeric(
-      palette = c("white", "yellow", "navyblue"),
-      domain = c(0, 90)
-    )
-  ) \%>\%
+    palette = c("white", "yellow", "navyblue"),
+    domain = c(0, 90)
+  ) |>
   tab_footnote(
-    footnote = "Color indicates height of sun.",
-    locations = cells_column_labels(
-      columns = sza
-    )
+    footnote = "Color indicates the solar zenith angle.",
+    locations = cells_column_labels(columns = sza)
   )
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_footnote_1.png" alt="This image of a table was generated from the first code example in the `tab_footnote()` help file." style="width:100\%;">
 }}
+
+Of course, we can add more than one footnote to the table, but, we have to
+use several calls of \code{tab_footnote()}. This variation of the \code{\link{sza}} table
+has three footnotes: one on the \code{"TST"} column label and two on the \code{"SZA"}
+column label (these were capitalized with \code{\link[=opt_all_caps]{opt_all_caps()}}). We have three
+calls of \code{tab_footnote()} and while the order of calls usually doesn't
+matter, it does have a subtle effect here since two footnotes are associated
+with the same text content (try reversing the second and third calls and
+observe the effect in the footer).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza |>
+  dplyr::filter(
+    latitude == 20 &
+      month == "jan" &
+      !is.na(sza)
+  ) |>
+  dplyr::select(-latitude, -month) |>
+  gt() |>
+  opt_all_caps() |>
+  cols_align(align = "center") |>
+  cols_width(everything() ~ px(200)) |>
+  tab_footnote(
+    footnote = md("TST stands for *True Solar Time*."),
+    locations = cells_column_labels(columns = tst)
+  ) |>
+  tab_footnote(
+    footnote = md("SZA stands for *Solar Zenith Angle*."),
+    locations = cells_column_labels(columns = sza)
+  ) |>
+  tab_footnote(
+    footnote = "Higher Values indicate sun closer to horizon.",
+    locations = cells_column_labels(columns = sza)
+  ) |>
+  tab_options(footnotes.multiline = FALSE)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_footnote_2.png" alt="This image of a table was generated from the second code example in the `tab_footnote()` help file." style="width:100\%;">
+}}
+
+Text in the footer (both from footnotes and also from source notes) tends to
+widen the table and, by extension, all the columns within it. We can limit
+that by explicitly setting column width values, which is what was done above
+with \code{\link[=cols_width]{cols_width()}}. There can also be a correspondingly large amount of
+vertical space taken up by the footer since footnotes will, by default, each
+start on a new line. In the above example, we used
+\code{tab_options(footnotes.multiline = FALSE)} to make it so that all footer text
+is contained in a single block of text.
+
+Let's move on to another footnote-laden table, this one based on the
+\code{\link{towny}} dataset. We have a header part, with a title and a subtitle. We
+can choose which of these could be associated with a footnote and in this
+case it is the \code{"subtitle"} (one of two options in the \code{\link[=cells_title]{cells_title()}} helper
+function). This table has a stub with row labels and some of those labels are
+associated with a footnote. So long as row labels are unique, they can be
+easily used as row identifiers in \code{\link[=cells_stub]{cells_stub()}}. The third footnote is
+placed on the \code{"Density"} column label. Here, changing the order of the
+\code{tab_footnote()} calls has no effect on the final table rendering.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
+  dplyr::filter(csd_type == "city") |>
+  dplyr::arrange(desc(population_2021)) |>
+  dplyr::select(name, density_2021, population_2021) |>
+  dplyr::slice_head(n = 10) |>
+  gt(rowname_col = "name") |>
+  tab_header(
+    title = md("The 10 Largest Municipalities in `towny`"),
+    subtitle = "Population values taken from the 2021 census."
+  ) |>
+  fmt_integer() |>
+  cols_label(
+    density_2021 = "Density",
+    population_2021 = "Population"
+  ) |>
+  tab_footnote(
+    footnote = "Part of the Greater Toronto Area.",
+    locations = cells_stub(rows = c(
+      "Toronto", "Mississauga", "Brampton", "Markham", "Vaughan"
+    ))
+  ) |>
+  tab_footnote(
+    footnote = md("Density is in terms of persons per km^2^."),
+    locations = cells_column_labels(columns = density_2021)
+  ) |>
+  tab_footnote(
+    footnote = "Census results made public on February 9, 2022.",
+    locations = cells_title(groups = "subtitle")
+  ) |>
+  tab_source_note(source_note = md(
+    "Data taken from the `towny` dataset (in the **gt** package)."
+  )) |>
+  opt_footnote_marks(marks = "letters")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_footnote_3.png" alt="This image of a table was generated from the third code example in the `tab_footnote()` help file." style="width:100\%;">
+}}
+
+In the above table, we elected to change the footnote marks to letters
+instead of the default numbers (done through \code{\link[=opt_footnote_marks]{opt_footnote_marks()}}). A
+source note was also added; this was mainly to demonstrate that source notes
+will be positioned beneath footnotes in the footer section.
+
+For our final example, let's make a relatively small table deriving from the
+\code{\link{sp500}} dataset. The set of \code{tab_footnote()} calls used here (four of them)
+have minor variations that allow for interesting expressions of footnotes.
+Two of the footnotes target values in the body of the table (using the
+\code{\link[=cells_body]{cells_body()}} helper function to achieve this). On numeric values that
+right-aligned, \strong{gt} will opt to place the footnote on the left of the
+content so as to not disrupt the alignment. However, the \code{placement} argument
+can be used to force the positioning of the footnote mark after the content.
+We can also opt to include footnotes that have no associated footnote marks
+whatsoever. This is done by not providing anything to \code{locations}. These
+'markless' footnotes will precede the other footnotes in the footer section.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
+  dplyr::filter(date >= "2015-01-05" & date <="2015-01-10") |>
+  dplyr::select(-c(adj_close, volume, high, low)) |>
+  dplyr::mutate(change = close - open) |>
+  dplyr::arrange(date) |>
+  gt() |>
+  tab_header(title = "S&P 500") |>
+  fmt_date(date_style = "m_day_year") |>
+  fmt_currency() |>
+  cols_width(everything() ~ px(150)) |>
+  tab_footnote(
+    footnote = "More red days than green in this period.",
+    locations = cells_column_labels(columns = change)
+  ) |>
+  tab_footnote(
+    footnote = "Lowest opening value.",
+    locations = cells_body(columns = open, rows = 3),
+  ) |>
+  tab_footnote(
+    footnote = "Devastating losses on this day.",
+    locations = cells_body(columns = change, rows = 1),
+    placement = "right"
+  ) |>
+  tab_footnote(footnote = "All values in USD.") |>
+  opt_footnote_marks(marks = "LETTERS") |>
+  opt_footnote_spec(spec_ref = "i[x]", spec_ftr = "x.")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_footnote_4.png" alt="This image of a table was generated from the fourth code example in the `tab_footnote()` help file." style="width:100\%;">
+}}
+
+Aside from changing the footnote marks to be \code{"LETTERS"}, we've also changed
+the way the marks are formatted. In \code{\link[=opt_footnote_spec]{opt_footnote_spec()}}, the \code{spec_ref}
+option governs the footnote marks across the table. Here, we describe marks
+that are italicized and set between square brackets (with \code{"i[x]"}). The
+\code{spec_ftr} argument is used for the footer representation of the footnote
+marks. As described in the example with \code{"x."}, it will be rendered as the
+footnote mark followed by a period.
 }
 
 \section{Function ID}{
 
 2-7
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{

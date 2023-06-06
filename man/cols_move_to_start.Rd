@@ -7,11 +7,24 @@
 cols_move_to_start(data, columns)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The column names to move to the left-most side of the table.
-The order in which columns are provided will be preserved (as is the case
-with the remaining columns).}
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+
+The columns for which the moving operations should be applied. Can either
+be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,
+or a select helper function. Examples of select helper functions include
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. The columns move as a group to the
+left-most side of the table. The order of the remaining columns will be
+preserved.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -34,15 +47,15 @@ column.
 \section{Examples}{
 
 
-Use \code{\link{countrypops}} to create a \strong{gt} table. With the remaining columns,
-move the \code{year} column to the start of the column series with
-\code{cols_move_to_start()}.
+Use a portion of the \code{\link{countrypops}} dataset to create a \strong{gt} table. Let's
+move the \code{year} column to the start of the column series with the
+\code{cols_move_to_start()} function.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::select(-contains("code")) \%>\%
-  dplyr::filter(country_name == "Mongolia") \%>\%
-  tail(5) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::select(-contains("code")) |>
+  dplyr::filter(country_name == "Mongolia") |>
+  tail(5) |>
+  gt() |>
   cols_move_to_start(columns = year)
 }\if{html}{\out{</div>}}
 
@@ -50,14 +63,15 @@ move the \code{year} column to the start of the column series with
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_move_to_start_1.png" alt="This image of a table was generated from the first code example in the `cols_move_to_start()` help file." style="width:100\%;">
 }}
 
-Use \code{\link{countrypops}} to create a \strong{gt} table. With the remaining columns,
-move \code{year} and \code{population} to the start.
+Use a portion of the \code{\link{countrypops}} dataset to create a \strong{gt} table. Let's
+move both the \code{year} and \code{population} columns to the start of the column
+series.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::select(-contains("code")) \%>\%
-  dplyr::filter(country_name == "Mongolia") \%>\%
-  tail(5) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::select(-contains("code")) |>
+  dplyr::filter(country_name == "Mongolia") |>
+  tail(5) |>
+  gt() |>
   cols_move_to_start(columns = c(year, population))
 }\if{html}{\out{</div>}}
 
@@ -68,7 +82,12 @@ move \code{year} and \code{population} to the start.
 
 \section{Function ID}{
 
-4-7
+5-7
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{

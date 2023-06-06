@@ -1,3 +1,27 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2023 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 .dt_boxhead_key <- "_boxhead"
 
 dt_boxhead_get <- function(data) {
@@ -10,7 +34,16 @@ dt_boxhead_set <- function(data, boxh) {
 
 dt_boxhead_init <- function(data) {
 
+  # Get the column names from the data table
   vars <- colnames(dt_data_get(data = data))
+
+  # If there are any 'labeled' columns in the data table, use those labels
+  # wherever possible; otherwise, use column names as the column labels
+  if (any_labeled_columns_in_data_tbl(data = data)) {
+    column_labels <- get_columns_labels_from_attrs(data = data)
+  } else {
+    column_labels <- vars
+  }
 
   empty_list <- lapply(seq_along(vars), function(x) NULL)
 
@@ -37,7 +70,7 @@ dt_boxhead_init <- function(data) {
       # row_group_label = lapply(seq_along(names(data)), function(x) NULL),
       # The presentation label, which is a list of labels by
       # render context (e.g., HTML, LaTeX, etc.)
-      column_label = as.list(vars),
+      column_label = as.list(column_labels),
       # The alignment of the column ("left", "right", "center")
       column_align = "center",
       # The width of the column in `px`

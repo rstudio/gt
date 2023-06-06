@@ -1,3 +1,27 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2023 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 # Define the contexts
 all_contexts <- c("html", "latex", "rtf", "word", "default")
 
@@ -93,6 +117,9 @@ render_formats <- function(data, context) {
           compat = compat
         )
       ) {
+
+        # Omit rows that are not present in the `data_tbl` object
+        rows <- base::intersect(seq_len(nrow(data_tbl)), rows)
 
         result <- fmt$func[[eval_func]](data_tbl[[col]][rows])
 
@@ -312,13 +339,12 @@ reorder_styles <- function(data) {
   tmp_mask <- vector("logical", sz)
 
   for (i in seq_len(sz)) {
-
     if (
       !is.na(styles_tbl$rownum[i]) &&
       !grepl("summary_cells", styles_tbl$locname[i])
     ) {
-      tmp_mask[i] = TRUE
-      tmp_rownum[i] = which(rownum_final == styles_tbl$rownum[i])
+      tmp_mask[i] <- TRUE
+      tmp_rownum[i] <- which(rownum_final == styles_tbl$rownum[i])
     }
   }
 
@@ -330,6 +356,12 @@ reorder_styles <- function(data) {
 }
 
 resolve_secondary_pattern <- function(x) {
+
+  #
+  # Preprocessing
+  #
+
+  x <- gsub("<br>", "[[br]]", x, fixed = TRUE)
 
   while (grepl("<<.*?>>", x)) {
 
@@ -362,6 +394,12 @@ resolve_secondary_pattern <- function(x) {
         )
     }
   }
+
+  #
+  # Postprocessing
+  #
+
+  x <- gsub("[[br]]", "<br>", x, fixed = TRUE)
 
   x
 }
@@ -727,4 +765,66 @@ get_stub_layout <- function(data) {
       if (stub_rownames_is_column) "rowname"
     )
   }
+}
+
+# Get a matrix of all body cells
+get_body_component_cell_matrix <- function(data) {
+
+  body <- dt_body_get(data = data)
+  stub_layout <- get_stub_layout(data = data)
+  default_vars <- dt_boxhead_get_vars_default(data = data)
+
+  body_matrix <- unname(as.matrix(body[, default_vars]))
+
+  if (length(stub_layout) == 0) {
+    return(body_matrix)
+  }
+
+  if ("rowname" %in% stub_layout) {
+
+    body_matrix <-
+      cbind(
+        unname(as.matrix(body[, dt_boxhead_get_var_stub(data = data)])),
+        body_matrix
+      )
+  }
+
+  if ("group_label" %in% stub_layout) {
+
+    groups_rows_df <-
+      dt_groups_rows_get(data = data) %>%
+      dplyr::select(group_id, group_label, row_start)
+
+    group_label_matrix <-
+      dt_stub_df_get(data = data) %>%
+      dplyr::select(-row_id, -group_label) %>%
+      dplyr::inner_join(groups_rows_df, by = "group_id") %>%
+      dplyr::mutate(
+        row = dplyr::row_number(),
+        built = dplyr::if_else(row_start != row, "", built_group_label)
+      ) %>%
+      dplyr::select(built) %>%
+      as.matrix() %>%
+      unname()
+
+    body_matrix <- cbind(group_label_matrix, body_matrix)
+  }
+
+  body_matrix
+}
+
+summary_row_side <- function(data, group_id) {
+
+  # Check that `group_id` isn't NULL and that length is exactly 1
+  if (is.null(group_id) || length(group_id) != 1) {
+    cli::cli_abort("`group_id` cannot be `NULL` and must be of length 1.")
+  }
+
+  list_of_summaries <- dt_summary_df_get(data = data)
+
+  # Obtain the summary data table specific to the group ID and
+  # then get the "side" attribute value
+  summary_df <- list_of_summaries$summary_df_display_list[[group_id]]
+
+  unique(summary_df[["::side::"]])
 }

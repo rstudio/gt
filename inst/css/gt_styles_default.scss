@@ -1,8 +1,18 @@
 @mixin gt_styles() {
 
+  thead, tbody, tfoot, tr, td, th {
+    border-style: none;
+  }
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
+
   .gt_table {
     display: table;
     border-collapse: collapse;
+    line-height: normal;
     margin-left: $table_margin_left; // table.margin.left
     margin-right: $table_margin_right; // table.margin.right
     color: font-color($table_background_color);
@@ -23,18 +33,6 @@
     border-left-style: $table_border_left_style; // table.border.left.style
     border-left-width: $table_border_left_width; // table.border.left.width
     border-left-color: $table_border_left_color; // table.border.left.color
-  }
-
-  .gt_heading {
-    background-color: $heading_background_color; // heading.background.color
-    text-align: $heading_align; // heading.align
-    border-bottom-color: $table_background_color; // table.background.color
-    border-left-style: $heading_border_lr_style; // heading.border.lr.style
-    border-left-width: $heading_border_lr_width; // heading.border.lr.width
-    border-left-color: $heading_border_lr_color; // heading.border.lr.color
-    border-right-style: $heading_border_lr_style; // heading.border.lr.style
-    border-right-width: $heading_border_lr_width; // heading.border.lr.width
-    border-right-color: $heading_border_lr_color; // heading.border.lr.color
   }
 
   .gt_caption {
@@ -58,12 +56,24 @@
     color: font-color($heading_background_color);
     font-size: $heading_subtitle_font_size; // heading.subtitle.font.size
     font-weight: $heading_subtitle_font_weight; // heading.subtitle.font.weight
-    padding-top: 0;
-    padding-bottom: $heading_padding + 2; // heading.padding
+    padding-top: $heading_padding - 1; // heading.padding
+    padding-bottom: $heading_padding + 1; // heading.padding
     padding-left: $heading_padding_horizontal; // heading.padding.horizontal
     padding-right: $heading_padding_horizontal; //heading.padding.horizontal
     border-top-color: $table_background_color; // table.background.color
     border-top-width: 0;
+  }
+
+  .gt_heading {
+    background-color: $heading_background_color; // heading.background.color
+    text-align: $heading_align; // heading.align
+    border-bottom-color: $table_background_color; // table.background.color
+    border-left-style: $heading_border_lr_style; // heading.border.lr.style
+    border-left-width: $heading_border_lr_width; // heading.border.lr.width
+    border-left-color: $heading_border_lr_color; // heading.border.lr.color
+    border-right-style: $heading_border_lr_style; // heading.border.lr.style
+    border-right-width: $heading_border_lr_width; // heading.border.lr.width
+    border-right-color: $heading_border_lr_color; // heading.border.lr.color
   }
 
   .gt_bottom_border {
@@ -135,6 +145,10 @@
     overflow-x: hidden;
     display: inline-block;
     width: 100%;
+  }
+
+  .gt_spanner_row {
+    border-bottom-style: hidden;
   }
 
   .gt_group_heading {
@@ -236,6 +250,10 @@
     border-top-width: $row_group_border_top_width;
   }
 
+  .gt_row_group_first th {
+    border-top-width: $row_group_border_top_width;
+  }
+
   .gt_summary_row {
     color: font-color($summary_row_background_color);
     background-color: $summary_row_background_color; // summary_row.background.color
@@ -285,6 +303,16 @@
     border-top-color: $grand_summary_row_border_color; // grand_summary_row.border.color
   }
 
+  .gt_last_grand_summary_row_top {
+    padding-top: $grand_summary_row_padding; // grand_summary_row.padding
+    padding-bottom: $grand_summary_row_padding; // grand_summary_row.padding
+    padding-left: $grand_summary_row_padding_horizontal; // grand_summary_row.padding.horizontal
+    padding-right: $grand_summary_row_padding_horizontal; // grand_summary_row.padding.horizontal
+    border-bottom-style: $grand_summary_row_border_style; // grand_summary_row.border.style
+    border-bottom-width: $grand_summary_row_border_width; // grand_summary_row.border.width
+    border-bottom-color: $grand_summary_row_border_color; // grand_summary_row.border.color
+  }
+
   .gt_striped {
      background-color: $row_striping_background_color; // row.striping.background_color
   }
@@ -315,8 +343,8 @@
   .gt_footnote {
     margin: $footnotes_margin;
     font-size: $footnotes_font_size; // footnotes.font.size
-    padding-left: $footnotes_padding; // footnotes.padding
-    padding-right: $footnotes_padding; // footnotes.padding
+    padding-top: $footnotes_padding; // footnotes.padding
+    padding-bottom: $footnotes_padding; // footnotes.padding
     padding-left: $footnotes_padding_horizontal; // footnotes.padding.horizontal
     padding-right: $footnotes_padding_horizontal; // footnotes.padding.horizontal
   }
@@ -373,10 +401,9 @@
   }
 
   .gt_footnote_marks {
-    font-style: italic;
-    font-weight: normal;
     font-size: 75%;
     vertical-align: 0.4em;
+    position: initial;
   }
 
   .gt_asterisk {

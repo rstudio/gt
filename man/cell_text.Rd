@@ -20,55 +20,102 @@ cell_text(
 )
 }
 \arguments{
-\item{color}{The text color.}
+\item{color}{\emph{Text color}
 
-\item{font}{The font or collection of fonts (subsequent font names are) used
-as fallbacks.}
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
 
-\item{size}{The size of the font. Can be provided as a number that is assumed
-to represent \code{px} values (or could be wrapped in the \code{\link[=px]{px()}}) helper
-function. We can also use one of the following absolute size keywords:
-\code{"xx-small"}, \code{"x-small"}, \code{"small"}, \code{"medium"}, \code{"large"}, \code{"x-large"},
-or \code{"xx-large"}.}
+The text color can be modified through the \code{color} argument.}
 
-\item{align}{The text alignment. Can be one of either \code{"center"}, \code{"left"},
-\code{"right"}, or \code{"justify"}.}
+\item{font}{\emph{Font (or collection of fonts) used for text}
 
-\item{v_align}{The vertical alignment of the text in the cell. Options are
-\code{"middle"}, \code{"top"}, or \code{"bottom"}.}
+\verb{vector<character>} --- \emph{default:} \code{NULL} (\code{optional})
 
-\item{style}{The text style. Can be one of either \code{"normal"}, \code{"italic"}, or
-\code{"oblique"}.}
+The font or collection of fonts (subsequent font names are) used as
+fallbacks.}
 
-\item{weight}{The weight of the font. Can be a text-based keyword such as
+\item{size}{\emph{Text size}
+
+\verb{scalar<numeric|integer|character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+The size of the font. Can be provided as a number that is assumed to
+represent \code{px} values (or could be wrapped in the \code{\link[=px]{px()}}) helper function.
+We can also use one of the following absolute size keywords: \code{"xx-small"},
+\code{"x-small"}, \code{"small"}, \code{"medium"}, \code{"large"}, \code{"x-large"}, or
+\code{"xx-large"}.}
+
+\item{align}{\emph{Text alignment}
+
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+The text in a cell can be aligned though one of the following options:
+\code{"center"}, \code{"left"}, \code{"right"}, or \code{"justify"}.}
+
+\item{v_align}{\emph{Vertical alignment}
+
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+The vertical alignment of the text in the cell can be modified through the
+options \code{"middle"}, \code{"top"}, or \code{"bottom"}.}
+
+\item{style}{\emph{Text style}
+
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+Can be one of either \code{"normal"}, \code{"italic"}, or \code{"oblique"}.}
+
+\item{weight}{\emph{Font weight}
+
+\verb{scalar<character|numeric|integer>} --- \emph{default:} \code{NULL} (\code{optional})
+
+The weight of the font can be modified thorough a text-based option such as
 \code{"normal"}, \code{"bold"}, \code{"lighter"}, \code{"bolder"}, or, a numeric value between
 \code{1} and \code{1000}, inclusive. Note that only variable fonts may support the
 numeric mapping of weight.}
 
-\item{stretch}{Allows for text to either be condensed or expanded. We can use
-one of the following text-based keywords to describe the degree of
+\item{stretch}{\emph{Stretch text}
+
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+Allows for text to either be condensed or expanded. We can use one of the
+following text-based keywords to describe the degree of
 condensation/expansion: \code{"ultra-condensed"}, \code{"extra-condensed"},
 \code{"condensed"}, \code{"semi-condensed"}, \code{"normal"}, \code{"semi-expanded"},
 \code{"expanded"}, \code{"extra-expanded"}, or \code{"ultra-expanded"}. Alternatively, we
 can supply percentage values from \verb{0\\\%} to \verb{200\\\%}, inclusive. Negative
 percentage values are not allowed.}
 
-\item{decorate}{Allows for text decoration effect to be applied. Here, we can
-use \code{"overline"}, \code{"line-through"}, or \code{"underline"}.}
+\item{decorate}{\emph{Decorate text}
 
-\item{transform}{Allows for the transformation of text. Options are
-\code{"uppercase"}, \code{"lowercase"}, or \code{"capitalize"}.}
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
 
-\item{whitespace}{A white-space preservation option. By default, runs of
-white-space will be collapsed into single spaces but several options exist
-to govern how white-space is collapsed and how lines might wrap at
-soft-wrap opportunities. The keyword options are \code{"normal"}, \code{"nowrap"},
-\code{"pre"}, \code{"pre-wrap"}, \code{"pre-line"}, and \code{"break-spaces"}.}
+Allows for text decoration effect to be applied. Here, we can use
+\code{"overline"}, \code{"line-through"}, or \code{"underline"}.}
 
-\item{indent}{The indentation of the text. Can be provided as a number that
-is assumed to represent \code{px} values (or could be wrapped in the \code{\link[=px]{px()}})
-helper function. Alternatively, this can be given as a percentage (easily
-constructed with \code{\link[=pct]{pct()}}).}
+\item{transform}{\emph{Transform text}
+
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+Allows for the transformation of text. Options are \code{"uppercase"},
+\code{"lowercase"}, or \code{"capitalize"}.}
+
+\item{whitespace}{\emph{White-space options}
+
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+A white-space preservation option. By default, runs of white-space will be
+collapsed into single spaces but several options exist to govern how
+white-space is collapsed and how lines might wrap at soft-wrap
+opportunities. The options are \code{"normal"}, \code{"nowrap"}, \code{"pre"},
+\code{"pre-wrap"}, \code{"pre-line"}, and \code{"break-spaces"}.}
+
+\item{indent}{\emph{Text indentation}
+
+\verb{scalar<numeric|integer|character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+The indentation of the text. Can be provided as a number that is assumed to
+represent \code{px} values (or could be wrapped in the \code{\link[=px]{px()}}) helper function.
+Alternatively, this can be given as a percentage (easily constructed with
+\code{\link[=pct]{pct()}}).}
 }
 \value{
 A list object of class \code{cell_styles}.
@@ -82,23 +129,23 @@ also define several styles within a single call of \code{cell_text()} and
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Add styles with \code{\link[=tab_style]{tab_style()}} and
-the \code{cell_text()} helper function.
+Let's use the \code{\link{exibble}} dataset to create a simple, two-column \strong{gt} table
+(keeping only the \code{num} and \code{currency} columns). With the \code{\link[=tab_style]{tab_style()}}
+function (called twice), we'll selectively add style to the values formatted
+by \code{\link[=fmt_number]{fmt_number()}}. We do this by using the \code{cell_text()} helper function in
+the \code{style} argument of \code{\link[=tab_style]{tab_style()}}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(num, currency) \%>\%
-  gt() \%>\%
-  fmt_number(
-    columns = c(num, currency),
-    decimals = 1
-  ) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(num, currency) |>
+  gt() |>
+  fmt_number(decimals = 1) |>
   tab_style(
     style = cell_text(weight = "bold"),
     locations = cells_body(
       columns = num,
       rows = num >= 5000
     )
-  ) \%>\%
+  ) |>
   tab_style(
     style = cell_text(style = "italic"),
     locations = cells_body(
@@ -115,7 +162,12 @@ the \code{cell_text()} helper function.
 
 \section{Function ID}{
 
-7-20
+8-20
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
@@ -146,6 +198,7 @@ Other helper functions:
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},
-\code{\link{stub}()}
+\code{\link{stub}()},
+\code{\link{system_fonts}()}
 }
 \concept{helper functions}

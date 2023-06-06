@@ -11,71 +11,148 @@ fmt_engineering(
   decimals = 2,
   drop_trailing_zeros = FALSE,
   scale_by = 1,
+  exp_style = "x10n",
   pattern = "{x}",
   sep_mark = ",",
   dec_mark = ".",
-  force_sign = FALSE,
+  force_sign_m = FALSE,
+  force_sign_n = FALSE,
   locale = NULL
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The columns to format. Can either be a series of column names
-provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
-focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+
+Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
+column indices, or a select helper function. Examples of select helper
+functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
+\code{columns} being formatted. Alternatively, we can supply a vector of row
+captions within \code{\link[=c]{c()}}, a vector of row indices, or a select helper
+function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}.}
+\code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
+need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
-default) results in all rows in \code{columns} being formatted. Alternatively,
-we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
-indices, or a helper function focused on selections. The select helper
-functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
-\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
-to filter down to the rows we need (e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+\item{decimals}{\emph{Number of decimal places}
 
-\item{decimals}{An option to specify the exact number of decimal places to
-use. The default number of decimal places is \code{2}.}
+\code{scalar<numeric|integer>(val>=0)} --- \emph{default:} \code{2}
 
-\item{drop_trailing_zeros}{A logical value that allows for removal of
-trailing zeros (those redundant zeros after the decimal mark).}
+This corresponds to the exact number of decimal places to use. A value
+such as \code{2.34} can, for example, be formatted with \code{0} decimal places and
+it would result in \code{"2"}. With \code{4} decimal places, the formatted value
+becomes \code{"2.3400"}. The trailing zeros can be removed with
+\code{drop_trailing_zeros = TRUE}. If you always need \code{decimals = 0}, the
+\code{\link[=fmt_integer]{fmt_integer()}} function should be considered.}
 
-\item{scale_by}{A value to scale the input. The default is \code{1.0}. All numeric
-values will be multiplied by this value first before undergoing formatting.}
+\item{drop_trailing_zeros}{\emph{Drop any trailing zeros}
 
-\item{pattern}{A formatting pattern that allows for decoration of the
-formatted value. The value itself is represented by \code{{x}} and all other
-characters are taken to be string literals.}
+\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
 
-\item{sep_mark}{The mark to use as a separator between groups of digits
-(e.g., using \code{sep_mark = ","} with \code{1000} would result in a formatted value
-of \verb{1,000}).}
+A logical value that allows for removal of trailing zeros (those redundant
+zeros after the decimal mark).}
 
-\item{dec_mark}{The character to use as a decimal mark (e.g., using \code{dec_mark = ","} with \code{0.152} would result in a formatted value of \verb{0,152}).}
+\item{scale_by}{\emph{Scale values by a fixed multiplier}
 
-\item{force_sign}{Should the positive sign be shown for positive values
-(effectively showing a sign for all values except zero)? If so, use \code{TRUE}
-for this option. The default is \code{FALSE}, where only negative numbers will
-display a minus sign.}
+\verb{scalar<numeric|integer>} --- \emph{default:} \code{1}
 
-\item{locale}{An optional locale ID that can be used for formatting values
-according to the locale's rules.}
+All numeric values will be multiplied by the \code{scale_by} value before
+undergoing formatting. Since the \code{default} value is \code{1}, no values will be
+changed unless a different multiplier value is supplied.}
+
+\item{exp_style}{\emph{Style declaration for exponent formatting}
+
+\verb{scalar<character>} --- \emph{default:} \code{"x10n"}
+
+Style of formatting to use for the scientific notation formatting. By
+default this is \code{"x10n"} but other options include using a single letter
+(e.g., \code{"e"}, \code{"E"}, etc.), a letter followed by a \code{"1"} to signal a
+minimum digit width of one, or \code{"low-ten"} for using a stylized \code{"10"}
+marker.}
+
+\item{pattern}{\emph{Specification of the formatting pattern}
+
+\verb{scalar<character>} --- \emph{default:} \code{"{x}"}
+
+A formatting pattern that allows for decoration of the formatted value. The
+formatted value is represented by the \code{{x}} (which can be used multiple
+times, if needed) and all other characters will be interpreted as string
+literals.}
+
+\item{sep_mark}{\emph{Separator mark for digit grouping}
+
+\verb{scalar<character>} --- \emph{default:} \code{","}
+
+The string to use as a separator between groups of digits. For example,
+using \code{sep_mark = ","} with a value of \code{1000} would result in a formatted
+value of \code{"1,000"}. This argument is ignored if a \code{locale} is supplied
+(i.e., is not \code{NULL}).}
+
+\item{dec_mark}{\emph{Decimal mark}
+
+\verb{scalar<character>} --- \emph{default:} \code{"."}
+
+The string to be used as the decimal mark. For example, using
+\code{dec_mark = ","} with the value \code{0.152} would result in a formatted value
+of \code{"0,152"}). This argument is ignored if a \code{locale} is supplied (i.e., is
+not \code{NULL}).}
+
+\item{force_sign_m, force_sign_n}{\emph{Forcing the display of a positive sign}
+
+\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+
+Should the plus sign be shown for positive values of the mantissa (first
+component, \code{force_sign_m}) or the exponent (\code{force_sign_n})? This would
+effectively show a sign for all values except zero on either of those
+numeric components of the notation. If so, use \code{TRUE} for either one of
+these options. The default for both is \code{FALSE}, where only negative numbers
+will display a sign.}
+
+\item{locale}{\emph{Locale identifier}
+
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+An optional locale identifier that can be used for formatting values
+according the locale's rules. Examples include \code{"en"} for English (United
+States) and \code{"fr"} for French (France). We can use the \code{\link[=info_locales]{info_locales()}}
+function as a useful reference for all of the locales that are supported. A
+locale ID can be also set in the initial \code{\link[=gt]{gt()}} function call (where it
+would be used automatically by any function with a \code{locale} argument) but a
+\code{locale} value provided here will override that global locale.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
 With numeric values in a \strong{gt} table, we can perform formatting so that the
-targeted values are rendered in engineering notation.
+targeted values are rendered in engineering notation, where numbers are
+written in the form of a mantissa (\code{m}) and an exponent (\code{n}). When combined
+the construction is either of the form \emph{m} x 10^\emph{n} or \emph{m}E\emph{n}. The mantissa
+is a number between \code{1} and \code{1000} and the exponent is a multiple of \code{3}. For
+example, the number 0.0000345 can be written in engineering notation as
+\verb{34.50 x 10^-6}. This notation helps to simplify calculations and make it
+easier to compare numbers that are on very different scales.
 
-With this function, there is fine control over the formatted values with the
-following options:
+We have fine control over the formatting task, with the following options:
 \itemize{
 \item decimals: choice of the number of decimal places, option to drop
 trailing zeros, and a choice of the decimal symbol
-\item digit grouping separators: choice of separator symbol
 \item scaling: we can choose to scale targeted values by a multiplier value
 \item pattern: option to use a text pattern for decoration of the formatted
 values
@@ -106,8 +183,8 @@ helper like \code{starts_with()}, or, providing a more complex incantation like
 
 \code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
 
-which targets numeric columns that have a maximum value of 100,000 (excluding
-\code{NA}s from consideration).
+which targets numeric columns that have a maximum value greater than
+1,000,000 (excluding any \code{NA}s from consideration).
 
 By default all columns and rows are selected (with the \code{everything()}
 defaults). Cell values that are incompatible with a given formatting function
@@ -154,11 +231,12 @@ useful reference on which locales are supported, we can use the
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{num} column in
-engineering notation.
+Use the \code{\link{exibble}} dataset to create a \strong{gt} table. Format the \code{num} column
+to display values in engineering notation using the \code{fmt_engineering()}
+function.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt() |>
   fmt_engineering(columns = num)
 }\if{html}{\out{</div>}}
 
@@ -172,6 +250,11 @@ engineering notation.
 3-4
 }
 
+\section{Function Introduced}{
+
+\code{v0.3.1} (August 9, 2021)
+}
+
 \seealso{
 The vector-formatting version of this function:
 \code{\link[=vec_fmt_engineering]{vec_fmt_engineering()}}.
@@ -179,12 +262,16 @@ The vector-formatting version of this function:
 Other data formatting functions: 
 \code{\link{data_color}()},
 \code{\link{fmt_auto}()},
+\code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
 \code{\link{fmt_duration}()},
+\code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_image}()},
+\code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},
@@ -193,13 +280,14 @@ Other data formatting functions:
 \code{\link{fmt_percent}()},
 \code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
+\code{\link{fmt_spelled_num}()},
 \code{\link{fmt_time}()},
+\code{\link{fmt_url}()},
 \code{\link{fmt}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},
 \code{\link{sub_values}()},
-\code{\link{sub_zero}()},
-\code{\link{text_transform}()}
+\code{\link{sub_zero}()}
 }
 \concept{data formatting functions}

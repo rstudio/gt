@@ -1,4 +1,30 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2023 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 #' Helper function for adding an image from the web
+#'
+#' @description
 #'
 #' We can flexibly add a web image inside of a table with `web_image()`
 #' function. The function provides a convenient way to generate an HTML fragment
@@ -19,8 +45,18 @@
 #' where a height of `30px` is a default height chosen to work well within the
 #' heights of most table rows.
 #'
-#' @param url A url that resolves to an image file.
-#' @param height The absolute height (px) of the image in the table cell.
+#' @param url *An image URL*
+#'
+#'   `scalar<character>` --- **required**
+#'
+#'   A url that resolves to an image file.
+#'
+#' @param height *Height of image*
+#'
+#'   `scalar<numeric|integer>` --- *default:* `30`
+#'
+#'   The absolute height of the image in the table cell (in `"px"` units). By
+#'   default, this is set to `"30px"`.
 #'
 #' @return A character object with an HTML fragment that can be placed inside of
 #'   a cell.
@@ -42,8 +78,8 @@
 #' dplyr::tibble(
 #'   pixels = px(seq(10, 35, 5)),
 #'   image = seq(10, 35, 5)
-#' ) %>%
-#'   gt() %>%
+#' ) |>
+#'   gt() |>
 #'   text_transform(
 #'     locations = cells_body(columns = image),
 #'     fn = function(x) {
@@ -74,8 +110,8 @@
 #' dplyr::tibble(
 #'   pixels = px(seq(10, 35, 5)),
 #'   image = seq(10, 35, 5)
-#' ) %>%
-#'   gt() %>%
+#' ) |>
+#'   gt() |>
 #'   tab_header(
 #'     title = html(
 #'       "<strong>R Logo</strong>",
@@ -88,7 +124,7 @@
 #'       web_image(
 #'         url = r_svg_url,
 #'         height = px(12)
-#'       ) %>%
+#'       ) |>
 #'         rep(5)
 #'     )
 #'   )
@@ -100,7 +136,10 @@
 #'
 #' @family image addition functions
 #' @section Function ID:
-#' 8-1
+#' 9-1
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
 web_image <- function(
@@ -116,6 +155,8 @@ web_image <- function(
 }
 
 #' Helper function for adding a local image
+#'
+#' @description
 #'
 #' We can flexibly add a local image (i.e., an image residing on disk) inside of
 #' a table with `local_image()` function. The function provides a convenient way
@@ -138,8 +179,18 @@ web_image <- function(
 #' where a height of `30px` is a default height chosen to work well within the
 #' heights of most table rows.
 #'
-#' @param filename A path to an image file.
-#' @param height The absolute height (px) of the image in the table cell.
+#' @param filename *Path to image file*
+#'
+#'   `scalar<character>` --- **required**
+#'
+#'   A local path to an image file on disk.
+#'
+#' @param height *Height of image*
+#'
+#'   `scalar<numeric|integer>` --- *default:* `30`
+#'
+#'   The absolute height of the image in the table cell (in `"px"` units). By
+#'   default, this is set to `"30px"`.
 #'
 #' @return A character object with an HTML fragment that can be placed inside of
 #'   a cell.
@@ -155,8 +206,8 @@ web_image <- function(
 #' dplyr::tibble(
 #'   pixels = px(seq(10, 35, 5)),
 #'   image = seq(10, 35, 5)
-#' ) %>%
-#'   gt() %>%
+#' ) |>
+#'   gt() |>
 #'   text_transform(
 #'     locations = cells_body(columns = image),
 #'     fn = function(x) {
@@ -174,7 +225,10 @@ web_image <- function(
 #'
 #' @family image addition functions
 #' @section Function ID:
-#' 8-2
+#' 9-2
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
 local_image <- function(
@@ -197,6 +251,8 @@ local_image <- function(
 }
 
 #' Helper function for adding a ggplot
+#'
+#' @description
 #'
 #' We can add a **ggplot2** plot inside of a table with the help of the
 #' `ggplot_image()` function. The function provides a convenient way to generate
@@ -221,13 +277,28 @@ local_image <- function(
 #' the plot (the default `aspect_ratio` is `1.0`) and this is useful for
 #' elongating any given plot to fit better within the table construct.
 #'
-#' @param plot_object A ggplot plot object.
-#' @param height The absolute height (px) of the image in the table cell.
-#' @param aspect_ratio The plot's final aspect ratio. Where the height of the
-#'   plot is fixed using the `height` argument, the `aspect_ratio`
-#'   will either compress (`aspect_ratio` < `1.0`) or expand
-#'   (`aspect_ratio` > `1.0`) the plot horizontally. The default value
-#'   of `1.0` will neither compress nor expand the plot.
+#' @param plot_object *A ggplot plot object*
+#'
+#'   `obj:<ggplot>` --- **required**
+#'
+#'   A `ggplot` plot object.
+#'
+#' @param height *Height of image*
+#'
+#'   `scalar<numeric|integer>` --- *default:* `100`
+#'
+#'   The absolute height of the output image in the table cell (in `"px"`
+#'   units). By default, this is set to `"100px"`.
+#'
+#' @param aspect_ratio *The final aspect ratio of plot*
+#'
+#'   `scalar<numeric|integer>` --- *default:* `1.0`
+#'
+#'   This is the plot's final aspect ratio. Where the height of the plot is
+#'   fixed using the `height` argument, the `aspect_ratio` will either compress
+#'   (`aspect_ratio` < `1.0`) or expand (`aspect_ratio` > `1.0`) the plot
+#'   horizontally. The default value of `1.0` will neither compress nor expand
+#'   the plot.
 #'
 #' @return A character object with an HTML fragment that can be placed inside of
 #'   a cell.
@@ -257,12 +328,12 @@ local_image <- function(
 #' dplyr::tibble(
 #'   text = "Here is a ggplot:",
 #'   ggplot = NA
-#' ) %>%
-#'   gt() %>%
+#' ) |>
+#'   gt() |>
 #'   text_transform(
 #'     locations = cells_body(columns = ggplot),
 #'     fn = function(x) {
-#'       plot_object %>%
+#'       plot_object |>
 #'         ggplot_image(height = px(200))
 #'     }
 #'   )
@@ -274,15 +345,25 @@ local_image <- function(
 #'
 #' @family image addition functions
 #' @section Function ID:
-#' 8-3
+#' 9-3
 #'
-#' @importFrom ggplot2 ggsave
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
 #' @export
 ggplot_image <- function(
     plot_object,
     height = 100,
     aspect_ratio = 1.0
 ) {
+
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+
+    cli::cli_abort(c(
+      "Using the `ggplot_image()` function requires the `ggplot2` package.",
+      "*" = "It can be installed with `install.packages(\"ggplot2\")`."
+    ))
+  }
 
   if (is.numeric(height)) {
     height <- paste0(height, "px")
@@ -321,19 +402,28 @@ ggplot_image <- function(
 
 #' Generate a path to a test image
 #'
+#' @description
+#'
 #' Two test images are available within the **gt** package. Both contain the
 #' same imagery (sized at 200px by 200px) but one is a PNG file while the other
 #' is an SVG file. This function is most useful when paired with [local_image()]
 #' since we test various sizes of the test image within that function.
 #'
-#' @param type The type of the image, which can either be `png` (the default) or
-#'   `svg`.
+#' @param type *The image type*
+#'
+#'   `singl-kw:[png|svg]` --- *default:* `"png"`
+#'
+#'   The type of image to produce here can either be `"png"` (the default) or
+#'   `"svg"`.
 #'
 #' @return A character vector with a single path to an image file.
 #'
 #' @family image addition functions
 #' @section Function ID:
-#' 8-4
+#' 9-4
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
 test_image <- function(type = c("png", "svg")) {

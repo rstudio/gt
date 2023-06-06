@@ -4,17 +4,42 @@
 \alias{cols_label}
 \title{Relabel one or more columns}
 \usage{
-cols_label(.data, ..., .list = list2(...))
+cols_label(.data, ..., .list = list2(...), .fn = NULL)
 }
 \arguments{
-\item{.data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{.data}{\emph{The gt table data object}
 
-\item{...}{One or more named arguments of column names from the input \code{.data}
-table along with their labels for display as the column labels. We can
-optionally wrap the column labels with \code{\link[=md]{md()}} (to interpret text as
-Markdown) or \code{\link[=html]{html()}} (to interpret text as HTML).}
+\verb{obj:<gt_tbl>} --- \strong{required}
 
-\item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{...}{\emph{Column label assignments}
+
+\verb{<multiple expressions>} --- \strong{required} (or, use \code{.list})
+
+Expressions for the assignment of column labels for the table columns in
+\code{.data}. Two-sided formulas (e.g., \verb{<LHS> ~ <RHS>}) can be used, where the
+left-hand side corresponds to selections of columns and the right-hand side
+evaluates to single-length values for the label to apply. Column names
+should be enclosed in \code{\link[=c]{c()}}. Select helpers like \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}
+can be used in the LHS. Named arguments are also valid as input for simple
+mappings of column name to label text; they should be of the form \verb{<column name> = <label>}. Subsequent expressions that operate on the columns
+assigned previously will result in overwriting column width values.}
+
+\item{.list}{\emph{Alternative to \code{...}}
+
+\verb{<list of multiple expressions>} --- \strong{required} (or, use \code{...})
+
+Allows for the use of a list as an input alternative to \code{...}.}
+
+\item{.fn}{\emph{Function to apply}
+
+\code{function} --- \emph{default:} \code{NULL} (\code{optional})
+
+An option to specify a function that will be applied to all of the provided
+label values.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -23,11 +48,11 @@ An object of class \code{gt_tbl}.
 Column labels can be modified from their default values (the names of the
 columns from the input table data). When you create a \strong{gt} table object
 using \code{\link[=gt]{gt()}}, column names effectively become the column labels. While this
-serves as a good first approximation, column names aren't often appealing as
-column labels in a \strong{gt} output table. The \code{cols_label()} function
-provides the flexibility to relabel one or more columns and we even have the
-option to use the \code{\link[=md]{md()}} or \code{\link[=html]{html()}} helper functions for rendering column
-labels from Markdown or using HTML.
+serves as a good first approximation, column names as label defaults aren't
+often appealing as the alternative for custom column labels in a \strong{gt}
+output table. The \code{cols_label()} function provides the flexibility to relabel
+one or more columns and we even have the option to use the \code{\link[=md]{md()}} or \code{\link[=html]{html()}}
+helper functions for rendering column labels from Markdown or using HTML.
 }
 \section{A note on column names and column labels}{
 
@@ -37,7 +62,7 @@ continue to refer to columns by their original column names. Column names in
 a tibble or data frame must be unique whereas column labels in \strong{gt} have
 no requirement for uniqueness (which is useful for labeling columns as, say,
 measurement units that may be repeated several times---usually under
-different spanner column labels). Thus, we can still easily distinguish
+different spanner labels). Thus, we can still easily distinguish
 between columns in other \strong{gt} function calls (e.g., in all of the
 \verb{fmt*()} functions) even though we may lose distinguishability in column
 labels once they have been relabeled.
@@ -46,14 +71,16 @@ labels once they have been relabeled.
 \section{Examples}{
 
 
-Use \code{\link{countrypops}} to create a \strong{gt} table. Relabel all the table's columns
-with the \code{cols_label()} function to improve its presentation.
+Let's use a portion of the \code{\link{countrypops}} dataset to create a \strong{gt} table.
+Relabel all the table's columns with the \code{cols_label()} function to improve
+its presentation. In this simple case we are supplying the name of the column
+on the left-hand side, and the label text on the right-hand side.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::select(-contains("code")) \%>\%
-  dplyr::filter(country_name == "Mongolia") \%>\%
-  tail(5) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::select(-contains("code")) |>
+  dplyr::filter(country_name == "Mongolia") |>
+  tail(5) |>
+  gt() |>
   cols_label(
     country_name = "Name",
     year = "Year",
@@ -61,34 +88,102 @@ with the \code{cols_label()} function to improve its presentation.
   )
 }\if{html}{\out{</div>}}
 
-#' \if{html}{\out{
+\if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_1.png" alt="This image of a table was generated from the first code example in the `cols_label()` help file." style="width:100\%;">
 }}
 
-Using \code{\link{countrypops}} again to create a \strong{gt} table, we label columns just
-as before but this time make the column labels bold through Markdown
-formatting.
+Using the \code{\link{countrypops}} dataset again, we label columns similarly to before
+but this time making the column labels be bold through Markdown formatting
+(with the \code{\link[=md]{md()}} helper function). It's possible here to use either a \code{=} or
+a \code{~} between the column name and the label text.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::select(-contains("code")) \%>\%
-  dplyr::filter(country_name == "Mongolia") \%>\%
-  tail(5) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::select(-contains("code")) |>
+  dplyr::filter(country_name == "Mongolia") |>
+  tail(5) |>
+  gt() |>
   cols_label(
     country_name = md("**Name**"),
     year = md("**Year**"),
-    population = md("**Population**")
+    population ~ md("**Population**")
   )
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_2.png" alt="This image of a table was generated from the second code example in the `cols_label()` help file." style="width:100\%;">
 }}
+
+With a select portion of the \code{\link{metro}} dataset, let's create a small \strong{gt}
+table with three columns. Within \code{cols_label()} we'd like to provide column
+labels that contain line breaks. For that, we can use \verb{<br>} to indicate
+where the line breaks should be. We also need to use the \code{\link[=md]{md()}} helper
+function to signal to \strong{gt} that this text should be interpreted as
+Markdown. Instead of calling \code{\link[=md]{md()}} on each of labels as before, we can more
+conveniently use the \code{.fn} argument and provide the bare function there (it
+will be applied to each label defined in the \code{cols_label()} call).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{metro |>
+  dplyr::select(name, lines, passengers, connect_other) |>
+  dplyr::arrange(desc(passengers)) |>
+  dplyr::slice_head(n = 10) |>
+  gt() |>
+  cols_hide(columns = passengers) |>
+  cols_label(
+    name = "Name of<br>Metro Station",
+    lines = "Metro<br>Lines",
+    connect_other = "Train<br>Services",
+    .fn = md
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_3.png" alt="This image of a table was generated from the third code example in the `cols_label()` help file." style="width:100\%;">
+}}
+
+Using a subset of the \code{\link{towny}} dataset, we can create an interesting \strong{gt}
+table. First, only certain columns are selected from the dataset, some
+filtering of rows is done, rows are sorted, and then only the first 10 rows
+are kept. When introduced to \code{\link[=gt]{gt()}}, we apply some spanner labels through two
+calls of \code{\link[=tab_spanner]{tab_spanner()}} all the table's columns. Below those spanners, we
+want to label the columns by the years of interest. Using \code{cols_label()} and
+select expressions on the left side of the formulas, we can easily relabel
+multiple columns with common label text. Note that we cannot use an \code{=} sign
+in any of the expressions within \code{cols_label()}; because the left-hand side
+is not a single column name, we must use formula syntax (i.e., with the \code{~}).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
+  dplyr::select(
+    name, ends_with("2001"), ends_with("2006"), matches("2001_2006")
+  ) |>
+  dplyr::filter(population_2001 > 100000) |>
+  dplyr::arrange(desc(pop_change_2001_2006_pct)) |>
+  dplyr::slice_head(n = 10) |>
+  gt() |>
+  fmt_integer() |>
+  fmt_percent(columns = matches("change"), decimals = 1) |>
+  tab_spanner(label = "Population", columns = starts_with("population")) |>
+  tab_spanner(label = "Density", columns = starts_with("density")) |>
+  cols_label(
+    ends_with("01") ~ "2001",
+    ends_with("06") ~ "2006",
+    matches("change") ~ md("Population Change,<br>2001 to 2006")
+  ) |>
+  cols_width(everything() ~ px(120))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_4.png" alt="This image of a table was generated from the fourth code example in the `cols_label()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
 
-4-4
+5-4
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{

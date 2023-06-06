@@ -6,16 +6,35 @@
 \usage{
 vec_fmt_markdown(
   x,
+  md_engine = c("markdown", "commonmark"),
   output = c("auto", "plain", "html", "latex", "rtf", "word")
 )
 }
 \arguments{
-\item{x}{A numeric vector.}
+\item{x}{\emph{The input vector}
 
-\item{output}{The output style of the resulting character vector. This can
-either be \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"},
-or \code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the
-\code{"auto"} option will choose the correct \code{output} value}
+\code{vector(numeric|integer)} --- \strong{required}
+
+This is the input vector that will undergo transformation to a character
+vector of the same length. Values within the vector will be formatted.}
+
+\item{md_engine}{\emph{Choice of Markdown engine}
+
+\verb{singl-kw:[markdown|commonmark]} --- \emph{default:} \code{"markdown"}
+
+The engine preference for Markdown rendering. By default, this is set to
+\code{"markdown"} where \strong{gt} will use the \strong{markdown} package for Markdown
+conversion to HTML and LaTeX. The other option is \code{"commonmark"} and with
+that the \strong{commonmark} package will be used.}
+
+\item{output}{\emph{Output format}
+
+\verb{singl-kw:[auto|plain|html|latex|rtf|word]} --- \emph{default:} \code{"auto"}
+
+The output style of the resulting character vector. This can either be
+\code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"}, or
+\code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the \code{"auto"}
+option will choose the correct \code{output} value}
 }
 \value{
 A character vector.
@@ -64,7 +83,12 @@ or LaTeX
 
 \section{Function ID}{
 
-14-15
+15-17
+}
+
+\section{Function Introduced}{
+
+\code{v0.7.0} (Aug 25, 2022)
 }
 
 \seealso{
@@ -79,12 +103,14 @@ Other vector formatting functions:
 \code{\link{vec_fmt_duration}()},
 \code{\link{vec_fmt_engineering}()},
 \code{\link{vec_fmt_fraction}()},
+\code{\link{vec_fmt_index}()},
 \code{\link{vec_fmt_integer}()},
 \code{\link{vec_fmt_number}()},
 \code{\link{vec_fmt_partsper}()},
 \code{\link{vec_fmt_percent}()},
 \code{\link{vec_fmt_roman}()},
 \code{\link{vec_fmt_scientific}()},
+\code{\link{vec_fmt_spelled_num}()},
 \code{\link{vec_fmt_time}()}
 }
 \concept{vector formatting functions}

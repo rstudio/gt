@@ -28,95 +28,185 @@ data_color(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns, rows}{The columns and rows to which cell data color operations
-are constrained.}
+\verb{obj:<gt_tbl>} --- \strong{required}
 
-\item{direction}{Should the color computations be performed column-wise or
-row-wise? By default this is set with the \code{"column"} keyword and colors
-will be applied down columns. The alternative option with the \code{"row"}
-keyword ensures that the color mapping works across rows.}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
-\item{target_columns}{For indirect column coloring treatments, we can supply
-the columns that will receive the styling. The necessary precondition is
-that we must use \code{direction = "column"}. If \code{columns} resolves to a single
-column then we may use one or more columns in \code{target_columns}. If on the
-other hand \code{columns} resolves to multiple columns, then \code{target_columns}
-must resolve to the same multiple.}
+\item{columns}{\emph{Columns to target}
 
-\item{method}{A method for computing color based on the data within body
-cells. Can be \code{"auto"} (the default), \code{"numeric"}, \code{"bin"}, \code{"quantile"},
-or \code{"factor"}. The \code{"auto"} method will automatically choose the
-\code{"numeric"} method for numerical input data or the \code{"factor"} method for
-any non-numeric inputs.}
+\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
 
-\item{palette}{A vector of color names, the name of an \strong{RColorBrewer}
-palette, the name of a \strong{viridis} palette, or a discrete palette
-accessible from the \strong{paletteer} package using the \verb{<package>::<palette>}
-syntax (e.g., \code{"wesanderson::IsleofDogs1"}). If providing a vector of
-colors as a palette, each color value provided must either be a color name
-(Only R/X11 color names or CSS 3.0 color names) or a hexadecimal string in
-the form of \code{"#RRGGBB"} or \code{"#RRGGBBAA"}. If nothing is provided here, the
-default R color palette is used (i.e., the colors from \code{palette()}).}
+The columns to which cell data color operations are constrained. Can either
+be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,
+or a select helper function. Examples of select helper functions include
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
 
-\item{domain}{The possible values that can be mapped. For the \code{"numeric"} and
-\code{"bin"} methods, this can be a numeric range specified with a length of two
-vector. Representative numeric data is needed for the \code{"quantile"} method
-and categorical data must be used for the \code{"factor"} method. If \code{NULL} (the
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+form a constraint for cell data color operations. The default
+\code{\link[=everything]{everything()}} results in all rows in \code{columns} being formatted.
+Alternatively, we can supply a vector of row captions within \code{\link[=c]{c()}}, a
+vector of row indices, or a select helper function. Examples of select
+helper functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use
+expressions to filter down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+
+\item{direction}{\emph{Color computation direction}
+
+\verb{singl-kw:[column|row]} --- \emph{default:} \code{"column"}
+
+Should the color computations be performed column-wise or row-wise? By
+default this is set with the \code{"column"} keyword and colors will be applied
+down columns. The alternative option with the \code{"row"} keyword ensures that
+the color mapping works across rows.}
+
+\item{target_columns}{\emph{Indirect columns to target}
+
+\verb{<row-targeting expression>} --- \emph{default:} \code{NULL} \code{optional}
+
+For indirect column coloring treatments, we can supply the columns that
+will receive the styling. The necessary precondition is that we must use
+\code{direction = "column"}. If \code{columns} resolves to a single column then we
+may use one or more columns in \code{target_columns}. If on the other hand
+\code{columns} resolves to multiple columns, then \code{target_columns} must resolve
+to the same multiple.}
+
+\item{method}{\emph{Color computation method}
+
+\verb{singl-kw:[auto|numeric|bin|quantile|factor]} --- \emph{default:} \code{"auto"}
+
+A method for computing color based on the data within body cells. Can be
+\code{"auto"} (the default), \code{"numeric"}, \code{"bin"}, \code{"quantile"}, or \code{"factor"}.
+The \code{"auto"} method will automatically choose the \code{"numeric"} method for
+numerical input data or the \code{"factor"} method for any non-numeric inputs.}
+
+\item{palette}{\emph{Color palette}
+
+\verb{vector<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+A vector of color names, the name of an \strong{RColorBrewer} palette, the name
+of a \strong{viridis} palette, or a discrete palette accessible from the
+\strong{paletteer} package using the \verb{<package>::<palette>} syntax (e.g.,
+\code{"wesanderson::IsleofDogs1"}). If providing a vector of colors as a
+palette, each color value provided must either be a color name (Only R/X11
+color names or CSS 3.0 color names) or a hexadecimal string in the form of
+\code{"#RRGGBB"} or \code{"#RRGGBBAA"}. If nothing is provided here, the default R
+color palette is used (i.e., the colors from \code{palette()}).}
+
+\item{domain}{\emph{Value domain}
+
+\verb{vector<numeric|integer|character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+The possible values that can be mapped. For the \code{"numeric"} and \code{"bin"}
+methods, this can be a numeric range specified with a length of two vector.
+Representative numeric data is needed for the \code{"quantile"} method and
+categorical data must be used for the \code{"factor"} method. If \code{NULL} (the
 default value), the values in each column or row (depending on \code{direction})
 value will represent the domain.}
 
-\item{bins}{For \code{method = "bin"} this can either be a numeric vector of two
-or more unique cut points, or, a single numeric value (greater than or
-equal to \code{2}) giving the number of intervals into which the domain values
-are to be cut. By default, this is \code{8}.}
+\item{bins}{\emph{Specification of bin number}
 
-\item{quantiles}{For \code{method = "quantile"} this is the number of equal-size
-quantiles to use. By default, this is set to \code{4}.}
+\verb{scalar<numeric|integer>} --- \emph{default:} \code{8}
 
-\item{levels}{For \code{method = "factor"} this allows for an alternate way of
-specifying levels. If anything is provided here then any value supplied to
-\code{domain} will be ignored. This should be a character vector of unique
-values.}
+For \code{method = "bin"} this can either be a numeric vector of two or more
+unique cut points, or, a single numeric value (greater than or equal to
+\code{2}) giving the number of intervals into which the domain values are to be
+cut. By default, this is \code{8}.}
 
-\item{ordered}{For \code{method = "factor"}, setting this to \code{TRUE} means that the
-vector supplied to \code{domain} will be treated as being in the correct order
-if that vector needs to be coerced to a factor. By default, this is
-\code{FALSE}.}
+\item{quantiles}{\emph{Specification of quantile number}
 
-\item{na_color}{The color to use for missing values. By default (with
-\code{na_color = NULL}) gray, \code{"#808080"}, will be used.}
+\verb{scalar<numeric|integer>} --- \emph{default:} \code{4}
 
-\item{alpha}{An optional, fixed alpha transparency value that will be applied
-to all of the \code{colors} provided (regardless of whether a color palette was
-directly supplied or generated through a color mapping function).}
+For \code{method = "quantile"} this is the number of equal-size quantiles to
+use. By default, this is set to \code{4}.}
 
-\item{reverse}{Should the colors computed operate in reverse order?
-If \code{TRUE} then colors that normally change from red to blue will change in
-the opposite direction. By default, this is \code{FALSE}.}
+\item{levels}{\emph{Specification of factor levels}
 
-\item{fn}{A color-mapping function. The function should be able to take a
-vector of data values as input and return an equal-length vector of color
-values. The \verb{col_*()} functions provided in the \strong{scales} package (i.e.,
+\verb{vector<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+For \code{method = "factor"} this allows for an alternate way of specifying
+levels. If anything is provided here then any value supplied to \code{domain}
+will be ignored. This should be a character vector of unique values.}
+
+\item{ordered}{\emph{Use an ordered factor}
+
+\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+
+For \code{method = "factor"}, setting this to \code{TRUE} means that the vector
+supplied to \code{domain} will be treated as being in the correct order if that
+vector needs to be coerced to a factor. By default, this is \code{FALSE}.}
+
+\item{na_color}{\emph{Default color for \code{NA} values}
+
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+The color to use for missing values. By default (with \code{na_color = NULL}),
+the color gray (\code{"#808080"}) will be used. This option has no effect if
+providing a color-mapping function to \code{fn}.}
+
+\item{alpha}{\emph{Transparency value}
+
+\verb{scalar<numeric|integer>(0>=val>=1)} --- \emph{default:} \code{NULL} (\code{optional})
+
+An optional, fixed alpha transparency value that will be applied to all of
+the \code{colors} provided (regardless of whether a color palette was directly
+supplied or generated through a color mapping function).}
+
+\item{reverse}{\emph{Reverse order of computed colors}
+
+\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+
+Should the colors computed operate in the reverse order? If \code{TRUE} then
+colors that normally change from red to blue will change in the opposite
+direction.}
+
+\item{fn}{\emph{Color-mapping function}
+
+\code{function} --- \emph{default:} \code{NULL} (\code{optional})
+
+A color-mapping function. The function should be able to take a vector of
+data values as input and return an equal-length vector of color values. The
+\verb{col_*()} functions provided in the \strong{scales} package (i.e.,
 \code{\link[scales:col_numeric]{scales::col_numeric()}}, \code{\link[scales:col_numeric]{scales::col_bin()}}, and \code{\link[scales:col_numeric]{scales::col_factor()}})
 can be invoked here with options, as those functions themselves return a
 color-mapping function.}
 
-\item{apply_to}{Which style element should the colors be applied to? Options
-include the cell background (the default, given as \code{"fill"}) or the cell
-text (\code{"text"}).}
+\item{apply_to}{\emph{How to apply color}
 
-\item{autocolor_text}{An option to let \strong{gt} modify the coloring of text
-within cells undergoing background coloring. This will result in better
-text-to-background color contrast. By default, this is set to \code{TRUE}.}
+\verb{singl-kw:[fill|text]} --- \emph{default:} \code{"fill"}
 
-\item{contrast_algo}{The color contrast algorithm to use when
-\code{autocolor_text = TRUE}. By default this is \code{"apca"} (Accessible Perceptual
-Contrast Algorithm) and the alternative to this is \code{"wcag"} (Web Content
-Accessibility Guidelines).}
+Which style element should the colors be applied to? Options include the
+cell background (the default, given as \code{"fill"}) or the cell text
+(\code{"text"}).}
 
-\item{colors}{Deprecated. Use the \code{fn} argument instead to provide a
+\item{autocolor_text}{\emph{Automatically recolor text}
+
+\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+
+An option to let \strong{gt} modify the coloring of text within cells undergoing
+background coloring. This will result in better text-to-background color
+contrast. By default, this is set to \code{TRUE}.}
+
+\item{contrast_algo}{\emph{Color contrast algorithm choice}
+
+\verb{singl-kw:[apca|wcag]} --- \emph{default:} \code{"apca"}
+
+The color contrast algorithm to use when \code{autocolor_text = TRUE}. By
+default this is \code{"apca"} (Accessible Perceptual Contrast Algorithm) and the
+alternative to this is \code{"wcag"} (Web Content Accessibility Guidelines).}
+
+\item{colors}{\emph{\link{Deprecated} Color mapping function}
+
+\code{function} --- \emph{default:} \code{NULL} (\code{optional})
+
+This argument is deprecated. Use the \code{fn} argument instead to provide a
 \strong{scales}-based color-mapping function. If providing a palette, use the
 \code{palette} argument.}
 }
@@ -144,7 +234,7 @@ for finer control over color evaluation with data; the color mapping
 function you might want to define
 \item color palettes: with \code{palette} we could supply a vector of colors, a
 \strong{virdis} or \strong{RColorBrewer} palette name, or, a palette from the
-\strong{paleteer} package
+\strong{paletteer} package
 \item value domain: we can either opt to have the range of values define the
 domain, or, specify one explicitly with the \code{domain} argument
 \item indirect color application: it's possible to compute colors from one column
@@ -164,6 +254,44 @@ that won't typically provide you the type of colorization you really need.
 You can however safely iterate through a collection of different options
 without running into too many errors.
 }
+\section{Targeting cells with \code{columns} and \code{rows}}{
+
+
+Targeting of values is done through \code{columns} and additionally by \code{rows} (if
+nothing is provided for \code{rows} then entire columns are selected). The
+\code{columns} argument allows us to target a subset of cells contained in the
+resolved columns. We say resolved because aside from declaring column names
+in \code{c()} (with bare column names or names in quotes) we can use
+\strong{tidyselect}-style expressions. This can be as basic as supplying a select
+helper like \code{starts_with()}, or, providing a more complex incantation like
+
+\code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
+
+which targets numeric columns that have a maximum value greater than
+1,000,000 (excluding any \code{NA}s from consideration).
+
+By default all columns and rows are selected (with the \code{everything()}
+defaults). Cell values that are incompatible with a given coloring
+function/method will be skipped over. One strategy is to color the bulk of
+cell values with one formatting function and then constrain the columns for
+later passes (the last coloring done to a cell is what you get in the final
+output).
+
+Once the columns are targeted, we may also target the \code{rows} within those
+columns. This can be done in a variety of ways. If a stub is present, then we
+potentially have row identifiers. Those can be used much like column names in
+the \code{columns}-targeting scenario. We can use simpler \strong{tidyselect}-style
+expressions (the select helpers should work well here) and we can use quoted
+row identifiers in \code{c()}. It's also possible to use row indices (e.g.,
+\code{c(3, 5, 6)}) though these index values must correspond to the row numbers of
+the input data (the indices won't necessarily match those of rearranged rows
+if row groups are present). One more type of expression is possible, an
+expression that takes column values (can involve any of the available columns
+in the table) and returns a logical vector. This is nice if you want to base
+formatting on values in the column or another column, or, you'd like to use a
+more complex predicate expression.
+}
+
 \section{Color computation methods}{
 
 
@@ -303,8 +431,8 @@ Accessibility Guidelines}).
 The \code{data_color()} function can be used without any supplied arguments to
 colorize a \strong{gt} table. Let's do this with the \code{\link{exibble}} dataset:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt() |>
   data_color()
 }\if{html}{\out{</div>}}
 
@@ -316,15 +444,15 @@ What's happened is that \code{data_color()} applies background colors to all cel
 of every column with the default palette in R (accessed through \code{palette()}).
 The default method for applying color is \code{"auto"}, where numeric values will
 use the \code{"numeric"} method and character or factor values will use the
-\code{"factor"} method. The text color will be undergo modification automatically
-to maximize contrast (since \code{autocolor_text} is \code{TRUE} by default).
+\code{"factor"} method. The text color undergoes an automatic modification that
+maximizes contrast (since \code{autocolor_text} is \code{TRUE} by default).
 
-You can one of several methods and \strong{gt} will only apply color to the
-compatible values. Let's use the \code{"numeric"} method and supply \code{palette}
-values of \code{"red"} and \code{"green"}.
+You can use any of the available \code{method} keywords and \strong{gt} will only apply
+color to the compatible values. Let's use the \code{"numeric"} method and supply
+\code{palette} values of \code{"red"} and \code{"green"}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt() |>
   data_color(
     method = "numeric",
     palette = c("red", "green")
@@ -346,8 +474,8 @@ We can constrain the cells to which coloring will be applied with the
 limits of the data with the \code{domain} argument (which is preferable in most
 cases). Here, the domain will be set as \code{domain = c(0, 50)}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt() |>
   data_color(
     columns = currency,
     rows = currency < 50,
@@ -361,22 +489,22 @@ cases). Here, the domain will be set as \code{domain = c(0, 50)}.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_data_color_3.png" alt="This image of a table was generated from the third code example in the `data_color()` help file." style="width:100\%;">
 }}
 
-We can use any of the \strong{RColorBrewer} and \strong{viridis} palettes. Let's make a
-new \strong{gt} table from a subset of the \code{\link{countrypops}} dataset. Then, through
-\code{data_color()}, we'll apply coloring to the \code{population} column with the
-\code{"numeric"} method, use a domain between 2.5 and 3.2 million, and specify
-\code{palette = "viridis"}.
+We can use any of the palettes available in the \strong{RColorBrewer} and
+\strong{viridis} packages. Let's make a new \strong{gt} table from a subset of the
+\code{\link{countrypops}} dataset. Then, through \code{data_color()}, we'll apply coloring
+to the \code{population} column with the \code{"numeric"} method, use a domain between
+2.5 and 3.4 million, and specify \code{palette = "viridis"}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::filter(country_name == "Mongolia") \%>\%
-  dplyr::select(-contains("code")) \%>\%
-  tail(10) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::filter(country_name == "Mongolia") |>
+  dplyr::select(-contains("code")) |>
+  tail(10) |>
+  gt() |>
   data_color(
     columns = population,
     method = "numeric",
     palette = "viridis",
-    domain = c(2.5E6, 3.2E6)
+    domain = c(2.5E6, 3.4E6)
   )
 }\if{html}{\out{</div>}}
 
@@ -384,22 +512,22 @@ new \strong{gt} table from a subset of the \code{\link{countrypops}} dataset. Th
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_data_color_4.png" alt="This image of a table was generated from the fourth code example in the `data_color()` help file." style="width:100\%;">
 }}
 
-We can alternatively use the \code{fn} for supplying the \strong{scales}-based function
-\code{\link[scales:col_numeric]{scales::col_numeric()}}. That function call will return a function (which is
-what the \code{fn} argument requires) that takes a vector of numeric values and
-returns color values. Here is the more complex version of the code that
-returns the same table as in the previous example.
+We can alternatively use the \code{fn} argument for supplying the \strong{scales}-based
+function \code{\link[scales:col_numeric]{scales::col_numeric()}}. That function call will itself return a
+function (which is what the \code{fn} argument actually requires) that takes a
+vector of numeric values and returns color values. Here is the more complex
+version of the code that returns the same table as in the previous example.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::filter(country_name == "Mongolia") \%>\%
-  dplyr::select(-contains("code")) \%>\%
-  tail(10) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::filter(country_name == "Mongolia") |>
+  dplyr::select(-contains("code")) |>
+  tail(10) |>
+  gt() |>
   data_color(
     columns = population,
     fn = scales::col_numeric(
       palette = "viridis",
-      domain = c(2.5E6, 3.2E6)
+      domain = c(2.5E6, 3.4E6)
     )
   )
 }\if{html}{\out{</div>}}
@@ -419,25 +547,25 @@ one used to generate those specific colors. The trick is to use the
 \code{target_columns} argument. Let's do this with a more complete
 \code{\link{countrypops}}-based table example.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::filter(country_code_3 \%in\% c("FRA", "GBR")) \%>\%
-  dplyr::filter(year \%\% 10 == 0) \%>\%
-  dplyr::select(-contains("code")) \%>\%
-  dplyr::mutate(color = "") \%>\%
-  gt(groupname_col = "country_name") \%>\%
-  fmt_integer(columns = population) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::filter(country_code_3 \%in\% c("FRA", "GBR")) |>
+  dplyr::filter(year \%\% 10 == 0) |>
+  dplyr::select(-contains("code")) |>
+  dplyr::mutate(color = "") |>
+  gt(groupname_col = "country_name") |>
+  fmt_integer(columns = population) |>
   data_color(
     columns = population,
     target_columns = color,
     method = "numeric",
     palette = "viridis",
     domain = c(4E7, 7E7)
-  ) \%>\%
+  ) |>
   cols_label(
     year = "",
     population = "Population",
     color = ""
-  ) \%>\%
+  ) |>
   opt_vertical_padding(scale = 0.65)
 }\if{html}{\out{</div>}}
 
@@ -451,28 +579,28 @@ table where we map the generated colors from the \code{year} column to all colum
 in the table. This time, the \code{palette} used is \code{"inferno"} (also from the
 \strong{viridis} package).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::filter(country_code_3 \%in\% c("FRA", "GBR", "ITA")) \%>\%
-  dplyr::select(-contains("code")) \%>\%
-  dplyr::filter(year \%\% 5 == 0) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::filter(country_code_3 \%in\% c("FRA", "GBR", "ITA")) |>
+  dplyr::select(-contains("code")) |>
+  dplyr::filter(year \%\% 5 == 0) |>
   tidyr::pivot_wider(
     names_from = "country_name",
     values_from = "population"
-  ) \%>\%
-  gt() \%>\%
-  fmt_integer(columns = c(everything(), -year)) \%>\%
+  ) |>
+  gt() |>
+  fmt_integer(columns = c(everything(), -year)) |>
   cols_width(
     year ~ px(80),
     everything() ~ px(160)
-  ) \%>\%
-  opt_all_caps() \%>\%
-  opt_vertical_padding(scale = 0.75) \%>\%
-  opt_horizontal_padding(scale = 3) \%>\%
+  ) |>
+  opt_all_caps() |>
+  opt_vertical_padding(scale = 0.75) |>
+  opt_horizontal_padding(scale = 3) |>
   data_color(
     columns = year,
     target_columns = everything(),
     palette = "inferno"
-  ) \%>\%
+  ) |>
   tab_options(
     table_body.hlines.style = "none",
     column_labels.border.top.color = "black",
@@ -493,32 +621,32 @@ don't have to specify those in \code{columns} because those are the only columns
 in the table. Also, the \code{domain} is not set here. We'll use the bounds of the
 available data in each column.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
-  dplyr::group_by(type, size) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
+  dplyr::group_by(type, size) |>
   dplyr::summarize(
     sold = dplyr::n(),
     income = sum(price),
     .groups = "drop_last"
-  ) \%>\%
-  dplyr::group_by(type) \%>\%
-  dplyr::mutate(f_sold = sold / sum(sold)) \%>\%
+  ) |>
+  dplyr::group_by(type) |>
+  dplyr::mutate(f_sold = sold / sum(sold)) |>
   dplyr::mutate(size = factor(
     size, levels = c("S", "M", "L", "XL", "XXL"))
-  ) \%>\%
-  dplyr::arrange(type, size) \%>\%
+  ) |>
+  dplyr::arrange(type, size) |>
   gt(
     rowname_col = "size",
     groupname_col = "type"
-  ) \%>\%
+  ) |>
   fmt_percent(
     columns = f_sold,
     decimals = 1
-  ) \%>\%
+  ) |>
   cols_merge(
     columns = c(size, f_sold),
     pattern = "\{1\} (\{2\})"
-  ) \%>\%
-  cols_align(align = "left", columns = stub()) \%>\%
+  ) |>
+  cols_align(align = "left", columns = stub()) |>
   data_color(
     method = "numeric",
     palette = "ggsci::red_material"
@@ -537,13 +665,13 @@ row will be captured, coloring each cell with values relative to the range.
 The \code{palette} is \code{"PuOr"} from the \strong{RColorBrewer} package (only the name
 here is required).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza \%>\%
-  dplyr::filter(latitude == 20 & tst <= "1200") \%>\%
-  dplyr::select(-latitude) \%>\%
-  dplyr::filter(!is.na(sza)) \%>\%
-  tidyr::spread(key = "tst", value = sza) \%>\%
-  gt(rowname_col = "month") \%>\%
-  sub_missing(missing_text = "") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza |>
+  dplyr::filter(latitude == 20 & tst <= "1200") |>
+  dplyr::select(-latitude) |>
+  dplyr::filter(!is.na(sza)) |>
+  tidyr::spread(key = "tst", value = sza) |>
+  gt(rowname_col = "month") |>
+  sub_missing(missing_text = "") |>
   data_color(
     direction = "row",
     palette = "PuOr",
@@ -562,19 +690,28 @@ gray cells for the missing values (we also removed the \code{"NA"} text with
 
 \section{Function ID}{
 
-3-25
+3-30
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
 Other data formatting functions: 
 \code{\link{fmt_auto}()},
+\code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
 \code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
+\code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_image}()},
+\code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},
@@ -583,13 +720,14 @@ Other data formatting functions:
 \code{\link{fmt_percent}()},
 \code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
+\code{\link{fmt_spelled_num}()},
 \code{\link{fmt_time}()},
+\code{\link{fmt_url}()},
 \code{\link{fmt}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},
 \code{\link{sub_values}()},
-\code{\link{sub_zero}()},
-\code{\link{text_transform}()}
+\code{\link{sub_zero}()}
 }
 \concept{data formatting functions}

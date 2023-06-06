@@ -14,28 +14,59 @@ cols_merge_range(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{col_begin}{A column that contains values for the start of the range.}
+\verb{obj:<gt_tbl>} --- \strong{required}
 
-\item{col_end}{A column that contains values for the end of the range.}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
-\item{rows}{Rows that will participate in the merging process. Providing
-\code{\link[=everything]{everything()}} (the default) results in all rows in \code{columns} undergoing
-merging. Alternatively, we can supply a vector of row identifiers within
-\code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on selections.
-The select helper functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
-\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.
-We can also use a standalone predicate expression to filter down to the
-rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+\item{col_begin}{\emph{Column to target for beginning of range}
 
-\item{sep}{The separator text that indicates the values are ranged. The
-default value of \code{"--"} indicates that an en dash will be used for the
-range separator. Using \code{"---"} will be taken to mean that an em dash should
-be used. Should you want these special symbols to be taken literally, they
-can be supplied within the base \code{\link[=I]{I()}} function.}
+\verb{<column-targeting expression>} --- \strong{required}
 
-\item{autohide}{An option to automatically hide the column specified as
+The column that contains values for the start of the range. While select
+helper functions such as \code{\link[=starts_with]{starts_with()}} and \code{\link[=ends_with]{ends_with()}} can be used for
+column targeting, it's recommended that a single column name be used. This
+is to ensure that exactly one column is provided here.}
+
+\item{col_end}{\emph{Column to target for end of range}
+
+\verb{<column-targeting expression>} --- \strong{required}
+
+The column that contains values for the end of the range. While select
+helper functions such as \code{\link[=starts_with]{starts_with()}} and \code{\link[=ends_with]{ends_with()}} can be used for
+column targeting, it's recommended that a single column name be used. This
+is to ensure that exactly one column is provided here.}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+participate in the merging process. The default \code{\link[=everything]{everything()}} results in
+all rows in \code{columns} being formatted. Alternatively, we can supply a
+vector of row captions within \code{\link[=c]{c()}}, a vector of row indices, or a select
+helper function. Examples of select helper functions include
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions to filter
+down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+
+\item{sep}{\emph{Separator text for ranges}
+
+\verb{scalar<character>} --- \emph{default:} \code{"--"}
+
+The separator text that indicates the values are ranged. The default value
+of \code{"--"} will be transformed to an en dash for the range separator. Using
+\code{"---"} will be taken to mean that an em dash should be used. Should you
+want these special symbols to be taken literally, they can be supplied
+within the base \code{\link[=I]{I()}} function.}
+
+\item{autohide}{\emph{Automatic hiding of the \code{col_end} column}
+
+\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+
+An option to automatically hide the column specified as
 \code{col_end}. Any columns with their state changed to hidden will behave
 the same as before, they just won't be displayed in the finalized table.}
 }
@@ -80,19 +111,21 @@ the output table through the \code{hide_columns} or \code{autohide} options.
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table, keeping only the \code{model}, \code{mpg_c},
-and \code{mpg_h} columns. Merge the \code{"mpg*"} columns together as a single range
-column (which is labeled as MPG, in italics) using the \code{cols_merge_range()}
-function.
+Let's use a subset of the \code{\link{gtcars}} dataset to create a \strong{gt} table,
+keeping only the \code{model}, \code{mpg_c}, and \code{mpg_h} columns. Merge the \code{"mpg*"}
+columns together as a single range column (which is labeled as MPG, in
+italics) using the \code{cols_merge_range()} function. After the merging process,
+the column label for the \code{mpg_c} column is updated with \code{\link[=cols_label]{cols_label()}} to
+better describe the content.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
-  dplyr::select(model, starts_with("mpg")) \%>\%
-  dplyr::slice(1:8) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::select(model, starts_with("mpg")) |>
+  dplyr::slice(1:8) |>
+  gt() |>
   cols_merge_range(
     col_begin = mpg_c,
     col_end = mpg_h
-  ) \%>\%
+  ) |>
   cols_label(mpg_c = md("*MPG*"))
 }\if{html}{\out{</div>}}
 
@@ -103,7 +136,12 @@ function.
 
 \section{Function ID}{
 
-4-13
+5-13
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{

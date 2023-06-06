@@ -17,14 +17,7 @@ Info on Markdown syntax can be found
 "
 
   text_2a <- "
-The **gt** package has these datasets:
-
- - `countrypops`
- - `sza`
- - `gtcars`
- - `sp500`
- - `pizzaplace`
- - `exibble`
+The **gt** package has three datasets.
 "
 
   text_2b <- "
@@ -59,11 +52,7 @@ There's a quick reference [here](https://commonmark.org/help/).
   expect_equal(
     (tab %>%
        render_formats_test(context = "latex"))[["column_1"]][[1]],
-    paste0(
-      "This is Markdown \\emph{text}.\n\nMarkdown's syntax is comprised ",
-      "entirely of\npunctuation characters, which punctuation\ncharacters ",
-      "have been carefully chosen so as\nto look like what they mean...  ",
-      "assuming\nyou've ever used email.")
+      "This is Markdown \\emph{text}.\n\nMarkdown's syntax is comprised entirely of\npunctuation characters, which punctuation\ncharacters have been carefully chosen so as\nto look like what they mean\\ldots{}  assuming\nyou've ever used email."
   )
 
   expect_equal(
@@ -71,24 +60,21 @@ There's a quick reference [here](https://commonmark.org/help/).
        render_formats_test(context = "latex"))[["column_1"]][[2]],
     paste0(
       "Info on Markdown syntax can be found",
-      "\n\\href{https://daringfireball.net/projects/markdown/}{here}.")
+      "\n\\href{https://daringfireball.net/projects/markdown/}{here}."
+    )
   )
 
   expect_equal(
     (tab %>%
        render_formats_test(context = "latex"))[["column_2"]][[1]],
-    paste0(
-      "The \\textbf{gt} package has these datasets:\n\n\\begin{itemize}",
-      "\n\\item \\texttt{countrypops}\n\n\\item \\texttt{sza}\n\n\\item ",
-      "\\texttt{gtcars}\n\n\\item \\texttt{sp500}\n\n\\item ",
-      "\\texttt{pizzaplace}\n\n\\item \\texttt{exibble}\n\n\\end{itemize}")
+      "The \\textbf{gt} package has three datasets."
   )
 
   expect_equal(
     (tab %>%
        render_formats_test(context = "latex"))[["column_2"]][[2]],
     paste0(
-      "There\\textquotesingle{}s a quick reference ",
-      "\\href{https://commonmark.org/help/}{here}.")
+      "There's a quick reference \\href{https://commonmark.org/help/}{here}."
+    )
   )
 })

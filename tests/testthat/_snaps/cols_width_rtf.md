@@ -178,7 +178,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6000
-      \intbl {\f0 {\f0\fs20 {\super \i 1}Table Footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} Table Footnote}}\cell
       
       \row
       
@@ -371,7 +371,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6000
-      \intbl {\f0 {\f0\fs20 {\super \i 1}Table Footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} Table Footnote}}\cell
       
       \row
       
@@ -564,7 +564,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6000
-      \intbl {\f0 {\f0\fs20 {\super \i 1}Table Footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} Table Footnote}}\cell
       
       \row
       
@@ -757,7 +757,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6000
-      \intbl {\f0 {\f0\fs20 {\super \i 1}Table Footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} Table Footnote}}\cell
       
       \row
       
@@ -950,7 +950,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6000
-      \intbl {\f0 {\f0\fs20 {\super \i 1}Table Footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} Table Footnote}}\cell
       
       \row
       
@@ -1143,7 +1143,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6000
-      \intbl {\f0 {\f0\fs20 {\super \i 1}Table Footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} Table Footnote}}\cell
       
       \row
       
@@ -1336,7 +1336,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx6000
-      \intbl {\f0 {\f0\fs20 {\super \i 1}Table Footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} Table Footnote}}\cell
       
       \row
       
@@ -1529,7 +1529,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0 {\f0\fs20 {\super \i 1}Table Footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} Table Footnote}}\cell
       
       \row
       
@@ -1722,7 +1722,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx5616
-      \intbl {\f0 {\f0\fs20 {\super \i 1}Table Footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} Table Footnote}}\cell
       
       \row
       
@@ -1915,7 +1915,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7200
-      \intbl {\f0 {\f0\fs20 {\super \i 1}Table Footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} Table Footnote}}\cell
       
       \row
       
@@ -2108,7 +2108,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7200
-      \intbl {\f0 {\f0\fs20 {\super \i 1}Table Footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} Table Footnote}}\cell
       
       \row
       
@@ -2301,7 +2301,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0 {\f0\fs20 {\super \i 1}Table Footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} Table Footnote}}\cell
       
       \row
       
@@ -2494,7 +2494,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
-      \intbl {\f0 {\f0\fs20 {\super \i 1}Table Footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} Table Footnote}}\cell
       
       \row
       
@@ -2687,7 +2687,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0 {\f0\fs20 {\super \i 1}Table Footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} Table Footnote}}\cell
       
       \row
       
@@ -2880,7 +2880,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
-      \intbl {\f0 {\f0\fs20 {\super \i 1}Table Footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} Table Footnote}}\cell
       
       \row
       
@@ -3073,7 +3073,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0 {\f0\fs20 {\super \i 1}Table Footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} Table Footnote}}\cell
       
       \row
       
@@ -3266,7 +3266,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7487
-      \intbl {\f0 {\f0\fs20 {\super \i 1}Table Footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} Table Footnote}}\cell
       
       \row
       
@@ -3459,7 +3459,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0 {\f0\fs20 {\super \i 1}Table Footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} Table Footnote}}\cell
       
       \row
       
@@ -3652,7 +3652,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
-      \intbl {\f0 {\f0\fs20 {\super \i 1}Table Footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} Table Footnote}}\cell
       
       \row
       
@@ -3845,7 +3845,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0 {\f0\fs20 {\super \i 1}Table Footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} Table Footnote}}\cell
       
       \row
       
@@ -4038,7 +4038,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx7488
-      \intbl {\f0 {\f0\fs20 {\super \i 1}Table Footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} Table Footnote}}\cell
       
       \row
       
@@ -4231,7 +4231,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0 {\f0\fs20 {\super \i 1}Table Footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} Table Footnote}}\cell
       
       \row
       
@@ -4424,7 +4424,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx1200
-      \intbl {\f0 {\f0\fs20 {\super \i 1}Table Footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} Table Footnote}}\cell
       
       \row
       
@@ -4617,7 +4617,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0 {\f0\fs20 {\super \i 1}Table Footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} Table Footnote}}\cell
       
       \row
       
@@ -4810,7 +4810,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0 {\f0\fs20 {\super \i 1}Table Footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} Table Footnote}}\cell
       
       \row
       
@@ -5003,7 +5003,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0 {\f0\fs20 {\super \i 1}Table Footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} Table Footnote}}\cell
       
       \row
       
@@ -5196,7 +5196,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0 {\f0\fs20 {\super \i 1}Table Footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} Table Footnote}}\cell
       
       \row
       
@@ -5389,7 +5389,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0 {\f0\fs20 {\super \i 1}Table Footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} Table Footnote}}\cell
       
       \row
       

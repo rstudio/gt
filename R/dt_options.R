@@ -1,3 +1,27 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2023 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 .dt_options_key <- "_options"
 
 dt_options_get <- function(data) {
@@ -27,21 +51,16 @@ dt_options_get_value <- function(data, option) {
 
 default_fonts_vec <-
   c(
-    "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Helvetica Neue", "Fira Sans",
-    "Droid Sans", "Arial", "sans-serif"
+    "system-ui", "Segoe UI", "Roboto", "Helvetica", "Arial", "sans-serif",
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"
   )
+
+default_page_size_vec <- c(10, 25, 50, 100)
 
 dt_options_tbl <-
   dplyr::tribble(
     ~parameter,                          ~scss,  ~category,          ~type,     ~value,
     "empty",                             FALSE,  "empty",            "value",   list(),
-    "container_width",                   FALSE,  "container",        "px",      "auto",
-    "container_height",                  FALSE,  "container",        "px",      "auto",
-    "container_padding_x",               FALSE,  "container",        "px",      "0px",
-    "container_padding_y",               FALSE,  "container",        "px",      "10px",
-    "container_overflow_x",              FALSE,  "container",        "overflow","auto",
-    "container_overflow_y",              FALSE,  "container",        "overflow","auto",
     "table_id",                          FALSE,  "table",            "value",   NA_character_,
     "table_caption",                     FALSE,  "table",            "value",   NA_character_,
     "table_width",                        TRUE,  "table",            "px",      "auto",
@@ -177,7 +196,9 @@ dt_options_tbl <-
     "footnotes_border_lr_style",          TRUE,  "footnotes",        "value",   "none",
     "footnotes_border_lr_width",          TRUE,  "footnotes",        "px",      "2px",
     "footnotes_border_lr_color",          TRUE,  "footnotes",        "value",   "#D3D3D3",
-    "footnotes_marks" ,                  FALSE,  "footnotes",        "values",  "numbers",
+    "footnotes_marks",                   FALSE,  "footnotes",        "values",  "numbers",
+    "footnotes_spec_ref",                FALSE,  "footnotes",        "values",  "^i",
+    "footnotes_spec_ftr",                FALSE,  "footnotes",        "values",  "^i",
     "footnotes_multiline",               FALSE,  "footnotes",        "logical", TRUE,
     "footnotes_sep",                     FALSE,  "footnotes",        "value",   " ",
     "source_notes_padding",               TRUE,  "source_notes",     "px",      "4px",
@@ -195,6 +216,26 @@ dt_options_tbl <-
     "row_striping_background_color",      TRUE,  "row",              "value",   "rgba(128,128,128,0.05)",
     "row_striping_include_stub",         FALSE,  "row",              "logical", FALSE,
     "row_striping_include_table_body",   FALSE,  "row",              "logical", FALSE,
+    "container_width",                   FALSE,  "container",        "px",      "auto",
+    "container_height",                  FALSE,  "container",        "px",      "auto",
+    "container_padding_x",               FALSE,  "container",        "px",      "0px",
+    "container_padding_y",               FALSE,  "container",        "px",      "10px",
+    "container_overflow_x",              FALSE,  "container",        "overflow","auto",
+    "container_overflow_y",              FALSE,  "container",        "overflow","auto",
+    "ihtml_active",                      FALSE,  "interactive",      "logical", FALSE,
+    "ihtml_use_pagination",              FALSE,  "interactive",      "logical", TRUE,
+    "ihtml_use_pagination_info",         FALSE,  "interactive",      "logical", TRUE,
+    "ihtml_use_sorting",                 FALSE,  "interactive",      "logical", TRUE,
+    "ihtml_use_search",                  FALSE,  "interactive",      "logical", FALSE,
+    "ihtml_use_filters",                 FALSE,  "interactive",      "logical", FALSE,
+    "ihtml_use_resizers",                FALSE,  "interactive",      "logical", FALSE,
+    "ihtml_use_highlight",               FALSE,  "interactive",      "logical", FALSE,
+    "ihtml_use_compact_mode",            FALSE,  "interactive",      "logical", FALSE,
+    "ihtml_use_text_wrapping",           FALSE,  "interactive",      "logical", TRUE,
+    "ihtml_use_page_size_select",        FALSE,  "interactive",      "logical", FALSE,
+    "ihtml_page_size_default",           FALSE,  "interactive",      "values",  10,
+    "ihtml_page_size_values",            FALSE,  "interactive",      "values",  default_page_size_vec,
+    "ihtml_pagination_type",             FALSE,  "interactive",      "value",   "numbers",
     "page_orientation",                  FALSE,  "page",             "value",   "portrait",
     "page_numbering",                    FALSE,  "page",             "logical", FALSE,
     "page_header_use_tbl_headings",      FALSE,  "page",             "logical", FALSE,
@@ -207,4 +248,6 @@ dt_options_tbl <-
     "page_margin_bottom",                FALSE,  "page",             "value",   "1.0in",
     "page_header_height",                FALSE,  "page",             "value",   "0.5in",
     "page_footer_height",                FALSE,  "page",             "value",   "0.5in",
+    "quarto_disable_processing",         FALSE,  "quarto",           "logical", FALSE,
+    "quarto_use_bootstrap",              FALSE,  "quarto",           "logical", FALSE,
   )[-1, ]

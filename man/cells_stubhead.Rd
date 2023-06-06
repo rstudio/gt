@@ -16,7 +16,7 @@ when applying a footnote with \code{\link[=tab_footnote]{tab_footnote()}} or add
 \code{locations} argument. The 'stubhead' location is always present alongside the
 'stub' location.
 }
-\section{Overview of Location Helper Functions}{
+\section{Overview of location helper functions}{
 
 
 Location helper functions can be used to target cells with virtually any
@@ -62,16 +62,18 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \section{Examples}{
 
 
-Use \code{\link{pizzaplace}} to create a \strong{gt} table. Add a stubhead label with
-\code{\link[=tab_stubhead]{tab_stubhead()}} and then style it with \code{\link[=tab_style]{tab_style()}} and \code{cells_stubhead()}.
+Using a summarized version of the \code{\link{pizzaplace}} dataset, let's create a
+\strong{gt} table. Add a stubhead label with \code{\link[=tab_stubhead]{tab_stubhead()}} and then style it
+with \code{\link[=tab_style]{tab_style()}} in conjunction with the use of \code{cells_stubhead()} in the
+\code{locations} argument.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
-  dplyr::mutate(month = as.numeric(substr(date, 6, 7))) \%>\%
-  dplyr::group_by(month, type) \%>\%
-  dplyr::summarize(sold = dplyr::n(), .groups = "drop") \%>\%
-  dplyr::filter(month \%in\% 1:2) \%>\%
-  gt(rowname_col = "type") \%>\%
-  tab_stubhead(label = "type") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
+  dplyr::mutate(month = as.numeric(substr(date, 6, 7))) |>
+  dplyr::group_by(month, type) |>
+  dplyr::summarize(sold = dplyr::n(), .groups = "drop") |>
+  dplyr::filter(month \%in\% 1:2) |>
+  gt(rowname_col = "type") |>
+  tab_stubhead(label = "type") |>
   tab_style(
     style = cell_fill(color = "lightblue"),
     locations = cells_stubhead()
@@ -85,7 +87,12 @@ Use \code{\link{pizzaplace}} to create a \strong{gt} table. Add a stubhead label
 
 \section{Function ID}{
 
-7-7
+8-7
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
@@ -116,6 +123,7 @@ Other helper functions:
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},
-\code{\link{stub}()}
+\code{\link{stub}()},
+\code{\link{system_fonts}()}
 }
 \concept{helper functions}

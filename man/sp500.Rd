@@ -5,13 +5,13 @@
 \alias{sp500}
 \title{Daily S&P 500 Index data from 1950 to 2015}
 \format{
-A tibble with 16607 rows and 7 variables:
+A tibble with 16,607 rows and 7 variables:
 \describe{
-\item{date}{The date expressed as \code{Date} values}
+\item{date}{The date expressed as \code{Date} values.}
 \item{open, high, low, close}{The day's opening, high, low, and closing
-prices in USD; the \code{close} price is adjusted for splits}
-\item{volume}{the number of trades for the given \code{date}}
-\item{adj_close}{The close price adjusted for both dividends and splits}
+prices in USD. The \code{close} price is adjusted for splits.}
+\item{volume}{The number of trades for the given \code{date}.}
+\item{adj_close}{The close price adjusted for both dividends and splits.}
 }
 }
 \usage{
@@ -20,7 +20,8 @@ sp500
 \description{
 This dataset provides daily price indicators for the S&P 500 index from the
 beginning of 1950 to the end of 2015. The index includes 500 leading
-companies and captures about 80\\% coverage of available market capitalization.
+companies and captures about 80 percent coverage of available market
+capitalization.
 }
 \section{Examples}{
 
@@ -40,19 +41,31 @@ Here is a glimpse at the data available in \code{sp500}.
 }\if{html}{\out{</div>}}
 }
 
-\section{Function ID}{
+\section{Dataset ID and Badge}{
 
-11-4
+DATA-4
+
+\if{html}{\out{
+<div style="text-align:center;"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_sp500.png" alt="This image of that of a dataset badge." style="width:50\%;padding-bottom:20px;"></div>
+}}
+}
+
+\section{Dataset Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
 Other datasets: 
 \code{\link{countrypops}},
 \code{\link{exibble}},
-\code{\link{gt_adsl}},
 \code{\link{gtcars}},
+\code{\link{metro}},
 \code{\link{pizzaplace}},
-\code{\link{sza}}
+\code{\link{rx_addv}},
+\code{\link{rx_adsl}},
+\code{\link{sza}},
+\code{\link{towny}}
 }
 \concept{datasets}
 \keyword{datasets}

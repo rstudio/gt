@@ -7,13 +7,22 @@
 rm_footnotes(data, footnotes = everything())
 }
 \arguments{
-\item{data}{A table object of class \code{gt_tbl}.}
+\item{data}{\emph{The gt table data object}
 
-\item{footnotes}{A specification of which footnotes should be removed.
-The footnotes to be removed can be given as a vector of integer values
-(they are stored as integer positions, in order of creation, starting at
-\code{1}). A select helper can also be used and, by default, this is
-\code{everything()} (whereby all footnotes will be removed).}
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{footnotes}{\emph{Footnotes to remove}
+
+\verb{scalar<numeric|integer>|everything()} --- \emph{default:} \code{everything()}
+
+A specification of which footnotes should be removed. The footnotes to be
+removed can be given as a vector of integer values (they are stored as
+integer positions, in order of creation, starting at \code{1}). A select helper
+can also be used and, by default, this is \code{everything()} (whereby all
+footnotes will be removed).}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -34,32 +43,30 @@ values.
 \section{Examples}{
 
 
-Use \code{\link{sza}} to create a \strong{gt} table. Color the \code{sza} column using the
-\code{\link[=data_color]{data_color()}} function, then, use \code{\link[=tab_footnote]{tab_footnote()}} twice to add two
-footnotes (each one targeting a different column label).
+Use a subset of the \code{\link{sza}} dataset to create a \strong{gt} table. Color the \code{sza}
+column using the \code{\link[=data_color]{data_color()}} function, then, use \code{\link[=tab_footnote]{tab_footnote()}} twice to
+add two footnotes (each one targeting a different column label).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
-  sza \%>\%
+  sza |>
   dplyr::filter(
     latitude == 20 &
       month == "jan" &
       !is.na(sza)
-  ) \%>\%
-  dplyr::select(-latitude, -month) \%>\%
-  gt() \%>\%
+  ) |>
+  dplyr::select(-latitude, -month) |>
+  gt() |>
   data_color(
     columns = sza,
-    colors = scales::col_numeric(
-      palette = c("white", "yellow", "navyblue"),
-      domain = c(0, 90)
-    )
-  ) \%>\%
+    palette = c("white", "yellow", "navyblue"),
+    domain = c(0, 90)
+  ) |>
   tab_footnote(
     footnote = "Color indicates height of sun.",
     locations = cells_column_labels(
       columns = sza
     )
-  ) \%>\%
+  ) |>
   tab_footnote(
     footnote = "
     The true solar time at the given latitude
@@ -69,7 +76,7 @@ footnotes (each one targeting a different column label).
     locations = cells_column_labels(
       columns = tst
     )
-  ) \%>\%
+  ) |>
   cols_width(everything() ~ px(150))
 
 gt_tbl
@@ -104,7 +111,12 @@ would give the correct index value to \code{footnotes}.
 
 \section{Function ID}{
 
-6-4
+7-4
+}
+
+\section{Function Introduced}{
+
+\code{v0.8.0} (November 16, 2022)
 }
 
 \seealso{

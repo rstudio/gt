@@ -280,7 +280,7 @@ test_that("Row groups can be successfully generated with `tab_row_group()", {
   # row group labels
   expect_match(
     tbl_html,
-    regexp = "<strong><em>void</em></strong><sup class=\"gt_footnote_marks\">1</sup>",
+    regexp = "<strong><em>void</em></strong><span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;\"><sup>1</sup></span>",
     fixed = TRUE
   )
   expect_match(
@@ -486,7 +486,8 @@ test_that("A gt table's row group labels are HTML escaped", {
   expect_equal(
     tbl_html %>%
       selection_text("[class='gt_group_heading']"),
-    "x > 30")
+    "x > 30"
+  )
 
   # Create a `tbl_html` object with `gt()`; this table
   # has the row group label (with necessity to HTML-escape)
@@ -507,7 +508,8 @@ test_that("A gt table's row group labels are HTML escaped", {
   expect_equal(
     tbl_html %>%
       selection_text("[class='gt_group_heading']"),
-    "x > 301")
+    "x > 301"
+  )
 })
 
 test_that("A gt table contains custom styles at the correct locations", {

@@ -7,10 +7,19 @@
 tab_caption(data, caption)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{caption}{The table caption to use for cross-referencing in R Markdown,
-Quarto, or \strong{bookdown}.}
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{caption}{\emph{Table caption text}
+
+\verb{scalar<character>} --- \strong{required}
+
+The table caption to use for cross-referencing in R Markdown, Quarto, or
+\strong{bookdown}.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -25,17 +34,18 @@ in each of these system.
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header part with the
-\code{\link[=tab_header]{tab_header()}} function, and, add a caption as well with \code{tab_caption()}.
+With three columns from the \code{\link{gtcars}} dataset, let's create a \strong{gt} table.
+First, we'll add a header part with the \code{\link[=tab_header]{tab_header()}} function. After that,
+a caption is added through use of \code{tab_caption()}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
-  dplyr::select(mfr, model, msrp) \%>\%
-  dplyr::slice(1:5) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::select(mfr, model, msrp) |>
+  dplyr::slice(1:5) |>
+  gt() |>
   tab_header(
     title = md("Data listing from **gtcars**"),
     subtitle = md("`gtcars` is an R dataset")
-  ) \%>\%
+  ) |>
   tab_caption(caption = md("**gt** table example."))
 }\if{html}{\out{</div>}}
 
@@ -47,6 +57,11 @@ Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header part with t
 \section{Function ID}{
 
 2-9
+}
+
+\section{Function Introduced}{
+
+\code{v0.8.0} (November 16, 2022)
 }
 
 \seealso{

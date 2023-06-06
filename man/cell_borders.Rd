@@ -7,17 +7,36 @@
 cell_borders(sides = "all", color = "#000000", style = "solid", weight = px(1))
 }
 \arguments{
-\item{sides}{The border sides to be modified. Options include \code{"left"},
+\item{sides}{\emph{Border sides}
+
+\verb{vector<character>} --- \emph{default:} \code{"all"}
+
+The border sides to be modified. Options include \code{"left"},
 \code{"right"}, \code{"top"}, and \code{"bottom"}. For all borders surrounding the
 selected cells, we can use the \code{"all"} option.}
 
-\item{color, style, weight}{The border color, style, and weight. The \code{color}
-can be defined with a color name or with a hexadecimal color code. The
-default \code{color} value is \code{"#000000"} (black). The \code{style} can be one of
-either \code{"solid"} (the default), \code{"dashed"}, \code{"dotted"}, \code{"hidden"}, or
-\code{"double"}. The \code{weight} of the border lines is to be given in pixel values
-(the \code{\link[=px]{px()}} helper function is useful for this. The default value for
-\code{weight} is \code{"1px"}. Borders for any defined \code{sides} can be removed by
+\item{color}{\emph{Border color}
+
+\verb{scalar<character>|NULL} --- \emph{default:} \code{"#000000"}
+
+The border \code{color} can be defined with a color name or with a hexadecimal
+color code. The default \code{color} value is \code{"#000000"} (black). Borders for any
+defined \code{sides} can be removed by supplying \code{NULL} here.}
+
+\item{style}{\emph{Border line style}
+
+\verb{scalar<character>|NULL} --- \emph{default:} \code{"solid"}
+
+The border \code{style} can be one of either \code{"solid"} (the default),
+\code{"dashed"}, \code{"dotted"}, \code{"hidden"}, or \code{"double"}. Borders for any
+defined \code{sides} can be removed by supplying \code{NULL} here.}
+
+\item{weight}{\emph{Border weight}
+
+\verb{scalar<character>|NULL} --- \emph{default:} \code{px(1)}
+
+The default value for \code{weight} is \code{"1px"} and higher values will become
+more visually prominent. Borders for any defined \code{sides} can be removed by
 supplying \code{NULL} to any of \code{color}, \code{style}, or \code{weight}.}
 }
 \value{
@@ -35,12 +54,14 @@ borders can then be modified.
 \section{Examples}{
 
 
-Add horizontal border lines for all table body rows in \code{\link{exibble}} using
-\code{\link[=tab_style]{tab_style()}} and \code{cell_borders()}.
+We can add horizontal border lines for all table body rows in a \strong{gt} table
+based on the \code{\link{exibble}} dataset. For this, we need to use \code{\link[=tab_style]{tab_style()}}
+(targeting all cells in the table body with \code{\link[=cells_body]{cells_body()}}) in conjunction
+with \code{cell_borders()} in the \code{style} argument. Both top and bottom borders
+will be added as \code{"solid"} and \code{"red"} lines with a line width of 1.5 px.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  gt() \%>\%
-  tab_options(row.striping.include_table_body = FALSE) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt() |>
   tab_style(
     style = cell_borders(
       sides = c("top", "bottom"),
@@ -48,10 +69,7 @@ Add horizontal border lines for all table body rows in \code{\link{exibble}} usi
       weight = px(1.5),
       style = "solid"
     ),
-    locations = cells_body(
-      columns = everything(),
-      rows = everything()
-    )
+    locations = cells_body()
   )
 }\if{html}{\out{</div>}}
 
@@ -59,12 +77,12 @@ Add horizontal border lines for all table body rows in \code{\link{exibble}} usi
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cell_borders_1.png" alt="This image of a table was generated from the first code example in the `cell_borders()` help file." style="width:100\%;">
 }}
 
-Incorporate different horizontal and vertical borders at several locations.
-This uses multiple \code{cell_borders()} and \code{\link[=cells_body]{cells_body()}} calls within
-\code{list()}s.
+It's possible to incorporate different horizontal and vertical (\code{"left"} and
+\code{"right"}) borders at several different locations. This uses multiple
+\code{cell_borders()} and \code{\link[=cells_body]{cells_body()}} calls within their own respective lists.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt() |>
   tab_style(
     style = list(
       cell_borders(
@@ -98,7 +116,12 @@ This uses multiple \code{cell_borders()} and \code{\link[=cells_body]{cells_body
 
 \section{Function ID}{
 
-7-22
+8-22
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
@@ -129,6 +152,7 @@ Other helper functions:
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},
-\code{\link{stub}()}
+\code{\link{stub}()},
+\code{\link{system_fonts}()}
 }
 \concept{helper functions}

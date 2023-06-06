@@ -7,7 +7,17 @@
 cells_stub_grand_summary(rows = everything())
 }
 \arguments{
-\item{rows}{The names of the rows that are to be targeted.}
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+
+We can specify which rows should be targeted. The default \code{\link[=everything]{everything()}}
+results in all rows in \code{columns} being formatted. Alternatively, we can
+supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row indices, or a
+select helper function. Examples of select helper functions include
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions to filter
+down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 }
 \value{
 A list object with the classes \code{cells_stub_grand_summary} and
@@ -33,7 +43,7 @@ use row indices (e.g., \code{c(3, 5, 6)}) that correspond to the row number of a
 grand summary row.
 }
 
-\section{Overview of Location Helper Functions}{
+\section{Overview of location helper functions}{
 
 
 Location helper functions can be used to target cells with virtually any
@@ -79,23 +89,23 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \section{Examples}{
 
 
-Use \code{\link{countrypops}} to create a \strong{gt} table. Add some styling to a grand
-summary stub cell with with the \code{\link[=tab_style]{tab_style()}} and
-\code{cells_stub_grand_summary()} functions.
+Use a portion of the \code{\link{countrypops}} dataset to create a \strong{gt} table. Add
+some styling to a grand summary stub cell with the \code{\link[=tab_style]{tab_style()}} function and
+using \code{cells_stub_grand_summary()} in the \code{locations} argument.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::filter(country_name == "Spain", year < 1970) \%>\%
-  dplyr::select(-contains("country")) \%>\%
-  gt(rowname_col = "year") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::filter(country_name == "Spain", year < 1970) |>
+  dplyr::select(-contains("country")) |>
+  gt(rowname_col = "year") |>
   fmt_number(
     columns = population,
     decimals = 0
-  ) \%>\%
+  ) |>
   grand_summary_rows(
     columns = population,
     fns = list(change = ~max(.) - min(.)),
     fmt = ~ fmt_integer(.)
-  ) \%>\%
+  ) |>
   tab_style(
     style = cell_text(weight = "bold", transform = "uppercase"),
     locations = cells_stub_grand_summary(rows = "change")
@@ -109,7 +119,12 @@ summary stub cell with with the \code{\link[=tab_style]{tab_style()}} and
 
 \section{Function ID}{
 
-7-16
+8-16
+}
+
+\section{Function Introduced}{
+
+\code{v0.3.0} (May 12, 2021)
 }
 
 \seealso{
@@ -140,6 +155,7 @@ Other helper functions:
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},
-\code{\link{stub}()}
+\code{\link{stub}()},
+\code{\link{system_fonts}()}
 }
 \concept{helper functions}

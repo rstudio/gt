@@ -19,7 +19,7 @@ This location helper function cannot be used for the \code{locations} argument o
 \code{\link[=tab_footnote]{tab_footnote()}} and doing so will result in a warning (with no change made
 to the table).
 }
-\section{Overview of Location Helper Functions}{
+\section{Overview of location helper functions}{
 
 
 Location helper functions can be used to target cells with virtually any
@@ -65,14 +65,16 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. Add a source note and style the
-source notes section.
+Let's use a subset of the \code{\link{gtcars}} dataset to create a \strong{gt} table. Add a
+source note (with \code{\link[=tab_source_note]{tab_source_note()}}) and style the source notes section
+inside the \code{\link[=tab_style]{tab_style()}} call by using the \code{cells_source_notes()} helper
+function for the targeting via the \code{locations} argument.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars \%>\%
-  dplyr::select(mfr, model, msrp) \%>\%
-  dplyr::slice(1:5) \%>\%
-  gt() \%>\%
-  tab_source_note(source_note = "From edmunds.com") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::select(mfr, model, msrp) |>
+  dplyr::slice(1:5) |>
+  gt() |>
+  tab_source_note(source_note = "From edmunds.com") |>
   tab_style(
     style = cell_text(
       color = "#A9A9A9",
@@ -89,7 +91,12 @@ source notes section.
 
 \section{Function ID}{
 
-7-18
+8-18
+}
+
+\section{Function Introduced}{
+
+\code{v0.3.0} (May 12, 2021)
 }
 
 \seealso{
@@ -120,6 +127,7 @@ Other helper functions:
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},
-\code{\link{stub}()}
+\code{\link{stub}()},
+\code{\link{system_fonts}()}
 }
 \concept{helper functions}

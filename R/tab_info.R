@@ -1,6 +1,7 @@
 #' Understand what's been set inside of a **gt** table object
 #'
 #' @description
+#'
 #' It can become increasingly difficult to recall the ID values associated with
 #' different labels in a **gt** table. Further to this, there are also
 #' situations where **gt** will generate ID values on your behalf (e.g., with
@@ -22,23 +23,25 @@
 #'
 #' @section Examples:
 #'
-#' Use [`gtcars`] to create a **gt** table. Use the [tab_spanner()] function to
-#' group two columns together under a spanner column with the ID and label
-#' `"performance"`. Finally, use the `tab_info()` function to get a table that
-#' summarizes the ID values and their label text for all parts of the table.
+#' Let's use a portion of the [`gtcars`] dataset to create a **gt** table. We'll
+#' use the [tab_spanner()] function to group two columns together under a
+#' spanner column with the ID and label `"performance"`. Finally, we can use the
+#' `tab_info()` function in a separate, interactive statement so that we can
+#' inspect a table that summarizes the ID values any associated label text for
+#' all parts of the table.
 #'
 #' ```r
 #' gt_tbl <-
-#'   gtcars %>%
-#'   dplyr::select(model, year, starts_with("hp"), msrp) %>%
-#'   dplyr::slice(1:4) %>%
-#'   gt(rowname_col = "model") %>%
+#'   gtcars |>
+#'   dplyr::select(model, year, starts_with("hp"), msrp) |>
+#'   dplyr::slice(1:4) |>
+#'   gt(rowname_col = "model") |>
 #'   tab_spanner(
 #'     label = "performance",
 #'     columns = starts_with("hp")
 #'   )
 #'
-#' gt_tbl %>% tab_info()
+#' gt_tbl |> tab_info()
 #' ```
 #'
 #' \if{html}{\out{
@@ -48,6 +51,9 @@
 #' @family part creation/modification functions
 #' @section Function ID:
 #' 2-12
+#'
+#' @section Function Introduced:
+#' `v0.8.0` (November 16, 2022)
 #'
 #' @export
 tab_info <- function(data) {

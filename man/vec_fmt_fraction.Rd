@@ -17,49 +17,89 @@ vec_fmt_fraction(
 )
 }
 \arguments{
-\item{x}{A numeric vector.}
+\item{x}{\emph{The input vector}
 
-\item{accuracy}{The type of fractions to generate. This can either be one of
-the keywords \code{"low"}, \code{"med"}, or \code{"high"} (to generate fractions with
-denominators of up to 1, 2, or 3 digits, respectively) or an integer value
-greater than zero to obtain fractions with a fixed denominator (\code{2} yields
-halves, \code{3} is for thirds, \code{4} is quarters, etc.). For the latter option,
-using \code{simplify = TRUE} will simplify fractions where possible (e.g., \code{2/4}
-will be simplified as \code{1/2}). By default, the \code{"low"} option is used.}
+\code{vector(numeric|integer)} --- \strong{required}
 
-\item{simplify}{If choosing to provide a numeric value for \code{accuracy}, the
-option to simplify the fraction (where possible) can be taken with \code{TRUE}
-(the default). With \code{FALSE}, denominators in fractions will be fixed to the
+This is the input vector that will undergo transformation to a character
+vector of the same length. Values within the vector will be formatted.}
+
+\item{accuracy}{\emph{Accuracy of fractions}
+
+\verb{singl-kw:[low|med|high]|scalar<numeric|integer>(val>=1)} --- \emph{default:} \code{"low"}
+
+The type of fractions to generate. This can either be one of the keywords
+\code{"low"}, \code{"med"}, or \code{"high"} (to generate fractions with denominators of
+up to 1, 2, or 3 digits, respectively) or an integer value greater than
+zero to obtain fractions with a fixed denominator (\code{2} yields halves, \code{3}
+is for thirds, \code{4} is quarters, etc.). For the latter option, using
+\code{simplify = TRUE} will simplify fractions where possible (e.g., \code{2/4} will
+be simplified as \code{1/2}). By default, the \code{"low"} option is used.}
+
+\item{simplify}{\emph{Simplify the fraction}
+
+\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+
+If choosing to provide a numeric value for \code{accuracy}, the option to
+simplify the fraction (where possible) can be taken with \code{TRUE} (the
+default). With \code{FALSE}, denominators in fractions will be fixed to the
 value provided in \code{accuracy}.}
 
-\item{layout}{For HTML output, the \code{"inline"} layout is the default. This
-layout places the numerals of the fraction on the baseline and uses a
-standard slash character. The \code{"diagonal"} layout will generate fractions
-that are typeset with raised/lowered numerals and a virgule.}
+\item{layout}{\emph{Layout of fractions in HTML output}
 
-\item{use_seps}{An option to use digit group separators. The type of digit
-group separator is set by \code{sep_mark} and overridden if a locale ID is
-provided to \code{locale}. This setting is \code{TRUE} by default.}
+\verb{singl-kw:[inline|diagonal]} --- \emph{default:} \code{"inline"}
 
-\item{pattern}{A formatting pattern that allows for decoration of the
-formatted value. The value itself is represented by \code{{x}} and all other
-characters are taken to be string literals.}
+For HTML output, the \code{"inline"} layout is the default. This layout places
+the numerals of the fraction on the baseline and uses a standard slash
+character. The \code{"diagonal"} layout will generate fractions that are typeset
+with raised/lowered numerals and a virgule.}
 
-\item{sep_mark}{The mark to use as a separator between groups of digits
-(e.g., using \code{sep_mark = ","} with \code{1000} would result in a formatted value
-of \verb{1,000}).}
+\item{use_seps}{\emph{Use digit group separators}
 
-\item{locale}{An optional locale ID that can be used for formatting the value
+\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+
+An option to use digit group separators. The type of digit group separator
+is set by \code{sep_mark} and overridden if a locale ID is provided to \code{locale}.
+This setting is \code{TRUE} by default.}
+
+\item{pattern}{\emph{Specification of the formatting pattern}
+
+\verb{scalar<character>} --- \emph{default:} \code{"{x}"}
+
+A formatting pattern that allows for decoration of the formatted value. The
+formatted value is represented by the \code{{x}} (which can be used multiple
+times, if needed) and all other characters will be interpreted as string
+literals.}
+
+\item{sep_mark}{\emph{Separator mark for digit grouping}
+
+\verb{scalar<character>} --- \emph{default:} \code{","}
+
+The string to use as a separator between groups of digits. For example,
+using \code{sep_mark = ","} with a value of \code{1000} would result in a formatted
+value of \code{"1,000"}. This argument is ignored if a \code{locale} is supplied
+(i.e., is not \code{NULL}).}
+
+\item{locale}{\emph{Locale identifier}
+
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+An optional locale identifier that can be used for formatting values
 according the locale's rules. Examples include \code{"en"} for English (United
-States) and \code{"fr"} for French (France). The use of a valid locale ID will
-override any values provided in \code{sep_mark} and \code{dec_mark}. We can use the
-\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
-are supported.}
+States) and \code{"fr"} for French (France). We can use the \code{\link[=info_locales]{info_locales()}}
+function as a useful reference for all of the locales that are supported. A
+locale ID can be also set in the initial \code{\link[=gt]{gt()}} function call (where it
+would be used automatically by any function with a \code{locale} argument) but a
+\code{locale} value provided here will override that global locale.}
 
-\item{output}{The output style of the resulting character vector. This can
-either be \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"},
-or \code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the
-\code{"auto"} option will choose the correct \code{output} value}
+\item{output}{\emph{Output format}
+
+\verb{singl-kw:[auto|plain|html|latex|rtf|word]} --- \emph{default:} \code{"auto"}
+
+The output style of the resulting character vector. This can either be
+\code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"}, or
+\code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the \code{"auto"}
+option will choose the correct \code{output} value}
 }
 \value{
 A character vector.
@@ -126,7 +166,12 @@ argument. Note here that \code{NA} values won't have the pattern applied.
 
 \section{Function ID}{
 
-14-7
+15-7
+}
+
+\section{Function Introduced}{
+
+\code{v0.7.0} (Aug 25, 2022)
 }
 
 \seealso{
@@ -140,6 +185,7 @@ Other vector formatting functions:
 \code{\link{vec_fmt_date}()},
 \code{\link{vec_fmt_duration}()},
 \code{\link{vec_fmt_engineering}()},
+\code{\link{vec_fmt_index}()},
 \code{\link{vec_fmt_integer}()},
 \code{\link{vec_fmt_markdown}()},
 \code{\link{vec_fmt_number}()},
@@ -147,6 +193,7 @@ Other vector formatting functions:
 \code{\link{vec_fmt_percent}()},
 \code{\link{vec_fmt_roman}()},
 \code{\link{vec_fmt_scientific}()},
+\code{\link{vec_fmt_spelled_num}()},
 \code{\link{vec_fmt_time}()}
 }
 \concept{vector formatting functions}

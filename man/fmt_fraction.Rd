@@ -2,7 +2,7 @@
 % Please edit documentation in R/format_data.R
 \name{fmt_fraction}
 \alias{fmt_fraction}
-\title{Format values as a mixed fractions}
+\title{Format values as mixed fractions}
 \usage{
 fmt_fraction(
   data,
@@ -19,61 +19,112 @@ fmt_fraction(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The columns to format. Can either be a series of column names
-provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
-focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+
+Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
+column indices, or a select helper function. Examples of select helper
+functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
+\code{columns} being formatted. Alternatively, we can supply a vector of row
+captions within \code{\link[=c]{c()}}, a vector of row indices, or a select helper
+function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}.}
+\code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
+need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
-default) results in all rows in \code{columns} being formatted. Alternatively,
-we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
-indices, or a helper function focused on selections. The select helper
-functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
-\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
-to filter down to the rows we need (e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+\item{accuracy}{\emph{Accuracy of fractions}
 
-\item{accuracy}{The type of fractions to generate. This can either be one of
-the keywords \code{"low"}, \code{"med"}, or \code{"high"} (to generate fractions with
-denominators of up to 1, 2, or 3 digits, respectively) or an integer value
-greater than zero to obtain fractions with a fixed denominator (\code{2} yields
-halves, \code{3} is for thirds, \code{4} is quarters, etc.). For the latter option,
-using \code{simplify = TRUE} will simplify fractions where possible (e.g., \code{2/4}
-will be simplified as \code{1/2}). By default, the \code{"low"} option is used.}
+\verb{singl-kw:[low|med|high]|scalar<numeric|integer>(val>=1)} --- \emph{default:} \code{"low"}
 
-\item{simplify}{If choosing to provide a numeric value for \code{accuracy}, the
-option to simplify the fraction (where possible) can be taken with \code{TRUE}
-(the default). With \code{FALSE}, denominators in fractions will be fixed to the
+The type of fractions to generate. This can either be one of the keywords
+\code{"low"}, \code{"med"}, or \code{"high"} (to generate fractions with denominators of
+up to 1, 2, or 3 digits, respectively) or an integer value greater than
+zero to obtain fractions with a fixed denominator (\code{2} yields halves, \code{3}
+is for thirds, \code{4} is quarters, etc.). For the latter option, using
+\code{simplify = TRUE} will simplify fractions where possible (e.g., \code{2/4} will
+be simplified as \code{1/2}). By default, the \code{"low"} option is used.}
+
+\item{simplify}{\emph{Simplify the fraction}
+
+\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+
+If choosing to provide a numeric value for \code{accuracy}, the option to
+simplify the fraction (where possible) can be taken with \code{TRUE} (the
+default). With \code{FALSE}, denominators in fractions will be fixed to the
 value provided in \code{accuracy}.}
 
-\item{layout}{For HTML output, the \code{"inline"} layout is the default. This
-layout places the numerals of the fraction on the baseline and uses a
-standard slash character. The \code{"diagonal"} layout will generate fractions
-that are typeset with raised/lowered numerals and a virgule.}
+\item{layout}{\emph{Layout of fractions in HTML output}
 
-\item{use_seps}{An option to use digit group separators. The type of digit
-group separator is set by \code{sep_mark} and overridden if a locale ID is
-provided to \code{locale}. This setting is \code{TRUE} by default.}
+\verb{singl-kw:[inline|diagonal]} --- \emph{default:} \code{"inline"}
 
-\item{pattern}{A formatting pattern that allows for decoration of the
-formatted value. The value itself is represented by \code{{x}} and all other
-characters are taken to be string literals.}
+For HTML output, the \code{"inline"} layout is the default. This layout places
+the numerals of the fraction on the baseline and uses a standard slash
+character. The \code{"diagonal"} layout will generate fractions that are typeset
+with raised/lowered numerals and a virgule.}
 
-\item{sep_mark}{The mark to use as a separator between groups of digits
-(e.g., using \code{sep_mark = ","} with \code{1000} would result in a formatted value
-of \verb{1,000}).}
+\item{use_seps}{\emph{Use digit group separators}
 
-\item{system}{The numbering system to use. By default, this is the
-international numbering system (\code{"intl"}) whereby grouping separators
-(i.e., \code{sep_mark}) are separated by three digits. The alternative system,
-the Indian numbering system (\code{"ind"}) uses grouping separators that
-correspond to thousand, lakh, crore, and higher quantities.}
+\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
 
-\item{locale}{An optional locale ID that can be used for formatting values
-according to the locale's rules.}
+An option to use digit group separators. The type of digit group separator
+is set by \code{sep_mark} and overridden if a locale ID is provided to \code{locale}.
+This setting is \code{TRUE} by default.}
+
+\item{pattern}{\emph{Specification of the formatting pattern}
+
+\verb{scalar<character>} --- \emph{default:} \code{"{x}"}
+
+A formatting pattern that allows for decoration of the formatted value. The
+formatted value is represented by the \code{{x}} (which can be used multiple
+times, if needed) and all other characters will be interpreted as string
+literals.}
+
+\item{sep_mark}{\emph{Separator mark for digit grouping}
+
+\verb{scalar<character>} --- \emph{default:} \code{","}
+
+The string to use as a separator between groups of digits. For example,
+using \code{sep_mark = ","} with a value of \code{1000} would result in a formatted
+value of \code{"1,000"}. This argument is ignored if a \code{locale} is supplied
+(i.e., is not \code{NULL}).}
+
+\item{system}{\emph{Numbering system for grouping separators}
+
+\verb{singl-kw:[intl|ind]} --- \emph{default:} \code{"intl"}
+
+The international numbering system (keyword: \code{"intl"}) is widely used and
+its grouping separators (i.e., \code{sep_mark}) are always separated by three
+digits. The alternative system, the Indian numbering system (keyword:
+\code{"ind"}), uses grouping separators that correspond to thousand, lakh,
+crore, and higher quantities.}
+
+\item{locale}{\emph{Locale identifier}
+
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+An optional locale identifier that can be used for formatting values
+according the locale's rules. Examples include \code{"en"} for English (United
+States) and \code{"fr"} for French (France). We can use the \code{\link[=info_locales]{info_locales()}}
+function as a useful reference for all of the locales that are supported. A
+locale ID can be also set in the initial \code{\link[=gt]{gt()}} function call (where it
+would be used automatically by any function with a \code{locale} argument) but a
+\code{locale} value provided here will override that global locale.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -121,8 +172,8 @@ helper like \code{starts_with()}, or, providing a more complex incantation like
 
 \code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
 
-which targets numeric columns that have a maximum value of 100,000 (excluding
-\code{NA}s from consideration).
+which targets numeric columns that have a maximum value greater than
+1,000,000 (excluding any \code{NA}s from consideration).
 
 By default all columns and rows are selected (with the \code{everything()}
 defaults). Cell values that are incompatible with a given formatting function
@@ -169,44 +220,48 @@ useful reference on which locales are supported, we can use the
 \section{Examples}{
 
 
-Use \code{\link{pizzaplace}} to create a \strong{gt} table. Format the \code{f_sold} and
-\code{f_income} columns to display fractions.
+Using a summarized version of the \code{\link{pizzaplace}} dataset, let's create a
+\strong{gt} table. With the \code{fmt_fraction()} function we can format the \code{f_sold}
+and \code{f_income} columns to display fractions. As for how the fractions are
+represented, we are electing to use \code{accuracy = 10}. This gives all fractions
+as tenths. We won't simplify the fractions (by using \code{simplify = FALSE}) and
+this means that a fraction like \code{5/10} won't become \code{1/2}. With \code{layout = "diagonal"}, we get a diagonal display of all fractions.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace \%>\%
-  dplyr::group_by(type, size) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
+  dplyr::group_by(type, size) |>
   dplyr::summarize(
     sold = dplyr::n(),
     income = sum(price),
     .groups = "drop_last"
-  ) \%>\%
-  dplyr::group_by(type) \%>\%
+  ) |>
+  dplyr::group_by(type) |>
   dplyr::mutate(
     f_sold = sold / sum(sold),
     f_income = income / sum(income),
-  ) \%>\%
-  dplyr::arrange(type, dplyr::desc(income)) \%>\%
-  gt(rowname_col = "size") \%>\%
+  ) |>
+  dplyr::arrange(type, dplyr::desc(income)) |>
+  gt(rowname_col = "size") |>
   tab_header(
     title = "Pizzas Sold in 2015",
     subtitle = "Fraction of Sell Count and Revenue by Size per Type"
-  ) \%>\%
-  fmt_integer(columns = sold) \%>\%
-  fmt_currency(columns = income) \%>\%
+  ) |>
+  fmt_integer(columns = sold) |>
+  fmt_currency(columns = income) |>
   fmt_fraction(
     columns = starts_with("f_"),
     accuracy = 10,
     simplify = FALSE,
     layout = "diagonal"
-  ) \%>\%
-  sub_missing(missing_text = "") \%>\%
+  ) |>
+  sub_missing(missing_text = "") |>
   tab_spanner(
     label = "Sold",
     columns = contains("sold")
-  ) \%>\%
+  ) |>
   tab_spanner(
     label = "Revenue",
     columns = contains("income")
-  ) \%>\%
+  ) |>
   text_transform(
     locations = cells_body(),
     fn = function(x) \{
@@ -215,14 +270,14 @@ Use \code{\link{pizzaplace}} to create a \strong{gt} table. Format the \code{f_s
         x != 0 ~ x
       )
     \}
-  ) \%>\%
+  ) |>
   cols_label(
     sold = "Amount",
     income = "Amount",
     f_sold = md("_f_"),
     f_income = md("_f_")
-  ) \%>\%
-  cols_align(align = "center", columns = starts_with("f")) \%>\%
+  ) |>
+  cols_align(align = "center", columns = starts_with("f")) |>
   tab_options(
     table.width = px(400),
     row_group.as_column = TRUE
@@ -239,6 +294,11 @@ Use \code{\link{pizzaplace}} to create a \strong{gt} table. Format the \code{f_s
 3-7
 }
 
+\section{Function Introduced}{
+
+\code{v0.4.0} (February 15, 2022)
+}
+
 \seealso{
 The vector-formatting version of this function:
 \code{\link[=vec_fmt_fraction]{vec_fmt_fraction()}}.
@@ -246,12 +306,16 @@ The vector-formatting version of this function:
 Other data formatting functions: 
 \code{\link{data_color}()},
 \code{\link{fmt_auto}()},
+\code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
 \code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
+\code{\link{fmt_flag}()},
+\code{\link{fmt_image}()},
+\code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},
 \code{\link{fmt_number}()},
@@ -260,13 +324,14 @@ Other data formatting functions:
 \code{\link{fmt_percent}()},
 \code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
+\code{\link{fmt_spelled_num}()},
 \code{\link{fmt_time}()},
+\code{\link{fmt_url}()},
 \code{\link{fmt}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},
 \code{\link{sub_values}()},
-\code{\link{sub_zero}()},
-\code{\link{text_transform}()}
+\code{\link{sub_zero}()}
 }
 \concept{data formatting functions}

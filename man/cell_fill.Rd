@@ -7,13 +7,21 @@
 cell_fill(color = "#D3D3D3", alpha = NULL)
 }
 \arguments{
-\item{color}{The fill color. If nothing is provided, then \code{"#D3D3D3"} (light
-gray) will be used as a default.}
+\item{color}{\emph{Cell fill color}
 
-\item{alpha}{An optional alpha transparency value for the \code{color} as single
-value in the range of \code{0} (fully transparent) to \code{1} (fully opaque). If not
-provided the fill color will either be fully opaque or use alpha
-information from the color value if it is supplied in the #RRGGBBAA format.}
+\verb{scalar<character>} --- \emph{default:} \code{"#D3D3D3"}
+
+If nothing is provided for \code{color} then \code{"#D3D3D3"} (light gray) will be
+used as a default.}
+
+\item{alpha}{\emph{Transparency value}
+
+\verb{scalar<numeric|integer>(0>=val>=1)} --- \emph{default:} \code{NULL} (\code{optional})
+
+An optional alpha transparency value for the \code{color} as single value in the
+range of \code{0} (fully transparent) to \code{1} (fully opaque). If not provided the
+fill color will either be fully opaque or use alpha information from the
+color value if it is supplied in the \verb{#RRGGBBAA} format.}
 }
 \value{
 A list object of class \code{cell_styles}.
@@ -27,23 +35,24 @@ cells. Specifically, the call to \code{cell_fill()} should be bound to the
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Add styles with \code{\link[=tab_style]{tab_style()}} and
-the \code{cell_fill()} helper function.
+Let's use the \code{\link{exibble}} dataset to create a simple, two-column \strong{gt} table
+(keeping only the \code{num} and \code{currency} columns). Styles are added with
+\code{\link[=tab_style]{tab_style()}} in two separate calls (targeting different body cells with the
+\code{\link[=cells_body]{cells_body()}} helper function). With the \code{cell_fill()} helper funciton we
+define cells with a \code{"lightblue"} background in one instance, and \code{"gray85"}
+in the other.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(num, currency) \%>\%
-  gt() \%>\%
-  fmt_number(
-    columns = c(num, currency),
-    decimals = 1
-  ) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(num, currency) |>
+  gt() |>
+  fmt_number(decimals = 1) |>
   tab_style(
     style = cell_fill(color = "lightblue"),
     locations = cells_body(
       columns = num,
       rows = num >= 5000
     )
-  ) \%>\%
+  ) |>
   tab_style(
     style = cell_fill(color = "gray85"),
     locations = cells_body(
@@ -60,7 +69,12 @@ the \code{cell_fill()} helper function.
 
 \section{Function ID}{
 
-7-21
+8-21
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
@@ -91,6 +105,7 @@ Other helper functions:
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},
-\code{\link{stub}()}
+\code{\link{stub}()},
+\code{\link{system_fonts}()}
 }
 \concept{helper functions}

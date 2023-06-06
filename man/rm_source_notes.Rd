@@ -7,13 +7,22 @@
 rm_source_notes(data, source_notes = everything())
 }
 \arguments{
-\item{data}{A table object of class \code{gt_tbl}.}
+\item{data}{\emph{The gt table data object}
 
-\item{source_notes}{A specification of which source notes should be removed.
-The source notes to be removed can be given as a vector of integer values
-(they are stored as integer positions, in order of creation, starting at
-\code{1}). A select helper can also be used and, by default, this is
-\code{everything()} (whereby all source notes will be removed).}
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{source_notes}{\emph{Source notes to remove}
+
+\verb{scalar<numeric|integer>|everything()} --- \emph{default:} \code{everything()}
+
+A specification of which source notes should be removed. The source notes
+to be removed can be given as a vector of integer values (they are stored
+as integer positions, in order of creation, starting at \code{1}). A select
+helper can also be used and, by default, this is \code{everything()} (whereby
+all source notes will be removed).}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -34,16 +43,18 @@ integer values.
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. Use \code{tab_source_note()} to add a
-source note to the table footer that cites the data source.
+Use a subset of the \code{\link{gtcars}} dataset to create a \strong{gt} table. The
+\code{\link[=tab_source_note]{tab_source_note()}} function is used to add a source note to the table footer
+that cites the data source (or, it could just be arbitrary text). We'll use
+the function twice, in effect adding two source notes to the footer.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
-  gtcars \%>\%
-  dplyr::select(mfr, model, msrp) \%>\%
-  dplyr::slice(1:5) \%>\%
-  gt() \%>\%
-  tab_source_note(source_note = "Data from the 'edmunds.com' site.") \%>\%
-  tab_source_note(source_note = "Showing only the first five rows.") \%>\%
+  gtcars |>
+  dplyr::select(mfr, model, msrp) |>
+  dplyr::slice(1:5) |>
+  gt() |>
+  tab_source_note(source_note = "Data from the 'edmunds.com' site.") |>
+  tab_source_note(source_note = "Showing only the first five rows.") |>
   cols_width(everything() ~ px(120))
 
 gt_tbl
@@ -79,7 +90,12 @@ the other source note) we would give the correct index value to
 
 \section{Function ID}{
 
-6-5
+7-5
+}
+
+\section{Function Introduced}{
+
+\code{v0.8.0} (November 16, 2022)
 }
 
 \seealso{

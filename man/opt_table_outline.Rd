@@ -7,12 +7,33 @@
 opt_table_outline(data, style = "solid", width = px(3), color = "#D3D3D3")
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{style, width, color}{The style, width, and color properties for the table
-outline. By default, these are \code{"solid"}, \code{px(3)} (or, \code{"3px"}), and
-\code{"#D3D3D3"}. If \code{"none"} is used then the outline is removed and any values
-provided for \code{width} and \code{color} will be ignored (i.e., not set).}
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{style}{\emph{Outline style property}
+
+\verb{scalar<character>} --- \emph{default:} \code{"solid"}
+
+The style property for the table outline. By default, this is \code{"solid"}. If
+\code{"none"} is used then the outline is removed and any values provided for
+\code{width} and \code{color} will be ignored (i.e., not set).}
+
+\item{width}{\emph{Outline width value}
+
+\verb{scalar<character>} --- \emph{default:} \code{px(3)}
+
+The width property for the table outline. By default, this is \code{px(3)} (or,
+\code{"3px"}).}
+
+\item{color}{\emph{Color of outline}
+
+\verb{scalar<character>} --- \emph{default:} \code{"#D3D3D3"}
+
+The color of the table outline. By default, this is \code{"#D3D3D3"}.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -27,30 +48,32 @@ will remove any present outline.
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table with a number of table parts added.
-Have an outline wrap around the entire table by using \code{opt_table_outline()}.
+Use the \code{\link{exibble}} dataset to create a \strong{gt} table with a number of table
+parts added (using functions like \code{\link[=summary_rows]{summary_rows()}}, \code{\link[=grand_summary_rows]{grand_summary_rows()}},
+and more). Following that, let's make it so that we have an outline wrap
+around the entire table by using the \code{opt_table_outline()} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
-  exibble \%>\%
-  gt(rowname_col = "row", groupname_col = "group") \%>\%
+  exibble |>
+  gt(rowname_col = "row", groupname_col = "group") |>
   summary_rows(
     groups = "grp_a",
     columns = c(num, currency),
     fns = c("min", "max")
-  ) \%>\%
+  ) |>
   grand_summary_rows(
     columns = currency,
     fns = total ~ sum(., na.rm = TRUE)
-  ) \%>\%
-  tab_source_note(source_note = "This is a source note.") \%>\%
+  ) |>
+  tab_source_note(source_note = "This is a source note.") |>
   tab_footnote(
     footnote = "This is a footnote.",
     locations = cells_body(columns = 1, rows = 1)
-  ) \%>\%
+  ) |>
   tab_header(
     title = "The title of the table",
     subtitle = "The table's subtitle"
-  ) \%>\%
+  ) |>
   opt_table_outline()
 
 tab_1
@@ -62,7 +85,7 @@ tab_1
 
 Remove the table outline with the \code{style = "none"} option.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% opt_table_outline(style = "none")
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |> opt_table_outline(style = "none")
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
@@ -72,7 +95,12 @@ Remove the table outline with the \code{style = "none"} option.
 
 \section{Function ID}{
 
-9-8
+10-11
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
@@ -81,7 +109,9 @@ Other table option functions:
 \code{\link{opt_all_caps}()},
 \code{\link{opt_css}()},
 \code{\link{opt_footnote_marks}()},
+\code{\link{opt_footnote_spec}()},
 \code{\link{opt_horizontal_padding}()},
+\code{\link{opt_interactive}()},
 \code{\link{opt_row_striping}()},
 \code{\link{opt_stylize}()},
 \code{\link{opt_table_font}()},

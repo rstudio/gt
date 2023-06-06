@@ -7,18 +7,33 @@
 gtsave(data, filename, path = NULL, ...)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{filename}{The file name to create on disk. Ensure that an extension
-compatible with the output types is provided (\code{.html}, \code{.tex}, \code{.ltx},
-\code{.rtf}, \code{.docx}). If a custom save function is provided then the file
-extension is disregarded.}
+\verb{obj:<gt_tbl>} --- \strong{required}
 
-\item{path}{An optional path to which the file should be saved (combined with
-filename).}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
-\item{...}{All other options passed to the appropriate internal saving
-function.}
+\item{filename}{\emph{Output filename}
+
+\verb{scalar<character>} --- \strong{required}
+
+The file name to create on disk. Ensure that an extension compatible with
+the output types is provided (\code{.html}, \code{.tex}, \code{.ltx}, \code{.rtf}, \code{.docx}). If
+a custom save function is provided then the file extension is disregarded.}
+
+\item{path}{\emph{Output path}
+
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+An optional path to which the file should be saved (combined with
+\code{filename}).}
+
+\item{...}{\emph{Additional options}
+
+\verb{<named arguments>}
+
+All other options passed to the appropriate internal saving function.}
 }
 \value{
 Invisibly returns \code{TRUE} if the export process is successful.
@@ -68,14 +83,15 @@ package needs to be installed before attempting to save any table as a
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. Add a stubhead label with the
-\code{\link[=tab_stubhead]{tab_stubhead()}} function to describe what is in the stub.
+Using a small subset of the \code{\link{gtcars}} dataset, we can create a \strong{gt} table
+with row labels. We'll add a stubhead label with the \code{\link[=tab_stubhead]{tab_stubhead()}}
+function to describe what is in the stub.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
-  gtcars \%>\%
-  dplyr::select(model, year, hp, trq) \%>\%
-  dplyr::slice(1:5) \%>\%
-  gt(rowname_col = "model") \%>\%
+  gtcars |>
+  dplyr::select(model, year, hp, trq) |>
+  dplyr::slice(1:5) |>
+  gt(rowname_col = "model") |>
   tab_stubhead(label = "car")
 }\if{html}{\out{</div>}}
 
@@ -83,42 +99,47 @@ Export the \strong{gt} table to an HTML file with inlined CSS (which is necessar
 for including the table as part of an HTML email) using \code{gtsave()} and the
 \code{inline_css = TRUE} option.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% gtsave(filename = "tab_1.html", inline_css = TRUE)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |> gtsave(filename = "tab_1.html", inline_css = TRUE)
 }\if{html}{\out{</div>}}
 
 By leaving out the \code{inline_css} option, we get a more conventional HTML file
 with embedded CSS styles.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% gtsave(filename = "tab_1.html")
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |> gtsave(filename = "tab_1.html")
 }\if{html}{\out{</div>}}
 
 Saving as a PNG file results in a cropped image of an HTML table. The amount
 of whitespace can be set with the \code{expand} option.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% gtsave("tab_1.png", expand = 10)
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |> gtsave("tab_1.png", expand = 10)
 }\if{html}{\out{</div>}}
 
 Any use of the \code{.tex}, \code{.ltx}, or \code{.rnw} will result in the output of a LaTeX
 document.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% gtsave("tab_1.tex")
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |> gtsave("tab_1.tex")
 }\if{html}{\out{</div>}}
 
 With the \code{.rtf} extension, we'll get an RTF document.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% gtsave("tab_1.rtf")
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |> gtsave("tab_1.rtf")
 
 }\if{html}{\out{</div>}}
 
 With the \code{.docx} extension, we'll get a word/docx document.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 \%>\% gtsave("tab_1.docx")
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |> gtsave("tab_1.docx")
 }\if{html}{\out{</div>}}
 }
 
 \section{Function ID}{
 
 13-1
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{

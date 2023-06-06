@@ -7,9 +7,13 @@
 info_locales(begins_with = NULL)
 }
 \arguments{
-\item{begins_with}{Providing a single letter will filter locales to only
-those that begin with that letter in their base locale ID. The default
-(\code{NULL}) will produce a table with all locales displayed.}
+\item{begins_with}{\emph{Show locales beginning with a specific letter}
+
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+Providing a single letter will filter locales to only those that begin
+with that letter in their locale ID. The default (\code{NULL}) will produce
+a table with all locales displayed}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -46,7 +50,12 @@ with a \code{"v"}.
 
 \section{Function ID}{
 
-10-4
+11-4
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{

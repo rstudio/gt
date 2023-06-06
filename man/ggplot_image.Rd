@@ -7,15 +7,28 @@
 ggplot_image(plot_object, height = 100, aspect_ratio = 1)
 }
 \arguments{
-\item{plot_object}{A ggplot plot object.}
+\item{plot_object}{\emph{A ggplot plot object}
 
-\item{height}{The absolute height (px) of the image in the table cell.}
+\verb{obj:<ggplot>} --- \strong{required}
 
-\item{aspect_ratio}{The plot's final aspect ratio. Where the height of the
-plot is fixed using the \code{height} argument, the \code{aspect_ratio}
-will either compress (\code{aspect_ratio} < \code{1.0}) or expand
-(\code{aspect_ratio} > \code{1.0}) the plot horizontally. The default value
-of \code{1.0} will neither compress nor expand the plot.}
+A \code{ggplot} plot object.}
+
+\item{height}{\emph{Height of image}
+
+\verb{scalar<numeric|integer>} --- \emph{default:} \code{100}
+
+The absolute height of the output image in the table cell (in \code{"px"}
+units). By default, this is set to \code{"100px"}.}
+
+\item{aspect_ratio}{\emph{The final aspect ratio of plot}
+
+\verb{scalar<numeric|integer>} --- \emph{default:} \code{1.0}
+
+This is the plot's final aspect ratio. Where the height of the plot is
+fixed using the \code{height} argument, the \code{aspect_ratio} will either compress
+(\code{aspect_ratio} < \code{1.0}) or expand (\code{aspect_ratio} > \code{1.0}) the plot
+horizontally. The default value of \code{1.0} will neither compress nor expand
+the plot.}
 }
 \value{
 A character object with an HTML fragment that can be placed inside of
@@ -32,8 +45,7 @@ then include a call to \code{ggplot_image()} within the required user-defined
 function (for the \code{fn} argument). If we want to include a plot in other
 places (e.g., in the header, within footnote text, etc.) we need to use
 \code{ggplot_image()} within the \code{\link[=html]{html()}} helper function.
-}
-\details{
+
 By itself, the function creates an HTML image tag with an image URI embedded
 within (a 100 dpi PNG). We can easily experiment with any \code{ggplot2} plot
 object, and using it within \verb{ggplot_image(plot_object = <plot object>}
@@ -70,12 +82,12 @@ function.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
   text = "Here is a ggplot:",
   ggplot = NA
-) \%>\%
-  gt() \%>\%
+) |>
+  gt() |>
   text_transform(
     locations = cells_body(columns = ggplot),
     fn = function(x) \{
-      plot_object \%>\%
+      plot_object |>
         ggplot_image(height = px(200))
     \}
   )
@@ -88,7 +100,12 @@ function.
 
 \section{Function ID}{
 
-8-3
+9-3
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{

@@ -7,19 +7,31 @@
 rm_spanners(data, spanners = everything(), levels = NULL)
 }
 \arguments{
-\item{data}{A table object of class \code{gt_tbl}.}
+\item{data}{\emph{The gt table data object}
 
-\item{spanners}{A specification of which spanner column labels should be
-removed. Those to be removed can be given as a vector of spanner ID values
-(every spanner column label has one, either set by the user or by \strong{gt}
-when using \code{\link[=tab_spanner_delim]{tab_spanner_delim()}}). A select helper can also be used and, by
-default, this is \code{everything()} (whereby all spanner column labels will be
-removed).}
+\verb{obj:<gt_tbl>} --- \strong{required}
 
-\item{levels}{Instead of removing spanner column labels by ID values, entire
-levels of spanners can instead be removed. Supply a numeric vector of level
-values (the first level is \code{1}) and, if they are present, they will be
-removed. Any input given to \code{level} will mean that \code{spanners} is ignored.}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{spanners}{\emph{Spanners to remove}
+
+\verb{<spanner-targeting expression>} --- \emph{default:} \code{everything()}
+
+A specification of which spanner column labels should be removed. Those to
+be removed can be given as a vector of spanner ID values (every spanner
+column label has one, either set by the user or by \strong{gt} when using
+\code{\link[=tab_spanner_delim]{tab_spanner_delim()}}). A select helper can also be used and, by default,
+this is \code{everything()} (whereby all spanner column labels will be removed).}
+
+\item{levels}{\emph{Spanner levels to remove}
+
+\verb{scalar<numeric|integer>} --- \emph{default:} \code{NULL} (\code{optional})
+
+Instead of removing spanner column labels by ID values, entire levels of
+spanners can instead be removed. Supply a numeric vector of level values
+(the first level is \code{1}) and, if they are present, they will be removed.
+Any input given to \code{level} will mean that \code{spanners} is ignored.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -41,22 +53,22 @@ instead of explicit ID values.
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. With the \code{\link[=tab_spanner]{tab_spanner()}} function,
-we can group several related columns together under spanner column labels. In
-this example, that is done with several calls of \code{\link[=tab_spanner]{tab_spanner()}} in order to
-create two levels of spanner column labels.
+Use a portion of the \code{\link{gtcars}} dataset to create a \strong{gt} table. With the
+\code{\link[=tab_spanner]{tab_spanner()}} function, we can group several related columns together under
+a spanner column. In this example, that is done with several calls of
+\code{\link[=tab_spanner]{tab_spanner()}} in order to create two levels of spanner column labels.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
-  gtcars \%>\%
+  gtcars |>
   dplyr::select(
     -mfr, -trim, bdy_style, drivetrain,
     -drivetrain, -trsmn, -ctry_origin
-  ) \%>\%
-  dplyr::slice(1:8) \%>\%
-  gt(rowname_col = "model") \%>\%
-  tab_spanner(label = "HP", columns = c(hp, hp_rpm)) \%>\%
-  tab_spanner(label = "Torque", columns = c(trq, trq_rpm)) \%>\%
-  tab_spanner(label = "MPG", columns = c(mpg_c, mpg_h)) \%>\%
+  ) |>
+  dplyr::slice(1:8) |>
+  gt(rowname_col = "model") |>
+  tab_spanner(label = "HP", columns = c(hp, hp_rpm)) |>
+  tab_spanner(label = "Torque", columns = c(trq, trq_rpm)) |>
+  tab_spanner(label = "MPG", columns = c(mpg_c, mpg_h)) |>
   tab_spanner(
     label = "Performance",
     columns = c(
@@ -110,7 +122,12 @@ accordingly.
 
 \section{Function ID}{
 
-6-3
+7-3
+}
+
+\section{Function Introduced}{
+
+\code{v0.8.0} (November 16, 2022)
 }
 
 \seealso{

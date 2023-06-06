@@ -7,10 +7,22 @@
 cols_hide(data, columns)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The column names to hide from the output display table. Values
-provided that do not correspond to column names will be disregarded.}
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+
+The columns to hide in the output display table. Can either be a series of
+column names provided in \code{\link[=c]{c()}}, a vector of column indices, or a select
+helper function. Examples of select helper functions include
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -37,13 +49,14 @@ warnings or messages when changing the state of already-invisible columns.
 \section{Examples}{
 
 
-Use \code{\link{countrypops}} to create a \strong{gt} table. Hide the \code{country_code_2} and
-\code{country_code_3} columns with \code{cols_hide()}.
+Use a small portion of the \code{\link{countrypops}} dataset to create a \strong{gt} table.
+We can hide the \code{country_code_2} and \code{country_code_3} columns with the
+\code{cols_hide()} function.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::filter(country_name == "Mongolia") \%>\%
-  tail(5) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::filter(country_name == "Mongolia") |>
+  tail(5) |>
+  gt() |>
   cols_hide(columns = c(country_code_2, country_code_3))
 }\if{html}{\out{</div>}}
 
@@ -51,21 +64,22 @@ Use \code{\link{countrypops}} to create a \strong{gt} table. Hide the \code{coun
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_hide_1.png" alt="This image of a table was generated from the first code example in the `cols_hide()` help file." style="width:100\%;">
 }}
 
-Use \code{\link{countrypops}} to create a \strong{gt} table. Use the \code{population} column to
-provide the conditional placement of footnotes, then hide that column and one
-other. Note that the order of the \code{cols_hide()} and \code{\link[=tab_footnote]{tab_footnote()}}
-statements has no effect.
+Using another \code{\link{countrypops}}-based \strong{gt} table, we can use the \code{population}
+column to provide the conditional placement of footnotes. Then, we'll hide
+that column along with the \code{country_code_3} column. Note that the order of
+the \code{cols_hide()} and \code{\link[=tab_footnote]{tab_footnote()}} statements has no effect on the final
+display of the table.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops \%>\%
-  dplyr::filter(country_name == "Mongolia") \%>\%
-  tail(5) \%>\%
-  gt() \%>\%
-  cols_hide(columns = c(country_code_3, population)) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::filter(country_name == "Mongolia") |>
+  tail(5) |>
+  gt() |>
+  cols_hide(columns = c(country_code_3, population)) |>
   tab_footnote(
-    footnote = "Population above 3,000,000.",
+    footnote = "Population above 3,200,000.",
     locations = cells_body(
       columns = year,
-      rows = population > 3000000
+      rows = population > 3200000
     )
   )
 }\if{html}{\out{</div>}}
@@ -77,7 +91,12 @@ statements has no effect.
 
 \section{Function ID}{
 
-4-9
+5-9
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{

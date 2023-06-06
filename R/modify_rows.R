@@ -1,6 +1,31 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2023 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 #' Modify the ordering of any row groups
 #'
 #' @description
+#'
 #' We can modify the display order of any row groups in a **gt** object with the
 #' `row_group_order()` function. The `groups` argument takes a vector of row
 #' group ID values. After this function is invoked, the row groups will adhere
@@ -10,26 +35,31 @@
 #' ordering.
 #'
 #' @inheritParams cols_align
-#' @param groups A character vector of row group ID values corresponding to the
-#'   revised ordering. While this vector must contain valid group ID values, it
-#'   is not required to have all of the row group IDs within it; any omitted
-#'   values will be added to the end while preserving the original ordering.
+#'
+#' @param groups *Specification of row group IDs*
+#'
+#'   `vector<character>` --- **required**
+#'
+#'   A character vector of row group ID values corresponding to the revised
+#'   ordering. While this vector must contain valid group ID values, it is not
+#'   required to have all of the row group IDs within it; any omitted values
+#'   will be added to the end while preserving the original ordering.
 #'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table with a stub and with row groups.
-#' Modify the order of the row groups with `row_group_order()`, specifying the
-#' new ordering in `groups`.
+#' Let's use [`exibble`] to create a **gt** table with a stub and with row
+#' groups. We can modify the order of the row groups with `row_group_order()`,
+#' specifying the new ordering in `groups`.
 #'
 #' ```r
-#' exibble %>%
-#'   dplyr::select(char, currency, row, group) %>%
+#' exibble |>
+#'   dplyr::select(char, currency, row, group) |>
 #'   gt(
 #'     rowname_col = "row",
 #'     groupname_col = "group"
-#'   ) %>%
+#'   ) |>
 #'   row_group_order(groups = c("grp_b", "grp_a"))
 #' ```
 #'
@@ -39,7 +69,10 @@
 #'
 #' @family row addition/modification functions
 #' @section Function ID:
-#' 5-3
+#' 6-3
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
 row_group_order <- function(
@@ -48,7 +81,7 @@ row_group_order <- function(
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
 
   # Stop function if `groups` is not a `character` vector
   if (!inherits(groups, "character")) {

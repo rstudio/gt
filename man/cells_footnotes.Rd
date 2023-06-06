@@ -19,7 +19,7 @@ function. This location helper function cannot be used for the \code{locations}
 argument of \code{\link[=tab_footnote]{tab_footnote()}} and doing so will result in a warning (with no
 change made to the table).
 }
-\section{Overview of Location Helper Functions}{
+\section{Overview of location helper functions}{
 
 
 Location helper functions can be used to target cells with virtually any
@@ -65,29 +65,30 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \section{Examples}{
 
 
-Use \code{\link{sza}} to create a \strong{gt} table. Color the \code{sza} column using the
-\code{data_color()} function, add a footnote and also style the footnotes section.
+Using a subset of the \code{\link{sza}} dataset, let's create a \strong{gt} table. We'd like
+to color the \code{sza} column so that's done with the \code{\link[=data_color]{data_color()}} function. We
+can add a footnote through the \code{\link[=tab_footnote]{tab_footnote()}} function and we can also
+style the footnotes section. The styling is done through the use of the
+\code{\link[=tab_style]{tab_style()}} function and to target the footnotes we use \code{locations = cells_footnotes()}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza |>
   dplyr::filter(
     latitude == 20 &
       month == "jan" &
       !is.na(sza)
-  ) \%>\%
-  dplyr::select(-latitude, -month) \%>\%
-  gt() \%>\%
+  ) |>
+  dplyr::select(-latitude, -month) |>
+  gt() |>
   data_color(
     columns = sza,
-    colors = scales::col_numeric(
-      palette = c("white", "yellow", "navyblue"),
-      domain = c(0, 90)
-    )
-  ) \%>\%
+    palette = c("white", "yellow", "navyblue"),
+    domain = c(0, 90)
+  ) |>
   tab_footnote(
     footnote = "Color indicates height of sun.",
     locations = cells_column_labels(columns = sza)
-  ) \%>\%
-  tab_options(table.width = px(320)) \%>\%
+  ) |>
+  tab_options(table.width = px(320)) |>
   tab_style(
     style = list(
       cell_text(size = "smaller"),
@@ -104,7 +105,12 @@ Use \code{\link{sza}} to create a \strong{gt} table. Color the \code{sza} column
 
 \section{Function ID}{
 
-7-17
+8-17
+}
+
+\section{Function Introduced}{
+
+\code{v0.3.0} (May 12, 2021)
 }
 
 \seealso{
@@ -135,6 +141,7 @@ Other helper functions:
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},
-\code{\link{stub}()}
+\code{\link{stub}()},
+\code{\link{system_fonts}()}
 }
 \concept{helper functions}

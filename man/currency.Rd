@@ -7,10 +7,18 @@
 currency(..., .list = list2(...))
 }
 \arguments{
-\item{...}{One or more named arguments using output contexts as the names and
+\item{...}{\emph{Currency symbols by output context}
+
+\verb{<named arguments>} --- \strong{required} (or, use \code{.list})
+
+One or more named arguments using output contexts as the names and
 currency symbol text as the values.}
 
-\item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
+\item{.list}{\emph{Alternative to \code{...}}
+
+\verb{<list of multiple expressions>} --- \strong{required} (or, use \code{...})
+
+Allows for the use of a list as an input alternative to \code{...}.}
 }
 \value{
 A list object of class \code{gt_currency}.
@@ -39,11 +47,15 @@ required each and every context.
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{currency} column to
-have currency values in guilder (a defunct Dutch currency).
+Use the \code{\link{exibble}} dataset to create a \strong{gt} table. Within the
+\code{\link[=fmt_currency]{fmt_currency()}} call, we'll format the \code{currency} column to have currency
+values in guilder (a defunct Dutch currency). We can register this custom
+currency with the \code{currency()} helper function, supplying the \code{"&fnof;"} HTML
+entity for \code{html} outputs and using \code{"f"} for any other type of \strong{gt}
+output.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt() |>
   fmt_currency(
     columns = currency,
     currency = currency(
@@ -61,7 +73,12 @@ have currency values in guilder (a defunct Dutch currency).
 
 \section{Function ID}{
 
-7-19
+8-19
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
@@ -92,6 +109,7 @@ Other helper functions:
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},
-\code{\link{stub}()}
+\code{\link{stub}()},
+\code{\link{system_fonts}()}
 }
 \concept{helper functions}

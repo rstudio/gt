@@ -52,14 +52,14 @@
     Code
       .
     Output
-      [1] "\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rrrr}\n\\toprule\nA\\textsuperscript{1} & A & A\\textsuperscript{1} & A \\\\ \n\\cmidrule(lr){1-1} \\cmidrule(lr){2-2} \\cmidrule(lr){3-3} \\cmidrule(lr){4-4}\nA\\_X & B\\_X & A\\_Y & B\\_Y \\\\ \n\\midrule\n1 & 2 & 3 & 4 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\textsuperscript{1}note\\\\\n\\end{minipage}\n"
+      [1] "\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rrrr}\n\\toprule\nA\\textsuperscript{\\textit{1}} & A & A\\textsuperscript{\\textit{1}} & A \\\\ \n\\cmidrule(lr){1-1} \\cmidrule(lr){2-2} \\cmidrule(lr){3-3} \\cmidrule(lr){4-4}\nA\\_X & B\\_X & A\\_Y & B\\_Y \\\\ \n\\midrule\n1 & 2 & 3 & 4 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\textsuperscript{\\textit{1}}note\\\\\n\\end{minipage}\n"
 
 ---
 
     Code
       .
     Output
-      [1] "\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rrrr}\n\\toprule\n\\multicolumn{2}{c}{A\\textsuperscript{1}} & \\multicolumn{2}{c}{A} \\\\ \n\\cmidrule(lr){1-2} \\cmidrule(lr){3-4}\nA\\_X & A\\_Y & B\\_X & B\\_Y \\\\ \n\\midrule\n1 & 3 & 2 & 4 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\textsuperscript{1}note\\\\\n\\end{minipage}\n"
+      [1] "\\setlength{\\LTpost}{0mm}\n\\begin{longtable}{rrrr}\n\\toprule\n\\multicolumn{2}{c}{A\\textsuperscript{\\textit{1}}} & \\multicolumn{2}{c}{A} \\\\ \n\\cmidrule(lr){1-2} \\cmidrule(lr){3-4}\nA\\_X & A\\_Y & B\\_X & B\\_Y \\\\ \n\\midrule\n1 & 3 & 2 & 4 \\\\ \n\\bottomrule\n\\end{longtable}\n\\begin{minipage}{\\linewidth}\n\\textsuperscript{\\textit{1}}note\\\\\n\\end{minipage}\n"
 
 ---
 

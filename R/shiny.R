@@ -1,4 +1,32 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2023 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
+#nocov start
+
 #' A **gt** display table render function for use in Shiny
+#'
+#' @description
 #'
 #' With `render_gt()` we can create a reactive **gt** table that works
 #' wonderfully once assigned to an output slot (with [gt_output()]). This
@@ -13,23 +41,55 @@
 #' is easily by using `install.packages("shiny")`. More information on creating
 #' Shiny apps can be found at the \href{https://shiny.rstudio.com}{Shiny Site}.
 #'
-#' @param expr An expression that creates a **gt** table object. For sake of
-#'   convenience, a data frame or tibble can be used here (it will be
-#'   automatically introduced to [gt()] with its default options).
-#' @param width,height The width and height of the table's container. Either can
-#'   be specified as a single-length character with units of pixels or as a
-#'   percentage. If provided as a single-length numeric vector, it is assumed
-#'   that the value is given in units of pixels. The [px()] and [pct()] helper
-#'   functions can also be used to pass in numeric values and obtain values as
-#'   pixel or percent units.
-#' @param align The alignment of the table in its container. By default, this is
-#'   `"center"`. Other options are `"left"` and `"right"`.
-#' @param env The environment in which to evaluate the `expr`.
-#' @param quoted Is `expr` a quoted expression (with `quote()`)? This is useful
-#'   if you want to save an expression in a variable.
-#' @param outputArgs A list of arguments to be passed through to the implicit
-#'   call to [gt_output()] when `render_gt` is used in an interactive R Markdown
+#' @param expr *Expression*
+#'
+#'   `<expression>|obj:<data.frame>|obj:<tbl_df>`
+#'
+#'   An expression that creates a **gt** table object. For sake of convenience,
+#'   a data frame or tibble can be used here (it will be automatically
+#'   introduced to [gt()] with its default options).
+#'
+#' @param width,height *Dimensions of table container*
+#'
+#'   `scalar<numeric|integer|character>` --- *default:* `NULL` (`optional`)
+#'
+#'   The width and height of the table's container. Either can be specified as a
+#'   single-length character vector with units of pixels or as a percentage. If
+#'   provided as a single-length numeric vector, it is assumed that the value is
+#'   given in units of pixels. The [px()] and [pct()] helper functions can also
+#'   be used to pass in numeric values and obtain values as pixel or percent
+#'   units.
+#'
+#' @param align *Table alignment*
+#'
+#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'
+#'   The alignment of the table in its container. If `NULL`, the table will be
+#'   center-aligned. Valid options for this are: `"center"`, `"left"`, and
+#'   `"right"`.
+#'
+#' @param env *Evaluation environment*
+#'
+#'   `<environment>` --- *default:* `parent.frame()`
+#'
+#'   The environment in which to evaluate the `expr`.
+#'
+#' @param quoted *Option to `quote()` `expr`*
+#'
+#'   `scalar<logical>` --- *default:* `FALSE`
+#'
+#'   Is `expr` a quoted expression (with `quote()`)? This is useful if you want
+#'   to save an expression in a variable.
+#'
+#' @param outputArgs *Output arguments*
+#'
+#'   `list` --- *default:* `list()`
+#'
+#'   A list of arguments to be passed through to the implicit call to
+#'   [gt_output()] when `render_gt()` is used in an interactive R Markdown
 #'   document.
+#'
+#' @return An object of class `shiny.render.function`.
 #'
 #' @section Examples:
 #'
@@ -42,31 +102,36 @@
 #' library(shiny)
 #'
 #' gt_tbl <-
-#'   gtcars %>%
-#'   gt() %>%
-#'   cols_hide(contains("_"))
+#'   gtcars |>
+#'   gt() |>
+#'   fmt_currency(columns = msrp, decimals = 0) |>
+#'   cols_hide(columns = -c(mfr, model, year, mpg_c, msrp)) |>
+#'   cols_label_with(columns = everything(), fn = toupper) |>
+#'   data_color(columns = msrp, method = "numeric", palette = "viridis") |>
+#'   sub_missing() |>
+#'   opt_interactive(use_compact_mode = TRUE)
 #'
 #' ui <- fluidPage(
-#'
 #'   gt_output(outputId = "table")
 #' )
 #'
-#' server <- function(input,
-#'                    output,
-#'                    session) {
-#'
-#'   output$table <-
-#'     render_gt(
-#'       expr = gt_tbl,
-#'       height = px(600),
-#'       width = px(600)
-#'     )
+#' server <- function(input, output, session) {
+#'   output$table <- render_gt(expr = gt_tbl)
 #' }
+#'
+#' shinyApp(ui = ui, server = server)
 #' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_render_gt_1.png")`
+#' }}
 #'
 #' @family Shiny functions
 #' @section Function ID:
 #' 12-1
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
 render_gt <- function(
@@ -134,6 +199,8 @@ render_gt <- function(
 
 #' Create a **gt** display table output element for Shiny
 #'
+#' @description
+#'
 #' Using `gt_output()` we can render a reactive **gt** table, a process
 #' initiated by using the [render_gt()] function in the `server` component of a
 #' Shiny app. The `gt_output()` call is to be used in the Shiny `ui` component,
@@ -147,7 +214,13 @@ render_gt <- function(
 #' is easily by using `install.packages("shiny")`. More information on creating
 #' Shiny apps can be found at the \href{https://shiny.rstudio.com}{Shiny Site}.
 #'
-#' @param outputId An output variable from which to read the table.
+#' @param outputId *Shiny output ID*
+#'
+#'   `scalar<character>` --- **required**
+#'
+#'   An output variable from which to read the table.
+#'
+#' @return An object of class `shiny.tag`.
 #'
 #' @section Examples:
 #'
@@ -160,31 +233,36 @@ render_gt <- function(
 #' library(shiny)
 #'
 #' gt_tbl <-
-#'   gtcars %>%
-#'   gt() %>%
-#'   cols_hide(contains("_"))
+#'   gtcars |>
+#'   gt() |>
+#'   fmt_currency(columns = msrp, decimals = 0) |>
+#'   cols_hide(columns = -c(mfr, model, year, mpg_c, msrp)) |>
+#'   cols_label_with(columns = everything(), fn = toupper) |>
+#'   data_color(columns = msrp, method = "numeric", palette = "viridis") |>
+#'   sub_missing() |>
+#'   opt_interactive(use_compact_mode = TRUE)
 #'
 #' ui <- fluidPage(
-#'
 #'   gt_output(outputId = "table")
 #' )
 #'
-#' server <- function(input,
-#'                    output,
-#'                    session) {
-#'
-#'   output$table <-
-#'     render_gt(
-#'       expr = gt_tbl,
-#'       height = px(600),
-#'       width = px(600)
-#'     )
+#' server <- function(input, output, session) {
+#'   output$table <- render_gt(expr = gt_tbl)
 #' }
+#'
+#' shinyApp(ui = ui, server = server)
 #' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_render_gt_1.png")`
+#' }}
 #'
 #' @family Shiny functions
 #' @section Function ID:
 #' 12-2
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
 gt_output <- function(outputId) {
@@ -200,8 +278,10 @@ check_shiny <- function() {
   if (!requireNamespace("shiny", quietly = TRUE)) {
 
     cli::cli_abort(c(
-      "Please install the shiny package before using this function.",
-      "*" = "Use `install.packages(\"shiny\")`."
+      "Please install the `shiny` package before using this function.",
+      "*" = "It can be installed with `install.packages(\"shiny\")`."
     ))
   }
 }
+
+#nocov end

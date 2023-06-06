@@ -11,15 +11,28 @@ opt_all_caps(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{all_caps}{A logical value to indicate whether the text transformation
-to all caps should be performed (\code{TRUE}, the default) or reset to default
-values (\code{FALSE}) for the \code{locations} targeted.}
+\verb{obj:<gt_tbl>} --- \strong{required}
 
-\item{locations}{Which locations should undergo this text transformation? By
-default it includes all of the \code{"column_labels"}, the \code{"stub"}, and the
-\code{"row_group"} locations. However, we could just choose one or two of those.}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{all_caps}{\emph{Use all-caps transformation}
+
+\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+
+A logical value to indicate whether the text transformation to all caps
+should be performed (\code{TRUE}, the default) or reset to default values
+(\code{FALSE}) for the \code{locations} targeted.}
+
+\item{locations}{\emph{Locations to target}
+
+\verb{mult-kw:[column_labels|stub|row_group]} --- \emph{default:} \code{c("column_labels", "stub", "row_group")}
+
+Which locations should undergo this text transformation? By default it
+includes all of the \code{"column_labels"}, the \code{"stub"}, and the \code{"row_group"}
+locations. However, we could just choose one or two of those.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -30,35 +43,37 @@ Sometimes an all-capitalized look is suitable for a table. With the
 the stub, and in all row groups in this way (and there's control over which
 of these locations are transformed).
 
-This function serves as a convenient shortcut for \verb{<gt_tbl> \%>\% tab_options(<location>.text_transform = "uppercase", <location>.font.size = pct(80), <location>.font.weight = "bolder")} (for all \code{locations} selected).
+This function serves as a convenient shortcut for \verb{<gt_tbl> |> tab_options(<location>.text_transform = "uppercase", <location>.font.size = pct(80), <location>.font.weight = "bolder")} (for all \code{locations} selected).
 }
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table with a number of table parts added.
-All text in the column labels, the stub, and in all row groups is to be
-transformed to all caps using \code{opt_all_caps()}.
+Use the \code{\link{exibble}} dataset to create a \strong{gt} table with a number of table
+parts added (using functions like \code{\link[=summary_rows]{summary_rows()}}, \code{\link[=grand_summary_rows]{grand_summary_rows()}},
+and more). Following that, we'll ensure that all text in the column labels,
+the stub, and in all row groups is transformed to all caps using
+\code{opt_all_caps()}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  gt(rowname_col = "row", groupname_col = "group") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt(rowname_col = "row", groupname_col = "group") |>
   summary_rows(
     groups = "grp_a",
     columns = c(num, currency),
     fns = c("min", "max")
-  ) \%>\%
+  ) |>
   grand_summary_rows(
     columns = currency,
     fns = total ~ sum(., na.rm = TRUE)
-  ) \%>\%
-  tab_source_note(source_note = "This is a source note.") \%>\%
+  ) |>
+  tab_source_note(source_note = "This is a source note.") |>
   tab_footnote(
     footnote = "This is a footnote.",
     locations = cells_body(columns = 1, rows = 1)
-  ) \%>\%
+  ) |>
   tab_header(
     title = "The title of the table",
     subtitle = "The table's subtitle"
-  ) \%>\%
+  ) |>
   opt_all_caps()
 }\if{html}{\out{</div>}}
 
@@ -69,7 +84,12 @@ transformed to all caps using \code{opt_all_caps()}.
 
 \section{Function ID}{
 
-9-6
+10-9
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
@@ -77,7 +97,9 @@ Other table option functions:
 \code{\link{opt_align_table_header}()},
 \code{\link{opt_css}()},
 \code{\link{opt_footnote_marks}()},
+\code{\link{opt_footnote_spec}()},
 \code{\link{opt_horizontal_padding}()},
+\code{\link{opt_interactive}()},
 \code{\link{opt_row_striping}()},
 \code{\link{opt_stylize}()},
 \code{\link{opt_table_font}()},

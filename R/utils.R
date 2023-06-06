@@ -1,3 +1,27 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2023 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 #' Get a tibble containing date formats
 #'
 #' @noRd
@@ -350,12 +374,13 @@ get_alignment_at_body_cell <- function(
   # Return the value of the last `text-align` property, if present
   if (!is.null(cell_style) && grepl("text-align", cell_style)) {
 
-    m <- gregexec("(?:^|;)\\s*text-align\\s*:\\s*([\\w-]+)\\s*(!important)?", cell_style, perl = TRUE)
+    m <- regexec_gt("(?:^|;)\\s*text-align\\s*:\\s*([\\w-]+)\\s*(!important)?", cell_style, perl = TRUE)
+
     cell_style_match_mat <- regmatches(cell_style, m)[[1]]
 
     is_important <- grepl("!important", cell_style_match_mat[1, ], fixed = TRUE)
 
-    # Pick last !important, or if no !important, then last anything
+    # Pick last '!important', or if no '!important', then last anything
     if (any(is_important)) {
       cell_alignment <- cell_style_match_mat[2, max(which(is_important))]
     } else {
@@ -397,6 +422,29 @@ get_currency_exponent <- function(currency) {
   }
 }
 
+get_markdown_engine_fn <- function(
+    md_engine_pref,
+    context = c("html", "latex")
+) {
+
+  context <- match.arg(context)
+
+  md_engine_fn <-
+    switch(
+      md_engine_pref,
+      markdown = markdown::mark,
+      commonmark = if (context == "html") {
+        commonmark::markdown_html
+      } else {
+        commonmark::markdown_latex
+      }
+    )
+
+  md_engine_fn <- c(md_engine_fn)
+  names(md_engine_fn) <- md_engine_pref
+  md_engine_fn
+}
+
 #' Process text based on rendering context any applied classes
 #'
 #' If the incoming text has the class `from_markdown` (applied by the `md()`
@@ -406,6 +454,15 @@ get_currency_exponent <- function(currency) {
 #' sanitization.
 #' @noRd
 process_text <- function(text, context = "html") {
+
+  # When processing text globally (outside of the `fmt_markdown()`
+  # function) we will use the 'markdown' package if it is available,
+  # otherwise the 'commonmark' package
+  if (utils::packageVersion("markdown") >= "1.5") {
+    md_engine <- "markdown"
+  } else {
+    md_engine <- "commonmark"
+  }
 
   # If text is marked `AsIs` (by using `I()`) then just
   # return the text unchanged
@@ -425,12 +482,20 @@ process_text <- function(text, context = "html") {
 
     if (inherits(text, "from_markdown")) {
 
+      md_engine_fn <-
+        get_markdown_engine_fn(
+          md_engine_pref = md_engine,
+          context = "html"
+        )
+
       text <-
         vapply(
           as.character(text),
           FUN.VALUE = character(1),
           USE.NAMES = FALSE,
-          FUN = commonmark::markdown_html
+          FUN = function(x) {
+            md_engine_fn[[1]](text = x)
+          }
         )
 
       text <- gsub("^<p>|</p>\n$", "", text)
@@ -453,13 +518,14 @@ process_text <- function(text, context = "html") {
 
       return(text)
     }
+
   } else if (context == "latex") {
 
     # Text processing for LaTeX output
 
     if (inherits(text, "from_markdown")) {
 
-      text <- markdown_to_latex(text = text)
+      text <- markdown_to_latex(text = text, md_engine = md_engine)
 
       return(text)
 
@@ -501,12 +567,13 @@ process_text <- function(text, context = "html") {
     # Text processing for Word output
 
     if (inherits(text, "from_markdown")) {
+
       text <- markdown_to_xml(text)
     }else{
-      text <- as.character(text)
+      text <- htmltools::htmlEscape(as.character(text))
     }
 
-    return(htmltools::htmlEscape(text))
+    return(text)
 
   } else {
 
@@ -549,18 +616,36 @@ unescape_html <- function(text) {
 #' Transform Markdown text to HTML and also perform HTML escaping
 #'
 #' @noRd
-md_to_html <- function(x) {
+md_to_html <- function(x, md_engine) {
 
-  non_na_x <-
-    vapply(
-      as.character(x[!is.na(x)]),
-      FUN.VALUE = character(1),
-      USE.NAMES = FALSE,
-      FUN = commonmark::markdown_html
+  md_engine_fn <-
+    get_markdown_engine_fn(
+      md_engine_pref = md_engine,
+      context = "html"
     )
 
-  non_na_x <- tidy_gsub(non_na_x, "^", "<div class='gt_from_md'>")
-  non_na_x <- tidy_gsub(non_na_x, "$", "</div>")
+  if (!check_quarto()) {
+
+    non_na_x <-
+      vapply(
+        as.character(x[!is.na(x)]),
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = function(x) {
+          md_engine_fn[[1]](text = x)
+        }
+      )
+
+    non_na_x <- tidy_gsub(non_na_x, "^", "<div class='gt_from_md'>")
+    non_na_x <- tidy_gsub(non_na_x, "$", "</div>")
+
+  } else {
+
+    non_na_x <- x[!is.na(x)]
+
+    non_na_x <- tidy_gsub(non_na_x, "^", "<span data-qmd=\"")
+    non_na_x <- tidy_gsub(non_na_x, "$", "\"></span>")
+  }
 
   x[!is.na(x)] <- non_na_x
   x
@@ -572,7 +657,13 @@ md_to_html <- function(x) {
 #' `markdown_to_latex()` also escapes ASCII characters with special meaning in
 #' LaTeX.
 #' @noRd
-markdown_to_latex <- function(text) {
+markdown_to_latex <- function(text, md_engine) {
+
+  md_engine_fn <-
+    get_markdown_engine_fn(
+      md_engine_pref = md_engine,
+      context = "latex"
+    )
 
   # Vectorize `commonmark::markdown_latex` and modify output
   # behavior to pass through NAs
@@ -596,17 +687,26 @@ markdown_to_latex <- function(text) {
             }
           }
 
-          tidy_gsub(commonmark::markdown_latex(x), "\\n$", "")
+          if (names(md_engine_fn) == "commonmark") {
+            tidy_gsub(md_engine_fn[[1]](text = x), "\\n$", "")
+          } else {
+            tidy_gsub(md_engine_fn[[1]](text = x, format = "latex"), "\\n$", "")
+          }
         }
       )
     )
   )
 }
 
+
+#' Transform Markdown text to ooxml
+#'
+#' @noRd
+#'
+#' @importFrom xml2 read_xml xml_name xml_children xml_type xml_contents
 markdown_to_xml <- function(text) {
 
-  text <-
-    text %>%
+  text %>%
     as.character() %>%
     vapply(
       FUN.VALUE = character(1),
@@ -617,33 +717,21 @@ markdown_to_xml <- function(text) {
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
       FUN = function(cmark) {
-        # cat(cmark)
+
         x <- xml2::read_xml(cmark)
+
         if (!identical(xml2::xml_name(x), "document")) {
           stop("Unexpected result from markdown parsing: `document` element not found")
         }
 
         children <- xml2::xml_children(x)
 
-        if (length(children) == 1 &&
-            xml2::xml_type(children[[1]]) == "element" &&
-            xml2::xml_name(children[[1]]) == "paragraph") {
-          children <- xml2::xml_children(children[[1]])
-        }
-
-        apply_rules <- function(x) {
+        apply_rules <- function(x, ...) {
 
           if (inherits(x, "xml_nodeset")) {
 
-            len <- length(x)
-            results <- character(len) # preallocate vector
-
-            for (i in seq_len(len)) {
-              results[[i]] <- apply_rules(x[[i]])
-            }
-
-            # TODO: is collapse = "" correct?
-            xml_raw(paste0("", results, collapse = ""))
+            results <- lapply( x, apply_rules)
+            do.call( 'paste0',c(results,collapse = "\n"))
 
           } else {
 
@@ -659,85 +747,193 @@ markdown_to_xml <- function(text) {
                   .frequency_id = "gt_commonmark_unknown_element"
                 )
 
-                apply_rules(xml2::xml_contents(x))
+                apply_rules(xml2::xml_children(x))
 
               } else if (is.function(rule)) {
 
-                rule(x, apply_rules)
+                rule(x, apply_rules, ...)
+
               }
             }
 
-            xml_raw(paste0("", output, collapse = ""))
-          }
+          paste0(output, collapse = "")
+         }
         }
 
-        apply_rules(children)
+        lapply(children, apply_rules)%>%
+          vapply(FUN = as.character,
+                 FUN.VALUE = character(1)) %>%
+          paste0(collapse = "") %>%
+          paste0("<md_container>", ., "</md_container>")
       }
     )
 
-  text
 }
 
 
 cmark_rules_xml <- list(
 
-  heading = function(x, process) {
+  ## default ordering
+  text = function(x, process, ...) {
+    xml_r(xml_rPr(),
+          xml_t(
+            enc2utf8(as.character(htmltools::htmlEscape(xml2::xml_text(x)))),
+            xml_space = "preserve")
+    ) %>% as.character()
+  },
+  paragraph = function(x, process, ...) {
+    runs <- lapply(xml2::xml_children(x), process)
+    xml_p(
+      xml_pPr(),
+      paste0(
+        vapply(
+          runs, FUN = paste, FUN.VALUE = character(1)
+        ),
+        collapse = ""
+      )
+    ) %>% as.character()
+  },
+  ## basic styling
+  strong = function(x, process, ...) {
+    x <- process(xml2::xml_children(x))
+    add_text_style(x, style = xml_b())
+  },
+  emph = function(x, process, ...) {
+    x <- process(xml2::xml_children(x))
+    add_text_style(x, style = xml_i())
+  },
 
+  ## Complex styling
+  heading = function(x, process, ...) {
     heading_sizes <- c(36, 32, 28, 24, 20, 16)
     fs <- heading_sizes[as.numeric(xml2::xml_attr(x, attr = "level"))]
-
-    htmltools::tagList(
-      xml_sz(process(xml2::xml_children(x)), val = fs)
-    )
+    x <- process(xml2::xml_children(x))
+    add_text_style(x, style = xml_sz(val = fs)) %>%
+      xml_p(xml_pPr(),.) %>%
+      as.character()
   },
-  thematic_break = function(x, process) {
-    "<w:pict>
-      <v:rect style=\"width:500pt;height:1pt;\" o:hralign=\"center\" fillcolor=\"#bbbbbb\" stroked=\"f\"/>
-    </w:pict>"
+  thematic_break = function(x, process, ...) {
+    xml_p(
+      xml_pPr(
+        xml_keepNext(),
+        xml_pBdr(
+          xml_border(dir = "bottom", type = "single", size = 6, space = 1, color = "auto")
+        ),
+        xml_spacing(after = 60)
+      )
+    ) %>% as.character()
   },
-  link = function(x, process) {
-    # NOTE: Links are difficult to insert in OOXML documents because
-    # a relationship must be provided in the 'document.xml.rels' file
-    xml2::xml_text(x)
-  },
-  list = function(x, process) {
+  list = function(x, process, ..., indent_level = 0, type = "bullet") {
 
     type <- xml2::xml_attr(x, attr = "type")
-    n_items <- length(xml2::xml_children(x))
+    children <- xml2::xml_children(x)
 
     # NOTE: `start`, `delim`, and `tight` attrs are ignored; we also
     # assume there is only `type` values of "ordered" and "bullet" (unordered)
-    htmltools::HTML(
-      paste(
-        vapply(
-          seq_len(n_items),
-          FUN.VALUE = character(1),
-          USE.NAMES = FALSE,
-          FUN = function(n) {
 
-            paste(
-              ifelse(type == "bullet", "\u2022", ""),
-              process(xml2::xml_children(x)[n]),
-              collapse = ""
-            )
+    paste(
+        lapply(
+          seq_along(children),
+          FUN = function(child_idx) {
+
+            child <- children[[child_idx]]
+
+            li_content <- process(child, indent_level = indent_level + 1, type = type) %>%
+              as_xml_node(create_ns = TRUE)
+
+            ## get first pPr tag
+            paragraph_style <- li_content %>% xml_find_first(".//w:pPr") %>% .[[1]]
+
+            ## check
+            list_style_format <- xml_pStyle(val = "ListParagraph") %>%
+              as_xml_node() %>%
+              .[[1]]
+
+            paragraph_style %>%
+              xml_add_child(
+                list_style_format
+              )
+
+            list_bullet_style <- xml_numPr(
+              xml_ilvl(val = indent_level)#,
+              # ifelse(type == "ordered", xml_numId(val = 2), xml_numId(val = 1))
+            ) %>%
+              as_xml_node() %>%
+              .[[1]]
+
+            paragraph_style %>%
+              xml_add_child(
+                list_bullet_style
+              )
+
+
+            list_symbol <- ifelse(type == "bullet", "-", paste0( child_idx, "."))
+
+              bullet_insert <- xml_r(
+                  xml_t(xml_space = "preserve", paste(c(rep("\t", times = indent_level),list_symbol,"\t"), collapse = ""))
+                ) %>%
+                as_xml_node()%>%
+                .[[1]]
+
+              ## must be nodes not nodesets
+              paragraph_style %>%
+                xml_add_sibling(
+                  bullet_insert,
+                  .where = "after"
+              )
+
+            paste0(li_content, collapse = "")
+
           }
         ),
-        collapse = "<w:br/>"
+        collapse = ""
+    )
+  },
+  item = function(x, process, ...) {
+
+    item_contents <- lapply(
+        xml2::xml_children(x),
+        process,
+        ...
       )
-    )
+
+    unlist(item_contents)
+
   },
-  item = function(x, process) {
-    # TODO: probably needs something like process_children()
-    xml2::xml_text(x)
+
+  ## code sections
+  code = function(x, process, ...) {
+    xml_r(xml_rPr(xml_rStyle(val = "Macro Text")),
+          xml_t(xml2::xml_text(x), xml_space = "preserve")) %>%
+      as.character()
+
   },
-  code_block = function(x, process) {
-    htmltools::tagList(
-      xml_rPr(xml_r_font(ascii_font = "Courier", ansi_font = "Courier")),
-      xml_t(xml2::xml_text(x), xml_space = "preserve"),
-      xml_rPr(xml_r_font(ascii_font = "Calibri", ansi_font = "Calibri"))
-    )
+  code_block = function(x, process, ...) {
+    ##split text up by new line
+    text <- strsplit(xml2::xml_text(x),split = "\n")[[1]]
+    code_text <- lapply(text, function(line){
+      xml_t(line, xml_space = "preserve")
+    })
+    xml_p(xml_pPr(xml_pStyle(val = "Macro Text")),
+          xml_r(xml_rPr(),
+                paste0(
+                  vapply(code_text,
+                         FUN = paste,
+                         FUN.VALUE = character(1)),
+                  collapse = "<w:br/>"
+                ))) %>%
+      as.character()
   },
-  html_inline = function(x, process) {
+
+  ## line breaks
+  softbreak = function(x, process, ...) {
+    xml_br(clear = "right")
+  },
+  linebreak = function(x, process, ...) {
+    xml_br()
+  },
+
+  html_inline = function(x, process, ...) {
 
     tag <- xml2::xml_text(x)
 
@@ -788,48 +984,36 @@ cmark_rules_xml <- list(
     # Any unrecognized HTML tags are stripped, returning nothing
     return(rtf_raw(""))
   },
-  softbreak = function(x, process) {
-    "\n "
+
+  html_block = function(x, process, ...){
+    xml_p(
+      xml_pPr(),
+      xml_r(xml_rPr(),
+            xml_t(
+              enc2utf8(as.character(xml2::xml_text(x))),
+              xml_space = "preserve")
+      )
+    ) %>%
+      as.character()
   },
-  linebreak = function(x, process) {
-    "<w:br/>"
+
+  link = function(x, process, ...) {
+    # NOTE: Links are difficult to insert in OOXML documents because
+    # a relationship must be provided in the 'document.xml.rels' file
+    xml_hyperlink(
+      url =xml_attr(x, "destination"),
+      xml_r(xml_rPr(xml_rStyle(val = "Hyperlink")),xml_t(xml2::xml_text(x)))
+    ) %>% as.character()
   },
-  block_quote = function(x, process) {
+
+  block_quote = function(x, process, ...) {
     # TODO: Implement
     process(xml2::xml_children(x))
-  },
-  code = function(x, process) {
-    htmltools::tagList(
-      xml_rPr(xml_r_font(ascii_font = "Courier", ansi_font = "Courier")),
-      xml_t(xml2::xml_text(x), xml_space = "preserve"),
-      xml_rPr(xml_r_font(ascii_font = "Calibri", ansi_font = "Calibri"))
-    )
-  },
-  strong = function(x, process) {
-    htmltools::HTML(
-      paste0(
-        xml_rPr(xml_b(active = TRUE)),
-        as.character(process(xml2::xml_children(x))),
-        xml_rPr(xml_b(active = FALSE))
-      )
-    )
-  },
-  emph = function(x, process) {
-    htmltools::HTML(
-      paste0(
-        xml_rPr(xml_i(active = TRUE)),
-        as.character(process(xml2::xml_children(x))),
-        xml_rPr(xml_i(active = FALSE))
-      )
-    )
-  },
-  text = function(x, process) {
-    xml2::xml_text(x)
-  },
-  paragraph = function(x, process) {
-    xml2::xml_text(x)
   }
 )
+
+
+
 
 cmark_rules_rtf <- list(
 
@@ -1064,6 +1248,8 @@ markdown_to_rtf <- function(text) {
   text
 }
 
+#nocov start
+
 rtf_wrap <- function(control, x, process) {
   content <- paste0("", process(xml2::xml_contents(x))) # coerce even NULL to string
   paste0("\\", control, " ", content, "\\", control, "0 ")
@@ -1102,6 +1288,8 @@ markdown_to_text <- function(text) {
     )
   )
 }
+
+#nocov end
 
 #' Handle formatting of a pattern in a `fmt_*()` function
 #'
@@ -1471,6 +1659,39 @@ extract_strings <- function(text, pattern, perl = TRUE) {
   sapply(regmatches(text, regexec(pattern, text, perl = perl)), "[", 1)
 }
 
+any_labeled_columns_in_data_tbl <- function(data) {
+
+  data_tbl <- dt_data_get(data = data)
+
+  any(
+    vapply(
+      seq_len(ncol(data_tbl)),
+      FUN.VALUE = logical(1),
+      USE.NAMES = FALSE,
+      FUN = function(x) {
+        "label" %in% names(attributes(data_tbl[[x]]))
+      }
+    )
+  )
+}
+
+get_columns_labels_from_attrs <- function(data) {
+
+  data_tbl <- dt_data_get(data = data)
+
+  # Initialize vector of column labels
+  var_labels <- colnames(data_tbl)
+
+  # Overwrite `var_labels` wherever a column contains a `label` attribute value
+  for (i in seq_along(var_labels)) {
+    if ("label" %in% names(attributes(data_tbl[[i]]))) {
+      var_labels[i] <- attr(data_tbl[[i]], which = "label")
+    }
+  }
+
+  var_labels
+}
+
 #' Split any strings that are values in scientific notation
 #'
 #' @param x_str The input character vector of values formatted in scientific
@@ -1537,8 +1758,7 @@ tidy_grepl <- function(x, pattern) {
 #' Create a vector of marks to use for footnotes
 #'
 #' @noRd
-process_footnote_marks <- function(x,
-                                   marks) {
+process_footnote_marks <- function(x, marks) {
 
   if (identical(marks, "numbers")) {
     return(as.character(x))
@@ -1577,8 +1797,25 @@ process_footnote_marks <- function(x,
 #'
 #' @param data A table object that is created using the [gt()] function.
 #' @noRd
-is_gt <- function(data) {
+is_gt_tbl <- function(data) {
   inherits(data, "gt_tbl")
+}
+
+#' Determine whether an object is a `gt_group`
+#'
+#' @param data A table object that is created using the [gt_group()] function.
+#' @noRd
+is_gt_group <- function(data) {
+  inherits(data, "gt_group")
+}
+
+#' Determine whether an object inherits from `gt_tbl` or `gt_group`
+#'
+#' @param data A table object that is created either using the [gt()] or
+#' [gt_group()] functions.
+#' @noRd
+is_gt_tbl_or_group <- function(data) {
+  inherits(data, "gt_tbl") || inherits(data, "gt_group")
 }
 
 #' Determines whether a character vector is non-empty
@@ -1594,9 +1831,37 @@ is_nonempty_string <- function(x) {
 #' @param data The input `data` object that is to be validated.
 #'
 #' @noRd
-stop_if_not_gt <- function(data) {
-  if (!is_gt(data)) {
-    cli::cli_abort("The object to `data` is not a `gt_tbl` object.")
+stop_if_not_gt_tbl <- function(data) {
+  if (!is_gt_tbl(data = data)) {
+    cli::cli_abort(
+      "The `data` provided is not a `gt_tbl` object."
+    )
+  }
+}
+
+#' Stop any function if object is not a `gt_group` object
+#'
+#' @param data The input `data` object that is to be validated.
+#'
+#' @noRd
+stop_if_not_gt_group <- function(data) {
+  if (!is_gt_group(data = data)) {
+    cli::cli_abort(
+      "The `data` provided is not a `gt_group` object."
+    )
+  }
+}
+
+#' Stop any function if object is neither `gt_tbl` nor `gt_group`
+#'
+#' @param data The input `data` object that is to be validated.
+#'
+#' @noRd
+stop_if_not_gt_tbl_or_group <- function(data) {
+  if (!is_gt_tbl(data = data) && !is_gt_group(data = data)) {
+    cli::cli_abort(
+      "The `data` provided is neither a `gt_tbl` nor a `gt_group` object."
+    )
   }
 }
 
@@ -1834,6 +2099,22 @@ column_classes_are_valid <- function(data, columns, valid_classes) {
 #   print(x)
 # }
 
+get_footnote_spec_by_location <- function(
+    data,
+    location
+) {
+
+  if (location == "ref") {
+    spec <- dt_options_get_value(data = data, option = "footnotes_spec_ref")
+  } else {
+    spec <- dt_options_get_value(data = data, option = "footnotes_spec_ftr")
+  }
+
+  spec
+}
+
+#nocov start
+
 man_get_image_tag <- function(file, dir = "images") {
 
   repo_url <- "https://raw.githubusercontent.com/rstudio/gt/master"
@@ -1871,3 +2152,23 @@ man_get_image_tag <- function(file, dir = "images") {
     "style=\"width:100\\%;\">"
   )
 }
+
+data_get_image_tag <- function(file, dir = "images") {
+
+  repo_url <- "https://raw.githubusercontent.com/rstudio/gt/master"
+
+  alt_text <- "This image of that of a dataset badge."
+
+  image_url <- file.path(repo_url, dir, file)
+
+  paste0(
+    "<div style=\"text-align:center;\">",
+    "<img ",
+    "src=\"", image_url, "\" ",
+    "alt=\"", alt_text, "\" ",
+    "style=\"width:50\\%;padding-bottom:20px;\">",
+    "</div>"
+  )
+}
+
+#nocov end

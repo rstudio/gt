@@ -61,7 +61,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0 {\f0\fs20 {\super \i 1}The first footnote\line {\super \i 2}The second footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} The first footnote\line {\super \i 2} The second footnote}}\cell
       
       \row
       
@@ -144,7 +144,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0 {\f0\fs20 {\super \i 1}The first footnote\line {\super \i 2}The second footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} The first footnote\line {\super \i 2} The second footnote}}\cell
       
       \row
       
@@ -230,7 +230,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0 {\f0\fs20 {\super \i 1}The first footnote\line {\super \i 2}The second footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} The first footnote\line {\super \i 2} The second footnote}}\cell
       
       \row
       
@@ -319,7 +319,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0 {\f0\fs20 {\super \i 1}The first footnote\line {\super \i 2}The second footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} The first footnote\line {\super \i 2} The second footnote}}\cell
       
       \row
       
@@ -410,7 +410,7 @@
       \row
       
       {\footer
-      {\f0\fs20 {\super \i 1}The first footnote\line {\super \i 2}The second footnote}\par
+      {\f0\fs20 {\super \i 1} The first footnote\line {\super \i 2} The second footnote}\par
       {\f0\fs20 This is a source note that explains some of the content in the table.}\par
       }
       }
@@ -493,7 +493,7 @@
       \row
       
       {\footer
-      {\f0\fs20 {\super \i 1}The first footnote\line {\super \i 2}The second footnote}\par
+      {\f0\fs20 {\super \i 1} The first footnote\line {\super \i 2} The second footnote}\par
       {\f0\fs20 This is a source note that explains some of the content in the table.}\par
       }
       }
@@ -578,7 +578,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx9360
-      \intbl {\f0 {\f0\fs20 {\super \i 1}The first footnote\line {\super \i 2}The second footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} The first footnote\line {\super \i 2} The second footnote}}\cell
       
       \row
       
@@ -667,7 +667,7 @@
       \row
       
       {\footer
-      {\f0\fs20 {\super \i 1}The first footnote\line {\super \i 2}The second footnote}\par
+      {\f0\fs20 {\super \i 1} The first footnote\line {\super \i 2} The second footnote}\par
       {\f0\fs20 This is a source note that explains some of the content in the table.}\par
       }
       }
@@ -750,7 +750,7 @@
       \row
       
       {\footer
-      {\f0\fs20 {\super \i 1}The first footnote\line {\super \i 2}The second footnote}\par
+      {\f0\fs20 {\super \i 1} The first footnote\line {\super \i 2} The second footnote}\par
       {\f0\fs20 This is a source note that explains some of the content in the table.}\par
       }
       }
@@ -833,7 +833,7 @@
       \row
       
       {\footer
-      {\f0\fs20 {\super \i 1}The first footnote\line {\super \i 2}The second footnote}\par
+      {\f0\fs20 {\super \i 1} The first footnote\line {\super \i 2} The second footnote}\par
       {\f0\fs20 This is a source note that explains some of the content in the table.}\par
       }
       }
@@ -918,7 +918,7 @@
       \trowd\trrh0
       
       \pard\plain\uc0\ql\clvertalc \clpadfl3\clpadl25 \clpadft3\clpadt85 \clpadfb3\clpadb25 \clpadfr3\clpadr85 \cellx12960
-      \intbl {\f0 {\f0\fs20 {\super \i 1}The first footnote\line {\super \i 2}The second footnote}}\cell
+      \intbl {\f0 {\f0\fs20 {\super \i 1} The first footnote\line {\super \i 2} The second footnote}}\cell
       
       \row
       
@@ -1007,7 +1007,7 @@
       \row
       
       {\footer
-      {\f0\fs20 {\super \i 1}The first footnote\line {\super \i 2}The second footnote}\par
+      {\f0\fs20 {\super \i 1} The first footnote\line {\super \i 2} The second footnote}\par
       {\f0\fs20 This is a source note that explains some of the content in the table.}\par
       }
       }

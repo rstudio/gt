@@ -1,6 +1,31 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2023 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 #' Add group-wise summary rows using aggregation functions
 #'
 #' @description
+#'
 #' Add summary rows to one or more row groups by using the table data and any
 #' suitable aggregation functions. Multiple summary rows can be added for
 #' selected groups via expressions given to `fns`. You can selectively format
@@ -8,40 +33,84 @@
 #' `fmt`.
 #'
 #' @inheritParams fmt_number
-#' @param groups The groups to consider for generation of group-wise summary
-#'   rows. By default this is set to `everything()`, which means that all
-#'   available groups will obtain summary rows. Providing the ID values (in
-#'   quotes) of row groups in `c()` will generate summary rows for those
-#'   specified groups.
-#' @param columns The columns for which the summaries should be calculated. By
-#'   default, this is every column that has data cells (given by
-#'   `everything()`).
-#' @param fns Functions used for aggregations. This can include base functions
-#'   like `mean`, `min`, `max`, `median`, `sd`, or `sum` or any other
-#'   user-defined aggregation function. Multiple functions, each of which would
-#'   generate a different row, are to be supplied within a `list()`. We can
-#'   specify the functions by use of function names in quotes (e.g., `"sum"`),
-#'   as bare functions (e.g., `sum`), or in formula form (e.g.,
-#'   `minimum ~ min(.)`) where the LHS could be used to supply the summary row
-#'   label and id values. More information on this can be found in the
+#'
+#' @param groups *Specification of row group IDs*
+#'
+#'   `<row-group-targeting expression>` --- *default:* `everything()`
+#'
+#'   The row groups to which targeting operations are constrained. Can either be
+#'   a series of row group ID values provided in [c()] or a select helper
+#'   function. Examples of select helper functions include [starts_with()],
+#'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
+#'   [everything()]. By default this is set to [everything()], which means that
+#'   all available groups will obtain summary rows.
+#'
+#' @param columns *Columns to target*
+#'
+#'   `<column-targeting expression>` --- *default:* `everything()`
+#'
+#'   The columns for which the summaries should be calculated. Can either
+#'   be a series of column names provided in [c()], a vector of column indices,
+#'   or a select helper function. Examples of select helper functions include
+#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
+#'   [num_range()], and [everything()].
+#'
+#' @param fns *Aggregation Expressions*
+#'
+#'   `<expression|list of expressions>`
+#'
+#'   Functions used for aggregations. This can include base functions like
+#'   `mean`, `min`, `max`, `median`, `sd`, or `sum` or any other user-defined
+#'   aggregation function. Multiple functions, each of which would generate a
+#'   different row, are to be supplied within a `list()`. We can specify the
+#'   functions by use of function names in quotes (e.g., `"sum"`), as bare
+#'   functions (e.g., `sum`), or in formula form (e.g., `minimum ~ min(.)`)
+#'   where the LHS could be used to supply the summary row label and ID values.
+#'   More information on this can be found in the
 #'   *Aggregation expressions for `fns`* section.
-#' @param fmt Formatting expressions in formula form. The RHS of `~` should
-#'   contain a formatting call (e.g.,
-#'   `~ fmt_number(., decimals = 3, use_seps = FALSE`). Optionally, the LHS
-#'   could contain a group-targeting expression (e.g.,
+#'
+#' @param fmt *Formatting expressions*
+#'
+#'   `<expression|list of expressions>`
+#'
+#'   Formatting expressions in formula form. The RHS of `~` should contain a
+#'   formatting call (e.g., `~ fmt_number(., decimals = 3, use_seps = FALSE`).
+#'   Optionally, the LHS could contain a group-targeting expression (e.g.,
 #'   `"group_a" ~ fmt_number(.)`). More information on this can be found in the
 #'   *Formatting expressions for `fmt`* section.
-#' @param missing_text The text to be used in place of `NA` values in summary
-#'   cells with no data outputs.
-#' @param formatter Deprecated, please use `fmt` instead. This was previously
-#'   used as a way to input a formatting function name, which could be any of
-#'   the `fmt_*()` functions available in the package (e.g., [fmt_number()],
-#'   [fmt_percent()], etc.), or a custom function using [fmt()]. The options of
-#'   a formatter can be accessed through `...`.
-#' @param ... Deprecated (along with `formatter`) but otherwise used for
-#'   argument values for a formatting function supplied in `formatter`. For
-#'   example, if using `formatter = fmt_number`, options such as `decimals = 1`,
-#'   `use_seps = FALSE`, and the like can be used here.
+#'
+#' @param side *Side used for placement of summary rows*
+#'
+#'   `singl-kw:[bottom|top]` --- *default:* `"bottom"`
+#'
+#'   Should the summary rows be placed at the `"bottom"` (the default) or the
+#'   `"top"` of the row group?
+#'
+#' @param missing_text *Replacement text for `NA` values*
+#'
+#'   `scalar<character>` --- *default:* `"---"`
+#'
+#'   The text to be used in place of `NA` values in summary cells with no data
+#'   outputs.
+#'
+#' @param formatter *[Deprecated] Formatting function*
+#'
+#'   `<expression>`
+#'
+#'   Deprecated, please use `fmt` instead. This was previously used as a way to
+#'   input a formatting function name, which could be any of the `fmt_*()`
+#'   functions available in the package (e.g., [fmt_number()], [fmt_percent()],
+#'   etc.), or a custom function using [fmt()]. The options of a formatter can
+#'   be accessed through `...`.
+#'
+#' @param ... *[Deprecated] Formatting arguments*
+#'
+#'   `<Named arguments>`
+#'
+#'   Deprecated (along with `formatter`) but otherwise used for argument values
+#'   for a formatting function supplied in `formatter`. For example, if using
+#'   `formatter = fmt_number`, options such as `decimals = 1`, `use_seps =
+#'   FALSE`, and the like can be used here.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -55,8 +124,8 @@
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns are selected (with the `everything()` default). This
 #' default may be not what's needed unless all columns can undergo useful
@@ -209,20 +278,21 @@
 #'
 #' @section Examples:
 #'
-#' Use [`sp500`] to create a **gt** table with row groups. Create the summary
-#' rows labeled `min`, `max`, and `avg` by row group (where each each row group
-#' is a week number) with the `summary_rows()` function.
+#' Use a modified version of [`sp500`] dataset to create a **gt** table with row
+#' groups and row labels. Create the summary rows labeled `min`, `max`, and
+#' `avg` by row group (where each each row group is a week number) with the
+#' `summary_rows()` function.
 #'
 #' ```r
-#' sp500 %>%
-#'   dplyr::filter(date >= "2015-01-05" & date <="2015-01-16") %>%
-#'   dplyr::arrange(date) %>%
-#'   dplyr::mutate(week = paste0("W", strftime(date, format = "%V"))) %>%
-#'   dplyr::select(-adj_close, -volume) %>%
+#' sp500 |>
+#'   dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") |>
+#'   dplyr::arrange(date) |>
+#'   dplyr::mutate(week = paste0("W", strftime(date, format = "%V"))) |>
+#'   dplyr::select(-adj_close, -volume) |>
 #'   gt(
 #'     rowname_col = "date",
 #'     groupname_col = "week"
-#'   ) %>%
+#'   ) |>
 #'   summary_rows(
 #'     fns = list(
 #'       "min",
@@ -237,9 +307,60 @@
 #' `r man_get_image_tag(file = "man_summary_rows_1.png")`
 #' }}
 #'
+#' Using the [`countrypops`] dataset, let's process that a bit before giving it
+#' to **gt**. We can create a summary rows with totals that appear at the top of
+#' each row group (with `side = "top"`). We can define the aggregation with a
+#' list that contains parameters for the summary row label (`md("**ALL**")`),
+#' the shared ID value of those rows across groups (`"totals"`), and the
+#' aggregation function (expressed as `"sum"`, which **gt** recognizes as the
+#' `sum()` function). To top it all off, we'll add background fills to the
+#' summary rows with [tab_style()].
+#'
+#' ```r
+#' countrypops |>
+#'   dplyr::filter(
+#'     country_code_2 %in% c("BR", "RU", "IN", "CN", "FR", "DE", "IT", "GB")
+#'   ) |>
+#'   dplyr::filter(year %% 10 == 0) |>
+#'   dplyr::select(country_name, year, population) |>
+#'   tidyr::pivot_wider(names_from = year, values_from = population) |>
+#'   gt(rowname_col = "country_name") |>
+#'   tab_row_group(
+#'     label = md("*BRIC*"),
+#'     rows = c("Brazil", "Russian Federation", "India", "China"),
+#'     id = "bric"
+#'   ) |>
+#'   tab_row_group(
+#'     label = md("*Big Four*"),
+#'     rows = c("France", "Germany", "Italy", "United Kingdom"),
+#'     id = "big4"
+#'   ) |>
+#'   row_group_order(groups = c("bric", "big4")) |>
+#'   tab_stub_indent(rows = everything()) |>
+#'   tab_header(title = "Populations of the BRIC and Big Four Countries") |>
+#'   tab_spanner(columns = everything(), label = "Year") |>
+#'   fmt_number(n_sigfig = 3, suffixing = TRUE) |>
+#'   summary_rows(
+#'     fns =  list(label = md("**ALL**"), id = "totals", fn = "sum"),
+#'     fmt = ~ fmt_number(., n_sigfig = 3, suffixing = TRUE),
+#'     side = "top"
+#'   ) |>
+#'   tab_style(
+#'     locations = cells_summary(),
+#'     style = cell_fill(color = "lightblue" |> adjust_luminance(steps = +1))
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_summary_rows_2.png")`
+#' }}
+#'
 #' @family row addition/modification functions
 #' @section Function ID:
-#' 5-1
+#' 6-1
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
 summary_rows <- function(
@@ -248,13 +369,17 @@ summary_rows <- function(
     columns = everything(),
     fns = NULL,
     fmt = NULL,
+    side = c("bottom", "top"),
     missing_text = "---",
     formatter = NULL,
     ...
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
+
+  # Get the correct `side` value
+  side <- rlang::arg_match(side)
 
   # Collect all provided formatting options in a list
   formatter_options <- list(...)
@@ -322,9 +447,15 @@ summary_rows <- function(
 
     # Add the `"::rowname::"` column into `_data`
     data$`_data` <-
-      data$`_data` %>%
-      dplyr::mutate(!!rowname_col_private := rep("", nrow(data$`_data`))) %>%
-      dplyr::select(dplyr::everything(), dplyr::all_of(rowname_col_private))
+      dplyr::mutate(
+        data$`_data`,
+        !!rowname_col_private := rep("", nrow(data$`_data`))
+      )
+    data$`_data` <-
+      dplyr::select(
+        data$`_data`,
+        dplyr::everything(), dplyr::all_of(rowname_col_private)
+      )
 
     # Get the `stub_df` object from `data`
     stub_df <- dt_stub_df_get(data = data)
@@ -392,6 +523,7 @@ summary_rows <- function(
       columns = columns,
       fns = summary_fns,
       fmt = fmt_fns,
+      side = side,
       missing_text = missing_text,
       formatter = formatter,
       formatter_options = formatter_options
@@ -416,6 +548,13 @@ summary_rows <- function(
 #'
 #' @inheritParams summary_rows
 #'
+#' @param side *Side used for placement of grand summary rows*
+#'
+#'   `singl-kw:[bottom|top]` --- *default:* `"bottom"`
+#'
+#'   Should the grand summary rows be placed at the `"bottom"` (the default) or
+#'   the `"top"` of the table?
+#'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Using `columns` to target column data for aggregation:
@@ -428,8 +567,8 @@ summary_rows <- function(
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns are selected (with the `everything()` default). This
 #' default may be not what's needed unless all columns can undergo useful
@@ -555,20 +694,20 @@ summary_rows <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`sp500`] to create a **gt** table with row groups. Create the grand
-#' summary rows `min`, `max`, and `avg` for the table with the
-#' `grand_summary_rows()` function.
+#' Use a modified version of the [`sp500`] dataset to create a **gt** table with
+#' row groups and row labels. Create the grand summary rows `min`, `max`, and
+#' `avg` for the table with the `grand_summary_rows()` function.
 #'
 #' ```r
-#' sp500 %>%
-#'   dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") %>%
-#'   dplyr::arrange(date) %>%
-#'   dplyr::mutate(week = paste0("W", strftime(date, format = "%V"))) %>%
-#'   dplyr::select(-adj_close, -volume) %>%
+#' sp500 |>
+#'   dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") |>
+#'   dplyr::arrange(date) |>
+#'   dplyr::mutate(week = paste0("W", strftime(date, format = "%V"))) |>
+#'   dplyr::select(-adj_close, -volume) |>
 #'   gt(
 #'     rowname_col = "date",
 #'     groupname_col = "week"
-#'   ) %>%
+#'   ) |>
 #'   grand_summary_rows(
 #'     columns = c(open, high, low, close),
 #'     fns = list(
@@ -584,9 +723,46 @@ summary_rows <- function(
 #' `r man_get_image_tag(file = "man_grand_summary_rows_1.png")`
 #' }}
 #'
+#' Let's take the [`countrypops`] dataset and process that a bit before handing
+#' it off to **gt**. We can create a single grand summary row with totals that
+#' appears at the top of the table body (with `side = "top"`). We can define the
+#' aggregation with a list that contains parameters for the grand summary row
+#' label (`"TOTALS"`), the ID value of that row (`"totals"`), and the
+#' aggregation function (expressed as `"sum"`, which **gt** recognizes as the
+#' `sum()` function). Finally, we'll add a background fill to the grand summary
+#' row with [tab_style()].
+#'
+#' ```r
+#' countrypops |>
+#'   dplyr::filter(country_code_2 %in% c("BE", "NL", "LU")) |>
+#'   dplyr::filter(year %% 10 == 0) |>
+#'   dplyr::select(country_name, year, population) |>
+#'   tidyr::pivot_wider(names_from = year, values_from = population) |>
+#'   gt(rowname_col = "country_name") |>
+#'   tab_header(title = "Populations of the Benelux Countries") |>
+#'   tab_spanner(columns = everything(), label = "Year") |>
+#'   fmt_integer() |>
+#'   grand_summary_rows(
+#'     fns =  list(label = "TOTALS", id = "totals", fn = "sum"),
+#'     fmt = ~ fmt_integer(.),
+#'     side = "top"
+#'   ) |>
+#'   tab_style(
+#'     locations = cells_grand_summary(),
+#'     style = cell_fill(color = "lightblue" |> adjust_luminance(steps = +1))
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_grand_summary_rows_2.png")`
+#' }}
+#'
 #' @family row addition/modification functions
 #' @section Function ID:
-#' 5-2
+#' 6-2
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
 #'
 #' @export
 grand_summary_rows <- function(
@@ -594,13 +770,17 @@ grand_summary_rows <- function(
     columns = everything(),
     fns = NULL,
     fmt = NULL,
+    side = c("bottom", "top"),
     missing_text = "---",
     formatter = NULL,
     ...
 ) {
 
   # Perform input object validation
-  stop_if_not_gt(data = data)
+  stop_if_not_gt_tbl(data = data)
+
+  # Get the correct `side` value
+  side <- rlang::arg_match(side)
 
   summary_rows(
     data = data,
@@ -608,6 +788,7 @@ grand_summary_rows <- function(
     columns = {{ columns }},
     fns = fns,
     fmt = fmt,
+    side = side,
     missing_text = missing_text,
     formatter = formatter,
     ...

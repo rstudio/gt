@@ -7,10 +7,14 @@
 info_paletteer(color_pkgs = NULL)
 }
 \arguments{
-\item{color_pkgs}{A vector of color packages that determines which sets of
-palettes should be displayed in the information table. If this is
-\code{NULL} (the default) then all of the discrete palettes from all of the
-color packages represented in \strong{paletteer} will be displayed.}
+\item{color_pkgs}{\emph{Filter to specific color packages}
+
+\verb{vector<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+A vector of color packages that determines which sets of palettes should be
+displayed in the information table. If this is \code{NULL} (the default) then
+all of the discrete palettes from all of the color packages represented in
+\strong{paletteer} will be displayed.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -77,7 +81,12 @@ from the \strong{paletteer} package).
 
 \section{Function ID}{
 
-10-5
+11-5
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{

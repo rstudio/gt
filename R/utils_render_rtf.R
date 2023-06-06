@@ -1,3 +1,27 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2023 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 rtf_paste0 <- function(..., collapse = NULL) {
 
   args <-
@@ -205,6 +229,7 @@ rtf_header <- function(
   rtf_header
 }
 
+# Generate an RTF file based on content in an RTF 'document'
 rtf_file <- function(
     data,
     document
@@ -214,11 +239,43 @@ rtf_file <- function(
   # Generate the header based on the RTF `document` content
   # (and also modify the document)
   #
-  # Scan for hexadecimal colors in the document; generate
-  # a <colortbl> object
-  matched_colors <-
-    unique(unlist(str_complete_extract(document, "<<COLOR:#[0-9a-fA-F]{6}>>")))
 
+  # Scan for any font declarations within the document (they use
+  # a specialized notation with angle brackets)
+  matched_fonts <-
+    unique(
+      unlist(
+        str_complete_extract(document, "<<FONT:.*?>>")
+      )
+    )
+
+  # Generate a <fonttbl> object, which is required for every RTF file
+  if (length(matched_fonts) > 0) {
+
+    fonttbl <-
+      rtf_fonttbl(
+        .font_names = c("Times", gsub("<<FONT:|>>", "", matched_fonts)),
+        .default_n = 1
+      )
+
+    for (i in seq_along(matched_fonts)) {
+      document <- gsub(matched_fonts[i], as.character(i), document, fixed = TRUE)
+    }
+
+  } else {
+    fonttbl <- rtf_fonttbl()
+  }
+
+  # Scan for any hexadecimal colors within the document (they use
+  # a specialized notation with angle brackets)
+  matched_colors <-
+    unique(
+      unlist(
+        str_complete_extract(document, "<<COLOR:#[0-9a-fA-F]{6}>>")
+      )
+    )
+
+  # Generate a <colortbl> object
   if (length(matched_colors) > 0) {
 
     colortbl <-
@@ -231,24 +288,7 @@ rtf_file <- function(
     colortbl <- rtf_colortbl(.hexadecimal_colors = "#FFFFFF")
   }
 
-  # Scan for font declarations in the document; generate a <fonttbl> object
-  matched_fonts <-
-    unique(unlist(str_complete_extract(document, "<<FONT:.*?>>")))
-
-  if (length(matched_fonts) > 0) {
-
-    fonttbl <-
-      rtf_fonttbl(.font_names = c("Times", gsub("<<FONT:|>>", "", matched_fonts)), .default_n = 1)
-
-    for (i in seq_along(matched_fonts)) {
-      document <- gsub(matched_fonts[i], as.character(i), document, fixed = TRUE)
-    }
-
-  } else {
-    fonttbl <- rtf_fonttbl()
-  }
-
-  # Create the document header
+  # Create the RTF document header (an 'rtf_header' object)
   header <- rtf_header(fonttbl, colortbl)
 
   #
@@ -741,14 +781,39 @@ rtf_raw <- function(...) {
 }
 
 # Transform a footnote mark to an RTF representation as a superscript
-footnote_mark_to_rtf <- function(mark) {
-  stopifnot(length(mark) == 1)
+footnote_mark_to_rtf <- function(
+    data,
+    mark,
+    location = c("ref", "ftr")
+) {
 
-  if (is.na(mark)) {
-    ""
-  } else {
-    rtf_paste0(rtf_raw("{\\super \\i "), mark, rtf_raw("}"))
+  location <- match.arg(location)
+
+  if (length(mark) == 1 && is.na(mark)) {
+    return("")
   }
+
+  spec <- get_footnote_spec_by_location(data = data, location = location)
+
+  if (is.null(spec)) {
+    spec <- "^i"
+  }
+
+  if (grepl("\\(|\\[", spec)) mark <- paste0("(", mark)
+  if (grepl("\\)|\\]", spec)) mark <- paste0(mark, ")")
+
+  rtf_paste0(
+    rtf_raw(
+      paste0(
+      "{",
+      if (grepl("\\^", spec)) "\\super " else NULL,
+      if (grepl("i", spec)) "\\i " else NULL,
+      if (grepl("b", spec)) "\\b " else NULL
+      )
+    ),
+    mark,
+    rtf_raw("}")
+  )
 }
 
 escape_rtf <- function(text) {
@@ -902,16 +967,23 @@ rtf_border <- function(
   rtf_border
 }
 
-as_rtf_string <- function(x) {
+as_rtf_string <- function(
+    x,
+    incl_open = TRUE,
+    incl_header = TRUE,
+    incl_page_info = TRUE,
+    incl_body = TRUE,
+    incl_close = TRUE
+) {
 
   rtf_paste0(
-    rtf_raw("{"),
-    rtf_raw(as.character(x$header)),
+    if (incl_open) rtf_raw("{") else NULL,
+    if (incl_header) rtf_raw(as.character(x$header)) else NULL,
     "\n",
-    rtf_raw(as.character(x$page_information)),
+    if (incl_page_info) rtf_raw(as.character(x$page_information)) else NULL,
     "\n",
-    rtf_raw(as.character(x$document)),
-    rtf_raw("}")
+    if (incl_body) rtf_raw(as.character(x$document)) else NULL,
+    if (incl_close) rtf_raw("}") else NULL
   )
 }
 
@@ -1550,8 +1622,7 @@ create_body_component_rtf <- function(data) {
     # Add groupwise summary rows
     #
 
-    if (summaries_present &&
-        i %in% groups_rows_df$row_end) {
+    if (summaries_present && i %in% groups_rows_df$row_end) {
 
       group_id <-
         groups_rows_df[
@@ -1617,16 +1688,15 @@ create_body_component_rtf <- function(data) {
               }
             )
 
-          row_list_body <-
-            c(
-              row_list_body,
-              rtf_tbl_row(
-                cell_list,
-                page_body_width = page_body_width,
-                widths = col_widths,
-                height = 0
-              )
+          row_list_summary <-
+            rtf_tbl_row(
+              cell_list,
+              page_body_width = page_body_width,
+              widths = col_widths,
+              height = 0
             )
+
+          row_list_body <- c(row_list_body, row_list_summary)
         }
       }
     }
@@ -1636,8 +1706,10 @@ create_body_component_rtf <- function(data) {
   # Add grand summary rows
   #
 
-  if (summaries_present &&
-      grand_summary_col %in% names(list_of_summaries$summary_df_display_list)) {
+  if (
+    summaries_present &&
+    grand_summary_col %in% names(list_of_summaries$summary_df_display_list)
+  ) {
 
     grand_summary_df <-
       dplyr::select(
@@ -1658,6 +1730,7 @@ create_body_component_rtf <- function(data) {
         merge_keys_cells <- c(1, 2, rep(0, length(grand_summary_row) - 2))
       }
 
+      # Generate a cell list containing grand summary rows
       cell_list <-
         lapply(
           seq_len(n_cols), FUN = function(x) {
@@ -1682,24 +1755,21 @@ create_body_component_rtf <- function(data) {
           }
         )
 
-      row_list_body <-
-        c(
-          row_list_body,
-          rtf_tbl_row(
-            cell_list,
-            page_body_width = page_body_width,
-            widths = col_widths,
-            height = 0#,
-            # borders = list(
-            #   rtf_border(
-            #     "top",
-            #     style = ifelse(j == 1, "db", "s"),
-            #     color = table_body_hlines_color,
-            #     width = ifelse(j == 1, 50, 10)
-            #   )
-            # )
-          )
+      side <- summary_row_side(data = data, group_id = grand_summary_col)
+
+      row_list_grand_summary <-
+        rtf_tbl_row(
+          cell_list,
+          page_body_width = page_body_width,
+          widths = col_widths,
+          height = 0
         )
+
+      if (side == "top") {
+        row_list_body <- c(row_list_grand_summary, row_list_body)
+      } else {
+        row_list_body <- c(row_list_body, row_list_grand_summary)
+      }
     }
   }
 
@@ -1770,6 +1840,7 @@ create_footer_component_rtf <- function(data) {
   # Generate a list containing formatted footnotes and source notes
   notes_list <-
     generate_notes_list(
+      data = data,
       footnotes_tbl = footnotes_tbl,
       source_notes_vec = source_notes_vec,
       footnotes_multiline = footnotes_multiline,
@@ -1840,6 +1911,7 @@ create_page_footer_component_rtf <- function(data) {
   # Generate a list containing formatted footnotes and source notes
   notes_list <-
     generate_notes_list(
+      data = data,
       footnotes_tbl = footnotes_tbl,
       source_notes_vec = source_notes_vec,
       footnotes_multiline = footnotes_multiline,
@@ -1858,6 +1930,7 @@ create_page_footer_component_rtf <- function(data) {
 }
 
 generate_notes_list <- function(
+    data,
     footnotes_tbl,
     source_notes_vec,
     footnotes_multiline,
@@ -1892,7 +1965,12 @@ generate_notes_list <- function(
         c(
           footnotes,
           rtf_paste0(
-            footnote_mark_to_rtf(footnote_mark[i]),
+            footnote_mark_to_rtf(
+              data = data,
+              mark = footnote_mark[i],
+              location = "ftr"
+            ),
+            " ",
             rtf_raw(footnote_text[i])
           )
         )

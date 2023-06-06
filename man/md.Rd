@@ -7,11 +7,15 @@
 md(text)
 }
 \arguments{
-\item{text}{The text that is understood to contain Markdown formatting.}
+\item{text}{\emph{Markdown text}
+
+\verb{scalar<character>} --- \strong{required}
+
+The text that is understood to contain Markdown formatting.}
 }
 \value{
 A character object of class \code{from_markdown}. It's tagged as being
-Markdown text and it will undergo conversion to HTML.
+Markdown text and it will undergo conversion to the desired output context.
 }
 \description{
 Markdown! It's a wonderful thing. We can use it in certain places (e.g.,
@@ -23,12 +27,13 @@ get to use Markdown plus any HTML fragments \emph{at the same time}).
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. When adding a title, use the \code{md()}
-helper to use Markdown formatting.
+Use the \code{\link{exibble}} dataset to create a \strong{gt} table. When adding a title
+through the \code{\link[=tab_header]{tab_header()}} function, we'll use the \code{md()} helper to signify
+to \strong{gt} that we're using Markdown formatting.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(currency, char) \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(currency, char) |>
+  gt() |>
   tab_header(title = md("Using *Markdown*"))
 }\if{html}{\out{</div>}}
 
@@ -39,7 +44,12 @@ helper to use Markdown formatting.
 
 \section{Function ID}{
 
-7-1
+8-1
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
@@ -70,6 +80,7 @@ Other helper functions:
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},
-\code{\link{stub}()}
+\code{\link{stub}()},
+\code{\link{system_fonts}()}
 }
 \concept{helper functions}

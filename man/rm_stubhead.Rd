@@ -7,7 +7,12 @@
 rm_stubhead(data)
 }
 \arguments{
-\item{data}{A table object of class \code{gt_tbl}.}
+\item{data}{\emph{The gt table data object}
+
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -25,15 +30,15 @@ use even if there is no stubhead label in the input \code{gt_tbl} object.
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. With \code{\link[=tab_stubhead]{tab_stubhead()}}, it's possible
-to add a stubhead label. This appears in the top-left and can be used to
-describe what is in the stub.
+Using the \code{\link{gtcars}} datset, we'll create a \strong{gt} table. With the
+\code{\link[=tab_stubhead]{tab_stubhead()}} function, it's possible to add a stubhead label. This
+appears in the top-left and can be used to describe what is in the stub.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
-  gtcars \%>\%
-  dplyr::select(model, year, hp, trq) \%>\%
-  dplyr::slice(1:5) \%>\%
-  gt(rowname_col = "model") \%>\%
+  gtcars |>
+  dplyr::select(model, year, hp, trq) |>
+  dplyr::slice(1:5) |>
+  gt(rowname_col = "model") |>
   tab_stubhead(label = "car")
 
 gt_tbl
@@ -56,7 +61,12 @@ it can be removed with the \code{rm_stubhead()} function.
 
 \section{Function ID}{
 
-6-2
+7-2
+}
+
+\section{Function Introduced}{
+
+\code{v0.8.0} (November 16, 2022)
 }
 
 \seealso{

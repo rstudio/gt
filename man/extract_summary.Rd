@@ -7,7 +7,12 @@
 extract_summary(data)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
+
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 }
 \value{
 A list of data frames containing summary data.
@@ -21,20 +26,21 @@ descriptive stub labels for the summary rows.
 \section{Examples}{
 
 
-Use \code{\link{sp500}} to create a \strong{gt} table with row groups. Create summary rows
-labeled as \code{min}, \code{max}, and \code{avg} for every row group with \code{\link[=summary_rows]{summary_rows()}}.
-Then, extract the summary rows as a list object.
+Use a modified version of \code{\link{sp500}} the dataset to create a \strong{gt} table with
+row groups and row labels. Create summary rows labeled as \code{min}, \code{max}, and
+\code{avg} for every row group with \code{\link[=summary_rows]{summary_rows()}}. Then, extract the summary
+rows as a list object.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{summary_extracted <-
-  sp500 \%>\%
-  dplyr::filter(date >= "2015-01-05" & date <="2015-01-30") \%>\%
-  dplyr::arrange(date) \%>\%
-  dplyr::mutate(week = paste0("W", strftime(date, format = "\%V"))) \%>\%
-  dplyr::select(-adj_close, -volume) \%>\%
+  sp500 |>
+  dplyr::filter(date >= "2015-01-05" & date <="2015-01-30") |>
+  dplyr::arrange(date) |>
+  dplyr::mutate(week = paste0("W", strftime(date, format = "\%V"))) |>
+  dplyr::select(-adj_close, -volume) |>
   gt(
     rowname_col = "date",
     groupname_col = "week"
-  ) \%>\%
+  ) |>
   summary_rows(
     groups = everything(),
     columns = c(open, high, low, close),
@@ -43,7 +49,7 @@ Then, extract the summary rows as a list object.
       max = ~max(.),
       avg = ~mean(.)
     ),
-  ) \%>\%
+  ) |>
   extract_summary()
 
 summary_extracted
@@ -84,10 +90,10 @@ summary_extracted
 Use the summary list to make a new \strong{gt} table. The key thing is to use
 \code{dplyr::bind_rows()} and then pass the tibble to \code{\link[=gt]{gt()}}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{summary_extracted \%>\%
-  unlist(recursive = FALSE) \%>\%
-  dplyr::bind_rows() \%>\%
-  gt(groupname_col = "group_id") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{summary_extracted |>
+  unlist(recursive = FALSE) |>
+  dplyr::bind_rows() |>
+  gt(groupname_col = "group_id") |>
   cols_hide(columns = row_id)
 }\if{html}{\out{</div>}}
 
@@ -99,6 +105,11 @@ Use the summary list to make a new \strong{gt} table. The key thing is to use
 \section{Function ID}{
 
 13-6
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{

@@ -7,21 +7,35 @@
 tab_stub_indent(data, rows, indent = "increase")
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{rows}{The rows to consider for the indentation change. Can either be a
-vector of row captions provided in \code{c()}, a vector of row indices, or a
-helper function focused on selections. The select helper functions are:
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and
-\code{\link[=everything]{everything()}}.}
+\verb{obj:<gt_tbl>} --- \strong{required}
 
-\item{indent}{An indentation directive either as a keyword describing the
-indentation change or as an explicit integer value for directly setting the
-indentation level. The keyword \code{"increase"} (the default) will increase the
-indentation level by one; \code{"decrease"} will do the same in the reverse
-direction. The starting indentation level of \code{0} means no indentation and
-this values serves as a lower bound. The upper bound for indentation is at
-level \code{5}.}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} --- \strong{required}
+
+The rows to consider for the indentation change. The default \code{\link[=everything]{everything()}}
+results in all rows being targeted. Alternatively, we can supply a vector
+of row captions within \code{\link[=c]{c()}}, a vector of row indices, or a select helper
+function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
+\code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
+need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+
+\item{indent}{\emph{Indentation directive}
+
+\verb{scalar<character|numeric|integer>} --- \emph{default:} \code{"increase"}
+
+An indentation directive either as a keyword describing the indentation
+change or as an explicit integer value for directly setting the indentation
+level. The keyword \code{"increase"} (the default) will increase the indentation
+level by one; \code{"decrease"} will do the same in the reverse direction. The
+starting indentation level of \code{0} means no indentation and this values
+serves as a lower bound. The upper bound for indentation is at level \code{5}.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -29,65 +43,44 @@ An object of class \code{gt_tbl}.
 \description{
 Indentation of row labels is an effective way for establishing structure in a
 table stub. The \code{tab_stub_indent()} function allows for fine control over
-row label indentation through either explicit definition of an indentation
-level, or, by way of an indentation directive using keywords.
+row label indentation in the stub. We can use an explicit definition of an
+indentation level, or, employ an indentation directive using keywords.
 }
 \section{Examples}{
 
 
-Use \code{\link{pizzaplace}} to create a \strong{gt} table. With \code{tab_stub_indent()} we can
-add indentation to targeted row labels in the stub. Here we target the
-different pizza sizes and avoid selecting the repeating \code{"All Sizes"} row
-label.
+Let's use a summarized version of the \code{\link{pizzaplace}} dataset to create a
+\strong{gt} table with row groups and row labels. With the \code{\link[=summary_rows]{summary_rows()}}
+function, we'll generate summary rows at the top of each row group. With
+\code{tab_stub_indent()} we can add indentation to the row labels in the stub.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::bind_rows(
-  pizzaplace \%>\%
-    dplyr::group_by(type, size) \%>\%
-    dplyr::summarize(
-      sold = n(),
-      income = sum(price),
-      .groups = "drop_last"
-    ) \%>\%
-    dplyr::summarize(
-      sold = sum(sold),
-      income = sum(income),
-      size = "All Sizes",
-      .groups = "drop"
-    ),
-  pizzaplace \%>\%
-    dplyr::group_by(type, size) \%>\%
-    dplyr::summarize(
-      sold = n(),
-      income = sum(price),
-      .groups = "drop"
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
+  dplyr::group_by(type, size) |>
+  dplyr::summarize(
+    sold = dplyr::n(),
+    income = sum(price),
+    .groups = "drop"
+  ) |>
+  gt(rowname_col = "size", groupname_col = "type") |>
+  tab_header(title = "Pizzas Sold in 2015") |>
+  fmt_integer(columns = sold) |>
+  fmt_currency(columns = income) |>
+  summary_rows(
+    fns = list(label = "All Sizes", fn = "sum"),
+    side = "top",
+    fmt = list(
+      ~ fmt_integer(., columns = sold),
+      ~ fmt_currency(., columns = income)
     )
-) \%>\%
-  gt(rowname_col = "size", groupname_col = "type") \%>\%
-  tab_header(title = "Pizzas Sold in 2015") \%>\%
-  fmt_number(
-    columns = sold,
-    decimals = 0,
-    use_seps = TRUE
-  ) \%>\%
-  fmt_currency(
-    columns = income,
-    currency = "USD"
-  ) \%>\%
+  ) |>
   tab_options(
-    summary_row.background.color = "#ACEACE",
+    summary_row.background.color = "gray95",
     row_group.background.color = "#FFEFDB",
     row_group.as_column = TRUE
-  ) \%>\%
+  ) |>
   tab_stub_indent(
-    rows = matches("^L|^M|^S|^XL|^XXL"),
+    rows = everything(),
     indent = 2
-  ) \%>\%
-  tab_style(
-    style = cell_fill(color = "gray95"),
-    locations = list(
-      cells_body(rows = matches("^All")),
-      cells_stub(rows = matches("^All"))
-    )
   )
 }\if{html}{\out{</div>}}
 
@@ -99,6 +92,11 @@ label.
 \section{Function ID}{
 
 2-6
+}
+
+\section{Function Introduced}{
+
+\code{v0.7.0} (Aug 25, 2022)
 }
 
 \seealso{

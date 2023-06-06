@@ -7,16 +7,32 @@
 opt_stylize(data, style = 1, color = "blue", add_row_striping = TRUE)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{style}{Six numbered styles are available. Simply provide a number from
-\code{1} (the default) to \code{6} to choose a distinct look.}
+\verb{obj:<gt_tbl>} --- \strong{required}
 
-\item{color}{There are six color variations: \code{"blue"} (the default),
-\code{"cyan"}, \code{"pink"}, \code{"green"}, \code{"red"}, and \code{"gray"}.}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
-\item{add_row_striping}{An option to enable row striping in the table body
-for the style chosen. By default, this is \code{TRUE}.}
+\item{style}{\emph{Table style}
+
+\verb{scalar<numeric|integer>(1>=val>=6)} --- \emph{default:} \code{1}
+
+Six numbered styles are available. Simply provide a number from \code{1} (the
+default) to \code{6} to choose a distinct look.}
+
+\item{color}{\emph{Color variation}
+
+\verb{scalar<character>} --- \emph{default:} \code{"blue"}
+
+There are six color variations: \code{"blue"}, \code{"cyan"}, \code{"pink"}, \code{"green"},
+\code{"red"}, and \code{"gray"}.}
+
+\item{add_row_striping}{\emph{Allow row striping}
+
+\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+
+An option to enable row striping in the table body for the \code{style} chosen.}
 }
 \value{
 an object of class \code{gt_tbl}.
@@ -40,26 +56,26 @@ Use \code{exibble} to create a \strong{gt} table with a number of table parts ad
 Then, use the \code{opt_stylize()} function to give the table some additional
 style (using the \code{"cyan"} color variation and style number \code{6}).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  gt(rowname_col = "row", groupname_col = "group") \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt(rowname_col = "row", groupname_col = "group") |>
   summary_rows(
     groups = "grp_a",
     columns = c(num, currency),
     fns = c("min", "max")
-  ) \%>\%
+  ) |>
   grand_summary_rows(
     columns = currency,
     fns = total ~ sum(., na.rm = TRUE)
-  ) \%>\%
-  tab_source_note(source_note = "This is a source note.") \%>\%
+  ) |>
+  tab_source_note(source_note = "This is a source note.") |>
   tab_footnote(
     footnote = "This is a footnote.",
     locations = cells_body(columns = 1, rows = 1)
-  ) \%>\%
+  ) |>
   tab_header(
     title = "The title of the table",
     subtitle = "The table's subtitle"
-  ) \%>\%
+  ) |>
   opt_stylize(style = 6, color = "cyan")
 }\if{html}{\out{</div>}}
 
@@ -70,7 +86,12 @@ style (using the \code{"cyan"} color variation and style number \code{6}).
 
 \section{Function ID}{
 
-9-10
+10-1
+}
+
+\section{Function Introduced}{
+
+\code{v0.7.0} (Aug 25, 2022)
 }
 
 \seealso{
@@ -79,7 +100,9 @@ Other table option functions:
 \code{\link{opt_all_caps}()},
 \code{\link{opt_css}()},
 \code{\link{opt_footnote_marks}()},
+\code{\link{opt_footnote_spec}()},
 \code{\link{opt_horizontal_padding}()},
+\code{\link{opt_interactive}()},
 \code{\link{opt_row_striping}()},
 \code{\link{opt_table_font}()},
 \code{\link{opt_table_lines}()},

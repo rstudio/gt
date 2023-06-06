@@ -33,10 +33,10 @@ For the purpose of simply learning more about **gt**, let's reduce this 47-row t
 # Get a subset of 8 cars from the `gtcars` dataset: two
 # from each manufacturer country of origin except the UK
 gtcars_8 <-
-  gtcars %>%
-  group_by(ctry_origin) %>%
-  slice_head(n = 2) %>%
-  ungroup() %>%
+  gtcars |>
+  group_by(ctry_origin) |>
+  slice_head(n = 2) |>
+  ungroup() |>
   filter(ctry_origin != "United Kingdom")
 
 # Show the `gtcars_8` tibble
@@ -62,32 +62,32 @@ Let's again use **dplyr** to help make groupings by the `ctry_origin` column, wh
 
 ```{r group_by_gtcars}
 # Use `group_by()` on `gtcars` and pass that to `gt()`
-gtcars_8 %>%
-  group_by(ctry_origin) %>%
+gtcars_8 |>
+  group_by(ctry_origin) |>
   gt()
 ```
 
 Getting the row groups in the preferred order can be done easily with **dplyr**'s `arrange()` function. For example, we can have groups that are arranged alphabetically by manufacturer (`mfr`) and then sorted by highest sticker price (`msrp`) to lowest. 
 
 ```{r group_by_arrange_gtcars}
-gtcars_8 %>%
-  group_by(ctry_origin) %>%
-  arrange(mfr, desc(msrp)) %>%
+gtcars_8 |>
+  group_by(ctry_origin) |>
+  arrange(mfr, desc(msrp)) |>
   gt()
 ```
 
 We could also use factor levels to get a more particular ordering within `arrange()`. For example, we can first arrange the groups themselves (the country of origin--`ctry_origin`) by our own preferred ordering and then arrange by `mfr` and descending `msrp` as before. Then, `group_by(ctry_origin)` can be used on the sorted tibble before passing this to `gt()`.
 
 ```{r factor_gtcars}
-# Define our preferred order `ctry_origin`
+# Define our preferred order for `ctry_origin`
 order_countries <- c("Germany", "Italy", "United States", "Japan")
 
 # Reorder the table rows by our specific ordering of groups
-gtcars_8 %>%
+gtcars_8 |>
   arrange(
     factor(ctry_origin, levels = order_countries), mfr, desc(msrp)
-  ) %>%
-  group_by(ctry_origin) %>%
+  ) |>
+  group_by(ctry_origin) |>
   gt()
 ```
 
@@ -96,14 +96,14 @@ The last variation is to combine the manufacturer name with the model name, usin
 ```{r factor_gtcars_rownames}
 # Reorder the table rows by our specific ordering of groups
 tab <-
-  gtcars_8 %>%
+  gtcars_8 |>
   arrange(
     factor(ctry_origin, levels = order_countries),
     mfr, desc(msrp)
-    ) %>%
-  mutate(car = paste(mfr, model)) %>%
-  select(-mfr, -model) %>%
-  group_by(ctry_origin) %>%
+  ) |>
+  mutate(car = paste(mfr, model)) |>
+  select(-mfr, -model) |>
+  group_by(ctry_origin) |>
   gt(rowname_col = "car")
 
 # Show the table
@@ -112,15 +112,15 @@ tab
 
 ### Hiding and Moving Some Columns
 
-Let's hide two columns that we don't need to the final table: `drivetrain` and `bdy_style`. We can use the `cols_hide()` function to hide columns. The same end result might also have been achieved by using `gtcars %>% dplyr::select(-c(drivetrain, bdy_style))`, before introducing the table to `gt()`. Why this function then? Sometimes you'll need variables for conditional statements within **gt** but won't want to display them in the end.
+Let's hide two columns that we don't need to the final table: `drivetrain` and `bdy_style`. We can use the `cols_hide()` function to hide columns. The same end result might also have been achieved by using `gtcars |> dplyr::select(-c(drivetrain, bdy_style))`, before introducing the table to `gt()`. Why this function then? Sometimes you'll need variables for conditional statements within **gt** but won't want to display them in the end.
 
 Aside from hiding columns, let's *move* some of them. Again, this could be done with `dplyr::select()` but there are options here in **gt** via the `cols_move_to_start()`, `cols_move()`, and `cols_move_to_end()` functions.
 
 ```{r cols_hide_move}
 # Use a few `cols_*()` functions to hide and move columns 
 tab <- 
-  tab %>%
-  cols_hide(columns = c(drivetrain, bdy_style)) %>%
+  tab |>
+  cols_hide(columns = c(drivetrain, bdy_style)) |>
   cols_move(
     columns = c(trsmn, mpg_c, mpg_h),
     after = trim
@@ -140,7 +140,7 @@ Here, we'll put the `mpg_c`, `mpg_h`, `hp`, `hp_rpm`, `trq`, `trq_rpm` columns u
 # Put the first three columns under a spanner
 # column with the label 'Performance'
 tab <- 
-  tab %>%
+  tab |>
   tab_spanner(
     label = "Performance",
     columns = c(mpg_c, mpg_h, hp, hp_rpm, trq, trq_rpm)
@@ -160,6 +160,8 @@ Sometimes we'd like to combine the data from two columns into a single column. T
 
 The `cols_merge()` function uses a `col_1` column and a `col_2` column. Once combined, the `col_1` column will be retained and the `col_2` column will be dropped. The pattern argument uses `{1}` and `{2}` to represent the content of `col_1` and `col_2`. Here, we can use string literals to add text like `rpm` or the `@` sign. Furthermore, because we are targeting an HTML table, we can use the `<br>` tag to insert a linebreak.
 
+We are going to do something a little special with the `pattern` for the `mpg_c` and `mpg_h` columns and wrap it all with `<<`/`>>`. This is special pattern syntax that tells **gt** to remove anything inside those double braces when there is an `NA` value. We find that is a single row that has `NA` in both columns (for the 'Tesla Model S') and rather than seeing `"NA"` appear in the table, it's better to remove that entry entirely with this specialized pattern syntax.  
+
 Labeling columns essentially means that we are choosing display-friendly labels that are no longer simply the column names (the default label). The `cols_label()` function makes this relabeling possible. It accepts a series of named arguments in the form of `<column_name> = <column_label>, ...`.
 
 ```{r merge_columns_pattern}
@@ -167,19 +169,19 @@ Labeling columns essentially means that we are choosing display-friendly labels 
 # MPG, HP, and torque; relabel all the remaining
 # columns for a nicer-looking presentation
 tab <- 
-  tab %>%
+  tab |>
   cols_merge(
     columns = c(mpg_c, mpg_h),
-    pattern = "{1}c<br>{2}h"
-    ) %>%
+    pattern = "<<{1}c<br>{2}h>>"
+  ) |>
   cols_merge(
     columns = c(hp, hp_rpm),
     pattern = "{1}<br>@{2}rpm"
-  ) %>%
+  ) |>
   cols_merge(
     columns = c(trq, trq_rpm),
     pattern = "{1}<br>@{2}rpm"
-  ) %>%
+  ) |>
   cols_label(
     mpg_c = "MPG",
     hp = "HP",
@@ -202,12 +204,8 @@ There are a number of formatter functions, all with the general naming conventio
 # Format the `msrp` column to USD currency
 # with no display of the currency subunits
 tab <- 
-  tab %>%
-  fmt_currency(
-    columns = msrp,
-    currency = "USD",
-    decimals = 0
-  )
+  tab |>
+  fmt_currency(columns = msrp, decimals = 0)
 
 # Show the table
 tab
@@ -217,18 +215,19 @@ tab
 
 We can change the alignment of data in columns with `cols_align()`. For our table, let's center-align the `mpg_c`, `hp`, and `trq` columns. All other columns will maintain their default alignments.
 
-It's sometimes useful to modify the default styles of table cells. We can do this in a targeted way with the `tab_style()` function. That function require two key pieces of information: a `style` definition, and one or more `locations` (which cells should the styles be applied to?). The `style` argument commonly uses the `cells_styles()` helper function, which contains arguments for all the styles that are supported (use `?cells_styles` for more information on this). Here we will use a text size of `12px` in our targeted cells---both `px(12)` and `"12px"` work equally well here. We also use helper functions with the `locations` argument and these are the `cells_*()` functions. We would like to target the data cells in all columns except `year` and `msrp` so we need to use `cells_body` and then supply our target columns to the `columns` argument.
+It's sometimes useful to modify the default styles of table cells. We can do this in a targeted way with the `tab_style()` function. That function require two key pieces of information: a `style` definition, and one or more `locations` (which cells should the styles be applied to?). The `style` argument commonly uses the `cell_*()` helper functions. There are three of these (`cell_text()`, `cell_fill()` and `cell_borders()`) and each contains different arguments for the different styles that are supported.
+
+Here we will use the `cell_text()` helper function and specify a text `size` of `"12px"` for our targeted cells---both `px(12)` and `"12px"` work equally well here. We also use helper functions with the `locations` argument and these are the `cells_*()` functions. We would like to target the data cells in all columns except `year` and `msrp` so we need to use `cells_body` and then supply our target columns to its own `columns` argument.
 
 ```{r align_style}
-# Center-align three columns in the gt table
-# and modify the text size of a few columns
-# of data
+# Center-align three columns in the gt table and
+# modify the text size of a few columns of data
 tab <- 
-  tab %>%
+  tab |>
   cols_align(
     align = "center",
     columns = c(mpg_c, hp, trq)
-  ) %>%
+  ) |>
   tab_style(
     style = cell_text(size = px(12)),
     locations = cells_body(
@@ -242,7 +241,7 @@ tab
 
 ### Text Transforms
 
-A text transform via the `text_transform()` function is a great way to further manipulate text in data cells (even after they've been formatted with the `fmt*()` function). After targeting data cells with the `cells_body()` location helper function, we supply a function to the `fn` argument that processes a vector of text. If we intend to render as an HTML table, we can directly apply HTML tags in the transformation function. The function we provide here will build strings that read better in a display table.
+A text transform via the `text_transform()` function is a great way to further manipulate text in data cells (even after they've been formatted with the `fmt*()` function). After targeting data cells with the `cells_body()` location helper function, we supply a function to the `fn` argument that processes a vector of text (the vector `x` will be the formatted text in each of the targeted cells). If we intend to render an HTML table, we can directly apply HTML tags in the transformation function. The function we provide here is a bit complicated but it will build strings in the `trsmn` column that read better in a display table.
 
 ```{r text_transform_html}
 # Transform the column of text in `trsmn` using
@@ -250,7 +249,7 @@ A text transform via the `text_transform()` function is a great way to further m
 # here `x` represents a character vector defined
 # in the `cells_body()` function
 tab <- 
-  tab %>%
+  tab |>
   text_transform(
     locations = cells_body(columns = trsmn),
     fn = function(x) {
@@ -288,7 +287,7 @@ The `tab_header()` function allows us to place a table title and, optionally, a 
 # Add a table title and subtitle; we can use
 # markdown with the `md()` helper function
 tab <- 
-  tab %>%
+  tab |>
   tab_header(
     title = md("The Cars of **gtcars**"),
     subtitle = "These are some fine automobiles"
@@ -306,7 +305,7 @@ A *source note* can be added below the display table using the `tab_source_note(
 # Add a source note to the bottom of the table; this
 # appears below the footnotes
 tab <- 
-  tab %>%
+  tab |>
   tab_source_note(
     source_note = md(
       "Source: Various pages within the Edmonds website."
@@ -325,9 +324,9 @@ Let's bring it all together by putting together all the statements we developed 
     b. identifying the car with the highest horsepower
     c. stating the currency of the MSRP
 
-The `tab_footnote()` function expects note text for the `footnote` argument, and locations for where the footnote mark should be attached. It will handle the placement of the footnote mark and also place the footnote in the footnotes area. Here, we'll use the `cells_body()` *location helper* function. There are several location helper functions for targeting all parts of the table (e.g,. `cells_body()`, `cells_stub()`, etc.). Each *location helper* has their own interface for targeting cells so refer to the documentation for examples of how they work in practice.
+The `tab_footnote()` function expects note text for the `footnote` argument, and locations for where the footnote mark should be attached. It will handle the placement of the footnote mark and also place the footnote in the footnotes area. Here, we'll use the `cells_body()` *location helper* function. There are several location helper functions for targeting all parts of the table (e.g,. `cells_body()`, `cells_stub()`, etc.). Each *location helper* has its own interface for targeting cells so refer to the documentation for examples of how they work in practice (e.g., use `?cells_body`).
 
-What `cells_body()` expects is `columns` (column names, which can be conveniently provided in `c()`) and `rows` (which can be a vector of row names or row indices). The `cells_stub()` location helper only expects a vector of `rows`. For `cells_column_labels()`, we can either provided targeted column labels in the `columns` argument or spanner column labels in the `groups` argument. Here, we are targeting a footnote to the `msrp` column label so we will use `columns = msrp`.
+What `cells_body()` expects is `columns` (column names, which can be conveniently provided in `c()`) and `rows` (which can be a vector of row names or row indices). The `cells_stub()` location helper only expects a vector of `rows`. For `cells_column_labels()`, we provide column labels in its `columns` argument. Here, we are targeting a footnote to the `msrp` column label so we will use `columns = msrp`.
 
 In terms of structuring the code, we're taking all the previous statements and putting those in first. It should be noted that the order of the statements does not matter to the end result, we could also put in all of the `tab_footnote()` statements first (again, any in order) and expect the same output table.
 
@@ -335,54 +334,57 @@ In terms of structuring the code, we're taking all the previous statements and p
 # Use dplyr functions to get the car with the best city gas mileage;
 # this will be used to target the correct cell for a footnote
 best_gas_mileage_city <- 
-  gtcars %>% 
-  arrange(desc(mpg_c)) %>%
-  slice(1) %>%
-  mutate(car = paste(mfr, model)) %>%
+  gtcars |> 
+  arrange(desc(mpg_c)) |>
+  slice(1) |>
+  mutate(car = paste(mfr, model)) |>
   pull(car)
 
 # Use dplyr functions to get the car with the highest horsepower
 # this will be used to target the correct cell for a footnote
 highest_horsepower <- 
-  gtcars %>% 
-  arrange(desc(hp)) %>%
-  slice(1) %>%
-  mutate(car = paste(mfr, model)) %>%
+  gtcars |> 
+  arrange(desc(hp)) |>
+  slice(1) |>
+  mutate(car = paste(mfr, model)) |>
   pull(car)
+
+# Define our preferred order for `ctry_origin`
+order_countries <- c("Germany", "Italy", "United States", "Japan")
 
 # Create a display table with `gtcars`, using all of the previous
 # statements piped together + additional `tab_footnote()` stmts
 tab <-
-  gtcars %>%
+  gtcars |>
   arrange(
     factor(ctry_origin, levels = order_countries),
     mfr, desc(msrp)
-  ) %>%
-  mutate(car = paste(mfr, model)) %>%
-  select(-mfr, -model) %>%
-  group_by(ctry_origin) %>%
-  gt(rowname_col = "car") %>%
-  cols_hide(columns = c(drivetrain, bdy_style)) %>%
+  ) |>
+  mutate(car = paste(mfr, model)) |>
+  select(-mfr, -model) |>
+  group_by(ctry_origin) |>
+  gt(rowname_col = "car") |>
+  cols_hide(columns = c(drivetrain, bdy_style)) |>
   cols_move(
     columns = c(trsmn, mpg_c, mpg_h),
     after = trim
-  ) %>%
+  ) |>
   tab_spanner(
     label = "Performance",
     columns = c(mpg_c, mpg_h, hp, hp_rpm, trq, trq_rpm)
-  ) %>%
+  ) |>
   cols_merge(
     columns = c(mpg_c, mpg_h),
-    pattern = "{1}c<br>{2}h"
-  ) %>%
+    pattern = "<<{1}c<br>{2}h>>"
+  ) |>
   cols_merge(
     columns = c(hp, hp_rpm),
     pattern = "{1}<br>@{2}rpm"
-  ) %>%
+  ) |>
   cols_merge(
     columns = c(trq, trq_rpm),
     pattern = "{1}<br>@{2}rpm"
-  ) %>%
+  ) |>
   cols_label(
     mpg_c = "MPG",
     hp = "HP",
@@ -391,22 +393,18 @@ tab <-
     trim = "Trim",
     trsmn = "Transmission",
     msrp = "MSRP"
-  ) %>%
-  fmt_currency(
-    columns = msrp,
-    currency = "USD",
-    decimals = 0
-  ) %>%
+  ) |>
+  fmt_currency(columns = msrp, decimals = 0) |>
   cols_align(
     align = "center",
     columns = c(mpg_c, hp, trq)
-  ) %>%
+  ) |>
   tab_style(
     style = cell_text(size = px(12)),
     locations = cells_body(
       columns = c(trim, trsmn, mpg_c, hp, trq)
     )
-  ) %>%
+  ) |>
   text_transform(
     locations = cells_body(columns = trsmn),
     fn = function(x) {
@@ -423,29 +421,30 @@ tab <-
       
       paste(speed, " Speed<br><em>", type, "</em>")
     }
-  ) %>%
+  ) |>
   tab_header(
     title = md("The Cars of **gtcars**"),
     subtitle = "These are some fine automobiles"
-  ) %>%
+  ) |>
   tab_source_note(
     source_note = md(
-      "Source: Various pages within the Edmonds website.")
-  ) %>%
+      "Source: Various pages within the Edmonds website."
+    )
+  ) |>
   tab_footnote(
     footnote = md("Best gas mileage (city) of all the **gtcars**."),
     locations = cells_body(
       columns = mpg_c,
       rows = best_gas_mileage_city
     )
-  ) %>%
+  ) |>
   tab_footnote(
     footnote = md("The highest horsepower of all the **gtcars**."),
     locations = cells_body(
       columns = hp,
       rows = highest_horsepower
     )
-  ) %>%
+  ) |>
   tab_footnote(
     footnote = "All prices in U.S. dollars (USD).",
     locations = cells_column_labels(columns = msrp)

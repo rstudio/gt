@@ -2,89 +2,136 @@
 % Please edit documentation in R/text_transform.R
 \name{text_transform}
 \alias{text_transform}
-\title{Perform targeted text transformation with a function}
+\title{Perform text transformations with a custom function}
 \usage{
-text_transform(data, locations, fn)
+text_transform(data, fn, locations = cells_body())
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{locations}{The cell or set of cells to be associated with the text
-transformation. Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}},
-\code{\link[=cells_column_labels]{cells_column_labels()}}, and \code{\link[=cells_row_groups]{cells_row_groups()}} helper functions can be
-used here. We can enclose several of these calls within a \code{list()} if we
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{fn}{\emph{Function for text transformation}
+
+\verb{<function>} --- \strong{required}
+
+The function to use for text transformation. It should include \code{x} as an
+argument and return a character vector of the same length as the input \code{x}.}
+
+\item{locations}{\emph{Locations to target}
+
+\verb{<locations expressions>} --- \emph{default:} \code{cells_body()}
+
+The cell or set of cells to be associated with the text transformation.
+Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_row_groups]{cells_row_groups()}},
+\code{\link[=cells_column_labels]{cells_column_labels()}}, and \code{\link[=cells_column_spanners]{cells_column_spanners()}} helper functions can
+be used here. We can enclose several of these calls within a \code{list()} if we
 wish to make the transformation happen at different locations.}
-
-\item{fn}{The function to use for text transformation.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
-Perform targeted text transformation with a function
+Text transforming in \strong{gt} is the act of modifying formatted strings in
+targeted cells. The \code{text_transform()} function provides the most flexibility
+of all the \verb{text_*()} functions in their family of functions. With it, you
+target the cells to undergo modification in the \code{locations} argument while
+also supplying a function to the \code{fn} argument. The function given to \code{fn}
+should ideally at the very least take \code{x} as an input (it stands for the
+character vector that is essentially the targeted cells) and return a
+character vector of the same length as the input. Using the construction
+\code{function(x) { .. }} for the function is recommended.
 }
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. transform the formatted text in the
-\code{num} column using a function supplied to \code{text_transform()} (via the \code{fn}
-argument). Note that the \code{x} in the \verb{fn = function (x)} part is a formatted
-vector of column values from the \code{num} column.
+Use a subset of the \code{\link{sp500}} dataset to create a \strong{gt} table. Transform the
+text in the \code{date} column using a function supplied to \code{text_transform()}
+(via the \code{fn} argument). Note that the \code{x} in the \verb{fn = function (x)} part
+consists entirely of ISO 8601 date strings (which are acceptable as input to
+the \code{\link[=vec_fmt_date]{vec_fmt_date()}} and \code{\link[=vec_fmt_datetime]{vec_fmt_datetime()}} functions).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  dplyr::select(num, char, currency) \%>\%
-  dplyr::slice(1:4) \%>\%
-  gt() \%>\%
-  fmt_number(columns = num) \%>\%
-  fmt_currency(columns = currency) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
+  dplyr::slice_head(n = 10) |>
+  dplyr::select(date, open, close) |>
+  dplyr::arrange(-dplyr::row_number()) |>
+  gt() |>
+  fmt_currency() |>
   text_transform(
-    locations = cells_body(columns = num),
     fn = function(x) \{
       paste0(
-        x, " (",
-        dplyr::case_when(
-          x > 20   ~ "large",
-          x <= 20  ~ "small"),
-        ")")
-    \}
+        "<strong>",
+        vec_fmt_date(x, date_style = "m_day_year"),
+        "</strong>",
+        "&mdash;W",
+        vec_fmt_datetime(x, format = "w")
+      )
+    \},
+    locations = cells_body(columns = date)
+  ) |>
+  cols_label(
+    date = "Date and Week",
+    open = "Opening Price",
+    close = "Closing Price"
   )
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_text_transform_1.png" alt="This image of a table was generated from the first code example in the `text_transform()` help file." style="width:100\%;">
 }}
+
+Let's use a summarized version of the \code{\link{gtcars}} dataset to create a \strong{gt}
+table. First, the numeric values in the \code{n} column are formatted as
+spelled-out numbers with \code{\link[=fmt_spelled_num]{fmt_spelled_num()}}. The output values are indeed
+spelled out but exclusively with lowercase letters. We actually want these
+words to begin with a capital letter and end with a period. To make this
+possible, the \code{text_transform()} function will be used since it can modify
+already-formatted text. Through the \code{fn} argument, we provide a custom
+function that uses R's \code{toTitleCase()} operating on \code{x} (the numbers-as-text
+strings) within a \code{paste0()} so that a period can be properly placed.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::select(mfr, ctry_origin) |>
+  dplyr::filter(ctry_origin \%in\% c("Germany", "Italy", "Japan")) |>
+  dplyr::group_by(mfr, ctry_origin) |>
+  dplyr::count() |>
+  dplyr::ungroup() |>
+  dplyr::arrange(ctry_origin, desc(n)) |>
+  gt(rowname_col = "mfr", groupname_col = "ctry_origin") |>
+  cols_label(n = "No. of Entries") |>
+  tab_stub_indent(rows = everything(), indent = 2) |>
+  cols_align(align = "center", columns = n) |>
+  fmt_spelled_num() |>
+  text_transform(
+    fn = function(x) \{
+      paste0(tools::toTitleCase(x), ".")
+    \},
+    locations = cells_body(columns = n)
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_text_transform_2.png" alt="This image of a table was generated from the second code example in the `text_transform()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
 
-3-24
+4-4
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
-Other data formatting functions: 
-\code{\link{data_color}()},
-\code{\link{fmt_auto}()},
-\code{\link{fmt_bytes}()},
-\code{\link{fmt_currency}()},
-\code{\link{fmt_datetime}()},
-\code{\link{fmt_date}()},
-\code{\link{fmt_duration}()},
-\code{\link{fmt_engineering}()},
-\code{\link{fmt_fraction}()},
-\code{\link{fmt_integer}()},
-\code{\link{fmt_markdown}()},
-\code{\link{fmt_number}()},
-\code{\link{fmt_partsper}()},
-\code{\link{fmt_passthrough}()},
-\code{\link{fmt_percent}()},
-\code{\link{fmt_roman}()},
-\code{\link{fmt_scientific}()},
-\code{\link{fmt_time}()},
-\code{\link{fmt}()},
-\code{\link{sub_large_vals}()},
-\code{\link{sub_missing}()},
-\code{\link{sub_small_vals}()},
-\code{\link{sub_values}()},
-\code{\link{sub_zero}()}
+Other text transforming functions: 
+\code{\link{text_case_match}()},
+\code{\link{text_case_when}()},
+\code{\link{text_replace}()}
 }
-\concept{data formatting functions}
+\concept{text transforming functions}

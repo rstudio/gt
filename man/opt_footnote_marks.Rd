@@ -4,15 +4,24 @@
 \alias{opt_footnote_marks}
 \title{Option to modify the set of footnote marks}
 \usage{
-opt_footnote_marks(data, marks)
+opt_footnote_marks(data, marks = "numbers")
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{marks}{Either a character vector of length greater than 1 (that will
-represent the series of marks) or a single keyword that represents a preset
-sequence of marks. The valid keywords are: \code{"numbers"} (for numeric marks),
-\code{"letters"} and \code{"LETTERS"} (for lowercase and uppercase alphabetic marks),
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{marks}{\emph{Sequence of footnote marks}
+
+\verb{vector<character>} --- \emph{default:} \code{"numbers"}
+
+Either a character vector of length greater than 1 (that will represent the
+series of marks) or a single keyword that represents a preset sequence of
+marks. The valid keywords are: \code{"numbers"} (for numeric marks), \code{"letters"}
+and \code{"LETTERS"} (for lowercase and uppercase alphabetic marks),
 \code{"standard"} (for a traditional set of four symbol marks), and \code{"extended"}
 (which adds two more symbols to the standard set).}
 }
@@ -25,16 +34,18 @@ Either a vector of marks can be provided (including Unicode characters), or,
 a specific keyword could be used to signify a preset sequence. This function
 serves as a shortcut for using \code{tab_options(footnotes.marks = {marks})}
 }
-\details{
-We can supply a vector of that will represent the series of marks.
-The series of footnote marks is recycled when its usage goes beyond the
-length of the set. At each cycle, the marks are simply doubled, tripled, and
-so on (e.g., \code{*} -> \verb{**} -> \verb{***}). The option exists for providing keywords
-for certain types of footnote marks. The keywords are:
+\section{Specification of footnote marks}{
+
+
+We can supply a vector that will represent the series of marks. The series of
+footnote marks is recycled when its usage goes beyond the length of the set.
+At each cycle, the marks are simply doubled, tripled, and so on (e.g., \code{*} ->
+\verb{**} -> \verb{***}). The option exists for providing keywords for certain types of
+footnote marks. The keywords are:
 \itemize{
 \item \code{"numbers"}: numeric marks, they begin from 1 and these marks are not
 subject to recycling behavior
-\item \code{"letters"}: miniscule alphabetic marks, internally uses the \code{letters}
+\item \code{"letters"}: minuscule alphabetic marks, internally uses the \code{letters}
 vector which contains 26 lowercase letters of the Roman alphabet
 \item \code{"LETTERS"}: majuscule alphabetic marks, using the \code{LETTERS} vector
 which has 26 uppercase letters of the Roman alphabet
@@ -42,16 +53,23 @@ which has 26 uppercase letters of the Roman alphabet
 \item \code{"extended"}: symbolic marks, extends the standard set by adding two
 more symbols, making six
 }
+
+The symbolic marks are the: (1) Asterisk, (2) Dagger, (3) Double Dagger,
+(4) Section Sign, (5) Double Vertical Line, and (6) Paragraph Sign; the
+\code{"standard"} set has the first four, \code{"extended"} contains all.
 }
+
 \section{Examples}{
 
 
-Use \code{\link{sza}} to create a \strong{gt} table, adding three footnotes. Call
-\code{opt_footnote_marks()} to specify which footnote marks to use.
+Use a summarized version of the \code{\link{sza}} dataset to create a \strong{gt} table,
+adding three footnotes (with three calls of \code{\link[=tab_footnote]{tab_footnote()}}). We can modify
+the footnote marks to use with the \code{opt_footnote_marks()} function. With the
+keyword \code{"standard"} we get four commonly-used typographic marks.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza \%>\%
-  dplyr::filter(latitude == 30) \%>\%
-  dplyr::group_by(tst) \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza |>
+  dplyr::filter(latitude == 30) |>
+  dplyr::group_by(tst) |>
   dplyr::summarize(
     SZA.Max = if (
       all(is.na(sza))) \{
@@ -66,28 +84,28 @@ Use \code{\link{sza}} to create a \strong{gt} table, adding three footnotes. Cal
       min(sza, na.rm = TRUE)
     \},
     .groups = "drop"
-  ) \%>\%
-  gt(rowname_col = "tst") \%>\%
-  tab_spanner_delim(delim = ".") \%>\%
+  ) |>
+  gt(rowname_col = "tst") |>
+  tab_spanner_delim(delim = ".") |>
   sub_missing(
     columns = everything(),
     missing_text = "90+"
-  ) \%>\%
-  tab_stubhead(label = "TST") \%>\%
+  ) |>
+  tab_stubhead(label = "TST") |>
   tab_footnote(
     footnote = "True solar time.",
     locations = cells_stubhead()
-  ) \%>\%
+  ) |>
   tab_footnote(
     footnote = "Solar zenith angle.",
     locations = cells_column_spanners(
       spanners = "spanner-SZA.Max"
     )
-  ) \%>\%
+  ) |>
   tab_footnote(
     footnote = "The Lowest SZA.",
     locations = cells_stub(rows = "1200")
-  ) \%>\%
+  ) |>
   opt_footnote_marks(marks = "standard")
 }\if{html}{\out{</div>}}
 
@@ -98,7 +116,12 @@ Use \code{\link{sza}} to create a \strong{gt} table, adding three footnotes. Cal
 
 \section{Function ID}{
 
-9-1
+10-3
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
@@ -106,7 +129,9 @@ Other table option functions:
 \code{\link{opt_align_table_header}()},
 \code{\link{opt_all_caps}()},
 \code{\link{opt_css}()},
+\code{\link{opt_footnote_spec}()},
 \code{\link{opt_horizontal_padding}()},
+\code{\link{opt_interactive}()},
 \code{\link{opt_row_striping}()},
 \code{\link{opt_stylize}()},
 \code{\link{opt_table_font}()},

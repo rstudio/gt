@@ -7,9 +7,13 @@
 px(x)
 }
 \arguments{
-\item{x}{the numeric value to format as a string (e.g., \code{"12px"}) for
-some \code{\link[=tab_options]{tab_options()}} arguments that can take values as units of
-pixels (e.g., \code{table.font.size}).}
+\item{x}{\emph{Numeric length in pixels}
+
+\verb{scalar<numeric|integer>} --- \strong{required}
+
+The numeric value to format as a string (e.g., \code{"12px"}) for some
+\code{\link[=tab_options]{tab_options()}} arguments that can take values as units of pixels (e.g.,
+\code{table.font.size}).}
 }
 \value{
 A character vector with a single value in pixel units.
@@ -24,11 +28,13 @@ function \code{\link[=pct]{pct()}}.
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Use the \code{px()} helper to define the
-font size for the column labels.
+Use the \code{\link{exibble}} dataset to create a \strong{gt} table. Inside of the
+\code{\link[=cell_text]{cell_text()}} call (which is itself inside of \code{\link[=tab_style]{tab_style()}}), we'll use the
+\code{px()} helper function to define the font size for the column labels in units
+of pixels.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble \%>\%
-  gt() \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  gt() |>
   tab_style(
     style = cell_text(size = px(20)),
     locations = cells_column_labels()
@@ -42,7 +48,12 @@ font size for the column labels.
 
 \section{Function ID}{
 
-7-3
+8-3
+}
+
+\section{Function Introduced}{
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
@@ -73,6 +84,7 @@ Other helper functions:
 \code{\link{md}()},
 \code{\link{pct}()},
 \code{\link{random_id}()},
-\code{\link{stub}()}
+\code{\link{stub}()},
+\code{\link{system_fonts}()}
 }
 \concept{helper functions}
