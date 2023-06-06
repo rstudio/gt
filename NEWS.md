@@ -1,5 +1,7 @@
 # gt (development version)
 
+* Update to `col_hide(columns=)` and `cols_unhide(columns=)` arguments. The functions no longer return an error if no columns are selected. (#1342)
+
 ## New features
 
 * A new function, `cols_label_with()`, is added for relabeling columns with functions. It allows for renaming functions to applied to arbitrary sets of columns, using `tidyselect`. It's like `rename_with()` for your **gt** table, but doesn't need unique names for labeling.
