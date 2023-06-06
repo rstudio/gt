@@ -7,8 +7,19 @@
 html(text, ...)
 }
 \arguments{
-\item{text, ...}{The text that is understood to be HTML text, which is to be
-preserved.}
+\item{text}{\emph{HTML text}
+
+\verb{scalar<character>} --- \strong{required}
+
+The text that is understood to be HTML text, which is to be preserved in
+the HTML output context.}
+
+\item{...}{\emph{Optional parameters for \code{htmltools::HTML()}}
+
+\verb{<multiple expressions>} --- (\code{optional})
+
+The \code{htmltools::HTML()} function contains \code{...} and anything provided here
+will be passed to that internal function call.}
 }
 \value{
 A character object of class \code{html}. It's tagged as an HTML fragment

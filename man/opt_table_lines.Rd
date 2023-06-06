@@ -7,10 +7,19 @@
 opt_table_lines(data, extent = c("all", "none", "default"))
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{extent}{The extent to which lines will be visible in the table. Options
-are \code{"all"}, \code{"none"}, or \code{"default"}.}
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{extent}{\emph{Extent of lines added}
+
+\verb{singl-kw:[all|none|default]} --- \emph{default:} \code{"all"}
+
+The extent to which lines will be visible in the table. Options are
+\code{"all"}, \code{"none"}, or \code{"default"}.}
 }
 \value{
 An object of class \code{gt_tbl}.

@@ -7,7 +7,11 @@
 gt_output(outputId)
 }
 \arguments{
-\item{outputId}{An output variable from which to read the table.}
+\item{outputId}{\emph{Shiny output ID}
+
+\verb{scalar<character>} --- \strong{required}
+
+An output variable from which to read the table.}
 }
 \value{
 An object of class \code{shiny.tag}.

@@ -13,33 +13,60 @@ cols_merge(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The columns that will participate in the merging process. The
-first column name provided will be the target column (i.e., undergo
-mutation) and the other columns will serve to provide input.}
+\verb{obj:<gt_tbl>} --- \strong{required}
 
-\item{hide_columns}{Any column names provided here will have their state
-changed to \code{hidden} (via internal use of \code{\link[=cols_hide]{cols_hide()}} if they aren't
-already hidden. This is convenient if the shared purpose of these specified
-columns is only to provide string input to the target column. To suppress
-any hiding of columns, \code{FALSE} can be used here.}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
-\item{rows}{Rows that will participate in the merging process. Providing
-\code{\link[=everything]{everything()}} (the default) results in all rows in \code{columns} undergoing
-merging. Alternatively, we can supply a vector of row identifiers within
-\code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on selections.
-The select helper functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
-\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.
-We can also use a standalone predicate expression to filter down to the
-rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+\item{columns}{\emph{Columns to target}
 
-\item{pattern}{A formatting pattern that specifies the arrangement of the
-\code{column} values and any string literals. The pattern uses numbers (within
-\code{{ }}) that correspond to the indices of columns provided in \code{columns}. If
-two columns are provided in \code{columns} and we would like to combine the cell
-data onto the first column, \code{"{1} {2}"} could be used. If a pattern isn't
-provided then a space-separated pattern that includes all \code{columns} will be
+\verb{<column-targeting expression>} --- \strong{required}
+
+The columns for which the merging operations should be applied. The first
+column resolved will be the target column (i.e., undergo mutation) and the
+other columns will serve to provide input. Can either be a series of column
+names provided in \code{\link[=c]{c()}}, a vector of column indices, or a select helper
+function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
+\code{\link[=everything]{everything()}}. A vector is recommended because in that case we are
+absolutely certain about the order of columns, and, that order information
+is needed for this and other arguments.}
+
+\item{hide_columns}{\emph{Subset of \code{columns} to hide}
+
+\verb{<column-targeting expression>|FALSE} --- \emph{default:} \code{columns[-1]}
+
+Any column names provided here will have their state changed to \code{hidden}
+(via internal use of \code{\link[=cols_hide]{cols_hide()}}) if they aren't already hidden. This is
+convenient if the shared purpose of these specified columns is only to
+provide string input to the target column. To suppress any hiding of
+columns, \code{FALSE} can be used here.}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+participate in the merging process. The default \code{\link[=everything]{everything()}} results in
+all rows in \code{columns} being formatted. Alternatively, we can supply a
+vector of row captions within \code{\link[=c]{c()}}, a vector of row indices, or a select
+helper function. Examples of select helper functions include
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions to filter
+down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+
+\item{pattern}{\emph{Formatting pattern}
+
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+A formatting pattern that specifies the arrangement of the \code{columns} values
+and any string literals. The pattern uses numbers (within \code{{ }}) that
+correspond to the indices of columns provided in \code{columns}. If two columns
+are provided in \code{columns} and we would like to combine the cell data onto
+the first column, \code{"{1} {2}"} could be used. If a pattern isn't provided
+then a space-separated pattern that includes all \code{columns} will be
 generated automatically. Further details are provided in the \emph{How the
 \code{pattern} works} section.}
 }

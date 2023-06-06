@@ -16,45 +16,78 @@ grand_summary_rows(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The columns for which the summaries should be calculated. By
-default, this is every column that has data cells (given by
-\code{everything()}).}
+\verb{obj:<gt_tbl>} --- \strong{required}
 
-\item{fns}{Functions used for aggregations. This can include base functions
-like \code{mean}, \code{min}, \code{max}, \code{median}, \code{sd}, or \code{sum} or any other
-user-defined aggregation function. Multiple functions, each of which would
-generate a different row, are to be supplied within a \code{list()}. We can
-specify the functions by use of function names in quotes (e.g., \code{"sum"}),
-as bare functions (e.g., \code{sum}), or in formula form (e.g.,
-\code{minimum ~ min(.)}) where the LHS could be used to supply the summary row
-label and id values. More information on this can be found in the
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+
+The columns for which the summaries should be calculated. Can either
+be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,
+or a select helper function. Examples of select helper functions include
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+
+\item{fns}{\emph{Aggregation Expressions}
+
+\verb{<expression|list of expressions>}
+
+Functions used for aggregations. This can include base functions like
+\code{mean}, \code{min}, \code{max}, \code{median}, \code{sd}, or \code{sum} or any other user-defined
+aggregation function. Multiple functions, each of which would generate a
+different row, are to be supplied within a \code{list()}. We can specify the
+functions by use of function names in quotes (e.g., \code{"sum"}), as bare
+functions (e.g., \code{sum}), or in formula form (e.g., \code{minimum ~ min(.)})
+where the LHS could be used to supply the summary row label and ID values.
+More information on this can be found in the
 \emph{Aggregation expressions for \code{fns}} section.}
 
-\item{fmt}{Formatting expressions in formula form. The RHS of \code{~} should
-contain a formatting call (e.g.,
-\verb{~ fmt_number(., decimals = 3, use_seps = FALSE}). Optionally, the LHS
-could contain a group-targeting expression (e.g.,
+\item{fmt}{\emph{Formatting expressions}
+
+\verb{<expression|list of expressions>}
+
+Formatting expressions in formula form. The RHS of \code{~} should contain a
+formatting call (e.g., \verb{~ fmt_number(., decimals = 3, use_seps = FALSE}).
+Optionally, the LHS could contain a group-targeting expression (e.g.,
 \code{"group_a" ~ fmt_number(.)}). More information on this can be found in the
 \emph{Formatting expressions for \code{fmt}} section.}
 
-\item{side}{Should the grand summary rows be placed at the \code{"bottom"} (the
-default) or the \code{"top"} of the table?}
+\item{side}{\emph{Side used for placement of grand summary rows}
 
-\item{missing_text}{The text to be used in place of \code{NA} values in summary
-cells with no data outputs.}
+\verb{singl-kw:[bottom|top]} --- \emph{default:} \code{"bottom"}
 
-\item{formatter}{Deprecated, please use \code{fmt} instead. This was previously
-used as a way to input a formatting function name, which could be any of
-the \verb{fmt_*()} functions available in the package (e.g., \code{\link[=fmt_number]{fmt_number()}},
-\code{\link[=fmt_percent]{fmt_percent()}}, etc.), or a custom function using \code{\link[=fmt]{fmt()}}. The options of
-a formatter can be accessed through \code{...}.}
+Should the grand summary rows be placed at the \code{"bottom"} (the default) or
+the \code{"top"} of the table?}
 
-\item{...}{Deprecated (along with \code{formatter}) but otherwise used for
-argument values for a formatting function supplied in \code{formatter}. For
-example, if using \code{formatter = fmt_number}, options such as \code{decimals = 1},
-\code{use_seps = FALSE}, and the like can be used here.}
+\item{missing_text}{\emph{Replacement text for \code{NA} values}
+
+\verb{scalar<character>} --- \emph{default:} \code{"---"}
+
+The text to be used in place of \code{NA} values in summary cells with no data
+outputs.}
+
+\item{formatter}{\emph{\link{Deprecated} Formatting function}
+
+\verb{<expression>}
+
+Deprecated, please use \code{fmt} instead. This was previously used as a way to
+input a formatting function name, which could be any of the \verb{fmt_*()}
+functions available in the package (e.g., \code{\link[=fmt_number]{fmt_number()}}, \code{\link[=fmt_percent]{fmt_percent()}},
+etc.), or a custom function using \code{\link[=fmt]{fmt()}}. The options of a formatter can
+be accessed through \code{...}.}
+
+\item{...}{\emph{\link{Deprecated} Formatting arguments}
+
+\verb{<Named arguments>}
+
+Deprecated (along with \code{formatter}) but otherwise used for argument values
+for a formatting function supplied in \code{formatter}. For example, if using
+\code{formatter = fmt_number}, options such as \code{decimals = 1}, \code{use_seps = FALSE}, and the like can be used here.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -293,6 +326,7 @@ row with \code{\link[=tab_style]{tab_style()}}.
 \seealso{
 Other row addition/modification functions: 
 \code{\link{row_group_order}()},
+\code{\link{rows_add}()},
 \code{\link{summary_rows}()}
 }
 \concept{row addition/modification functions}

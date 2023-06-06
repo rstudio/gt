@@ -536,31 +536,42 @@ context_missing_text <- function(missing_text, context) {
 
   is_asis <- inherits(missing_text, "AsIs")
 
-  switch(
-    context,
-    html = ,
-    latex = ,
-    word =
-      {
-        if (!is_asis && missing_text == "---") {
-          "\U02014"
-        } else if (!is_asis && missing_text == "--") {
-          "\U02013"
-        } else {
-          process_text(missing_text, context)
+  missing_text <-
+    switch(
+      context,
+      html = ,
+      latex = ,
+      word =
+        {
+          if (!is_asis && missing_text == "---") {
+            "\U02014"
+          } else if (!is_asis && missing_text == "--") {
+            "\U02013"
+          } else {
+            process_text(missing_text, context)
+          }
+        },
+      rtf =
+        {
+          if (!is_asis && missing_text == "---") {
+            "\\'97"
+          } else if (!is_asis && missing_text == "--") {
+            "\\'96"
+          } else {
+            process_text(missing_text, context)
+          }
         }
-      },
-    rtf =
-      {
-        if (!is_asis && missing_text == "---") {
-          "\\'97"
-        } else if (!is_asis && missing_text == "--") {
-          "\\'96"
-        } else {
-          process_text(missing_text, context)
-        }
-      }
-  )
+    )
+
+  if (
+    context == "html" &&
+    !is_asis &&
+    (missing_text == "" || grepl("^\\s+$", missing_text))
+  ) {
+    missing_text <- "<br />"
+  }
+
+  missing_text
 }
 
 context_dash_mark <- context_missing_text

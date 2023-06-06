@@ -7,13 +7,21 @@
 cell_fill(color = "#D3D3D3", alpha = NULL)
 }
 \arguments{
-\item{color}{The fill color. If nothing is provided, then \code{"#D3D3D3"} (light
-gray) will be used as a default.}
+\item{color}{\emph{Cell fill color}
 
-\item{alpha}{An optional alpha transparency value for the \code{color} as single
-value in the range of \code{0} (fully transparent) to \code{1} (fully opaque). If not
-provided the fill color will either be fully opaque or use alpha
-information from the color value if it is supplied in the #RRGGBBAA format.}
+\verb{scalar<character>} --- \emph{default:} \code{"#D3D3D3"}
+
+If nothing is provided for \code{color} then \code{"#D3D3D3"} (light gray) will be
+used as a default.}
+
+\item{alpha}{\emph{Transparency value}
+
+\verb{scalar<numeric|integer>(0>=val>=1)} --- \emph{default:} \code{NULL} (\code{optional})
+
+An optional alpha transparency value for the \code{color} as single value in the
+range of \code{0} (fully transparent) to \code{1} (fully opaque). If not provided the
+fill color will either be fully opaque or use alpha information from the
+color value if it is supplied in the \verb{#RRGGBBAA} format.}
 }
 \value{
 A list object of class \code{cell_styles}.

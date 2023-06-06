@@ -1,5 +1,7 @@
 # gt (development version)
 
+* Update to `col_hide(columns=)` and `cols_unhide(columns=)` arguments. The functions no longer return an error if no columns are selected. (#1342)
+
 # gt 0.9.0
 
 ## New features

@@ -1,8 +1,7 @@
 <div align="center">
 
-<hr style="color:transparent" />
-<a href='https://gt.rstudio.com/'><img src="man/figures/logo.svg" width="350px"/></a>
-<hr style="color:transparent"/>
+<a href="https://gt.rstudio.com/"><img src="man/figures/logo.svg" width="350px"/></a>
+
 <!-- badges: start -->
 <a href="https://cran.r-project.org/package=gt"><img src="https://www.r-pkg.org/badges/version/gt" alt="CRAN status" /></a>
 <a href="https://github.com/rstudio/gt/actions/workflows/R-CMD-check.yaml"><img src="https://github.com/rstudio/gt/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R build status" /></a>
@@ -78,23 +77,54 @@ sp500 |>
 <img src="man/figures/gt_sp500_table.svg" width="800px">
 </div>
 
-There are ten datasets provided by **gt**: `countrypops`, `sza`, `gtcars`, `sp500`, `pizzaplace`, `exibble`, `towny`, `metro`, `rx_adsl`, and `rx_addv`. They're useful for experimenting with **gt**’s functions and the package documentation makes extensive use of them in the *Examples* section within each function's documentation.
+There are ten datasets provided by **gt**: `countrypops`, `sza`, `gtcars`, `sp500`, `pizzaplace`, `exibble`, `towny`, `metro`, `rx_adsl`, and `rx_addv`.
 
-Beyond this simple example, there are many functions available in **gt**
-for creating super-customized tables. For much more information on these, visit the
-[documentation website](https://gt.rstudio.com/).
+<div align="center" style="padding-top:20px">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_countrypops.svg" style="width:18%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_sza.svg" style="width:18%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_gtcars.svg" style="width:18%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_sp500.svg" style="width:18%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_pizzaplace.svg" style="width:18%;">
+</div>
+<div align="center" style="padding-bottom:20px">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_exibble.svg" style="width:18%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_towny.svg" style="width:18%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_metro.svg" style="width:18%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_rx_adsl.svg" style="width:18%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_rx_addv.svg" style="width:18%;">
+</div>
+
+All of this tabular data is great for experimenting with **gt**’s functions and we make extensive use of these datasets in our documentation.
+
+Beyond the functions shown in the simple `sp500`-based example, there are many functions available in **gt** for creating super-customized tables. Check out the [documentation website](https://gt.rstudio.com/) to get started via introductory articles for making **gt** tables. There's a handy *Reference* section that has detailed help for every function in the package.
+
+[![Documentation Site](https://img.shields.io/badge/Project%20Website-Documentation%20and%20Reference-blue?style=social)](https://gt.rstudio.com/)
 
 With the **gt** *Test Drive*, you can try **gt** in the *Posit Cloud* environment that features the RStudio IDE and a large collection of ready-to-run examples. Visit the publicly available [*Posit Cloud* project](https://rstudio.cloud/project/779965) and try out the package in your browser. There's no charge to use this platform and you'll learn **a lot** about what the package can do!
 
-## DISCUSSIONS
+[![Posit Cloud](https://img.shields.io/badge/Posit%20Cloud-gt%20Test%20Drive-blue?style=social&logo=rstudio&logoColor=75AADB)](https://rstudio.cloud/project/779965)
+
+<hr style="color:transparent" />
+
+<div align="center">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/gt_table_examples.gif">
+</div>
+
+<hr style="color:transparent" />
 
 Let's talk about making tables with **gt**! There are a few locations where there is much potential for discussion.
 
 One such place is in [*GitHub Discussions*](https://github.com/rstudio/gt/discussions). This discussion board is especially great for Q&A, and many people have had their problems solved in there.
 
+[![GitHub Discussions](https://img.shields.io/badge/GitHub%20Discussions-Ask%20about%20anything-blue?style=social&logo=github&logoColor=gray)](https://github.com/rstudio/gt/discussions)
+
 Another fine venue for discussion is in the [`gt_package` *Discord server*](https://discord.gg/Ux7nrcXHVV). This is a good option for asking about the development of **gt**, pitching ideas that may become features, and sharing your table creations!
 
+[![Discord Server](https://img.shields.io/badge/Discord-Chat%20with%20us-blue?style=social&logo=discord&logoColor=purple)](https://discord.gg/Ux7nrcXHVV)
+
 Finally, there is the [`gt_package` *Twitter account*](https://twitter.com/gt_package). There you'll find tweets about **gt** (including sneak previews about in-development features) and other table-generation packages.
+
+[![Twitter Follow](https://img.shields.io/twitter/follow/gt_package?style=social)](https://twitter.com/gt_package)
 
 These are all great places to ask questions about how to use the package, discuss
 some ideas, engage with others, and much more!

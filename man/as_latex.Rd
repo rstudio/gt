@@ -7,7 +7,12 @@
 as_latex(data)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
+
+\verb{obj:<gt_tbl>} --- \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 }
 \description{
 Get the LaTeX content from a \code{gt_tbl} object as a \code{knit_asis} object. This

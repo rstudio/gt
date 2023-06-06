@@ -7,19 +7,35 @@
 text_replace(data, pattern, replacement, locations = cells_body())
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{pattern}{A regex pattern used to target text fragments in the cells
-resolved in locations.}
+\verb{obj:<gt_tbl>} --- \strong{required}
 
-\item{replacement}{The replacement text for any matched text fragments.}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
-\item{locations}{The cell or set of cells to be associated with the text
-transformation. Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}},
-\code{\link[=cells_row_groups]{cells_row_groups()}}, \code{\link[=cells_column_labels]{cells_column_labels()}}, and
-\code{\link[=cells_column_spanners]{cells_column_spanners()}} helper functions can be used here. We can enclose
-several of these calls within a \code{list()} if we wish to make the
-transformation happen at different locations.}
+\item{pattern}{\emph{Regex pattern to match with}
+
+\verb{scalar<character>} --- \strong{required}
+
+A regex pattern used to target text fragments in the cells resolved in
+locations.}
+
+\item{replacement}{\emph{Replacement text}
+
+\verb{scalar<character>} --- \strong{required}
+
+The replacement text for any matched text fragments.}
+
+\item{locations}{\emph{Locations to target}
+
+\verb{<locations expressions>} --- \emph{default:} \code{cells_body()}
+
+The cell or set of cells to be associated with the text transformation.
+Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_row_groups]{cells_row_groups()}},
+\code{\link[=cells_column_labels]{cells_column_labels()}}, and \code{\link[=cells_column_spanners]{cells_column_spanners()}} helper functions can
+be used here. We can enclose several of these calls within a \code{list()} if we
+wish to make the transformation happen at different locations.}
 }
 \value{
 An object of class \code{gt_tbl}.

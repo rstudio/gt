@@ -33,15 +33,33 @@
 #' modify the output of `gt_preview()`. Furthermore, you cannot pass a **gt**
 #' object to `gt_preview()`.
 #'
-#' @param data A `data.frame` object or a tibble.
-#' @param top_n This value will be used as the number of rows from the top of
-#'   the table to display. The default, `5`, will show the first five rows of
-#'   the table.
-#' @param bottom_n The value will be used as the number of rows from the bottom
+#' @param data *Input data table*
+#'
+#'   `obj:<data.frame>|obj:<tbl_df>` --- **required**
+#'
+#'   A `data.frame` object or a tibble (`tbl_df`).
+#'
+#' @param top_n *Top n rows to display*
+#'
+#'   `scalar<numeric|integer>` --- *default:* `5`
+#'
+#'   The `top_n` value will be used as the number of rows from the top of the
+#'   table to display. The default, `5`, will show the first five rows of the
+#'   table.
+#'
+#' @param bottom_n *Bottom n rows to display*
+#'
+#'   `scalar<numeric|integer>` --- *default:* `1`
+#'
+#'   The `bottom_n` value will be used as the number of rows from the bottom
 #'   of the table to display. The default, `1`, will show the final row of the
 #'   table.
-#' @param incl_rownums An option to include the row numbers for `data` in the
-#'   table stub. By default, this is `TRUE`.
+#'
+#' @param incl_rownums *Display row numbers*
+#'
+#'   `scalar<logical>` --- *default:* `TRUE`
+#'
+#'   An option to include the row numbers for `data` in the table stub.
 #'
 #' @return An object of class `gt_tbl`.
 #'

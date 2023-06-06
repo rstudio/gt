@@ -65,6 +65,7 @@ tests/testthat/test-l_table_parts.R
 tests/testthat/test-location_cells.R
 tests/testthat/test-opt_functions.R
 tests/testthat/test-removal_functions.R
+tests/testthat/test-rows_add.R
 tests/testthat/test-rtf_column_widths.R
 tests/testthat/test-rtf_page_options.R
 tests/testthat/test-stub.R

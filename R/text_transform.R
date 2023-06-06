@@ -32,16 +32,35 @@
 #' that is done, the remaining two values to supply are for the regex pattern
 #' (`pattern`) and the replacement for all matched text (`replacement`).
 #'
-#' @param data A table object that is created using the [gt()] function.
-#' @param pattern A regex pattern used to target text fragments in the cells
-#'   resolved in locations.
-#' @param replacement The replacement text for any matched text fragments.
-#' @param locations The cell or set of cells to be associated with the text
-#'   transformation. Only the [cells_body()], [cells_stub()],
-#'   [cells_row_groups()], [cells_column_labels()], and
-#'   [cells_column_spanners()] helper functions can be used here. We can enclose
-#'   several of these calls within a `list()` if we wish to make the
-#'   transformation happen at different locations.
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
+#' @param pattern *Regex pattern to match with*
+#'
+#'   `scalar<character>` --- **required**
+#'
+#'   A regex pattern used to target text fragments in the cells resolved in
+#'   locations.
+#'
+#' @param replacement *Replacement text*
+#'
+#'   `scalar<character>` --- **required**
+#'
+#'   The replacement text for any matched text fragments.
+#'
+#' @param locations *Locations to target*
+#'
+#'   `<locations expressions>` --- *default:* `cells_body()`
+#'
+#'   The cell or set of cells to be associated with the text transformation.
+#'   Only the [cells_body()], [cells_stub()], [cells_row_groups()],
+#'   [cells_column_labels()], and [cells_column_spanners()] helper functions can
+#'   be used here. We can enclose several of these calls within a `list()` if we
+#'   wish to make the transformation happen at different locations.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -120,20 +139,38 @@ text_replace <- function(
 #' vector of length one (i.e., either `TRUE` or `FALSE`). To refer to the values
 #' undergoing transformation, you need to use the `x` variable.
 #'
-#' @param .data A table object that is created using the [gt()] function.
-#' @param ... A sequence of two-sided formulas. The left hand side (LHS)
+#' @param .data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
+#' @param ... *Matching expressions*
+#'
+#'   `<multiple expressions>` --- **required**
+#'
+#'   A sequence of two-sided formulas. The left hand side (LHS)
 #'   determines which values match this case. The right hand side (RHS) provides
 #'   the replacement text (it must resolve to a value of the `character` class).
 #'   The LHS inputs must evaluate to logical vectors.
-#' @param .default The replacement text to use when cell values aren't matched
-#'   by any of the LHS inputs. If `NULL`, the default, no replacement text will
-#'   be used.
-#' @param .locations The cell or set of cells to be associated with the text
-#'   transformation. Only the [cells_body()], [cells_stub()],
-#'   [cells_row_groups()], [cells_column_labels()], and
-#'   [cells_column_spanners()] helper functions can be used here. We can enclose
-#'   several of these calls within a `list()` if we wish to make the
-#'   transformation happen at different locations.
+#'
+#' @param .default *Default replacement text*
+#'
+#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'
+#'   The replacement text to use when cell values aren't matched by any of the
+#'   LHS inputs. If `NULL`, the default, no replacement text will be used.
+#'
+#' @param .locations *Locations to target*
+#'
+#'   `<locations expressions>` --- *default:* `cells_body()`
+#'
+#'   The cell or set of cells to be associated with the text transformation.
+#'   Only the [cells_body()], [cells_stub()], [cells_row_groups()],
+#'   [cells_column_labels()], and [cells_column_spanners()] helper functions can
+#'   be used here. We can enclose several of these calls within a `list()` if we
+#'   wish to make the transformation happen at different locations.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -251,28 +288,51 @@ text_case_when <- function(
 #' those strings. This can be changed to a partial matching and replacement
 #' strategy with the alternate option.
 #'
-#' @param .data A table object that is created using the [gt()] function.
-#' @param ... A sequence of two-sided formulas matching this general
-#'   construction: `<old_text> ~ <new_text>`. The left hand side (LHS)
-#'   determines which values to match on and it can be any length (allowing for
-#'   `new_text` to replace different values of `old_text`). The right hand side
-#'   (RHS) provides the replacement text (it must resolve to a single value of
-#'   the `character` class).
-#' @param .default The replacement text to use when cell values aren't matched
-#'   by any of the LHS inputs. If `NULL`, the default, no replacement text will
-#'   be used.
-#' @param .replace A choice in how the matching is to be done. The default
-#'   `"all"` means that the `old_text` (on the LHS of formulas given in `...`)
-#'   must match the cell text *completely*. With that option, the replacement
-#'   will completely replace that matched text. With `"partial"`, the match will
-#'   occur in all substrings of `old_text`. In this way, the replacements will
-#'   act on those matched substrings.
-#' @param .locations The cell or set of cells to be associated with the text
-#'   transformation. Only the [cells_body()], [cells_stub()],
-#'   [cells_row_groups()], [cells_column_labels()], and
-#'   [cells_column_spanners()] helper functions can be used here. We can enclose
-#'   several of these calls within a `list()` if we wish to make the
-#'   transformation happen at different locations.
+#' @param .data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
+#' @param ... *Matching expressions*
+#'
+#'   `<multiple expressions>` --- **required**
+#'
+#'   A sequence of two-sided formulas matching this general construction:
+#'   `<old_text> ~ <new_text>`. The left hand side (LHS) determines which values
+#'   to match on and it can be any length (allowing for `new_text` to replace
+#'   different values of `old_text`). The right hand side (RHS) provides the
+#'   replacement text (it must resolve to a single value of the `character`
+#'   class).
+#'
+#' @param .default *Default replacement text*
+#'
+#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'
+#'   The replacement text to use when cell values aren't matched by any of the
+#'   LHS inputs. If `NULL`, the default, no replacement text will be used.
+#'
+#' @param .replace *Method for text replacement*
+#'
+#'   `singl-kw:[all|partial]` --- *default:* `"all"`
+#'
+#'   A choice in how the matching is to be done. The default `"all"` means that
+#'   the `old_text` (on the LHS of formulas given in `...`) must match the cell
+#'   text *completely*. With that option, the replacement will completely
+#'   replace that matched text. With `"partial"`, the match will occur in all
+#'   substrings of `old_text`. In this way, the replacements will act on those
+#'   matched substrings.
+#'
+#' @param .locations *Locations to target*
+#'
+#'   `<locations expressions>` --- *default:* `cells_body()`
+#'
+#'   The cell or set of cells to be associated with the text transformation.
+#'   Only the [cells_body()], [cells_stub()], [cells_row_groups()],
+#'   [cells_column_labels()], and [cells_column_spanners()] helper functions can
+#'   be used here. We can enclose several of these calls within a `list()` if we
+#'   wish to make the transformation happen at different locations.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -442,16 +502,29 @@ text_case_match <- function(
 #' character vector of the same length as the input. Using the construction
 #' `function(x) { .. }` for the function is recommended.
 #'
-#' @param data A table object that is created using the [gt()] function.
-#' @param fn The function to use for text transformation. It should include `x`
-#'   as an argument and return a character vector of the same length as the
-#'   input `x`.
-#' @param locations The cell or set of cells to be associated with the text
-#'   transformation. Only the [cells_body()], [cells_stub()],
-#'   [cells_row_groups()], [cells_column_labels()], and
-#'   [cells_column_spanners()] helper functions can be used here. We can enclose
-#'   several of these calls within a `list()` if we wish to make the
-#'   transformation happen at different locations.
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
+#' @param fn *Function for text transformation*
+#'
+#'   `<function>` --- **required**
+#'
+#'   The function to use for text transformation. It should include `x` as an
+#'   argument and return a character vector of the same length as the input `x`.
+#'
+#' @param locations *Locations to target*
+#'
+#'   `<locations expressions>` --- *default:* `cells_body()`
+#'
+#'   The cell or set of cells to be associated with the text transformation.
+#'   Only the [cells_body()], [cells_stub()], [cells_row_groups()],
+#'   [cells_column_labels()], and [cells_column_spanners()] helper functions can
+#'   be used here. We can enclose several of these calls within a `list()` if we
+#'   wish to make the transformation happen at different locations.
 #'
 #' @return An object of class `gt_tbl`.
 #'
