@@ -1592,9 +1592,9 @@ cols_hide <- function(
 
   vars <- dt_boxhead_get_vars(data = data)
 
-  # Stop function if no `columns` are provided
+  # if no `columns` are provided, return data unaltered
   if (length(columns) == 0) {
-    cli::cli_abort("Columns must be provided.")
+    return(data)
   }
 
   # Stop function if any of the `columns` don't exist in `vars`
@@ -1703,9 +1703,9 @@ cols_unhide <- function(
 
   vars <- dt_boxhead_get_vars(data = data)
 
-  # Stop function if no `columns` are provided
+  # if no `columns` are provided, return data unaltered
   if (length(columns) == 0) {
-    cli::cli_abort("Columns must be provided.")
+    return(data)
   }
 
   # Stop function if any of the `columns` don't exist in `vars`
