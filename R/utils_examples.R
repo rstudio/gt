@@ -171,6 +171,7 @@ generate_gt_examples_tbl <- function() {
 
 write_gt_examples_qmd_files <- function(
     topics = NULL,
+    generate_index_page = TRUE,
     output_dir = "gt_qmd_examples"
 ) {
 
@@ -201,6 +202,137 @@ write_gt_examples_qmd_files <- function(
     if (!dir.exists(paths = output_dir)) {
       stop("The directory `", output_dir, "` could not be created.")
     }
+  }
+
+  if (generate_index_page) {
+
+    index_tbl <-
+      dplyr::tibble(
+        name = character(0),
+        title = character(0),
+        type = character(0),
+        family = integer(0),
+        number = integer(0)
+      )
+
+    pkg_docs <- get_package_docs()
+
+    for (topic in topics) {
+
+      help_file_lines <- as.character(attr(pkg_docs[[topic]], which = "srcref"))
+
+      if (any(grepl("Function ID", help_file_lines))) {
+
+        type <- "function"
+        id_idx <- which(grepl("\\section{Function ID}{", help_file_lines, fixed = TRUE)) + 2
+        id_val <- help_file_lines[id_idx]
+        title_idx <- which(grepl("\\title{", help_file_lines, fixed = TRUE))
+        title <- gsub("\\title{", "", help_file_lines[title_idx], fixed = TRUE)
+        title <- gsub("\\}$", "", title)
+        family <- as.integer(unlist(strsplit(id_val, split = "-"))[[1]])
+        number <- as.integer(unlist(strsplit(id_val, split = "-"))[[2]])
+
+      } else if (any(grepl("Dataset ID ", help_file_lines))) {
+
+        type <- "dataset"
+        id_idx <- which(grepl("\\section{Dataset ID and Badge}{", help_file_lines, fixed = TRUE)) + 2
+        id_val <- help_file_lines[id_idx]
+        title_idx <- which(grepl("\\title{", help_file_lines, fixed = TRUE))
+        title <- gsub("\\title{", "", help_file_lines[title_idx], fixed = TRUE)
+        title <- gsub("\\}$", "", title)
+        family <- 99L
+        number <- as.integer(unlist(strsplit(id_val, split = "-"))[[2]])
+      }
+
+      title <- gsub("\\\\link\\{(.*?)\\}", "\\1", title)
+      title <- gsub("\\\\link\\[.*?\\]\\{(.*?)\\}", "\\1", title)
+      title <- gsub("\\\\strong\\{(.*?)\\}", "**\\1**", title)
+      title <- gsub("\\\\emph\\{(.*?)\\}", "*\\1*", title)
+      title <- gsub("\\\\code\\{(.*?)\\}", "`\\1`", title)
+      title <- gsub("\\\\verb\\{(.*?)\\}", "`\\1`", title)
+
+      index_tbl_i <-
+        dplyr::tibble(
+          name = topic,
+          title = title,
+          type = type,
+          family = family,
+          number = number
+        )
+
+      index_tbl <- dplyr::bind_rows(index_tbl, index_tbl_i)
+    }
+
+    index_tbl <-
+      index_tbl %>%
+      dplyr::arrange(family, number) %>%
+      dplyr::mutate(
+        name = dplyr::case_when(
+          type == "function" ~ paste0(
+            "[`", name, "()`](gt-", name , ".qmd)"
+          ),
+          .default = name
+        )
+      ) %>%
+      dplyr::mutate(
+        group = dplyr::case_when(
+          family == 1 ~ "Table creation",
+          family == 2 ~ "Creating or modifying parts of a table",
+          family == 3 ~ "Formatting column data",
+          family == 4 ~ "Text transformation",
+          family == 5 ~ "Modifying columns",
+          family == 6 ~ "Adding or modifying rows",
+          family == 7 ~ "Removing parts of a table",
+          family == 8 ~ "Helper functions",
+          family == 9 ~ "Image addition utilities",
+          family == 10 ~ "Table options",
+          family == 11 ~ "Informational tables for reference",
+          family == 12 ~ "Shiny",
+          family == 13 ~ "Export and extraction functions",
+          family == 14 ~ "Working with table groups",
+          family == 15 ~ "Vector formatting",
+          family == 99 ~ "Built in datasets"
+        )
+      ) %>%
+      gt(groupname_col = "group", process_md = TRUE) %>%
+      fmt_markdown() %>%
+      cols_hide(columns = c(type, family, number)) %>%
+      tab_options(column_labels.hidden = TRUE)
+
+    writeLines(
+      text = c(
+        "---",
+        "format: html",
+        "---",
+        "",
+        "```{=html}",
+        as_raw_html(index_tbl),
+        "```",
+        ""
+      ),
+      con = paste0(output_dir, "/index.qmd")
+    )
+
+    writeLines(
+      text = c(
+        "project:",
+        "  type: website",
+        "render:",
+        "  - \"*.qmd\"",
+        "",
+        "website:",
+        "  title: \"The gt package\"",
+        "navbar:",
+        "  left:",
+        "  - href: index.qmd",
+        "",
+        "format:",
+        "  html:",
+        "    theme: cosmo",
+        ""
+      ),
+      con = paste0(output_dir, "/_quarto.yml")
+    )
   }
 
   for (topic in topics) {
