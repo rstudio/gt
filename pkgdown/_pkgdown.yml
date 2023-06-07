@@ -17,7 +17,7 @@ development:
   mode: release
 
 reference:
-  - title: Creating a table
+  - title: Table creation
     desc: >
       All **gt** tables begin with a call to `gt()`, where we would supply the
       input data table (data frame or tibble) and some basic options for
@@ -54,7 +54,7 @@ reference:
     - tab_options
     - tab_info
 
-  - title: Formatting data
+  - title: Formatting column data
     desc: >
       Columns of data can be formatted with the `fmt_*()` functions. We can
       specify the rows of these columns quite precisely with the `rows`
@@ -96,7 +96,7 @@ reference:
     - sub_values
     - data_color
 
-  - title: Text transformation functions
+  - title: Text transformation
     desc: >
       The `text_*()` functions take cell data that are solidified into
       strings and allow for flexible transformations of those string values.
@@ -202,7 +202,7 @@ reference:
     - default_fonts
     - system_fonts
 
-  - title: Image addition functions
+  - title: Image addition utilities
     desc: >
       We can add images into a **gt** table with the help of the `*_image()`
       functions. Two common ways to do this: (1) use `text_transform()` to
@@ -215,7 +215,7 @@ reference:
     - ggplot_image
     - test_image
 
-  - title: Table option functions
+  - title: Table options
     desc: >
       With the `opt_*()` functions, we have an easy way to set commonly-used
       table options without having to use `tab_options()` directly. Like, we can
@@ -238,7 +238,7 @@ reference:
     - opt_table_font
     - opt_css
 
-  - title: Information functions
+  - title: Informational tables for reference
     desc: >
       These `info_*()` functions present us with **gt** tables containing
       useful information. So far, we can get reference information on
@@ -256,7 +256,7 @@ reference:
     - info_paletteer
     - info_google_fonts
 
-  - title: Shiny functions
+  - title: Shiny
     desc: >
       Shiny is great for building interactive web apps with R. There's
       really nothing quite like it. The **gt** package includes two
@@ -286,7 +286,7 @@ reference:
     - extract_summary
     - extract_cells
 
-  - title: Table group functions
+  - title: Working with table groups
     desc: >
       Sometimes you want to deal with a multitude of **gt** tables, all at once.
       There are some advantages to having a group of tables bundled together in
@@ -305,7 +305,7 @@ reference:
     - grp_rm
     - grp_options
 
-  - title: Vector formatting functions
+  - title: Vector formatting
     desc: >
       Why should columns have all the formatting fun? If you have vectors in
       need of formatting, we have a set of `vec_fmt_*()` functions that have
