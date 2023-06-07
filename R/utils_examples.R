@@ -22,11 +22,13 @@
 #------------------------------------------------------------------------------#
 
 
+fetch_rd_db <- utils::getFromNamespace("fetchRdDB", "tools")
+
 # Function to get the package docs RdDB for any package
 get_package_docs <- function() {
   help_dir <- system.file("help", package = "gt")
   db_path <- file.path(help_dir, "gt")
-  tools:::fetchRdDB(db_path)
+  fetch_rd_db(db_path)
 }
 
 get_topic_names <- function() {
