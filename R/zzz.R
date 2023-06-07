@@ -76,6 +76,7 @@ utils::globalVariables(
     "decimal",
     "designer",
     "display_name",
+    "examples",
     "flexible",
     "footnotes",
     "footnotes_to_list",
