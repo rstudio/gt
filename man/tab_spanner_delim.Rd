@@ -252,12 +252,16 @@ used in the \strong{tidyr} \code{pivot_wider()} call. We can also process the ge
 column labels with \code{\link[=cols_label_with]{cols_label_with()}}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
-  select(name, date, type, price) |>
-  group_by(name, date, type) |>
-  summarize(revenue = sum(price), sold = n(), .groups = "drop") |>
-  filter(date \%in\% c("2015-01-01", "2015-01-02", "2015-01-03")) |>
-  filter(type \%in\% c("classic", "veggie")) |>
-  pivot_wider(
+  dplyr::select(name, date, type, price) |>
+  dplyr::group_by(name, date, type) |>
+  dplyr::summarize(
+    revenue = sum(price),
+    sold = dplyr::n(),
+    .groups = "drop"
+  ) |>
+  dplyr::filter(date \%in\% c("2015-01-01", "2015-01-02", "2015-01-03")) |>
+  dplyr::filter(type \%in\% c("classic", "veggie")) |>
+  tidyr::pivot_wider(
     names_from = date,
     names_sep = ".",
     values_from = c(revenue, sold),
