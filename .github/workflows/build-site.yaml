@@ -31,8 +31,17 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::pkgdown, local::.
-          needs: website
+          packages: |
+            gt
+            shiny
+            tidyverse
+            dplyr
+            tidyr
+            ggplot2
+            lubridate
+            paletteer
+            any::sessioninfo
+          dependencies: '"hard"'
 
       - name: Install package
         run: R CMD INSTALL .
