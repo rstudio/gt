@@ -348,7 +348,6 @@ write_gt_examples_qmd_files <- function(
         "",
         "```{r include=FALSE}",
         "library(gt)",
-        "library(tidyverse)",
         "```",
         "",
         paste0("## The `", topic, "()` function"),
