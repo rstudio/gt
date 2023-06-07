@@ -138,20 +138,20 @@ generate_gt_examples_tbl <- function() {
   dplyr::tibble(
     name = topic_names,
     examples = topic_examples
-  ) |>
-    dplyr::mutate(name = paste0("`", name, "()`")) |>
-    gt(id = "gt-examples") |>
-    fmt_markdown() |>
+  ) %>%
+    dplyr::mutate(name = paste0("`", name, "()`")) %>%
+    gt(id = "gt-examples") %>%
+    fmt_markdown() %>%
     text_transform(
       fn = function(x) paste0("<details><summary>EXAMPLES</summary><br>", x, "</details"),
       locations = cells_body(columns = examples)
-    ) |>
-    cols_width(name ~ px(275), examples ~ px(800)) |>
+    ) %>%
+    cols_width(name ~ px(275), examples ~ px(800)) %>%
     tab_style(
       style = cell_text(v_align = "top"),
       locations = cells_body(columns = name)
-    ) |>
-    tab_options(column_labels.hidden = TRUE) |>
+    ) %>%
+    tab_options(column_labels.hidden = TRUE) %>%
     opt_css(
       "
     #gt-examples details > div {
