@@ -8,10 +8,12 @@ code {
 
 h1, .h1 {
   font-size: 3rem;
+  line-height: 1em;
 }
 
 h2, .h2 {
   font-size: 2rem;
+  line-height: 1em;
 }
 
 h3, .h3 {
