@@ -198,8 +198,9 @@ numbers_metadata_tbl <-
     default_numbering_system, minimum_grouping_digits
   )
 
-
+#
 # Create a table of in-use currencies from all possible regions
+#
 
 regional_currencies_tbl <- dplyr::tibble()
 
@@ -251,6 +252,9 @@ for (i in seq_along(regional_currencies)) {
     dplyr::bind_rows(regional_currencies_tbl, regional_currencies_tbl_row_i)
 }
 
+# Make corrections for specific currencies
+regional_currencies_tbl[regional_currencies_tbl$territory_name == "CU", ][["currency_code"]] <- "CUP"
+
 #
 # Join all tables together to generate a comprehensive locale metadata table
 #
@@ -260,3 +264,31 @@ locales <-
   left_join(chr_index_tbl, by = "locale") %>%
   left_join(numbers_metadata_tbl, by = "locale") %>%
   left_join(regional_currencies_tbl, by = "territory_name")
+
+rm(parse_locale)
+rm(i)
+rm(j)
+rm(all_locales)
+rm(variant_names)
+rm(territory_names)
+rm(script_names)
+rm(regional_currencies)
+rm(regional_currencies_tbl)
+rm(regional_currencies_tbl_row_i)
+rm(regional_currencies_i)
+rm(regional_currencies_data)
+rm(regional_currencies_path)
+rm(numbers_metadata_tbl)
+rm(locale_metadata_tbl)
+rm(locale_metadata_tbl_i)
+rm(locale_metadata_list)
+rm(lang_names)
+rm(en_locale_names)
+rm(default_locales)
+rm(chr_index_tbl)
+rm(chr_index_tbl_i)
+rm(chr_from_exemplar)
+rm(currency_in_use)
+rm(index_chr)
+rm(n_regional_currencies)
+rm(not_tender_j)
