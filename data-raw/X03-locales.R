@@ -1,5 +1,6 @@
 library(tidyverse)
 library(i18n)
+library(jsonlite)
 library(gt)
 library(stringi)
 
@@ -30,9 +31,23 @@ parse_locale <- function(locale) {
       variant_desc = NA_character_
     )
 
-  # Resolve any default locales into their base names (e.g., 'en-US' -> 'en')
-  if (locale %in% default_locales$default_locale) {
-    locale <- default_locales[default_locales$default_locale == locale, ][["base_locale"]]
+  default_locales_no_subtags <- gsub("-.*", "", default_locales$base_locale)
+
+  # Resolve any territory that are purely language locales into their
+  # base names (e.g., 'en-US' -> 'en')
+  if (
+    locale %in% default_locales$base_locale ||
+    locale %in% default_locales_no_subtags
+  ) {
+
+    locale_i <- default_locales[default_locales$base_locale == locale, ][["default_locale"]]
+
+    if (length(locale_i) < 1) {
+
+      locale_i <- default_locales[default_locales_no_subtags == locale, ][["default_locale"]][[1]]
+    }
+
+    locale <- locale_i
   }
 
   # Normalize any hyphens to underscores
@@ -75,6 +90,18 @@ parse_locale <- function(locale) {
         locale_attrs$variant_desc <- variant_names[names(variant_names) == locale_attrs$variant_name][[1]]
       }
     }
+  }
+
+  # Process exceptions
+  if (locale == "be_tarask") {
+    locale_attrs$script_name <- "Cyrl"
+    locale_attrs$script_desc <- "Cyrillic"
+    locale_attrs$territory_name <- "BY"
+    locale_attrs$territory_desc <- "Belarus"
+  }
+  if (locale == "no") {
+    locale_attrs$territory_name <- "NO"
+    locale_attrs$territory_desc <- "Norway"
   }
 
   locale_attrs
@@ -171,6 +198,59 @@ numbers_metadata_tbl <-
     default_numbering_system, minimum_grouping_digits
   )
 
+
+# Create a table of in-use currencies from all possible regions
+
+regional_currencies_tbl <- dplyr::tibble()
+
+regional_currencies_path <-
+  file.path(
+    "https://raw.githubusercontent.com/unicode-org/cldr-json",
+    "41.0.0", "cldr-json/cldr-core/supplemental/currencyData.json"
+  )
+
+regional_currencies_data <-
+  jsonlite::read_json(regional_currencies_path)
+
+regional_currencies <- regional_currencies_data$supplemental$currencyData$region
+
+for (i in seq_along(regional_currencies)) {
+
+  regional_currencies_i <- regional_currencies[[i]]
+
+  not_tender_j <- integer(0)
+
+  for (j in seq_along(regional_currencies_i)) {
+
+    if (
+      "_tender" %in% names(regional_currencies_i[[j]][[1]]) &&
+      regional_currencies_i[[j]][[1]][["_tender"]] == "false"
+    ) {
+      not_tender_j <- c(not_tender_j, j)
+    }
+  }
+
+  if (length(not_tender_j) > 0) {
+    regional_currencies_i <- regional_currencies_i[-not_tender_j]
+  }
+
+  if (length(regional_currencies_i) < 1) next
+
+  n_regional_currencies <- length(regional_currencies_i)
+
+  currency_in_use <- names(regional_currencies_i[[n_regional_currencies]])
+
+  regional_currencies_tbl_row_i <-
+    dplyr::tibble(
+      territory_name = names(regional_currencies[i]),
+      currency_code = currency_in_use
+    )
+
+  # Append row to main table
+  regional_currencies_tbl <-
+    dplyr::bind_rows(regional_currencies_tbl, regional_currencies_tbl_row_i)
+}
+
 #
 # Join all tables together to generate a comprehensive locale metadata table
 #
@@ -178,4 +258,5 @@ numbers_metadata_tbl <-
 locales <-
   locale_metadata_tbl %>%
   left_join(chr_index_tbl, by = "locale") %>%
-  left_join(numbers_metadata_tbl, by = "locale")
+  left_join(numbers_metadata_tbl, by = "locale") %>%
+  left_join(regional_currencies_tbl, by = "territory_name")
