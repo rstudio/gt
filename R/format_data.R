@@ -2924,6 +2924,12 @@ fmt_currency <- function(
     }
   }
 
+  # Resolve the currency either from direct input in `currency` or
+  # through a locale
+  if (is.null(currency)) {
+    currency <- get_locale_currency_code(locale = locale)
+  }
+
   # Stop function if `currency` does not have a valid value
   validate_currency(currency = currency)
 
