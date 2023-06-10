@@ -2873,7 +2873,7 @@ fmt_currency <- function(
     data,
     columns = everything(),
     rows = everything(),
-    currency = "USD",
+    currency = NULL,
     use_subunits = TRUE,
     decimals = NULL,
     drop_trailing_dec_mark = TRUE,
