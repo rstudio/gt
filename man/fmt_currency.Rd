@@ -8,7 +8,7 @@ fmt_currency(
   data,
   columns = everything(),
   rows = everything(),
-  currency = "USD",
+  currency = NULL,
   use_subunits = TRUE,
   decimals = NULL,
   drop_trailing_dec_mark = TRUE,
@@ -58,7 +58,7 @@ need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{currency}{\emph{Currency to use}
 
-\verb{scalar<character>|obj:<gt_currency>} --- \emph{default:} \code{"USD"}
+\verb{scalar<character>|obj:<gt_currency>} --- \emph{default:} \code{NULL} (\code{optional})
 
 The currency to use for the numeric value. This input can be
 supplied as a 3-letter currency code (e.g., \code{"USD"} for U.S. Dollars,
@@ -75,7 +75,15 @@ currency, where the string could vary across output contexts. For example,
 using \code{currency(html = "&fnof;", default = "f")} would give us a suitable
 glyph for the Dutch guilder in an HTML output table, and it would simply be
 the letter "f" in all other output contexts). Please note that \code{decimals}
-will default to \code{2} when using the \code{\link[=currency]{currency()}} helper function.}
+will default to \code{2} when using the \code{\link[=currency]{currency()}} helper function.
+
+If nothing is provided here but a \code{locale} value has been set (either in
+this function call or as part of the initial \code{\link[=gt]{gt()}} call), the currency
+will be obtained from that locale. Virtually all locales are linked to a
+territory that is a country (use \code{\link[=info_locales]{info_locales()}} for details on all
+locales used in this package), so, the in-use (or \emph{de facto}) currency will
+be obtained. As the default locale is \code{"en"}, the \code{"USD"} currency will be
+used if neither a \code{locale} nor a \code{currency} value is given.}
 
 \item{use_subunits}{\emph{Show or hide currency subunits}
 
