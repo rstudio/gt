@@ -2702,7 +2702,8 @@ round_gt <- function(x, digits = 0) {
 #' - pattern: option to use a text pattern for decoration of the formatted
 #' currency values
 #' - locale-based formatting: providing a locale ID will result in currency
-#' formatting specific to the chosen locale
+#' formatting specific to the chosen locale; it will also retrieve the locale's
+#' currency if none is explicitly given
 #'
 #' We can use the [info_currencies()] function for a useful reference on all of
 #' the possible inputs to the `currency` argument.
