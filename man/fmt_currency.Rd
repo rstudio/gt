@@ -273,7 +273,8 @@ be autoscaled and decorated with the appropriate suffixes
 \item pattern: option to use a text pattern for decoration of the formatted
 currency values
 \item locale-based formatting: providing a locale ID will result in currency
-formatting specific to the chosen locale
+formatting specific to the chosen locale; it will also retrieve the locale's
+currency if none is explicitly given
 }
 
 We can use the \code{\link[=info_currencies]{info_currencies()}} function for a useful reference on all of
