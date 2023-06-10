@@ -2730,6 +2730,14 @@ round_gt <- function(x, digits = 0) {
 #'   the letter "f" in all other output contexts). Please note that `decimals`
 #'   will default to `2` when using the [currency()] helper function.
 #'
+#'   If nothing is provided here but a `locale` value has been set (either in
+#'   this function call or as part of the initial [gt()] call), the currency
+#'   will be obtained from that locale. Virtually all locales are linked to a
+#'   territory that is a country (use [info_locales()] for details on all
+#'   locales used in this package), so, the in-use (or *de facto*) currency will
+#'   be obtained. As the default locale is `"en"`, the `"USD"` currency will be
+#'   used if neither a `locale` nor a `currency` value is given.
+#'
 #' @param use_subunits *Show or hide currency subunits*
 #'
 #'   `scalar<logical>` --- *default:* `TRUE`
