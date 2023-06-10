@@ -2711,7 +2711,7 @@ round_gt <- function(x, digits = 0) {
 #'
 #' @param currency *Currency to use*
 #'
-#'   `scalar<character>|obj:<gt_currency>` --- *default:* `"USD"`
+#'   `scalar<character>|obj:<gt_currency>` --- *default:* `NULL` (`optional`)
 #'
 #'   The currency to use for the numeric value. This input can be
 #'   supplied as a 3-letter currency code (e.g., `"USD"` for U.S. Dollars,
