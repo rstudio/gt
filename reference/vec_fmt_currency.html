@@ -22,8 +22,9 @@ large-number suffixing: larger figures (thousands, millions, etc.) can
 be autoscaled and decorated with the appropriate suffixes
 pattern: option to use a text pattern for decoration of the formatted
 currency values
-locale-based formatting: providing a locale ID will result in
-currency formatting specific to the chosen locale
+locale-based formatting: providing a locale ID will result in currency
+formatting specific to the chosen locale; it will also retrieve the locale's
+currency if none is explicitly given
 
 
 We can use the info_currencies() function for a useful reference on all of
@@ -50,8 +51,9 @@ large-number suffixing: larger figures (thousands, millions, etc.) can
 be autoscaled and decorated with the appropriate suffixes
 pattern: option to use a text pattern for decoration of the formatted
 currency values
-locale-based formatting: providing a locale ID will result in
-currency formatting specific to the chosen locale
+locale-based formatting: providing a locale ID will result in currency
+formatting specific to the chosen locale; it will also retrieve the locale's
+currency if none is explicitly given
 
 
 We can use the info_currencies() function for a useful reference on all of
@@ -137,8 +139,9 @@ and provide a choice of separator symbol</p></li>
 be autoscaled and decorated with the appropriate suffixes</p></li>
 <li><p>pattern: option to use a text pattern for decoration of the formatted
 currency values</p></li>
-<li><p>locale-based formatting: providing a locale ID will result in
-currency formatting specific to the chosen locale</p></li>
+<li><p>locale-based formatting: providing a locale ID will result in currency
+formatting specific to the chosen locale; it will also retrieve the locale's
+currency if none is explicitly given</p></li>
 </ul><p>We can use the <code><a href="info_currencies.html">info_currencies()</a></code> function for a useful reference on all of
 the possible inputs to the <code>currency</code> argument.</p>
     </div>
@@ -147,7 +150,7 @@ the possible inputs to the <code>currency</code> argument.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">vec_fmt_currency</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
-<span>  currency <span class="op">=</span> <span class="st">"USD"</span>,</span>
+<span>  currency <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  use_subunits <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  decimals <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  drop_trailing_dec_mark <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -177,7 +180,7 @@ vector of the same length. Values within the vector will be formatted.</p></dd>
 
 <dt>currency</dt>
 <dd><p><em>Currency to use</em></p>
-<p><code>scalar&lt;character&gt;|obj:&lt;gt_currency&gt;</code> --- <em>default:</em> <code>"USD"</code></p>
+<p><code>scalar&lt;character&gt;|obj:&lt;gt_currency&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>The currency to use for the numeric value. This input can be
 supplied as a 3-letter currency code (e.g., <code>"USD"</code> for U.S. Dollars,
 <code>"EUR"</code> for the Euro currency). Use <code><a href="info_currencies.html">info_currencies()</a></code> to get an
@@ -192,7 +195,14 @@ currency, where the string could vary across output contexts. For example,
 using <code>currency(html = "&amp;fnof;", default = "f")</code> would give us a suitable
 glyph for the Dutch guilder in an HTML output table, and it would simply be
 the letter "f" in all other output contexts). Please note that <code>decimals</code>
-will default to <code>2</code> when using the <code><a href="currency.html">currency()</a></code> helper function.</p></dd>
+will default to <code>2</code> when using the <code><a href="currency.html">currency()</a></code> helper function.</p>
+<p>If nothing is provided here but a <code>locale</code> value has been set (either in
+this function call or as part of the initial <code><a href="gt.html">gt()</a></code> call), the currency
+will be obtained from that locale. Virtually all locales are linked to a
+territory that is a country (use <code><a href="info_locales.html">info_locales()</a></code> for details on all
+locales used in this package), so, the in-use (or <em>de facto</em>) currency will
+be obtained. As the default locale is <code>"en"</code>, the <code>"USD"</code> currency will be
+used if neither a <code>locale</code> nor a <code>currency</code> value is given.</p></dd>
 
 
 <dt>use_subunits</dt>
@@ -370,7 +380,7 @@ Pounds through <code>currency = "GBP"</code>:</p>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "GBP5.20" "GBP8.65" "GBP0.00" "-GBP5.30" "NA"</span></span></code></pre><p></p></div>
 <p>If we are formatting for a different locale, we could supply the locale ID
 and let <strong>gt</strong> handle all locale-specific formatting options:</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/vec_fmt_currency.html">vec_fmt_currency</a></span><span class="op">(</span><span class="va">num_vals</span>, currency <span class="op">=</span> <span class="st">"EUR"</span>, locale <span class="op">=</span> <span class="st">"fr"</span><span class="op">)</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/vec_fmt_currency.html">vec_fmt_currency</a></span><span class="op">(</span><span class="va">num_vals</span>, locale <span class="op">=</span> <span class="st">"fr"</span><span class="op">)</span></span></code></pre><p></p></div>
 <p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "EUR5,20" "EUR8,65" "EUR0,00" "-EUR5,30" "NA"</span></span></code></pre><p></p></div>
 <p>There are many options for formatting values. Perhaps you need to have
 explicit positive and negative signs? Use <code>force_sign = TRUE</code> for that.</p>

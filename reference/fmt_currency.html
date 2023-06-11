@@ -24,7 +24,8 @@ be autoscaled and decorated with the appropriate suffixes
 pattern: option to use a text pattern for decoration of the formatted
 currency values
 locale-based formatting: providing a locale ID will result in currency
-formatting specific to the chosen locale
+formatting specific to the chosen locale; it will also retrieve the locale's
+currency if none is explicitly given
 
 
 We can use the info_currencies() function for a useful reference on all of
@@ -53,7 +54,8 @@ be autoscaled and decorated with the appropriate suffixes
 pattern: option to use a text pattern for decoration of the formatted
 currency values
 locale-based formatting: providing a locale ID will result in currency
-formatting specific to the chosen locale
+formatting specific to the chosen locale; it will also retrieve the locale's
+currency if none is explicitly given
 
 
 We can use the info_currencies() function for a useful reference on all of
@@ -141,7 +143,8 @@ be autoscaled and decorated with the appropriate suffixes</p></li>
 <li><p>pattern: option to use a text pattern for decoration of the formatted
 currency values</p></li>
 <li><p>locale-based formatting: providing a locale ID will result in currency
-formatting specific to the chosen locale</p></li>
+formatting specific to the chosen locale; it will also retrieve the locale's
+currency if none is explicitly given</p></li>
 </ul><p>We can use the <code><a href="info_currencies.html">info_currencies()</a></code> function for a useful reference on all of
 the possible inputs to the <code>currency</code> argument.</p>
     </div>
@@ -152,7 +155,7 @@ the possible inputs to the <code>currency</code> argument.</p>
 <span>  <span class="va">data</span>,</span>
 <span>  columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  currency <span class="op">=</span> <span class="st">"USD"</span>,</span>
+<span>  currency <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  use_subunits <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  decimals <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  drop_trailing_dec_mark <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -204,7 +207,7 @@ need (e.g., <code>[colname_1] &gt; 100 &amp; [colname_2] &lt; 50</code>).</p></d
 
 <dt>currency</dt>
 <dd><p><em>Currency to use</em></p>
-<p><code>scalar&lt;character&gt;|obj:&lt;gt_currency&gt;</code> --- <em>default:</em> <code>"USD"</code></p>
+<p><code>scalar&lt;character&gt;|obj:&lt;gt_currency&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>The currency to use for the numeric value. This input can be
 supplied as a 3-letter currency code (e.g., <code>"USD"</code> for U.S. Dollars,
 <code>"EUR"</code> for the Euro currency). Use <code><a href="info_currencies.html">info_currencies()</a></code> to get an
@@ -219,7 +222,14 @@ currency, where the string could vary across output contexts. For example,
 using <code>currency(html = "&amp;fnof;", default = "f")</code> would give us a suitable
 glyph for the Dutch guilder in an HTML output table, and it would simply be
 the letter "f" in all other output contexts). Please note that <code>decimals</code>
-will default to <code>2</code> when using the <code><a href="currency.html">currency()</a></code> helper function.</p></dd>
+will default to <code>2</code> when using the <code><a href="currency.html">currency()</a></code> helper function.</p>
+<p>If nothing is provided here but a <code>locale</code> value has been set (either in
+this function call or as part of the initial <code><a href="gt.html">gt()</a></code> call), the currency
+will be obtained from that locale. Virtually all locales are linked to a
+territory that is a country (use <code><a href="info_locales.html">info_locales()</a></code> for details on all
+locales used in this package), so, the in-use (or <em>de facto</em>) currency will
+be obtained. As the default locale is <code>"en"</code>, the <code>"USD"</code> currency will be
+used if neither a <code>locale</code> nor a <code>currency</code> value is given.</p></dd>
 
 
 <dt>use_subunits</dt>
@@ -437,10 +447,12 @@ more complex predicate expression.</p>
 
 <p>This formatting function can adapt outputs according to a provided <code>locale</code>
 value. Examples include <code>"en"</code> for English (United States) and <code>"fr"</code> for
-French (France). The use of a valid locale ID here means separator and
+French (France). The use of a locale ID here means separator and
 decimal marks will be correct for the given locale. Should any values be
 provided in <code>sep_mark</code> or <code>dec_mark</code>, they will be overridden by the locale's
-preferred values.</p>
+preferred values. In addition to number formatting, providing a <code>locale</code>
+value and not providing a <code>currency</code> allows <strong>gt</strong> to obtain the currency
+code from the locale's territory.</p>
 <p>Note that a <code>locale</code> value provided here will override any global locale
 setting performed in <code><a href="gt.html">gt()</a></code>'s own <code>locale</code> argument (it is settable there as
 a value received by all other functions that have a <code>locale</code> argument). As a
@@ -452,30 +464,45 @@ useful reference on which locales are supported, we can use the
     
 
 
-<p>Use the <code><a href="exibble.html">exibble</a></code> dataset to create a <strong>gt</strong> table. Using the
-<code>fmt_currency()</code> function, we'll format values in the <code>currency</code> column to
-display as currency values in euros (<code>"EUR"</code>).</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/fmt_currency.html">fmt_currency</a></span><span class="op">(</span></span>
-<span>    columns <span class="op">=</span> <span class="va">currency</span>,</span>
-<span>    currency <span class="op">=</span> <span class="st">"EUR"</span></span>
-<span>  <span class="op">)</span></span></code></pre><p></p></div>
-<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_currency_1.png" alt="This image of a table was generated from the first code example in the `fmt_currency()` help file." style="width:100%;"></p>
-<p>Use the <code><a href="exibble.html">exibble</a></code> to create a <strong>gt</strong> table. Keep only the <code>num</code> and
-<code>currency</code>, columns, then, format those columns using the <code>"CNY"</code> and <code>"GBP"</code>
-currencies.</p>
+<p>Let's make a simple <strong>gt</strong> table from the <code><a href="exibble.html">exibble</a></code> dataset. We'll keep
+only the <code>num</code> and <code>currency</code>, columns, then, format those columns using
+<code>fmt_currency()</code> (with the <code>"JPY"</code> and <code>"GBP"</code> currencies).</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">num</span>, <span class="va">currency</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_currency.html">fmt_currency</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">num</span>,</span>
-<span>    currency <span class="op">=</span> <span class="st">"CNY"</span></span>
+<span>    currency <span class="op">=</span> <span class="st">"JPY"</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_currency.html">fmt_currency</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">currency</span>,</span>
 <span>    currency <span class="op">=</span> <span class="st">"GBP"</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_currency_1.png" alt="This image of a table was generated from the first code example in the `fmt_currency()` help file." style="width:100%;"></p>
+<p>With the <code><a href="pizzaplace.html">pizzaplace</a></code> dataset, let's make a summary table that gets the
+number of <code>"hawaiian"</code> pizzas sold (and revenue generated) by month. In the
+<strong>gt</strong> table, we'll format only the <code>revenue</code> column. The <code>currency</code> value is
+automatically U.S. Dollars when don't supply either a currency code or a
+locale. We'll also create a grand summary with the <code><a href="grand_summary_rows.html">grand_summary_rows()</a></code>
+function. Within that summary row, the total revenue needs to be formatted
+with <code>fmt_currency()</code> and we can do that within the <code>fmt</code> argument.</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">pizzaplace</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">name</span> <span class="op">==</span> <span class="st">"hawaiian"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>month <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/month.html" class="external-link">month</a></span><span class="op">(</span><span class="va">date</span>, label <span class="op">=</span> <span class="cn">TRUE</span>, abbr <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">month</span>, <span class="va">price</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">month</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span></span>
+<span>    `number sold` <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    revenue <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">price</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"month"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_header.html">tab_header</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Summary of Hawaiian Pizzas Sold by Month"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_currency.html">fmt_currency</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">revenue</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/grand_summary_rows.html">grand_summary_rows</a></span><span class="op">(</span></span>
+<span>    fns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Totals:"</span>, id <span class="op">=</span> <span class="st">"totals"</span>, fn <span class="op">=</span> <span class="st">"sum"</span><span class="op">)</span>,</span>
+<span>    fmt <span class="op">=</span> <span class="op">~</span> <span class="fu"><a href="../reference/fmt_currency.html">fmt_currency</a></span><span class="op">(</span><span class="va">.</span>, columns <span class="op">=</span> <span class="va">revenue</span><span class="op">)</span>,</span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/opt_all_caps.html">opt_all_caps</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_currency_2.png" alt="This image of a table was generated from the second code example in the `fmt_currency()` help file." style="width:100%;"></p>
     </div>
     <div class="section level2">
