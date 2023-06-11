@@ -335,10 +335,12 @@ more complex predicate expression.
 
 This formatting function can adapt outputs according to a provided \code{locale}
 value. Examples include \code{"en"} for English (United States) and \code{"fr"} for
-French (France). The use of a valid locale ID here means separator and
+French (France). The use of a locale ID here means separator and
 decimal marks will be correct for the given locale. Should any values be
 provided in \code{sep_mark} or \code{dec_mark}, they will be overridden by the locale's
-preferred values.
+preferred values. In addition to number formatting, providing a \code{locale}
+value and not providing a \code{currency} allows \strong{gt} to obtain the currency
+code from the locale's territory.
 
 Note that a \code{locale} value provided here will override any global locale
 setting performed in \code{\link[=gt]{gt()}}'s own \code{locale} argument (it is settable there as
