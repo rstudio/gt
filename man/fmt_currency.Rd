@@ -352,15 +352,20 @@ useful reference on which locales are supported, we can use the
 \section{Examples}{
 
 
-Use the \code{\link{exibble}} dataset to create a \strong{gt} table. Using the
-\code{fmt_currency()} function, we'll format values in the \code{currency} column to
-display as currency values in euros (\code{"EUR"}).
+Let's make a simple \strong{gt} table from the \code{\link{exibble}} dataset. We'll keep
+only the \code{num} and \code{currency}, columns, then, format those columns using
+\code{fmt_currency()} (with the \code{"JPY"} and \code{"GBP"} currencies).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(num, currency) |>
   gt() |>
   fmt_currency(
+    columns = num,
+    currency = "JPY"
+  ) |>
+  fmt_currency(
     columns = currency,
-    currency = "EUR"
+    currency = "GBP"
   )
 }\if{html}{\out{</div>}}
 
@@ -368,21 +373,31 @@ display as currency values in euros (\code{"EUR"}).
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_currency_1.png" alt="This image of a table was generated from the first code example in the `fmt_currency()` help file." style="width:100\%;">
 }}
 
-Use the \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{num} and
-\code{currency}, columns, then, format those columns using the \code{"CNY"} and \code{"GBP"}
-currencies.
+With the \code{\link{pizzaplace}} dataset, let's make a summary table that gets the
+number of \code{"hawaiian"} pizzas sold (and revenue generated) by month. In the
+\strong{gt} table, we'll format only the \code{revenue} column. The \code{currency} value is
+automatically U.S. Dollars when don't supply either a currency code or a
+locale. We'll also create a grand summary with the \code{\link[=grand_summary_rows]{grand_summary_rows()}}
+function. Within that summary row, the total revenue needs to be formatted
+with \code{fmt_currency()} and we can do that within the \code{fmt} argument.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
-  dplyr::select(num, currency) |>
-  gt() |>
-  fmt_currency(
-    columns = num,
-    currency = "CNY"
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
+  dplyr::filter(name == "hawaiian") |>
+  dplyr::mutate(month = lubridate::month(date, label = TRUE, abbr = TRUE)) |>
+  dplyr::select(month, price) |>
+  dplyr::group_by(month) |>
+  dplyr::summarize(
+    `number sold` = dplyr::n(),
+    revenue = sum(price)
   ) |>
-  fmt_currency(
-    columns = currency,
-    currency = "GBP"
-  )
+  gt(rowname_col = "month") |>
+  tab_header(title = "Summary of Hawaiian Pizzas Sold by Month") |>
+  fmt_currency(columns = revenue) |>
+  grand_summary_rows(
+    fns = list(label = "Totals:", id = "totals", fn = "sum"),
+    fmt = ~ fmt_currency(., columns = revenue),
+  ) |>
+  opt_all_caps()
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
