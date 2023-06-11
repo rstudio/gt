@@ -1435,8 +1435,9 @@ vec_fmt_fraction <- function(
 #' be autoscaled and decorated with the appropriate suffixes
 #' - pattern: option to use a text pattern for decoration of the formatted
 #' currency values
-#' - locale-based formatting: providing a locale ID will result in
-#' currency formatting specific to the chosen locale
+#' - locale-based formatting: providing a locale ID will result in currency
+#' formatting specific to the chosen locale; it will also retrieve the locale's
+#' currency if none is explicitly given
 #'
 #' We can use the [info_currencies()] function for a useful reference on all of
 #' the possible inputs to the `currency` argument.
@@ -1445,7 +1446,7 @@ vec_fmt_fraction <- function(
 #'
 #' @param currency *Currency to use*
 #'
-#'   `scalar<character>|obj:<gt_currency>` --- *default:* `"USD"`
+#'   `scalar<character>|obj:<gt_currency>` --- *default:* `NULL` (`optional`)
 #'
 #'   The currency to use for the numeric value. This input can be
 #'   supplied as a 3-letter currency code (e.g., `"USD"` for U.S. Dollars,
@@ -1463,6 +1464,14 @@ vec_fmt_fraction <- function(
 #'   glyph for the Dutch guilder in an HTML output table, and it would simply be
 #'   the letter "f" in all other output contexts). Please note that `decimals`
 #'   will default to `2` when using the [currency()] helper function.
+#'
+#'   If nothing is provided here but a `locale` value has been set (either in
+#'   this function call or as part of the initial [gt()] call), the currency
+#'   will be obtained from that locale. Virtually all locales are linked to a
+#'   territory that is a country (use [info_locales()] for details on all
+#'   locales used in this package), so, the in-use (or *de facto*) currency will
+#'   be obtained. As the default locale is `"en"`, the `"USD"` currency will be
+#'   used if neither a `locale` nor a `currency` value is given.
 #'
 #' @param use_subunits *Show or hide currency subunits*
 #'
@@ -1524,7 +1533,7 @@ vec_fmt_fraction <- function(
 #' and let **gt** handle all locale-specific formatting options:
 #'
 #' ```r
-#' vec_fmt_currency(num_vals, currency = "EUR", locale = "fr")
+#' vec_fmt_currency(num_vals, locale = "fr")
 #' ```
 #' ```
 #' #> [1] "EUR5,20" "EUR8,65" "EUR0,00" "-EUR5,30" "NA"
@@ -1563,7 +1572,7 @@ vec_fmt_fraction <- function(
 #' @export
 vec_fmt_currency <- function(
     x,
-    currency = "USD",
+    currency = NULL,
     use_subunits = TRUE,
     decimals = NULL,
     drop_trailing_dec_mark = TRUE,

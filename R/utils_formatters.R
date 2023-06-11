@@ -173,6 +173,27 @@ get_locale_dec_mark <- function(locale = NULL, default) {
   filter_table_to_value(locales, decimal, locale == {{ locale }})
 }
 
+#' Get the currency code value associated with a locale's territory
+#'
+#' @param locale The user-supplied `locale` value, found in several `fmt_*()`
+#'   functions. This is expected as `NULL` if not supplied by the user.
+#' @noRd
+get_locale_currency_code <- function(locale = NULL) {
+
+  # If `locale` is NULL then return `"USD"`
+  if (is.null(locale)) {
+    return("USD")
+  }
+
+  locale <- locales[locales$locale == locale, ][["currency_code"]][[1]]
+
+  if (is.na(locale)) {
+    return("USD")
+  }
+
+  locale
+}
+
 #' Get the `idx_set` vector based on a locale
 #'
 #' @param locale The user-supplied `locale` value, found in several `fmt_*()`

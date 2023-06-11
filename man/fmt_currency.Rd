@@ -8,7 +8,7 @@ fmt_currency(
   data,
   columns = everything(),
   rows = everything(),
-  currency = "USD",
+  currency = NULL,
   use_subunits = TRUE,
   decimals = NULL,
   drop_trailing_dec_mark = TRUE,
@@ -58,7 +58,7 @@ need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{currency}{\emph{Currency to use}
 
-\verb{scalar<character>|obj:<gt_currency>} --- \emph{default:} \code{"USD"}
+\verb{scalar<character>|obj:<gt_currency>} --- \emph{default:} \code{NULL} (\code{optional})
 
 The currency to use for the numeric value. This input can be
 supplied as a 3-letter currency code (e.g., \code{"USD"} for U.S. Dollars,
@@ -75,7 +75,15 @@ currency, where the string could vary across output contexts. For example,
 using \code{currency(html = "&fnof;", default = "f")} would give us a suitable
 glyph for the Dutch guilder in an HTML output table, and it would simply be
 the letter "f" in all other output contexts). Please note that \code{decimals}
-will default to \code{2} when using the \code{\link[=currency]{currency()}} helper function.}
+will default to \code{2} when using the \code{\link[=currency]{currency()}} helper function.
+
+If nothing is provided here but a \code{locale} value has been set (either in
+this function call or as part of the initial \code{\link[=gt]{gt()}} call), the currency
+will be obtained from that locale. Virtually all locales are linked to a
+territory that is a country (use \code{\link[=info_locales]{info_locales()}} for details on all
+locales used in this package), so, the in-use (or \emph{de facto}) currency will
+be obtained. As the default locale is \code{"en"}, the \code{"USD"} currency will be
+used if neither a \code{locale} nor a \code{currency} value is given.}
 
 \item{use_subunits}{\emph{Show or hide currency subunits}
 
@@ -265,7 +273,8 @@ be autoscaled and decorated with the appropriate suffixes
 \item pattern: option to use a text pattern for decoration of the formatted
 currency values
 \item locale-based formatting: providing a locale ID will result in currency
-formatting specific to the chosen locale
+formatting specific to the chosen locale; it will also retrieve the locale's
+currency if none is explicitly given
 }
 
 We can use the \code{\link[=info_currencies]{info_currencies()}} function for a useful reference on all of
@@ -326,10 +335,12 @@ more complex predicate expression.
 
 This formatting function can adapt outputs according to a provided \code{locale}
 value. Examples include \code{"en"} for English (United States) and \code{"fr"} for
-French (France). The use of a valid locale ID here means separator and
+French (France). The use of a locale ID here means separator and
 decimal marks will be correct for the given locale. Should any values be
 provided in \code{sep_mark} or \code{dec_mark}, they will be overridden by the locale's
-preferred values.
+preferred values. In addition to number formatting, providing a \code{locale}
+value and not providing a \code{currency} allows \strong{gt} to obtain the currency
+code from the locale's territory.
 
 Note that a \code{locale} value provided here will override any global locale
 setting performed in \code{\link[=gt]{gt()}}'s own \code{locale} argument (it is settable there as
@@ -341,15 +352,20 @@ useful reference on which locales are supported, we can use the
 \section{Examples}{
 
 
-Use the \code{\link{exibble}} dataset to create a \strong{gt} table. Using the
-\code{fmt_currency()} function, we'll format values in the \code{currency} column to
-display as currency values in euros (\code{"EUR"}).
+Let's make a simple \strong{gt} table from the \code{\link{exibble}} dataset. We'll keep
+only the \code{num} and \code{currency}, columns, then, format those columns using
+\code{fmt_currency()} (with the \code{"JPY"} and \code{"GBP"} currencies).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(num, currency) |>
   gt() |>
   fmt_currency(
+    columns = num,
+    currency = "JPY"
+  ) |>
+  fmt_currency(
     columns = currency,
-    currency = "EUR"
+    currency = "GBP"
   )
 }\if{html}{\out{</div>}}
 
@@ -357,21 +373,31 @@ display as currency values in euros (\code{"EUR"}).
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_currency_1.png" alt="This image of a table was generated from the first code example in the `fmt_currency()` help file." style="width:100\%;">
 }}
 
-Use the \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{num} and
-\code{currency}, columns, then, format those columns using the \code{"CNY"} and \code{"GBP"}
-currencies.
+With the \code{\link{pizzaplace}} dataset, let's make a summary table that gets the
+number of \code{"hawaiian"} pizzas sold (and revenue generated) by month. In the
+\strong{gt} table, we'll format only the \code{revenue} column. The \code{currency} value is
+automatically U.S. Dollars when don't supply either a currency code or a
+locale. We'll also create a grand summary with the \code{\link[=grand_summary_rows]{grand_summary_rows()}}
+function. Within that summary row, the total revenue needs to be formatted
+with \code{fmt_currency()} and we can do that within the \code{fmt} argument.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
-  dplyr::select(num, currency) |>
-  gt() |>
-  fmt_currency(
-    columns = num,
-    currency = "CNY"
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
+  dplyr::filter(name == "hawaiian") |>
+  dplyr::mutate(month = lubridate::month(date, label = TRUE, abbr = TRUE)) |>
+  dplyr::select(month, price) |>
+  dplyr::group_by(month) |>
+  dplyr::summarize(
+    `number sold` = dplyr::n(),
+    revenue = sum(price)
   ) |>
-  fmt_currency(
-    columns = currency,
-    currency = "GBP"
-  )
+  gt(rowname_col = "month") |>
+  tab_header(title = "Summary of Hawaiian Pizzas Sold by Month") |>
+  fmt_currency(columns = revenue) |>
+  grand_summary_rows(
+    fns = list(label = "Totals:", id = "totals", fn = "sum"),
+    fmt = ~ fmt_currency(., columns = revenue),
+  ) |>
+  opt_all_caps()
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{

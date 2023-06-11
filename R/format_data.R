@@ -2702,7 +2702,8 @@ round_gt <- function(x, digits = 0) {
 #' - pattern: option to use a text pattern for decoration of the formatted
 #' currency values
 #' - locale-based formatting: providing a locale ID will result in currency
-#' formatting specific to the chosen locale
+#' formatting specific to the chosen locale; it will also retrieve the locale's
+#' currency if none is explicitly given
 #'
 #' We can use the [info_currencies()] function for a useful reference on all of
 #' the possible inputs to the `currency` argument.
@@ -2711,7 +2712,7 @@ round_gt <- function(x, digits = 0) {
 #'
 #' @param currency *Currency to use*
 #'
-#'   `scalar<character>|obj:<gt_currency>` --- *default:* `"USD"`
+#'   `scalar<character>|obj:<gt_currency>` --- *default:* `NULL` (`optional`)
 #'
 #'   The currency to use for the numeric value. This input can be
 #'   supplied as a 3-letter currency code (e.g., `"USD"` for U.S. Dollars,
@@ -2729,6 +2730,14 @@ round_gt <- function(x, digits = 0) {
 #'   glyph for the Dutch guilder in an HTML output table, and it would simply be
 #'   the letter "f" in all other output contexts). Please note that `decimals`
 #'   will default to `2` when using the [currency()] helper function.
+#'
+#'   If nothing is provided here but a `locale` value has been set (either in
+#'   this function call or as part of the initial [gt()] call), the currency
+#'   will be obtained from that locale. Virtually all locales are linked to a
+#'   territory that is a country (use [info_locales()] for details on all
+#'   locales used in this package), so, the in-use (or *de facto*) currency will
+#'   be obtained. As the default locale is `"en"`, the `"USD"` currency will be
+#'   used if neither a `locale` nor a `currency` value is given.
 #'
 #' @param use_subunits *Show or hide currency subunits*
 #'
@@ -2805,10 +2814,12 @@ round_gt <- function(x, digits = 0) {
 #'
 #' This formatting function can adapt outputs according to a provided `locale`
 #' value. Examples include `"en"` for English (United States) and `"fr"` for
-#' French (France). The use of a valid locale ID here means separator and
+#' French (France). The use of a locale ID here means separator and
 #' decimal marks will be correct for the given locale. Should any values be
 #' provided in `sep_mark` or `dec_mark`, they will be overridden by the locale's
-#' preferred values.
+#' preferred values. In addition to number formatting, providing a `locale`
+#' value and not providing a `currency` allows **gt** to obtain the currency
+#' code from the locale's territory.
 #'
 #' Note that a `locale` value provided here will override any global locale
 #' setting performed in [gt()]'s own `locale` argument (it is settable there as
@@ -2818,26 +2829,9 @@ round_gt <- function(x, digits = 0) {
 #'
 #' @section Examples:
 #'
-#' Use the [`exibble`] dataset to create a **gt** table. Using the
-#' `fmt_currency()` function, we'll format values in the `currency` column to
-#' display as currency values in euros (`"EUR"`).
-#'
-#' ```r
-#' exibble |>
-#'   gt() |>
-#'   fmt_currency(
-#'     columns = currency,
-#'     currency = "EUR"
-#'   )
-#' ```
-#'
-#' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_fmt_currency_1.png")`
-#' }}
-#'
-#' Use the [`exibble`] to create a **gt** table. Keep only the `num` and
-#' `currency`, columns, then, format those columns using the `"CNY"` and `"GBP"`
-#' currencies.
+#' Let's make a simple **gt** table from the [`exibble`] dataset. We'll keep
+#' only the `num` and `currency`, columns, then, format those columns using
+#' `fmt_currency()` (with the `"JPY"` and `"GBP"` currencies).
 #'
 #' ```r
 #' exibble |>
@@ -2845,12 +2839,44 @@ round_gt <- function(x, digits = 0) {
 #'   gt() |>
 #'   fmt_currency(
 #'     columns = num,
-#'     currency = "CNY"
+#'     currency = "JPY"
 #'   ) |>
 #'   fmt_currency(
 #'     columns = currency,
 #'     currency = "GBP"
 #'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_currency_1.png")`
+#' }}
+#'
+#' With the [`pizzaplace`] dataset, let's make a summary table that gets the
+#' number of `"hawaiian"` pizzas sold (and revenue generated) by month. In the
+#' **gt** table, we'll format only the `revenue` column. The `currency` value is
+#' automatically U.S. Dollars when don't supply either a currency code or a
+#' locale. We'll also create a grand summary with the [grand_summary_rows()]
+#' function. Within that summary row, the total revenue needs to be formatted
+#' with `fmt_currency()` and we can do that within the `fmt` argument.
+#'
+#' ```r
+#' pizzaplace |>
+#'   dplyr::filter(name == "hawaiian") |>
+#'   dplyr::mutate(month = lubridate::month(date, label = TRUE, abbr = TRUE)) |>
+#'   dplyr::select(month, price) |>
+#'   dplyr::group_by(month) |>
+#'   dplyr::summarize(
+#'     `number sold` = dplyr::n(),
+#'     revenue = sum(price)
+#'   ) |>
+#'   gt(rowname_col = "month") |>
+#'   tab_header(title = "Summary of Hawaiian Pizzas Sold by Month") |>
+#'   fmt_currency(columns = revenue) |>
+#'   grand_summary_rows(
+#'     fns = list(label = "Totals:", id = "totals", fn = "sum"),
+#'     fmt = ~ fmt_currency(., columns = revenue),
+#'   ) |>
+#'   opt_all_caps()
 #' ```
 #'
 #' \if{html}{\out{
@@ -2873,7 +2899,7 @@ fmt_currency <- function(
     data,
     columns = everything(),
     rows = everything(),
-    currency = "USD",
+    currency = NULL,
     use_subunits = TRUE,
     decimals = NULL,
     drop_trailing_dec_mark = TRUE,
@@ -2922,6 +2948,12 @@ fmt_currency <- function(
       with numeric data."
       )
     }
+  }
+
+  # Resolve the currency either from direct input in `currency` or
+  # through a locale
+  if (is.null(currency)) {
+    currency <- get_locale_currency_code(locale = locale)
   }
 
   # Stop function if `currency` does not have a valid value

@@ -6,7 +6,7 @@
 \usage{
 vec_fmt_currency(
   x,
-  currency = "USD",
+  currency = NULL,
   use_subunits = TRUE,
   decimals = NULL,
   drop_trailing_dec_mark = TRUE,
@@ -34,7 +34,7 @@ vector of the same length. Values within the vector will be formatted.}
 
 \item{currency}{\emph{Currency to use}
 
-\verb{scalar<character>|obj:<gt_currency>} --- \emph{default:} \code{"USD"}
+\verb{scalar<character>|obj:<gt_currency>} --- \emph{default:} \code{NULL} (\code{optional})
 
 The currency to use for the numeric value. This input can be
 supplied as a 3-letter currency code (e.g., \code{"USD"} for U.S. Dollars,
@@ -51,7 +51,15 @@ currency, where the string could vary across output contexts. For example,
 using \code{currency(html = "&fnof;", default = "f")} would give us a suitable
 glyph for the Dutch guilder in an HTML output table, and it would simply be
 the letter "f" in all other output contexts). Please note that \code{decimals}
-will default to \code{2} when using the \code{\link[=currency]{currency()}} helper function.}
+will default to \code{2} when using the \code{\link[=currency]{currency()}} helper function.
+
+If nothing is provided here but a \code{locale} value has been set (either in
+this function call or as part of the initial \code{\link[=gt]{gt()}} call), the currency
+will be obtained from that locale. Virtually all locales are linked to a
+territory that is a country (use \code{\link[=info_locales]{info_locales()}} for details on all
+locales used in this package), so, the in-use (or \emph{de facto}) currency will
+be obtained. As the default locale is \code{"en"}, the \code{"USD"} currency will be
+used if neither a \code{locale} nor a \code{currency} value is given.}
 
 \item{use_subunits}{\emph{Show or hide currency subunits}
 
@@ -233,8 +241,9 @@ and provide a choice of separator symbol
 be autoscaled and decorated with the appropriate suffixes
 \item pattern: option to use a text pattern for decoration of the formatted
 currency values
-\item locale-based formatting: providing a locale ID will result in
-currency formatting specific to the chosen locale
+\item locale-based formatting: providing a locale ID will result in currency
+formatting specific to the chosen locale; it will also retrieve the locale's
+currency if none is explicitly given
 }
 
 We can use the \code{\link[=info_currencies]{info_currencies()}} function for a useful reference on all of
@@ -272,7 +281,7 @@ Pounds through \code{currency = "GBP"}:
 If we are formatting for a different locale, we could supply the locale ID
 and let \strong{gt} handle all locale-specific formatting options:
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_currency(num_vals, currency = "EUR", locale = "fr")
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_currency(num_vals, locale = "fr")
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "EUR5,20" "EUR8,65" "EUR0,00" "-EUR5,30" "NA"
