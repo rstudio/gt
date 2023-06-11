@@ -2829,26 +2829,9 @@ round_gt <- function(x, digits = 0) {
 #'
 #' @section Examples:
 #'
-#' Use the [`exibble`] dataset to create a **gt** table. Using the
-#' `fmt_currency()` function, we'll format values in the `currency` column to
-#' display as currency values in euros (`"EUR"`).
-#'
-#' ```r
-#' exibble |>
-#'   gt() |>
-#'   fmt_currency(
-#'     columns = currency,
-#'     currency = "EUR"
-#'   )
-#' ```
-#'
-#' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_fmt_currency_1.png")`
-#' }}
-#'
-#' Use the [`exibble`] to create a **gt** table. Keep only the `num` and
-#' `currency`, columns, then, format those columns using the `"CNY"` and `"GBP"`
-#' currencies.
+#' Let's make a simple **gt** table from the [`exibble`] dataset. We'll keep
+#' only the `num` and `currency`, columns, then, format those columns using
+#' `fmt_currency()` (with the `"JPY"` and `"GBP"` currencies).
 #'
 #' ```r
 #' exibble |>
@@ -2856,12 +2839,44 @@ round_gt <- function(x, digits = 0) {
 #'   gt() |>
 #'   fmt_currency(
 #'     columns = num,
-#'     currency = "CNY"
+#'     currency = "JPY"
 #'   ) |>
 #'   fmt_currency(
 #'     columns = currency,
 #'     currency = "GBP"
 #'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_currency_1.png")`
+#' }}
+#'
+#' With the [`pizzaplace`] dataset, let's make a summary table that gets the
+#' number of `"hawaiian"` pizzas sold (and revenue generated) by month. In the
+#' **gt** table, we'll format only the `revenue` column. The `currency` value is
+#' automatically U.S. Dollars when don't supply either a currency code or a
+#' locale. We'll also create a grand summary with the [grand_summary_rows()]
+#' function. Within that summary row, the total revenue needs to be formatted
+#' with `fmt_currency()` and we can do that within the `fmt` argument.
+#'
+#' ```r
+#' pizzaplace |>
+#'   dplyr::filter(name == "hawaiian") |>
+#'   dplyr::mutate(month = lubridate::month(date, label = TRUE, abbr = TRUE)) |>
+#'   dplyr::select(month, price) |>
+#'   dplyr::group_by(month) |>
+#'   dplyr::summarize(
+#'     `number sold` = dplyr::n(),
+#'     revenue = sum(price)
+#'   ) |>
+#'   gt(rowname_col = "month") |>
+#'   tab_header(title = "Summary of Hawaiian Pizzas Sold by Month") |>
+#'   fmt_currency(columns = revenue) |>
+#'   grand_summary_rows(
+#'     fns = list(label = "Totals:", id = "totals", fn = "sum"),
+#'     fmt = ~ fmt_currency(., columns = revenue),
+#'   ) |>
+#'   opt_all_caps()
 #' ```
 #'
 #' \if{html}{\out{
