@@ -2814,10 +2814,12 @@ round_gt <- function(x, digits = 0) {
 #'
 #' This formatting function can adapt outputs according to a provided `locale`
 #' value. Examples include `"en"` for English (United States) and `"fr"` for
-#' French (France). The use of a valid locale ID here means separator and
+#' French (France). The use of a locale ID here means separator and
 #' decimal marks will be correct for the given locale. Should any values be
 #' provided in `sep_mark` or `dec_mark`, they will be overridden by the locale's
-#' preferred values.
+#' preferred values. In addition to number formatting, providing a `locale`
+#' value and not providing a `currency` allows **gt** to obtain the currency
+#' code from the locale's territory.
 #'
 #' Note that a `locale` value provided here will override any global locale
 #' setting performed in [gt()]'s own `locale` argument (it is settable there as
