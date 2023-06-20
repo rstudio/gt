@@ -414,7 +414,7 @@ create_body_component_l <- function(data) {
       row_splits_body = row_splits_body
     )
 
-  # Replace an NA group with an empty string
+  # Replace an NA group with a small amount of vertical space
   if (any(is.na(groups_rows_df$group_label))) {
 
     groups_rows_df <-
