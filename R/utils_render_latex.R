@@ -365,16 +365,6 @@ create_body_component_l <- function(data) {
   # character vectors by row, and create a vector of LaTeX body rows
   cell_matrix <- get_body_component_cell_matrix(data = data)
 
-  # Replace an NA group with an empty string
-  if (any(is.na(groups_rows_df$group_label))) {
-
-    groups_rows_df <-
-      dplyr::mutate(
-        groups_rows_df,
-        group_label = ifelse(is.na(group_label), "", group_label)
-      )
-  }
-
   row_splits_body <- split_row_content(cell_matrix)
 
   # Get the number of rows in the body
