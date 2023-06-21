@@ -896,6 +896,13 @@ create_body_rows_l <- function(
                 styles_i_col_text_color <- styles_i_col[[1]][["cell_text"]][["color"]]
                 styles_i_col_cell_color <- styles_i_col[[1]][["cell_fill"]][["color"]]
 
+                if (
+                  !is.null(styles_i_col[[1]][["cell_text"]][["weight"]]) &&
+                  styles_i_col[[1]][["cell_text"]][["weight"]] == "bold"
+                ) {
+                  content[i] <- paste0("\\textbf{", content[i], "}")
+                }
+
                 if (!is.null(styles_i_col_text_color)) {
                   content[i] <-
                     paste0(
