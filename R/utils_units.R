@@ -107,7 +107,17 @@ units_to_html <- function(units_object) {
 
     units_object_i <- units_object[[i]]
 
-    units_str_i <- paste0(units_str_i, units_object_i[["unit"]])
+    units_item <- units_object_i[["unit"]]
+
+    if (grepl("_", units_item, fixed = TRUE)) {
+
+      units_item_split <- unlist(strsplit(units_item, split = "_"))
+
+      units_item <-
+        paste0(units_item_split[1], units_html_subscript(units_item_split[2]))
+    }
+
+    units_str_i <- paste0(units_str_i, units_item)
 
     if (!is.na(units_object_i[["exponent"]])) {
 
