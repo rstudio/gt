@@ -60,4 +60,12 @@ test_that("Units are rendered properly", {
     generate_html_units("{{ N m /kg m^-2 }}"),
     "N m kg<span style=\"white-space:nowrap;\"><sup>&minus;1</sup></span> m<span style=\"white-space:nowrap;\"><sup>&minus;2</sup></span>"
   )
+  expect_equal(
+    generate_html_units("m_0 s"),
+    "m<span style=\"white-space:nowrap;\"><sub>0</sub></span> s"
+  )
+  expect_equal(
+    generate_html_units("m_0 s_1"),
+    "m<span style=\"white-space:nowrap;\"><sub>0</sub></span> s<span style=\"white-space:nowrap;\"><sub>1</sub></span>"
+  )
 })
