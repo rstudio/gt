@@ -364,6 +364,7 @@ create_body_component_l <- function(data) {
   # Get a matrix of body cells to render, split into a list of
   # character vectors by row, and create a vector of LaTeX body rows
   cell_matrix <- get_body_component_cell_matrix(data = data)
+
   row_splits_body <- split_row_content(cell_matrix)
 
   # Get the number of rows in the body
@@ -407,9 +408,13 @@ create_body_component_l <- function(data) {
     )
   }
 
-  body_rows <- create_body_rows_l(row_splits_body = row_splits_body)
+  body_rows <-
+    create_body_rows_l(
+      data = data,
+      row_splits_body = row_splits_body
+    )
 
-  # Replace an NA group with an empty string
+  # Replace an NA group with a small amount of vertical space
   if (any(is.na(groups_rows_df$group_label))) {
 
     groups_rows_df <-
@@ -804,18 +809,127 @@ create_group_rows_l <- function(
 
 
 # Function to build a vector of `body` rows
-create_body_rows_l <- function(row_splits_body) {
+create_body_rows_l <- function(
+    data,
+    row_splits_body
+) {
 
-  unname(
-    unlist(
-      lapply(
-        seq_len(length(row_splits_body)),
-        FUN = function(x) {
-          latex_body_row(content = row_splits_body[[x]], type = "row")
-        }
+  styles_tbl <- dt_styles_get(data = data)
+  styles_tbl <- dplyr::filter(styles_tbl, locname %in% c("stub", "data", "row_groups"))
+
+  # Obtain all of the visible (`"default"`), non-stub column names
+  # for the table from the `boxh` object
+  default_vars <- dt_boxhead_get_vars_default(data = data)
+
+  stub_layout <- get_stub_layout(data = data)
+
+  stub_is_2 <- length(stub_layout) > 1
+
+  if (is.null(stub_layout)) {
+    vars <- default_vars
+  } else if (!is.null(stub_layout) && !stub_is_2 && stub_layout == "rowname") {
+    vars <- c("::stub::", default_vars)
+  } else if (!is.null(stub_layout) && !stub_is_2 && stub_layout == "group_label") {
+    vars <- c("::group::", default_vars)
+  } else if (!is.null(stub_layout) && stub_is_2) {
+    vars <- c("::group::", "::stub::", default_vars)
+  }
+
+  if ("::group::" %in% vars) {
+    styles_tbl <- dplyr::mutate(styles_tbl, rownum = round(rownum))
+  }
+
+  body_rows <-
+    unname(
+      unlist(
+        lapply(
+          seq_len(length(row_splits_body)),
+          FUN = function(x) {
+
+            content <- row_splits_body[[x]]
+            content_length <- length(content)
+
+            styles_tbl_i <- dplyr::filter(styles_tbl, rownum == x)
+
+            if (nrow(styles_tbl_i) < 1) {
+              return(paste(paste(content, collapse = " & "), "\\\\ \n"))
+            }
+
+            for (i in seq_len(content_length)) {
+
+              colname_i <- vars[i]
+
+              if (
+                colname_i == "::group::" &&
+                "row_groups" %in% styles_tbl_i[["locname"]]
+              ) {
+
+                styles_tbl_i_col <- dplyr::filter(styles_tbl_i, locname == "row_groups")
+                styles_i_col <- styles_tbl_i_col[["styles"]]
+
+              } else if (
+                colname_i == "::stub::" &&
+                "stub" %in% styles_tbl_i[["locname"]]
+              ) {
+
+                styles_tbl_i_col <- dplyr::filter(styles_tbl_i, locname == "stub")
+                styles_i_col <- styles_tbl_i_col[["styles"]]
+
+              } else if (
+                "data" %in% styles_tbl_i[["locname"]] &&
+                colname_i %in% styles_tbl_i[["colname"]]
+              ) {
+
+                styles_tbl_i_col <- dplyr::filter(styles_tbl_i, colname == colname_i)
+                styles_i_col <- styles_tbl_i_col[["styles"]]
+
+              } else {
+                styles_i_col <- NULL
+              }
+
+              if (!is.null(styles_i_col)) {
+
+                # TODO: this only considers the first entry; we need to iterate
+                # through them since there may be multiple styles set for each
+                # body cell and that might result in several rows in `styles_tbl_i_col`
+                # (i.e., length greater than 1 in `styles_i_col`)
+                styles_i_col_text_color <- styles_i_col[[1]][["cell_text"]][["color"]]
+                styles_i_col_cell_color <- styles_i_col[[1]][["cell_fill"]][["color"]]
+
+                if (
+                  !is.null(styles_i_col[[1]][["cell_text"]][["weight"]]) &&
+                  styles_i_col[[1]][["cell_text"]][["weight"]] == "bold"
+                ) {
+                  content[i] <- paste0("\\textbf{", content[i], "}")
+                }
+
+                if (!is.null(styles_i_col_text_color)) {
+                  content[i] <-
+                    paste0(
+                      "\\textcolor[HTML]{",
+                      gsub("#", "", styles_i_col_text_color, fixed = TRUE),
+                      "}{", content[i], "}"
+                    )
+                }
+
+                if (!is.null(styles_i_col_cell_color)) {
+                  content[i] <-
+                    paste0(
+                      "\\cellcolor[HTML]{",
+                      gsub("#", "", styles_i_col_cell_color, fixed = TRUE),
+                      "}{", content[i], "}"
+                    )
+                }
+              }
+            }
+
+            paste(paste(content, collapse = " & "), "\\\\ \n")
+          }
+        )
       )
     )
-  )
+
+  body_rows
 }
 
 # Function to build a vector of `summary` rows in the table body
