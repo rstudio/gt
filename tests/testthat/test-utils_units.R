@@ -180,4 +180,8 @@ test_that("Units are rendered properly in HTML", {
     generate_html_units("{{[ kg kg^-1 ]}}"),
     "[kg kg<span style=\"white-space:nowrap;\"><sup>&minus;1</sup></span>]"
   )
+  expect_equal(
+    generate_html_units(":mu:mol %C25H52% / :micro:L"),
+    "&micro;mol C<span style=\"white-space:nowrap;\"><sub>25</sub></span>H<span style=\"white-space:nowrap;\"><sub>52</sub></span> / &micro;L"
+  )
 })
