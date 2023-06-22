@@ -27,7 +27,8 @@ token_list_item <- function(
     unit,
     unit_subscript = NULL,
     exponent = NULL,
-    sub_super_overstrike = FALSE
+    sub_super_overstrike = FALSE,
+    chemical_formula = FALSE
 ) {
 
   list_item <-
@@ -36,7 +37,8 @@ token_list_item <- function(
       unit = unit,
       unit_subscript = NA_character_,
       exponent = NA_character_,
-      sub_super_overstrike = FALSE
+      sub_super_overstrike = FALSE,
+      chemical_formula = FALSE
     )
 
   if (!is.null(exponent)) {
@@ -48,6 +50,7 @@ token_list_item <- function(
   }
 
   list_item[["sub_super_overstrike"]] <- sub_super_overstrike
+  list_item[["chemical_formula"]] <- chemical_formula
 
   list_item
 }
@@ -87,11 +90,24 @@ generate_token_list <- function(input) {
 
     unit_subscript <- NA_character_
     sub_super_overstrike <- FALSE
+    chemical_formula <- FALSE
     exponent <- NULL
 
-    # Determine if both a subscript and exponent are present
-    # and, if so, extract each one
-    if (grepl(".+?\\[_.+?\\^.+?\\]", tokens_vec_i)) {
+    if (
+      grepl("^%", tokens_vec_i) &&
+      grepl("%$", tokens_vec_i) &&
+      nchar(tokens_vec_i) > 2
+    ) {
+      # Case where the unit is marked as a chemical formula
+
+      chemical_formula <- TRUE
+
+      # Extract the formula w/o the surrounding `%` signs
+      unit <- gsub("^%|%$", "", tokens_vec_i)
+
+    } else if (grepl(".+?\\[_.+?\\^.+?\\]", tokens_vec_i)) {
+      # Case where both a subscript and exponent are present and
+      # an overstrike arrangement is necessary
 
       sub_super_overstrike <- TRUE
 
@@ -110,6 +126,8 @@ generate_token_list <- function(input) {
       exponent <- gsub("_.+?\\^(.+?)", "\\1", sub_exponent)
 
     } else if (grepl(".+?_.+?\\^.+?", tokens_vec_i)) {
+      # Case where both a subscript and exponent are present and
+      # the subscript is set before the exponent
 
       # Extract the unit w/o subscript from the string
       unit <- gsub("(.+?)_.+?\\^.+?", "\\1", tokens_vec_i)
@@ -126,6 +144,7 @@ generate_token_list <- function(input) {
       exponent <- gsub("_.+?\\^(.+?)", "\\1", sub_exponent)
 
     } else if (grepl("^", tokens_vec_i, fixed = TRUE)) {
+      # Case where only an exponent is present
 
       tokens_vec_i_split <- unlist(strsplit(tokens_vec_i, "^", fixed = TRUE))
 
@@ -133,6 +152,7 @@ generate_token_list <- function(input) {
       exponent <- tokens_vec_i_split[2]
 
     } else if (grepl("_", tokens_vec_i, fixed = TRUE)) {
+      # Case where only a subscript is present
 
       tokens_vec_i_split <- unlist(strsplit(tokens_vec_i, "_", fixed = TRUE))
 
@@ -149,6 +169,7 @@ generate_token_list <- function(input) {
         unit = unit,
         unit_subscript = unit_subscript,
         exponent = exponent,
+        chemical_formula = chemical_formula,
         sub_super_overstrike = sub_super_overstrike
       )
   }
@@ -167,13 +188,13 @@ units_to_html <- function(units_object) {
     units_str_i <- ""
 
     units_object_i <- units_object[[i]]
-
     unit <- units_object_i[["unit"]]
     unit_subscript <- units_object_i[["unit_subscript"]]
     exponent <- units_object_i[["exponent"]]
     sub_super_overstrike <- units_object_i[["sub_super_overstrike"]]
+    chemical_formula <- units_object_i[["chemical_formula"]]
 
-    if (grepl("x10", unit)) {
+    if (grepl("x10", unit) && !chemical_formula) {
       unit <- gsub("x", "&times;", unit)
     }
 
@@ -232,6 +253,15 @@ units_to_html <- function(units_object) {
             content_sub = unit_subscript,
             content_sup = exponent
           )
+        )
+
+    } else if (chemical_formula) {
+
+      units_str_i <-
+        gsub(
+          "(\\d+)",
+          "<span style=\"white-space:nowrap;\"><sub>\\1</sub></span>",
+          units_str_i
         )
 
     } else {
