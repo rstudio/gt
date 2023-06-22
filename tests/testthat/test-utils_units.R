@@ -65,12 +65,32 @@ test_that("Units are rendered properly in HTML", {
     "m<span style=\"white-space:nowrap;\"><sub>0</sub></span> s"
   )
   expect_equal(
+    generate_html_units("m a.s.l."),
+    "m a.s.l."
+  )
+  expect_equal(
     generate_html_units("m_0 s_1"),
     "m<span style=\"white-space:nowrap;\"><sub>0</sub></span> s<span style=\"white-space:nowrap;\"><sub>1</sub></span>"
   )
   expect_equal(
     generate_html_units("m_0^2 s_1"),
     "m<span style=\"white-space:nowrap;\"><sub>0</sub></span><span style=\"white-space:nowrap;\"><sup>2</sup></span> s<span style=\"white-space:nowrap;\"><sub>1</sub></span>"
+  )
+  expect_equal(
+    generate_html_units("ng m^−3 Na^+"),
+    "ng m<span style=\"white-space:nowrap;\"><sup>−3</sup></span> Na<span style=\"white-space:nowrap;\"><sup>+</sup></span>"
+  )
+  expect_equal(
+    generate_html_units("ng m^−3 *total salt*"),
+    "ng m<span style=\"white-space:nowrap;\"><sup>−3</sup></span> *total salt*"
+  )
+  expect_equal(
+    generate_html_units("5.5 :plusminus: 7.2 ng m^−3"),
+    "5.5 &plusmn; 7.2 ng m<span style=\"white-space:nowrap;\"><sup>−3</sup></span>"
+  )
+  expect_equal(
+    generate_html_units("10^−12 cm^3 molecule^−1 s^−1"),
+    "10<span style=\"white-space:nowrap;\"><sup>−12</sup></span> cm<span style=\"white-space:nowrap;\"><sup>3</sup></span> molecule<span style=\"white-space:nowrap;\"><sup>−1</sup></span> s<span style=\"white-space:nowrap;\"><sup>−1</sup></span>"
   )
   expect_equal(
     generate_html_units("m[_0^2]"),
@@ -109,6 +129,10 @@ test_that("Units are rendered properly in HTML", {
     "&micro;N"
   )
   expect_equal(
+    generate_html_units(":mu:J /min"),
+    "&micro;J min<span style=\"white-space:nowrap;\"><sup>&minus;1</sup></span>"
+  )
+  expect_equal(
     generate_html_units("J / degC"),
     "J / &degree;C"
   )
@@ -135,5 +159,21 @@ test_that("Units are rendered properly in HTML", {
   expect_equal(
     generate_html_units("*:permil:*"),
     "*&permil;*"
+  )
+  expect_equal(
+    generate_html_units("3:times:3"),
+    "3&times;3"
+  )
+  expect_equal(
+    generate_html_units("1:5"),
+    "1:5"
+  )
+  expect_equal(
+    generate_html_units("{{ [ kg kg^-1 ] }}"),
+    "[kg kg<span style=\"white-space:nowrap;\"><sup>&minus;1</sup></span>]"
+  )
+  expect_equal(
+    generate_html_units("{{[ kg kg^-1 ]}}"),
+    "[kg kg<span style=\"white-space:nowrap;\"><sup>&minus;1</sup></span>]"
   )
 })
