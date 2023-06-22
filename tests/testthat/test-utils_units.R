@@ -137,6 +137,14 @@ test_that("Units are rendered properly in HTML", {
     "&micro;g m<span style=\"white-space:nowrap;\"><sup>−3</sup></span> NO<span style=\"white-space:nowrap;\"><sub>*x*</sub></span>"
   )
   expect_equal(
+    generate_html_units(":micro:gC /g /h"),
+    "&micro;gC g<span style=\"white-space:nowrap;\"><sup>&minus;1</sup></span> h<span style=\"white-space:nowrap;\"><sup>&minus;1</sup></span>"
+  )
+  expect_equal(
+    generate_html_units("ug C /g /h"),
+    "&micro;g C g<span style=\"white-space:nowrap;\"><sup>&minus;1</sup></span> h<span style=\"white-space:nowrap;\"><sup>&minus;1</sup></span>"
+  )
+  expect_equal(
     generate_html_units("J / degC"),
     "J / &degree;C"
   )
@@ -147,6 +155,10 @@ test_that("Units are rendered properly in HTML", {
   expect_equal(
     generate_html_units("25:degree:C"),
     "25&degree;C"
+  )
+  expect_equal(
+    generate_html_units(":degree:N"),
+    "&degree;N"
   )
   expect_equal(
     generate_html_units(":angstrom: / s"),
@@ -183,5 +195,9 @@ test_that("Units are rendered properly in HTML", {
   expect_equal(
     generate_html_units(":mu:mol %C25H52% / :micro:L"),
     "&micro;mol C<span style=\"white-space:nowrap;\"><sub>25</sub></span>H<span style=\"white-space:nowrap;\"><sub>52</sub></span> / &micro;L"
+  )
+  expect_equal(
+    generate_html_units("mol %Ca3(PO4)2%"),
+    "mol Ca<span style=\"white-space:nowrap;\"><sub>3</sub></span>(PO<span style=\"white-space:nowrap;\"><sub>4</sub></span>)<span style=\"white-space:nowrap;\"><sub>2</sub></span>"
   )
 })
