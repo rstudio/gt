@@ -88,4 +88,52 @@ test_that("Units are rendered properly in HTML", {
     generate_html_units("[ W / m^2 ]"),
     "[W / m<span style=\"white-space:nowrap;\"><sup>2</sup></span>]"
   )
+  expect_equal(
+    generate_html_units("SO[_4^2-] **h** 3"),
+    "SO<span style=\"display:inline-block;line-height:1em;text-align:left;font-size:60%;vertical-align:-0.25em;margin-left:0.1em;\">2&minus;<br>4</span> **h** 3"
+  )
+  expect_equal(
+    generate_html_units("-2a"),
+    "&minus;2a"
+  )
+  expect_equal(
+    generate_html_units("um / s"),
+    "&micro;m / s"
+  )
+  expect_equal(
+    generate_html_units("um^2 /s"),
+    "&micro;m<span style=\"white-space:nowrap;\"><sup>2</sup></span> s<span style=\"white-space:nowrap;\"><sup>&minus;1</sup></span>"
+  )
+  expect_equal(
+    generate_html_units(":micro:N"),
+    "&micro;N"
+  )
+  expect_equal(
+    generate_html_units("J / degC"),
+    "J / &degree;C"
+  )
+  expect_equal(
+    generate_html_units("1 / degF"),
+    "1 / &degree;F"
+  )
+  expect_equal(
+    generate_html_units("25:degree:C"),
+    "25&degree;C"
+  )
+  expect_equal(
+    generate_html_units(":angstrom: / s"),
+    "&#8491; / s"
+  )
+  expect_equal(
+    generate_html_units(":permil:"),
+    "&permil;"
+  )
+  expect_equal(
+    generate_html_units(":permille:"),
+    "&permil;"
+  )
+  expect_equal(
+    generate_html_units("*:permil:*"),
+    "*&permil;*"
+  )
 })
