@@ -133,6 +133,10 @@ test_that("Units are rendered properly in HTML", {
     "&micro;J min<span style=\"white-space:nowrap;\"><sup>&minus;1</sup></span>"
   )
   expect_equal(
+    generate_html_units(":micro:g m^−3 NO_*x*"),
+    "&micro;g m<span style=\"white-space:nowrap;\"><sup>−3</sup></span> NO<span style=\"white-space:nowrap;\"><sub>*x*</sub></span>"
+  )
+  expect_equal(
     generate_html_units("J / degC"),
     "J / &degree;C"
   )
