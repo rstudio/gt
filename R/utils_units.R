@@ -205,6 +205,9 @@ units_to_html <- function(units_object) {
     if (grepl("^um$", unit)) {
       unit <- gsub("um", "&micro;m", unit)
     }
+    if (grepl("^ug$", unit)) {
+      unit <- gsub("ug", "&micro;g", unit)
+    }
     if (grepl(":micro:", unit)) {
       unit <- gsub(":micro:", "&micro;", unit)
     }
