@@ -56,7 +56,7 @@ token_list_item <- function(
 generate_token_list <- function(input) {
 
   # Trim any incoming `{{`/`}}`
-  input <- gsub("^\\{\\{\\s+|\\s+\\}\\}$", "", input)
+  input <- gsub("^\\{\\{\\s*|\\s*\\}\\}$", "", input)
 
   # Get a vector of raw tokens
   tokens_vec <- unlist(strsplit(input, split = " "))
