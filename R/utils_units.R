@@ -187,6 +187,9 @@ units_to_html <- function(units_object) {
     if (grepl(":micro:", unit)) {
       unit <- gsub(":micro:", "&micro;", unit)
     }
+    if (grepl(":mu:", unit)) {
+      unit <- gsub(":mu:", "&micro;", unit)
+    }
 
     if (grepl(":angstrom:", unit)) {
       unit <- gsub(":angstrom:", "&#8491;", unit)
@@ -194,6 +197,10 @@ units_to_html <- function(units_object) {
 
     if (grepl(":times:", unit)) {
       unit <- gsub(":times:", "&times;", unit)
+    }
+
+    if (grepl(":plusminus:", unit)) {
+      unit <- gsub(":plusminus:", "&plusmn;", unit)
     }
 
     if (grepl(":permil:", unit)) {
