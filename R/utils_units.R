@@ -177,6 +177,37 @@ units_to_html <- function(units_object) {
       unit <- gsub("x", "&times;", unit)
     }
 
+    if (grepl("^-", unit)) {
+      unit <- gsub("^-", "&minus;", unit)
+    }
+
+    if (grepl("^um$", unit)) {
+      unit <- gsub("um", "&micro;m", unit)
+    }
+    if (grepl(":micro:", unit)) {
+      unit <- gsub(":micro:", "&micro;", unit)
+    }
+
+    if (grepl(":angstrom:", unit)) {
+      unit <- gsub(":angstrom:", "&#8491;", unit)
+    }
+
+    if (grepl(":times:", unit)) {
+      unit <- gsub(":times:", "&times;", unit)
+    }
+
+    if (grepl(":permil:", unit)) {
+      unit <- gsub(":permil:", "&permil;", unit)
+    }
+    if (grepl(":permille:", unit)) {
+      unit <- gsub(":permille:", "&permil;", unit)
+    }
+
+    if (grepl(":degree:", unit)) unit <- gsub(":degree:", "&degree;", unit)
+    if (grepl("degC", unit)) unit <- gsub("degC", "&degree;C", unit)
+    if (grepl("degF", unit)) unit <- gsub("degF", "&degree;F", unit)
+
+
     units_str_i <- paste0(units_str_i, unit)
 
     if (
