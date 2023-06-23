@@ -145,6 +145,22 @@ test_that("Units are rendered properly in HTML", {
     "&micro;g C g<span style=\"white-space:nowrap;\"><sup>&minus;1</sup></span> h<span style=\"white-space:nowrap;\"><sup>&minus;1</sup></span>"
   )
   expect_equal(
+    generate_html_units("ohm_i^2"),
+    "&#8486;<span style=\"white-space:nowrap;\"><sub>i</sub></span><span style=\"white-space:nowrap;\"><sup>2</sup></span>"
+  )
+  expect_equal(
+    generate_html_units(":ohm:_i^2"),
+    "&#8486;<span style=\"white-space:nowrap;\"><sub>i</sub></span><span style=\"white-space:nowrap;\"><sup>2</sup></span>"
+  )
+  expect_equal(
+    generate_html_units("m:ohm:_i^2"),
+    "m&#8486;<span style=\"white-space:nowrap;\"><sub>i</sub></span><span style=\"white-space:nowrap;\"><sup>2</sup></span>"
+  )
+  expect_equal(
+    generate_html_units("( GeV^2 / ( c^2 + 6) )^-2"),
+    "(GeV<span style=\"white-space:nowrap;\"><sup>2</sup></span> / (c<span style=\"white-space:nowrap;\"><sup>2</sup></span> + 6))<span style=\"white-space:nowrap;\"><sup>&minus;2</sup></span>"
+  )
+  expect_equal(
     generate_html_units("J / degC"),
     "J / &degree;C"
   )
