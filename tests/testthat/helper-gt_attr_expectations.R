@@ -67,7 +67,7 @@ expect_tab <- function(tab, df) {
 
   (dt_boxhead_get(data = tab) %>%
     dim())[2] %>%
-    expect_equal(6)
+    expect_equal(8)
 
   dt_stub_df_get(data = tab) %>%
     dim() %>%
