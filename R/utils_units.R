@@ -180,7 +180,7 @@ generate_token_list <- function(input) {
   token_list
 }
 
-# Render to HTML with a one line, all exponential format
+# Render units to HTML
 units_to_html <- function(units_object) {
 
   for (i in seq_along(units_object)) {
@@ -213,6 +213,13 @@ units_to_html <- function(units_object) {
     }
     if (grepl(":mu:", unit)) {
       unit <- gsub(":mu:", "&micro;", unit)
+    }
+
+    if (grepl("^ohm$", unit)) {
+      unit <- gsub("ohm", "&#8486;", unit)
+    }
+    if (grepl(":ohm:", unit)) {
+      unit <- gsub(":ohm:", "&#8486;", unit)
     }
 
     if (grepl(":angstrom:", unit)) {
@@ -294,7 +301,7 @@ units_to_html <- function(units_object) {
 
     unit_add <- units_object[[i]][["built"]]
 
-    if (grepl("\\($|\\[$", units_str) || grepl("\\)$|\\]$", unit_add)) {
+    if (grepl("\\($|\\[$", units_str) || grepl("^\\)|^\\]", unit_add)) {
       spacer <- ""
     } else {
       spacer <- " "
