@@ -876,8 +876,34 @@ cols_label <- function(
 
     for (j in seq_along(columns)) {
 
-      # For each of the resolved columns, insert the new label
-      # into the boxhead
+      # For each of the resolved columns, process the label text and
+      # insert the new label and any discovered units in the boxhead
+
+      # Determine is there is any text pertaining to units; if there is,
+      # then (1) extract that text, (2) add it to the `column_units` entry,
+      # and (3) set a `column_pattern` override value of `""` (because the
+      # use of units here is already part of the column label string, so no
+      # pattern needed)
+
+      if (grepl("\\{\\{.*?\\}\\}", new_label)) {
+
+        column_units <- gsub("^.*?(\\{\\{.*?\\}\\}).*?$", "\\1", new_label)
+
+        .data <-
+          dt_boxhead_edit_column_units(
+            data = .data,
+            var = columns[j],
+            column_units = column_units
+          )
+
+        .data <-
+          dt_boxhead_edit_column_pattern(
+            data = .data,
+            var = columns[j],
+            column_pattern = ""
+          )
+      }
+
       .data <-
         dt_boxhead_edit_column_label(
           data = .data,
