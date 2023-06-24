@@ -205,6 +205,12 @@ units_to_html <- function(units_object) {
     if (grepl("^um$", unit)) {
       unit <- gsub("um", "&micro;m", unit)
     }
+    if (grepl("^uL$", unit)) {
+      unit <- gsub("uL", "&micro;L", unit)
+    }
+    if (grepl("^umol$", unit)) {
+      unit <- gsub("umol", "&micro;mol", unit)
+    }
     if (grepl("^ug$", unit)) {
       unit <- gsub("ug", "&micro;g", unit)
     }
@@ -305,6 +311,12 @@ units_to_html <- function(units_object) {
       spacer <- ""
     } else {
       spacer <- " "
+    }
+
+    # Treat special case where two simple units on both sides of a solidus
+    # should have no extra spacing (e.g., 'm / s' -> 'm/s')
+    if (length(units_object) == 3 && units_object[[2]][["unit"]] == "/") {
+      spacer <- ""
     }
 
     units_str <- paste0(units_str, spacer, unit_add)
