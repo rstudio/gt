@@ -64,8 +64,8 @@ no requirement for uniqueness (which is useful for labeling columns as, say,
 measurement units that may be repeated several times---usually under
 different spanner labels). Thus, we can still easily distinguish
 between columns in other \strong{gt} function calls (e.g., in all of the
-\verb{fmt*()} functions) even though we may lose distinguishability in column
-labels once they have been relabeled.
+\verb{fmt*()} functions) even though we may lose distinguishability between column
+labels once they have undergone relabeling.
 }
 
 \section{Examples}{
