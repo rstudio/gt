@@ -670,8 +670,8 @@ cols_width <- function(
 #' measurement units that may be repeated several times---usually under
 #' different spanner labels). Thus, we can still easily distinguish
 #' between columns in other **gt** function calls (e.g., in all of the
-#' `fmt*()` functions) even though we may lose distinguishability in column
-#' labels once they have been relabeled.
+#' `fmt*()` functions) even though we may lose distinguishability between column
+#' labels once they have undergone relabeling.
 #'
 #' @section Examples:
 #'
