@@ -177,6 +177,9 @@ reference:
     - html
     - px
     - pct
+    - currency
+    - adjust_luminance
+    - define_units
     - stub
     - cells_title
     - cells_stubhead
@@ -191,11 +194,9 @@ reference:
     - cells_stub_grand_summary
     - cells_footnotes
     - cells_source_notes
-    - currency
     - cell_text
     - cell_fill
     - cell_borders
-    - adjust_luminance
     - random_id
     - escape_latex
     - gt_latex_dependencies
