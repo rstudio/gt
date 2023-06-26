@@ -644,7 +644,7 @@ cols_width <- function(
 #'   can be used in the LHS. Named arguments are also valid as input for simple
 #'   mappings of column name to label text; they should be of the form `<column
 #'   name> = <label>`. Subsequent expressions that operate on the columns
-#'   assigned previously will result in overwriting column width values.
+#'   assigned previously will result in overwriting column label values.
 #'
 #' @param .list *Alternative to `...`*
 #'
