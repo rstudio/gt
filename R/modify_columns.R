@@ -1138,10 +1138,13 @@ cols_label_with <- function(
 #' from easy to define and typeset (e.g., `"m/s"`) to very difficult. Such
 #' difficulty can arise from the need to include subscripts or superscripts,
 #' non-ASCII symbols, etc. The `cols_units()` function tries to make this task
-#' easier by letting you apply text pertaining to units to various columns.
-#' This takes advantage of **gt**'s special unit syntax which provides several
-#' conveniences for defining units, ultimately providing sensible formatting for
-#' the specified table output format (i.e., HTML, LaTeX, RTF, etc.).
+#' easier by letting you apply text pertaining to units to various columns. This
+#' takes advantage of **gt**'s specialized units notation (e.g.,
+#' `"J Hz^-1 mol^-1"` can be used to generate units for the
+#' `molar Planck constant`) which provides several conveniences for defining
+#' units, ultimately providing the correct formatting for the specified table
+#' output format (i.e., HTML, LaTeX, RTF, etc.). Details pertaining to the units
+#' notation can be found in the *How to use **gt**'s units notation* section.
 #'
 #' @param .data *The gt table data object*
 #'
@@ -1186,14 +1189,21 @@ cols_label_with <- function(
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @details
+#' @section How to use **gt**'s units notation:
 #'
-#' The columns supplied in `columns` must all exist in the table and none of
-#' them can be in the `after` argument. The `after` column must also exist and
-#' only one column should be provided here. If you need to place one or columns
-#' at the beginning of the column series, the [cols_move_to_start()] function
-#' should be used. Similarly, if those columns to move should be placed at the
-#' end of the column series then use [cols_move_to_end()].
+#' The units notation involves a shorthand of writing units that feels familiar
+#' and is fine-tuned for the task at hand. Each unit is treated as a separate
+#' entity (parentheses and other symbols included) and the addition of subscript
+#' text and exponents is flexible and relatively easy to formulate. This is all
+#' best shown with examples:
+#'
+#' - `"m/s"` and `"m / s"` both render as `"m/s"`
+#' - `"m s^-1"` will appear with the `"-1"` exponent intact
+#' - `"m \s"` gives the the same result, as `"\<unit>"` is equivalent to
+#'   `"<unit>^-1"`
+#' - `"E_h"` will render an `"E"` with the `"h"` subscript
+#' - `"t_i^2.5"` provides a `t` with an `"i"` subscript and a `"2.5"` exponent
+#'
 #'
 #' @family column modification functions
 #' @section Function ID:
@@ -1290,7 +1300,7 @@ cols_units <- function(
           column_units = new_units
         )
 
-      if (!is.na(.units_pattern)) {
+      if (!is.null(.units_pattern) && !is.na(.units_pattern)) {
 
         .data <-
           dt_boxhead_edit_column_pattern(
