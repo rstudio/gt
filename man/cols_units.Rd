@@ -59,10 +59,11 @@ non-ASCII symbols, etc. The \code{cols_units()} function tries to make this task
 easier by letting you apply text pertaining to units to various columns. This
 takes advantage of \strong{gt}'s specialized units notation (e.g.,
 \code{"J Hz^-1 mol^-1"} can be used to generate units for the
-\verb{molar Planck constant}) which provides several conveniences for defining
-units, ultimately providing the correct formatting for the specified table
-output format (i.e., HTML, LaTeX, RTF, etc.). Details pertaining to the units
-notation can be found in the \emph{How to use \strong{gt}'s units notation} section.
+\emph{molar Planck constant}). The notation here provides several conveniences for
+defining units, letting you produce the correct formatting no matter what the
+table output format might be (i.e., HTML, LaTeX, RTF, etc.). Details
+pertaining to the units notation can be found in the section entitled
+\emph{How to use \strong{gt}'s units notation}.
 }
 \section{How to use \strong{gt}'s units notation}{
 
@@ -79,6 +80,16 @@ best shown with examples:
 \code{"<unit>^-1"}
 \item \code{"E_h"} will render an \code{"E"} with the \code{"h"} subscript
 \item \code{"t_i^2.5"} provides a \code{t} with an \code{"i"} subscript and a \code{"2.5"} exponent
+\item \code{"m[_0^2]"} will use overstriking to set both scripts vertically
+\item \code{"g/L \%C6H12O6\%"} uses a chemical formula (enclosed in a pair of \code{"\%"}
+characters) as a unit partial, and the formula will render correctly with
+subscripted numbers
+\item Common units that are difficult to write using ASCII text may be implicitly
+converted to the correct characters (e.g., the \code{"u"} in \code{"ug"}, \code{"um"},
+\code{"uL"}, and \code{"umol"} will be converted to the Greek \emph{mu} symbol; \code{"degC"}
+and \code{"degF"} will render a degree sign before the temperature unit)
+\item We can transform shorthand symbol/unit names enclosed in \code{":"} (e.g.,
+\code{":angstrom:"}, \code{":ohm:"}, etc.) into proper symbols
 }
 }
 
