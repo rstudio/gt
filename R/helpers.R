@@ -26,11 +26,13 @@
 #'
 #' @description
 #'
-#' Markdown! It's a wonderful thing. We can use it in certain places (e.g.,
-#' footnotes, source notes, the table title, etc.) and expect it to render to
-#' HTML as Markdown does. There is the [html()] helper that allows you to ferry
-#' in HTML but this function `md()`... it's almost like a two-for-one deal (you
-#' get to use Markdown plus any HTML fragments *at the same time*).
+#' Markdown text can be used in certain places in a **gt** table, and this is
+#' wherever new text is defined (e.g., footnotes, source notes, the table title,
+#' etc.). Using Markdown is advantageous for styling text since it will be
+#' rendered correctly to the the output format of the **gt** table. There is
+#' also the [html()] helper that allows you use HTML exclusively (for tables
+#' expressly meant for HTML output) but `md()` allows for both; you get to use
+#' Markdown plus any HTML fragments at the same time.
 #'
 #' @param text *Markdown text*
 #'
@@ -132,20 +134,6 @@ html <- function(text, ...) {
   }
 
   htmltools::HTML(text, ...)
-}
-
-#' Does an object have the `html` class?
-#'
-#' @noRd
-is_html <- function(x) {
-  inherits(x, "html") && isTRUE(attr(x, "html"))
-}
-
-#' Does an object have the `rtf_text` class?
-#'
-#' @noRd
-is_rtf <- function(x) {
-  inherits(x, "rtf_text")
 }
 
 #' Helper for providing a numeric value as pixels value
@@ -264,6 +252,432 @@ pct <- function(x) {
   paste0(x, "%")
 }
 
+#' Supply a custom currency symbol to `fmt_currency()`
+#'
+#' @description
+#'
+#' The `currency()` helper function makes it easy to specify a context-aware
+#' currency symbol to `currency` argument of [fmt_currency()]. Since **gt** can
+#' render tables to several output formats, `currency()` allows for different
+#' variations of the custom symbol based on the output context (which are
+#' `html`, `latex`, `rtf`, and `default`). The number of decimal places for
+#' the custom currency defaults to `2`, however, a value set for the `decimals`
+#' argument of [fmt_currency()] will take precedence.
+#'
+#' @details
+#'
+#' We can use any combination of `html`, `latex`, `rtf`, and `default` as named
+#' arguments for the currency text in each of the namesake contexts. The
+#' `default` value is used as a fallback when there doesn't exist a dedicated
+#' currency text value for a particular output context (e.g., when a table is
+#' rendered as HTML and we use `currency(latex = "LTC", default = "ltc")`, the
+#' currency symbol will be `"ltc"`. For convenience, if we provide only a single
+#' string without a name, it will be taken as the `default` (i.e.,
+#' `currency("ltc")` is equivalent to `currency(default = "ltc")`). However, if
+#' we were to specify currency strings for multiple output contexts, names are
+#' required each and every context.
+#'
+#' @param ... *Currency symbols by output context*
+#'
+#'   `<named arguments>` --- **required** (or, use `.list`)
+#'
+#'   One or more named arguments using output contexts as the names and
+#'   currency symbol text as the values.
+#'
+#' @param .list *Alternative to `...`*
+#'
+#'   `<list of multiple expressions>` --- **required** (or, use `...`)
+#'
+#'   Allows for the use of a list as an input alternative to `...`.
+#'
+#' @return A list object of class `gt_currency`.
+#'
+#' @section Examples:
+#'
+#' Use the [`exibble`] dataset to create a **gt** table. Within the
+#' [fmt_currency()] call, we'll format the `currency` column to have currency
+#' values in guilder (a defunct Dutch currency). We can register this custom
+#' currency with the `currency()` helper function, supplying the `"&fnof;"` HTML
+#' entity for `html` outputs and using `"f"` for any other type of **gt**
+#' output.
+#'
+#' ```r
+#' exibble |>
+#'   gt() |>
+#'   fmt_currency(
+#'     columns = currency,
+#'     currency = currency(
+#'       html = "&fnof;",
+#'       default = "f"
+#'     ),
+#'     decimals = 2
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_currency_1.png")`
+#' }}
+#'
+#' @family helper functions
+#' @section Function ID:
+#' 8-5
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
+#' @export
+currency <- function(
+    ...,
+    .list = list2(...)
+) {
+
+  # Collect a named list of currencies
+  currency_list <- .list
+
+  # Stop function if the currency list contains no values
+  if (length(currency_list) == 0) {
+    cli::cli_abort("The `currency()` function must be provided with currency symbols.")
+  }
+
+  # If only a single string is provided, upgrade the `currency_list`
+  # to have that string be the `default` value
+  if (length(currency_list) == 1 && !rlang::is_named(currency_list)) {
+    currency_list <- list(default = currency_list[[1]])
+  }
+
+  # Stop function if `currency_list` isn't entirely named
+  if (!rlang::is_named(currency_list)) {
+    cli::cli_abort("Names must be provided for all output contexts.")
+  }
+
+  # Stop function if all names are not part of the supported contexts
+  validate_contexts(contexts = names(currency_list))
+
+  # Stop function if there are duplicated names
+  if (!rlang::is_dictionaryish(currency_list)) {
+    cli::cli_abort("There cannot be any duplicate names for output contexts.")
+  }
+
+  # Set the `gt_currency` class
+  class(currency_list) <- "gt_currency"
+
+  currency_list
+}
+
+#' Adjust the luminance for a palette of colors
+#'
+#' @description
+#'
+#' The `adjust_luminance()` function can brighten or darken a palette of colors
+#' by an arbitrary number of steps, which is defined by a real number between
+#' -2.0 and 2.0. The transformation of a palette by a fixed step in this
+#' function will tend to apply greater darkening or lightening for those colors
+#' in the midrange compared to any very dark or very light colors in the input
+#' palette.
+#'
+#' @details
+#'
+#' This function can be useful when combined with the [data_color()] function's
+#' `palette` argument, which can use a vector of colors or any of the `col_*`
+#' functions from the **scales** package (all of which have a `palette`
+#' argument).
+#'
+#' @param colors *Color vector*
+#'
+#'   `vector<character>` --- **required**
+#'
+#'   This is the vector of colors that will undergo an adjustment in luminance.
+#'   Each color value provided must either be a color name (in the set of colors
+#'   provided by `grDevices::colors()`) or a hexadecimal string in the form of
+#'   "#RRGGBB" or "#RRGGBBAA".
+#'
+#' @param steps *Adjustment level*
+#'
+#'   `scalar<numeric|integer>(-2>=val>=2)` --- **required**
+#'
+#'   A positive or negative factor by which the luminance of colors in the
+#'   `colors` vector will be adjusted. Must be a number between `-2.0` and
+#'   `2.0`.
+#'
+#' @return A vector of color values.
+#'
+#' @section Examples:
+#'
+#' Get a palette of 8 pastel colors from the **RColorBrewer** package.
+#'
+#' ```r
+#' pal <- RColorBrewer::brewer.pal(8, "Pastel2")
+#' ```
+#'
+#' Create lighter and darker variants of the base palette (one step lower, one
+#' step higher).
+#'
+#' ```r
+#' pal_darker  <- pal |> adjust_luminance(-1.0)
+#' pal_lighter <- pal |> adjust_luminance(+1.0)
+#' ```
+#'
+#' Create a tibble and make a **gt** table from it. Color each column in order
+#' of increasingly darker palettes (with [data_color()]).
+#'
+#' ```r
+#' dplyr::tibble(a = 1:8, b = 1:8, c = 1:8) |>
+#'   gt() |>
+#'   data_color(
+#'     columns = a,
+#'     colors = scales::col_numeric(
+#'       palette = pal_lighter,
+#'       domain = c(1, 8)
+#'     )
+#'   ) |>
+#'   data_color(
+#'     columns = b,
+#'     colors = scales::col_numeric(
+#'       palette = pal,
+#'       domain = c(1, 8)
+#'     )
+#'   ) |>
+#'   data_color(
+#'     columns = c,
+#'     colors = scales::col_numeric(
+#'       palette = pal_darker,
+#'       domain = c(1, 8)
+#'     )
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_adjust_luminance_1.png")`
+#' }}
+#'
+#' @family helper functions
+#' @section Function ID:
+#' 8-6
+#'
+#' @section Function Introduced:
+#' `v0.2.0.5` (March 31, 2020)
+#'
+#' @export
+adjust_luminance <- function(
+    colors,
+    steps
+) {
+
+  # Stop if steps is beyond an acceptable range
+  if (steps > 2.0 | steps < -2.0) {
+    cli::cli_abort(
+      "The value provided for `steps` (`{steps}`) must be between `-2.0` and `+2.0`."
+    )
+  }
+
+  # Get a matrix of values in the RGB color space
+  rgb_matrix <- t(grDevices::col2rgb(colors, alpha = TRUE)) / 255
+
+  # Obtain the alpha values
+  alpha <- rgb_matrix[, "alpha"]
+
+  # Get a matrix of values in the Luv color space
+  luv_matrix <- grDevices::convertColor(rgb_matrix[, 1:3], "sRGB", "Luv")
+
+  # Apply calculations to obtain values in the HCL color space
+  h <- atan2(luv_matrix[, "v"], luv_matrix[, "u"]) * 180 / pi
+  c <- sqrt(luv_matrix[, "u"]^2 + luv_matrix[, "v"]^2)
+  l <- luv_matrix[, "L"]
+
+  # Scale luminance to occupy [0, 1]
+  y <- l / 100.
+
+  # Obtain `x` positions of luminance values along a sigmoid function
+  x <- log(-(y / (y - 1)))
+
+  # Calculate new luminance values based on a fixed step-change in `x`
+  y_2 <- 1 / (1 + exp(-(x + steps)))
+
+  # Rescale the new luminance values to [0, 100]
+  l <- y_2 * 100.
+
+  # Obtain hexadecimal colors from the modified HCL color values
+  grDevices::hcl(h, c, l, alpha = alpha)
+}
+
+#' Define measurement units with **gt**'s units notation
+#'
+#' The `define_units()` function is available for working with text in **gt**'s
+#' units notation.
+#'
+#' @param units_notation *Text in specialized units notation*
+#'
+#'   `scalar<character>` --- **required**
+#'
+#'   A single string that defines the units (e.g., `"m/s"`) to be used.
+#'
+#' @return An object of class `units_definition`.
+#'
+#' @family helper functions
+#' @section Function ID:
+#' 8-7
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @export
+define_units <- function(units_notation) {
+
+  # Trim any incoming `{{`/`}}`
+  input <- gsub("^\\{\\{\\s*|\\s*\\}\\}$", "", units_notation)
+
+  # Get a vector of raw tokens
+  tokens_vec <- unlist(strsplit(input, split = " "))
+
+  # Remove any empty tokens
+  tokens_vec <- tokens_vec[tokens_vec != ""]
+
+  # Replace any instances of `/<text>` with `<text>^-1`
+  tokens_vec <-
+    vapply(
+      tokens_vec,
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
+      FUN = function(x) {
+        if (grepl("^/", x) && nchar(x) > 1) {
+          x <- gsub("^/", "", x)
+          x <- paste0(x, "^-1")
+        }
+        x
+      }
+    )
+
+  units_list <- list()
+
+  for (i in seq_along(tokens_vec)) {
+
+    tokens_vec_i <- tokens_vec[i]
+
+    unit_subscript <- NA_character_
+    sub_super_overstrike <- FALSE
+    chemical_formula <- FALSE
+    exponent <- NULL
+
+    if (
+      grepl("^%", tokens_vec_i) &&
+      grepl("%$", tokens_vec_i) &&
+      nchar(tokens_vec_i) > 2
+    ) {
+      # Case where the unit is marked as a chemical formula
+
+      chemical_formula <- TRUE
+
+      # Extract the formula w/o the surrounding `%` signs
+      unit <- gsub("^%|%$", "", tokens_vec_i)
+
+    } else if (grepl(".+?\\[_.+?\\^.+?\\]", tokens_vec_i)) {
+      # Case where both a subscript and exponent are present and
+      # an overstrike arrangement is necessary
+
+      sub_super_overstrike <- TRUE
+
+      # Extract the unit w/o subscript from the string
+      unit <- gsub("(.+?)\\[_.+?\\^.+?\\]", "\\1", tokens_vec_i)
+
+      # Obtain only the subscript/exponent of the string
+      sub_exponent <- gsub(".+?\\[(_.+?\\^.+?)\\]", "\\1", tokens_vec_i)
+
+      # Extract the content after the underscore but terminate
+      # before any `^`; this is the subscript
+      unit_subscript <- gsub("^_(.+?)(\\^.+?)$", "\\1", sub_exponent)
+
+      # Extract the content after the caret but terminate before
+      # any `_`; this is the exponent
+      exponent <- gsub("_.+?\\^(.+?)", "\\1", sub_exponent)
+
+    } else if (grepl(".+?_.+?\\^.+?", tokens_vec_i)) {
+      # Case where both a subscript and exponent are present and
+      # the subscript is set before the exponent
+
+      # Extract the unit w/o subscript from the string
+      unit <- gsub("(.+?)_.+?\\^.+?", "\\1", tokens_vec_i)
+
+      # Obtain only the subscript/exponent portion of the string
+      sub_exponent <- gsub(".+?(_.+?\\^.+?)", "\\1", tokens_vec_i)
+
+      # Extract the content after the underscore but terminate
+      # before any `^`; this is the subscript
+      unit_subscript <- gsub("_(.+?)\\^.+?", "\\1", sub_exponent)
+
+      # Extract the content after the caret but terminate before
+      # any `_`; this is the exponent
+      exponent <- gsub("_.+?\\^(.+?)", "\\1", sub_exponent)
+
+    } else if (grepl("^", tokens_vec_i, fixed = TRUE)) {
+      # Case where only an exponent is present
+
+      tokens_vec_i_split <- unlist(strsplit(tokens_vec_i, "^", fixed = TRUE))
+
+      unit <- tokens_vec_i_split[1]
+      exponent <- tokens_vec_i_split[2]
+
+    } else if (grepl("_", tokens_vec_i, fixed = TRUE)) {
+      # Case where only a subscript is present
+
+      tokens_vec_i_split <- unlist(strsplit(tokens_vec_i, "_", fixed = TRUE))
+
+      unit <- tokens_vec_i_split[1]
+      unit_subscript <- tokens_vec_i_split[2]
+
+    } else {
+      unit <- tokens_vec_i
+    }
+
+    units_list[[length(units_list) + 1]] <-
+      units_list_item(
+        token = tokens_vec_i,
+        unit = unit,
+        unit_subscript = unit_subscript,
+        exponent = exponent,
+        chemical_formula = chemical_formula,
+        sub_super_overstrike = sub_super_overstrike
+      )
+  }
+
+  names(units_list) <- tokens_vec
+  class(units_list) <- "units_definition"
+
+  units_list
+}
+
+units_list_item <- function(
+    token,
+    unit,
+    unit_subscript = NULL,
+    exponent = NULL,
+    sub_super_overstrike = FALSE,
+    chemical_formula = FALSE
+) {
+
+  list_item <-
+    list(
+      token = token,
+      unit = unit,
+      unit_subscript = NA_character_,
+      exponent = NA_character_,
+      sub_super_overstrike = FALSE,
+      chemical_formula = FALSE
+    )
+
+  if (!is.null(exponent)) {
+    list_item[["exponent"]] <- exponent
+  }
+
+  if (!is.null(unit_subscript)) {
+    list_item[["unit_subscript"]] <- unit_subscript
+  }
+
+  list_item[["sub_super_overstrike"]] <- sub_super_overstrike
+  list_item[["chemical_formula"]] <- chemical_formula
+
+  list_item
+}
+
 #' Select helper for targeting the stub column
 #'
 #' @description
@@ -306,7 +720,7 @@ pct <- function(x) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-5
+#' 8-8
 #'
 #' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
@@ -401,7 +815,7 @@ stub <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-6
+#' 8-9
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -514,7 +928,7 @@ cells_title <- function(groups = c("title", "subtitle")) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-7
+#' 8-10
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -623,7 +1037,7 @@ cells_stubhead <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-8
+#' 8-11
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -754,7 +1168,7 @@ cells_column_spanners <- function(spanners = everything()) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-9
+#' 8-12
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -877,7 +1291,7 @@ cells_column_labels <- function(columns = everything()) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-10
+#' 8-13
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1018,7 +1432,7 @@ cells_group <- function(groups = everything()) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-11
+#' 8-14
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1170,7 +1584,7 @@ cells_stub <- function(rows = everything()) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-12
+#' 8-15
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1368,7 +1782,7 @@ cells_body <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-13
+#' 8-16
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1538,7 +1952,7 @@ cells_summary <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-14
+#' 8-17
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1704,7 +2118,7 @@ cells_grand_summary <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-15
+#' 8-18
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
@@ -1841,7 +2255,7 @@ cells_stub_summary <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-16
+#' 8-19
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
@@ -1960,7 +2374,7 @@ cells_stub_grand_summary <- function(rows = everything()) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-17
+#' 8-20
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
@@ -2061,7 +2475,7 @@ cells_footnotes <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-18
+#' 8-21
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
@@ -2077,118 +2491,6 @@ cells_source_notes <- function() {
   class(cells) <- c("cells_source_notes", "location_cells")
 
   cells
-}
-
-#' Supply a custom currency symbol to `fmt_currency()`
-#'
-#' @description
-#'
-#' The `currency()` helper function makes it easy to specify a context-aware
-#' currency symbol to `currency` argument of [fmt_currency()]. Since **gt** can
-#' render tables to several output formats, `currency()` allows for different
-#' variations of the custom symbol based on the output context (which are
-#' `html`, `latex`, `rtf`, and `default`). The number of decimal places for
-#' the custom currency defaults to `2`, however, a value set for the `decimals`
-#' argument of [fmt_currency()] will take precedence.
-#'
-#' @details
-#'
-#' We can use any combination of `html`, `latex`, `rtf`, and `default` as named
-#' arguments for the currency text in each of the namesake contexts. The
-#' `default` value is used as a fallback when there doesn't exist a dedicated
-#' currency text value for a particular output context (e.g., when a table is
-#' rendered as HTML and we use `currency(latex = "LTC", default = "ltc")`, the
-#' currency symbol will be `"ltc"`. For convenience, if we provide only a single
-#' string without a name, it will be taken as the `default` (i.e.,
-#' `currency("ltc")` is equivalent to `currency(default = "ltc")`). However, if
-#' we were to specify currency strings for multiple output contexts, names are
-#' required each and every context.
-#'
-#' @param ... *Currency symbols by output context*
-#'
-#'   `<named arguments>` --- **required** (or, use `.list`)
-#'
-#'   One or more named arguments using output contexts as the names and
-#'   currency symbol text as the values.
-#'
-#' @param .list *Alternative to `...`*
-#'
-#'   `<list of multiple expressions>` --- **required** (or, use `...`)
-#'
-#'   Allows for the use of a list as an input alternative to `...`.
-#'
-#' @return A list object of class `gt_currency`.
-#'
-#' @section Examples:
-#'
-#' Use the [`exibble`] dataset to create a **gt** table. Within the
-#' [fmt_currency()] call, we'll format the `currency` column to have currency
-#' values in guilder (a defunct Dutch currency). We can register this custom
-#' currency with the `currency()` helper function, supplying the `"&fnof;"` HTML
-#' entity for `html` outputs and using `"f"` for any other type of **gt**
-#' output.
-#'
-#' ```r
-#' exibble |>
-#'   gt() |>
-#'   fmt_currency(
-#'     columns = currency,
-#'     currency = currency(
-#'       html = "&fnof;",
-#'       default = "f"
-#'     ),
-#'     decimals = 2
-#'   )
-#' ```
-#'
-#' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_currency_1.png")`
-#' }}
-#'
-#' @family helper functions
-#' @section Function ID:
-#' 8-19
-#'
-#' @section Function Introduced:
-#' `v0.2.0.5` (March 31, 2020)
-#'
-#' @export
-currency <- function(
-    ...,
-    .list = list2(...)
-) {
-
-  # Collect a named list of currencies
-  currency_list <- .list
-
-  # Stop function if the currency list contains no values
-  if (length(currency_list) == 0) {
-    cli::cli_abort("The `currency()` function must be provided with currency symbols.")
-  }
-
-  # If only a single string is provided, upgrade the `currency_list`
-  # to have that string be the `default` value
-  if (length(currency_list) == 1 && !rlang::is_named(currency_list)) {
-    currency_list <- list(default = currency_list[[1]])
-  }
-
-  # Stop function if `currency_list` isn't entirely named
-  if (!rlang::is_named(currency_list)) {
-    cli::cli_abort("Names must be provided for all output contexts.")
-  }
-
-  # Stop function if all names are not part of the supported contexts
-  validate_contexts(contexts = names(currency_list))
-
-  # Stop function if there are duplicated names
-  if (!rlang::is_dictionaryish(currency_list)) {
-    cli::cli_abort("There cannot be any duplicate names for output contexts.")
-  }
-
-  # Set the `gt_currency` class
-  class(currency_list) <- "gt_currency"
-
-  currency_list
 }
 
 #' Helper for defining custom text styles for table cells
@@ -2334,7 +2636,7 @@ currency <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-20
+#' 8-22
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2523,7 +2825,7 @@ cell_style_to_html.cell_text <- function(style) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-21
+#' 8-23
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2670,7 +2972,7 @@ cell_style_to_html.cell_fill <- function(style) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-22
+#' 8-24
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2790,142 +3092,6 @@ cell_style_structure <- function(name, obj, subclass = name) {
   style_obj
 }
 
-#' Adjust the luminance for a palette of colors
-#'
-#' @description
-#'
-#' The `adjust_luminance()` function can brighten or darken a palette of colors
-#' by an arbitrary number of steps, which is defined by a real number between
-#' -2.0 and 2.0. The transformation of a palette by a fixed step in this
-#' function will tend to apply greater darkening or lightening for those colors
-#' in the midrange compared to any very dark or very light colors in the input
-#' palette.
-#'
-#' @details
-#'
-#' This function can be useful when combined with the [data_color()] function's
-#' `palette` argument, which can use a vector of colors or any of the `col_*`
-#' functions from the **scales** package (all of which have a `palette`
-#' argument).
-#'
-#' @param colors *Color vector*
-#'
-#'   `vector<character>` --- **required**
-#'
-#'   This is the vector of colors that will undergo an adjustment in luminance.
-#'   Each color value provided must either be a color name (in the set of colors
-#'   provided by `grDevices::colors()`) or a hexadecimal string in the form of
-#'   "#RRGGBB" or "#RRGGBBAA".
-#'
-#' @param steps *Adjustment level*
-#'
-#'   `scalar<numeric|integer>(-2>=val>=2)` --- **required**
-#'
-#'   A positive or negative factor by which the luminance of colors in the
-#'   `colors` vector will be adjusted. Must be a number between `-2.0` and
-#'   `2.0`.
-#'
-#' @return A vector of color values.
-#'
-#' @section Examples:
-#'
-#' Get a palette of 8 pastel colors from the **RColorBrewer** package.
-#'
-#' ```r
-#' pal <- RColorBrewer::brewer.pal(8, "Pastel2")
-#' ```
-#'
-#' Create lighter and darker variants of the base palette (one step lower, one
-#' step higher).
-#'
-#' ```r
-#' pal_darker  <- pal |> adjust_luminance(-1.0)
-#' pal_lighter <- pal |> adjust_luminance(+1.0)
-#' ```
-#'
-#' Create a tibble and make a **gt** table from it. Color each column in order
-#' of increasingly darker palettes (with [data_color()]).
-#'
-#' ```r
-#' dplyr::tibble(a = 1:8, b = 1:8, c = 1:8) |>
-#'   gt() |>
-#'   data_color(
-#'     columns = a,
-#'     colors = scales::col_numeric(
-#'       palette = pal_lighter,
-#'       domain = c(1, 8)
-#'     )
-#'   ) |>
-#'   data_color(
-#'     columns = b,
-#'     colors = scales::col_numeric(
-#'       palette = pal,
-#'       domain = c(1, 8)
-#'     )
-#'   ) |>
-#'   data_color(
-#'     columns = c,
-#'     colors = scales::col_numeric(
-#'       palette = pal_darker,
-#'       domain = c(1, 8)
-#'     )
-#'   )
-#' ```
-#'
-#' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_adjust_luminance_1.png")`
-#' }}
-#'
-#' @family helper functions
-#' @section Function ID:
-#' 8-23
-#'
-#' @section Function Introduced:
-#' `v0.2.0.5` (March 31, 2020)
-#'
-#' @export
-adjust_luminance <- function(
-    colors,
-    steps
-) {
-
-  # Stop if steps is beyond an acceptable range
-  if (steps > 2.0 | steps < -2.0) {
-    cli::cli_abort(
-      "The value provided for `steps` (`{steps}`) must be between `-2.0` and `+2.0`."
-    )
-  }
-
-  # Get a matrix of values in the RGB color space
-  rgb_matrix <- t(grDevices::col2rgb(colors, alpha = TRUE)) / 255
-
-  # Obtain the alpha values
-  alpha <- rgb_matrix[, "alpha"]
-
-  # Get a matrix of values in the Luv color space
-  luv_matrix <- grDevices::convertColor(rgb_matrix[, 1:3], "sRGB", "Luv")
-
-  # Apply calculations to obtain values in the HCL color space
-  h <- atan2(luv_matrix[, "v"], luv_matrix[, "u"]) * 180 / pi
-  c <- sqrt(luv_matrix[, "u"]^2 + luv_matrix[, "v"]^2)
-  l <- luv_matrix[, "L"]
-
-  # Scale luminance to occupy [0, 1]
-  y <- l / 100.
-
-  # Obtain `x` positions of luminance values along a sigmoid function
-  x <- log(-(y / (y - 1)))
-
-  # Calculate new luminance values based on a fixed step-change in `x`
-  y_2 <- 1 / (1 + exp(-(x + steps)))
-
-  # Rescale the new luminance values to [0, 100]
-  l <- y_2 * 100.
-
-  # Obtain hexadecimal colors from the modified HCL color values
-  grDevices::hcl(h, c, l, alpha = alpha)
-}
-
 #' Helper for creating a random `id` for a **gt** table
 #'
 #' @description
@@ -2945,7 +3111,7 @@ adjust_luminance <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-24
+#' 8-25
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2987,7 +3153,7 @@ latex_special_chars <- c(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-25
+#' 8-26
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3061,7 +3227,7 @@ escape_latex <- function(text) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-26
+#' 8-27
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3172,7 +3338,7 @@ gt_latex_dependencies <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-27
+#' 8-28
 #'
 #' @section Function Introduced:
 #' `v0.2.2` (August 5, 2020)
@@ -3247,7 +3413,7 @@ google_font <- function(name) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-28
+#' 8-29
 #'
 #' @section Function Introduced:
 #' `v0.2.2` (August 5, 2020)
@@ -3487,7 +3653,7 @@ default_fonts <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-29
+#' 8-30
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
