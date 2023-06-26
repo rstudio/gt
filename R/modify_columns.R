@@ -1130,6 +1130,158 @@ cols_label_with <- function(
   data
 }
 
+#' Define units for one or more columns
+#'
+#' @description
+#'
+#' Column labels can sometimes contain measurement units, and these might range
+#' from easy to define and typeset (e.g., `"m/s"`) to very difficult. Such
+#' difficulty can arise from the need to include subscripts or superscripts,
+#' non-ASCII symbols, etc. The `cols_units()` function tries to make this task
+#' easier by letting you apply text pertaining to units to various columns.
+#' This takes advantage of **gt**'s special unit syntax which provides several
+#' conveniences for defining units, ultimately providing sensible formatting for
+#' the specified table output format (i.e., HTML, LaTeX, RTF, etc.).
+#'
+#' @param .data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
+#' @param ... *Column units definitions*
+#'
+#'   `<multiple expressions>` --- **required** (or, use `.list`)
+#'
+#'   Expressions for the assignment of column units for the table columns in
+#'   `.data`. Two-sided formulas (e.g., `<LHS> ~ <RHS>`) can be used, where the
+#'   left-hand side corresponds to selections of columns and the right-hand side
+#'   evaluates to single-length values for the units to apply. Column names
+#'   should be enclosed in [c()]. Select helpers like [starts_with()],
+#'   [ends_with()], [contains()], [matches()], [one_of()], and [everything()]
+#'   can be used in the LHS. Named arguments are also valid as input for simple
+#'   mappings of column name to the **gt** units syntax; they should be of the
+#'   form `<column name> = <units text>`. Subsequent expressions that operate on
+#'   the columns assigned previously will result in overwriting column units
+#'   defintion values.
+#'
+#' @param .list *Alternative to `...`*
+#'
+#'   `<list of multiple expressions>` --- **required** (or, use `...`)
+#'
+#'   Allows for the use of a list as an input alternative to `...`.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @details
+#'
+#' The columns supplied in `columns` must all exist in the table and none of
+#' them can be in the `after` argument. The `after` column must also exist and
+#' only one column should be provided here. If you need to place one or columns
+#' at the beginning of the column series, the [cols_move_to_start()] function
+#' should be used. Similarly, if those columns to move should be placed at the
+#' end of the column series then use [cols_move_to_end()].
+#'
+#' @family column modification functions
+#' @section Function ID:
+#' 5-6
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @import rlang
+#' @export
+cols_units <- function(
+    .data,
+    ...,
+    .list = list2(...)
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = .data)
+
+  # Collect a list of column units
+  units_list <- .list
+
+  column_vars <- dt_boxhead_get_vars(data = .data)
+
+  # If nothing is provided, return `data` unchanged
+  if (length(units_list) == 0) {
+    return(.data)
+  }
+
+  for (i in seq_along(units_list)) {
+
+    units_i <- units_list[i]
+
+    # When input is provided as a list in `.list`, we obtain named vectors;
+    # upgrade this to a list to match the input collected from `...`
+    if (rlang::is_named(units_i) && rlang::is_scalar_vector(units_i)) {
+      units_i <- as.list(units_i)
+    }
+
+    if (
+      is.list(units_i) &&
+      rlang::is_named(units_i) &&
+      rlang::is_scalar_vector(units_i[[1]])
+    ) {
+
+      # Get column and value
+      columns <- names(units_i)
+      new_units <- units_i[[1]]
+
+      if (!(columns %in% column_vars)) {
+        cli::cli_abort(c(
+          "The column name supplied to `cols_units()` (`{columns}`) is not valid.",
+          "*" = "Include column names or a tidyselect statement on the LHS."
+        ))
+      }
+
+    } else if (
+      is.list(units_i) &&
+      rlang::is_formula(units_i[[1]])
+    ) {
+
+      units_i <- units_i[[1]]
+
+      cols <- rlang::f_lhs(units_i)
+
+      if (is.null(cols)) {
+        cli::cli_abort(c(
+          "A formula supplied to `cols_units()` must be two-sided.",
+          "*" = "Include column names or a tidyselect statement on the LHS."
+        ))
+      }
+
+      # The default use of `resolve_cols_c()` won't work here if there
+      # is a table stub column (because we need to be able to set the
+      # stub column width and, by default, `resolve_cols_c()` excludes
+      # the stub); to prevent this exclusion, we set `excl_stub` to FALSE
+      columns <-
+        resolve_cols_c(
+          expr = !!cols,
+          data = .data
+        )
+
+      new_units <- rlang::eval_tidy(rlang::f_rhs(units_i))
+    }
+
+    for (j in seq_along(columns)) {
+
+      # For each of the resolved columns, add the units text to the boxhead
+      .data <-
+        dt_boxhead_edit_column_units(
+          data = .data,
+          var = columns[j],
+          column_units = new_units
+        )
+    }
+  }
+
+  .data
+}
+
 #' Move one or more columns
 #'
 #' @description
@@ -1201,7 +1353,7 @@ cols_label_with <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-6
+#' 5-7
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1347,7 +1499,7 @@ cols_move <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-7
+#' 5-8
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1465,7 +1617,7 @@ cols_move_to_start <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-8
+#' 5-9
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1594,7 +1746,7 @@ cols_move_to_end <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-9
+#' 5-10
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1706,7 +1858,7 @@ cols_hide <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-10
+#' 5-11
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
@@ -1920,7 +2072,7 @@ cols_unhide <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-11
+#' 5-12
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2133,7 +2285,7 @@ cols_merge <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-12
+#' 5-13
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2314,7 +2466,7 @@ cols_merge_uncert <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-13
+#' 5-14
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2540,7 +2692,7 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-14
+#' 5-15
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
