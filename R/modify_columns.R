@@ -1059,6 +1059,9 @@ cols_label <- function(
 #' @section Function ID:
 #' 5-5
 #'
+#' @section Function Introduced:
+#' `v0.9.0` (March 31, 2023)
+#'
 #' @import rlang
 #' @export
 cols_label_with <- function(
