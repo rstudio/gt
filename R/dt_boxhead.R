@@ -332,8 +332,13 @@ dt_boxhead_build <- function(data, context) {
 
         if (is.na(column_pattern)) {
 
-          # TODO: Make this default `column_pattern` available/settable from `tab_options()`
-          column_pattern <- "{1}, {2}"
+          # Obtain the default `column_pattern` (which that is settable in the
+          # `column_labels.units_pattern` option of `tab_options()`
+          column_pattern <-
+            dt_options_get_value(
+              data = data,
+              option = "column_labels_units_pattern"
+            )
         }
 
         column_pattern <- gsub("{1}", column_label, column_pattern, fixed = TRUE)
