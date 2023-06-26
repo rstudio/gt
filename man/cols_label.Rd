@@ -68,6 +68,46 @@ between columns in other \strong{gt} function calls (e.g., in all of the
 labels once they have undergone relabeling.
 }
 
+\section{Incorporating units with \strong{gt}'s units notation}{
+
+
+Measurement units are often seen as part of column labels and indeed it can
+be much more straightforward to include them here rather than using other
+devices to make readers aware of units for specific columns. The \strong{gt}
+package offers the function \code{\link[=cols_units]{cols_units()}} to apply units to various columns
+with an interface that's similar to that of this function. However, it is
+also possible to define units here along with the column label, obviating the
+need for pattern syntax that joins the two text components. To do this, we
+have to surround the portion of text in the label that corresponds to the
+units definition with \code{"{{"}/\code{"}}"}.
+
+Now that we know how to mark text for units definition, we know need to know
+how to write proper units with the notation. Such notation uses a succinct
+method of writing units and it should feel somewhat familiar though it is
+particular to the task at hand. Each unit is treated as a separate entity
+(parentheses and other symbols included) and the addition of subscript text
+and exponents is flexible and relatively easy to formulate. This is all best
+shown with a few examples:
+\itemize{
+\item \code{"m/s"} and \code{"m / s"} both render as \code{"m/s"}
+\item \code{"m s^-1"} will appear with the \code{"-1"} exponent intact
+\item \code{"m \\s"} gives the the same result, as \code{"\\<unit>"} is equivalent to
+\code{"<unit>^-1"}
+\item \code{"E_h"} will render an \code{"E"} with the \code{"h"} subscript
+\item \code{"t_i^2.5"} provides a \code{t} with an \code{"i"} subscript and a \code{"2.5"} exponent
+\item \code{"m[_0^2]"} will use overstriking to set both scripts vertically
+\item \code{"g/L \%C6H12O6\%"} uses a chemical formula (enclosed in a pair of \code{"\%"}
+characters) as a unit partial, and the formula will render correctly with
+subscripted numbers
+\item Common units that are difficult to write using ASCII text may be implicitly
+converted to the correct characters (e.g., the \code{"u"} in \code{"ug"}, \code{"um"},
+\code{"uL"}, and \code{"umol"} will be converted to the Greek \emph{mu} symbol; \code{"degC"}
+and \code{"degF"} will render a degree sign before the temperature unit)
+\item We can transform shorthand symbol/unit names enclosed in \code{":"} (e.g.,
+\code{":angstrom:"}, \code{":ohm:"}, etc.) into proper symbols
+}
+}
+
 \section{Examples}{
 
 
