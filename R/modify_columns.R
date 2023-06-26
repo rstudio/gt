@@ -1141,10 +1141,11 @@ cols_label_with <- function(
 #' easier by letting you apply text pertaining to units to various columns. This
 #' takes advantage of **gt**'s specialized units notation (e.g.,
 #' `"J Hz^-1 mol^-1"` can be used to generate units for the
-#' `molar Planck constant`) which provides several conveniences for defining
-#' units, ultimately providing the correct formatting for the specified table
-#' output format (i.e., HTML, LaTeX, RTF, etc.). Details pertaining to the units
-#' notation can be found in the *How to use **gt**'s units notation* section.
+#' *molar Planck constant*). The notation here provides several conveniences for
+#' defining units, letting you produce the correct formatting no matter what the
+#' table output format might be (i.e., HTML, LaTeX, RTF, etc.). Details
+#' pertaining to the units notation can be found in the section entitled
+#' *How to use **gt**'s units notation*.
 #'
 #' @param .data *The gt table data object*
 #'
@@ -1203,7 +1204,16 @@ cols_label_with <- function(
 #'   `"<unit>^-1"`
 #' - `"E_h"` will render an `"E"` with the `"h"` subscript
 #' - `"t_i^2.5"` provides a `t` with an `"i"` subscript and a `"2.5"` exponent
-#'
+#' - `"m[_0^2]"` will use overstriking to set both scripts vertically
+#' - `"g/L %C6H12O6%"` uses a chemical formula (enclosed in a pair of `"%"`
+#'   characters) as a unit partial, and the formula will render correctly with
+#'   subscripted numbers
+#' - Common units that are difficult to write using ASCII text may be implicitly
+#'   converted to the correct characters (e.g., the `"u"` in `"ug"`, `"um"`,
+#'   `"uL"`, and `"umol"` will be converted to the Greek *mu* symbol; `"degC"`
+#'   and `"degF"` will render a degree sign before the temperature unit)
+#' - We can transform shorthand symbol/unit names enclosed in `":"` (e.g.,
+#'   `":angstrom:"`, `":ohm:"`, etc.) into proper symbols
 #'
 #' @family column modification functions
 #' @section Function ID:
