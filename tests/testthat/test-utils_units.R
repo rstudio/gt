@@ -1,5 +1,5 @@
 generate_html_units <- function(input) {
-  input %>% generate_token_list() %>% units_to_html()
+  input %>% define_units() %>% units_to_html()
 }
 
 test_that("Units are rendered properly in HTML", {
