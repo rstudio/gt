@@ -321,7 +321,24 @@ dt_boxhead_build <- function(data, context) {
       units_built <- units_to_html(generate_token_list(units))
 
       if (column_pattern == "" && grepl(units, column_label, fixed = TRUE)) {
+
+        # With `column_pattern` equal to `""`, we can surmise that this was
+        # set automatically by `cols_label()`; the mechanism now is to replace
+        # the units text in the label with the 'built' units text
+
         column_label <- gsub(units, units_built, column_label, fixed = TRUE)
+
+      } else {
+
+        if (is.na(column_pattern)) {
+
+          # TODO: Make this default `column_pattern` available/settable from `tab_options()`
+          column_pattern <- "{1}, {2}"
+        }
+
+        column_pattern <- gsub("{1}", column_label, column_pattern, fixed = TRUE)
+        column_pattern <- gsub("{2}", units_built, column_pattern, fixed = TRUE)
+        column_label <- column_pattern
       }
 
       boxh$column_label[i] <- list(column_label)
