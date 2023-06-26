@@ -673,6 +673,43 @@ cols_width <- function(
 #' `fmt*()` functions) even though we may lose distinguishability between column
 #' labels once they have undergone relabeling.
 #'
+#' @section Incorporating units with **gt**'s units notation:
+#'
+#' Measurement units are often seen as part of column labels and indeed it can
+#' be much more straightforward to include them here rather than using other
+#' devices to make readers aware of units for specific columns. The **gt**
+#' package offers the function [cols_units()] to apply units to various columns
+#' with an interface that's similar to that of this function. However, it is
+#' also possible to define units here along with the column label, obviating the
+#' need for pattern syntax that joins the two text components. To do this, we
+#' have to surround the portion of text in the label that corresponds to the
+#' units definition with `"{{"`/`"}}"`.
+#'
+#' Now that we know how to mark text for units definition, we know need to know
+#' how to write proper units with the notation. Such notation uses a succinct
+#' method of writing units and it should feel somewhat familiar though it is
+#' particular to the task at hand. Each unit is treated as a separate entity
+#' (parentheses and other symbols included) and the addition of subscript text
+#' and exponents is flexible and relatively easy to formulate. This is all best
+#' shown with a few examples:
+#'
+#' - `"m/s"` and `"m / s"` both render as `"m/s"`
+#' - `"m s^-1"` will appear with the `"-1"` exponent intact
+#' - `"m \s"` gives the the same result, as `"\<unit>"` is equivalent to
+#'   `"<unit>^-1"`
+#' - `"E_h"` will render an `"E"` with the `"h"` subscript
+#' - `"t_i^2.5"` provides a `t` with an `"i"` subscript and a `"2.5"` exponent
+#' - `"m[_0^2]"` will use overstriking to set both scripts vertically
+#' - `"g/L %C6H12O6%"` uses a chemical formula (enclosed in a pair of `"%"`
+#'   characters) as a unit partial, and the formula will render correctly with
+#'   subscripted numbers
+#' - Common units that are difficult to write using ASCII text may be implicitly
+#'   converted to the correct characters (e.g., the `"u"` in `"ug"`, `"um"`,
+#'   `"uL"`, and `"umol"` will be converted to the Greek *mu* symbol; `"degC"`
+#'   and `"degF"` will render a degree sign before the temperature unit)
+#' - We can transform shorthand symbol/unit names enclosed in `":"` (e.g.,
+#'   `":angstrom:"`, `":ohm:"`, etc.) into proper symbols
+#'
 #' @section Examples:
 #'
 #' Let's use a portion of the [`countrypops`] dataset to create a **gt** table.
