@@ -155,6 +155,11 @@ interpreted as Markdown text.
 5-5
 }
 
+\section{Function Introduced}{
+
+\code{v0.9.0} (March 31, 2023)
+}
+
 \seealso{
 Other column modification functions: 
 \code{\link{cols_align_decimal}()},
@@ -169,6 +174,7 @@ Other column modification functions:
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
 \code{\link{cols_unhide}()},
+\code{\link{cols_units}()},
 \code{\link{cols_width}()}
 }
 \concept{column modification functions}

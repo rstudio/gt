@@ -82,7 +82,7 @@ series.
 
 \section{Function ID}{
 
-5-7
+5-8
 }
 
 \section{Function Introduced}{
@@ -104,6 +104,7 @@ Other column modification functions:
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move}()},
 \code{\link{cols_unhide}()},
+\code{\link{cols_units}()},
 \code{\link{cols_width}()}
 }
 \concept{column modification functions}

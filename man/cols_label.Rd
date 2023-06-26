@@ -26,7 +26,7 @@ should be enclosed in \code{\link[=c]{c()}}. Select helpers like \code{\link[=st
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}
 can be used in the LHS. Named arguments are also valid as input for simple
 mappings of column name to label text; they should be of the form \verb{<column name> = <label>}. Subsequent expressions that operate on the columns
-assigned previously will result in overwriting column width values.}
+assigned previously will result in overwriting column label values.}
 
 \item{.list}{\emph{Alternative to \code{...}}
 
@@ -200,6 +200,7 @@ Other column modification functions:
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
 \code{\link{cols_unhide}()},
+\code{\link{cols_units}()},
 \code{\link{cols_width}()}
 }
 \concept{column modification functions}
