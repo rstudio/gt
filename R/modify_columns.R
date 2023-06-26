@@ -1172,6 +1172,18 @@ cols_label_with <- function(
 #'
 #'   Allows for the use of a list as an input alternative to `...`.
 #'
+#' @param .units_pattern *Pattern to combine column labels and units*
+#'
+#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'
+#'   An optional pattern to be used for combining column labels with the defined
+#'   units. The default pattern is `"{1}, {2}"`, where `"{1}"` refers to the
+#'   column label text and `"{2}"` is the text related to the associated units.
+#'   This default can be modified through the `column_labels.units_pattern`
+#'   option found in [tab_options()]. Setting a value here will provide an
+#'   override to the `column_labels.units_pattern` default (only for the
+#'   resolved columns in the invocation of `cols_units()`).
+#'
 #' @return An object of class `gt_tbl`.
 #'
 #' @details
@@ -1195,7 +1207,8 @@ cols_label_with <- function(
 cols_units <- function(
     .data,
     ...,
-    .list = list2(...)
+    .list = list2(...),
+    .units_pattern = NULL
 ) {
 
   # Perform input object validation
@@ -1276,6 +1289,16 @@ cols_units <- function(
           var = columns[j],
           column_units = new_units
         )
+
+      if (!is.na(.units_pattern)) {
+
+        .data <-
+          dt_boxhead_edit_column_pattern(
+            data = .data,
+            var = columns[j],
+            column_pattern = .units_pattern
+          )
+      }
     }
   }
 
