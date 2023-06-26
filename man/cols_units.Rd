@@ -56,19 +56,32 @@ Column labels can sometimes contain measurement units, and these might range
 from easy to define and typeset (e.g., \code{"m/s"}) to very difficult. Such
 difficulty can arise from the need to include subscripts or superscripts,
 non-ASCII symbols, etc. The \code{cols_units()} function tries to make this task
-easier by letting you apply text pertaining to units to various columns.
-This takes advantage of \strong{gt}'s special unit syntax which provides several
-conveniences for defining units, ultimately providing sensible formatting for
-the specified table output format (i.e., HTML, LaTeX, RTF, etc.).
+easier by letting you apply text pertaining to units to various columns. This
+takes advantage of \strong{gt}'s specialized units notation (e.g.,
+\code{"J Hz^-1 mol^-1"} can be used to generate units for the
+\verb{molar Planck constant}) which provides several conveniences for defining
+units, ultimately providing the correct formatting for the specified table
+output format (i.e., HTML, LaTeX, RTF, etc.). Details pertaining to the units
+notation can be found in the \emph{How to use \strong{gt}'s units notation} section.
 }
-\details{
-The columns supplied in \code{columns} must all exist in the table and none of
-them can be in the \code{after} argument. The \code{after} column must also exist and
-only one column should be provided here. If you need to place one or columns
-at the beginning of the column series, the \code{\link[=cols_move_to_start]{cols_move_to_start()}} function
-should be used. Similarly, if those columns to move should be placed at the
-end of the column series then use \code{\link[=cols_move_to_end]{cols_move_to_end()}}.
+\section{How to use \strong{gt}'s units notation}{
+
+
+The units notation involves a shorthand of writing units that feels familiar
+and is fine-tuned for the task at hand. Each unit is treated as a separate
+entity (parentheses and other symbols included) and the addition of subscript
+text and exponents is flexible and relatively easy to formulate. This is all
+best shown with examples:
+\itemize{
+\item \code{"m/s"} and \code{"m / s"} both render as \code{"m/s"}
+\item \code{"m s^-1"} will appear with the \code{"-1"} exponent intact
+\item \code{"m \\s"} gives the the same result, as \code{"\\<unit>"} is equivalent to
+\code{"<unit>^-1"}
+\item \code{"E_h"} will render an \code{"E"} with the \code{"h"} subscript
+\item \code{"t_i^2.5"} provides a \code{t} with an \code{"i"} subscript and a \code{"2.5"} exponent
 }
+}
+
 \section{Function ID}{
 
 5-6

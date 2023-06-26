@@ -53,7 +53,7 @@ provides.
 
 \section{Function ID}{
 
-8-28
+8-29
 }
 
 \section{Function Introduced}{
@@ -81,6 +81,7 @@ Other helper functions:
 \code{\link{cells_summary}()},
 \code{\link{cells_title}()},
 \code{\link{currency}()},
+\code{\link{define_units}()},
 \code{\link{escape_latex}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},

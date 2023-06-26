@@ -148,7 +148,7 @@ some styling to the summary data stub cells with \code{\link[=tab_style]{tab_sty
 
 \section{Function ID}{
 
-8-15
+8-18
 }
 
 \section{Function Introduced}{
@@ -176,6 +176,7 @@ Other helper functions:
 \code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
+\code{\link{define_units}()},
 \code{\link{escape_latex}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},

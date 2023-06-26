@@ -233,7 +233,7 @@ used if the aforementioned fonts aren't available).
 
 \section{Function ID}{
 
-8-29
+8-30
 }
 
 \section{Function Introduced}{
@@ -262,6 +262,7 @@ Other helper functions:
 \code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
+\code{\link{define_units}()},
 \code{\link{escape_latex}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},

@@ -148,7 +148,7 @@ some styling to a grand summary cells with the \code{\link[=tab_style]{tab_style
 
 \section{Function ID}{
 
-8-14
+8-17
 }
 
 \section{Function Introduced}{
@@ -176,6 +176,7 @@ Other helper functions:
 \code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
+\code{\link{define_units}()},
 \code{\link{escape_latex}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},

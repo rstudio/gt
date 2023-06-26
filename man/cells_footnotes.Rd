@@ -105,7 +105,7 @@ style the footnotes section. The styling is done through the use of the
 
 \section{Function ID}{
 
-8-17
+8-20
 }
 
 \section{Function Introduced}{
@@ -133,6 +133,7 @@ Other helper functions:
 \code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
+\code{\link{define_units}()},
 \code{\link{escape_latex}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
