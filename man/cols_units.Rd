@@ -4,7 +4,7 @@
 \alias{cols_units}
 \title{Define units for one or more columns}
 \usage{
-cols_units(.data, ..., .list = list2(...))
+cols_units(.data, ..., .list = list2(...), .units_pattern = NULL)
 }
 \arguments{
 \item{.data}{\emph{The gt table data object}
@@ -35,6 +35,18 @@ defintion values.}
 \verb{<list of multiple expressions>} --- \strong{required} (or, use \code{...})
 
 Allows for the use of a list as an input alternative to \code{...}.}
+
+\item{.units_pattern}{\emph{Pattern to combine column labels and units}
+
+\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+
+An optional pattern to be used for combining column labels with the defined
+units. The default pattern is \code{"{1}, {2}"}, where \code{"{1}"} refers to the
+column label text and \code{"{2}"} is the text related to the associated units.
+This default can be modified through the \code{column_labels.units_pattern}
+option found in \code{\link[=tab_options]{tab_options()}}. Setting a value here will provide an
+override to the \code{column_labels.units_pattern} default (only for the
+resolved columns in the invocation of \code{cols_units()}).}
 }
 \value{
 An object of class \code{gt_tbl}.
