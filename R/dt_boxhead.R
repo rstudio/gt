@@ -318,7 +318,7 @@ dt_boxhead_build <- function(data, context) {
       units <- boxh[["column_units"]][i]
       column_pattern <- boxh[["column_pattern"]][i]
 
-      units_built <- units_to_html(generate_token_list(units))
+      units_built <- units_to_html(define_units(units_notation = units))
 
       if (column_pattern == "" && grepl(units, column_label, fixed = TRUE)) {
 
