@@ -675,6 +675,7 @@ grp_options <- function(
     column_labels.border.lr.width = NULL,
     column_labels.border.lr.color = NULL,
     column_labels.hidden = NULL,
+    column_labels.units_pattern = NULL,
     row_group.background.color = NULL,
     row_group.font.size = NULL,
     row_group.font.weight = NULL,
