@@ -3482,6 +3482,17 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   `column_labels` location won't be seen and the table header (if present)
 #'   will collapse downward.
 #'
+#' @param column_labels.units_pattern *Pattern to combine column labels and units*
+#'
+#'   The default pattern for combining column labels with any defined units for
+#'   column labels. The pattern is initialized as `"{1}, {2}"`, where `"{1}"`
+#'   refers to the column label text and `"{2}"` is the text related to the
+#'   associated units. When using [cols_units()], there is the opportunity to
+#'   provide a specific pattern that overrides the units pattern unit. Further
+#'   to this, if specifying units directly in [cols_label()] (through the units
+#'   syntax surrounded by `"{{"`/`"}}"`) there is no need for a units pattern
+#'   and any value here will be disregarded.
+#'
 #' @param row_group.border.top.style,row_group.border.top.width,row_group.border.top.color,row_group.border.bottom.style,row_group.border.bottom.width,row_group.border.bottom.color,row_group.border.left.style,row_group.border.left.width,row_group.border.left.color,row_group.border.right.style,row_group.border.right.width,row_group.border.right.color
 #'   *Border properties associated with the `row_group` location*
 #'
@@ -3971,6 +3982,7 @@ tab_options <- function(
     column_labels.border.lr.width = NULL,
     column_labels.border.lr.color = NULL,
     column_labels.hidden = NULL,
+    column_labels.units_pattern = NULL,
     row_group.background.color = NULL,
     row_group.font.size = NULL,
     row_group.font.weight = NULL,
