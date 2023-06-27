@@ -588,7 +588,7 @@
 #' \item{value}{The value of the constant.}
 #' \item{uncert}{The uncertainty associated with the value. If `NA` then the
 #' value is seen as an 'exact' value (e.g., an electron volt has the exact value
-#' of 1.602 176 634 e-19 J)}
+#' of 1.602 176 634 e-19 J).}
 #' \item{units}{The units associated with the constant.}
 #' }
 #'
@@ -613,7 +613,29 @@
 #'
 #' @description
 #'
-#' A dataset with daily lab data.
+#' A dataset with artificial daily lab data for a patient with Yellow Fever
+#' (YF). The table comprises laboratory findings for the patient from day 3 of
+#' illness onset until day 9 (after which the patient died). YF viral DNA was
+#' found in serum samples from day 3, where the viral load reached 14,000 copies
+#' per mL. Several medical interventions were taken to help the patient,
+#' including the administration of fresh frozen plasma, platelets, red cells,
+#' and coagulation factor VIII. The patient also received advanced support
+#' treatment in the form of mechanical ventilation and plasmapheresis. Though
+#' the patient's temperature remained stable during their illness,
+#' unfortunately, the patient's condition did not improve. On days 7 and 8, the
+#' patient's health declined further, with symptoms such as nosebleeds,
+#' gastrointestinal bleeding, and hematoma.
+#'
+#' @format A tibble with 39 rows and 11 variables:
+#' \describe{
+#' \item{test}{The name of the test.}
+#' \item{units}{The measurement units for the test.}
+#' \item{day_3,day_4,day_5,day_6,day_7,day_8,day_9}{Measurement values
+#' associated with each test administered. If `NA` then the test either could
+#' not be performed properly.)}
+#' \item{norm_l,norm_u}{Lower and upper bounds for the normal range associated
+#' with the test.}
+#' }
 #'
 #' @section Examples:
 #'
