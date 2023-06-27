@@ -69,6 +69,22 @@ test_that("Units are rendered properly in HTML", {
     "m a.s.l."
   )
   expect_equal(
+    generate_html_units("degC"),
+    "&deg;C"
+  )
+  expect_equal(
+    generate_html_units("degF"),
+    "&deg;F"
+  )
+  expect_equal(
+    generate_html_units(":degree:F"),
+    "&deg;F"
+  )
+  expect_equal(
+    generate_html_units(":degrees:F"),
+    "&deg;F"
+  )
+  expect_equal(
     generate_html_units("m_0 s_1"),
     "m<span style=\"white-space:nowrap;\"><sub>0</sub></span> s<span style=\"white-space:nowrap;\"><sub>1</sub></span>"
   )
@@ -162,11 +178,11 @@ test_that("Units are rendered properly in HTML", {
   )
   expect_equal(
     generate_html_units("J / degC"),
-    "J/&degree;C"
+    "J/&deg;C"
   )
   expect_equal(
     generate_html_units("1 / degF"),
-    "1/&degree;F"
+    "1/&deg;F"
   )
   expect_equal(
     generate_html_units("m / s"),
@@ -174,11 +190,11 @@ test_that("Units are rendered properly in HTML", {
   )
   expect_equal(
     generate_html_units("25:degree:C"),
-    "25&degree;C"
+    "25&deg;C"
   )
   expect_equal(
     generate_html_units(":degree:N"),
-    "&degree;N"
+    "&deg;N"
   )
   expect_equal(
     generate_html_units(":angstrom: / s"),
@@ -211,6 +227,10 @@ test_that("Units are rendered properly in HTML", {
   expect_equal(
     generate_html_units("{{[ kg kg^-1 ]}}"),
     "[kg kg<span style=\"white-space:nowrap;\"><sup>&minus;1</sup></span>]"
+  )
+  expect_equal(
+    generate_html_units("umol %C25H52% / uL"),
+    "&micro;mol C<span style=\"white-space:nowrap;\"><sub>25</sub></span>H<span style=\"white-space:nowrap;\"><sub>52</sub></span> / &micro;L"
   )
   expect_equal(
     generate_html_units(":mu:mol %C25H52% / :micro:L"),
