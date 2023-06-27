@@ -57,9 +57,11 @@ DATA-4
 
 \seealso{
 Other datasets: 
+\code{\link{constants}},
 \code{\link{countrypops}},
 \code{\link{exibble}},
 \code{\link{gtcars}},
+\code{\link{illness}},
 \code{\link{metro}},
 \code{\link{pizzaplace}},
 \code{\link{rx_addv}},
