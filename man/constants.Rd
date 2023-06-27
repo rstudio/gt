@@ -11,7 +11,7 @@ A tibble with 354 rows and 4 variables:
 \item{value}{The value of the constant.}
 \item{uncert}{The uncertainty associated with the value. If \code{NA} then the
 value is seen as an 'exact' value (e.g., an electron volt has the exact value
-of 1.602 176 634 e-19 J)}
+of 1.602 176 634 e-19 J).}
 \item{units}{The units associated with the constant.}
 }
 }
