@@ -595,18 +595,18 @@ define_units <- function(units_notation) {
       # the subscript is set before the exponent
 
       # Extract the unit w/o subscript from the string
-      unit <- gsub("(.+?)_.+?\\^.+?", "\\1", tokens_vec_i)
+      unit <- gsub("^(.+?)_.+?\\^.+?$", "\\1", tokens_vec_i)
 
       # Obtain only the subscript/exponent portion of the string
-      sub_exponent <- gsub(".+?(_.+?\\^.+?)", "\\1", tokens_vec_i)
+      sub_exponent <- gsub("^.+?(_.+?\\^.+?)$", "\\1", tokens_vec_i)
 
       # Extract the content after the underscore but terminate
       # before any `^`; this is the subscript
-      unit_subscript <- gsub("_(.+?)\\^.+?", "\\1", sub_exponent)
+      unit_subscript <- gsub("^_(.+?)\\^.+?$", "\\1", sub_exponent)
 
       # Extract the content after the caret but terminate before
       # any `_`; this is the exponent
-      exponent <- gsub("_.+?\\^(.+?)", "\\1", sub_exponent)
+      exponent <- gsub("^_.+?\\^(.+?)$", "\\1", sub_exponent)
 
     } else if (grepl("^", tokens_vec_i, fixed = TRUE)) {
       # Case where only an exponent is present
