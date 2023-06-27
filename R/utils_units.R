@@ -89,10 +89,10 @@ units_to_html <- function(units_object) {
       unit <- gsub(":permille:", "&permil;", unit)
     }
 
-    if (grepl(":degree:", unit)) unit <- gsub(":degree:", "&degree;", unit)
-    if (grepl("degC", unit)) unit <- gsub("degC", "&degree;C", unit)
-    if (grepl("degF", unit)) unit <- gsub("degF", "&degree;F", unit)
-
+    if (grepl(":degree:", unit)) unit <- gsub(":degree:", "&deg;", unit)
+    if (grepl(":degrees:", unit)) unit <- gsub(":degrees:", "&deg;", unit)
+    if (grepl("degC", unit)) unit <- gsub("degC", "&deg;C", unit)
+    if (grepl("degF", unit)) unit <- gsub("degF", "&deg;F", unit)
 
     units_str_i <- paste0(units_str_i, unit)
 
