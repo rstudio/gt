@@ -565,6 +565,54 @@
 #'
 "metro"
 
+
+#' Physical constants
+#'
+#' @description
+#'
+#' A dataset with physical constants.
+#'
+#' @section Examples:
+#'
+#' Here is a glimpse at the data available in `constants`.
+#'
+#' ```{r}
+#' dplyr::glimpse(constants)
+#' ```
+#'
+#' @family datasets
+#' @section Dataset ID and Badge:
+#' DATA-9
+#'
+#' @section Dataset Introduced:
+#' *In Development*
+#'
+"constants"
+
+#' Lab tests for one suffering from an illness
+#'
+#' @description
+#'
+#' A dataset with daily lab data.
+#'
+#' @section Examples:
+#'
+#' Here is a glimpse at the data available in `illness`.
+#'
+#' ```{r}
+#' dplyr::glimpse(illness)
+#' ```
+#'
+#' @family datasets
+#' @section Dataset ID and Badge:
+#' DATA-10
+#'
+#' @section Dataset Introduced:
+#' *In Development*
+#'
+"illness"
+
+
 #' An ADSL-flavored clinical trial toy dataset
 #'
 #' @description
@@ -624,7 +672,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-9
+#' DATA-11
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_rx_adsl.png")`
@@ -697,7 +745,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-10
+#' DATA-12
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_rx_addv.png")`
