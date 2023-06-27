@@ -90,6 +90,9 @@ converted to the correct characters (e.g., the \code{"u"} in \code{"ug"}, \code{
 and \code{"degF"} will render a degree sign before the temperature unit)
 \item We can transform shorthand symbol/unit names enclosed in \code{":"} (e.g.,
 \code{":angstrom:"}, \code{":ohm:"}, etc.) into proper symbols
+\item The components of a unit (unit name, subscript, and exponent) can be
+fully or partially italicized/emboldened by surrounding text with \code{"*"} or
+\code{"**"}
 }
 }
 

@@ -20,6 +20,37 @@ An object of class \code{units_definition}.
 The \code{define_units()} function is available for working with text in \strong{gt}'s
 units notation.
 }
+\section{How to use \strong{gt}'s units notation}{
+
+
+The units notation involves a shorthand of writing units that feels familiar
+and is fine-tuned for the task at hand. Each unit is treated as a separate
+entity (parentheses and other symbols included) and the addition of subscript
+text and exponents is flexible and relatively easy to formulate. This is all
+best shown with examples:
+\itemize{
+\item \code{"m/s"} and \code{"m / s"} both render as \code{"m/s"}
+\item \code{"m s^-1"} will appear with the \code{"-1"} exponent intact
+\item \code{"m \\s"} gives the the same result, as \code{"\\<unit>"} is equivalent to
+\code{"<unit>^-1"}
+\item \code{"E_h"} will render an \code{"E"} with the \code{"h"} subscript
+\item \code{"t_i^2.5"} provides a \code{t} with an \code{"i"} subscript and a \code{"2.5"} exponent
+\item \code{"m[_0^2]"} will use overstriking to set both scripts vertically
+\item \code{"g/L \%C6H12O6\%"} uses a chemical formula (enclosed in a pair of \code{"\%"}
+characters) as a unit partial, and the formula will render correctly with
+subscripted numbers
+\item Common units that are difficult to write using ASCII text may be implicitly
+converted to the correct characters (e.g., the \code{"u"} in \code{"ug"}, \code{"um"},
+\code{"uL"}, and \code{"umol"} will be converted to the Greek \emph{mu} symbol; \code{"degC"}
+and \code{"degF"} will render a degree sign before the temperature unit)
+\item We can transform shorthand symbol/unit names enclosed in \code{":"} (e.g.,
+\code{":angstrom:"}, \code{":ohm:"}, etc.) into proper symbols
+\item The components of a unit (unit name, subscript, and exponent) can be
+fully or partially italicized/emboldened by surrounding text with \code{"*"} or
+\code{"**"}
+}
+}
+
 \section{Function ID}{
 
 8-7
