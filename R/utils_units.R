@@ -94,6 +94,22 @@ units_to_html <- function(units_object) {
     if (grepl("degC", unit)) unit <- gsub("degC", "&deg;C", unit)
     if (grepl("degF", unit)) unit <- gsub("degF", "&deg;F", unit)
 
+    if (grepl(":space:", unit)) unit <- gsub(":space:", "&nbsp;", unit)
+
+    # Process Markdown for different components
+    if (!is.na(unit) && nchar(unit) > 2 && grepl("*", unit)) {
+      unit <- commonmark::markdown_html(text = unit)
+      unit <- gsub("^<p>|</p>\n$", "", unit)
+    }
+    if (!is.na(unit_subscript) && nchar(unit_subscript) > 2 && grepl("*", unit_subscript)) {
+      unit_subscript <- commonmark::markdown_html(text = unit_subscript)
+      unit_subscript <- gsub("^<p>|</p>\n$", "", unit_subscript)
+    }
+    if (!is.na(exponent) && nchar(exponent) > 2 && grepl("*", exponent)) {
+      exponent <- commonmark::markdown_html(text = exponent)
+      exponent <- gsub("^<p>|</p>\n$", "", exponent)
+    }
+
     units_str_i <- paste0(units_str_i, unit)
 
     if (
