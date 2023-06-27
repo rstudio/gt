@@ -3,15 +3,33 @@
 \docType{data}
 \name{constants}
 \alias{constants}
-\title{Physical constants}
+\title{The fundamental physical constants}
 \format{
-An object of class \code{tbl_df} (inherits from \code{tbl}, \code{data.frame}) with 354 rows and 4 columns.
+A tibble with 354 rows and 4 variables:
+\describe{
+\item{name}{The name of the constant.}
+\item{value}{The value of the constant.}
+\item{uncert}{The uncertainty associated with the value. If \code{NA} then the
+value is seen as an 'exact' value (e.g., an electron volt has the exact value
+of 1.602 176 634 e-19 J)}
+\item{units}{The units associated with the constant.}
+}
 }
 \usage{
 constants
 }
 \description{
-A dataset with physical constants.
+This dataset contains values for over 300 basic fundamental constants in
+nature. The values originate from the 2018 adjustment which is based on the
+latest relevant precision measurements and improvements of theoretical
+calculations. Such work has been carried out under the authority of the
+\emph{Task Group on Fundamental Constants} (TGFC) of the
+\emph{Committee on Data of the International Science Council} (CODATA). These
+updated values became available on May 20, 2019. They are published at
+\url{http://physics.nist.gov/constants}, a website of the
+\emph{Fundamental Constants Data Center} of the
+\emph{National Institute of Standards and Technology} (NIST), Gaithersburg,
+Maryland, USA.
 }
 \section{Examples}{
 
