@@ -709,6 +709,9 @@ cols_width <- function(
 #'   and `"degF"` will render a degree sign before the temperature unit)
 #' - We can transform shorthand symbol/unit names enclosed in `":"` (e.g.,
 #'   `":angstrom:"`, `":ohm:"`, etc.) into proper symbols
+#' - The components of a unit (unit name, subscript, and exponent) can be
+#'   fully or partially italicized/emboldened by surrounding text with `"*"` or
+#'   `"**"`
 #'
 #' @section Examples:
 #'
@@ -1251,6 +1254,9 @@ cols_label_with <- function(
 #'   and `"degF"` will render a degree sign before the temperature unit)
 #' - We can transform shorthand symbol/unit names enclosed in `":"` (e.g.,
 #'   `":angstrom:"`, `":ohm:"`, etc.) into proper symbols
+#' - The components of a unit (unit name, subscript, and exponent) can be
+#'   fully or partially italicized/emboldened by surrounding text with `"*"` or
+#'   `"**"`
 #'
 #' @family column modification functions
 #' @section Function ID:
