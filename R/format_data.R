@@ -6842,7 +6842,7 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #' but rather `"<unit_1> <unit_2>^-1"`).
 #'
 #' ```r
-#' constants %>%
+#' constants |>
 #'   dplyr::filter(grepl("molar", name)) |>
 #'   gt() |>
 #'   cols_hide(columns = uncert) |>
