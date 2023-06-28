@@ -957,7 +957,7 @@ cmark_rules_xml <- list(
               bullet_insert <- xml_r(
                   xml_t(xml_space = "preserve", paste(c(rep("\t", times = indent_level),list_symbol,"\t"), collapse = ""))
                 ) %>%
-                as_xml_node()%>%
+                as_xml_node() %>%
                 .[[1]]
 
               ## must be nodes not nodesets
