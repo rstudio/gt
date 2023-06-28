@@ -42,7 +42,11 @@ render_units <- function(units_object, context = "html") {
       exponent <- escape_latex(exponent)
     }
 
-    if (grepl("x10", unit) && !chemical_formula) {
+    if (
+      context %in% c("html", "latex") &&
+      grepl("x10", unit) &&
+      !chemical_formula
+    ) {
       unit <- gsub("x", "&times;", unit)
     }
 
