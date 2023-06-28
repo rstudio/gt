@@ -178,7 +178,7 @@ format those units. Here, the preference preference in units typesetting
 was for positive and negative exponents (e.g., not \code{"<unit_1> / <unit_2>"}
 but rather \code{"<unit_1> <unit_2>^-1"}).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{constants \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{constants |>
   dplyr::filter(grepl("molar", name)) |>
   gt() |>
   cols_hide(columns = uncert) |>
