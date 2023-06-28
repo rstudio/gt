@@ -305,9 +305,8 @@ dt_boxhead_build <- function(data, context) {
   boxh$column_label <-
     lapply(boxh$column_label, function(label) process_text(label, context))
 
-  # Merge column units into column label
-  # TODO: allow this to work for other output contexts
-  if (context == "html" && !all(is.na(boxh$column_units))) {
+  # Merge column units into column labels
+  if (!all(is.na(boxh$column_units))) {
 
     for (i in seq_along(boxh$column_label)) {
 
@@ -318,7 +317,11 @@ dt_boxhead_build <- function(data, context) {
       units <- boxh[["column_units"]][i]
       column_pattern <- boxh[["column_pattern"]][i]
 
-      units_built <- units_to_html(define_units(units_notation = units))
+      units_built <-
+        render_units(
+          define_units(units_notation = units),
+          context = context
+        )
 
       if (column_pattern == "" && grepl(units, column_label, fixed = TRUE)) {
 
