@@ -169,6 +169,28 @@ those units.
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_units_1.png" alt="This image of a table was generated from the first code example in the `fmt_units()` help file." style="width:100\%;">
 }}
+
+The \code{\link{constants}} dataset contains values for hundreds of fundamental
+physical constants. We'll take a subset of values that have some molar basis
+and generate a \strong{gt} table from that. Like the \code{\link{illness}} dataset, this one
+has a \code{units} column so, again, the \code{fmt_units()} function will be used to
+format those units. Here, the preference preference in units typesetting
+was for positive and negative exponents (e.g., not \code{"<unit_1> / <unit_2>"}
+but rather \code{"<unit_1> <unit_2>^-1"}).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{constants \%>\%
+  dplyr::filter(grepl("molar", name)) |>
+  gt() |>
+  cols_hide(columns = uncert) |>
+  fmt_units(columns = units) |>
+  fmt_scientific(columns = value, decimals = 3) |>
+  tab_header(title = "Physical Constants Having a Molar Basis") |>
+  tab_options(column_labels.hidden = TRUE)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_units_2.png" alt="This image of a table was generated from the second code example in the `fmt_units()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
