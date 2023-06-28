@@ -6902,8 +6902,20 @@ fmt_units <- function(
     columns = {{ columns }},
     rows = {{ rows }},
     fns = list(
+      html = function(x) {
+        format_units_by_context(x, context = "html")
+      },
+      latex = function(x) {
+        format_units_by_context(x, context = "latex")
+      },
+      rtf = function(x) {
+        format_units_by_context(x, context = "rtf")
+      },
+      word = function(x) {
+        format_units_by_context(x, context = "word")
+      },
       default = function(x) {
-        format_units_by_context(x)
+        format_units_by_context(x, context = "plain")
       }
     )
   )
@@ -6925,7 +6937,7 @@ format_units_by_context <- function(x, context = "html") {
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
       FUN = function(x) {
-        units_to_html(define_units(x_str_non_missing[x]))
+        render_units(define_units(x_str_non_missing[x]), context = context)
       }
     )
 
