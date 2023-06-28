@@ -638,12 +638,18 @@ perform_col_merge <- function(data, context) {
         rows_to_format <- base::intersect(which(!(na_1_rows | na_2_rows)), rows)
       }
 
+      body_1_vals <- body[[mutated_column]][rows_to_format]
+      body_1_vals[body_1_vals == "<br />"] <- ""
+
+      body_2_vals <- body[[second_column]][rows_to_format]
+      body_2_vals[body_2_vals == "<br />"] <- ""
+
       body[rows_to_format, mutated_column] <-
         as.character(
           glue_gt(
             list(
-              "1" = body[[mutated_column]][rows_to_format],
-              "2" = body[[second_column]][rows_to_format],
+              "1" = body_1_vals,
+              "2" = body_2_vals,
               "sep" = sep
             ),
             pattern
