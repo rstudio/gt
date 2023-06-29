@@ -619,10 +619,10 @@ cols_width <- function(
 #' columns from the input table data). When you create a **gt** table object
 #' using [gt()], column names effectively become the column labels. While this
 #' serves as a good first approximation, column names as label defaults aren't
-#' often appealing as the alternative for custom column labels in a **gt**
-#' output table. The `cols_label()` function provides the flexibility to relabel
-#' one or more columns and we even have the option to use the [md()] or [html()]
-#' helper functions for rendering column labels from Markdown or using HTML.
+#' often as appealing in a **gt** table as the option for custom column labels.
+#' The `cols_label()` function provides the flexibility to relabel one or more
+#' columns and we even have the option to use the [md()] or [html()] helper
+#' functions for rendering column labels from Markdown or using HTML.
 #'
 #' @param .data *The gt table data object*
 #'
@@ -658,6 +658,16 @@ cols_width <- function(
 #'
 #'   An option to specify a function that will be applied to all of the provided
 #'   label values.
+#'
+#' @param .process_units *Option to process any available units throughout*
+#'
+#'   `scalar<logical>` --- *default:* `NULL` (`optional`)
+#'
+#'   Should your column text contain text that is already in **gt**'s units
+#'   notation (and, importantly, is surrounded by `"{{"`/`"}}"`), using `TRUE`
+#'   here reprocesses all column such that the units are properly registered for
+#'   each of the column labels. This ignores any column label assignments in
+#'   `...` or `.list`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -823,6 +833,40 @@ cols_width <- function(
 #' `r man_get_image_tag(file = "man_cols_label_4.png")`
 #' }}
 #'
+#' Here's another table that uses the [`towny`] dataset. The big difference
+#' compared to the previous *gt* table is that `cols_label()` here is
+#' incorporating unit notation text (within `"{{"`/`"}}"`).
+#'
+#' ```r
+#' towny |>
+#'   dplyr::select(
+#'     name, population_2021, density_2021, land_area_km2, latitude, longitude
+#'   ) |>
+#'   dplyr::filter(population_2021 > 100000) |>
+#'   dplyr::arrange(desc(population_2021)) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt() |>
+#'   fmt_integer(columns = population_2021) |>
+#'   fmt_number(
+#'     columns = c(density_2021, land_area_km2),
+#'     decimals = 1
+#'   ) |>
+#'   fmt_number(columns = latitude, decimals = 2) |>
+#'   fmt_number(columns = longitude, decimals = 2, scale_by = -1) |>
+#'   cols_label(
+#'     starts_with("population") ~ "Population",
+#'     starts_with("density") ~ "Density, {{*persons* km^-2}}",
+#'     land_area_km2 ~ "Area, {{km^2}}",
+#'     latitude ~ "Latitude, {{:degrees:N}}",
+#'     longitude ~ "Longitude, {{:degrees:W}}"
+#'   ) |>
+#'   cols_width(everything() ~ px(120))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_label_5.png")`
+#' }}
+#'
 #' @family column modification functions
 #' @section Function ID:
 #' 5-4
@@ -836,14 +880,32 @@ cols_label <- function(
     .data,
     ...,
     .list = list2(...),
-    .fn = NULL
+    .fn = NULL,
+    .process_units = NULL
 ) {
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = .data)
 
-  # Collect a list of column labels
-  labels_list <- .list
+  if (!is.null(.process_units) && .process_units) {
+
+    # Obtain all extant labels as a list
+    vars_default <- dt_boxhead_get_vars_default(data = .data)
+    vars_labels_default <- dt_boxhead_get_vars_labels_default(data = .data)
+
+    labels_list <- as.list(vars_labels_default)
+    names(labels_list) <- vars_default
+
+  } else if (!is.null(.process_units) && !.process_units) {
+
+    # Collect a list of column labels
+    labels_list <- .list
+
+  } else {
+
+    # Collect a list of column labels
+    labels_list <- .list
+  }
 
   column_vars <- dt_boxhead_get_vars(data = .data)
 
@@ -1126,6 +1188,7 @@ cols_label_with <- function(
   if (length(resolved_columns) < 1) {
     return(data)
   }
+
   # Obtain `boxh_df` table and filter to the rows with resolved column names
   boxh_df <- dt_boxhead_get(data = data)
   boxh_df <- boxh_df[boxh_df[["var"]] %in% resolved_columns, ]
