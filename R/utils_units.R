@@ -117,12 +117,18 @@ render_units <- function(units_object, context = "html") {
 
     } else if (chemical_formula) {
 
-      units_str_i <-
-        gsub(
-          "(\\d+)",
-          "<span style=\"white-space:nowrap;\"><sub>\\1</sub></span>",
-          units_str_i
-        )
+      if (context == "html") {
+
+        units_str_i <-
+          gsub(
+            "(\\d+)",
+            "<span style=\"white-space:nowrap;\"><sub>\\1</sub></span>",
+            units_str_i
+          )
+
+      } else if (context == "latex") {
+        units_str_i <- gsub("(\\d+)", "\\\\textsubscript\\{\\1\\}", units_str_i)
+      }
 
     } else {
 
