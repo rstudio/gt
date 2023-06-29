@@ -88,6 +88,12 @@ render_units <- function(units_object, context = "html") {
 
     units_str_i <- paste0(units_str_i, unit)
 
+    # Overstriking of subscripts and superscripts is only possible
+    # for the `"html"` context; deactivate this for any other context
+    if (sub_super_overstrike && context != "html") {
+      sub_super_overstrike <- FALSE
+    }
+
     if (
       sub_super_overstrike &&
       !is.na(unit_subscript) &&
