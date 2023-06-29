@@ -4,7 +4,7 @@
 \alias{cols_label}
 \title{Relabel one or more columns}
 \usage{
-cols_label(.data, ..., .list = list2(...), .fn = NULL)
+cols_label(.data, ..., .list = list2(...), .fn = NULL, .process_units = NULL)
 }
 \arguments{
 \item{.data}{\emph{The gt table data object}
@@ -40,6 +40,16 @@ Allows for the use of a list as an input alternative to \code{...}.}
 
 An option to specify a function that will be applied to all of the provided
 label values.}
+
+\item{.process_units}{\emph{Option to process any available units throughout}
+
+\verb{scalar<logical>} --- \emph{default:} \code{NULL} (\code{optional})
+
+Should your column text contain text that is already in \strong{gt}'s units
+notation (and, importantly, is surrounded by \code{"{{"}/\code{"}}"}), using \code{TRUE}
+here reprocesses all column such that the units are properly registered for
+each of the column labels. This ignores any column label assignments in
+\code{...} or \code{.list}.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -49,10 +59,10 @@ Column labels can be modified from their default values (the names of the
 columns from the input table data). When you create a \strong{gt} table object
 using \code{\link[=gt]{gt()}}, column names effectively become the column labels. While this
 serves as a good first approximation, column names as label defaults aren't
-often appealing as the alternative for custom column labels in a \strong{gt}
-output table. The \code{cols_label()} function provides the flexibility to relabel
-one or more columns and we even have the option to use the \code{\link[=md]{md()}} or \code{\link[=html]{html()}}
-helper functions for rendering column labels from Markdown or using HTML.
+often as appealing in a \strong{gt} table as the option for custom column labels.
+The \code{cols_label()} function provides the flexibility to relabel one or more
+columns and we even have the option to use the \code{\link[=md]{md()}} or \code{\link[=html]{html()}} helper
+functions for rendering column labels from Markdown or using HTML.
 }
 \section{A note on column names and column labels}{
 
@@ -216,6 +226,39 @@ is not a single column name, we must use formula syntax (i.e., with the \code{~}
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_4.png" alt="This image of a table was generated from the fourth code example in the `cols_label()` help file." style="width:100\%;">
+}}
+
+Here's another table that uses the \code{\link{towny}} dataset. The big difference
+compared to the previous \emph{gt} table is that \code{cols_label()} here is
+incorporating unit notation text (within \code{"{{"}/\code{"}}"}).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
+  dplyr::select(
+    name, population_2021, density_2021, land_area_km2, latitude, longitude
+  ) |>
+  dplyr::filter(population_2021 > 100000) |>
+  dplyr::arrange(desc(population_2021)) |>
+  dplyr::slice_head(n = 10) |>
+  gt() |>
+  fmt_integer(columns = population_2021) |>
+  fmt_number(
+    columns = c(density_2021, land_area_km2),
+    decimals = 1
+  ) |>
+  fmt_number(columns = latitude, decimals = 2) |>
+  fmt_number(columns = longitude, decimals = 2, scale_by = -1) |>
+  cols_label(
+    starts_with("population") ~ "Population",
+    starts_with("density") ~ "Density, \{\{*persons* km^-2\}\}",
+    land_area_km2 ~ "Area, \{\{km^2\}\}",
+    latitude ~ "Latitude, \{\{:degrees:N\}\}",
+    longitude ~ "Longitude, \{\{:degrees:W\}\}"
+  ) |>
+  cols_width(everything() ~ px(120))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_5.png" alt="This image of a table was generated from the fifth code example in the `cols_label()` help file." style="width:100\%;">
 }}
 }
 
