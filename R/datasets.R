@@ -565,7 +565,6 @@
 #'
 "metro"
 
-
 #' The fundamental physical constants
 #'
 #' @description
@@ -630,6 +629,50 @@
 #' patient's health declined further, with symptoms such as nosebleeds,
 #' gastrointestinal bleeding, and hematoma.
 #'
+#' @details
+#'
+#' The various tests are identified in the `test` column. The following listing
+#' provides full names for any of the abbreviations seen in that column.
+#'
+#' \itemize{
+#' \item `"WBC"`: white blood cells.
+#' \item `"RBC"`: red blood cells.
+#' \item `"Hb"`: hemoglobin.
+#' \item `"PLT"`: platelets.
+#' \item `"ALT"`: alanine aminotransferase.
+#' \item `"AST"`: aspartate aminotransferase.
+#' \item `"TBIL"`: total bilirubin.
+#' \item `"DBIL"`: direct bilirubin.
+#' \item `"NH3"`: hydrogen nitride.
+#' \item `"PT"`: prothrombin time.
+#' \item `"APTT"`: activated partial thromboplastin time.
+#' \item `"PTA"`: prothrombin time activity.
+#' \item `"DD"`: D-dimer.
+#' \item `"FDP"`: fibrinogen degradation products.
+#' \item `"LDH"`: lactate dehydrogenase.
+#' \item `"HBDH"`: hydroxybutyrate dehydrogenase.
+#' \item `"CK"`: creatine kinase.
+#' \item `"CKMB"`: the MB fraction of creatine kinase.
+#' \item `"BNP"`: B-type natriuetic peptide.
+#' \item `"MYO"`: myohemoglobin.
+#' \item `"TnI"`: troponin inhibitory.
+#' \item `"CREA"`: creatinine.
+#' \item `"BUN"`: blood urea nitrogen.
+#' \item `"AMY"`: amylase.
+#' \item `"LPS"`: lipase.
+#' \item `"K"`: kalium.
+#' \item `"Na"`: sodium.
+#' \item `"Cl"`: chlorine.
+#' \item `"Ca"`: calcium.
+#' \item `"P"`: phosphorus.
+#' \item `"Lac"`: lactate, blood.
+#' \item `"CRP"`: c-reactive protein.
+#' \item `"PCT"`: procalcitonin.
+#' \item `"IL-6"`: interleukin-6.
+#' \item `"CD3+CD4+"`: CD4+T lymphocytes.
+#' \item `"CD3+CD8+"`: CD8+T lymphocytes.
+#' }
+#'
 #' @format A tibble with 39 rows and 11 variables:
 #' \describe{
 #' \item{test}{The name of the test.}
@@ -661,7 +704,6 @@
 #' *In Development*
 #'
 "illness"
-
 
 #' An ADSL-flavored clinical trial toy dataset
 #'
