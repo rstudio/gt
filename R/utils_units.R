@@ -187,6 +187,10 @@ units_to_superscript <- function(content, context = "html") {
     out <- paste0("\\textsuperscript{", content, "}")
   }
 
+  if (context == "rtf") {
+    out <- paste0("\\super ", content, " \\nosupersub")
+  }
+
   if (context == "word") {
 
     out <-
@@ -219,6 +223,10 @@ units_to_subscript <- function(content, context = "html") {
 
   if (context == "latex") {
     out <- paste0("\\textsubscript{", content, "}")
+  }
+
+  if (context == "rtf") {
+    out <- paste0("\\sub ", content, " \\nosupersub")
   }
 
   if (context == "word") {
@@ -311,6 +319,28 @@ units_symbol_replacements <- function(
     text <- replace_units_symbol(text, "degC", "degC", "&deg;C")
     text <- replace_units_symbol(text, "degF", "degF", "&deg;F")
     text <- replace_units_symbol(text, ":space:", ":space:", "&nbsp;")
+  }
+
+  if (context == "rtf") {
+
+    text <- replace_units_symbol(text, "^um$", "um", "\\\\u181 m")
+    text <- replace_units_symbol(text, "^uL$", "uL", "\\\\u181 L")
+    text <- replace_units_symbol(text, "^umol", "^umol", "\\\\u181 mol")
+    text <- replace_units_symbol(text, "^ug$", "ug", "\\\\u181 g")
+    text <- replace_units_symbol(text, ":micro:", ":micro:", "\\\\u181 ")
+    text <- replace_units_symbol(text, ":mu:", ":mu:", "\\\\u181 ")
+    text <- replace_units_symbol(text, "^ohm$", "ohm", "\\\\u8486 ")
+    text <- replace_units_symbol(text, ":ohm:", ":ohm:", "\\\\u8486 ")
+    text <- replace_units_symbol(text, ":angstrom:", ":angstrom:", "\\\\u8491 ")
+    text <- replace_units_symbol(text, ":times:", ":times:", "\\\\u215 ")
+    text <- replace_units_symbol(text, ":plusminus:", ":plusminus:", "\\\\u177 ")
+    text <- replace_units_symbol(text, ":permil:", ":permil:", "\\\\u8240 ")
+    text <- replace_units_symbol(text, ":permille:", ":permille:", "\\\\u8240 ")
+    text <- replace_units_symbol(text, ":degree:", ":degree:", "\\\\u0176 ")
+    text <- replace_units_symbol(text, ":degrees:", ":degrees:", "\\\\0u176 ")
+    text <- replace_units_symbol(text, "degC", "degC", "\\\\u0176 C")
+    text <- replace_units_symbol(text, "degF", "degF", "\\\\u0176 F")
+    text <- replace_units_symbol(text, ":space:", ":space:", " ")
   }
 
   if (context == "word") {
