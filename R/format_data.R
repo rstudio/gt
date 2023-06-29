@@ -7200,7 +7200,7 @@ format_units_by_context <- function(x, context = "html") {
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-18
+#' 3-19
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
@@ -7624,7 +7624,7 @@ fmt_url <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-19
+#' 3-20
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
@@ -7954,7 +7954,7 @@ fmt_image <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-20
+#' 3-21
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
@@ -8216,7 +8216,7 @@ fmt_flag <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-21
+#' 3-22
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -8362,7 +8362,7 @@ fmt_markdown <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-22
+#' 3-23
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -8570,7 +8570,7 @@ fmt_passthrough <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-23
+#' 3-24
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
@@ -8889,7 +8889,7 @@ fmt_auto <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-24
+#' 3-25
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
