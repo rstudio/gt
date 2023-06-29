@@ -61,6 +61,8 @@ render_units <- function(units_object, context = "html") {
       } else if (context == "latex") {
         unit <- commonmark::markdown_latex(text = unit)
         unit <- gsub("\n$", "", unit)
+      } else if (context == "rtf") {
+        unit <- markdown_to_rtf(text = unit)
       }
     }
 
@@ -72,6 +74,8 @@ render_units <- function(units_object, context = "html") {
       } else if (context == "latex") {
         unit_subscript <- commonmark::markdown_latex(text = unit_subscript)
         unit_subscript <- gsub("\n$", "", unit_subscript)
+      } else if (context == "rtf") {
+        unit_subscript <- markdown_to_rtf(text = unit_subscript)
       }
     }
 
@@ -83,6 +87,8 @@ render_units <- function(units_object, context = "html") {
       } else if (context == "latex") {
         exponent <- commonmark::markdown_latex(text = exponent)
         exponent <- gsub("\n$", "", exponent)
+      } else if (context == "rtf") {
+        exponent <- markdown_to_rtf(text = exponent)
       }
     }
 
