@@ -33,6 +33,49 @@ unfortunately, the patient's condition did not improve. On days 7 and 8, the
 patient's health declined further, with symptoms such as nosebleeds,
 gastrointestinal bleeding, and hematoma.
 }
+\details{
+The various tests are identified in the \code{test} column. The following listing
+provides full names for any of the abbreviations seen in that column.
+
+\itemize{
+\item \code{"WBC"}: white blood cells.
+\item \code{"RBC"}: red blood cells.
+\item \code{"Hb"}: hemoglobin.
+\item \code{"PLT"}: platelets.
+\item \code{"ALT"}: alanine aminotransferase.
+\item \code{"AST"}: aspartate aminotransferase.
+\item \code{"TBIL"}: total bilirubin.
+\item \code{"DBIL"}: direct bilirubin.
+\item \code{"NH3"}: hydrogen nitride.
+\item \code{"PT"}: prothrombin time.
+\item \code{"APTT"}: activated partial thromboplastin time.
+\item \code{"PTA"}: prothrombin time activity.
+\item \code{"DD"}: D-dimer.
+\item \code{"FDP"}: fibrinogen degradation products.
+\item \code{"LDH"}: lactate dehydrogenase.
+\item \code{"HBDH"}: hydroxybutyrate dehydrogenase.
+\item \code{"CK"}: creatine kinase.
+\item \code{"CKMB"}: the MB fraction of creatine kinase.
+\item \code{"BNP"}: B-type natriuetic peptide.
+\item \code{"MYO"}: myohemoglobin.
+\item \code{"TnI"}: troponin inhibitory.
+\item \code{"CREA"}: creatinine.
+\item \code{"BUN"}: blood urea nitrogen.
+\item \code{"AMY"}: amylase.
+\item \code{"LPS"}: lipase.
+\item \code{"K"}: kalium.
+\item \code{"Na"}: sodium.
+\item \code{"Cl"}: chlorine.
+\item \code{"Ca"}: calcium.
+\item \code{"P"}: phosphorus.
+\item \code{"Lac"}: lactate, blood.
+\item \code{"CRP"}: c-reactive protein.
+\item \code{"PCT"}: procalcitonin.
+\item \code{"IL-6"}: interleukin-6.
+\item \code{"CD3+CD4+"}: CD4+T lymphocytes.
+\item \code{"CD3+CD8+"}: CD8+T lymphocytes.
+}
+}
 \section{Examples}{
 
 

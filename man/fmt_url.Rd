@@ -299,7 +299,7 @@ you to handle them with \code{\link[=sub_missing]{sub_missing()}}. Here's an exa
 
 \section{Function ID}{
 
-3-18
+3-19
 }
 
 \section{Function Introduced}{

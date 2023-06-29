@@ -203,7 +203,7 @@ taken from the referenced graphics files on disk.
 
 \section{Function ID}{
 
-3-19
+3-20
 }
 
 \section{Function Introduced}{

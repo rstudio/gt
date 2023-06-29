@@ -690,7 +690,7 @@ gray cells for the missing values (we also removed the \code{"NA"} text with
 
 \section{Function ID}{
 
-3-30
+3-31
 }
 
 \section{Function Introduced}{

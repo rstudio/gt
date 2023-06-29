@@ -164,7 +164,7 @@ scientific notation. This is done by using the \code{lg_num_pref = "suf"} option
 
 \section{Function ID}{
 
-3-23
+3-24
 }
 
 \section{Function Introduced}{
