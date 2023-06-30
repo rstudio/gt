@@ -229,7 +229,7 @@ is not a single column name, we must use formula syntax (i.e., with the \code{~}
 }}
 
 Here's another table that uses the \code{\link{towny}} dataset. The big difference
-compared to the previous \emph{gt} table is that \code{cols_label()} here is
+compared to the previous \emph{gt} table is that \code{cols_label()} as used here is
 incorporating unit notation text (within \code{"{{"}/\code{"}}"}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
@@ -259,6 +259,48 @@ incorporating unit notation text (within \code{"{{"}/\code{"}}"}).
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_5.png" alt="This image of a table was generated from the fifth code example in the `cols_label()` help file." style="width:100\%;">
+}}
+
+The \code{\link{illness}} dataset has units in all through the \code{units} column. They're
+formatted in just the right way for \strong{gt} too. Let's do some text
+manipulation through \code{dplyr::mutate()} and some pivoting with
+\strong{tidyr}'s \code{pivot_longer()} and \code{pivot_wider()} in order to include the
+units as part of the column names of the reshaped table. The column names
+are already in a format where the units are included within \code{"{{"}/\code{"}}"},
+so, we can use \code{cols_label()} with the \code{.process_units = TRUE} option to
+register the measurement units. In addition to this, because there is a
+\verb{<br>} included (for a line break), we should use the \code{.fn} option and give
+it the \code{\link[=md]{md()}} helper function (as a bare function name). This ensures that
+the linebreak does materialize.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{illness |>
+  dplyr::mutate(test = paste0(test, ",<br>\{\{", units, "\}\}")) |>
+  dplyr::slice_head(n = 8) |>
+  dplyr::select(-c(starts_with("norm"), units)) |>
+  tidyr::pivot_longer(
+    cols = starts_with("day"),
+    names_to = "day",
+    names_prefix = "day_",
+    values_to = "value"
+  ) |>
+  tidyr::pivot_wider(
+    names_from = test,
+    values_from = value
+  ) |>
+  gt(rowname_col = "day") |>
+  tab_stubhead(label = "Day") |>
+  cols_label(
+    .fn = md,
+    .process_units = TRUE
+  ) |>
+  cols_width(
+    stub() ~ px(50),
+    everything() ~ px(120)
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_6.png" alt="This image of a table was generated from the sixth code example in the `cols_label()` help file." style="width:100\%;">
 }}
 }
 
