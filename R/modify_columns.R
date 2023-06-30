@@ -1364,6 +1364,154 @@ cols_label_with <- function(
 #'   fully or partially italicized/emboldened by surrounding text with `"*"` or
 #'   `"**"`
 #'
+#' @section Examples:
+#'
+#' Let's analyze some [`pizzaplace`] data with **dplyr** and then make a **gt**
+#' table. Here we are separately defining new column labels with [cols_label()]
+#' and then defining the units (to combine to those labels) through
+#' `cols_units()`. The default pattern for combination is `"{1}, {2}"` which
+#' is acceptable here.
+#'
+#' ```r
+#' pizzaplace |>
+#'   dplyr::mutate(month = lubridate::month(date, label = TRUE, abbr = TRUE)) |>
+#'   dplyr::group_by(month) |>
+#'   dplyr::summarize(
+#'     n_sold = dplyr::n(),
+#'     rev = sum(price)
+#'   ) |>
+#'   dplyr::mutate(chg = (rev - dplyr::lag(rev)) / dplyr::lag(rev)) |>
+#'   dplyr::mutate(month = as.character(month)) |>
+#'   gt(rowname_col = "month") |>
+#'   fmt_integer(columns = n_sold) |>
+#'   fmt_currency(columns = rev, use_subunits = FALSE) |>
+#'   fmt_percent(columns = chg) |>
+#'   sub_missing() |>
+#'   cols_label(
+#'     n_sold = "Number of Pizzas Sold",
+#'     rev = "Revenue Generated",
+#'     chg = "Monthly Changes in Revenue"
+#'   ) |>
+#'   cols_units(
+#'     n_sold = "units month^-1",
+#'     rev = "USD month^-1",
+#'     chg = "% change *m*/*m*"
+#'   ) |>
+#'   cols_width(
+#'     stub() ~ px(40),
+#'     everything() ~ px(200)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_units_1.png")`
+#' }}
+#'
+#' The [`sza`] dataset has a wealth of information and here we'll generate
+#' a smaller table that contains the average solar zenith angles at noon for
+#' different months and at different northern latitudes. The column labels are
+#' numbers representing the latitudes and it's convenient to apply units
+#' of 'degrees north' to each of them with `cols_units()`. The extra thing we
+#' wanted to do here was to ensure that the units are placed directly after
+#' the column labels, and we do that with `.units_pattern = "{1}{2}"`. This
+#' append the units (`"{2}"`) right to the column label (`"{1}"`).
+#'
+#' ```r
+#' sza |>
+#'   dplyr::filter(tst == "1200") |>
+#'   dplyr::select(-tst) |>
+#'   dplyr::arrange(desc(latitude)) |>
+#'   tidyr::pivot_wider(
+#'     names_from = latitude,
+#'     values_from = sza
+#'   ) |>
+#'   gt(rowname_col = "month") |>
+#'   cols_units(
+#'     everything() ~ ":degree:N",
+#'     .units_pattern = "{1}{2}"
+#'   ) |>
+#'   tab_spanner(
+#'     label = "Solar Zenith Angle",
+#'     columns = everything()
+#'   ) |>
+#'   text_transform(
+#'     fn = toupper,
+#'     locations = cells_stub()
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(align = "right"),
+#'     locations = cells_stub()
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_units_2.png")`
+#' }}
+#'
+#' Taking a portion of the [`towny`] dataset, let's use spanners to describe
+#' what's in the columns and use only measurement units for the column labels.
+#' The columns labels that have to do with population and density information
+#' will be replaced with units defined in `cols_units()`. We'll use a
+#' `.units_pattern` value of `"{2}"`, which means that only the units will
+#' be present (the `"{1}"`, representing the column label text, is omitted).
+#' Spanners added through several invocations of [tab_spanner()] will declare
+#' what the last four columns contain.
+#'
+#' ```r
+#' towny |>
+#'   dplyr::select(
+#'     name, land_area_km2,
+#'     ends_with("2016"), ends_with("2021")
+#'   ) |>
+#'   dplyr::arrange(desc(population_2021)) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt(rowname_col = "name") |>
+#'   tab_stubhead(label = "City") |>
+#'   fmt_integer() |>
+#'   cols_label(
+#'     land_area_km2 ~ "Area, {{km^2}}",
+#'     starts_with("population") ~ "",
+#'     starts_with("density") ~ ""
+#'   ) |>
+#'   cols_units(
+#'     starts_with("population") ~ "*ppl*",
+#'     starts_with("density") ~ "*ppl* km^-2",
+#'     .units_pattern = "{2}"
+#'   ) |>
+#'   tab_spanner(
+#'     label = "Population",
+#'     columns = starts_with("population"),
+#'     gather = FALSE
+#'   ) |>
+#'   tab_spanner(
+#'     label = "Density",
+#'     columns = starts_with("density"),
+#'     gather = FALSE
+#'   ) |>
+#'   tab_spanner(
+#'     label = "2016",
+#'     columns = ends_with("2016"),
+#'     gather = FALSE
+#'   ) |>
+#'   tab_spanner(
+#'     label = "2021",
+#'     columns = ends_with("2021"),
+#'     gather = FALSE
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(align = "center"),
+#'     locations = cells_column_labels(
+#'       c(starts_with("population"), starts_with("density"))
+#'     )
+#'   ) |>
+#'   cols_width(everything() ~ px(120)) |>
+#'   opt_horizontal_padding(scale = 3)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_units_3.png")`
+#' }}
+#'
 #' @family column modification functions
 #' @section Function ID:
 #' 5-6
