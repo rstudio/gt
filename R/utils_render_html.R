@@ -898,11 +898,12 @@ create_columns_component_h <- function(data) {
       for (j in seq_along(colspans)) {
 
         if (colspans[j] > 0) {
+
           styles_spanners <-
             dplyr::filter(
               styles_tbl,
               locname == "columns_groups",
-              grpname == spanners_vars
+              grpname %in% spanners_vars
             )
 
           spanner_style <-

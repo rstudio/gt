@@ -73,7 +73,7 @@ output.
 
 \section{Function ID}{
 
-8-19
+8-5
 }
 
 \section{Function Introduced}{
@@ -101,6 +101,7 @@ Other helper functions:
 \code{\link{cells_summary}()},
 \code{\link{cells_title}()},
 \code{\link{default_fonts}()},
+\code{\link{define_units}()},
 \code{\link{escape_latex}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},

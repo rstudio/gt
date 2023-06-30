@@ -92,7 +92,7 @@ header with a title, and then add a footnote to the title with
 
 \section{Function ID}{
 
-8-6
+8-9
 }
 
 \section{Function Introduced}{
@@ -120,6 +120,7 @@ Other helper functions:
 \code{\link{cells_summary}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
+\code{\link{define_units}()},
 \code{\link{escape_latex}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},

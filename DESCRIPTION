@@ -137,6 +137,7 @@ Collate:
     'utils_render_latex.R'
     'utils_render_rtf.R'
     'utils_render_xml.R'
+    'utils_units.R'
     'z_utils_render_footnotes.R'
     'zzz.R'
 Config/testthat/edition: 3

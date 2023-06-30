@@ -136,7 +136,7 @@ better describe the content.
 
 \section{Function ID}{
 
-5-13
+5-14
 }
 
 \section{Function Introduced}{
@@ -158,6 +158,7 @@ Other column modification functions:
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
 \code{\link{cols_unhide}()},
+\code{\link{cols_units}()},
 \code{\link{cols_width}()}
 }
 \concept{column modification functions}

@@ -126,7 +126,7 @@ calls of \code{sub_missing()}.
 
 \section{Function ID}{
 
-3-25
+3-26
 }
 
 \section{Function Introduced}{
@@ -159,6 +159,7 @@ Other data formatting functions:
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
 \code{\link{fmt_time}()},
+\code{\link{fmt_units}()},
 \code{\link{fmt_url}()},
 \code{\link{fmt}()},
 \code{\link{sub_large_vals}()},
