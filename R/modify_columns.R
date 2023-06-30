@@ -834,7 +834,7 @@ cols_width <- function(
 #' }}
 #'
 #' Here's another table that uses the [`towny`] dataset. The big difference
-#' compared to the previous *gt* table is that `cols_label()` here is
+#' compared to the previous *gt* table is that `cols_label()` as used here is
 #' incorporating unit notation text (within `"{{"`/`"}}"`).
 #'
 #' ```r
@@ -865,6 +865,49 @@ cols_width <- function(
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_cols_label_5.png")`
+#' }}
+#'
+#' The [`illness`] dataset has units in all through the `units` column. They're
+#' formatted in just the right way for **gt** too. Let's do some text
+#' manipulation through `dplyr::mutate()` and some pivoting with
+#' **tidyr**'s `pivot_longer()` and `pivot_wider()` in order to include the
+#' units as part of the column names of the reshaped table. The column names
+#' are already in a format where the units are included within `"{{"`/`"}}"`,
+#' so, we can use `cols_label()` with the `.process_units = TRUE` option to
+#' register the measurement units. In addition to this, because there is a
+#' `<br>` included (for a line break), we should use the `.fn` option and give
+#' it the [md()] helper function (as a bare function name). This ensures that
+#' the linebreak does materialize.
+#'
+#' ```r
+#' illness |>
+#'   dplyr::mutate(test = paste0(test, ",<br>{{", units, "}}")) |>
+#'   dplyr::slice_head(n = 8) |>
+#'   dplyr::select(-c(starts_with("norm"), units)) |>
+#'   tidyr::pivot_longer(
+#'     cols = starts_with("day"),
+#'     names_to = "day",
+#'     names_prefix = "day_",
+#'     values_to = "value"
+#'   ) |>
+#'   tidyr::pivot_wider(
+#'     names_from = test,
+#'     values_from = value
+#'   ) |>
+#'   gt(rowname_col = "day") |>
+#'   tab_stubhead(label = "Day") |>
+#'   cols_label(
+#'     .fn = md,
+#'     .process_units = TRUE
+#'   ) |>
+#'   cols_width(
+#'     stub() ~ px(50),
+#'     everything() ~ px(120)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_label_6.png")`
 #' }}
 #'
 #' @family column modification functions
