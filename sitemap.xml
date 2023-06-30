@@ -154,7 +154,13 @@
     <loc>https://gt.rstudio.com/reference/cols_unhide.html</loc>
   </url>
   <url>
+    <loc>https://gt.rstudio.com/reference/cols_units.html</loc>
+  </url>
+  <url>
     <loc>https://gt.rstudio.com/reference/cols_width.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/reference/constants.html</loc>
   </url>
   <url>
     <loc>https://gt.rstudio.com/reference/countrypops.html</loc>
@@ -167,6 +173,9 @@
   </url>
   <url>
     <loc>https://gt.rstudio.com/reference/default_fonts.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/reference/define_units.html</loc>
   </url>
   <url>
     <loc>https://gt.rstudio.com/reference/escape_latex.html</loc>
@@ -253,6 +262,9 @@
     <loc>https://gt.rstudio.com/reference/fmt_time.html</loc>
   </url>
   <url>
+    <loc>https://gt.rstudio.com/reference/fmt_units.html</loc>
+  </url>
+  <url>
     <loc>https://gt.rstudio.com/reference/fmt_url.html</loc>
   </url>
   <url>
@@ -314,6 +326,9 @@
   </url>
   <url>
     <loc>https://gt.rstudio.com/reference/html.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/reference/illness.html</loc>
   </url>
   <url>
     <loc>https://gt.rstudio.com/reference/index.html</loc>

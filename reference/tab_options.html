@@ -127,6 +127,7 @@ components, the subcomponents, and the element that can adjusted.</p>
 <span>  column_labels.border.lr.width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  column_labels.border.lr.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  column_labels.hidden <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  column_labels.units_pattern <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  row_group.background.color <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  row_group.font.size <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  row_group.font.weight <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -443,6 +444,18 @@ the <code>column_labels</code> location.</p></dd>
 <p>An option to hide the column labels. If providing <code>TRUE</code> then the entire
 <code>column_labels</code> location won't be seen and the table header (if present)
 will collapse downward.</p></dd>
+
+
+<dt>column_labels.units_pattern</dt>
+<dd><p><em>Pattern to combine column labels and units</em></p>
+<p>The default pattern for combining column labels with any defined units for
+column labels. The pattern is initialized as <code>"{1}, {2}"</code>, where <code>"{1}"</code>
+refers to the column label text and <code>"{2}"</code> is the text related to the
+associated units. When using <code><a href="cols_units.html">cols_units()</a></code>, there is the opportunity to
+provide a specific pattern that overrides the units pattern unit. Further
+to this, if specifying units directly in <code><a href="cols_label.html">cols_label()</a></code> (through the units
+syntax surrounded by <code>"{{"</code>/<code>"}}"</code>) there is no need for a units pattern
+and any value here will be disregarded.</p></dd>
 
 
 <dt>row_group.border.top.style, row_group.border.top.width, row_group.border.top.color, row_group.border.bottom.style, row_group.border.bottom.width, row_group.border.bottom.color, row_group.border.left.style, row_group.border.left.width, row_group.border.left.color, row_group.border.right.style, row_group.border.right.width, row_group.border.right.color</dt>
