@@ -10,8 +10,8 @@ A tibble with 39 rows and 11 variables:
 \item{test}{The name of the test.}
 \item{units}{The measurement units for the test.}
 \item{day_3,day_4,day_5,day_6,day_7,day_8,day_9}{Measurement values
-associated with each test administered. If \code{NA} then the test either could
-not be performed properly.)}
+associated with each test administered from days 3 to 9. If \code{NA} then the
+test could not be performed properly.)}
 \item{norm_l,norm_u}{Lower and upper bounds for the normal range associated
 with the test.}
 }
@@ -35,7 +35,7 @@ gastrointestinal bleeding, and hematoma.
 }
 \details{
 The various tests are identified in the \code{test} column. The following listing
-provides full names for any of the abbreviations seen in that column.
+provides the full names of any abbreviations seen in that column.
 
 \itemize{
 \item \code{"WBC"}: white blood cells.

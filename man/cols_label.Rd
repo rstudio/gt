@@ -229,8 +229,8 @@ is not a single column name, we must use formula syntax (i.e., with the \code{~}
 }}
 
 Here's another table that uses the \code{\link{towny}} dataset. The big difference
-compared to the previous \emph{gt} table is that \code{cols_label()} as used here is
-incorporating unit notation text (within \code{"{{"}/\code{"}}"}).
+compared to the previous \emph{gt} table is that \code{cols_label()} as used here
+incorporates unit notation text (within \code{"{{"}/\code{"}}"}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
   dplyr::select(
@@ -261,17 +261,17 @@ incorporating unit notation text (within \code{"{{"}/\code{"}}"}).
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_5.png" alt="This image of a table was generated from the fifth code example in the `cols_label()` help file." style="width:100\%;">
 }}
 
-The \code{\link{illness}} dataset has units in all through the \code{units} column. They're
+The \code{\link{illness}} dataset has units within the \code{units} column. They're
 formatted in just the right way for \strong{gt} too. Let's do some text
 manipulation through \code{dplyr::mutate()} and some pivoting with
 \strong{tidyr}'s \code{pivot_longer()} and \code{pivot_wider()} in order to include the
-units as part of the column names of the reshaped table. The column names
-are already in a format where the units are included within \code{"{{"}/\code{"}}"},
-so, we can use \code{cols_label()} with the \code{.process_units = TRUE} option to
-register the measurement units. In addition to this, because there is a
-\verb{<br>} included (for a line break), we should use the \code{.fn} option and give
-it the \code{\link[=md]{md()}} helper function (as a bare function name). This ensures that
-the linebreak does materialize.
+units as part of the column names in the reworked table. These column names
+are in a format where the units are included within \code{"{{"}/\code{"}}"}, so, we can
+use \code{cols_label()} with the \code{.process_units = TRUE} option to register the
+measurement units. In addition to this, because there is a \verb{<br>} included
+(for a line break), we should use the \code{.fn} option and provide the \code{\link[=md]{md()}}
+helper function (as a bare function name). This ensures that any linebreaks
+do materialize.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{illness |>
   dplyr::mutate(test = paste0(test, ",<br>\{\{", units, "\}\}")) |>
