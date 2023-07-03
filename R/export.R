@@ -310,7 +310,31 @@ gt_save_latex <- function(
 
   filename <- gtsave_filename(path = path, filename = filename)
 
-  writeLines(text = as_latex(data = data), con = filename)
+  if (is_gt_tbl(data = data)) {
+
+    latex_lines <- as_latex(data = data)
+
+  } else {
+
+    latex_lines <- c()
+
+    seq_tbls <- seq_len(nrow(data$gt_tbls))
+
+    for (i in seq_tbls) {
+
+      latex_lines_i <- as_latex(grp_pull(data, which = i))
+
+      latex_lines <- c(latex_lines, latex_lines_i)
+    }
+
+    latex_lines <-
+      paste(
+        latex_lines,
+        collapse = "\n\\newpage\n\n"
+      )
+  }
+
+  writeLines(text = latex_lines, con = filename)
 }
 
 #' Saving function for an RTF file
