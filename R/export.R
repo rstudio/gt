@@ -234,16 +234,33 @@ gt_save_html <- function(
 
   filename <- gtsave_filename(path = path, filename = filename)
 
-  if (inline_css) {
+  if (is_gt_tbl(data = data)) {
 
-     html <- as_raw_html(data, inline_css = inline_css)
-     html <- htmltools::HTML(html)
-     htmltools::save_html(html, filename, ...)
+    if (inline_css) {
 
-  } else {
+      html <- as_raw_html(data, inline_css = inline_css)
+      html <- htmltools::HTML(html)
 
-    html <- htmltools::as.tags(data)
-    htmltools::save_html(html, filename, ...)
+    } else {
+
+      html <- htmltools::as.tags(data)
+    }
+
+    return(htmltools::save_html(html, filename, ...))
+
+  } else if (is_gt_group(data = data)) {
+
+    seq_tbls <- seq_len(nrow(data$gt_tbls))
+
+    html_tbls <- htmltools::tagList()
+
+    for (i in seq_tbls) {
+
+      html_tbl_i <- as_raw_html(grp_pull(data, which = i), inline_css = inline_css)
+      html_tbls <- htmltools::tagList(html_tbls, html_tbl_i)
+    }
+
+    return(htmltools::save_html(html_tbls, filename, ...))
   }
 }
 
@@ -259,6 +276,14 @@ gt_save_webshot <- function(
     zoom = 2,
     expand = 5
 ) {
+
+  if (is_gt_group(data = data)) {
+
+    cli::cli_abort(c(
+      "The `gtsave()` function cannot be used with `gt_group` objects.",
+      "*" = "Alternatively, you can use `grp_pull()` -> `gtsave()` for each gt table."
+    ))
+  }
 
   filename <- gtsave_filename(path = path, filename = filename)
 
@@ -310,7 +335,31 @@ gt_save_latex <- function(
 
   filename <- gtsave_filename(path = path, filename = filename)
 
-  writeLines(text = as_latex(data = data), con = filename)
+  if (is_gt_tbl(data = data)) {
+
+    latex_lines <- as_latex(data = data)
+
+  } else if (is_gt_group(data = data)) {
+
+    latex_lines <- c()
+
+    seq_tbls <- seq_len(nrow(data$gt_tbls))
+
+    for (i in seq_tbls) {
+
+      latex_lines_i <- as_latex(grp_pull(data, which = i))
+
+      latex_lines <- c(latex_lines, latex_lines_i)
+    }
+
+    latex_lines <-
+      paste(
+        latex_lines,
+        collapse = "\n\\newpage\n\n"
+      )
+  }
+
+  writeLines(text = latex_lines, con = filename)
 }
 
 #' Saving function for an RTF file
@@ -329,7 +378,7 @@ gt_save_rtf <- function(
 
     rtf_lines <- as_rtf(data = data)
 
-  } else {
+  } else if (is_gt_group(data = data)) {
 
     rtf_lines <- c()
 
@@ -408,7 +457,7 @@ gt_save_docx <- function(
         collapse = "\n"
       )
 
-  } else {
+  } else if (is_gt_group(data = data)) {
 
     word_tbls <- c()
 
@@ -449,9 +498,8 @@ gt_save_docx <- function(
   )
 
   if (needs_gt_as_word_post_processing(word_md_text)) {
-    gt_as_word_post_processing(filename)
+    gt_as_word_post_processing(path = filename)
   }
-
 }
 
 #' Get the lowercase extension from a filename
