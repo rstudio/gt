@@ -353,8 +353,8 @@ xml_pStyle <- function(
 }
 
 # paragraph border
-
 xml_pBdr <- function(..., app = "word"){
+
   htmltools::tag(
     `_tag_name` = xml_tag_type("pBdr", app),
     varArgs = list(
@@ -364,6 +364,7 @@ xml_pBdr <- function(..., app = "word"){
 }
 
 xml_numPr <- function(..., app = "word"){
+
   htmltools::tag(
     `_tag_name` = xml_tag_type("numPr", app),
     varArgs = list(
@@ -440,14 +441,14 @@ xml_spacing <- function(
 }
 
 # hyperlink
-
 xml_hyperlink <- function(..., url, app = "word"){
+
   htmltools::tag(
     `_tag_name` = xml_tag_type("hyperlink", app),
     varArgs = list(
       `r:id` = url,
       htmltools::HTML(paste0(...))
-      )
+    )
   )
 }
 
@@ -1556,7 +1557,7 @@ create_body_component_xml <- function(
 
     n_cols <- n_data_cols + 1
 
-    alignment<- c("left", alignment)
+    alignment <- c("left", alignment)
 
     stub_var <- dt_boxhead_get_var_stub(data = data)
     all_stub_vals <- as.matrix(body[, stub_var])
@@ -1806,7 +1807,8 @@ create_source_notes_component_xml <- function(
 
   stub_components <- dt_stub_components(data = data)
 
-  cell_style <- dt_styles_get(data = data) %>%
+  cell_style <-
+    dt_styles_get(data = data) %>%
     dplyr::filter(locname == "source_notes") %>%
     dplyr::pull("styles") %>%
     .[1] %>% .[[1]]
@@ -1879,7 +1881,8 @@ create_footnotes_component_xml <- function(
 
   stub_components <- dt_stub_components(data = data)
 
-  cell_style <- dt_styles_get(data = data) %>%
+  cell_style <-
+    dt_styles_get(data = data) %>%
     dplyr::filter(
       locname == "footnotes"
     ) %>%
@@ -2119,10 +2122,9 @@ stretch_to_xml_stretch <- function(x) {
   )[x]
 }
 
-v_align_to_xml_v_align <- function(x){
-  x <-
-    rlang::arg_match(x,
-                     values = c("middle", "top", "bottom"))
+v_align_to_xml_v_align <- function(x) {
+
+  x <- rlang::arg_match(x, values = c("middle", "top", "bottom"))
 
   c(
     "middle" = "center",
@@ -2131,7 +2133,7 @@ v_align_to_xml_v_align <- function(x){
   )[x]
 }
 
-row_span_to_xml_v_merge <- function(x){
+row_span_to_xml_v_merge <- function(x) {
 
   x <- rlang::arg_match(x, values = c("start", "continue"))
 
@@ -2141,12 +2143,15 @@ row_span_to_xml_v_merge <- function(x){
   )[x]
 }
 
-white_space_to_t_xml_space <- function(x = NULL){
-  ## default behavior we want
+white_space_to_t_xml_space <- function(x = NULL) {
+
+  # Default behavior we want
   spacing <- "default"
-  if(isTRUE(x %in% c( "pre", "pre-wrap", "pre-line","break-spaces"))){
+
+  if (isTRUE(x %in% c( "pre", "pre-wrap", "pre-line","break-spaces"))) {
     spacing <- "preserve"
   }
+
   spacing
 }
 
@@ -2157,16 +2162,14 @@ white_space_in_text <- function(x, whitespace = NULL){
   ## general behavior based on: https://developer.mozilla.org/en-US/docs/Web/CSS/white-space
 
   ## collapse white spaces unless preserving it
-  if(!isTRUE(whitespace %in% c( "pre", "pre-wrap", "break-spaces"))){
+  if (!isTRUE(whitespace %in% c( "pre", "pre-wrap", "break-spaces"))) {
     x <- gsub("\\s+|\\t+"," ",x)
   }
 
   x
-
 }
 
-
-#' define ooxml table cells
+#' Define OOXML table cells
 #'
 #' paragrah
 #'
@@ -2234,7 +2237,7 @@ xml_table_cell <- function(
   )
 }
 
-process_cell_content <- function(x, ...){
+process_cell_content <- function(x, ...) {
 
   x %>%
     parse_to_xml() %>%
@@ -2247,32 +2250,50 @@ process_cell_content <- function(x, ...){
     paste0(collapse = "")
 }
 
-
 #' @importFrom xml2 xml_find_all xml_text xml_attr `xml_attr<-` `xml_text<-`
-process_cell_content_ooxml_t <- function(x, ..., whitespace = NULL) {
+process_cell_content_ooxml_t <- function(
+    x,
+    ...,
+    whitespace = NULL
+) {
+
   text_tag <- x %>% xml_find_all("//w:t")
+
   for (txt in text_tag) {
+
     text_tag_content <- xml_text(txt)
     text_tag_attr <- xml_attr(txt, "space")
-    ## if its already set to preserve, respect preservation
+
+    # If it's already set to preserve, respect preservation
+
     if (!text_tag_attr == "preserve") {
       xml_text(txt) <- white_space_in_text(x = text_tag_content, whitespace = whitespace)
       xml_attr(txt, attr = "xml:space") <- white_space_to_t_xml_space(whitespace)
     }
   }
+
   x
 }
 
 #' @importFrom xml2 xml_find_all xml_find_first xml_children xml_add_sibling xml_remove xml_ns xml_name
-process_cell_content_ooxml_r<- function(x,..., font = NULL, size = NULL, color = NULL, style = NULL, weight = NULL){
+process_cell_content_ooxml_r <- function(
+    x,
+    ...,
+    font = NULL,
+    size = NULL,
+    color = NULL,
+    style = NULL,
+    weight = NULL
+) {
 
-  ## cell level styles
-  cell_styles <- list(
+  # Cell level styles
+  cell_styles <-
+    list(
       as_xml_node(
         xml_r_font(
           ascii_font = font ,
           ansi_font = font
-          )
+        )
       ),
       as_xml_node(xml_sz(val = size %||% 20)),
       if (!is.null(color)) {
@@ -2293,7 +2314,7 @@ process_cell_content_ooxml_r<- function(x,..., font = NULL, size = NULL, color =
   ## pull run styles from x
   run_tags <- x %>% xml_find_all("//w:r")
 
-  for(run in run_tags){
+  for (run in run_tags) {
 
       run_style <- run %>% xml_find_first(".//w:rPr")
 
@@ -2303,7 +2324,8 @@ process_cell_content_ooxml_r<- function(x,..., font = NULL, size = NULL, color =
       ## which styles are new. Add those. Respect ones that already exist and do not update
       new_cell_styles <- which(!cell_styles_types %in% run_style_children_types)
 
-      for(cell_style_idx in new_cell_styles){
+      for (cell_style_idx in new_cell_styles) {
+
         xml_add_child(
           run_style,
           cell_styles[[cell_style_idx]][[1]]
@@ -2315,7 +2337,16 @@ process_cell_content_ooxml_r<- function(x,..., font = NULL, size = NULL, color =
 }
 
 #' @importFrom xml2 xml_find_all xml_find_first xml_children xml_add_sibling xml_add_child xml_remove xml_ns xml_name
-process_cell_content_ooxml_p <- function(x, ..., align = NULL, col_span = NULL, stretch = NULL, keep_with_next = TRUE, whitespace = NULL, paragraph_style = NULL){
+process_cell_content_ooxml_p <- function(
+    x,
+    ...,
+    align = NULL,
+    col_span = NULL,
+    stretch = NULL,
+    keep_with_next = TRUE,
+    whitespace = NULL,
+    paragraph_style = NULL
+) {
 
   ## cell level styles
   cell_styles <- list(
@@ -2333,7 +2364,7 @@ process_cell_content_ooxml_p <- function(x, ..., align = NULL, col_span = NULL, 
     if (!is.null(align)) {
       as_xml_node(xml_jc(val = align))
     },
-    if(!is.null(paragraph_style)){
+    if (!is.null(paragraph_style)) {
       as_xml_node(xml_pStyle(val = paragraph_style))
     }
   )
@@ -2345,17 +2376,17 @@ process_cell_content_ooxml_p <- function(x, ..., align = NULL, col_span = NULL, 
   ## pull run styles from x
   paragraph_tags <- x %>% xml_find_all("//w:p")
 
-  if(length(paragraph_tags) == 0){
+  if (length(paragraph_tags) == 0) {
 
-    x <- xml_p(xml_pPr()) %>%
+    x <-
+      xml_p(xml_pPr()) %>%
       as_xml_node() %>%
       xml_add_child(x)
 
     paragraph_tags <- x %>% xml_find_all("//w:p")
-
   }
 
-  for(paragraph in paragraph_tags){
+  for (paragraph in paragraph_tags) {
 
     paragraph_style <- paragraph %>% xml_find_all(".//w:pPr")
 
@@ -2365,51 +2396,48 @@ process_cell_content_ooxml_p <- function(x, ..., align = NULL, col_span = NULL, 
     ## which styles are new?
     new_cell_styles <- which(!cell_styles_types %in% paragraph_style_children_types)
 
-    for(cell_style_idx in new_cell_styles){
+    for (cell_style_idx in new_cell_styles) {
         xml_add_child(
           paragraph_style,
           cell_styles[[cell_style_idx]][[1]]
         )
     }
-
   }
 
-
   x
-
 }
 
 #' @importFrom xml2 xml_find_all xml_find_first xml_children xml_child xml_add_sibling xml_remove xml_ns xml_name
 process_white_space_br_in_xml <- function(x, ..., whitespace = NULL){
 
-  ##options for white space: normal, nowrap, pre, pre-wrap, pre-line, break-spaces
+  ## Options for white space: normal, nowrap, pre, pre-wrap, pre-line, break-spaces
   ## normal drops all newlines and collapse spaces
   ## general behavior based on: https://developer.mozilla.org/en-US/docs/Web/CSS/white-space
 
-  ## remove newlines (br) unless preserving it
-  if(!isTRUE(whitespace %in% c( "pre", "pre-wrap", "pre-line","break-spaces"))){
+  ## Remove newlines (br) unless preserving it
+  if (!isTRUE(whitespace %in% c("pre", "pre-wrap", "pre-line", "break-spaces"))) {
 
     paragraphs <- x %>% xml_find_all("//w:p")
 
-    for(p in paragraphs){
+    for (p in paragraphs) {
 
       paragraph_children <- p %>% xml_children()
 
       break_tags_locs <- which(xml_name(paragraph_children, ns = xml_ns(x)) == "w:br")
       run_tags_locs <-  which(xml_name(paragraph_children, ns = xml_ns(x)) == "w:r")
 
-      if(length(break_tags_locs) > 0){
+      if (length(break_tags_locs) > 0) {
 
 
-        for(break_tag_loc in break_tags_locs){
+        for (break_tag_loc in break_tags_locs) {
 
           break_tag <- paragraph_children[[break_tag_loc]]
 
           ## if the br is between two runs, replace with space
-          if(any(run_tags_locs > break_tag_loc) & any(run_tags_locs < break_tag_loc )){
+          if (any(run_tags_locs > break_tag_loc) & any(run_tags_locs < break_tag_loc )) {
 
-
-            replacement_br <- xml_r(xml_rPr(), xml_t(" ", xml_space = "preserve")) %>%
+            replacement_br <-
+              xml_r(xml_rPr(), xml_t(" ", xml_space = "preserve")) %>%
               as_xml_node(create_ns = TRUE) %>%
               process_cell_content_ooxml_t(...) %>%
               process_cell_content_ooxml_r(...) %>%
@@ -2420,12 +2448,9 @@ process_white_space_br_in_xml <- function(x, ..., whitespace = NULL){
               replacement_br,
               .where = "after"
             )
-
           }
 
-
           xml_remove(break_tag)
-
         }
       }
     }
@@ -2435,50 +2460,53 @@ process_white_space_br_in_xml <- function(x, ..., whitespace = NULL){
 }
 
 #' @importFrom xml2 xml_find_all xml_children xml_child xml_add_sibling xml_remove xml_ns xml_name
-
 process_drop_empty_styling_nodes <- function(x){
 
   paragraph_styles <- x %>% xml_find_all(".//w:pPr")
 
-  for(p_style in paragraph_styles){
+  for (p_style in paragraph_styles) {
     style_children <- p_style %>% xml_children()
 
-    if(length(style_children) == 0){
+    if (length(style_children) == 0) {
       xml_remove(p_style)
     }
   }
 
   run_styles <- x %>% xml_find_all(".//w:rPr")
 
-  for(r_style in run_styles){
+  for (r_style in run_styles) {
     style_children <- r_style %>% xml_children()
 
-    if(length(style_children) == 0){
+    if (length(style_children) == 0) {
       xml_remove(r_style)
     }
   }
 
   x
-
 }
 
 add_text_style <- function(x, style){
   UseMethod("add_text_style",x)
 }
 
-add_text_style.character <- function(x, style){
+add_text_style.character <- function(x, style) {
+
   x <- x %>% as_xml_node(create_ns = TRUE)
   style_to_add <- style %>% as_xml_node()
   run_style_tag <- x %>% xml_find_all("./w:rPr")
+
   xml_add_child(
     run_style_tag,
     style_to_add
   )
+
   as.character(x)
 }
 
-add_text_style.shiny.tag <- function(x, style){
+add_text_style.shiny.tag <- function(x, style) {
+
   x <- x %>% as.character()
+
   add_text_style.character(x, style = style)
 }
 
@@ -2486,53 +2514,64 @@ add_text_style.shiny.tag <- function(x, style){
 
 ## if wrapped in xml, convert to html
 #' @importFrom xml2 read_xml xml_children
-parse_to_xml <- function(x,...){
+parse_to_xml <- function(x, ...) {
+
   ##check if wrapped in ooxml
   ## get what it starts with and assign
 
-  if(is.null(x)){
-    x <- xml_p(
-      xml_pPr(
-        xml_spacing(before = 0, after = 60)
-      ),
-      xml_r(
-        xml_rPr(),
-        xml_t()
+  if (is.null(x)) {
+    x <-
+      xml_p(
+        xml_pPr(
+          xml_spacing(before = 0, after = 60)
+        ),
+        xml_r(
+          xml_rPr(),
+          xml_t()
+        )
       )
-    )
 
-    x <- x %>%
+    x <-
+      x %>%
       as.character() %>%
       paste0("<md_container>", ., "</md_container>")
   }
 
-  if(length(x) > 1){
-    if(all(grepl("^<md_container>.*</md_container>$", x))){
-      x <- gsub("^<md_container>(.*)</md_container>$", "\\1",x) %>%
+  if (length(x) > 1) {
+
+    if (all(grepl("^<md_container>.*</md_container>$", x))) {
+
+      x <-
+        gsub("^<md_container>(.*)</md_container>$", "\\1",x) %>%
         paste0(collapse = "") %>%
         paste0("<md_container>",.,"</md_container>")
-    }else{
+
+    } else {
       x <- x %>% paste0(collapse = "")
     }
   }
 
-  if(!grepl("^<md_container>.*</md_container>$", x)){
+  if (!grepl("^<md_container>.*</md_container>$", x)) {
 
-    x <- xml_p(
-      xml_pPr(
-        xml_spacing(before = 0, after = 60)
-      ),
-      xml_r(
-        xml_rPr(),
-        xml_t(x)
+    x <-
+      xml_p(
+        xml_pPr(
+          xml_spacing(before = 0, after = 60)
+        ),
+        xml_r(
+          xml_rPr(),
+          xml_t(x)
+        )
       )
-    )
-    x <- x %>%
+
+    x <-
+      x %>%
       as.character() %>%
       paste0("<md_container>", ., "</md_container>")
   }
 
-  parsed_xml_contents <- x %>%
+  parsed_xml_contents <-
+    x %>%
     ## add namespace for later processing
     add_ns() %>%
     xml2::read_xml() %>%
@@ -2543,14 +2582,15 @@ parse_to_xml <- function(x,...){
 }
 
 #' @importFrom xml2 as_xml_document xml_children
-as_xml_node <- function(x, create_ns = FALSE){
+as_xml_node <- function(x, create_ns = FALSE) {
+
   x <- paste(
     "<node_container>",
     as.character(x),
     "</node_container>"
   )
 
-  if(create_ns){
+  if (create_ns) {
     x <- add_ns(x)
   }
 
@@ -2560,12 +2600,12 @@ as_xml_node <- function(x, create_ns = FALSE){
     suppressWarnings()
 }
 
-add_ns <- function(x){
+add_ns <- function(x) {
 
-  x <- x %>%
+  x <-
+    x %>%
     as_xml_node() %>%
     suppressWarnings()
-
 
   xml2::xml_set_attrs(
     x,
@@ -2580,28 +2620,25 @@ add_ns <- function(x){
   as.character(x)
 }
 
-
-paste_footnote_xml <- function(text, footmark_xml, position = "right"){
+paste_footnote_xml <- function(
+    text,
+    footmark_xml,
+    position = "right"
+) {
 
   text_xml <- parse_to_xml(text)
 
   position <- match.arg(position, c("left","right"))
 
-  footmark_xml <- footmark_xml %>%
-      as_xml_node() %>%
-      .[[1]]
+  footmark_xml <-
+    footmark_xml %>%
+    as_xml_node() %>%
+    .[[1]]
 
-  if(position == "right"){
-    text_xml %>%
-      xml_add_child(
-        footmark_xml
-        )
-  }else{
-    text_xml %>%
-      xml_add_child(
-        footmark_xml,
-        .where = 1
-      )
+  if (position == "right") {
+    xml_add_child(text_xml, footmark_xml)
+  } else {
+    xml_add_child(text_xml, footmark_xml, .where = 1)
   }
 
   as.character(text_xml) %>%
@@ -2609,39 +2646,37 @@ paste_footnote_xml <- function(text, footmark_xml, position = "right"){
 }
 
 ## if hyperlinks are in gt, postprocessing will be necessary
-needs_gt_as_word_post_processing <- function(x){
+needs_gt_as_word_post_processing <- function(x) {
   grepl("<w:hyperlink", x)
 }
 
 ## apply postprocessing
 ## at this point, only url relationship rId updating, but can expand to more in the future
-gt_as_word_post_processing <- function(path){
+gt_as_word_post_processing <- function(path) {
 
-  ## unzip doc
+  # Unzip doc
   tmp_word_dir <- tempfile(pattern = "word_dir")
   utils::unzip(zipfile = path, exdir = tmp_word_dir)
 
-  ## load docx
+  # Load docx
   content_doc_path <- file.path(tmp_word_dir,"word/document.xml")
   docx <- read_xml(content_doc_path)
 
-  ## load rels
+  # Load rels
   rels_doc_path <- file.path(tmp_word_dir,"word/_rels/document.xml.rels")
   rels <- read_xml(rels_doc_path)
 
-  ## update hyperlinks
+  # Update hyperlinks
   update_hyperlink_node_id(docx, rels)
 
-
-  ## write updates
+  # Write updates
   xml2::write_xml(rels, rels_doc_path)
   xml2::write_xml(docx, content_doc_path)
 
-  ## unzip contents
+  # Unzip contents
   wd <- getwd()
   zip_temp_word_doc(path, tmp_word_dir, wd)
 }
-
 
 update_hyperlink_node_id <- function(docx, rels){
 
@@ -2649,13 +2684,14 @@ update_hyperlink_node_id <- function(docx, rels){
   rels_ids <- rels_relationships %>% xml_attr("Id")
   max_id <- max(as.numeric(gsub("rId","",rels_ids)))
 
-  ## get all hyperlink nodes
+  # Get all hyperlink nodes
   hyperlink_nodes <- docx %>% xml_find_all("//w:hyperlink[@r:id]")
 
-  ## identify nodes needing updating
-  hyperlink_nodes <- hyperlink_nodes[!grepl("^rId\\d+$", xml_attr(hyperlink_nodes, "id"))]
+  # Identify nodes needing updating
+  hyperlink_nodes <-
+    hyperlink_nodes[!grepl("^rId\\d+$", xml_attr(hyperlink_nodes, "id"))]
 
-  for(hl_node in hyperlink_nodes){
+  for (hl_node in hyperlink_nodes) {
 
     max_id <- max_id + 1
     url <- xml_attr(hl_node, "id")
@@ -2668,17 +2704,27 @@ update_hyperlink_node_id <- function(docx, rels){
 
     xml_attr(hl_node, "r:id") <- new_id
   }
-
 }
 
 ## conveniently zip up word doc temp folder
-zip_temp_word_doc <- function(path, temp_dir, cur_dir = getwd()){
+zip_temp_word_doc <- function(path, temp_dir, cur_dir = getwd()) {
+
   setwd(temp_dir)
   on.exit(setwd(cur_dir))
-  utils::zip(zipfile = path, files = list.files(path = ".", recursive = TRUE, all.files = FALSE),flags = "-r9X -q")
+
+  utils::zip(
+    zipfile = path,
+    files = list.files(path = ".", recursive = TRUE, all.files = FALSE),
+    flags = "-r9X -q"
+  )
 }
 
-xml_relationship <- function(id,  target, type = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink", target_mode = "External"){
+xml_relationship <- function(
+    id,
+    target,
+    type = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink",
+    target_mode = "External"
+) {
 
   htmltools::tag(
     `_tag_name` = "Relationship",
@@ -2690,14 +2736,4 @@ xml_relationship <- function(id,  target, type = "http://schemas.openxmlformats.
   ) %>%
     as.character() %>%
     read_xml()
-
 }
-
-
-
-
-
-
-
-
-
