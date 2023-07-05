@@ -248,7 +248,7 @@ gt_save_html <- function(
 
     return(htmltools::save_html(html, filename, ...))
 
-  } else {
+  } else if (is_gt_group(data = data)) {
 
     seq_tbls <- seq_len(nrow(data$gt_tbls))
 
@@ -339,7 +339,7 @@ gt_save_latex <- function(
 
     latex_lines <- as_latex(data = data)
 
-  } else {
+  } else if (is_gt_group(data = data)) {
 
     latex_lines <- c()
 
@@ -378,7 +378,7 @@ gt_save_rtf <- function(
 
     rtf_lines <- as_rtf(data = data)
 
-  } else {
+  } else if (is_gt_group(data = data)) {
 
     rtf_lines <- c()
 
@@ -457,7 +457,7 @@ gt_save_docx <- function(
         collapse = "\n"
       )
 
-  } else {
+  } else if (is_gt_group(data = data)) {
 
     word_tbls <- c()
 
@@ -498,9 +498,8 @@ gt_save_docx <- function(
   )
 
   if (needs_gt_as_word_post_processing(word_md_text)) {
-    gt_as_word_post_processing(filename)
+    gt_as_word_post_processing(path = filename)
   }
-
 }
 
 #' Get the lowercase extension from a filename
