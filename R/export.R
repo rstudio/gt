@@ -277,6 +277,14 @@ gt_save_webshot <- function(
     expand = 5
 ) {
 
+  if (is_gt_group(data = data)) {
+
+    cli::cli_abort(c(
+      "The `gtsave()` function cannot be used with `gt_group` objects.",
+      "*" = "Alternatively, you can use `grp_pull()` -> `gtsave()` for each gt table."
+    ))
+  }
+
   filename <- gtsave_filename(path = path, filename = filename)
 
   # Create a temporary file with the `html` extension
