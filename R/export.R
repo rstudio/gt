@@ -234,16 +234,33 @@ gt_save_html <- function(
 
   filename <- gtsave_filename(path = path, filename = filename)
 
-  if (inline_css) {
+  if (is_gt_tbl(data = data)) {
 
-     html <- as_raw_html(data, inline_css = inline_css)
-     html <- htmltools::HTML(html)
-     htmltools::save_html(html, filename, ...)
+    if (inline_css) {
+
+      html <- as_raw_html(data, inline_css = inline_css)
+      html <- htmltools::HTML(html)
+
+    } else {
+
+      html <- htmltools::as.tags(data)
+    }
+
+    return(htmltools::save_html(html, filename, ...))
 
   } else {
 
-    html <- htmltools::as.tags(data)
-    htmltools::save_html(html, filename, ...)
+    seq_tbls <- seq_len(nrow(data$gt_tbls))
+
+    html_tbls <- htmltools::tagList()
+
+    for (i in seq_tbls) {
+
+      html_tbl_i <- as_raw_html(grp_pull(data, which = i), inline_css = inline_css)
+      html_tbls <- htmltools::tagList(html_tbls, html_tbl_i)
+    }
+
+    return(htmltools::save_html(html_tbls, filename, ...))
   }
 }
 
