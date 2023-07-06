@@ -1970,7 +1970,7 @@ cols_add <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-7
+#' 5-8
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2116,7 +2116,7 @@ cols_move <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-8
+#' 5-9
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2234,7 +2234,7 @@ cols_move_to_start <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-9
+#' 5-10
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2363,7 +2363,7 @@ cols_move_to_end <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-10
+#' 5-11
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2475,7 +2475,7 @@ cols_hide <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-11
+#' 5-12
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
@@ -2689,7 +2689,7 @@ cols_unhide <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-12
+#' 5-13
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2902,7 +2902,7 @@ cols_merge <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-13
+#' 5-14
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3083,7 +3083,7 @@ cols_merge_uncert <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-14
+#' 5-15
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3309,7 +3309,7 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-15
+#' 5-16
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
