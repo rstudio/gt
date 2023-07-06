@@ -80,7 +80,7 @@ table.
 \section{Targeting the row for insertion with \code{.before} or \code{.after}}{
 
 
-The targeting of a rows for insertion is done through the \code{.before} or
+The targeting of a row for insertion is done through the \code{.before} or
 \code{.after} arguments (only one of these options should be be used). This can be
 done in a variety of ways. If a stub is present, then we potentially have row
 identifiers. This is the ideal method to use for establishing a row target.
@@ -89,8 +89,8 @@ possible to use row indices (e.g., \code{c(3, 5, 6)}) though these index values
 must correspond to the row numbers of the input data (the indices won't
 necessarily match those of rearranged rows if row groups are present). One
 more type of expression is possible, an expression that takes column values
-(can involve any of the available columns in the table) and returns a
-logical vector.
+(can involve any of the available columns in the table) and returns a logical
+vector.
 }
 
 \section{Examples}{

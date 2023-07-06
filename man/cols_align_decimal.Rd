@@ -98,6 +98,7 @@ could remedy this and align the numbers by the decimal mark with
 
 \seealso{
 Other column modification functions: 
+\code{\link{cols_add}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
 \code{\link{cols_label_with}()},

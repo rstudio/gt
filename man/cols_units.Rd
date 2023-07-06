@@ -255,6 +255,7 @@ what the last four columns contain.
 
 \seealso{
 Other column modification functions: 
+\code{\link{cols_add}()},
 \code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},

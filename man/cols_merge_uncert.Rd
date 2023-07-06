@@ -146,7 +146,7 @@ updated with \code{\link[=cols_label]{cols_label()}} to better describe the cont
 
 \section{Function ID}{
 
-5-13
+5-14
 }
 
 \section{Function Introduced}{
@@ -156,6 +156,7 @@ updated with \code{\link[=cols_label]{cols_label()}} to better describe the cont
 
 \seealso{
 Other column modification functions: 
+\code{\link{cols_add}()},
 \code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
