@@ -148,7 +148,7 @@ merge the \code{n} and \code{frac} columns (and the \code{frac} column is format
 
 \section{Function ID}{
 
-5-15
+5-16
 }
 
 \section{Function Introduced}{
@@ -158,6 +158,7 @@ merge the \code{n} and \code{frac} columns (and the \code{frac} column is format
 
 \seealso{
 Other column modification functions: 
+\code{\link{cols_add}()},
 \code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},

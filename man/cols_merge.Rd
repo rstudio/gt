@@ -192,7 +192,7 @@ drop parts of the output text whenever missing values are encountered.
 
 \section{Function ID}{
 
-5-12
+5-13
 }
 
 \section{Function Introduced}{
@@ -202,6 +202,7 @@ drop parts of the output text whenever missing values are encountered.
 
 \seealso{
 Other column modification functions: 
+\code{\link{cols_add}()},
 \code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},

@@ -80,7 +80,7 @@ move the \code{year} and \code{country_name} columns to the end of the column se
 
 \section{Function ID}{
 
-5-9
+5-10
 }
 
 \section{Function Introduced}{
@@ -90,6 +90,7 @@ move the \code{year} and \code{country_name} columns to the end of the column se
 
 \seealso{
 Other column modification functions: 
+\code{\link{cols_add}()},
 \code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},

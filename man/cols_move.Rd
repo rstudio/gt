@@ -81,7 +81,7 @@ position the \code{population} column after the \code{country_name} column by us
 
 \section{Function ID}{
 
-5-7
+5-8
 }
 
 \section{Function Introduced}{
@@ -91,6 +91,7 @@ position the \code{population} column after the \code{country_name} column by us
 
 \seealso{
 Other column modification functions: 
+\code{\link{cols_add}()},
 \code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},

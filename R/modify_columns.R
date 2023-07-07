@@ -1622,6 +1622,350 @@ cols_units <- function(
   .data
 }
 
+#' Add one or more columns to a **gt** table
+#'
+#' @description
+#'
+#' We can add new columns to a table with the `cols_add()` function and it works
+#' quite a bit like the **dplyr** `mutate()` function. The idea is that you
+#' supply name-value pairs where the name is the new column name and the value
+#' part describes the data that will go into the column. The latter can:
+#' (1) be a vector where the length of the number of rows in the data table,
+#' (2) be a single value (which will be repeated all the way down), or (3)
+#' involve other columns in the table (as they represent vectors of the correct
+#' length). The new columns are added to the end of the column series by default
+#' but can instead be added internally by using either the `.before` or `.after`
+#' arguments. If entirely empty (i.e., all `NA`) columns need to be added, you
+#' can use any of the `NA` types (e.g., `NA`, `NA_character_`, `NA_real_`, etc.)
+#' for such columns.
+#'
+#' @param .data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` --- **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
+#' @param ... *Cell data assignments*
+#'
+#'   `<multiple expressions>` --- (or, use `.list`)
+#'
+#'   Expressions for the assignment of cell values to the new columns.
+#'   Name-value pairs, in the form of `<column> = <value vector>` will work, so
+#'   long as any `<column>` value does not already exist in the table. The
+#'   `<value vector>` may be an expression that uses one or more column names in
+#'   the table to generate a vector of values. Single values in `<value vector>`
+#'   will be repeated down the new column. A vector where the length is exactly
+#'   the number of rows in the table can also be used.
+#'
+#' @param .before,.after *Column used as anchor*
+#'
+#'   `<column-targeting expression>` --- *default:* `NULL` (`optional`)
+#'
+#'   A single column-resolving expression or column index an be given to either
+#'   `.before` or `.after`. The column specifies where the new columns should be
+#'   positioned among the existing columns in the input data table. While select
+#'   helper functions such as [starts_with()] and [ends_with()] can be used for
+#'   column targeting, it's recommended that a single column name or index be
+#'   used. This is to ensure that exactly one column is provided to either of
+#'   these arguments (otherwise, the function will be stopped). If nothing is
+#'   provided for either argument then any new column will be placed at the end
+#'   of the column series.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Targeting the column for insertion with `.before` or `.after`:
+#'
+#' The targeting of a column for insertion is done through the `.before` or
+#' `.after` arguments (only one of these options should be be used). While
+#' **tidyselect**-style expressions or indices can used to target a column, it's
+#' advised that a single column name be used. This is to avoid the possibility
+#' of inadvertently resolving multiple columns (since the requirement is for a
+#' single column).
+#'
+#' @section Examples:
+#'
+#' Let's take a subset of the [`exibble`] dataset and make a simple **gt** table
+#' with it (using the `row` column for labels in the stub). We'll add a single
+#' column to the right of all the existing columns and call it `country`. This
+#' new column needs eight values and these will be supplied when using
+#' `cols_add()`.
+#'
+#' ```r
+#' exibble |>
+#'   dplyr::select(num, char, datetime, currency, group) |>
+#'   gt(rowname_col = "row") |>
+#'   cols_add(
+#'     country = c("TL", "PY", "GL", "PA", "MO", "EE", "CO", "AU")
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_add_1.png")`
+#' }}
+#'
+#' We can add multiple columns with a single use of `cols_add()`. The columns
+#' generated can be formatted and otherwise manipulated just as any column could
+#' be in a **gt** table. The following example extends the first one by adding
+#' more columns and immediately using them in various function calls like
+#' [fmt_flag()] and [fmt_units()].
+#'
+#' ```r
+#' exibble |>
+#'   dplyr::select(num, char, datetime, currency, group) |>
+#'   gt(rowname_col = "row") |>
+#'   cols_add(
+#'     country = c("TL", "PY", "GL", "PA", "MO", "EE", "CO", "AU"),
+#'     empty = NA_character_,
+#'     units = c(
+#'       "k m s^-2", "N m^-2", "degC", "m^2 kg s^-2",
+#'       "m^2 kg s^-3", "/s", "A s", "m^2 kg s^-3 A^-1"
+#'     ),
+#'     big_num = num ^ 3
+#'   ) |>
+#'   fmt_flag(columns = country) |>
+#'   sub_missing(columns = empty, missing_text = "") |>
+#'   fmt_units(columns = units) |>
+#'   fmt_scientific(columns = big_num)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_add_2.png")`
+#' }}
+#'
+#' In this table generated from a portion of the [`towny`] dataset, we add two
+#' new columns (`land_area` and `density`) through a single use of `cols_add()`.
+#' The new `land_area` column is a conversion of land area from square
+#' kilometers to square miles and the `density` column is calculated by through
+#' division of `population_2021` by that new `land_area` column. We hide the
+#' now unneeded `land_area_km2` with [cols_hide()] and also perform some column
+#' labeling and adjustments to column widths with [cols_label()] and
+#' [cols_width()].
+#'
+#' ```r
+#' towny |>
+#'   dplyr::select(name, population_2021, land_area_km2) |>
+#'   dplyr::filter(population_2021 > 100000) |>
+#'   dplyr::arrange(desc(population_2021)) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt() |>
+#'   cols_add(
+#'     land_area = land_area_km2 / 2.58998811,
+#'     density = population_2021 / land_area
+#'   ) |>
+#'   fmt_integer() |>
+#'   cols_hide(columns = land_area_km2) |>
+#'   cols_label(
+#'     population_2021 = "Population",
+#'     density = "Density, {{*persons* / sq mi}}",
+#'     land_area ~ "Area, {{mi^2}}"
+#'   ) |>
+#'   cols_width(everything() ~ px(120))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_add_3.png")`
+#' }}
+#'
+#' @family column modification functions
+#' @section Function ID:
+#' 5-7
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @import rlang
+#' @export
+cols_add <- function(
+    .data,
+    ...,
+    .before = NULL,
+    .after = NULL
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = .data)
+
+  # Get the table's boxhead
+  boxh_df <- dt_boxhead_get(data = .data)
+
+  # Get the internal dataset and a vector of its column names
+  data_tbl <- dt_data_get(data = .data)
+  data_tbl_columns <- colnames(data_tbl)
+
+  # Mutate the internal data table and get a vector of its column names
+  data_tbl_mutated <- dplyr::mutate(data_tbl, ...)
+  data_tbl_mutated_columns <- colnames(data_tbl_mutated)
+
+  #
+  # If the number of columns in the mutated table is not at least one
+  # larger than the non-mutated table then return the data unchanged
+  #
+
+  column_count_diff <-
+    length(data_tbl_mutated_columns) - length(data_tbl_columns)
+
+  if (column_count_diff < 1) {
+    return(.data)
+  }
+
+  # Determine which columns are new in the mutated table
+  columns_new <- base::setdiff(data_tbl_mutated_columns, data_tbl_columns)
+
+  # Generate a table that has only the new columns
+  data_tbl_new_cols <- dplyr::select(data_tbl_mutated, columns_new)
+
+  # Generate boxhead rows that correspond to the new columns
+  boxh_df_new_cols <- dt_boxhead_get(data = gt(data_tbl_new_cols))
+
+  #
+  # Resolve any `.before` or `.after` column and stop function upon
+  # observing any inconsistencies
+  #
+
+  resolved_column_before <-
+    resolve_cols_c(
+      expr = {{ .before }},
+      data = .data,
+      null_means = "nothing"
+    )
+
+  if (length(resolved_column_before) < 1) {
+    resolved_column_before <- NULL
+  }
+
+  if (
+    !is.null(resolved_column_before) &&
+    length(resolved_column_before) != 1
+  ) {
+
+    if (length(resolved_column_before) < 1) {
+      cli::cli_abort("The expression used for `.before` did not resolve a column.")
+    }
+
+    if (length(resolved_column_before) > 1) {
+      cli::cli_abort("The expression used for `.before` resolved multiple columns.")
+    }
+  }
+
+  resolved_column_after <-
+    resolve_cols_c(
+      expr = {{ .after }},
+      data = .data,
+      null_means = "nothing"
+    )
+
+  if (length(resolved_column_after) < 1) {
+    resolved_column_after <- NULL
+  }
+
+  if (
+    !is.null(resolved_column_after) &&
+    length(resolved_column_after) != 1
+  ) {
+
+    if (length(resolved_column_after) < 1) {
+      cli::cli_abort("The expression used for `.after` did not resolve a column.")
+    }
+
+    if (length(resolved_column_after) > 1) {
+      cli::cli_abort("The expression used for `.after` resolved multiple columns.")
+    }
+  }
+
+  # Stop function if expressions are given to both `.before` and `.after`
+  if (!is.null(resolved_column_before) && !is.null(resolved_column_after)) {
+    cli::cli_abort("Expressions cannot be given to both `.before` and `.after`.")
+  }
+
+  #
+  # Prepend, insert, or append the new data columns (`data_tbl_new_cols`)
+  # to those existing in `data_tbl`
+  #
+
+  # Get the first and last column names from `data_tbl`
+  first_colname <- colnames(data_tbl)[1]
+  last_colname <- colnames(data_tbl)[ncol(data_tbl)]
+
+  if (is.null(resolved_column_before) && is.null(resolved_column_after)) {
+
+    updated_data_tbl <-
+      dplyr::bind_cols(
+        data_tbl,
+        data_tbl_new_cols
+      )
+
+    updated_boxh_df <-
+      dplyr::bind_rows(
+        boxh_df,
+        boxh_df_new_cols
+      )
+
+  } else if (!is.null(resolved_column_before) && is.null(resolved_column_after)) {
+
+    before_colnum <- which(colnames(data_tbl) == resolved_column_before)
+
+    updated_data_tbl <-
+      dplyr::bind_cols(
+        dplyr::select(data_tbl, 1:(before_colnum - 1)),
+        data_tbl_new_cols,
+        dplyr::select(data_tbl, before_colnum:ncol(data_tbl))
+      )
+
+    before_colnum <- which(boxh_df[["var"]] == resolved_column_before)
+
+    updated_boxh_df <-
+      dplyr::bind_rows(
+        boxh_df[(1:before_colnum) - 1, ],
+        boxh_df_new_cols,
+        boxh_df[before_colnum:nrow(boxh_df), ]
+      )
+
+  } else if (is.null(resolved_column_before) && !is.null(resolved_column_after)) {
+
+    if (resolved_column_after == nrow(data_tbl)) {
+
+      updated_data_tbl <-
+        dplyr::bind_cols(
+          data_tbl,
+          data_tbl_new_cols
+        )
+
+      updated_boxh_df <-
+        dplyr::bind_rows(
+          boxh_df,
+          boxh_df_new_cols
+        )
+
+    } else {
+
+      after_colnum <- which(colnames(data_tbl) == resolved_column_after)
+
+      updated_data_tbl <-
+        dplyr::bind_cols(
+          dplyr::select(data_tbl, 1:after_colnum),
+          data_tbl_new_cols,
+          dplyr::select(data_tbl, (after_colnum + 1):ncol(data_tbl))
+        )
+
+      after_colnum <- which(boxh_df[["var"]] == resolved_column_after)
+
+      updated_boxh_df <-
+        dplyr::bind_rows(
+          boxh_df[1:after_colnum, ],
+          boxh_df_new_cols,
+          boxh_df[(after_colnum + 1):nrow(boxh_df), ]
+        )
+    }
+  }
+
+  # Modify the internal datasets
+  .data <- dt_data_set(data = .data, data_tbl = updated_data_tbl)
+  .data <- dt_boxhead_set(data = .data, boxh = updated_boxh_df)
+
+  .data
+}
+
 #' Move one or more columns
 #'
 #' @description
@@ -1693,7 +2037,7 @@ cols_units <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-7
+#' 5-8
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1839,7 +2183,7 @@ cols_move <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-8
+#' 5-9
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1957,7 +2301,7 @@ cols_move_to_start <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-9
+#' 5-10
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2086,7 +2430,7 @@ cols_move_to_end <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-10
+#' 5-11
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2198,7 +2542,7 @@ cols_hide <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-11
+#' 5-12
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
@@ -2412,7 +2756,7 @@ cols_unhide <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-12
+#' 5-13
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2625,7 +2969,7 @@ cols_merge <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-13
+#' 5-14
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2806,7 +3150,7 @@ cols_merge_uncert <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-14
+#' 5-15
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3032,7 +3376,7 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-15
+#' 5-16
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
