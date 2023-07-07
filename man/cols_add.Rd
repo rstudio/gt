@@ -84,6 +84,71 @@ new column needs eight values and these will be supplied when using
     country = c("TL", "PY", "GL", "PA", "MO", "EE", "CO", "AU")
   )
 }\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_add_1.png" alt="This image of a table was generated from the first code example in the `cols_add()` help file." style="width:100\%;">
+}}
+
+We can add multiple columns with a single use of \code{cols_add()}. The columns
+generated can be formatted and otherwise manipulated just as any column could
+be in a \strong{gt} table. The following example extends the first one by adding
+more columns and immediately using them in various function calls like
+\code{\link[=fmt_flag]{fmt_flag()}} and \code{\link[=fmt_units]{fmt_units()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(num, char, datetime, currency, group) |>
+  gt(rowname_col = "row") |>
+  cols_add(
+    country = c("TL", "PY", "GL", "PA", "MO", "EE", "CO", "AU"),
+    empty = NA_character_,
+    units = c(
+      "k m s^-2", "N m^-2", "degC", "m^2 kg s^-2",
+      "m^2 kg s^-3", "/s", "A s", "m^2 kg s^-3 A^-1"
+    ),
+    big_num = num ^ 3
+  ) |>
+  fmt_flag(columns = country) |>
+  sub_missing(columns = empty, missing_text = "") |>
+  fmt_units(columns = units) |>
+  fmt_scientific(columns = big_num)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_add_2.png" alt="This image of a table was generated from the second code example in the `cols_add()` help file." style="width:100\%;">
+}}
+
+In this table generated from a portion of the \code{\link{towny}} dataset, we add two
+new columns (\code{land_area} and \code{density}) through a single use of \code{cols_add()}.
+The new \code{land_area} column is a conversion of land area from square
+kilometers to square miles and the \code{density} column is calculated by through
+division of \code{population_2021} by that new \code{land_area} column. We hide the
+now unneeded \code{land_area_km2} with \code{\link[=cols_hide]{cols_hide()}} and also perform some column
+labeling and adjustments to column widths with \code{\link[=cols_label]{cols_label()}} and
+\code{\link[=cols_width]{cols_width()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
+  dplyr::select(name, population_2021, land_area_km2) |>
+  dplyr::filter(population_2021 > 100000) |>
+  dplyr::arrange(desc(population_2021)) |>
+  dplyr::slice_head(n = 10) |>
+  gt() |>
+  cols_add(
+    land_area = land_area_km2 / 2.58998811,
+    density = population_2021 / land_area
+  ) |>
+  fmt_integer() |>
+  cols_hide(columns = land_area_km2) |>
+  cols_label(
+    population_2021 = "Population",
+    density = "Density, \{\{*persons* / sq mi\}\}",
+    land_area ~ "Area, \{\{mi^2\}\}"
+  ) |>
+  cols_width(everything() ~ px(120))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_add_3.png" alt="This image of a table was generated from the third code example in the `cols_add()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
