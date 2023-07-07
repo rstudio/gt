@@ -1700,6 +1700,73 @@ cols_units <- function(
 #'   )
 #' ```
 #'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_add_1.png")`
+#' }}
+#'
+#' We can add multiple columns with a single use of `cols_add()`. The columns
+#' generated can be formatted and otherwise manipulated just as any column could
+#' be in a **gt** table. The following example extends the first one by adding
+#' more columns and immediately using them in various function calls like
+#' [fmt_flag()] and [fmt_units()].
+#'
+#' ```r
+#' exibble |>
+#'   dplyr::select(num, char, datetime, currency, group) |>
+#'   gt(rowname_col = "row") |>
+#'   cols_add(
+#'     country = c("TL", "PY", "GL", "PA", "MO", "EE", "CO", "AU"),
+#'     empty = NA_character_,
+#'     units = c(
+#'       "k m s^-2", "N m^-2", "degC", "m^2 kg s^-2",
+#'       "m^2 kg s^-3", "/s", "A s", "m^2 kg s^-3 A^-1"
+#'     ),
+#'     big_num = num ^ 3
+#'   ) |>
+#'   fmt_flag(columns = country) |>
+#'   sub_missing(columns = empty, missing_text = "") |>
+#'   fmt_units(columns = units) |>
+#'   fmt_scientific(columns = big_num)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_add_2.png")`
+#' }}
+#'
+#' In this table generated from a portion of the [`towny`] dataset, we add two
+#' new columns (`land_area` and `density`) through a single use of `cols_add()`.
+#' The new `land_area` column is a conversion of land area from square
+#' kilometers to square miles and the `density` column is calculated by through
+#' division of `population_2021` by that new `land_area` column. We hide the
+#' now unneeded `land_area_km2` with [cols_hide()] and also perform some column
+#' labeling and adjustments to column widths with [cols_label()] and
+#' [cols_width()].
+#'
+#' ```r
+#' towny |>
+#'   dplyr::select(name, population_2021, land_area_km2) |>
+#'   dplyr::filter(population_2021 > 100000) |>
+#'   dplyr::arrange(desc(population_2021)) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt() |>
+#'   cols_add(
+#'     land_area = land_area_km2 / 2.58998811,
+#'     density = population_2021 / land_area
+#'   ) |>
+#'   fmt_integer() |>
+#'   cols_hide(columns = land_area_km2) |>
+#'   cols_label(
+#'     population_2021 = "Population",
+#'     density = "Density, {{*persons* / sq mi}}",
+#'     land_area ~ "Area, {{mi^2}}"
+#'   ) |>
+#'   cols_width(everything() ~ px(120))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_add_3.png")`
+#' }}
+#'
 #' @family column modification functions
 #' @section Function ID:
 #' 5-7
