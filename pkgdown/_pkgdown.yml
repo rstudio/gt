@@ -7,7 +7,6 @@ home:
 
 template:
   bootstrap: 5
-  bootswatch: cyborg
 
 authors:
   JooYoung Seo:
