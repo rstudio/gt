@@ -116,7 +116,7 @@ create_table_start_l <- function(data) {
   col_alignment <- dt_boxhead_get_vars_align_default(data = data)
 
   if (length(stub_layout) > 0) {
-    col_alignment <- paste0(rep("left", length(stub_layout)), collapse = "")
+    col_alignment <- c(rep("left", length(stub_layout)), col_alignment)
   }
 
   # Determine if there are any footnotes or source notes; if any,
@@ -156,6 +156,16 @@ create_table_start_l <- function(data) {
     # TODO: check that length of `col_widths` is equal to that
     # of `col_alignment`
 
+    if ("group_label" %in% stub_layout) {
+
+      group_label_width <-
+        unlist(
+          dplyr::pull(dplyr::filter(boxh_df, type == "row_group"), column_width)
+        )
+
+      col_widths <- c(group_label_width, col_widths)
+    }
+
     for (i in seq_along(col_widths)) {
 
       if (col_widths[i] != "") {
@@ -181,13 +191,14 @@ create_table_start_l <- function(data) {
 
   } else {
 
-    col_defs <-
-      c(
-        if (length(stub_layout) > 0) {
-          rep("l|", length(stub_layout))
-        },
-        substr(col_alignment, 1, 1)
-      )
+    col_defs <- substr(col_alignment, 1, 1)
+  }
+
+  # Add borders to the right of any columns in the stub
+  if (length(stub_layout) > 0) {
+
+    col_defs[seq_along(stub_layout)] <-
+      paste0(col_defs[seq_along(stub_layout)], "|")
   }
 
   # Generate setup statements for table including default left
@@ -195,9 +206,6 @@ create_table_start_l <- function(data) {
   paste0(
     longtable_post_length,
     "\\begin{longtable}{",
-    if (length(stub_layout) > 0) {
-      paste0(rep("l|", length(stub_layout)), collapse = "")
-    },
     paste(col_defs, collapse = ""),
     "}\n",
     collapse = ""
