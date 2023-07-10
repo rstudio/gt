@@ -110,8 +110,14 @@ create_table_start_l <- function(data) {
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
 
+  boxh_df <- dt_boxhead_get(data = data)
+
   # Get default alignments for body columns
   col_alignment <- dt_boxhead_get_vars_align_default(data = data)
+
+  if (length(stub_layout) > 0) {
+    col_alignment <- paste0(rep("left", length(stub_layout)), collapse = "")
+  }
 
   # Determine if there are any footnotes or source notes; if any,
   # add a `\setlength` command that will pull up the minipage environment
@@ -125,7 +131,66 @@ create_table_start_l <- function(data) {
     longtable_post_length <- ""
   }
 
-  # Generate setup statements for table including default right
+  # Obtain widths for each visible column label
+  col_widths <-
+    boxh_df %>%
+    dplyr::filter(type %in% c("default", "stub")) %>%
+    dplyr::arrange(dplyr::desc(type)) %>%
+    dplyr::pull(column_width) %>%
+    unlist()
+
+  # Generate the column definitions for visible columns
+  # these can either be simple `l`, `c`, `r` directive if a width isn't set
+  # for a column, or, use `p{<width>}` statements with leading `>{...}`
+  # specifiers that should have one of the following:
+  # - `>{\raggedright\arraybackslash}` <- left alignment
+  # - `>{\raggedleft\arraybackslash}` <- right alignment
+  # - `>{\centering\arraybackslash}` <- center alignment
+  # the `\arraybackslash` command is used to restore the behavior of the
+  # `\\` command in the table (all of this uses the CTAN `array` package)
+
+  if (!is.null(col_widths)) {
+
+    col_defs <- c()
+
+    # TODO: check that length of `col_widths` is equal to that
+    # of `col_alignment`
+
+    for (i in seq_along(col_widths)) {
+
+      if (col_widths[i] != "") {
+
+        align <-
+          switch(
+            col_alignment[i],
+            left = ">{\\raggedright\\arraybackslash}",
+            right = ">{\\raggedleft\\arraybackslash}",
+            center = ">{\\centering\\arraybackslash}",
+            ">{\\raggedright\\arraybackslash}"
+          )
+
+        col_defs_i <- paste0(align, "p{", col_widths[i], "}")
+
+      } else {
+
+        col_defs_i <- substr(col_alignment[i], 1, 1)
+      }
+
+      col_defs <- c(col_defs, col_defs_i)
+    }
+
+  } else {
+
+    col_defs <-
+      c(
+        if (length(stub_layout) > 0) {
+          rep("l|", length(stub_layout))
+        },
+        substr(col_alignment, 1, 1)
+      )
+  }
+
+  # Generate setup statements for table including default left
   # alignments and vertical lines for any stub columns
   paste0(
     longtable_post_length,
@@ -133,7 +198,7 @@ create_table_start_l <- function(data) {
     if (length(stub_layout) > 0) {
       paste0(rep("l|", length(stub_layout)), collapse = "")
     },
-    col_alignment %>% substr(1, 1) %>% paste(collapse = ""),
+    paste(col_defs, collapse = ""),
     "}\n",
     collapse = ""
   )
