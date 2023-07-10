@@ -91,7 +91,7 @@ containing the LaTeX code.</p>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>LaTeX packages required to generate tables are:
-booktabs, caption, longtable, colortbl.</p>
+booktabs, caption, longtable, colortbl, array.</p>
 <p>In the event packages are not automatically added during the render phase
 of the document, please create and include a style file to load them.</p>
 <p>Inside the document's YAML metadata, please include:</p>
@@ -103,7 +103,7 @@ of the document, please create and include a style file to load them.</p>
 
 <p>The <code>gt_packages.sty</code> file would then contain the listed dependencies above:</p>
 <div class="sourceCode"><pre><code>
-  \usepackage{amsmath, booktabs, caption, longtable}
+  \usepackage{booktabs, caption, longtable, colortbl, array}
 </code></pre></div>
 
     </div>
