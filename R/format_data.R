@@ -6109,20 +6109,25 @@ values_to_durations <- function(
     x <- as.numeric(x)
   }
 
-  # Should `in_units` be anything other than days then
-  # convert all `x` values to days
-  if (in_units != "days") {
+  if (in_units == "mins") {
+    in_units <- "minutes"
+  }
+  if (in_units == "secs") {
+    in_units <- "seconds"
+  }
 
-    x <-
-      switch(
-        in_units,
-        weeks = x * 7,
-        hours = x / 24,
-        mins = ,
-        minutes = x / 1440,
-        secs = ,
-        seconds = x / 86400
-      )
+  second_conversion_factor <- c(
+    weeks = 604800L,
+    days = 86400L,
+    hours = 3600L,
+    minutes = 60L,
+    seconds = 1L
+  )
+
+  # Should `in_units` be anything other than seconds then
+  # convert all `x` values to seconds
+  if (in_units != "seconds") {
+    x <- x * second_conversion_factor[[in_units]]
   }
 
   x_str <- character(length(x))
@@ -6131,33 +6136,19 @@ values_to_durations <- function(
 
     x_df_i <-
       dplyr::tibble(
-        value = numeric(0),
-        time_part = character(0),
-        formatted = character(0)
+        value = NA_integer_,
+        time_part = out_units,
+        formatted = NA_character_
       )
 
-    x_rem_i <- abs(x[i])
+    x_rem_i <- abs(x[[i]])
 
-    for (time_p in out_units) {
+    for (j in seq_along(out_units)) {
+      factor <- second_conversion_factor[[out_units[[j]]]]
 
-      time_part_val <- get_time_part_val(x_rem_i, time_part = time_p)
+      x_df_i$value[[j]] <- floor(x_rem_i / factor)
 
-      x_df_i <-
-        dplyr::bind_rows(
-          x_df_i,
-          dplyr::tibble(
-            value = time_part_val,
-            time_part = time_p,
-            formatted = NA_character_
-          )
-        )
-
-      x_rem_i <-
-        subtract_time_with_val(
-          x = x_rem_i,
-          time_part = time_p,
-          val = time_part_val
-        )
+      x_rem_i <- x_rem_i %% factor
     }
 
     # Remove time parts according to keywords in `trim_zero_units`
@@ -6257,7 +6248,7 @@ values_to_durations <- function(
           pattern = pattern
         )
 
-      if (x_rem_i != 0 ) {
+      if (x_rem_i != 0) {
         x_df_i[1, "formatted"] <- paste0("<", x_df_i[1, "formatted"])
       }
     }
@@ -6308,26 +6299,6 @@ values_to_durations <- function(
   }
 
   x_str
-}
-
-day_conversion_factor <- function(time_part) {
-
-  switch(
-    time_part,
-    weeks = 1/7,
-    days = 1,
-    hours = 24,
-    minutes = 1440,
-    seconds = 86400
-  )
-}
-
-get_time_part_val <- function(x, time_part) {
-  floor(x * day_conversion_factor(time_part = time_part))
-}
-
-subtract_time_with_val <- function(x, time_part, val) {
-  x - (val / day_conversion_factor(time_part = time_part))
 }
 
 format_time_part <- function(
