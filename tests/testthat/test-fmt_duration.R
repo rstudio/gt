@@ -1352,6 +1352,62 @@ test_that("The `fmt_duration()` function works correctly with numerical inputs",
   )
 })
 
+test_that("The `fmt_duration()` function works correctly with integer inputs", {
+  # Create an input tibble with an integer column
+  data_tbl_1 <-
+    dplyr::tibble(
+      int_1 = seq(90L, 93L)
+    )
+
+  # Create a `gt_tbl` object with `gt()` and the
+  # `data_tbl_1` dataset
+  tab_1 <- gt(data_tbl_1)
+
+  # Format the `num_1` column using the defaults for `fmt_duration()` and
+  # ensuring the `input_units` are days
+  expect_equal(
+    (tab_1 %>%
+       fmt_duration(columns = "int_1", input_units = "days") %>%
+       render_formats_test(context = "html"))[["int_1"]],
+    c(
+      "12w 6d", "13w", "13w 1d", "13w 2d"
+    )
+  )
+
+  # Format the `num_1` column using the defaults for `fmt_duration()` and
+  # ensuring the `input_units` are hours
+  expect_equal(
+    (tab_1 %>%
+       fmt_duration(columns = "int_1", input_units = "hours") %>%
+       render_formats_test(context = "html"))[["int_1"]],
+    c(
+      "3d 18h", "3d 19h", "3d 20h", "3d 21h"
+    )
+  )
+
+  # Format the `num_1` column using the defaults for `fmt_duration()` and
+  # ensuring the `input_units` are minutes
+  expect_equal(
+    (tab_1 %>%
+       fmt_duration(columns = "int_1", input_units = "minutes") %>%
+       render_formats_test(context = "html"))[["int_1"]],
+    c(
+      "1h 30m", "1h 31m", "1h 32m", "1h 33m"
+    )
+  )
+
+  # Format the `num_1` column using the defaults for `fmt_duration()` and
+  # ensuring the `input_units` are seconds
+  expect_equal(
+    (tab_1 %>%
+       fmt_duration(columns = "int_1", input_units = "seconds") %>%
+       render_formats_test(context = "html"))[["int_1"]],
+    c(
+      "1m 30s", "1m 31s", "1m 32s", "1m 33s"
+    )
+  )
+})
+
 test_that("Specialized handling of the `colon-sep` format works correctly", {
 
   # Create an input tibble with a numeric column
