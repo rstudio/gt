@@ -6116,13 +6116,14 @@ values_to_durations <- function(
     in_units <- "seconds"
   }
 
-  second_conversion_factor <- c(
-    weeks = 604800L,
-    days = 86400L,
-    hours = 3600L,
-    minutes = 60L,
-    seconds = 1L
-  )
+  second_conversion_factor <-
+    c(
+      weeks = 604800L,
+      days = 86400L,
+      hours = 3600L,
+      minutes = 60L,
+      seconds = 1L
+    )
 
   # Should `in_units` be anything other than seconds then
   # convert all `x` values to seconds
@@ -6144,6 +6145,7 @@ values_to_durations <- function(
     x_rem_i <- abs(x[[i]])
 
     for (j in seq_along(out_units)) {
+
       factor <- second_conversion_factor[[out_units[[j]]]]
 
       x_df_i$value[[j]] <- floor(x_rem_i / factor)
@@ -6227,6 +6229,9 @@ values_to_durations <- function(
     # than the smallest unit in `out_units`
     if (all(x_df_i$value == 0)) {
 
+      # Obtain the smallest time unit; `normalize_duration_output_units()`
+      # ensures that `out_units` is sorted from largest to smallest so the
+      # last component will always be needed here
       time_p <- out_units[length(out_units)]
 
       # If the time duration is zero then use `0` as the value,
@@ -6261,7 +6266,7 @@ values_to_durations <- function(
       colon_sep_trim_zero_units <- colon_sep_params$trim_zero_units
 
       # Filter to only the output units needed
-      x_df_i <- dplyr::filter(x_df_i, time_part %in% .env$colon_sep_output_units)
+      x_df_i <- dplyr::filter(x_df_i, time_part %in% colon_sep_output_units)
 
       # If days has a zero value, remove that entry unconditionally
       if ("days" %in% x_df_i$time_part && x_df_i[[1, "value"]] == 0) {
