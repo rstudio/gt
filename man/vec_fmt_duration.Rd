@@ -217,7 +217,7 @@ unit those values have.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_duration(num_vals, input_units = "days")
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3d 5h 38m 23s" "5h 31m 12s" "7m 12s" "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3d 5h 38m 24s" "5h 31m 12s" "7m 12s" "NA"
 }\if{html}{\out{</div>}}
 
 We can define a set of output time units that we want to see.
@@ -242,7 +242,7 @@ There are many duration 'styles' to choose from. We could opt for the
 )
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3 days 5 hours 38 minutes 23 seconds"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3 days 5 hours 38 minutes 24 seconds"
 #> [2] "5 hours 31 minutes 12 seconds"
 #> [3] "7 minutes 12 seconds"
 #> [4] "NA"
@@ -260,7 +260,7 @@ locale.
 )
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3 dagen 5 uur 38 minuten 23 seconden"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3 dagen 5 uur 38 minuten 24 seconden"
 #> [2] "5 uur 31 minuten 12 seconden"
 #> [3] "7 minuten 12 seconden"
 #> [4] "NA"
