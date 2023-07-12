@@ -93,14 +93,14 @@ the output table.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p><em>The gt table data object</em></p>
-<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong></p>
+<p><code>obj:&lt;gt_tbl&gt;</code> // <strong>required</strong></p>
 <p>This is the <strong>gt</strong> table object that is commonly created through use of the
 <code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>col_begin</dt>
 <dd><p><em>Column to target for beginning of range</em></p>
-<p><code>&lt;column-targeting expression&gt;</code> --- <strong>required</strong></p>
+<p><code>&lt;column-targeting expression&gt;</code> // <strong>required</strong></p>
 <p>The column that contains values for the start of the range. While select
 helper functions such as <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code> and <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code> can be used for
 column targeting, it's recommended that a single column name be used. This
@@ -109,7 +109,7 @@ is to ensure that exactly one column is provided here.</p></dd>
 
 <dt>col_end</dt>
 <dd><p><em>Column to target for end of range</em></p>
-<p><code>&lt;column-targeting expression&gt;</code> --- <strong>required</strong></p>
+<p><code>&lt;column-targeting expression&gt;</code> // <strong>required</strong></p>
 <p>The column that contains values for the end of the range. While select
 helper functions such as <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code> and <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code> can be used for
 column targeting, it's recommended that a single column name be used. This
@@ -118,7 +118,7 @@ is to ensure that exactly one column is provided here.</p></dd>
 
 <dt>rows</dt>
 <dd><p><em>Rows to target</em></p>
-<p><code>&lt;row-targeting expression&gt;</code> --- <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
+<p><code>&lt;row-targeting expression&gt;</code> // <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
 <p>In conjunction with <code>columns</code>, we can specify which of their rows should
 participate in the merging process. The default <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code> results in
 all rows in <code>columns</code> being formatted. Alternatively, we can supply a
@@ -131,7 +131,7 @@ down to the rows we need (e.g., <code>[colname_1] &gt; 100 &amp; [colname_2] &lt
 
 <dt>sep</dt>
 <dd><p><em>Separator text for ranges</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>"--"</code></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>"--"</code></p>
 <p>The separator text that indicates the values are ranged. The default value
 of <code>"--"</code> will be transformed to an en dash for the range separator. Using
 <code>"---"</code> will be taken to mean that an em dash should be used. Should you
@@ -141,7 +141,7 @@ within the base <code><a href="https://rdrr.io/r/base/AsIs.html" class="external
 
 <dt>autohide</dt>
 <dd><p><em>Automatic hiding of the <code>col_end</code> column</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>TRUE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
 <p>An option to automatically hide the column specified as
 <code>col_end</code>. Any columns with their state changed to hidden will behave
 the same as before, they just won't be displayed in the finalized table.</p></dd>

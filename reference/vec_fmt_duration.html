@@ -99,14 +99,14 @@ from weeks to seconds.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
 <dd><p><em>The input vector</em></p>
-<p><code>vector(numeric|integer)</code> --- <strong>required</strong></p>
+<p><code>vector(numeric|integer)</code> // <strong>required</strong></p>
 <p>This is the input vector that will undergo transformation to a character
 vector of the same length. Values within the vector will be formatted.</p></dd>
 
 
 <dt>input_units</dt>
 <dd><p><em>Declaration of duration units for numerical values</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>If one or more selected columns contains numeric values (not <code>difftime</code>
 values, which contain the duration units), a keyword must be provided for
 <code>input_units</code> for <strong>gt</strong> to determine how those values are to be
@@ -116,7 +116,7 @@ interpreted in terms of duration. The accepted units are: <code>"seconds"</code>
 
 <dt>output_units</dt>
 <dd><p><em>Choice of output units</em></p>
-<p><code>mult-kw:[weeks|days|hours|minutes|seconds]</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>mult-kw:[weeks|days|hours|minutes|seconds]</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>Controls the output time units. The default, <code>NULL</code>, means that <strong>gt</strong> will
 automatically choose time units based on the input duration value. To
 control which time units are to be considered for output (before trimming
@@ -127,7 +127,7 @@ following keywords: <code>"weeks"</code>, <code>"days"</code>, <code>"hours"</co
 
 <dt>duration_style</dt>
 <dd><p><em>Style for representing duration values</em></p>
-<p><code>singl-kw:[narrow|wide|colon-sep|iso]</code> --- <em>default:</em> <code>"narrow"</code></p>
+<p><code>singl-kw:[narrow|wide|colon-sep|iso]</code> // <em>default:</em> <code>"narrow"</code></p>
 <p>A choice of four formatting styles for the output duration values. With
 <code>"narrow"</code> (the default style), duration values will be formatted with
 single letter time-part units (e.g., 1.35 days will be styled as
@@ -140,7 +140,7 @@ format. The <code>"iso"</code> style will produce a value that conforms to the I
 
 <dt>trim_zero_units</dt>
 <dd><p><em>Trimming of zero values</em></p>
-<p><code>scalar&lt;logical&gt;|mult-kw:[leading|trailing|internal]</code> --- <em>default:</em> <code>TRUE</code></p>
+<p><code>scalar&lt;logical&gt;|mult-kw:[leading|trailing|internal]</code> // <em>default:</em> <code>TRUE</code></p>
 <p>Provides methods to remove output time units that have zero values. By
 default this is <code>TRUE</code> and duration values that might otherwise be
 formatted as <code>"0w 1d 0h 4m 19s"</code> with <code>trim_zero_units = FALSE</code> are instead
@@ -154,7 +154,7 @@ internal zero-value time units (e.g., <code>"5d 0h 33m"</code> -&gt; <code>"5d 3
 
 <dt>max_output_units</dt>
 <dd><p><em>Maximum number of time units to display</em></p>
-<p><code>scalar&lt;numeric|integer&gt;(val&gt;=1)</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;numeric|integer&gt;(val&gt;=1)</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>If <code>output_units</code> is <code>NULL</code>, where the output time units are unspecified
 and left to <strong>gt</strong> to handle, a numeric value provided for
 <code>max_output_units</code> will be taken as the maximum number of time units to
@@ -166,7 +166,7 @@ customize that type of duration output).</p></dd>
 
 <dt>pattern</dt>
 <dd><p><em>Specification of the formatting pattern</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>"{x}"</code></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>"{x}"</code></p>
 <p>A formatting pattern that allows for decoration of the formatted value. The
 formatted value is represented by the <code>{x}</code> (which can be used multiple
 times, if needed) and all other characters will be interpreted as string
@@ -175,7 +175,7 @@ literals.</p></dd>
 
 <dt>use_seps</dt>
 <dd><p><em>Use digit group separators</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>TRUE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
 <p>An option to use digit group separators. The type of digit group separator
 is set by <code>sep_mark</code> and overridden if a locale ID is provided to <code>locale</code>.
 This setting is <code>TRUE</code> by default.</p></dd>
@@ -183,7 +183,7 @@ This setting is <code>TRUE</code> by default.</p></dd>
 
 <dt>sep_mark</dt>
 <dd><p><em>Separator mark for digit grouping</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>","</code></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>","</code></p>
 <p>The string to use as a separator between groups of digits. For example,
 using <code>sep_mark = ","</code> with a value of <code>1000</code> would result in a formatted
 value of <code>"1,000"</code>. This argument is ignored if a <code>locale</code> is supplied
@@ -192,7 +192,7 @@ value of <code>"1,000"</code>. This argument is ignored if a <code>locale</code>
 
 <dt>force_sign</dt>
 <dd><p><em>Forcing the display of a positive sign</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>FALSE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
 <p>Should the positive sign be shown for positive values (effectively showing
 a sign for all values except zero)? If so, use <code>TRUE</code> for this option. By
 default only negative values will display a minus sign.</p></dd>
@@ -200,7 +200,7 @@ default only negative values will display a minus sign.</p></dd>
 
 <dt>locale</dt>
 <dd><p><em>Locale identifier</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>An optional locale identifier that can be used for formatting values
 according the locale's rules. Examples include <code>"en"</code> for English (United
 States) and <code>"fr"</code> for French (France). We can use the <code><a href="info_locales.html">info_locales()</a></code>
@@ -212,7 +212,7 @@ would be used automatically by any function with a <code>locale</code> argument)
 
 <dt>output</dt>
 <dd><p><em>Output format</em></p>
-<p><code>singl-kw:[auto|plain|html|latex|rtf|word]</code> --- <em>default:</em> <code>"auto"</code></p>
+<p><code>singl-kw:[auto|plain|html|latex|rtf|word]</code> // <em>default:</em> <code>"auto"</code></p>
 <p>The output style of the resulting character vector. This can either be
 <code>"auto"</code> (the default), <code>"plain"</code>, <code>"html"</code>, <code>"latex"</code>, <code>"rtf"</code>, or
 <code>"word"</code>. In <strong>knitr</strong> rendering (i.e., Quarto or R Markdown), the <code>"auto"</code>

@@ -79,21 +79,21 @@ rounding values as necessary.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
 <dd><p><em>The input vector</em></p>
-<p><code>vector(numeric|integer)</code> --- <strong>required</strong></p>
+<p><code>vector(numeric|integer)</code> // <strong>required</strong></p>
 <p>This is the input vector that will undergo transformation to a character
 vector of the same length. Values within the vector will be formatted.</p></dd>
 
 
 <dt>case</dt>
 <dd><p><em>Use uppercase or lowercase letters</em></p>
-<p><code>singl-kw:[upper|lower]</code> --- <em>default:</em> <code>"upper"</code></p>
+<p><code>singl-kw:[upper|lower]</code> // <em>default:</em> <code>"upper"</code></p>
 <p>Should Roman numerals should be rendered as uppercase (<code>"upper"</code>) or
 lowercase (<code>"lower"</code>) letters? By default, this is set to <code>"upper"</code>.</p></dd>
 
 
 <dt>pattern</dt>
 <dd><p><em>Specification of the formatting pattern</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>"{x}"</code></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>"{x}"</code></p>
 <p>A formatting pattern that allows for decoration of the formatted value. The
 formatted value is represented by the <code>{x}</code> (which can be used multiple
 times, if needed) and all other characters will be interpreted as string
@@ -102,7 +102,7 @@ literals.</p></dd>
 
 <dt>output</dt>
 <dd><p><em>Output format</em></p>
-<p><code>singl-kw:[auto|plain|html|latex|rtf|word]</code> --- <em>default:</em> <code>"auto"</code></p>
+<p><code>singl-kw:[auto|plain|html|latex|rtf|word]</code> // <em>default:</em> <code>"auto"</code></p>
 <p>The output style of the resulting character vector. This can either be
 <code>"auto"</code> (the default), <code>"plain"</code>, <code>"html"</code>, <code>"latex"</code>, <code>"rtf"</code>, or
 <code>"word"</code>. In <strong>knitr</strong> rendering (i.e., Quarto or R Markdown), the <code>"auto"</code>

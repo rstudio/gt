@@ -87,14 +87,14 @@ of these locations are transformed).</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p><em>The gt table data object</em></p>
-<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong></p>
+<p><code>obj:&lt;gt_tbl&gt;</code> // <strong>required</strong></p>
 <p>This is the <strong>gt</strong> table object that is commonly created through use of the
 <code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>all_caps</dt>
 <dd><p><em>Use all-caps transformation</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>TRUE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
 <p>A logical value to indicate whether the text transformation to all caps
 should be performed (<code>TRUE</code>, the default) or reset to default values
 (<code>FALSE</code>) for the <code>locations</code> targeted.</p></dd>
@@ -102,7 +102,7 @@ should be performed (<code>TRUE</code>, the default) or reset to default values
 
 <dt>locations</dt>
 <dd><p><em>Locations to target</em></p>
-<p><code>mult-kw:[column_labels|stub|row_group]</code> --- <em>default:</em> <code>c("column_labels", "stub", "row_group")</code></p>
+<p><code>mult-kw:[column_labels|stub|row_group]</code> // <em>default:</em> <code>c("column_labels", "stub", "row_group")</code></p>
 <p>Which locations should undergo this text transformation? By default it
 includes all of the <code>"column_labels"</code>, the <code>"stub"</code>, and the <code>"row_group"</code>
 locations. However, we could just choose one or two of those.</p></dd>

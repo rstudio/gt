@@ -89,7 +89,7 @@ demonstrate the default formatting of each currency.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>type</dt>
 <dd><p><em>Type of currency</em></p>
-<p><code>singl-kw:[code|symbol]</code> --- <em>default:</em> <code>"code"</code></p>
+<p><code>singl-kw:[code|symbol]</code> // <em>default:</em> <code>"code"</code></p>
 <p>The type of currency information provided. Can either be <code>code</code> where
 currency information corresponding to 3-letter currency codes is provided,
 or <code>symbol</code> where currency info for common currency names (e.g., dollar,
@@ -98,7 +98,7 @@ pound, yen, etc.) is returned.</p></dd>
 
 <dt>begins_with</dt>
 <dd><p><em>Show currencies beginning with a specific letter</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>Providing a single letter will filter currencies to only those that begin
 with that letter in their currency code. The default (<code>NULL</code>) will produce
 a table with all currencies displayed. This option only constrains the

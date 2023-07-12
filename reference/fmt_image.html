@@ -110,14 +110,14 @@ separator to be applied between images.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p><em>The gt table data object</em></p>
-<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong></p>
+<p><code>obj:&lt;gt_tbl&gt;</code> // <strong>required</strong></p>
 <p>This is the <strong>gt</strong> table object that is commonly created through use of the
 <code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>columns</dt>
 <dd><p><em>Columns to target</em></p>
-<p><code>&lt;column-targeting expression&gt;</code> --- <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
+<p><code>&lt;column-targeting expression&gt;</code> // <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
 <p>Can either be a series of column names provided in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of
 column indices, or a select helper function. Examples of select helper
 functions include <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>,
@@ -126,7 +126,7 @@ functions include <code><a href="https://tidyselect.r-lib.org/reference/starts_w
 
 <dt>rows</dt>
 <dd><p><em>Rows to target</em></p>
-<p><code>&lt;row-targeting expression&gt;</code> --- <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
+<p><code>&lt;row-targeting expression&gt;</code> // <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
 <p>In conjunction with <code>columns</code>, we can specify which of their rows should
 undergo formatting. The default <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code> results in all rows in
 <code>columns</code> being formatted. Alternatively, we can supply a vector of row
@@ -139,28 +139,28 @@ need (e.g., <code>[colname_1] &gt; 100 &amp; [colname_2] &lt; 50</code>).</p></d
 
 <dt>height</dt>
 <dd><p><em>Height of image</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>"1em"</code></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>"1em"</code></p>
 <p>The absolute height of the image in the table cell. By default, this is set
 to <code>"1em"</code>.</p></dd>
 
 
 <dt>sep</dt>
 <dd><p><em>Separator between images</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>" "</code></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>" "</code></p>
 <p>In the output of images within a body cell, <code>sep</code> provides the separator
 between each image.</p></dd>
 
 
 <dt>path</dt>
 <dd><p><em>Path to image files</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>An optional path to local image files (this is combined with all
 filenames).</p></dd>
 
 
 <dt>file_pattern</dt>
 <dd><p><em>File pattern specification</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>"{x}"</code></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>"{x}"</code></p>
 <p>The pattern to use for mapping input values in the body cells to the names
 of the graphics files. The string supplied should use <code>"{x}"</code> in the
 pattern to map filename fragments to input strings.</p></dd>
@@ -168,7 +168,7 @@ pattern to map filename fragments to input strings.</p></dd>
 
 <dt>encode</dt>
 <dd><p><em>Use Base64 encoding</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>TRUE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
 <p>The option to always use Base64 encoding for image paths that are
 determined to be local. By default, this is <code>TRUE</code>.</p></dd>
 

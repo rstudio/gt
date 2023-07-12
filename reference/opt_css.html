@@ -80,20 +80,20 @@ as a vector of lines or as a single string.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p><em>The gt table data object</em></p>
-<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong></p>
+<p><code>obj:&lt;gt_tbl&gt;</code> // <strong>required</strong></p>
 <p>This is the <strong>gt</strong> table object that is commonly created through use of the
 <code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>css</dt>
 <dd><p><em>CSS declarations</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <strong>required</strong></p>
+<p><code>scalar&lt;character&gt;</code> // <strong>required</strong></p>
 <p>The CSS to include as part of the rendered table's <code>&lt;style&gt;</code> element.</p></dd>
 
 
 <dt>add</dt>
 <dd><p><em>Add to existing CSS</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>TRUE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
 <p>If <code>TRUE</code>, the default, the CSS is added to any already-defined CSS
 (typically from previous calls of <code><a href="opt_table_font.html">opt_table_font()</a></code>, <code>opt_css()</code>, or,
 directly setting CSS the <code>table.additional_css</code> value in <code><a href="tab_options.html">tab_options()</a></code>).
@@ -103,7 +103,7 @@ previously-stored CSS.</p></dd>
 
 <dt>allow_duplicates</dt>
 <dd><p><em>Allow for CSS duplication</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>FALSE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
 <p>When this is <code>FALSE</code> (the default), the CSS provided here won't be added
 (provided that <code>add = TRUE</code>) if it is seen in the already-defined CSS.</p></dd>
 

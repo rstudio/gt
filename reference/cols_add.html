@@ -104,14 +104,14 @@ for such columns.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>.data</dt>
 <dd><p><em>The gt table data object</em></p>
-<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong></p>
+<p><code>obj:&lt;gt_tbl&gt;</code> // <strong>required</strong></p>
 <p>This is the <strong>gt</strong> table object that is commonly created through use of the
 <code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>...</dt>
 <dd><p><em>Cell data assignments</em></p>
-<p><code>&lt;multiple expressions&gt;</code> --- (or, use <code>.list</code>)</p>
+<p><code>&lt;multiple expressions&gt;</code> // (or, use <code>.list</code>)</p>
 <p>Expressions for the assignment of cell values to the new columns.
 Name-value pairs, in the form of <code>&lt;column&gt; = &lt;value vector&gt;</code> will work, so
 long as any <code>&lt;column&gt;</code> value does not already exist in the table. The
@@ -123,7 +123,7 @@ the number of rows in the table can also be used.</p></dd>
 
 <dt>.before, .after</dt>
 <dd><p><em>Column used as anchor</em></p>
-<p><code>&lt;column-targeting expression&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>&lt;column-targeting expression&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>A single column-resolving expression or column index an be given to either
 <code>.before</code> or <code>.after</code>. The column specifies where the new columns should be
 positioned among the existing columns in the input data table. While select

@@ -170,14 +170,14 @@ formatting specific to the chosen locale</p></li>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p><em>The gt table data object</em></p>
-<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong></p>
+<p><code>obj:&lt;gt_tbl&gt;</code> // <strong>required</strong></p>
 <p>This is the <strong>gt</strong> table object that is commonly created through use of the
 <code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>columns</dt>
 <dd><p><em>Columns to target</em></p>
-<p><code>&lt;column-targeting expression&gt;</code> --- <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
+<p><code>&lt;column-targeting expression&gt;</code> // <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
 <p>Can either be a series of column names provided in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of
 column indices, or a select helper function. Examples of select helper
 functions include <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>,
@@ -186,7 +186,7 @@ functions include <code><a href="https://tidyselect.r-lib.org/reference/starts_w
 
 <dt>rows</dt>
 <dd><p><em>Rows to target</em></p>
-<p><code>&lt;row-targeting expression&gt;</code> --- <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
+<p><code>&lt;row-targeting expression&gt;</code> // <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
 <p>In conjunction with <code>columns</code>, we can specify which of their rows should
 undergo formatting. The default <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code> results in all rows in
 <code>columns</code> being formatted. Alternatively, we can supply a vector of row
@@ -199,7 +199,7 @@ need (e.g., <code>[colname_1] &gt; 100 &amp; [colname_2] &lt; 50</code>).</p></d
 
 <dt>to_units</dt>
 <dd><p><em>Output Quantity</em></p>
-<p><code>singl-kw:[per-mille|per-myriad|pcm|ppm|ppb|ppt|ppq]</code> --- <em>default:</em> <code>"per-mille"</code></p>
+<p><code>singl-kw:[per-mille|per-myriad|pcm|ppm|ppb|ppt|ppq]</code> // <em>default:</em> <code>"per-mille"</code></p>
 <p>A keyword that signifies the desired output quantity. This can be any from
 the following set: <code>"per-mille"</code>, <code>"per-myriad"</code>, <code>"pcm"</code>, <code>"ppm"</code>,
 <code>"ppb"</code>, <code>"ppt"</code>, or <code>"ppq"</code>.</p></dd>
@@ -207,7 +207,7 @@ the following set: <code>"per-mille"</code>, <code>"per-myriad"</code>, <code>"p
 
 <dt>symbol</dt>
 <dd><p><em>Symbol or units to use in output display</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>"auto"</code></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>"auto"</code></p>
 <p>The symbol/units to use for the quantity. By default, this is set to
 <code>"auto"</code> and <strong>gt</strong> will choose the appropriate symbol based on the
 <code>to_units</code> keyword and the output context. However, this can be changed by
@@ -216,7 +216,7 @@ supplying a string (e.g, using <code>symbol = "ppbV"</code> when <code>to_units 
 
 <dt>decimals</dt>
 <dd><p><em>Number of decimal places</em></p>
-<p><code>scalar&lt;numeric|integer&gt;(val&gt;=0)</code> --- <em>default:</em> <code>2</code></p>
+<p><code>scalar&lt;numeric|integer&gt;(val&gt;=0)</code> // <em>default:</em> <code>2</code></p>
 <p>This corresponds to the exact number of decimal places to use. A value
 such as <code>2.34</code> can, for example, be formatted with <code>0</code> decimal places and
 it would result in <code>"2"</code>. With <code>4</code> decimal places, the formatted value
@@ -227,14 +227,14 @@ becomes <code>"2.3400"</code>. The trailing zeros can be removed with
 
 <dt>drop_trailing_zeros</dt>
 <dd><p><em>Drop any trailing zeros</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>FALSE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
 <p>A logical value that allows for removal of trailing zeros (those redundant
 zeros after the decimal mark).</p></dd>
 
 
 <dt>drop_trailing_dec_mark</dt>
 <dd><p><em>Drop the trailing decimal mark</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>TRUE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
 <p>A logical value that determines whether decimal marks should always appear
 even if there are no decimal digits to display after formatting (e.g., <code>23</code>
 becomes <code>23.</code> if <code>FALSE</code>). By default trailing decimal marks are not shown.</p></dd>
@@ -242,7 +242,7 @@ becomes <code>23.</code> if <code>FALSE</code>). By default trailing decimal mar
 
 <dt>scale_values</dt>
 <dd><p><em>Scale input values accordingly</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>TRUE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
 <p>Should the values be scaled through multiplication according to the keyword
 set in <code>to_units</code>? By default this is <code>TRUE</code> since the expectation is that
 normally values are proportions. Setting to <code>FALSE</code> signifies that the
@@ -252,7 +252,7 @@ when formatted.</p></dd>
 
 <dt>use_seps</dt>
 <dd><p><em>Use digit group separators</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>TRUE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
 <p>An option to use digit group separators. The type of digit group separator
 is set by <code>sep_mark</code> and overridden if a locale ID is provided to <code>locale</code>.
 This setting is <code>TRUE</code> by default.</p></dd>
@@ -260,7 +260,7 @@ This setting is <code>TRUE</code> by default.</p></dd>
 
 <dt>pattern</dt>
 <dd><p><em>Specification of the formatting pattern</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>"{x}"</code></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>"{x}"</code></p>
 <p>A formatting pattern that allows for decoration of the formatted value. The
 formatted value is represented by the <code>{x}</code> (which can be used multiple
 times, if needed) and all other characters will be interpreted as string
@@ -269,7 +269,7 @@ literals.</p></dd>
 
 <dt>sep_mark</dt>
 <dd><p><em>Separator mark for digit grouping</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>","</code></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>","</code></p>
 <p>The string to use as a separator between groups of digits. For example,
 using <code>sep_mark = ","</code> with a value of <code>1000</code> would result in a formatted
 value of <code>"1,000"</code>. This argument is ignored if a <code>locale</code> is supplied
@@ -278,7 +278,7 @@ value of <code>"1,000"</code>. This argument is ignored if a <code>locale</code>
 
 <dt>dec_mark</dt>
 <dd><p><em>Decimal mark</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>"."</code></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>"."</code></p>
 <p>The string to be used as the decimal mark. For example, using
 <code>dec_mark = ","</code> with the value <code>0.152</code> would result in a formatted value
 of <code>"0,152"</code>). This argument is ignored if a <code>locale</code> is supplied (i.e., is
@@ -287,7 +287,7 @@ not <code>NULL</code>).</p></dd>
 
 <dt>force_sign</dt>
 <dd><p><em>Forcing the display of a positive sign</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>FALSE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
 <p>Should the positive sign be shown for positive values (effectively showing
 a sign for all values except zero)? If so, use <code>TRUE</code> for this option. The
 default is <code>FALSE</code>, where only negative numbers will display a minus sign.
@@ -297,7 +297,7 @@ This option is disregarded when using accounting notation with
 
 <dt>incl_space</dt>
 <dd><p><em>Include a space between the value and the symbol/units</em></p>
-<p><code>scalar&lt;character&gt;|scalar&lt;logical&gt;</code> --- <em>default:</em> <code>"auto"</code></p>
+<p><code>scalar&lt;character&gt;|scalar&lt;logical&gt;</code> // <em>default:</em> <code>"auto"</code></p>
 <p>An option for whether to include a space between the value and the
 symbol/units. The default is <code>"auto"</code> which provides spacing dependent on
 the mark itself. This can be directly controlled by using either <code>TRUE</code> or
@@ -306,7 +306,7 @@ the mark itself. This can be directly controlled by using either <code>TRUE</cod
 
 <dt>system</dt>
 <dd><p><em>Numbering system for grouping separators</em></p>
-<p><code>singl-kw:[intl|ind]</code> --- <em>default:</em> <code>"intl"</code></p>
+<p><code>singl-kw:[intl|ind]</code> // <em>default:</em> <code>"intl"</code></p>
 <p>The international numbering system (keyword: <code>"intl"</code>) is widely used and
 its grouping separators (i.e., <code>sep_mark</code>) are always separated by three
 digits. The alternative system, the Indian numbering system (keyword:
@@ -316,7 +316,7 @@ crore, and higher quantities.</p></dd>
 
 <dt>locale</dt>
 <dd><p><em>Locale identifier</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>An optional locale identifier that can be used for formatting values
 according the locale's rules. Examples include <code>"en"</code> for English (United
 States) and <code>"fr"</code> for French (France). We can use the <code><a href="info_locales.html">info_locales()</a></code>

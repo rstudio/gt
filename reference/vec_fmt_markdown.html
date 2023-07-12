@@ -78,14 +78,14 @@ appropriate output type.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
 <dd><p><em>The input vector</em></p>
-<p><code>vector(numeric|integer)</code> --- <strong>required</strong></p>
+<p><code>vector(numeric|integer)</code> // <strong>required</strong></p>
 <p>This is the input vector that will undergo transformation to a character
 vector of the same length. Values within the vector will be formatted.</p></dd>
 
 
 <dt>md_engine</dt>
 <dd><p><em>Choice of Markdown engine</em></p>
-<p><code>singl-kw:[markdown|commonmark]</code> --- <em>default:</em> <code>"markdown"</code></p>
+<p><code>singl-kw:[markdown|commonmark]</code> // <em>default:</em> <code>"markdown"</code></p>
 <p>The engine preference for Markdown rendering. By default, this is set to
 <code>"markdown"</code> where <strong>gt</strong> will use the <strong>markdown</strong> package for Markdown
 conversion to HTML and LaTeX. The other option is <code>"commonmark"</code> and with
@@ -94,7 +94,7 @@ that the <strong>commonmark</strong> package will be used.</p></dd>
 
 <dt>output</dt>
 <dd><p><em>Output format</em></p>
-<p><code>singl-kw:[auto|plain|html|latex|rtf|word]</code> --- <em>default:</em> <code>"auto"</code></p>
+<p><code>singl-kw:[auto|plain|html|latex|rtf|word]</code> // <em>default:</em> <code>"auto"</code></p>
 <p>The output style of the resulting character vector. This can either be
 <code>"auto"</code> (the default), <code>"plain"</code>, <code>"html"</code>, <code>"latex"</code>, <code>"rtf"</code>, or
 <code>"word"</code>. In <strong>knitr</strong> rendering (i.e., Quarto or R Markdown), the <code>"auto"</code>

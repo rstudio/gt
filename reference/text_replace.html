@@ -83,27 +83,27 @@ that is done, the remaining two values to supply are for the regex pattern
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p><em>The gt table data object</em></p>
-<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong></p>
+<p><code>obj:&lt;gt_tbl&gt;</code> // <strong>required</strong></p>
 <p>This is the <strong>gt</strong> table object that is commonly created through use of the
 <code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>pattern</dt>
 <dd><p><em>Regex pattern to match with</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <strong>required</strong></p>
+<p><code>scalar&lt;character&gt;</code> // <strong>required</strong></p>
 <p>A regex pattern used to target text fragments in the cells resolved in
 locations.</p></dd>
 
 
 <dt>replacement</dt>
 <dd><p><em>Replacement text</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <strong>required</strong></p>
+<p><code>scalar&lt;character&gt;</code> // <strong>required</strong></p>
 <p>The replacement text for any matched text fragments.</p></dd>
 
 
 <dt>locations</dt>
 <dd><p><em>Locations to target</em></p>
-<p><code>&lt;locations expressions&gt;</code> --- <em>default:</em> <code><a href="cells_body.html">cells_body()</a></code></p>
+<p><code>&lt;locations expressions&gt;</code> // <em>default:</em> <code><a href="cells_body.html">cells_body()</a></code></p>
 <p>The cell or set of cells to be associated with the text transformation.
 Only the <code><a href="cells_body.html">cells_body()</a></code>, <code><a href="cells_stub.html">cells_stub()</a></code>, <code><a href="cells_row_groups.html">cells_row_groups()</a></code>,
 <code><a href="cells_column_labels.html">cells_column_labels()</a></code>, and <code><a href="cells_column_spanners.html">cells_column_spanners()</a></code> helper functions can

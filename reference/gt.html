@@ -92,13 +92,13 @@ before rendering to a display table of various formats.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p><em>Input data table</em></p>
-<p><code>obj:&lt;data.frame&gt;|obj:&lt;tbl_df&gt;</code> --- <strong>required</strong></p>
+<p><code>obj:&lt;data.frame&gt;|obj:&lt;tbl_df&gt;</code> // <strong>required</strong></p>
 <p>A <code>data.frame</code> object or a tibble (<code>tbl_df</code>).</p></dd>
 
 
 <dt>rowname_col</dt>
 <dd><p><em>Column for row names/labels from <code>data</code></em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>The column name in the input <code>data</code> table to use as row labels to be placed
 in the table stub. If the <code>rownames_to_stub</code> option is <code>TRUE</code> then any
 column name provided to <code>rowname_col</code> will be ignored.</p></dd>
@@ -106,7 +106,7 @@ column name provided to <code>rowname_col</code> will be ignored.</p></dd>
 
 <dt>groupname_col</dt>
 <dd><p><em>Column for group names/labels from <code>data</code></em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>The column name in the input <code>data</code> table to use as group labels for
 generation of stub row groups. If the input <code>data</code> table has the
 <code>grouped_df</code> class (through use of the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">dplyr::group_by()</a></code> function or
@@ -115,28 +115,28 @@ associated <code>group_by*()</code> functions) then any input here is ignored.</
 
 <dt>process_md</dt>
 <dd><p><em>Process Markdown in <code>rowname_col</code> and <code>groupname_col</code></em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>FALSE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
 <p>Should the contents of the <code>rowname_col</code> and <code>groupname_col</code> be interpreted
 as Markdown? By default this won't happen.</p></dd>
 
 
 <dt>caption</dt>
 <dd><p><em>Table caption text</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>An optional table caption to use for cross-referencing in R Markdown,
 Quarto, or <strong>bookdown</strong>.</p></dd>
 
 
 <dt>rownames_to_stub</dt>
 <dd><p><em>Use data frame row labels in the stub</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>FALSE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
 <p>An option to take rownames from the input <code>data</code> table (should they be
 available) as row labels in the display table stub.</p></dd>
 
 
 <dt>row_group_as_column</dt>
 <dd><p><em>Mode for displaying row group labels in the stub</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>FALSE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
 <p>An option that alters the display of row group labels. By default this is
 <code>FALSE</code> and row group labels will appear in dedicated rows above their
 respective groups of rows. If <code>TRUE</code> row group labels will occupy a
@@ -145,7 +145,7 @@ secondary column in the table stub.</p></dd>
 
 <dt>auto_align</dt>
 <dd><p><em>Automatic alignment of column values and labels</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>TRUE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
 <p>Optionally have column data be aligned depending on the content contained
 in each column of the input <code>data</code>. Internally, this calls
 <code>cols_align(align = "auto")</code> for all columns.</p></dd>
@@ -153,7 +153,7 @@ in each column of the input <code>data</code>. Internally, this calls
 
 <dt>id</dt>
 <dd><p><em>The table ID</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>By default (with <code>NULL</code>) this will be a random, ten-letter ID as generated
 by using the <code><a href="random_id.html">random_id()</a></code> function. A custom table ID can be used be
 providing a single-length character vector.</p></dd>
@@ -161,7 +161,7 @@ providing a single-length character vector.</p></dd>
 
 <dt>locale</dt>
 <dd><p><em>Locale identifier</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>An optional locale identifier that can be set as the default locale for all
 functions that take a <code>locale</code> argument. Examples include <code>"en"</code> for
 English (United States) and <code>"fr"</code> for French (France). We can use the
@@ -171,7 +171,7 @@ are supported.</p></dd>
 
 <dt>row_group.sep</dt>
 <dd><p><em>Separator text for multiple row group labels</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>getOption("gt.row_group.sep", " - ")</code></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>getOption("gt.row_group.sep", " - ")</code></p>
 <p>The separator to use between consecutive group names (a possibility when
 providing <code>data</code> as a <code>grouped_df</code> with multiple groups) in the displayed
 row group label.</p></dd>

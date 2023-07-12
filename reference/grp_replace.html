@@ -86,7 +86,7 @@ tables provided must equal the number of indices for tables present in the
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>.data</dt>
 <dd><p><em>The gt table group object</em></p>
-<p><code>obj:&lt;gt_group&gt;</code> --- <strong>required</strong></p>
+<p><code>obj:&lt;gt_group&gt;</code> // <strong>required</strong></p>
 <p>This is a <code>gt_group</code> container object. It is typically generated through
 use of the <code><a href="gt_group.html">gt_group()</a></code> function along with one or more <code>gt_tbl</code> objects,
 or, made by splitting a <strong>gt</strong> table with <code><a href="gt_split.html">gt_split()</a></code>.</p></dd>
@@ -94,20 +94,20 @@ or, made by splitting a <strong>gt</strong> table with <code><a href="gt_split.h
 
 <dt>...</dt>
 <dd><p><em>One or more gt table objects</em></p>
-<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong> (or, use <code>...</code>)</p>
+<p><code>obj:&lt;gt_tbl&gt;</code> // <strong>required</strong> (or, use <code>...</code>)</p>
 <p>One or more <strong>gt</strong> table (<code>gt_tbl</code>) objects, typically generated via the
 <code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>.list</dt>
 <dd><p><em>Alternative to <code>...</code></em></p>
-<p><code>&lt;list of multiple expressions&gt;</code> --- (or, use <code>...</code>)</p>
+<p><code>&lt;list of multiple expressions&gt;</code> // (or, use <code>...</code>)</p>
 <p>Allows for the use of a list as an input alternative to <code>...</code>.</p></dd>
 
 
 <dt>.which</dt>
 <dd><p><em>The tables to replace</em></p>
-<p><code>vector&lt;numeric|integer&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>vector&lt;numeric|integer&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>A vector of index values denoting which <strong>gt</strong> tables should be replaced
 inside of the <code>gt_group</code> object.</p></dd>
 

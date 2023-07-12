@@ -77,14 +77,14 @@ filename, producing either an HTML, PDF, PNG, LaTeX, or RTF file.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p><em>The gt table data object</em></p>
-<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong></p>
+<p><code>obj:&lt;gt_tbl&gt;</code> // <strong>required</strong></p>
 <p>This is the <strong>gt</strong> table object that is commonly created through use of the
 <code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>filename</dt>
 <dd><p><em>Output filename</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <strong>required</strong></p>
+<p><code>scalar&lt;character&gt;</code> // <strong>required</strong></p>
 <p>The file name to create on disk. Ensure that an extension compatible with
 the output types is provided (<code>.html</code>, <code>.tex</code>, <code>.ltx</code>, <code>.rtf</code>, <code>.docx</code>). If
 a custom save function is provided then the file extension is disregarded.</p></dd>
@@ -92,7 +92,7 @@ a custom save function is provided then the file extension is disregarded.</p></
 
 <dt>path</dt>
 <dd><p><em>Output path</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>An optional path to which the file should be saved (combined with
 <code>filename</code>).</p></dd>
 

@@ -89,7 +89,7 @@ borders can then be modified.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>sides</dt>
 <dd><p><em>Border sides</em></p>
-<p><code>vector&lt;character&gt;</code> --- <em>default:</em> <code>"all"</code></p>
+<p><code>vector&lt;character&gt;</code> // <em>default:</em> <code>"all"</code></p>
 <p>The border sides to be modified. Options include <code>"left"</code>,
 <code>"right"</code>, <code>"top"</code>, and <code>"bottom"</code>. For all borders surrounding the
 selected cells, we can use the <code>"all"</code> option.</p></dd>
@@ -97,7 +97,7 @@ selected cells, we can use the <code>"all"</code> option.</p></dd>
 
 <dt>color</dt>
 <dd><p><em>Border color</em></p>
-<p><code>scalar&lt;character&gt;|NULL</code> --- <em>default:</em> <code>"#000000"</code></p>
+<p><code>scalar&lt;character&gt;|NULL</code> // <em>default:</em> <code>"#000000"</code></p>
 <p>The border <code>color</code> can be defined with a color name or with a hexadecimal
 color code. The default <code>color</code> value is <code>"#000000"</code> (black). Borders for any
 defined <code>sides</code> can be removed by supplying <code>NULL</code> here.</p></dd>
@@ -105,7 +105,7 @@ defined <code>sides</code> can be removed by supplying <code>NULL</code> here.</
 
 <dt>style</dt>
 <dd><p><em>Border line style</em></p>
-<p><code>scalar&lt;character&gt;|NULL</code> --- <em>default:</em> <code>"solid"</code></p>
+<p><code>scalar&lt;character&gt;|NULL</code> // <em>default:</em> <code>"solid"</code></p>
 <p>The border <code>style</code> can be one of either <code>"solid"</code> (the default),
 <code>"dashed"</code>, <code>"dotted"</code>, <code>"hidden"</code>, or <code>"double"</code>. Borders for any
 defined <code>sides</code> can be removed by supplying <code>NULL</code> here.</p></dd>
@@ -113,7 +113,7 @@ defined <code>sides</code> can be removed by supplying <code>NULL</code> here.</
 
 <dt>weight</dt>
 <dd><p><em>Border weight</em></p>
-<p><code>scalar&lt;character&gt;|NULL</code> --- <em>default:</em> <code>px(1)</code></p>
+<p><code>scalar&lt;character&gt;|NULL</code> // <em>default:</em> <code>px(1)</code></p>
 <p>The default value for <code>weight</code> is <code>"1px"</code> and higher values will become
 more visually prominent. Borders for any defined <code>sides</code> can be removed by
 supplying <code>NULL</code> to any of <code>color</code>, <code>style</code>, or <code>weight</code>.</p></dd>

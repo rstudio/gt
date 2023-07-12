@@ -101,14 +101,14 @@ formatting of values in different columns will be preserved upon merging.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p><em>The gt table data object</em></p>
-<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong></p>
+<p><code>obj:&lt;gt_tbl&gt;</code> // <strong>required</strong></p>
 <p>This is the <strong>gt</strong> table object that is commonly created through use of the
 <code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>columns</dt>
 <dd><p><em>Columns to target</em></p>
-<p><code>&lt;column-targeting expression&gt;</code> --- <strong>required</strong></p>
+<p><code>&lt;column-targeting expression&gt;</code> // <strong>required</strong></p>
 <p>The columns for which the merging operations should be applied. The first
 column resolved will be the target column (i.e., undergo mutation) and the
 other columns will serve to provide input. Can either be a series of column
@@ -122,7 +122,7 @@ is needed for this and other arguments.</p></dd>
 
 <dt>hide_columns</dt>
 <dd><p><em>Subset of <code>columns</code> to hide</em></p>
-<p><code>&lt;column-targeting expression&gt;|FALSE</code> --- <em>default:</em> <code>columns[-1]</code></p>
+<p><code>&lt;column-targeting expression&gt;|FALSE</code> // <em>default:</em> <code>columns[-1]</code></p>
 <p>Any column names provided here will have their state changed to <code>hidden</code>
 (via internal use of <code><a href="cols_hide.html">cols_hide()</a></code>) if they aren't already hidden. This is
 convenient if the shared purpose of these specified columns is only to
@@ -132,7 +132,7 @@ columns, <code>FALSE</code> can be used here.</p></dd>
 
 <dt>rows</dt>
 <dd><p><em>Rows to target</em></p>
-<p><code>&lt;row-targeting expression&gt;</code> --- <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
+<p><code>&lt;row-targeting expression&gt;</code> // <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
 <p>In conjunction with <code>columns</code>, we can specify which of their rows should
 participate in the merging process. The default <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code> results in
 all rows in <code>columns</code> being formatted. Alternatively, we can supply a
@@ -145,7 +145,7 @@ down to the rows we need (e.g., <code>[colname_1] &gt; 100 &amp; [colname_2] &lt
 
 <dt>pattern</dt>
 <dd><p><em>Formatting pattern</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>A formatting pattern that specifies the arrangement of the <code>columns</code> values
 and any string literals. The pattern uses numbers (within <code><a href="https://rdrr.io/r/base/Paren.html" class="external-link">{ }</a></code>) that
 correspond to the indices of columns provided in <code>columns</code>. If two columns

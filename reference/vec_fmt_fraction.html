@@ -129,14 +129,14 @@ formatting specific to the chosen locale</p></li>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
 <dd><p><em>The input vector</em></p>
-<p><code>vector(numeric|integer)</code> --- <strong>required</strong></p>
+<p><code>vector(numeric|integer)</code> // <strong>required</strong></p>
 <p>This is the input vector that will undergo transformation to a character
 vector of the same length. Values within the vector will be formatted.</p></dd>
 
 
 <dt>accuracy</dt>
 <dd><p><em>Accuracy of fractions</em></p>
-<p><code>singl-kw:[low|med|high]|scalar&lt;numeric|integer&gt;(val&gt;=1)</code> --- <em>default:</em> <code>"low"</code></p>
+<p><code>singl-kw:[low|med|high]|scalar&lt;numeric|integer&gt;(val&gt;=1)</code> // <em>default:</em> <code>"low"</code></p>
 <p>The type of fractions to generate. This can either be one of the keywords
 <code>"low"</code>, <code>"med"</code>, or <code>"high"</code> (to generate fractions with denominators of
 up to 1, 2, or 3 digits, respectively) or an integer value greater than
@@ -148,7 +148,7 @@ be simplified as <code>1/2</code>). By default, the <code>"low"</code> option is
 
 <dt>simplify</dt>
 <dd><p><em>Simplify the fraction</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>TRUE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
 <p>If choosing to provide a numeric value for <code>accuracy</code>, the option to
 simplify the fraction (where possible) can be taken with <code>TRUE</code> (the
 default). With <code>FALSE</code>, denominators in fractions will be fixed to the
@@ -157,7 +157,7 @@ value provided in <code>accuracy</code>.</p></dd>
 
 <dt>layout</dt>
 <dd><p><em>Layout of fractions in HTML output</em></p>
-<p><code>singl-kw:[inline|diagonal]</code> --- <em>default:</em> <code>"inline"</code></p>
+<p><code>singl-kw:[inline|diagonal]</code> // <em>default:</em> <code>"inline"</code></p>
 <p>For HTML output, the <code>"inline"</code> layout is the default. This layout places
 the numerals of the fraction on the baseline and uses a standard slash
 character. The <code>"diagonal"</code> layout will generate fractions that are typeset
@@ -166,7 +166,7 @@ with raised/lowered numerals and a virgule.</p></dd>
 
 <dt>use_seps</dt>
 <dd><p><em>Use digit group separators</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>TRUE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
 <p>An option to use digit group separators. The type of digit group separator
 is set by <code>sep_mark</code> and overridden if a locale ID is provided to <code>locale</code>.
 This setting is <code>TRUE</code> by default.</p></dd>
@@ -174,7 +174,7 @@ This setting is <code>TRUE</code> by default.</p></dd>
 
 <dt>pattern</dt>
 <dd><p><em>Specification of the formatting pattern</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>"{x}"</code></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>"{x}"</code></p>
 <p>A formatting pattern that allows for decoration of the formatted value. The
 formatted value is represented by the <code>{x}</code> (which can be used multiple
 times, if needed) and all other characters will be interpreted as string
@@ -183,7 +183,7 @@ literals.</p></dd>
 
 <dt>sep_mark</dt>
 <dd><p><em>Separator mark for digit grouping</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>","</code></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>","</code></p>
 <p>The string to use as a separator between groups of digits. For example,
 using <code>sep_mark = ","</code> with a value of <code>1000</code> would result in a formatted
 value of <code>"1,000"</code>. This argument is ignored if a <code>locale</code> is supplied
@@ -192,7 +192,7 @@ value of <code>"1,000"</code>. This argument is ignored if a <code>locale</code>
 
 <dt>locale</dt>
 <dd><p><em>Locale identifier</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>An optional locale identifier that can be used for formatting values
 according the locale's rules. Examples include <code>"en"</code> for English (United
 States) and <code>"fr"</code> for French (France). We can use the <code><a href="info_locales.html">info_locales()</a></code>
@@ -204,7 +204,7 @@ would be used automatically by any function with a <code>locale</code> argument)
 
 <dt>output</dt>
 <dd><p><em>Output format</em></p>
-<p><code>singl-kw:[auto|plain|html|latex|rtf|word]</code> --- <em>default:</em> <code>"auto"</code></p>
+<p><code>singl-kw:[auto|plain|html|latex|rtf|word]</code> // <em>default:</em> <code>"auto"</code></p>
 <p>The output style of the resulting character vector. This can either be
 <code>"auto"</code> (the default), <code>"plain"</code>, <code>"html"</code>, <code>"latex"</code>, <code>"rtf"</code>, or
 <code>"word"</code>. In <strong>knitr</strong> rendering (i.e., Quarto or R Markdown), the <code>"auto"</code>

@@ -178,14 +178,14 @@ the possible inputs to the <code>currency</code> argument.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p><em>The gt table data object</em></p>
-<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong></p>
+<p><code>obj:&lt;gt_tbl&gt;</code> // <strong>required</strong></p>
 <p>This is the <strong>gt</strong> table object that is commonly created through use of the
 <code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>columns</dt>
 <dd><p><em>Columns to target</em></p>
-<p><code>&lt;column-targeting expression&gt;</code> --- <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
+<p><code>&lt;column-targeting expression&gt;</code> // <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
 <p>Can either be a series of column names provided in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of
 column indices, or a select helper function. Examples of select helper
 functions include <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>,
@@ -194,7 +194,7 @@ functions include <code><a href="https://tidyselect.r-lib.org/reference/starts_w
 
 <dt>rows</dt>
 <dd><p><em>Rows to target</em></p>
-<p><code>&lt;row-targeting expression&gt;</code> --- <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
+<p><code>&lt;row-targeting expression&gt;</code> // <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
 <p>In conjunction with <code>columns</code>, we can specify which of their rows should
 undergo formatting. The default <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code> results in all rows in
 <code>columns</code> being formatted. Alternatively, we can supply a vector of row
@@ -207,7 +207,7 @@ need (e.g., <code>[colname_1] &gt; 100 &amp; [colname_2] &lt; 50</code>).</p></d
 
 <dt>currency</dt>
 <dd><p><em>Currency to use</em></p>
-<p><code>scalar&lt;character&gt;|obj:&lt;gt_currency&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;character&gt;|obj:&lt;gt_currency&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>The currency to use for the numeric value. This input can be
 supplied as a 3-letter currency code (e.g., <code>"USD"</code> for U.S. Dollars,
 <code>"EUR"</code> for the Euro currency). Use <code><a href="info_currencies.html">info_currencies()</a></code> to get an
@@ -234,7 +234,7 @@ used if neither a <code>locale</code> nor a <code>currency</code> value is given
 
 <dt>use_subunits</dt>
 <dd><p><em>Show or hide currency subunits</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>TRUE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
 <p>An option for whether the subunits portion of a currency value should be
 displayed. For example, with an input value of <code>273.81</code>, the default
 formatting will produce <code>"$273.81"</code>. Removing the subunits (with
@@ -243,7 +243,7 @@ formatting will produce <code>"$273.81"</code>. Removing the subunits (with
 
 <dt>decimals</dt>
 <dd><p><em>Number of decimal places</em></p>
-<p><code>scalar&lt;numeric|integer&gt;(val&gt;=0)</code> --- <em>default:</em> <code>2</code></p>
+<p><code>scalar&lt;numeric|integer&gt;(val&gt;=0)</code> // <em>default:</em> <code>2</code></p>
 <p>This corresponds to the exact number of decimal places to use. A value
 such as <code>2.34</code> can, for example, be formatted with <code>0</code> decimal places and
 it would result in <code>"2"</code>. With <code>4</code> decimal places, the formatted value
@@ -254,7 +254,7 @@ becomes <code>"2.3400"</code>. The trailing zeros can be removed with
 
 <dt>drop_trailing_dec_mark</dt>
 <dd><p><em>Drop the trailing decimal mark</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>TRUE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
 <p>A logical value that determines whether decimal marks should always appear
 even if there are no decimal digits to display after formatting (e.g., <code>23</code>
 becomes <code>23.</code> if <code>FALSE</code>). By default trailing decimal marks are not shown.</p></dd>
@@ -262,7 +262,7 @@ becomes <code>23.</code> if <code>FALSE</code>). By default trailing decimal mar
 
 <dt>use_seps</dt>
 <dd><p><em>Use digit group separators</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>TRUE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
 <p>An option to use digit group separators. The type of digit group separator
 is set by <code>sep_mark</code> and overridden if a locale ID is provided to <code>locale</code>.
 This setting is <code>TRUE</code> by default.</p></dd>
@@ -270,7 +270,7 @@ This setting is <code>TRUE</code> by default.</p></dd>
 
 <dt>accounting</dt>
 <dd><p><em>Use accounting style</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>FALSE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
 <p>An option to use accounting style for values. Normally, negative values
 will be shown with a minus sign but using accounting style will instead put
 any negative values in parentheses.</p></dd>
@@ -278,7 +278,7 @@ any negative values in parentheses.</p></dd>
 
 <dt>scale_by</dt>
 <dd><p><em>Scale values by a fixed multiplier</em></p>
-<p><code>scalar&lt;numeric|integer&gt;</code> --- <em>default:</em> <code>1</code></p>
+<p><code>scalar&lt;numeric|integer&gt;</code> // <em>default:</em> <code>1</code></p>
 <p>All numeric values will be multiplied by the <code>scale_by</code> value before
 undergoing formatting. Since the <code>default</code> value is <code>1</code>, no values will be
 changed unless a different multiplier value is supplied. This value will be
@@ -288,7 +288,7 @@ not set to <code>FALSE</code>).</p></dd>
 
 <dt>suffixing</dt>
 <dd><p><em>Specification for large-number suffixing</em></p>
-<p><code>scalar&lt;logical&gt;|vector&lt;character&gt;</code> --- <em>default:</em> <code>FALSE</code></p>
+<p><code>scalar&lt;logical&gt;|vector&lt;character&gt;</code> // <em>default:</em> <code>FALSE</code></p>
 <p>The <code>suffixing</code> option allows us to scale and apply suffixes to larger
 numbers (e.g., <code>1924000</code> can be transformed to <code>1.92M</code>). This option can
 accept a logical value, where <code>FALSE</code> (the default) will not perform this
@@ -315,7 +315,7 @@ doesn't apply suffixes to the thousands range, but does express values in
 
 <dt>pattern</dt>
 <dd><p><em>Specification of the formatting pattern</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>"{x}"</code></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>"{x}"</code></p>
 <p>A formatting pattern that allows for decoration of the formatted value. The
 formatted value is represented by the <code>{x}</code> (which can be used multiple
 times, if needed) and all other characters will be interpreted as string
@@ -324,7 +324,7 @@ literals.</p></dd>
 
 <dt>sep_mark</dt>
 <dd><p><em>Separator mark for digit grouping</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>","</code></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>","</code></p>
 <p>The string to use as a separator between groups of digits. For example,
 using <code>sep_mark = ","</code> with a value of <code>1000</code> would result in a formatted
 value of <code>"1,000"</code>. This argument is ignored if a <code>locale</code> is supplied
@@ -333,7 +333,7 @@ value of <code>"1,000"</code>. This argument is ignored if a <code>locale</code>
 
 <dt>dec_mark</dt>
 <dd><p><em>Decimal mark</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>"."</code></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>"."</code></p>
 <p>The string to be used as the decimal mark. For example, using
 <code>dec_mark = ","</code> with the value <code>0.152</code> would result in a formatted value
 of <code>"0,152"</code>). This argument is ignored if a <code>locale</code> is supplied (i.e., is
@@ -342,7 +342,7 @@ not <code>NULL</code>).</p></dd>
 
 <dt>force_sign</dt>
 <dd><p><em>Forcing the display of a positive sign</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>FALSE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
 <p>Should the positive sign be shown for positive values (effectively showing
 a sign for all values except zero)? If so, use <code>TRUE</code> for this option. The
 default is <code>FALSE</code>, where only negative numbers will display a minus sign.
@@ -352,21 +352,21 @@ This option is disregarded when using accounting notation with
 
 <dt>placement</dt>
 <dd><p><em>Currency symbol placement</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>"left"</code></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>"left"</code></p>
 <p>The placement of the currency symbol. This can be either be <code>left</code> (as
 in <code>"$450"</code>) or <code>right</code> (which yields <code>"450$"</code>).</p></dd>
 
 
 <dt>incl_space</dt>
 <dd><p><em>Include a space between the value and the currency symbol</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>FALSE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
 <p>An option for whether to include a space between the value and the currency
 symbol. The default is to not introduce a space character.</p></dd>
 
 
 <dt>system</dt>
 <dd><p><em>Numbering system for grouping separators</em></p>
-<p><code>singl-kw:[intl|ind]</code> --- <em>default:</em> <code>"intl"</code></p>
+<p><code>singl-kw:[intl|ind]</code> // <em>default:</em> <code>"intl"</code></p>
 <p>The international numbering system (keyword: <code>"intl"</code>) is widely used and
 its grouping separators (i.e., <code>sep_mark</code>) are always separated by three
 digits. The alternative system, the Indian numbering system (keyword:
@@ -376,7 +376,7 @@ crore, and higher quantities.</p></dd>
 
 <dt>locale</dt>
 <dd><p><em>Locale identifier</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>An optional locale identifier that can be used for formatting values
 according the locale's rules. Examples include <code>"en"</code> for English (United
 States) and <code>"fr"</code> for French (France). We can use the <code><a href="info_locales.html">info_locales()</a></code>

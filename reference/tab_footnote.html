@@ -142,14 +142,14 @@ placement of the footnote mark.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p><em>The gt table data object</em></p>
-<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong></p>
+<p><code>obj:&lt;gt_tbl&gt;</code> // <strong>required</strong></p>
 <p>This is the <strong>gt</strong> table object that is commonly created through use of the
 <code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>footnote</dt>
 <dd><p><em>Footnote text</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <strong>required</strong></p>
+<p><code>scalar&lt;character&gt;</code> // <strong>required</strong></p>
 <p>The text to be used in the footnote. We can optionally use the <code><a href="md.html">md()</a></code> and
 <code><a href="html.html">html()</a></code> functions to style the text as Markdown or to retain HTML elements
 in the footnote text.</p></dd>
@@ -157,7 +157,7 @@ in the footnote text.</p></dd>
 
 <dt>locations</dt>
 <dd><p><em>Locations to target</em></p>
-<p><code>&lt;locations expressions&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>&lt;locations expressions&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>The cell or set of cells to be associated with the footnote. Supplying any
 of the <code>cells_*()</code> helper functions is a useful way to target the location
 cells that are associated with the footnote text. These helper functions
@@ -172,7 +172,7 @@ group labels, the table title, etc.).</p></dd>
 
 <dt>placement</dt>
 <dd><p><em>Placement of footnote mark</em></p>
-<p><code>singl-kw:[auto|right|left]</code> --- <em>default:</em> <code>"auto"</code></p>
+<p><code>singl-kw:[auto|right|left]</code> // <em>default:</em> <code>"auto"</code></p>
 <p>Where to affix footnote marks to the table content. Two options for this
 are <code>"left</code> or <code>"right"</code>, where the placement is either to the absolute
 left or right of the cell content. By default, however, this option is set

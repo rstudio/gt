@@ -79,14 +79,14 @@ cell data formatted in the same way as the table.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p><em>The gt table data object</em></p>
-<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong></p>
+<p><code>obj:&lt;gt_tbl&gt;</code> // <strong>required</strong></p>
 <p>This is the <strong>gt</strong> table object that is commonly created through use of the
 <code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>columns</dt>
 <dd><p><em>Columns to target</em></p>
-<p><code>&lt;column-targeting expression&gt;</code> --- <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
+<p><code>&lt;column-targeting expression&gt;</code> // <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
 <p>Can either be a series of column names provided in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of
 column indices, or a select helper function. Examples of select helper
 functions include <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>,
@@ -95,7 +95,7 @@ functions include <code><a href="https://tidyselect.r-lib.org/reference/starts_w
 
 <dt>rows</dt>
 <dd><p><em>Rows to target</em></p>
-<p><code>&lt;row-targeting expression&gt;</code> --- <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
+<p><code>&lt;row-targeting expression&gt;</code> // <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
 <p>In conjunction with <code>columns</code>, we can specify which of their rows should
 form a constraint for extraction. The default <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code> results in all
 rows in <code>columns</code> being formatted. Alternatively, we can supply a vector of
@@ -108,7 +108,7 @@ need (e.g., <code>[colname_1] &gt; 100 &amp; [colname_2] &lt; 50</code>).</p></d
 
 <dt>output</dt>
 <dd><p><em>Output format</em></p>
-<p><code>singl-kw:[auto|plain|html|latex|rtf|word]</code> --- <em>default:</em> <code>"auto"</code></p>
+<p><code>singl-kw:[auto|plain|html|latex|rtf|word]</code> // <em>default:</em> <code>"auto"</code></p>
 <p>The output style of the resulting character vector. This can either be
 <code>"auto"</code> (the default), <code>"plain"</code>, <code>"html"</code>, <code>"latex"</code>, <code>"rtf"</code>, or
 <code>"word"</code>. In <strong>knitr</strong> rendering (i.e., Quarto or R Markdown), the <code>"auto"</code>

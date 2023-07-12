@@ -140,14 +140,14 @@ formatting specific to the chosen locale</p></li>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>x</dt>
 <dd><p><em>The input vector</em></p>
-<p><code>vector(numeric|integer)</code> --- <strong>required</strong></p>
+<p><code>vector(numeric|integer)</code> // <strong>required</strong></p>
 <p>This is the input vector that will undergo transformation to a character
 vector of the same length. Values within the vector will be formatted.</p></dd>
 
 
 <dt>standard</dt>
 <dd><p><em>Standard used to express byte sizes</em></p>
-<p><code>singl-kw:[decimal|binary]</code> --- <em>default:</em> <code>"decimal"</code></p>
+<p><code>singl-kw:[decimal|binary]</code> // <em>default:</em> <code>"decimal"</code></p>
 <p>The form of expressing large byte sizes is divided between: (1) decimal
 units (powers of 1000; e.g., <code>"kB"</code> and <code>"MB"</code>), and (2) binary units
 (powers of 1024; e.g., <code>"KiB"</code> and <code>"MiB"</code>).</p></dd>
@@ -155,7 +155,7 @@ units (powers of 1000; e.g., <code>"kB"</code> and <code>"MB"</code>), and (2) b
 
 <dt>decimals</dt>
 <dd><p><em>Number of decimal places</em></p>
-<p><code>scalar&lt;numeric|integer&gt;(val&gt;=0)</code> --- <em>default:</em> <code>1</code></p>
+<p><code>scalar&lt;numeric|integer&gt;(val&gt;=0)</code> // <em>default:</em> <code>1</code></p>
 <p>This corresponds to the exact number of decimal places to use. A value
 such as <code>2.34</code> can, for example, be formatted with <code>0</code> decimal places and
 it would result in <code>"2"</code>. With <code>4</code> decimal places, the formatted value
@@ -165,7 +165,7 @@ becomes <code>"2.3400"</code>. The trailing zeros can be removed with
 
 <dt>n_sigfig</dt>
 <dd><p><em>Number of significant figures</em></p>
-<p><code>scalar&lt;numeric|integer&gt;(val&gt;=1)</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;numeric|integer&gt;(val&gt;=1)</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>A option to format numbers to <em>n</em> significant figures. By default, this is
 <code>NULL</code> and thus number values will be formatted according to the number of
 decimal places set via <code>decimals</code>. If opting to format according to the
@@ -176,14 +176,14 @@ arguments will be ignored.</p></dd>
 
 <dt>drop_trailing_zeros</dt>
 <dd><p><em>Drop any trailing zeros</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>FALSE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
 <p>A logical value that allows for removal of trailing zeros (those redundant
 zeros after the decimal mark).</p></dd>
 
 
 <dt>drop_trailing_dec_mark</dt>
 <dd><p><em>Drop the trailing decimal mark</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>TRUE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
 <p>A logical value that determines whether decimal marks should always appear
 even if there are no decimal digits to display after formatting (e.g., <code>23</code>
 becomes <code>23.</code> if <code>FALSE</code>). By default trailing decimal marks are not shown.</p></dd>
@@ -191,7 +191,7 @@ becomes <code>23.</code> if <code>FALSE</code>). By default trailing decimal mar
 
 <dt>use_seps</dt>
 <dd><p><em>Use digit group separators</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>TRUE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
 <p>An option to use digit group separators. The type of digit group separator
 is set by <code>sep_mark</code> and overridden if a locale ID is provided to <code>locale</code>.
 This setting is <code>TRUE</code> by default.</p></dd>
@@ -199,7 +199,7 @@ This setting is <code>TRUE</code> by default.</p></dd>
 
 <dt>pattern</dt>
 <dd><p><em>Specification of the formatting pattern</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>"{x}"</code></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>"{x}"</code></p>
 <p>A formatting pattern that allows for decoration of the formatted value. The
 formatted value is represented by the <code>{x}</code> (which can be used multiple
 times, if needed) and all other characters will be interpreted as string
@@ -208,7 +208,7 @@ literals.</p></dd>
 
 <dt>sep_mark</dt>
 <dd><p><em>Separator mark for digit grouping</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>","</code></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>","</code></p>
 <p>The string to use as a separator between groups of digits. For example,
 using <code>sep_mark = ","</code> with a value of <code>1000</code> would result in a formatted
 value of <code>"1,000"</code>. This argument is ignored if a <code>locale</code> is supplied
@@ -217,7 +217,7 @@ value of <code>"1,000"</code>. This argument is ignored if a <code>locale</code>
 
 <dt>dec_mark</dt>
 <dd><p><em>Decimal mark</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>"."</code></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>"."</code></p>
 <p>The string to be used as the decimal mark. For example, using
 <code>dec_mark = ","</code> with the value <code>0.152</code> would result in a formatted value
 of <code>"0,152"</code>). This argument is ignored if a <code>locale</code> is supplied (i.e., is
@@ -226,7 +226,7 @@ not <code>NULL</code>).</p></dd>
 
 <dt>force_sign</dt>
 <dd><p><em>Forcing the display of a positive sign</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>FALSE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
 <p>Should the positive sign be shown for positive numbers (effectively showing
 a sign for all numbers except zero)? If so, use <code>TRUE</code> for this option. The
 default is <code>FALSE</code>, where only negative numbers will display a minus sign.</p></dd>
@@ -234,14 +234,14 @@ default is <code>FALSE</code>, where only negative numbers will display a minus 
 
 <dt>incl_space</dt>
 <dd><p><em>Include a space between the value and the units</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>TRUE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
 <p>An option for whether to include a space between the value and the units.
 The default is to use a space character for separation.</p></dd>
 
 
 <dt>locale</dt>
 <dd><p><em>Locale identifier</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>An optional locale identifier that can be used for formatting values
 according the locale's rules. Examples include <code>"en"</code> for English (United
 States) and <code>"fr"</code> for French (France). We can use the <code><a href="info_locales.html">info_locales()</a></code>
@@ -253,7 +253,7 @@ would be used automatically by any function with a <code>locale</code> argument)
 
 <dt>output</dt>
 <dd><p><em>Output format</em></p>
-<p><code>singl-kw:[auto|plain|html|latex|rtf|word]</code> --- <em>default:</em> <code>"auto"</code></p>
+<p><code>singl-kw:[auto|plain|html|latex|rtf|word]</code> // <em>default:</em> <code>"auto"</code></p>
 <p>The output style of the resulting character vector. This can either be
 <code>"auto"</code> (the default), <code>"plain"</code>, <code>"html"</code>, <code>"latex"</code>, <code>"rtf"</code>, or
 <code>"word"</code>. In <strong>knitr</strong> rendering (i.e., Quarto or R Markdown), the <code>"auto"</code>

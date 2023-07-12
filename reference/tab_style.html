@@ -119,14 +119,14 @@ bold text (the degree of choice is greater with variable fonts)</p></li>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p><em>The gt table data object</em></p>
-<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong></p>
+<p><code>obj:&lt;gt_tbl&gt;</code> // <strong>required</strong></p>
 <p>This is the <strong>gt</strong> table object that is commonly created through use of the
 <code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>style</dt>
 <dd><p><em>Style declarations</em></p>
-<p><code>&lt;style expressions&gt;</code> --- <strong>required</strong></p>
+<p><code>&lt;style expressions&gt;</code> // <strong>required</strong></p>
 <p>The styles to use for the cells at the targeted <code>locations</code>. The
 <code><a href="cell_text.html">cell_text()</a></code>, <code><a href="cell_fill.html">cell_fill()</a></code>, and <code><a href="cell_borders.html">cell_borders()</a></code> helper functions can be
 used here to more easily generate valid styles. If using more than one
@@ -137,7 +137,7 @@ Custom CSS declarations can be used for HTML output by including a
 
 <dt>locations</dt>
 <dd><p><em>Locations to target</em></p>
-<p><code>&lt;locations expressions&gt;</code> --- <strong>required</strong></p>
+<p><code>&lt;locations expressions&gt;</code> // <strong>required</strong></p>
 <p>The cell or set of cells to be associated with the style. Supplying any of
 the <code>cells_*()</code> helper functions is a useful way to target the location
 cells that are associated with the styling. These helper functions are:

@@ -144,21 +144,21 @@ expressions</p></li>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p><em>The gt table data object</em></p>
-<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong></p>
+<p><code>obj:&lt;gt_tbl&gt;</code> // <strong>required</strong></p>
 <p>This is the <strong>gt</strong> table object that is commonly created through use of the
 <code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>delim</dt>
 <dd><p><em>Delimiter for splitting</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <strong>required</strong></p>
+<p><code>scalar&lt;character&gt;</code> // <strong>required</strong></p>
 <p>The delimiter to use to split an input column name. This should be a single
 character (e.g., <code>"_"</code>, <code>"."</code>, etc.).</p></dd>
 
 
 <dt>columns</dt>
 <dd><p><em>Columns to target</em></p>
-<p><code>&lt;column-targeting expression&gt;</code> --- <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
+<p><code>&lt;column-targeting expression&gt;</code> // <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
 <p>The columns to consider for the splitting, relabeling, and spanner setting
 operations. Can either be a series of column names provided in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a
 vector of column indices, or a select helper function. Examples of select
@@ -169,7 +169,7 @@ works in tandem with the <code>spanners</code> argument.</p></dd>
 
 <dt>split</dt>
 <dd><p><em>Splitting side</em></p>
-<p><code>singl-kw:[last|first]</code> --- <em>default:</em> <code>"last"</code></p>
+<p><code>singl-kw:[last|first]</code> // <em>default:</em> <code>"last"</code></p>
 <p>Should the delimiter splitting occur from the <code>"last"</code> instance of the
 <code>delim</code> character or from the <code>"first"</code>? The default here uses the <code>"last"</code>
 keyword, and splitting begins at the last instance of the delimiter in the
@@ -181,7 +181,7 @@ number).</p></dd>
 
 <dt>limit</dt>
 <dd><p><em>Limit for splitting</em></p>
-<p><code>scalar&lt;numeric|integer|character&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;numeric|integer|character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>An optional limit to place on the splitting procedure. The default <code>NULL</code>
 means that a column name will be split as many times are there are
 delimiter characters. In other words, the default means there is no limit.
@@ -193,7 +193,7 @@ or left side (<code>split = "first"</code>) of the column name.</p></dd>
 
 <dt>reverse</dt>
 <dd><p><em>Reverse vector of split names</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>FALSE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
 <p>Should the order of split names be reversed? By default, this is <code>FALSE</code>.</p></dd>
 
 </dl></div>

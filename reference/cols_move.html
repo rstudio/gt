@@ -92,14 +92,14 @@ in the table.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p><em>The gt table data object</em></p>
-<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong></p>
+<p><code>obj:&lt;gt_tbl&gt;</code> // <strong>required</strong></p>
 <p>This is the <strong>gt</strong> table object that is commonly created through use of the
 <code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>columns</dt>
 <dd><p><em>Columns to target</em></p>
-<p><code>&lt;column-targeting expression&gt;</code> --- <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
+<p><code>&lt;column-targeting expression&gt;</code> // <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
 <p>The columns for which the moving operations should be applied. Can either
 be a series of column names provided in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of column indices,
 or a select helper function. Examples of select helper functions include
@@ -110,7 +110,7 @@ different position. The order of the remaining columns will be preserved.</p></d
 
 <dt>after</dt>
 <dd><p><em>Column used as anchor</em></p>
-<p><code>&lt;column-targeting expression&gt;</code> --- <strong>required</strong></p>
+<p><code>&lt;column-targeting expression&gt;</code> // <strong>required</strong></p>
 <p>The column used to anchor the insertion of the moved columns. All of the
 moved columns will be placed to the right of this column. While select
 helper functions such as <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code> and <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code> can be used for

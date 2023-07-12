@@ -135,14 +135,14 @@ bold text (the degree of choice is greater with variable fonts)</p></li>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p><em>The gt table data object</em></p>
-<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong></p>
+<p><code>obj:&lt;gt_tbl&gt;</code> // <strong>required</strong></p>
 <p>This is the <strong>gt</strong> table object that is commonly created through use of the
 <code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>style</dt>
 <dd><p><em>Style declarations</em></p>
-<p><code>&lt;style expressions&gt;</code> --- <strong>required</strong></p>
+<p><code>&lt;style expressions&gt;</code> // <strong>required</strong></p>
 <p>The styles to use for the targeted cells. The <code><a href="cell_text.html">cell_text()</a></code>, <code><a href="cell_fill.html">cell_fill()</a></code>,
 and <code><a href="cell_borders.html">cell_borders()</a></code> helper functions can be used here to more easily
 generate valid styles. If using more than one helper function to define
@@ -153,7 +153,7 @@ list item.</p></dd>
 
 <dt>columns</dt>
 <dd><p><em>Columns to target</em></p>
-<p><code>&lt;column-targeting expression&gt;</code> --- <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
+<p><code>&lt;column-targeting expression&gt;</code> // <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
 <p>The columns to which the targeting operations are constrained.  Can either
 be a series of column names provided in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of column indices,
 or a select helper function. Examples of select helper functions include
@@ -164,7 +164,7 @@ or a select helper function. Examples of select helper functions include
 
 <dt>rows</dt>
 <dd><p><em>Rows to target</em></p>
-<p><code>&lt;row-targeting expression&gt;</code> --- <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
+<p><code>&lt;row-targeting expression&gt;</code> // <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
 <p>In conjunction with <code>columns</code>, we can specify which of their rows should
 form a constraint for targeting operations. The default <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>
 results in all rows in <code>columns</code> being formatted. Alternatively, we can
@@ -177,21 +177,21 @@ down to the rows we need (e.g., <code>[colname_1] &gt; 100 &amp; [colname_2] &lt
 
 <dt>values</dt>
 <dd><p><em>Values for targeting</em></p>
-<p><code>vector&lt;character|numeric|integer&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>vector&lt;character|numeric|integer&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>The specific value or values that should be targeted for styling. If
 <code>pattern</code> is also supplied then <code>values</code> will be ignored.</p></dd>
 
 
 <dt>pattern</dt>
 <dd><p><em>Regex pattern for targeting</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>A regex pattern that can target solely those values in <code>character</code>-based
 columns. If <code>values</code> is also supplied, <code>pattern</code> will take precedence.</p></dd>
 
 
 <dt>fn</dt>
 <dd><p><em>Function to return logical values</em></p>
-<p><code>&lt;function&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>&lt;function&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>A supplied function that operates on each cell of each column specified
 through <code>columns</code> and <code>rows</code>. The function should be fashioned such that a
 single logical value is returned. If either of <code>values</code> or <code>pattern</code> is
@@ -200,7 +200,7 @@ also supplied, <code>fn</code> will take precedence.</p></dd>
 
 <dt>targets</dt>
 <dd><p><em>Styling targets</em></p>
-<p><code>vector&lt;character&gt;</code> --- <em>default:</em> <code>"cell"</code></p>
+<p><code>vector&lt;character&gt;</code> // <em>default:</em> <code>"cell"</code></p>
 <p>A vector of styling target keywords to contain or expand the target of each
 cell. By default, this is a vector just containing <code>"cell"</code>. However, the
 keywords <code>"row"</code> and <code>"column"</code> may be used separately or in combination to
@@ -209,7 +209,7 @@ style the target cells' associated rows or columns.</p></dd>
 
 <dt>extents</dt>
 <dd><p><em>Styling extents</em></p>
-<p><code>vector&lt;character&gt;</code> --- <em>default:</em> <code>"body"</code></p>
+<p><code>vector&lt;character&gt;</code> // <em>default:</em> <code>"body"</code></p>
 <p>A vector of locations to project styling. By default, this is a vector just
 containing <code>"body"</code>, whereby styled rows or columns (facilitated via
 inclusion of the <code>"row"</code> and <code>"column"</code> keywords in <code>targets</code>) will not

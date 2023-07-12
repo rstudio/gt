@@ -101,7 +101,7 @@ Shiny apps can be found at the <a href="https://shiny.rstudio.com" class="extern
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>outputId</dt>
 <dd><p><em>Shiny output ID</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <strong>required</strong></p>
+<p><code>scalar&lt;character&gt;</code> // <strong>required</strong></p>
 <p>An output variable from which to read the table.</p></dd>
 
 </dl></div>
@@ -120,7 +120,7 @@ Shiny apps can be found at the <a href="https://shiny.rstudio.com" class="extern
 <strong>gt</strong> table, (2) sets up the <code>ui</code> with <code>gt_output()</code>, and (3) sets up the
 <code>server</code> with a <code><a href="render_gt.html">render_gt()</a></code> that uses the <code>gt_tbl</code> object as the input
 expression.</p>
-<p></p><div class="sourceCode r"><pre><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span></span>
+<p></p><div class="sourceCode r"><pre><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.posit.co/" class="external-link">shiny</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">gt_tbl</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">gtcars</span> <span class="op">|&gt;</span></span>

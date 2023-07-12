@@ -83,7 +83,7 @@ either the <code>before</code> or <code>after</code> arguments.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p><em>The gt table group object</em></p>
-<p><code>obj:&lt;gt_group&gt;</code> --- <strong>required</strong></p>
+<p><code>obj:&lt;gt_group&gt;</code> // <strong>required</strong></p>
 <p>This is a <code>gt_group</code> container object. It is typically generated through
 use of the <code><a href="gt_group.html">gt_group()</a></code> function along with one or more <code>gt_tbl</code> objects,
 or, made by splitting a <strong>gt</strong> table with <code><a href="gt_split.html">gt_split()</a></code>.</p></dd>
@@ -91,14 +91,14 @@ or, made by splitting a <strong>gt</strong> table with <code><a href="gt_split.h
 
 <dt>which</dt>
 <dd><p><em>The tables to clone</em></p>
-<p><code>vector&lt;numeric|integer&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>vector&lt;numeric|integer&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>A vector of index values denoting which <strong>gt</strong> tables should be cloned
 inside of the <code>gt_group</code> object.</p></dd>
 
 
 <dt>before, after</dt>
 <dd><p><em>Table used as anchor</em></p>
-<p><code>scalar&lt;numeric|integer&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;numeric|integer&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>A single index for either <code>before</code> or <code>after</code>, specifies where the cloned
 <code>gt_tbl</code> objects should be placed amongst the existing collection of <strong>gt</strong>
 tables. If nothing is provided for either argument, the incoming <code>gt_tbl</code>

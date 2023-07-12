@@ -83,28 +83,28 @@ smaller tables across multiple pages (in RTF and Word outputs, primarily via
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p><em>The gt table data object</em></p>
-<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong></p>
+<p><code>obj:&lt;gt_tbl&gt;</code> // <strong>required</strong></p>
 <p>This is the <strong>gt</strong> table object that is commonly created through use of the
 <code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>row_every_n</dt>
 <dd><p><em>Split at every n rows</em></p>
-<p><code>scalar&lt;numeric|integer&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;numeric|integer&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>A directive to split at every <em>n</em> number of rows. This argument expects a
 single numerical value.</p></dd>
 
 
 <dt>row_slice_i</dt>
 <dd><p><em>Row-slicing indices</em></p>
-<p><code>vector&lt;numeric|integer&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>vector&lt;numeric|integer&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>An argument for splitting at specific row indices. Here, we expect either a
 vector of index values or a function that evaluates to a numeric vector.</p></dd>
 
 
 <dt>col_slice_at</dt>
 <dd><p><em>Column-slicing locations</em></p>
-<p><code>&lt;column-targeting expression&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>&lt;column-targeting expression&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>Any columns where vertical splitting across should occur. The splits occur
 to the right of the resolved column names. Can either be a series of column
 names provided in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of column indices, or a select helper

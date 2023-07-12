@@ -86,7 +86,7 @@ palette.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>colors</dt>
 <dd><p><em>Color vector</em></p>
-<p><code>vector&lt;character&gt;</code> --- <strong>required</strong></p>
+<p><code>vector&lt;character&gt;</code> // <strong>required</strong></p>
 <p>This is the vector of colors that will undergo an adjustment in luminance.
 Each color value provided must either be a color name (in the set of colors
 provided by <code><a href="https://rdrr.io/r/grDevices/colors.html" class="external-link">grDevices::colors()</a></code>) or a hexadecimal string in the form of
@@ -95,7 +95,7 @@ provided by <code><a href="https://rdrr.io/r/grDevices/colors.html" class="exter
 
 <dt>steps</dt>
 <dd><p><em>Adjustment level</em></p>
-<p><code>scalar&lt;numeric|integer&gt;(-2&gt;=val&gt;=2)</code> --- <strong>required</strong></p>
+<p><code>scalar&lt;numeric|integer&gt;(-2&gt;=val&gt;=2)</code> // <strong>required</strong></p>
 <p>A positive or negative factor by which the luminance of colors in the
 <code>colors</code> vector will be adjusted. Must be a number between <code>-2.0</code> and
 <code>2.0</code>.</p></dd>

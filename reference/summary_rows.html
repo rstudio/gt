@@ -93,14 +93,14 @@ the values in the resulting summary cells by use of formatting expressions in
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p><em>The gt table data object</em></p>
-<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong></p>
+<p><code>obj:&lt;gt_tbl&gt;</code> // <strong>required</strong></p>
 <p>This is the <strong>gt</strong> table object that is commonly created through use of the
 <code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>groups</dt>
 <dd><p><em>Specification of row group IDs</em></p>
-<p><code>&lt;row-group-targeting expression&gt;</code> --- <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
+<p><code>&lt;row-group-targeting expression&gt;</code> // <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
 <p>The row groups to which targeting operations are constrained. Can either be
 a series of row group ID values provided in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> or a select helper
 function. Examples of select helper functions include <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>,
@@ -111,7 +111,7 @@ all available groups will obtain summary rows.</p></dd>
 
 <dt>columns</dt>
 <dd><p><em>Columns to target</em></p>
-<p><code>&lt;column-targeting expression&gt;</code> --- <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
+<p><code>&lt;column-targeting expression&gt;</code> // <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
 <p>The columns for which the summaries should be calculated. Can either
 be a series of column names provided in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of column indices,
 or a select helper function. Examples of select helper functions include
@@ -145,14 +145,14 @@ Optionally, the LHS could contain a group-targeting expression (e.g.,
 
 <dt>side</dt>
 <dd><p><em>Side used for placement of summary rows</em></p>
-<p><code>singl-kw:[bottom|top]</code> --- <em>default:</em> <code>"bottom"</code></p>
+<p><code>singl-kw:[bottom|top]</code> // <em>default:</em> <code>"bottom"</code></p>
 <p>Should the summary rows be placed at the <code>"bottom"</code> (the default) or the
 <code>"top"</code> of the row group?</p></dd>
 
 
 <dt>missing_text</dt>
 <dd><p><em>Replacement text for <code>NA</code> values</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>"---"</code></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>"---"</code></p>
 <p>The text to be used in place of <code>NA</code> values in summary cells with no data
 outputs.</p></dd>
 

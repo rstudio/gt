@@ -113,14 +113,14 @@ replacement.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p><em>The gt table data object</em></p>
-<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong></p>
+<p><code>obj:&lt;gt_tbl&gt;</code> // <strong>required</strong></p>
 <p>This is the <strong>gt</strong> table object that is commonly created through use of the
 <code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>label</dt>
 <dd><p><em>Spanner label text</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <strong>required</strong></p>
+<p><code>scalar&lt;character&gt;</code> // <strong>required</strong></p>
 <p>The text to use for the spanner label. We can optionally use the <code><a href="md.html">md()</a></code> and
 <code><a href="html.html">html()</a></code> functions to style the text as Markdown or to retain HTML elements
 in the text.</p></dd>
@@ -128,7 +128,7 @@ in the text.</p></dd>
 
 <dt>columns</dt>
 <dd><p><em>Columns to target</em></p>
-<p><code>&lt;column-targeting expression&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>&lt;column-targeting expression&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>The columns to serve as components of the spanner. Can either be a series
 of column names provided in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of column indices, or a select
 helper function. Examples of select helper functions include
@@ -139,7 +139,7 @@ helper function. Examples of select helper functions include
 
 <dt>spanners</dt>
 <dd><p><em>Spanners to target</em></p>
-<p><code>vector&lt;character&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>vector&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>The spanners that should be spanned over, should they already be defined.
 One or more spanner ID values (in quotes) can be supplied here. This
 argument works in tandem with the <code>columns</code> argument.</p></dd>
@@ -147,7 +147,7 @@ argument works in tandem with the <code>columns</code> argument.</p></dd>
 
 <dt>level</dt>
 <dd><p><em>Spanner level for insertion</em></p>
-<p><code>scalar&lt;numeric|integer&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;numeric|integer&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>An explicit level to which the spanner should be placed. If not provided,
 <strong>gt</strong> will choose the level based on the inputs provided within <code>columns</code>
 and <code>spanners</code>, placing the spanner label where it will fit. The first
@@ -156,7 +156,7 @@ spanner level (right above the column labels) is <code>1</code>.</p></dd>
 
 <dt>id</dt>
 <dd><p><em>Spanner ID</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>label</code></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>label</code></p>
 <p>The ID for the spanner. When accessing a spanner through the <code>spanners</code>
 argument of <code>tab_spanner()</code> or <code><a href="cells_column_spanners.html">cells_column_spanners()</a></code> (when using
 <code><a href="tab_style.html">tab_style()</a></code> or <code><a href="tab_footnote.html">tab_footnote()</a></code>) the <code>id</code> value is used as the reference
@@ -171,7 +171,7 @@ if <code>id</code> isn't unique).</p></dd>
 
 <dt>gather</dt>
 <dd><p><em>Gather columns together</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>TRUE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
 <p>An option to move the specified <code>columns</code> such that they are unified under
 the spanner. Ordering of the moved-into-place columns will be preserved in
 all cases. By default, this is set to <code>TRUE</code>.</p></dd>
@@ -179,7 +179,7 @@ all cases. By default, this is set to <code>TRUE</code>.</p></dd>
 
 <dt>replace</dt>
 <dd><p><em>Replace existing spanners</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>FALSE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
 <p>Should new spanners be allowed to partially or fully replace existing
 spanners? (This is a possibility if setting spanners at an already
 populated <code>level</code>.) By default, this is set to <code>FALSE</code> and an error will

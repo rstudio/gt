@@ -101,14 +101,14 @@ instead of explicit ID values.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p><em>The gt table data object</em></p>
-<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong></p>
+<p><code>obj:&lt;gt_tbl&gt;</code> // <strong>required</strong></p>
 <p>This is the <strong>gt</strong> table object that is commonly created through use of the
 <code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>spanners</dt>
 <dd><p><em>Spanners to remove</em></p>
-<p><code>&lt;spanner-targeting expression&gt;</code> --- <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
+<p><code>&lt;spanner-targeting expression&gt;</code> // <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
 <p>A specification of which spanner column labels should be removed. Those to
 be removed can be given as a vector of spanner ID values (every spanner
 column label has one, either set by the user or by <strong>gt</strong> when using
@@ -118,7 +118,7 @@ this is <code><a href="https://tidyselect.r-lib.org/reference/everything.html" c
 
 <dt>levels</dt>
 <dd><p><em>Spanner levels to remove</em></p>
-<p><code>scalar&lt;numeric|integer&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;numeric|integer&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>Instead of removing spanner column labels by ID values, entire levels of
 spanners can instead be removed. Supply a numeric vector of level values
 (the first level is <code>1</code>) and, if they are present, they will be removed.

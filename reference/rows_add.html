@@ -96,14 +96,14 @@ table.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>.data</dt>
 <dd><p><em>The gt table data object</em></p>
-<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong></p>
+<p><code>obj:&lt;gt_tbl&gt;</code> // <strong>required</strong></p>
 <p>This is the <strong>gt</strong> table object that is commonly created through use of the
 <code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>...</dt>
 <dd><p><em>Cell data assignments</em></p>
-<p><code>&lt;multiple expressions&gt;</code> --- (or, use <code>.list</code>)</p>
+<p><code>&lt;multiple expressions&gt;</code> // (or, use <code>.list</code>)</p>
 <p>Expressions for the assignment of cell values to the new rows by column
 name in <code>.data</code>. Name-value pairs, in the form of
 <code>&lt;column&gt; = &lt;value vector&gt;</code> will work, so long as the <code>&lt;column&gt;</code> value
@@ -119,13 +119,13 @@ in cases where there are multiple rows to be added.</p></dd>
 
 <dt>.list</dt>
 <dd><p><em>Alternative to <code>...</code></em></p>
-<p><code>&lt;list of multiple expressions&gt;</code> --- (or, use <code>...</code>)</p>
+<p><code>&lt;list of multiple expressions&gt;</code> // (or, use <code>...</code>)</p>
 <p>Allows for the use of a list as an input alternative to <code>...</code>.</p></dd>
 
 
 <dt>.before, .after</dt>
 <dd><p><em>Row used as anchor</em></p>
-<p><code>&lt;row-targeting expression&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>&lt;row-targeting expression&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>A single row-resolving expression or row index an be given to either
 <code>.before</code> or <code>.after</code>. The row specifies where the new rows should be
 positioned among the existing rows in the input data table. While select
@@ -139,7 +139,7 @@ table.</p></dd>
 
 <dt>.n_empty</dt>
 <dd><p><em>Number of empty rows to add</em></p>
-<p><code>scalar&lt;numeric|integer&gt;(val&gt;=0)</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;numeric|integer&gt;(val&gt;=0)</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>An option to add empty rows in lieu of rows containing data that would
 otherwise be supplied to <code>...</code> or <code>.list</code>. If the option is taken, provide
 an integer value here.</p></dd>

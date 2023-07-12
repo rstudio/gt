@@ -102,14 +102,14 @@ locations of the table. For that you would need to use <code><a href="tab_style.
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p><em>The gt table data object</em></p>
-<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong></p>
+<p><code>obj:&lt;gt_tbl&gt;</code> // <strong>required</strong></p>
 <p>This is the <strong>gt</strong> table object that is commonly created through use of the
 <code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>font</dt>
 <dd><p><em>Default table fonts</em></p>
-<p><code>vector&lt;character&gt;|list|obj:&lt;font_css&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>vector&lt;character&gt;|list|obj:&lt;font_css&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>One or more font names available as system or web fonts. These can be
 combined with a <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> or a <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code>. To choose fonts from the
 <em>Google Fonts</em> service, we can call the <code><a href="google_font.html">google_font()</a></code> helper function.</p></dd>
@@ -117,7 +117,7 @@ combined with a <code><a href="https://rdrr.io/r/base/c.html" class="external-li
 
 <dt>stack</dt>
 <dd><p><em>Name of font stack</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>A name that is representative of a font stack (obtained via internally via
 the <code><a href="system_fonts.html">system_fonts()</a></code> helper function). If provided, this new stack will
 replace any defined fonts and any <code>font</code> values will be prepended.</p></dd>
@@ -125,7 +125,7 @@ replace any defined fonts and any <code>font</code> values will be prepended.</p
 
 <dt>weight</dt>
 <dd><p><em>Text weight</em></p>
-<p><code>scalar&lt;character|numeric|integer&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;character|numeric|integer&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>Option to set the weight of the font. Can be a text-based keyword such as
 <code>"normal"</code>, <code>"bold"</code>, <code>"lighter"</code>, <code>"bolder"</code>, or, a numeric value between
 <code>1</code> and <code>1000</code>, inclusive. Please note that typefaces have varying support
@@ -134,14 +134,14 @@ for the numeric mapping of weight.</p></dd>
 
 <dt>style</dt>
 <dd><p><em>Text style</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>An option to modify the text style. Can be one of either <code>"normal"</code>,
 <code>"italic"</code>, or <code>"oblique"</code>.</p></dd>
 
 
 <dt>add</dt>
 <dd><p><em>Add to existing fonts</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>TRUE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
 <p>Should fonts be added to the beginning of any already-defined fonts for the
 table? By default, this is <code>TRUE</code> and is recommended since those fonts
 already present can serve as fallbacks when everything specified in <code>font</code>

@@ -86,14 +86,14 @@ replacement though value, regex, and custom matching rules.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p><em>The gt table data object</em></p>
-<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong></p>
+<p><code>obj:&lt;gt_tbl&gt;</code> // <strong>required</strong></p>
 <p>This is the <strong>gt</strong> table object that is commonly created through use of the
 <code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>columns</dt>
 <dd><p><em>Columns to target</em></p>
-<p><code>&lt;column-targeting expression&gt;</code> --- <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
+<p><code>&lt;column-targeting expression&gt;</code> // <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
 <p>The columns to which substitution operations are constrained. Can either
 be a series of column names provided in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of column indices,
 or a select helper function. Examples of select helper functions include
@@ -103,7 +103,7 @@ or a select helper function. Examples of select helper functions include
 
 <dt>rows</dt>
 <dd><p><em>Rows to target</em></p>
-<p><code>&lt;row-targeting expression&gt;</code> --- <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
+<p><code>&lt;row-targeting expression&gt;</code> // <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
 <p>In conjunction with <code>columns</code>, we can specify which of their rows should
 form a constraint for targeting operations. The default <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>
 results in all rows in <code>columns</code> being formatted. Alternatively, we can
@@ -116,21 +116,21 @@ down to the rows we need (e.g., <code>[colname_1] &gt; 100 &amp; [colname_2] &lt
 
 <dt>values</dt>
 <dd><p><em>Values to match on</em></p>
-<p><code>scalar&lt;character|numeric|integer&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;character|numeric|integer&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>The specific value or values that should be replaced with a <code>replacement</code>
 value. If <code>pattern</code> is also supplied then <code>values</code> will be ignored.</p></dd>
 
 
 <dt>pattern</dt>
 <dd><p><em>Regex pattern to match with</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>A regex pattern that can target solely those values in <code>character</code>-based
 columns. If <code>values</code> is also supplied, <code>pattern</code> will take precedence.</p></dd>
 
 
 <dt>fn</dt>
 <dd><p><em>Function to return logical values</em></p>
-<p><code>&lt;function&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>&lt;function&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>A supplied function that operates on <code>x</code> (the data in a column) and should
 return a logical vector that matches the length of <code>x</code> (i.e., number of
 rows in the input table). If either of <code>values</code> or <code>pattern</code> is also
@@ -139,14 +139,14 @@ supplied, <code>fn</code> will take precedence.</p></dd>
 
 <dt>replacement</dt>
 <dd><p><em>Replacement value for matches</em></p>
-<p><code>scalar&lt;character|numeric|integer&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;character|numeric|integer&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>The replacement value for any cell values matched by either <code>values</code> or
 <code>pattern</code>. Must be a character or numeric vector of length 1.</p></dd>
 
 
 <dt>escape</dt>
 <dd><p><em>Text escaping</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>TRUE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
 <p>An option to escape replacement text according to the final output format
 of the table. For example, if a LaTeX table is to be generated then LaTeX
 escaping would be performed on the replacements during rendering. By

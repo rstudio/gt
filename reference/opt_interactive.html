@@ -147,14 +147,14 @@ filtering, sorting, and more.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p><em>The gt table data object</em></p>
-<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong></p>
+<p><code>obj:&lt;gt_tbl&gt;</code> // <strong>required</strong></p>
 <p>This is the <strong>gt</strong> table object that is commonly created through use of the
 <code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>active</dt>
 <dd><p><em>Display interactive HTML table</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>TRUE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
 <p>The <code>active</code> option will either enable or disable interactive features for
 an HTML table. The individual features of an interactive HTML table are
 controlled by the other options.</p></dd>
@@ -162,7 +162,7 @@ controlled by the other options.</p></dd>
 
 <dt>use_pagination</dt>
 <dd><p><em>Display pagination controls</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>TRUE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
 <p>This is the option for using pagination controls (below the table body). By
 default, this is <code>TRUE</code> and it will allow the use to page through table
 content.</p></dd>
@@ -170,7 +170,7 @@ content.</p></dd>
 
 <dt>use_pagination_info</dt>
 <dd><p><em>Display pagination info</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>TRUE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
 <p>If <code>use_pagination</code> is <code>TRUE</code> then the <code>use_pagination_info</code> option can be
 used to display informational text regarding the current page view (this is
 set to <code>TRUE</code> by default).</p></dd>
@@ -178,42 +178,42 @@ set to <code>TRUE</code> by default).</p></dd>
 
 <dt>use_sorting</dt>
 <dd><p><em>Provide column sorting controls</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>TRUE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
 <p>This option provides controls for sorting column values. By default, this
 is <code>TRUE</code>.</p></dd>
 
 
 <dt>use_search</dt>
 <dd><p><em>Provide a global search field</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>FALSE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
 <p>The <code>use_search</code> option places a search field for globally filtering rows
 to the requested content. By default, this is <code>FALSE</code>.</p></dd>
 
 
 <dt>use_filters</dt>
 <dd><p><em>Display filtering fields</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>FALSE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
 <p>The <code>use_filters</code> option places search fields below each column header and
 allows for filtering by column. By default, this is <code>FALSE</code>.</p></dd>
 
 
 <dt>use_resizers</dt>
 <dd><p><em>Allow column resizing</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>FALSE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
 <p>This option allows for the interactive resizing of columns. By default,
 this is <code>FALSE</code>.</p></dd>
 
 
 <dt>use_highlight</dt>
 <dd><p><em>Enable row highlighting on hover</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>FALSE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
 <p>The <code>use_highlight</code> option highlights individual rows upon hover. By
 default, this is <code>FALSE</code>.</p></dd>
 
 
 <dt>use_compact_mode</dt>
 <dd><p><em>Use compact mode</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>FALSE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
 <p>To reduce vertical padding and thus make the table consume less vertical
 space the <code>use_compact_mode</code> option can be used. By default, this is
 <code>FALSE</code>.</p></dd>
@@ -221,7 +221,7 @@ space the <code>use_compact_mode</code> option can be used. By default, this is
 
 <dt>use_text_wrapping</dt>
 <dd><p><em>Use text wrapping</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>TRUE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
 <p>The <code>use_text_wrapping</code> option controls whether text wrapping occurs
 throughout the table. This is <code>TRUE</code> by default and with that text will be
 wrapped to multiple lines. If <code>FALSE</code>, text will be truncated to a single
@@ -230,14 +230,14 @@ line.</p></dd>
 
 <dt>use_page_size_select</dt>
 <dd><p><em>Allow for page size selection</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>FALSE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
 <p>The <code>use_page_size_select</code> option lets us display a dropdown menu for the
 number of rows to show per page of data.</p></dd>
 
 
 <dt>page_size_default</dt>
 <dd><p><em>Change the default page size</em></p>
-<p><code>scalar&lt;numeric|integer&gt;</code> --- <em>default:</em> <code>10</code></p>
+<p><code>scalar&lt;numeric|integer&gt;</code> // <em>default:</em> <code>10</code></p>
 <p>The default page size (initially set as <code>10</code>) can be modified with
 <code>page_size_default</code> and this works whether or not <code>use_page_size_select</code> is
 set to <code>TRUE</code>.</p></dd>
@@ -245,7 +245,7 @@ set to <code>TRUE</code>.</p></dd>
 
 <dt>page_size_values</dt>
 <dd><p><em>Set of page-size values</em></p>
-<p><code>vector&lt;numeric|integer&gt;</code> --- <em>default:</em> <code>c(10, 25, 50, 100)</code></p>
+<p><code>vector&lt;numeric|integer&gt;</code> // <em>default:</em> <code>c(10, 25, 50, 100)</code></p>
 <p>By default, this is the vector <code>c(10, 25, 50, 100)</code> which corresponds to
 options for <code>10</code>, <code>25</code>, <code>50</code>, and <code>100</code> rows of data per page. To modify
 these page-size options, provide a numeric vector to <code>page_size_values</code>.</p></dd>
@@ -253,7 +253,7 @@ these page-size options, provide a numeric vector to <code>page_size_values</cod
 
 <dt>pagination_type</dt>
 <dd><p><em>Change pagination mode</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>"numbers"</code></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>"numbers"</code></p>
 <p>When using pagination the <code>pagination_type</code> option lets us select between
 one of three options for the layout of pagination controls. The default is
 <code>"numbers"</code>, where a series of page-number buttons is presented along with

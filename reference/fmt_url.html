@@ -115,14 +115,14 @@ text.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p><em>The gt table data object</em></p>
-<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong></p>
+<p><code>obj:&lt;gt_tbl&gt;</code> // <strong>required</strong></p>
 <p>This is the <strong>gt</strong> table object that is commonly created through use of the
 <code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>columns</dt>
 <dd><p><em>Columns to target</em></p>
-<p><code>&lt;column-targeting expression&gt;</code> --- <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
+<p><code>&lt;column-targeting expression&gt;</code> // <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
 <p>Can either be a series of column names provided in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of
 column indices, or a select helper function. Examples of select helper
 functions include <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with()</a></code>, <code><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains()</a></code>,
@@ -131,7 +131,7 @@ functions include <code><a href="https://tidyselect.r-lib.org/reference/starts_w
 
 <dt>rows</dt>
 <dd><p><em>Rows to target</em></p>
-<p><code>&lt;row-targeting expression&gt;</code> --- <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
+<p><code>&lt;row-targeting expression&gt;</code> // <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
 <p>In conjunction with <code>columns</code>, we can specify which of their rows should
 undergo formatting. The default <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code> results in all rows in
 <code>columns</code> being formatted. Alternatively, we can supply a vector of row
@@ -144,7 +144,7 @@ need (e.g., <code>[colname_1] &gt; 100 &amp; [colname_2] &lt; 50</code>).</p></d
 
 <dt>label</dt>
 <dd><p><em>Link label</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>The visible 'label' to use for the link. If <code>NULL</code> (the default)
 the URL will serve as the label. There are two non-<code>NULL</code> options: (1) a
 static text can be used for the label by providing a string, and (2) a
@@ -153,7 +153,7 @@ function can be provided to fashion a label from every URL.</p></dd>
 
 <dt>as_button</dt>
 <dd><p><em>Style link as a button</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>FALSE</code></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
 <p>An option to style the link as a button. By default, this is
 <code>FALSE</code>. If this option is chosen then the <code>button_fill</code> argument becomes
 usable.</p></dd>
@@ -161,7 +161,7 @@ usable.</p></dd>
 
 <dt>color</dt>
 <dd><p><em>Link color</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>"auto"</code></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>"auto"</code></p>
 <p>The color used for the resulting link and its underline. This is
 <code>"auto"</code> by default; this allows <strong>gt</strong> to choose an appropriate color
 based on various factors (such as the background <code>button_fill</code> when
@@ -170,7 +170,7 @@ based on various factors (such as the background <code>button_fill</code> when
 
 <dt>show_underline</dt>
 <dd><p><em>Show the link underline</em></p>
-<p><code>scalar&lt;character&gt;|scalar&lt;logical&gt;</code> --- <em>default:</em> <code>"auto"</code></p>
+<p><code>scalar&lt;character&gt;|scalar&lt;logical&gt;</code> // <em>default:</em> <code>"auto"</code></p>
 <p>Should the link be decorated with an underline? By
 default this is <code>"auto"</code> which means that <strong>gt</strong> will choose <code>TRUE</code> when
 <code>as_button = FALSE</code> and <code>FALSE</code> in the other case. The link underline will
@@ -179,7 +179,7 @@ be the same color as that set in the <code>color</code> option.</p></dd>
 
 <dt>button_fill, button_width, button_outline</dt>
 <dd><p><em>Button options</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>"auto"</code></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>"auto"</code></p>
 <p>Options for styling a link-as-button (and only applies if
 <code>as_button = TRUE</code>). All of these options are by default set to <code>"auto"</code>,
 allowing <strong>gt</strong> to choose appropriate fill, width, and outline values.</p></dd>

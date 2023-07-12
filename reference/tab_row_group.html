@@ -101,14 +101,14 @@ labels for row groups not explicitly assigned a group,
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p><em>The gt table data object</em></p>
-<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong></p>
+<p><code>obj:&lt;gt_tbl&gt;</code> // <strong>required</strong></p>
 <p>This is the <strong>gt</strong> table object that is commonly created through use of the
 <code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>label</dt>
 <dd><p><em>Row group label text</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <strong>required</strong></p>
+<p><code>scalar&lt;character&gt;</code> // <strong>required</strong></p>
 <p>The text to use for the row group label. We can optionally use the <code><a href="md.html">md()</a></code>
 and <code><a href="html.html">html()</a></code> functions to style the text as Markdown or to retain HTML
 elements in the text.</p></dd>
@@ -116,7 +116,7 @@ elements in the text.</p></dd>
 
 <dt>rows</dt>
 <dd><p><em>Rows to target</em></p>
-<p><code>&lt;row-targeting expression&gt;</code> --- <strong>required</strong></p>
+<p><code>&lt;row-targeting expression&gt;</code> // <strong>required</strong></p>
 <p>The rows to be made components of the row group. The default <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code>
 results in all rows in <code>columns</code> being formatted. Alternatively, we can
 supply a vector of row captions within <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of row indices, or a
@@ -128,7 +128,7 @@ down to the rows we need (e.g., <code>[colname_1] &gt; 100 &amp; [colname_2] &lt
 
 <dt>id</dt>
 <dd><p><em>Row group ID</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>label</code></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>label</code></p>
 <p>The ID for the row group. When accessing a row group through
 <code><a href="cells_row_groups.html">cells_row_groups()</a></code> (when using <code><a href="tab_style.html">tab_style()</a></code> or <code><a href="tab_footnote.html">tab_footnote()</a></code>) the
 <code>id</code> value is used as the reference (and not the <code>label</code>). If an <code>id</code> is
@@ -142,14 +142,14 @@ function will stop if <code>id</code> isn't unique).</p></dd>
 
 <dt>others_label</dt>
 <dd><p><em><a href="https://rdrr.io/r/base/Deprecated.html" class="external-link">Deprecated</a> Label for default row group</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>This argument is deprecated. Instead use
 <code>tab_options(row_group.default_label = &lt;label&gt;)</code>.</p></dd>
 
 
 <dt>group</dt>
 <dd><p><em><a href="https://rdrr.io/r/base/Deprecated.html" class="external-link">Deprecated</a> The group label</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>This argument is deprecated. Instead use <code>label</code>.</p></dd>
 
 </dl></div>

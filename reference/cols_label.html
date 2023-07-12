@@ -92,14 +92,14 @@ functions for rendering column labels from Markdown or using HTML.</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>.data</dt>
 <dd><p><em>The gt table data object</em></p>
-<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong></p>
+<p><code>obj:&lt;gt_tbl&gt;</code> // <strong>required</strong></p>
 <p>This is the <strong>gt</strong> table object that is commonly created through use of the
 <code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>...</dt>
 <dd><p><em>Column label assignments</em></p>
-<p><code>&lt;multiple expressions&gt;</code> --- <strong>required</strong> (or, use <code>.list</code>)</p>
+<p><code>&lt;multiple expressions&gt;</code> // <strong>required</strong> (or, use <code>.list</code>)</p>
 <p>Expressions for the assignment of column labels for the table columns in
 <code>.data</code>. Two-sided formulas (e.g., <code>&lt;LHS&gt; ~ &lt;RHS&gt;</code>) can be used, where the
 left-hand side corresponds to selections of columns and the right-hand side
@@ -113,20 +113,20 @@ assigned previously will result in overwriting column label values.</p></dd>
 
 <dt>.list</dt>
 <dd><p><em>Alternative to <code>...</code></em></p>
-<p><code>&lt;list of multiple expressions&gt;</code> --- <strong>required</strong> (or, use <code>...</code>)</p>
+<p><code>&lt;list of multiple expressions&gt;</code> // <strong>required</strong> (or, use <code>...</code>)</p>
 <p>Allows for the use of a list as an input alternative to <code>...</code>.</p></dd>
 
 
 <dt>.fn</dt>
 <dd><p><em>Function to apply</em></p>
-<p><code>function</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>function</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>An option to specify a function that will be applied to all of the provided
 label values.</p></dd>
 
 
 <dt>.process_units</dt>
 <dd><p><em>Option to process any available units throughout</em></p>
-<p><code>scalar&lt;logical&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>Should your column text contain text that is already in <strong>gt</strong>'s units
 notation (and, importantly, is surrounded by <code>"{{"</code>/<code>"}}"</code>), using <code>TRUE</code>
 here reprocesses all column such that the units are properly registered for

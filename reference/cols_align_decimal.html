@@ -83,14 +83,14 @@ this type of alignment).</p>
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>data</dt>
 <dd><p><em>The gt table data object</em></p>
-<p><code>obj:&lt;gt_tbl&gt;</code> --- <strong>required</strong></p>
+<p><code>obj:&lt;gt_tbl&gt;</code> // <strong>required</strong></p>
 <p>This is the <strong>gt</strong> table object that is commonly created through use of the
 <code><a href="gt.html">gt()</a></code> function.</p></dd>
 
 
 <dt>columns</dt>
 <dd><p><em>Columns to target</em></p>
-<p><code>&lt;column-targeting expression&gt;</code> --- <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
+<p><code>&lt;column-targeting expression&gt;</code> // <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
 <p>The columns for which decimal alignment should be applied. Can either be a
 series of column names provided in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of column indices, or a
 select helper function. Examples of select helper functions include
@@ -101,7 +101,7 @@ which means that decimal alignment will be attempted on all columns.</p></dd>
 
 <dt>dec_mark</dt>
 <dd><p><em>Decimal mark</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>"."</code></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>"."</code></p>
 <p>The character used as a decimal mark in the numeric values to be aligned.
 If a locale value was used when formatting the numeric values then <code>locale</code>
 is better to use and it will override any value here in <code>dec_mark</code>.</p></dd>
@@ -109,7 +109,7 @@ is better to use and it will override any value here in <code>dec_mark</code>.</
 
 <dt>locale</dt>
 <dd><p><em>Locale identifier</em></p>
-<p><code>scalar&lt;character&gt;</code> --- <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>An optional locale identifier that can be used to obtain the type of
 decimal mark used in the numeric values to be aligned (according to the
 locale's formatting rules). Examples include <code>"en"</code> for English (United
