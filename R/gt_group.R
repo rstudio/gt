@@ -35,20 +35,20 @@
 #'
 #' @param ... *One or more gt table data objects*
 #'
-#'   `obj:<gt_tbl>` --- (`optional`)
+#'   `obj:<gt_tbl>` // (`optional`)
 #'
 #'   One or more **gt** table (`gt_tbl`) objects, typically generated via the
 #'   [gt()] function.
 #'
 #' @param .list *Alternative to `...`*
 #'
-#'   `<list of multiple expressions>` --- (or, use `...`)
+#'   `<list of multiple expressions>` // (or, use `...`)
 #'
 #'   Allows for the use of a list as an input alternative to `...`.
 #'
 #' @param .use_grp_opts *Apply options to all contained tables?*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   Should options specified in the `gt_group` object be applied to all
 #'   contained **gt** tables? By default this is `FALSE`.
@@ -112,7 +112,7 @@ gt_group <- function(
 #'
 #' @param data *The gt table group object*
 #'
-#'   `obj:<gt_group>` --- **required**
+#'   `obj:<gt_group>` // **required**
 #'
 #'   This is a `gt_group` container object. It is typically generated through
 #'   use of the [gt_group()] function along with one or more `gt_tbl` objects,
@@ -120,7 +120,7 @@ gt_group <- function(
 #'
 #' @param which *The table to pull from the group*
 #'
-#'   `scalar<numeric|integer>` --- **required**
+#'   `scalar<numeric|integer>` // **required**
 #'
 #'   A single index value denoting which `gt_tbl` table should be obtained
 #'   from the `gt_group` object.
@@ -169,7 +169,7 @@ grp_pull <- function(
 #'
 #' @param .data *The gt table group object*
 #'
-#'   `obj:<gt_group>` --- **required**
+#'   `obj:<gt_group>` // **required**
 #'
 #'   This is a `gt_group` container object. It is typically generated through
 #'   use of the [gt_group()] function along with one or more `gt_tbl` objects,
@@ -177,20 +177,20 @@ grp_pull <- function(
 #'
 #' @param ... *One or more gt table objects*
 #'
-#'   `obj:<gt_tbl>` --- **required** (or, use `...`)
+#'   `obj:<gt_tbl>` // **required** (or, use `...`)
 #'
 #'   One or more **gt** table (`gt_tbl`) objects, typically generated via the
 #'   [gt()] function.
 #'
 #' @param .list *Alternative to `...`*
 #'
-#'   `<list of multiple expressions>` --- (or, use `...`)
+#'   `<list of multiple expressions>` // (or, use `...`)
 #'
 #'   Allows for the use of a list as an input alternative to `...`.
 #'
 #' @param .before,.after *Table used as anchor*
 #'
-#'   `scalar<numeric|integer>` --- *default:* `NULL` (`optional`)
+#'   `scalar<numeric|integer>` // *default:* `NULL` (`optional`)
 #'
 #'   A single index for either `.before` or `.after`, specifying where the
 #'   supplied `gt_tbl` objects should be placed amongst the existing collection
@@ -326,7 +326,7 @@ grp_add <- function(
 #'
 #' @param data *The gt table group object*
 #'
-#'   `obj:<gt_group>` --- **required**
+#'   `obj:<gt_group>` // **required**
 #'
 #'   This is a `gt_group` container object. It is typically generated through
 #'   use of the [gt_group()] function along with one or more `gt_tbl` objects,
@@ -334,14 +334,14 @@ grp_add <- function(
 #'
 #' @param which *The tables to clone*
 #'
-#'   `vector<numeric|integer>` --- *default:* `NULL` (`optional`)
+#'   `vector<numeric|integer>` // *default:* `NULL` (`optional`)
 #'
 #'   A vector of index values denoting which **gt** tables should be cloned
 #'   inside of the `gt_group` object.
 #'
 #' @param before,after *Table used as anchor*
 #'
-#'   `scalar<numeric|integer>` --- *default:* `NULL` (`optional`)
+#'   `scalar<numeric|integer>` // *default:* `NULL` (`optional`)
 #'
 #'   A single index for either `before` or `after`, specifies where the cloned
 #'   `gt_tbl` objects should be placed amongst the existing collection of **gt**
@@ -464,7 +464,7 @@ grp_clone <- function(
 #'
 #' @param .data *The gt table group object*
 #'
-#'   `obj:<gt_group>` --- **required**
+#'   `obj:<gt_group>` // **required**
 #'
 #'   This is a `gt_group` container object. It is typically generated through
 #'   use of the [gt_group()] function along with one or more `gt_tbl` objects,
@@ -472,20 +472,20 @@ grp_clone <- function(
 #'
 #' @param ... *One or more gt table objects*
 #'
-#'   `obj:<gt_tbl>` --- **required** (or, use `...`)
+#'   `obj:<gt_tbl>` // **required** (or, use `...`)
 #'
 #'   One or more **gt** table (`gt_tbl`) objects, typically generated via the
 #'   [gt()] function.
 #'
 #' @param .list *Alternative to `...`*
 #'
-#'   `<list of multiple expressions>` --- (or, use `...`)
+#'   `<list of multiple expressions>` // (or, use `...`)
 #'
 #'   Allows for the use of a list as an input alternative to `...`.
 #'
 #' @param .which *The tables to replace*
 #'
-#'   `vector<numeric|integer>` --- *default:* `NULL` (`optional`)
+#'   `vector<numeric|integer>` // *default:* `NULL` (`optional`)
 #'
 #'   A vector of index values denoting which **gt** tables should be replaced
 #'   inside of the `gt_group` object.
@@ -556,7 +556,7 @@ grp_replace <- function(
 #'
 #' @param data *The gt table group object*
 #'
-#'   `obj:<gt_group>` --- **required**
+#'   `obj:<gt_group>` // **required**
 #'
 #'   This is a `gt_group` container object. It is typically generated through
 #'   use of the [gt_group()] function along with one or more `gt_tbl` objects,
@@ -564,7 +564,7 @@ grp_replace <- function(
 #'
 #' @param which *The table to remove from the group*
 #'
-#'   `scalar<numeric|integer>` --- **required**
+#'   `scalar<numeric|integer>` // **required**
 #'
 #'   A single index value denoting which `gt_tbl` table should be removed
 #'   from the `gt_group` object.
@@ -599,7 +599,7 @@ grp_rm <- function(
 #'
 #' @param data *The gt table group object*
 #'
-#'   `obj:<gt_group>` --- **required**
+#'   `obj:<gt_group>` // **required**
 #'
 #'   This is `gt_group` container object. It is typically generated through use
 #'   of the [gt_group()] function along with one or more `gt_tbl` objects, or,

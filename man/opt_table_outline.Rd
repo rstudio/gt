@@ -9,14 +9,14 @@ opt_table_outline(data, style = "solid", width = px(3), color = "#D3D3D3")
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{style}{\emph{Outline style property}
 
-\verb{scalar<character>} --- \emph{default:} \code{"solid"}
+\verb{scalar<character>} // \emph{default:} \code{"solid"}
 
 The style property for the table outline. By default, this is \code{"solid"}. If
 \code{"none"} is used then the outline is removed and any values provided for
@@ -24,14 +24,14 @@ The style property for the table outline. By default, this is \code{"solid"}. If
 
 \item{width}{\emph{Outline width value}
 
-\verb{scalar<character>} --- \emph{default:} \code{px(3)}
+\verb{scalar<character>} // \emph{default:} \code{px(3)}
 
 The width property for the table outline. By default, this is \code{px(3)} (or,
 \code{"3px"}).}
 
 \item{color}{\emph{Color of outline}
 
-\verb{scalar<character>} --- \emph{default:} \code{"#D3D3D3"}
+\verb{scalar<character>} // \emph{default:} \code{"#D3D3D3"}
 
 The color of the table outline. By default, this is \code{"#D3D3D3"}.}
 }

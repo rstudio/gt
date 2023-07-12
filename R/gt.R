@@ -49,13 +49,13 @@
 #'
 #' @param data *Input data table*
 #'
-#'   `obj:<data.frame>|obj:<tbl_df>` --- **required**
+#'   `obj:<data.frame>|obj:<tbl_df>` // **required**
 #'
 #'   A `data.frame` object or a tibble (`tbl_df`).
 #'
 #' @param rowname_col *Column for row names/labels from `data`*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   The column name in the input `data` table to use as row labels to be placed
 #'   in the table stub. If the `rownames_to_stub` option is `TRUE` then any
@@ -63,7 +63,7 @@
 #'
 #' @param groupname_col *Column for group names/labels from `data`*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   The column name in the input `data` table to use as group labels for
 #'   generation of stub row groups. If the input `data` table has the
@@ -72,28 +72,28 @@
 #'
 #' @param process_md *Process Markdown in `rowname_col` and `groupname_col`*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   Should the contents of the `rowname_col` and `groupname_col` be interpreted
 #'   as Markdown? By default this won't happen.
 #'
 #' @param caption *Table caption text*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional table caption to use for cross-referencing in R Markdown,
 #'   Quarto, or **bookdown**.
 #'
 #' @param rownames_to_stub *Use data frame row labels in the stub*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   An option to take rownames from the input `data` table (should they be
 #'   available) as row labels in the display table stub.
 #'
 #' @param row_group_as_column *Mode for displaying row group labels in the stub*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   An option that alters the display of row group labels. By default this is
 #'   `FALSE` and row group labels will appear in dedicated rows above their
@@ -102,7 +102,7 @@
 #'
 #' @param auto_align *Automatic alignment of column values and labels*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   Optionally have column data be aligned depending on the content contained
 #'   in each column of the input `data`. Internally, this calls
@@ -110,7 +110,7 @@
 #'
 #' @param id *The table ID*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   By default (with `NULL`) this will be a random, ten-letter ID as generated
 #'   by using the [random_id()] function. A custom table ID can be used be
@@ -118,7 +118,7 @@
 #'
 #' @param locale *Locale identifier*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional locale identifier that can be set as the default locale for all
 #'   functions that take a `locale` argument. Examples include `"en"` for
@@ -128,7 +128,7 @@
 #'
 #' @param row_group.sep *Separator text for multiple row group labels*
 #'
-#'   `scalar<character>` --- *default:* `getOption("gt.row_group.sep", " - ")`
+#'   `scalar<character>` // *default:* `getOption("gt.row_group.sep", " - ")`
 #'
 #'   The separator to use between consecutive group names (a possibility when
 #'   providing `data` as a `grouped_df` with multiple groups) in the displayed

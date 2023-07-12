@@ -9,27 +9,27 @@ text_replace(data, pattern, replacement, locations = cells_body())
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{pattern}{\emph{Regex pattern to match with}
 
-\verb{scalar<character>} --- \strong{required}
+\verb{scalar<character>} // \strong{required}
 
 A regex pattern used to target text fragments in the cells resolved in
 locations.}
 
 \item{replacement}{\emph{Replacement text}
 
-\verb{scalar<character>} --- \strong{required}
+\verb{scalar<character>} // \strong{required}
 
 The replacement text for any matched text fragments.}
 
 \item{locations}{\emph{Locations to target}
 
-\verb{<locations expressions>} --- \emph{default:} \code{cells_body()}
+\verb{<locations expressions>} // \emph{default:} \code{cells_body()}
 
 The cell or set of cells to be associated with the text transformation.
 Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_row_groups]{cells_row_groups()}},

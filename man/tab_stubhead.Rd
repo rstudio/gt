@@ -9,14 +9,14 @@ tab_stubhead(data, label)
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{label}{\emph{Stubhead label text}
 
-\verb{scalar<character>} --- \strong{required}
+\verb{scalar<character>} // \strong{required}
 
 The text to be used as the stubhead label. We can optionally use the \code{\link[=md]{md()}}
 and \code{\link[=html]{html()}} functions to style the text as Markdown or to retain HTML

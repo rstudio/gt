@@ -9,14 +9,14 @@ cols_merge_n_pct(data, col_n, col_pct, rows = everything(), autohide = TRUE)
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{col_n}{\emph{Column to target for counts}
 
-\verb{<column-targeting expression>} --- \strong{required}
+\verb{<column-targeting expression>} // \strong{required}
 
 The column that contains values for the count component. While select
 helper functions such as \code{\link[=starts_with]{starts_with()}} and \code{\link[=ends_with]{ends_with()}} can be used for
@@ -25,7 +25,7 @@ is to ensure that exactly one column is provided here.}
 
 \item{col_pct}{\emph{Column to target for percentages}
 
-\verb{<column-targeting expression>} --- \strong{required}
+\verb{<column-targeting expression>} // \strong{required}
 
 The column that contains values for the percentage component. While select
 helper functions such as \code{\link[=starts_with]{starts_with()}} and \code{\link[=ends_with]{ends_with()}} can be used for
@@ -36,7 +36,7 @@ be formatted such that percentages are displayed (e.g., with
 
 \item{rows}{\emph{Rows to target}
 
-\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
 
 In conjunction with \code{columns}, we can specify which of their rows should
 participate in the merging process. The default \code{\link[=everything]{everything()}} results in
@@ -49,7 +49,7 @@ down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{autohide}{\emph{Automatic hiding of the \code{col_pct} column}
 
-\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 An option to automatically hide the column specified as \code{col_pct}. Any
 columns with their state changed to hidden will behave the same as before,

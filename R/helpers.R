@@ -36,7 +36,7 @@
 #'
 #' @param text *Markdown text*
 #'
-#'   `scalar<character>` --- **required**
+#'   `scalar<character>` // **required**
 #'
 #'   The text that is understood to contain Markdown formatting.
 #'
@@ -87,14 +87,14 @@ md <- function(text) {
 #'
 #' @param text *HTML text*
 #'
-#'   `scalar<character>` --- **required**
+#'   `scalar<character>` // **required**
 #'
 #'   The text that is understood to be HTML text, which is to be preserved in
 #'   the HTML output context.
 #'
 #' @param ... *Optional parameters for `htmltools::HTML()`*
 #'
-#'   `<multiple expressions>` --- (`optional`)
+#'   `<multiple expressions>` // (`optional`)
 #'
 #'   The `htmltools::HTML()` function contains `...` and anything provided here
 #'   will be passed to that internal function call.
@@ -148,7 +148,7 @@ html <- function(text, ...) {
 #'
 #' @param x *Numeric length in pixels*
 #'
-#'   `scalar<numeric|integer>` --- **required**
+#'   `scalar<numeric|integer>` // **required**
 #'
 #'   The numeric value to format as a string (e.g., `"12px"`) for some
 #'   [tab_options()] arguments that can take values as units of pixels (e.g.,
@@ -208,7 +208,7 @@ px <- function(x) {
 #'
 #' @param x *Numeric value in percent*
 #'
-#'   `scalar<numeric|integer>` --- **required**
+#'   `scalar<numeric|integer>` // **required**
 #'
 #'   The numeric value to format as a string percentage for some [tab_options()]
 #'   arguments that can take percentage values (e.g., `table.width`).
@@ -279,14 +279,14 @@ pct <- function(x) {
 #'
 #' @param ... *Currency symbols by output context*
 #'
-#'   `<named arguments>` --- **required** (or, use `.list`)
+#'   `<named arguments>` // **required** (or, use `.list`)
 #'
 #'   One or more named arguments using output contexts as the names and
 #'   currency symbol text as the values.
 #'
 #' @param .list *Alternative to `...`*
 #'
-#'   `<list of multiple expressions>` --- **required** (or, use `...`)
+#'   `<list of multiple expressions>` // **required** (or, use `...`)
 #'
 #'   Allows for the use of a list as an input alternative to `...`.
 #'
@@ -384,7 +384,7 @@ currency <- function(
 #'
 #' @param colors *Color vector*
 #'
-#'   `vector<character>` --- **required**
+#'   `vector<character>` // **required**
 #'
 #'   This is the vector of colors that will undergo an adjustment in luminance.
 #'   Each color value provided must either be a color name (in the set of colors
@@ -393,7 +393,7 @@ currency <- function(
 #'
 #' @param steps *Adjustment level*
 #'
-#'   `scalar<numeric|integer>(-2>=val>=2)` --- **required**
+#'   `scalar<numeric|integer>(-2>=val>=2)` // **required**
 #'
 #'   A positive or negative factor by which the luminance of colors in the
 #'   `colors` vector will be adjusted. Must be a number between `-2.0` and
@@ -507,7 +507,7 @@ adjust_luminance <- function(
 #'
 #' @param units_notation *Text in specialized units notation*
 #'
-#'   `scalar<character>` --- **required**
+#'   `scalar<character>` // **required**
 #'
 #'   A single string that defines the units (e.g., `"m/s"`) to be used.
 #'
@@ -772,7 +772,7 @@ stub <- function() {
 #'
 #' @param groups *Specification of groups*
 #'
-#'   `mult-kw:[title|subtitle]` --- *default:* `c("title", "subtitle")`
+#'   `mult-kw:[title|subtitle]` // *default:* `c("title", "subtitle")`
 #'
 #'   We can either specify `"title"`, `"subtitle"`, or both (the default) in a
 #'   vector to target the title element, the subtitle element, or both elements.
@@ -986,7 +986,7 @@ cells_stubhead <- function() {
 #'
 #' @param spanners *Specification of spanner IDs*
 #'
-#'   `<spanner-targeting expression>` --- *default:* `everything()`
+#'   `<spanner-targeting expression>` // *default:* `everything()`
 #'
 #'   The spanners to which targeting operations are constrained. Can either be a
 #'   series of spanner ID values provided in [c()] or a select helper function.
@@ -1098,7 +1098,7 @@ cells_column_spanners <- function(spanners = everything()) {
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` --- *default:* `everything()`
+#'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns to which targeting operations are constrained. Can either
 #'   be a series of column names provided in [c()], a vector of column indices,
@@ -1231,7 +1231,7 @@ cells_column_labels <- function(columns = everything()) {
 #'
 #' @param groups *Specification of row group IDs*
 #'
-#'   `<row-group-targeting expression>` --- *default:* `everything()`
+#'   `<row-group-targeting expression>` // *default:* `everything()`
 #'
 #'   The row groups to which targeting operations are constrained. Can either be
 #'   a series of row group ID values provided in [c()] or a select helper
@@ -1378,7 +1378,7 @@ cells_group <- function(groups = everything()) {
 #'
 #' @param rows *Rows to target*
 #'
-#'   `<row-targeting expression>` --- *default:* `everything()`
+#'   `<row-targeting expression>` // *default:* `everything()`
 #'
 #'   The rows to which targeting operations are constrained. The default
 #'   [everything()] results in all rows in `columns` being formatted.
@@ -1494,7 +1494,7 @@ cells_stub <- function(rows = everything()) {
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` --- *default:* `everything()`
+#'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns to which targeting operations are constrained. Can either
 #'   be a series of column names provided in [c()], a vector of column indices,
@@ -1504,7 +1504,7 @@ cells_stub <- function(rows = everything()) {
 #'
 #' @param rows *Rows to target*
 #'
-#'   `<row-targeting expression>` --- *default:* `everything()`
+#'   `<row-targeting expression>` // *default:* `everything()`
 #'
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   form a constraint for targeting operations. The default [everything()]
@@ -1653,7 +1653,7 @@ cells_body <- function(
 #'
 #' @param groups *Specification of row group IDs*
 #'
-#'   `<row-group-targeting expression>` --- *default:* `everything()`
+#'   `<row-group-targeting expression>` // *default:* `everything()`
 #'
 #'   The row groups to which targeting operations are constrained. This aids in
 #'   targeting the summary rows that reside in certain row groups. Can either be
@@ -1664,7 +1664,7 @@ cells_body <- function(
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` --- *default:* `everything()`
+#'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns to which targeting operations are constrained. Can either
 #'   be a series of column names provided in [c()], a vector of column indices,
@@ -1674,7 +1674,7 @@ cells_body <- function(
 #'
 #' @param rows *Rows to target*
 #'
-#'   `<row-targeting expression>` --- *default:* `everything()`
+#'   `<row-targeting expression>` // *default:* `everything()`
 #'
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   form a constraint for targeting operations. The default [everything()]
@@ -1855,7 +1855,7 @@ cells_summary <- function(
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` --- *default:* `everything()`
+#'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns to which targeting operations are constrained. Can either
 #'   be a series of column names provided in [c()], a vector of column indices,
@@ -1865,7 +1865,7 @@ cells_summary <- function(
 #'
 #' @param rows *Rows to target*
 #'
-#'   `<row-targeting expression>` --- *default:* `everything()`
+#'   `<row-targeting expression>` // *default:* `everything()`
 #'
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   form a constraint for targeting operations. The default [everything()]
@@ -2021,7 +2021,7 @@ cells_grand_summary <- function(
 #'
 #' @param groups *Specification of row group IDs*
 #'
-#'   `<row-group-targeting expression>` --- *default:* `everything()`
+#'   `<row-group-targeting expression>` // *default:* `everything()`
 #'
 #'   The row groups to which targeting operations are constrained. Can either be
 #'   a series of row group ID values provided in [c()] or a select helper
@@ -2031,7 +2031,7 @@ cells_grand_summary <- function(
 #'
 #' @param rows *Rows to target*
 #'
-#'   `<row-targeting expression>` --- *default:* `everything()`
+#'   `<row-targeting expression>` // *default:* `everything()`
 #'
 #'   In conjunction with `groups`, we can specify which of their rows should
 #'   form a constraint for targeting operations. The default [everything()]
@@ -2188,7 +2188,7 @@ cells_stub_summary <- function(
 #'
 #' @param rows *Rows to target*
 #'
-#'   `<row-targeting expression>` --- *default:* `everything()`
+#'   `<row-targeting expression>` // *default:* `everything()`
 #'
 #'   We can specify which rows should be targeted. The default [everything()]
 #'   results in all rows in `columns` being formatted. Alternatively, we can
@@ -2532,20 +2532,20 @@ cells_source_notes <- function() {
 #'
 #' @param color *Text color*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   The text color can be modified through the `color` argument.
 #'
 #' @param font *Font (or collection of fonts) used for text*
 #'
-#'   `vector<character>` --- *default:* `NULL` (`optional`)
+#'   `vector<character>` // *default:* `NULL` (`optional`)
 #'
 #'   The font or collection of fonts (subsequent font names are) used as
 #'   fallbacks.
 #'
 #' @param size *Text size*
 #'
-#'   `scalar<numeric|integer|character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<numeric|integer|character>` // *default:* `NULL` (`optional`)
 #'
 #'   The size of the font. Can be provided as a number that is assumed to
 #'   represent `px` values (or could be wrapped in the [px()]) helper function.
@@ -2555,13 +2555,13 @@ cells_source_notes <- function() {
 #'
 #' @param style *Text style*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   Can be one of either `"normal"`, `"italic"`, or `"oblique"`.
 #'
 #' @param weight *Font weight*
 #'
-#'   `scalar<character|numeric|integer>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character|numeric|integer>` // *default:* `NULL` (`optional`)
 #'
 #'   The weight of the font can be modified thorough a text-based option such as
 #'   `"normal"`, `"bold"`, `"lighter"`, `"bolder"`, or, a numeric value between
@@ -2570,21 +2570,21 @@ cells_source_notes <- function() {
 #'
 #' @param align *Text alignment*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   The text in a cell can be aligned though one of the following options:
 #'   `"center"`, `"left"`, `"right"`, or `"justify"`.
 #'
 #' @param v_align *Vertical alignment*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   The vertical alignment of the text in the cell can be modified through the
 #'   options `"middle"`, `"top"`, or `"bottom"`.
 #'
 #' @param stretch *Stretch text*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   Allows for text to either be condensed or expanded. We can use one of the
 #'   following text-based keywords to describe the degree of
@@ -2596,21 +2596,21 @@ cells_source_notes <- function() {
 #'
 #' @param decorate *Decorate text*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   Allows for text decoration effect to be applied. Here, we can use
 #'   `"overline"`, `"line-through"`, or `"underline"`.
 #'
 #' @param transform *Transform text*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   Allows for the transformation of text. Options are `"uppercase"`,
 #'   `"lowercase"`, or `"capitalize"`.
 #'
 #' @param whitespace *White-space options*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   A white-space preservation option. By default, runs of white-space will be
 #'   collapsed into single spaces but several options exist to govern how
@@ -2620,7 +2620,7 @@ cells_source_notes <- function() {
 #'
 #' @param indent *Text indentation*
 #'
-#'   `scalar<numeric|integer|character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<numeric|integer|character>` // *default:* `NULL` (`optional`)
 #'
 #'   The indentation of the text. Can be provided as a number that is assumed to
 #'   represent `px` values (or could be wrapped in the [px()]) helper function.
@@ -2801,14 +2801,14 @@ cell_style_to_html.cell_text <- function(style) {
 #'
 #' @param color *Cell fill color*
 #'
-#'   `scalar<character>` --- *default:* `"#D3D3D3"`
+#'   `scalar<character>` // *default:* `"#D3D3D3"`
 #'
 #'   If nothing is provided for `color` then `"#D3D3D3"` (light gray) will be
 #'   used as a default.
 #'
 #' @param alpha *Transparency value*
 #'
-#'   `scalar<numeric|integer>(0>=val>=1)` --- *default:* `NULL` (`optional`)
+#'   `scalar<numeric|integer>(0>=val>=1)` // *default:* `NULL` (`optional`)
 #'
 #'   An optional alpha transparency value for the `color` as single value in the
 #'   range of `0` (fully transparent) to `1` (fully opaque). If not provided the
@@ -2903,7 +2903,7 @@ cell_style_to_html.cell_fill <- function(style) {
 #'
 #' @param sides *Border sides*
 #'
-#'   `vector<character>` --- *default:* `"all"`
+#'   `vector<character>` // *default:* `"all"`
 #'
 #'   The border sides to be modified. Options include `"left"`,
 #'   `"right"`, `"top"`, and `"bottom"`. For all borders surrounding the
@@ -2911,7 +2911,7 @@ cell_style_to_html.cell_fill <- function(style) {
 #'
 #' @param color *Border color*
 #'
-#'   `scalar<character>|NULL` --- *default:* `"#000000"`
+#'   `scalar<character>|NULL` // *default:* `"#000000"`
 #'
 #'   The border `color` can be defined with a color name or with a hexadecimal
 #'   color code. The default `color` value is `"#000000"` (black). Borders for any
@@ -2919,7 +2919,7 @@ cell_style_to_html.cell_fill <- function(style) {
 #'
 #' @param style *Border line style*
 #'
-#'   `scalar<character>|NULL` --- *default:* `"solid"`
+#'   `scalar<character>|NULL` // *default:* `"solid"`
 #'
 #'   The border `style` can be one of either `"solid"` (the default),
 #'   `"dashed"`, `"dotted"`, `"hidden"`, or `"double"`. Borders for any
@@ -2927,7 +2927,7 @@ cell_style_to_html.cell_fill <- function(style) {
 #'
 #' @param weight *Border weight*
 #'
-#'   `scalar<character>|NULL` --- *default:* `px(1)`
+#'   `scalar<character>|NULL` // *default:* `px(1)`
 #'
 #'   The default value for `weight` is `"1px"` and higher values will become
 #'   more visually prominent. Borders for any defined `sides` can be removed by
@@ -3130,7 +3130,7 @@ cell_style_structure <- function(name, obj, subclass = name) {
 #'
 #' @param n *Number of letters*
 #'
-#'   `scalar<numeric|integer>` --- *default:* `10`
+#'   `scalar<numeric|integer>` // *default:* `10`
 #'
 #'   The `n` argument defines the number of lowercase letters to use for the
 #'   random ID.
@@ -3173,7 +3173,7 @@ latex_special_chars <- c(
 #'
 #' @param text *LaTeX text*
 #'
-#'   `vector<character>` --- **required**
+#'   `vector<character>` // **required**
 #'
 #'   A character vector containing the text that is to be LaTeX-escaped.
 #'
@@ -3295,7 +3295,7 @@ gt_latex_dependencies <- function() {
 #'
 #' @param name *Google Font name*
 #'
-#'   `scalar<character>` --- **required**
+#'   `scalar<character>` // **required**
 #'
 #'   The complete name of a font available in *Google Fonts*.
 #'
@@ -3468,7 +3468,7 @@ default_fonts <- function() {
 #'
 #' @param name *Name of font stack*
 #'
-#'   `scalar<character>` --- **required**
+#'   `scalar<character>` // **required**
 #'
 #'   The name of a font stack. Must be drawn from the set of `"system-ui"`,
 #'   `"transitional"`, `"old-style"`, `"humanist"`, `"geometric-humanist"`,

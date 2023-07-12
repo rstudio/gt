@@ -36,14 +36,14 @@
 #'
 #' @param .data *The gt table data object*
 #'
-#'   `obj:<gt_tbl>` --- **required**
+#'   `obj:<gt_tbl>` // **required**
 #'
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
 #' @param ... *Cell data assignments*
 #'
-#'   `<multiple expressions>` --- (or, use `.list`)
+#'   `<multiple expressions>` // (or, use `.list`)
 #'
 #'   Expressions for the assignment of cell values to the new rows by column
 #'   name in `.data`. Name-value pairs, in the form of
@@ -59,13 +59,13 @@
 #'
 #' @param .list *Alternative to `...`*
 #'
-#'   `<list of multiple expressions>` --- (or, use `...`)
+#'   `<list of multiple expressions>` // (or, use `...`)
 #'
 #'   Allows for the use of a list as an input alternative to `...`.
 #'
 #' @param .before,.after *Row used as anchor*
 #'
-#'   `<row-targeting expression>` --- *default:* `NULL` (`optional`)
+#'   `<row-targeting expression>` // *default:* `NULL` (`optional`)
 #'
 #'   A single row-resolving expression or row index an be given to either
 #'   `.before` or `.after`. The row specifies where the new rows should be
@@ -79,7 +79,7 @@
 #'
 #' @param .n_empty *Number of empty rows to add*
 #'
-#'   `scalar<numeric|integer>(val>=0)` --- *default:* `NULL` (`optional`)
+#'   `scalar<numeric|integer>(val>=0)` // *default:* `NULL` (`optional`)
 #'
 #'   An option to add empty rows in lieu of rows containing data that would
 #'   otherwise be supplied to `...` or `.list`. If the option is taken, provide

@@ -9,28 +9,28 @@ gt_split(data, row_every_n = NULL, row_slice_i = NULL, col_slice_at = NULL)
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{row_every_n}{\emph{Split at every n rows}
 
-\verb{scalar<numeric|integer>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<numeric|integer>} // \emph{default:} \code{NULL} (\code{optional})
 
 A directive to split at every \emph{n} number of rows. This argument expects a
 single numerical value.}
 
 \item{row_slice_i}{\emph{Row-slicing indices}
 
-\verb{vector<numeric|integer>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{vector<numeric|integer>} // \emph{default:} \code{NULL} (\code{optional})
 
 An argument for splitting at specific row indices. Here, we expect either a
 vector of index values or a function that evaluates to a numeric vector.}
 
 \item{col_slice_at}{\emph{Column-slicing locations}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{<column-targeting expression>} // \emph{default:} \code{NULL} (\code{optional})
 
 Any columns where vertical splitting across should occur. The splits occur
 to the right of the resolved column names. Can either be a series of column

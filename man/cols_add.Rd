@@ -9,14 +9,14 @@ cols_add(.data, ..., .before = NULL, .after = NULL)
 \arguments{
 \item{.data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{...}{\emph{Cell data assignments}
 
-\verb{<multiple expressions>} --- (or, use \code{.list})
+\verb{<multiple expressions>} // (or, use \code{.list})
 
 Expressions for the assignment of cell values to the new columns.
 Name-value pairs, in the form of \verb{<column> = <value vector>} will work, so
@@ -28,7 +28,7 @@ the number of rows in the table can also be used.}
 
 \item{.before, .after}{\emph{Column used as anchor}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{<column-targeting expression>} // \emph{default:} \code{NULL} (\code{optional})
 
 A single column-resolving expression or column index an be given to either
 \code{.before} or \code{.after}. The column specifies where the new columns should be

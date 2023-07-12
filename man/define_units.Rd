@@ -9,7 +9,7 @@ define_units(units_notation)
 \arguments{
 \item{units_notation}{\emph{Text in specialized units notation}
 
-\verb{scalar<character>} --- \strong{required}
+\verb{scalar<character>} // \strong{required}
 
 A single string that defines the units (e.g., \code{"m/s"}) to be used.}
 }

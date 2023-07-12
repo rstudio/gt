@@ -9,14 +9,14 @@ row_group_order(data, groups)
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{groups}{\emph{Specification of row group IDs}
 
-\verb{vector<character>} --- \strong{required}
+\verb{vector<character>} // \strong{required}
 
 A character vector of row group ID values corresponding to the revised
 ordering. While this vector must contain valid group ID values, it is not

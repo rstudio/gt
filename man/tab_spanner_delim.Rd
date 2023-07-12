@@ -16,21 +16,21 @@ tab_spanner_delim(
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{delim}{\emph{Delimiter for splitting}
 
-\verb{scalar<character>} --- \strong{required}
+\verb{scalar<character>} // \strong{required}
 
 The delimiter to use to split an input column name. This should be a single
 character (e.g., \code{"_"}, \code{"."}, etc.).}
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 The columns to consider for the splitting, relabeling, and spanner setting
 operations. Can either be a series of column names provided in \code{\link[=c]{c()}}, a
@@ -41,7 +41,7 @@ works in tandem with the \code{spanners} argument.}
 
 \item{split}{\emph{Splitting side}
 
-\verb{singl-kw:[last|first]} --- \emph{default:} \code{"last"}
+\verb{singl-kw:[last|first]} // \emph{default:} \code{"last"}
 
 Should the delimiter splitting occur from the \code{"last"} instance of the
 \code{delim} character or from the \code{"first"}? The default here uses the \code{"last"}
@@ -53,7 +53,7 @@ number).}
 
 \item{limit}{\emph{Limit for splitting}
 
-\verb{scalar<numeric|integer|character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<numeric|integer|character>} // \emph{default:} \code{NULL} (\code{optional})
 
 An optional limit to place on the splitting procedure. The default \code{NULL}
 means that a column name will be split as many times are there are
@@ -65,7 +65,7 @@ or left side (\code{split = "first"}) of the column name.}
 
 \item{reverse}{\emph{Reverse vector of split names}
 
-\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
 
 Should the order of split names be reversed? By default, this is \code{FALSE}.}
 }

@@ -34,27 +34,27 @@
 #'
 #' @param data *The gt table data object*
 #'
-#'   `obj:<gt_tbl>` --- **required**
+#'   `obj:<gt_tbl>` // **required**
 #'
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
 #' @param pattern *Regex pattern to match with*
 #'
-#'   `scalar<character>` --- **required**
+#'   `scalar<character>` // **required**
 #'
 #'   A regex pattern used to target text fragments in the cells resolved in
 #'   locations.
 #'
 #' @param replacement *Replacement text*
 #'
-#'   `scalar<character>` --- **required**
+#'   `scalar<character>` // **required**
 #'
 #'   The replacement text for any matched text fragments.
 #'
 #' @param locations *Locations to target*
 #'
-#'   `<locations expressions>` --- *default:* `cells_body()`
+#'   `<locations expressions>` // *default:* `cells_body()`
 #'
 #'   The cell or set of cells to be associated with the text transformation.
 #'   Only the [cells_body()], [cells_stub()], [cells_row_groups()],
@@ -141,14 +141,14 @@ text_replace <- function(
 #'
 #' @param .data *The gt table data object*
 #'
-#'   `obj:<gt_tbl>` --- **required**
+#'   `obj:<gt_tbl>` // **required**
 #'
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
 #' @param ... *Matching expressions*
 #'
-#'   `<multiple expressions>` --- **required**
+#'   `<multiple expressions>` // **required**
 #'
 #'   A sequence of two-sided formulas. The left hand side (LHS)
 #'   determines which values match this case. The right hand side (RHS) provides
@@ -157,14 +157,14 @@ text_replace <- function(
 #'
 #' @param .default *Default replacement text*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   The replacement text to use when cell values aren't matched by any of the
 #'   LHS inputs. If `NULL`, the default, no replacement text will be used.
 #'
 #' @param .locations *Locations to target*
 #'
-#'   `<locations expressions>` --- *default:* `cells_body()`
+#'   `<locations expressions>` // *default:* `cells_body()`
 #'
 #'   The cell or set of cells to be associated with the text transformation.
 #'   Only the [cells_body()], [cells_stub()], [cells_row_groups()],
@@ -290,14 +290,14 @@ text_case_when <- function(
 #'
 #' @param .data *The gt table data object*
 #'
-#'   `obj:<gt_tbl>` --- **required**
+#'   `obj:<gt_tbl>` // **required**
 #'
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
 #' @param ... *Matching expressions*
 #'
-#'   `<multiple expressions>` --- **required**
+#'   `<multiple expressions>` // **required**
 #'
 #'   A sequence of two-sided formulas matching this general construction:
 #'   `<old_text> ~ <new_text>`. The left hand side (LHS) determines which values
@@ -308,14 +308,14 @@ text_case_when <- function(
 #'
 #' @param .default *Default replacement text*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   The replacement text to use when cell values aren't matched by any of the
 #'   LHS inputs. If `NULL`, the default, no replacement text will be used.
 #'
 #' @param .replace *Method for text replacement*
 #'
-#'   `singl-kw:[all|partial]` --- *default:* `"all"`
+#'   `singl-kw:[all|partial]` // *default:* `"all"`
 #'
 #'   A choice in how the matching is to be done. The default `"all"` means that
 #'   the `old_text` (on the LHS of formulas given in `...`) must match the cell
@@ -326,7 +326,7 @@ text_case_when <- function(
 #'
 #' @param .locations *Locations to target*
 #'
-#'   `<locations expressions>` --- *default:* `cells_body()`
+#'   `<locations expressions>` // *default:* `cells_body()`
 #'
 #'   The cell or set of cells to be associated with the text transformation.
 #'   Only the [cells_body()], [cells_stub()], [cells_row_groups()],
@@ -504,21 +504,21 @@ text_case_match <- function(
 #'
 #' @param data *The gt table data object*
 #'
-#'   `obj:<gt_tbl>` --- **required**
+#'   `obj:<gt_tbl>` // **required**
 #'
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
 #' @param fn *Function for text transformation*
 #'
-#'   `<function>` --- **required**
+#'   `<function>` // **required**
 #'
 #'   The function to use for text transformation. It should include `x` as an
 #'   argument and return a character vector of the same length as the input `x`.
 #'
 #' @param locations *Locations to target*
 #'
-#'   `<locations expressions>` --- *default:* `cells_body()`
+#'   `<locations expressions>` // *default:* `cells_body()`
 #'
 #'   The cell or set of cells to be associated with the text transformation.
 #'   Only the [cells_body()], [cells_stub()], [cells_row_groups()],

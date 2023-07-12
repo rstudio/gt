@@ -9,7 +9,7 @@ md(text)
 \arguments{
 \item{text}{\emph{Markdown text}
 
-\verb{scalar<character>} --- \strong{required}
+\verb{scalar<character>} // \strong{required}
 
 The text that is understood to contain Markdown formatting.}
 }

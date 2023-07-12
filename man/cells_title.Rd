@@ -9,7 +9,7 @@ cells_title(groups = c("title", "subtitle"))
 \arguments{
 \item{groups}{\emph{Specification of groups}
 
-\verb{mult-kw:[title|subtitle]} --- \emph{default:} \code{c("title", "subtitle")}
+\verb{mult-kw:[title|subtitle]} // \emph{default:} \code{c("title", "subtitle")}
 
 We can either specify \code{"title"}, \code{"subtitle"}, or both (the default) in a
 vector to target the title element, the subtitle element, or both elements.}

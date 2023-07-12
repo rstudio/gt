@@ -9,7 +9,7 @@ info_paletteer(color_pkgs = NULL)
 \arguments{
 \item{color_pkgs}{\emph{Filter to specific color packages}
 
-\verb{vector<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{vector<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 A vector of color packages that determines which sets of palettes should be
 displayed in the information table. If this is \code{NULL} (the default) then

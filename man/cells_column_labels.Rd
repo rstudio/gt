@@ -9,7 +9,7 @@ cells_column_labels(columns = everything())
 \arguments{
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 The columns to which targeting operations are constrained. Can either
 be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,

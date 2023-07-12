@@ -18,14 +18,14 @@ fmt_image(
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
 column indices, or a select helper function. Examples of select helper
@@ -34,7 +34,7 @@ functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_w
 
 \item{rows}{\emph{Rows to target}
 
-\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
 
 In conjunction with \code{columns}, we can specify which of their rows should
 undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
@@ -47,28 +47,28 @@ need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{height}{\emph{Height of image}
 
-\verb{scalar<character>} --- \emph{default:} \code{"1em"}
+\verb{scalar<character>} // \emph{default:} \code{"1em"}
 
 The absolute height of the image in the table cell. By default, this is set
 to \code{"1em"}.}
 
 \item{sep}{\emph{Separator between images}
 
-\verb{scalar<character>} --- \emph{default:} \code{" "}
+\verb{scalar<character>} // \emph{default:} \code{" "}
 
 In the output of images within a body cell, \code{sep} provides the separator
 between each image.}
 
 \item{path}{\emph{Path to image files}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 An optional path to local image files (this is combined with all
 filenames).}
 
 \item{file_pattern}{\emph{File pattern specification}
 
-\verb{scalar<character>} --- \emph{default:} \code{"{x}"}
+\verb{scalar<character>} // \emph{default:} \code{"{x}"}
 
 The pattern to use for mapping input values in the body cells to the names
 of the graphics files. The string supplied should use \code{"{x}"} in the
@@ -76,7 +76,7 @@ pattern to map filename fragments to input strings.}
 
 \item{encode}{\emph{Use Base64 encoding}
 
-\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 The option to always use Base64 encoding for image paths that are
 determined to be local. By default, this is \code{TRUE}.}

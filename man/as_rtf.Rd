@@ -16,35 +16,35 @@ as_rtf(
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{incl_open, incl_close}{\emph{Include opening/closing braces}
 
-\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 Options that govern whether the opening or closing \code{"{"} and \code{"}"} should
 be included. By default, both options are \code{TRUE}.}
 
 \item{incl_header}{\emph{Include RTF header}
 
-\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 Should the RTF header be included in the output? By default, this is
 \code{TRUE}.}
 
 \item{incl_page_info}{\emph{Include RTF page information}
 
-\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 Should the RTF output include directives for the document pages? This is
 \code{TRUE} by default.}
 
 \item{incl_body}{\emph{Include RTF body}
 
-\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 An option to include the body of RTF document. By default, this is \code{TRUE}.}
 }

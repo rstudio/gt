@@ -9,7 +9,7 @@ cells_stub(rows = everything())
 \arguments{
 \item{rows}{\emph{Rows to target}
 
-\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
 
 The rows to which targeting operations are constrained. The default
 \code{\link[=everything]{everything()}} results in all rows in \code{columns} being formatted.

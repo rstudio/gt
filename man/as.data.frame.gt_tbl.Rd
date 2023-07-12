@@ -9,14 +9,14 @@
 \arguments{
 \item{x}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{...}{\emph{Optional parameters}
 
-\verb{<multiple expressions>} --- (\code{optional})
+\verb{<multiple expressions>} // (\code{optional})
 
 Anything provided here in \code{...} will be passed to internal function calls
 that can consume it.}

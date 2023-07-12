@@ -30,14 +30,14 @@ data_color(
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 The columns to which cell data color operations are constrained. Can either
 be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,
@@ -47,7 +47,7 @@ or a select helper function. Examples of select helper functions include
 
 \item{rows}{\emph{Rows to target}
 
-\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
 
 In conjunction with \code{columns}, we can specify which of their rows should
 form a constraint for cell data color operations. The default
@@ -60,7 +60,7 @@ expressions to filter down to the rows we need (e.g., \verb{[colname_1] > 100 & 
 
 \item{direction}{\emph{Color computation direction}
 
-\verb{singl-kw:[column|row]} --- \emph{default:} \code{"column"}
+\verb{singl-kw:[column|row]} // \emph{default:} \code{"column"}
 
 Should the color computations be performed column-wise or row-wise? By
 default this is set with the \code{"column"} keyword and colors will be applied
@@ -69,7 +69,7 @@ the color mapping works across rows.}
 
 \item{target_columns}{\emph{Indirect columns to target}
 
-\verb{<row-targeting expression>} --- \emph{default:} \code{NULL} \code{optional}
+\verb{<row-targeting expression>} // \emph{default:} \code{NULL} \code{optional}
 
 For indirect column coloring treatments, we can supply the columns that
 will receive the styling. The necessary precondition is that we must use
@@ -80,7 +80,7 @@ to the same multiple.}
 
 \item{method}{\emph{Color computation method}
 
-\verb{singl-kw:[auto|numeric|bin|quantile|factor]} --- \emph{default:} \code{"auto"}
+\verb{singl-kw:[auto|numeric|bin|quantile|factor]} // \emph{default:} \code{"auto"}
 
 A method for computing color based on the data within body cells. Can be
 \code{"auto"} (the default), \code{"numeric"}, \code{"bin"}, \code{"quantile"}, or \code{"factor"}.
@@ -89,7 +89,7 @@ numerical input data or the \code{"factor"} method for any non-numeric inputs.}
 
 \item{palette}{\emph{Color palette}
 
-\verb{vector<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{vector<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 A vector of color names, the name of an \strong{RColorBrewer} palette, the name
 of a \strong{viridis} palette, or a discrete palette accessible from the
@@ -102,7 +102,7 @@ color palette is used (i.e., the colors from \code{palette()}).}
 
 \item{domain}{\emph{Value domain}
 
-\verb{vector<numeric|integer|character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{vector<numeric|integer|character>} // \emph{default:} \code{NULL} (\code{optional})
 
 The possible values that can be mapped. For the \code{"numeric"} and \code{"bin"}
 methods, this can be a numeric range specified with a length of two vector.
@@ -113,7 +113,7 @@ value will represent the domain.}
 
 \item{bins}{\emph{Specification of bin number}
 
-\verb{scalar<numeric|integer>} --- \emph{default:} \code{8}
+\verb{scalar<numeric|integer>} // \emph{default:} \code{8}
 
 For \code{method = "bin"} this can either be a numeric vector of two or more
 unique cut points, or, a single numeric value (greater than or equal to
@@ -122,14 +122,14 @@ cut. By default, this is \code{8}.}
 
 \item{quantiles}{\emph{Specification of quantile number}
 
-\verb{scalar<numeric|integer>} --- \emph{default:} \code{4}
+\verb{scalar<numeric|integer>} // \emph{default:} \code{4}
 
 For \code{method = "quantile"} this is the number of equal-size quantiles to
 use. By default, this is set to \code{4}.}
 
 \item{levels}{\emph{Specification of factor levels}
 
-\verb{vector<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{vector<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 For \code{method = "factor"} this allows for an alternate way of specifying
 levels. If anything is provided here then any value supplied to \code{domain}
@@ -137,7 +137,7 @@ will be ignored. This should be a character vector of unique values.}
 
 \item{ordered}{\emph{Use an ordered factor}
 
-\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
 
 For \code{method = "factor"}, setting this to \code{TRUE} means that the vector
 supplied to \code{domain} will be treated as being in the correct order if that
@@ -145,7 +145,7 @@ vector needs to be coerced to a factor. By default, this is \code{FALSE}.}
 
 \item{na_color}{\emph{Default color for \code{NA} values}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 The color to use for missing values. By default (with \code{na_color = NULL}),
 the color gray (\code{"#808080"}) will be used. This option has no effect if
@@ -153,7 +153,7 @@ providing a color-mapping function to \code{fn}.}
 
 \item{alpha}{\emph{Transparency value}
 
-\verb{scalar<numeric|integer>(0>=val>=1)} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<numeric|integer>(0>=val>=1)} // \emph{default:} \code{NULL} (\code{optional})
 
 An optional, fixed alpha transparency value that will be applied to all of
 the \code{colors} provided (regardless of whether a color palette was directly
@@ -161,7 +161,7 @@ supplied or generated through a color mapping function).}
 
 \item{reverse}{\emph{Reverse order of computed colors}
 
-\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
 
 Should the colors computed operate in the reverse order? If \code{TRUE} then
 colors that normally change from red to blue will change in the opposite
@@ -169,7 +169,7 @@ direction.}
 
 \item{fn}{\emph{Color-mapping function}
 
-\code{function} --- \emph{default:} \code{NULL} (\code{optional})
+\code{function} // \emph{default:} \code{NULL} (\code{optional})
 
 A color-mapping function. The function should be able to take a vector of
 data values as input and return an equal-length vector of color values. The
@@ -180,7 +180,7 @@ color-mapping function.}
 
 \item{apply_to}{\emph{How to apply color}
 
-\verb{singl-kw:[fill|text]} --- \emph{default:} \code{"fill"}
+\verb{singl-kw:[fill|text]} // \emph{default:} \code{"fill"}
 
 Which style element should the colors be applied to? Options include the
 cell background (the default, given as \code{"fill"}) or the cell text
@@ -188,7 +188,7 @@ cell background (the default, given as \code{"fill"}) or the cell text
 
 \item{autocolor_text}{\emph{Automatically recolor text}
 
-\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 An option to let \strong{gt} modify the coloring of text within cells undergoing
 background coloring. This will result in better text-to-background color
@@ -196,7 +196,7 @@ contrast. By default, this is set to \code{TRUE}.}
 
 \item{contrast_algo}{\emph{Color contrast algorithm choice}
 
-\verb{singl-kw:[apca|wcag]} --- \emph{default:} \code{"apca"}
+\verb{singl-kw:[apca|wcag]} // \emph{default:} \code{"apca"}
 
 The color contrast algorithm to use when \code{autocolor_text = TRUE}. By
 default this is \code{"apca"} (Accessible Perceptual Contrast Algorithm) and the
@@ -204,7 +204,7 @@ alternative to this is \code{"wcag"} (Web Content Accessibility Guidelines).}
 
 \item{colors}{\emph{\link{Deprecated} Color mapping function}
 
-\code{function} --- \emph{default:} \code{NULL} (\code{optional})
+\code{function} // \emph{default:} \code{NULL} (\code{optional})
 
 This argument is deprecated. Use the \code{fn} argument instead to provide a
 \strong{scales}-based color-mapping function. If providing a palette, use the

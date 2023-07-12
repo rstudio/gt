@@ -9,7 +9,7 @@ cells_column_spanners(spanners = everything())
 \arguments{
 \item{spanners}{\emph{Specification of spanner IDs}
 
-\verb{<spanner-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<spanner-targeting expression>} // \emph{default:} \code{everything()}
 
 The spanners to which targeting operations are constrained. Can either be a
 series of spanner ID values provided in \code{\link[=c]{c()}} or a select helper function.

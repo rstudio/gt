@@ -9,14 +9,14 @@ tab_style(data, style, locations)
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{style}{\emph{Style declarations}
 
-\verb{<style expressions>} --- \strong{required}
+\verb{<style expressions>} // \strong{required}
 
 The styles to use for the cells at the targeted \code{locations}. The
 \code{\link[=cell_text]{cell_text()}}, \code{\link[=cell_fill]{cell_fill()}}, and \code{\link[=cell_borders]{cell_borders()}} helper functions can be
@@ -27,7 +27,7 @@ Custom CSS declarations can be used for HTML output by including a
 
 \item{locations}{\emph{Locations to target}
 
-\verb{<locations expressions>} --- \strong{required}
+\verb{<locations expressions>} // \strong{required}
 
 The cell or set of cells to be associated with the style. Supplying any of
 the \verb{cells_*()} helper functions is a useful way to target the location

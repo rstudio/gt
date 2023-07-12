@@ -194,7 +194,7 @@ grp_options(
 \arguments{
 \item{data}{\emph{The gt table group object}
 
-\verb{obj:<gt_group>} --- \strong{required}
+\verb{obj:<gt_group>} // \strong{required}
 
 This is \code{gt_group} container object. It is typically generated through use
 of the \code{\link[=gt_group]{gt_group()}} function along with one or more \code{gt_tbl} objects, or,

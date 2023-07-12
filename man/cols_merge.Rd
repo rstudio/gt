@@ -15,14 +15,14 @@ cols_merge(
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} --- \strong{required}
+\verb{<column-targeting expression>} // \strong{required}
 
 The columns for which the merging operations should be applied. The first
 column resolved will be the target column (i.e., undergo mutation) and the
@@ -36,7 +36,7 @@ is needed for this and other arguments.}
 
 \item{hide_columns}{\emph{Subset of \code{columns} to hide}
 
-\verb{<column-targeting expression>|FALSE} --- \emph{default:} \code{columns[-1]}
+\verb{<column-targeting expression>|FALSE} // \emph{default:} \code{columns[-1]}
 
 Any column names provided here will have their state changed to \code{hidden}
 (via internal use of \code{\link[=cols_hide]{cols_hide()}}) if they aren't already hidden. This is
@@ -46,7 +46,7 @@ columns, \code{FALSE} can be used here.}
 
 \item{rows}{\emph{Rows to target}
 
-\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
 
 In conjunction with \code{columns}, we can specify which of their rows should
 participate in the merging process. The default \code{\link[=everything]{everything()}} results in
@@ -59,7 +59,7 @@ down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{pattern}{\emph{Formatting pattern}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 A formatting pattern that specifies the arrangement of the \code{columns} values
 and any string literals. The pattern uses numbers (within \code{{ }}) that

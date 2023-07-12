@@ -45,14 +45,14 @@
 #'
 #' @param data *The gt table data object*
 #'
-#'   `obj:<gt_tbl>` --- **required**
+#'   `obj:<gt_tbl>` // **required**
 #'
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` --- *default:* `everything()`
+#'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   Can either be a series of column names provided in [c()], a vector of
 #'   column indices, or a select helper function. Examples of select helper
@@ -61,7 +61,7 @@
 #'
 #' @param rows *Rows to target*
 #'
-#'   `<row-targeting expression>` --- *default:* `everything()`
+#'   `<row-targeting expression>` // *default:* `everything()`
 #'
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   undergo formatting. The default [everything()] results in all rows in
@@ -74,7 +74,7 @@
 #'
 #' @param decimals *Number of decimal places*
 #'
-#'   `scalar<numeric|integer>(val>=0)` --- *default:* `2`
+#'   `scalar<numeric|integer>(val>=0)` // *default:* `2`
 #'
 #'   This corresponds to the exact number of decimal places to use. A value
 #'   such as `2.34` can, for example, be formatted with `0` decimal places and
@@ -85,7 +85,7 @@
 #'
 #' @param n_sigfig *Number of significant figures*
 #'
-#'   `scalar<numeric|integer>(val>=1)` --- *default:* `NULL` (`optional`)
+#'   `scalar<numeric|integer>(val>=1)` // *default:* `NULL` (`optional`)
 #'
 #'   A option to format numbers to *n* significant figures. By default, this is
 #'   `NULL` and thus number values will be formatted according to the number of
@@ -96,14 +96,14 @@
 #'
 #' @param drop_trailing_zeros *Drop any trailing zeros*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   A logical value that allows for removal of trailing zeros (those redundant
 #'   zeros after the decimal mark).
 #'
 #' @param drop_trailing_dec_mark *Drop the trailing decimal mark*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   A logical value that determines whether decimal marks should always appear
 #'   even if there are no decimal digits to display after formatting (e.g., `23`
@@ -111,7 +111,7 @@
 #'
 #' @param use_seps *Use digit group separators*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   An option to use digit group separators. The type of digit group separator
 #'   is set by `sep_mark` and overridden if a locale ID is provided to `locale`.
@@ -119,7 +119,7 @@
 #'
 #' @param accounting *Use accounting style*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   An option to use accounting style for values. Normally, negative values
 #'   will be shown with a minus sign but using accounting style will instead put
@@ -127,7 +127,7 @@
 #'
 #' @param scale_by *Scale values by a fixed multiplier*
 #'
-#'   `scalar<numeric|integer>` --- *default:* `1`
+#'   `scalar<numeric|integer>` // *default:* `1`
 #'
 #'   All numeric values will be multiplied by the `scale_by` value before
 #'   undergoing formatting. Since the `default` value is `1`, no values will be
@@ -137,7 +137,7 @@
 #'
 #' @param suffixing *Specification for large-number suffixing*
 #'
-#'   `scalar<logical>|vector<character>` --- *default:* `FALSE`
+#'   `scalar<logical>|vector<character>` // *default:* `FALSE`
 #'
 #'   The `suffixing` option allows us to scale and apply suffixes to larger
 #'   numbers (e.g., `1924000` can be transformed to `1.92M`). This option can
@@ -168,7 +168,7 @@
 #'
 #' @param pattern *Specification of the formatting pattern*
 #'
-#'   `scalar<character>` --- *default:* `"{x}"`
+#'   `scalar<character>` // *default:* `"{x}"`
 #'
 #'   A formatting pattern that allows for decoration of the formatted value. The
 #'   formatted value is represented by the `{x}` (which can be used multiple
@@ -177,7 +177,7 @@
 #'
 #' @param sep_mark *Separator mark for digit grouping*
 #'
-#'   `scalar<character>` --- *default:* `","`
+#'   `scalar<character>` // *default:* `","`
 #'
 #'   The string to use as a separator between groups of digits. For example,
 #'   using `sep_mark = ","` with a value of `1000` would result in a formatted
@@ -186,7 +186,7 @@
 #'
 #' @param dec_mark *Decimal mark*
 #'
-#'   `scalar<character>` --- *default:* `"."`
+#'   `scalar<character>` // *default:* `"."`
 #'
 #'   The string to be used as the decimal mark. For example, using
 #'   `dec_mark = ","` with the value `0.152` would result in a formatted value
@@ -195,7 +195,7 @@
 #'
 #' @param force_sign *Forcing the display of a positive sign*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   Should the positive sign be shown for positive values (effectively showing
 #'   a sign for all values except zero)? If so, use `TRUE` for this option. The
@@ -205,7 +205,7 @@
 #'
 #' @param system *Numbering system for grouping separators*
 #'
-#'   `singl-kw:[intl|ind]` --- *default:* `"intl"`
+#'   `singl-kw:[intl|ind]` // *default:* `"intl"`
 #'
 #'   The international numbering system (keyword: `"intl"`) is widely used and
 #'   its grouping separators (i.e., `sep_mark`) are always separated by three
@@ -215,7 +215,7 @@
 #'
 #' @param locale *Locale identifier*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional locale identifier that can be used for formatting values
 #'   according the locale's rules. Examples include `"en"` for English (United
@@ -522,7 +522,7 @@ fmt_number <- function(
 #'
 #' @param suffixing *Specification for large-number suffixing*
 #'
-#'   `scalar<logical>|vector<character>` --- *default:* `FALSE`
+#'   `scalar<logical>|vector<character>` // *default:* `FALSE`
 #'
 #'   The `suffixing` option allows us to scale and apply suffixes to larger
 #'   numbers (e.g., `1924000` can be transformed to `2M`). This option can
@@ -710,7 +710,7 @@ fmt_integer <- function(
 #'
 #' @param scale_by *Scale values by a fixed multiplier*
 #'
-#'   `scalar<numeric|integer>` --- *default:* `1`
+#'   `scalar<numeric|integer>` // *default:* `1`
 #'
 #'   All numeric values will be multiplied by the `scale_by` value before
 #'   undergoing formatting. Since the `default` value is `1`, no values will be
@@ -718,7 +718,7 @@ fmt_integer <- function(
 #'
 #' @param exp_style *Style declaration for exponent formatting*
 #'
-#'   `scalar<character>` --- *default:* `"x10n"`
+#'   `scalar<character>` // *default:* `"x10n"`
 #'
 #'   Style of formatting to use for the scientific notation formatting. By
 #'   default this is `"x10n"` but other options include using a single letter
@@ -728,7 +728,7 @@ fmt_integer <- function(
 #'
 #' @param force_sign_m,force_sign_n *Forcing the display of a positive sign*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   Should the plus sign be shown for positive values of the mantissa (first
 #'   component, `force_sign_m`) or the exponent (`force_sign_n`)? This would
@@ -1094,7 +1094,7 @@ fmt_scientific <- function(
 #'
 #' @param scale_by *Scale values by a fixed multiplier*
 #'
-#'   `scalar<numeric|integer>` --- *default:* `1`
+#'   `scalar<numeric|integer>` // *default:* `1`
 #'
 #'   All numeric values will be multiplied by the `scale_by` value before
 #'   undergoing formatting. Since the `default` value is `1`, no values will be
@@ -1102,7 +1102,7 @@ fmt_scientific <- function(
 #'
 #' @param exp_style *Style declaration for exponent formatting*
 #'
-#'   `scalar<character>` --- *default:* `"x10n"`
+#'   `scalar<character>` // *default:* `"x10n"`
 #'
 #'   Style of formatting to use for the scientific notation formatting. By
 #'   default this is `"x10n"` but other options include using a single letter
@@ -1112,7 +1112,7 @@ fmt_scientific <- function(
 #'
 #' @param force_sign_m,force_sign_n *Forcing the display of a positive sign*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   Should the plus sign be shown for positive values of the mantissa (first
 #'   component, `force_sign_m`) or the exponent (`force_sign_n`)? This would
@@ -1617,7 +1617,7 @@ fmt_symbol <- function(
 #'
 #' @param scale_values *Multiply input values by 100*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   Should the values be scaled through multiplication by 100? By default this
 #'   scaling is performed since the expectation is that incoming values are
@@ -1626,14 +1626,14 @@ fmt_symbol <- function(
 #'
 #' @param incl_space *Include a space between the value and the % sign*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   An option for whether to include a space between the value and the percent
 #'   sign. The default is to not introduce a space character.
 #'
 #' @param placement *Percent sign placement*
 #'
-#'   `scalar<character>` --- *default:* `"right"`
+#'   `scalar<character>` // *default:* `"right"`
 #'
 #'   This option governs the placement of the percent sign. This can be either
 #'   be `right` (the default) or `left`.
@@ -1857,7 +1857,7 @@ fmt_percent <- function(
 #'
 #' @param to_units *Output Quantity*
 #'
-#'   `singl-kw:[per-mille|per-myriad|pcm|ppm|ppb|ppt|ppq]` --- *default:* `"per-mille"`
+#'   `singl-kw:[per-mille|per-myriad|pcm|ppm|ppb|ppt|ppq]` // *default:* `"per-mille"`
 #'
 #'   A keyword that signifies the desired output quantity. This can be any from
 #'   the following set: `"per-mille"`, `"per-myriad"`, `"pcm"`, `"ppm"`,
@@ -1865,7 +1865,7 @@ fmt_percent <- function(
 #'
 #' @param symbol *Symbol or units to use in output display*
 #'
-#'   `scalar<character>` --- *default:* `"auto"`
+#'   `scalar<character>` // *default:* `"auto"`
 #'
 #'   The symbol/units to use for the quantity. By default, this is set to
 #'   `"auto"` and **gt** will choose the appropriate symbol based on the
@@ -1874,7 +1874,7 @@ fmt_percent <- function(
 #'
 #' @param scale_values *Scale input values accordingly*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   Should the values be scaled through multiplication according to the keyword
 #'   set in `to_units`? By default this is `TRUE` since the expectation is that
@@ -1884,7 +1884,7 @@ fmt_percent <- function(
 #'
 #' @param incl_space *Include a space between the value and the symbol/units*
 #'
-#'   `scalar<character>|scalar<logical>` --- *default:* `"auto"`
+#'   `scalar<character>|scalar<logical>` // *default:* `"auto"`
 #'
 #'   An option for whether to include a space between the value and the
 #'   symbol/units. The default is `"auto"` which provides spacing dependent on
@@ -2140,7 +2140,7 @@ fmt_partsper <- function(
 #'
 #' @param accuracy *Accuracy of fractions*
 #'
-#'   `singl-kw:[low|med|high]|scalar<numeric|integer>(val>=1)` --- *default:* `"low"`
+#'   `singl-kw:[low|med|high]|scalar<numeric|integer>(val>=1)` // *default:* `"low"`
 #'
 #'   The type of fractions to generate. This can either be one of the keywords
 #'   `"low"`, `"med"`, or `"high"` (to generate fractions with denominators of
@@ -2152,7 +2152,7 @@ fmt_partsper <- function(
 #'
 #' @param simplify *Simplify the fraction*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   If choosing to provide a numeric value for `accuracy`, the option to
 #'   simplify the fraction (where possible) can be taken with `TRUE` (the
@@ -2161,7 +2161,7 @@ fmt_partsper <- function(
 #'
 #' @param layout *Layout of fractions in HTML output*
 #'
-#'   `singl-kw:[inline|diagonal]` --- *default:* `"inline"`
+#'   `singl-kw:[inline|diagonal]` // *default:* `"inline"`
 #'
 #'   For HTML output, the `"inline"` layout is the default. This layout places
 #'   the numerals of the fraction on the baseline and uses a standard slash
@@ -2712,7 +2712,7 @@ round_gt <- function(x, digits = 0) {
 #'
 #' @param currency *Currency to use*
 #'
-#'   `scalar<character>|obj:<gt_currency>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>|obj:<gt_currency>` // *default:* `NULL` (`optional`)
 #'
 #'   The currency to use for the numeric value. This input can be
 #'   supplied as a 3-letter currency code (e.g., `"USD"` for U.S. Dollars,
@@ -2741,7 +2741,7 @@ round_gt <- function(x, digits = 0) {
 #'
 #' @param use_subunits *Show or hide currency subunits*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   An option for whether the subunits portion of a currency value should be
 #'   displayed. For example, with an input value of `273.81`, the default
@@ -2750,14 +2750,14 @@ round_gt <- function(x, digits = 0) {
 #'
 #' @param placement *Currency symbol placement*
 #'
-#'   `scalar<character>` --- *default:* `"left"`
+#'   `scalar<character>` // *default:* `"left"`
 #'
 #'   The placement of the currency symbol. This can be either be `left` (as
 #'   in `"$450"`) or `right` (which yields `"450$"`).
 #'
 #' @param incl_space *Include a space between the value and the currency symbol*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   An option for whether to include a space between the value and the currency
 #'   symbol. The default is to not introduce a space character.
@@ -3002,7 +3002,7 @@ fmt_currency <- function(
 #'
 #' @param case *Use uppercase or lowercase letters*
 #'
-#'   `singl-kw:[upper|lower]` --- *default:* `"upper"`
+#'   `singl-kw:[upper|lower]` // *default:* `"upper"`
 #'
 #'   Should Roman numerals should be rendered as uppercase (`"upper"`) or
 #'   lowercase (`"lower"`) letters? By default, this is set to `"upper"`.
@@ -3176,14 +3176,14 @@ fmt_roman <- function(
 #'
 #' @param case *Use uppercase or lowercase letters*
 #'
-#'   `singl-kw:[upper|lower]` --- *default:* `"upper"`
+#'   `singl-kw:[upper|lower]` // *default:* `"upper"`
 #'
 #'   Should the resulting index characters be rendered as uppercase (`"upper"`)
 #'   or lowercase (`"lower"`) letters? By default, this is set to `"upper"`.
 #'
 #' @param index_algo *Indexing algorithm*
 #'
-#'   `singl-kw:[repeat|excel]` --- *default:* `"repeat"`
+#'   `singl-kw:[repeat|excel]` // *default:* `"repeat"`
 #'
 #'   The indexing algorithm handles the recycling of the index character set. By
 #'   default, the `"repeat"` option is used where characters are doubled,
@@ -3726,7 +3726,7 @@ fmt_spelled_num <- function(
 #'
 #' @param standard *Standard used to express byte sizes*
 #'
-#'   `singl-kw:[decimal|binary]` --- *default:* `"decimal"`
+#'   `singl-kw:[decimal|binary]` // *default:* `"decimal"`
 #'
 #'   The form of expressing large byte sizes is divided between: (1) decimal
 #'   units (powers of 1000; e.g., `"kB"` and `"MB"`), and (2) binary units
@@ -3734,7 +3734,7 @@ fmt_spelled_num <- function(
 #'
 #' @param decimals *Number of decimal places*
 #'
-#'   `scalar<numeric|integer>(val>=0)` --- *default:* `1`
+#'   `scalar<numeric|integer>(val>=0)` // *default:* `1`
 #'
 #'   This corresponds to the exact number of decimal places to use. A value
 #'   such as `2.34` can, for example, be formatted with `0` decimal places and
@@ -3744,7 +3744,7 @@ fmt_spelled_num <- function(
 #'
 #' @param force_sign *Forcing the display of a positive sign*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   Should the positive sign be shown for positive numbers (effectively showing
 #'   a sign for all numbers except zero)? If so, use `TRUE` for this option. The
@@ -3752,7 +3752,7 @@ fmt_spelled_num <- function(
 #'
 #' @param incl_space *Include a space between the value and the units*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   An option for whether to include a space between the value and the units.
 #'   The default is to use a space character for separation.
@@ -4004,7 +4004,7 @@ fmt_bytes <- function(
 #'
 #' @param date_style *Predefined style for dates*
 #'
-#'   `scalar<character>|scalar<numeric|integer>(1<=val<=41)` --- *default:* `"iso"`
+#'   `scalar<character>|scalar<numeric|integer>(1<=val<=41)` // *default:* `"iso"`
 #'
 #'   The date style to use. By default this is the short name `"iso"` which
 #'   corresponds to ISO 8601 date formatting. There are 41 date styles in total
@@ -4298,7 +4298,7 @@ fmt_date <- function(
 #'
 #' @param time_style *Predefined style for times*
 #'
-#'   `scalar<character>|scalar<numeric|integer>(1<=val<=25)` --- *default:* `"iso"`
+#'   `scalar<character>|scalar<numeric|integer>(1<=val<=25)` // *default:* `"iso"`
 #'
 #'   The time style to use. By default this is the short name `"iso"` which
 #'   corresponds to how times are formatted within ISO 8601 datetime values.
@@ -4590,7 +4590,7 @@ fmt_time <- function(
 #'
 #' @param sep *Separator between date and time components*
 #'
-#'   `scalar<character>` --- *default:* `" "`
+#'   `scalar<character>` // *default:* `" "`
 #'
 #'   The separator string to use between the date and time components. By
 #'   default, this is a single space character (`" "`). Only used when not
@@ -4598,7 +4598,7 @@ fmt_time <- function(
 #'
 #' @param format *Date/time formatting string*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional formatting string used for generating custom dates/times. If
 #'   used then the arguments governing preset styles (`date_style` and
@@ -4607,7 +4607,7 @@ fmt_time <- function(
 #'
 #' @param tz *Time zone*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   The time zone for printing dates/times (i.e., the output). The
 #'   default of `NULL` will preserve the time zone of the input data in the
@@ -5594,7 +5594,7 @@ fmt_datetime <- function(
 #'
 #' @param input_units *Declaration of duration units for numerical values*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   If one or more selected columns contains numeric values (not `difftime`
 #'   values, which contain the duration units), a keyword must be provided for
@@ -5604,7 +5604,7 @@ fmt_datetime <- function(
 #'
 #' @param output_units *Choice of output units*
 #'
-#'   `mult-kw:[weeks|days|hours|minutes|seconds]` --- *default:* `NULL` (`optional`)
+#'   `mult-kw:[weeks|days|hours|minutes|seconds]` // *default:* `NULL` (`optional`)
 #'
 #'   Controls the output time units. The default, `NULL`, means that **gt** will
 #'   automatically choose time units based on the input duration value. To
@@ -5615,7 +5615,7 @@ fmt_datetime <- function(
 #'
 #' @param duration_style *Style for representing duration values*
 #'
-#'   `singl-kw:[narrow|wide|colon-sep|iso]` --- *default:* `"narrow"`
+#'   `singl-kw:[narrow|wide|colon-sep|iso]` // *default:* `"narrow"`
 #'
 #'   A choice of four formatting styles for the output duration values. With
 #'   `"narrow"` (the default style), duration values will be formatted with
@@ -5628,7 +5628,7 @@ fmt_datetime <- function(
 #'
 #' @param trim_zero_units *Trimming of zero values*
 #'
-#'   `scalar<logical>|mult-kw:[leading|trailing|internal]` --- *default:* `TRUE`
+#'   `scalar<logical>|mult-kw:[leading|trailing|internal]` // *default:* `TRUE`
 #'
 #'   Provides methods to remove output time units that have zero values. By
 #'   default this is `TRUE` and duration values that might otherwise be
@@ -5642,7 +5642,7 @@ fmt_datetime <- function(
 #'
 #' @param max_output_units *Maximum number of time units to display*
 #'
-#'   `scalar<numeric|integer>(val>=1)` --- *default:* `NULL` (`optional`)
+#'   `scalar<numeric|integer>(val>=1)` // *default:* `NULL` (`optional`)
 #'
 #'   If `output_units` is `NULL`, where the output time units are unspecified
 #'   and left to **gt** to handle, a numeric value provided for
@@ -5654,7 +5654,7 @@ fmt_datetime <- function(
 #'
 #' @param force_sign *Forcing the display of a positive sign*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   Should the positive sign be shown for positive values (effectively showing
 #'   a sign for all values except zero)? If so, use `TRUE` for this option. By
@@ -6434,7 +6434,7 @@ extract_duration_pattern <- function(
 #'
 #' @param sep *Separator between values*
 #'
-#'   `scalar<character>` --- *default:* `"--"`
+#'   `scalar<character>` // *default:* `"--"`
 #'
 #'   The separator text that indicates the values are ranged. The default value
 #'   of `"--"` indicates that an en dash will be used for the range separator.
@@ -6444,7 +6444,7 @@ extract_duration_pattern <- function(
 #'
 #' @param fmt *Formatting expressions*
 #'
-#'   `<single expression>` --- *default:* `NULL` (`optional`)
+#'   `<single expression>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional formatting expression in formula form. If used, the RHS of `~`
 #'   should contain a formatting call (e.g.,
@@ -6968,7 +6968,7 @@ format_units_by_context <- function(x, context = "html") {
 #'
 #' @param label *Link label*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   The visible 'label' to use for the link. If `NULL` (the default)
 #'   the URL will serve as the label. There are two non-`NULL` options: (1) a
@@ -6977,7 +6977,7 @@ format_units_by_context <- function(x, context = "html") {
 #'
 #' @param as_button *Style link as a button*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   An option to style the link as a button. By default, this is
 #'   `FALSE`. If this option is chosen then the `button_fill` argument becomes
@@ -6985,7 +6985,7 @@ format_units_by_context <- function(x, context = "html") {
 #'
 #' @param color *Link color*
 #'
-#'   `scalar<character>` --- *default:* `"auto"`
+#'   `scalar<character>` // *default:* `"auto"`
 #'
 #'   The color used for the resulting link and its underline. This is
 #'   `"auto"` by default; this allows **gt** to choose an appropriate color
@@ -6994,7 +6994,7 @@ format_units_by_context <- function(x, context = "html") {
 #'
 #' @param show_underline *Show the link underline*
 #'
-#'   `scalar<character>|scalar<logical>` --- *default:* `"auto"`
+#'   `scalar<character>|scalar<logical>` // *default:* `"auto"`
 #'
 #'   Should the link be decorated with an underline? By
 #'   default this is `"auto"` which means that **gt** will choose `TRUE` when
@@ -7003,7 +7003,7 @@ format_units_by_context <- function(x, context = "html") {
 #'
 #' @param button_fill,button_width,button_outline *Button options*
 #'
-#'   `scalar<character>` --- *default:* `"auto"`
+#'   `scalar<character>` // *default:* `"auto"`
 #'
 #'   Options for styling a link-as-button (and only applies if
 #'   `as_button = TRUE`). All of these options are by default set to `"auto"`,
@@ -7485,28 +7485,28 @@ fmt_url <- function(
 #'
 #' @param height *Height of image*
 #'
-#'   `scalar<character>` --- *default:* `"1em"`
+#'   `scalar<character>` // *default:* `"1em"`
 #'
 #'   The absolute height of the image in the table cell. By default, this is set
 #'   to `"1em"`.
 #'
 #' @param sep *Separator between images*
 #'
-#'   `scalar<character>` --- *default:* `" "`
+#'   `scalar<character>` // *default:* `" "`
 #'
 #'   In the output of images within a body cell, `sep` provides the separator
 #'   between each image.
 #'
 #' @param path *Path to image files*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional path to local image files (this is combined with all
 #'   filenames).
 #'
 #' @param file_pattern *File pattern specification*
 #'
-#'   `scalar<character>` --- *default:* `"{x}"`
+#'   `scalar<character>` // *default:* `"{x}"`
 #'
 #'   The pattern to use for mapping input values in the body cells to the names
 #'   of the graphics files. The string supplied should use `"{x}"` in the
@@ -7514,7 +7514,7 @@ fmt_url <- function(
 #'
 #' @param encode *Use Base64 encoding*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   The option to always use Base64 encoding for image paths that are
 #'   determined to be local. By default, this is `TRUE`.
@@ -7788,14 +7788,14 @@ fmt_image <- function(
 #'
 #' @param height *Height of flag*
 #'
-#'   `scalar<character>` --- *default:* `"1em"`
+#'   `scalar<character>` // *default:* `"1em"`
 #'
 #'   The absolute height of the flag icon in the table cell. By default, this is
 #'   set to `"1em"`.
 #'
 #' @param sep *Separator between flags*
 #'
-#'   `scalar<character>` --- *default:* `" "`
+#'   `scalar<character>` // *default:* `" "`
 #'
 #'   In the output of flag icons within a body cell, `sep` provides the
 #'   separator between each icon. By default, this is a single space character
@@ -7803,7 +7803,7 @@ fmt_image <- function(
 #'
 #' @param use_title *Display country name on hover*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   An option to display a tooltip for the country name (in English) when
 #'   hovering over the flag icon.
@@ -8112,7 +8112,7 @@ fmt_flag <- function(
 #'
 #' @param md_engine *Choice of Markdown engine*
 #'
-#'   `singl-kw:[markdown|commonmark]` --- *default:* `"markdown"`
+#'   `singl-kw:[markdown|commonmark]` // *default:* `"markdown"`
 #'
 #'   The engine preference for Markdown rendering. By default, this is set to
 #'   `"markdown"` where **gt** will use the **markdown** package for Markdown
@@ -8287,7 +8287,7 @@ fmt_markdown <- function(
 #'
 #' @param escape *Text escaping*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   An option to escape text according to the final output format of the table.
 #'   For example, if a LaTeX table is to be generated then LaTeX escaping would
@@ -8477,7 +8477,7 @@ fmt_passthrough <- function(
 #'
 #' @param scope *Scope of automatic formatting*
 #'
-#'   `mult-kw:[numbers|currency]` --- *default:* `c("numbers", "currency")`
+#'   `mult-kw:[numbers|currency]` // *default:* `c("numbers", "currency")`
 #'
 #'   By default, the function will format both `"numbers"`-type values and
 #'   `"currency"`-type values though the scope can be reduced to a single type
@@ -8485,7 +8485,7 @@ fmt_passthrough <- function(
 #'
 #' @param lg_num_pref *Large-number preference*
 #'
-#'   `singl-kw:[sci|suf]` --- *default:* `"sci"`
+#'   `singl-kw:[sci|suf]` // *default:* `"sci"`
 #'
 #'   When large numbers are present, there can be a fixed preference toward how
 #'   they are formatted. Choices are scientific notation for very small and very
@@ -8812,14 +8812,14 @@ fmt_auto <- function(
 #'
 #' @param compat *Formatting compatibility*
 #'
-#'   `vector<character>` --- *default:* `NULL` (`optional`)
+#'   `vector<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional vector that provides the compatible classes for the formatting.
 #'   By default this is `NULL`.
 #'
 #' @param fns *Formatting functions*
 #'
-#'   `function|list of functions` --- **required**
+#'   `function|list of functions` // **required**
 #'
 #'   Either a single formatting function or a named list of functions.
 #'

@@ -9,7 +9,7 @@ info_locales(begins_with = NULL)
 \arguments{
 \item{begins_with}{\emph{Show locales beginning with a specific letter}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 Providing a single letter will filter locales to only those that begin
 with that letter in their locale ID. The default (\code{NULL}) will produce

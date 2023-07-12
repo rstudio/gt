@@ -9,7 +9,7 @@ google_font(name)
 \arguments{
 \item{name}{\emph{Google Font name}
 
-\verb{scalar<character>} --- \strong{required}
+\verb{scalar<character>} // \strong{required}
 
 The complete name of a font available in \emph{Google Fonts}.}
 }

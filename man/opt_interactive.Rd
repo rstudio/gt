@@ -25,14 +25,14 @@ opt_interactive(
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{active}{\emph{Display interactive HTML table}
 
-\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 The \code{active} option will either enable or disable interactive features for
 an HTML table. The individual features of an interactive HTML table are
@@ -40,7 +40,7 @@ controlled by the other options.}
 
 \item{use_pagination}{\emph{Display pagination controls}
 
-\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 This is the option for using pagination controls (below the table body). By
 default, this is \code{TRUE} and it will allow the use to page through table
@@ -48,7 +48,7 @@ content.}
 
 \item{use_pagination_info}{\emph{Display pagination info}
 
-\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 If \code{use_pagination} is \code{TRUE} then the \code{use_pagination_info} option can be
 used to display informational text regarding the current page view (this is
@@ -56,42 +56,42 @@ set to \code{TRUE} by default).}
 
 \item{use_sorting}{\emph{Provide column sorting controls}
 
-\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 This option provides controls for sorting column values. By default, this
 is \code{TRUE}.}
 
 \item{use_search}{\emph{Provide a global search field}
 
-\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
 
 The \code{use_search} option places a search field for globally filtering rows
 to the requested content. By default, this is \code{FALSE}.}
 
 \item{use_filters}{\emph{Display filtering fields}
 
-\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
 
 The \code{use_filters} option places search fields below each column header and
 allows for filtering by column. By default, this is \code{FALSE}.}
 
 \item{use_resizers}{\emph{Allow column resizing}
 
-\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
 
 This option allows for the interactive resizing of columns. By default,
 this is \code{FALSE}.}
 
 \item{use_highlight}{\emph{Enable row highlighting on hover}
 
-\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
 
 The \code{use_highlight} option highlights individual rows upon hover. By
 default, this is \code{FALSE}.}
 
 \item{use_compact_mode}{\emph{Use compact mode}
 
-\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
 
 To reduce vertical padding and thus make the table consume less vertical
 space the \code{use_compact_mode} option can be used. By default, this is
@@ -99,7 +99,7 @@ space the \code{use_compact_mode} option can be used. By default, this is
 
 \item{use_text_wrapping}{\emph{Use text wrapping}
 
-\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 The \code{use_text_wrapping} option controls whether text wrapping occurs
 throughout the table. This is \code{TRUE} by default and with that text will be
@@ -108,14 +108,14 @@ line.}
 
 \item{use_page_size_select}{\emph{Allow for page size selection}
 
-\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
 
 The \code{use_page_size_select} option lets us display a dropdown menu for the
 number of rows to show per page of data.}
 
 \item{page_size_default}{\emph{Change the default page size}
 
-\verb{scalar<numeric|integer>} --- \emph{default:} \code{10}
+\verb{scalar<numeric|integer>} // \emph{default:} \code{10}
 
 The default page size (initially set as \code{10}) can be modified with
 \code{page_size_default} and this works whether or not \code{use_page_size_select} is
@@ -123,7 +123,7 @@ set to \code{TRUE}.}
 
 \item{page_size_values}{\emph{Set of page-size values}
 
-\verb{vector<numeric|integer>} --- \emph{default:} \code{c(10, 25, 50, 100)}
+\verb{vector<numeric|integer>} // \emph{default:} \code{c(10, 25, 50, 100)}
 
 By default, this is the vector \code{c(10, 25, 50, 100)} which corresponds to
 options for \code{10}, \code{25}, \code{50}, and \code{100} rows of data per page. To modify
@@ -131,7 +131,7 @@ these page-size options, provide a numeric vector to \code{page_size_values}.}
 
 \item{pagination_type}{\emph{Change pagination mode}
 
-\verb{scalar<character>} --- \emph{default:} \code{"numbers"}
+\verb{scalar<character>} // \emph{default:} \code{"numbers"}
 
 When using pagination the \code{pagination_type} option lets us select between
 one of three options for the layout of pagination controls. The default is

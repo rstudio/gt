@@ -13,14 +13,14 @@ opt_all_caps(
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{all_caps}{\emph{Use all-caps transformation}
 
-\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 A logical value to indicate whether the text transformation to all caps
 should be performed (\code{TRUE}, the default) or reset to default values
@@ -28,7 +28,7 @@ should be performed (\code{TRUE}, the default) or reset to default values
 
 \item{locations}{\emph{Locations to target}
 
-\verb{mult-kw:[column_labels|stub|row_group]} --- \emph{default:} \code{c("column_labels", "stub", "row_group")}
+\verb{mult-kw:[column_labels|stub|row_group]} // \emph{default:} \code{c("column_labels", "stub", "row_group")}
 
 Which locations should undergo this text transformation? By default it
 includes all of the \code{"column_labels"}, the \code{"stub"}, and the \code{"row_group"}

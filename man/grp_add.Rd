@@ -9,7 +9,7 @@ grp_add(.data, ..., .list = list2(...), .before = NULL, .after = NULL)
 \arguments{
 \item{.data}{\emph{The gt table group object}
 
-\verb{obj:<gt_group>} --- \strong{required}
+\verb{obj:<gt_group>} // \strong{required}
 
 This is a \code{gt_group} container object. It is typically generated through
 use of the \code{\link[=gt_group]{gt_group()}} function along with one or more \code{gt_tbl} objects,
@@ -17,20 +17,20 @@ or, made by splitting a \strong{gt} table with \code{\link[=gt_split]{gt_split()
 
 \item{...}{\emph{One or more gt table objects}
 
-\verb{obj:<gt_tbl>} --- \strong{required} (or, use \code{...})
+\verb{obj:<gt_tbl>} // \strong{required} (or, use \code{...})
 
 One or more \strong{gt} table (\code{gt_tbl}) objects, typically generated via the
 \code{\link[=gt]{gt()}} function.}
 
 \item{.list}{\emph{Alternative to \code{...}}
 
-\verb{<list of multiple expressions>} --- (or, use \code{...})
+\verb{<list of multiple expressions>} // (or, use \code{...})
 
 Allows for the use of a list as an input alternative to \code{...}.}
 
 \item{.before, .after}{\emph{Table used as anchor}
 
-\verb{scalar<numeric|integer>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<numeric|integer>} // \emph{default:} \code{NULL} (\code{optional})
 
 A single index for either \code{.before} or \code{.after}, specifying where the
 supplied \code{gt_tbl} objects should be placed amongst the existing collection

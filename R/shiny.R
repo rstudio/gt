@@ -51,7 +51,7 @@
 #'
 #' @param width,height *Dimensions of table container*
 #'
-#'   `scalar<numeric|integer|character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<numeric|integer|character>` // *default:* `NULL` (`optional`)
 #'
 #'   The width and height of the table's container. Either can be specified as a
 #'   single-length character vector with units of pixels or as a percentage. If
@@ -62,7 +62,7 @@
 #'
 #' @param align *Table alignment*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   The alignment of the table in its container. If `NULL`, the table will be
 #'   center-aligned. Valid options for this are: `"center"`, `"left"`, and
@@ -70,20 +70,20 @@
 #'
 #' @param env *Evaluation environment*
 #'
-#'   `<environment>` --- *default:* `parent.frame()`
+#'   `<environment>` // *default:* `parent.frame()`
 #'
 #'   The environment in which to evaluate the `expr`.
 #'
 #' @param quoted *Option to `quote()` `expr`*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   Is `expr` a quoted expression (with `quote()`)? This is useful if you want
 #'   to save an expression in a variable.
 #'
 #' @param outputArgs *Output arguments*
 #'
-#'   `list` --- *default:* `list()`
+#'   `list` // *default:* `list()`
 #'
 #'   A list of arguments to be passed through to the implicit call to
 #'   [gt_output()] when `render_gt()` is used in an interactive R Markdown
@@ -216,7 +216,7 @@ render_gt <- function(
 #'
 #' @param outputId *Shiny output ID*
 #'
-#'   `scalar<character>` --- **required**
+#'   `scalar<character>` // **required**
 #'
 #'   An output variable from which to read the table.
 #'

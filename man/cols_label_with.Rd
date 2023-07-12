@@ -9,14 +9,14 @@ cols_label_with(data, columns = everything(), fn)
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 The columns for which the column-labeling operations should be applied. Can
 either be a series of column names provided in \code{\link[=c]{c()}}, a vector of column
@@ -26,7 +26,7 @@ include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_
 
 \item{fn}{\emph{Function to apply}
 
-\verb{function|formula} --- \strong{required}
+\verb{function|formula} // \strong{required}
 
 The function or function call to be applied to the column labels. This can
 take the form of a bare function (e.g., \code{tools::toTitleCase}), a function

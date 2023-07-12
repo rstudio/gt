@@ -257,7 +257,7 @@ info_time_style <- function() {
 #'
 #' @param type *Type of currency*
 #'
-#'   `singl-kw:[code|symbol]` --- *default:* `"code"`
+#'   `singl-kw:[code|symbol]` // *default:* `"code"`
 #'
 #'   The type of currency information provided. Can either be `code` where
 #'   currency information corresponding to 3-letter currency codes is provided,
@@ -266,7 +266,7 @@ info_time_style <- function() {
 #'
 #' @param begins_with *Show currencies beginning with a specific letter*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   Providing a single letter will filter currencies to only those that begin
 #'   with that letter in their currency code. The default (`NULL`) will produce
@@ -438,7 +438,7 @@ info_currencies <- function(
 #'
 #' @param begins_with *Show locales beginning with a specific letter*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   Providing a single letter will filter locales to only those that begin
 #'   with that letter in their locale ID. The default (`NULL`) will produce
@@ -608,7 +608,7 @@ info_locales <- function(begins_with = NULL) {
 #'
 #' @param color_pkgs *Filter to specific color packages*
 #'
-#'   `vector<character>` --- *default:* `NULL` (`optional`)
+#'   `vector<character>` // *default:* `NULL` (`optional`)
 #'
 #'   A vector of color packages that determines which sets of palettes should be
 #'   displayed in the information table. If this is `NULL` (the default) then

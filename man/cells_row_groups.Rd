@@ -9,7 +9,7 @@ cells_row_groups(groups = everything())
 \arguments{
 \item{groups}{\emph{Specification of row group IDs}
 
-\verb{<row-group-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<row-group-targeting expression>} // \emph{default:} \code{everything()}
 
 The row groups to which targeting operations are constrained. Can either be
 a series of row group ID values provided in \code{\link[=c]{c()}} or a select helper

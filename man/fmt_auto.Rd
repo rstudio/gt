@@ -16,14 +16,14 @@ fmt_auto(
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
 column indices, or a select helper function. Examples of select helper
@@ -32,7 +32,7 @@ functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_w
 
 \item{rows}{\emph{Rows to target}
 
-\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
 
 In conjunction with \code{columns}, we can specify which of their rows should
 undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
@@ -45,7 +45,7 @@ need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{scope}{\emph{Scope of automatic formatting}
 
-\verb{mult-kw:[numbers|currency]} --- \emph{default:} \code{c("numbers", "currency")}
+\verb{mult-kw:[numbers|currency]} // \emph{default:} \code{c("numbers", "currency")}
 
 By default, the function will format both \code{"numbers"}-type values and
 \code{"currency"}-type values though the scope can be reduced to a single type
@@ -53,7 +53,7 @@ of value to format.}
 
 \item{lg_num_pref}{\emph{Large-number preference}
 
-\verb{singl-kw:[sci|suf]} --- \emph{default:} \code{"sci"}
+\verb{singl-kw:[sci|suf]} // \emph{default:} \code{"sci"}
 
 When large numbers are present, there can be a fixed preference toward how
 they are formatted. Choices are scientific notation for very small and very
@@ -62,7 +62,7 @@ values only).}
 
 \item{locale}{\emph{Locale identifier}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 An optional locale identifier that can be used for formatting values
 according the locale's rules. Examples include \code{"en"} for English (United

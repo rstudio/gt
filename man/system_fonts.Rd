@@ -9,7 +9,7 @@ system_fonts(name)
 \arguments{
 \item{name}{\emph{Name of font stack}
 
-\verb{scalar<character>} --- \strong{required}
+\verb{scalar<character>} // \strong{required}
 
 The name of a font stack. Must be drawn from the set of \code{"system-ui"},
 \code{"transitional"}, \code{"old-style"}, \code{"humanist"}, \code{"geometric-humanist"},

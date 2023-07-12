@@ -9,14 +9,14 @@ cols_label(.data, ..., .list = list2(...), .fn = NULL, .process_units = NULL)
 \arguments{
 \item{.data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{...}{\emph{Column label assignments}
 
-\verb{<multiple expressions>} --- \strong{required} (or, use \code{.list})
+\verb{<multiple expressions>} // \strong{required} (or, use \code{.list})
 
 Expressions for the assignment of column labels for the table columns in
 \code{.data}. Two-sided formulas (e.g., \verb{<LHS> ~ <RHS>}) can be used, where the
@@ -30,20 +30,20 @@ assigned previously will result in overwriting column label values.}
 
 \item{.list}{\emph{Alternative to \code{...}}
 
-\verb{<list of multiple expressions>} --- \strong{required} (or, use \code{...})
+\verb{<list of multiple expressions>} // \strong{required} (or, use \code{...})
 
 Allows for the use of a list as an input alternative to \code{...}.}
 
 \item{.fn}{\emph{Function to apply}
 
-\code{function} --- \emph{default:} \code{NULL} (\code{optional})
+\code{function} // \emph{default:} \code{NULL} (\code{optional})
 
 An option to specify a function that will be applied to all of the provided
 label values.}
 
 \item{.process_units}{\emph{Option to process any available units throughout}
 
-\verb{scalar<logical>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<logical>} // \emph{default:} \code{NULL} (\code{optional})
 
 Should your column text contain text that is already in \strong{gt}'s units
 notation (and, importantly, is surrounded by \code{"{{"}/\code{"}}"}), using \code{TRUE}

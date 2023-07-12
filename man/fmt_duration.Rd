@@ -24,14 +24,14 @@ fmt_duration(
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
 column indices, or a select helper function. Examples of select helper
@@ -40,7 +40,7 @@ functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_w
 
 \item{rows}{\emph{Rows to target}
 
-\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
 
 In conjunction with \code{columns}, we can specify which of their rows should
 undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
@@ -53,7 +53,7 @@ need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{input_units}{\emph{Declaration of duration units for numerical values}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 If one or more selected columns contains numeric values (not \code{difftime}
 values, which contain the duration units), a keyword must be provided for
@@ -63,7 +63,7 @@ interpreted in terms of duration. The accepted units are: \code{"seconds"},
 
 \item{output_units}{\emph{Choice of output units}
 
-\verb{mult-kw:[weeks|days|hours|minutes|seconds]} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{mult-kw:[weeks|days|hours|minutes|seconds]} // \emph{default:} \code{NULL} (\code{optional})
 
 Controls the output time units. The default, \code{NULL}, means that \strong{gt} will
 automatically choose time units based on the input duration value. To
@@ -74,7 +74,7 @@ following keywords: \code{"weeks"}, \code{"days"}, \code{"hours"}, \code{"minute
 
 \item{duration_style}{\emph{Style for representing duration values}
 
-\verb{singl-kw:[narrow|wide|colon-sep|iso]} --- \emph{default:} \code{"narrow"}
+\verb{singl-kw:[narrow|wide|colon-sep|iso]} // \emph{default:} \code{"narrow"}
 
 A choice of four formatting styles for the output duration values. With
 \code{"narrow"} (the default style), duration values will be formatted with
@@ -87,7 +87,7 @@ format. The \code{"iso"} style will produce a value that conforms to the ISO
 
 \item{trim_zero_units}{\emph{Trimming of zero values}
 
-\verb{scalar<logical>|mult-kw:[leading|trailing|internal]} --- \emph{default:} \code{TRUE}
+\verb{scalar<logical>|mult-kw:[leading|trailing|internal]} // \emph{default:} \code{TRUE}
 
 Provides methods to remove output time units that have zero values. By
 default this is \code{TRUE} and duration values that might otherwise be
@@ -101,7 +101,7 @@ internal zero-value time units (e.g., \code{"5d 0h 33m"} -> \code{"5d 33m"}).}
 
 \item{max_output_units}{\emph{Maximum number of time units to display}
 
-\code{scalar<numeric|integer>(val>=1)} --- \emph{default:} \code{NULL} (\code{optional})
+\code{scalar<numeric|integer>(val>=1)} // \emph{default:} \code{NULL} (\code{optional})
 
 If \code{output_units} is \code{NULL}, where the output time units are unspecified
 and left to \strong{gt} to handle, a numeric value provided for
@@ -113,7 +113,7 @@ customize that type of duration output).}
 
 \item{pattern}{\emph{Specification of the formatting pattern}
 
-\verb{scalar<character>} --- \emph{default:} \code{"{x}"}
+\verb{scalar<character>} // \emph{default:} \code{"{x}"}
 
 A formatting pattern that allows for decoration of the formatted value. The
 formatted value is represented by the \code{{x}} (which can be used multiple
@@ -122,7 +122,7 @@ literals.}
 
 \item{use_seps}{\emph{Use digit group separators}
 
-\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 An option to use digit group separators. The type of digit group separator
 is set by \code{sep_mark} and overridden if a locale ID is provided to \code{locale}.
@@ -130,7 +130,7 @@ This setting is \code{TRUE} by default.}
 
 \item{sep_mark}{\emph{Separator mark for digit grouping}
 
-\verb{scalar<character>} --- \emph{default:} \code{","}
+\verb{scalar<character>} // \emph{default:} \code{","}
 
 The string to use as a separator between groups of digits. For example,
 using \code{sep_mark = ","} with a value of \code{1000} would result in a formatted
@@ -139,7 +139,7 @@ value of \code{"1,000"}. This argument is ignored if a \code{locale} is supplied
 
 \item{force_sign}{\emph{Forcing the display of a positive sign}
 
-\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
 
 Should the positive sign be shown for positive values (effectively showing
 a sign for all values except zero)? If so, use \code{TRUE} for this option. By
@@ -147,7 +147,7 @@ default only negative values will display a minus sign.}
 
 \item{system}{\emph{Numbering system for grouping separators}
 
-\verb{singl-kw:[intl|ind]} --- \emph{default:} \code{"intl"}
+\verb{singl-kw:[intl|ind]} // \emph{default:} \code{"intl"}
 
 The international numbering system (keyword: \code{"intl"}) is widely used and
 its grouping separators (i.e., \code{sep_mark}) are always separated by three
@@ -157,7 +157,7 @@ crore, and higher quantities.}
 
 \item{locale}{\emph{Locale identifier}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 An optional locale identifier that can be used for formatting values
 according the locale's rules. Examples include \code{"en"} for English (United

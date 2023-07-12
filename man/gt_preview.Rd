@@ -9,13 +9,13 @@ gt_preview(data, top_n = 5, bottom_n = 1, incl_rownums = TRUE)
 \arguments{
 \item{data}{\emph{Input data table}
 
-\verb{obj:<data.frame>|obj:<tbl_df>} --- \strong{required}
+\verb{obj:<data.frame>|obj:<tbl_df>} // \strong{required}
 
 A \code{data.frame} object or a tibble (\code{tbl_df}).}
 
 \item{top_n}{\emph{Top n rows to display}
 
-\verb{scalar<numeric|integer>} --- \emph{default:} \code{5}
+\verb{scalar<numeric|integer>} // \emph{default:} \code{5}
 
 The \code{top_n} value will be used as the number of rows from the top of the
 table to display. The default, \code{5}, will show the first five rows of the
@@ -23,7 +23,7 @@ table.}
 
 \item{bottom_n}{\emph{Bottom n rows to display}
 
-\verb{scalar<numeric|integer>} --- \emph{default:} \code{1}
+\verb{scalar<numeric|integer>} // \emph{default:} \code{1}
 
 The \code{bottom_n} value will be used as the number of rows from the bottom
 of the table to display. The default, \code{1}, will show the final row of the
@@ -31,7 +31,7 @@ table.}
 
 \item{incl_rownums}{\emph{Display row numbers}
 
-\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 An option to include the row numbers for \code{data} in the table stub.}
 }

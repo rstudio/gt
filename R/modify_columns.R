@@ -34,14 +34,14 @@
 #'
 #' @param data *The gt table data object*
 #'
-#'   `obj:<gt_tbl>` --- **required**
+#'   `obj:<gt_tbl>` // **required**
 #'
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
 #' @param align *Alignment type*
 #'
-#'   `singl-kw:[auto|left|center|right]` --- *default:* `"auto"`
+#'   `singl-kw:[auto|left|center|right]` // *default:* `"auto"`
 #'
 #'   This can be any of `"center"`, `"left"`, or `"right"` for center-, left-,
 #'   or right-alignment. Alternatively, the `"auto"` option (the default), will
@@ -50,7 +50,7 @@
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` --- *default:* `everything()`
+#'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns for which the alignment should be applied. Can either be a
 #'   series of column names provided in [c()], a vector of column indices, or a
@@ -202,14 +202,14 @@ determine_which_character_number <- function(
 #'
 #' @param data *The gt table data object*
 #'
-#'   `obj:<gt_tbl>` --- **required**
+#'   `obj:<gt_tbl>` // **required**
 #'
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` --- *default:* `everything()`
+#'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns for which decimal alignment should be applied. Can either be a
 #'   series of column names provided in [c()], a vector of column indices, or a
@@ -220,7 +220,7 @@ determine_which_character_number <- function(
 #'
 #' @param dec_mark *Decimal mark*
 #'
-#'   `scalar<character>` --- *default:* `"."`
+#'   `scalar<character>` // *default:* `"."`
 #'
 #'   The character used as a decimal mark in the numeric values to be aligned.
 #'   If a locale value was used when formatting the numeric values then `locale`
@@ -228,7 +228,7 @@ determine_which_character_number <- function(
 #'
 #' @param locale *Locale identifier*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional locale identifier that can be used to obtain the type of
 #'   decimal mark used in the numeric values to be aligned (according to the
@@ -443,14 +443,14 @@ align_to_char <- function(x, align_at = ".") {
 #'
 #' @param .data *The gt table data object*
 #'
-#'   `obj:<gt_tbl>` --- **required**
+#'   `obj:<gt_tbl>` // **required**
 #'
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
 #' @param ... *Column width assignments*
 #'
-#'   `<multiple expressions>` --- **required** (or, use `.list`)
+#'   `<multiple expressions>` // **required** (or, use `.list`)
 #'
 #'   Expressions for the assignment of column widths for the table columns in
 #'   `.data`. Two-sided formulas (e.g, `<LHS> ~ <RHS>`) can be used, where the
@@ -467,7 +467,7 @@ align_to_char <- function(x, align_at = ".") {
 #'
 #' @param .list *Alternative to `...`*
 #'
-#'   `<list of multiple expressions>` --- **required** (or, use `...`)
+#'   `<list of multiple expressions>` // **required** (or, use `...`)
 #'
 #'   Allows for the use of a list as an input alternative to `...`.
 #'
@@ -626,14 +626,14 @@ cols_width <- function(
 #'
 #' @param .data *The gt table data object*
 #'
-#'   `obj:<gt_tbl>` --- **required**
+#'   `obj:<gt_tbl>` // **required**
 #'
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
 #' @param ... *Column label assignments*
 #'
-#'   `<multiple expressions>` --- **required** (or, use `.list`)
+#'   `<multiple expressions>` // **required** (or, use `.list`)
 #'
 #'   Expressions for the assignment of column labels for the table columns in
 #'   `.data`. Two-sided formulas (e.g., `<LHS> ~ <RHS>`) can be used, where the
@@ -648,20 +648,20 @@ cols_width <- function(
 #'
 #' @param .list *Alternative to `...`*
 #'
-#'   `<list of multiple expressions>` --- **required** (or, use `...`)
+#'   `<list of multiple expressions>` // **required** (or, use `...`)
 #'
 #'   Allows for the use of a list as an input alternative to `...`.
 #'
 #' @param .fn *Function to apply*
 #'
-#'   `function` --- *default:* `NULL` (`optional`)
+#'   `function` // *default:* `NULL` (`optional`)
 #'
 #'   An option to specify a function that will be applied to all of the provided
 #'   label values.
 #'
 #' @param .process_units *Option to process any available units throughout*
 #'
-#'   `scalar<logical>` --- *default:* `NULL` (`optional`)
+#'   `scalar<logical>` // *default:* `NULL` (`optional`)
 #'
 #'   Should your column text contain text that is already in **gt**'s units
 #'   notation (and, importantly, is surrounded by `"{{"`/`"}}"`), using `TRUE`
@@ -1081,7 +1081,7 @@ cols_label <- function(
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` --- *default:* `everything()`
+#'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns for which the column-labeling operations should be applied. Can
 #'   either be a series of column names provided in [c()], a vector of column
@@ -1091,7 +1091,7 @@ cols_label <- function(
 #'
 #' @param fn *Function to apply*
 #'
-#'   `function|formula` --- **required**
+#'   `function|formula` // **required**
 #'
 #'   The function or function call to be applied to the column labels. This can
 #'   take the form of a bare function (e.g., `tools::toTitleCase`), a function
@@ -1295,14 +1295,14 @@ cols_label_with <- function(
 #'
 #' @param .data *The gt table data object*
 #'
-#'   `obj:<gt_tbl>` --- **required**
+#'   `obj:<gt_tbl>` // **required**
 #'
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
 #' @param ... *Column units definitions*
 #'
-#'   `<multiple expressions>` --- **required** (or, use `.list`)
+#'   `<multiple expressions>` // **required** (or, use `.list`)
 #'
 #'   Expressions for the assignment of column units for the table columns in
 #'   `.data`. Two-sided formulas (e.g., `<LHS> ~ <RHS>`) can be used, where the
@@ -1318,13 +1318,13 @@ cols_label_with <- function(
 #'
 #' @param .list *Alternative to `...`*
 #'
-#'   `<list of multiple expressions>` --- **required** (or, use `...`)
+#'   `<list of multiple expressions>` // **required** (or, use `...`)
 #'
 #'   Allows for the use of a list as an input alternative to `...`.
 #'
 #' @param .units_pattern *Pattern to combine column labels and units*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional pattern to be used for combining column labels with the defined
 #'   units. The default pattern is `"{1}, {2}"`, where `"{1}"` refers to the
@@ -1641,14 +1641,14 @@ cols_units <- function(
 #'
 #' @param .data *The gt table data object*
 #'
-#'   `obj:<gt_tbl>` --- **required**
+#'   `obj:<gt_tbl>` // **required**
 #'
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
 #' @param ... *Cell data assignments*
 #'
-#'   `<multiple expressions>` --- (or, use `.list`)
+#'   `<multiple expressions>` // (or, use `.list`)
 #'
 #'   Expressions for the assignment of cell values to the new columns.
 #'   Name-value pairs, in the form of `<column> = <value vector>` will work, so
@@ -1660,7 +1660,7 @@ cols_units <- function(
 #'
 #' @param .before,.after *Column used as anchor*
 #'
-#'   `<column-targeting expression>` --- *default:* `NULL` (`optional`)
+#'   `<column-targeting expression>` // *default:* `NULL` (`optional`)
 #'
 #'   A single column-resolving expression or column index an be given to either
 #'   `.before` or `.after`. The column specifies where the new columns should be
@@ -1983,7 +1983,7 @@ cols_add <- function(
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` --- *default:* `everything()`
+#'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns for which the moving operations should be applied. Can either
 #'   be a series of column names provided in [c()], a vector of column indices,
@@ -1994,7 +1994,7 @@ cols_add <- function(
 #'
 #' @param after *Column used as anchor*
 #'
-#'   `<column-targeting expression>` --- **required**
+#'   `<column-targeting expression>` // **required**
 #'
 #'   The column used to anchor the insertion of the moved columns. All of the
 #'   moved columns will be placed to the right of this column. While select
@@ -2124,7 +2124,7 @@ cols_move <- function(
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` --- *default:* `everything()`
+#'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns for which the moving operations should be applied. Can either
 #'   be a series of column names provided in [c()], a vector of column indices,
@@ -2244,7 +2244,7 @@ cols_move_to_start <- function(
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` --- *default:* `everything()`
+#'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns for which the moving operations should be applied. Can either
 #'   be a series of column names provided in [c()], a vector of column indices,
@@ -2363,7 +2363,7 @@ cols_move_to_end <- function(
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` --- *default:* `everything()`
+#'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns to hide in the output display table. Can either be a series of
 #'   column names provided in [c()], a vector of column indices, or a select
@@ -2488,7 +2488,7 @@ cols_hide <- function(
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` --- *default:* `everything()`
+#'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns to unhide in the output display table. Can either be a series
 #'   of column names provided in [c()], a vector of column indices, or a select
@@ -2603,7 +2603,7 @@ cols_unhide <- function(
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` --- **required**
+#'   `<column-targeting expression>` // **required**
 #'
 #'   The columns for which the merging operations should be applied. The first
 #'   column resolved will be the target column (i.e., undergo mutation) and the
@@ -2617,7 +2617,7 @@ cols_unhide <- function(
 #'
 #' @param hide_columns *Subset of `columns` to hide*
 #'
-#'   `<column-targeting expression>|FALSE` --- *default:* `columns[-1]`
+#'   `<column-targeting expression>|FALSE` // *default:* `columns[-1]`
 #'
 #'   Any column names provided here will have their state changed to `hidden`
 #'   (via internal use of [cols_hide()]) if they aren't already hidden. This is
@@ -2627,7 +2627,7 @@ cols_unhide <- function(
 #'
 #' @param rows *Rows to target*
 #'
-#'   `<row-targeting expression>` --- *default:* `everything()`
+#'   `<row-targeting expression>` // *default:* `everything()`
 #'
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   participate in the merging process. The default [everything()] results in
@@ -2640,7 +2640,7 @@ cols_unhide <- function(
 #'
 #' @param pattern *Formatting pattern*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   A formatting pattern that specifies the arrangement of the `columns` values
 #'   and any string literals. The pattern uses numbers (within `{ }`) that
@@ -2860,7 +2860,7 @@ cols_merge <- function(
 #'
 #' @param col_val *Column to target for base values*
 #'
-#'   `<column-targeting expression>` --- **required**
+#'   `<column-targeting expression>` // **required**
 #'
 #'   The column that contains values for the start of the range. While select
 #'   helper functions such as [starts_with()] and [ends_with()] can be used for
@@ -2869,7 +2869,7 @@ cols_merge <- function(
 #'
 #' @param col_uncert *Column or columns to target for uncertainty values*
 #'
-#'   `<column-targeting expression>` --- **required**
+#'   `<column-targeting expression>` // **required**
 #'
 #'   The most common case involves supplying a single column with uncertainties;
 #'   these values will be combined with those in `col_val`. Less commonly, the
@@ -2882,7 +2882,7 @@ cols_merge <- function(
 #'
 #' @param rows *Rows to target*
 #'
-#'   `<row-targeting expression>` --- *default:* `everything()`
+#'   `<row-targeting expression>` // *default:* `everything()`
 #'
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   participate in the merging process. The default [everything()] results in
@@ -2895,7 +2895,7 @@ cols_merge <- function(
 #'
 #' @param sep *Separator text for uncertainties*
 #'
-#'   `scalar<character>` --- *default:* `" +/- "`
+#'   `scalar<character>` // *default:* `" +/- "`
 #'
 #'   The separator text that contains the uncertainty mark for a single
 #'   uncertainty value. The default value of `" +/- "` indicates that an
@@ -2905,7 +2905,7 @@ cols_merge <- function(
 #'
 #' @param autohide *Automatic hiding of the `col_uncert` column(s)*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   An option to automatically hide any columns specified in `col_uncert`. Any
 #'   columns with their state changed to 'hidden' will behave the same as
@@ -3049,7 +3049,7 @@ cols_merge_uncert <- function(
 #'
 #' @param col_begin *Column to target for beginning of range*
 #'
-#'   `<column-targeting expression>` --- **required**
+#'   `<column-targeting expression>` // **required**
 #'
 #'   The column that contains values for the start of the range. While select
 #'   helper functions such as [starts_with()] and [ends_with()] can be used for
@@ -3058,7 +3058,7 @@ cols_merge_uncert <- function(
 #'
 #' @param col_end *Column to target for end of range*
 #'
-#'   `<column-targeting expression>` --- **required**
+#'   `<column-targeting expression>` // **required**
 #'
 #'   The column that contains values for the end of the range. While select
 #'   helper functions such as [starts_with()] and [ends_with()] can be used for
@@ -3067,7 +3067,7 @@ cols_merge_uncert <- function(
 #'
 #' @param rows *Rows to target*
 #'
-#'   `<row-targeting expression>` --- *default:* `everything()`
+#'   `<row-targeting expression>` // *default:* `everything()`
 #'
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   participate in the merging process. The default [everything()] results in
@@ -3080,7 +3080,7 @@ cols_merge_uncert <- function(
 #'
 #' @param sep *Separator text for ranges*
 #'
-#'   `scalar<character>` --- *default:* `"--"`
+#'   `scalar<character>` // *default:* `"--"`
 #'
 #'   The separator text that indicates the values are ranged. The default value
 #'   of `"--"` will be transformed to an en dash for the range separator. Using
@@ -3090,7 +3090,7 @@ cols_merge_uncert <- function(
 #'
 #' @param autohide *Automatic hiding of the `col_end` column*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   An option to automatically hide the column specified as
 #'   `col_end`. Any columns with their state changed to hidden will behave
@@ -3257,7 +3257,7 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #'
 #' @param col_n *Column to target for counts*
 #'
-#'   `<column-targeting expression>` --- **required**
+#'   `<column-targeting expression>` // **required**
 #'
 #'   The column that contains values for the count component. While select
 #'   helper functions such as [starts_with()] and [ends_with()] can be used for
@@ -3266,7 +3266,7 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #'
 #' @param col_pct *Column to target for percentages*
 #'
-#'   `<column-targeting expression>` --- **required**
+#'   `<column-targeting expression>` // **required**
 #'
 #'   The column that contains values for the percentage component. While select
 #'   helper functions such as [starts_with()] and [ends_with()] can be used for
@@ -3277,7 +3277,7 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #'
 #' @param rows *Rows to target*
 #'
-#'   `<row-targeting expression>` --- *default:* `everything()`
+#'   `<row-targeting expression>` // *default:* `everything()`
 #'
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   participate in the merging process. The default [everything()] results in
@@ -3290,7 +3290,7 @@ cols_merge_resolver <- function(data, col_begin, col_end, sep) {
 #'
 #' @param autohide *Automatic hiding of the `col_pct` column*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   An option to automatically hide the column specified as `col_pct`. Any
 #'   columns with their state changed to hidden will behave the same as before,

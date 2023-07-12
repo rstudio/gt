@@ -9,7 +9,7 @@ random_id(n = 10)
 \arguments{
 \item{n}{\emph{Number of letters}
 
-\verb{scalar<numeric|integer>} --- \emph{default:} \code{10}
+\verb{scalar<numeric|integer>} // \emph{default:} \code{10}
 
 The \code{n} argument defines the number of lowercase letters to use for the
 random ID.}

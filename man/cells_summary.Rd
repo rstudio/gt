@@ -13,7 +13,7 @@ cells_summary(
 \arguments{
 \item{groups}{\emph{Specification of row group IDs}
 
-\verb{<row-group-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<row-group-targeting expression>} // \emph{default:} \code{everything()}
 
 The row groups to which targeting operations are constrained. This aids in
 targeting the summary rows that reside in certain row groups. Can either be
@@ -24,7 +24,7 @@ function. Examples of select helper functions include \code{\link[=starts_with]{
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 The columns to which targeting operations are constrained. Can either
 be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,
@@ -34,7 +34,7 @@ or a select helper function. Examples of select helper functions include
 
 \item{rows}{\emph{Rows to target}
 
-\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
 
 In conjunction with \code{columns}, we can specify which of their rows should
 form a constraint for targeting operations. The default \code{\link[=everything]{everything()}}

@@ -9,14 +9,14 @@ cols_units(.data, ..., .list = list2(...), .units_pattern = NULL)
 \arguments{
 \item{.data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{...}{\emph{Column units definitions}
 
-\verb{<multiple expressions>} --- \strong{required} (or, use \code{.list})
+\verb{<multiple expressions>} // \strong{required} (or, use \code{.list})
 
 Expressions for the assignment of column units for the table columns in
 \code{.data}. Two-sided formulas (e.g., \verb{<LHS> ~ <RHS>}) can be used, where the
@@ -32,13 +32,13 @@ defintion values.}
 
 \item{.list}{\emph{Alternative to \code{...}}
 
-\verb{<list of multiple expressions>} --- \strong{required} (or, use \code{...})
+\verb{<list of multiple expressions>} // \strong{required} (or, use \code{...})
 
 Allows for the use of a list as an input alternative to \code{...}.}
 
 \item{.units_pattern}{\emph{Pattern to combine column labels and units}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 An optional pattern to be used for combining column labels with the defined
 units. The default pattern is \code{"{1}, {2}"}, where \code{"{1}"} refers to the

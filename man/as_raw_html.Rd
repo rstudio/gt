@@ -9,14 +9,14 @@ as_raw_html(data, inline_css = TRUE)
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{inline_css}{\emph{Use inline CSS}
 
-\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 An option to supply styles to table elements as inlined CSS styles. This is
 useful when including the table HTML as part of an HTML email message body,

@@ -9,14 +9,14 @@ tab_stub_indent(data, rows, indent = "increase")
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{rows}{\emph{Rows to target}
 
-\verb{<row-targeting expression>} --- \strong{required}
+\verb{<row-targeting expression>} // \strong{required}
 
 The rows to consider for the indentation change. The default \code{\link[=everything]{everything()}}
 results in all rows being targeted. Alternatively, we can supply a vector
@@ -28,7 +28,7 @@ need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{indent}{\emph{Indentation directive}
 
-\verb{scalar<character|numeric|integer>} --- \emph{default:} \code{"increase"}
+\verb{scalar<character|numeric|integer>} // \emph{default:} \code{"increase"}
 
 An indentation directive either as a keyword describing the indentation
 change or as an explicit integer value for directly setting the indentation

@@ -16,14 +16,14 @@ cols_merge_range(
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{col_begin}{\emph{Column to target for beginning of range}
 
-\verb{<column-targeting expression>} --- \strong{required}
+\verb{<column-targeting expression>} // \strong{required}
 
 The column that contains values for the start of the range. While select
 helper functions such as \code{\link[=starts_with]{starts_with()}} and \code{\link[=ends_with]{ends_with()}} can be used for
@@ -32,7 +32,7 @@ is to ensure that exactly one column is provided here.}
 
 \item{col_end}{\emph{Column to target for end of range}
 
-\verb{<column-targeting expression>} --- \strong{required}
+\verb{<column-targeting expression>} // \strong{required}
 
 The column that contains values for the end of the range. While select
 helper functions such as \code{\link[=starts_with]{starts_with()}} and \code{\link[=ends_with]{ends_with()}} can be used for
@@ -41,7 +41,7 @@ is to ensure that exactly one column is provided here.}
 
 \item{rows}{\emph{Rows to target}
 
-\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
 
 In conjunction with \code{columns}, we can specify which of their rows should
 participate in the merging process. The default \code{\link[=everything]{everything()}} results in
@@ -54,7 +54,7 @@ down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{sep}{\emph{Separator text for ranges}
 
-\verb{scalar<character>} --- \emph{default:} \code{"--"}
+\verb{scalar<character>} // \emph{default:} \code{"--"}
 
 The separator text that indicates the values are ranged. The default value
 of \code{"--"} will be transformed to an en dash for the range separator. Using
@@ -64,7 +64,7 @@ within the base \code{\link[=I]{I()}} function.}
 
 \item{autohide}{\emph{Automatic hiding of the \code{col_end} column}
 
-\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 An option to automatically hide the column specified as
 \code{col_end}. Any columns with their state changed to hidden will behave
