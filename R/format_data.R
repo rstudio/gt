@@ -6227,6 +6227,8 @@ values_to_durations <- function(
     # than the smallest unit in `out_units`
     if (all(x_df_i$value == 0)) {
 
+      time_p <- out_units[length(out_units)]
+
       # If the time duration is zero then use `0` as the value,
       # otherwise, use `1` and indicate that the value is less than that
       pattern <-
