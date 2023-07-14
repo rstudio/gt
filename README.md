@@ -150,40 +150,6 @@ make this package better, please feel free to file an
 
 -----
 
-## How **gt** fits in with Other Packages that Generate Display Tables
-
-The **gt** package joins a burgeoning collection of packages for display
-table generation. Why another? We feel that there is enough room in this
-space to innovate further. Here are some of the ways that **gt**
-contributes to this ecosystem:
-
-  - the interface is high-level and declarative (general instructions
-    versus very specific)
-  - the formatting options are ‘batteries included’ (scientific
-    notation, uncertainty, ranges, percentages, suffixes, localized
-    currency, dates/times + much more)
-  - there is excellent, pain-free support for footnotes
-  - multiple output formats are supported with the same declarative
-    interface
-  - the API closely follows tidyverse conventions by adhering to the
-    [tidyverse style guide](https://style.tidyverse.org)
-  - there’s a focus on making the package documentation and examples the
-    best they can be
-  - rigorous QA/QC measures: high test coverage for automated tests, and
-    thorough manual testing
-
-While **gt** is trying to do something different with its own interface,
-it may not suit your specific needs. Here is a listing of other leading
-table-making **R** packages, with links to their respective project
-pages:
-
-  - **DT** ([GITHUB](https://github.com/rstudio/DT), [WEBSITE](https://rstudio.github.io/DT/))
-  - **reactable** ([GITHUB](https://github.com/glin/reactable), [WEBSITE](https://glin.github.io/reactable/))
-  - **flextable** ([GITHUB](https://github.com/davidgohel/flextable), [WEBSITE](https://davidgohel.github.io/flextable/))
-  - **kableExtra** ([GITHUB](https://github.com/haozhu233/kableExtra), [WEBSITE](https://haozhu233.github.io/kableExtra/))
-  - **formattable** ([GITHUB](https://github.com/renkun-ken/formattable), [WEBSITE](https://renkun-ken.github.io/formattable/))
-  - **huxtable** ([GITHUB](https://github.com/hughjonesd/huxtable), [WEBSITE](https://hughjonesd.github.io/huxtable/))
-
 ## Packages that use or extend **gt**
 
 There are several **R** packages that either use **gt** to generate tabular outputs or extend **gt** in amazing ways. Here is a short list of some of these great packages:
