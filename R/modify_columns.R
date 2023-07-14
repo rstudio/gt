@@ -1793,6 +1793,33 @@ cols_add <- function(
   data_tbl <- dt_data_get(data = .data)
   data_tbl_columns <- colnames(data_tbl)
 
+  #
+  # Special case where data table has no columns; here, we allow for one or
+  # more columns to be added with an arbitrary number of rows, however,
+  # the number of rows should be consistent across the supplied columns
+  #
+
+  if (length(data_tbl_columns) < 1) {
+
+    # Generate boxhead rows that correspond to the new columns
+    updated_boxh_df <-
+      dt_boxhead_get(data = gt(dplyr::as_tibble(as.data.frame(list(...)))))
+
+    # Modify the internal boxhead data frame
+    .data <- dt_boxhead_set(data = .data, boxh = updated_boxh_df)
+
+    # Manually add rows to the empty data table
+    .data <-
+      dt_data_add_rows(
+        data = .data,
+        row_data_list = list(...),
+        before = NULL,
+        after = NULL
+      )
+
+    return(.data)
+  }
+
   # Mutate the internal data table and get a vector of its column names
   data_tbl_mutated <- dplyr::mutate(data_tbl, ...)
   data_tbl_mutated_columns <- colnames(data_tbl_mutated)
