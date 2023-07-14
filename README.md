@@ -163,7 +163,6 @@ contributes to this ecosystem:
     notation, uncertainty, ranges, percentages, suffixes, localized
     currency, dates/times + much more)
   - there is excellent, pain-free support for footnotes
-  - the output is ‘camera-ready’
   - multiple output formats are supported with the same declarative
     interface
   - the API closely follows tidyverse conventions by adhering to the
@@ -171,22 +170,19 @@ contributes to this ecosystem:
   - there’s a focus on making the package documentation and examples the
     best they can be
   - rigorous QA/QC measures: high test coverage for automated tests, and
-    thorough manual testing by QA engineers (with every proposed code
-    change)
+    thorough manual testing
 
 While **gt** is trying to do something different with its own interface,
 it may not suit your specific needs. Here is a listing of other leading
 table-making **R** packages, with links to their respective project
 pages:
 
-  - **knitr** ([GITHUB](https://github.com/yihui/knitr), [WEBSITE](https://yihui.org/knitr/))
   - **DT** ([GITHUB](https://github.com/rstudio/DT), [WEBSITE](https://rstudio.github.io/DT/))
   - **reactable** ([GITHUB](https://github.com/glin/reactable), [WEBSITE](https://glin.github.io/reactable/))
   - **flextable** ([GITHUB](https://github.com/davidgohel/flextable), [WEBSITE](https://davidgohel.github.io/flextable/))
   - **kableExtra** ([GITHUB](https://github.com/haozhu233/kableExtra), [WEBSITE](https://haozhu233.github.io/kableExtra/))
   - **formattable** ([GITHUB](https://github.com/renkun-ken/formattable), [WEBSITE](https://renkun-ken.github.io/formattable/))
   - **huxtable** ([GITHUB](https://github.com/hughjonesd/huxtable), [WEBSITE](https://hughjonesd.github.io/huxtable/))
-  - **ftextra** ([GITHUB](https://github.com/atusy/ftExtra), [WEBSITE](https://ftextra.atusy.net/))
 
 ## Packages that use or extend **gt**
 
