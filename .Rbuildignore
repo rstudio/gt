@@ -28,6 +28,7 @@ tests/testthat/test-cols_merge.R
 tests/testthat/test-cols_width_rtf.R
 tests/testthat/test-cols_width.R
 tests/testthat/test-data_color.R
+tests/testthat/test-empty_tbl.R
 tests/testthat/test-escaping.R
 tests/testthat/test-extract_cells.R
 tests/testthat/test-fmt_auto.R
