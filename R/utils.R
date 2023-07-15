@@ -47,6 +47,22 @@ is_gt_tbl_or_group <- function(data) {
   inherits(data, "gt_tbl") || inherits(data, "gt_group")
 }
 
+is_gt_tbl_empty <- function(data) {
+  data_tbl <- dt_data_get(data = data)
+  ncol(data_tbl) == 0 && nrow(data_tbl) == 0
+}
+
+# Adjustments for a completely empty table (no columns and no rows)
+adjust_gt_tbl_empty <- function(data) {
+
+  data <- cols_add(data, no_data = "TABLE HAS NO DATA")
+  data <- tab_options(data, column_labels.hidden = TRUE)
+  data <- cols_align(data, align = "center", columns = no_data)
+  data <- cols_width(data, no_data ~ px(500))
+
+  data
+}
+
 #' Determines whether a character vector is non-empty
 #'
 #' @param x A character vector.
