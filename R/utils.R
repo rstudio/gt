@@ -52,6 +52,16 @@ is_gt_tbl_empty <- function(data) {
   ncol(data_tbl) == 0 && nrow(data_tbl) == 0
 }
 
+is_gt_tbl_empty_w_cols <- function(data) {
+  data_tbl <- dt_data_get(data = data)
+  ncol(data_tbl) > 0 && nrow(data_tbl) == 0
+}
+
+is_gt_tbl_empty_w_rows <- function(data) {
+  data_tbl <- dt_data_get(data = data)
+  ncol(data_tbl) == 0 && nrow(data_tbl) > 0
+}
+
 # Adjustments for a completely empty table (no columns and no rows)
 adjust_gt_tbl_empty <- function(data) {
 
