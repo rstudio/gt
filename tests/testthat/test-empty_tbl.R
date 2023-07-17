@@ -47,20 +47,20 @@ test_that("We can build gt tables starting from an empty table", {
 
   # An empty table (having some rows though) can be rendered
   # in different output formats without failing
-  #expect_error(
-  #  regexp = NA,
-  #  gt(empty_w_rows_tbl) %>% render_as_html()
-  #)
-  #expect_error(
-  #  regexp = NA,
-  #  gt(empty_w_rows_tbl) %>% as_latex()
-  #)
-  #expect_error(
-  #  regexp = NA,
-  #  gt(empty_w_rows_tbl) %>% as_rtf()
-  #)
-  #expect_error(
-  #  regexp = NA,
-  #  gt(empty_w_rows_tbl) %>% as_word()
-  #)
+  expect_error(
+    regexp = NA,
+    gt(empty_w_rows_tbl) %>% render_as_html()
+  )
+  expect_error(
+    regexp = NA,
+    gt(empty_w_rows_tbl) %>% as_latex()
+  )
+  expect_error(
+    regexp = NA,
+    gt(empty_w_rows_tbl) %>% as_rtf()
+  )
+  expect_error(
+    regexp = NA,
+    gt(empty_w_rows_tbl) %>% as_word()
+  )
 })
