@@ -40,6 +40,11 @@ dt_data_init <- function(
     rownames_to_column = NA
 ) {
 
+  # If the data table has rows but no columns, remove all of the rows
+  if (ncol(data_tbl) == 0 && nrow(data_tbl) > 0) {
+    data_tbl <- data_tbl[0, ]
+  }
+
   if (!is.na(rownames_to_column)) {
 
     data_rownames <- rownames(data_tbl)
