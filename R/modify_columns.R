@@ -1793,6 +1793,114 @@ cols_add <- function(
   data_tbl <- dt_data_get(data = .data)
   data_tbl_columns <- colnames(data_tbl)
 
+  #
+  # Special case where data table has no columns (and perhaps no rows); here,
+  # we allow for one or more columns to be added with an arbitrary number of
+  # rows, however, the number of rows should be consistent across the supplied
+  # columns
+  #
+
+  if (nrow(data_tbl) < 1 && ncol(data_tbl) < 1) {
+
+    # Generate boxhead rows that correspond to the new columns
+    updated_boxh_df <-
+      dt_boxhead_get(data = gt(dplyr::as_tibble(as.data.frame(list(...)))))
+
+    # Modify the internal boxhead data frame
+    .data <- dt_boxhead_set(data = .data, boxh = updated_boxh_df)
+
+    # Manually add rows to the empty data table (if there are indeed some rows)
+    if (nrow(dplyr::as_tibble(as.data.frame(list(...)))) > 0) {
+
+      .data <-
+        dt_data_add_rows(
+          data = .data,
+          row_data_list = list(...),
+          before = NULL,
+          after = NULL
+        )
+    }
+
+    # Update the internal data table object
+    .data <-
+      dt_data_set(
+        data = .data,
+        data_tbl = dplyr::as_tibble(as.data.frame(list(...)))
+      )
+
+    return(.data)
+  }
+
+  #
+  # Special case where data table has some columns (but no rows); here, we allow
+  # for one or more columns to be added with an arbitrary number of rows,
+  # however, the number of rows should be consistent across the supplied columns
+  #
+
+  if (nrow(data_tbl) < 1 && ncol(data_tbl) > 0) {
+
+    # Generate boxhead rows that correspond to the new columns
+    updated_boxh_df <-
+      dt_boxhead_get(data = gt(dplyr::as_tibble(as.data.frame(list(...)))))
+
+    updated_boxh_df <-
+      dplyr::bind_rows(
+        dt_boxhead_get(data = .data),
+        updated_boxh_df[
+          !(updated_boxh_df$var %in% dt_boxhead_get(data = .data)[["var"]]),
+        ]
+      )
+
+    # Modify the internal boxhead data frame
+    .data <- dt_boxhead_set(data = .data, boxh = updated_boxh_df)
+
+    # Determine whether the supplied set of values is zero length
+    row_data_list_empty <-
+      all(
+        vapply(
+          seq_along(list(...)),
+          FUN.VALUE = logical(1),
+          USE.NAMES = FALSE,
+          FUN = function(x) {
+            length(list(...)[[x]]) < 1
+          }
+        )
+      )
+
+    if (row_data_list_empty) {
+
+      # Bind the zero-row tables together
+      updated_data_tbl <-
+        dplyr::bind_cols(
+          dt_data_get(data = .data),
+          dplyr::as_tibble(as.data.frame(list(...)))
+        )
+
+      # Update the internal data table object
+      .data <-
+        dt_data_set(
+          data = .data,
+          data_tbl = updated_data_tbl
+        )
+
+      return(.data)
+    }
+
+    # Manually add rows to the empty data table (if there are indeed some rows)
+    if (nrow(dplyr::as_tibble(as.data.frame(list(...)))) > 0) {
+
+      .data <-
+        dt_data_add_rows(
+          data = .data,
+          row_data_list = list(...),
+          before = NULL,
+          after = NULL
+        )
+    }
+
+    return(.data)
+  }
+
   # Mutate the internal data table and get a vector of its column names
   data_tbl_mutated <- dplyr::mutate(data_tbl, ...)
   data_tbl_mutated_columns <- colnames(data_tbl_mutated)
@@ -1813,7 +1921,8 @@ cols_add <- function(
   columns_new <- base::setdiff(data_tbl_mutated_columns, data_tbl_columns)
 
   # Generate a table that has only the new columns
-  data_tbl_new_cols <- dplyr::select(data_tbl_mutated, columns_new)
+  data_tbl_new_cols <-
+    dplyr::select(data_tbl_mutated, dplyr::all_of(columns_new))
 
   # Generate boxhead rows that correspond to the new columns
   boxh_df_new_cols <- dt_boxhead_get(data = gt(data_tbl_new_cols))

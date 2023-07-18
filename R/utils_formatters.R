@@ -245,6 +245,23 @@ get_locale_num_spellout <- function(locale = NULL) {
   spelled_num[[locale]]
 }
 
+#' Get the `no_table_data_text` value based on a locale
+#'
+#' @param locale The user-supplied `locale` value, found in several `fmt_*()`
+#'   functions. This is expected as `NULL` if not supplied by the user.
+#' @noRd
+get_locale_no_table_data_text <- function(locale = NULL) {
+
+  # If `locale` is NULL then use the 'en' locale
+  if (is.null(locale)) {
+    locale <- "en"
+  }
+
+  # Get the correct `no_table_data_text` value from the
+  # `gt:::locales` lookup table
+  filter_table_to_value(locales, no_table_data_text, locale == {{ locale }})
+}
+
 get_locale_segments <- function(locale) {
 
   if (!grepl("-", locale)) {

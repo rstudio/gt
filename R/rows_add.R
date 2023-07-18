@@ -307,8 +307,21 @@ rows_add <- function(
     return(.data)
   }
 
-  # Get the column names from the internal dataset
+  # Get the internal dataset and a vector of its column names
   data_tbl <- dt_data_get(data = .data)
+  data_tbl_columns <- colnames(data_tbl)
+
+  #
+  # Special case where data table has no columns (and no rows); here, we allow
+  # for one or more rows to be added with an arbitrary number of columns
+  #
+
+  if (nrow(data_tbl) < 1 && length(data_tbl_columns) < 1) {
+
+    .data <- cols_add(.data = .data, ...)
+
+    return(.data)
+  }
 
   if (!is.null(.n_empty)) {
 
@@ -451,6 +464,27 @@ rows_add <- function(
   # Stop function if expressions are given to both `.before` and `.after`
   if (!is.null(resolved_rows_before_idx) && !is.null(resolved_rows_after_idx)) {
     cli::cli_abort("Expressions cannot be given to both `.before` and `.after`.")
+  }
+
+  #
+  # Special case where all components of `row_data_list` are empty (have
+  # zero length); in this case we need to return the data unchanged
+  #
+
+  row_data_list_empty <-
+    all(
+      vapply(
+        seq_along(row_data_list),
+        FUN.VALUE = logical(1),
+        USE.NAMES = FALSE,
+        FUN = function(x) {
+          length(row_data_list[[x]]) < 1
+        }
+      )
+    )
+
+  if (row_data_list_empty) {
+    return(.data)
   }
 
   dt_data_add_rows(

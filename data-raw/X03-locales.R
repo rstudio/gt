@@ -256,6 +256,19 @@ for (i in seq_along(regional_currencies)) {
 regional_currencies_tbl[regional_currencies_tbl$territory_name == "CU", ][["currency_code"]] <- "CUP"
 
 #
+# Create a table of 'no-table-data' text from all possible languages
+#
+
+no_table_data <-
+  readr::read_csv(
+    "data-raw/no_table_data_text.csv",
+    col_types = cols(
+      lang_name = col_character(),
+      no_table_data_text = col_character()
+    )
+  )
+
+#
 # Join all tables together to generate a comprehensive locale metadata table
 #
 
@@ -263,7 +276,8 @@ locales <-
   locale_metadata_tbl %>%
   left_join(chr_index_tbl, by = "locale") %>%
   left_join(numbers_metadata_tbl, by = "locale") %>%
-  left_join(regional_currencies_tbl, by = "territory_name")
+  left_join(regional_currencies_tbl, by = "territory_name") %>%
+  left_join(no_table_data, by = "lang_name")
 
 rm(parse_locale)
 rm(i)
@@ -292,3 +306,5 @@ rm(currency_in_use)
 rm(index_chr)
 rm(n_regional_currencies)
 rm(not_tender_j)
+rm(no_table_data)
+
