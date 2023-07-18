@@ -411,3 +411,44 @@ test_that("We can use a combination of row/column adding on empty tables", {
       rows_add(.n_empty = 5)
   )
 })
+
+test_that("Empty tables when rendered are locale aware", {
+
+  # Expect that the 'Table has no data' text is rendered in
+  # different languages according to locale
+  expect_match(
+    gt(empty_tbl) %>%
+      render_as_html(),
+    "Table has no data"
+  )
+  expect_match(
+    gt(empty_tbl, locale = "en") %>%
+      render_as_html(),
+    "Table has no data"
+  )
+  expect_match(
+    gt(empty_w_rows_tbl) %>%
+      render_as_html(),
+    "Table has no data"
+  )
+  expect_match(
+    gt(empty_tbl, locale = "ak") %>%
+      render_as_html(),
+    "Table nya data"
+  )
+  expect_match(
+    gt(empty_tbl, locale = "et") %>%
+      render_as_html(),
+    "Tabelis pole andmeid"
+  )
+  expect_match(
+    gt(empty_tbl, locale = "rn") %>%
+      render_as_html(),
+    "Teyiburu ntibaho"
+  )
+  expect_match(
+    gt(empty_tbl, locale = "su") %>%
+      render_as_html(),
+    "Tabel henteu na data"
+  )
+})
