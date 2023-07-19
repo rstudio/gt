@@ -1514,6 +1514,7 @@ fmt_symbol <- function(
               x[is_not_negative_x],
               context = context,
               decimals = decimals,
+              n_sigfig = NULL,
               sep_mark = sep_mark,
               dec_mark = dec_mark,
               drop_trailing_zeros = drop_trailing_zeros,
@@ -1532,6 +1533,7 @@ fmt_symbol <- function(
               abs(x[is_negative_x]),
               context = context,
               decimals = decimals,
+              n_sigfig = NULL,
               sep_mark = sep_mark,
               dec_mark = dec_mark,
               drop_trailing_zeros = drop_trailing_zeros,
@@ -2484,8 +2486,11 @@ fmt_fraction <- function(
         big_x <-
           format_num_to_str(
             big_x,
-            context = context, decimals = 0, n_sigfig = NULL,
-            sep_mark = sep_mark, dec_mark = "",
+            context = context,
+            decimals = 0,
+            n_sigfig = NULL,
+            sep_mark = sep_mark,
+            dec_mark = "",
             drop_trailing_zeros = TRUE,
             drop_trailing_dec_mark = TRUE,
             format = "f",
@@ -2638,8 +2643,10 @@ make_frac <- function(x, denom, simplify = TRUE) {
         format_num_to_str(
           numer,
           context = "plain",
-          decimals = 0, n_sigfig = NULL,
-          sep_mark = "", dec_mark = ".",
+          decimals = 0,
+          n_sigfig = NULL,
+          sep_mark = "",
+          dec_mark = ".",
           drop_trailing_zeros = TRUE,
           drop_trailing_dec_mark = TRUE,
           format = "f"
@@ -2648,8 +2655,10 @@ make_frac <- function(x, denom, simplify = TRUE) {
         format_num_to_str(
           denom,
           context = "plain",
-          decimals = 0, n_sigfig = NULL,
-          sep_mark = "", dec_mark = ".",
+          decimals = 0,
+          n_sigfig = NULL,
+          sep_mark = "",
+          dec_mark = ".",
           drop_trailing_zeros = TRUE,
           drop_trailing_dec_mark = TRUE,
           format = "f"
