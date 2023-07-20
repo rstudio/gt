@@ -19,14 +19,14 @@ tab_style_body(
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{style}{\emph{Style declarations}
 
-\verb{<style expressions>} --- \strong{required}
+\verb{<style expressions>} // \strong{required}
 
 The styles to use for the targeted cells. The \code{\link[=cell_text]{cell_text()}}, \code{\link[=cell_fill]{cell_fill()}},
 and \code{\link[=cell_borders]{cell_borders()}} helper functions can be used here to more easily
@@ -37,7 +37,7 @@ list item.}
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 The columns to which the targeting operations are constrained.  Can either
 be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,
@@ -48,7 +48,7 @@ or a select helper function. Examples of select helper functions include
 
 \item{rows}{\emph{Rows to target}
 
-\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
 
 In conjunction with \code{columns}, we can specify which of their rows should
 form a constraint for targeting operations. The default \code{\link[=everything]{everything()}}
@@ -61,21 +61,21 @@ down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{values}{\emph{Values for targeting}
 
-\verb{vector<character|numeric|integer>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{vector<character|numeric|integer>} // \emph{default:} \code{NULL} (\code{optional})
 
 The specific value or values that should be targeted for styling. If
 \code{pattern} is also supplied then \code{values} will be ignored.}
 
 \item{pattern}{\emph{Regex pattern for targeting}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 A regex pattern that can target solely those values in \code{character}-based
 columns. If \code{values} is also supplied, \code{pattern} will take precedence.}
 
 \item{fn}{\emph{Function to return logical values}
 
-\verb{<function>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{<function>} // \emph{default:} \code{NULL} (\code{optional})
 
 A supplied function that operates on each cell of each column specified
 through \code{columns} and \code{rows}. The function should be fashioned such that a
@@ -84,7 +84,7 @@ also supplied, \code{fn} will take precedence.}
 
 \item{targets}{\emph{Styling targets}
 
-\verb{vector<character>} --- \emph{default:} \code{"cell"}
+\verb{vector<character>} // \emph{default:} \code{"cell"}
 
 A vector of styling target keywords to contain or expand the target of each
 cell. By default, this is a vector just containing \code{"cell"}. However, the
@@ -93,7 +93,7 @@ style the target cells' associated rows or columns.}
 
 \item{extents}{\emph{Styling extents}
 
-\verb{vector<character>} --- \emph{default:} \code{"body"}
+\verb{vector<character>} // \emph{default:} \code{"body"}
 
 A vector of locations to project styling. By default, this is a vector just
 containing \code{"body"}, whereby styled rows or columns (facilitated via

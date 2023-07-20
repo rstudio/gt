@@ -9,14 +9,14 @@ opt_horizontal_padding(data, scale = 1)
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{scale}{\emph{Scale factor}
 
-\verb{scalar<numeric|integer>(0>=val>=3)} --- \emph{default:} \code{1}
+\verb{scalar<numeric|integer>(0>=val>=3)} // \emph{default:} \code{1}
 
 A scale factor by which the horizontal padding will be adjusted. Must be a
 number between \code{0} and \code{3}.}

@@ -9,14 +9,14 @@ cols_width(.data, ..., .list = list2(...))
 \arguments{
 \item{.data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{...}{\emph{Column width assignments}
 
-\verb{<multiple expressions>} --- \strong{required} (or, use \code{.list})
+\verb{<multiple expressions>} // \strong{required} (or, use \code{.list})
 
 Expressions for the assignment of column widths for the table columns in
 \code{.data}. Two-sided formulas (e.g, \verb{<LHS> ~ <RHS>}) can be used, where the
@@ -33,7 +33,7 @@ value by using \code{everything()} on the left-hand side.}
 
 \item{.list}{\emph{Alternative to \code{...}}
 
-\verb{<list of multiple expressions>} --- \strong{required} (or, use \code{...})
+\verb{<list of multiple expressions>} // \strong{required} (or, use \code{...})
 
 Allows for the use of a list as an input alternative to \code{...}.}
 }
@@ -97,6 +97,7 @@ named arguments in \code{...}, specifying the exact widths for table columns
 
 \seealso{
 Other column modification functions: 
+\code{\link{cols_add}()},
 \code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
@@ -109,6 +110,7 @@ Other column modification functions:
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
-\code{\link{cols_unhide}()}
+\code{\link{cols_unhide}()},
+\code{\link{cols_units}()}
 }
 \concept{column modification functions}

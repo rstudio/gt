@@ -9,7 +9,7 @@ px(x)
 \arguments{
 \item{x}{\emph{Numeric length in pixels}
 
-\verb{scalar<numeric|integer>} --- \strong{required}
+\verb{scalar<numeric|integer>} // \strong{required}
 
 The numeric value to format as a string (e.g., \code{"12px"}) for some
 \code{\link[=tab_options]{tab_options()}} arguments that can take values as units of pixels (e.g.,
@@ -77,6 +77,7 @@ Other helper functions:
 \code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
+\code{\link{define_units}()},
 \code{\link{escape_latex}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},

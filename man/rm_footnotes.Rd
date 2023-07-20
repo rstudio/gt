@@ -9,14 +9,14 @@ rm_footnotes(data, footnotes = everything())
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{footnotes}{\emph{Footnotes to remove}
 
-\verb{scalar<numeric|integer>|everything()} --- \emph{default:} \code{everything()}
+\verb{scalar<numeric|integer>|everything()} // \emph{default:} \code{everything()}
 
 A specification of which footnotes should be removed. The footnotes to be
 removed can be given as a vector of integer values (they are stored as

@@ -16,14 +16,14 @@ rows_add(
 \arguments{
 \item{.data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{...}{\emph{Cell data assignments}
 
-\verb{<multiple expressions>} --- (or, use \code{.list})
+\verb{<multiple expressions>} // (or, use \code{.list})
 
 Expressions for the assignment of cell values to the new rows by column
 name in \code{.data}. Name-value pairs, in the form of
@@ -39,13 +39,13 @@ in cases where there are multiple rows to be added.}
 
 \item{.list}{\emph{Alternative to \code{...}}
 
-\verb{<list of multiple expressions>} --- (or, use \code{...})
+\verb{<list of multiple expressions>} // (or, use \code{...})
 
 Allows for the use of a list as an input alternative to \code{...}.}
 
 \item{.before, .after}{\emph{Row used as anchor}
 
-\verb{<row-targeting expression>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{<row-targeting expression>} // \emph{default:} \code{NULL} (\code{optional})
 
 A single row-resolving expression or row index an be given to either
 \code{.before} or \code{.after}. The row specifies where the new rows should be
@@ -59,7 +59,7 @@ table.}
 
 \item{.n_empty}{\emph{Number of empty rows to add}
 
-\code{scalar<numeric|integer>(val>=0)} --- \emph{default:} \code{NULL} (\code{optional})
+\code{scalar<numeric|integer>(val>=0)} // \emph{default:} \code{NULL} (\code{optional})
 
 An option to add empty rows in lieu of rows containing data that would
 otherwise be supplied to \code{...} or \code{.list}. If the option is taken, provide
@@ -80,7 +80,7 @@ table.
 \section{Targeting the row for insertion with \code{.before} or \code{.after}}{
 
 
-The targeting of a rows for insertion is done through the \code{.before} or
+The targeting of a row for insertion is done through the \code{.before} or
 \code{.after} arguments (only one of these options should be be used). This can be
 done in a variety of ways. If a stub is present, then we potentially have row
 identifiers. This is the ideal method to use for establishing a row target.
@@ -89,8 +89,8 @@ possible to use row indices (e.g., \code{c(3, 5, 6)}) though these index values
 must correspond to the row numbers of the input data (the indices won't
 necessarily match those of rearranged rows if row groups are present). One
 more type of expression is possible, an expression that takes column values
-(can involve any of the available columns in the table) and returns a
-logical vector.
+(can involve any of the available columns in the table) and returns a logical
+vector.
 }
 
 \section{Examples}{

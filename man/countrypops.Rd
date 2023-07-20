@@ -60,8 +60,10 @@ DATA-1
 
 \seealso{
 Other datasets: 
+\code{\link{constants}},
 \code{\link{exibble}},
 \code{\link{gtcars}},
+\code{\link{illness}},
 \code{\link{metro}},
 \code{\link{pizzaplace}},
 \code{\link{rx_addv}},

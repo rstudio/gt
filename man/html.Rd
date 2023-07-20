@@ -9,14 +9,14 @@ html(text, ...)
 \arguments{
 \item{text}{\emph{HTML text}
 
-\verb{scalar<character>} --- \strong{required}
+\verb{scalar<character>} // \strong{required}
 
 The text that is understood to be HTML text, which is to be preserved in
 the HTML output context.}
 
 \item{...}{\emph{Optional parameters for \code{htmltools::HTML()}}
 
-\verb{<multiple expressions>} --- (\code{optional})
+\verb{<multiple expressions>} // (\code{optional})
 
 The \code{htmltools::HTML()} function contains \code{...} and anything provided here
 will be passed to that internal function call.}
@@ -81,6 +81,7 @@ Other helper functions:
 \code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
+\code{\link{define_units}()},
 \code{\link{escape_latex}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},

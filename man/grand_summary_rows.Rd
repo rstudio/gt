@@ -18,14 +18,14 @@ grand_summary_rows(
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 The columns for which the summaries should be calculated. Can either
 be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,
@@ -59,14 +59,14 @@ Optionally, the LHS could contain a group-targeting expression (e.g.,
 
 \item{side}{\emph{Side used for placement of grand summary rows}
 
-\verb{singl-kw:[bottom|top]} --- \emph{default:} \code{"bottom"}
+\verb{singl-kw:[bottom|top]} // \emph{default:} \code{"bottom"}
 
 Should the grand summary rows be placed at the \code{"bottom"} (the default) or
 the \code{"top"} of the table?}
 
 \item{missing_text}{\emph{Replacement text for \code{NA} values}
 
-\verb{scalar<character>} --- \emph{default:} \code{"---"}
+\verb{scalar<character>} // \emph{default:} \code{"---"}
 
 The text to be used in place of \code{NA} values in summary cells with no data
 outputs.}

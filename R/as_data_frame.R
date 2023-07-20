@@ -30,14 +30,14 @@
 #'
 #' @param x *The gt table data object*
 #'
-#'   `obj:<gt_tbl>` --- **required**
+#'   `obj:<gt_tbl>` // **required**
 #'
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
 #' @param ... *Optional parameters*
 #'
-#'   `<multiple expressions>` --- (`optional`)
+#'   `<multiple expressions>` // (`optional`)
 #'
 #'   Anything provided here in `...` will be passed to internal function calls
 #'   that can consume it.

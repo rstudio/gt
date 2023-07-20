@@ -245,6 +245,23 @@ get_locale_num_spellout <- function(locale = NULL) {
   spelled_num[[locale]]
 }
 
+#' Get the `no_table_data_text` value based on a locale
+#'
+#' @param locale The user-supplied `locale` value, found in several `fmt_*()`
+#'   functions. This is expected as `NULL` if not supplied by the user.
+#' @noRd
+get_locale_no_table_data_text <- function(locale = NULL) {
+
+  # If `locale` is NULL then use the 'en' locale
+  if (is.null(locale)) {
+    locale <- "en"
+  }
+
+  # Get the correct `no_table_data_text` value from the
+  # `gt:::locales` lookup table
+  filter_table_to_value(locales, no_table_data_text, locale == {{ locale }})
+}
+
 get_locale_segments <- function(locale) {
 
   if (!grepl("-", locale)) {
@@ -400,27 +417,35 @@ format_num_to_str <- function(
   # If this hardcoding is ever to change, then we need to
   # modify the regexes below
   if (system == "ind") {
+
     sep_mark <- ","
     dec_mark <- "."
   }
 
   if (format == "fg") {
+
     x <- signif(x, digits = n_sigfig)
     mode <- NULL
     digits <- n_sigfig
     flag <- "#"
     drop0trailing <- FALSE
+
   } else if (format == "f") {
+
     mode <- "double"
     digits <- decimals
     flag <- ""
     drop0trailing <- drop_trailing_zeros
+
   } else if (format == "e") {
+
     mode <- "double"
     digits <- decimals
     flag <- ""
-    drop0trailing <- drop_trailing_zeros
+    drop0trailing <- FALSE
+
   } else {
+
     cli::cli_abort("The format provided isn't recognized.")
   }
 
@@ -496,6 +521,7 @@ format_num_to_str_c <- function(
     x,
     context,
     decimals,
+    n_sigfig,
     sep_mark,
     dec_mark,
     drop_trailing_zeros = FALSE,
@@ -509,6 +535,7 @@ format_num_to_str_c <- function(
     x = x,
     context = context,
     decimals = decimals,
+    n_sigfig = n_sigfig,
     sep_mark = sep_mark,
     dec_mark = dec_mark,
     drop_trailing_zeros = drop_trailing_zeros,
@@ -1110,7 +1137,7 @@ num_fmt_factory <- function(
     format_fn
 ) {
 
-  # Force all arguments
+  # Force all arguments that don't have default values
   force(context)
   force(pattern)
   force(format_fn)
@@ -1128,17 +1155,22 @@ num_fmt_factory <- function(
       # Create a possibly shorter vector of non-NA `x` values
       x_vals <- x[non_na_x]
 
+      #
       # Apply a series of transformations to `x_str_vals`
-      x_str_vals <-
-        x_vals %>%
-        # Format all non-NA x values with a formatting function
-        format_fn(context = context) %>%
-        # If in a LaTeX context, wrap values in math mode
-        { if (use_latex_math_mode) to_latex_math_mode(., context = context) else . } %>%
-        # Handle formatting of pattern
-        apply_pattern_fmt_x(pattern = pattern)
+      #
 
-      # Place the `x_str_vals` into `str` (at the non-NA indices)
+      # Format all non-NA `x` values with a formatting function
+      x_str_vals <- format_fn(x_vals, context = context)
+
+      # If in a LaTeX context, wrap values in math mode
+      if (use_latex_math_mode) {
+        x_str_vals <- to_latex_math_mode(x_str_vals, context = context)
+      }
+
+      # Handle formatting of pattern
+      x_str_vals <- apply_pattern_fmt_x(x_str_vals, pattern = pattern)
+
+      # Place the `x_str_vals` into `x_str` (at the non-NA indices)
       x_str[non_na_x] <- x_str_vals
     }
 

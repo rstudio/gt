@@ -38,7 +38,7 @@
 #'
 #' @param groups *Specification of row group IDs*
 #'
-#'   `vector<character>` --- **required**
+#'   `vector<character>` // **required**
 #'
 #'   A character vector of row group ID values corresponding to the revised
 #'   ordering. While this vector must contain valid group ID values, it is not

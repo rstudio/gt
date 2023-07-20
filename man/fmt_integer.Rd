@@ -22,14 +22,14 @@ fmt_integer(
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
 column indices, or a select helper function. Examples of select helper
@@ -38,7 +38,7 @@ functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_w
 
 \item{rows}{\emph{Rows to target}
 
-\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
 
 In conjunction with \code{columns}, we can specify which of their rows should
 undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
@@ -51,7 +51,7 @@ need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{use_seps}{\emph{Use digit group separators}
 
-\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 An option to use digit group separators. The type of digit group separator
 is set by \code{sep_mark} and overridden if a locale ID is provided to \code{locale}.
@@ -59,7 +59,7 @@ This setting is \code{TRUE} by default.}
 
 \item{accounting}{\emph{Use accounting style}
 
-\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
 
 An option to use accounting style for values. Normally, negative values
 will be shown with a minus sign but using accounting style will instead put
@@ -67,7 +67,7 @@ any negative values in parentheses.}
 
 \item{scale_by}{\emph{Scale values by a fixed multiplier}
 
-\verb{scalar<numeric|integer>} --- \emph{default:} \code{1}
+\verb{scalar<numeric|integer>} // \emph{default:} \code{1}
 
 All numeric values will be multiplied by the \code{scale_by} value before
 undergoing formatting. Since the \code{default} value is \code{1}, no values will be
@@ -77,7 +77,7 @@ not set to \code{FALSE}).}
 
 \item{suffixing}{\emph{Specification for large-number suffixing}
 
-\verb{scalar<logical>|vector<character>} --- \emph{default:} \code{FALSE}
+\verb{scalar<logical>|vector<character>} // \emph{default:} \code{FALSE}
 
 The \code{suffixing} option allows us to scale and apply suffixes to larger
 numbers (e.g., \code{1924000} can be transformed to \verb{2M}). This option can
@@ -107,7 +107,7 @@ doesn't apply suffixes to the thousands range, but does express values in
 
 \item{pattern}{\emph{Specification of the formatting pattern}
 
-\verb{scalar<character>} --- \emph{default:} \code{"{x}"}
+\verb{scalar<character>} // \emph{default:} \code{"{x}"}
 
 A formatting pattern that allows for decoration of the formatted value. The
 formatted value is represented by the \code{{x}} (which can be used multiple
@@ -116,7 +116,7 @@ literals.}
 
 \item{sep_mark}{\emph{Separator mark for digit grouping}
 
-\verb{scalar<character>} --- \emph{default:} \code{","}
+\verb{scalar<character>} // \emph{default:} \code{","}
 
 The string to use as a separator between groups of digits. For example,
 using \code{sep_mark = ","} with a value of \code{1000} would result in a formatted
@@ -125,7 +125,7 @@ value of \code{"1,000"}. This argument is ignored if a \code{locale} is supplied
 
 \item{force_sign}{\emph{Forcing the display of a positive sign}
 
-\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
 
 Should the positive sign be shown for positive values (effectively showing
 a sign for all values except zero)? If so, use \code{TRUE} for this option. The
@@ -135,7 +135,7 @@ This option is disregarded when using accounting notation with
 
 \item{system}{\emph{Numbering system for grouping separators}
 
-\verb{singl-kw:[intl|ind]} --- \emph{default:} \code{"intl"}
+\verb{singl-kw:[intl|ind]} // \emph{default:} \code{"intl"}
 
 The international numbering system (keyword: \code{"intl"}) is widely used and
 its grouping separators (i.e., \code{sep_mark}) are always separated by three
@@ -145,7 +145,7 @@ crore, and higher quantities.}
 
 \item{locale}{\emph{Locale identifier}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 An optional locale identifier that can be used for formatting values
 according the locale's rules. Examples include \code{"en"} for English (United
@@ -299,6 +299,7 @@ Other data formatting functions:
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
 \code{\link{fmt_time}()},
+\code{\link{fmt_units}()},
 \code{\link{fmt_url}()},
 \code{\link{fmt}()},
 \code{\link{sub_large_vals}()},

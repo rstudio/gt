@@ -25,14 +25,14 @@ fmt_bytes(
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
 column indices, or a select helper function. Examples of select helper
@@ -41,7 +41,7 @@ functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_w
 
 \item{rows}{\emph{Rows to target}
 
-\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
 
 In conjunction with \code{columns}, we can specify which of their rows should
 undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
@@ -54,7 +54,7 @@ need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{standard}{\emph{Standard used to express byte sizes}
 
-\verb{singl-kw:[decimal|binary]} --- \emph{default:} \code{"decimal"}
+\verb{singl-kw:[decimal|binary]} // \emph{default:} \code{"decimal"}
 
 The form of expressing large byte sizes is divided between: (1) decimal
 units (powers of 1000; e.g., \code{"kB"} and \code{"MB"}), and (2) binary units
@@ -62,7 +62,7 @@ units (powers of 1000; e.g., \code{"kB"} and \code{"MB"}), and (2) binary units
 
 \item{decimals}{\emph{Number of decimal places}
 
-\code{scalar<numeric|integer>(val>=0)} --- \emph{default:} \code{1}
+\code{scalar<numeric|integer>(val>=0)} // \emph{default:} \code{1}
 
 This corresponds to the exact number of decimal places to use. A value
 such as \code{2.34} can, for example, be formatted with \code{0} decimal places and
@@ -72,7 +72,7 @@ becomes \code{"2.3400"}. The trailing zeros can be removed with
 
 \item{n_sigfig}{\emph{Number of significant figures}
 
-\code{scalar<numeric|integer>(val>=1)} --- \emph{default:} \code{NULL} (\code{optional})
+\code{scalar<numeric|integer>(val>=1)} // \emph{default:} \code{NULL} (\code{optional})
 
 A option to format numbers to \emph{n} significant figures. By default, this is
 \code{NULL} and thus number values will be formatted according to the number of
@@ -83,14 +83,14 @@ arguments will be ignored.}
 
 \item{drop_trailing_zeros}{\emph{Drop any trailing zeros}
 
-\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
 
 A logical value that allows for removal of trailing zeros (those redundant
 zeros after the decimal mark).}
 
 \item{drop_trailing_dec_mark}{\emph{Drop the trailing decimal mark}
 
-\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 A logical value that determines whether decimal marks should always appear
 even if there are no decimal digits to display after formatting (e.g., \code{23}
@@ -98,7 +98,7 @@ becomes \code{23.} if \code{FALSE}). By default trailing decimal marks are not s
 
 \item{use_seps}{\emph{Use digit group separators}
 
-\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 An option to use digit group separators. The type of digit group separator
 is set by \code{sep_mark} and overridden if a locale ID is provided to \code{locale}.
@@ -106,7 +106,7 @@ This setting is \code{TRUE} by default.}
 
 \item{pattern}{\emph{Specification of the formatting pattern}
 
-\verb{scalar<character>} --- \emph{default:} \code{"{x}"}
+\verb{scalar<character>} // \emph{default:} \code{"{x}"}
 
 A formatting pattern that allows for decoration of the formatted value. The
 formatted value is represented by the \code{{x}} (which can be used multiple
@@ -115,7 +115,7 @@ literals.}
 
 \item{sep_mark}{\emph{Separator mark for digit grouping}
 
-\verb{scalar<character>} --- \emph{default:} \code{","}
+\verb{scalar<character>} // \emph{default:} \code{","}
 
 The string to use as a separator between groups of digits. For example,
 using \code{sep_mark = ","} with a value of \code{1000} would result in a formatted
@@ -124,7 +124,7 @@ value of \code{"1,000"}. This argument is ignored if a \code{locale} is supplied
 
 \item{dec_mark}{\emph{Decimal mark}
 
-\verb{scalar<character>} --- \emph{default:} \code{"."}
+\verb{scalar<character>} // \emph{default:} \code{"."}
 
 The string to be used as the decimal mark. For example, using
 \code{dec_mark = ","} with the value \code{0.152} would result in a formatted value
@@ -133,7 +133,7 @@ not \code{NULL}).}
 
 \item{force_sign}{\emph{Forcing the display of a positive sign}
 
-\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
 
 Should the positive sign be shown for positive numbers (effectively showing
 a sign for all numbers except zero)? If so, use \code{TRUE} for this option. The
@@ -141,14 +141,14 @@ default is \code{FALSE}, where only negative numbers will display a minus sign.}
 
 \item{incl_space}{\emph{Include a space between the value and the units}
 
-\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 An option for whether to include a space between the value and the units.
 The default is to use a space character for separation.}
 
 \item{locale}{\emph{Locale identifier}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 An optional locale identifier that can be used for formatting values
 according the locale's rules. Examples include \code{"en"} for English (United
@@ -318,6 +318,7 @@ Other data formatting functions:
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
 \code{\link{fmt_time}()},
+\code{\link{fmt_units}()},
 \code{\link{fmt_url}()},
 \code{\link{fmt}()},
 \code{\link{sub_large_vals}()},

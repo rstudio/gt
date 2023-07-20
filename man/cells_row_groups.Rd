@@ -9,7 +9,7 @@ cells_row_groups(groups = everything())
 \arguments{
 \item{groups}{\emph{Specification of row group IDs}
 
-\verb{<row-group-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<row-group-targeting expression>} // \emph{default:} \code{everything()}
 
 The row groups to which targeting operations are constrained. Can either be
 a series of row group ID values provided in \code{\link[=c]{c()}} or a select helper
@@ -113,7 +113,7 @@ function and then add a footnote to the \code{"peppr_salami"} row group label wi
 
 \section{Function ID}{
 
-8-10
+8-13
 }
 
 \section{Function Introduced}{
@@ -141,6 +141,7 @@ Other helper functions:
 \code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
+\code{\link{define_units}()},
 \code{\link{escape_latex}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},

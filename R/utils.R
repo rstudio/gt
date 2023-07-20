@@ -22,6 +22,123 @@
 #------------------------------------------------------------------------------#
 
 
+#' Determine whether an object is a `gt_tbl`
+#'
+#' @param data A table object that is created using the [gt()] function.
+#' @noRd
+is_gt_tbl <- function(data) {
+  inherits(data, "gt_tbl")
+}
+
+#' Determine whether an object is a `gt_group`
+#'
+#' @param data A table object that is created using the [gt_group()] function.
+#' @noRd
+is_gt_group <- function(data) {
+  inherits(data, "gt_group")
+}
+
+#' Determine whether an object inherits from `gt_tbl` or `gt_group`
+#'
+#' @param data A table object that is created either using the [gt()] or
+#' [gt_group()] functions.
+#' @noRd
+is_gt_tbl_or_group <- function(data) {
+  inherits(data, "gt_tbl") || inherits(data, "gt_group")
+}
+
+is_gt_tbl_empty <- function(data) {
+  data_tbl <- dt_data_get(data = data)
+  ncol(data_tbl) == 0 && nrow(data_tbl) == 0
+}
+
+is_gt_tbl_empty_w_cols <- function(data) {
+  data_tbl <- dt_data_get(data = data)
+  ncol(data_tbl) > 0 && nrow(data_tbl) == 0
+}
+
+is_gt_tbl_empty_w_rows <- function(data) {
+  data_tbl <- dt_data_get(data = data)
+  ncol(data_tbl) == 0 && nrow(data_tbl) > 0
+}
+
+# Adjustments for a completely empty table (no columns and no rows)
+adjust_gt_tbl_empty <- function(data) {
+
+  # Get the table's locale
+  tbl_locale <- dt_locale_get_value(data = data)
+
+  no_table_data_text <- get_locale_no_table_data_text(locale = tbl_locale)
+
+  data <- cols_add(data, no_data = no_table_data_text)
+  data <- tab_options(data, column_labels.hidden = TRUE)
+  data <- cols_align(data, align = "center", columns = no_data)
+  data <- cols_width(data, no_data ~ px(500))
+
+  data
+}
+
+#' Determines whether a character vector is non-empty
+#'
+#' @param x A character vector.
+#' @noRd
+is_nonempty_string <- function(x) {
+  length(x) > 0 && any(grepl("\\S", x))
+}
+
+#' Stop any function if object is not a `gt_tbl` object
+#'
+#' @param data The input `data` object that is to be validated.
+#'
+#' @noRd
+stop_if_not_gt_tbl <- function(data) {
+  if (!is_gt_tbl(data = data)) {
+    cli::cli_abort(
+      "The `data` provided is not a `gt_tbl` object."
+    )
+  }
+}
+
+#' Stop any function if object is not a `gt_group` object
+#'
+#' @param data The input `data` object that is to be validated.
+#'
+#' @noRd
+stop_if_not_gt_group <- function(data) {
+  if (!is_gt_group(data = data)) {
+    cli::cli_abort(
+      "The `data` provided is not a `gt_group` object."
+    )
+  }
+}
+
+#' Stop any function if object is neither `gt_tbl` nor `gt_group`
+#'
+#' @param data The input `data` object that is to be validated.
+#'
+#' @noRd
+stop_if_not_gt_tbl_or_group <- function(data) {
+  if (!is_gt_tbl(data = data) && !is_gt_group(data = data)) {
+    cli::cli_abort(
+      "The `data` provided is neither a `gt_tbl` nor a `gt_group` object."
+    )
+  }
+}
+
+#' Does an object have the `html` class?
+#'
+#' @noRd
+is_html <- function(x) {
+  inherits(x, "html") && isTRUE(attr(x, "html"))
+}
+
+#' Does an object have the `rtf_text` class?
+#'
+#' @noRd
+is_rtf <- function(x) {
+  inherits(x, "rtf_text")
+}
+
 #' Get a tibble containing date formats
 #'
 #' @noRd
@@ -698,7 +815,6 @@ markdown_to_latex <- function(text, md_engine) {
   )
 }
 
-
 #' Transform Markdown text to ooxml
 #'
 #' @noRd
@@ -760,7 +876,7 @@ markdown_to_xml <- function(text) {
          }
         }
 
-        lapply(children, apply_rules)%>%
+        lapply(children, apply_rules) %>%
           vapply(FUN = as.character,
                  FUN.VALUE = character(1)) %>%
           paste0(collapse = "") %>%
@@ -872,7 +988,7 @@ cmark_rules_xml <- list(
               bullet_insert <- xml_r(
                   xml_t(xml_space = "preserve", paste(c(rep("\t", times = indent_level),list_symbol,"\t"), collapse = ""))
                 ) %>%
-                as_xml_node()%>%
+                as_xml_node() %>%
                 .[[1]]
 
               ## must be nodes not nodesets
@@ -1001,8 +1117,8 @@ cmark_rules_xml <- list(
     # NOTE: Links are difficult to insert in OOXML documents because
     # a relationship must be provided in the 'document.xml.rels' file
     xml_hyperlink(
-      url =xml_attr(x, "destination"),
-      xml_r(xml_rPr(xml_rStyle(val = "Hyperlink")),xml_t(xml2::xml_text(x)))
+      url = xml_attr(x, "destination"),
+      xml_r(xml_rPr(xml_rStyle(val = "Hyperlink")), xml_t(xml2::xml_text(x)))
     ) %>% as.character()
   },
 
@@ -1011,9 +1127,6 @@ cmark_rules_xml <- list(
     process(xml2::xml_children(x))
   }
 )
-
-
-
 
 cmark_rules_rtf <- list(
 
@@ -1793,77 +1906,7 @@ process_footnote_marks <- function(x, marks) {
   )
 }
 
-#' Determine whether an object is a `gt_tbl`
-#'
-#' @param data A table object that is created using the [gt()] function.
-#' @noRd
-is_gt_tbl <- function(data) {
-  inherits(data, "gt_tbl")
-}
 
-#' Determine whether an object is a `gt_group`
-#'
-#' @param data A table object that is created using the [gt_group()] function.
-#' @noRd
-is_gt_group <- function(data) {
-  inherits(data, "gt_group")
-}
-
-#' Determine whether an object inherits from `gt_tbl` or `gt_group`
-#'
-#' @param data A table object that is created either using the [gt()] or
-#' [gt_group()] functions.
-#' @noRd
-is_gt_tbl_or_group <- function(data) {
-  inherits(data, "gt_tbl") || inherits(data, "gt_group")
-}
-
-#' Determines whether a character vector is non-empty
-#'
-#' @param x A character vector.
-#' @noRd
-is_nonempty_string <- function(x) {
-  length(x) > 0 && any(grepl("\\S", x))
-}
-
-#' Stop any function if object is not a `gt_tbl` object
-#'
-#' @param data The input `data` object that is to be validated.
-#'
-#' @noRd
-stop_if_not_gt_tbl <- function(data) {
-  if (!is_gt_tbl(data = data)) {
-    cli::cli_abort(
-      "The `data` provided is not a `gt_tbl` object."
-    )
-  }
-}
-
-#' Stop any function if object is not a `gt_group` object
-#'
-#' @param data The input `data` object that is to be validated.
-#'
-#' @noRd
-stop_if_not_gt_group <- function(data) {
-  if (!is_gt_group(data = data)) {
-    cli::cli_abort(
-      "The `data` provided is not a `gt_group` object."
-    )
-  }
-}
-
-#' Stop any function if object is neither `gt_tbl` nor `gt_group`
-#'
-#' @param data The input `data` object that is to be validated.
-#'
-#' @noRd
-stop_if_not_gt_tbl_or_group <- function(data) {
-  if (!is_gt_tbl(data = data) && !is_gt_group(data = data)) {
-    cli::cli_abort(
-      "The `data` provided is neither a `gt_tbl` nor a `gt_group` object."
-    )
-  }
-}
 
 #' Resolve the selection of border elements for a table cell
 #'

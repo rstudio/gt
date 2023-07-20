@@ -338,8 +338,7 @@ get_start_stop_positions <- function(x, pattern) {
 #' @param group_1,group_2 Vectors of length 2 with starting and stopping
 #'   positions in a text string.
 #' @noRd
-is_adjacent_separate <- function(group_1,
-                                 group_2) {
+is_adjacent_separate <- function(group_1, group_2) {
 
   group_1_expanded <- seq(group_1[1], group_1[2])
   group_2_expanded <- seq(group_2[1], group_2[2])
@@ -634,5 +633,3 @@ rtl_modern_unicode_charset <-
     samaritan_unicode_charset,
     mandaic_unicode_charset,sep = "|"
   )
-
-

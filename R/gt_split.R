@@ -34,28 +34,28 @@
 #'
 #' @param data *The gt table data object*
 #'
-#'   `obj:<gt_tbl>` --- **required**
+#'   `obj:<gt_tbl>` // **required**
 #'
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
 #' @param row_every_n *Split at every n rows*
 #'
-#'   `scalar<numeric|integer>` --- *default:* `NULL` (`optional`)
+#'   `scalar<numeric|integer>` // *default:* `NULL` (`optional`)
 #'
 #'   A directive to split at every *n* number of rows. This argument expects a
 #'   single numerical value.
 #'
 #' @param row_slice_i *Row-slicing indices*
 #'
-#'   `vector<numeric|integer>` --- *default:* `NULL` (`optional`)
+#'   `vector<numeric|integer>` // *default:* `NULL` (`optional`)
 #'
 #'   An argument for splitting at specific row indices. Here, we expect either a
 #'   vector of index values or a function that evaluates to a numeric vector.
 #'
 #' @param col_slice_at *Column-slicing locations*
 #'
-#'   `<column-targeting expression>` --- *default:* `NULL` (`optional`)
+#'   `<column-targeting expression>` // *default:* `NULL` (`optional`)
 #'
 #'   Any columns where vertical splitting across should occur. The splits occur
 #'   to the right of the resolved column names. Can either be a series of column

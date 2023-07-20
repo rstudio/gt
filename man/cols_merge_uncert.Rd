@@ -16,14 +16,14 @@ cols_merge_uncert(
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{col_val}{\emph{Column to target for base values}
 
-\verb{<column-targeting expression>} --- \strong{required}
+\verb{<column-targeting expression>} // \strong{required}
 
 The column that contains values for the start of the range. While select
 helper functions such as \code{\link[=starts_with]{starts_with()}} and \code{\link[=ends_with]{ends_with()}} can be used for
@@ -32,7 +32,7 @@ is to ensure that exactly one column is provided here.}
 
 \item{col_uncert}{\emph{Column or columns to target for uncertainty values}
 
-\verb{<column-targeting expression>} --- \strong{required}
+\verb{<column-targeting expression>} // \strong{required}
 
 The most common case involves supplying a single column with uncertainties;
 these values will be combined with those in \code{col_val}. Less commonly, the
@@ -45,7 +45,7 @@ vector.}
 
 \item{rows}{\emph{Rows to target}
 
-\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
 
 In conjunction with \code{columns}, we can specify which of their rows should
 participate in the merging process. The default \code{\link[=everything]{everything()}} results in
@@ -58,7 +58,7 @@ down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{sep}{\emph{Separator text for uncertainties}
 
-\verb{scalar<character>} --- \emph{default:} \code{" +/- "}
+\verb{scalar<character>} // \emph{default:} \code{" +/- "}
 
 The separator text that contains the uncertainty mark for a single
 uncertainty value. The default value of \code{" +/- "} indicates that an
@@ -68,7 +68,7 @@ supplied within the \code{\link[=I]{I()}} function.}
 
 \item{autohide}{\emph{Automatic hiding of the \code{col_uncert} column(s)}
 
-\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 An option to automatically hide any columns specified in \code{col_uncert}. Any
 columns with their state changed to 'hidden' will behave the same as
@@ -146,7 +146,7 @@ updated with \code{\link[=cols_label]{cols_label()}} to better describe the cont
 
 \section{Function ID}{
 
-5-12
+5-14
 }
 
 \section{Function Introduced}{
@@ -156,6 +156,7 @@ updated with \code{\link[=cols_label]{cols_label()}} to better describe the cont
 
 \seealso{
 Other column modification functions: 
+\code{\link{cols_add}()},
 \code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
@@ -168,6 +169,7 @@ Other column modification functions:
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
 \code{\link{cols_unhide}()},
+\code{\link{cols_units}()},
 \code{\link{cols_width}()}
 }
 \concept{column modification functions}

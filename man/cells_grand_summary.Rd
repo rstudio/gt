@@ -9,7 +9,7 @@ cells_grand_summary(columns = everything(), rows = everything())
 \arguments{
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 The columns to which targeting operations are constrained. Can either
 be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,
@@ -19,7 +19,7 @@ or a select helper function. Examples of select helper functions include
 
 \item{rows}{\emph{Rows to target}
 
-\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
 
 In conjunction with \code{columns}, we can specify which of their rows should
 form a constraint for targeting operations. The default \code{\link[=everything]{everything()}}
@@ -148,7 +148,7 @@ some styling to a grand summary cells with the \code{\link[=tab_style]{tab_style
 
 \section{Function ID}{
 
-8-14
+8-17
 }
 
 \section{Function Introduced}{
@@ -176,6 +176,7 @@ Other helper functions:
 \code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
+\code{\link{define_units}()},
 \code{\link{escape_latex}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},

@@ -40,6 +40,11 @@ dt_data_init <- function(
     rownames_to_column = NA
 ) {
 
+  # If the data table has rows but no columns, remove all of the rows
+  if (ncol(data_tbl) == 0 && nrow(data_tbl) > 0) {
+    data_tbl <- data_tbl[0, ]
+  }
+
   if (!is.na(rownames_to_column)) {
 
     data_rownames <- rownames(data_tbl)
@@ -166,8 +171,8 @@ dt_data_add_rows <- function(
     if (is.null(stub_df_add[i, ][["group_label"]][[1]])) {
 
       if (
-        stub_df_add[i, ][["group_id"]] %in%
-        stub_df_group_lookup[["group_id"]]
+        length(stub_df_group_lookup[["group_id"]]) > 0 &&
+        stub_df_add[i, ][["group_id"]] %in% stub_df_group_lookup[["group_id"]]
       ) {
 
         # This case is where a `group_id` in the added rows already exists
@@ -180,9 +185,12 @@ dt_data_add_rows <- function(
 
       } else {
 
-        # Migrate the text from a new group ID to a group label
-        stub_df_add[i, ][["group_label"]] <-
-          as.list(stub_df_add[i, ][["group_id"]])
+        if (!is.na(stub_df_add[i, ][["group_id"]])) {
+
+          # Migrate the text from a new group ID to a group label
+          stub_df_add[i, ][["group_label"]] <-
+            as.list(stub_df_add[i, ][["group_id"]])
+        }
       }
     }
   }

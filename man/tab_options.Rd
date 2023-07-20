@@ -64,6 +64,7 @@ tab_options(
   column_labels.border.lr.width = NULL,
   column_labels.border.lr.color = NULL,
   column_labels.hidden = NULL,
+  column_labels.units_pattern = NULL,
   row_group.background.color = NULL,
   row_group.font.size = NULL,
   row_group.font.weight = NULL,
@@ -195,7 +196,7 @@ tab_options(
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
@@ -356,6 +357,17 @@ the \code{column_labels} location.}
 An option to hide the column labels. If providing \code{TRUE} then the entire
 \code{column_labels} location won't be seen and the table header (if present)
 will collapse downward.}
+
+\item{column_labels.units_pattern}{\emph{Pattern to combine column labels and units}
+
+The default pattern for combining column labels with any defined units for
+column labels. The pattern is initialized as \code{"{1}, {2}"}, where \code{"{1}"}
+refers to the column label text and \code{"{2}"} is the text related to the
+associated units. When using \code{\link[=cols_units]{cols_units()}}, there is the opportunity to
+provide a specific pattern that overrides the units pattern unit. Further
+to this, if specifying units directly in \code{\link[=cols_label]{cols_label()}} (through the units
+syntax surrounded by \code{"{{"}/\code{"}}"}) there is no need for a units pattern
+and any value here will be disregarded.}
 
 \item{row_group.border.top.style, row_group.border.top.width, row_group.border.top.color, row_group.border.bottom.style, row_group.border.bottom.width, row_group.border.bottom.color, row_group.border.left.style, row_group.border.left.width, row_group.border.left.color, row_group.border.right.style, row_group.border.right.width, row_group.border.right.color}{\emph{Border properties associated with the \code{row_group} location}
 

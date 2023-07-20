@@ -9,14 +9,14 @@ cols_move_to_end(data, columns)
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 The columns for which the moving operations should be applied. Can either
 be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,
@@ -80,7 +80,7 @@ move the \code{year} and \code{country_name} columns to the end of the column se
 
 \section{Function ID}{
 
-5-8
+5-10
 }
 
 \section{Function Introduced}{
@@ -90,6 +90,7 @@ move the \code{year} and \code{country_name} columns to the end of the column se
 
 \seealso{
 Other column modification functions: 
+\code{\link{cols_add}()},
 \code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
@@ -102,6 +103,7 @@ Other column modification functions:
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
 \code{\link{cols_unhide}()},
+\code{\link{cols_units}()},
 \code{\link{cols_width}()}
 }
 \concept{column modification functions}

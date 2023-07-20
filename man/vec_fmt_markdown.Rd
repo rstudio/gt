@@ -13,14 +13,14 @@ vec_fmt_markdown(
 \arguments{
 \item{x}{\emph{The input vector}
 
-\code{vector(numeric|integer)} --- \strong{required}
+\code{vector(numeric|integer)} // \strong{required}
 
 This is the input vector that will undergo transformation to a character
 vector of the same length. Values within the vector will be formatted.}
 
 \item{md_engine}{\emph{Choice of Markdown engine}
 
-\verb{singl-kw:[markdown|commonmark]} --- \emph{default:} \code{"markdown"}
+\verb{singl-kw:[markdown|commonmark]} // \emph{default:} \code{"markdown"}
 
 The engine preference for Markdown rendering. By default, this is set to
 \code{"markdown"} where \strong{gt} will use the \strong{markdown} package for Markdown
@@ -29,7 +29,7 @@ that the \strong{commonmark} package will be used.}
 
 \item{output}{\emph{Output format}
 
-\verb{singl-kw:[auto|plain|html|latex|rtf|word]} --- \emph{default:} \code{"auto"}
+\verb{singl-kw:[auto|plain|html|latex|rtf|word]} // \emph{default:} \code{"auto"}
 
 The output style of the resulting character vector. This can either be
 \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"}, or

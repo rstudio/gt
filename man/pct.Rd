@@ -9,7 +9,7 @@ pct(x)
 \arguments{
 \item{x}{\emph{Numeric value in percent}
 
-\verb{scalar<numeric|integer>} --- \strong{required}
+\verb{scalar<numeric|integer>} // \strong{required}
 
 The numeric value to format as a string percentage for some \code{\link[=tab_options]{tab_options()}}
 arguments that can take percentage values (e.g., \code{table.width}).}
@@ -79,6 +79,7 @@ Other helper functions:
 \code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
+\code{\link{define_units}()},
 \code{\link{escape_latex}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},

@@ -9,14 +9,14 @@ cell_fill(color = "#D3D3D3", alpha = NULL)
 \arguments{
 \item{color}{\emph{Cell fill color}
 
-\verb{scalar<character>} --- \emph{default:} \code{"#D3D3D3"}
+\verb{scalar<character>} // \emph{default:} \code{"#D3D3D3"}
 
 If nothing is provided for \code{color} then \code{"#D3D3D3"} (light gray) will be
 used as a default.}
 
 \item{alpha}{\emph{Transparency value}
 
-\verb{scalar<numeric|integer>(0>=val>=1)} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<numeric|integer>(0>=val>=1)} // \emph{default:} \code{NULL} (\code{optional})
 
 An optional alpha transparency value for the \code{color} as single value in the
 range of \code{0} (fully transparent) to \code{1} (fully opaque). If not provided the
@@ -69,7 +69,7 @@ in the other.
 
 \section{Function ID}{
 
-8-21
+8-23
 }
 
 \section{Function Introduced}{
@@ -97,6 +97,7 @@ Other helper functions:
 \code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
+\code{\link{define_units}()},
 \code{\link{escape_latex}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},

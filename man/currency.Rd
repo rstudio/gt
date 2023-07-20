@@ -9,14 +9,14 @@ currency(..., .list = list2(...))
 \arguments{
 \item{...}{\emph{Currency symbols by output context}
 
-\verb{<named arguments>} --- \strong{required} (or, use \code{.list})
+\verb{<named arguments>} // \strong{required} (or, use \code{.list})
 
 One or more named arguments using output contexts as the names and
 currency symbol text as the values.}
 
 \item{.list}{\emph{Alternative to \code{...}}
 
-\verb{<list of multiple expressions>} --- \strong{required} (or, use \code{...})
+\verb{<list of multiple expressions>} // \strong{required} (or, use \code{...})
 
 Allows for the use of a list as an input alternative to \code{...}.}
 }
@@ -73,7 +73,7 @@ output.
 
 \section{Function ID}{
 
-8-19
+8-5
 }
 
 \section{Function Introduced}{
@@ -101,6 +101,7 @@ Other helper functions:
 \code{\link{cells_summary}()},
 \code{\link{cells_title}()},
 \code{\link{default_fonts}()},
+\code{\link{define_units}()},
 \code{\link{escape_latex}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},

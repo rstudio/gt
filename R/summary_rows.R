@@ -36,7 +36,7 @@
 #'
 #' @param groups *Specification of row group IDs*
 #'
-#'   `<row-group-targeting expression>` --- *default:* `everything()`
+#'   `<row-group-targeting expression>` // *default:* `everything()`
 #'
 #'   The row groups to which targeting operations are constrained. Can either be
 #'   a series of row group ID values provided in [c()] or a select helper
@@ -47,7 +47,7 @@
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` --- *default:* `everything()`
+#'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns for which the summaries should be calculated. Can either
 #'   be a series of column names provided in [c()], a vector of column indices,
@@ -81,14 +81,14 @@
 #'
 #' @param side *Side used for placement of summary rows*
 #'
-#'   `singl-kw:[bottom|top]` --- *default:* `"bottom"`
+#'   `singl-kw:[bottom|top]` // *default:* `"bottom"`
 #'
 #'   Should the summary rows be placed at the `"bottom"` (the default) or the
 #'   `"top"` of the row group?
 #'
 #' @param missing_text *Replacement text for `NA` values*
 #'
-#'   `scalar<character>` --- *default:* `"---"`
+#'   `scalar<character>` // *default:* `"---"`
 #'
 #'   The text to be used in place of `NA` values in summary cells with no data
 #'   outputs.
@@ -550,7 +550,7 @@ summary_rows <- function(
 #'
 #' @param side *Side used for placement of grand summary rows*
 #'
-#'   `singl-kw:[bottom|top]` --- *default:* `"bottom"`
+#'   `singl-kw:[bottom|top]` // *default:* `"bottom"`
 #'
 #'   Should the grand summary rows be placed at the `"bottom"` (the default) or
 #'   the `"top"` of the table?

@@ -9,14 +9,14 @@ cols_move(data, columns, after)
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 The columns for which the moving operations should be applied. Can either
 be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,
@@ -27,7 +27,7 @@ different position. The order of the remaining columns will be preserved.}
 
 \item{after}{\emph{Column used as anchor}
 
-\verb{<column-targeting expression>} --- \strong{required}
+\verb{<column-targeting expression>} // \strong{required}
 
 The column used to anchor the insertion of the moved columns. All of the
 moved columns will be placed to the right of this column. While select
@@ -81,7 +81,7 @@ position the \code{population} column after the \code{country_name} column by us
 
 \section{Function ID}{
 
-5-6
+5-8
 }
 
 \section{Function Introduced}{
@@ -91,6 +91,7 @@ position the \code{population} column after the \code{country_name} column by us
 
 \seealso{
 Other column modification functions: 
+\code{\link{cols_add}()},
 \code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
@@ -103,6 +104,7 @@ Other column modification functions:
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_unhide}()},
+\code{\link{cols_units}()},
 \code{\link{cols_width}()}
 }
 \concept{column modification functions}

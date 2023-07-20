@@ -9,14 +9,14 @@ opt_footnote_spec(data, spec_ref = NULL, spec_ftr = NULL)
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{spec_ref, spec_ftr}{\emph{Specifications for formatting of footnote marks}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 Specification of the footnote marks when behaving as footnote references
 and as marks in the footer section of the table. This is a string

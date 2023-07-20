@@ -22,14 +22,14 @@ vec_fmt_duration(
 \arguments{
 \item{x}{\emph{The input vector}
 
-\code{vector(numeric|integer)} --- \strong{required}
+\code{vector(numeric|integer)} // \strong{required}
 
 This is the input vector that will undergo transformation to a character
 vector of the same length. Values within the vector will be formatted.}
 
 \item{input_units}{\emph{Declaration of duration units for numerical values}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 If one or more selected columns contains numeric values (not \code{difftime}
 values, which contain the duration units), a keyword must be provided for
@@ -39,7 +39,7 @@ interpreted in terms of duration. The accepted units are: \code{"seconds"},
 
 \item{output_units}{\emph{Choice of output units}
 
-\verb{mult-kw:[weeks|days|hours|minutes|seconds]} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{mult-kw:[weeks|days|hours|minutes|seconds]} // \emph{default:} \code{NULL} (\code{optional})
 
 Controls the output time units. The default, \code{NULL}, means that \strong{gt} will
 automatically choose time units based on the input duration value. To
@@ -50,7 +50,7 @@ following keywords: \code{"weeks"}, \code{"days"}, \code{"hours"}, \code{"minute
 
 \item{duration_style}{\emph{Style for representing duration values}
 
-\verb{singl-kw:[narrow|wide|colon-sep|iso]} --- \emph{default:} \code{"narrow"}
+\verb{singl-kw:[narrow|wide|colon-sep|iso]} // \emph{default:} \code{"narrow"}
 
 A choice of four formatting styles for the output duration values. With
 \code{"narrow"} (the default style), duration values will be formatted with
@@ -63,7 +63,7 @@ format. The \code{"iso"} style will produce a value that conforms to the ISO
 
 \item{trim_zero_units}{\emph{Trimming of zero values}
 
-\verb{scalar<logical>|mult-kw:[leading|trailing|internal]} --- \emph{default:} \code{TRUE}
+\verb{scalar<logical>|mult-kw:[leading|trailing|internal]} // \emph{default:} \code{TRUE}
 
 Provides methods to remove output time units that have zero values. By
 default this is \code{TRUE} and duration values that might otherwise be
@@ -77,7 +77,7 @@ internal zero-value time units (e.g., \code{"5d 0h 33m"} -> \code{"5d 33m"}).}
 
 \item{max_output_units}{\emph{Maximum number of time units to display}
 
-\code{scalar<numeric|integer>(val>=1)} --- \emph{default:} \code{NULL} (\code{optional})
+\code{scalar<numeric|integer>(val>=1)} // \emph{default:} \code{NULL} (\code{optional})
 
 If \code{output_units} is \code{NULL}, where the output time units are unspecified
 and left to \strong{gt} to handle, a numeric value provided for
@@ -89,7 +89,7 @@ customize that type of duration output).}
 
 \item{pattern}{\emph{Specification of the formatting pattern}
 
-\verb{scalar<character>} --- \emph{default:} \code{"{x}"}
+\verb{scalar<character>} // \emph{default:} \code{"{x}"}
 
 A formatting pattern that allows for decoration of the formatted value. The
 formatted value is represented by the \code{{x}} (which can be used multiple
@@ -98,7 +98,7 @@ literals.}
 
 \item{use_seps}{\emph{Use digit group separators}
 
-\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 An option to use digit group separators. The type of digit group separator
 is set by \code{sep_mark} and overridden if a locale ID is provided to \code{locale}.
@@ -106,7 +106,7 @@ This setting is \code{TRUE} by default.}
 
 \item{sep_mark}{\emph{Separator mark for digit grouping}
 
-\verb{scalar<character>} --- \emph{default:} \code{","}
+\verb{scalar<character>} // \emph{default:} \code{","}
 
 The string to use as a separator between groups of digits. For example,
 using \code{sep_mark = ","} with a value of \code{1000} would result in a formatted
@@ -115,7 +115,7 @@ value of \code{"1,000"}. This argument is ignored if a \code{locale} is supplied
 
 \item{force_sign}{\emph{Forcing the display of a positive sign}
 
-\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
 
 Should the positive sign be shown for positive values (effectively showing
 a sign for all values except zero)? If so, use \code{TRUE} for this option. By
@@ -123,7 +123,7 @@ default only negative values will display a minus sign.}
 
 \item{locale}{\emph{Locale identifier}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 An optional locale identifier that can be used for formatting values
 according the locale's rules. Examples include \code{"en"} for English (United
@@ -135,7 +135,7 @@ would be used automatically by any function with a \code{locale} argument) but a
 
 \item{output}{\emph{Output format}
 
-\verb{singl-kw:[auto|plain|html|latex|rtf|word]} --- \emph{default:} \code{"auto"}
+\verb{singl-kw:[auto|plain|html|latex|rtf|word]} // \emph{default:} \code{"auto"}
 
 The output style of the resulting character vector. This can either be
 \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"}, or
@@ -217,7 +217,7 @@ unit those values have.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_duration(num_vals, input_units = "days")
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3d 5h 38m 23s" "5h 31m 12s" "7m 12s" "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3d 5h 38m 24s" "5h 31m 12s" "7m 12s" "NA"
 }\if{html}{\out{</div>}}
 
 We can define a set of output time units that we want to see.
@@ -242,7 +242,7 @@ There are many duration 'styles' to choose from. We could opt for the
 )
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3 days 5 hours 38 minutes 23 seconds"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3 days 5 hours 38 minutes 24 seconds"
 #> [2] "5 hours 31 minutes 12 seconds"
 #> [3] "7 minutes 12 seconds"
 #> [4] "NA"
@@ -260,7 +260,7 @@ locale.
 )
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3 dagen 5 uur 38 minuten 23 seconden"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3 dagen 5 uur 38 minuten 24 seconden"
 #> [2] "5 uur 31 minuten 12 seconden"
 #> [3] "7 minuten 12 seconden"
 #> [4] "NA"

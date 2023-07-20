@@ -16,21 +16,21 @@ as_word(
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{align}{\emph{Table alignment}
 
-\verb{scalar<character>} --- \emph{default:} \code{"center"}
+\verb{scalar<character>} // \emph{default:} \code{"center"}
 
 An option for table alignment. Can either be \code{"center"}, \code{"left"}, or
 \code{"right"}.}
 
 \item{caption_location}{\emph{Caption location}
 
-\verb{singl-kw:[top|bottom|embed]} --- \emph{default:} \code{"top"}
+\verb{singl-kw:[top|bottom|embed]} // \emph{default:} \code{"top"}
 
 Determines where the caption should be positioned. This can either be
 \code{"top"}, \code{"bottom"}, or \code{"embed"}.}
@@ -43,14 +43,14 @@ only used when \code{caption_location} is not set as \code{"embed"}.}
 
 \item{split}{\emph{Allow splitting}
 
-\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
 
 A logical value that indicates whether to activate the Word option
 \verb{Allow row to break across pages}.}
 
 \item{keep_with_next}{\emph{Keeping rows together}
 
-\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 A logical value that indicates whether a table should use Word option
 \verb{keep rows together}.}

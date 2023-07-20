@@ -9,7 +9,7 @@ cells_column_spanners(spanners = everything())
 \arguments{
 \item{spanners}{\emph{Specification of spanner IDs}
 
-\verb{<spanner-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<spanner-targeting expression>} // \emph{default:} \code{everything()}
 
 The spanners to which targeting operations are constrained. Can either be a
 series of spanner ID values provided in \code{\link[=c]{c()}} or a select helper function.
@@ -101,7 +101,7 @@ we are making the text of the column spanner label appear as bold.
 
 \section{Function ID}{
 
-8-8
+8-11
 }
 
 \section{Function Introduced}{
@@ -129,6 +129,7 @@ Other helper functions:
 \code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
+\code{\link{define_units}()},
 \code{\link{escape_latex}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},

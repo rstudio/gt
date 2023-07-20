@@ -14,14 +14,14 @@ tab_footnote(
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{footnote}{\emph{Footnote text}
 
-\verb{scalar<character>} --- \strong{required}
+\verb{scalar<character>} // \strong{required}
 
 The text to be used in the footnote. We can optionally use the \code{\link[=md]{md()}} and
 \code{\link[=html]{html()}} functions to style the text as Markdown or to retain HTML elements
@@ -29,7 +29,7 @@ in the footnote text.}
 
 \item{locations}{\emph{Locations to target}
 
-\verb{<locations expressions>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{<locations expressions>} // \emph{default:} \code{NULL} (\code{optional})
 
 The cell or set of cells to be associated with the footnote. Supplying any
 of the \verb{cells_*()} helper functions is a useful way to target the location
@@ -44,7 +44,7 @@ group labels, the table title, etc.).}
 
 \item{placement}{\emph{Placement of footnote mark}
 
-\verb{singl-kw:[auto|right|left]} --- \emph{default:} \code{"auto"}
+\verb{singl-kw:[auto|right|left]} // \emph{default:} \code{"auto"}
 
 Where to affix footnote marks to the table content. Two options for this
 are \verb{"left} or \code{"right"}, where the placement is either to the absolute

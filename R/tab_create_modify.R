@@ -36,7 +36,7 @@
 #'
 #' @param title *Header title*
 #'
-#'   `scalar<character>` --- **required**
+#'   `scalar<character>` // **required**
 #'
 #'   Text to be used in the table title. We can elect to use the [md()] and
 #'   [html()] helper functions to style the text as Markdown or to retain HTML
@@ -44,7 +44,7 @@
 #'
 #' @param subtitle *Header subtitle*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   Text to be used in the table subtitle. We can elect to use the [md()] and
 #'   [html()] helper functions to style the text as Markdown or to retain HTML
@@ -52,7 +52,7 @@
 #'
 #' @param preheader *RTF preheader text*
 #'
-#'   `vector<character>` --- *default:* `NULL` (`optional`)
+#'   `vector<character>` // *default:* `NULL` (`optional`)
 #'
 #'   Optional preheader content that is rendered above the table for RTF output.
 #'   Can be supplied as a vector of text.
@@ -180,7 +180,7 @@ tab_header <- function(
 #'
 #' @param label *Spanner label text*
 #'
-#'   `scalar<character>` --- **required**
+#'   `scalar<character>` // **required**
 #'
 #'   The text to use for the spanner label. We can optionally use the [md()] and
 #'   [html()] functions to style the text as Markdown or to retain HTML elements
@@ -188,7 +188,7 @@ tab_header <- function(
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` --- *default:* `NULL` (`optional`)
+#'   `<column-targeting expression>` // *default:* `NULL` (`optional`)
 #'
 #'   The columns to serve as components of the spanner. Can either be a series
 #'   of column names provided in [c()], a vector of column indices, or a select
@@ -199,7 +199,7 @@ tab_header <- function(
 #'
 #' @param spanners *Spanners to target*
 #'
-#'   `vector<character>` --- *default:* `NULL` (`optional`)
+#'   `vector<character>` // *default:* `NULL` (`optional`)
 #'
 #'   The spanners that should be spanned over, should they already be defined.
 #'   One or more spanner ID values (in quotes) can be supplied here. This
@@ -207,7 +207,7 @@ tab_header <- function(
 #'
 #' @param level *Spanner level for insertion*
 #'
-#'   `scalar<numeric|integer>` --- *default:* `NULL` (`optional`)
+#'   `scalar<numeric|integer>` // *default:* `NULL` (`optional`)
 #'
 #'   An explicit level to which the spanner should be placed. If not provided,
 #'   **gt** will choose the level based on the inputs provided within `columns`
@@ -216,7 +216,7 @@ tab_header <- function(
 #'
 #' @param id *Spanner ID*
 #'
-#'   `scalar<character>` --- *default:* `label`
+#'   `scalar<character>` // *default:* `label`
 #'
 #'   The ID for the spanner. When accessing a spanner through the `spanners`
 #'   argument of `tab_spanner()` or [cells_column_spanners()] (when using
@@ -231,7 +231,7 @@ tab_header <- function(
 #'
 #' @param gather *Gather columns together*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   An option to move the specified `columns` such that they are unified under
 #'   the spanner. Ordering of the moved-into-place columns will be preserved in
@@ -239,7 +239,7 @@ tab_header <- function(
 #'
 #' @param replace *Replace existing spanners*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   Should new spanners be allowed to partially or fully replace existing
 #'   spanners? (This is a possibility if setting spanners at an already
@@ -734,14 +734,14 @@ resolve_spanned_column_names <- function(
 #'
 #' @param delim *Delimiter for splitting*
 #'
-#'   `scalar<character>` --- **required**
+#'   `scalar<character>` // **required**
 #'
 #'   The delimiter to use to split an input column name. This should be a single
 #'   character (e.g., `"_"`, `"."`, etc.).
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` --- *default:* `everything()`
+#'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns to consider for the splitting, relabeling, and spanner setting
 #'   operations. Can either be a series of column names provided in [c()], a
@@ -752,7 +752,7 @@ resolve_spanned_column_names <- function(
 #'
 #' @param split *Splitting side*
 #'
-#'   `singl-kw:[last|first]` --- *default:* `"last"`
+#'   `singl-kw:[last|first]` // *default:* `"last"`
 #'
 #'   Should the delimiter splitting occur from the `"last"` instance of the
 #'   `delim` character or from the `"first"`? The default here uses the `"last"`
@@ -764,7 +764,7 @@ resolve_spanned_column_names <- function(
 #'
 #' @param limit *Limit for splitting*
 #'
-#'   `scalar<numeric|integer|character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<numeric|integer|character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional limit to place on the splitting procedure. The default `NULL`
 #'   means that a column name will be split as many times are there are
@@ -776,7 +776,7 @@ resolve_spanned_column_names <- function(
 #'
 #' @param reverse *Reverse vector of split names*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   Should the order of split names be reversed? By default, this is `FALSE`.
 #'
@@ -1344,7 +1344,7 @@ str_split_across <- function(
 #'
 #' @param label *Row group label text*
 #'
-#'   `scalar<character>` --- **required**
+#'   `scalar<character>` // **required**
 #'
 #'   The text to use for the row group label. We can optionally use the [md()]
 #'   and [html()] functions to style the text as Markdown or to retain HTML
@@ -1352,7 +1352,7 @@ str_split_across <- function(
 #'
 #' @param rows *Rows to target*
 #'
-#'   `<row-targeting expression>` --- **required**
+#'   `<row-targeting expression>` // **required**
 #'
 #'   The rows to be made components of the row group. The default [everything()]
 #'   results in all rows in `columns` being formatted. Alternatively, we can
@@ -1364,7 +1364,7 @@ str_split_across <- function(
 #'
 #' @param id *Row group ID*
 #'
-#'   `scalar<character>` --- *default:* `label`
+#'   `scalar<character>` // *default:* `label`
 #'
 #'   The ID for the row group. When accessing a row group through
 #'   [cells_row_groups()] (when using [tab_style()] or [tab_footnote()]) the
@@ -1378,14 +1378,14 @@ str_split_across <- function(
 #'
 #' @param others_label *[Deprecated] Label for default row group*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   This argument is deprecated. Instead use
 #'   `tab_options(row_group.default_label = <label>)`.
 #'
 #' @param group *[Deprecated] The group label*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   This argument is deprecated. Instead use `label`.
 #'
@@ -1657,7 +1657,7 @@ tab_row_group <- function(
 #'
 #' @param label *Stubhead label text*
 #'
-#'   `scalar<character>` --- **required**
+#'   `scalar<character>` // **required**
 #'
 #'   The text to be used as the stubhead label. We can optionally use the [md()]
 #'   and [html()] functions to style the text as Markdown or to retain HTML
@@ -1733,7 +1733,7 @@ tab_stubhead <- function(
 #'
 #' @param rows *Rows to target*
 #'
-#'   `<row-targeting expression>` --- **required**
+#'   `<row-targeting expression>` // **required**
 #'
 #'   The rows to consider for the indentation change. The default [everything()]
 #'   results in all rows being targeted. Alternatively, we can supply a vector
@@ -1745,7 +1745,7 @@ tab_stubhead <- function(
 #'
 #' @param indent *Indentation directive*
 #'
-#'   `scalar<character|numeric|integer>` --- *default:* `"increase"`
+#'   `scalar<character|numeric|integer>` // *default:* `"increase"`
 #'
 #'   An indentation directive either as a keyword describing the indentation
 #'   change or as an explicit integer value for directly setting the indentation
@@ -1918,7 +1918,7 @@ tab_stub_indent <- function(
 #'
 #' @param footnote *Footnote text*
 #'
-#'   `scalar<character>` --- **required**
+#'   `scalar<character>` // **required**
 #'
 #'   The text to be used in the footnote. We can optionally use the [md()] and
 #'   [html()] functions to style the text as Markdown or to retain HTML elements
@@ -1926,7 +1926,7 @@ tab_stub_indent <- function(
 #'
 #' @param locations *Locations to target*
 #'
-#'   `<locations expressions>` --- *default:* `NULL` (`optional`)
+#'   `<locations expressions>` // *default:* `NULL` (`optional`)
 #'
 #'   The cell or set of cells to be associated with the footnote. Supplying any
 #'   of the `cells_*()` helper functions is a useful way to target the location
@@ -1941,7 +1941,7 @@ tab_stub_indent <- function(
 #'
 #' @param placement *Placement of footnote mark*
 #'
-#'   `singl-kw:[auto|right|left]` --- *default:* `"auto"`
+#'   `singl-kw:[auto|right|left]` // *default:* `"auto"`
 #'
 #'   Where to affix footnote marks to the table content. Two options for this
 #'   are `"left` or `"right"`, where the placement is either to the absolute
@@ -2576,7 +2576,7 @@ set_footnote.cells_footnotes <- function(
 #'
 #' @param source_note *Source note text*
 #'
-#'   `scalar<character>` --- **required**
+#'   `scalar<character>` // **required**
 #'
 #'   Text to be used in the source note. We can optionally use the [md()] and
 #'   [html()] functions to style the text as Markdown or to retain HTML elements
@@ -2639,7 +2639,7 @@ tab_source_note <- function(
 #'
 #' @param caption *Table caption text*
 #'
-#'   `scalar<character>` --- **required**
+#'   `scalar<character>` // **required**
 #'
 #'   The table caption to use for cross-referencing in R Markdown, Quarto, or
 #'   **bookdown**.
@@ -2717,7 +2717,7 @@ tab_caption <- function(
 #'
 #' @param style *Style declarations*
 #'
-#'   `<style expressions>` --- **required**
+#'   `<style expressions>` // **required**
 #'
 #'   The styles to use for the cells at the targeted `locations`. The
 #'   [cell_text()], [cell_fill()], and [cell_borders()] helper functions can be
@@ -2728,7 +2728,7 @@ tab_caption <- function(
 #'
 #' @param locations *Locations to target*
 #'
-#'   `<locations expressions>` --- **required**
+#'   `<locations expressions>` // **required**
 #'
 #'   The cell or set of cells to be associated with the style. Supplying any of
 #'   the `cells_*()` helper functions is a useful way to target the location
@@ -3482,6 +3482,17 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   `column_labels` location won't be seen and the table header (if present)
 #'   will collapse downward.
 #'
+#' @param column_labels.units_pattern *Pattern to combine column labels and units*
+#'
+#'   The default pattern for combining column labels with any defined units for
+#'   column labels. The pattern is initialized as `"{1}, {2}"`, where `"{1}"`
+#'   refers to the column label text and `"{2}"` is the text related to the
+#'   associated units. When using [cols_units()], there is the opportunity to
+#'   provide a specific pattern that overrides the units pattern unit. Further
+#'   to this, if specifying units directly in [cols_label()] (through the units
+#'   syntax surrounded by `"{{"`/`"}}"`) there is no need for a units pattern
+#'   and any value here will be disregarded.
+#'
 #' @param row_group.border.top.style,row_group.border.top.width,row_group.border.top.color,row_group.border.bottom.style,row_group.border.bottom.width,row_group.border.bottom.color,row_group.border.left.style,row_group.border.left.width,row_group.border.left.color,row_group.border.right.style,row_group.border.right.width,row_group.border.right.color
 #'   *Border properties associated with the `row_group` location*
 #'
@@ -3971,6 +3982,7 @@ tab_options <- function(
     column_labels.border.lr.width = NULL,
     column_labels.border.lr.color = NULL,
     column_labels.hidden = NULL,
+    column_labels.units_pattern = NULL,
     row_group.background.color = NULL,
     row_group.font.size = NULL,
     row_group.font.weight = NULL,

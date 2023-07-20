@@ -9,21 +9,21 @@ text_transform(data, fn, locations = cells_body())
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{fn}{\emph{Function for text transformation}
 
-\verb{<function>} --- \strong{required}
+\verb{<function>} // \strong{required}
 
 The function to use for text transformation. It should include \code{x} as an
 argument and return a character vector of the same length as the input \code{x}.}
 
 \item{locations}{\emph{Locations to target}
 
-\verb{<locations expressions>} --- \emph{default:} \code{cells_body()}
+\verb{<locations expressions>} // \emph{default:} \code{cells_body()}
 
 The cell or set of cells to be associated with the text transformation.
 Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_row_groups]{cells_row_groups()}},

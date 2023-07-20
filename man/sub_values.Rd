@@ -18,14 +18,14 @@ sub_values(
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 The columns to which substitution operations are constrained. Can either
 be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,
@@ -35,7 +35,7 @@ or a select helper function. Examples of select helper functions include
 
 \item{rows}{\emph{Rows to target}
 
-\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
 
 In conjunction with \code{columns}, we can specify which of their rows should
 form a constraint for targeting operations. The default \code{\link[=everything]{everything()}}
@@ -48,21 +48,21 @@ down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{values}{\emph{Values to match on}
 
-\verb{scalar<character|numeric|integer>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character|numeric|integer>} // \emph{default:} \code{NULL} (\code{optional})
 
 The specific value or values that should be replaced with a \code{replacement}
 value. If \code{pattern} is also supplied then \code{values} will be ignored.}
 
 \item{pattern}{\emph{Regex pattern to match with}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 A regex pattern that can target solely those values in \code{character}-based
 columns. If \code{values} is also supplied, \code{pattern} will take precedence.}
 
 \item{fn}{\emph{Function to return logical values}
 
-\verb{<function>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{<function>} // \emph{default:} \code{NULL} (\code{optional})
 
 A supplied function that operates on \code{x} (the data in a column) and should
 return a logical vector that matches the length of \code{x} (i.e., number of
@@ -71,14 +71,14 @@ supplied, \code{fn} will take precedence.}
 
 \item{replacement}{\emph{Replacement value for matches}
 
-\verb{scalar<character|numeric|integer>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character|numeric|integer>} // \emph{default:} \code{NULL} (\code{optional})
 
 The replacement value for any cell values matched by either \code{values} or
 \code{pattern}. Must be a character or numeric vector of length 1.}
 
 \item{escape}{\emph{Text escaping}
 
-\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 An option to escape replacement text according to the final output format
 of the table. For example, if a LaTeX table is to be generated then LaTeX
@@ -209,7 +209,7 @@ that vector must match the length of \code{x}).
 
 \section{Function ID}{
 
-3-29
+3-30
 }
 
 \section{Function Introduced}{
@@ -242,6 +242,7 @@ Other data formatting functions:
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
 \code{\link{fmt_time}()},
+\code{\link{fmt_units}()},
 \code{\link{fmt_url}()},
 \code{\link{fmt}()},
 \code{\link{sub_large_vals}()},

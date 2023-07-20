@@ -9,20 +9,20 @@ opt_css(data, css, add = TRUE, allow_duplicates = FALSE)
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{css}{\emph{CSS declarations}
 
-\verb{scalar<character>} --- \strong{required}
+\verb{scalar<character>} // \strong{required}
 
 The CSS to include as part of the rendered table's \verb{<style>} element.}
 
 \item{add}{\emph{Add to existing CSS}
 
-\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 If \code{TRUE}, the default, the CSS is added to any already-defined CSS
 (typically from previous calls of \code{\link[=opt_table_font]{opt_table_font()}}, \code{opt_css()}, or,
@@ -32,7 +32,7 @@ previously-stored CSS.}
 
 \item{allow_duplicates}{\emph{Allow for CSS duplication}
 
-\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
 
 When this is \code{FALSE} (the default), the CSS provided here won't be added
 (provided that \code{add = TRUE}) if it is seen in the already-defined CSS.}

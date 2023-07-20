@@ -35,7 +35,7 @@
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` --- *default:* `everything()`
+#'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns to which substitution operations are constrained. Can either
 #'   be a series of column names provided in [c()], a vector of column indices,
@@ -45,7 +45,7 @@
 #'
 #' @param rows *Rows to target*
 #'
-#'   `<row-targeting expression>` --- *default:* `everything()`
+#'   `<row-targeting expression>` // *default:* `everything()`
 #'
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   form a constraint for targeting operations. The default [everything()]
@@ -58,7 +58,7 @@
 #'
 #' @param missing_text *Replacement text for `NA` values*
 #'
-#'   `scalar<character>` --- *default:* `"---"`
+#'   `scalar<character>` // *default:* `"---"`
 #'
 #'   The text to be used in place of `NA` values in the rendered table. We can
 #'   optionally use the [md()] and [html()] functions to style the text as
@@ -131,7 +131,7 @@
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-25
+#' 3-26
 #'
 #' @section Function Introduced:
 #' `v0.6.0` (May 24, 2022)
@@ -240,7 +240,7 @@ fmt_missing <- function(
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` --- *default:* `everything()`
+#'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns to which substitution operations are constrained. Can either
 #'   be a series of column names provided in [c()], a vector of column indices,
@@ -250,7 +250,7 @@ fmt_missing <- function(
 #'
 #' @param rows *Rows to target*
 #'
-#'   `<row-targeting expression>` --- *default:* `everything()`
+#'   `<row-targeting expression>` // *default:* `everything()`
 #'
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   form a constraint for targeting operations. The default [everything()]
@@ -263,7 +263,7 @@ fmt_missing <- function(
 #'
 #' @param zero_text *Replacement text for zero values*
 #'
-#'   `scalar<character>` --- *default:* `"nil"`
+#'   `scalar<character>` // *default:* `"nil"`
 #'
 #'   The text to be used in place of zero values in the rendered table. We can
 #'   optionally use the [md()] and [html()] functions to style the text as
@@ -336,7 +336,7 @@ fmt_missing <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-26
+#' 3-27
 #'
 #' @section Function Introduced:
 #' `v0.6.0` (May 24, 2022)
@@ -400,7 +400,7 @@ sub_zero <- function(
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` --- *default:* `everything()`
+#'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns to which substitution operations are constrained. Can either
 #'   be a series of column names provided in [c()], a vector of column indices,
@@ -410,7 +410,7 @@ sub_zero <- function(
 #'
 #' @param rows *Rows to target*
 #'
-#'   `<row-targeting expression>` --- *default:* `everything()`
+#'   `<row-targeting expression>` // *default:* `everything()`
 #'
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   form a constraint for targeting operations. The default [everything()]
@@ -423,21 +423,21 @@ sub_zero <- function(
 #'
 #' @param threshold *Threshold value*
 #'
-#'   `scalar<numeric|integer>` --- *default:* `0.01`
+#'   `scalar<numeric|integer>` // *default:* `0.01`
 #'
 #'   The threshold value with which values should be considered small enough for
 #'   replacement.
 #'
 #' @param small_pattern *Pattern specification for small values*
 #'
-#'   `scalar<character>` --- *default:* `if (sign == "+") "<{x}" else md("<*abs*(-{x})")`
+#'   `scalar<character>` // *default:* `if (sign == "+") "<{x}" else md("<*abs*(-{x})")`
 #'
 #'   The pattern text to be used in place of the suitably small values in the
 #'   rendered table.
 #'
 #' @param sign *Consider positive or negative values?*
 #'
-#'   `scalar<character>` --- *default:* `"+"`
+#'   `scalar<character>` // *default:* `"+"`
 #'
 #'   The sign of the numbers to be considered in the replacement. By default, we
 #'   only consider positive values (`"+"`). The other option (`"-"`) can be used
@@ -546,7 +546,7 @@ sub_zero <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-27
+#' 3-28
 #'
 #' @section Function Introduced:
 #' `v0.6.0` (May 24, 2022)
@@ -675,7 +675,7 @@ sub_small_vals <- function(
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` --- *default:* `everything()`
+#'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns to which substitution operations are constrained. Can either
 #'   be a series of column names provided in [c()], a vector of column indices,
@@ -685,7 +685,7 @@ sub_small_vals <- function(
 #'
 #' @param rows *Rows to target*
 #'
-#'   `<row-targeting expression>` --- *default:* `everything()`
+#'   `<row-targeting expression>` // *default:* `everything()`
 #'
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   form a constraint for targeting operations. The default [everything()]
@@ -698,21 +698,21 @@ sub_small_vals <- function(
 #'
 #' @param threshold *Threshold value*
 #'
-#'   `scalar<numeric|integer>` --- *default:* `1E12`
+#'   `scalar<numeric|integer>` // *default:* `1E12`
 #'
 #'   The threshold value with which values should be considered large enough for
 #'   replacement.
 #'
 #' @param large_pattern *Pattern specification for large values*
 #'
-#'   `scalar<character>` --- *default:* `">={x}"`
+#'   `scalar<character>` // *default:* `">={x}"`
 #'
 #'   The pattern text to be used in place of the suitably large values in the
 #'   rendered table.
 #'
 #' @param sign *Consider positive or negative values?*
 #'
-#'   `scalar<character>` --- *default:* `"+"`
+#'   `scalar<character>` // *default:* `"+"`
 #'
 #'   The sign of the numbers to be considered in the replacement. By default, we
 #'   only consider positive values (`"+"`). The other option (`"-"`) can be used
@@ -822,7 +822,7 @@ sub_small_vals <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-28
+#' 3-29
 #'
 #' @section Function Introduced:
 #' `v0.6.0` (May 24, 2022)
@@ -958,7 +958,7 @@ check_sub_fn_sign <- function(sign) {
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` --- *default:* `everything()`
+#'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns to which substitution operations are constrained. Can either
 #'   be a series of column names provided in [c()], a vector of column indices,
@@ -968,7 +968,7 @@ check_sub_fn_sign <- function(sign) {
 #'
 #' @param rows *Rows to target*
 #'
-#'   `<row-targeting expression>` --- *default:* `everything()`
+#'   `<row-targeting expression>` // *default:* `everything()`
 #'
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   form a constraint for targeting operations. The default [everything()]
@@ -981,21 +981,21 @@ check_sub_fn_sign <- function(sign) {
 #'
 #' @param values *Values to match on*
 #'
-#'   `scalar<character|numeric|integer>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character|numeric|integer>` // *default:* `NULL` (`optional`)
 #'
 #'   The specific value or values that should be replaced with a `replacement`
 #'   value. If `pattern` is also supplied then `values` will be ignored.
 #'
 #' @param pattern *Regex pattern to match with*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   A regex pattern that can target solely those values in `character`-based
 #'   columns. If `values` is also supplied, `pattern` will take precedence.
 #'
 #' @param fn *Function to return logical values*
 #'
-#'   `<function>` --- *default:* `NULL` (`optional`)
+#'   `<function>` // *default:* `NULL` (`optional`)
 #'
 #'   A supplied function that operates on `x` (the data in a column) and should
 #'   return a logical vector that matches the length of `x` (i.e., number of
@@ -1004,14 +1004,14 @@ check_sub_fn_sign <- function(sign) {
 #'
 #' @param replacement *Replacement value for matches*
 #'
-#'   `scalar<character|numeric|integer>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character|numeric|integer>` // *default:* `NULL` (`optional`)
 #'
 #'   The replacement value for any cell values matched by either `values` or
 #'   `pattern`. Must be a character or numeric vector of length 1.
 #'
 #' @param escape *Text escaping*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   An option to escape replacement text according to the final output format
 #'   of the table. For example, if a LaTeX table is to be generated then LaTeX
@@ -1127,7 +1127,7 @@ check_sub_fn_sign <- function(sign) {
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-29
+#' 3-30
 #'
 #' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)

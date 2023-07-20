@@ -15,14 +15,14 @@ vec_fmt_time(
 \arguments{
 \item{x}{\emph{The input vector}
 
-\code{vector(numeric|integer)} --- \strong{required}
+\code{vector(numeric|integer)} // \strong{required}
 
 This is the input vector that will undergo transformation to a character
 vector of the same length. Values within the vector will be formatted.}
 
 \item{time_style}{\emph{Predefined style for times}
 
-\verb{scalar<character>|scalar<numeric|integer>(1<=val<=25)} --- \emph{default:} \code{"iso"}
+\verb{scalar<character>|scalar<numeric|integer>(1<=val<=25)} // \emph{default:} \code{"iso"}
 
 The time style to use. By default this is the short name \code{"iso"} which
 corresponds to how times are formatted within ISO 8601 datetime values.
@@ -31,7 +31,7 @@ There are 25 time styles in total and their short names can be viewed using
 
 \item{pattern}{\emph{Specification of the formatting pattern}
 
-\verb{scalar<character>} --- \emph{default:} \code{"{x}"}
+\verb{scalar<character>} // \emph{default:} \code{"{x}"}
 
 A formatting pattern that allows for decoration of the formatted value. The
 formatted value is represented by the \code{{x}} (which can be used multiple
@@ -40,7 +40,7 @@ literals.}
 
 \item{locale}{\emph{Locale identifier}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 An optional locale identifier that can be used for formatting values
 according the locale's rules. Examples include \code{"en"} for English (United
@@ -52,7 +52,7 @@ would be used automatically by any function with a \code{locale} argument) but a
 
 \item{output}{\emph{Output format}
 
-\verb{singl-kw:[auto|plain|html|latex|rtf|word]} --- \emph{default:} \code{"auto"}
+\verb{singl-kw:[auto|plain|html|latex|rtf|word]} // \emph{default:} \code{"auto"}
 
 The output style of the resulting character vector. This can either be
 \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"}, or

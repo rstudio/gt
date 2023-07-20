@@ -9,7 +9,7 @@ cells_stub(rows = everything())
 \arguments{
 \item{rows}{\emph{Rows to target}
 
-\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
 
 The rows to which targeting operations are constrained. The default
 \code{\link[=everything]{everything()}} results in all rows in \code{columns} being formatted.
@@ -106,7 +106,7 @@ using \code{cells_stub()} in \code{locations}.
 
 \section{Function ID}{
 
-8-11
+8-14
 }
 
 \section{Function Introduced}{
@@ -134,6 +134,7 @@ Other helper functions:
 \code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
+\code{\link{define_units}()},
 \code{\link{escape_latex}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},

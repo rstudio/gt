@@ -9,14 +9,14 @@ cols_align_decimal(data, columns = everything(), dec_mark = ".", locale = NULL)
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 The columns for which decimal alignment should be applied. Can either be a
 series of column names provided in \code{\link[=c]{c()}}, a vector of column indices, or a
@@ -27,7 +27,7 @@ which means that decimal alignment will be attempted on all columns.}
 
 \item{dec_mark}{\emph{Decimal mark}
 
-\verb{scalar<character>} --- \emph{default:} \code{"."}
+\verb{scalar<character>} // \emph{default:} \code{"."}
 
 The character used as a decimal mark in the numeric values to be aligned.
 If a locale value was used when formatting the numeric values then \code{locale}
@@ -35,7 +35,7 @@ is better to use and it will override any value here in \code{dec_mark}.}
 
 \item{locale}{\emph{Locale identifier}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 An optional locale identifier that can be used to obtain the type of
 decimal mark used in the numeric values to be aligned (according to the
@@ -98,6 +98,7 @@ could remedy this and align the numbers by the decimal mark with
 
 \seealso{
 Other column modification functions: 
+\code{\link{cols_add}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
 \code{\link{cols_label_with}()},
@@ -110,6 +111,7 @@ Other column modification functions:
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
 \code{\link{cols_unhide}()},
+\code{\link{cols_units}()},
 \code{\link{cols_width}()}
 }
 \concept{column modification functions}

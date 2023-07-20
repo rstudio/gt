@@ -9,20 +9,20 @@ gt_group(..., .list = list2(...), .use_grp_opts = FALSE)
 \arguments{
 \item{...}{\emph{One or more gt table data objects}
 
-\verb{obj:<gt_tbl>} --- (\code{optional})
+\verb{obj:<gt_tbl>} // (\code{optional})
 
 One or more \strong{gt} table (\code{gt_tbl}) objects, typically generated via the
 \code{\link[=gt]{gt()}} function.}
 
 \item{.list}{\emph{Alternative to \code{...}}
 
-\verb{<list of multiple expressions>} --- (or, use \code{...})
+\verb{<list of multiple expressions>} // (or, use \code{...})
 
 Allows for the use of a list as an input alternative to \code{...}.}
 
 \item{.use_grp_opts}{\emph{Apply options to all contained tables?}
 
-\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
 
 Should options specified in the \code{gt_group} object be applied to all
 contained \strong{gt} tables? By default this is \code{FALSE}.}

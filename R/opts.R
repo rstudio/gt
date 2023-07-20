@@ -41,21 +41,21 @@
 #'
 #' @param style *Table style*
 #'
-#'   `scalar<numeric|integer>(1>=val>=6)` --- *default:* `1`
+#'   `scalar<numeric|integer>(1>=val>=6)` // *default:* `1`
 #'
 #'   Six numbered styles are available. Simply provide a number from `1` (the
 #'   default) to `6` to choose a distinct look.
 #'
 #' @param color *Color variation*
 #'
-#'   `scalar<character>` --- *default:* `"blue"`
+#'   `scalar<character>` // *default:* `"blue"`
 #'
 #'   There are six color variations: `"blue"`, `"cyan"`, `"pink"`, `"green"`,
 #'   `"red"`, and `"gray"`.
 #'
 #' @param add_row_striping *Allow row striping*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   An option to enable row striping in the table body for the `style` chosen.
 #'
@@ -225,7 +225,7 @@ get_colorized_params <- function(
 #'
 #' @param active *Display interactive HTML table*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   The `active` option will either enable or disable interactive features for
 #'   an HTML table. The individual features of an interactive HTML table are
@@ -233,7 +233,7 @@ get_colorized_params <- function(
 #'
 #' @param use_pagination *Display pagination controls*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   This is the option for using pagination controls (below the table body). By
 #'   default, this is `TRUE` and it will allow the use to page through table
@@ -241,7 +241,7 @@ get_colorized_params <- function(
 #'
 #' @param use_pagination_info *Display pagination info*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   If `use_pagination` is `TRUE` then the `use_pagination_info` option can be
 #'   used to display informational text regarding the current page view (this is
@@ -249,42 +249,42 @@ get_colorized_params <- function(
 #'
 #' @param use_sorting *Provide column sorting controls*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   This option provides controls for sorting column values. By default, this
 #'   is `TRUE`.
 #'
 #' @param use_search *Provide a global search field*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   The `use_search` option places a search field for globally filtering rows
 #'   to the requested content. By default, this is `FALSE`.
 #'
 #' @param use_filters *Display filtering fields*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   The `use_filters` option places search fields below each column header and
 #'   allows for filtering by column. By default, this is `FALSE`.
 #'
 #' @param use_resizers *Allow column resizing*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   This option allows for the interactive resizing of columns. By default,
 #'   this is `FALSE`.
 #'
 #' @param use_highlight *Enable row highlighting on hover*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   The `use_highlight` option highlights individual rows upon hover. By
 #'   default, this is `FALSE`.
 #'
 #' @param use_compact_mode *Use compact mode*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   To reduce vertical padding and thus make the table consume less vertical
 #'   space the `use_compact_mode` option can be used. By default, this is
@@ -292,7 +292,7 @@ get_colorized_params <- function(
 #'
 #' @param use_text_wrapping *Use text wrapping*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   The `use_text_wrapping` option controls whether text wrapping occurs
 #'   throughout the table. This is `TRUE` by default and with that text will be
@@ -301,14 +301,14 @@ get_colorized_params <- function(
 #'
 #' @param use_page_size_select *Allow for page size selection*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   The `use_page_size_select` option lets us display a dropdown menu for the
 #'   number of rows to show per page of data.
 #'
 #' @param page_size_default *Change the default page size*
 #'
-#'   `scalar<numeric|integer>` --- *default:* `10`
+#'   `scalar<numeric|integer>` // *default:* `10`
 #'
 #'   The default page size (initially set as `10`) can be modified with
 #'   `page_size_default` and this works whether or not `use_page_size_select` is
@@ -316,7 +316,7 @@ get_colorized_params <- function(
 #'
 #' @param page_size_values *Set of page-size values*
 #'
-#'   `vector<numeric|integer>` --- *default:* `c(10, 25, 50, 100)`
+#'   `vector<numeric|integer>` // *default:* `c(10, 25, 50, 100)`
 #'
 #'   By default, this is the vector `c(10, 25, 50, 100)` which corresponds to
 #'   options for `10`, `25`, `50`, and `100` rows of data per page. To modify
@@ -324,7 +324,7 @@ get_colorized_params <- function(
 #'
 #' @param pagination_type *Change pagination mode*
 #'
-#'   `scalar<character>` --- *default:* `"numbers"`
+#'   `scalar<character>` // *default:* `"numbers"`
 #'
 #'   When using pagination the `pagination_type` option lets us select between
 #'   one of three options for the layout of pagination controls. The default is
@@ -453,7 +453,7 @@ opt_interactive <- function(
 #'
 #' @param marks *Sequence of footnote marks*
 #'
-#'   `vector<character>` --- *default:* `"numbers"`
+#'   `vector<character>` // *default:* `"numbers"`
 #'
 #'   Either a character vector of length greater than 1 (that will represent the
 #'   series of marks) or a single keyword that represents a preset sequence of
@@ -578,7 +578,7 @@ opt_footnote_marks <- function(
 #'
 #' @param spec_ref,spec_ftr *Specifications for formatting of footnote marks*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   Specification of the footnote marks when behaving as footnote references
 #'   and as marks in the footer section of the table. This is a string
@@ -691,7 +691,7 @@ opt_footnote_spec <- function(
 #'
 #' @param row_striping *Use alternating row stripes*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   A logical value to indicate whether row striping should be added or
 #'   removed.
@@ -769,7 +769,7 @@ opt_row_striping <- function(
 #'
 #' @param align *Header alignment*
 #'
-#'   `singl-kw:[left|center|right]` --- *default:* `"left"`
+#'   `singl-kw:[left|center|right]` // *default:* `"left"`
 #'
 #'   The alignment of the title and subtitle elements in the table header.
 #'   Options are `"left"` (the default), `"center"`, or `"right"`.
@@ -858,7 +858,7 @@ opt_align_table_header <- function(
 #'
 #' @param scale *Scale factor*
 #'
-#'   `scalar<numeric|integer>(0>=val>=3)` --- *default:* `1`
+#'   `scalar<numeric|integer>(0>=val>=3)` // *default:* `1`
 #'
 #'   A scale factor by which the vertical padding will be adjusted. Must be a
 #'   number between `0` and `3`.
@@ -950,7 +950,7 @@ opt_vertical_padding <- function(
 #'
 #' @param scale *Scale factor*
 #'
-#'   `scalar<numeric|integer>(0>=val>=3)` --- *default:* `1`
+#'   `scalar<numeric|integer>(0>=val>=3)` // *default:* `1`
 #'
 #'   A scale factor by which the horizontal padding will be adjusted. Must be a
 #'   number between `0` and `3`.
@@ -1072,7 +1072,7 @@ get_padding_option_value_list <- function(scale, type) {
 #'
 #' @param all_caps *Use all-caps transformation*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   A logical value to indicate whether the text transformation to all caps
 #'   should be performed (`TRUE`, the default) or reset to default values
@@ -1080,7 +1080,7 @@ get_padding_option_value_list <- function(scale, type) {
 #'
 #' @param locations *Locations to target*
 #'
-#'   `mult-kw:[column_labels|stub|row_group]` --- *default:* `c("column_labels", "stub", "row_group")`
+#'   `mult-kw:[column_labels|stub|row_group]` // *default:* `c("column_labels", "stub", "row_group")`
 #'
 #'   Which locations should undergo this text transformation? By default it
 #'   includes all of the `"column_labels"`, the `"stub"`, and the `"row_group"`
@@ -1193,7 +1193,7 @@ opt_all_caps <- function(
 #'
 #' @param extent *Extent of lines added*
 #'
-#'   `singl-kw:[all|none|default]` --- *default:* `"all"`
+#'   `singl-kw:[all|none|default]` // *default:* `"all"`
 #'
 #'   The extent to which lines will be visible in the table. Options are
 #'   `"all"`, `"none"`, or `"default"`.
@@ -1286,7 +1286,7 @@ opt_table_lines <- function(
 #'
 #' @param style *Outline style property*
 #'
-#'   `scalar<character>` --- *default:* `"solid"`
+#'   `scalar<character>` // *default:* `"solid"`
 #'
 #'   The style property for the table outline. By default, this is `"solid"`. If
 #'   `"none"` is used then the outline is removed and any values provided for
@@ -1294,14 +1294,14 @@ opt_table_lines <- function(
 #'
 #' @param width *Outline width value*
 #'
-#'   `scalar<character>` --- *default:* `px(3)`
+#'   `scalar<character>` // *default:* `px(3)`
 #'
 #'   The width property for the table outline. By default, this is `px(3)` (or,
 #'   `"3px"`).
 #'
 #' @param color *Color of outline*
 #'
-#'   `scalar<character>` --- *default:* `"#D3D3D3"`
+#'   `scalar<character>` // *default:* `"#D3D3D3"`
 #'
 #'   The color of the table outline. By default, this is `"#D3D3D3"`.
 #'
@@ -1427,7 +1427,7 @@ opt_table_outline <- function(
 #'
 #' @param font *Default table fonts*
 #'
-#'   `vector<character>|list|obj:<font_css>` --- *default:* `NULL` (`optional`)
+#'   `vector<character>|list|obj:<font_css>` // *default:* `NULL` (`optional`)
 #'
 #'   One or more font names available as system or web fonts. These can be
 #'   combined with a `c()` or a `list()`. To choose fonts from the
@@ -1435,7 +1435,7 @@ opt_table_outline <- function(
 #'
 #' @param stack *Name of font stack*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   A name that is representative of a font stack (obtained via internally via
 #'   the [system_fonts()] helper function). If provided, this new stack will
@@ -1443,14 +1443,14 @@ opt_table_outline <- function(
 #'
 #' @param style *Text style*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An option to modify the text style. Can be one of either `"normal"`,
 #'   `"italic"`, or `"oblique"`.
 #'
 #' @param weight *Text weight*
 #'
-#'   `scalar<character|numeric|integer>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character|numeric|integer>` // *default:* `NULL` (`optional`)
 #'
 #'   Option to set the weight of the font. Can be a text-based keyword such as
 #'   `"normal"`, `"bold"`, `"lighter"`, `"bolder"`, or, a numeric value between
@@ -1459,7 +1459,7 @@ opt_table_outline <- function(
 #'
 #' @param add *Add to existing fonts*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   Should fonts be added to the beginning of any already-defined fonts for the
 #'   table? By default, this is `TRUE` and is recommended since those fonts
@@ -1659,13 +1659,13 @@ opt_table_font <- function(
 #'
 #' @param css *CSS declarations*
 #'
-#'   `scalar<character>` --- **required**
+#'   `scalar<character>` // **required**
 #'
 #'   The CSS to include as part of the rendered table's `<style>` element.
 #'
 #' @param add *Add to existing CSS*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   If `TRUE`, the default, the CSS is added to any already-defined CSS
 #'   (typically from previous calls of [opt_table_font()], `opt_css()`, or,
@@ -1675,7 +1675,7 @@ opt_table_font <- function(
 #'
 #' @param allow_duplicates *Allow for CSS duplication*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   When this is `FALSE` (the default), the CSS provided here won't be added
 #'   (provided that `add = TRUE`) if it is seen in the already-defined CSS.

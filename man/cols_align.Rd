@@ -13,14 +13,14 @@ cols_align(
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{align}{\emph{Alignment type}
 
-\verb{singl-kw:[auto|left|center|right]} --- \emph{default:} \code{"auto"}
+\verb{singl-kw:[auto|left|center|right]} // \emph{default:} \code{"auto"}
 
 This can be any of \code{"center"}, \code{"left"}, or \code{"right"} for center-, left-,
 or right-alignment. Alternatively, the \code{"auto"} option (the default), will
@@ -29,7 +29,7 @@ Details section for specifics on which alignments are applied).}
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 The columns for which the alignment should be applied. Can either be a
 series of column names provided in \code{\link[=c]{c()}}, a vector of column indices, or a
@@ -89,6 +89,7 @@ data to the left.
 
 \seealso{
 Other column modification functions: 
+\code{\link{cols_add}()},
 \code{\link{cols_align_decimal}()},
 \code{\link{cols_hide}()},
 \code{\link{cols_label_with}()},
@@ -101,6 +102,7 @@ Other column modification functions:
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
 \code{\link{cols_unhide}()},
+\code{\link{cols_units}()},
 \code{\link{cols_width}()}
 }
 \concept{column modification functions}

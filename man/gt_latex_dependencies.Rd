@@ -47,7 +47,7 @@ gt(exibble)
 }
 \section{Function ID}{
 
-8-26
+8-27
 }
 
 \section{Function Introduced}{
@@ -76,6 +76,7 @@ Other helper functions:
 \code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
+\code{\link{define_units}()},
 \code{\link{escape_latex}()},
 \code{\link{google_font}()},
 \code{\link{html}()},
