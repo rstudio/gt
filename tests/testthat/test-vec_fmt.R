@@ -714,7 +714,7 @@ test_that("The `vec_fmt_scientific()` function works", {
       c(
         "-2.5 \U000D7 10^6", "-2 \U000D7 10^6",
         "-1.5 \U000D7 10^6", "-1 \U000D7 10^6",
-        "-5 \U000D7 10^5", "0.00", "5 \U000D7 10^5",
+        "-5 \U000D7 10^5", "0", "5 \U000D7 10^5",
         "1 \U000D7 10^6", "1.5 \U000D7 10^6",
         "2 \U000D7 10^6", "2.5 \U000D7 10^6", "NA"
       )
@@ -728,7 +728,7 @@ test_that("The `vec_fmt_scientific()` function works", {
         paste0("\U02212", "1.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
         paste0("\U02212", "1 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
         paste0("\U02212", "5 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>"),
-        "0.00",
+        "0",
         paste0("5 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>"),
         paste0("1 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
         paste0("1.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
@@ -742,7 +742,7 @@ test_that("The `vec_fmt_scientific()` function works", {
     expect_equal(
       c(
         "$-2.5 \\times 10^{6}$", "$-2 \\times 10^{6}$", "$-1.5 \\times 10^{6}$",
-        "$-1 \\times 10^{6}$", "$-5 \\times 10^{5}$", "$0.00$",
+        "$-1 \\times 10^{6}$", "$-5 \\times 10^{5}$", "$0$",
         "$5 \\times 10^{5}$", "$1 \\times 10^{6}$", "$1.5 \\times 10^{6}$",
         "$2 \\times 10^{6}$", "$2.5 \\times 10^{6}$", "NA"
       )
@@ -752,7 +752,7 @@ test_that("The `vec_fmt_scientific()` function works", {
     expect_equal(
       c(
         "-2.5 \\'d7 10{\\super 6}", "-2 \\'d7 10{\\super 6}", "-1.5 \\'d7 10{\\super 6}",
-        "-1 \\'d7 10{\\super 6}", "-5 \\'d7 10{\\super 5}", "0.00",
+        "-1 \\'d7 10{\\super 6}", "-5 \\'d7 10{\\super 5}", "0",
         "5 \\'d7 10{\\super 5}", "1 \\'d7 10{\\super 6}", "1.5 \\'d7 10{\\super 6}",
         "2 \\'d7 10{\\super 6}", "2.5 \\'d7 10{\\super 6}", "NA"
       )
