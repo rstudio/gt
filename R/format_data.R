@@ -979,10 +979,12 @@ fmt_scientific <- function(
 
           if (drop_trailing_zeros) {
             m_part <- sub("0+$", "", m_part)
+            x_str[small_pos] <- sub("0+$", "", x_str[small_pos])
           }
 
           if (drop_trailing_dec_mark) {
             m_part <- sub("\\.$", "", m_part)
+            x_str[small_pos] <- sub("\\.$", "", x_str[small_pos])
           }
 
           m_part <- replace_minus(m_part)
