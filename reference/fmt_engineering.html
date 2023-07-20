@@ -118,6 +118,7 @@ formatting specific to the chosen locale</p></li>
 <span>  rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  decimals <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  drop_trailing_zeros <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  drop_trailing_dec_mark <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  scale_by <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  exp_style <span class="op">=</span> <span class="st">"x10n"</span>,</span>
 <span>  pattern <span class="op">=</span> <span class="st">"{x}"</span>,</span>
@@ -176,6 +177,14 @@ becomes <code>"2.3400"</code>. The trailing zeros can be removed with
 <p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
 <p>A logical value that allows for removal of trailing zeros (those redundant
 zeros after the decimal mark).</p></dd>
+
+
+<dt>drop_trailing_dec_mark</dt>
+<dd><p><em>Drop the trailing decimal mark</em></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
+<p>A logical value that determines whether decimal marks should always appear
+even if there are no decimal digits to display after formatting (e.g., <code>23</code>
+becomes <code>23.</code> if <code>FALSE</code>). By default trailing decimal marks are not shown.</p></dd>
 
 
 <dt>scale_by</dt>
