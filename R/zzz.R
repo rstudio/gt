@@ -111,6 +111,8 @@ utils::globalVariables(
     "n_cols",
     "name",
     "name_copy",
+    "no_data",
+    "no_table_data_text",
     "obtain_group_ordering",
     "package",
     "palette",
