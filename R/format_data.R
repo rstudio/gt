@@ -847,6 +847,7 @@ fmt_scientific <- function(
     rows = everything(),
     decimals = 2,
     drop_trailing_zeros = FALSE,
+    drop_trailing_dec_mark = TRUE,
     scale_by = 1.0,
     exp_style = "x10n",
     pattern = "{x}",
@@ -940,7 +941,7 @@ fmt_scientific <- function(
             n_sigfig = NULL,
             sep_mark = sep_mark,
             dec_mark = dec_mark,
-            drop_trailing_zeros = drop_trailing_zeros,
+            drop_trailing_zeros = FALSE,
             drop_trailing_dec_mark = FALSE,
             format = "e",
             replace_minus_mark = FALSE
@@ -954,8 +955,7 @@ fmt_scientific <- function(
 
           # For any numbers that shouldn't have an exponent, remove
           # that portion from the character version
-          x_str[small_pos] <-
-            replace_minus(split_scientific_notn(x_str = x_str[small_pos])$num)
+          x_str[small_pos] <- replace_minus(gsub("(e|E).*", "", x_str[small_pos]))
 
           # For any non-NA numbers that do have an exponent, format
           # those according to the output context
@@ -975,6 +975,14 @@ fmt_scientific <- function(
                   if (x > 0) gsub("^", "+", x) else as.character(x)
                 }
               )
+          }
+
+          if (drop_trailing_zeros) {
+            m_part <- sub("0+$", "", m_part)
+          }
+
+          if (drop_trailing_dec_mark) {
+            m_part <- sub("\\.$", "", m_part)
           }
 
           m_part <- replace_minus(m_part)
@@ -1219,6 +1227,7 @@ fmt_engineering <- function(
     rows = everything(),
     decimals = 2,
     drop_trailing_zeros = FALSE,
+    drop_trailing_dec_mark = TRUE,
     scale_by = 1.0,
     exp_style = "x10n",
     pattern = "{x}",
@@ -1331,7 +1340,7 @@ fmt_engineering <- function(
             sep_mark = sep_mark,
             dec_mark = dec_mark,
             drop_trailing_zeros = drop_trailing_zeros,
-            drop_trailing_dec_mark = FALSE,
+            drop_trailing_dec_mark = drop_trailing_dec_mark,
             format = "f",
             replace_minus_mark = FALSE
           )
