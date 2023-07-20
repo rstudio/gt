@@ -417,27 +417,35 @@ format_num_to_str <- function(
   # If this hardcoding is ever to change, then we need to
   # modify the regexes below
   if (system == "ind") {
+
     sep_mark <- ","
     dec_mark <- "."
   }
 
   if (format == "fg") {
+
     x <- signif(x, digits = n_sigfig)
     mode <- NULL
     digits <- n_sigfig
     flag <- "#"
     drop0trailing <- FALSE
+
   } else if (format == "f") {
+
     mode <- "double"
     digits <- decimals
     flag <- ""
     drop0trailing <- drop_trailing_zeros
+
   } else if (format == "e") {
+
     mode <- "double"
     digits <- decimals
     flag <- ""
-    drop0trailing <- drop_trailing_zeros
+    drop0trailing <- FALSE
+
   } else {
+
     cli::cli_abort("The format provided isn't recognized.")
   }
 
