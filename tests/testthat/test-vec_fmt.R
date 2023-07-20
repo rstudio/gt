@@ -614,7 +614,7 @@ test_that("The `vec_fmt_integer()` function works", {
 
 test_that("The `vec_fmt_scientific()` function works", {
 
-  # TODO: `vec_fmt_scientifc()` and `fmt_scientific()` are incompatible with
+  # TODO: `vec_fmt_scientific()` and `fmt_scientific()` are incompatible with
   # Inf values so we will omit them from the test vectors until a fix is
   # available
 
@@ -709,25 +709,54 @@ test_that("The `vec_fmt_scientific()` function works", {
       )
     )
 
-  # TODO: `vec_fmt_scientific()` and `fmt_scientific()` both error when
-  # `drop_trailing_zeros = TRUE`; omit these test until a fix is available
-  # vec_fmt_scientific(vec_num_4_m, drop_trailing_zeros = TRUE, output = "html") %>%
-  #   expect_equal(
-  #     c(
-  #     )
-  #   )
-  #
-  # vec_fmt_scientific(vec_num_1, drop_trailing_zeros = TRUE, output = "latex") %>%
-  #   expect_equal(
-  #     c(
-  #     )
-  #   )
-  #
-  # vec_fmt_scientific(vec_num_1, drop_trailing_zeros = TRUE, output = "rtf") %>%
-  #   expect_equal(
-  #     c(
-  #     )
-  #   )
+  vec_fmt_scientific(vec_num_4_m, drop_trailing_zeros = TRUE, output = "plain") %>%
+    expect_equal(
+      c(
+        "-2.5 \U000D7 10^6", "-2 \U000D7 10^6",
+        "-1.5 \U000D7 10^6", "-1 \U000D7 10^6",
+        "-5 \U000D7 10^5", "0.00", "5 \U000D7 10^5",
+        "1 \U000D7 10^6", "1.5 \U000D7 10^6",
+        "2 \U000D7 10^6", "2.5 \U000D7 10^6", "NA"
+      )
+    )
+
+  vec_fmt_scientific(vec_num_4_m, drop_trailing_zeros = TRUE, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "2 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "5 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>"),
+        "0.00",
+        paste0("5 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>"),
+        paste0("1 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("1.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        "NA"
+      )
+    )
+
+  vec_fmt_scientific(vec_num_4_m, drop_trailing_zeros = TRUE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.5 \\times 10^{6}$", "$-2 \\times 10^{6}$", "$-1.5 \\times 10^{6}$",
+        "$-1 \\times 10^{6}$", "$-5 \\times 10^{5}$", "$0.00$",
+        "$5 \\times 10^{5}$", "$1 \\times 10^{6}$", "$1.5 \\times 10^{6}$",
+        "$2 \\times 10^{6}$", "$2.5 \\times 10^{6}$", "NA"
+      )
+    )
+
+  vec_fmt_scientific(vec_num_4_m, drop_trailing_zeros = TRUE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.5 \\'d7 10{\\super 6}", "-2 \\'d7 10{\\super 6}", "-1.5 \\'d7 10{\\super 6}",
+        "-1 \\'d7 10{\\super 6}", "-5 \\'d7 10{\\super 5}", "0.00",
+        "5 \\'d7 10{\\super 5}", "1 \\'d7 10{\\super 6}", "1.5 \\'d7 10{\\super 6}",
+        "2 \\'d7 10{\\super 6}", "2.5 \\'d7 10{\\super 6}", "NA"
+      )
+    )
 
   vec_fmt_scientific(vec_num_4_m, locale = "de", output = "plain") %>%
     expect_equal(
@@ -896,7 +925,7 @@ test_that("The `vec_fmt_engineering()` function works", {
       c(
         "-2.50", "-2.00", "-1.50", "-1.00", "-500.00 \U000D7 10^-3",
         "0.00", "500.00 \U000D7 10^-3", "1.00", "1.50", "2.00",
-        "2.50", "NA", "Inf."
+        "2.50", "NA", "Inf"
       )
     )
 
@@ -908,7 +937,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         paste0("\U02212", "500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
         "0.00",
         paste0("500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
-        "1.00", "1.50", "2.00", "2.50", "NA", "Inf."
+        "1.00", "1.50", "2.00", "2.50", "NA", "Inf"
       )
     )
 
@@ -917,7 +946,7 @@ test_that("The `vec_fmt_engineering()` function works", {
       c(
         "$-2.50$", "$-2.00$", "$-1.50$", "$-1.00$", "$-500.00 \\times 10^{-3}$",
         "$0.00$", "$500.00 \\times 10^{-3}$", "$1.00$", "$1.50$", "$2.00$",
-        "$2.50$", "NA", "$Inf.$"
+        "$2.50$", "NA", "$Inf$"
       )
     )
 
@@ -926,7 +955,7 @@ test_that("The `vec_fmt_engineering()` function works", {
       c(
         "-2.50", "-2.00", "-1.50", "-1.00", "-500.00 \\'d7 10{\\super -3}",
         "0.00", "500.00 \\'d7 10{\\super -3}", "1.00", "1.50", "2.00",
-        "2.50", "NA", "Inf."
+        "2.50", "NA", "Inf"
       )
     )
 
@@ -938,7 +967,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         "-500.00 \U000D7 10^3", "0.00",
         "500.00 \U000D7 10^3", "1.00 \U000D7 10^6",
         "1.50 \U000D7 10^6", "2.00 \U000D7 10^6",
-        "2.50 \U000D7 10^6", "NA", "Inf."
+        "2.50 \U000D7 10^6", "NA", "Inf"
       )
     )
 
@@ -956,7 +985,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         paste0("1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
         paste0("2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
         paste0("2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        "NA", "Inf."
+        "NA", "Inf"
       )
     )
 
@@ -966,7 +995,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         "$-2.50 \\times 10^{6}$", "$-2.00 \\times 10^{6}$", "$-1.50 \\times 10^{6}$",
         "$-1.00 \\times 10^{6}$", "$-500.00 \\times 10^{3}$", "$0.00$",
         "$500.00 \\times 10^{3}$", "$1.00 \\times 10^{6}$", "$1.50 \\times 10^{6}$",
-        "$2.00 \\times 10^{6}$", "$2.50 \\times 10^{6}$", "NA", "$Inf.$"
+        "$2.00 \\times 10^{6}$", "$2.50 \\times 10^{6}$", "NA", "$Inf$"
       )
     )
 
@@ -977,7 +1006,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         "-1.00 \\'d7 10{\\super 6}", "-500.00 \\'d7 10{\\super 3}", "0.00",
         "500.00 \\'d7 10{\\super 3}", "1.00 \\'d7 10{\\super 6}", "1.50 \\'d7 10{\\super 6}",
         "2.00 \\'d7 10{\\super 6}", "2.50 \\'d7 10{\\super 6}", "NA",
-        "Inf."
+        "Inf"
       )
     )
 
@@ -989,7 +1018,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         "-500.00 \U000D7 10^9", "0.00", "500.00 \U000D7 10^9",
         "1.00 \U000D7 10^12", "1.50 \U000D7 10^12",
         "2.00 \U000D7 10^12", "2.50 \U000D7 10^12",
-        "NA", "Inf."
+        "NA", "Inf"
       )
     )
 
@@ -1007,7 +1036,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         paste0("1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>12</sup>"),
         paste0("2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>12</sup>"),
         paste0("2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>12</sup>"),
-        "NA", "Inf."
+        "NA", "Inf"
       )
     )
 
@@ -1019,7 +1048,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         "$-500.00 \\times 10^{9}$", "$0.00$",
         "$500.00 \\times 10^{9}$", "$1.00 \\times 10^{12}$",
         "$1.50 \\times 10^{12}$", "$2.00 \\times 10^{12}$",
-        "$2.50 \\times 10^{12}$", "NA", "$Inf.$"
+        "$2.50 \\times 10^{12}$", "NA", "$Inf$"
       )
     )
 
@@ -1031,11 +1060,65 @@ test_that("The `vec_fmt_engineering()` function works", {
         "-500.00 \\'d7 10{\\super 9}", "0.00", "500.00 \\'d7 10{\\super 9}",
         "1.00 \\'d7 10{\\super 12}", "1.50 \\'d7 10{\\super 12}",
         "2.00 \\'d7 10{\\super 12}", "2.50 \\'d7 10{\\super 12}",
-        "NA", "Inf."
+        "NA", "Inf"
       )
     )
 
   vec_fmt_engineering(vec_num_4, drop_trailing_zeros = TRUE, output = "plain") %>%
+    expect_equal(
+      c(
+        "-2.5 \U000D7 10^6", "-2 \U000D7 10^6",
+        "-1.5 \U000D7 10^6", "-1 \U000D7 10^6",
+        "-500 \U000D7 10^3", "0", "500 \U000D7 10^3",
+        "1 \U000D7 10^6", "1.5 \U000D7 10^6",
+        "2 \U000D7 10^6", "2.5 \U000D7 10^6", "NA", "Inf"
+      )
+    )
+
+  vec_fmt_engineering(vec_num_4, drop_trailing_zeros = TRUE, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "2 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "500 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
+        "0",
+        paste0("500 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
+        paste0("1 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("1.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        "NA", "Inf"
+      )
+    )
+
+  vec_fmt_engineering(vec_num_4, drop_trailing_zeros = TRUE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.5 \\times 10^{6}$", "$-2 \\times 10^{6}$", "$-1.5 \\times 10^{6}$",
+        "$-1 \\times 10^{6}$", "$-500 \\times 10^{3}$", "$0$", "$500 \\times 10^{3}$",
+        "$1 \\times 10^{6}$", "$1.5 \\times 10^{6}$", "$2 \\times 10^{6}$",
+        "$2.5 \\times 10^{6}$", "NA", "$Inf$"
+      )
+    )
+
+  vec_fmt_engineering(vec_num_4, drop_trailing_zeros = TRUE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.5 \\'d7 10{\\super 6}", "-2 \\'d7 10{\\super 6}", "-1.5 \\'d7 10{\\super 6}",
+        "-1 \\'d7 10{\\super 6}", "-500 \\'d7 10{\\super 3}", "0",
+        "500 \\'d7 10{\\super 3}", "1 \\'d7 10{\\super 6}", "1.5 \\'d7 10{\\super 6}",
+        "2 \\'d7 10{\\super 6}", "2.5 \\'d7 10{\\super 6}", "NA", "Inf"
+      )
+    )
+
+  vec_fmt_engineering(
+    vec_num_4,
+    drop_trailing_zeros = TRUE,
+    drop_trailing_dec_mark = FALSE,
+    output = "plain"
+  ) %>%
     expect_equal(
       c(
         "-2.5 \U000D7 10^6", "-2. \U000D7 10^6",
@@ -1046,7 +1129,12 @@ test_that("The `vec_fmt_engineering()` function works", {
       )
     )
 
-  vec_fmt_engineering(vec_num_4, drop_trailing_zeros = TRUE, output = "html") %>%
+  vec_fmt_engineering(
+    vec_num_4,
+    drop_trailing_zeros = TRUE,
+    drop_trailing_dec_mark = FALSE,
+    output = "html"
+  ) %>%
     expect_equal(
       c(
         paste0("\U02212", "2.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
@@ -1064,7 +1152,12 @@ test_that("The `vec_fmt_engineering()` function works", {
       )
     )
 
-  vec_fmt_engineering(vec_num_4, drop_trailing_zeros = TRUE, output = "latex") %>%
+  vec_fmt_engineering(
+    vec_num_4,
+    drop_trailing_zeros = TRUE,
+    drop_trailing_dec_mark = FALSE,
+    output = "latex"
+  ) %>%
     expect_equal(
       c(
         "$-2.5 \\times 10^{6}$", "$-2. \\times 10^{6}$", "$-1.5 \\times 10^{6}$",
@@ -1074,7 +1167,12 @@ test_that("The `vec_fmt_engineering()` function works", {
       )
     )
 
-  vec_fmt_engineering(vec_num_4, drop_trailing_zeros = TRUE, output = "rtf") %>%
+  vec_fmt_engineering(
+    vec_num_4,
+    drop_trailing_zeros = TRUE,
+    drop_trailing_dec_mark = FALSE,
+    output = "rtf"
+  ) %>%
     expect_equal(
       c(
         "-2.5 \\'d7 10{\\super 6}", "-2. \\'d7 10{\\super 6}", "-1.5 \\'d7 10{\\super 6}",
@@ -1092,7 +1190,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         "-500,00 \U000D7 10^3", "0,00",
         "500,00 \U000D7 10^3", "1,00 \U000D7 10^6",
         "1,50 \U000D7 10^6", "2,00 \U000D7 10^6",
-        "2,50 \U000D7 10^6", "NA", "Inf,"
+        "2,50 \U000D7 10^6", "NA", "Inf"
       )
     )
 
@@ -1110,7 +1208,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         paste0("1,50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
         paste0("2,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
         paste0("2,50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        "NA", "Inf,"
+        "NA", "Inf"
       )
     )
 
@@ -1122,7 +1220,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         "$-500,00 \\times 10^{3}$", "$0,00$", "$500,00 \\times 10^{3}$",
         "$1,00 \\times 10^{6}$", "$1,50 \\times 10^{6}$",
         "$2,00 \\times 10^{6}$", "$2,50 \\times 10^{6}$",
-        "NA", "$Inf,$"
+        "NA", "$Inf$"
       )
     )
 
@@ -1134,7 +1232,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         "-500,00 \\'d7 10{\\super 3}", "0,00", "500,00 \\'d7 10{\\super 3}",
         "1,00 \\'d7 10{\\super 6}", "1,50 \\'d7 10{\\super 6}",
         "2,00 \\'d7 10{\\super 6}", "2,50 \\'d7 10{\\super 6}",
-        "NA", "Inf,"
+        "NA", "Inf"
       )
     )
 
@@ -1146,7 +1244,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         "a-500.00 \U000D7 10^3b", "a0.00b", "a500.00 \U000D7 10^3b",
         "a1.00 \U000D7 10^6b", "a1.50 \U000D7 10^6b",
         "a2.00 \U000D7 10^6b", "a2.50 \U000D7 10^6b",
-        "NA", "aInf.b"
+        "NA", "aInfb"
       )
     )
 
@@ -1164,7 +1262,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         paste0("a1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
         paste0("a2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
         paste0("a2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
-        "NA", "aInf.b"
+        "NA", "aInfb"
       )
     )
 
@@ -1176,7 +1274,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         "a$-500.00 \\times 10^{3}$b", "a$0.00$b",
         "a$500.00 \\times 10^{3}$b", "a$1.00 \\times 10^{6}$b",
         "a$1.50 \\times 10^{6}$b", "a$2.00 \\times 10^{6}$b",
-        "a$2.50 \\times 10^{6}$b", "NA", "a$Inf.$b"
+        "a$2.50 \\times 10^{6}$b", "NA", "a$Inf$b"
       )
     )
 
@@ -1188,7 +1286,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         "a-500.00 \\'d7 10{\\super 3}b", "a0.00b", "a500.00 \\'d7 10{\\super 3}b",
         "a1.00 \\'d7 10{\\super 6}b", "a1.50 \\'d7 10{\\super 6}b",
         "a2.00 \\'d7 10{\\super 6}b", "a2.50 \\'d7 10{\\super 6}b",
-        "NA", "aInf.b"
+        "NA", "aInfb"
       )
     )
 
@@ -1200,7 +1298,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         "-500.00 \U000D7 10^3", "0.00",
         "+500.00 \U000D7 10^3", "+1.00 \U000D7 10^6",
         "+1.50 \U000D7 10^6", "+2.00 \U000D7 10^6",
-        "+2.50 \U000D7 10^6", "NA", "+Inf."
+        "+2.50 \U000D7 10^6", "NA", "+Inf"
       )
     )
 
@@ -1218,7 +1316,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         paste0("+1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
         paste0("+2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
         paste0("+2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        "NA", "+Inf."
+        "NA", "+Inf"
       )
     )
 
@@ -1229,7 +1327,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         "$-1.50 \\times 10^{6}$", "$-1.00 \\times 10^{6}$",
         "$-500.00 \\times 10^{3}$", "$0.00$", "$+500.00 \\times 10^{3}$",
         "$+1.00 \\times 10^{6}$", "$+1.50 \\times 10^{6}$",
-        "$+2.00 \\times 10^{6}$", "$+2.50 \\times 10^{6}$", "NA", "$+Inf.$"
+        "$+2.00 \\times 10^{6}$", "$+2.50 \\times 10^{6}$", "NA", "$+Inf$"
       )
     )
 
@@ -1241,7 +1339,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         "-500.00 \\'d7 10{\\super 3}", "0.00",
         "+500.00 \\'d7 10{\\super 3}", "+1.00 \\'d7 10{\\super 6}",
         "+1.50 \\'d7 10{\\super 6}", "+2.00 \\'d7 10{\\super 6}",
-        "+2.50 \\'d7 10{\\super 6}", "NA", "+Inf."
+        "+2.50 \\'d7 10{\\super 6}", "NA", "+Inf"
       )
     )
 
