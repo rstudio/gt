@@ -8,6 +8,7 @@ vec_fmt_scientific(
   x,
   decimals = 2,
   drop_trailing_zeros = FALSE,
+  drop_trailing_dec_mark = TRUE,
   scale_by = 1,
   exp_style = "x10n",
   pattern = "{x}",
@@ -44,6 +45,14 @@ becomes \code{"2.3400"}. The trailing zeros can be removed with
 
 A logical value that allows for removal of trailing zeros (those redundant
 zeros after the decimal mark).}
+
+\item{drop_trailing_dec_mark}{\emph{Drop the trailing decimal mark}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+A logical value that determines whether decimal marks should always appear
+even if there are no decimal digits to display after formatting (e.g., \code{23}
+becomes \code{23.} if \code{FALSE}). By default trailing decimal marks are not shown.}
 
 \item{scale_by}{\emph{Scale values by a fixed multiplier}
 
