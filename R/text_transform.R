@@ -601,6 +601,44 @@ text_case_match <- function(
 #' `r man_get_image_tag(file = "man_text_transform_2.png")`
 #' }}
 #'
+#' There may be occasions where you'd want to remove all text. Here in this
+#' example based on the [`pizzaplace`] dataset, we generate a **gt** table that
+#' summarizes an entire year of data by colorizing the daily sales revenue.
+#' Individual cell values are not needed here (since the encoding by color
+#' suffices), so, `text_transform()` is used to turn every value to an empty
+#' string: `""`.
+#'
+#' ```r
+#' pizzaplace |>
+#'   dplyr::group_by(date) |>
+#'   dplyr::summarize(rev = sum(price)) |>
+#'   dplyr::ungroup() |>
+#'   dplyr::mutate(
+#'     month = lubridate::month(date, label = TRUE),
+#'     day_num = lubridate::mday(date)
+#'   ) |>
+#'   dplyr::select(-date) |>
+#'   tidyr::pivot_wider(names_from = month, values_from = rev) |>
+#'   gt(rowname_col = "day_num") |>
+#'   data_color(
+#'     method = "numeric",
+#'     palette = "wesanderson::Zissou1",
+#'     na_color = "white"
+#'   ) |>
+#'   text_transform(
+#'     fn = function(x) "",
+#'     locations = cells_body()
+#'   ) |>
+#'   opt_table_lines(extent = "none") |>
+#'   opt_all_caps() |>
+#'   cols_width(everything() ~ px(35)) |>
+#'   cols_align(align = "center")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_text_transform_3.png")`
+#' }}
+#'
 #' @family text transforming functions
 #' @section Function ID:
 #' 4-4
