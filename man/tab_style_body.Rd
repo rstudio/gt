@@ -297,6 +297,21 @@ be used on numeric values and we can make sure of this by using \code{columns = 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_body_6.png" alt="This image of a table was generated from the sixth code example in the `tab_style_body()` help file." style="width:100\%;">
 }}
+
+Styling every \code{NA} value in a table is also easily accomplished with the \code{fn}
+argument by way of the \code{is.na()} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl |>
+  tab_style_body(
+    style = cell_text(color = "red3"),
+    fn = function(x) is.na(x)
+  ) |>
+  sub_missing(missing_text = "Not Available")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_body_7.png" alt="This image of a table was generated from the seventh code example in the `tab_style_body()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
