@@ -354,6 +354,15 @@ be used on numeric values and we can make sure of this by using <code>columns = 
 <span>    fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">&gt;=</span> <span class="fl">0</span> <span class="op">&amp;&amp;</span> <span class="va">x</span> <span class="op">&lt;</span> <span class="fl">50</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_body_6.png" alt="This image of a table was generated from the sixth code example in the `tab_style_body()` help file." style="width:100%;"></p>
+<p>Styling every <code>NA</code> value in a table is also easily accomplished with the <code>fn</code>
+argument by way of the <code><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na()</a></code> function.</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_style_body.html">tab_style_body</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_text.html">cell_text</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"red3"</span><span class="op">)</span>,</span>
+<span>    fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/sub_missing.html">sub_missing</a></span><span class="op">(</span>missing_text <span class="op">=</span> <span class="st">"Not Available"</span><span class="op">)</span></span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_body_7.png" alt="This image of a table was generated from the seventh code example in the `tab_style_body()` help file." style="width:100%;"></p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
