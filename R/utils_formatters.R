@@ -887,6 +887,8 @@ context_symbol_str <- function(context, symbol) {
       },
       get_currency_str(currency = symbol, fallback_to_code = TRUE)
     )
+
+  symbol
 }
 
 #' Paste a symbol string to a formatted number
