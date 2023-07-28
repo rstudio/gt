@@ -170,7 +170,8 @@ render_as_ihtml <- function(data, id) {
         formatted_cells <-
           extract_cells(
             data = data,
-            columns = column_names[x]
+            columns = column_names[x],
+            output = "html"
           )
 
         reactable::colDef(
