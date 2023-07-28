@@ -917,42 +917,45 @@ format_symbol_str <- function(
     return(x_abs_str)
   }
 
-  vapply(
-    seq_along(x),
-    FUN.VALUE = character(1),
-    USE.NAMES = FALSE,
-    FUN = function(i) {
+  x_out <-
+    vapply(
+      seq_along(x),
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
+      FUN = function(i) {
 
-      # Using absolute value format, the minus mark will
-      # be added later
-      x_i <- x[i]
-      x_str_i <- x_abs_str[i]
+        # Using absolute value format, the minus mark will
+        # be added later
+        x_i <- x[i]
+        x_str_i <- x_abs_str[i]
 
-      # Place possible space and symbol on correct side of value
-      x_str_i <-
-        paste_on_side(
-          x_str_i,
-          x_side = ifelse(incl_space, " ", ""),
-          direction = placement
-        )
-      x_str_i <-
-        paste_on_side(
-          x_str_i,
-          x_side = as.character(symbol_str),
-          direction = placement
-        )
+        # Place possible space and symbol on correct side of value
+        x_str_i <-
+          paste_on_side(
+            x_str_i,
+            x_side = ifelse(incl_space, " ", ""),
+            direction = placement
+          )
+        x_str_i <-
+          paste_on_side(
+            x_str_i,
+            x_side = as.character(symbol_str),
+            direction = placement
+          )
 
-      # Create the minus mark for the context
-      minus_mark <- context_minus_mark(context)
+        # Create the minus mark for the context
+        minus_mark <- context_minus_mark(context)
 
-      # Place the `minus_mark` onto the formatted strings
-      if (x_i < 0) {
-        x_str_i <- paste_left(x_str_i, minus_mark)
+        # Place the `minus_mark` onto the formatted strings
+        if (x_i < 0) {
+          x_str_i <- paste_left(x_str_i, minus_mark)
+        }
+
+        x_str_i
       }
+    )
 
-      x_str_i
-    }
-  )
+  x_out
 }
 
 #' Transform currency values to accounting style
