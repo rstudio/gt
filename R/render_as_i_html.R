@@ -53,11 +53,46 @@ render_as_ihtml <- function(data, id) {
   # Obtain the language from the `locale`, if provided
   locale <- dt_locale_get_value(data = data)
 
-  # TODO: generate a language options object to pass to `language` option
-  if (is.null(locale)) {
-    lang <- "en"
+  # Generate a `lang_defs` object to pass to the `language` argument
+  if (is.null(locale) || locale == "en") {
+
+    lang_defs <- reactable::reactableLang()
+
   } else {
-    lang <- gsub("(.)?_.*", "\\1", locale)
+
+    locale_data <- locales[locales$locale == locale, ][1, ]
+
+    if (is.na(locale_data[["no_table_data_text"]])) {
+
+      lang_defs <- reactable::reactableLang()
+
+    } else {
+
+      lang_defs <-
+        reactable::reactableLang(
+          sortLabel = locale_data[["sort_label_text"]],
+          filterPlaceholder = "",
+          filterLabel = locale_data[["filter_label_text"]],
+          searchPlaceholder = locale_data[["search_placeholder_text"]],
+          searchLabel = locale_data[["search_placeholder_text"]],
+          noData = locale_data[["no_table_data_text"]],
+          pageNext = locale_data[["page_next_text"]],
+          pagePrevious = locale_data[["page_previous_text"]],
+          pageNumbers = locale_data[["page_numbers_text"]],
+          pageInfo = gsub("\\\\u2013", "\u2013", locale_data[["page_info_text"]]),
+          pageSizeOptions = locale_data[["page_size_options_text"]],
+          pageNextLabel = locale_data[["page_next_label_text"]],
+          pagePreviousLabel = locale_data[["page_previous_label_text"]],
+          pageNumberLabel = locale_data[["page_number_label_text"]],
+          pageJumpLabel = locale_data[["page_jump_label_text"]],
+          pageSizeOptionsLabel = locale_data[["page_size_options_label_text"]],
+          groupExpandLabel = "Toggle group",
+          detailsExpandLabel = "Toggle details",
+          selectAllRowsLabel = "Select all rows",
+          selectAllSubRowsLabel = "Select all rows in group",
+          selectRowLabel = "Select row"
+        )
+    }
   }
 
   # Obtain the underlying data table
@@ -397,7 +432,7 @@ render_as_ihtml <- function(data, id) {
       width = table_width,
       height = "auto",
       theme = tbl_theme,
-      language = NULL,
+      language = lang_defs,
       elementId = id,
       static = FALSE
     )
