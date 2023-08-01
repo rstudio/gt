@@ -82,7 +82,7 @@ latex_heading_row <- function(content) {
 
   paste0(
     paste(paste(content, collapse = " & "), "\\\\ \n"),
-    "\\midrule\n",
+    "\\midrule\\addlinespace[2.5pt]\n",
     collapse = ""
   )
 }
@@ -96,10 +96,10 @@ latex_group_row <- function(
 ) {
 
   paste0(
-    ifelse(top_border, "\\midrule\n", ""),
+    ifelse(top_border, "\\midrule\\addlinespace[2.5pt]\n", ""),
     "\\multicolumn{", n_cols, "}{l}{", group_name,
     "} \\\\ \n",
-    ifelse(bottom_border, "\\midrule\n", ""),
+    ifelse(bottom_border, "\\midrule\\addlinespace[2.5pt]\n", ""),
     collapse = ""
   )
 }
@@ -536,7 +536,8 @@ create_body_component_l <- function(data) {
         # Insert a horizontal line if this is the beginning of a new row
         # group and there is a two-column stub
         if (group_start && has_two_col_stub && i != 1) {
-          body_section <- append(body_section, "\\midrule\n")
+          body_section <-
+            append(body_section, "\\midrule\\addlinespace[2.5pt]\n")
         }
 
         #
