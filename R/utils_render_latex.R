@@ -133,11 +133,15 @@ create_table_start_l <- function(data) {
 
   # Obtain widths for each visible column label
   col_widths <-
-    boxh_df %>%
-    dplyr::filter(type %in% c("default", "stub")) %>%
-    dplyr::arrange(dplyr::desc(type)) %>%
-    dplyr::pull(column_width) %>%
-    unlist()
+    unlist(
+      dplyr::pull(
+        dplyr::arrange(
+          dplyr::filter(boxh_df, type %in% c("default", "stub")),
+          dplyr::desc(type)
+        ),
+        column_width
+      )
+    )
 
   # Generate the column definitions for visible columns
   # these can either be simple `l`, `c`, `r` directive if a width isn't set
@@ -551,7 +555,7 @@ create_body_component_l <- function(data) {
               group_name = group_label,
               n_cols = n_cols,
               top_border = i != 1,
-              bottom_border = i != n_rows
+              bottom_border = TRUE
             )
 
           body_section <- append(body_section, list(group_heading_row))
@@ -823,10 +827,11 @@ create_footer_component_l <- function(data) {
       )
 
     if (footnotes_multiline) {
-      footnotes <- paste(footnotes, collapse = "\\\\\n") %>% paste_right("\\\\\n")
+      footnotes <- paste_right(paste(footnotes, collapse = "\\\\\n"), "\\\\\n")
     } else {
-      footnotes <- paste(footnotes, collapse = footnotes_sep) %>% paste_right("\\\\\n")
+      footnotes <- paste_right(paste(footnotes, collapse = footnotes_sep), "\\\\\n")
     }
+
   } else {
     footnotes <- ""
   }
@@ -835,9 +840,9 @@ create_footer_component_l <- function(data) {
   if (length(source_notes_vec) > 0) {
 
     if (source_notes_multiline) {
-      source_notes <- paste(source_notes_vec, collapse = "\\\\\n") %>% paste_right("\\\\\n")
+      source_notes <- paste_right(paste(source_notes_vec, collapse = "\\\\\n"), "\\\\\n")
     } else {
-      source_notes <- paste(source_notes_vec, collapse = source_notes_sep) %>% paste_right("\\\\\n")
+      source_notes <- paste_right(paste(source_notes_vec, collapse = source_notes_sep), "\\\\\n")
     }
 
   } else {
@@ -852,35 +857,6 @@ create_footer_component_l <- function(data) {
     collapse = ""
   )
 }
-
-# Function to build a vector of `group` rows in the table body
-create_group_rows_l <- function(
-    groups_rows_df,
-    n_rows,
-    n_cols
-) {
-
-  unname(
-    unlist(
-      lapply(
-        seq_len(n_rows),
-        FUN = function(x) {
-          if (!(x %in% groups_rows_df$row_start)) {
-            return("")
-          }
-
-          latex_group_row(
-            group_name = groups_rows_df[groups_rows_df$row_start == x, "group_label"][[1]],
-            n_cols = n_cols,
-            top_border = x != 1,
-            bottom_border = x != n_rows
-          )
-        }
-      )
-    )
-  )
-}
-
 
 # Function to build a vector of `body` rows
 create_body_rows_l <- function(
