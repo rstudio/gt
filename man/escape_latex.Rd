@@ -23,7 +23,7 @@ safe to use within LaTeX tables.
 }
 \section{Function ID}{
 
-8-26
+8-27
 }
 
 \section{Function Introduced}{
@@ -53,6 +53,7 @@ Other helper functions:
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
 \code{\link{define_units}()},
+\code{\link{from_column}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
