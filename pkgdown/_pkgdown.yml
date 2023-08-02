@@ -178,6 +178,7 @@ reference:
     - html
     - px
     - pct
+    - from_column
     - currency
     - adjust_luminance
     - define_units
