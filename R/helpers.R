@@ -252,6 +252,63 @@ pct <- function(x) {
   paste0(x, "%")
 }
 
+#' Reference a column of values for formatting purposes
+#'
+#' For some functions, it is useful to get parameter values from a column in the
+#' **gt** table.
+#'
+#' @param column *Column name*
+#'
+#'   `scalar<character>` // **required**
+#'
+#'   A single column name in quotation marks. Values will be extracted from this
+#'   column and provided to compatible arguments.
+#'
+#' @param na_value *Default replacement for `NA` values*
+#'
+#'   `scalar<character|numeric|logical>` // *default:* `NULL` (`optional`)
+#'
+#'   A single value to replace any `NA` values in the `column`. Take care to
+#'   provide a value that is of the same type as the `column` values to avoid
+#'   any undesirable coercion.
+#'
+#' @param fn *Function to apply*
+#'
+#'   `function|formula` // *default:* `NULL` (`optional`)
+#'
+#'   If a function is provided here, any values extracted from the table
+#'   `column` (except `NA` values) can be mutated.
+#'
+#' @return A list object of class `gt_column`.
+#'
+#'
+#' @family helper functions
+#' @section Function ID:
+#' 8-5
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @export
+from_column <- function(
+    column,
+    na_value = NULL,
+    fn = NULL
+) {
+
+  column_list <-
+    list(
+      column = column,
+      na_value = na_value[1],
+      fn = fn
+    )
+
+  # Set the `gt_currency` class
+  class(column_list) <- "gt_column"
+
+  column_list
+}
+
 #' Supply a custom currency symbol to `fmt_currency()`
 #'
 #' @description
@@ -320,7 +377,7 @@ pct <- function(x) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-5
+#' 8-6
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -452,7 +509,7 @@ currency <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-6
+#' 8-7
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -543,7 +600,7 @@ adjust_luminance <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-7
+#' 8-8
 #'
 #' @section Function Introduced:
 #' *In Development*
@@ -748,7 +805,7 @@ units_list_item <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-8
+#' 8-9
 #'
 #' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
@@ -843,7 +900,7 @@ stub <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-9
+#' 8-10
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -956,7 +1013,7 @@ cells_title <- function(groups = c("title", "subtitle")) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-10
+#' 8-11
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1065,7 +1122,7 @@ cells_stubhead <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-11
+#' 8-12
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1196,7 +1253,7 @@ cells_column_spanners <- function(spanners = everything()) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-12
+#' 8-13
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1319,7 +1376,7 @@ cells_column_labels <- function(columns = everything()) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-13
+#' 8-14
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1460,7 +1517,7 @@ cells_group <- function(groups = everything()) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-14
+#' 8-15
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1612,7 +1669,7 @@ cells_stub <- function(rows = everything()) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-15
+#' 8-16
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1810,7 +1867,7 @@ cells_body <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-16
+#' 8-17
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1980,7 +2037,7 @@ cells_summary <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-17
+#' 8-18
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2146,7 +2203,7 @@ cells_grand_summary <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-18
+#' 8-19
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
@@ -2283,7 +2340,7 @@ cells_stub_summary <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-19
+#' 8-20
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
@@ -2402,7 +2459,7 @@ cells_stub_grand_summary <- function(rows = everything()) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-20
+#' 8-21
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
@@ -2503,7 +2560,7 @@ cells_footnotes <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-21
+#' 8-22
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
@@ -2664,7 +2721,7 @@ cells_source_notes <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-22
+#' 8-23
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2853,7 +2910,7 @@ cell_style_to_html.cell_text <- function(style) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-23
+#' 8-24
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3000,7 +3057,7 @@ cell_style_to_html.cell_fill <- function(style) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-24
+#' 8-25
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3139,7 +3196,7 @@ cell_style_structure <- function(name, obj, subclass = name) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-25
+#' 8-26
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3181,7 +3238,7 @@ latex_special_chars <- c(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-26
+#' 8-27
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3255,7 +3312,7 @@ escape_latex <- function(text) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-27
+#' 8-28
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3366,7 +3423,7 @@ gt_latex_dependencies <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-28
+#' 8-29
 #'
 #' @section Function Introduced:
 #' `v0.2.2` (August 5, 2020)
@@ -3441,7 +3498,7 @@ google_font <- function(name) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-29
+#' 8-30
 #'
 #' @section Function Introduced:
 #' `v0.2.2` (August 5, 2020)
@@ -3681,7 +3738,7 @@ default_fonts <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-30
+#' 8-31
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
