@@ -60,3 +60,106 @@ test_that("A gt table can contain indentation in the stub", {
   tbl_5 %>% render_as_html() %>% expect_snapshot()
   tbl_5 %>% as_latex() %>% as.character() %>% expect_snapshot()
 })
+
+test_that("Indentation values can be obtained from a table column", {
+
+  # Indent via `from_column()`, using values from the `rank` column
+  tbl_6 <-
+    exibble %>%
+    dplyr::select(char, fctr, currency) %>%
+    dplyr::mutate(rank = dplyr::dense_rank(dplyr::desc(currency))) %>%
+    dplyr::arrange(rank) %>%
+    gt(rowname_col = "char") %>%
+    tab_stub_indent(
+      rows = everything(),
+      indent = from_column(column = "rank")
+    )
+
+  # Take snapshots of `tbl_6`
+  tbl_6 %>% render_as_html() %>% expect_snapshot()
+  tbl_6 %>% as_latex() %>% as.character() %>% expect_snapshot()
+
+  # This time, create a table that also has row groups; use the same indentation
+  tbl_7 <-
+    exibble %>%
+    dplyr::select(char, fctr, currency, group) %>%
+    dplyr::mutate(rank = dplyr::dense_rank(dplyr::desc(currency))) %>%
+    dplyr::arrange(rank) %>%
+    gt(rowname_col = "char", groupname_col = "group") %>%
+    tab_stub_indent(
+      rows = everything(),
+      indent = from_column(column = "rank")
+    )
+
+  # Take snapshots of `tbl_7`
+  tbl_7 %>% render_as_html() %>% expect_snapshot()
+  tbl_7 %>% as_latex() %>% as.character() %>% expect_snapshot()
+
+  # This variation of the previous includes an `na_value`
+  tbl_8 <-
+    exibble %>%
+    dplyr::select(char, fctr, currency, group) %>%
+    dplyr::mutate(rank = dplyr::dense_rank(dplyr::desc(currency))) %>%
+    dplyr::arrange(rank) %>%
+    gt(rowname_col = "char", groupname_col = "group") %>%
+    tab_stub_indent(
+      rows = everything(),
+      indent = from_column(column = "rank", na_value = 3)
+    )
+
+  # Take snapshots of `tbl_8`
+  tbl_8 %>% render_as_html() %>% expect_snapshot()
+  tbl_8 %>% as_latex() %>% as.character() %>% expect_snapshot()
+
+  # This variation of the previous includes a function provided to `fn`
+  tbl_9 <-
+    exibble %>%
+    dplyr::select(char, fctr, currency, group) %>%
+    dplyr::mutate(rank = dplyr::dense_rank(dplyr::desc(currency))) %>%
+    dplyr::arrange(rank) %>%
+    gt(rowname_col = "char", groupname_col = "group") %>%
+    tab_stub_indent(
+      rows = everything(),
+      indent = from_column(
+        column = "rank",
+        na_value = 3,
+        fn = function(x) x + 1
+      )
+    )
+
+  # Take snapshots of `tbl_9`
+  tbl_9 %>% render_as_html() %>% expect_snapshot()
+  tbl_9 %>% as_latex() %>% as.character() %>% expect_snapshot()
+
+  # This variation only affects rows where `matches("a")` is true for the stub
+  tbl_10 <-
+    exibble %>%
+    dplyr::select(char, fctr, currency, group) %>%
+    dplyr::mutate(rank = dplyr::dense_rank(dplyr::desc(currency))) %>%
+    dplyr::arrange(rank) %>%
+    gt(rowname_col = "char", groupname_col = "group") %>%
+    tab_stub_indent(
+      rows = matches("a"),
+      indent = from_column(column = "rank", na_value = 3)
+    )
+
+  # Take snapshots of `tbl_10`
+  tbl_10 %>% render_as_html() %>% expect_snapshot()
+  tbl_10 %>% as_latex() %>% as.character() %>% expect_snapshot()
+
+  # This varation uses not-intergerish values for `rank` (values are truncated)
+  tbl_11 <-
+    exibble %>%
+    dplyr::select(char, fctr, currency) %>%
+    dplyr::mutate(rank = dplyr::dense_rank(dplyr::desc(currency)) + 0.7) %>%
+    dplyr::arrange(rank) %>%
+    gt(rowname_col = "char") %>%
+    tab_stub_indent(
+      rows = everything(),
+      indent = from_column(column = "rank")
+    )
+
+  # Take snapshots of `tbl_11`
+  tbl_11 %>% render_as_html() %>% expect_snapshot()
+  tbl_11 %>% as_latex() %>% as.character() %>% expect_snapshot()
+})
