@@ -2,7 +2,7 @@
 % Please edit documentation in R/helpers.R
 \name{from_column}
 \alias{from_column}
-\title{Reference a column of values for formatting purposes}
+\title{Reference a column of values for certain parameters}
 \usage{
 from_column(column, na_value = NULL, fn = NULL)
 }
@@ -34,7 +34,12 @@ A list object of class \code{gt_column}.
 }
 \description{
 For some functions, it is useful to get parameter values from a column in the
-\strong{gt} table.
+\strong{gt} table. For example, you might have indentation values (there are
+indentation levels from \code{1} to \code{5}) in an adjacent column; these values could
+be applied to the row labels in the stub through the \code{\link[=tab_stub_indent]{tab_stub_indent()}}
+function. To make this work, we can use the \code{from_column()} helper function.
+Invoke this helper at the \code{indent} argument and specify the column that has
+the values.
 }
 \section{Function ID}{
 
