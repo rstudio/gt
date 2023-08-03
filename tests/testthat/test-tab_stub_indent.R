@@ -147,7 +147,7 @@ test_that("Indentation values can be obtained from a table column", {
   tbl_10 %>% render_as_html() %>% expect_snapshot()
   tbl_10 %>% as_latex() %>% as.character() %>% expect_snapshot()
 
-  # This varation uses not-intergerish values for `rank` (values are truncated)
+  # This variation uses non-intergerish values for `rank` (values are truncated)
   tbl_11 <-
     exibble %>%
     dplyr::select(char, fctr, currency) %>%
