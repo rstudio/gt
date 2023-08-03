@@ -1836,10 +1836,11 @@ tab_stub_indent <- function(
   # used for the `indent` arg, a `gt_column` object is provided
   if (inherits(indent, "gt_column")) {
 
+    # Obtain the underlying data table
+    data_df <- dt_data_get(data = data)
+
     # Obtain a `resolved_column` from a column name in the table
     resolved_column <- resolve_cols_c(expr = indent[["column"]], data = data)
-
-    data_df <- dt_data_get(data = data)
 
     indent_vals <- data_df[resolved_rows_idx, ][[resolved_column]]
 
