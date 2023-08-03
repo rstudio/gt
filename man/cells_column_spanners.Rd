@@ -101,7 +101,7 @@ we are making the text of the column spanner label appear as bold.
 
 \section{Function ID}{
 
-8-11
+8-12
 }
 
 \section{Function Introduced}{
@@ -131,6 +131,7 @@ Other helper functions:
 \code{\link{default_fonts}()},
 \code{\link{define_units}()},
 \code{\link{escape_latex}()},
+\code{\link{from_column}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},

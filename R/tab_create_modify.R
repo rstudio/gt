@@ -1829,55 +1829,104 @@ tab_stub_indent <- function(
       data = data
     )
 
-  # Set indent levels appropriately
+  # Get existing indentation values
   indent_vals <- stub_df[stub_df$rownum_i %in% resolved_rows_idx, ][["indent"]]
 
-  for (i in seq_along(indent_vals)) {
+  # Implement support for the `from_column()` helper function; when
+  # used for the `indent` arg, a `gt_column` object is provided
+  if (inherits(indent, "gt_column")) {
 
-    if (is.na(indent_vals[i])) {
-      indent_val_i <- 0L
-    } else if (grepl("^[0-9]$", indent_vals[i])) {
-      indent_val_i <- as.integer(indent_vals[i])
-    } else {
-      indent_val_i <- indent_vals[i]
+    # Obtain the underlying data table
+    data_df <- dt_data_get(data = data)
+
+    # Obtain a `resolved_column` from a column name in the table
+    resolved_column <- resolve_cols_c(expr = indent[["column"]], data = data)
+
+    indent_vals <- data_df[resolved_rows_idx, ][[resolved_column]]
+
+    # Stop function if indentation values aren't numeric
+    if (!is.numeric(indent_vals)) {
+      cli::cli_abort("Values taken from a column must be numeric.")
     }
 
-    # Modify `indent_val_i` based on keyword directives
-    if (is.character(indent)) {
+    # If a function supplied with `fn` in the `from_column()` output,
+    # apply that function to any `indent_vals`
+    if (!is.null(indent[["fn"]])) {
 
-      # Move `indent_val_i` up or down by one
-      if (indent == "increase") {
-        indent_val_i <- indent_val_i + 1L
-      } else if (indent == "decrease") {
-        indent_val_i <- indent_val_i - 1L
+      fn <- indent[["fn"]]
+      indent_vals <- fn(indent_vals)
+    }
+
+    # If there is an `na_value` provided along with `from_column()`, apply
+    # that to the `indent_vals` vector
+    if (!is.null(indent[["na_value"]])) {
+
+      na_value <- indent[["na_value"]]
+
+      # Stop function if the `na_value` isn't numeric
+      if (!is.numeric(na_value)) {
+        cli::cli_abort("The `na_value` provided must be numeric.")
       }
 
-      # Set hard boundaries on the indentation value (LB is `0`, UB is `5`)
-      if (indent_val_i > 5) indent_val_i <- 5L
-      if (indent_val_i < 0) indent_val_i <- 0L
+      indent_vals[is.na(indent_vals)] <- na_value
     }
 
-    # Modify `indent_val_i` using a fixed value
-    if (
-      is.numeric(indent) &&
-      !is.na(indent) &&
-      !is.infinite(indent)
-    ) {
+    indent_vals <- abs(as.integer(indent_vals))
 
-      # Stop function if `indent` value doesn't fall into the acceptable range
-      if (indent < 0 | indent > 5) {
-        cli::cli_abort(c(
-          "If given as a numeric value, `indent` should be one of the following:",
-          "*" = "0, 1, 2, 3, 4, or 5"
-        ))
+    indent_vals[indent_vals > 5] <- 5L
+
+    indent_vals <- as.character(indent_vals)
+
+  } else {
+
+    for (i in seq_along(indent_vals)) {
+
+      if (is.na(indent_vals[i])) {
+        indent_val_i <- 0L
+      } else if (grepl("^[0-9]$", indent_vals[i])) {
+        indent_val_i <- as.integer(indent_vals[i])
+      } else {
+        indent_val_i <- indent_vals[i]
       }
 
-      # Coerce `indent` to an integer value
-      indent_val_i <- as.integer(indent)
-    }
+      # Modify `indent_val_i` based on keyword directives
+      if (is.character(indent)) {
 
-    # Ensure that `indent_val_i` is assigned to indent_vals as a character value
-    indent_vals[i] <- as.character(indent_val_i)
+        # Move `indent_val_i` up or down by one
+        if (indent == "increase") {
+          indent_val_i <- indent_val_i + 1L
+        } else if (indent == "decrease") {
+          indent_val_i <- indent_val_i - 1L
+        }
+
+        # Set hard boundaries on the indentation value (LB is `0`, UB is `5`)
+        if (indent_val_i > 5) indent_val_i <- 5L
+        if (indent_val_i < 0) indent_val_i <- 0L
+      }
+
+      # Modify `indent_val_i` using a fixed value
+      if (
+        is.numeric(indent) &&
+        !is.na(indent) &&
+        !is.infinite(indent)
+      ) {
+
+        # Stop function if `indent` value doesn't fall into the acceptable range
+        if (indent < 0 | indent > 5) {
+          cli::cli_abort(c(
+            "If given as a numeric value, `indent` should be one of the following:",
+            "*" = "0, 1, 2, 3, 4, or 5"
+          ))
+        }
+
+        # Coerce `indent` to an integer value
+        indent_val_i <- as.integer(indent)
+      }
+
+      # Ensure that `indent_val_i` is assigned to `indent_vals` as
+      # a character value
+      indent_vals[i] <- as.character(indent_val_i)
+    }
   }
 
   stub_df[stub_df$rownum_i %in% resolved_rows_idx, ][["indent"]] <- indent_vals

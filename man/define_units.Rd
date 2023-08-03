@@ -53,7 +53,7 @@ fully or partially italicized/emboldened by surrounding text with \code{"*"} or
 
 \section{Function ID}{
 
-8-7
+8-8
 }
 
 \section{Function Introduced}{
@@ -83,6 +83,7 @@ Other helper functions:
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
 \code{\link{escape_latex}()},
+\code{\link{from_column}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
