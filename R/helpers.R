@@ -252,10 +252,17 @@ pct <- function(x) {
   paste0(x, "%")
 }
 
-#' Reference a column of values for formatting purposes
+#' Reference a column of values for certain parameters
+#'
+#' @description
 #'
 #' For some functions, it is useful to get parameter values from a column in the
-#' **gt** table.
+#' **gt** table. For example, you might have indentation values (there are
+#' indentation levels from `1` to `5`) in an adjacent column; these values could
+#' be applied to the row labels in the stub through the [tab_stub_indent()]
+#' function. To make this work, we can use the `from_column()` helper function.
+#' Invoke this helper at the `indent` argument and specify the column that has
+#' the values.
 #'
 #' @param column *Column name*
 #'
@@ -280,7 +287,6 @@ pct <- function(x) {
 #'   `column` (except `NA` values) can be mutated.
 #'
 #' @return A list object of class `gt_column`.
-#'
 #'
 #' @family helper functions
 #' @section Function ID:
