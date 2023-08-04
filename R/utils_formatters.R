@@ -1182,3 +1182,103 @@ num_fmt_factory <- function(
     x_str
   }
 }
+
+get_arg_names <- function(
+    function_name,
+    in_args = NULL,
+    all_args_except = NULL
+) {
+
+  if (is.null(in_args) && is.null(all_args_except)) {
+    stop("The `in_args` and `all_args_except` args should not both be NULL.")
+  }
+
+  if (!is.null(in_args) && !is.null(all_args_except)) {
+    stop("The `in_args` and `all_args_except` args should not both be used.")
+  }
+
+  if (!is.null(in_args)) {
+
+    arg_names <- in_args
+
+  } else {
+
+    arg_names <-
+      base::setdiff(
+        names(formals(function_name)),
+        all_args_except
+      )
+  }
+
+  arg_names
+}
+
+args_have_gt_column_obj <- function(arg_vals) {
+
+  any(
+    vapply(
+      arg_vals,
+      FUN.VALUE = logical(1),
+      USE.NAMES = FALSE,
+      FUN = function(x) {
+        inherits(x, "gt_column")
+      }
+    )
+  )
+}
+
+generate_param_tbl <- function(
+    data,
+    arg_vals,
+    resolved_rows_idx
+  ) {
+
+  data_df <- dt_data_get(data = data)
+
+  param_tbl <- dplyr::tibble(.rows = length(resolved_rows_idx))
+
+  for (i in seq_along(names(arg_vals))) {
+
+    if (inherits(arg_vals[[i]], "gt_column")) {
+
+      resolved_column <-
+        resolve_cols_c(expr = arg_vals[[i]][["column"]], data = data)
+
+      param_vals <- data_df[resolved_rows_idx, ][[resolved_column]]
+
+      if (!is.null(arg_vals[[i]][["fn"]])) {
+
+        fn <- arg_vals[[i]][["fn"]]
+        param_vals <- fn(param_vals)
+      }
+
+      if (!is.null(arg_vals[[i]][["na_value"]])) {
+
+        na_value <- arg_vals[[i]][["na_value"]]
+        param_vals[is.na(param_vals)] <- na_value
+      }
+
+      param_tbl <-
+        dplyr::bind_cols(
+          param_tbl,
+          dplyr::tibble(!!names(arg_vals)[i] := param_vals)
+        )
+
+    } else {
+
+      arg_name <- names(arg_vals)[i]
+      default_for_arg <- rlang::eval_bare(formals(fmt_number)[[arg_name]])
+
+      if (!identical(arg_vals[[i]], default_for_arg)) {
+
+        param_tbl <-
+          dplyr::bind_cols(
+            param_tbl,
+            dplyr::tibble(!!arg_name := arg_vals[[i]])
+          )
+      }
+    }
+  }
+
+  param_tbl
+}
