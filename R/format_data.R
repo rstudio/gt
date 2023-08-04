@@ -387,33 +387,35 @@ fmt_number <- function(
   stop_if_not_gt_tbl(data = data)
 
   #
-  # Support for `gt_column()` objects passed to compatible arguments
+  # Begin support for `from_column()` objects passed to compatible arguments
   #
 
-  arg_names <-
-    base::setdiff(
-      names(formals(fmt_number)),
-      c("data", "columns", "rows")
-    )
+  # Supports parameters:
+  #
+  # - decimals
+  # - n_sigfig
+  # - drop_trailing_zeros
+  # - drop_trailing_dec_mark
+  # - use_seps
+  # - accounting
+  # - scale_by
+  # - suffixing
+  # - pattern
+  # - sep_mark
+  # - dec_mark
+  # - force_sign
+  # - system
+  # - locale
 
-  arg_vals <- mget(arg_names)
-
-  params_have_gt_column_obj <-
-    any(
-      vapply(
-        arg_vals,
-        FUN.VALUE = logical(1),
-        USE.NAMES = FALSE,
-        FUN = function(x) {
-          inherits(x, "gt_column")
-        }
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = get(as.character(match.call()[[1]])),
+        all_args_except = c("data", "columns", "rows")
       )
     )
 
-  if (params_have_gt_column_obj) {
-
-    # Obtain the underlying data table
-    data_df <- dt_data_get(data = data)
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
 
     # Resolve the row numbers using the `resolve_vars` function
     resolved_rows_idx <-
@@ -422,74 +424,36 @@ fmt_number <- function(
         data = data
       )
 
-    param_tbl <- dplyr::tibble(.rows = length(resolved_rows_idx))
-
-    for (i in seq_along(names(arg_vals))) {
-
-      if (inherits(arg_vals[[i]], "gt_column")) {
-
-        resolved_column <-
-          resolve_cols_c(expr = arg_vals[[i]][["column"]], data = data)
-
-        param_vals <- data_df[resolved_rows_idx, ][[resolved_column]]
-
-        if (!is.null(arg_vals[[i]][["fn"]])) {
-
-          fn <- arg_vals[[i]][["fn"]]
-          param_vals <- fn(param_vals)
-        }
-
-        if (!is.null(arg_vals[[i]][["na_value"]])) {
-
-          na_value <- arg_vals[[i]][["na_value"]]
-          param_vals[is.na(param_vals)] <- na_value
-        }
-
-        param_tbl <-
-          dplyr::bind_cols(
-            param_tbl,
-            dplyr::tibble(!!names(arg_vals)[i] := param_vals)
-          )
-
-      } else {
-
-        arg_name <- names(arg_vals)[i]
-        default_for_arg <- rlang::eval_bare(formals(fmt_number)[[arg_name]])
-
-        if (!identical(arg_vals[[i]],  default_for_arg)) {
-
-          param_tbl <-
-            dplyr::bind_cols(
-              param_tbl,
-              dplyr::tibble(!!arg_name := arg_vals[[i]])
-            )
-        }
-      }
-    }
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
 
     for (i in seq_len(nrow(param_tbl))) {
 
-      p_list <- as.list(param_tbl[i, ])
+      p_i <- as.list(param_tbl[i, ])
 
       data <-
         fmt_number(
           data = data,
           columns = {{ columns }},
           rows = resolved_rows_idx[i],
-          decimals = p_list$decimals %||% decimals,
-          n_sigfig = p_list$n_sigfig %||% n_sigfig,
-          drop_trailing_zeros = p_list$drop_trailing_zeros %||% drop_trailing_zeros,
-          drop_trailing_dec_mark = p_list$drop_trailing_dec_mark %||% drop_trailing_dec_mark,
-          use_seps = p_list$use_seps %||% use_seps,
-          accounting = p_list$accounting %||% accounting,
-          scale_by = p_list$scale_by %||% scale_by,
-          suffixing = p_list$suffixing %||% suffixing,
-          pattern = p_list$pattern %||% pattern,
-          sep_mark = p_list$sep_mark %||% sep_mark,
-          dec_mark = p_list$dec_mark %||% dec_mark,
-          force_sign = p_list$force_sign %||% force_sign,
-          system = p_list$system %||% system,
-          locale = p_list$locale %||% locale
+          decimals = p_i$decimals %||% decimals,
+          n_sigfig = p_i$n_sigfig %||% n_sigfig,
+          drop_trailing_zeros = p_i$drop_trailing_zeros %||% drop_trailing_zeros,
+          drop_trailing_dec_mark = p_i$drop_trailing_dec_mark %||% drop_trailing_dec_mark,
+          use_seps = p_i$use_seps %||% use_seps,
+          accounting = p_i$accounting %||% accounting,
+          scale_by = p_i$scale_by %||% scale_by,
+          suffixing = p_i$suffixing %||% suffixing,
+          pattern = p_i$pattern %||% pattern,
+          sep_mark = p_i$sep_mark %||% sep_mark,
+          dec_mark = p_i$dec_mark %||% dec_mark,
+          force_sign = p_i$force_sign %||% force_sign,
+          system = p_i$system %||% system,
+          locale = p_i$locale %||% locale
         )
     }
 
