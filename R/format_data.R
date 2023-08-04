@@ -738,6 +738,77 @@ fmt_integer <- function(
     locale = NULL
 ) {
 
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - use_seps
+  # - accounting
+  # - scale_by
+  # - suffixing
+  # - pattern
+  # - sep_mark
+  # - force_sign
+  # - system
+  # - locale
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = get(as.character(match.call()[[1]])),
+        all_args_except = c("data", "columns", "rows")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using the `resolve_vars` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_integer(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          use_seps = p_i$use_seps %||% use_seps,
+          accounting = p_i$accounting %||% accounting,
+          scale_by = p_i$scale_by %||% scale_by,
+          suffixing = p_i$suffixing %||% suffixing,
+          pattern = p_i$pattern %||% pattern,
+          sep_mark = p_i$sep_mark %||% sep_mark,
+          force_sign = p_i$force_sign %||% force_sign,
+          system = p_i$system %||% system,
+          locale = p_i$locale %||% locale
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()` objects passed to compatible arguments
+  #
+
   fmt_number(
     data = data,
     columns = {{ columns }},
