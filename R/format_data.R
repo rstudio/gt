@@ -387,33 +387,35 @@ fmt_number <- function(
   stop_if_not_gt_tbl(data = data)
 
   #
-  # Support for `gt_column()` objects passed to compatible arguments
+  # Begin support for `from_column()` objects passed to compatible arguments
   #
 
-  arg_names <-
-    base::setdiff(
-      names(formals(fmt_number)),
-      c("data", "columns", "rows")
-    )
+  # Supports parameters:
+  #
+  # - decimals
+  # - n_sigfig
+  # - drop_trailing_zeros
+  # - drop_trailing_dec_mark
+  # - use_seps
+  # - accounting
+  # - scale_by
+  # - suffixing
+  # - pattern
+  # - sep_mark
+  # - dec_mark
+  # - force_sign
+  # - system
+  # - locale
 
-  arg_vals <- mget(arg_names)
-
-  params_have_gt_column_obj <-
-    any(
-      vapply(
-        arg_vals,
-        FUN.VALUE = logical(1),
-        USE.NAMES = FALSE,
-        FUN = function(x) {
-          inherits(x, "gt_column")
-        }
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = get(as.character(match.call()[[1]])),
+        all_args_except = c("data", "columns", "rows")
       )
     )
 
-  if (params_have_gt_column_obj) {
-
-    # Obtain the underlying data table
-    data_df <- dt_data_get(data = data)
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
 
     # Resolve the row numbers using the `resolve_vars` function
     resolved_rows_idx <-
@@ -422,74 +424,36 @@ fmt_number <- function(
         data = data
       )
 
-    param_tbl <- dplyr::tibble(.rows = length(resolved_rows_idx))
-
-    for (i in seq_along(names(arg_vals))) {
-
-      if (inherits(arg_vals[[i]], "gt_column")) {
-
-        resolved_column <-
-          resolve_cols_c(expr = arg_vals[[i]][["column"]], data = data)
-
-        param_vals <- data_df[resolved_rows_idx, ][[resolved_column]]
-
-        if (!is.null(arg_vals[[i]][["fn"]])) {
-
-          fn <- arg_vals[[i]][["fn"]]
-          param_vals <- fn(param_vals)
-        }
-
-        if (!is.null(arg_vals[[i]][["na_value"]])) {
-
-          na_value <- arg_vals[[i]][["na_value"]]
-          param_vals[is.na(param_vals)] <- na_value
-        }
-
-        param_tbl <-
-          dplyr::bind_cols(
-            param_tbl,
-            dplyr::tibble(!!names(arg_vals)[i] := param_vals)
-          )
-
-      } else {
-
-        arg_name <- names(arg_vals)[i]
-        default_for_arg <- rlang::eval_bare(formals(fmt_number)[[arg_name]])
-
-        if (!identical(arg_vals[[i]],  default_for_arg)) {
-
-          param_tbl <-
-            dplyr::bind_cols(
-              param_tbl,
-              dplyr::tibble(!!arg_name := arg_vals[[i]])
-            )
-        }
-      }
-    }
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
 
     for (i in seq_len(nrow(param_tbl))) {
 
-      p_list <- as.list(param_tbl[i, ])
+      p_i <- as.list(param_tbl[i, ])
 
       data <-
         fmt_number(
           data = data,
           columns = {{ columns }},
           rows = resolved_rows_idx[i],
-          decimals = p_list$decimals %||% decimals,
-          n_sigfig = p_list$n_sigfig %||% n_sigfig,
-          drop_trailing_zeros = p_list$drop_trailing_zeros %||% drop_trailing_zeros,
-          drop_trailing_dec_mark = p_list$drop_trailing_dec_mark %||% drop_trailing_dec_mark,
-          use_seps = p_list$use_seps %||% use_seps,
-          accounting = p_list$accounting %||% accounting,
-          scale_by = p_list$scale_by %||% scale_by,
-          suffixing = p_list$suffixing %||% suffixing,
-          pattern = p_list$pattern %||% pattern,
-          sep_mark = p_list$sep_mark %||% sep_mark,
-          dec_mark = p_list$dec_mark %||% dec_mark,
-          force_sign = p_list$force_sign %||% force_sign,
-          system = p_list$system %||% system,
-          locale = p_list$locale %||% locale
+          decimals = p_i$decimals %||% decimals,
+          n_sigfig = p_i$n_sigfig %||% n_sigfig,
+          drop_trailing_zeros = p_i$drop_trailing_zeros %||% drop_trailing_zeros,
+          drop_trailing_dec_mark = p_i$drop_trailing_dec_mark %||% drop_trailing_dec_mark,
+          use_seps = p_i$use_seps %||% use_seps,
+          accounting = p_i$accounting %||% accounting,
+          scale_by = p_i$scale_by %||% scale_by,
+          suffixing = p_i$suffixing %||% suffixing,
+          pattern = p_i$pattern %||% pattern,
+          sep_mark = p_i$sep_mark %||% sep_mark,
+          dec_mark = p_i$dec_mark %||% dec_mark,
+          force_sign = p_i$force_sign %||% force_sign,
+          system = p_i$system %||% system,
+          locale = p_i$locale %||% locale
         )
     }
 
@@ -774,6 +738,77 @@ fmt_integer <- function(
     locale = NULL
 ) {
 
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - use_seps
+  # - accounting
+  # - scale_by
+  # - suffixing
+  # - pattern
+  # - sep_mark
+  # - force_sign
+  # - system
+  # - locale
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = get(as.character(match.call()[[1]])),
+        all_args_except = c("data", "columns", "rows")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using the `resolve_vars` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_integer(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          use_seps = p_i$use_seps %||% use_seps,
+          accounting = p_i$accounting %||% accounting,
+          scale_by = p_i$scale_by %||% scale_by,
+          suffixing = p_i$suffixing %||% suffixing,
+          pattern = p_i$pattern %||% pattern,
+          sep_mark = p_i$sep_mark %||% sep_mark,
+          force_sign = p_i$force_sign %||% force_sign,
+          system = p_i$system %||% system,
+          locale = p_i$locale %||% locale
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()` objects passed to compatible arguments
+  #
+
   fmt_number(
     data = data,
     columns = {{ columns }},
@@ -974,6 +1009,78 @@ fmt_scientific <- function(
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
+
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - decimals
+  # - drop_trailing_zeros
+  # - drop_trailing_dec_mark
+  # - scale_by
+  # - exp_style
+  # - pattern
+  # - sep_mark
+  # - dec_mark
+  # - force_sign_m
+  # - force_sign_n
+  # - locale
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = get(as.character(match.call()[[1]])),
+        all_args_except = c("data", "columns", "rows")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using the `resolve_vars` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_scientific(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          decimals = p_i$decimals %||% decimals,
+          drop_trailing_zeros = p_i$drop_trailing_zeros %||% drop_trailing_zeros,
+          drop_trailing_dec_mark = p_i$drop_trailing_dec_mark %||% drop_trailing_dec_mark,
+          scale_by = p_i$scale_by %||% scale_by,
+          exp_style = p_i$exp_style %||% exp_style,
+          pattern = p_i$pattern %||% pattern,
+          sep_mark = p_i$sep_mark %||% sep_mark,
+          dec_mark = p_i$dec_mark %||% dec_mark,
+          force_sign_m = p_i$force_sign_m %||% force_sign_m,
+          force_sign_n = p_i$force_sign_n %||% force_sign_n,
+          locale = p_i$locale %||% locale
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()` objects passed to compatible arguments
+  #
 
   # Declare formatting function compatibility
   compat <- c("numeric", "integer")
@@ -1356,6 +1463,78 @@ fmt_engineering <- function(
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
+
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - decimals
+  # - drop_trailing_zeros
+  # - drop_trailing_dec_mark
+  # - scale_by
+  # - exp_style
+  # - pattern
+  # - sep_mark
+  # - dec_mark
+  # - force_sign_m
+  # - force_sign_n
+  # - locale
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = get(as.character(match.call()[[1]])),
+        all_args_except = c("data", "columns", "rows")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using the `resolve_vars` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_engineering(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          decimals = p_i$decimals %||% decimals,
+          drop_trailing_zeros = p_i$drop_trailing_zeros %||% drop_trailing_zeros,
+          drop_trailing_dec_mark = p_i$drop_trailing_dec_mark %||% drop_trailing_dec_mark,
+          scale_by = p_i$scale_by %||% scale_by,
+          exp_style = p_i$exp_style %||% exp_style,
+          pattern = p_i$pattern %||% pattern,
+          sep_mark = p_i$sep_mark %||% sep_mark,
+          dec_mark = p_i$dec_mark %||% dec_mark,
+          force_sign_m = p_i$force_sign_m %||% force_sign_m,
+          force_sign_n = p_i$force_sign_n %||% force_sign_n,
+          locale = p_i$locale %||% locale
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()` objects passed to compatible arguments
+  #
 
   # Declare formatting function compatibility
   compat <- c("numeric", "integer")
@@ -1886,6 +2065,84 @@ fmt_percent <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - decimals
+  # - drop_trailing_zeros
+  # - drop_trailing_dec_mark
+  # - scale_values
+  # - use_seps
+  # - accounting
+  # - pattern
+  # - sep_mark
+  # - dec_mark
+  # - force_sign
+  # - incl_space
+  # - placement
+  # - system
+  # - locale
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = get(as.character(match.call()[[1]])),
+        all_args_except = c("data", "columns", "rows")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using the `resolve_vars` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_percent(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          decimals = p_i$decimals %||% decimals,
+          drop_trailing_zeros = p_i$drop_trailing_zeros %||% drop_trailing_zeros,
+          drop_trailing_dec_mark = p_i$drop_trailing_dec_mark %||% drop_trailing_dec_mark,
+          scale_values = p_i$scale_values %||% scale_values,
+          use_seps = p_i$use_seps %||% use_seps,
+          accounting = p_i$accounting %||% accounting,
+          pattern = p_i$pattern %||% pattern,
+          sep_mark = p_i$sep_mark %||% sep_mark,
+          dec_mark = p_i$dec_mark %||% dec_mark,
+          force_sign = p_i$force_sign %||% force_sign,
+          incl_space = p_i$incl_space %||% incl_space,
+          placement = p_i$placement %||% placement,
+          system = p_i$system %||% system,
+          locale = p_i$locale %||% locale
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()` objects passed to compatible arguments
+  #
+
   # Ensure that arguments are matched
   system <- rlang::arg_match(system)
 
@@ -2135,6 +2392,84 @@ fmt_partsper <- function(
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
+
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - to_units
+  # - symbol
+  # - decimals
+  # - drop_trailing_zeros
+  # - drop_trailing_dec_mark
+  # - scale_values
+  # - use_seps
+  # - pattern
+  # - sep_mark
+  # - dec_mark
+  # - force_sign
+  # - incl_space
+  # - system
+  # - locale
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = get(as.character(match.call()[[1]])),
+        all_args_except = c("data", "columns", "rows")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using the `resolve_vars` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_partsper(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          to_units = p_i$to_units %||% to_units,
+          symbol = p_i$symbol %||% symbol,
+          decimals = p_i$decimals %||% decimals,
+          drop_trailing_zeros = p_i$drop_trailing_zeros %||% drop_trailing_zeros,
+          drop_trailing_dec_mark = p_i$drop_trailing_dec_mark %||% drop_trailing_dec_mark,
+          scale_values = p_i$scale_values %||% scale_values,
+          use_seps = p_i$use_seps %||% use_seps,
+          pattern = p_i$pattern %||% pattern,
+          sep_mark = p_i$sep_mark %||% sep_mark,
+          dec_mark = p_i$dec_mark %||% dec_mark,
+          force_sign = p_i$force_sign %||% force_sign,
+          incl_space = p_i$incl_space %||% incl_space,
+          system = p_i$system %||% system,
+          locale = p_i$locale %||% locale
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()` objects passed to compatible arguments
+  #
 
   # Ensure that arguments are matched
   to_units <- rlang::arg_match(to_units)
@@ -2458,6 +2793,72 @@ fmt_fraction <- function(
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
+
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - accuracy
+  # - simplify
+  # - layout
+  # - use_seps
+  # - pattern
+  # - sep_mark
+  # - system
+  # - locale
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = get(as.character(match.call()[[1]])),
+        all_args_except = c("data", "columns", "rows")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using the `resolve_vars` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_fraction(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          accuracy = p_i$accuracy %||% accuracy,
+          simplify = p_i$simplify %||% simplify,
+          layout = p_i$layout %||% layout,
+          use_seps = p_i$use_seps %||% use_seps,
+          pattern = p_i$pattern %||% pattern,
+          sep_mark = p_i$sep_mark %||% sep_mark,
+          system = p_i$system %||% system,
+          locale = p_i$locale %||% locale
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()` objects passed to compatible arguments
+  #
 
   # Ensure that arguments are matched
   system <- rlang::arg_match(system)
@@ -3054,6 +3455,88 @@ fmt_currency <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - currency
+  # - use_subunits
+  # - decimals
+  # - drop_trailing_dec_mark
+  # - use_seps
+  # - accounting
+  # - scale_by
+  # - suffixing
+  # - pattern
+  # - sep_mark
+  # - dec_mark
+  # - force_sign
+  # - placement
+  # - incl_space
+  # - system
+  # - locale
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = get(as.character(match.call()[[1]])),
+        all_args_except = c("data", "columns", "rows")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using the `resolve_vars` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_currency(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          currency = p_i$currency %||% currency,
+          use_subunits = p_i$use_subunits %||% use_subunits,
+          decimals = p_i$decimals %||% decimals,
+          drop_trailing_dec_mark = p_i$drop_trailing_dec_mark %||% drop_trailing_dec_mark,
+          use_seps = p_i$use_seps %||% use_seps,
+          accounting = p_i$accounting %||% accounting,
+          scale_by = p_i$scale_by %||% scale_by,
+          suffixing = p_i$suffixing %||% suffixing,
+          pattern = p_i$pattern %||% pattern,
+          sep_mark = p_i$sep_mark %||% sep_mark,
+          dec_mark = p_i$dec_mark %||% dec_mark,
+          force_sign = p_i$force_sign %||% force_sign,
+          placement = p_i$placement %||% placement,
+          incl_space = p_i$incl_space %||% incl_space,
+          system = p_i$system %||% system,
+          locale = p_i$locale %||% locale
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()` objects passed to compatible arguments
+  #
+
   # Ensure that arguments are matched
   system <- rlang::arg_match(system)
 
@@ -3225,6 +3708,60 @@ fmt_roman <- function(
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
+
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - case
+  # - pattern
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = get(as.character(match.call()[[1]])),
+        all_args_except = c("data", "columns", "rows")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using the `resolve_vars` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_roman(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          case = p_i$case %||% case,
+          pattern = p_i$pattern %||% pattern
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()` objects passed to compatible arguments
+  #
 
   # Ensure that arguments are matched
   case <- rlang::arg_match(case)
@@ -3434,6 +3971,64 @@ fmt_index <- function(
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
+
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - case
+  # - index_algo
+  # - pattern
+  # - locale
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = get(as.character(match.call()[[1]])),
+        all_args_except = c("data", "columns", "rows")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using the `resolve_vars` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_index(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          case = p_i$case %||% case,
+          index_algo = p_i$index_algo %||% index_algo,
+          pattern = p_i$pattern %||% pattern,
+          locale = p_i$locale %||% locale
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()` objects passed to compatible arguments
+  #
 
   # Ensure that arguments are matched
   case <- rlang::arg_match(case)
@@ -3753,6 +4348,60 @@ fmt_spelled_num <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - pattern
+  # - locale
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = get(as.character(match.call()[[1]])),
+        all_args_except = c("data", "columns", "rows")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using the `resolve_vars` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_spelled_num(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          pattern = p_i$pattern %||% pattern,
+          locale = p_i$locale %||% locale
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()` objects passed to compatible arguments
+  #
+
   # Declare formatting function compatibility
   compat <- c("numeric", "integer")
 
@@ -4016,6 +4665,80 @@ fmt_bytes <- function(
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
+
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - standard
+  # - decimals
+  # - n_sigfig
+  # - drop_trailing_zeros
+  # - drop_trailing_dec_mark
+  # - use_seps
+  # - pattern
+  # - sep_mark
+  # - dec_mark
+  # - force_sign
+  # - incl_space
+  # - locale
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = get(as.character(match.call()[[1]])),
+        all_args_except = c("data", "columns", "rows")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using the `resolve_vars` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_bytes(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          standard = p_i$standard %||% standard,
+          decimals = p_i$decimals %||% decimals,
+          n_sigfig = p_i$n_sigfig %||% n_sigfig,
+          drop_trailing_zeros = p_i$drop_trailing_zeros %||% drop_trailing_zeros,
+          drop_trailing_dec_mark = p_i$drop_trailing_dec_mark %||% drop_trailing_dec_mark,
+          use_seps = p_i$use_seps %||% use_seps,
+          pattern = p_i$pattern %||% pattern,
+          sep_mark = p_i$sep_mark %||% sep_mark,
+          dec_mark = p_i$dec_mark %||% dec_mark,
+          force_sign = p_i$force_sign %||% force_sign,
+          incl_space = p_i$incl_space %||% incl_space,
+          locale = p_i$locale %||% locale
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()` objects passed to compatible arguments
+  #
 
   # Ensure that arguments are matched
   standard <- rlang::arg_match(standard)
@@ -4353,6 +5076,62 @@ fmt_date <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - date_style
+  # - pattern
+  # - locale
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = get(as.character(match.call()[[1]])),
+        all_args_except = c("data", "columns", "rows")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using the `resolve_vars` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_date(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          date_style = p_i$date_style %||% date_style,
+          pattern = p_i$pattern %||% pattern,
+          locale = p_i$locale %||% locale
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()` objects passed to compatible arguments
+  #
+
   # Declare formatting function compatibility
   compat <- c("Date", "POSIXt", "character")
 
@@ -4632,6 +5411,62 @@ fmt_time <- function(
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
+
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - time_style
+  # - pattern
+  # - locale
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = get(as.character(match.call()[[1]])),
+        all_args_except = c("data", "columns", "rows")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using the `resolve_vars` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_time(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          time_style = p_i$time_style %||% time_style,
+          pattern = p_i$pattern %||% pattern,
+          locale = p_i$locale %||% locale
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()` objects passed to compatible arguments
+  #
 
   # Declare formatting function compatibility
   compat <- c("Date", "POSIXt", "character")
@@ -5535,6 +6370,70 @@ fmt_datetime <- function(
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
+
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - date_style
+  # - time_style
+  # - sep
+  # - format
+  # - tz
+  # - pattern
+  # - locale
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = get(as.character(match.call()[[1]])),
+        all_args_except = c("data", "columns", "rows")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using the `resolve_vars` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_datetime(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          date_style = p_i$date_style %||% date_style,
+          time_style = p_i$time_style %||% time_style,
+          sep = p_i$sep %||% sep,
+          format = p_i$format %||% format,
+          tz = p_i$tz %||% tz,
+          pattern = p_i$pattern %||% pattern,
+          locale = p_i$locale %||% locale
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()` objects passed to compatible arguments
+  #
 
   # Declare formatting function compatibility
   compat <- c("Date", "POSIXct", "character")
@@ -7335,6 +8234,70 @@ fmt_url <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - label
+  # - as_button
+  # - color
+  # - show_underline
+  # - button_fill
+  # - button_width
+  # - button_outline
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = get(as.character(match.call()[[1]])),
+        all_args_except = c("data", "columns", "rows")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using the `resolve_vars` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_url(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          label = p_i$label %||% label,
+          as_button = p_i$as_button %||% as_button,
+          color = p_i$color %||% color,
+          show_underline = p_i$show_underline %||% show_underline,
+          button_fill = p_i$button_fill %||% button_fill,
+          button_width = p_i$button_width %||% button_width,
+          button_outline = p_i$button_outline %||% button_outline
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()` objects passed to compatible arguments
+  #
+
   # Declare formatting function compatibility
   compat <- c("character", "factor")
 
@@ -7757,6 +8720,66 @@ fmt_image <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - height
+  # - sep
+  # - path
+  # - file_pattern
+  # - encode
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = get(as.character(match.call()[[1]])),
+        all_args_except = c("data", "columns", "rows")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using the `resolve_vars` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_image(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          height = p_i$height %||% height,
+          sep = p_i$sep %||% sep,
+          path = p_i$path %||% path,
+          file_pattern = p_i$file_pattern %||% file_pattern,
+          encode = p_i$encode %||% encode
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()` objects passed to compatible arguments
+  #
+
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(
@@ -8085,6 +9108,62 @@ fmt_flag <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - height
+  # - sep
+  # - use_title
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = get(as.character(match.call()[[1]])),
+        all_args_except = c("data", "columns", "rows")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using the `resolve_vars` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_flag(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          height = p_i$height %||% height,
+          sep = p_i$sep %||% sep,
+          use_title = p_i$use_title %||% use_title
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()` objects passed to compatible arguments
+  #
+
   # Declare formatting function compatibility
   compat <- c("character", "factor")
 
@@ -8348,6 +9427,58 @@ fmt_markdown <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - md_engine
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = get(as.character(match.call()[[1]])),
+        all_args_except = c("data", "columns", "rows")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using the `resolve_vars` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_markdown(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          md_engine = p_i$md_engine %||% md_engine
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()` objects passed to compatible arguments
+  #
+
   # Ensure that arguments are matched
   md_engine <- rlang::arg_match(md_engine)
 
@@ -8491,6 +9622,60 @@ fmt_passthrough <- function(
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
+
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - escape
+  # - pattern
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = get(as.character(match.call()[[1]])),
+        all_args_except = c("data", "columns", "rows")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using the `resolve_vars` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_passthrough(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          escape = p_i$escape %||% escape,
+          pattern = p_i$pattern %||% pattern
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()` objects passed to compatible arguments
+  #
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions (as a function list) to `fmt()`
