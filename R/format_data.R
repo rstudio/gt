@@ -8234,6 +8234,70 @@ fmt_url <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - label
+  # - as_button
+  # - color
+  # - show_underline
+  # - button_fill
+  # - button_width
+  # - button_outline
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = get(as.character(match.call()[[1]])),
+        all_args_except = c("data", "columns", "rows")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using the `resolve_vars` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_url(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          label = p_i$label %||% label,
+          as_button = p_i$as_button %||% as_button,
+          color = p_i$color %||% color,
+          show_underline = p_i$show_underline %||% show_underline,
+          button_fill = p_i$button_fill %||% button_fill,
+          button_width = p_i$button_width %||% button_width,
+          button_outline = p_i$button_outline %||% button_outline
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()` objects passed to compatible arguments
+  #
+
   # Declare formatting function compatibility
   compat <- c("character", "factor")
 
