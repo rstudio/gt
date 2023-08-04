@@ -1279,7 +1279,7 @@ generate_param_tbl <- function(
         param_tbl <-
           dplyr::bind_cols(
             param_tbl,
-            dplyr::tibble(!!arg_name := arg_vals[[i]])
+            dplyr::tibble(!!arg_name := arg_vals[[i]][1])
           )
       }
     }
