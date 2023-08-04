@@ -2065,6 +2065,84 @@ fmt_percent <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - decimals
+  # - drop_trailing_zeros
+  # - drop_trailing_dec_mark
+  # - scale_values
+  # - use_seps
+  # - accounting
+  # - pattern
+  # - sep_mark
+  # - dec_mark
+  # - force_sign
+  # - incl_space
+  # - placement
+  # - system
+  # - locale
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = get(as.character(match.call()[[1]])),
+        all_args_except = c("data", "columns", "rows")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using the `resolve_vars` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_percent(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          decimals = p_i$decimals %||% decimals,
+          drop_trailing_zeros = p_i$drop_trailing_zeros %||% drop_trailing_zeros,
+          drop_trailing_dec_mark = p_i$drop_trailing_dec_mark %||% drop_trailing_dec_mark,
+          scale_values = p_i$scale_values %||% scale_values,
+          use_seps = p_i$use_seps %||% use_seps,
+          accounting = p_i$accounting %||% accounting,
+          pattern = p_i$pattern %||% pattern,
+          sep_mark = p_i$sep_mark %||% sep_mark,
+          dec_mark = p_i$dec_mark %||% dec_mark,
+          force_sign = p_i$force_sign %||% force_sign,
+          incl_space = p_i$incl_space %||% incl_space,
+          placement = p_i$placement %||% placement,
+          system = p_i$system %||% system,
+          locale = p_i$locale %||% locale
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()` objects passed to compatible arguments
+  #
+
   # Ensure that arguments are matched
   system <- rlang::arg_match(system)
 
