@@ -302,6 +302,11 @@ resolve_locale <- function(data, locale) {
     locale <- dt_locale_get_value(data = data)
   }
 
+  # An 'undetermined' locale should map back to the `"en"` locale
+  if (!is.null(locale) && locale == "und") {
+    locale <- "en"
+  }
+
   locale <- normalize_locale(locale = locale)
 
   validate_locale(locale = locale)
