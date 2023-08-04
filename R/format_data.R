@@ -1010,6 +1010,78 @@ fmt_scientific <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - decimals
+  # - drop_trailing_zeros
+  # - drop_trailing_dec_mark
+  # - scale_by
+  # - exp_style
+  # - pattern
+  # - sep_mark
+  # - dec_mark
+  # - force_sign_m
+  # - force_sign_n
+  # - locale
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = get(as.character(match.call()[[1]])),
+        all_args_except = c("data", "columns", "rows")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using the `resolve_vars` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_scientific(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          decimals = p_i$decimals %||% decimals,
+          drop_trailing_zeros = p_i$drop_trailing_zeros %||% drop_trailing_zeros,
+          drop_trailing_dec_mark = p_i$drop_trailing_dec_mark %||% drop_trailing_dec_mark,
+          scale_by = p_i$scale_by %||% scale_by,
+          exp_style = p_i$exp_style %||% exp_style,
+          pattern = p_i$pattern %||% pattern,
+          sep_mark = p_i$sep_mark %||% sep_mark,
+          dec_mark = p_i$dec_mark %||% dec_mark,
+          force_sign_m = p_i$force_sign_m %||% force_sign_m,
+          force_sign_n = p_i$force_sign_n %||% force_sign_n,
+          locale = p_i$locale %||% locale
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()` objects passed to compatible arguments
+  #
+
   # Declare formatting function compatibility
   compat <- c("numeric", "integer")
 
