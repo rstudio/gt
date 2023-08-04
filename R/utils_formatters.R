@@ -221,6 +221,11 @@ get_locale_num_spellout <- function(locale = NULL) {
     locale <- "en"
   }
 
+  # If `locale` contains `sr-Latn` then set locale as 'sr-Latn'
+  if (grepl("sr-Latn", locale)) {
+    locale <- "sr-Latn"
+  }
+
   # Get a vector of all locales from the column names of the
   # `spelled_num` dataset
   all_locales <- base::setdiff(names(spelled_num), "number")
