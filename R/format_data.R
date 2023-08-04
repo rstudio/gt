@@ -9427,6 +9427,58 @@ fmt_markdown <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - md_engine
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = get(as.character(match.call()[[1]])),
+        all_args_except = c("data", "columns", "rows")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using the `resolve_vars` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_markdown(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          md_engine = p_i$md_engine %||% md_engine
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()` objects passed to compatible arguments
+  #
+
   # Ensure that arguments are matched
   md_engine <- rlang::arg_match(md_engine)
 
