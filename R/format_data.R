@@ -300,7 +300,7 @@
 #' different for each argument). Additional columns for parameter values can be
 #' generated with the [cols_add()] function (if not already present). Columns
 #' that contain parameter data can also be hidden from final display with
-#' [hide_columns()]. Finally, there is no limitation to how many arguments the
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
 #' [from_column()] helper is applied so long as the arguments belong to this
 #' closed set.
 #'
@@ -729,7 +729,7 @@ fmt_number <- function(
 #' different for each argument). Additional columns for parameter values can be
 #' generated with the [cols_add()] function (if not already present). Columns
 #' that contain parameter data can also be hidden from final display with
-#' [hide_columns()]. Finally, there is no limitation to how many arguments the
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
 #' [from_column()] helper is applied so long as the arguments belong to this
 #' closed set.
 #'
@@ -1015,7 +1015,7 @@ fmt_integer <- function(
 #' different for each argument). Additional columns for parameter values can be
 #' generated with the [cols_add()] function (if not already present). Columns
 #' that contain parameter data can also be hidden from final display with
-#' [hide_columns()]. Finally, there is no limitation to how many arguments the
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
 #' [from_column()] helper is applied so long as the arguments belong to this
 #' closed set.
 #'
@@ -1510,7 +1510,7 @@ fmt_scientific <- function(
 #' different for each argument). Additional columns for parameter values can be
 #' generated with the [cols_add()] function (if not already present). Columns
 #' that contain parameter data can also be hidden from final display with
-#' [hide_columns()]. Finally, there is no limitation to how many arguments the
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
 #' [from_column()] helper is applied so long as the arguments belong to this
 #' closed set.
 #'
@@ -2132,7 +2132,7 @@ fmt_symbol <- function(
 #' different for each argument). Additional columns for parameter values can be
 #' generated with the [cols_add()] function (if not already present). Columns
 #' that contain parameter data can also be hidden from final display with
-#' [hide_columns()]. Finally, there is no limitation to how many arguments the
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
 #' [from_column()] helper is applied so long as the arguments belong to this
 #' closed set.
 #'
@@ -2494,7 +2494,7 @@ fmt_percent <- function(
 #' different for each argument). Additional columns for parameter values can be
 #' generated with the [cols_add()] function (if not already present). Columns
 #' that contain parameter data can also be hidden from final display with
-#' [hide_columns()]. Finally, there is no limitation to how many arguments the
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
 #' [from_column()] helper is applied so long as the arguments belong to this
 #' closed set.
 #'
@@ -2874,7 +2874,7 @@ fmt_partsper <- function(
 #' different for each argument). Additional columns for parameter values can be
 #' generated with the [cols_add()] function (if not already present). Columns
 #' that contain parameter data can also be hidden from final display with
-#' [hide_columns()]. Finally, there is no limitation to how many arguments the
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
 #' [from_column()] helper is applied so long as the arguments belong to this
 #' closed set.
 #'
@@ -3574,7 +3574,7 @@ round_gt <- function(x, digits = 0) {
 #' different for each argument). Additional columns for parameter values can be
 #' generated with the [cols_add()] function (if not already present). Columns
 #' that contain parameter data can also be hidden from final display with
-#' [hide_columns()]. Finally, there is no limitation to how many arguments the
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
 #' [from_column()] helper is applied so long as the arguments belong to this
 #' closed set.
 #'
@@ -3920,7 +3920,7 @@ fmt_currency <- function(
 #' different for each argument). Additional columns for parameter values can be
 #' generated with the [cols_add()] function (if not already present). Columns
 #' that contain parameter data can also be hidden from final display with
-#' [hide_columns()]. Finally, there is no limitation to how many arguments the
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
 #' [from_column()] helper is applied so long as the arguments belong to this
 #' closed set.
 #'
@@ -4179,7 +4179,7 @@ fmt_roman <- function(
 #' different for each argument). Additional columns for parameter values can be
 #' generated with the [cols_add()] function (if not already present). Columns
 #' that contain parameter data can also be hidden from final display with
-#' [hide_columns()]. Finally, there is no limitation to how many arguments the
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
 #' [from_column()] helper is applied so long as the arguments belong to this
 #' closed set.
 #'
@@ -4518,7 +4518,7 @@ get_letters_from_div <- function(x, set) {
 #' different for each argument). Additional columns for parameter values can be
 #' generated with the [cols_add()] function (if not already present). Columns
 #' that contain parameter data can also be hidden from final display with
-#' [hide_columns()]. Finally, there is no limitation to how many arguments the
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
 #' [from_column()] helper is applied so long as the arguments belong to this
 #' closed set.
 #'
@@ -4905,7 +4905,7 @@ fmt_spelled_num <- function(
 #' different for each argument). Additional columns for parameter values can be
 #' generated with the [cols_add()] function (if not already present). Columns
 #' that contain parameter data can also be hidden from final display with
-#' [hide_columns()]. Finally, there is no limitation to how many arguments the
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
 #' [from_column()] helper is applied so long as the arguments belong to this
 #' closed set.
 #'
@@ -5253,7 +5253,7 @@ fmt_bytes <- function(
 #' different for each argument). Additional columns for parameter values can be
 #' generated with the [cols_add()] function (if not already present). Columns
 #' that contain parameter data can also be hidden from final display with
-#' [hide_columns()]. Finally, there is no limitation to how many arguments the
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
 #' [from_column()] helper is applied so long as the arguments belong to this
 #' closed set.
 #'
@@ -5624,7 +5624,7 @@ fmt_date <- function(
 #' different for each argument). Additional columns for parameter values can be
 #' generated with the [cols_add()] function (if not already present). Columns
 #' that contain parameter data can also be hidden from final display with
-#' [hide_columns()]. Finally, there is no limitation to how many arguments the
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
 #' [from_column()] helper is applied so long as the arguments belong to this
 #' closed set.
 #'
@@ -6014,7 +6014,7 @@ fmt_time <- function(
 #' different for each argument). Additional columns for parameter values can be
 #' generated with the [cols_add()] function (if not already present). Columns
 #' that contain parameter data can also be hidden from final display with
-#' [hide_columns()]. Finally, there is no limitation to how many arguments the
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
 #' [from_column()] helper is applied so long as the arguments belong to this
 #' closed set.
 #'
@@ -8473,7 +8473,7 @@ format_units_by_context <- function(x, context = "html") {
 #' different for each argument). Additional columns for parameter values can be
 #' generated with the [cols_add()] function (if not already present). Columns
 #' that contain parameter data can also be hidden from final display with
-#' [hide_columns()]. Finally, there is no limitation to how many arguments the
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
 #' [from_column()] helper is applied so long as the arguments belong to this
 #' closed set.
 #'
@@ -9062,7 +9062,7 @@ fmt_url <- function(
 #' different for each argument). Additional columns for parameter values can be
 #' generated with the [cols_add()] function (if not already present). Columns
 #' that contain parameter data can also be hidden from final display with
-#' [hide_columns()]. Finally, there is no limitation to how many arguments the
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
 #' [from_column()] helper is applied so long as the arguments belong to this
 #' closed set.
 #'
@@ -9438,7 +9438,7 @@ fmt_image <- function(
 #' different for each argument). Additional columns for parameter values can be
 #' generated with the [cols_add()] function (if not already present). Columns
 #' that contain parameter data can also be hidden from final display with
-#' [hide_columns()]. Finally, there is no limitation to how many arguments the
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
 #' [from_column()] helper is applied so long as the arguments belong to this
 #' closed set.
 #'
@@ -9813,7 +9813,7 @@ fmt_flag <- function(
 #' needs to reference a column that has data of the `character` type. Additional
 #' columns for parameter values can be generated with the [cols_add()] function
 #' (if not already present). Columns that contain parameter data can also be
-#' hidden from final display with [hide_columns()].
+#' hidden from final display with [cols_hide()].
 #'
 #' @section Examples:
 #'
@@ -10058,7 +10058,7 @@ fmt_markdown <- function(
 #' different for each argument). Additional columns for parameter values can be
 #' generated with the [cols_add()] function (if not already present). Columns
 #' that contain parameter data can also be hidden from final display with
-#' [hide_columns()]. Finally, there is no limitation to how many arguments the
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
 #' [from_column()] helper is applied so long as the arguments belong to this
 #' closed set.
 #'
