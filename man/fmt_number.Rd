@@ -279,6 +279,40 @@ formatting on values in the column or another column, or, you'd like to use a
 more complex predicate expression.
 }
 
+\section{Compatibility of arguments with the \code{from_column()} helper function}{
+
+
+The \code{\link[=from_column]{from_column()}} helper function can be used with certain arguments of
+\code{fmt_number()} to obtain varying parameter values from a specified column
+within the table. This means that each row could be formatted a little bit
+differently. These arguments provide support for \code{\link[=from_column]{from_column()}}:
+\itemize{
+\item \code{decimals}
+\item \code{n_sigfig}
+\item \code{drop_trailing_zeros}
+\item \code{drop_trailing_dec_mark}
+\item \code{use_seps}
+\item \code{accounting}
+\item \code{scale_by}
+\item \code{suffixing}
+\item \code{pattern}
+\item \code{sep_mark}
+\item \code{dec_mark}
+\item \code{force_sign}
+\item \code{system}
+\item \code{locale}
+}
+
+Please note that for all of the aforementioned arguments, a \code{\link[=from_column]{from_column()}}
+call needs to reference a column that has data of the correct type (this is
+different for each argument). Additional columns for parameter values can be
+generated with the \code{\link[=cols_add]{cols_add()}} function (if not already present). Columns
+that contain parameter data can also be hidden from final display with
+\code{\link[=hide_columns]{hide_columns()}}. Finally, there is no limitation to how many arguments the
+\code{\link[=from_column]{from_column()}} helper is applied so long as the arguments belong to this
+closed set.
+}
+
 \section{Adapting output to a specific \code{locale}}{
 
 

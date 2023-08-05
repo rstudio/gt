@@ -46,6 +46,21 @@ table stub. The \code{tab_stub_indent()} function allows for fine control over
 row label indentation in the stub. We can use an explicit definition of an
 indentation level, or, employ an indentation directive using keywords.
 }
+\section{Compatibility of arguments with the \code{from_column()} helper function}{
+
+
+The \code{\link[=from_column]{from_column()}} helper function can be used with the \code{indent} argument
+of \code{tab_stub_indent()} to obtain varying parameter values from a specified
+column within the table. This means that each row label could be indented a
+little bit differently.
+
+Please note that for this argument (\code{indent}), a \code{\link[=from_column]{from_column()}} call needs
+to reference a column that has data of the \code{numeric} or \code{integer} type.
+Additional columns for parameter values can be generated with the
+\code{\link[=cols_add]{cols_add()}} function (if not already present). Columns that contain
+parameter data can also be hidden from final display with \code{\link[=hide_columns]{hide_columns()}}.
+}
+
 \section{Examples}{
 
 
