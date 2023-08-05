@@ -59,6 +59,7 @@ tests/testthat/test-gt_object.R
 tests/testthat/test-gt_split.R
 tests/testthat/test-gtsave.R
 tests/testthat/test-h_md_html.R
+tests/testthat/test-helper_functions.R
 tests/testthat/test-i_html.R
 tests/testthat/test-image.R
 tests/testthat/test-info_tables.R
