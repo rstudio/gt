@@ -58,7 +58,7 @@ Please note that for this argument (\code{indent}), a \code{\link[=from_column]{
 to reference a column that has data of the \code{numeric} or \code{integer} type.
 Additional columns for parameter values can be generated with the
 \code{\link[=cols_add]{cols_add()}} function (if not already present). Columns that contain
-parameter data can also be hidden from final display with \code{\link[=hide_columns]{hide_columns()}}.
+parameter data can also be hidden from final display with \code{\link[=cols_hide]{cols_hide()}}.
 }
 
 \section{Examples}{

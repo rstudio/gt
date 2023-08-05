@@ -150,7 +150,7 @@ call needs to reference a column that has data of the correct type (this is
 different for each argument). Additional columns for parameter values can be
 generated with the \code{\link[=cols_add]{cols_add()}} function (if not already present). Columns
 that contain parameter data can also be hidden from final display with
-\code{\link[=hide_columns]{hide_columns()}}. Finally, there is no limitation to how many arguments the
+\code{\link[=cols_hide]{cols_hide()}}. Finally, there is no limitation to how many arguments the
 \code{\link[=from_column]{from_column()}} helper is applied so long as the arguments belong to this
 closed set.
 }
