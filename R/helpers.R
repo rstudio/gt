@@ -256,13 +256,15 @@ pct <- function(x) {
 #'
 #' @description
 #'
-#' For some functions, it is useful to get parameter values from a column in the
-#' **gt** table. For example, you might have indentation values (there are
-#' indentation levels from `1` to `5`) in an adjacent column; these values could
-#' be applied to the row labels in the stub through the [tab_stub_indent()]
-#' function. To make this work, we can use the `from_column()` helper function.
-#' Invoke this helper at the `indent` argument and specify the column that has
-#' the values.
+#' It can be useful to obtain parameter values from a column in a
+#' **gt** for functions that operate on the table body and stub cells. For
+#' example, you might want to indent row labels in the stub. You could call
+#' [tab_stub_indent()] and indent different rows to various indentation levels.
+#' However, each level of indentation applied necessitates a new call of that
+#' function. To make this better, we can use indentation values available in a
+#' table column via the `from_column()` helper function. For the
+#' [tab_stub_indent()] case, you'd invoke this helper at the `indent` argument
+#' and specify the column that has the values.
 #'
 #' @param column *Column name*
 #'
@@ -287,6 +289,39 @@ pct <- function(x) {
 #'   `column` (except `NA` values) can be mutated.
 #'
 #' @return A list object of class `gt_column`.
+#'
+#' @section Functions that allow the use of the `with_column()` helper:
+#'
+#' Only certain functions (and furthermore a subset of arguments within each)
+#' support the use of `from_column()` for accessing varying parameter values.
+#' These functions are:
+#'
+#' - [tab_stub_indent()]
+#' - [fmt_number()]
+#' - [fmt_integer()]
+#' - [fmt_scientific()]
+#' - [fmt_engineering()]
+#' - [fmt_percent()]
+#' - [fmt_partsper()]
+#' - [fmt_fraction()]
+#' - [fmt_currency()]
+#' - [fmt_roman()]
+#' - [fmt_index()]
+#' - [fmt_spelled_num()]
+#' - [fmt_bytes()]
+#' - [fmt_date()]
+#' - [fmt_time()]
+#' - [fmt_datetime()]
+#' - [fmt_url()]
+#' - [fmt_image()]
+#' - [fmt_flag()]
+#' - [fmt_markdown()]
+#' - [fmt_passthrough()]
+#'
+#' Within help documents for each of these functions you'll find the
+#' *Compatibility of arguments with the `with_column()` helper function* section
+#' and sections like these describe which arguments support the use of
+#' `with_column()`.
 #'
 #' @family helper functions
 #' @section Function ID:
