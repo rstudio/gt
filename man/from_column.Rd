@@ -43,7 +43,7 @@ table column via the \code{from_column()} helper function. For the
 \code{\link[=tab_stub_indent]{tab_stub_indent()}} case, you'd invoke this helper at the \code{indent} argument
 and specify the column that has the values.
 }
-\section{Functions that allow the use of the \code{with_column()} helper}{
+\section{Functions that allow the use of the \code{from_column()} helper}{
 
 
 Only certain functions (and furthermore a subset of arguments within each)
@@ -74,9 +74,9 @@ These functions are:
 }
 
 Within help documents for each of these functions you'll find the
-\emph{Compatibility of arguments with the \code{with_column()} helper function} section
+\emph{Compatibility of arguments with the \code{from_column()} helper function} section
 and sections like these describe which arguments support the use of
-\code{with_column()}.
+\code{from_column()}.
 }
 
 \section{Function ID}{
