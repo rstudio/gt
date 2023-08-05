@@ -1756,6 +1756,19 @@ tab_stubhead <- function(
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @section Compatibility of arguments with the `from_column()` helper function:
+#'
+#' The [from_column()] helper function can be used with the `indent` argument
+#' of `tab_stub_indent()` to obtain varying parameter values from a specified
+#' column within the table. This means that each row label could be indented a
+#' little bit differently.
+#'
+#' Please note that for this argument (`indent`), a [from_column()] call needs
+#' to reference a column that has data of the `numeric` or `integer` type.
+#' Additional columns for parameter values can be generated with the
+#' [cols_add()] function (if not already present). Columns that contain
+#' parameter data can also be hidden from final display with [hide_columns()].
+#'
 #' @section Examples:
 #'
 #' Let's use a summarized version of the [`pizzaplace`] dataset to create a
