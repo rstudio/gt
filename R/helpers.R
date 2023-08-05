@@ -290,7 +290,7 @@ pct <- function(x) {
 #'
 #' @return A list object of class `gt_column`.
 #'
-#' @section Functions that allow the use of the `with_column()` helper:
+#' @section Functions that allow the use of the `from_column()` helper:
 #'
 #' Only certain functions (and furthermore a subset of arguments within each)
 #' support the use of `from_column()` for accessing varying parameter values.
@@ -319,9 +319,9 @@ pct <- function(x) {
 #' - [fmt_passthrough()]
 #'
 #' Within help documents for each of these functions you'll find the
-#' *Compatibility of arguments with the `with_column()` helper function* section
+#' *Compatibility of arguments with the `from_column()` helper function* section
 #' and sections like these describe which arguments support the use of
-#' `with_column()`.
+#' `from_column()`.
 #'
 #' @family helper functions
 #' @section Function ID:
