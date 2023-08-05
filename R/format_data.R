@@ -273,6 +273,37 @@
 #' formatting on values in the column or another column, or, you'd like to use a
 #' more complex predicate expression.
 #'
+#' @section Compatibility of arguments with the `from_column()` helper function:
+#'
+#' The [from_column()] helper function can be used with certain arguments of
+#' `fmt_number()` to obtain varying parameter values from a specified column
+#' within the table. This means that each row could be formatted a little bit
+#' differently. These arguments provide support for [from_column()]:
+#'
+#' - `decimals`
+#' - `n_sigfig`
+#' - `drop_trailing_zeros`
+#' - `drop_trailing_dec_mark`
+#' - `use_seps`
+#' - `accounting`
+#' - `scale_by`
+#' - `suffixing`
+#' - `pattern`
+#' - `sep_mark`
+#' - `dec_mark`
+#' - `force_sign`
+#' - `system`
+#' - `locale`
+#'
+#' Please note that for all of the aforementioned arguments, a [from_column()]
+#' call needs to reference a column that has data of the correct type (this is
+#' different for each argument). Additional columns for parameter values can be
+#' generated with the [cols_add()] function (if not already present). Columns
+#' that contain parameter data can also be hidden from final display with
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
+#' [from_column()] helper is applied so long as the arguments belong to this
+#' closed set.
+#'
 #' @section Adapting output to a specific `locale`:
 #'
 #' This formatting function can adapt outputs according to a provided `locale`
@@ -676,6 +707,32 @@ fmt_number <- function(
 #' formatting on values in the column or another column, or, you'd like to use a
 #' more complex predicate expression.
 #'
+#' @section Compatibility of arguments with the `from_column()` helper function:
+#'
+#' The [from_column()] helper function can be used with certain arguments of
+#' `fmt_integer()` to obtain varying parameter values from a specified column
+#' within the table. This means that each row could be formatted a little bit
+#' differently. These arguments provide support for [from_column()]:
+#'
+#' - `use_seps`
+#' - `accounting`
+#' - `scale_by`
+#' - `suffixing`
+#' - `pattern`
+#' - `sep_mark`
+#' - `force_sign`
+#' - `system`
+#' - `locale`
+#'
+#' Please note that for all of the aforementioned arguments, a [from_column()]
+#' call needs to reference a column that has data of the correct type (this is
+#' different for each argument). Additional columns for parameter values can be
+#' generated with the [cols_add()] function (if not already present). Columns
+#' that contain parameter data can also be hidden from final display with
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
+#' [from_column()] helper is applied so long as the arguments belong to this
+#' closed set.
+#'
 #' @section Adapting output to a specific `locale`:
 #'
 #' This formatting function can adapt outputs according to a provided `locale`
@@ -933,6 +990,34 @@ fmt_integer <- function(
 #' in the table) and returns a logical vector. This is nice if you want to base
 #' formatting on values in the column or another column, or, you'd like to use a
 #' more complex predicate expression.
+#'
+#' @section Compatibility of arguments with the `from_column()` helper function:
+#'
+#' The [from_column()] helper function can be used with certain arguments of
+#' `fmt_scientific()` to obtain varying parameter values from a specified column
+#' within the table. This means that each row could be formatted a little bit
+#' differently. These arguments provide support for [from_column()]:
+#'
+#' - `decimals`
+#' - `drop_trailing_zeros`
+#' - `drop_trailing_dec_mark`
+#' - `scale_by`
+#' - `exp_style`
+#' - `pattern`
+#' - `sep_mark`
+#' - `dec_mark`
+#' - `force_sign_m`
+#' - `force_sign_n`
+#' - `locale`
+#'
+#' Please note that for all of the aforementioned arguments, a [from_column()]
+#' call needs to reference a column that has data of the correct type (this is
+#' different for each argument). Additional columns for parameter values can be
+#' generated with the [cols_add()] function (if not already present). Columns
+#' that contain parameter data can also be hidden from final display with
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
+#' [from_column()] helper is applied so long as the arguments belong to this
+#' closed set.
 #'
 #' @section Adapting output to a specific `locale`:
 #'
@@ -1400,6 +1485,34 @@ fmt_scientific <- function(
 #' in the table) and returns a logical vector. This is nice if you want to base
 #' formatting on values in the column or another column, or, you'd like to use a
 #' more complex predicate expression.
+#'
+#' @section Compatibility of arguments with the `from_column()` helper function:
+#'
+#' The [from_column()] helper function can be used with certain arguments of
+#' `fmt_engineering()` to obtain varying parameter values from a specified
+#' column within the table. This means that each row could be formatted a little
+#' bit differently. These arguments provide support for [from_column()]:
+#'
+#' - `decimals`
+#' - `drop_trailing_zeros`
+#' - `drop_trailing_dec_mark`
+#' - `scale_by`
+#' - `exp_style`
+#' - `pattern`
+#' - `sep_mark`
+#' - `dec_mark`
+#' - `force_sign_m`
+#' - `force_sign_n`
+#' - `locale`
+#'
+#' Please note that for all of the aforementioned arguments, a [from_column()]
+#' call needs to reference a column that has data of the correct type (this is
+#' different for each argument). Additional columns for parameter values can be
+#' generated with the [cols_add()] function (if not already present). Columns
+#' that contain parameter data can also be hidden from final display with
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
+#' [from_column()] helper is applied so long as the arguments belong to this
+#' closed set.
 #'
 #' @section Adapting output to a specific `locale`:
 #'
@@ -1992,6 +2105,37 @@ fmt_symbol <- function(
 #' formatting on values in the column or another column, or, you'd like to use a
 #' more complex predicate expression.
 #'
+#' @section Compatibility of arguments with the `from_column()` helper function:
+#'
+#' The [from_column()] helper function can be used with certain arguments of
+#' `fmt_percent()` to obtain varying parameter values from a specified column
+#' within the table. This means that each row could be formatted a little bit
+#' differently. These arguments provide support for [from_column()]:
+#'
+#' - `decimals`
+#' - `drop_trailing_zeros`
+#' - `drop_trailing_dec_mark`
+#' - `scale_values`
+#' - `use_seps`
+#' - `accounting`
+#' - `pattern`
+#' - `sep_mark`
+#' - `dec_mark`
+#' - `force_sign`
+#' - `incl_space`
+#' - `placement`
+#' - `system`
+#' - `locale`
+#'
+#' Please note that for all of the aforementioned arguments, a [from_column()]
+#' call needs to reference a column that has data of the correct type (this is
+#' different for each argument). Additional columns for parameter values can be
+#' generated with the [cols_add()] function (if not already present). Columns
+#' that contain parameter data can also be hidden from final display with
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
+#' [from_column()] helper is applied so long as the arguments belong to this
+#' closed set.
+#'
 #' @section Adapting output to a specific `locale`:
 #'
 #' This formatting function can adapt outputs according to a provided `locale`
@@ -2322,6 +2466,37 @@ fmt_percent <- function(
 #' in the table) and returns a logical vector. This is nice if you want to base
 #' formatting on values in the column or another column, or, you'd like to use a
 #' more complex predicate expression.
+#'
+#' @section Compatibility of arguments with the `from_column()` helper function:
+#'
+#' The [from_column()] helper function can be used with certain arguments of
+#' `fmt_partsper()` to obtain varying parameter values from a specified column
+#' within the table. This means that each row could be formatted a little bit
+#' differently. These arguments provide support for [from_column()]:
+#'
+#' - `to_units`
+#' - `symbol`
+#' - `decimals`
+#' - `drop_trailing_zeros`
+#' - `drop_trailing_dec_mark`
+#' - `scale_values`
+#' - `use_seps`
+#' - `pattern`
+#' - `sep_mark`
+#' - `dec_mark`
+#' - `force_sign`
+#' - `incl_space`
+#' - `system`
+#' - `locale`
+#'
+#' Please note that for all of the aforementioned arguments, a [from_column()]
+#' call needs to reference a column that has data of the correct type (this is
+#' different for each argument). Additional columns for parameter values can be
+#' generated with the [cols_add()] function (if not already present). Columns
+#' that contain parameter data can also be hidden from final display with
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
+#' [from_column()] helper is applied so long as the arguments belong to this
+#' closed set.
 #'
 #' @section Adapting output to a specific `locale`:
 #'
@@ -2677,6 +2852,31 @@ fmt_partsper <- function(
 #' in the table) and returns a logical vector. This is nice if you want to base
 #' formatting on values in the column or another column, or, you'd like to use a
 #' more complex predicate expression.
+#'
+#' @section Compatibility of arguments with the `from_column()` helper function:
+#'
+#' The [from_column()] helper function can be used with certain arguments of
+#' `fmt_fraction()` to obtain varying parameter values from a specified column
+#' within the table. This means that each row could be formatted a little bit
+#' differently. These arguments provide support for [from_column()]:
+#'
+#' - `accuracy`
+#' - `simplify`
+#' - `layout`
+#' - `use_seps`
+#' - `pattern`
+#' - `sep_mark`
+#' - `system`
+#' - `locale`
+#'
+#' Please note that for all of the aforementioned arguments, a [from_column()]
+#' call needs to reference a column that has data of the correct type (this is
+#' different for each argument). Additional columns for parameter values can be
+#' generated with the [cols_add()] function (if not already present). Columns
+#' that contain parameter data can also be hidden from final display with
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
+#' [from_column()] helper is applied so long as the arguments belong to this
+#' closed set.
 #'
 #' @section Adapting output to a specific `locale`:
 #'
@@ -3345,6 +3545,39 @@ round_gt <- function(x, digits = 0) {
 #' formatting on values in the column or another column, or, you'd like to use a
 #' more complex predicate expression.
 #'
+#' @section Compatibility of arguments with the `from_column()` helper function:
+#'
+#' The [from_column()] helper function can be used with certain arguments of
+#' `fmt_currency()` to obtain varying parameter values from a specified column
+#' within the table. This means that each row could be formatted a little bit
+#' differently. These arguments provide support for [from_column()]:
+#'
+#' - `currency`
+#' - `use_subunits`
+#' - `decimals`
+#' - `drop_trailing_dec_mark`
+#' - `use_seps`
+#' - `accounting`
+#' - `scale_by`
+#' - `suffixing`
+#' - `pattern`
+#' - `sep_mark`
+#' - `dec_mark`
+#' - `force_sign`
+#' - `placement`
+#' - `incl_space`
+#' - `system`
+#' - `locale`
+#'
+#' Please note that for all of the aforementioned arguments, a [from_column()]
+#' call needs to reference a column that has data of the correct type (this is
+#' different for each argument). Additional columns for parameter values can be
+#' generated with the [cols_add()] function (if not already present). Columns
+#' that contain parameter data can also be hidden from final display with
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
+#' [from_column()] helper is applied so long as the arguments belong to this
+#' closed set.
+#'
 #' @section Adapting output to a specific `locale`:
 #'
 #' This formatting function can adapt outputs according to a provided `locale`
@@ -3672,6 +3905,25 @@ fmt_currency <- function(
 #' formatting on values in the column or another column, or, you'd like to use a
 #' more complex predicate expression.
 #'
+#' @section Compatibility of arguments with the `from_column()` helper function:
+#'
+#' The [from_column()] helper function can be used with certain arguments of
+#' `fmt_roman()` to obtain varying parameter values from a specified column
+#' within the table. This means that each row could be formatted a little bit
+#' differently. These arguments provide support for [from_column()]:
+#'
+#' - `case`
+#' - `pattern`
+#'
+#' Please note that for both of the aforementioned arguments, a [from_column()]
+#' call needs to reference a column that has data of the correct type (this is
+#' different for each argument). Additional columns for parameter values can be
+#' generated with the [cols_add()] function (if not already present). Columns
+#' that contain parameter data can also be hidden from final display with
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
+#' [from_column()] helper is applied so long as the arguments belong to this
+#' closed set.
+#'
 #' @section Examples:
 #'
 #' Create a tibble of small numeric values and generate a **gt** table. Format
@@ -3909,6 +4161,27 @@ fmt_roman <- function(
 #' in the table) and returns a logical vector. This is nice if you want to base
 #' formatting on values in the column or another column, or, you'd like to use a
 #' more complex predicate expression.
+#'
+#' @section Compatibility of arguments with the `from_column()` helper function:
+#'
+#' The [from_column()] helper function can be used with certain arguments of
+#' `fmt_index()` to obtain varying parameter values from a specified column
+#' within the table. This means that each row could be formatted a little bit
+#' differently. These arguments provide support for [from_column()]:
+#'
+#' - `case`
+#' - `index_algo`
+#' - `pattern`
+#' - `locale`
+#'
+#' Please note that for all of the aforementioned arguments, a [from_column()]
+#' call needs to reference a column that has data of the correct type (this is
+#' different for each argument). Additional columns for parameter values can be
+#' generated with the [cols_add()] function (if not already present). Columns
+#' that contain parameter data can also be hidden from final display with
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
+#' [from_column()] helper is applied so long as the arguments belong to this
+#' closed set.
 #'
 #' @section Examples:
 #'
@@ -4229,6 +4502,25 @@ get_letters_from_div <- function(x, set) {
 #' in the table) and returns a logical vector. This is nice if you want to base
 #' formatting on values in the column or another column, or, you'd like to use a
 #' more complex predicate expression.
+#'
+#' @section Compatibility of arguments with the `from_column()` helper function:
+#'
+#' The [from_column()] helper function can be used with certain arguments of
+#' `fmt_spelled_num()` to obtain varying parameter values from a specified
+#' column within the table. This means that each row could be formatted a little
+#' bit differently. These arguments provide support for [from_column()]:
+#'
+#' - `pattern`
+#' - `locale`
+#'
+#' Please note that for both of the aforementioned arguments, a [from_column()]
+#' call needs to reference a column that has data of the correct type (this is
+#' different for each argument). Additional columns for parameter values can be
+#' generated with the [cols_add()] function (if not already present). Columns
+#' that contain parameter data can also be hidden from final display with
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
+#' [from_column()] helper is applied so long as the arguments belong to this
+#' closed set.
 #'
 #' @section Supported locales:
 #'
@@ -4588,6 +4880,35 @@ fmt_spelled_num <- function(
 #' formatting on values in the column or another column, or, you'd like to use a
 #' more complex predicate expression.
 #'
+#' @section Compatibility of arguments with the `from_column()` helper function:
+#'
+#' The [from_column()] helper function can be used with certain arguments of
+#' `fmt_bytes()` to obtain varying parameter values from a specified column
+#' within the table. This means that each row could be formatted a little bit
+#' differently. These arguments provide support for [from_column()]:
+#'
+#' - `standard`
+#' - `decimals`
+#' - `n_sigfig`
+#' - `drop_trailing_zeros`
+#' - `drop_trailing_dec_mark`
+#' - `use_seps`
+#' - `pattern`
+#' - `sep_mark`
+#' - `dec_mark`
+#' - `force_sign`
+#' - `incl_space`
+#' - `locale`
+#'
+#' Please note that for each of the aforementioned arguments, a [from_column()]
+#' call needs to reference a column that has data of the correct type (this is
+#' different for each argument). Additional columns for parameter values can be
+#' generated with the [cols_add()] function (if not already present). Columns
+#' that contain parameter data can also be hidden from final display with
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
+#' [from_column()] helper is applied so long as the arguments belong to this
+#' closed set.
+#'
 #' @section Adapting output to a specific `locale`:
 #'
 #' This formatting function can adapt outputs according to a provided `locale`
@@ -4915,6 +5236,26 @@ fmt_bytes <- function(
 #' in the table) and returns a logical vector. This is nice if you want to base
 #' formatting on values in the column or another column, or, you'd like to use a
 #' more complex predicate expression.
+#'
+#' @section Compatibility of arguments with the `from_column()` helper function:
+#'
+#' The [from_column()] helper function can be used with certain arguments of
+#' `fmt_date()` to obtain varying parameter values from a specified column
+#' within the table. This means that each row could be formatted a little bit
+#' differently. These arguments provide support for [from_column()]:
+#'
+#' - `date_style`
+#' - `pattern`
+#' - `locale`
+#'
+#' Please note that for each of the aforementioned arguments, a [from_column()]
+#' call needs to reference a column that has data of the correct type (this is
+#' different for each argument). Additional columns for parameter values can be
+#' generated with the [cols_add()] function (if not already present). Columns
+#' that contain parameter data can also be hidden from final display with
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
+#' [from_column()] helper is applied so long as the arguments belong to this
+#' closed set.
 #'
 #' @section Formatting with the `date_style` argument:
 #'
@@ -5266,6 +5607,26 @@ fmt_date <- function(
 #' in the table) and returns a logical vector. This is nice if you want to base
 #' formatting on values in the column or another column, or, you'd like to use a
 #' more complex predicate expression.
+#'
+#' @section Compatibility of arguments with the `from_column()` helper function:
+#'
+#' The [from_column()] helper function can be used with certain arguments of
+#' `fmt_time()` to obtain varying parameter values from a specified column
+#' within the table. This means that each row could be formatted a little bit
+#' differently. These arguments provide support for [from_column()]:
+#'
+#' - `time_style`
+#' - `pattern`
+#' - `locale`
+#'
+#' Please note that for each of the aforementioned arguments, a [from_column()]
+#' call needs to reference a column that has data of the correct type (this is
+#' different for each argument). Additional columns for parameter values can be
+#' generated with the [cols_add()] function (if not already present). Columns
+#' that contain parameter data can also be hidden from final display with
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
+#' [from_column()] helper is applied so long as the arguments belong to this
+#' closed set.
 #'
 #' @section Formatting with the `time_style` argument:
 #'
@@ -5632,6 +5993,30 @@ fmt_time <- function(
 #' in the table) and returns a logical vector. This is nice if you want to base
 #' formatting on values in the column or another column, or, you'd like to use a
 #' more complex predicate expression.
+#'
+#' @section Compatibility of arguments with the `from_column()` helper function:
+#'
+#' The [from_column()] helper function can be used with certain arguments of
+#' `fmt_datetime()` to obtain varying parameter values from a specified column
+#' within the table. This means that each row could be formatted a little bit
+#' differently. These arguments provide support for [from_column()]:
+#'
+#' - `date_style`
+#' - `time_style`
+#' - `sep`
+#' - `format`
+#' - `tz`
+#' - `pattern`
+#' - `locale`
+#'
+#' Please note that for each of the aforementioned arguments, a [from_column()]
+#' call needs to reference a column that has data of the correct type (this is
+#' different for each argument). Additional columns for parameter values can be
+#' generated with the [cols_add()] function (if not already present). Columns
+#' that contain parameter data can also be hidden from final display with
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
+#' [from_column()] helper is applied so long as the arguments belong to this
+#' closed set.
 #'
 #' @section Formatting with the `date_style` argument:
 #'
@@ -8068,6 +8453,30 @@ format_units_by_context <- function(x, context = "html") {
 #' formatting on values in the column or another column, or, you'd like to use a
 #' more complex predicate expression.
 #'
+#' @section Compatibility of arguments with the `from_column()` helper function:
+#'
+#' The [from_column()] helper function can be used with certain arguments of
+#' `fmt_url()` to obtain varying parameter values from a specified column within
+#' the table. This means that each row could be formatted a little bit
+#' differently. These arguments provide support for [from_column()]:
+#'
+#' - `label`
+#' - `as_button`
+#' - `color`
+#' - `show_underline`
+#' - `button_fill`
+#' - `button_width`
+#' - `button_outline`
+#'
+#' Please note that for each of the aforementioned arguments, a [from_column()]
+#' call needs to reference a column that has data of the correct type (this is
+#' different for each argument). Additional columns for parameter values can be
+#' generated with the [cols_add()] function (if not already present). Columns
+#' that contain parameter data can also be hidden from final display with
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
+#' [from_column()] helper is applied so long as the arguments belong to this
+#' closed set.
+#'
 #' @section Examples:
 #'
 #' Using a portion of the [`towny`] dataset, let's create a **gt** table. We can
@@ -8635,6 +9044,28 @@ fmt_url <- function(
 #' formatting on values in the column or another column, or, you'd like to use a
 #' more complex predicate expression.
 #'
+#' @section Compatibility of arguments with the `from_column()` helper function:
+#'
+#' The [from_column()] helper function can be used with certain arguments of
+#' `fmt_image()` to obtain varying parameter values from a specified column
+#' within the table. This means that each row could be formatted a little bit
+#' differently. These arguments provide support for [from_column()]:
+#'
+#' - `height`
+#' - `sep`
+#' - `path`
+#' - `file_pattern`
+#' - `encode`
+#'
+#' Please note that for each of the aforementioned arguments, a [from_column()]
+#' call needs to reference a column that has data of the correct type (this is
+#' different for each argument). Additional columns for parameter values can be
+#' generated with the [cols_add()] function (if not already present). Columns
+#' that contain parameter data can also be hidden from final display with
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
+#' [from_column()] helper is applied so long as the arguments belong to this
+#' closed set.
+#'
 #' @section Examples:
 #'
 #' Using a small portion of [`metro`] dataset, let's create a **gt** table. We
@@ -8990,6 +9421,26 @@ fmt_image <- function(
 #' in the table) and returns a logical vector. This is nice if you want to base
 #' formatting on values in the column or another column, or, you'd like to use a
 #' more complex predicate expression.
+#'
+#' @section Compatibility of arguments with the `from_column()` helper function:
+#'
+#' The [from_column()] helper function can be used with certain arguments of
+#' `fmt_flag()` to obtain varying parameter values from a specified column
+#' within the table. This means that each row could be formatted a little bit
+#' differently. These arguments provide support for [from_column()]:
+#'
+#' - `height`
+#' - `sep`
+#' - `use_title`
+#'
+#' Please note that for each of the aforementioned arguments, a [from_column()]
+#' call needs to reference a column that has data of the correct type (this is
+#' different for each argument). Additional columns for parameter values can be
+#' generated with the [cols_add()] function (if not already present). Columns
+#' that contain parameter data can also be hidden from final display with
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
+#' [from_column()] helper is applied so long as the arguments belong to this
+#' closed set.
 #'
 #' @section Examples:
 #'
@@ -9351,6 +9802,19 @@ fmt_flag <- function(
 #' formatting on values in the column or another column, or, you'd like to use a
 #' more complex predicate expression.
 #'
+#' @section Compatibility of arguments with the `from_column()` helper function:
+#'
+#' The [from_column()] helper function can be used with the `md_engine` argument
+#' of `fmt_markdown()` to obtain varying parameter values from a specified
+#' column within the table. This means that each row could be formatted a little
+#' bit differently.
+#'
+#' Please note that for this argument (`md_engine`), a [from_column()] call
+#' needs to reference a column that has data of the `character` type. Additional
+#' columns for parameter values can be generated with the [cols_add()] function
+#' (if not already present). Columns that contain parameter data can also be
+#' hidden from final display with [cols_hide()].
+#'
 #' @section Examples:
 #'
 #' Create a few Markdown-based text snippets.
@@ -9578,6 +10042,25 @@ fmt_markdown <- function(
 #' in the table) and returns a logical vector. This is nice if you want to base
 #' formatting on values in the column or another column, or, you'd like to use a
 #' more complex predicate expression.
+#'
+#' @section Compatibility of arguments with the `from_column()` helper function:
+#'
+#' The [from_column()] helper function can be used with certain arguments of
+#' `fmt_passthrough()` to obtain varying parameter values from a specified
+#' column within the table. This means that each row could be formatted a little
+#' bit differently. These arguments provide support for [from_column()]:
+#'
+#' - `escape`
+#' - `pattern`
+#'
+#' Please note that for both of the aforementioned arguments, a [from_column()]
+#' call needs to reference a column that has data of the correct type (this is
+#' different for each argument). Additional columns for parameter values can be
+#' generated with the [cols_add()] function (if not already present). Columns
+#' that contain parameter data can also be hidden from final display with
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
+#' [from_column()] helper is applied so long as the arguments belong to this
+#' closed set.
 #'
 #' @section Examples:
 #'
