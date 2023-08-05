@@ -1767,7 +1767,7 @@ tab_stubhead <- function(
 #' to reference a column that has data of the `numeric` or `integer` type.
 #' Additional columns for parameter values can be generated with the
 #' [cols_add()] function (if not already present). Columns that contain
-#' parameter data can also be hidden from final display with [hide_columns()].
+#' parameter data can also be hidden from final display with [cols_hide()].
 #'
 #' @section Examples:
 #'
