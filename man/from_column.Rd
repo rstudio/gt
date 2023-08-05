@@ -33,14 +33,52 @@ If a function is provided here, any values extracted from the table
 A list object of class \code{gt_column}.
 }
 \description{
-For some functions, it is useful to get parameter values from a column in the
-\strong{gt} table. For example, you might have indentation values (there are
-indentation levels from \code{1} to \code{5}) in an adjacent column; these values could
-be applied to the row labels in the stub through the \code{\link[=tab_stub_indent]{tab_stub_indent()}}
-function. To make this work, we can use the \code{from_column()} helper function.
-Invoke this helper at the \code{indent} argument and specify the column that has
-the values.
+It can be useful to obtain parameter values from a column in a
+\strong{gt} for functions that operate on the table body and stub cells. For
+example, you might want to indent row labels in the stub. You could call
+\code{\link[=tab_stub_indent]{tab_stub_indent()}} and indent different rows to various indentation levels.
+However, each level of indentation applied necessitates a new call of that
+function. To make this better, we can use indentation values available in a
+table column via the \code{from_column()} helper function. For the
+\code{\link[=tab_stub_indent]{tab_stub_indent()}} case, you'd invoke this helper at the \code{indent} argument
+and specify the column that has the values.
 }
+\section{Functions that allow the use of the \code{with_column()} helper}{
+
+
+Only certain functions (and furthermore a subset of arguments within each)
+support the use of \code{from_column()} for accessing varying parameter values.
+These functions are:
+\itemize{
+\item \code{\link[=tab_stub_indent]{tab_stub_indent()}}
+\item \code{\link[=fmt_number]{fmt_number()}}
+\item \code{\link[=fmt_integer]{fmt_integer()}}
+\item \code{\link[=fmt_scientific]{fmt_scientific()}}
+\item \code{\link[=fmt_engineering]{fmt_engineering()}}
+\item \code{\link[=fmt_percent]{fmt_percent()}}
+\item \code{\link[=fmt_partsper]{fmt_partsper()}}
+\item \code{\link[=fmt_fraction]{fmt_fraction()}}
+\item \code{\link[=fmt_currency]{fmt_currency()}}
+\item \code{\link[=fmt_roman]{fmt_roman()}}
+\item \code{\link[=fmt_index]{fmt_index()}}
+\item \code{\link[=fmt_spelled_num]{fmt_spelled_num()}}
+\item \code{\link[=fmt_bytes]{fmt_bytes()}}
+\item \code{\link[=fmt_date]{fmt_date()}}
+\item \code{\link[=fmt_time]{fmt_time()}}
+\item \code{\link[=fmt_datetime]{fmt_datetime()}}
+\item \code{\link[=fmt_url]{fmt_url()}}
+\item \code{\link[=fmt_image]{fmt_image()}}
+\item \code{\link[=fmt_flag]{fmt_flag()}}
+\item \code{\link[=fmt_markdown]{fmt_markdown()}}
+\item \code{\link[=fmt_passthrough]{fmt_passthrough()}}
+}
+
+Within help documents for each of these functions you'll find the
+\emph{Compatibility of arguments with the \code{with_column()} helper function} section
+and sections like these describe which arguments support the use of
+\code{with_column()}.
+}
+
 \section{Function ID}{
 
 8-5
