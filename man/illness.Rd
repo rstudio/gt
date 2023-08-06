@@ -10,8 +10,8 @@ A tibble with 39 rows and 11 variables:
 \item{test}{The name of the test.}
 \item{units}{The measurement units for the test.}
 \item{day_3,day_4,day_5,day_6,day_7,day_8,day_9}{Measurement values
-associated with each test administered from days 3 to 9. If \code{NA} then the
-test could not be performed properly.)}
+associated with each test administered from days 3 to 9. An \code{NA} value
+indicates that the test could not be performed that day.}
 \item{norm_l,norm_u}{Lower and upper bounds for the normal range associated
 with the test.}
 }
