@@ -1279,7 +1279,7 @@ generate_param_tbl <- function(
       arg_name <- names(arg_vals)[i]
       default_for_arg <- rlang::eval_bare(formals(fmt_number)[[arg_name]])
 
-      if (!identical(arg_vals[[i]], default_for_arg)) {
+      if (!identical(arg_vals[[i]], default_for_arg) && !is.null(arg_vals[[i]])) {
 
         param_tbl <-
           dplyr::bind_cols(
