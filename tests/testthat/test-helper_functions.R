@@ -500,14 +500,15 @@ test_that("The `from_column()` helper works correctly", {
     (tab %>%
        fmt_time(
          columns = time,
+         rows = 1:3,
          time_style = from_column(column = "i_real"),
          locale = from_column(column = "locales")
        ) %>%
        render_formats_test("html")
     )[["time"]],
     c(
-      "13:35:00", "14:40", "3:45:00 PM", "4:50 p. m.", "5 PM", NA,
-      "19:10", "20"
+      "13:35:00", "14:40", "3:45:00 PM", "16:50", "17:55", NA, "19:10",
+      "20:20"
     )
   )
 
@@ -516,6 +517,7 @@ test_that("The `from_column()` helper works correctly", {
     (tab %>%
        fmt_datetime(
          columns = datetime,
+         rows = 1:3,
          date_style = from_column(column = "i_integer"),
          time_style = from_column(column = "i_real"),
          locale = from_column(column = "locales")
@@ -523,10 +525,9 @@ test_that("The `from_column()` helper works correctly", {
        render_formats_test("html")
     )[["datetime"]],
     c(
-      "2018-01-01 02:22:00", "Freitag, Februar 2, 2018 14:33",
-      "sam., mars 3, 2018 3:44:00 AM", "miércoles 4 abril 2018 3:55 p. m.",
-      "maggio 5, 2018 4 AM", "jun. 6, 2018 16:11:00",
-      "7 7月 2018 05:22", NA
+      "2018-01-01 02:22:00", "Freitag, Februar 2, 2018 14:33", "sam., mars 3, 2018 3:44:00 AM",
+      "2018-04-04 15:55", "2018-05-05 04:00", "2018-06-06 16:11", "2018-07-07 05:22",
+      NA
     )
   )
 
