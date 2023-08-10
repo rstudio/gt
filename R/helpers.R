@@ -2962,17 +2962,20 @@ cell_fill <- function(
     alpha = NULL
 ) {
 
-  if (length(color) != 1) {
+  if (!inherits(color, "gt_column") && length(color) != 1) {
     cli::cli_abort("The length of the `color` vector must be `1`.")
   }
 
-  if (!is.null(alpha) && length(alpha) != 1) {
+  if (!is.null(alpha) && !inherits(color, "gt_column") && length(alpha) != 1) {
     cli::cli_abort("If provided, `alpha` must be a single value.")
   }
 
   # Transform the `color` value, if present, so that X11 color names
   # can be used in all output contexts
-  color <- html_color(colors = color, alpha = alpha)
+
+  if (!inherits(color, "gt_column")) {
+    color <- html_color(colors = color, alpha = alpha)
+  }
 
   style_vals <- list(color = color)
 
