@@ -441,7 +441,7 @@ fmt_number <- function(
   arg_vals <-
     mget(
       get_arg_names(
-        function_name = get(as.character(match.call()[[1]])),
+        function_name = "fmt_number",
         all_args_except = c("data", "columns", "rows")
       )
     )
@@ -817,7 +817,7 @@ fmt_integer <- function(
   arg_vals <-
     mget(
       get_arg_names(
-        function_name = get(as.character(match.call()[[1]])),
+        function_name = "fmt_integer",
         all_args_except = c("data", "columns", "rows")
       )
     )
@@ -1116,7 +1116,7 @@ fmt_scientific <- function(
   arg_vals <-
     mget(
       get_arg_names(
-        function_name = get(as.character(match.call()[[1]])),
+        function_name = "fmt_scientific",
         all_args_except = c("data", "columns", "rows")
       )
     )
@@ -1598,7 +1598,7 @@ fmt_engineering <- function(
   arg_vals <-
     mget(
       get_arg_names(
-        function_name = get(as.character(match.call()[[1]])),
+        function_name = "fmt_engineering",
         all_args_except = c("data", "columns", "rows")
       )
     )
@@ -2233,7 +2233,7 @@ fmt_percent <- function(
   arg_vals <-
     mget(
       get_arg_names(
-        function_name = get(as.character(match.call()[[1]])),
+        function_name = "fmt_percent",
         all_args_except = c("data", "columns", "rows")
       )
     )
@@ -2592,7 +2592,7 @@ fmt_partsper <- function(
   arg_vals <-
     mget(
       get_arg_names(
-        function_name = get(as.character(match.call()[[1]])),
+        function_name = "fmt_partsper",
         all_args_except = c("data", "columns", "rows")
       )
     )
@@ -3012,7 +3012,7 @@ fmt_fraction <- function(
   arg_vals <-
     mget(
       get_arg_names(
-        function_name = get(as.character(match.call()[[1]])),
+        function_name = "fmt_fraction",
         all_args_except = c("data", "columns", "rows")
       )
     )
@@ -3714,7 +3714,7 @@ fmt_currency <- function(
   arg_vals <-
     mget(
       get_arg_names(
-        function_name = get(as.character(match.call()[[1]])),
+        function_name = "fmt_currency",
         all_args_except = c("data", "columns", "rows")
       )
     )
@@ -3973,7 +3973,7 @@ fmt_roman <- function(
   arg_vals <-
     mget(
       get_arg_names(
-        function_name = get(as.character(match.call()[[1]])),
+        function_name = "fmt_roman",
         all_args_except = c("data", "columns", "rows")
       )
     )
@@ -4259,7 +4259,7 @@ fmt_index <- function(
   arg_vals <-
     mget(
       get_arg_names(
-        function_name = get(as.character(match.call()[[1]])),
+        function_name = "fmt_index",
         all_args_except = c("data", "columns", "rows")
       )
     )
@@ -4652,7 +4652,7 @@ fmt_spelled_num <- function(
   arg_vals <-
     mget(
       get_arg_names(
-        function_name = get(as.character(match.call()[[1]])),
+        function_name = "fmt_spelled_num",
         all_args_except = c("data", "columns", "rows")
       )
     )
@@ -5009,7 +5009,7 @@ fmt_bytes <- function(
   arg_vals <-
     mget(
       get_arg_names(
-        function_name = get(as.character(match.call()[[1]])),
+        function_name = "fmt_bytes",
         all_args_except = c("data", "columns", "rows")
       )
     )
@@ -5430,7 +5430,7 @@ fmt_date <- function(
   arg_vals <-
     mget(
       get_arg_names(
-        function_name = get(as.character(match.call()[[1]])),
+        function_name = "fmt_date",
         all_args_except = c("data", "columns", "rows")
       )
     )
@@ -5786,7 +5786,7 @@ fmt_time <- function(
   arg_vals <-
     mget(
       get_arg_names(
-        function_name = get(as.character(match.call()[[1]])),
+        function_name = "fmt_time",
         all_args_except = c("data", "columns", "rows")
       )
     )
@@ -6773,7 +6773,7 @@ fmt_datetime <- function(
   arg_vals <-
     mget(
       get_arg_names(
-        function_name = get(as.character(match.call()[[1]])),
+        function_name = "fmt_datetime",
         all_args_except = c("data", "columns", "rows")
       )
     )
@@ -8660,7 +8660,7 @@ fmt_url <- function(
   arg_vals <-
     mget(
       get_arg_names(
-        function_name = get(as.character(match.call()[[1]])),
+        function_name = "fmt_url",
         all_args_except = c("data", "columns", "rows")
       )
     )
@@ -9166,7 +9166,7 @@ fmt_image <- function(
   arg_vals <-
     mget(
       get_arg_names(
-        function_name = get(as.character(match.call()[[1]])),
+        function_name = "fmt_image",
         all_args_except = c("data", "columns", "rows")
       )
     )
@@ -9572,7 +9572,7 @@ fmt_flag <- function(
   arg_vals <-
     mget(
       get_arg_names(
-        function_name = get(as.character(match.call()[[1]])),
+        function_name = "fmt_flag",
         all_args_except = c("data", "columns", "rows")
       )
     )
@@ -9902,7 +9902,7 @@ fmt_markdown <- function(
   arg_vals <-
     mget(
       get_arg_names(
-        function_name = get(as.character(match.call()[[1]])),
+        function_name = "fmt_markdown",
         all_args_except = c("data", "columns", "rows")
       )
     )
@@ -10118,7 +10118,7 @@ fmt_passthrough <- function(
   arg_vals <-
     mget(
       get_arg_names(
-        function_name = get(as.character(match.call()[[1]])),
+        function_name = "fmt_passthrough",
         all_args_except = c("data", "columns", "rows")
       )
     )
