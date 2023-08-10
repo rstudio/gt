@@ -14,33 +14,57 @@ as_word(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{gt()} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{align}{An option for table alignment. Can either be \code{"center"} (the
-default), \code{"left"}, or \code{"right"}.}
+\verb{obj:<gt_tbl>} // \strong{required}
 
-\item{caption_location}{Determines where the caption should be positioned.
-This can either be \code{"top"} (the default), \code{"bottom"}, or \code{"embed"}.}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
-\item{caption_align}{Determines the alignment of the caption. This is
+\item{align}{\emph{Table alignment}
+
+\verb{scalar<character>} // \emph{default:} \code{"center"}
+
+An option for table alignment. Can either be \code{"center"}, \code{"left"}, or
+\code{"right"}.}
+
+\item{caption_location}{\emph{Caption location}
+
+\verb{singl-kw:[top|bottom|embed]} // \emph{default:} \code{"top"}
+
+Determines where the caption should be positioned. This can either be
+\code{"top"}, \code{"bottom"}, or \code{"embed"}.}
+
+\item{caption_align}{\emph{Caption alignment}
+
+Determines the alignment of the caption. This is
 either \code{"left"} (the default), \code{"center"}, or \code{"right"}. This option is
 only used when \code{caption_location} is not set as \code{"embed"}.}
 
-\item{split}{A \code{TRUE} or \code{FALSE} (the default) value that indicates whether
-to activate the Word option \verb{Allow row to break across pages}.}
+\item{split}{\emph{Allow splitting}
 
-\item{keep_with_next}{A \code{TRUE} (the default) or \code{FALSE} value that indicates
-whether a table should use Word option \verb{keep rows together}.}
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+A logical value that indicates whether to activate the Word option
+\verb{Allow row to break across pages}.}
+
+\item{keep_with_next}{\emph{Keeping rows together}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+A logical value that indicates whether a table should use Word option
+\verb{keep rows together}.}
 }
 \description{
-Get the Open Office XML table tag content from a \code{gt_tbl} object as as a
+Get the Open Office XML table tag content from a \code{gt_tbl} object as a
 single-element character vector.
 }
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header and then export as
-OOXML code for Word.
+Use a subset of the \code{\link{gtcars}} dataset to create a \strong{gt} table. Add a header
+with \code{\link[=tab_header]{tab_header()}} and then export the table as OOXML code for Word using the
+\code{as_word()} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_rtf <-
   gtcars |>

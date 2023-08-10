@@ -22,92 +22,150 @@ fmt_duration(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The columns to format. Can either be a series of column names
-provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
-focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
+\verb{obj:<gt_tbl>} // \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
+
+Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
+column indices, or a select helper function. Examples of select helper
+functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
+\code{columns} being formatted. Alternatively, we can supply a vector of row
+captions within \code{\link[=c]{c()}}, a vector of row indices, or a select helper
+function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}.}
+\code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
+need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
-default) results in all rows in \code{columns} being formatted. Alternatively,
-we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
-indices, or a helper function focused on selections. The select helper
-functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
-\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
-to filter down to the rows we need (e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+\item{input_units}{\emph{Declaration of duration units for numerical values}
 
-\item{input_units}{If one or more selected columns contains numeric values, a
-keyword must be provided for \code{input_units} for \strong{gt} to determine how
-those values are to be interpreted in terms of duration. The accepted units
-are: \code{"seconds"}, \code{"minutes"}, \code{"hours"}, \code{"days"}, and \code{"weeks"}.}
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
-\item{output_units}{Controls the output time units. The default, \code{NULL},
-means that \strong{gt} will automatically choose time units based on the input
-duration value. To control which time units are to be considered for output
-(before trimming with \code{trim_zero_units}) we can specify a vector of one or
-more of the following keywords: \code{"weeks"}, \code{"days"}, \code{"hours"},
-\code{"minutes"}, or \code{"seconds"}.}
+If one or more selected columns contains numeric values (not \code{difftime}
+values, which contain the duration units), a keyword must be provided for
+\code{input_units} for \strong{gt} to determine how those values are to be
+interpreted in terms of duration. The accepted units are: \code{"seconds"},
+\code{"minutes"}, \code{"hours"}, \code{"days"}, and \code{"weeks"}.}
 
-\item{duration_style}{A choice of four formatting styles for the output
-duration values. With \code{"narrow"} (the default style), duration values will
-be formatted with single letter time-part units (e.g., 1.35 days will be
-styled as \verb{"1d 8h 24m}). With \code{"wide"}, this example value will be expanded
-to \code{"1 day 8 hours 24 minutes"} after formatting. The \code{"colon-sep"} style
-will put days, hours, minutes, and seconds in the \code{"([D]/)[HH]:[MM]:[SS]"}
+\item{output_units}{\emph{Choice of output units}
+
+\verb{mult-kw:[weeks|days|hours|minutes|seconds]} // \emph{default:} \code{NULL} (\code{optional})
+
+Controls the output time units. The default, \code{NULL}, means that \strong{gt} will
+automatically choose time units based on the input duration value. To
+control which time units are to be considered for output (before trimming
+with \code{trim_zero_units}) we can specify a vector of one or more of the
+following keywords: \code{"weeks"}, \code{"days"}, \code{"hours"}, \code{"minutes"}, or
+\code{"seconds"}.}
+
+\item{duration_style}{\emph{Style for representing duration values}
+
+\verb{singl-kw:[narrow|wide|colon-sep|iso]} // \emph{default:} \code{"narrow"}
+
+A choice of four formatting styles for the output duration values. With
+\code{"narrow"} (the default style), duration values will be formatted with
+single letter time-part units (e.g., 1.35 days will be styled as
+\code{"1d 8h 24m"}). With \code{"wide"}, this example value will be expanded to
+\code{"1 day 8 hours 24 minutes"} after formatting. The \code{"colon-sep"} style will
+put days, hours, minutes, and seconds in the \code{"([D]/)[HH]:[MM]:[SS]"}
 format. The \code{"iso"} style will produce a value that conforms to the ISO
 8601 rules for duration values (e.g., 1.35 days will become \code{"P1DT8H24M"}).}
 
-\item{trim_zero_units}{Provides methods to remove output time units that have
-zero values. By default this is \code{TRUE} and duration values that might
-otherwise be formatted as \code{"0w 1d 0h 4m 19s"} with
-\code{trim_zero_units = FALSE} are instead displayed as \code{"1d 4m 19s"}. Aside
-from using \code{TRUE}/\code{FALSE} we could provide a vector of keywords for more
-precise control. These keywords are: (1) \code{"leading"}, to omit all leading
-zero-value time units (e.g., \code{"0w 1d"} -> \code{"1d"}), (2) \code{"trailing"}, to
-omit all trailing zero-value time units (e.g., \code{"3d 5h 0s"} -> \code{"3d 5h"}),
-and \code{"internal"}, which removes all internal zero-value time units (e.g.,
-\code{"5d 0h 33m"} -> \code{"5d 33m"}).}
+\item{trim_zero_units}{\emph{Trimming of zero values}
 
-\item{max_output_units}{If \code{output_units} is \code{NULL}, where the output time
-units are unspecified and left to \strong{gt} to handle, a numeric value
-provided for \code{max_output_units} will be taken as the maximum number of time
-units to display in all output time duration values. By default, this is
-\code{NULL} and all possible time units will be displayed. This option has no
-effect when \code{duration_style = "colon-sep"} (only \code{output_units} can be used
-to customize that type of duration output).}
+\verb{scalar<logical>|mult-kw:[leading|trailing|internal]} // \emph{default:} \code{TRUE}
 
-\item{pattern}{A formatting pattern that allows for decoration of the
-formatted value. The value itself is represented by \code{{x}} and all other
-characters are taken to be string literals.}
+Provides methods to remove output time units that have zero values. By
+default this is \code{TRUE} and duration values that might otherwise be
+formatted as \code{"0w 1d 0h 4m 19s"} with \code{trim_zero_units = FALSE} are instead
+displayed as \code{"1d 4m 19s"}. Aside from using \code{TRUE}/\code{FALSE} we could
+provide a vector of keywords for more precise control. These keywords are:
+(1) \code{"leading"}, to omit all leading zero-value time units (e.g., \code{"0w 1d"}
+-> \code{"1d"}), (2) \code{"trailing"}, to omit all trailing zero-value time units
+(e.g., \code{"3d 5h 0s"} -> \code{"3d 5h"}), and \code{"internal"}, which removes all
+internal zero-value time units (e.g., \code{"5d 0h 33m"} -> \code{"5d 33m"}).}
 
-\item{use_seps}{An option to use digit group separators. The type of digit
-group separator is set by \code{sep_mark} and overridden if a locale ID is
-provided to \code{locale}. This setting is \code{TRUE} by default.}
+\item{max_output_units}{\emph{Maximum number of time units to display}
 
-\item{sep_mark}{The mark to use as a separator between groups of digits
-(e.g., using \code{sep_mark = ","} with \code{1000} would result in a formatted value
-of \verb{1,000}).}
+\code{scalar<numeric|integer>(val>=1)} // \emph{default:} \code{NULL} (\code{optional})
 
-\item{force_sign}{Should the positive sign be shown for positive values
-(effectively showing a sign for all values except zero)? If so, use \code{TRUE}
-for this option. The default is \code{FALSE}, where only negative value will
-display a minus sign.}
+If \code{output_units} is \code{NULL}, where the output time units are unspecified
+and left to \strong{gt} to handle, a numeric value provided for
+\code{max_output_units} will be taken as the maximum number of time units to
+display in all output time duration values. By default, this is \code{NULL} and
+all possible time units will be displayed. This option has no effect when
+\code{duration_style = "colon-sep"} (only \code{output_units} can be used to
+customize that type of duration output).}
 
-\item{system}{The numbering system to use. By default, this is the
-international numbering system (\code{"intl"}) whereby grouping separators
-(i.e., \code{sep_mark}) are separated by three digits. The alternative system,
-the Indian numbering system (\code{"ind"}) uses grouping separators that
-correspond to thousand, lakh, crore, and higher quantities.}
+\item{pattern}{\emph{Specification of the formatting pattern}
 
-\item{locale}{An optional locale identifier that can be used for formatting
-the value according the locale's rules. Examples include \code{"en"} for English
-(United States) and \code{"fr"} for French (France). The use of a locale ID will
-override any locale-specific values provided. We can use the
-\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
-are supported.}
+\verb{scalar<character>} // \emph{default:} \code{"{x}"}
+
+A formatting pattern that allows for decoration of the formatted value. The
+formatted value is represented by the \code{{x}} (which can be used multiple
+times, if needed) and all other characters will be interpreted as string
+literals.}
+
+\item{use_seps}{\emph{Use digit group separators}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+An option to use digit group separators. The type of digit group separator
+is set by \code{sep_mark} and overridden if a locale ID is provided to \code{locale}.
+This setting is \code{TRUE} by default.}
+
+\item{sep_mark}{\emph{Separator mark for digit grouping}
+
+\verb{scalar<character>} // \emph{default:} \code{","}
+
+The string to use as a separator between groups of digits. For example,
+using \code{sep_mark = ","} with a value of \code{1000} would result in a formatted
+value of \code{"1,000"}. This argument is ignored if a \code{locale} is supplied
+(i.e., is not \code{NULL}).}
+
+\item{force_sign}{\emph{Forcing the display of a positive sign}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+Should the positive sign be shown for positive values (effectively showing
+a sign for all values except zero)? If so, use \code{TRUE} for this option. By
+default only negative values will display a minus sign.}
+
+\item{system}{\emph{Numbering system for grouping separators}
+
+\verb{singl-kw:[intl|ind]} // \emph{default:} \code{"intl"}
+
+The international numbering system (keyword: \code{"intl"}) is widely used and
+its grouping separators (i.e., \code{sep_mark}) are always separated by three
+digits. The alternative system, the Indian numbering system (keyword:
+\code{"ind"}), uses grouping separators that correspond to thousand, lakh,
+crore, and higher quantities.}
+
+\item{locale}{\emph{Locale identifier}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional locale identifier that can be used for formatting values
+according the locale's rules. Examples include \code{"en"} for English (United
+States) and \code{"fr"} for French (France). We can use the \code{\link[=info_locales]{info_locales()}}
+function as a useful reference for all of the locales that are supported. A
+locale ID can be also set in the initial \code{\link[=gt]{gt()}} function call (where it
+would be used automatically by any function with a \code{locale} argument) but a
+\code{locale} value provided here will override that global locale.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -165,8 +223,8 @@ helper like \code{starts_with()}, or, providing a more complex incantation like
 
 \code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
 
-which targets numeric columns that have a maximum value of 100,000 (excluding
-\code{NA}s from consideration).
+which targets numeric columns that have a maximum value greater than
+1,000,000 (excluding any \code{NA}s from consideration).
 
 By default all columns and rows are selected (with the \code{everything()}
 defaults). Cell values that are incompatible with a given formatting function
@@ -275,6 +333,7 @@ Other data formatting functions:
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
 \code{\link{fmt_time}()},
+\code{\link{fmt_units}()},
 \code{\link{fmt_url}()},
 \code{\link{fmt}()},
 \code{\link{sub_large_vals}()},

@@ -1,3 +1,27 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2023 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 #' Helper function for adding an image from the web
 #'
 #' @description
@@ -21,8 +45,18 @@
 #' where a height of `30px` is a default height chosen to work well within the
 #' heights of most table rows.
 #'
-#' @param url A url that resolves to an image file.
-#' @param height The absolute height (px) of the image in the table cell.
+#' @param url *An image URL*
+#'
+#'   `scalar<character>` // **required**
+#'
+#'   A url that resolves to an image file.
+#'
+#' @param height *Height of image*
+#'
+#'   `scalar<numeric|integer>` // *default:* `30`
+#'
+#'   The absolute height of the image in the table cell (in `"px"` units). By
+#'   default, this is set to `"30px"`.
 #'
 #' @return A character object with an HTML fragment that can be placed inside of
 #'   a cell.
@@ -145,8 +179,18 @@ web_image <- function(
 #' where a height of `30px` is a default height chosen to work well within the
 #' heights of most table rows.
 #'
-#' @param filename A path to an image file.
-#' @param height The absolute height (px) of the image in the table cell.
+#' @param filename *Path to image file*
+#'
+#'   `scalar<character>` // **required**
+#'
+#'   A local path to an image file on disk.
+#'
+#' @param height *Height of image*
+#'
+#'   `scalar<numeric|integer>` // *default:* `30`
+#'
+#'   The absolute height of the image in the table cell (in `"px"` units). By
+#'   default, this is set to `"30px"`.
 #'
 #' @return A character object with an HTML fragment that can be placed inside of
 #'   a cell.
@@ -233,13 +277,28 @@ local_image <- function(
 #' the plot (the default `aspect_ratio` is `1.0`) and this is useful for
 #' elongating any given plot to fit better within the table construct.
 #'
-#' @param plot_object A ggplot plot object.
-#' @param height The absolute height (px) of the image in the table cell.
-#' @param aspect_ratio The plot's final aspect ratio. Where the height of the
-#'   plot is fixed using the `height` argument, the `aspect_ratio`
-#'   will either compress (`aspect_ratio` < `1.0`) or expand
-#'   (`aspect_ratio` > `1.0`) the plot horizontally. The default value
-#'   of `1.0` will neither compress nor expand the plot.
+#' @param plot_object *A ggplot plot object*
+#'
+#'   `obj:<ggplot>` // **required**
+#'
+#'   A `ggplot` plot object.
+#'
+#' @param height *Height of image*
+#'
+#'   `scalar<numeric|integer>` // *default:* `100`
+#'
+#'   The absolute height of the output image in the table cell (in `"px"`
+#'   units). By default, this is set to `"100px"`.
+#'
+#' @param aspect_ratio *The final aspect ratio of plot*
+#'
+#'   `scalar<numeric|integer>` // *default:* `1.0`
+#'
+#'   This is the plot's final aspect ratio. Where the height of the plot is
+#'   fixed using the `height` argument, the `aspect_ratio` will either compress
+#'   (`aspect_ratio` < `1.0`) or expand (`aspect_ratio` > `1.0`) the plot
+#'   horizontally. The default value of `1.0` will neither compress nor expand
+#'   the plot.
 #'
 #' @return A character object with an HTML fragment that can be placed inside of
 #'   a cell.
@@ -298,6 +357,14 @@ ggplot_image <- function(
     aspect_ratio = 1.0
 ) {
 
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+
+    cli::cli_abort(c(
+      "Using the `ggplot_image()` function requires the `ggplot2` package.",
+      "*" = "It can be installed with `install.packages(\"ggplot2\")`."
+    ))
+  }
+
   if (is.numeric(height)) {
     height <- paste0(height, "px")
   }
@@ -342,8 +409,12 @@ ggplot_image <- function(
 #' is an SVG file. This function is most useful when paired with [local_image()]
 #' since we test various sizes of the test image within that function.
 #'
-#' @param type The type of the image, which can either be `png` (the default) or
-#'   `svg`.
+#' @param type *The image type*
+#'
+#'   `singl-kw:[png|svg]` // *default:* `"png"`
+#'
+#'   The type of image to produce here can either be `"png"` (the default) or
+#'   `"svg"`.
 #'
 #' @return A character vector with a single path to an image file.
 #'

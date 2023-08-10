@@ -18,6 +18,9 @@ inst/doc
 # Output files from R CMD check
 /*.Rcheck/
 
+# Output files from Quarto site build
+gt_qmd_examples/
+
 # RStudio files
 .Rproj.user/
 

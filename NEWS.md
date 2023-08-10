@@ -1,23 +1,28 @@
 # gt (development version)
 
+* Update to `col_hide(columns=)` and `cols_unhide(columns=)` arguments. The functions no longer return an error if no columns are selected. (#1342)
+
+* Update word processing to htmlEscape all characters before it goes into xml_t. This means now footnotes are escaped too. (#1303)
+
+# gt 0.9.0
+
 ## New features
 
 * The `summary_rows()` and `grand_summary_rows()` functions have been rewritten extensively to allow more flexibility in providing aggregation information to `fns`. The documentation for both functions will walk you through all the new ways you can express your aggregations. The formatting of cells in new summary rows is now easier thanks to the new `fmt` argument. We can provide a single formatting expression or a number of them in a list. The dedicated documentation section for formatting can walk you through all of this. Furthermore, we now have the option to place summary rows at top or bottom of a group (in `summary_rows()`) or table (in `grand_summary_rows()`) with the new `side` argument (#177, #270, #292, #545, #581, #784, #785, #840). (#1159, #1171)
 
 * The `data_color()` function has been completely overhauled to make it easier to use and also more powerful. It gains a `rows` argument to better constrain where the colorization should take place. Instead of having to use functions from **scales** to define the coloring scheme, you can now use the `method` argument to handle most cases (otherwise, the new `fn` argument allows for a color-mapping function to be used). The new `palette` argument allows for flexible input of color palettes. One or more adjacent columns can receive the coloring treatment by way of the new `target_columns` argument. Coloring can now also be applied in a row-wise fashion by using `direction = "row"`. Despite all of these changes, older code should still work with the revamped function (#116, #633, #637, #1103, #1119). (#1147)
 
-* We now have a much improved `cols_merge()` function! It has gained a `rows` argument for limiting which body cells get merged together. The `pattern` argument now has a more advanced syntax. It now has the following delimiters and rules: (1) `{ }` for arranging single column values in a row-wise fashion, and (2) the `<< >>` to surround spans of text that will be removed if any of the contained `{ }` yields a missing value. The new `<< >>` delimiters will help in cases where `NA` values are present and should be omitted during the merging process (#1167). (#1168)
+* We now have a much improved `cols_merge()` function! It has gained a `rows` argument for limiting which body cells get merged together. The `pattern` argument now has a more advanced syntax. It now has the following delimiters and rules: (1) `{ }` for arranging single column values in a row-wise fashion, and (2) the `<< >>` to surround spans of text that will be removed if any of the contained `{ }` yields a missing value. The new `<< >>` delimiters will help in cases where `NA` values are present and should be omitted during the merging process (#1167). (#1144, #1168)
 
-* The `cols_label()` function has been improved by allowing formula expressions to be given to `...`. With two-sided formulas (e.g., `<LHS> ~ <RHS>`), the left-hand side corresponds to selections of columns and the right-hand side evaluates to single-length values for the label to apply. Named arguments in the format of `<column name> = <label>` are still also valid as input for simple mappings of column name to label text. (#1255, #1256)
+* The `cols_label()` function has been improved by allowing formula expressions to be given to `...`. With two-sided formulas (e.g., `<LHS> ~ <RHS>`), the left-hand side corresponds to selections of columns and the right-hand side evaluates to single-length values for the label to apply. Named arguments in the format of `<column name> = <label>` are still also valid as input for simple mappings of column name to label text. Also, there's a `.fn` argument, which takes a function to be applied to all provided label values (#1146). (#1255, #1256, #1265)
 
-* Added the footnote formatting options `footnotes.spec_ref` and `footnotes.spec_ftr` in `tab_options()` and exposed these options further in a new function called `opt_footnote_spec()`. Specifications for footnote formatting can be produced for the footnote marks that alight to the targeted text within cells from various locations in the table, or, for the footnote marks that appear in the table footer. (#1268)
+* Interactive HTML tables can now be generated in **gt**. Options for enabling interactive table rendering are available in `tab_options()` and also in `opt_interactive()`. The collection of `use_*` arguments in `opt_interactive()` allow for control of pagination, global search, filtering, sorting, and more. The documentation within `opt_interactive()` demonstrates how to generate HTML tables with interactive elements (#207). (#902, #1252, #1261, #1278, #1280)
 
 * A new function, `cols_label_with()`, has been added for relabeling columns via functions. It allows for such functions to be applied to arbitrary sets of columns, taking advantage of **tidyselect**. It's like `dplyr::rename_with()` for your **gt** table, but it doesn't need unique names for labeling (#701). (#1158, thank you @christopherkenny!)
 
 * We added `fmt_spelled_num()` and `vec_fmt_spelled_num()` so that numeric values could be transformed to spelled out numbers. Any values from `0` to `100` can be spelled out according to a given `locale` value. For example, the value `23` will be rendered as `"twenty-three"` if the locale is an English-language one (or, not provided at all); should a Swedish locale be provided (e.g., `"sv"`), the output will instead be `"tjugotre"`. (#1198)
 
-* The `fmt_index()` and `vec_fmt_index()` functions were added in so that numeric values could undergo transform those to index values, which are usually based on letters (depending on the `locale` chosen). For example, the value `5` will be rendered as `"E"` if the locale is an English-language one. The characters chosen for indexing here are based on character sets intended for ordering (often leaving out characters with
-diacritical marks). (#1189)
+* The `fmt_index()` and `vec_fmt_index()` functions were added in so that numeric values could undergo transformation to index values, which are usually based on letters (depending on the `locale` chosen). For example, the value `5` will be rendered as `"E"` if the locale is an English-language one. The characters chosen for indexing here are based on character sets intended for ordering (often leaving out characters with diacritical marks). (#1189)
 
 * Should body cells contain URLs, the new `fmt_url()` function can be used to make them navigable links. There are several options provided that control how the links should be styled (conventional underline style or button-like text) (#609). (#1205, #1220, #1221)
 
@@ -31,9 +36,13 @@ diacritical marks). (#1189)
 
 * Three `text_*()` functions were added to better enable transformations of formatted text in various table locations: `text_replace()`, `text_case_when()`, and `text_case_match()`. (#1238)
 
-* Interactive HTML tables are now possible to generate in **gt**. Options for enabling interactive table rendering are available in `tab_options()` and also in `opt_interactive()`. The collection of `use_*` arguments in `opt_interactive()` allow for control of pagination, global search, filtering, sorting, and more. The documentation within `opt_interactive()` demonstrates how to generate HTML tables with interactive elements (#207). (#902, #1252)
+* We can use any of 15 system font stacks available in **gt**! These are families of themed system fonts that are widely available in different computer systems. Examples include 'System UI' (the default font stack), 'Humanist', and 'Neo-Grotesque'. The new helper function `system_fonts()` can be used to access the various font stack and is useful when specifying `font` values in the `cell_text()` function. The `opt_table_font()` function has been upgraded to include a `stack` argument (which accepts keywords for the different font stacks). (#1275)
 
-* We now have a new family of functions that let you deal with a multitude of **gt** tables, all at once. You can create a `gt_group` object with multiple tables via the `gt_group()` function, or, split a single table into multiple with `gt_split()`. There are some advantages to having a group of tables bundled together like this. You could apply options that pertain to all tables yet still access the individual tables to give them their own specialized modifications. They all print together at once too! For HTML, each table will be separated by a line break whereas in paginated formats (e.g., RTF, Word, etc.) the tables are separated by page breaks. (#1216, #1219, #1226, #1248, #1249, #1264)
+* We now have a new family of functions that let you deal with a multitude of **gt** tables, all at once. You can create a `gt_group` object with multiple tables via the `gt_group()` function, or, split a single table into multiple with `gt_split()`. There are some advantages to having a group of tables bundled together like this. You could apply options that pertain to all tables yet still access the individual tables to give them their own specialized modifications. They all print together at once too! For HTML, each table will be separated by a line break whereas in paginated formats (e.g., RTF, Word, etc.) the tables are separated by page breaks. (#1216, #1219, #1226, #1248, #1249, #1262, #1264)
+
+* There is now a choice of which Markdown engine to use for Markdown rendering (in `fmt_markdown()` and `vec_fmt_markdown()`) and a default default choice. The **markdown** package can be chosen instead of **commonmark** to perform conversions of Markdown to HTML and LaTeX (and it's now the default). One of many benefits to this change is the parsing of subscripts (using `~x~`) and superscripts (using `^x^`) (#725). (#1254)
+
+* Added the footnote formatting options `footnotes.spec_ref` and `footnotes.spec_ftr` in `tab_options()` and exposed these options further in a new function called `opt_footnote_spec()`. Specifications for footnote formatting can be produced for the footnote marks that alight to the targeted text within cells from various locations in the table, or, for the footnote marks that appear in the table footer. (#1268, #1271)
 
 * The `towny` dataset was added. It provides a fun, population-based dataset with place names, URLs, coordinate information, and population figures with repetition (values for different census years). (#1184, #1199)
 
@@ -41,27 +50,25 @@ diacritical marks). (#1189)
 
 * The `rx_adsl` and `rx_addv` datasets have been added. These clinical trial toy datasets are both featured in a new vignette that explains how **gt** can be used for table generation in the Pharma space (#1145, #1200; thank you @alex-lauer!).
 
-* We now have right-to-left (RTL) text handling and **gt** will automatically set the appropriate alignment for RTL text in HTML output. This is done through detection of RTL script characters. (#697). (#1202)
-
-* For any columns that are labeled (i.e., have a `label` attribute), **gt** will automatically use those labels as column labels (#656). (#1230)
-
-* There is now a choice of which Markdown engine to use for Markdown rendering (in `fmt_markdown()` and `vec_fmt_markdown()`) and a default default choice. The **markdown** package can be chosen instead of **commonmark** to perform conversions of Markdown to HTML and LaTeX (and it's now the default). One of many benefits to this change is the parsing of subscripts (using `~x~`) and superscripts (using `^x^`) (#725). (#1254)
-
 ## Documentation enhancements
 
 * Addition of a new vignette (*gt Clinical Tables*) that uses the `rx_adsl` and `rx_addv` datasets. (#1145, #1217, #1224; all contributed by @alex-lauer)
 
 * All examples in the documentation were modernized by using the `|>` instead of the `%>%`. A lot of explanatory text was improved through rewriting. The ordering of documentation sections was improved. And functions that had very little documentation (like `text_transform()`) were greatly improved (#1087). (#1166, #1185, #1192)
 
-* Several small documentation and housekeeping updates. (#1134, #1135, #1136, #1190, #1206, #1242, #1246, #1258, #1266, #1270)
+* Several small documentation and housekeeping updates. (#1133, #1134, #1135, #1136, #1190, #1206, #1218, #1242, #1246, #1258, #1260, #1266, #1270, #1276, #1281)
 
-* Added a citation file for the package. (#1128)
+* Added a citation file for the package. (#1128, #1277)
 
 ## Minor improvements and bug fixes
 
 * The `fmt_scientific()` and `fmt_engineering()` (and their `vec_fmt_*()` analogues) now have a `exp_style` argument for defining the exponent notation. By default this is `"x10n"` but other options include using a single letter (e.g., "e", "E", etc.), a letter followed by a "1" to signal a minimum digit width of one, or "low-ten" for using a stylized "10" marker. These functions now also have the `force_sign_m` and `force_sign_n` arguments for forcing `+` signs in the mantissa or the exponent. (#1178)
 
-* Tables in the Word output format now have much better Markdown support (#1057, #1067). (#1263)
+* We now have right-to-left (RTL) text handling and **gt** will automatically set the appropriate alignment for RTL text in HTML output. This is done through detection of RTL script characters. (#697). (#1202)
+
+* For any columns that are labeled (i.e., have a `label` attribute), **gt** will automatically use those labels as column labels (#656). (#1230)
+
+* Tables in the Word output format now have much better Markdown support (#1057, #1067, #1204). (#1142, #1263, #1274)
 
 * Added the `"double"` option for a border style in `cell_borders()` (#1132). (#1137)
 
@@ -77,15 +84,17 @@ diacritical marks). (#1189)
 
 * We now remove **knitr** flags when saving an RTF file through the `gtsave()` function (#674). (#1153)
 
-* Fixed some border-related issues for **gt** tables published in R Markdown and Quarto documents (#1120). (#1234)
+* Fixed LaTeX rendering of tables using the `xelatex` engine by removing the unneeded `"amsmath"` LaTeX package from the default set of LaTeX dependencies. This set is now modifiable through the `gt.latex_packages` option (#751). (#1279)
 
-* The **juicyjuice** package is now a soft dependency. The previous hard requirement presented some problems for users in environments where the installation of the package was difficult (because of its own dependency on **V8**) (#1179). (#1229)
+* Fixed some border-related issues for **gt** tables published in R Markdown and Quarto documents (#1120). (#1234)
 
 * Added the `quarto.use_bootstrap` and `quarto.disable_processing` options in `tab_options()` to control whether Quarto will add Bootstrap classes to a **gt** table or ignore a **gt** table. (#1222, #1227)
 
 * Fixed the unintended appearance of a bottom border in the column spanner row for some CSS environments. (#1209)
 
 * Fixed the SCSS class `.gt_footnote_marks` to ensure that the footnote mark is at a consistent height from the baseline in different CSS environments. (#1187)
+
+* Fixed an error in the SCSS class `.gt_footnote` where the wrong types of padding were specified. (#1236)
 
 * Added frequency levels to `cli_abort()` warnings throughout package (#1160). (#1169)
 
@@ -134,7 +143,7 @@ diacritical marks). (#1189)
 
 * The `docx` output format is now better detected in R Markdown and Quarto (#1040). (#1084, thanks @cderv!)
 
-* Replaced all `match.arg()` calls with **rlang*'s `match_arg()` for better error output (#672). (#1099, thanks @mojister!)
+* Replaced all `match.arg()` calls with **rlang**'s `match_arg()` for better error output (#672). (#1099, thanks @mojister!)
 
 * Project website improvements; we now have a doublet of sites: (1) https://gt.rstudio.com and (2) https://gt.rstudio.com/dev (#1074, thanks @ddsjoberg!)
 

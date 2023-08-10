@@ -99,20 +99,22 @@ Here is a glimpse at the data available in \code{towny}.
 DATA-7
 
 \if{html}{\out{
-<div align="center"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_towny.png" alt="This image of that of a dataset badge." style="width:50\%;padding-bottom:20px;"></div>
+<div style="text-align:center;"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_towny.png" alt="This image of that of a dataset badge." style="width:50\%;padding-bottom:20px;"></div>
 }}
 }
 
 \section{Dataset Introduced}{
 
-\emph{In Development}
+\code{v0.9.0} (Mar 31, 2023)
 }
 
 \seealso{
 Other datasets: 
+\code{\link{constants}},
 \code{\link{countrypops}},
 \code{\link{exibble}},
 \code{\link{gtcars}},
+\code{\link{illness}},
 \code{\link{metro}},
 \code{\link{pizzaplace}},
 \code{\link{rx_addv}},

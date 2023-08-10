@@ -1,3 +1,27 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2023 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 #' Resolve the `cells_body` object once it has access to the `data` object
 #'
 #' @param data A table object that is created using the `gt()` function.
@@ -182,6 +206,7 @@ resolve_cols_c <- function(
     data,
     strict = TRUE,
     excl_stub = TRUE,
+    excl_group = TRUE,
     null_means = c("everything", "nothing")
 ) {
 
@@ -193,6 +218,7 @@ resolve_cols_c <- function(
       data = data,
       strict = strict,
       excl_stub = excl_stub,
+      excl_group = excl_group,
       null_means = null_means
     )
   )
@@ -212,6 +238,7 @@ resolve_cols_i <- function(
     data,
     strict = TRUE,
     excl_stub = TRUE,
+    excl_group = TRUE,
     null_means = c("everything", "nothing")
 ) {
   quo <- rlang::enquo(expr)
@@ -249,11 +276,18 @@ resolve_cols_i <- function(
         NULL
       }
 
-    # The columns that represent the group rows are always
-    # excluded (i.e., included in the `col_excl` vector)
-    group_rows_vars <- dt_boxhead_get_vars_groups(data = data)
+    # The columns that represent the group rows are usually
+    # always excluded but in certain cases (i.e., `rows_add()`)
+    # we may want to include this column
+    group_var <-
+      if (excl_group) {
+        dt_boxhead_get_vars_groups(data = data)[1]
+      } else {
+        NULL
+      }
 
-    cols_excl <- c(stub_var, group_rows_vars)
+
+    cols_excl <- c(stub_var, group_var)
 
     data <- dt_data_get(data = data)
   }
@@ -318,6 +352,7 @@ translate_legacy_resolver_expr <- function(quo, null_means) {
       rlang::quo_set_expr(quo = quo, expr = quote(everything()))
 
     } else {
+
       rlang::quo_set_expr(quo = quo, expr = quote(NULL))
     }
 
@@ -339,7 +374,11 @@ translate_legacy_resolver_expr <- function(quo, null_means) {
   }
 }
 
-resolve_rows_l <- function(expr, data) {
+resolve_rows_l <- function(
+    expr,
+    data,
+    null_means
+) {
 
   if (is_gt_tbl(data = data)) {
     row_names <- dt_stub_df_get(data = data)$row_id
@@ -360,14 +399,20 @@ resolve_rows_l <- function(expr, data) {
 
   if (is.null(resolved)) {
 
-    cli::cli_warn(c(
-      "Since gt v0.3.0, the use of `NULL` for `rows` has been deprecated.",
-      "*" = "Please use `TRUE` instead."
-    ))
+    if (null_means == "everything") {
 
-    # Modify the NULL value of `resolved` to `TRUE` (which is
-    # fully supported for selecting all rows)
-    resolved <- TRUE
+      cli::cli_warn(c(
+        "Since gt v0.3.0, the use of `NULL` for `rows` has been deprecated.",
+        "*" = "Please use `TRUE` instead."
+      ))
+
+      # Modify the NULL value of `resolved` to `TRUE` (which is
+      # fully supported for selecting all rows)
+      resolved <- TRUE
+
+    } else {
+      return(NULL)
+    }
   }
 
   resolved <-
@@ -380,8 +425,26 @@ resolve_rows_l <- function(expr, data) {
   resolved
 }
 
-resolve_rows_i <- function(expr, data) {
-  which(resolve_rows_l(expr = {{ expr }}, data = data))
+resolve_rows_i <- function(
+    expr,
+    data,
+    null_means = c("everything", "nothing")
+) {
+
+  null_means <- rlang::arg_match(null_means)
+
+  resolved_rows <-
+    resolve_rows_l(
+      expr = {{ expr }},
+      data = data,
+      null_means = null_means
+    )
+
+  if (!is.null(resolved_rows)) {
+    return(which(resolved_rows))
+  } else {
+    return(NULL)
+  }
 }
 
 resolve_vector_l <- function(

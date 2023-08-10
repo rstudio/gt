@@ -2,7 +2,7 @@
 % Please edit documentation in R/tab_create_modify.R
 \name{tab_spanner}
 \alias{tab_spanner}
-\title{Add a spanner column label}
+\title{Add a spanner label}
 \usage{
 tab_spanner(
   data,
@@ -16,37 +16,78 @@ tab_spanner(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{label}{The text to use for the spanner column label.}
+\verb{obj:<gt_tbl>} // \strong{required}
 
-\item{columns}{The columns to be components of the spanner heading.}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
-\item{spanners}{The spanners that should be spanned over, should they already
-be defined.}
+\item{label}{\emph{Spanner label text}
 
-\item{level}{An explicit level to which the spanner should be placed. If not
-provided, \strong{gt} will choose the level based on the inputs provided within
-\code{columns} and \code{spanners}, placing the spanner label where it will fit. The
-first spanner level (right above the column labels) is \code{1}.}
+\verb{scalar<character>} // \strong{required}
 
-\item{id}{The ID for the spanner column label. When accessing a spanner
-column label through \code{\link[=cells_column_spanners]{cells_column_spanners()}} (when using \code{\link[=tab_style]{tab_style()}} or
-\code{\link[=tab_footnote]{tab_footnote()}}) the \code{id} value is used as the reference (and not the
-\code{label}). If an \code{id} is not explicitly provided here, it will be taken from
-the \code{label} value. It is advisable to set an explicit \code{id} value if you
-plan to access this cell in a later function call and the label text is
-complicated (e.g., contains markup, is lengthy, or both). Finally, when
-providing an \code{id} value you must ensure that it is unique across all ID
-values set for column spanner labels (the function will stop if \code{id} isn't
-unique).}
+The text to use for the spanner label. We can optionally use the \code{\link[=md]{md()}} and
+\code{\link[=html]{html()}} functions to style the text as Markdown or to retain HTML elements
+in the text.}
 
-\item{gather}{An option to move the specified \code{columns} such that they are
-unified under the spanner column label. Ordering of the moved-into-place
-columns will be preserved in all cases. By default, this is set to \code{TRUE}.}
+\item{columns}{\emph{Columns to target}
 
-\item{replace}{Should new spanners be allowed to partially or fully replace
-existing spanners? (This is a possibility if setting spanners at an already
+\verb{<column-targeting expression>} // \emph{default:} \code{NULL} (\code{optional})
+
+The columns to serve as components of the spanner. Can either be a series
+of column names provided in \code{\link[=c]{c()}}, a vector of column indices, or a select
+helper function. Examples of select helper functions include
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. This argument works in tandem with the
+\code{spanners} argument.}
+
+\item{spanners}{\emph{Spanners to target}
+
+\verb{vector<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+The spanners that should be spanned over, should they already be defined.
+One or more spanner ID values (in quotes) can be supplied here. This
+argument works in tandem with the \code{columns} argument.}
+
+\item{level}{\emph{Spanner level for insertion}
+
+\verb{scalar<numeric|integer>} // \emph{default:} \code{NULL} (\code{optional})
+
+An explicit level to which the spanner should be placed. If not provided,
+\strong{gt} will choose the level based on the inputs provided within \code{columns}
+and \code{spanners}, placing the spanner label where it will fit. The first
+spanner level (right above the column labels) is \code{1}.}
+
+\item{id}{\emph{Spanner ID}
+
+\verb{scalar<character>} // \emph{default:} \code{label}
+
+The ID for the spanner. When accessing a spanner through the \code{spanners}
+argument of \code{tab_spanner()} or \code{\link[=cells_column_spanners]{cells_column_spanners()}} (when using
+\code{\link[=tab_style]{tab_style()}} or \code{\link[=tab_footnote]{tab_footnote()}}) the \code{id} value is used as the reference
+(and not the \code{label}). If an \code{id} is not explicitly provided here, it will
+be taken from the \code{label} value. It is advisable to set an explicit \code{id}
+value if you plan to access this cell in a later function call and the
+label text is complicated (e.g., contains markup, is lengthy, or both).
+Finally, when providing an \code{id} value you must ensure that it is unique
+across all ID values set for column spanner labels (the function will stop
+if \code{id} isn't unique).}
+
+\item{gather}{\emph{Gather columns together}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+An option to move the specified \code{columns} such that they are unified under
+the spanner. Ordering of the moved-into-place columns will be preserved in
+all cases. By default, this is set to \code{TRUE}.}
+
+\item{replace}{\emph{Replace existing spanners}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+Should new spanners be allowed to partially or fully replace existing
+spanners? (This is a possibility if setting spanners at an already
 populated \code{level}.) By default, this is set to \code{FALSE} and an error will
 occur if some replacement is attempted.}
 }
@@ -54,16 +95,84 @@ occur if some replacement is attempted.}
 An object of class \code{gt_tbl}.
 }
 \description{
-Set a spanner column label by mapping it to columns already in the table.
-This label is placed above one or more column labels, spanning the width of
-those columns and column labels.
+With the \code{tab_spanner()} function, you can insert a spanner in the column
+labels part of a \strong{gt} table. This part of the table contains, at a minimum,
+column labels and, optionally, an unlimited number of levels for spanners. A
+spanner will occupy space over any number of contiguous column labels and it
+will have an associated label and ID value. This function allows for mapping
+to be defined by column names, existing spanner ID values, or a mixture of
+both. The spanners are placed in the order of calling \code{tab_spanner()} so if a
+later call uses the same columns in its definition (or even a subset) as the
+first invocation, the second spanner will be overlaid atop the first. Options
+exist for forcibly inserting a spanner underneath other (with \code{level} as
+space permits) and with \code{replace}, which allows for full or partial spanner
+replacement.
 }
+\section{Targeting columns with the \code{columns} argument}{
+
+
+The \code{columns} argument allows us to target a subset of columns contained in
+the table. We can declare column names in \code{c()} (with bare column names or
+names in quotes) or we can use \strong{tidyselect}-style expressions. This can be
+as basic as supplying a select helper like \code{starts_with()}, or, providing a
+more complex incantation like
+
+\code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
+
+which targets numeric columns that have a maximum value greater than
+1,000,000 (excluding any \code{NA}s from consideration).
+}
+
+\section{Details on spanner placement}{
+
+
+Let's take a hypothetical table that includes the following column names in
+order from left to right: \code{year}, \code{len.pop}, \code{m.pop}, \code{len.dens}, and
+\code{m.dens}. We'd like to have some useful spanners, but don't want to have any
+over the \code{year} column (so we'll avoid using that column when defining
+spanners). Let's start by creating a schematic representation of what is
+wanted in terms of spanners:
+
+\if{html}{\out{<div class="sourceCode default">}}\preformatted{       | ------- `"Two Provinces of Ireland"` ------ <- level 2 spanner
+       | ---- `"Leinster"` ---- | --- `"Munster"` -- <- level 1 spanners
+`year` | `len.pop` | `len.dens` | `m.pop` | `m.dens` <- column names
+----------------------------------------------------
+}\if{html}{\out{</div>}}
+
+To make this arrangement happen, we need three separate calls of
+\code{tab_spanner()}:
+\itemize{
+\item \code{tab_spanner(., label = "Leinster", columns = starts_with("len"))}
+\item \code{tab_spanner(., label = "Munster", columns = starts_with("m"))}
+\item \code{tab_spanner(., label = "Two Provinces of Ireland", columns = -year)}
+}
+
+This will give us the spanners we need with the appropriate labels. The ID
+values will be derived from the labels in this case, but they can directly
+supplied via the \code{id} argument.
+
+An important thing to keep aware of is that the order of calls matters. The
+first two can be in any order but the third one \emph{must} happen last since we
+build spanners from the bottom up. Also note that the first calls will
+rearrange columns! This is by design as the \code{gather = TRUE} default will
+purposefully gather columns together so that the columns will be united under
+a single spanner. More complex definitions of spanners can be performed and
+the \emph{Examples} section demonstrates some of the more advanced calls of
+\code{tab_spanner()}.
+
+As a final note, the column labels (by default deriving from the column
+names) will likely need to change and that's especially true in the above
+case. This can be done with either of \code{\link[=cols_label]{cols_label()}} or \code{\link[=cols_label_with]{cols_label_with()}}.
+}
+
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. Use the \code{tab_spanner()} function to
-effectively group several columns related to car performance under a spanner
-column with the label \code{"performance"}.
+Let's create a \strong{gt} table using a small portion of the \code{\link{gtcars}} dataset.
+Over several columns (\code{hp}, \code{hp_rpm}, \code{trq}, \code{trq_rpm}, \code{mpg_c}, \code{mpg_h})
+we'll use \code{tab_spanner()} to add a spanner with the label \code{"performance"}.
+This effectively groups together several columns related to car performance
+under a unifying label.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
   dplyr::select(
@@ -75,8 +184,7 @@ column with the label \code{"performance"}.
   tab_spanner(
     label = "performance",
     columns = c(
-      hp, hp_rpm, trq, trq_rpm,
-      mpg_c, mpg_h
+      hp, hp_rpm, trq, trq_rpm, mpg_c, mpg_h
     )
   )
 }\if{html}{\out{</div>}}
@@ -84,6 +192,172 @@ column with the label \code{"performance"}.
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_spanner_1.png" alt="This image of a table was generated from the first code example in the `tab_spanner()` help file." style="width:100\%;">
 }}
+
+With the default \code{gather = TRUE} option, columns selected for a particular
+spanner will be moved so that there is no separation between them. This can
+be seen with the example below that uses a subset of the \code{\link{towny}} dataset.
+The starting column order is \code{name}, \code{latitude}, \code{longitude},
+\code{population_2016}, \code{density_2016}, \code{population_2021}, and \code{density_2021}. The
+first two uses of \code{tab_spanner()} deal with making separate spanners for the
+two population and two density columns. After their use, the columns are
+moved to this new ordering: \code{name}, \code{latitude}, \code{longitude},
+\code{population_2016}, \code{population_2021}, \code{density_2016}, and \code{density_2021}. The
+third and final call of \code{tab_spanner()} doesn't further affect the ordering
+of columns.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
+  dplyr::arrange(desc(population_2021)) |>
+  dplyr::slice_head(n = 5) |>
+  dplyr::select(
+    name, latitude, longitude,
+    ends_with("2016"), ends_with("2021")
+  ) |>
+  gt() |>
+  tab_spanner(
+    label = "Population",
+    columns = starts_with("pop")
+  ) |>
+  tab_spanner(
+    label = "Density",
+    columns = starts_with("den")
+  ) |>
+  tab_spanner(
+    label = md("*Location*"),
+    columns = ends_with("itude"),
+    id = "loc"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_spanner_2.png" alt="This image of a table was generated from the second code example in the `tab_spanner()` help file." style="width:100\%;">
+}}
+
+While columns are moved, it is only the minimal amount of moving required
+(pulling in columns from the right) to ensure that columns are gathered under
+the appropriate spanners. With the last call, there are two more things to
+note: (1) \code{label} values can use the \code{\link[=md]{md()}} (or \code{\link[=html]{html()}}) helper functions to
+help create styled text, and (2) an \code{id} value may be supplied for reference
+later (e.g., for styling with \code{\link[=tab_style]{tab_style()}} or applying footnotes with
+\code{\link[=tab_footnote]{tab_footnote()}}).
+
+It's possible to stack multiple spanners atop each other with consecutive
+calls of \code{tab_spanner()}. It's a bit like playing Tetris: putting a spanner
+down anywhere there is another spanner (i.e., there are one or more shared
+columns) means that second spanner will reside a level above the prior. Let's
+look at a few examples at how this works, and we'll also explore a few
+lesser-known placement tricks. Let's use a cut down version of \code{\link{exibble}}
+for this, set up a few level-one spanners, and then place a level two spanner
+over two other spanners.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble_narrow <- exibble |> dplyr::slice_head(n = 3)
+
+exibble_narrow |>
+  gt() |>
+  tab_spanner(
+    label = "Row Information",
+    columns = c(row, group)
+  ) |>
+  tab_spanner(
+    label = "Numeric Values",
+    columns = where(is.numeric),
+    id = "num_spanner"
+  ) |>
+  tab_spanner(
+    label = "Text Values",
+    columns = c(char, fctr),
+    id = "text_spanner"
+  ) |>
+  tab_spanner(
+    label = "Numbers and Text",
+    spanners = c("num_spanner", "text_spanner")
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_spanner_3.png" alt="This image of a table was generated from the third code example in the `tab_spanner()` help file." style="width:100\%;">
+}}
+
+In the above example, we used the \code{spanners} argument to define where the
+\code{"Numbers and Text"}-labeled spanner should reside. For that, we supplied the
+\code{"num_spanner"} and \code{"text_spanner"} ID values for the two spanners
+associated with the \code{num}, \code{currency}, \code{char}, and \code{fctr} columns.
+Alternatively, we could have given those column names to the \code{columns}
+argument and achieved the same result. You could actually use a combination
+of \code{spanners} and \code{columns} to define where the spanner should be placed.
+Here is an example of just that:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble_narrow_gt <-
+  exibble_narrow |>
+  gt() |>
+  tab_spanner(
+    label = "Numeric Values",
+    columns = where(is.numeric),
+    id = "num_spanner"
+  ) |>
+  tab_spanner(
+    label = "Text Values",
+    columns = c(char, fctr),
+    id = "text_spanner"
+  ) |>
+  tab_spanner(
+    label = "Text, Dates, Times, Datetimes",
+    columns = contains(c("date", "time")),
+    spanners = "text_spanner"
+  )
+
+exibble_narrow_gt
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_spanner_4.png" alt="This image of a table was generated from the fourth code example in the `tab_spanner()` help file." style="width:100\%;">
+}}
+
+And, again, we could have solely supplied all of the column names to
+\code{columns} instead of using this hybrid approach, but it is interesting to
+express the definition of spanners with this flexible combination.
+
+What if you wanted to extend the above example and place a spanner above the
+\code{date}, \code{time}, and \code{datetime} columns? If you tried that in the manner as
+exemplified above, the spanner will be placed in the third level of spanners:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble_narrow_gt |>
+  tab_spanner(
+    label = "Date and Time Columns",
+    columns = contains(c("date", "time")),
+    id = "date_time_spanner"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_spanner_5.png" alt="This image of a table was generated from the fifth code example in the `tab_spanner()` help file." style="width:100\%;">
+}}
+
+Remember that the approach taken by \code{tab_spanner()} is to keep stacking atop
+existing spanners. But, there is space next to the \code{"Text Values"} spanner on
+the first level. You can either revise the order of \code{tab_spanner()} calls,
+or, use the \code{level} argument to force the spanner into that level (so long
+as there is space).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble_narrow_gt |>
+  tab_spanner(
+    label = "Date and Time Columns",
+    columns = contains(c("date", "time")),
+    level = 1,
+    id = "date_time_spanner"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_spanner_6.png" alt="This image of a table was generated from the sixth code example in the `tab_spanner()` help file." style="width:100\%;">
+}}
+
+That puts the spanner in the intended level. If there aren't free locations
+available in the \code{level} specified you'll get an error stating which columns
+cannot be used for the new spanner (this can be circumvented, if necessary,
+with the \code{replace = TRUE} option). If you choose a level higher than the
+maximum occupied, then the spanner will be dropped down. Again, these
+behaviors are indicative of Tetris-like rules though they tend to work well
+for the application of spanners.
 }
 
 \section{Function ID}{
@@ -97,6 +371,9 @@ column with the label \code{"performance"}.
 }
 
 \seealso{
+\code{\link[=tab_spanner_delim]{tab_spanner_delim()}} to create spanners and new column labels with
+delimited column names.
+
 Other part creation/modification functions: 
 \code{\link{tab_caption}()},
 \code{\link{tab_footnote}()},

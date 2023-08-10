@@ -1,3 +1,27 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2023 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 #' Split a table into a group of tables (a `gt_group`)
 #'
 #' @description
@@ -8,15 +32,37 @@
 #' smaller tables across multiple pages (in RTF and Word outputs, primarily via
 #' [gtsave()]), or, with breaks between them when the output context is HTML.
 #'
-#' @param data A **gt** table object (`gt_tbl`) that is created using the [gt()]
-#'   function.
-#' @param row_every_n A directive to split at every *n* number of rows. This
-#'   argument expects a single numerical value.
-#' @param row_slice_i An argument for splitting at specific row indices. Here,
-#'   we expect either a vector of index values or a function that evaluates to a
-#'   numeric vector.
-#' @param col_slice_at Any columns where vertical splitting across should occur.
-#'   The splits occur to the right of the resolved column names.
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` // **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
+#' @param row_every_n *Split at every n rows*
+#'
+#'   `scalar<numeric|integer>` // *default:* `NULL` (`optional`)
+#'
+#'   A directive to split at every *n* number of rows. This argument expects a
+#'   single numerical value.
+#'
+#' @param row_slice_i *Row-slicing indices*
+#'
+#'   `vector<numeric|integer>` // *default:* `NULL` (`optional`)
+#'
+#'   An argument for splitting at specific row indices. Here, we expect either a
+#'   vector of index values or a function that evaluates to a numeric vector.
+#'
+#' @param col_slice_at *Column-slicing locations*
+#'
+#'   `<column-targeting expression>` // *default:* `NULL` (`optional`)
+#'
+#'   Any columns where vertical splitting across should occur. The splits occur
+#'   to the right of the resolved column names. Can either be a series of column
+#'   names provided in [c()], a vector of column indices, or a select helper
+#'   function. Examples of select helper functions include [starts_with()],
+#'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
+#'   [everything()].
 #'
 #' @return An object of class `gt_group`.
 #'
@@ -70,7 +116,7 @@
 #' 14-2
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @export
 gt_split <- function(

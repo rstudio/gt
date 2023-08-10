@@ -49,7 +49,7 @@ Here is a glimpse at the data available in \code{countrypops}.
 DATA-1
 
 \if{html}{\out{
-<div align="center"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_countrypops.png" alt="This image of that of a dataset badge." style="width:50\%;padding-bottom:20px;"></div>
+<div style="text-align:center;"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_countrypops.png" alt="This image of that of a dataset badge." style="width:50\%;padding-bottom:20px;"></div>
 }}
 }
 
@@ -60,8 +60,10 @@ DATA-1
 
 \seealso{
 Other datasets: 
+\code{\link{constants}},
 \code{\link{exibble}},
 \code{\link{gtcars}},
+\code{\link{illness}},
 \code{\link{metro}},
 \code{\link{pizzaplace}},
 \code{\link{rx_addv}},

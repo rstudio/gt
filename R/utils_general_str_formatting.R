@@ -1,3 +1,27 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2023 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 #' Flexibly split a string into two pieces
 #'
 #' @param x The string to split into a character vector of length 2.
@@ -314,8 +338,7 @@ get_start_stop_positions <- function(x, pattern) {
 #' @param group_1,group_2 Vectors of length 2 with starting and stopping
 #'   positions in a text string.
 #' @noRd
-is_adjacent_separate <- function(group_1,
-                                 group_2) {
+is_adjacent_separate <- function(group_1, group_2) {
 
   group_1_expanded <- seq(group_1[1], group_1[2])
   group_2_expanded <- seq(group_2[1], group_2[2])
@@ -610,5 +633,3 @@ rtl_modern_unicode_charset <-
     samaritan_unicode_charset,
     mandaic_unicode_charset,sep = "|"
   )
-
-

@@ -7,27 +7,43 @@
 sub_zero(data, columns = everything(), rows = everything(), zero_text = "nil")
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{Optional columns for constraining the targeting process.
-Providing \code{\link[=everything]{everything()}} (the default) results in cells in all \code{columns}
-being targeting (this can be limited by \code{rows} however). Can either be a
-series of column names provided in \code{\link[=c]{c()}}, a vector of column indices, or a
-helper function focused on selections. The select helper functions are:
+\verb{obj:<gt_tbl>} // \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
+
+The columns to which substitution operations are constrained. Can either
+be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,
+or a select helper function. Examples of select helper functions include
 \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
 \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
 
-\item{rows}{Optional rows for constraining the targeting process. Providing
-\code{\link[=everything]{everything()}} (the default) results in all rows in \code{columns} being
-targeted. Alternatively, we can supply a vector of row captions within
-\code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on selections.
-The select helper functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
-\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.
-We can also use expressions to filter down to the rows we need (e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+\item{rows}{\emph{Rows to target}
 
-\item{zero_text}{The text to be used in place of zero values in the rendered
-table.}
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+form a constraint for targeting operations. The default \code{\link[=everything]{everything()}}
+results in all rows in \code{columns} being formatted. Alternatively, we can
+supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row indices, or a
+select helper function. Examples of select helper functions include
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions to filter
+down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+
+\item{zero_text}{\emph{Replacement text for zero values}
+
+\verb{scalar<character>} // \emph{default:} \code{"nil"}
+
+The text to be used in place of zero values in the rendered table. We can
+optionally use the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} functions to style the text as
+Markdown or to retain HTML elements in the text.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -50,8 +66,8 @@ helper like \code{starts_with()}, or, providing a more complex incantation like
 
 \code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
 
-which targets numeric columns that have a maximum value of 100,000 (excluding
-\code{NA}s from consideration).
+which targets numeric columns that have a maximum value greater than
+1,000,000 (excluding any \code{NA}s from consideration).
 
 By default all columns and rows are selected (with the \code{everything()}
 defaults). Cell values that are incompatible with a given substitution
@@ -115,7 +131,7 @@ single call of \code{sub_zero()}.
 
 \section{Function ID}{
 
-3-26
+3-27
 }
 
 \section{Function Introduced}{
@@ -148,6 +164,7 @@ Other data formatting functions:
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
 \code{\link{fmt_time}()},
+\code{\link{fmt_units}()},
 \code{\link{fmt_url}()},
 \code{\link{fmt}()},
 \code{\link{sub_large_vals}()},

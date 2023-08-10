@@ -7,16 +7,29 @@
 grp_clone(data, which = NULL, before = NULL, after = NULL)
 }
 \arguments{
-\item{data}{A \code{gt_group} container object, typically generated through use
-of the \code{\link[=gt_group]{gt_group()}} function along with one or more \code{gt_tbl} objects.}
+\item{data}{\emph{The gt table group object}
 
-\item{which}{A vector of index values denoting which \code{gt_tbl} tables should
-be cloned inside of the \code{gt_group} object.}
+\verb{obj:<gt_group>} // \strong{required}
 
-\item{before, after}{A single index for either \code{before} or \code{after},
-specifies where the cloned \code{gt_tbl} objects should be placed amongst the
-existing collection of \strong{gt} tables. If nothing is provided for either
-argument the incoming \code{gt_tbl} objects will be appended.}
+This is a \code{gt_group} container object. It is typically generated through
+use of the \code{\link[=gt_group]{gt_group()}} function along with one or more \code{gt_tbl} objects,
+or, made by splitting a \strong{gt} table with \code{\link[=gt_split]{gt_split()}}.}
+
+\item{which}{\emph{The tables to clone}
+
+\verb{vector<numeric|integer>} // \emph{default:} \code{NULL} (\code{optional})
+
+A vector of index values denoting which \strong{gt} tables should be cloned
+inside of the \code{gt_group} object.}
+
+\item{before, after}{\emph{Table used as anchor}
+
+\verb{scalar<numeric|integer>} // \emph{default:} \code{NULL} (\code{optional})
+
+A single index for either \code{before} or \code{after}, specifies where the cloned
+\code{gt_tbl} objects should be placed amongst the existing collection of \strong{gt}
+tables. If nothing is provided for either argument, the incoming \code{gt_tbl}
+objects will be appended.}
 }
 \value{
 An object of class \code{gt_group}.
@@ -35,7 +48,7 @@ either the \code{before} or \code{after} arguments.
 
 \section{Function Introduced}{
 
-\emph{In Development}
+\code{v0.9.0} (Mar 31, 2023)
 }
 
 \seealso{

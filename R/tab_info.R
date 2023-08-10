@@ -23,10 +23,12 @@
 #'
 #' @section Examples:
 #'
-#' Use [`gtcars`] to create a **gt** table. Use the [tab_spanner()] function to
-#' group two columns together under a spanner column with the ID and label
-#' `"performance"`. Finally, use the `tab_info()` function to get a table that
-#' summarizes the ID values and their label text for all parts of the table.
+#' Let's use a portion of the [`gtcars`] dataset to create a **gt** table. We'll
+#' use the [tab_spanner()] function to group two columns together under a
+#' spanner column with the ID and label `"performance"`. Finally, we can use the
+#' `tab_info()` function in a separate, interactive statement so that we can
+#' inspect a table that summarizes the ID values any associated label text for
+#' all parts of the table.
 #'
 #' ```r
 #' gt_tbl <-

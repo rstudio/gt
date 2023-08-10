@@ -337,6 +337,66 @@ test_that("The `fmt_scientific()` function works correctly", {
     )
   )
 
+  # Format the `num` column and choose a exponent style of `"E1"`; extract
+  # in the default context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_scientific(columns = "num", exp_style = "E1") %>%
+       render_formats_test("default"))[["num"]],
+    c(
+      "-3.49E13", "-3.45E3", "-2.34E-4", "0.00E0", "7.53E-5",
+      "8.28E4", "7.16E14"
+    )
+  )
+
+  # Format the `num` column and choose a exponent style of `"D3"`; extract
+  # in the default context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_scientific(columns = "num", exp_style = "D3") %>%
+       render_formats_test("default"))[["num"]],
+    c(
+      "-3.49E13", "-3.45E03", "-2.34E-04", "0.00E00", "7.53E-05",
+      "8.28E04", "7.16E14"
+    )
+  )
+
+  # Format the `num` column and choose a exponent style of `"e1"`; extract
+  # in the default context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_scientific(columns = "num", exp_style = "e1") %>%
+       render_formats_test("default"))[["num"]],
+    c(
+      "-3.49e13", "-3.45e3", "-2.34e-4", "0.00e0", "7.53e-5",
+      "8.28e4", "7.16e14"
+    )
+  )
+
+  # Format the `num` column and choose a exponent style of `"e2"`; extract
+  # in the default context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_scientific(columns = "num", exp_style = "e2") %>%
+       render_formats_test("default"))[["num"]],
+    c(
+      "-3.49E13", "-3.45E03", "-2.34E-04", "0.00E00", "7.53E-05",
+      "8.28E04", "7.16E14"
+    )
+  )
+
+  # Format the `num` column and choose a exponent style of `"E2"`; extract
+  # in the default context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_scientific(columns = "num", exp_style = "E2") %>%
+       render_formats_test("default"))[["num"]],
+    c(
+      "-3.49E13", "-3.45E03", "-2.34E-04", "0.00E00", "7.53E-05",
+      "8.28E04", "7.16E14"
+    )
+  )
+
   # Format the `num` column and choose a exponent style of `"low-ten"`; extract
   # in the default context and compare to expected values
   expect_equal(

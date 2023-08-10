@@ -24,47 +24,122 @@
 #' - the cell borders ([cell_borders()])
 #'
 #' @inheritParams fmt_number
-#' @param style a vector of styles to use. The [cell_text()], [cell_fill()], and
-#'   [cell_borders()] helper functions can be used here to more easily generate
-#'   valid styles. If using more than one helper function to define styles, all
-#'   calls must be enclosed in a [list()]. Custom CSS declarations can be used
-#'   for HTML output by including a [css()]-based statement as a list item.
-#' @param columns Optional columns for constraining the targeting process.
-#'   Providing [everything()] (the default) results in cells in all `columns`
-#'   being targeting (this can be limited by `rows` however). Can either be a
-#'   series of column names provided in [c()], a vector of column indices, or a
-#'   helper function focused on selections. The select helper functions are:
+#'
+#' @param style *Style declarations*
+#'
+#'   `<style expressions>` // **required**
+#'
+#'   The styles to use for the targeted cells. The [cell_text()], [cell_fill()],
+#'   and [cell_borders()] helper functions can be used here to more easily
+#'   generate valid styles. If using more than one helper function to define
+#'   styles, all calls must be enclosed in a [list()]. Custom CSS declarations
+#'   can be used for HTML output by including a [css()]-based statement as a
+#'   list item.
+#'
+#' @param columns *Columns to target*
+#'
+#'   `<column-targeting expression>` // *default:* `everything()`
+#'
+#'   The columns to which the targeting operations are constrained.  Can either
+#'   be a series of column names provided in [c()], a vector of column indices,
+#'   or a select helper function. Examples of select helper functions include
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()].
-#' @param rows Optional rows for constraining the targeting process. Providing
-#'   [everything()] (the default) results in all rows in `columns` being
-#'   targeted. Alternatively, we can supply a vector of row captions within
-#'   [c()], a vector of row indices, or a helper function focused on selections.
-#'   The select helper functions are: [starts_with()], [ends_with()],
-#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
-#'   We can also use expressions to filter down to the rows we need (e.g.,
-#'   `[colname_1] > 100 & [colname_2] < 50`).
-#' @param values The specific value or values that should be targeted for
-#'   styling. If `pattern` is also supplied then `values` will be ignored.
-#' @param pattern A regex pattern that can target solely those values in
-#'   `character`-based columns. If `values` is also supplied, `pattern` will
-#'   take precedence.
-#' @param fn A supplied function that operates on each cell of each column
-#'   specified through `columns` and `rows`. The function should be fashioned
-#'   such that a single logical value is returned. If either of `values` or
-#'   `pattern` is also supplied, `fn` will take precedence.
-#' @param targets A vector of styling target keywords to contain or expand the
-#'   target of each cell. By default, this is a vector just containing `"cell"`.
-#'   However, the keywords `"row"` and `"column"` may be used separately or in
-#'   combination to style the target cells' associated rows or columns.
-#' @param extents A vector of locations to project styling. By default, this is
-#'   a vector just containing `"body"`, whereby styled rows or columns
-#'   (facilitated via inclusion of the `"row"` and `"column"` keywords in
-#'   `targets`) will not permeate into the stub. The additional keyword `"stub"`
-#'   may be used alone or in conjunction with `"body"` to project or expand the
-#'   styling into the stub.
+#'   [num_range()], and [everything()]. This argument works in tandem with the
+#'   `spanners` argument.
+#'
+#' @param rows *Rows to target*
+#'
+#'   `<row-targeting expression>` // *default:* `everything()`
+#'
+#'   In conjunction with `columns`, we can specify which of their rows should
+#'   form a constraint for targeting operations. The default [everything()]
+#'   results in all rows in `columns` being formatted. Alternatively, we can
+#'   supply a vector of row captions within [c()], a vector of row indices, or a
+#'   select helper function. Examples of select helper functions include
+#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
+#'   [num_range()], and [everything()]. We can also use expressions to filter
+#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'
+#' @param values *Values for targeting*
+#'
+#'   `vector<character|numeric|integer>` // *default:* `NULL` (`optional`)
+#'
+#'   The specific value or values that should be targeted for styling. If
+#'   `pattern` is also supplied then `values` will be ignored.
+#'
+#' @param pattern *Regex pattern for targeting*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   A regex pattern that can target solely those values in `character`-based
+#'   columns. If `values` is also supplied, `pattern` will take precedence.
+#'
+#' @param fn *Function to return logical values*
+#'
+#'   `<function>` // *default:* `NULL` (`optional`)
+#'
+#'   A supplied function that operates on each cell of each column specified
+#'   through `columns` and `rows`. The function should be fashioned such that a
+#'   single logical value is returned. If either of `values` or `pattern` is
+#'   also supplied, `fn` will take precedence.
+#'
+#' @param targets *Styling targets*
+#'
+#'   `vector<character>` // *default:* `"cell"`
+#'
+#'   A vector of styling target keywords to contain or expand the target of each
+#'   cell. By default, this is a vector just containing `"cell"`. However, the
+#'   keywords `"row"` and `"column"` may be used separately or in combination to
+#'   style the target cells' associated rows or columns.
+#'
+#' @param extents *Styling extents*
+#'
+#'   `vector<character>` // *default:* `"body"`
+#'
+#'   A vector of locations to project styling. By default, this is a vector just
+#'   containing `"body"`, whereby styled rows or columns (facilitated via
+#'   inclusion of the `"row"` and `"column"` keywords in `targets`) will not
+#'   permeate into the stub. The additional keyword `"stub"` may be used alone
+#'   or in conjunction with `"body"` to project or expand the styling into the
+#'   stub.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @section Targeting cells with `columns` and `rows`:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to constrain a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given search will be
+#' skipped over. So it's safe to select all columns with a type of search (only
+#' those values that can be formatted will be formatted), but, you may not want
+#' that. One strategy is to format the bulk of cell values with one formatting
+#' function and then constrain the columns for later passes with other types of
+#' formatting (the last formatting done to a cell is what you get in the final
+#' output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
+#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
+#' the input data (the indices won't necessarily match those of rearranged rows
+#' if row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector.
 #'
 #' @section Examples:
 #'
@@ -203,6 +278,22 @@
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_tab_style_body_6.png")`
+#' }}
+#'
+#' Styling every `NA` value in a table is also easily accomplished with the `fn`
+#' argument by way of the `is.na()` function.
+#'
+#' ```r
+#' gt_tbl |>
+#'   tab_style_body(
+#'     style = cell_text(color = "red3"),
+#'     fn = function(x) is.na(x)
+#'   ) |>
+#'   sub_missing(missing_text = "Not Available")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_style_body_7.png")`
 #' }}
 #'
 #' @family part creation/modification functions

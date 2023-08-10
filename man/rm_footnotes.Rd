@@ -7,13 +7,22 @@
 rm_footnotes(data, footnotes = everything())
 }
 \arguments{
-\item{data}{A table object of class \code{gt_tbl}.}
+\item{data}{\emph{The gt table data object}
 
-\item{footnotes}{A specification of which footnotes should be removed.
-The footnotes to be removed can be given as a vector of integer values
-(they are stored as integer positions, in order of creation, starting at
-\code{1}). A select helper can also be used and, by default, this is
-\code{everything()} (whereby all footnotes will be removed).}
+\verb{obj:<gt_tbl>} // \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{footnotes}{\emph{Footnotes to remove}
+
+\verb{scalar<numeric|integer>|everything()} // \emph{default:} \code{everything()}
+
+A specification of which footnotes should be removed. The footnotes to be
+removed can be given as a vector of integer values (they are stored as
+integer positions, in order of creation, starting at \code{1}). A select helper
+can also be used and, by default, this is \code{everything()} (whereby all
+footnotes will be removed).}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -34,9 +43,9 @@ values.
 \section{Examples}{
 
 
-Use \code{\link{sza}} to create a \strong{gt} table. Color the \code{sza} column using the
-\code{\link[=data_color]{data_color()}} function, then, use \code{\link[=tab_footnote]{tab_footnote()}} twice to add two
-footnotes (each one targeting a different column label).
+Use a subset of the \code{\link{sza}} dataset to create a \strong{gt} table. Color the \code{sza}
+column using the \code{\link[=data_color]{data_color()}} function, then, use \code{\link[=tab_footnote]{tab_footnote()}} twice to
+add two footnotes (each one targeting a different column label).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
   sza |>

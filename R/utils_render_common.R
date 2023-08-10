@@ -1,3 +1,27 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2023 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 # Define the contexts
 all_contexts <- c("html", "latex", "rtf", "word", "default")
 
@@ -333,6 +357,12 @@ reorder_styles <- function(data) {
 
 resolve_secondary_pattern <- function(x) {
 
+  #
+  # Preprocessing
+  #
+
+  x <- gsub("<br>", "[[br]]", x, fixed = TRUE)
+
   while (grepl("<<.*?>>", x)) {
 
     m <- gregexpr("<<[^<]*?>>", x, perl = TRUE)
@@ -364,6 +394,12 @@ resolve_secondary_pattern <- function(x) {
         )
     }
   }
+
+  #
+  # Postprocessing
+  #
+
+  x <- gsub("[[br]]", "<br>", x, fixed = TRUE)
 
   x
 }
@@ -602,12 +638,18 @@ perform_col_merge <- function(data, context) {
         rows_to_format <- base::intersect(which(!(na_1_rows | na_2_rows)), rows)
       }
 
+      body_1_vals <- body[[mutated_column]][rows_to_format]
+      body_1_vals[body_1_vals == "<br />"] <- ""
+
+      body_2_vals <- body[[second_column]][rows_to_format]
+      body_2_vals[body_2_vals == "<br />"] <- ""
+
       body[rows_to_format, mutated_column] <-
         as.character(
           glue_gt(
             list(
-              "1" = body[[mutated_column]][rows_to_format],
-              "2" = body[[second_column]][rows_to_format],
+              "1" = body_1_vals,
+              "2" = body_2_vals,
               "sep" = sep
             ),
             pattern

@@ -14,32 +14,56 @@ fmt_flag(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The columns to format. Can either be a series of column names
-provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
-focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
+\verb{obj:<gt_tbl>} // \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
+
+Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
+column indices, or a select helper function. Examples of select helper
+functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
+\code{columns} being formatted. Alternatively, we can supply a vector of row
+captions within \code{\link[=c]{c()}}, a vector of row indices, or a select helper
+function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}.}
+\code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
+need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
-default) results in all rows in \code{columns} being formatted. Alternatively,
-we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
-indices, or a helper function focused on selections. The select helper
-functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
-\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
-to filter down to the rows we need (e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+\item{height}{\emph{Height of flag}
 
-\item{height}{The absolute height of the flag icon in the table cell. By
-default, this is set to \code{"1em"}.}
+\verb{scalar<character>} // \emph{default:} \code{"1em"}
 
-\item{sep}{In the output of flag icons within a body cell, \code{sep} provides the
+The absolute height of the flag icon in the table cell. By default, this is
+set to \code{"1em"}.}
+
+\item{sep}{\emph{Separator between flags}
+
+\verb{scalar<character>} // \emph{default:} \code{" "}
+
+In the output of flag icons within a body cell, \code{sep} provides the
 separator between each icon. By default, this is a single space character
 (\code{" "}).}
 
-\item{use_title}{An option to display a tooltip for the country name when
-hovering over the flag icon. By default this is \code{TRUE}.}
+\item{use_title}{\emph{Display country name on hover}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+An option to display a tooltip for the country name (in English) when
+hovering over the flag icon.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -59,6 +83,15 @@ included per cell by separating country codes with commas (e.g., \code{"GB,TT"})
 The \code{sep} argument allows for a common separator to be applied between flag
 icons.
 }
+\section{Compatibility of formatting function with data values}{
+
+
+The \code{fmt_flag()} formatting function is compatible with body cells that are
+of the \code{"character"} or \code{"factor"} types. Any other types of body cells are
+ignored during formatting. This is to say that cells of incompatible data
+types may be targeted, but there will be no attempt to format them.
+}
+
 \section{Targeting cells with \code{columns} and \code{rows}}{
 
 
@@ -72,8 +105,8 @@ helper like \code{starts_with()}, or, providing a more complex incantation like
 
 \code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
 
-which targets numeric columns that have a maximum value of 100,000 (excluding
-\code{NA}s from consideration).
+which targets numeric columns that have a maximum value greater than
+1,000,000 (excluding any \code{NA}s from consideration).
 
 By default all columns and rows are selected (with the \code{everything()}
 defaults). Cell values that are incompatible with a given formatting function
@@ -98,6 +131,29 @@ expression that takes column values (can involve any of the available columns
 in the table) and returns a logical vector. This is nice if you want to base
 formatting on values in the column or another column, or, you'd like to use a
 more complex predicate expression.
+}
+
+\section{Compatibility of arguments with the \code{from_column()} helper function}{
+
+
+The \code{\link[=from_column]{from_column()}} helper function can be used with certain arguments of
+\code{fmt_flag()} to obtain varying parameter values from a specified column
+within the table. This means that each row could be formatted a little bit
+differently. These arguments provide support for \code{\link[=from_column]{from_column()}}:
+\itemize{
+\item \code{height}
+\item \code{sep}
+\item \code{use_title}
+}
+
+Please note that for each of the aforementioned arguments, a \code{\link[=from_column]{from_column()}}
+call needs to reference a column that has data of the correct type (this is
+different for each argument). Additional columns for parameter values can be
+generated with the \code{\link[=cols_add]{cols_add()}} function (if not already present). Columns
+that contain parameter data can also be hidden from final display with
+\code{\link[=cols_hide]{cols_hide()}}. Finally, there is no limitation to how many arguments the
+\code{\link[=from_column]{from_column()}} helper is applied so long as the arguments belong to this
+closed set.
 }
 
 \section{Examples}{
@@ -130,7 +186,7 @@ that function transforms the codes in circular flag icons.
 }}
 
 Using \code{\link{countrypops}} we can generate a table that provides populations
-every five years for the Benelux countries (\code{"BE"}, \code{"NU"}, and \code{"LU"}).
+every five years for the Benelux countries (\code{"BE"}, \code{"NL"}, and \code{"LU"}).
 This requires some manipulation with \strong{dplyr} and \strong{tidyr} before
 introducing the table to \strong{gt}. With \code{fmt_flag()} we can obtain flag icons
 in the \code{country_code_2} column. After that, we can merge the flag icons into
@@ -138,7 +194,7 @@ the stub column, generating row labels that have a combination of icon and
 text.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
-  dplyr::filter(country_code_2 \%in\% c("BE", "NU", "LU")) |>
+  dplyr::filter(country_code_2 \%in\% c("BE", "NL", "LU")) |>
   dplyr::filter(year \%\% 10 == 0) |>
   dplyr::select(country_name, country_code_2, year, population) |>
   tidyr::pivot_wider(names_from = year, values_from = population) |>
@@ -197,12 +253,12 @@ tooltip text showing the name of the country.
 
 \section{Function ID}{
 
-3-20
+3-21
 }
 
 \section{Function Introduced}{
 
-\emph{In Development}
+\code{v0.9.0} (Mar 31, 2023)
 }
 
 \seealso{
@@ -229,6 +285,7 @@ Other data formatting functions:
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
 \code{\link{fmt_time}()},
+\code{\link{fmt_units}()},
 \code{\link{fmt_url}()},
 \code{\link{fmt}()},
 \code{\link{sub_large_vals}()},

@@ -7,9 +7,12 @@
 pct(x)
 }
 \arguments{
-\item{x}{the numeric value to format as a string percentage for some
-\code{\link[=tab_options]{tab_options()}} arguments that can take percentage values
-(e.g., \code{table.width}).}
+\item{x}{\emph{Numeric value in percent}
+
+\verb{scalar<numeric|integer>} // \strong{required}
+
+The numeric value to format as a string percentage for some \code{\link[=tab_options]{tab_options()}}
+arguments that can take percentage values (e.g., \code{table.width}).}
 }
 \value{
 A character vector with a single value in percentage units.
@@ -27,8 +30,10 @@ analogous helper function \code{\link[=pct]{pct()}} will be more useful.
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Use the \code{pct()} helper to define
-the font size for the column labels.
+Use the \code{\link{exibble}} dataset to create a \strong{gt} table. Inside of the
+\code{\link[=cell_text]{cell_text()}} call (which is itself inside of \code{\link[=tab_style]{tab_style()}}), we'll use the
+\code{pct()} helper function to define the font size for the column labels as a
+percentage value.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   gt() |>
@@ -74,13 +79,16 @@ Other helper functions:
 \code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
+\code{\link{define_units}()},
 \code{\link{escape_latex}()},
+\code{\link{from_column}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
 \code{\link{md}()},
 \code{\link{px}()},
 \code{\link{random_id}()},
-\code{\link{stub}()}
+\code{\link{stub}()},
+\code{\link{system_fonts}()}
 }
 \concept{helper functions}

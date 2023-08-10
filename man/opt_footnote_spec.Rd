@@ -7,12 +7,21 @@
 opt_footnote_spec(data, spec_ref = NULL, spec_ftr = NULL)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{spec_ref, spec_ftr}{Specification of the footnote marks when behaving as
-footnote references and as marks in the footer section of the table. This
-is a string containing spec characters. The default is the spec string
-\code{"^i"}, which is superscript text set in italics.}
+\verb{obj:<gt_tbl>} // \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{spec_ref, spec_ftr}{\emph{Specifications for formatting of footnote marks}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+Specification of the footnote marks when behaving as footnote references
+and as marks in the footer section of the table. This is a string
+containing spec characters. The default is the spec string \code{"^i"}, which is
+superscript text set in italics.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -53,10 +62,11 @@ helpful placeholder for the marks).
 \section{Examples}{
 
 
-Use \code{\link{sp500}} to create a \strong{gt} table, adding two footnotes. We can call
-\code{opt_footnote_spec()} to specify that the marks of the footnote reference
-should be superscripts in bold, and, the marks in the footer section should
-be enclosed in parentheses.
+Use a modified version of \code{\link{sp500}} the dataset to create a \strong{gt} table with
+row labels. We'll add two footnotes using the \code{tab_footnote()} function. We
+can call \code{opt_footnote_spec()} to specify that the marks of the footnote
+reference should be superscripts in bold, and, the marks in the footer
+section should be enclosed in parentheses.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
   dplyr::filter(date >= "1987-10-14" & date <= "1987-10-25") |>
@@ -99,7 +109,7 @@ be enclosed in parentheses.
 
 \section{Function Introduced}{
 
-\emph{In Development}
+\code{v0.9.0} (Mar 31, 2023)
 }
 
 \seealso{

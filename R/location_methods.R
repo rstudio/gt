@@ -1,3 +1,27 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2023 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 #' Upgrader function for `cells_*` objects
 #'
 #' Upgrade a `cells_*` object to a `list()` if only a single instance is
@@ -277,6 +301,17 @@ resolve_location.cells_column_labels <- function(loc, data) {
   #       select all groups; this should be changed to select all groups
 
   # TODO: abort() if groups provided not in the available set of groups
+  class(loc) <- c("resolved", class(loc))
+
+  loc
+}
+
+resolve_location.cells_column_spanners <- function(loc, data) {
+
+  resolved <- resolve_cells_column_spanners(data = data, object = loc)
+
+  loc$spanners <- resolved$spanners
+
   class(loc) <- c("resolved", class(loc))
 
   loc

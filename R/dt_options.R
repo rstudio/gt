@@ -1,3 +1,27 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2023 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 .dt_options_key <- "_options"
 
 dt_options_get <- function(data) {
@@ -27,9 +51,8 @@ dt_options_get_value <- function(data, option) {
 
 default_fonts_vec <-
   c(
-    "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto",
-    "Oxygen", "Ubuntu", "Cantarell", "Helvetica Neue", "Fira Sans",
-    "Droid Sans", "Arial", "sans-serif"
+    "system-ui", "Segoe UI", "Roboto", "Helvetica", "Arial", "sans-serif",
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"
   )
 
 default_page_size_vec <- c(10, 25, 50, 100)
@@ -99,6 +122,7 @@ dt_options_tbl <-
     "column_labels_border_lr_width",      TRUE,  "column_labels",    "px",      "1px",
     "column_labels_border_lr_color",      TRUE,  "column_labels",    "value",   "#D3D3D3",
     "column_labels_hidden",              FALSE,  "column_labels",    "logical", FALSE,
+    "column_labels_units_pattern",       FALSE,  "column_labels",    "value",   "{1}, {2}",
     "row_group_background_color",         TRUE,  "row_group",        "value",   NA_character_,
     "row_group_font_size",                TRUE,  "row_group",        "px",      "100%",
     "row_group_font_weight",              TRUE,  "row_group",        "value",   "initial",
@@ -208,6 +232,7 @@ dt_options_tbl <-
     "ihtml_use_resizers",                FALSE,  "interactive",      "logical", FALSE,
     "ihtml_use_highlight",               FALSE,  "interactive",      "logical", FALSE,
     "ihtml_use_compact_mode",            FALSE,  "interactive",      "logical", FALSE,
+    "ihtml_use_text_wrapping",           FALSE,  "interactive",      "logical", TRUE,
     "ihtml_use_page_size_select",        FALSE,  "interactive",      "logical", FALSE,
     "ihtml_page_size_default",           FALSE,  "interactive",      "values",  10,
     "ihtml_page_size_values",            FALSE,  "interactive",      "values",  default_page_size_vec,

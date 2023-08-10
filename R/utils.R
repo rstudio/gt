@@ -1,3 +1,144 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2023 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
+#' Determine whether an object is a `gt_tbl`
+#'
+#' @param data A table object that is created using the [gt()] function.
+#' @noRd
+is_gt_tbl <- function(data) {
+  inherits(data, "gt_tbl")
+}
+
+#' Determine whether an object is a `gt_group`
+#'
+#' @param data A table object that is created using the [gt_group()] function.
+#' @noRd
+is_gt_group <- function(data) {
+  inherits(data, "gt_group")
+}
+
+#' Determine whether an object inherits from `gt_tbl` or `gt_group`
+#'
+#' @param data A table object that is created either using the [gt()] or
+#' [gt_group()] functions.
+#' @noRd
+is_gt_tbl_or_group <- function(data) {
+  inherits(data, "gt_tbl") || inherits(data, "gt_group")
+}
+
+is_gt_tbl_empty <- function(data) {
+  data_tbl <- dt_data_get(data = data)
+  ncol(data_tbl) == 0 && nrow(data_tbl) == 0
+}
+
+is_gt_tbl_empty_w_cols <- function(data) {
+  data_tbl <- dt_data_get(data = data)
+  ncol(data_tbl) > 0 && nrow(data_tbl) == 0
+}
+
+is_gt_tbl_empty_w_rows <- function(data) {
+  data_tbl <- dt_data_get(data = data)
+  ncol(data_tbl) == 0 && nrow(data_tbl) > 0
+}
+
+# Adjustments for a completely empty table (no columns and no rows)
+adjust_gt_tbl_empty <- function(data) {
+
+  # Get the table's locale
+  tbl_locale <- dt_locale_get_value(data = data)
+
+  no_table_data_text <- get_locale_no_table_data_text(locale = tbl_locale)
+
+  data <- cols_add(data, no_data = no_table_data_text)
+  data <- tab_options(data, column_labels.hidden = TRUE)
+  data <- cols_align(data, align = "center", columns = no_data)
+  data <- cols_width(data, no_data ~ px(500))
+
+  data
+}
+
+#' Determines whether a character vector is non-empty
+#'
+#' @param x A character vector.
+#' @noRd
+is_nonempty_string <- function(x) {
+  length(x) > 0 && any(grepl("\\S", x))
+}
+
+#' Stop any function if object is not a `gt_tbl` object
+#'
+#' @param data The input `data` object that is to be validated.
+#'
+#' @noRd
+stop_if_not_gt_tbl <- function(data) {
+  if (!is_gt_tbl(data = data)) {
+    cli::cli_abort(
+      "The `data` provided is not a `gt_tbl` object."
+    )
+  }
+}
+
+#' Stop any function if object is not a `gt_group` object
+#'
+#' @param data The input `data` object that is to be validated.
+#'
+#' @noRd
+stop_if_not_gt_group <- function(data) {
+  if (!is_gt_group(data = data)) {
+    cli::cli_abort(
+      "The `data` provided is not a `gt_group` object."
+    )
+  }
+}
+
+#' Stop any function if object is neither `gt_tbl` nor `gt_group`
+#'
+#' @param data The input `data` object that is to be validated.
+#'
+#' @noRd
+stop_if_not_gt_tbl_or_group <- function(data) {
+  if (!is_gt_tbl(data = data) && !is_gt_group(data = data)) {
+    cli::cli_abort(
+      "The `data` provided is neither a `gt_tbl` nor a `gt_group` object."
+    )
+  }
+}
+
+#' Does an object have the `html` class?
+#'
+#' @noRd
+is_html <- function(x) {
+  inherits(x, "html") && isTRUE(attr(x, "html"))
+}
+
+#' Does an object have the `rtf_text` class?
+#'
+#' @noRd
+is_rtf <- function(x) {
+  inherits(x, "rtf_text")
+}
+
 #' Get a tibble containing date formats
 #'
 #' @noRd
@@ -405,18 +546,9 @@ get_markdown_engine_fn <- function(
 
   context <- match.arg(context)
 
-  md_engine_name <-
-    switch(
-      md_engine_pref,
-      auto = ,
-      markdown = "markdown",
-      commonmark = "commonmark"
-    )
-
   md_engine_fn <-
     switch(
       md_engine_pref,
-      auto = ,
       markdown = markdown::mark,
       commonmark = if (context == "html") {
         commonmark::markdown_html
@@ -425,39 +557,8 @@ get_markdown_engine_fn <- function(
       }
     )
 
-  # Stop function if user explicitly chose the `markdown` package as
-  # the Markdown engine but the package is not available
-  if (md_engine_pref == "markdown") {
-
-    if (!requireNamespace("markdown", quietly = TRUE)) {
-
-      cli::cli_abort(c(
-        "Using the \"markdown\"` engine preference requires the markdown package.",
-        "*" = "It can be installed with `install.packages(\"markdown\")`."
-      ))
-    }
-  }
-
-  # If the Markdown engine preference was set to 'auto' (the default) and
-  # the `markdown` is not available, use the `commonmark` package as a
-  # fallback; the situation is that `commonmark` is a hard dependency whereas
-  # `markdown` is a soft dependency (though commonly present in user libraries)
-  if (
-    md_engine_pref == "auto" &&
-    !requireNamespace("markdown", quietly = TRUE)
-  ) {
-
-    if (context == "html") {
-      md_engine_fn <- commonmark::markdown_html
-    } else {
-      md_engine_fn <- commonmark::markdown_latex
-    }
-
-    md_engine_name <- "commonmark"
-  }
-
   md_engine_fn <- c(md_engine_fn)
-  names(md_engine_fn) <- md_engine_name
+  names(md_engine_fn) <- md_engine_pref
   md_engine_fn
 }
 
@@ -474,10 +575,7 @@ process_text <- function(text, context = "html") {
   # When processing text globally (outside of the `fmt_markdown()`
   # function) we will use the 'markdown' package if it is available,
   # otherwise the 'commonmark' package
-  if (
-    requireNamespace("markdown", quietly = TRUE) &&
-    utils::packageVersion("markdown") >= "1.5"
-  ) {
+  if (utils::packageVersion("markdown") >= "1.5") {
     md_engine <- "markdown"
   } else {
     md_engine <- "commonmark"
@@ -717,7 +815,6 @@ markdown_to_latex <- function(text, md_engine) {
   )
 }
 
-
 #' Transform Markdown text to ooxml
 #'
 #' @noRd
@@ -779,7 +876,7 @@ markdown_to_xml <- function(text) {
          }
         }
 
-        lapply(children, apply_rules)%>%
+        lapply(children, apply_rules) %>%
           vapply(FUN = as.character,
                  FUN.VALUE = character(1)) %>%
           paste0(collapse = "") %>%
@@ -891,7 +988,7 @@ cmark_rules_xml <- list(
               bullet_insert <- xml_r(
                   xml_t(xml_space = "preserve", paste(c(rep("\t", times = indent_level),list_symbol,"\t"), collapse = ""))
                 ) %>%
-                as_xml_node()%>%
+                as_xml_node() %>%
                 .[[1]]
 
               ## must be nodes not nodesets
@@ -1020,8 +1117,8 @@ cmark_rules_xml <- list(
     # NOTE: Links are difficult to insert in OOXML documents because
     # a relationship must be provided in the 'document.xml.rels' file
     xml_hyperlink(
-      url =xml_attr(x, "destination"),
-      xml_r(xml_rPr(xml_rStyle(val = "Hyperlink")),xml_t(xml2::xml_text(x)))
+      url = xml_attr(x, "destination"),
+      xml_r(xml_rPr(xml_rStyle(val = "Hyperlink")), xml_t(xml2::xml_text(x)))
     ) %>% as.character()
   },
 
@@ -1030,9 +1127,6 @@ cmark_rules_xml <- list(
     process(xml2::xml_children(x))
   }
 )
-
-
-
 
 cmark_rules_rtf <- list(
 
@@ -1267,6 +1361,8 @@ markdown_to_rtf <- function(text) {
   text
 }
 
+#nocov start
+
 rtf_wrap <- function(control, x, process) {
   content <- paste0("", process(xml2::xml_contents(x))) # coerce even NULL to string
   paste0("\\", control, " ", content, "\\", control, "0 ")
@@ -1305,6 +1401,8 @@ markdown_to_text <- function(text) {
     )
   )
 }
+
+#nocov end
 
 #' Handle formatting of a pattern in a `fmt_*()` function
 #'
@@ -1808,77 +1906,7 @@ process_footnote_marks <- function(x, marks) {
   )
 }
 
-#' Determine whether an object is a `gt_tbl`
-#'
-#' @param data A table object that is created using the [gt()] function.
-#' @noRd
-is_gt_tbl <- function(data) {
-  inherits(data, "gt_tbl")
-}
 
-#' Determine whether an object is a `gt_group`
-#'
-#' @param data A table object that is created using the [gt_group()] function.
-#' @noRd
-is_gt_group <- function(data) {
-  inherits(data, "gt_group")
-}
-
-#' Determine whether an object inherits from `gt_tbl` or `gt_group`
-#'
-#' @param data A table object that is created either using the [gt()] or
-#' [gt_group()] functions.
-#' @noRd
-is_gt_tbl_or_group <- function(data) {
-  inherits(data, "gt_tbl") || inherits(data, "gt_group")
-}
-
-#' Determines whether a character vector is non-empty
-#'
-#' @param x A character vector.
-#' @noRd
-is_nonempty_string <- function(x) {
-  length(x) > 0 && any(grepl("\\S", x))
-}
-
-#' Stop any function if object is not a `gt_tbl` object
-#'
-#' @param data The input `data` object that is to be validated.
-#'
-#' @noRd
-stop_if_not_gt_tbl <- function(data) {
-  if (!is_gt_tbl(data = data)) {
-    cli::cli_abort(
-      "The `data` provided is not a `gt_tbl` object."
-    )
-  }
-}
-
-#' Stop any function if object is not a `gt_group` object
-#'
-#' @param data The input `data` object that is to be validated.
-#'
-#' @noRd
-stop_if_not_gt_group <- function(data) {
-  if (!is_gt_group(data = data)) {
-    cli::cli_abort(
-      "The `data` provided is not a `gt_group` object."
-    )
-  }
-}
-
-#' Stop any function if object is neither `gt_tbl` nor `gt_group`
-#'
-#' @param data The input `data` object that is to be validated.
-#'
-#' @noRd
-stop_if_not_gt_tbl_or_group <- function(data) {
-  if (!is_gt_tbl(data = data) && !is_gt_group(data = data)) {
-    cli::cli_abort(
-      "The `data` provided is neither a `gt_tbl` nor a `gt_group` object."
-    )
-  }
-}
 
 #' Resolve the selection of border elements for a table cell
 #'
@@ -2128,6 +2156,8 @@ get_footnote_spec_by_location <- function(
   spec
 }
 
+#nocov start
+
 man_get_image_tag <- function(file, dir = "images") {
 
   repo_url <- "https://raw.githubusercontent.com/rstudio/gt/master"
@@ -2175,7 +2205,7 @@ data_get_image_tag <- function(file, dir = "images") {
   image_url <- file.path(repo_url, dir, file)
 
   paste0(
-    "<div align=\"center\">",
+    "<div style=\"text-align:center;\">",
     "<img ",
     "src=\"", image_url, "\" ",
     "alt=\"", alt_text, "\" ",
@@ -2183,3 +2213,5 @@ data_get_image_tag <- function(file, dir = "images") {
     "</div>"
   )
 }
+
+#nocov end

@@ -11,15 +11,28 @@ opt_all_caps(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{all_caps}{A logical value to indicate whether the text transformation
-to all caps should be performed (\code{TRUE}, the default) or reset to default
-values (\code{FALSE}) for the \code{locations} targeted.}
+\verb{obj:<gt_tbl>} // \strong{required}
 
-\item{locations}{Which locations should undergo this text transformation? By
-default it includes all of the \code{"column_labels"}, the \code{"stub"}, and the
-\code{"row_group"} locations. However, we could just choose one or two of those.}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{all_caps}{\emph{Use all-caps transformation}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+A logical value to indicate whether the text transformation to all caps
+should be performed (\code{TRUE}, the default) or reset to default values
+(\code{FALSE}) for the \code{locations} targeted.}
+
+\item{locations}{\emph{Locations to target}
+
+\verb{mult-kw:[column_labels|stub|row_group]} // \emph{default:} \code{c("column_labels", "stub", "row_group")}
+
+Which locations should undergo this text transformation? By default it
+includes all of the \code{"column_labels"}, the \code{"stub"}, and the \code{"row_group"}
+locations. However, we could just choose one or two of those.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -35,9 +48,11 @@ This function serves as a convenient shortcut for \verb{<gt_tbl> |> tab_options(
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table with a number of table parts added.
-All text in the column labels, the stub, and in all row groups is to be
-transformed to all caps using \code{opt_all_caps()}.
+Use the \code{\link{exibble}} dataset to create a \strong{gt} table with a number of table
+parts added (using functions like \code{\link[=summary_rows]{summary_rows()}}, \code{\link[=grand_summary_rows]{grand_summary_rows()}},
+and more). Following that, we'll ensure that all text in the column labels,
+the stub, and in all row groups is transformed to all caps using
+\code{opt_all_caps()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   gt(rowname_col = "row", groupname_col = "group") |>

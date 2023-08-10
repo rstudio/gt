@@ -11,11 +11,39 @@ cells_summary(
 )
 }
 \arguments{
-\item{groups}{The names of the groups that the summary rows reside in.}
+\item{groups}{\emph{Specification of row group IDs}
 
-\item{columns}{The names of the columns that are to be targeted.}
+\verb{<row-group-targeting expression>} // \emph{default:} \code{everything()}
 
-\item{rows}{The names of the rows that are to be targeted.}
+The row groups to which targeting operations are constrained. This aids in
+targeting the summary rows that reside in certain row groups. Can either be
+a series of row group ID values provided in \code{\link[=c]{c()}} or a select helper
+function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
+\code{\link[=everything]{everything()}}.}
+
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
+
+The columns to which targeting operations are constrained. Can either
+be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,
+or a select helper function. Examples of select helper functions include
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+form a constraint for targeting operations. The default \code{\link[=everything]{everything()}}
+results in all rows in \code{columns} being formatted. Alternatively, we can
+supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row indices, or a
+select helper function. Examples of select helper functions include
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions to filter
+down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 }
 \value{
 A list object with the classes \code{cells_summary} and \code{location_cells}.
@@ -45,8 +73,8 @@ incantation like
 
 \code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
 
-which targets numeric columns that have a maximum value of 100,000 (excluding
-\code{NA}s from consideration).
+which targets numeric columns that have a maximum value greater than
+1,000,000 (excluding any \code{NA}s from consideration).
 
 Once the groups and columns are targeted, we may also target the \code{rows} of
 the summary. Summary cells in the stub will have ID values that can be used
@@ -57,7 +85,7 @@ use row indices (e.g., \code{c(3, 5, 6)}) that correspond to the row number of a
 summary row in a row group (numbering restarts with every row group).
 }
 
-\section{Overview of Location Helper Functions}{
+\section{Overview of location helper functions}{
 
 
 Location helper functions can be used to target cells with virtually any
@@ -103,8 +131,9 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \section{Examples}{
 
 
-Use \code{\link{countrypops}} to create a \strong{gt} table. Add some styling to the summary
-data cells with with \code{\link[=tab_style]{tab_style()}}, using \code{cells_summary()} in \code{locations}.
+Use a portion of the \code{\link{countrypops}} dataset to create a \strong{gt} table. Add
+some styling to the summary data cells with with \code{\link[=tab_style]{tab_style()}}, using
+\code{cells_summary()} in the \code{locations} argument.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::filter(country_name == "Japan", year < 1970) |>
@@ -155,7 +184,7 @@ data cells with with \code{\link[=tab_style]{tab_style()}}, using \code{cells_su
 
 \section{Function ID}{
 
-8-13
+8-17
 }
 
 \section{Function Introduced}{
@@ -183,7 +212,9 @@ Other helper functions:
 \code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
+\code{\link{define_units}()},
 \code{\link{escape_latex}()},
+\code{\link{from_column}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
@@ -191,6 +222,7 @@ Other helper functions:
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},
-\code{\link{stub}()}
+\code{\link{stub}()},
+\code{\link{system_fonts}()}
 }
 \concept{helper functions}

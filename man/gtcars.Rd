@@ -78,7 +78,7 @@ Here is a glimpse at the data available in \code{gtcars}.
 DATA-3
 
 \if{html}{\out{
-<div align="center"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_gtcars.png" alt="This image of that of a dataset badge." style="width:50\%;padding-bottom:20px;"></div>
+<div style="text-align:center;"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_gtcars.png" alt="This image of that of a dataset badge." style="width:50\%;padding-bottom:20px;"></div>
 }}
 }
 
@@ -89,8 +89,10 @@ DATA-3
 
 \seealso{
 Other datasets: 
+\code{\link{constants}},
 \code{\link{countrypops}},
 \code{\link{exibble}},
+\code{\link{illness}},
 \code{\link{metro}},
 \code{\link{pizzaplace}},
 \code{\link{rx_addv}},

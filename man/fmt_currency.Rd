@@ -8,7 +8,7 @@ fmt_currency(
   data,
   columns = everything(),
   rows = everything(),
-  currency = "USD",
+  currency = NULL,
   use_subunits = TRUE,
   decimals = NULL,
   drop_trailing_dec_mark = TRUE,
@@ -27,24 +27,40 @@ fmt_currency(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The columns to format. Can either be a series of column names
-provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
-focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
+\verb{obj:<gt_tbl>} // \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
+
+Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
+column indices, or a select helper function. Examples of select helper
+functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
+\code{columns} being formatted. Alternatively, we can supply a vector of row
+captions within \code{\link[=c]{c()}}, a vector of row indices, or a select helper
+function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}.}
+\code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
+need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
-default) results in all rows in \code{columns} being formatted. Alternatively,
-we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
-indices, or a helper function focused on selections. The select helper
-functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
-\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
-to filter down to the rows we need (e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+\item{currency}{\emph{Currency to use}
 
-\item{currency}{The currency to use for the numeric value. This input can be
+\verb{scalar<character>|obj:<gt_currency>} // \emph{default:} \code{NULL} (\code{optional})
+
+The currency to use for the numeric value. This input can be
 supplied as a 3-letter currency code (e.g., \code{"USD"} for U.S. Dollars,
 \code{"EUR"} for the Euro currency). Use \code{\link[=info_currencies]{info_currencies()}} to get an
 information table with all of the valid currency codes and examples of
@@ -61,100 +77,183 @@ glyph for the Dutch guilder in an HTML output table, and it would simply be
 the letter "f" in all other output contexts). Please note that \code{decimals}
 will default to \code{2} when using the \code{\link[=currency]{currency()}} helper function.
 
-If nothing is provided to \code{currency} then \code{"USD"} (U.S. dollars) will be
-used.}
+If nothing is provided here but a \code{locale} value has been set (either in
+this function call or as part of the initial \code{\link[=gt]{gt()}} call), the currency
+will be obtained from that locale. Virtually all locales are linked to a
+territory that is a country (use \code{\link[=info_locales]{info_locales()}} for details on all
+locales used in this package), so, the in-use (or \emph{de facto}) currency will
+be obtained. As the default locale is \code{"en"}, the \code{"USD"} currency will be
+used if neither a \code{locale} nor a \code{currency} value is given.}
 
-\item{use_subunits}{An option for whether the subunits portion of a currency
-value should be displayed. By default, this is \code{TRUE}.}
+\item{use_subunits}{\emph{Show or hide currency subunits}
 
-\item{decimals}{An option to specify the exact number of decimal places to
-use. The default number of decimal places is \code{2}.}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
-\item{drop_trailing_dec_mark}{A logical value that determines whether decimal
-marks should always appear even if there are no decimal digits to display
-after formatting (e.g, \code{23} becomes \code{23.}). The default for this is \code{TRUE},
-which means that trailing decimal marks are not shown.}
+An option for whether the subunits portion of a currency value should be
+displayed. For example, with an input value of \code{273.81}, the default
+formatting will produce \code{"$273.81"}. Removing the subunits (with
+\code{use_subunits = FALSE}) will give us \code{"$273"}.}
 
-\item{use_seps}{An option to use digit group separators. The type of digit
-group separator is set by \code{sep_mark} and overridden if a locale ID is
-provided to \code{locale}. This setting is \code{TRUE} by default.}
+\item{decimals}{\emph{Number of decimal places}
 
-\item{accounting}{An option to use accounting style for values. With \code{FALSE}
-(the default), negative values will be shown with a minus sign. Using
-\code{accounting = TRUE} will put negative values in parentheses.}
+\code{scalar<numeric|integer>(val>=0)} // \emph{default:} \code{2}
 
-\item{scale_by}{A value to scale the input. The default is \code{1.0}. All numeric
-values will be multiplied by this value first before undergoing formatting.
-This value will be ignored if using any of the \code{suffixing} options (i.e.,
-where \code{suffixing} is not set to \code{FALSE}).}
+This corresponds to the exact number of decimal places to use. A value
+such as \code{2.34} can, for example, be formatted with \code{0} decimal places and
+it would result in \code{"2"}. With \code{4} decimal places, the formatted value
+becomes \code{"2.3400"}. The trailing zeros can be removed with
+\code{drop_trailing_zeros = TRUE}. If you always need \code{decimals = 0}, the
+\code{\link[=fmt_integer]{fmt_integer()}} function should be considered.}
 
-\item{suffixing}{An option to scale and apply suffixes to larger numbers
-(e.g., \code{1924000} can be transformed to \verb{1.92M}). This option can accept a
-logical value, where \code{FALSE} (the default) will not perform this
-transformation and \code{TRUE} will apply thousands (\code{K}), millions (\code{M}),
-billions (\code{B}), and trillions (\code{T}) suffixes after automatic value scaling.
-We can also specify which symbols to use for each of the value ranges by
-using a character vector of the preferred symbols to replace the defaults
-(e.g., \code{c("k", "Ml", "Bn", "Tr")}).
+\item{drop_trailing_dec_mark}{\emph{Drop the trailing decimal mark}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+A logical value that determines whether decimal marks should always appear
+even if there are no decimal digits to display after formatting (e.g., \code{23}
+becomes \code{23.} if \code{FALSE}). By default trailing decimal marks are not shown.}
+
+\item{use_seps}{\emph{Use digit group separators}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+An option to use digit group separators. The type of digit group separator
+is set by \code{sep_mark} and overridden if a locale ID is provided to \code{locale}.
+This setting is \code{TRUE} by default.}
+
+\item{accounting}{\emph{Use accounting style}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+An option to use accounting style for values. Normally, negative values
+will be shown with a minus sign but using accounting style will instead put
+any negative values in parentheses.}
+
+\item{scale_by}{\emph{Scale values by a fixed multiplier}
+
+\verb{scalar<numeric|integer>} // \emph{default:} \code{1}
+
+All numeric values will be multiplied by the \code{scale_by} value before
+undergoing formatting. Since the \code{default} value is \code{1}, no values will be
+changed unless a different multiplier value is supplied. This value will be
+ignored if using any of the \code{suffixing} options (i.e., where \code{suffixing} is
+not set to \code{FALSE}).}
+
+\item{suffixing}{\emph{Specification for large-number suffixing}
+
+\verb{scalar<logical>|vector<character>} // \emph{default:} \code{FALSE}
+
+The \code{suffixing} option allows us to scale and apply suffixes to larger
+numbers (e.g., \code{1924000} can be transformed to \verb{1.92M}). This option can
+accept a logical value, where \code{FALSE} (the default) will not perform this
+transformation and \code{TRUE} will apply thousands (\code{"K"}), millions (\code{"M"}),
+billions (\code{"B"}), and trillions (\code{"T"}) suffixes after automatic value
+scaling.
+
+We can alternatively provide a character vector that serves as a
+specification for which symbols are to used for each of the value ranges.
+These preferred symbols will replace the defaults (e.g.,
+\code{c("k", "Ml", "Bn", "Tr")} replaces \code{"K"}, \code{"M"}, \code{"B"}, and \code{"T"}).
 
 Including \code{NA} values in the vector will ensure that the particular range
-will either not be included in the transformation (e.g, \code{c(NA, "M", "B", "T")} won't modify numbers in the thousands range) or the range will
-inherit a previous suffix (e.g., with \code{c("K", "M", NA, "T")}, all numbers
-in the range of millions and billions will be in terms of millions).
+will either not be included in the transformation (e.g.,
+\code{c(NA, "M", "B", "T")} won't modify numbers at all in the thousands range)
+or the range will inherit a previous suffix (e.g., with
+\code{c("K", "M", NA, "T")}, all numbers in the range of millions and billions
+will be in terms of millions).
 
 Any use of \code{suffixing} (where it is not set expressly as \code{FALSE}) means
 that any value provided to \code{scale_by} will be ignored.
 
 If using \code{system = "ind"} then the default suffix set provided by
-\code{suffixing = TRUE} will be \code{c(NA, "L", "Cr")}. This doesn't apply suffixes
-to the thousands range, but does express values in lakhs and crores.}
+\code{suffixing = TRUE} will be the equivalent of \code{c(NA, "L", "Cr")}. This
+doesn't apply suffixes to the thousands range, but does express values in
+\emph{lakhs} and \emph{crores}.}
 
-\item{pattern}{A formatting pattern that allows for decoration of the
-formatted value. The value itself is represented by \code{{x}} and all other
-characters are taken to be string literals.}
+\item{pattern}{\emph{Specification of the formatting pattern}
 
-\item{sep_mark}{The mark to use as a separator between groups of digits
-(e.g., using \code{sep_mark = ","} with \code{1000} would result in a formatted value
-of \verb{1,000}).}
+\verb{scalar<character>} // \emph{default:} \code{"{x}"}
 
-\item{dec_mark}{The character to use as a decimal mark (e.g., using \code{dec_mark = ","} with \code{0.152} would result in a formatted value of \verb{0,152}).}
+A formatting pattern that allows for decoration of the formatted value. The
+formatted value is represented by the \code{{x}} (which can be used multiple
+times, if needed) and all other characters will be interpreted as string
+literals.}
 
-\item{force_sign}{Should the positive sign be shown for positive values
-(effectively showing a sign for all values except zero)? If so, use \code{TRUE}
-for this option. The default is \code{FALSE}, where only negative numbers will
-display a minus sign. This option is disregarded when using accounting
-notation with \code{accounting = TRUE}.}
+\item{sep_mark}{\emph{Separator mark for digit grouping}
 
-\item{placement}{The placement of the currency symbol. This can be either be
-\code{left} (the default) or \code{right}.}
+\verb{scalar<character>} // \emph{default:} \code{","}
 
-\item{incl_space}{An option for whether to include a space between the value
-and the currency symbol. The default is to not introduce a space character.}
+The string to use as a separator between groups of digits. For example,
+using \code{sep_mark = ","} with a value of \code{1000} would result in a formatted
+value of \code{"1,000"}. This argument is ignored if a \code{locale} is supplied
+(i.e., is not \code{NULL}).}
 
-\item{system}{The numbering system to use. By default, this is the
-international numbering system (\code{"intl"}) whereby grouping separators
-(i.e., \code{sep_mark}) are separated by three digits. The alternative system,
-the Indian numbering system (\code{"ind"}) uses grouping separators that
-correspond to thousand, lakh, crore, and higher quantities.}
+\item{dec_mark}{\emph{Decimal mark}
 
-\item{locale}{An optional locale identifier that can be used for formatting
-the value according the locale's rules. Examples include \code{"en"} for English
-(United States) and \code{"fr"} for French (France). The use of a locale ID will
-override any locale-specific values provided. We can use the
-\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
-are supported.}
+\verb{scalar<character>} // \emph{default:} \code{"."}
+
+The string to be used as the decimal mark. For example, using
+\code{dec_mark = ","} with the value \code{0.152} would result in a formatted value
+of \code{"0,152"}). This argument is ignored if a \code{locale} is supplied (i.e., is
+not \code{NULL}).}
+
+\item{force_sign}{\emph{Forcing the display of a positive sign}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+Should the positive sign be shown for positive values (effectively showing
+a sign for all values except zero)? If so, use \code{TRUE} for this option. The
+default is \code{FALSE}, where only negative numbers will display a minus sign.
+This option is disregarded when using accounting notation with
+\code{accounting = TRUE}.}
+
+\item{placement}{\emph{Currency symbol placement}
+
+\verb{scalar<character>} // \emph{default:} \code{"left"}
+
+The placement of the currency symbol. This can be either be \code{left} (as
+in \code{"$450"}) or \code{right} (which yields \code{"450$"}).}
+
+\item{incl_space}{\emph{Include a space between the value and the currency symbol}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+An option for whether to include a space between the value and the currency
+symbol. The default is to not introduce a space character.}
+
+\item{system}{\emph{Numbering system for grouping separators}
+
+\verb{singl-kw:[intl|ind]} // \emph{default:} \code{"intl"}
+
+The international numbering system (keyword: \code{"intl"}) is widely used and
+its grouping separators (i.e., \code{sep_mark}) are always separated by three
+digits. The alternative system, the Indian numbering system (keyword:
+\code{"ind"}), uses grouping separators that correspond to thousand, lakh,
+crore, and higher quantities.}
+
+\item{locale}{\emph{Locale identifier}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional locale identifier that can be used for formatting values
+according the locale's rules. Examples include \code{"en"} for English (United
+States) and \code{"fr"} for French (France). We can use the \code{\link[=info_locales]{info_locales()}}
+function as a useful reference for all of the locales that are supported. A
+locale ID can be also set in the initial \code{\link[=gt]{gt()}} function call (where it
+would be used automatically by any function with a \code{locale} argument) but a
+\code{locale} value provided here will override that global locale.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
 With numeric values in a \strong{gt} table, we can perform currency-based
-formatting. This function supports both automatic formatting with a
-three-letter or numeric currency code. We can also specify a custom currency
-that is formatted according to the output context with the \code{\link[=currency]{currency()}}
-helper function. Numeric formatting facilitated through the use of a locale
-ID. We have fine control over the conversion from numeric values to currency
-values, where we could take advantage of the following options:
+formatting with the \code{fmt_currency()} function. The function supports both
+automatic formatting with either a three-letter or a numeric currency code.
+We can also specify a custom currency that is formatted according to one or
+more output contexts with the \code{\link[=currency]{currency()}} helper function. We have fine
+control over the conversion from numeric values to currency values, where we
+could take advantage of the following options:
 \itemize{
 \item the currency: providing a currency code or common currency name will
 procure the correct currency symbol and number of currency subunits; we could
@@ -163,7 +262,7 @@ also use the \code{\link[=currency]{currency()}} helper function to specify a cu
 or after the values
 \item decimals/subunits: choice of the number of decimal places, and a
 choice of the decimal symbol, and an option on whether to include or exclude
-the currency subunits (decimal portion)
+the currency subunits (the decimal portion)
 \item negative values: choice of a negative sign or parentheses for values
 less than zero
 \item digit grouping separators: options to enable/disable digit separators
@@ -173,8 +272,9 @@ and provide a choice of separator symbol
 be autoscaled and decorated with the appropriate suffixes
 \item pattern: option to use a text pattern for decoration of the formatted
 currency values
-\item locale-based formatting: providing a locale ID will result in
-currency formatting specific to the chosen locale
+\item locale-based formatting: providing a locale ID will result in currency
+formatting specific to the chosen locale; it will also retrieve the locale's
+currency if none is explicitly given
 }
 
 We can use the \code{\link[=info_currencies]{info_currencies()}} function for a useful reference on all of
@@ -202,8 +302,8 @@ helper like \code{starts_with()}, or, providing a more complex incantation like
 
 \code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
 
-which targets numeric columns that have a maximum value of 100,000 (excluding
-\code{NA}s from consideration).
+which targets numeric columns that have a maximum value greater than
+1,000,000 (excluding any \code{NA}s from consideration).
 
 By default all columns and rows are selected (with the \code{everything()}
 defaults). Cell values that are incompatible with a given formatting function
@@ -230,15 +330,53 @@ formatting on values in the column or another column, or, you'd like to use a
 more complex predicate expression.
 }
 
+\section{Compatibility of arguments with the \code{from_column()} helper function}{
+
+
+The \code{\link[=from_column]{from_column()}} helper function can be used with certain arguments of
+\code{fmt_currency()} to obtain varying parameter values from a specified column
+within the table. This means that each row could be formatted a little bit
+differently. These arguments provide support for \code{\link[=from_column]{from_column()}}:
+\itemize{
+\item \code{currency}
+\item \code{use_subunits}
+\item \code{decimals}
+\item \code{drop_trailing_dec_mark}
+\item \code{use_seps}
+\item \code{accounting}
+\item \code{scale_by}
+\item \code{suffixing}
+\item \code{pattern}
+\item \code{sep_mark}
+\item \code{dec_mark}
+\item \code{force_sign}
+\item \code{placement}
+\item \code{incl_space}
+\item \code{system}
+\item \code{locale}
+}
+
+Please note that for all of the aforementioned arguments, a \code{\link[=from_column]{from_column()}}
+call needs to reference a column that has data of the correct type (this is
+different for each argument). Additional columns for parameter values can be
+generated with the \code{\link[=cols_add]{cols_add()}} function (if not already present). Columns
+that contain parameter data can also be hidden from final display with
+\code{\link[=cols_hide]{cols_hide()}}. Finally, there is no limitation to how many arguments the
+\code{\link[=from_column]{from_column()}} helper is applied so long as the arguments belong to this
+closed set.
+}
+
 \section{Adapting output to a specific \code{locale}}{
 
 
 This formatting function can adapt outputs according to a provided \code{locale}
 value. Examples include \code{"en"} for English (United States) and \code{"fr"} for
-French (France). The use of a valid locale ID here means separator and
+French (France). The use of a locale ID here means separator and
 decimal marks will be correct for the given locale. Should any values be
 provided in \code{sep_mark} or \code{dec_mark}, they will be overridden by the locale's
-preferred values.
+preferred values. In addition to number formatting, providing a \code{locale}
+value and not providing a \code{currency} allows \strong{gt} to obtain the currency
+code from the locale's territory.
 
 Note that a \code{locale} value provided here will override any global locale
 setting performed in \code{\link[=gt]{gt()}}'s own \code{locale} argument (it is settable there as
@@ -250,14 +388,20 @@ useful reference on which locales are supported, we can use the
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Format the \code{currency} column to
-have currency values in euros (\code{"EUR"}).
+Let's make a simple \strong{gt} table from the \code{\link{exibble}} dataset. We'll keep
+only the \code{num} and \code{currency}, columns, then, format those columns using
+\code{fmt_currency()} (with the \code{"JPY"} and \code{"GBP"} currencies).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(num, currency) |>
   gt() |>
   fmt_currency(
+    columns = num,
+    currency = "JPY"
+  ) |>
+  fmt_currency(
     columns = currency,
-    currency = "EUR"
+    currency = "GBP"
   )
 }\if{html}{\out{</div>}}
 
@@ -265,20 +409,31 @@ have currency values in euros (\code{"EUR"}).
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_currency_1.png" alt="This image of a table was generated from the first code example in the `fmt_currency()` help file." style="width:100\%;">
 }}
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{num} and \code{currency},
-columns, then, format those columns using the \code{"CNY"} and \code{"GBP"} currencies.
+With the \code{\link{pizzaplace}} dataset, let's make a summary table that gets the
+number of \code{"hawaiian"} pizzas sold (and revenue generated) by month. In the
+\strong{gt} table, we'll format only the \code{revenue} column. The \code{currency} value is
+automatically U.S. Dollars when don't supply either a currency code or a
+locale. We'll also create a grand summary with the \code{\link[=grand_summary_rows]{grand_summary_rows()}}
+function. Within that summary row, the total revenue needs to be formatted
+with \code{fmt_currency()} and we can do that within the \code{fmt} argument.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
-  dplyr::select(num, currency) |>
-  gt() |>
-  fmt_currency(
-    columns = num,
-    currency = "CNY"
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
+  dplyr::filter(name == "hawaiian") |>
+  dplyr::mutate(month = lubridate::month(date, label = TRUE, abbr = TRUE)) |>
+  dplyr::select(month, price) |>
+  dplyr::group_by(month) |>
+  dplyr::summarize(
+    `number sold` = dplyr::n(),
+    revenue = sum(price)
   ) |>
-  fmt_currency(
-    columns = currency,
-    currency = "GBP"
-  )
+  gt(rowname_col = "month") |>
+  tab_header(title = "Summary of Hawaiian Pizzas Sold by Month") |>
+  fmt_currency(columns = revenue) |>
+  grand_summary_rows(
+    fns = list(label = "Totals:", id = "totals", fn = "sum"),
+    fmt = ~ fmt_currency(., columns = revenue),
+  ) |>
+  opt_all_caps()
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
@@ -323,6 +478,7 @@ Other data formatting functions:
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
 \code{\link{fmt_time}()},
+\code{\link{fmt_units}()},
 \code{\link{fmt_url}()},
 \code{\link{fmt}()},
 \code{\link{sub_large_vals}()},

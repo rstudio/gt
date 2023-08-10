@@ -1,3 +1,27 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2023 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 #' Print a **gt** table
 #'
 #' This facilitates printing of the HTML table to the R console.
@@ -38,18 +62,14 @@ print.gt_group <- function(x, ..., view = interactive()) {
   for (i in seq_tbls) {
 
     html_tbl_i <- as.tags.gt_tbl(grp_pull(x, which = i), ...)
-
-    html_tbls <-
-      htmltools::tagList(
-        html_tbls,
-        html_tbl_i,
-        if (i != max(seq_tbls)) htmltools::HTML("<br />")
-      )
+    html_tbls <- htmltools::tagList(html_tbls, html_tbl_i)
   }
 
   # Use `print()` to print to the console
   print(html_tbls, browse = view, ...)
 }
+
+#nocov start
 
 #' Knit print a **gt** table
 #'
@@ -131,15 +151,24 @@ knit_print.gt_group <- function(x, ...) {
 
   } else {
 
-    # TODO: make this work for HTML
+    html_tbls <- htmltools::tagList()
 
-    # Default to HTML output
-    x <- as.tags.gt_tbl(x, ...)
+    seq_tbls <- seq_len(nrow(x$gt_tbls))
+
+    for (i in seq_tbls) {
+
+      html_tbl_i <- as.tags.gt_tbl(grp_pull(x, which = i), ...)
+      html_tbls <- htmltools::tagList(html_tbls, html_tbl_i)
+    }
+
+    return(knitr::knit_print(html_tbls, ...))
   }
 
   # Use `knit_print()` to print in a code chunk
   knitr::knit_print(x, ...)
 }
+
+#nocov end
 
 #' Convert a **gt** table to an **htmltools** `tagList`
 #'

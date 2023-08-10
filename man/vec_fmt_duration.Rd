@@ -20,76 +20,127 @@ vec_fmt_duration(
 )
 }
 \arguments{
-\item{x}{A numeric vector.}
+\item{x}{\emph{The input vector}
 
-\item{input_units}{If one or more selected columns contains numeric values, a
-keyword must be provided for \code{input_units} for \strong{gt} to determine how
-those values are to be interpreted in terms of duration. The accepted units
-are: \code{"seconds"}, \code{"minutes"}, \code{"hours"}, \code{"days"}, and \code{"weeks"}.}
+\code{vector(numeric|integer)} // \strong{required}
 
-\item{output_units}{Controls the output time units. The default, \code{NULL},
-means that \strong{gt} will automatically choose time units based on the input
-duration value. To control which time units are to be considered for output
-(before trimming with \code{trim_zero_units}) we can specify a vector of one or
-more of the following keywords: \code{"weeks"}, \code{"days"}, \code{"hours"},
-\code{"minutes"}, or \code{"seconds"}.}
+This is the input vector that will undergo transformation to a character
+vector of the same length. Values within the vector will be formatted.}
 
-\item{duration_style}{A choice of four formatting styles for the output
-duration values. With \code{"narrow"} (the default style), duration values will
-be formatted with single letter time-part units (e.g., 1.35 days will be
-styled as \verb{"1d 8h 24m}). With \code{"wide"}, this example value will be expanded
-to \code{"1 day 8 hours 24 minutes"} after formatting. The \code{"colon-sep"} style
-will put days, hours, minutes, and seconds in the \code{"([D]/)[HH]:[MM]:[SS]"}
+\item{input_units}{\emph{Declaration of duration units for numerical values}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+If one or more selected columns contains numeric values (not \code{difftime}
+values, which contain the duration units), a keyword must be provided for
+\code{input_units} for \strong{gt} to determine how those values are to be
+interpreted in terms of duration. The accepted units are: \code{"seconds"},
+\code{"minutes"}, \code{"hours"}, \code{"days"}, and \code{"weeks"}.}
+
+\item{output_units}{\emph{Choice of output units}
+
+\verb{mult-kw:[weeks|days|hours|minutes|seconds]} // \emph{default:} \code{NULL} (\code{optional})
+
+Controls the output time units. The default, \code{NULL}, means that \strong{gt} will
+automatically choose time units based on the input duration value. To
+control which time units are to be considered for output (before trimming
+with \code{trim_zero_units}) we can specify a vector of one or more of the
+following keywords: \code{"weeks"}, \code{"days"}, \code{"hours"}, \code{"minutes"}, or
+\code{"seconds"}.}
+
+\item{duration_style}{\emph{Style for representing duration values}
+
+\verb{singl-kw:[narrow|wide|colon-sep|iso]} // \emph{default:} \code{"narrow"}
+
+A choice of four formatting styles for the output duration values. With
+\code{"narrow"} (the default style), duration values will be formatted with
+single letter time-part units (e.g., 1.35 days will be styled as
+\code{"1d 8h 24m"}). With \code{"wide"}, this example value will be expanded to
+\code{"1 day 8 hours 24 minutes"} after formatting. The \code{"colon-sep"} style will
+put days, hours, minutes, and seconds in the \code{"([D]/)[HH]:[MM]:[SS]"}
 format. The \code{"iso"} style will produce a value that conforms to the ISO
 8601 rules for duration values (e.g., 1.35 days will become \code{"P1DT8H24M"}).}
 
-\item{trim_zero_units}{Provides methods to remove output time units that have
-zero values. By default this is \code{TRUE} and duration values that might
-otherwise be formatted as \code{"0w 1d 0h 4m 19s"} with
-\code{trim_zero_units = FALSE} are instead displayed as \code{"1d 4m 19s"}. Aside
-from using \code{TRUE}/\code{FALSE} we could provide a vector of keywords for more
-precise control. These keywords are: (1) \code{"leading"}, to omit all leading
-zero-value time units (e.g., \code{"0w 1d"} -> \code{"1d"}), (2) \code{"trailing"}, to
-omit all trailing zero-value time units (e.g., \code{"3d 5h 0s"} -> \code{"3d 5h"}),
-and \code{"internal"}, which removes all internal zero-value time units (e.g.,
-\code{"5d 0h 33m"} -> \code{"5d 33m"}).}
+\item{trim_zero_units}{\emph{Trimming of zero values}
 
-\item{max_output_units}{If \code{output_units} is \code{NULL}, where the output time
-units are unspecified and left to \strong{gt} to handle, a numeric value
-provided for \code{max_output_units} will be taken as the maximum number of time
-units to display in all output time duration values. By default, this is
-\code{NULL} and all possible time units will be displayed. This option has no
-effect when \code{duration_style = "colon-sep"} (only \code{output_units} can be used
-to customize that type of duration output).}
+\verb{scalar<logical>|mult-kw:[leading|trailing|internal]} // \emph{default:} \code{TRUE}
 
-\item{pattern}{A formatting pattern that allows for decoration of the
-formatted value. The value itself is represented by \code{{x}} and all other
-characters are taken to be string literals.}
+Provides methods to remove output time units that have zero values. By
+default this is \code{TRUE} and duration values that might otherwise be
+formatted as \code{"0w 1d 0h 4m 19s"} with \code{trim_zero_units = FALSE} are instead
+displayed as \code{"1d 4m 19s"}. Aside from using \code{TRUE}/\code{FALSE} we could
+provide a vector of keywords for more precise control. These keywords are:
+(1) \code{"leading"}, to omit all leading zero-value time units (e.g., \code{"0w 1d"}
+-> \code{"1d"}), (2) \code{"trailing"}, to omit all trailing zero-value time units
+(e.g., \code{"3d 5h 0s"} -> \code{"3d 5h"}), and \code{"internal"}, which removes all
+internal zero-value time units (e.g., \code{"5d 0h 33m"} -> \code{"5d 33m"}).}
 
-\item{use_seps}{An option to use digit group separators. The type of digit
-group separator is set by \code{sep_mark} and overridden if a locale ID is
-provided to \code{locale}. This setting is \code{TRUE} by default.}
+\item{max_output_units}{\emph{Maximum number of time units to display}
 
-\item{sep_mark}{The mark to use as a separator between groups of digits
-(e.g., using \code{sep_mark = ","} with \code{1000} would result in a formatted value
-of \verb{1,000}).}
+\code{scalar<numeric|integer>(val>=1)} // \emph{default:} \code{NULL} (\code{optional})
 
-\item{force_sign}{Should the positive sign be shown for positive values
-(effectively showing a sign for all values except zero)? If so, use \code{TRUE}
-for this option. The default is \code{FALSE}, where only negative value will
-display a minus sign.}
+If \code{output_units} is \code{NULL}, where the output time units are unspecified
+and left to \strong{gt} to handle, a numeric value provided for
+\code{max_output_units} will be taken as the maximum number of time units to
+display in all output time duration values. By default, this is \code{NULL} and
+all possible time units will be displayed. This option has no effect when
+\code{duration_style = "colon-sep"} (only \code{output_units} can be used to
+customize that type of duration output).}
 
-\item{locale}{An optional locale identifier that can be used for formatting
-the value according the locale's rules. Examples include \code{"en"} for English
-(United States) and \code{"fr"} for French (France). The use of a locale ID will
-override any locale-specific values provided. We can use the
-\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
-are supported.}
+\item{pattern}{\emph{Specification of the formatting pattern}
 
-\item{output}{The output style of the resulting character vector. This can
-either be \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"},
-or \code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the
-\code{"auto"} option will choose the correct \code{output} value}
+\verb{scalar<character>} // \emph{default:} \code{"{x}"}
+
+A formatting pattern that allows for decoration of the formatted value. The
+formatted value is represented by the \code{{x}} (which can be used multiple
+times, if needed) and all other characters will be interpreted as string
+literals.}
+
+\item{use_seps}{\emph{Use digit group separators}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+An option to use digit group separators. The type of digit group separator
+is set by \code{sep_mark} and overridden if a locale ID is provided to \code{locale}.
+This setting is \code{TRUE} by default.}
+
+\item{sep_mark}{\emph{Separator mark for digit grouping}
+
+\verb{scalar<character>} // \emph{default:} \code{","}
+
+The string to use as a separator between groups of digits. For example,
+using \code{sep_mark = ","} with a value of \code{1000} would result in a formatted
+value of \code{"1,000"}. This argument is ignored if a \code{locale} is supplied
+(i.e., is not \code{NULL}).}
+
+\item{force_sign}{\emph{Forcing the display of a positive sign}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+Should the positive sign be shown for positive values (effectively showing
+a sign for all values except zero)? If so, use \code{TRUE} for this option. By
+default only negative values will display a minus sign.}
+
+\item{locale}{\emph{Locale identifier}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional locale identifier that can be used for formatting values
+according the locale's rules. Examples include \code{"en"} for English (United
+States) and \code{"fr"} for French (France). We can use the \code{\link[=info_locales]{info_locales()}}
+function as a useful reference for all of the locales that are supported. A
+locale ID can be also set in the initial \code{\link[=gt]{gt()}} function call (where it
+would be used automatically by any function with a \code{locale} argument) but a
+\code{locale} value provided here will override that global locale.}
+
+\item{output}{\emph{Output format}
+
+\verb{singl-kw:[auto|plain|html|latex|rtf|word]} // \emph{default:} \code{"auto"}
+
+The output style of the resulting character vector. This can either be
+\code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"}, or
+\code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the \code{"auto"}
+option will choose the correct \code{output} value}
 }
 \value{
 A character vector.
@@ -166,7 +217,7 @@ unit those values have.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_duration(num_vals, input_units = "days")
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3d 5h 38m 23s" "5h 31m 12s" "7m 12s" "NA"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3d 5h 38m 24s" "5h 31m 12s" "7m 12s" "NA"
 }\if{html}{\out{</div>}}
 
 We can define a set of output time units that we want to see.
@@ -191,7 +242,7 @@ There are many duration 'styles' to choose from. We could opt for the
 )
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3 days 5 hours 38 minutes 23 seconds"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3 days 5 hours 38 minutes 24 seconds"
 #> [2] "5 hours 31 minutes 12 seconds"
 #> [3] "7 minutes 12 seconds"
 #> [4] "NA"
@@ -209,7 +260,7 @@ locale.
 )
 }\if{html}{\out{</div>}}
 
-\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3 dagen 5 uur 38 minuten 23 seconden"
+\if{html}{\out{<div class="sourceCode">}}\preformatted{#> [1] "3 dagen 5 uur 38 minuten 24 seconden"
 #> [2] "5 uur 31 minuten 12 seconden"
 #> [3] "7 minuten 12 seconden"
 #> [4] "NA"

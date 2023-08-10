@@ -1,3 +1,27 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2023 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 #' Modify the ordering of any row groups
 #'
 #' @description
@@ -11,18 +35,23 @@
 #' ordering.
 #'
 #' @inheritParams cols_align
-#' @param groups A character vector of row group ID values corresponding to the
-#'   revised ordering. While this vector must contain valid group ID values, it
-#'   is not required to have all of the row group IDs within it; any omitted
-#'   values will be added to the end while preserving the original ordering.
+#'
+#' @param groups *Specification of row group IDs*
+#'
+#'   `vector<character>` // **required**
+#'
+#'   A character vector of row group ID values corresponding to the revised
+#'   ordering. While this vector must contain valid group ID values, it is not
+#'   required to have all of the row group IDs within it; any omitted values
+#'   will be added to the end while preserving the original ordering.
 #'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table with a stub and with row groups.
-#' Modify the order of the row groups with `row_group_order()`, specifying the
-#' new ordering in `groups`.
+#' Let's use [`exibble`] to create a **gt** table with a stub and with row
+#' groups. We can modify the order of the row groups with `row_group_order()`,
+#' specifying the new ordering in `groups`.
 #'
 #' ```r
 #' exibble |>

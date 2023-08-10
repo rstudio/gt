@@ -1,3 +1,27 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2023 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 #' Transform a **gt** table object to an HTML table
 #'
 #' Take a `gti_tbl` table object and transform it to an HTML table.
@@ -29,11 +53,46 @@ render_as_ihtml <- function(data, id) {
   # Obtain the language from the `locale`, if provided
   locale <- dt_locale_get_value(data = data)
 
-  # TODO: generate a language options object to pass to `language` option
-  if (is.null(locale)) {
-    lang <- "en"
+  # Generate a `lang_defs` object to pass to the `language` argument
+  if (is.null(locale) || locale == "en") {
+
+    lang_defs <- reactable::reactableLang()
+
   } else {
-    lang <- gsub("(.)?_.*", "\\1", locale)
+
+    locale_data <- locales[locales$locale == locale, ][1, ]
+
+    if (is.na(locale_data[["no_table_data_text"]])) {
+
+      lang_defs <- reactable::reactableLang()
+
+    } else {
+
+      lang_defs <-
+        reactable::reactableLang(
+          sortLabel = locale_data[["sort_label_text"]],
+          filterPlaceholder = "",
+          filterLabel = locale_data[["filter_label_text"]],
+          searchPlaceholder = locale_data[["search_placeholder_text"]],
+          searchLabel = locale_data[["search_placeholder_text"]],
+          noData = locale_data[["no_table_data_text"]],
+          pageNext = locale_data[["page_next_text"]],
+          pagePrevious = locale_data[["page_previous_text"]],
+          pageNumbers = locale_data[["page_numbers_text"]],
+          pageInfo = gsub("\\\\u2013", "\u2013", locale_data[["page_info_text"]]),
+          pageSizeOptions = locale_data[["page_size_options_text"]],
+          pageNextLabel = locale_data[["page_next_label_text"]],
+          pagePreviousLabel = locale_data[["page_previous_label_text"]],
+          pageNumberLabel = locale_data[["page_number_label_text"]],
+          pageJumpLabel = locale_data[["page_jump_label_text"]],
+          pageSizeOptionsLabel = locale_data[["page_size_options_label_text"]],
+          groupExpandLabel = "Toggle group",
+          detailsExpandLabel = "Toggle details",
+          selectAllRowsLabel = "Select all rows",
+          selectAllSubRowsLabel = "Select all rows in group",
+          selectRowLabel = "Select row"
+        )
+    }
   }
 
   # Obtain the underlying data table
@@ -46,6 +105,8 @@ render_as_ihtml <- function(data, id) {
   data_tbl_vars <- dt_boxhead_get_vars_default(data = data)
   data_tbl <- data_tbl[, data_tbl_vars, drop = FALSE]
 
+  #nocov start
+
   # Stop function if there are no visible columns
   if (ncol(data_tbl) < 1) {
 
@@ -55,6 +116,8 @@ render_as_ihtml <- function(data, id) {
       "*" = "Failing that, look at whether all columns have been inadvertently hidden."
     ))
   }
+
+  #nocov end
 
   # Obtain column label attributes
   column_names  <- dt_boxhead_get_vars_default(data = data)
@@ -96,6 +159,7 @@ render_as_ihtml <- function(data, id) {
   use_resizers <- opt_val(data = data, option = "ihtml_use_resizers")
   use_highlight <- opt_val(data = data, option = "ihtml_use_highlight")
   use_compact_mode <- opt_val(data = data, option = "ihtml_use_compact_mode")
+  use_text_wrapping <- opt_val(data = data, option = "ihtml_use_text_wrapping")
   use_page_size_select <- opt_val(data = data, option = "ihtml_use_page_size_select")
   page_size_default <- opt_val(data = data, option = "ihtml_page_size_default")
   page_size_values <- opt_val(data = data, option = "ihtml_page_size_values")
@@ -106,7 +170,7 @@ render_as_ihtml <- function(data, id) {
 
   table_width <- opt_val(data = data, option = "table_width")
   table_background_color <- opt_val(data = data, option = "table_background_color")
-  table_font_style <- opt_val(data = data, option = "table_font_names")
+  table_font_names <- opt_val(data = data, option = "table_font_names")
   table_font_color <- opt_val(data = data, option = "table_font_color")
 
   column_labels_border_top_style <- opt_val(data = data, option = "column_labels_border_top_style")
@@ -115,6 +179,20 @@ render_as_ihtml <- function(data, id) {
   column_labels_border_bottom_style <- opt_val(data = data, option = "column_labels_border_bottom_style")
   column_labels_border_bottom_width <- opt_val(data = data, option = "column_labels_border_bottom_width")
   column_labels_border_bottom_color <- opt_val(data = data, option = "column_labels_border_bottom_color")
+
+  emoji_symbol_fonts <-
+    c(
+      "Apple Color Emoji", "Segoe UI Emoji",
+      "Segoe UI Symbol", "Noto Color Emoji"
+    )
+
+  table_font_names <- base::setdiff(table_font_names, emoji_symbol_fonts)
+
+  font_family_str <-
+    as_css_font_family_attr(
+      font_vec = table_font_names,
+      value_only = TRUE
+    )
 
   if (table_width == "auto") table_width <- NULL
 
@@ -127,7 +205,8 @@ render_as_ihtml <- function(data, id) {
         formatted_cells <-
           extract_cells(
             data = data,
-            columns = column_names[x]
+            columns = column_names[x],
+            output = "html"
           )
 
         reactable::colDef(
@@ -186,7 +265,10 @@ render_as_ihtml <- function(data, id) {
       collapse = ""
     )
 
-  default_col_def <- reactable::colDef(style = reactable::JS(body_style_js_str))
+  default_col_def <-
+    reactable::colDef(
+      style = reactable::JS(body_style_js_str)
+    )
 
   # Generate the table header if there are any heading components
   if (has_header_section) {
@@ -196,6 +278,7 @@ render_as_ihtml <- function(data, id) {
     heading_component <-
       htmltools::div(
         style = htmltools::css(
+          `font-family` = font_family_str,
           `border-top-style` = "solid",
           `border-top-width` = "2px",
           `border-top-color` = "#D3D3D3",
@@ -237,6 +320,7 @@ render_as_ihtml <- function(data, id) {
     footer_component <-
       htmltools::div(
         style = htmltools::css(
+          `font-family` = font_family_str,
           `border-top-style` = "solid",
           `border-top-width` = "2px",
           `border-top-color` = "#D3D3D3",
@@ -267,7 +351,7 @@ render_as_ihtml <- function(data, id) {
       highlightColor = NULL,
       cellPadding = NULL,
       style = list(
-        fontFamily = table_font_style
+        fontFamily = font_family_str
       ),
       tableStyle = NULL,
       headerStyle = list(
@@ -337,7 +421,7 @@ render_as_ihtml <- function(data, id) {
       borderless = FALSE,
       striped = use_row_striping,
       compact = use_compact_mode,
-      wrap = TRUE,
+      wrap = use_text_wrapping,
       showSortIcon = TRUE,
       showSortable = TRUE,
       class = NULL,
@@ -348,10 +432,12 @@ render_as_ihtml <- function(data, id) {
       width = table_width,
       height = "auto",
       theme = tbl_theme,
-      language = NULL,
+      language = lang_defs,
       elementId = id,
       static = FALSE
     )
+
+  #nocov start
 
   # Prepend the `heading_component` to the widget content
   if (!is.null(heading_component)) {
@@ -362,6 +448,8 @@ render_as_ihtml <- function(data, id) {
   if (!is.null(footer_component)) {
     x <- htmlwidgets::appendContent(x, footer_component)
   }
+
+  #nocov end
 
   x
 }

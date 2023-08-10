@@ -16,37 +16,70 @@ fmt_image(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The columns to format. Can either be a series of column names
-provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
-focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
+\verb{obj:<gt_tbl>} // \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
+
+Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
+column indices, or a select helper function. Examples of select helper
+functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
+\code{columns} being formatted. Alternatively, we can supply a vector of row
+captions within \code{\link[=c]{c()}}, a vector of row indices, or a select helper
+function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}.}
+\code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
+need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
-default) results in all rows in \code{columns} being formatted. Alternatively,
-we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
-indices, or a helper function focused on selections. The select helper
-functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
-\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
-to filter down to the rows we need (e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+\item{height}{\emph{Height of image}
 
-\item{height}{The absolute height of the image in the table cell. By default,
-this is set to \code{"1em"}.}
+\verb{scalar<character>} // \emph{default:} \code{"1em"}
 
-\item{sep}{In the output of images within a body cell, \code{sep} provides the
-separator between each image.}
+The absolute height of the image in the table cell. By default, this is set
+to \code{"1em"}.}
 
-\item{path}{An optional path to local image files (this is combined with all
+\item{sep}{\emph{Separator between images}
+
+\verb{scalar<character>} // \emph{default:} \code{" "}
+
+In the output of images within a body cell, \code{sep} provides the separator
+between each image.}
+
+\item{path}{\emph{Path to image files}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional path to local image files (this is combined with all
 filenames).}
 
-\item{file_pattern}{The pattern to use for mapping input values in the body
-cells to the names of the graphics files.}
+\item{file_pattern}{\emph{File pattern specification}
 
-\item{encode}{The option to always use Base64 encoding for image paths that
-are determined to be local. By default, this is \code{TRUE}.}
+\verb{scalar<character>} // \emph{default:} \code{"{x}"}
+
+The pattern to use for mapping input values in the body cells to the names
+of the graphics files. The string supplied should use \code{"{x}"} in the
+pattern to map filename fragments to input strings.}
+
+\item{encode}{\emph{Use Base64 encoding}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+The option to always use Base64 encoding for image paths that are
+determined to be local. By default, this is \code{TRUE}.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -77,8 +110,8 @@ helper like \code{starts_with()}, or, providing a more complex incantation like
 
 \code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
 
-which targets numeric columns that have a maximum value of 100,000 (excluding
-\code{NA}s from consideration).
+which targets numeric columns that have a maximum value greater than
+1,000,000 (excluding any \code{NA}s from consideration).
 
 By default all columns and rows are selected (with the \code{everything()}
 defaults). Cell values that are incompatible with a given formatting function
@@ -105,20 +138,45 @@ formatting on values in the column or another column, or, you'd like to use a
 more complex predicate expression.
 }
 
+\section{Compatibility of arguments with the \code{from_column()} helper function}{
+
+
+The \code{\link[=from_column]{from_column()}} helper function can be used with certain arguments of
+\code{fmt_image()} to obtain varying parameter values from a specified column
+within the table. This means that each row could be formatted a little bit
+differently. These arguments provide support for \code{\link[=from_column]{from_column()}}:
+\itemize{
+\item \code{height}
+\item \code{sep}
+\item \code{path}
+\item \code{file_pattern}
+\item \code{encode}
+}
+
+Please note that for each of the aforementioned arguments, a \code{\link[=from_column]{from_column()}}
+call needs to reference a column that has data of the correct type (this is
+different for each argument). Additional columns for parameter values can be
+generated with the \code{\link[=cols_add]{cols_add()}} function (if not already present). Columns
+that contain parameter data can also be hidden from final display with
+\code{\link[=cols_hide]{cols_hide()}}. Finally, there is no limitation to how many arguments the
+\code{\link[=from_column]{from_column()}} helper is applied so long as the arguments belong to this
+closed set.
+}
+
 \section{Examples}{
 
 
-Use the \code{\link{metro}} dataset to create a \strong{gt} table. We will only include a
-few columns and rows from that table. The \code{lines} and \code{connect_rer} columns
-have comma-separated listings of numbers/letters (corresponding to lines
-served at each station). We have a directory SVG graphics for all of these
-lines in the package (the path for the image directory can be accessed via
-\code{system.file("metro_svg", package = "gt")}), and the filenames roughly
-correspond to the data in those two columns. The \code{fmt_image()} function can
-be used with these inputs since the \code{path} and \code{file_pattern} arguments allow
-us to compose complete and valid file locations. What you get from this are
-sequences of images in the table cells, taken from the referenced graphics
-files on disk.
+Using a small portion of \code{\link{metro}} dataset, let's create a \strong{gt} table. We
+will only include a few columns and rows from that table. The \code{lines} and
+\code{connect_rer} columns have comma-separated listings of numbers/letters
+(corresponding to lines served at each station). We have a directory SVG
+graphics for all of these lines in the package (the path for the image
+directory can be accessed via \code{system.file("metro_svg", package = "gt")}),
+and the filenames roughly correspond to the data in those two columns. The
+\code{fmt_image()} function can be used with these inputs since the \code{path} and
+\code{file_pattern} arguments allow us to compose complete and valid file
+locations. What you get from this are sequences of images in the table cells,
+taken from the referenced graphics files on disk.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{metro |>
   dplyr::select(name, caption, lines, connect_rer) |>
@@ -170,12 +228,12 @@ files on disk.
 
 \section{Function ID}{
 
-3-19
+3-20
 }
 
 \section{Function Introduced}{
 
-\emph{In Development}
+\code{v0.9.0} (Mar 31, 2023)
 }
 
 \seealso{
@@ -202,6 +260,7 @@ Other data formatting functions:
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
 \code{\link{fmt_time}()},
+\code{\link{fmt_units}()},
 \code{\link{fmt_url}()},
 \code{\link{fmt}()},
 \code{\link{sub_large_vals}()},

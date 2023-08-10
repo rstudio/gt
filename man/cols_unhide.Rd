@@ -7,10 +7,22 @@
 cols_unhide(data, columns)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The column names to unhide from the output display table.
-Values provided that do not correspond to column names will be disregarded.}
+\verb{obj:<gt_tbl>} // \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
+
+The columns to unhide in the output display table. Can either be a series
+of column names provided in \code{\link[=c]{c()}}, a vector of column indices, or a select
+helper function. Examples of select helper functions include
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -33,8 +45,9 @@ already-visible columns.
 \section{Examples}{
 
 
-Use \code{\link{countrypops}} to create a \strong{gt} table. Hide the \code{country_code_2} and
-\code{country_code_3} columns with \code{\link[=cols_hide]{cols_hide()}}.
+Let's use a small portion of the \code{\link{countrypops}} dataset to create a \strong{gt}
+table. We'll hide the \code{country_code_2} and \code{country_code_3} columns with the
+\code{\link[=cols_hide]{cols_hide()}} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
   countrypops |>
@@ -64,7 +77,7 @@ the \code{cols_unhide()} function becomes useful.
 
 \section{Function ID}{
 
-5-10
+5-12
 }
 
 \section{Function Introduced}{
@@ -76,6 +89,7 @@ the \code{cols_unhide()} function becomes useful.
 \code{\link[=cols_hide]{cols_hide()}} to perform the inverse operation.
 
 Other column modification functions: 
+\code{\link{cols_add}()},
 \code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
@@ -88,6 +102,7 @@ Other column modification functions:
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
+\code{\link{cols_units}()},
 \code{\link{cols_width}()}
 }
 \concept{column modification functions}

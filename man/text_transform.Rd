@@ -7,16 +7,28 @@
 text_transform(data, fn, locations = cells_body())
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{fn}{The function to use for text transformation. It should include \code{x}
-as an argument and return a character vector of the same length as the
-input \code{x}.}
+\verb{obj:<gt_tbl>} // \strong{required}
 
-\item{locations}{The cell or set of cells to be associated with the text
-transformation. Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}},
-\code{\link[=cells_column_labels]{cells_column_labels()}}, and \code{\link[=cells_row_groups]{cells_row_groups()}} helper functions can be
-used here. We can enclose several of these calls within a \code{list()} if we
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{fn}{\emph{Function for text transformation}
+
+\verb{<function>} // \strong{required}
+
+The function to use for text transformation. It should include \code{x} as an
+argument and return a character vector of the same length as the input \code{x}.}
+
+\item{locations}{\emph{Locations to target}
+
+\verb{<locations expressions>} // \emph{default:} \code{cells_body()}
+
+The cell or set of cells to be associated with the text transformation.
+Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_row_groups]{cells_row_groups()}},
+\code{\link[=cells_column_labels]{cells_column_labels()}}, and \code{\link[=cells_column_spanners]{cells_column_spanners()}} helper functions can
+be used here. We can enclose several of these calls within a \code{list()} if we
 wish to make the transformation happen at different locations.}
 }
 \value{
@@ -36,11 +48,11 @@ character vector of the same length as the input. Using the construction
 \section{Examples}{
 
 
-Use \code{\link{sp500}} to create a \strong{gt} table. Transform the text in the
-\code{date} column using a function supplied to \code{text_transform()} (via the \code{fn}
-argument). Note that the \code{x} in the \verb{fn = function (x)} part consists
-entirely of ISO 8601 date strings (which are acceptable as input to the
-\code{\link[=vec_fmt_date]{vec_fmt_date()}} and \code{\link[=vec_fmt_datetime]{vec_fmt_datetime()}} functions).
+Use a subset of the \code{\link{sp500}} dataset to create a \strong{gt} table. Transform the
+text in the \code{date} column using a function supplied to \code{text_transform()}
+(via the \code{fn} argument). Note that the \code{x} in the \verb{fn = function (x)} part
+consists entirely of ISO 8601 date strings (which are acceptable as input to
+the \code{\link[=vec_fmt_date]{vec_fmt_date()}} and \code{\link[=vec_fmt_datetime]{vec_fmt_datetime()}} functions).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
   dplyr::slice_head(n = 10) |>
@@ -71,15 +83,15 @@ entirely of ISO 8601 date strings (which are acceptable as input to the
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_text_transform_1.png" alt="This image of a table was generated from the first code example in the `text_transform()` help file." style="width:100\%;">
 }}
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. First, the numeric values in the \code{n}
-column are formatted as spelled-out numbers with \code{\link[=fmt_spelled_num]{fmt_spelled_num()}}. The
-output values are indeed spelled out but exclusively with lowercase letters.
-We actually want these words to begin with a capital letter and end with a
-period. To make this possible, the \code{text_transform()} function will be used
-since it can modify already-formatted text. Through the \code{fn} argument, we
-provide a custom function that uses R's \code{toTitleCase()} operating on \code{x} (the
-numbers-as-text strings) within a \code{paste0()} so that a period can be properly
-placed.
+Let's use a summarized version of the \code{\link{gtcars}} dataset to create a \strong{gt}
+table. First, the numeric values in the \code{n} column are formatted as
+spelled-out numbers with \code{\link[=fmt_spelled_num]{fmt_spelled_num()}}. The output values are indeed
+spelled out but exclusively with lowercase letters. We actually want these
+words to begin with a capital letter and end with a period. To make this
+possible, the \code{text_transform()} function will be used since it can modify
+already-formatted text. Through the \code{fn} argument, we provide a custom
+function that uses R's \code{toTitleCase()} operating on \code{x} (the numbers-as-text
+strings) within a \code{paste0()} so that a period can be properly placed.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
   dplyr::select(mfr, ctry_origin) |>
@@ -103,6 +115,43 @@ placed.
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_text_transform_2.png" alt="This image of a table was generated from the second code example in the `text_transform()` help file." style="width:100\%;">
+}}
+
+There may be occasions where you'd want to remove all text. Here in this
+example based on the \code{\link{pizzaplace}} dataset, we generate a \strong{gt} table that
+summarizes an entire year of data by colorizing the daily sales revenue.
+Individual cell values are not needed here (since the encoding by color
+suffices), so, \code{text_transform()} is used to turn every value to an empty
+string: \code{""}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
+  dplyr::group_by(date) |>
+  dplyr::summarize(rev = sum(price)) |>
+  dplyr::ungroup() |>
+  dplyr::mutate(
+    month = lubridate::month(date, label = TRUE),
+    day_num = lubridate::mday(date)
+  ) |>
+  dplyr::select(-date) |>
+  tidyr::pivot_wider(names_from = month, values_from = rev) |>
+  gt(rowname_col = "day_num") |>
+  data_color(
+    method = "numeric",
+    palette = "wesanderson::Zissou1",
+    na_color = "white"
+  ) |>
+  text_transform(
+    fn = function(x) "",
+    locations = cells_body()
+  ) |>
+  opt_table_lines(extent = "none") |>
+  opt_all_caps() |>
+  cols_width(everything() ~ px(35)) |>
+  cols_align(align = "center")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_text_transform_3.png" alt="This image of a table was generated from the third code example in the `text_transform()` help file." style="width:100\%;">
 }}
 }
 

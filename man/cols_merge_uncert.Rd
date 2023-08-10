@@ -14,39 +14,65 @@ cols_merge_uncert(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{col_val}{A single column name that contains the base values. This is
-the column where values will be mutated.}
+\verb{obj:<gt_tbl>} // \strong{required}
 
-\item{col_uncert}{Either one or two column names that contain the uncertainty
-values. The most common case involves supplying a single column with
-uncertainties; these values will be combined with those in \code{col_val}. Less
-commonly, lower and upper uncertainty bounds may be different. For that
-case two columns (representing lower and upper uncertainty values away from
-\code{col_val}, respectively) should be provided. Since we often don't want the
-uncertainty value columns in the output table, we can automatically hide
-any \code{col_uncert} columns through the \code{autohide} option.}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 
-\item{rows}{Rows that will participate in the merging process. Providing
-\code{\link[=everything]{everything()}} (the default) results in all rows in \code{columns} undergoing
-merging. Alternatively, we can supply a vector of row identifiers within
-\code{\link[=c]{c()}}, a vector of row indices, or a helper function focused on selections.
-The select helper functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
-\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.
-We can also use a standalone predicate expression to filter down to the
-rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+\item{col_val}{\emph{Column to target for base values}
 
-\item{sep}{The separator text that contains the uncertainty mark for a single
+\verb{<column-targeting expression>} // \strong{required}
+
+The column that contains values for the start of the range. While select
+helper functions such as \code{\link[=starts_with]{starts_with()}} and \code{\link[=ends_with]{ends_with()}} can be used for
+column targeting, it's recommended that a single column name be used. This
+is to ensure that exactly one column is provided here.}
+
+\item{col_uncert}{\emph{Column or columns to target for uncertainty values}
+
+\verb{<column-targeting expression>} // \strong{required}
+
+The most common case involves supplying a single column with uncertainties;
+these values will be combined with those in \code{col_val}. Less commonly, the
+lower and upper uncertainty bounds may be different. For that case, two
+columns representing the lower and upper uncertainty values away from
+\code{col_val}, respectively, should be provided. While select helper functions
+such as \code{\link[=starts_with]{starts_with()}} and \code{\link[=ends_with]{ends_with()}} can be used for column targeting,
+it's recommended that one or two column names be explicitly provided in a
+vector.}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+participate in the merging process. The default \code{\link[=everything]{everything()}} results in
+all rows in \code{columns} being formatted. Alternatively, we can supply a
+vector of row captions within \code{\link[=c]{c()}}, a vector of row indices, or a select
+helper function. Examples of select helper functions include
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions to filter
+down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+
+\item{sep}{\emph{Separator text for uncertainties}
+
+\verb{scalar<character>} // \emph{default:} \code{" +/- "}
+
+The separator text that contains the uncertainty mark for a single
 uncertainty value. The default value of \code{" +/- "} indicates that an
 appropriate plus/minus mark will be used depending on the output context.
 Should you want this special symbol to be taken literally, it can be
 supplied within the \code{\link[=I]{I()}} function.}
 
-\item{autohide}{An option to automatically hide any columns specified in
-\code{col_uncert}. Any columns with their state changed to 'hidden' will behave
-the same as before, they just won't be displayed in the finalized table.
-By default, this is set to \code{TRUE}.}
+\item{autohide}{\emph{Automatic hiding of the \code{col_uncert} column(s)}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+An option to automatically hide any columns specified in \code{col_uncert}. Any
+columns with their state changed to 'hidden' will behave the same as
+before, they just won't be displayed in the finalized table.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -89,12 +115,16 @@ the output table through the \code{hide_columns} or \code{autohide} options.
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table, keeping only the \code{currency} and
-\code{num} columns. Merge columns into one with a base value and uncertainty
-(after formatting the \code{num} column) using the \code{cols_merge_uncert()} function.
+Let's use the \code{\link{exibble}} dataset to create a simple, two-column \strong{gt} table
+(keeping only the \code{num} and \code{currency} columns). We'll format the \code{num}
+column with the \code{\link[=fmt_number]{fmt_number()}} function. Next we merge the \code{currency} and
+\code{num} columns into the \code{currency} column; this will contain a base value and
+an uncertainty and it's all done using the \code{cols_merge_uncert()} function.
+After the merging process, the column label for the \code{currency} column is
+updated with \code{\link[=cols_label]{cols_label()}} to better describe the content.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
-  dplyr::select(currency, num) |>
+  dplyr::select(num, currency) |>
   dplyr::slice(1:7) |>
   gt() |>
   fmt_number(
@@ -116,7 +146,7 @@ Use \code{\link{exibble}} to create a \strong{gt} table, keeping only the \code{
 
 \section{Function ID}{
 
-5-12
+5-14
 }
 
 \section{Function Introduced}{
@@ -126,6 +156,7 @@ Use \code{\link{exibble}} to create a \strong{gt} table, keeping only the \code{
 
 \seealso{
 Other column modification functions: 
+\code{\link{cols_add}()},
 \code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
@@ -138,6 +169,7 @@ Other column modification functions:
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
 \code{\link{cols_unhide}()},
+\code{\link{cols_units}()},
 \code{\link{cols_width}()}
 }
 \concept{column modification functions}

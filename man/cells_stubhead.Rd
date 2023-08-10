@@ -16,7 +16,7 @@ when applying a footnote with \code{\link[=tab_footnote]{tab_footnote()}} or add
 \code{locations} argument. The 'stubhead' location is always present alongside the
 'stub' location.
 }
-\section{Overview of Location Helper Functions}{
+\section{Overview of location helper functions}{
 
 
 Location helper functions can be used to target cells with virtually any
@@ -62,8 +62,10 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 \section{Examples}{
 
 
-Use \code{\link{pizzaplace}} to create a \strong{gt} table. Add a stubhead label with
-\code{\link[=tab_stubhead]{tab_stubhead()}} and then style it with \code{\link[=tab_style]{tab_style()}} and \code{cells_stubhead()}.
+Using a summarized version of the \code{\link{pizzaplace}} dataset, let's create a
+\strong{gt} table. Add a stubhead label with \code{\link[=tab_stubhead]{tab_stubhead()}} and then style it
+with \code{\link[=tab_style]{tab_style()}} in conjunction with the use of \code{cells_stubhead()} in the
+\code{locations} argument.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
   dplyr::mutate(month = as.numeric(substr(date, 6, 7))) |>
@@ -85,7 +87,7 @@ Use \code{\link{pizzaplace}} to create a \strong{gt} table. Add a stubhead label
 
 \section{Function ID}{
 
-8-7
+8-11
 }
 
 \section{Function Introduced}{
@@ -113,7 +115,9 @@ Other helper functions:
 \code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
+\code{\link{define_units}()},
 \code{\link{escape_latex}()},
+\code{\link{from_column}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
@@ -121,6 +125,7 @@ Other helper functions:
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},
-\code{\link{stub}()}
+\code{\link{stub}()},
+\code{\link{system_fonts}()}
 }
 \concept{helper functions}

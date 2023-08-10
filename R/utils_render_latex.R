@@ -1,11 +1,35 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2023 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 # Create a simple LaTeX group by surrounding a statement with curly braces
 latex_group <- function(...) {
   paste0("{", ..., "}")
 }
 
-# Create a vector of LaTeX packages to use as table dependencies
+# Get a vector of LaTeX packages to use as table dependencies
 latex_packages <- function() {
-  c("amsmath", "booktabs", "caption", "longtable")
+  getOption("gt.latex_packages")
 }
 
 # Transform a footnote mark to a LaTeX representation as a superscript
@@ -58,7 +82,7 @@ latex_heading_row <- function(content) {
 
   paste0(
     paste(paste(content, collapse = " & "), "\\\\ \n"),
-    "\\midrule\n",
+    "\\midrule\\addlinespace[2.5pt]\n",
     collapse = ""
   )
 }
@@ -72,10 +96,10 @@ latex_group_row <- function(
 ) {
 
   paste0(
-    ifelse(top_border, "\\midrule\n", ""),
+    ifelse(top_border, "\\midrule\\addlinespace[2.5pt]\n", ""),
     "\\multicolumn{", n_cols, "}{l}{", group_name,
     "} \\\\ \n",
-    ifelse(bottom_border, "\\midrule\n", ""),
+    ifelse(bottom_border, "\\midrule\\addlinespace[2.5pt]\n", ""),
     collapse = ""
   )
 }
@@ -86,8 +110,14 @@ create_table_start_l <- function(data) {
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
 
+  boxh_df <- dt_boxhead_get(data = data)
+
   # Get default alignments for body columns
   col_alignment <- dt_boxhead_get_vars_align_default(data = data)
+
+  if (length(stub_layout) > 0) {
+    col_alignment <- c(rep("left", length(stub_layout)), col_alignment)
+  }
 
   # Determine if there are any footnotes or source notes; if any,
   # add a `\setlength` command that will pull up the minipage environment
@@ -101,15 +131,86 @@ create_table_start_l <- function(data) {
     longtable_post_length <- ""
   }
 
-  # Generate setup statements for table including default right
+  # Obtain widths for each visible column label
+  col_widths <-
+    unlist(
+      dplyr::pull(
+        dplyr::arrange(
+          dplyr::filter(boxh_df, type %in% c("default", "stub")),
+          dplyr::desc(type)
+        ),
+        column_width
+      )
+    )
+
+  # Generate the column definitions for visible columns
+  # these can either be simple `l`, `c`, `r` directive if a width isn't set
+  # for a column, or, use `p{<width>}` statements with leading `>{...}`
+  # specifiers that should have one of the following:
+  # - `>{\raggedright\arraybackslash}` <- left alignment
+  # - `>{\raggedleft\arraybackslash}` <- right alignment
+  # - `>{\centering\arraybackslash}` <- center alignment
+  # the `\arraybackslash` command is used to restore the behavior of the
+  # `\\` command in the table (all of this uses the CTAN `array` package)
+
+  if (!is.null(col_widths)) {
+
+    col_defs <- c()
+
+    # TODO: check that length of `col_widths` is equal to that
+    # of `col_alignment`
+
+    if ("group_label" %in% stub_layout) {
+
+      group_label_width <-
+        unlist(
+          dplyr::pull(dplyr::filter(boxh_df, type == "row_group"), column_width)
+        )
+
+      col_widths <- c(group_label_width, col_widths)
+    }
+
+    for (i in seq_along(col_widths)) {
+
+      if (col_widths[i] != "") {
+
+        align <-
+          switch(
+            col_alignment[i],
+            left = ">{\\raggedright\\arraybackslash}",
+            right = ">{\\raggedleft\\arraybackslash}",
+            center = ">{\\centering\\arraybackslash}",
+            ">{\\raggedright\\arraybackslash}"
+          )
+
+        col_defs_i <- paste0(align, "p{", col_widths[i], "}")
+
+      } else {
+
+        col_defs_i <- substr(col_alignment[i], 1, 1)
+      }
+
+      col_defs <- c(col_defs, col_defs_i)
+    }
+
+  } else {
+
+    col_defs <- substr(col_alignment, 1, 1)
+  }
+
+  # Add borders to the right of any columns in the stub
+  if (length(stub_layout) > 0) {
+
+    col_defs[seq_along(stub_layout)] <-
+      paste0(col_defs[seq_along(stub_layout)], "|")
+  }
+
+  # Generate setup statements for table including default left
   # alignments and vertical lines for any stub columns
   paste0(
     longtable_post_length,
     "\\begin{longtable}{",
-    if (length(stub_layout) > 0) {
-      paste0(rep("l|", length(stub_layout)), collapse = "")
-    },
-    col_alignment %>% substr(1, 1) %>% paste(collapse = ""),
+    paste(col_defs, collapse = ""),
     "}\n",
     collapse = ""
   )
@@ -340,6 +441,7 @@ create_body_component_l <- function(data) {
   # Get a matrix of body cells to render, split into a list of
   # character vectors by row, and create a vector of LaTeX body rows
   cell_matrix <- get_body_component_cell_matrix(data = data)
+
   row_splits_body <- split_row_content(cell_matrix)
 
   # Get the number of rows in the body
@@ -383,9 +485,13 @@ create_body_component_l <- function(data) {
     )
   }
 
-  body_rows <- create_body_rows_l(row_splits_body = row_splits_body)
+  body_rows <-
+    create_body_rows_l(
+      data = data,
+      row_splits_body = row_splits_body
+    )
 
-  # Replace an NA group with an empty string
+  # Replace an NA group with a small amount of vertical space
   if (any(is.na(groups_rows_df$group_label))) {
 
     groups_rows_df <-
@@ -434,7 +540,8 @@ create_body_component_l <- function(data) {
         # Insert a horizontal line if this is the beginning of a new row
         # group and there is a two-column stub
         if (group_start && has_two_col_stub && i != 1) {
-          body_section <- append(body_section, "\\midrule\n")
+          body_section <-
+            append(body_section, "\\midrule\\addlinespace[2.5pt]\n")
         }
 
         #
@@ -448,7 +555,7 @@ create_body_component_l <- function(data) {
               group_name = group_label,
               n_cols = n_cols,
               top_border = i != 1,
-              bottom_border = i != n_rows
+              bottom_border = TRUE
             )
 
           body_section <- append(body_section, list(group_heading_row))
@@ -720,10 +827,11 @@ create_footer_component_l <- function(data) {
       )
 
     if (footnotes_multiline) {
-      footnotes <- paste(footnotes, collapse = "\\\\\n") %>% paste_right("\\\\\n")
+      footnotes <- paste_right(paste(footnotes, collapse = "\\\\\n"), "\\\\\n")
     } else {
-      footnotes <- paste(footnotes, collapse = footnotes_sep) %>% paste_right("\\\\\n")
+      footnotes <- paste_right(paste(footnotes, collapse = footnotes_sep), "\\\\\n")
     }
+
   } else {
     footnotes <- ""
   }
@@ -732,9 +840,9 @@ create_footer_component_l <- function(data) {
   if (length(source_notes_vec) > 0) {
 
     if (source_notes_multiline) {
-      source_notes <- paste(source_notes_vec, collapse = "\\\\\n") %>% paste_right("\\\\\n")
+      source_notes <- paste_right(paste(source_notes_vec, collapse = "\\\\\n"), "\\\\\n")
     } else {
-      source_notes <- paste(source_notes_vec, collapse = source_notes_sep) %>% paste_right("\\\\\n")
+      source_notes <- paste_right(paste(source_notes_vec, collapse = source_notes_sep), "\\\\\n")
     }
 
   } else {
@@ -750,48 +858,128 @@ create_footer_component_l <- function(data) {
   )
 }
 
-# Function to build a vector of `group` rows in the table body
-create_group_rows_l <- function(
-    groups_rows_df,
-    n_rows,
-    n_cols
+# Function to build a vector of `body` rows
+create_body_rows_l <- function(
+    data,
+    row_splits_body
 ) {
 
-  unname(
-    unlist(
-      lapply(
-        seq_len(n_rows),
-        FUN = function(x) {
-          if (!(x %in% groups_rows_df$row_start)) {
-            return("")
+  styles_tbl <- dt_styles_get(data = data)
+  styles_tbl <- dplyr::filter(styles_tbl, locname %in% c("stub", "data", "row_groups"))
+
+  # Obtain all of the visible (`"default"`), non-stub column names
+  # for the table from the `boxh` object
+  default_vars <- dt_boxhead_get_vars_default(data = data)
+
+  stub_layout <- get_stub_layout(data = data)
+
+  stub_is_2 <- length(stub_layout) > 1
+
+  if (is.null(stub_layout)) {
+    vars <- default_vars
+  } else if (!is.null(stub_layout) && !stub_is_2 && stub_layout == "rowname") {
+    vars <- c("::stub::", default_vars)
+  } else if (!is.null(stub_layout) && !stub_is_2 && stub_layout == "group_label") {
+    vars <- c("::group::", default_vars)
+  } else if (!is.null(stub_layout) && stub_is_2) {
+    vars <- c("::group::", "::stub::", default_vars)
+  }
+
+  if ("::group::" %in% vars) {
+    styles_tbl <- dplyr::mutate(styles_tbl, rownum = round(rownum))
+  }
+
+  body_rows <-
+    unname(
+      unlist(
+        lapply(
+          seq_len(length(row_splits_body)),
+          FUN = function(x) {
+
+            content <- row_splits_body[[x]]
+            content_length <- length(content)
+
+            styles_tbl_i <- dplyr::filter(styles_tbl, rownum == x)
+
+            if (nrow(styles_tbl_i) < 1) {
+              return(paste(paste(content, collapse = " & "), "\\\\ \n"))
+            }
+
+            for (i in seq_len(content_length)) {
+
+              colname_i <- vars[i]
+
+              if (
+                colname_i == "::group::" &&
+                "row_groups" %in% styles_tbl_i[["locname"]]
+              ) {
+
+                styles_tbl_i_col <- dplyr::filter(styles_tbl_i, locname == "row_groups")
+                styles_i_col <- styles_tbl_i_col[["styles"]]
+
+              } else if (
+                colname_i == "::stub::" &&
+                "stub" %in% styles_tbl_i[["locname"]]
+              ) {
+
+                styles_tbl_i_col <- dplyr::filter(styles_tbl_i, locname == "stub")
+                styles_i_col <- styles_tbl_i_col[["styles"]]
+
+              } else if (
+                "data" %in% styles_tbl_i[["locname"]] &&
+                colname_i %in% styles_tbl_i[["colname"]]
+              ) {
+
+                styles_tbl_i_col <- dplyr::filter(styles_tbl_i, colname == colname_i)
+                styles_i_col <- styles_tbl_i_col[["styles"]]
+
+              } else {
+                styles_i_col <- NULL
+              }
+
+              if (!is.null(styles_i_col)) {
+
+                # TODO: this only considers the first entry; we need to iterate
+                # through them since there may be multiple styles set for each
+                # body cell and that might result in several rows in `styles_tbl_i_col`
+                # (i.e., length greater than 1 in `styles_i_col`)
+                styles_i_col_text_color <- styles_i_col[[1]][["cell_text"]][["color"]]
+                styles_i_col_cell_color <- styles_i_col[[1]][["cell_fill"]][["color"]]
+
+                if (
+                  !is.null(styles_i_col[[1]][["cell_text"]][["weight"]]) &&
+                  styles_i_col[[1]][["cell_text"]][["weight"]] == "bold"
+                ) {
+                  content[i] <- paste0("\\textbf{", content[i], "}")
+                }
+
+                if (!is.null(styles_i_col_text_color)) {
+                  content[i] <-
+                    paste0(
+                      "\\textcolor[HTML]{",
+                      gsub("#", "", styles_i_col_text_color, fixed = TRUE),
+                      "}{", content[i], "}"
+                    )
+                }
+
+                if (!is.null(styles_i_col_cell_color)) {
+                  content[i] <-
+                    paste0(
+                      "\\cellcolor[HTML]{",
+                      gsub("#", "", styles_i_col_cell_color, fixed = TRUE),
+                      "}{", content[i], "}"
+                    )
+                }
+              }
+            }
+
+            paste(paste(content, collapse = " & "), "\\\\ \n")
           }
-
-          latex_group_row(
-            group_name = groups_rows_df[groups_rows_df$row_start == x, "group_label"][[1]],
-            n_cols = n_cols,
-            top_border = x != 1,
-            bottom_border = x != n_rows
-          )
-        }
+        )
       )
     )
-  )
-}
 
-
-# Function to build a vector of `body` rows
-create_body_rows_l <- function(row_splits_body) {
-
-  unname(
-    unlist(
-      lapply(
-        seq_len(length(row_splits_body)),
-        FUN = function(x) {
-          latex_body_row(content = row_splits_body[[x]], type = "row")
-        }
-      )
-    )
-  )
+  body_rows
 }
 
 # Function to build a vector of `summary` rows in the table body

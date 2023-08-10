@@ -11,10 +11,18 @@
 
 \strong{gt} uses the following \code{\link[=options]{options()}} to configure behavior:
 \itemize{
+\item \code{gt.row_group.sep}: A separator between groups for the row group label. By
+default this is \code{" - "}.
 \item \code{gt.html_tag_check}: A logical scalar indicating whether or not to print a
 warning when HTML tags are found in a table that is being rendered to LaTeX.
-\item \code{gt.row_group.sep}: A separator between groups for the row group
-label.
+The default for this is \code{TRUE}.
+\item \code{gt.strict_column_fmt}: A logical scalar that controls whether formatting
+via the \verb{fmt_*()} functions should fail if attempting to format data that is
+incompatible with the function. This is \code{FALSE} by default.
+\item \code{gt.latex_packages}: A vector of LaTeX package names to use when generating
+tables in the LaTeX output context. The set of packages loaded is controlled
+by this default vector:
+\code{c("booktabs", "caption", "longtable", "colortbl", "array")}.
 }
 }
 

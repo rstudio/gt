@@ -614,7 +614,7 @@ test_that("The `vec_fmt_integer()` function works", {
 
 test_that("The `vec_fmt_scientific()` function works", {
 
-  # TODO: `vec_fmt_scientifc()` and `fmt_scientific()` are incompatible with
+  # TODO: `vec_fmt_scientific()` and `fmt_scientific()` are incompatible with
   # Inf values so we will omit them from the test vectors until a fix is
   # available
 
@@ -709,25 +709,54 @@ test_that("The `vec_fmt_scientific()` function works", {
       )
     )
 
-  # TODO: `vec_fmt_scientific()` and `fmt_scientific()` both error when
-  # `drop_trailing_zeros = TRUE`; omit these test until a fix is available
-  # vec_fmt_scientific(vec_num_4_m, drop_trailing_zeros = TRUE, output = "html") %>%
-  #   expect_equal(
-  #     c(
-  #     )
-  #   )
-  #
-  # vec_fmt_scientific(vec_num_1, drop_trailing_zeros = TRUE, output = "latex") %>%
-  #   expect_equal(
-  #     c(
-  #     )
-  #   )
-  #
-  # vec_fmt_scientific(vec_num_1, drop_trailing_zeros = TRUE, output = "rtf") %>%
-  #   expect_equal(
-  #     c(
-  #     )
-  #   )
+  vec_fmt_scientific(vec_num_4_m, drop_trailing_zeros = TRUE, output = "plain") %>%
+    expect_equal(
+      c(
+        "-2.5 \U000D7 10^6", "-2 \U000D7 10^6",
+        "-1.5 \U000D7 10^6", "-1 \U000D7 10^6",
+        "-5 \U000D7 10^5", "0", "5 \U000D7 10^5",
+        "1 \U000D7 10^6", "1.5 \U000D7 10^6",
+        "2 \U000D7 10^6", "2.5 \U000D7 10^6", "NA"
+      )
+    )
+
+  vec_fmt_scientific(vec_num_4_m, drop_trailing_zeros = TRUE, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "2 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "5 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>"),
+        "0",
+        paste0("5 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>"),
+        paste0("1 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("1.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        "NA"
+      )
+    )
+
+  vec_fmt_scientific(vec_num_4_m, drop_trailing_zeros = TRUE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.5 \\times 10^{6}$", "$-2 \\times 10^{6}$", "$-1.5 \\times 10^{6}$",
+        "$-1 \\times 10^{6}$", "$-5 \\times 10^{5}$", "$0$",
+        "$5 \\times 10^{5}$", "$1 \\times 10^{6}$", "$1.5 \\times 10^{6}$",
+        "$2 \\times 10^{6}$", "$2.5 \\times 10^{6}$", "NA"
+      )
+    )
+
+  vec_fmt_scientific(vec_num_4_m, drop_trailing_zeros = TRUE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.5 \\'d7 10{\\super 6}", "-2 \\'d7 10{\\super 6}", "-1.5 \\'d7 10{\\super 6}",
+        "-1 \\'d7 10{\\super 6}", "-5 \\'d7 10{\\super 5}", "0",
+        "5 \\'d7 10{\\super 5}", "1 \\'d7 10{\\super 6}", "1.5 \\'d7 10{\\super 6}",
+        "2 \\'d7 10{\\super 6}", "2.5 \\'d7 10{\\super 6}", "NA"
+      )
+    )
 
   vec_fmt_scientific(vec_num_4_m, locale = "de", output = "plain") %>%
     expect_equal(
@@ -896,7 +925,7 @@ test_that("The `vec_fmt_engineering()` function works", {
       c(
         "-2.50", "-2.00", "-1.50", "-1.00", "-500.00 \U000D7 10^-3",
         "0.00", "500.00 \U000D7 10^-3", "1.00", "1.50", "2.00",
-        "2.50", "NA", "Inf."
+        "2.50", "NA", "Inf"
       )
     )
 
@@ -908,7 +937,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         paste0("\U02212", "500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
         "0.00",
         paste0("500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
-        "1.00", "1.50", "2.00", "2.50", "NA", "Inf."
+        "1.00", "1.50", "2.00", "2.50", "NA", "Inf"
       )
     )
 
@@ -917,7 +946,7 @@ test_that("The `vec_fmt_engineering()` function works", {
       c(
         "$-2.50$", "$-2.00$", "$-1.50$", "$-1.00$", "$-500.00 \\times 10^{-3}$",
         "$0.00$", "$500.00 \\times 10^{-3}$", "$1.00$", "$1.50$", "$2.00$",
-        "$2.50$", "NA", "$Inf.$"
+        "$2.50$", "NA", "$Inf$"
       )
     )
 
@@ -926,7 +955,7 @@ test_that("The `vec_fmt_engineering()` function works", {
       c(
         "-2.50", "-2.00", "-1.50", "-1.00", "-500.00 \\'d7 10{\\super -3}",
         "0.00", "500.00 \\'d7 10{\\super -3}", "1.00", "1.50", "2.00",
-        "2.50", "NA", "Inf."
+        "2.50", "NA", "Inf"
       )
     )
 
@@ -938,7 +967,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         "-500.00 \U000D7 10^3", "0.00",
         "500.00 \U000D7 10^3", "1.00 \U000D7 10^6",
         "1.50 \U000D7 10^6", "2.00 \U000D7 10^6",
-        "2.50 \U000D7 10^6", "NA", "Inf."
+        "2.50 \U000D7 10^6", "NA", "Inf"
       )
     )
 
@@ -956,7 +985,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         paste0("1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
         paste0("2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
         paste0("2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        "NA", "Inf."
+        "NA", "Inf"
       )
     )
 
@@ -966,7 +995,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         "$-2.50 \\times 10^{6}$", "$-2.00 \\times 10^{6}$", "$-1.50 \\times 10^{6}$",
         "$-1.00 \\times 10^{6}$", "$-500.00 \\times 10^{3}$", "$0.00$",
         "$500.00 \\times 10^{3}$", "$1.00 \\times 10^{6}$", "$1.50 \\times 10^{6}$",
-        "$2.00 \\times 10^{6}$", "$2.50 \\times 10^{6}$", "NA", "$Inf.$"
+        "$2.00 \\times 10^{6}$", "$2.50 \\times 10^{6}$", "NA", "$Inf$"
       )
     )
 
@@ -977,7 +1006,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         "-1.00 \\'d7 10{\\super 6}", "-500.00 \\'d7 10{\\super 3}", "0.00",
         "500.00 \\'d7 10{\\super 3}", "1.00 \\'d7 10{\\super 6}", "1.50 \\'d7 10{\\super 6}",
         "2.00 \\'d7 10{\\super 6}", "2.50 \\'d7 10{\\super 6}", "NA",
-        "Inf."
+        "Inf"
       )
     )
 
@@ -989,7 +1018,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         "-500.00 \U000D7 10^9", "0.00", "500.00 \U000D7 10^9",
         "1.00 \U000D7 10^12", "1.50 \U000D7 10^12",
         "2.00 \U000D7 10^12", "2.50 \U000D7 10^12",
-        "NA", "Inf."
+        "NA", "Inf"
       )
     )
 
@@ -1007,7 +1036,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         paste0("1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>12</sup>"),
         paste0("2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>12</sup>"),
         paste0("2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>12</sup>"),
-        "NA", "Inf."
+        "NA", "Inf"
       )
     )
 
@@ -1019,7 +1048,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         "$-500.00 \\times 10^{9}$", "$0.00$",
         "$500.00 \\times 10^{9}$", "$1.00 \\times 10^{12}$",
         "$1.50 \\times 10^{12}$", "$2.00 \\times 10^{12}$",
-        "$2.50 \\times 10^{12}$", "NA", "$Inf.$"
+        "$2.50 \\times 10^{12}$", "NA", "$Inf$"
       )
     )
 
@@ -1031,11 +1060,65 @@ test_that("The `vec_fmt_engineering()` function works", {
         "-500.00 \\'d7 10{\\super 9}", "0.00", "500.00 \\'d7 10{\\super 9}",
         "1.00 \\'d7 10{\\super 12}", "1.50 \\'d7 10{\\super 12}",
         "2.00 \\'d7 10{\\super 12}", "2.50 \\'d7 10{\\super 12}",
-        "NA", "Inf."
+        "NA", "Inf"
       )
     )
 
   vec_fmt_engineering(vec_num_4, drop_trailing_zeros = TRUE, output = "plain") %>%
+    expect_equal(
+      c(
+        "-2.5 \U000D7 10^6", "-2 \U000D7 10^6",
+        "-1.5 \U000D7 10^6", "-1 \U000D7 10^6",
+        "-500 \U000D7 10^3", "0", "500 \U000D7 10^3",
+        "1 \U000D7 10^6", "1.5 \U000D7 10^6",
+        "2 \U000D7 10^6", "2.5 \U000D7 10^6", "NA", "Inf"
+      )
+    )
+
+  vec_fmt_engineering(vec_num_4, drop_trailing_zeros = TRUE, output = "html") %>%
+    expect_equal(
+      c(
+        paste0("\U02212", "2.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "2 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "500 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
+        "0",
+        paste0("500 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
+        paste0("1 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("1.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        "NA", "Inf"
+      )
+    )
+
+  vec_fmt_engineering(vec_num_4, drop_trailing_zeros = TRUE, output = "latex") %>%
+    expect_equal(
+      c(
+        "$-2.5 \\times 10^{6}$", "$-2 \\times 10^{6}$", "$-1.5 \\times 10^{6}$",
+        "$-1 \\times 10^{6}$", "$-500 \\times 10^{3}$", "$0$", "$500 \\times 10^{3}$",
+        "$1 \\times 10^{6}$", "$1.5 \\times 10^{6}$", "$2 \\times 10^{6}$",
+        "$2.5 \\times 10^{6}$", "NA", "$Inf$"
+      )
+    )
+
+  vec_fmt_engineering(vec_num_4, drop_trailing_zeros = TRUE, output = "rtf") %>%
+    expect_equal(
+      c(
+        "-2.5 \\'d7 10{\\super 6}", "-2 \\'d7 10{\\super 6}", "-1.5 \\'d7 10{\\super 6}",
+        "-1 \\'d7 10{\\super 6}", "-500 \\'d7 10{\\super 3}", "0",
+        "500 \\'d7 10{\\super 3}", "1 \\'d7 10{\\super 6}", "1.5 \\'d7 10{\\super 6}",
+        "2 \\'d7 10{\\super 6}", "2.5 \\'d7 10{\\super 6}", "NA", "Inf"
+      )
+    )
+
+  vec_fmt_engineering(
+    vec_num_4,
+    drop_trailing_zeros = TRUE,
+    drop_trailing_dec_mark = FALSE,
+    output = "plain"
+  ) %>%
     expect_equal(
       c(
         "-2.5 \U000D7 10^6", "-2. \U000D7 10^6",
@@ -1046,7 +1129,12 @@ test_that("The `vec_fmt_engineering()` function works", {
       )
     )
 
-  vec_fmt_engineering(vec_num_4, drop_trailing_zeros = TRUE, output = "html") %>%
+  vec_fmt_engineering(
+    vec_num_4,
+    drop_trailing_zeros = TRUE,
+    drop_trailing_dec_mark = FALSE,
+    output = "html"
+  ) %>%
     expect_equal(
       c(
         paste0("\U02212", "2.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
@@ -1064,7 +1152,12 @@ test_that("The `vec_fmt_engineering()` function works", {
       )
     )
 
-  vec_fmt_engineering(vec_num_4, drop_trailing_zeros = TRUE, output = "latex") %>%
+  vec_fmt_engineering(
+    vec_num_4,
+    drop_trailing_zeros = TRUE,
+    drop_trailing_dec_mark = FALSE,
+    output = "latex"
+  ) %>%
     expect_equal(
       c(
         "$-2.5 \\times 10^{6}$", "$-2. \\times 10^{6}$", "$-1.5 \\times 10^{6}$",
@@ -1074,7 +1167,12 @@ test_that("The `vec_fmt_engineering()` function works", {
       )
     )
 
-  vec_fmt_engineering(vec_num_4, drop_trailing_zeros = TRUE, output = "rtf") %>%
+  vec_fmt_engineering(
+    vec_num_4,
+    drop_trailing_zeros = TRUE,
+    drop_trailing_dec_mark = FALSE,
+    output = "rtf"
+  ) %>%
     expect_equal(
       c(
         "-2.5 \\'d7 10{\\super 6}", "-2. \\'d7 10{\\super 6}", "-1.5 \\'d7 10{\\super 6}",
@@ -1092,7 +1190,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         "-500,00 \U000D7 10^3", "0,00",
         "500,00 \U000D7 10^3", "1,00 \U000D7 10^6",
         "1,50 \U000D7 10^6", "2,00 \U000D7 10^6",
-        "2,50 \U000D7 10^6", "NA", "Inf,"
+        "2,50 \U000D7 10^6", "NA", "Inf"
       )
     )
 
@@ -1110,7 +1208,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         paste0("1,50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
         paste0("2,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
         paste0("2,50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        "NA", "Inf,"
+        "NA", "Inf"
       )
     )
 
@@ -1122,7 +1220,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         "$-500,00 \\times 10^{3}$", "$0,00$", "$500,00 \\times 10^{3}$",
         "$1,00 \\times 10^{6}$", "$1,50 \\times 10^{6}$",
         "$2,00 \\times 10^{6}$", "$2,50 \\times 10^{6}$",
-        "NA", "$Inf,$"
+        "NA", "$Inf$"
       )
     )
 
@@ -1134,7 +1232,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         "-500,00 \\'d7 10{\\super 3}", "0,00", "500,00 \\'d7 10{\\super 3}",
         "1,00 \\'d7 10{\\super 6}", "1,50 \\'d7 10{\\super 6}",
         "2,00 \\'d7 10{\\super 6}", "2,50 \\'d7 10{\\super 6}",
-        "NA", "Inf,"
+        "NA", "Inf"
       )
     )
 
@@ -1146,7 +1244,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         "a-500.00 \U000D7 10^3b", "a0.00b", "a500.00 \U000D7 10^3b",
         "a1.00 \U000D7 10^6b", "a1.50 \U000D7 10^6b",
         "a2.00 \U000D7 10^6b", "a2.50 \U000D7 10^6b",
-        "NA", "aInf.b"
+        "NA", "aInfb"
       )
     )
 
@@ -1164,7 +1262,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         paste0("a1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
         paste0("a2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
         paste0("a2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
-        "NA", "aInf.b"
+        "NA", "aInfb"
       )
     )
 
@@ -1176,7 +1274,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         "a$-500.00 \\times 10^{3}$b", "a$0.00$b",
         "a$500.00 \\times 10^{3}$b", "a$1.00 \\times 10^{6}$b",
         "a$1.50 \\times 10^{6}$b", "a$2.00 \\times 10^{6}$b",
-        "a$2.50 \\times 10^{6}$b", "NA", "a$Inf.$b"
+        "a$2.50 \\times 10^{6}$b", "NA", "a$Inf$b"
       )
     )
 
@@ -1188,7 +1286,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         "a-500.00 \\'d7 10{\\super 3}b", "a0.00b", "a500.00 \\'d7 10{\\super 3}b",
         "a1.00 \\'d7 10{\\super 6}b", "a1.50 \\'d7 10{\\super 6}b",
         "a2.00 \\'d7 10{\\super 6}b", "a2.50 \\'d7 10{\\super 6}b",
-        "NA", "aInf.b"
+        "NA", "aInfb"
       )
     )
 
@@ -1200,7 +1298,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         "-500.00 \U000D7 10^3", "0.00",
         "+500.00 \U000D7 10^3", "+1.00 \U000D7 10^6",
         "+1.50 \U000D7 10^6", "+2.00 \U000D7 10^6",
-        "+2.50 \U000D7 10^6", "NA", "+Inf."
+        "+2.50 \U000D7 10^6", "NA", "+Inf"
       )
     )
 
@@ -1218,7 +1316,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         paste0("+1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
         paste0("+2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
         paste0("+2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        "NA", "+Inf."
+        "NA", "+Inf"
       )
     )
 
@@ -1229,7 +1327,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         "$-1.50 \\times 10^{6}$", "$-1.00 \\times 10^{6}$",
         "$-500.00 \\times 10^{3}$", "$0.00$", "$+500.00 \\times 10^{3}$",
         "$+1.00 \\times 10^{6}$", "$+1.50 \\times 10^{6}$",
-        "$+2.00 \\times 10^{6}$", "$+2.50 \\times 10^{6}$", "NA", "$+Inf.$"
+        "$+2.00 \\times 10^{6}$", "$+2.50 \\times 10^{6}$", "NA", "$+Inf$"
       )
     )
 
@@ -1241,7 +1339,7 @@ test_that("The `vec_fmt_engineering()` function works", {
         "-500.00 \\'d7 10{\\super 3}", "0.00",
         "+500.00 \\'d7 10{\\super 3}", "+1.00 \\'d7 10{\\super 6}",
         "+1.50 \\'d7 10{\\super 6}", "+2.00 \\'d7 10{\\super 6}",
-        "+2.50 \\'d7 10{\\super 6}", "NA", "+Inf."
+        "+2.50 \\'d7 10{\\super 6}", "NA", "+Inf"
       )
     )
 
@@ -2930,40 +3028,41 @@ test_that("The `vec_fmt_currency()` function works", {
   vec_fmt_currency(vec_num_4, locale = "de", output = "plain") %>%
     expect_equal(
       c(
-        "-$2.500.000,00", "-$2.000.000,00", "-$1.500.000,00", "-$1.000.000,00",
-        "-$500.000,00", "$0,00", "$500.000,00", "$1.000.000,00", "$1.500.000,00",
-        "$2.000.000,00", "$2.500.000,00", "NA", "$Inf"
+        "-EUR2.500.000,00", "-EUR2.000.000,00", "-EUR1.500.000,00",
+        "-EUR1.000.000,00", "-EUR500.000,00", "EUR0,00", "EUR500.000,00",
+        "EUR1.000.000,00", "EUR1.500.000,00", "EUR2.000.000,00",
+        "EUR2.500.000,00", "NA", "EURInf"
       )
     )
 
   vec_fmt_currency(vec_num_4, locale = "de", output = "html") %>%
     expect_equal(
       c(
-        paste0("\U02212", "$2.500.000,00"), paste0("\U02212", "$2.000.000,00"),
-        paste0("\U02212", "$1.500.000,00"), paste0("\U02212", "$1.000.000,00"),
-        paste0("\U02212", "$500.000,00"), "$0,00", "$500.000,00",
-        "$1.000.000,00", "$1.500.000,00", "$2.000.000,00", "$2.500.000,00",
-        "NA", "$Inf"
+        "−&#8364;2.500.000,00", "−&#8364;2.000.000,00", "−&#8364;1.500.000,00",
+        "−&#8364;1.000.000,00", "−&#8364;500.000,00", "&#8364;0,00",
+        "&#8364;500.000,00", "&#8364;1.000.000,00", "&#8364;1.500.000,00",
+        "&#8364;2.000.000,00", "&#8364;2.500.000,00", "NA", "&#8364;Inf"
       )
     )
 
   vec_fmt_currency(vec_num_4, locale = "de", output = "latex") %>%
     expect_equal(
       c(
-        "$-\\text{\\$}2.500.000,00$", "$-\\text{\\$}2.000.000,00$",
-        "$-\\text{\\$}1.500.000,00$", "$-\\text{\\$}1.000.000,00$", "$-\\text{\\$}500.000,00$",
-        "$\\text{\\$}0,00$", "$\\text{\\$}500.000,00$", "$\\text{\\$}1.000.000,00$",
-        "$\\text{\\$}1.500.000,00$", "$\\text{\\$}2.000.000,00$", "$\\text{\\$}2.500.000,00$",
-        "NA", "$\\text{\\$}Inf$"
+        "$-\\text{EUR}2.500.000,00$", "$-\\text{EUR}2.000.000,00$",
+        "$-\\text{EUR}1.500.000,00$", "$-\\text{EUR}1.000.000,00$", "$-\\text{EUR}500.000,00$",
+        "$\\text{EUR}0,00$", "$\\text{EUR}500.000,00$", "$\\text{EUR}1.000.000,00$",
+        "$\\text{EUR}1.500.000,00$", "$\\text{EUR}2.000.000,00$", "$\\text{EUR}2.500.000,00$",
+        "NA", "$\\text{EUR}Inf$"
       )
     )
 
   vec_fmt_currency(vec_num_4, locale = "de", output = "rtf") %>%
     expect_equal(
       c(
-        "-$2.500.000,00", "-$2.000.000,00", "-$1.500.000,00", "-$1.000.000,00",
-        "-$500.000,00", "$0,00", "$500.000,00", "$1.000.000,00", "$1.500.000,00",
-        "$2.000.000,00", "$2.500.000,00", "NA", "$Inf"
+        "-EUR2.500.000,00", "-EUR2.000.000,00", "-EUR1.500.000,00",
+        "-EUR1.000.000,00", "-EUR500.000,00", "EUR0,00", "EUR500.000,00",
+        "EUR1.000.000,00", "EUR1.500.000,00", "EUR2.000.000,00", "EUR2.500.000,00",
+        "NA", "EURInf"
       )
     )
 
@@ -4265,7 +4364,6 @@ test_that("The `vec_fmt_bytes()` function works", {
 
 test_that("The `vec_fmt_date()` function works", {
 
-
   vec_fmt_date(dates, date_style = 2, output = "html") %>%
     expect_equal(
       c(
@@ -5202,6 +5300,850 @@ test_that("The `vec_fmt_date()` function works", {
         "dSunday, January 5, 2020d", "dSaturday, February 6, 2021d",
         "dMonday, March 7, 2022d", "dSaturday, April 8, 2023d",
         "dThursday, May 9, 2024d"
+      )
+    )
+})
+
+test_that("The `vec_fmt_time()` function works", {
+
+  vec_fmt_time(times, time_style = 1, output = "html") %>%
+    expect_equal(c("15:35:00", "16:36:00", "17:37:00", "18:38:00", "19:39:00"))
+  vec_fmt_time(times, time_style = "iso", output = "html") %>%
+    expect_equal(c("15:35:00", "16:36:00", "17:37:00", "18:38:00", "19:39:00"))
+  expect_equal(
+    vec_fmt_time(times, time_style = "iso", output = "html"),
+    vec_fmt_time(times, time_style = "iso", output = "latex")
+  )
+  expect_equal(
+    vec_fmt_time(times, time_style = "iso", output = "html"),
+    vec_fmt_time(times, time_style = "iso", output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_time(times, time_style = "iso", output = "html"),
+    vec_fmt_time(times, time_style = "iso", output = "plain")
+  )
+
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "iso-short", output = "html"),
+    as.character(times)
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "iso-short", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "iso-short", output = "latex")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "iso-short", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "iso-short", output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "iso-short", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "iso-short", output = "plain")
+  )
+
+  vec_fmt_time(times, time_style = "h_m_s_p", output = "html") %>%
+    expect_equal(
+      c("3:35:00 PM", "4:36:00 PM", "5:37:00 PM", "6:38:00 PM", "7:39:00 PM")
+    )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "h_m_s_p", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "h_m_s_p", output = "latex")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "h_m_s_p", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "h_m_s_p", output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "h_m_s_p", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "h_m_s_p", output = "plain")
+  )
+
+  vec_fmt_time(times, time_style = "h_m_p", output = "html") %>%
+    expect_equal(
+      c("3:35 PM", "4:36 PM", "5:37 PM", "6:38 PM", "7:39 PM")
+    )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "h_m_p", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "h_m_p", output = "latex")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "h_m_p", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "h_m_p", output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "h_m_p", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "h_m_p", output = "plain")
+  )
+
+  vec_fmt_time(times, time_style = "h_p", output = "html") %>%
+    expect_equal(c("3 PM", "4 PM", "5 PM", "6 PM", "7 PM"))
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "h_p", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "h_p", output = "latex")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "h_p", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "h_p", output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "h_p", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "h_p", output = "plain")
+  )
+
+  vec_fmt_time(times, time_style = "Hms", output = "html") %>%
+    expect_equal(c("15:35:00", "16:36:00", "17:37:00", "18:38:00", "19:39:00"))
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "Hms", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "Hms", output = "latex")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "Hms", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "Hms", output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "Hms", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "Hms", output = "plain")
+  )
+
+  vec_fmt_time(times, time_style = "Hm", output = "html") %>%
+    expect_equal(c("15:35", "16:36", "17:37", "18:38", "19:39"))
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "Hm", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "Hm", output = "latex")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "Hm", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "Hm", output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "Hm", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "Hm", output = "plain")
+  )
+
+  vec_fmt_time(times, time_style = "H", output = "html") %>%
+    expect_equal(c("15", "16", "17", "18", "19"))
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "H", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "H", output = "latex")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "H", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "H", output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "H", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "H", output = "plain")
+  )
+
+  vec_fmt_time(times, time_style = "EHm", output = "html") %>%
+    expect_equal(
+      c("Thu 15:35", "Thu 16:36", "Thu 17:37", "Thu 18:38", "Thu 19:39")
+    )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "EHm", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "EHm", output = "latex")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "EHm", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "EHm", output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "EHm", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "EHm", output = "plain")
+  )
+
+  vec_fmt_time(times, time_style = "EHms", output = "html") %>%
+    expect_equal(
+      c(
+        "Thu 15:35:00", "Thu 16:36:00", "Thu 17:37:00", "Thu 18:38:00",
+        "Thu 19:39:00"
+      )
+    )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "EHms", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "EHms", output = "latex")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "EHms", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "EHms", output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "EHms", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "EHms", output = "plain")
+  )
+
+  # vec_fmt_time(times, time_style = "Hmsv", output = "html") %>%
+  #   expect_equal(
+  #     c(
+  #       "15:35:00 GMT", "16:36:00 GMT", "17:37:00 GMT",
+  #       "18:38:00 GMT", "19:39:00 GMT"
+  #     )
+  #   )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "Hmsv", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "Hmsv", output = "latex")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "Hmsv", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "Hmsv", output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "Hmsv", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "Hmsv", output = "plain")
+  )
+
+  # vec_fmt_time(times, time_style = "Hmv", output = "html") %>%
+  #   expect_equal(c("15:35 GMT", "16:36 GMT", "17:37 GMT", "18:38 GMT", "19:39 GMT"))
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "Hmv", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "Hmv", output = "latex")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "Hmv", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "Hmv", output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "Hmv", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "Hmv", output = "plain")
+  )
+
+  vec_fmt_time(times, time_style = "hms", output = "html") %>%
+    expect_equal(c("3:35:00 PM", "4:36:00 PM", "5:37:00 PM", "6:38:00 PM", "7:39:00 PM"))
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "hms", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "hms", output = "latex")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "hms", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "hms", output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "hms", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "hms", output = "plain")
+  )
+
+  vec_fmt_time(times, time_style = "hm", output = "html") %>%
+    expect_equal(c("3:35 PM", "4:36 PM", "5:37 PM", "6:38 PM", "7:39 PM"))
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "hm", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "hm", output = "latex")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "hm", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "hm", output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "hm", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "hm", output = "plain")
+  )
+
+  vec_fmt_time(times, time_style = "h", output = "html") %>%
+    expect_equal(c("3 PM", "4 PM", "5 PM", "6 PM", "7 PM"))
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "h", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "h", output = "latex")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "h", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "h", output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "h", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "h", output = "plain")
+  )
+
+  vec_fmt_time(times, time_style = "Ehm", output = "html") %>%
+    expect_equal(
+      c(
+        "Thu 3:35 PM", "Thu 4:36 PM", "Thu 5:37 PM",
+        "Thu 6:38 PM", "Thu 7:39 PM"
+      )
+    )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "Ehm", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "Ehm", output = "latex")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "Ehm", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "Ehm", output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "Ehm", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "Ehm", output = "plain")
+  )
+
+  vec_fmt_time(times, time_style = "Ehms", output = "html") %>%
+    expect_equal(
+      c(
+        "Thu 3:35:00 PM", "Thu 4:36:00 PM", "Thu 5:37:00 PM",
+        "Thu 6:38:00 PM", "Thu 7:39:00 PM"
+      )
+    )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "Ehms", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "Ehms", output = "latex")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "Ehms", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "Ehms", output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "Ehms", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "Ehms", output = "plain")
+  )
+
+  vec_fmt_time(times, time_style = "EBhms", output = "html") %>%
+    expect_equal(
+      c(
+        "Thu 3:35:00 in the afternoon", "Thu 4:36:00 in the afternoon",
+        "Thu 5:37:00 in the afternoon", "Thu 6:38:00 in the evening",
+        "Thu 7:39:00 in the evening"
+      )
+    )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "EBhms", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "EBhms", output = "latex")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "EBhms", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "EBhms", output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "EBhms", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "EBhms", output = "plain")
+  )
+
+  vec_fmt_time(times, time_style = "Bhms", output = "html") %>%
+    expect_equal(
+      c(
+        "3:35:00 in the afternoon", "4:36:00 in the afternoon",
+        "5:37:00 in the afternoon", "6:38:00 in the evening",
+        "7:39:00 in the evening"
+      )
+    )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "Bhms", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "Bhms", output = "latex")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "Bhms", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "Bhms", output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "Bhms", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "Bhms", output = "plain")
+  )
+
+  vec_fmt_time(times, time_style = "EBhm", output = "html") %>%
+    expect_equal(
+      c(
+        "Thu 3:35 in the afternoon", "Thu 4:36 in the afternoon",
+        "Thu 5:37 in the afternoon", "Thu 6:38 in the evening",
+        "Thu 7:39 in the evening"
+      )
+    )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "EBhm", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "EBhm", output = "latex")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "EBhm", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "EBhm", output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "EBhm", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "EBhm", output = "plain")
+  )
+
+  vec_fmt_time(times, time_style = "Bhm", output = "html") %>%
+    expect_equal(
+      c(
+        "3:35 in the afternoon", "4:36 in the afternoon",
+        "5:37 in the afternoon", "6:38 in the evening",
+        "7:39 in the evening"
+      )
+    )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "Bhm", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "Bhm", output = "latex")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "Bhm", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "Bhm", output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "Bhm", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "Bhm", output = "plain")
+  )
+
+  vec_fmt_time(times, time_style = "Bh", output = "html") %>%
+    expect_equal(
+      c(
+        "3 in the afternoon", "4 in the afternoon", "5 in the afternoon",
+        "6 in the evening", "7 in the evening"
+      )
+    )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "Bh", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "Bh", output = "latex")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "Bh", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "Bh", output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "Bh", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "Bh", output = "plain")
+  )
+
+  # vec_fmt_time(times, time_style = "hmsv", output = "html") %>%
+  #   expect_equal(
+  #     c(
+  #       "3:35:00 PM GMT", "4:36:00 PM GMT", "5:37:00 PM GMT",
+  #       "6:38:00 PM GMT", "7:39:00 PM GMT"
+  #     )
+  #   )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "hmsv", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "hmsv", output = "latex")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "hmsv", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "hmsv", output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "hmsv", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "hmsv", output = "plain")
+  )
+
+  # vec_fmt_time(times, time_style = "hmv", output = "html") %>%
+  #   expect_equal(
+  #     c(
+  #       "3:35 PM GMT", "4:36 PM GMT", "5:37 PM GMT",
+  #       "6:38 PM GMT", "7:39 PM GMT"
+  #     )
+  #   )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "hmv", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "hmv", output = "latex")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "hmv", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "hmv", output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "hmv", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "hmv", output = "plain")
+  )
+
+  vec_fmt_time(times, time_style = "ms", output = "html") %>%
+    expect_equal(c("35:00", "36:00", "37:00", "38:00", "39:00"))
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "ms", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "ms", output = "latex")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "ms", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "ms", output = "rtf")
+  )
+  expect_equal(
+    vec_fmt_time(as.character(times), time_style = "ms", output = "html"),
+    vec_fmt_time(as.character(times), time_style = "ms", output = "plain")
+  )
+
+  vec_fmt_time(times, time_style = "EHm", locale = "fr", output = "html") %>%
+    expect_equal(
+      c(
+        "jeu. 15:35", "jeu. 16:36", "jeu. 17:37", "jeu. 18:38", "jeu. 19:39"
+      )
+    )
+  vec_fmt_time(dates, time_style = "EBhms", locale = "fr", output = "html") %>%
+    expect_equal(
+      c(
+        "dim. 12:00:00 minuit", "sam. 12:00:00 minuit", "lun. 12:00:00 minuit",
+        "sam. 12:00:00 minuit", "jeu. 12:00:00 minuit"
+      )
+    )
+
+  vec_fmt_time(
+    times,
+    time_style = "Bhms",
+    pattern = "d{x}d",
+    output = "html"
+  ) %>%
+    expect_equal(
+      c(
+        "d3:35:00 in the afternoond", "d4:36:00 in the afternoond",
+        "d5:37:00 in the afternoond", "d6:38:00 in the eveningd",
+        "d7:39:00 in the eveningd"
+      )
+    )
+})
+
+test_that("The `vec_fmt_datetime()` function works", {
+
+  vec_fmt_datetime(
+    datetimes,
+    date_style = 2,
+    time_style = 1,
+    output = "html"
+  ) %>%
+    expect_equal(
+      c(
+        "Sunday, January 5, 2020 15:35:00",
+        "Saturday, February 6, 2021 16:36:01",
+        "Monday, March 7, 2022 17:37:02",
+        "Saturday, April 8, 2023 18:38:03",
+        "Thursday, May 9, 2024 19:39:04"
+      )
+    )
+  vec_fmt_datetime(
+    datetimes,
+    date_style = "wday_month_day_year",
+    time_style = "iso",
+    output = "html"
+  ) %>%
+    expect_equal(
+      c(
+        "Sunday, January 5, 2020 15:35:00",
+        "Saturday, February 6, 2021 16:36:01",
+        "Monday, March 7, 2022 17:37:02",
+        "Saturday, April 8, 2023 18:38:03",
+        "Thursday, May 9, 2024 19:39:04"
+      )
+    )
+  expect_equal(
+    vec_fmt_datetime(
+      datetimes,
+      date_style = "wday_month_day_year",
+      time_style = "iso",
+      output = "html"
+    ),
+    vec_fmt_datetime(
+      datetimes,
+      date_style = "wday_month_day_year",
+      time_style = "iso",
+      output = "latex"
+    )
+  )
+  expect_equal(
+    vec_fmt_datetime(
+      datetimes,
+      date_style = "wday_month_day_year",
+      time_style = "iso",
+      output = "html"
+    ),
+    vec_fmt_datetime(
+      datetimes,
+      date_style = "wday_month_day_year",
+      time_style = "iso",
+      output = "rtf"
+    )
+  )
+  expect_equal(
+    vec_fmt_datetime(
+      datetimes,
+      date_style = "wday_month_day_year",
+      time_style = "iso",
+      output = "html"
+    ),
+    vec_fmt_datetime(
+      datetimes,
+      date_style = "wday_month_day_year",
+      time_style = "iso",
+      output = "plain"
+    )
+  )
+
+  vec_fmt_datetime(
+    datetimes,
+    date_style = "yMMMEd",
+    time_style = "Hms",
+    output = "html"
+  ) %>%
+    expect_equal(
+      c(
+        "Sun, Jan 5, 2020 15:35:00",
+        "Sat, Feb 6, 2021 16:36:01",
+        "Mon, Mar 7, 2022 17:37:02",
+        "Sat, Apr 8, 2023 18:38:03",
+        "Thu, May 9, 2024 19:39:04"
+      )
+    )
+
+  vec_fmt_datetime(
+    datetimes,
+    date_style = "yMMMEd",
+    time_style = "Hms",
+    locale = "fr",
+    output = "html"
+  ) %>%
+    expect_equal(
+      c(
+        "dim. 5 janv. 2020 15:35:00",
+        "sam. 6 févr. 2021 16:36:01",
+        "lun. 7 mars 2022 17:37:02",
+        "sam. 8 avr. 2023 18:38:03",
+        "jeu. 9 mai 2024 19:39:04"
+      )
+    )
+
+  vec_fmt_datetime(
+    datetimes,
+    date_style = 3,
+    time_style = 3,
+    sep = " / ",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Sun, Jan 5, 2020 / 3:35:00 PM", "Sat, Feb 6, 2021 / 4:36:01 PM",
+        "Mon, Mar 7, 2022 / 5:37:02 PM", "Sat, Apr 8, 2023 / 6:38:03 PM",
+        "Thu, May 9, 2024 / 7:39:04 PM"
+      )
+    )
+
+  vec_fmt_datetime(
+    datetimes,
+    format = "EEEE, MMMM d, y, h:mm a",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Sunday, January 5, 2020, 3:35 PM",
+        "Saturday, February 6, 2021, 4:36 PM",
+        "Monday, March 7, 2022, 5:37 PM",
+        "Saturday, April 8, 2023, 6:38 PM",
+        "Thursday, May 9, 2024, 7:39 PM"
+      )
+    )
+
+  vec_fmt_datetime(
+    datetimes,
+    format = "EEEE, MMMM d, y, h:mm a",
+    pattern = "[ {x} ]",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "[ Sunday, January 5, 2020, 3:35 PM ]",
+        "[ Saturday, February 6, 2021, 4:36 PM ]",
+        "[ Monday, March 7, 2022, 5:37 PM ]",
+        "[ Saturday, April 8, 2023, 6:38 PM ]",
+        "[ Thursday, May 9, 2024, 7:39 PM ]"
+      )
+    )
+
+  vec_fmt_datetime(
+    datetimes,
+    format = "EEEE, MMMM d, y, h:mm a",
+    locale = "fr",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "dimanche, janvier 5, 2020, 3:35 PM",
+        "samedi, février 6, 2021, 4:36 PM",
+        "lundi, mars 7, 2022, 5:37 PM",
+        "samedi, avril 8, 2023, 6:38 PM",
+        "jeudi, mai 9, 2024, 7:39 PM"
+      )
+    )
+
+  # Create a short vector with string-based datetime values
+  str_vals <- c("2022-06-13 18:36", "2019-01-25 01:08", NA)
+
+  vec_fmt_datetime(
+    str_vals,
+    format = "EEEE, MMMM d, y, h:mm a",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Monday, June 13, 2022, 6:36 PM",
+        "Friday, January 25, 2019, 1:08 AM",
+        NA
+      )
+    )
+
+  vec_fmt_datetime(
+    str_vals,
+    format = "EEEE, MMMM d, y, h:mm a",
+    tz = "America/Toronto",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Monday, June 13, 2022, 6:36 PM",
+        "Friday, January 25, 2019, 1:08 AM",
+        NA
+      )
+    )
+
+  vec_fmt_datetime(
+    str_vals,
+    format = "EEEE, MMMM d, y, h:mm a (ZZZ)",
+    tz = "America/Toronto",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Monday, June 13, 2022, 6:36 PM (-0400)",
+        "Friday, January 25, 2019, 1:08 AM (-0500)",
+        NA
+      )
+    )
+
+  vec_fmt_datetime(
+    str_vals,
+    format = "EEEE, MMMM d, y, h:mm a (V)",
+    tz = "America/Toronto",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Monday, June 13, 2022, 6:36 PM (cator)",
+        "Friday, January 25, 2019, 1:08 AM (cator)",
+        NA
+      )
+    )
+
+  vec_fmt_datetime(
+    str_vals,
+    format = "EEEE, MMMM d, y, h:mm a (VV)",
+    tz = "America/Toronto",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Monday, June 13, 2022, 6:36 PM (America/Toronto)",
+        "Friday, January 25, 2019, 1:08 AM (America/Toronto)",
+        NA
+      )
+    )
+
+  vec_fmt_datetime(
+    str_vals,
+    format = "EEEE, MMMM d, y, h:mm a (VVV)",
+    tz = "America/Toronto",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Monday, June 13, 2022, 6:36 PM (Toronto)",
+        "Friday, January 25, 2019, 1:08 AM (Toronto)",
+        NA
+      )
+    )
+
+  vec_fmt_datetime(
+    str_vals,
+    format = "EEEE, MMMM d, y, h:mm a (VVVV)",
+    tz = "America/Toronto",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Monday, June 13, 2022, 6:36 PM (Toronto Time)",
+        "Friday, January 25, 2019, 1:08 AM (Toronto Time)",
+        NA
+      )
+    )
+
+  vec_fmt_datetime(
+    str_vals,
+    format = "EEEE, MMMM d, y, h:mm a (v)",
+    tz = "America/Toronto",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Monday, June 13, 2022, 6:36 PM (ET)",
+        "Friday, January 25, 2019, 1:08 AM (ET)",
+        NA
+      )
+    )
+
+  vec_fmt_datetime(
+    str_vals,
+    format = "EEEE, MMMM d, y, h:mm a (vvvv)",
+    tz = "America/Toronto",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Monday, June 13, 2022, 6:36 PM (Eastern Time)",
+        "Friday, January 25, 2019, 1:08 AM (Eastern Time)",
+        NA
+      )
+    )
+
+  vec_fmt_datetime(
+    str_vals,
+    format = "EEEE, MMMM d, y, h:mm a (O)",
+    tz = "America/Toronto",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Monday, June 13, 2022, 6:36 PM (GMT-4)",
+        "Friday, January 25, 2019, 1:08 AM (GMT-5)",
+        NA
+      )
+    )
+
+  vec_fmt_datetime(
+    str_vals,
+    format = "EEEE, MMMM d, y, h:mm a (OOOO)",
+    tz = "America/Toronto",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Monday, June 13, 2022, 6:36 PM (GMT-04:00)",
+        "Friday, January 25, 2019, 1:08 AM (GMT-05:00)",
+        NA
+      )
+    )
+
+  vec_fmt_datetime(
+    str_vals,
+    format = "EEEE, MMMM d, y, h:mm a (z)",
+    tz = "America/Toronto",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Monday, June 13, 2022, 6:36 PM (EDT)",
+        "Friday, January 25, 2019, 1:08 AM (EST)",
+        NA
+      )
+    )
+
+  vec_fmt_datetime(
+    str_vals,
+    format = "EEEE, MMMM d, y, h:mm a (zzzz)",
+    tz = "America/Toronto",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Monday, June 13, 2022, 6:36 PM (Eastern Daylight Time)",
+        "Friday, January 25, 2019, 1:08 AM (Eastern Standard Time)",
+        NA
+      )
+    )
+
+  vec_fmt_datetime(
+    str_vals,
+    format = "EEEE, MMMM d, y, h:mm a (Z)",
+    tz = "America/Toronto",
+    output = "plain"
+  ) %>%
+    expect_equal(
+      c(
+        "Monday, June 13, 2022, 6:36 PM (-0400)",
+        "Friday, January 25, 2019, 1:08 AM (-0500)",
+        NA
       )
     )
 })
