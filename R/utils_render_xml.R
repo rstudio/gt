@@ -2483,10 +2483,6 @@ parse_to_xml <- function(x,...){
       paste0("<md_container>", ., "</md_container>")
   }
 
-  if(length(x) > 1){
-    browser()
-  }
-
   if(!grepl("^<md_container>.*</md_container>$", x)){
 
     x <- xml_p(
@@ -2495,7 +2491,7 @@ parse_to_xml <- function(x,...){
       ),
       xml_r(
         xml_rPr(),
-        xml_t(x)
+        xml_t(enc2utf8(htmltools::htmlEscape(x)))
       )
     )
     x <- x %>%
