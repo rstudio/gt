@@ -751,7 +751,7 @@ xml_image <- function(src, height = 1, width = 1, units = "in", alt_text = ""){
         units = units
       ),
       xml_wp_effectExtent(),
-      xml_wp_docPr(id = 1, description = alt_text),
+      xml_wp_docPr(id = "", description = alt_text),
       xml_wp_cNvGraphicFramePr(
         xml_a_graphic_frame_locks()
       ),
@@ -759,7 +759,7 @@ xml_image <- function(src, height = 1, width = 1, units = "in", alt_text = ""){
         xml_a_graphicData(
           xml_pic_pic(
             xml_pic_nvPicPr(
-              xml_pic_cNvPr(id = 0),
+              xml_pic_cNvPr(id = ""),
               xml_pic_cNvPicPr(
                 xml_a_pic_locks(noChangeAspect = TRUE, noChangeArrowheads = TRUE)
               )
@@ -3009,7 +3009,7 @@ gt_as_word_post_processing <- function(path){
   content_doc_path <- file.path(tmp_word_dir,"word/document.xml")
   docx <- read_xml(content_doc_path)
 
-  ## load rels
+  ## load word/_rels
   rels_doc_path <- file.path(tmp_word_dir,"word/_rels/document.xml.rels")
   rels <- read_xml(rels_doc_path)
 
@@ -3024,6 +3024,12 @@ gt_as_word_post_processing <- function(path){
   update_hyperlink_node_id(docx, rels)
   update_blip_node_id(docx, rels, content_types, tmp_word_dir)
 
+  ## update all ids
+  update_ref_id(docx)
+
+  ## end section
+  ensure_sect_end(docx)
+
   ## write updates
   xml2::write_xml(rels, rels_doc_path)
   xml2::write_xml(content_types, content_type_doc_path)
@@ -3036,18 +3042,59 @@ gt_as_word_post_processing <- function(path){
 
 update_docx_ns <- function(docx){
 
-
   ## add ns to document?
-  xml2::xml_attrs(docx) <- c(
-    xml2::xml_attrs(docx),
-    `xmlns:wpc`="http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas",
-    `xmlns:cx`="http://schemas.microsoft.com/office/drawing/2014/chartex"
+  potential_ns <- c(
+    "xmlns:wpc"="http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas",
+    "xmlns:cx"="http://schemas.microsoft.com/office/drawing/2014/chartex" ,
+    "xmlns:cx1"="http://schemas.microsoft.com/office/drawing/2015/9/8/chartex",
+    "xmlns:cx2"="http://schemas.microsoft.com/office/drawing/2015/10/21/chartex",
+    "xmlns:cx3"="http://schemas.microsoft.com/office/drawing/2016/5/9/chartex",
+    "xmlns:cx4"="http://schemas.microsoft.com/office/drawing/2016/5/10/chartex",
+    "xmlns:cx5"="http://schemas.microsoft.com/office/drawing/2016/5/11/chartex" ,
+    "xmlns:cx6"="http://schemas.microsoft.com/office/drawing/2016/5/12/chartex",
+    "xmlns:cx7"="http://schemas.microsoft.com/office/drawing/2016/5/13/chartex",
+    "xmlns:cx8"="http://schemas.microsoft.com/office/drawing/2016/5/14/chartex" ,
+    "xmlns:mc"="http://schemas.openxmlformats.org/markup-compatibility/2006",
+    "xmlns:aink"="http://schemas.microsoft.com/office/drawing/2016/ink",
+    "xmlns:am3d"="http://schemas.microsoft.com/office/drawing/2017/model3d",
+    "xmlns:o"="urn:schemas-microsoft-com:office:office" ,
+    "xmlns:r"="http://schemas.openxmlformats.org/officeDocument/2006/relationships" ,
+    "xmlns:m"="http://schemas.openxmlformats.org/officeDocument/2006/math" ,
+    "xmlns:v"="urn:schemas-microsoft-com:vml",
+    "xmlns:wp14"="http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing",
+    "xmlns:wp"="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" ,
+    "xmlns:w10"="urn:schemas-microsoft-com:office:word",
+    "xmlns:w"="http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+    "xmlns:w14"="http://schemas.microsoft.com/office/word/2010/wordml",
+    "xmlns:w15"="http://schemas.microsoft.com/office/word/2012/wordml",
+    "xmlns:w16cex"="http://schemas.microsoft.com/office/word/2018/wordml/cex",
+    "xmlns:w16cid"="http://schemas.microsoft.com/office/word/2016/wordml/cid",
+    "xmlns:w16"="http://schemas.microsoft.com/office/word/2018/wordml",
+    "xmlns:w16se"="http://schemas.microsoft.com/office/word/2015/wordml/symex",
+    "xmlns:wpg"="http://schemas.microsoft.com/office/word/2010/wordprocessingGroup",
+    "xmlns:wpi"="http://schemas.microsoft.com/office/word/2010/wordprocessingInk",
+    "xmlns:wne"="http://schemas.microsoft.com/office/word/2006/wordml" ,
+    "xmlns:wps"="http://schemas.microsoft.com/office/word/2010/wordprocessingShape"
   )
 
-  tmp_docx <- tempfile(fileext = ".xml")
+  browser()
 
-  xml2::write_xml(docx, tmp_docx)
-  read_xml(tmp_docx)
+  current_ns <- xml2::xml_attrs(docx)
+
+  new_ns_attr <- c(
+    potential_ns,
+    current_ns[!names(current_ns) %in% names(potential_ns)]
+  )
+
+  for(i in names(new_ns_attr)){
+    xml2::xml_set_attr(docx, i, new_ns_attr[[i]])
+  }
+
+  # xml2::xml_attr(docx, "mc:Ignorable") <-  "w14 w15 w16se w16cid w16 w16cex wp14"
+
+  browser()
+
+  xml2::read_xml(as.character(docx), options = c("NSCLEAN"))
 
 }
 
@@ -3139,6 +3186,41 @@ update_blip_node_id <- function(docx, rels, content_types, tmp_word_dir){
 
 }
 
+update_ref_id <- function(docx){
+
+  id <- 1
+  all_els_with_ids <- xml_find_all(docx, "//*[@id]")
+  for (i in seq_along(all_els_with_ids)) {
+      xml_attr(all_els_with_ids[[i]], "id") <- id
+      id <- id + 1
+  }
+}
+
+ensure_sect_end <- function(docx){
+
+  body <- xml_child(docx)
+  last_body_node <- xml_child(body, search = xml2::xml_length(body))
+  new_last_node <-
+    paste0(
+      "<w:sectPr",
+      " xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\"",
+      " xmlns:wp=\"http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing\"",
+      " xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\"",
+      " xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\">",
+      "<w:type w:val=\"continuous\"/></w:sectPr>"
+    ) %>%
+    as_xml_document(str)
+
+  if (!xml_name(last_body_node) %in% "sectPr") {
+    xml_add_child(body,new_last_node)
+  }else{
+    xml2::xml_replace(
+      last_body_node,
+      new_last_node
+    )
+  }
+}
+
 copy_to_media <- function(path, media_dir){
 
   if(grepl("https?://", path)){
@@ -3193,47 +3275,47 @@ xml_add_all_content_types <- function(content_types){
   xml2::xml_add_child(
     content_types,
     xml_content_type_ext(Extension = "jpeg", ContentType = "image/jpeg"),
-    .where = 3
+    .where = 2
   )
   xml2::xml_add_child(
     content_types,
     xml_content_type_ext(Extension = "gif", ContentType = "image/gif"),
-    .where = 3
+    .where = 2
   )
   xml2::xml_add_child(
     content_types,
     xml_content_type_ext(Extension = "svg", ContentType = "image/svg+xml"),
-    .where = 3
+    .where = 2
   )
   xml2::xml_add_child(
     content_types,
     xml_content_type_ext(Extension = "png", ContentType = "image/png"),
-    .where = 3
+    .where = 2
   )
   xml2::xml_add_child(
     content_types,
     xml_content_type_ext(Extension = "bmp", ContentType = "image/bmp"),
-    .where = 3
+    .where = 2
   )
   xml2::xml_add_child(
     content_types,
     xml_content_type_ext(Extension = "emf", ContentType = "image/x-emf"),
-    .where = 3
+    .where = 2
   )
   xml2::xml_add_child(
     content_types,
     xml_content_type_ext(Extension = "jpg", ContentType = "application/octet-stream"),
-    .where = 3
+    .where = 2
   )
   xml2::xml_add_child(
     content_types,
     xml_content_type_ext(Extension = "wmf", ContentType = "image/x-wmf"),
-    .where = 3
+    .where = 2
   )
   xml2::xml_add_child(
     content_types,
     xml_content_type_ext(Extension = "tiff", ContentType = "image/tiff"),
-    .where = 3
+    .where = 2
   )
 
 }
@@ -3251,9 +3333,6 @@ xml_content_type_ext <- function(Extension, ContentType){
     read_xml()
 
 }
-
-
-
 
 
 
