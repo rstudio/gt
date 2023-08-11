@@ -242,6 +242,21 @@ test_that("word ooxml escapes special characters in gt object", {
 
 })
 
+test_that("word ooxml escapes special characters in gt object footer", {
+
+  # Create a one-row table for these tests
+  exibble_min <- exibble[1, ]
+
+  ## basic table with invalid footnote
+  exibble_min %>%
+    gt() %>%
+    tab_footnote(footnote = "p < .05, ><&\n\r\"'") %>%
+    as_word() %>%
+    expect_snapshot()
+
+})
+
+
 test_that("tables can be added to a word doc", {
 
   check_suggests_xml()

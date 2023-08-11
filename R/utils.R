@@ -687,7 +687,7 @@ process_text <- function(text, context = "html") {
 
       text <- markdown_to_xml(text)
     }else{
-      text <- htmltools::htmlEscape(as.character(text))
+      text <- as.character(text)
     }
 
     return(text)

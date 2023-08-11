@@ -2560,7 +2560,7 @@ parse_to_xml <- function(x, ...) {
         ),
         xml_r(
           xml_rPr(),
-          xml_t(x)
+          xml_t(enc2utf8(htmltools::htmlEscape(x)))
         )
       )
 
