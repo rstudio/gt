@@ -3023,26 +3023,59 @@ tab_style <- function(
   # Resolve into a list of locations
   locations <- as_locations(locations)
 
+  # Upgrade `style` to be within a list if not provided as such
+  if (inherits(style, "cell_styles")) {
+    style <- list(style)
+  }
+
   #
   # Begin support for `from_column()`
   #
 
-  cell_helpers <- names(style)
+  cell_helpers <-
+    vapply(
+      style,
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
+      FUN = function(x) {
+        x <- names(x)
+        if (is.null(x)) {
+          x <- "bare"
+        }
+        if (any(grepl("cell_border", x))) {
+          x <- "cell_border"
+        }
+        x
+      }
+    )
+
+  # Set `has_gt_column` as FALSE initially and toggle to TRUE if there is
+  # any instance of `from_column()` used (a `gt_column` object will be present)
   has_gt_column <- FALSE
 
   for (i in seq_along(cell_helpers)) {
 
-    any_gt_column <-
-      any(
-        vapply(
-          style[[cell_helpers[i]]],
-          FUN.VALUE = logical(1),
-          USE.NAMES = FALSE,
-          FUN = function(x) {
-            inherits(x, "gt_column")
-          }
+    if (!is.character(style) && is.list(style)) {
+      style_i <- unlist(style, recursive = FALSE)
+    } else {
+      style_i <- style
+    }
+
+    if (cell_helpers[i] == "bare") {
+      any_gt_column <- FALSE
+    } else {
+      any_gt_column <-
+        any(
+          vapply(
+            style_i[[cell_helpers[i]]],
+            FUN.VALUE = logical(1),
+            USE.NAMES = FALSE,
+            FUN = function(x) {
+              inherits(x, "gt_column")
+            }
+          )
         )
-      )
+    }
 
     if (any_gt_column) {
       has_gt_column <- TRUE
@@ -3052,7 +3085,6 @@ tab_style <- function(
   if (has_gt_column) {
 
     # Stop if `locations` only refers to locations other than `cells_body()`
-
     for (i in seq_along(locations)) {
 
       any_non_body_location <-
@@ -3076,17 +3108,89 @@ tab_style <- function(
       }
     }
 
-     return(data)
+    # TODO: Extract only the body location from the `locations` object
+    body_location <- locations[[1]]
+
+    # Remove the outer list from the `style` object
+    style <- unlist(style, recursive = FALSE)
+
+    # Resolve the row numbers using the `resolve_rows_i` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = !!body_location$rows,
+        data = data
+      )
+
+    for (i in seq_along(style)) {
+
+      arg_vals <- unclass(style[[i]])
+
+      param_tbl <-
+        generate_param_tbl(
+          data = data,
+          arg_vals = arg_vals,
+          resolved_rows_idx = resolved_rows_idx
+        )
+
+      if (names(style[i]) == "cell_fill") {
+
+        for (j in seq_len(nrow(param_tbl))) {
+
+          p_j <- as.list(param_tbl[j, ])
+
+          data <-
+            tab_style(
+              data = data,
+              style = cell_fill(
+                color = p_j$color
+              ),
+              locations = cells_body(
+                columns = !!body_location$columns,
+                rows = resolved_rows_idx[j]
+              )
+            )
+        }
+      }
+
+      if (names(style[i]) == "cell_text") {
+
+        for (j in seq_len(nrow(param_tbl))) {
+
+          p_j <- as.list(param_tbl[j, ])
+
+          data <-
+            tab_style(
+              data = data,
+              style = cell_text(
+                color = p_j$color,
+                font = p_j$font,
+                size = p_j$size,
+                align = p_j$align,
+                v_align = p_j$v_align,
+                style = p_j$style,
+                weight = p_j$weight,
+                stretch = p_j$stretch,
+                decorate = p_j$decorate,
+                transform = p_j$transform,
+                whitespace = p_j$whitespace,
+                indent = p_j$indent
+              ),
+              locations = cells_body(
+                columns = !!body_location$columns,
+                rows = resolved_rows_idx[j]
+              )
+            )
+        }
+      }
+
+    }
+
+    return(data)
   }
 
   #
   # End support for `gt_column()`
   #
-
-  # Upgrade `style` to be within a list if not provided as such
-  if (inherits(style, "cell_styles")) {
-    style <- list(style)
-  }
 
   # Determine if there is a `cell_text` list within the main list;
   # because we need to intercept any provided `font` inputs in `cell_text`
