@@ -1543,7 +1543,7 @@ create_body_component_xml <- function(
 
   # Determine whether the stub is available through analysis
   # of the `stub_components`
-  stub_available <- dt_stub_components_has_rowname(stub_components)
+  stub_available <- dt_stub_components_has_rowname(stub_components) || summaries_present
 
   # Obtain all of the visible (`"default"`), non-stub
   # column names for the table
@@ -1598,6 +1598,7 @@ create_body_component_xml <- function(
       function(i) {
 
         body_section <- list()
+
 
         #
         # Create a group heading row
@@ -1660,8 +1661,9 @@ create_body_component_xml <- function(
 
         row_cells <- list()
         row_idx <- i
+        row_vec <- output_df_row_as_vec(i)
 
-        for (y in seq_along(output_df_row_as_vec(i))) {
+        for (y in seq_along(row_vec)) {
 
           style_col_idx <- ifelse(stub_available, y - 1, y)
 
@@ -1673,11 +1675,12 @@ create_body_component_xml <- function(
               colnum == style_col_idx
             ) %>%
             dplyr::pull("styles") %>%
-            .[1] %>% .[[1]]
+            .[1] %>%
+            .[[1]]
 
           row_cells[[length(row_cells) + 1]] <-
             xml_table_cell(
-              content = output_df_row_as_vec(i)[y],
+              content = row_vec[y],
               font = cell_style[["cell_text"]][["font"]],
               size = cell_style[["cell_text"]][["size"]],
               color = cell_style[["cell_text"]][["color"]],
@@ -1712,43 +1715,57 @@ create_body_component_xml <- function(
             )
           )
 
-        body_section <- append(body_section, list(body_row))
+
 
         #
-        # Add groupwise summary rows
+        # Add groupwise summary rows.
         #
 
-        if (summaries_present && i %in% groups_rows_df$row_end) {
+        if (summaries_present && nrow(groups_rows_df) > 0){
 
-          group_id <-
-            groups_rows_df[
-              stats::na.omit(groups_rows_df$row_end == i),
-              "group_id", drop = TRUE
-            ]
+          group_info <- groups_rows_df[
+            i >= groups_rows_df$row_start & i <= groups_rows_df$row_end, ]
 
-          summary_styles <-
-            styles_tbl %>%
-            dplyr::filter(
-              locname %in% c("summary_cells"),
-              grpname %in% group_id
-            ) %>%
-            dplyr::mutate(rownum = ceiling(rownum * 100 - i * 100))
+          group_summary_row_side <- unique(group_info[, "summary_row_side"])[[1]]
 
-          summary_section <-
-            summary_rows_xml(
-              list_of_summaries = list_of_summaries,
-              boxh = boxh,
-              group_id = group_id,
-              locname = "summary_cells",
-              col_alignment = col_alignment,
-              table_body_hlines_color = table_body_hlines_color,
-              table_body_vlines_color = table_body_vlines_color,
-              styles = summary_styles,
-              split = split,
-              keep_with_next = keep_with_next
-            )
+          group_row_add_row_loc <- group_info[,ifelse(group_summary_row_side == "top", "row_start","row_end")][[1]]
 
-          body_section <- append(body_section, summary_section)
+          if(i == group_row_add_row_loc) {
+
+            summary_styles <-
+              styles_tbl %>%
+              dplyr::filter(
+                locname %in% c("summary_cells"),
+                grpname %in% group_info[["group_id"]]
+              ) %>%
+              dplyr::mutate(rownum = ceiling(rownum * 100 - i * 100))
+
+            summary_section <-
+              summary_rows_xml(
+                list_of_summaries = list_of_summaries,
+                boxh = boxh,
+                group_id = group_info[["group_id"]],
+                locname = "summary_cells",
+                col_alignment = col_alignment,
+                table_body_hlines_color = table_body_hlines_color,
+                table_body_vlines_color = table_body_vlines_color,
+                styles = summary_styles,
+                split = split,
+                keep_with_next = keep_with_next
+              )
+
+            if(group_summary_row_side == "top"){
+              body_section <- append(body_section, summary_section)
+              body_section <- append(body_section, list(body_row))
+            }else{
+              body_section <- append(body_section, list(body_row))
+              body_section <- append(body_section, summary_section)
+            }
+          }else{
+            body_section <- append(body_section, list(body_row))
+          }
+        }else{
+            body_section <- append(body_section, list(body_row))
         }
 
         body_section
@@ -1784,7 +1801,13 @@ create_body_component_xml <- function(
         keep_with_next = keep_with_next
       )
 
-    body_rows <- c(body_rows, grand_summary_section)
+    grand_summary_loc <- unique(list_of_summaries$summary_df_display_list[[grand_summary_col]][["::side::"]])
+
+    if(grand_summary_loc == "top"){
+      body_rows <- c(grand_summary_section, body_rows)
+    }else{
+      body_rows <- c(body_rows, grand_summary_section)
+    }
   }
 
   htmltools::tagList(body_rows)
@@ -2560,7 +2583,7 @@ parse_to_xml <- function(x, ...) {
         ),
         xml_r(
           xml_rPr(),
-          xml_t(x)
+          xml_t(enc2utf8(htmltools::htmlEscape(x)))
         )
       )
 
