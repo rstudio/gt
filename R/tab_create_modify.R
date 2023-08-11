@@ -3020,6 +3020,69 @@ tab_style <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
+  # Resolve into a list of locations
+  locations <- as_locations(locations)
+
+  #
+  # Begin support for `from_column()`
+  #
+
+  cell_helpers <- names(style)
+  has_gt_column <- FALSE
+
+  for (i in seq_along(cell_helpers)) {
+
+    any_gt_column <-
+      any(
+        vapply(
+          style[[cell_helpers[i]]],
+          FUN.VALUE = logical(1),
+          USE.NAMES = FALSE,
+          FUN = function(x) {
+            inherits(x, "gt_column")
+          }
+        )
+      )
+
+    if (any_gt_column) {
+      has_gt_column <- TRUE
+    }
+  }
+
+  if (has_gt_column) {
+
+    # Stop if `locations` only refers to locations other than `cells_body()`
+
+    for (i in seq_along(locations)) {
+
+      any_non_body_location <-
+        any(
+          vapply(
+            locations,
+            FUN.VALUE = logical(1),
+            USE.NAMES = FALSE,
+            FUN = function(x) {
+              !inherits(x, "cells_body")
+            }
+          )
+        )
+
+      if (any_non_body_location) {
+        cli::cli_abort(c(
+          "If using `from_column()` in a `cell_*()` function, the location helper
+          used must be `cells_body().",
+          "*" = "Please remove any other location helpers."
+        ))
+      }
+    }
+
+     return(data)
+  }
+
+  #
+  # End support for `gt_column()`
+  #
+
   # Upgrade `style` to be within a list if not provided as such
   if (inherits(style, "cell_styles")) {
     style <- list(style)
@@ -3070,9 +3133,6 @@ tab_style <- function(
         )
     }
   }
-
-  # Resolve into a list of locations
-  locations <- as_locations(locations)
 
   style <- as_style(style = style)
 
