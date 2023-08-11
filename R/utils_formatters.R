@@ -1199,15 +1199,15 @@ get_arg_names <- function(
     all_args_except = NULL
 ) {
 
-  if (is.null(in_args) && is.null(all_args_except)) {
-    stop("The `in_args` and `all_args_except` args should not both be NULL.")
-  }
-
   if (!is.null(in_args) && !is.null(all_args_except)) {
     stop("The `in_args` and `all_args_except` args should not both be used.")
   }
 
-  if (!is.null(in_args)) {
+  if (is.null(in_args) && is.null(all_args_except)) {
+
+    arg_names <- names(formals(function_name))
+
+  } else if (!is.null(in_args) && is.null(all_args_except)) {
 
     arg_names <- in_args
 
