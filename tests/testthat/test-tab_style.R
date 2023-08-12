@@ -606,3 +606,55 @@ test_that("Hiding columns that have styles does not result in errors/warnings", 
       cols_hide(columns = datetime)
   )
 })
+
+test_that("Using fonts in `from_column()` works within `cell_*()` fns", {
+
+  # Generate table with column of spelled-out numbers (`num`) and
+  # styling option values
+  tab <-
+    dplyr::tibble(
+      num = vec_fmt_spelled_num(1:4),
+      bkg_color = c("blue", "red", "yellow", "rebeccapurple"),
+      txt_color = c("white", "#FFF", "gray10", "#FFFFFFEE"),
+      size = paste0(c(14, 20, 24, 30), "px"),
+      align = c("left", "right", "center", "right"),
+      v_align = c("middle", "top", "bottom", "middle"),
+      style = c("normal", "italic", "oblique", "normal"),
+      weight = c("normal", "bold", "lighter", "bolder"),
+      stretch = c("normal", "semi-expanded", "expanded", "extra-expanded"),
+      decorate = c("overline", "line-through", "underline", "underline overline"),
+      transform = c("uppercase", "lowercase", "capitalize", "lowercase"),
+      whitespace = c("normal", "nowrap", "pre", "pre-wrap"),
+      indent = c(0, 4, 8, 10)
+    )
+
+  # Generate a gt table and use `tab_style()` along with `cell_*()`
+  # helper functions that in turn use the `from_column()` helper
+  gt_tbl_1 <-
+    tab %>%
+    gt() %>%
+    tab_style(
+      style = list(
+        cell_fill(
+          color = from_column(column = "bkg_color")
+        ),
+        cell_text(
+          color = from_column(column = "txt_color"),
+          size = from_column(column = "size"),
+          align = from_column(column = "align"),
+          v_align = from_column(column = "v_align"),
+          style = from_column(column = "style"),
+          weight = from_column(column = "weight"),
+          stretch = from_column(column = "stretch"),
+          decorate = from_column(column = "decorate"),
+          transform = from_column(column = "transform"),
+          whitespace = from_column(column = "whitespace"),
+          indent = from_column(column = "indent")
+        )
+      ),
+      locations = cells_body(columns = num)
+    )
+
+  # Perform snapshot test
+  gt_tbl_1 %>% render_as_html() %>% expect_snapshot()
+})
