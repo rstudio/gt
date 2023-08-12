@@ -2810,7 +2810,7 @@ tab_caption <- function(
 #'
 #' The [from_column()] helper function can be used with certain arguments of
 #' [cell_fill()] and [cell_text()]; this allows you to get parameter values from
-#' a specified column within the table. This means that cells targeted for
+#' a specified column within the table. This means that body cells targeted for
 #' styling could be formatted a little bit differently, using options taken from
 #' a column. For [cell_fill()], we can use [from_column()] for its `color`
 #' argument. The [cell_text()] function allows the use of [from_column()] in the
@@ -2834,6 +2834,11 @@ tab_caption <- function(
 #' generated with the [cols_add()] function (if not already present). Columns
 #' that contain parameter data can also be hidden from final display with
 #' [cols_hide()].
+#'
+#' Importantly, a call of `tab_style()` with any use of [from_column()] within
+#' styling expressions must only use [cells_body()] within `locations`. This is
+#' because we cannot map multiple options taken from a column onto other
+#' locations.
 #'
 #' @section Examples:
 #'
