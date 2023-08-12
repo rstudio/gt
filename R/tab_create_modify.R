@@ -2806,6 +2806,35 @@ tab_caption <- function(
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @section Using `from_column()` with `cell_*()` styling functions:
+#'
+#' The [from_column()] helper function can be used with certain arguments of
+#' [cell_fill()] and [cell_text()]; this allows you to get parameter values from
+#' a specified column within the table. This means that cells targeted for
+#' styling could be formatted a little bit differently, using options taken from
+#' a column. For [cell_fill()], we can use [from_column()] for its `color`
+#' argument. The [cell_text()] function allows the use of [from_column()] in the
+#' following arguments:
+#'
+#' - `color`
+#' - `size`
+#' - `align`
+#' - `v_align`
+#' - `style`
+#' - `weight`
+#' - `stretch`
+#' - `decorate`
+#' - `transform`
+#' - `whitespace`
+#' - `indent`
+#'
+#' Please note that for all of the aforementioned arguments, a [from_column()]
+#' call needs to reference a column that has data of the correct type (this is
+#' different for each argument). Additional columns for parameter values can be
+#' generated with the [cols_add()] function (if not already present). Columns
+#' that contain parameter data can also be hidden from final display with
+#' [cols_hide()].
+#'
 #' @section Examples:
 #'
 #' Let's use the [`exibble`] dataset to create a simple, two-column **gt** table
