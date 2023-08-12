@@ -2798,66 +2798,80 @@ cell_text <- function(
   # Validate textual styles values with `validate_style_in()`
   #
 
-  validate_style_in(
-    style_vals, style_names,
-    arg_name = "align",
-    in_vector = c("center", "left", "right", "justify")
-  )
-
-  validate_style_in(
-    style_vals, style_names,
-    arg_name = "v_align",
-    in_vector = c("middle", "top", "bottom")
-  )
-
-  validate_style_in(
-    style_vals, style_names,
-    arg_name = "style",
-    in_vector = c("normal", "italic", "oblique")
-  )
-
-  validate_style_in(
-    style_vals, style_names,
-    arg_name = "weight",
-    in_vector = c("normal", "bold", "lighter", "bolder"),
-    with_pattern = "[1-9][0-9][0-9]"
-  )
-
-  validate_style_in(
-    style_vals, style_names, arg_name = "stretch",
-    in_vector = c(
-      "ultra-condensed", "extra-condensed", "condensed",
-      "semi-condensed", "normal", "semi-expanded", "expanded",
-      "extra-expanded", "ultra-expanded"
+  if (!inherits(align, "gt_column")) {
+    validate_style_in(
+      style_vals, style_names,
+      arg_name = "align",
+      in_vector = c("center", "left", "right", "justify")
     )
-  )
+  }
 
-  validate_style_in(
-    style_vals, style_names,
-    arg_name = "decorate",
-    in_vector = c("overline", "line-through", "underline", "underline overline")
-  )
-
-  validate_style_in(
-    style_vals, style_names,
-    arg_name = "transform",
-    in_vector = c("uppercase", "lowercase", "capitalize")
-  )
-
-
-  validate_style_in(
-    style_vals, style_names,
-    arg_name = "whitespace",
-    in_vector = c(
-      "normal", "nowrap", "pre", "pre-wrap",
-      "pre-line", "break-spaces"
+  if (!inherits(v_align, "gt_column")) {
+    validate_style_in(
+      style_vals, style_names,
+      arg_name = "v_align",
+      in_vector = c("middle", "top", "bottom")
     )
-  )
+  }
+
+  if (!inherits(style, "gt_column")) {
+    validate_style_in(
+      style_vals, style_names,
+      arg_name = "style",
+      in_vector = c("normal", "italic", "oblique")
+    )
+  }
+
+  if (!inherits(weight, "gt_column")) {
+    validate_style_in(
+      style_vals, style_names,
+      arg_name = "weight",
+      in_vector = c("normal", "bold", "lighter", "bolder"),
+      with_pattern = "[1-9][0-9][0-9]"
+    )
+  }
+
+  if (!inherits(stretch, "gt_column")) {
+    validate_style_in(
+      style_vals, style_names, arg_name = "stretch",
+      in_vector = c(
+        "ultra-condensed", "extra-condensed", "condensed", "semi-condensed",
+        "normal", "semi-expanded", "expanded", "extra-expanded", "ultra-expanded"
+      )
+    )
+  }
+
+  if (!inherits(decorate, "gt_column")) {
+    validate_style_in(
+      style_vals, style_names,
+      arg_name = "decorate",
+      in_vector = c("overline", "line-through", "underline", "underline overline")
+    )
+  }
+
+  if (!inherits(transform, "gt_column")) {
+    validate_style_in(
+      style_vals, style_names,
+      arg_name = "transform",
+      in_vector = c("uppercase", "lowercase", "capitalize")
+    )
+  }
+
+  if (!inherits(whitespace, "gt_column")) {
+    validate_style_in(
+      style_vals = style_vals,
+      style_names = style_names,
+      arg_name = "whitespace",
+      in_vector = c(
+        "normal", "nowrap", "pre", "pre-wrap", "pre-line", "break-spaces"
+      )
+    )
+  }
 
   # Transform the `color` value, if present, so that X11 color names
   # can be used in all output contexts
-  if ("color" %in% style_names) {
-    style_vals$color <- html_color(colors = style_vals$color)
+  if (!inherits(color, "gt_column") && "color" %in% style_names) {
+    style_vals$color <- html_color(colors = color)
   }
 
   cell_style_structure(name = "cell_text", obj = style_vals)
@@ -2962,17 +2976,20 @@ cell_fill <- function(
     alpha = NULL
 ) {
 
-  if (length(color) != 1) {
+  if (!inherits(color, "gt_column") && length(color) != 1) {
     cli::cli_abort("The length of the `color` vector must be `1`.")
   }
 
-  if (!is.null(alpha) && length(alpha) != 1) {
+  if (!is.null(alpha) && !inherits(color, "gt_column") && length(alpha) != 1) {
     cli::cli_abort("If provided, `alpha` must be a single value.")
   }
 
   # Transform the `color` value, if present, so that X11 color names
   # can be used in all output contexts
-  color <- html_color(colors = color, alpha = alpha)
+
+  if (!inherits(color, "gt_column")) {
+    color <- html_color(colors = color, alpha = alpha)
+  }
 
   style_vals <- list(color = color)
 

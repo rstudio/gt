@@ -64,6 +64,43 @@ bold text (the degree of choice is greater with variable fonts)
 \item the cell borders (\code{\link[=cell_borders]{cell_borders()}})
 }
 }
+\section{Using \code{from_column()} with \verb{cell_*()} styling functions}{
+
+
+The \code{\link[=from_column]{from_column()}} helper function can be used with certain arguments of
+\code{\link[=cell_fill]{cell_fill()}} and \code{\link[=cell_text]{cell_text()}}; this allows you to get parameter values from
+a specified column within the table. This means that body cells targeted for
+styling could be formatted a little bit differently, using options taken from
+a column. For \code{\link[=cell_fill]{cell_fill()}}, we can use \code{\link[=from_column]{from_column()}} for its \code{color}
+argument. The \code{\link[=cell_text]{cell_text()}} function allows the use of \code{\link[=from_column]{from_column()}} in the
+following arguments:
+\itemize{
+\item \code{color}
+\item \code{size}
+\item \code{align}
+\item \code{v_align}
+\item \code{style}
+\item \code{weight}
+\item \code{stretch}
+\item \code{decorate}
+\item \code{transform}
+\item \code{whitespace}
+\item \code{indent}
+}
+
+Please note that for all of the aforementioned arguments, a \code{\link[=from_column]{from_column()}}
+call needs to reference a column that has data of the correct type (this is
+different for each argument). Additional columns for parameter values can be
+generated with the \code{\link[=cols_add]{cols_add()}} function (if not already present). Columns
+that contain parameter data can also be hidden from final display with
+\code{\link[=cols_hide]{cols_hide()}}.
+
+Importantly, a call of \code{tab_style()} with any use of \code{\link[=from_column]{from_column()}} within
+styling expressions must only use \code{\link[=cells_body]{cells_body()}} within \code{locations}. This is
+because we cannot map multiple options taken from a column onto other
+locations.
+}
+
 \section{Examples}{
 
 

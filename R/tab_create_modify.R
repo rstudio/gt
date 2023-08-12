@@ -2806,6 +2806,40 @@ tab_caption <- function(
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @section Using `from_column()` with `cell_*()` styling functions:
+#'
+#' The [from_column()] helper function can be used with certain arguments of
+#' [cell_fill()] and [cell_text()]; this allows you to get parameter values from
+#' a specified column within the table. This means that body cells targeted for
+#' styling could be formatted a little bit differently, using options taken from
+#' a column. For [cell_fill()], we can use [from_column()] for its `color`
+#' argument. The [cell_text()] function allows the use of [from_column()] in the
+#' following arguments:
+#'
+#' - `color`
+#' - `size`
+#' - `align`
+#' - `v_align`
+#' - `style`
+#' - `weight`
+#' - `stretch`
+#' - `decorate`
+#' - `transform`
+#' - `whitespace`
+#' - `indent`
+#'
+#' Please note that for all of the aforementioned arguments, a [from_column()]
+#' call needs to reference a column that has data of the correct type (this is
+#' different for each argument). Additional columns for parameter values can be
+#' generated with the [cols_add()] function (if not already present). Columns
+#' that contain parameter data can also be hidden from final display with
+#' [cols_hide()].
+#'
+#' Importantly, a call of `tab_style()` with any use of [from_column()] within
+#' styling expressions must only use [cells_body()] within `locations`. This is
+#' because we cannot map multiple options taken from a column onto other
+#' locations.
+#'
 #' @section Examples:
 #'
 #' Let's use the [`exibble`] dataset to create a simple, two-column **gt** table
@@ -3020,10 +3054,177 @@ tab_style <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
+  # Resolve into a list of locations
+  locations <- as_locations(locations)
+
   # Upgrade `style` to be within a list if not provided as such
   if (inherits(style, "cell_styles")) {
     style <- list(style)
   }
+
+  #
+  # Begin support for `from_column()`
+  #
+
+  cell_helpers <-
+    vapply(
+      style,
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
+      FUN = function(x) {
+        x <- names(x)
+        if (is.null(x)) {
+          x <- "bare"
+        }
+        if (any(grepl("cell_border", x))) {
+          x <- "cell_border"
+        }
+        x
+      }
+    )
+
+  # Set `has_gt_column` as FALSE initially and toggle to TRUE if there is
+  # any instance of `from_column()` used (a `gt_column` object will be present)
+  has_gt_column <- FALSE
+
+  for (i in seq_along(cell_helpers)) {
+
+    if (!is.character(style) && is.list(style)) {
+      style_i <- unlist(style, recursive = FALSE)
+    } else {
+      style_i <- style
+    }
+
+    if (cell_helpers[i] == "bare") {
+      any_gt_column <- FALSE
+    } else {
+      any_gt_column <-
+        any(
+          vapply(
+            style_i[[cell_helpers[i]]],
+            FUN.VALUE = logical(1),
+            USE.NAMES = FALSE,
+            FUN = function(x) {
+              inherits(x, "gt_column")
+            }
+          )
+        )
+    }
+
+    if (any_gt_column) {
+      has_gt_column <- TRUE
+    }
+  }
+
+  if (has_gt_column) {
+
+    # Stop if `locations` only refers to locations other than `cells_body()`
+    for (i in seq_along(locations)) {
+
+      any_non_body_location <-
+        any(
+          vapply(
+            locations,
+            FUN.VALUE = logical(1),
+            USE.NAMES = FALSE,
+            FUN = function(x) {
+              !inherits(x, "cells_body")
+            }
+          )
+        )
+
+      if (any_non_body_location) {
+        cli::cli_abort(c(
+          "If using `from_column()` in a `cell_*()` function, the location helper
+          used must be `cells_body().",
+          "*" = "Please remove any other location helpers."
+        ))
+      }
+    }
+
+    # TODO: Extract only the body location from the `locations` object
+    body_location <- locations[[1]]
+
+    # Remove the outer list from the `style` object
+    style <- unlist(style, recursive = FALSE)
+
+    # Resolve the row numbers using the `resolve_rows_i` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = !!body_location$rows,
+        data = data
+      )
+
+    for (i in seq_along(style)) {
+
+      arg_vals <- unclass(style[[i]])
+
+      param_tbl <-
+        generate_param_tbl(
+          data = data,
+          arg_vals = arg_vals,
+          resolved_rows_idx = resolved_rows_idx
+        )
+
+      if (names(style[i]) == "cell_fill") {
+
+        for (j in seq_len(nrow(param_tbl))) {
+
+          p_j <- as.list(param_tbl[j, ])
+
+          data <-
+            tab_style(
+              data = data,
+              style = cell_fill(
+                color = p_j$color
+              ),
+              locations = cells_body(
+                columns = !!body_location$columns,
+                rows = resolved_rows_idx[j]
+              )
+            )
+        }
+      }
+
+      if (names(style[i]) == "cell_text") {
+
+        for (j in seq_len(nrow(param_tbl))) {
+
+          p_j <- as.list(param_tbl[j, ])
+
+          data <-
+            tab_style(
+              data = data,
+              style = cell_text(
+                color = p_j$color,
+                font = p_j$font,
+                size = p_j$size,
+                align = p_j$align,
+                v_align = p_j$v_align,
+                style = p_j$style,
+                weight = p_j$weight,
+                stretch = p_j$stretch,
+                decorate = p_j$decorate,
+                transform = p_j$transform,
+                whitespace = p_j$whitespace,
+                indent = p_j$indent
+              ),
+              locations = cells_body(
+                columns = !!body_location$columns,
+                rows = resolved_rows_idx[j]
+              )
+            )
+        }
+      }
+
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()`
+  #
 
   # Determine if there is a `cell_text` list within the main list;
   # because we need to intercept any provided `font` inputs in `cell_text`
@@ -3070,9 +3271,6 @@ tab_style <- function(
         )
     }
   }
-
-  # Resolve into a list of locations
-  locations <- as_locations(locations)
 
   style <- as_style(style = style)
 
