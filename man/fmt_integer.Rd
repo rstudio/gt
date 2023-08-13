@@ -287,6 +287,27 @@ the \code{num} column as integer values having no digit separators (with the
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_integer_1.png" alt="This image of a table was generated from the first code example in the `fmt_integer()` help file." style="width:100\%;">
 }}
+
+Let's use a modified version of the \code{\link{countrypops}} dataset to create a
+\strong{gt} table with row labels. We will format all numeric columns with
+\code{fmt_integer()} and scale all values by \code{1 / 1E6}, giving us integer values
+representing millions of people. We can make clear what the values represent
+with an informative spanner label via \link{tab_spanner()`}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
+  dplyr::select(country_code_3, year, population) |>
+  dplyr::filter(country_code_3 \%in\% c("CHN", "IND", "USA", "PAK", "IDN")) |>
+  dplyr::filter(year > 1975 & year \%\% 5 == 0) |>
+  tidyr::spread(year, population) |>
+  dplyr::arrange(desc(`2015`)) |>
+  gt(rowname_col = "country_code_3") |>
+  fmt_integer(scale_by = 1 / 1E6) |>
+  tab_spanner(label = "Millions of People", columns = everything())
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_integer_2.png" alt="This image of a table was generated from the second code example in the `fmt_integer()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
