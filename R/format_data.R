@@ -821,7 +821,7 @@ fmt_number <- function(
 #' **gt** table with row labels. We will format all numeric columns with
 #' `fmt_integer()` and scale all values by `1 / 1E6`, giving us integer values
 #' representing millions of people. We can make clear what the values represent
-#' with an informative spanner label via [tab_spanner()`].
+#' with an informative spanner label via [tab_spanner()].
 #'
 #' ```r
 #' countrypops |>
