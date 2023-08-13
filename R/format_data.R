@@ -379,6 +379,57 @@
 #' `r man_get_image_tag(file = "man_fmt_number_3.png")`
 #' }}
 #'
+#' There can be cases where you want to show numbers to a large number of
+#' decimal places but also drop the unnecessary trailing zeros for low-precision
+#' values. Let's take a portion of the [`towny`] dataset and format the
+#' `latitude` and `longitude` columns with `fmt_number()`. We'll have up to 5
+#' digits displayed as decimal values, but we'll also unconditionally drop any
+#' runs of trailing zeros in the decimal part with `drop_trailing_zeros = TRUE`.
+#'
+#' ```r
+#' towny |>
+#'   dplyr::select(name, latitude, longitude) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt() |>
+#'   fmt_number(decimals = 5, drop_trailing_zeros = TRUE) |>
+#'   cols_merge(columns = -name, pattern = "{1}, {2}") |>
+#'   cols_label(
+#'     name ~ "Municipality",
+#'     latitude = "Location"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_number_4.png")`
+#' }}
+#'
+#' Another strategy for dealing with precision of decimals is to have a separate
+#' column of values that specify how many decimal digits to retain. Such a
+#' column can be added via [cols_add()] or it can be part of the input table for
+#' [gt()]. With that column available, it can be referenced in the `decimals`
+#' argument with the [from_column()] helper function. This approach yields a
+#' display of coordinate values that reflects the measurement precision of each
+#' value.
+#'
+#' ```r
+#' towny |>
+#'   dplyr::select(name, latitude, longitude) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt() |>
+#'   cols_add(dec_digits = c(1, 2, 2, 5, 5, 2, 3, 2, 3, 3)) |>
+#'   fmt_number(decimals = from_column(column = "dec_digits")) |>
+#'   cols_merge(columns = -name, pattern = "{1}, {2}") |>
+#'   cols_label(
+#'     name ~ "Municipality",
+#'     latitude = "Location"
+#'   ) |>
+#'   cols_hide(columns = dec_digits)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_number_5.png")`
+#' }}
+#'
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-1
