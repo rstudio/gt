@@ -292,7 +292,7 @@ Let's use a modified version of the \code{\link{countrypops}} dataset to create 
 \strong{gt} table with row labels. We will format all numeric columns with
 \code{fmt_integer()} and scale all values by \code{1 / 1E6}, giving us integer values
 representing millions of people. We can make clear what the values represent
-with an informative spanner label via \link{tab_spanner()`}.
+with an informative spanner label via \code{\link[=tab_spanner]{tab_spanner()}}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(country_code_3, year, population) |>
