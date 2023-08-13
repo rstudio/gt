@@ -839,6 +839,33 @@ fmt_number <- function(
 #' `r man_get_image_tag(file = "man_fmt_integer_2.png")`
 #' }}
 #'
+#' Using a subset of the [`towny`] dataset, we can do interesting things with
+#' integer values. Through [cols_add()] we'll add the `difference` column (which
+#' calculates the difference between 2021 and 2001 populations). All numeric
+#' values will be formatted with a first pass of `fmt_integer()`; a second pass
+#' of `fmt_integer()` focuses on the `difference` column and here we use the
+#' `force_sign = TRUE` option to draw attention to positive and negative
+#' difference values.
+#'
+#' ```r
+#' towny |>
+#'   dplyr::select(name, population_2001, population_2021) |>
+#'   dplyr::slice_tail(n = 10) |>
+#'   gt() |>
+#'   cols_add(difference = population_2021 - population_2001) |>
+#'   fmt_integer() |>
+#'   fmt_integer(columns = difference, force_sign = TRUE) |>
+#'   cols_label_with(fn = function(x) gsub("population_", "", x)) |>
+#'   tab_style(
+#'     style = cell_fill(color = "gray90"),
+#'     locations = cells_body(columns = difference)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_integer_3.png")`
+#' }}
+#'
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-2
