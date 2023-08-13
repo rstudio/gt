@@ -308,6 +308,32 @@ with an informative spanner label via \link{tab_spanner()`}.
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_integer_2.png" alt="This image of a table was generated from the second code example in the `fmt_integer()` help file." style="width:100\%;">
 }}
+
+Using a subset of the \code{\link{towny}} dataset, we can do interesting things with
+integer values. Through \code{\link[=cols_add]{cols_add()}} we'll add the \code{difference} column (which
+calculates the difference between 2021 and 2001 populations). All numeric
+values will be formatted with a first pass of \code{fmt_integer()}; a second pass
+of \code{fmt_integer()} focuses on the \code{difference} column and here we use the
+\code{force_sign = TRUE} option to draw attention to positive and negative
+difference values.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
+  dplyr::select(name, population_2001, population_2021) |>
+  dplyr::slice_tail(n = 10) |>
+  gt() |>
+  cols_add(difference = population_2021 - population_2001) |>
+  fmt_integer() |>
+  fmt_integer(columns = difference, force_sign = TRUE) |>
+  cols_label_with(fn = function(x) gsub("population_", "", x)) |>
+  tab_style(
+    style = cell_fill(color = "gray90"),
+    locations = cells_body(columns = difference)
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_integer_3.png" alt="This image of a table was generated from the third code example in the `fmt_integer()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
