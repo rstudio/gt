@@ -817,6 +817,28 @@ fmt_number <- function(
 #' `r man_get_image_tag(file = "man_fmt_integer_1.png")`
 #' }}
 #'
+#' Let's use a modified version of the [`countrypops`] dataset to create a
+#' **gt** table with row labels. We will format all numeric columns with
+#' `fmt_integer()` and scale all values by `1 / 1E6`, giving us integer values
+#' representing millions of people. We can make clear what the values represent
+#' with an informative spanner label via [tab_spanner()`].
+#'
+#' ```r
+#' countrypops |>
+#'   dplyr::select(country_code_3, year, population) |>
+#'   dplyr::filter(country_code_3 %in% c("CHN", "IND", "USA", "PAK", "IDN")) |>
+#'   dplyr::filter(year > 1975 & year %% 5 == 0) |>
+#'   tidyr::spread(year, population) |>
+#'   dplyr::arrange(desc(`2015`)) |>
+#'   gt(rowname_col = "country_code_3") |>
+#'   fmt_integer(scale_by = 1 / 1E6) |>
+#'   tab_spanner(label = "Millions of People", columns = everything())
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_integer_2.png")`
+#' }}
+#'
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-2
