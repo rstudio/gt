@@ -1787,7 +1787,6 @@ cols_units <- function(
 #' `r man_get_image_tag(file = "man_cols_add_4.png")`
 #' }}
 #'
-#'
 #' Tables can contain no rows, yet have columns. In the following example, we'll
 #' create a zero-row table with three columns (`num`, `chr`, and `ext`) and
 #' perform the same `cols_add()`-based addition of two columns of data. This is
