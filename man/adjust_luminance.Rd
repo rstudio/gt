@@ -7,23 +7,33 @@
 adjust_luminance(colors, steps)
 }
 \arguments{
-\item{colors}{A vector of colors that will undergo an adjustment in
-luminance. Each color value provided must either be a color name (in the
-set of colors provided by \code{grDevices::colors()}) or a hexadecimal string in
-the form of "#RRGGBB" or "#RRGGBBAA".}
+\item{colors}{\emph{Color vector}
 
-\item{steps}{A positive or negative factor by which the luminance will be
-adjusted. Must be a number between \code{-2.0} and \code{2.0}.}
+\verb{vector<character>} // \strong{required}
+
+This is the vector of colors that will undergo an adjustment in luminance.
+Each color value provided must either be a color name (in the set of colors
+provided by \code{grDevices::colors()}) or a hexadecimal string in the form of
+"#RRGGBB" or "#RRGGBBAA".}
+
+\item{steps}{\emph{Adjustment level}
+
+\verb{scalar<numeric|integer>(-2>=val>=2)} // \strong{required}
+
+A positive or negative factor by which the luminance of colors in the
+\code{colors} vector will be adjusted. Must be a number between \code{-2.0} and
+\code{2.0}.}
 }
 \value{
 A vector of color values.
 }
 \description{
-This function can brighten or darken a palette of colors by an arbitrary
-number of steps, which is defined by a real number between -2.0 and 2.0. The
-transformation of a palette by a fixed step in this function will tend to
-apply greater darkening or lightening for those colors in the midrange
-compared to any very dark or very light colors in the input palette.
+The \code{adjust_luminance()} function can brighten or darken a palette of colors
+by an arbitrary number of steps, which is defined by a real number between
+-2.0 and 2.0. The transformation of a palette by a fixed step in this
+function will tend to apply greater darkening or lightening for those colors
+in the midrange compared to any very dark or very light colors in the input
+palette.
 }
 \details{
 This function can be useful when combined with the \code{\link[=data_color]{data_color()}} function's
@@ -81,7 +91,7 @@ of increasingly darker palettes (with \code{\link[=data_color]{data_color()}}).
 
 \section{Function ID}{
 
-8-23
+8-7
 }
 
 \section{Function Introduced}{
@@ -109,7 +119,9 @@ Other helper functions:
 \code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
+\code{\link{define_units}()},
 \code{\link{escape_latex}()},
+\code{\link{from_column}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
@@ -117,6 +129,7 @@ Other helper functions:
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},
-\code{\link{stub}()}
+\code{\link{stub}()},
+\code{\link{system_fonts}()}
 }
 \concept{helper functions}

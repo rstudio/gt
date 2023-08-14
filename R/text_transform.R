@@ -1,3 +1,27 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2023 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 #' Perform highly targeted text replacement with a regex pattern
 #'
 #' @description
@@ -8,27 +32,52 @@
 #' that is done, the remaining two values to supply are for the regex pattern
 #' (`pattern`) and the replacement for all matched text (`replacement`).
 #'
-#' @param data A table object that is created using the [gt()] function.
-#' @param pattern A regex pattern used to target text fragments in the cells
-#'   resolved in locations.
-#' @param replacement The replacement text for any matched text fragments.
-#' @param locations The cell or set of cells to be associated with the text
-#'   transformation. Only the [cells_body()], [cells_stub()],
-#'   [cells_column_labels()], and [cells_row_groups()] helper functions can be
-#'   used here. We can enclose several of these calls within a `list()` if we
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` // **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
+#' @param pattern *Regex pattern to match with*
+#'
+#'   `scalar<character>` // **required**
+#'
+#'   A regex pattern used to target text fragments in the cells resolved in
+#'   locations.
+#'
+#' @param replacement *Replacement text*
+#'
+#'   `scalar<character>` // **required**
+#'
+#'   The replacement text for any matched text fragments.
+#'
+#' @param locations *Locations to target*
+#'
+#'   `<locations expressions>` // *default:* `cells_body()`
+#'
+#'   The cell or set of cells to be associated with the text transformation.
+#'   Only the [cells_body()], [cells_stub()], [cells_row_groups()],
+#'   [cells_column_labels()], and [cells_column_spanners()] helper functions can
+#'   be used here. We can enclose several of these calls within a `list()` if we
 #'   wish to make the transformation happen at different locations.
 #'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
 #'
-#' Use [`metro`] to create a **gt** table. Merge the `name` and `caption`
-#' columns together but only if `caption` doesn't have an `NA` value (the
-#' special `pattern` syntax of `"{1}<< ({2})>>"` takes care of this). This
-#' merged content is now part of the `name` column. We'd like to modify this
-#' further wherever there is text in parentheses: (1) make that text italicized,
-#' and (2) introduce a line break before the text in parentheses. We can do this
-#' with the `text_replace()` function.
+#' Use the [`metro`] dataset to create a **gt** table. With the [cols_merge()]
+#' function, we'll merge the `name` and `caption` columns together but only if
+#' `caption` doesn't have an `NA` value (the special `pattern` syntax of `"{1}<<
+#' ({2})>>"` takes care of this). This merged content is now part of the `name`
+#' column. We'd like to modify this further wherever there is text in
+#' parentheses: (1) make that text italicized, and (2) introduce a line break
+#' before the text in parentheses. We can do this with the `text_replace()`
+#' function. The `pattern` value of `"\\((.*?)\\)"` will match on text between
+#' parentheses, and the inner `"(.*?)"` is a capture group. The `replacement`
+#' value of `"<br>(<em>\\1</em>)"` puts the capture group text `"\\1"` within
+#' `<em>` tags, wraps literal parentheses around it, and prepends a line break
+#' tag.
 #'
 #' ```r
 #' metro |>
@@ -55,7 +104,7 @@
 #' 4-1
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @export
 text_replace <- function(
@@ -90,29 +139,51 @@ text_replace <- function(
 #' vector of length one (i.e., either `TRUE` or `FALSE`). To refer to the values
 #' undergoing transformation, you need to use the `x` variable.
 #'
-#' @param .data A table object that is created using the [gt()] function.
-#' @param ... A sequence of two-sided formulas. The left hand side (LHS)
+#' @param .data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` // **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
+#' @param ... *Matching expressions*
+#'
+#'   `<multiple expressions>` // **required**
+#'
+#'   A sequence of two-sided formulas. The left hand side (LHS)
 #'   determines which values match this case. The right hand side (RHS) provides
 #'   the replacement text (it must resolve to a value of the `character` class).
 #'   The LHS inputs must evaluate to logical vectors.
-#' @param .default The replacement text to use when cell values aren't matched
-#'   by any of the LHS inputs. If `NULL`, the default, no replacement text will
-#'   be used.
-#' @param .locations The cell or set of cells to be associated with the text
-#'   transformation. Only the [cells_body()], [cells_stub()],
-#'   [cells_column_labels()], and [cells_row_groups()] helper functions can be
-#'   used here. We can enclose several of these calls within a `list()` if we
+#'
+#' @param .default *Default replacement text*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   The replacement text to use when cell values aren't matched by any of the
+#'   LHS inputs. If `NULL`, the default, no replacement text will be used.
+#'
+#' @param .locations *Locations to target*
+#'
+#'   `<locations expressions>` // *default:* `cells_body()`
+#'
+#'   The cell or set of cells to be associated with the text transformation.
+#'   Only the [cells_body()], [cells_stub()], [cells_row_groups()],
+#'   [cells_column_labels()], and [cells_column_spanners()] helper functions can
+#'   be used here. We can enclose several of these calls within a `list()` if we
 #'   wish to make the transformation happen at different locations.
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' #' @section Examples:
+#' @section Examples:
 #'
-#' Use [`metro`] to create a **gt** table. In the `connect_rer` column,
-#' perform a count of pattern matches with `stringr::str_count()` and determine
-#' which cells have 1, 2, or 3 matched patterns. For each of these cases,
-#' provide descriptive replacement text. Here, we use a `.default` to replace
-#' the non-matched cases with an empty string.
+#' Use a portion of the [`metro`] dataset to create a **gt** table. We'll use
+#' the `text_case_when()` function to supply pairs of predicate statements and
+#' replacement text. For the `connect_rer` column, we will perform a count of
+#' pattern matches with `stringr::str_count()` and determine which cells have 1,
+#' 2, or 3 matched patterns. For each of these cases, descriptive replacement
+#' text is provided. Here, we use a `.default` value to replace the non-matched
+#' cases with an empty string (`""`). Finally, we use [cols_label()] to modify
+#' the labels of the three columns.
 #'
 #' ```r
 #' metro |>
@@ -142,7 +213,7 @@ text_replace <- function(
 #' 4-2
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @import rlang
 #' @export
@@ -217,37 +288,65 @@ text_case_when <- function(
 #' those strings. This can be changed to a partial matching and replacement
 #' strategy with the alternate option.
 #'
-#' @param .data A table object that is created using the [gt()] function.
-#' @param ... A sequence of two-sided formulas matching this general
-#'   construction: `<old_text> ~ <new_text>`. The left hand side (LHS)
-#'   determines which values to match on and it can be any length (allowing for
-#'   `new_text` to replace different values of `old_text`). The right hand side
-#'   (RHS) provides the replacement text (it must resolve to a single value of
-#'   the `character` class).
-#' @param .default The replacement text to use when cell values aren't matched
-#'   by any of the LHS inputs. If `NULL`, the default, no replacement text will
-#'   be used.
-#' @param .replace A choice in how the matching is to be done. The default
-#'   `"all"` means that the `old_text` (on the LHS of formulas given in `...`)
-#'   must match the cell text *completely*. With that option, the replacement
-#'   will completely replace that matched text. With `"partial"`, the match will
-#'   occur in all substrings of `old_text`. In this way, the replacements will
-#'   act on those matched substrings.
-#' @param .locations The cell or set of cells to be associated with the text
-#'   transformation. Only the [cells_body()], [cells_stub()],
-#'   [cells_column_labels()], and [cells_row_groups()] helper functions can be
-#'   used here. We can enclose several of these calls within a `list()` if we
+#' @param .data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` // **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
+#' @param ... *Matching expressions*
+#'
+#'   `<multiple expressions>` // **required**
+#'
+#'   A sequence of two-sided formulas matching this general construction:
+#'   `<old_text> ~ <new_text>`. The left hand side (LHS) determines which values
+#'   to match on and it can be any length (allowing for `new_text` to replace
+#'   different values of `old_text`). The right hand side (RHS) provides the
+#'   replacement text (it must resolve to a single value of the `character`
+#'   class).
+#'
+#' @param .default *Default replacement text*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   The replacement text to use when cell values aren't matched by any of the
+#'   LHS inputs. If `NULL`, the default, no replacement text will be used.
+#'
+#' @param .replace *Method for text replacement*
+#'
+#'   `singl-kw:[all|partial]` // *default:* `"all"`
+#'
+#'   A choice in how the matching is to be done. The default `"all"` means that
+#'   the `old_text` (on the LHS of formulas given in `...`) must match the cell
+#'   text *completely*. With that option, the replacement will completely
+#'   replace that matched text. With `"partial"`, the match will occur in all
+#'   substrings of `old_text`. In this way, the replacements will act on those
+#'   matched substrings.
+#'
+#' @param .locations *Locations to target*
+#'
+#'   `<locations expressions>` // *default:* `cells_body()`
+#'
+#'   The cell or set of cells to be associated with the text transformation.
+#'   Only the [cells_body()], [cells_stub()], [cells_row_groups()],
+#'   [cells_column_labels()], and [cells_column_spanners()] helper functions can
+#'   be used here. We can enclose several of these calls within a `list()` if we
 #'   wish to make the transformation happen at different locations.
 #'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. In the `char` column, transform the
-#' `NA` value to `"elderberry"`. Over in the `fctr` column, perform some
-#' sophisticated matches on spelled-out numbers and replace with descriptive
-#' text. Here, we use a `.default` to replace text for any of those non-matched
-#' cases.
+#' Let's use the [`exibble`] dataset to create a simple, two-column **gt** table
+#' (keeping only the `char` and `fctr` columns). In the `char` column, we'll
+#' transform the `NA` value to `"elderberry"` using the `text_case_match()`
+#' function. Over in the `fctr` column, some more sophisticated matches will be
+#' performed using `text_case_match()`. That column has spelled out numbers and
+#' we can produce these on the LHS with help from the [vec_fmt_spelled_num()]
+#' function. The replacements will contain descriptive text. In this last call
+#' of `text_case_match()`, we use a `.default` to replace text for any of those
+#' non-matched cases.
 #'
 #' ```r
 #' exibble |>
@@ -269,10 +368,10 @@ text_case_when <- function(
 #' `r man_get_image_tag(file = "man_text_case_match_1.png")`
 #' }}
 #'
-#' Use [`towny`] to create a **gt** table. Transform the text in the
-#' `csd_type` column using two-sided formulas supplied to `text_case_match()`.
-#' We can replace matches on the LHS with Fontawesome icons furnished by the
-#' **fontawesome** R package.
+#' Next, let's use a transformed version of the [`towny`] dataset to create a
+#' **gt** table. Transform the text in the `csd_type` column using two-sided
+#' formulas supplied to `text_case_match()`. We can replace matches on the LHS
+#' with Fontawesome icons furnished by the **fontawesome** R package.
 #'
 #' ```r
 #' towny |>
@@ -304,7 +403,7 @@ text_case_when <- function(
 #' 4-3
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @import rlang
 #' @export
@@ -403,25 +502,39 @@ text_case_match <- function(
 #' character vector of the same length as the input. Using the construction
 #' `function(x) { .. }` for the function is recommended.
 #'
-#' @param data A table object that is created using the [gt()] function.
-#' @param fn The function to use for text transformation. It should include `x`
-#'   as an argument and return a character vector of the same length as the
-#'   input `x`.
-#' @param locations The cell or set of cells to be associated with the text
-#'   transformation. Only the [cells_body()], [cells_stub()],
-#'   [cells_column_labels()], and [cells_row_groups()] helper functions can be
-#'   used here. We can enclose several of these calls within a `list()` if we
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` // **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
+#' @param fn *Function for text transformation*
+#'
+#'   `<function>` // **required**
+#'
+#'   The function to use for text transformation. It should include `x` as an
+#'   argument and return a character vector of the same length as the input `x`.
+#'
+#' @param locations *Locations to target*
+#'
+#'   `<locations expressions>` // *default:* `cells_body()`
+#'
+#'   The cell or set of cells to be associated with the text transformation.
+#'   Only the [cells_body()], [cells_stub()], [cells_row_groups()],
+#'   [cells_column_labels()], and [cells_column_spanners()] helper functions can
+#'   be used here. We can enclose several of these calls within a `list()` if we
 #'   wish to make the transformation happen at different locations.
 #'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
 #'
-#' Use [`sp500`] to create a **gt** table. Transform the text in the
-#' `date` column using a function supplied to `text_transform()` (via the `fn`
-#' argument). Note that the `x` in the `fn = function (x)` part consists
-#' entirely of ISO 8601 date strings (which are acceptable as input to the
-#' [vec_fmt_date()] and [vec_fmt_datetime()] functions).
+#' Use a subset of the [`sp500`] dataset to create a **gt** table. Transform the
+#' text in the `date` column using a function supplied to `text_transform()`
+#' (via the `fn` argument). Note that the `x` in the `fn = function (x)` part
+#' consists entirely of ISO 8601 date strings (which are acceptable as input to
+#' the [vec_fmt_date()] and [vec_fmt_datetime()] functions).
 #'
 #' ```r
 #' sp500 |>
@@ -453,15 +566,15 @@ text_case_match <- function(
 #' `r man_get_image_tag(file = "man_text_transform_1.png")`
 #' }}
 #'
-#' Use [`gtcars`] to create a **gt** table. First, the numeric values in the `n`
-#' column are formatted as spelled-out numbers with [fmt_spelled_num()]. The
-#' output values are indeed spelled out but exclusively with lowercase letters.
-#' We actually want these words to begin with a capital letter and end with a
-#' period. To make this possible, the `text_transform()` function will be used
-#' since it can modify already-formatted text. Through the `fn` argument, we
-#' provide a custom function that uses R's `toTitleCase()` operating on `x` (the
-#' numbers-as-text strings) within a `paste0()` so that a period can be properly
-#' placed.
+#' Let's use a summarized version of the [`gtcars`] dataset to create a **gt**
+#' table. First, the numeric values in the `n` column are formatted as
+#' spelled-out numbers with [fmt_spelled_num()]. The output values are indeed
+#' spelled out but exclusively with lowercase letters. We actually want these
+#' words to begin with a capital letter and end with a period. To make this
+#' possible, the `text_transform()` function will be used since it can modify
+#' already-formatted text. Through the `fn` argument, we provide a custom
+#' function that uses R's `toTitleCase()` operating on `x` (the numbers-as-text
+#' strings) within a `paste0()` so that a period can be properly placed.
 #'
 #' ```r
 #' gtcars |>
@@ -486,6 +599,44 @@ text_case_match <- function(
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_text_transform_2.png")`
+#' }}
+#'
+#' There may be occasions where you'd want to remove all text. Here in this
+#' example based on the [`pizzaplace`] dataset, we generate a **gt** table that
+#' summarizes an entire year of data by colorizing the daily sales revenue.
+#' Individual cell values are not needed here (since the encoding by color
+#' suffices), so, `text_transform()` is used to turn every value to an empty
+#' string: `""`.
+#'
+#' ```r
+#' pizzaplace |>
+#'   dplyr::group_by(date) |>
+#'   dplyr::summarize(rev = sum(price)) |>
+#'   dplyr::ungroup() |>
+#'   dplyr::mutate(
+#'     month = lubridate::month(date, label = TRUE),
+#'     day_num = lubridate::mday(date)
+#'   ) |>
+#'   dplyr::select(-date) |>
+#'   tidyr::pivot_wider(names_from = month, values_from = rev) |>
+#'   gt(rowname_col = "day_num") |>
+#'   data_color(
+#'     method = "numeric",
+#'     palette = "wesanderson::Zissou1",
+#'     na_color = "white"
+#'   ) |>
+#'   text_transform(
+#'     fn = function(x) "",
+#'     locations = cells_body()
+#'   ) |>
+#'   opt_table_lines(extent = "none") |>
+#'   opt_all_caps() |>
+#'   cols_width(everything() ~ px(35)) |>
+#'   cols_align(align = "center")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_text_transform_3.png")`
 #' }}
 #'
 #' @family text transforming functions
@@ -527,6 +678,7 @@ text_transform_at_location <- function(loc, data, fn = identity) {
   UseMethod("text_transform_at_location")
 }
 
+# Text transformation using `cells_body()`
 text_transform_at_location.cells_body <- function(
     loc,
     data,
@@ -552,6 +704,7 @@ text_transform_at_location.cells_body <- function(
   dt_body_set(data = data, body = body)
 }
 
+# Text transformation using `cells_stub()`
 text_transform_at_location.cells_stub <- function(
     loc,
     data,
@@ -573,6 +726,7 @@ text_transform_at_location.cells_stub <- function(
   dt_body_set(data = data, body = body)
 }
 
+# Text transformation using `cells_column_labels()`
 text_transform_at_location.cells_column_labels <- function(
     loc,
     data,
@@ -602,6 +756,34 @@ text_transform_at_location.cells_column_labels <- function(
   data
 }
 
+# Text transformation using `cells_column_spanners()`
+text_transform_at_location.cells_column_spanners <- function(
+    loc,
+    data,
+    fn = identity
+) {
+
+  spanners_df <- dt_spanners_get(data = data)
+
+  spanner_id_vec <- spanners_df[["spanner_id"]]
+
+  loc <- to_output_location(loc = loc, data = data)
+
+  for (spanner in loc$spanners) {
+
+    if (spanner %in% spanner_id_vec) {
+
+      spanners_df[spanners_df[["spanner_id"]] == spanner, ][["spanner_label"]] <-
+        as.list(fn(spanners_df[spanners_df[["spanner_id"]] == spanner, ][["spanner_label"]]))
+
+      data <- dt_spanners_set(data = data, spanners = spanners_df)
+    }
+  }
+
+  data
+}
+
+# Text transformation using `cells_row_groups()`
 text_transform_at_location.cells_row_groups <- function(
     loc,
     data,

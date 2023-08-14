@@ -7,10 +7,19 @@
 opt_table_lines(data, extent = c("all", "none", "default"))
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{extent}{The extent to which lines will be visible in the table. Options
-are \code{"all"}, \code{"none"}, or \code{"default"}.}
+\verb{obj:<gt_tbl>} // \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{extent}{\emph{Extent of lines added}
+
+\verb{singl-kw:[all|none|default]} // \emph{default:} \code{"all"}
+
+The extent to which lines will be visible in the table. Options are
+\code{"all"}, \code{"none"}, or \code{"default"}.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -26,9 +35,11 @@ completely lineless table, adding individual lines as needed.
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table with a number of table parts added.
-Then, use the \code{opt_table_lines()} function to haves lines everywhere there
-can possibly be lines.
+Use the \code{\link{exibble}} dataset to create a \strong{gt} table with a number of table
+parts added (using functions like \code{\link[=summary_rows]{summary_rows()}}, \code{\link[=grand_summary_rows]{grand_summary_rows()}},
+and more). Following that, we'll use the \code{opt_table_lines()} function to
+generate lines everywhere there can possibly be lines (the default for the
+\code{extent} argument is \code{"all"}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   gt(rowname_col = "row", groupname_col = "group") |>

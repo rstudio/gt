@@ -7,15 +7,28 @@
 ggplot_image(plot_object, height = 100, aspect_ratio = 1)
 }
 \arguments{
-\item{plot_object}{A ggplot plot object.}
+\item{plot_object}{\emph{A ggplot plot object}
 
-\item{height}{The absolute height (px) of the image in the table cell.}
+\verb{obj:<ggplot>} // \strong{required}
 
-\item{aspect_ratio}{The plot's final aspect ratio. Where the height of the
-plot is fixed using the \code{height} argument, the \code{aspect_ratio}
-will either compress (\code{aspect_ratio} < \code{1.0}) or expand
-(\code{aspect_ratio} > \code{1.0}) the plot horizontally. The default value
-of \code{1.0} will neither compress nor expand the plot.}
+A \code{ggplot} plot object.}
+
+\item{height}{\emph{Height of image}
+
+\verb{scalar<numeric|integer>} // \emph{default:} \code{100}
+
+The absolute height of the output image in the table cell (in \code{"px"}
+units). By default, this is set to \code{"100px"}.}
+
+\item{aspect_ratio}{\emph{The final aspect ratio of plot}
+
+\verb{scalar<numeric|integer>} // \emph{default:} \code{1.0}
+
+This is the plot's final aspect ratio. Where the height of the plot is
+fixed using the \code{height} argument, the \code{aspect_ratio} will either compress
+(\code{aspect_ratio} < \code{1.0}) or expand (\code{aspect_ratio} > \code{1.0}) the plot
+horizontally. The default value of \code{1.0} will neither compress nor expand
+the plot.}
 }
 \value{
 A character object with an HTML fragment that can be placed inside of

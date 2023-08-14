@@ -8,32 +8,47 @@ fmt_markdown(
   data,
   columns = everything(),
   rows = everything(),
-  md_engine = c("auto", "markdown", "commonmark")
+  md_engine = c("markdown", "commonmark")
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The columns to format. Can either be a series of column names
-provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
-focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
+\verb{obj:<gt_tbl>} // \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
+
+Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
+column indices, or a select helper function. Examples of select helper
+functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
+\code{columns} being formatted. Alternatively, we can supply a vector of row
+captions within \code{\link[=c]{c()}}, a vector of row indices, or a select helper
+function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}.}
+\code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
+need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
-default) results in all rows in \code{columns} being formatted. Alternatively,
-we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
-indices, or a helper function focused on selections. The select helper
-functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
-\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
-to filter down to the rows we need (e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+\item{md_engine}{\emph{Choice of Markdown engine}
 
-\item{md_engine}{The engine preference for Markdown rendering. By default,
-this is set to \code{"auto"} where \strong{gt} will choose the \strong{markdown} package
-if it is available in the user library, otherwise functions from the
-\strong{commonmark} package will be used. You can explicitly choose one or the
-other with the \code{"markdown"} or \code{"commonmark"} keyword option.}
+\verb{singl-kw:[markdown|commonmark]} // \emph{default:} \code{"markdown"}
+
+The engine preference for Markdown rendering. By default, this is set to
+\code{"markdown"} where \strong{gt} will use the \strong{markdown} package for Markdown
+conversion to HTML and LaTeX. The other option is \code{"commonmark"} and with
+that the \strong{commonmark} package will be used.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -55,8 +70,8 @@ helper like \code{starts_with()}, or, providing a more complex incantation like
 
 \code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
 
-which targets numeric columns that have a maximum value of 100,000 (excluding
-\code{NA}s from consideration).
+which targets numeric columns that have a maximum value greater than
+1,000,000 (excluding any \code{NA}s from consideration).
 
 By default all columns and rows are selected (with the \code{everything()}
 defaults). Cell values that are incompatible with a given formatting function
@@ -81,6 +96,21 @@ expression that takes column values (can involve any of the available columns
 in the table) and returns a logical vector. This is nice if you want to base
 formatting on values in the column or another column, or, you'd like to use a
 more complex predicate expression.
+}
+
+\section{Compatibility of arguments with the \code{from_column()} helper function}{
+
+
+The \code{\link[=from_column]{from_column()}} helper function can be used with the \code{md_engine} argument
+of \code{fmt_markdown()} to obtain varying parameter values from a specified
+column within the table. This means that each row could be formatted a little
+bit differently.
+
+Please note that for this argument (\code{md_engine}), a \code{\link[=from_column]{from_column()}} call
+needs to reference a column that has data of the \code{character} type. Additional
+columns for parameter values can be generated with the \code{\link[=cols_add]{cols_add()}} function
+(if not already present). Columns that contain parameter data can also be
+hidden from final display with \code{\link[=cols_hide]{cols_hide()}}.
 }
 
 \section{Examples}{
@@ -139,7 +169,7 @@ then, create a \strong{gt} table and format all columns with \code{fmt_markdown(
 
 \section{Function ID}{
 
-3-21
+3-22
 }
 
 \section{Function Introduced}{
@@ -174,6 +204,7 @@ Other data formatting functions:
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
 \code{\link{fmt_time}()},
+\code{\link{fmt_units}()},
 \code{\link{fmt_url}()},
 \code{\link{fmt}()},
 \code{\link{sub_large_vals}()},

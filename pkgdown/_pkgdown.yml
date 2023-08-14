@@ -1,9 +1,9 @@
+url: https://gt.rstudio.com
+
 destination: docs
 
 home:
   strip_header: true
-
-url: https://gt.rstudio.com
 
 template:
   bootstrap: 5
@@ -13,11 +13,10 @@ authors:
     href: "https://jooyoungseo.github.io/"
 
 development:
-  mode: auto
-  version_label: default
+  mode: release
 
 reference:
-  - title: Create Table
+  - title: Table creation
     desc: >
       All **gt** tables begin with a call to `gt()`, where we would supply the
       input data table (data frame or tibble) and some basic options for
@@ -30,7 +29,7 @@ reference:
     - gt
     - gt_preview
 
-  - title: Create or Modify Parts
+  - title: Creating or modifying parts of a table
     desc: >
       A **gt** table can contain a few useful parts for conveying additional
       information. These include a header (with a titles and subtitle), a
@@ -54,7 +53,7 @@ reference:
     - tab_options
     - tab_info
 
-  - title: Format Data
+  - title: Formatting column data
     desc: >
       Columns of data can be formatted with the `fmt_*()` functions. We can
       specify the rows of these columns quite precisely with the `rows`
@@ -83,6 +82,7 @@ reference:
     - fmt_duration
     - fmt_bins
     - fmt_markdown
+    - fmt_units
     - fmt_url
     - fmt_image
     - fmt_flag
@@ -96,7 +96,7 @@ reference:
     - sub_values
     - data_color
 
-  - title: Text Transformation Functions
+  - title: Text transformation
     desc: >
       The `text_*()` functions take cell data that are solidified into
       strings and allow for flexible transformations of those string values.
@@ -110,7 +110,7 @@ reference:
     - text_case_match
     - text_transform
 
-  - title: Modify Columns
+  - title: Modifying columns
     desc: >
       The `cols_*()` functions allow for modifications that act on entire
       columns. This includes alignment of the data in columns
@@ -124,6 +124,8 @@ reference:
     - cols_width
     - cols_label
     - cols_label_with
+    - cols_units
+    - cols_add
     - cols_move
     - cols_move_to_start
     - cols_move_to_end
@@ -134,7 +136,7 @@ reference:
     - cols_merge_range
     - cols_merge_n_pct
 
-  - title: Add or Modify Rows
+  - title: Adding or modifying rows
     desc: >
       There are two functions that will add rows to a **gt** table:
       `summary_rows()` and `grand_summary_rows()`. These functions will both add
@@ -145,8 +147,9 @@ reference:
     - summary_rows
     - grand_summary_rows
     - row_group_order
+    - rows_add
 
-  - title: Remove Parts of a Table
+  - title: Removing parts of a table
     desc: >
       The `rm_*()` functions let us safely remove parts of a **gt** table. This
       can be advantageous in those instances where you would obtain a **gt**
@@ -159,7 +162,7 @@ reference:
     - rm_source_notes
     - rm_caption
 
-  - title: Helper Functions
+  - title: Helper functions
     desc: >
       An assortment of helper functions is available in the **gt** package.
       The various `cells_*()` functions are used for targeting cells with the
@@ -175,6 +178,10 @@ reference:
     - html
     - px
     - pct
+    - from_column
+    - currency
+    - adjust_luminance
+    - define_units
     - stub
     - cells_title
     - cells_stubhead
@@ -189,18 +196,17 @@ reference:
     - cells_stub_grand_summary
     - cells_footnotes
     - cells_source_notes
-    - currency
     - cell_text
     - cell_fill
     - cell_borders
-    - adjust_luminance
     - random_id
     - escape_latex
     - gt_latex_dependencies
-    - default_fonts
     - google_font
+    - default_fonts
+    - system_fonts
 
-  - title: Image Addition Functions
+  - title: Image addition utilities
     desc: >
       We can add images into a **gt** table with the help of the `*_image()`
       functions. Two common ways to do this: (1) use `text_transform()` to
@@ -213,7 +219,7 @@ reference:
     - ggplot_image
     - test_image
 
-  - title: Table Option Functions
+  - title: Table options
     desc: >
       With the `opt_*()` functions, we have an easy way to set commonly-used
       table options without having to use `tab_options()` directly. Like, we can
@@ -236,7 +242,7 @@ reference:
     - opt_table_font
     - opt_css
 
-  - title: Information Functions
+  - title: Informational tables for reference
     desc: >
       These `info_*()` functions present us with **gt** tables containing
       useful information. So far, we can get reference information on
@@ -254,7 +260,7 @@ reference:
     - info_paletteer
     - info_google_fonts
 
-  - title: Shiny Functions
+  - title: Shiny
     desc: >
       Shiny is great for building interactive web apps with R. There's
       really nothing quite like it. The **gt** package includes two
@@ -265,7 +271,7 @@ reference:
     - render_gt
     - gt_output
 
-  - title: Export Functions
+  - title: Export and extraction functions
     desc: >
       There may come a day when you need to export a **gt** table to some
       specific format. A great function for that is `gtsave()`, which allows
@@ -284,7 +290,7 @@ reference:
     - extract_summary
     - extract_cells
 
-  - title: Table Group Functions
+  - title: Working with table groups
     desc: >
       Sometimes you want to deal with a multitude of **gt** tables, all at once.
       There are some advantages to having a group of tables bundled together in
@@ -303,7 +309,7 @@ reference:
     - grp_rm
     - grp_options
 
-  - title: Vector Formatting Functions
+  - title: Vector formatting
     desc: >
       Why should columns have all the formatting fun? If you have vectors in
       need of formatting, we have a set of `vec_fmt_*()` functions that have
@@ -327,12 +333,12 @@ reference:
     - vec_fmt_duration
     - vec_fmt_markdown
 
-  - title: Datasets
+  - title: Built in datasets
     desc: >
-      The **gt** package is equipped with ten datasets that come in all shapes
-      and sizes. Use them to experiment with the package! Many examples in the
-      internal help documents use these datasets to quickly demonstrate the
-      awesome features of **gt**.
+      The **gt** package is equipped with twelve datasets that come in all
+      shapes and sizes. Use them to experiment with the package! Many examples
+      in the internal help documents use these datasets to quickly demonstrate
+      the awesome features of **gt**.
     contents:
     - countrypops
     - sza
@@ -342,6 +348,8 @@ reference:
     - exibble
     - towny
     - metro
+    - constants
+    - illness
     - rx_adsl
     - rx_addv
 

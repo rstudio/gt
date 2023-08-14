@@ -7,15 +7,23 @@
 info_currencies(type = c("code", "symbol"), begins_with = NULL)
 }
 \arguments{
-\item{type}{The type of currency information provided. Can either be \code{code}
-where currency information corresponding to 3-letter currency codes is
-provided, or \code{symbol} where currency info for common currency names (e.g.,
-dollar, pound, yen, etc.) is returned.}
+\item{type}{\emph{Type of currency}
 
-\item{begins_with}{Providing a single letter will filter currencies to only
-those that begin with that letter in their currency code. The default
-(\code{NULL}) will produce a table with all currencies displayed. This option
-only constrains the information table where \code{type == "code"}.}
+\verb{singl-kw:[code|symbol]} // \emph{default:} \code{"code"}
+
+The type of currency information provided. Can either be \code{code} where
+currency information corresponding to 3-letter currency codes is provided,
+or \code{symbol} where currency info for common currency names (e.g., dollar,
+pound, yen, etc.) is returned.}
+
+\item{begins_with}{\emph{Show currencies beginning with a specific letter}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+Providing a single letter will filter currencies to only those that begin
+with that letter in their currency code. The default (\code{NULL}) will produce
+a table with all currencies displayed. This option only constrains the
+information table where \code{type == "code"}.}
 }
 \value{
 An object of class \code{gt_tbl}.

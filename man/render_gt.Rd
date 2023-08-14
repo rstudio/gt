@@ -15,28 +15,56 @@ render_gt(
 )
 }
 \arguments{
-\item{expr}{An expression that creates a \strong{gt} table object. For sake of
-convenience, a data frame or tibble can be used here (it will be
-automatically introduced to \code{\link[=gt]{gt()}} with its default options).}
+\item{expr}{\emph{Expression}
 
-\item{width, height}{The width and height of the table's container. Either can
-be specified as a single-length character with units of pixels or as a
-percentage. If provided as a single-length numeric vector, it is assumed
-that the value is given in units of pixels. The \code{\link[=px]{px()}} and \code{\link[=pct]{pct()}} helper
-functions can also be used to pass in numeric values and obtain values as
-pixel or percent units.}
+\verb{<expression>|obj:<data.frame>|obj:<tbl_df>}
 
-\item{align}{The alignment of the table in its container. By default, this is
-\code{"center"}. Other options are \code{"left"} and \code{"right"}.}
+An expression that creates a \strong{gt} table object. For sake of convenience,
+a data frame or tibble can be used here (it will be automatically
+introduced to \code{\link[=gt]{gt()}} with its default options).}
 
-\item{env}{The environment in which to evaluate the \code{expr}.}
+\item{width, height}{\emph{Dimensions of table container}
 
-\item{quoted}{Is \code{expr} a quoted expression (with \code{quote()})? This is useful
-if you want to save an expression in a variable.}
+\verb{scalar<numeric|integer|character>} // \emph{default:} \code{NULL} (\code{optional})
 
-\item{outputArgs}{A list of arguments to be passed through to the implicit
-call to \code{\link[=gt_output]{gt_output()}} when \code{render_gt()} is used in an interactive R
-Markdown document.}
+The width and height of the table's container. Either can be specified as a
+single-length character vector with units of pixels or as a percentage. If
+provided as a single-length numeric vector, it is assumed that the value is
+given in units of pixels. The \code{\link[=px]{px()}} and \code{\link[=pct]{pct()}} helper functions can also
+be used to pass in numeric values and obtain values as pixel or percent
+units.}
+
+\item{align}{\emph{Table alignment}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+The alignment of the table in its container. If \code{NULL}, the table will be
+center-aligned. Valid options for this are: \code{"center"}, \code{"left"}, and
+\code{"right"}.}
+
+\item{env}{\emph{Evaluation environment}
+
+\verb{<environment>} // \emph{default:} \code{parent.frame()}
+
+The environment in which to evaluate the \code{expr}.}
+
+\item{quoted}{\emph{Option to \code{quote()} \code{expr}}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+Is \code{expr} a quoted expression (with \code{quote()})? This is useful if you want
+to save an expression in a variable.}
+
+\item{outputArgs}{\emph{Output arguments}
+
+\code{list} // \emph{default:} \code{list()}
+
+A list of arguments to be passed through to the implicit call to
+\code{\link[=gt_output]{gt_output()}} when \code{render_gt()} is used in an interactive R Markdown
+document.}
+}
+\value{
+An object of class \code{shiny.render.function}.
 }
 \description{
 With \code{render_gt()} we can create a reactive \strong{gt} table that works
@@ -65,22 +93,27 @@ expression.
 gt_tbl <-
   gtcars |>
   gt() |>
-  cols_hide(columns = contains("_"))
+  fmt_currency(columns = msrp, decimals = 0) |>
+  cols_hide(columns = -c(mfr, model, year, mpg_c, msrp)) |>
+  cols_label_with(columns = everything(), fn = toupper) |>
+  data_color(columns = msrp, method = "numeric", palette = "viridis") |>
+  sub_missing() |>
+  opt_interactive(use_compact_mode = TRUE)
 
 ui <- fluidPage(
   gt_output(outputId = "table")
 )
 
 server <- function(input, output, session) \{
-
-  output$table <-
-    render_gt(
-      expr = gt_tbl,
-      height = px(600),
-      width = px(600)
-    )
+  output$table <- render_gt(expr = gt_tbl)
 \}
+
+shinyApp(ui = ui, server = server)
 }\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_render_gt_1.png" alt="This image of a table was generated from the first code example in the `render_gt()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{

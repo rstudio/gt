@@ -1,4 +1,28 @@
-#' Create a `gt_group` container for multiple **gt** table objects
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2023 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
+#' Create a `gt_group` container for holding multiple **gt** table objects
 #'
 #' @description
 #'
@@ -9,11 +33,25 @@
 #' can be printed independently and table separation (usually a page break)
 #' occurs between each of those.
 #'
-#' @param ... One or more **gt** table (`gt_tbl`) objects, typically generated
-#'   via the [gt()] function.
-#' @param .list Allows for the use of a list as an input alternative to `...`.
-#' @param .use_grp_opts Should options specified in the `gt_group` object be
-#'   applied to all contained **gt** tables? By default this is `FALSE`.
+#' @param ... *One or more gt table data objects*
+#'
+#'   `obj:<gt_tbl>` // (`optional`)
+#'
+#'   One or more **gt** table (`gt_tbl`) objects, typically generated via the
+#'   [gt()] function.
+#'
+#' @param .list *Alternative to `...`*
+#'
+#'   `<list of multiple expressions>` // (or, use `...`)
+#'
+#'   Allows for the use of a list as an input alternative to `...`.
+#'
+#' @param .use_grp_opts *Apply options to all contained tables?*
+#'
+#'   `scalar<logical>` // *default:* `FALSE`
+#'
+#'   Should options specified in the `gt_group` object be applied to all
+#'   contained **gt** tables? By default this is `FALSE`.
 #'
 #' @return An object of class `gt_group`.
 #'
@@ -22,7 +60,7 @@
 #' 14-1
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @import rlang
 #' @export
@@ -72,9 +110,19 @@ gt_group <- function(
 #' The only thing you need to provide is the index value for the **gt** table
 #' within the `gt_group` object.
 #'
-#' @param data A `gt_group` container object, typically generated through use of
-#'   the [gt_group()] function along with one or more `gt_tbl` objects.
-#' @param which An index value denoting which `gt_tbl` table should be obtained
+#' @param data *The gt table group object*
+#'
+#'   `obj:<gt_group>` // **required**
+#'
+#'   This is a `gt_group` container object. It is typically generated through
+#'   use of the [gt_group()] function along with one or more `gt_tbl` objects,
+#'   or, made by splitting a **gt** table with [gt_split()].
+#'
+#' @param which *The table to pull from the group*
+#'
+#'   `scalar<numeric|integer>` // **required**
+#'
+#'   A single index value denoting which `gt_tbl` table should be obtained
 #'   from the `gt_group` object.
 #'
 #' @return An object of class `gt_tbl`.
@@ -84,7 +132,7 @@ gt_group <- function(
 #' 14-3
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @export
 grp_pull <- function(
@@ -119,15 +167,35 @@ grp_pull <- function(
 #' workflow might be, the `grp_add()` function makes it possible to flexibly
 #' add one or more new **gt** tables, returning a refreshed `gt_group` object.
 #'
-#' @param .data A `gt_group` container object, typically generated through use
-#'   of the [gt_group()] function along with one or more `gt_tbl` objects.
-#' @param ... One or more **gt** table (`gt_tbl`) objects, typically generated
-#'   via the [gt()] function.
-#' @param .list Allows for the use of a list as an input alternative to `...`.
-#' @param .before,.after A single index for either `.before` or `.after`,
-#'   specifying where the supplied `gt_tbl` objects should be placed amongst the
-#'   existing collection of **gt** tables. If nothing is provided for either
-#'   argument the incoming `gt_tbl` objects will be appended.
+#' @param .data *The gt table group object*
+#'
+#'   `obj:<gt_group>` // **required**
+#'
+#'   This is a `gt_group` container object. It is typically generated through
+#'   use of the [gt_group()] function along with one or more `gt_tbl` objects,
+#'   or, made by splitting a **gt** table with [gt_split()].
+#'
+#' @param ... *One or more gt table objects*
+#'
+#'   `obj:<gt_tbl>` // **required** (or, use `...`)
+#'
+#'   One or more **gt** table (`gt_tbl`) objects, typically generated via the
+#'   [gt()] function.
+#'
+#' @param .list *Alternative to `...`*
+#'
+#'   `<list of multiple expressions>` // (or, use `...`)
+#'
+#'   Allows for the use of a list as an input alternative to `...`.
+#'
+#' @param .before,.after *Table used as anchor*
+#'
+#'   `scalar<numeric|integer>` // *default:* `NULL` (`optional`)
+#'
+#'   A single index for either `.before` or `.after`, specifying where the
+#'   supplied `gt_tbl` objects should be placed amongst the existing collection
+#'   of **gt** tables. If nothing is provided for either argument the incoming
+#'   `gt_tbl` objects will be appended.
 #'
 #' @return An object of class `gt_group`.
 #'
@@ -136,7 +204,7 @@ grp_pull <- function(
 #' 14-4
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @import rlang
 #' @export
@@ -256,14 +324,29 @@ grp_add <- function(
 #' function and the placement of the cloned **gt** tables can be controlled with
 #' either the `before` or `after` arguments.
 #'
-#' @param data A `gt_group` container object, typically generated through use
-#'   of the [gt_group()] function along with one or more `gt_tbl` objects.
-#' @param which A vector of index values denoting which `gt_tbl` tables should
-#'   be cloned inside of the `gt_group` object.
-#' @param before,after A single index for either `before` or `after`,
-#'   specifies where the cloned `gt_tbl` objects should be placed amongst the
-#'   existing collection of **gt** tables. If nothing is provided for either
-#'   argument the incoming `gt_tbl` objects will be appended.
+#' @param data *The gt table group object*
+#'
+#'   `obj:<gt_group>` // **required**
+#'
+#'   This is a `gt_group` container object. It is typically generated through
+#'   use of the [gt_group()] function along with one or more `gt_tbl` objects,
+#'   or, made by splitting a **gt** table with [gt_split()].
+#'
+#' @param which *The tables to clone*
+#'
+#'   `vector<numeric|integer>` // *default:* `NULL` (`optional`)
+#'
+#'   A vector of index values denoting which **gt** tables should be cloned
+#'   inside of the `gt_group` object.
+#'
+#' @param before,after *Table used as anchor*
+#'
+#'   `scalar<numeric|integer>` // *default:* `NULL` (`optional`)
+#'
+#'   A single index for either `before` or `after`, specifies where the cloned
+#'   `gt_tbl` objects should be placed amongst the existing collection of **gt**
+#'   tables. If nothing is provided for either argument, the incoming `gt_tbl`
+#'   objects will be appended.
 #'
 #' @return An object of class `gt_group`.
 #'
@@ -272,7 +355,7 @@ grp_add <- function(
 #' 14-5
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @import rlang
 #' @export
@@ -379,13 +462,33 @@ grp_clone <- function(
 #' tables provided must equal the number of indices for tables present in the
 #' `gt_group` object.
 #'
-#' @param .data A `gt_group` container object, typically generated through use
-#'   of the [gt_group()] function along with one or more `gt_tbl` objects.
-#' @param ... One or more **gt** table (`gt_tbl`) objects, typically generated
-#'   via the [gt()] function.
-#' @param .list Allows for the use of a list as an input alternative to `...`.
-#' @param .which Index values denoting which `gt_tbl` tables should be replaced
-#'   in the `gt_group` object.
+#' @param .data *The gt table group object*
+#'
+#'   `obj:<gt_group>` // **required**
+#'
+#'   This is a `gt_group` container object. It is typically generated through
+#'   use of the [gt_group()] function along with one or more `gt_tbl` objects,
+#'   or, made by splitting a **gt** table with [gt_split()].
+#'
+#' @param ... *One or more gt table objects*
+#'
+#'   `obj:<gt_tbl>` // **required** (or, use `...`)
+#'
+#'   One or more **gt** table (`gt_tbl`) objects, typically generated via the
+#'   [gt()] function.
+#'
+#' @param .list *Alternative to `...`*
+#'
+#'   `<list of multiple expressions>` // (or, use `...`)
+#'
+#'   Allows for the use of a list as an input alternative to `...`.
+#'
+#' @param .which *The tables to replace*
+#'
+#'   `vector<numeric|integer>` // *default:* `NULL` (`optional`)
+#'
+#'   A vector of index values denoting which **gt** tables should be replaced
+#'   inside of the `gt_group` object.
 #'
 #' @return An object of class `gt_group`.
 #'
@@ -394,7 +497,7 @@ grp_clone <- function(
 #' 14-6
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @export
 grp_replace <- function(
@@ -451,9 +554,19 @@ grp_replace <- function(
 #' specified `gt_tbl` objects gone. The only thing you need to provide is the
 #' index value for the **gt** table within the `gt_group` object.
 #'
-#' @param data A `gt_group` container object, typically generated through use of
-#'   the [gt_group()] function along with one or more `gt_tbl` objects.
-#' @param which An index value denoting which `gt_tbl` table should be removed
+#' @param data *The gt table group object*
+#'
+#'   `obj:<gt_group>` // **required**
+#'
+#'   This is a `gt_group` container object. It is typically generated through
+#'   use of the [gt_group()] function along with one or more `gt_tbl` objects,
+#'   or, made by splitting a **gt** table with [gt_split()].
+#'
+#' @param which *The table to remove from the group*
+#'
+#'   `scalar<numeric|integer>` // **required**
+#'
+#'   A single index value denoting which `gt_tbl` table should be removed
 #'   from the `gt_group` object.
 #'
 #' @return An object of class `gt_group`.
@@ -463,7 +576,7 @@ grp_replace <- function(
 #' 14-7
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @export
 grp_rm <- function(
@@ -483,8 +596,14 @@ grp_rm <- function(
 #' element that can adjusted.
 #'
 #' @inheritParams tab_options
-#' @param data A `gt_group` container object, typically generated through use of
-#'   the [gt_group()] function along with one or more `gt_tbl` objects.
+#'
+#' @param data *The gt table group object*
+#'
+#'   `obj:<gt_group>` // **required**
+#'
+#'   This is `gt_group` container object. It is typically generated through use
+#'   of the [gt_group()] function along with one or more `gt_tbl` objects, or,
+#'   made by splitting a **gt** table with [gt_split()].
 #'
 #' @return An object of class `gt_group`.
 #'
@@ -493,7 +612,7 @@ grp_rm <- function(
 #' 14-8
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @export
 grp_options <- function(
@@ -556,6 +675,7 @@ grp_options <- function(
     column_labels.border.lr.width = NULL,
     column_labels.border.lr.color = NULL,
     column_labels.hidden = NULL,
+    column_labels.units_pattern = NULL,
     row_group.background.color = NULL,
     row_group.font.size = NULL,
     row_group.font.weight = NULL,
@@ -663,6 +783,7 @@ grp_options <- function(
     ihtml.use_resizers = NULL,
     ihtml.use_highlight = NULL,
     ihtml.use_compact_mode = NULL,
+    ihtml.use_text_wrapping = NULL,
     ihtml.use_page_size_select = NULL,
     ihtml.page_size_default = NULL,
     ihtml.page_size_values = NULL,

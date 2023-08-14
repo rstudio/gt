@@ -50,12 +50,12 @@ test_that("The `resolve_rows_l()` and `resolve_rows_i()` fns both work", {
 
   expect_identical(resolve_rows_l(1, mtcars), c(TRUE, rep_len(FALSE, nrow(mtcars) - 1)))
   expect_identical(resolve_rows_l("Mazda RX4", mtcars), c(TRUE, rep_len(FALSE, nrow(mtcars) - 1)))
-  expect_warning(expect_identical(resolve_rows_l(NULL, mtcars), rep_len(TRUE, nrow(mtcars))))
+  expect_warning(expect_identical(resolve_rows_l(NULL, mtcars, null_means = "everything"), rep_len(TRUE, nrow(mtcars))))
   expect_identical(resolve_rows_l(everything(), mtcars), rep_len(TRUE, nrow(mtcars)))
 
   expect_identical(resolve_rows_l(1, mtcars_gt), c(TRUE, rep_len(FALSE, nrow(mtcars) - 1)))
   expect_identical(resolve_rows_l("Mazda RX4", mtcars_gt), c(TRUE, rep_len(FALSE, nrow(mtcars) - 1)))
-  expect_warning(expect_identical(resolve_rows_l(NULL, mtcars_gt), rep_len(TRUE, nrow(mtcars))))
+  expect_warning(expect_identical(resolve_rows_l(NULL, mtcars_gt, null_means = "everything"), rep_len(TRUE, nrow(mtcars))))
   expect_identical(resolve_rows_l(everything(), mtcars_gt), rep_len(TRUE, nrow(mtcars)))
 
   # Select helpers
@@ -83,7 +83,7 @@ test_that("The `resolve_rows_l()` and `resolve_rows_i()` fns both work", {
   expect_identical(resolve_rows_l("", exibble_gt_1), c(rep_len(FALSE, length(row_names_1) - 1), TRUE))
   expect_identical(resolve_rows_l(FALSE, exibble_gt_1), c(rep_len(FALSE, length(row_names_1))))
   expect_identical(resolve_rows_l(character(0), exibble_gt_1), c(rep_len(FALSE, length(row_names_1))))
-  expect_warning(expect_identical(resolve_rows_l(NULL, exibble_gt_1), rep_len(TRUE, length(row_names_1))))
+  expect_warning(expect_identical(resolve_rows_l(NULL, exibble_gt_1, null_means = "everything"), rep_len(TRUE, length(row_names_1))))
   expect_identical(resolve_rows_l(everything(), exibble_gt_1), rep_len(TRUE, length(row_names_1)))
 
   expect_identical(resolve_rows_l(TRUE, exibble_gt_1), rep_len(TRUE, length(row_names_1)))
@@ -97,7 +97,7 @@ test_that("The `resolve_rows_l()` and `resolve_rows_i()` fns both work", {
 
   expect_identical(resolve_rows_l(1, exibble_gt_2), c(TRUE, rep_len(FALSE, length(row_names_2) - 1)))
   expect_identical(resolve_rows_l("apricot", exibble_gt_2), c(TRUE, rep(FALSE, length(row_names_2) - 1)))
-  expect_warning(expect_identical(resolve_rows_l(NULL, exibble_gt_2), rep_len(TRUE, length(row_names_2))))
+  expect_warning(expect_identical(resolve_rows_l(NULL, exibble_gt_2, null_means = "everything"), rep_len(TRUE, length(row_names_2))))
   expect_identical(resolve_rows_l(everything(), exibble_gt_2), rep_len(TRUE, length(row_names_2)))
 
   #

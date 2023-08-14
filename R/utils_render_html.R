@@ -1,3 +1,27 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2023 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 #' Transform a footnote mark to an HTML representation
 #'
 #' @noRd
@@ -66,6 +90,91 @@ footnote_mark_to_html <- function(
     },
     "</span>"
   )
+}
+
+get_font_stack <- function(
+    name = c(
+      "system-ui", "transitional", "old-style", "humanist",
+      "geometric-humanist", "classical-humanist", "neo-grotesque",
+      "monospace-slab-serif", "monospace-code", "industrial",
+      "rounded-sans", "slab-serif", "antique", "didone", "handwritten"
+    ),
+    add_emoji = TRUE
+) {
+
+  name <- match.arg(name)
+
+  font_stack <-
+    switch(
+      name,
+      "system-ui" = c(
+        "system-ui", "Segoe UI", "Roboto", "Helvetica", "Arial", "sans-serif"
+      ),
+      "transitional" = c(
+        "Charter", "Bitstream Charter", "Sitka Text", "Cambria", "serif"
+      ),
+      "old-style" = c(
+        "Iowan Old Style", "Palatino Linotype", "URW Palladio L", "P052", "serif"
+      ),
+      "humanist" = c(
+        "Seravek", "Gill Sans Nova", "Ubuntu", "Calibri", "DejaVu Sans",
+        "source-sans-pro", "sans-serif"
+      ),
+      "geometric-humanist" = c(
+        "Avenir", "Avenir Next LT Pro", "Montserrat", "Corbel", "URW Gothic",
+        "source-sans-pro", "sans-serif"
+      ),
+      "classical-humanist" = c(
+        "Optima", "Candara", "Noto Sans", "source-sans-pro", "sans-serif"
+      ),
+      "neo-grotesque" = c(
+        "Inter", "Roboto", "Helvetica Neue", "Arial Nova", "Nimbus Sans",
+        "Arial", "sans-serif"
+      ),
+      "monospace-slab-serif" = c(
+        "Nimbus Mono PS", "Courier New", "Cutive Mono", "monospace"
+      ),
+      "monospace-code" = c(
+        "ui-monospace", "Cascadia Code", "Source Code Pro", "Menlo", "Consolas",
+        "DejaVu Sans Mono", "monospace"
+      ),
+      "industrial" = c(
+        "Bahnschrift", "DIN Alternate", "Franklin Gothic Medium",
+        "Nimbus Sans Narrow", "sans-serif-condensed", "sans-serif"
+      ),
+      "rounded-sans" = c(
+        "ui-rounded", "Hiragino Maru Gothic ProN", "Quicksand", "Comfortaa",
+        "Manjari", "Arial Rounded MT Bold", "Calibri", "source-sans-pro",
+        "sans-serif"
+      ),
+      "slab-serif" = c(
+        "Rockwell", "Rockwell Nova", "Roboto Slab", "DejaVu Serif",
+        "Sitka Small", "serif"
+      ),
+      "antique" = c(
+        "Superclarendon", "Bookman Old Style", "URW Bookman", "URW Bookman L",
+        "Georgia Pro", "Georgia", "serif"
+      ),
+      "didone" = c(
+        "Didot", "Bodoni MT", "Noto Serif Display", "URW Palladio L", "P052",
+        "Sylfaen", "serif"
+      ),
+      "handwritten" = c(
+        "Segoe Print", "Bradley Hand", "Chilanka", "TSCu_Comic",
+        "casual", "cursive"
+      )
+    )
+
+  if (add_emoji) {
+    font_stack <-
+      c(
+        font_stack,
+        "Apple Color Emoji", "Segoe UI Emoji",
+        "Segoe UI Symbol", "Noto Color Emoji"
+      )
+  }
+
+  font_stack
 }
 
 styles_to_html <- function(styles) {
@@ -789,11 +898,12 @@ create_columns_component_h <- function(data) {
       for (j in seq_along(colspans)) {
 
         if (colspans[j] > 0) {
+
           styles_spanners <-
             dplyr::filter(
               styles_tbl,
               locname == "columns_groups",
-              grpname == spanners_vars
+              grpname %in% spanners_vars
             )
 
           spanner_style <-

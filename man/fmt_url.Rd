@@ -18,46 +18,77 @@ fmt_url(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The columns to format. Can either be a series of column names
-provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
-focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
+\verb{obj:<gt_tbl>} // \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
+
+Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
+column indices, or a select helper function. Examples of select helper
+functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
+\code{columns} being formatted. Alternatively, we can supply a vector of row
+captions within \code{\link[=c]{c()}}, a vector of row indices, or a select helper
+function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}.}
+\code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
+need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
-default) results in all rows in \code{columns} being formatted. Alternatively,
-we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
-indices, or a helper function focused on selections. The select helper
-functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
-\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
-to filter down to the rows we need (e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+\item{label}{\emph{Link label}
 
-\item{label}{The visible 'label' to use for the link. If \code{NULL} (the default)
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+The visible 'label' to use for the link. If \code{NULL} (the default)
 the URL will serve as the label. There are two non-\code{NULL} options: (1) a
 static text can be used for the label by providing a string, and (2) a
 function can be provided to fashion a label from every URL.}
 
-\item{as_button}{An option to style the link as a button. By default, this is
+\item{as_button}{\emph{Style link as a button}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+An option to style the link as a button. By default, this is
 \code{FALSE}. If this option is chosen then the \code{button_fill} argument becomes
 usable.}
 
-\item{color}{The color used for the resulting link and its underline. This is
-\code{"auto"} by default; this allows \strong{gt} to choose an appropriate color
-based on various factors (e.g., background \code{button_fill} when \code{as_button}
-is \code{TRUE}).}
+\item{color}{\emph{Link color}
 
-\item{show_underline}{Should the link be decorated with an underline? By
+\verb{scalar<character>} // \emph{default:} \code{"auto"}
+
+The color used for the resulting link and its underline. This is
+\code{"auto"} by default; this allows \strong{gt} to choose an appropriate color
+based on various factors (such as the background \code{button_fill} when
+\code{as_button} is \code{TRUE}).}
+
+\item{show_underline}{\emph{Show the link underline}
+
+\verb{scalar<character>|scalar<logical>} // \emph{default:} \code{"auto"}
+
+Should the link be decorated with an underline? By
 default this is \code{"auto"} which means that \strong{gt} will choose \code{TRUE} when
 \code{as_button = FALSE} and \code{FALSE} in the other case. The link underline will
 be the same color as that set in the \code{color} option.}
 
-\item{button_fill, button_width, button_outline}{Options for styling a
-link-as-button (and only applies if \code{as_button = TRUE}). All of these
-options are by default set to \code{"auto"}, allowing \strong{gt} to choose
-appropriate fill, width, and outline values.}
+\item{button_fill, button_width, button_outline}{\emph{Button options}
+
+\verb{scalar<character>} // \emph{default:} \code{"auto"}
+
+Options for styling a link-as-button (and only applies if
+\code{as_button = TRUE}). All of these options are by default set to \code{"auto"},
+allowing \strong{gt} to choose appropriate fill, width, and outline values.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -77,6 +108,15 @@ that the text is the URL. In the latter case the URL is also used as the
 label but there is the option to use the \code{label} argument to modify that
 text.
 }
+\section{Compatibility of formatting function with data values}{
+
+
+The \code{fmt_url()} formatting function is compatible with body cells that are
+of the \code{"character"} or \code{"factor"} types. Any other types of body cells are
+ignored during formatting. This is to say that cells of incompatible data
+types may be targeted, but there will be no attempt to format them.
+}
+
 \section{Targeting cells with \code{columns} and \code{rows}}{
 
 
@@ -90,8 +130,8 @@ helper like \code{starts_with()}, or, providing a more complex incantation like
 
 \code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
 
-which targets numeric columns that have a maximum value of 100,000 (excluding
-\code{NA}s from consideration).
+which targets numeric columns that have a maximum value greater than
+1,000,000 (excluding any \code{NA}s from consideration).
 
 By default all columns and rows are selected (with the \code{everything()}
 defaults). Cell values that are incompatible with a given formatting function
@@ -118,14 +158,40 @@ formatting on values in the column or another column, or, you'd like to use a
 more complex predicate expression.
 }
 
+\section{Compatibility of arguments with the \code{from_column()} helper function}{
+
+
+The \code{\link[=from_column]{from_column()}} helper function can be used with certain arguments of
+\code{fmt_url()} to obtain varying parameter values from a specified column within
+the table. This means that each row could be formatted a little bit
+differently. These arguments provide support for \code{\link[=from_column]{from_column()}}:
+\itemize{
+\item \code{label}
+\item \code{as_button}
+\item \code{color}
+\item \code{show_underline}
+\item \code{button_fill}
+\item \code{button_width}
+\item \code{button_outline}
+}
+
+Please note that for each of the aforementioned arguments, a \code{\link[=from_column]{from_column()}}
+call needs to reference a column that has data of the correct type (this is
+different for each argument). Additional columns for parameter values can be
+generated with the \code{\link[=cols_add]{cols_add()}} function (if not already present). Columns
+that contain parameter data can also be hidden from final display with
+\code{\link[=cols_hide]{cols_hide()}}. Finally, there is no limitation to how many arguments the
+\code{\link[=from_column]{from_column()}} helper is applied so long as the arguments belong to this
+closed set.
+}
+
 \section{Examples}{
 
 
-Use the \code{\link{towny}} dataset to create a \strong{gt} table. After some major
-\strong{dplyr}ing to get a nicely formatted data table, we use the \code{fmt_url()}
-function on the \code{website} column to generate navigable links to websites.
-By default the links are underlined and the color will be chosen for you
-(it's dark cyan).
+Using a portion of the \code{\link{towny}} dataset, let's create a \strong{gt} table. We can
+use the \code{fmt_url()} function on the \code{website} column to generate navigable
+links to websites. By default the links are underlined and the color will be
+chosen for you (it's dark cyan).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
   dplyr::filter(csd_type == "city") |>
@@ -260,12 +326,12 @@ you to handle them with \code{\link[=sub_missing]{sub_missing()}}. Here's an exa
 
 \section{Function ID}{
 
-3-18
+3-19
 }
 
 \section{Function Introduced}{
 
-\emph{In Development}
+\code{v0.9.0} (Mar 31, 2023)
 }
 
 \seealso{
@@ -293,6 +359,7 @@ Other data formatting functions:
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
 \code{\link{fmt_time}()},
+\code{\link{fmt_units}()},
 \code{\link{fmt}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},

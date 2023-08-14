@@ -1,3 +1,27 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2023 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 #' Yearly populations of countries from 1960 to 2021
 #'
 #' @description
@@ -462,7 +486,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 "towny"
 
@@ -537,9 +561,149 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 "metro"
+
+#' The fundamental physical constants
+#'
+#' @description
+#'
+#' This dataset contains values for over 300 basic fundamental constants in
+#' nature. The values originate from the 2018 adjustment which is based on the
+#' latest relevant precision measurements and improvements of theoretical
+#' calculations. Such work has been carried out under the authority of the
+#' *Task Group on Fundamental Constants* (TGFC) of the
+#' *Committee on Data of the International Science Council* (CODATA). These
+#' updated values became available on May 20, 2019. They are published at
+#' <http://physics.nist.gov/constants>, a website of the
+#' *Fundamental Constants Data Center* of the
+#' *National Institute of Standards and Technology* (NIST), Gaithersburg,
+#' Maryland, USA.
+#'
+#' @format A tibble with 354 rows and 4 variables:
+#' \describe{
+#' \item{name}{The name of the constant.}
+#' \item{value}{The value of the constant.}
+#' \item{uncert}{The uncertainty associated with the value. If `NA` then the
+#' value is seen as an 'exact' value (e.g., an electron volt has the exact value
+#' of 1.602 176 634 e-19 J).}
+#' \item{units}{The units associated with the constant.}
+#' }
+#'
+#' @section Examples:
+#'
+#' Here is a glimpse at the data available in `constants`.
+#'
+#' ```{r}
+#' dplyr::glimpse(constants)
+#' ```
+#'
+#' @family datasets
+#' @section Dataset ID and Badge:
+#' DATA-9
+#'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_constants.png")`
+#' }}
+#'
+#' @section Dataset Introduced:
+#' *In Development*
+#'
+"constants"
+
+#' Lab tests for one suffering from an illness
+#'
+#' @description
+#'
+#' A dataset with artificial daily lab data for a patient with Yellow Fever
+#' (YF). The table comprises laboratory findings for the patient from day 3 of
+#' illness onset until day 9 (after which the patient died). YF viral DNA was
+#' found in serum samples from day 3, where the viral load reached 14,000 copies
+#' per mL. Several medical interventions were taken to help the patient,
+#' including the administration of fresh frozen plasma, platelets, red cells,
+#' and coagulation factor VIII. The patient also received advanced support
+#' treatment in the form of mechanical ventilation and plasmapheresis. Though
+#' the patient's temperature remained stable during their illness,
+#' unfortunately, the patient's condition did not improve. On days 7 and 8, the
+#' patient's health declined further, with symptoms such as nosebleeds,
+#' gastrointestinal bleeding, and hematoma.
+#'
+#' @details
+#'
+#' The various tests are identified in the `test` column. The following listing
+#' provides the full names of any abbreviations seen in that column.
+#'
+#' \itemize{
+#' \item `"WBC"`: white blood cells.
+#' \item `"RBC"`: red blood cells.
+#' \item `"Hb"`: hemoglobin.
+#' \item `"PLT"`: platelets.
+#' \item `"ALT"`: alanine aminotransferase.
+#' \item `"AST"`: aspartate aminotransferase.
+#' \item `"TBIL"`: total bilirubin.
+#' \item `"DBIL"`: direct bilirubin.
+#' \item `"NH3"`: hydrogen nitride.
+#' \item `"PT"`: prothrombin time.
+#' \item `"APTT"`: activated partial thromboplastin time.
+#' \item `"PTA"`: prothrombin time activity.
+#' \item `"DD"`: D-dimer.
+#' \item `"FDP"`: fibrinogen degradation products.
+#' \item `"LDH"`: lactate dehydrogenase.
+#' \item `"HBDH"`: hydroxybutyrate dehydrogenase.
+#' \item `"CK"`: creatine kinase.
+#' \item `"CKMB"`: the MB fraction of creatine kinase.
+#' \item `"BNP"`: B-type natriuetic peptide.
+#' \item `"MYO"`: myohemoglobin.
+#' \item `"TnI"`: troponin inhibitory.
+#' \item `"CREA"`: creatinine.
+#' \item `"BUN"`: blood urea nitrogen.
+#' \item `"AMY"`: amylase.
+#' \item `"LPS"`: lipase.
+#' \item `"K"`: kalium.
+#' \item `"Na"`: sodium.
+#' \item `"Cl"`: chlorine.
+#' \item `"Ca"`: calcium.
+#' \item `"P"`: phosphorus.
+#' \item `"Lac"`: lactate, blood.
+#' \item `"CRP"`: c-reactive protein.
+#' \item `"PCT"`: procalcitonin.
+#' \item `"IL-6"`: interleukin-6.
+#' \item `"CD3+CD4+"`: CD4+T lymphocytes.
+#' \item `"CD3+CD8+"`: CD8+T lymphocytes.
+#' }
+#'
+#' @format A tibble with 39 rows and 11 variables:
+#' \describe{
+#' \item{test}{The name of the test.}
+#' \item{units}{The measurement units for the test.}
+#' \item{day_3,day_4,day_5,day_6,day_7,day_8,day_9}{Measurement values
+#' associated with each test administered from days 3 to 9. An `NA` value
+#' indicates that the test could not be performed that day.}
+#' \item{norm_l,norm_u}{Lower and upper bounds for the normal range associated
+#' with the test.}
+#' }
+#'
+#' @section Examples:
+#'
+#' Here is a glimpse at the data available in `illness`.
+#'
+#' ```{r}
+#' dplyr::glimpse(illness)
+#' ```
+#'
+#' @family datasets
+#' @section Dataset ID and Badge:
+#' DATA-10
+#'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_illness.png")`
+#' }}
+#'
+#' @section Dataset Introduced:
+#' *In Development*
+#'
+"illness"
 
 #' An ADSL-flavored clinical trial toy dataset
 #'
@@ -600,14 +764,14 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-9
+#' DATA-11
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_rx_adsl.png")`
 #' }}
 #'
 #' @section Dataset Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 "rx_adsl"
 
@@ -673,13 +837,13 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-10
+#' DATA-12
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_rx_addv.png")`
 #' }}
 #'
 #' @section Dataset Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 "rx_addv"

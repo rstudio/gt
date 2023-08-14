@@ -60,28 +60,11 @@ test_that("The `tab_spanner_delim()` function works correctly", {
     gt(iris_short) %>%
     tab_spanner_delim(delim = ".", split = "first")
 
-  # Expect a particular ordering of column labels in `_boxh`
-  tbl_html_first %>%
-    dt_boxhead_get() %>%
-    .$column_label %>%
-    unlist() %>%
-    expect_equal(c("Sepal", "Sepal", "Petal", "Petal", "Species"))
-
-  # Expect a particular ordering of spanner labels in `_spanners`
-  tbl_html_first %>%
-    dt_spanners_get() %>%
-    .$spanner_label %>%
-    unlist() %>%
-    expect_equal(c("Length", "Width", "Length", "Width"))
-
-  # Expect that no cells should have a colspan value of `2`
-  tbl_html_first %>%
-    render_as_html() %>%
-    xml2::read_html() %>%
-    rvest::html_nodes("[colspan='2']") %>%
-    rvest::html_text() %>%
-    length() %>%
-    expect_equal(0)
+  # Expect the same table as with the `split = "last"` (default) option
+  expect_equal(
+    tbl_html_first %>% render_as_html(),
+    tbl_html %>% render_as_html()
+  )
 
   # Create a `tbl_html` object with `gt()`; split the column
   # names into spanner headings and column labels but constrain
@@ -89,8 +72,8 @@ test_that("The `tab_spanner_delim()` function works correctly", {
   tbl_html <-
     gt(iris_short) %>%
     tab_spanner_delim(
-      delim = ".",
-      columns = c("Sepal.Length", "Sepal.Width")
+      columns = c("Sepal.Length", "Sepal.Width"),
+      delim = "."
     )
 
   # Expect a particular ordering of spanner labels in `_spanners`
@@ -247,6 +230,472 @@ test_that("The `tab_spanner_delim()` function works correctly", {
     rvest::html_nodes("[class='gt_row gt_right']") %>%
     rvest::html_text() %>%
     expect_equal(c("0.5", "1", "2", "3", "4"))
+
+  # Expect no change if the delimiter isn't present in any of the
+  # targeted column names
+  expect_equal(
+    gt(iris_short) %>%
+      tab_spanner_delim(delim = "_") %>%
+      render_as_html(),
+    gt(iris_short) %>%
+      render_as_html()
+  )
+
+  # Expect an error if an invalid delimiter specification is used; here
+  # we use strings that aren't a single character (and some cases, vectors
+  # with lengths not equal to one)
+  expect_error(
+    gt(iris_short) %>%
+      tab_spanner_delim(delim = "__")
+  )
+  expect_error(
+    gt(iris_short) %>%
+      tab_spanner_delim(delim = "")
+  )
+  expect_error(
+    gt(iris_short) %>%
+      tab_spanner_delim(delim = "  ")
+  )
+  expect_error(
+    gt(iris_short) %>%
+      tab_spanner_delim(delim = c(".", "."))
+  )
+  expect_error(
+    gt(iris_short) %>%
+      tab_spanner_delim(delim = character(0))
+  )
+  expect_error(
+    regexp = NA,
+    gt(iris_short) %>%
+      tab_spanner_delim(delim = ".")
+  )
+
+  # Expect an error if the `split` value isn't one of two keywords
+  expect_error(
+    gt(iris_short) %>%
+      tab_spanner_delim(delim = "_", split = "yes")
+  )
+  expect_error(
+    gt(iris_short) %>%
+      tab_spanner_delim(delim = "_", split = NULL)
+  )
+  expect_error(
+    regexp = NA,
+    gt(iris_short) %>%
+      tab_spanner_delim(delim = "_", split = c("last", "first"))
+  )
+  expect_error(
+    regexp = NA,
+    gt(iris_short) %>%
+      tab_spanner_delim(delim = "_", split = "last")
+  )
+  expect_error(
+    regexp = NA,
+    gt(iris_short) %>%
+      tab_spanner_delim(delim = "_", split = "first")
+  )
+
+  # Expect an error if an invalid limit specification is used; here
+  # we use values that aren't a single integer in the acceptable range
+  expect_error(
+    gt(iris_short) %>%
+      tab_spanner_delim(delim = ".", limit = TRUE)
+  )
+  expect_error(
+    gt(iris_short) %>%
+      tab_spanner_delim(delim = ".", limit = "1")
+  )
+  expect_error(
+    gt(iris_short) %>%
+      tab_spanner_delim(delim = ".", limit = -1)
+  )
+  expect_error(
+    gt(iris_short) %>%
+      tab_spanner_delim(delim = ".", limit = 0)
+  )
+  expect_error(
+    gt(iris_short) %>%
+      tab_spanner_delim(delim = ".", limit = 1.5)
+  )
+  expect_error(
+    regexp = NA,
+    gt(iris_short) %>%
+      tab_spanner_delim(delim = ".", limit = 1.0)
+  )
+  expect_error(
+    regexp = NA,
+    gt(iris_short) %>%
+      tab_spanner_delim(delim = ".", limit = 2)
+  )
+  # Expect that `limit = Inf` causes a downstream error
+  expect_error(
+    gt(iris_short) %>%
+      tab_spanner_delim(delim = ".", limit = Inf)
+  )
+})
+
+test_that("`tab_spanner_delim()` works with different `limit` values", {
+
+  # Create a `tbl_html` object with `gt()`; split the column
+  # names into spanner headings and column labels, ensure that
+  # the non-default `split` option (`"first"`) is used in conjunction
+  # with `limit = 1`
+  tbl_html_first_1 <-
+    towny %>%
+    dplyr::arrange(desc(population_2021)) %>%
+    dplyr::slice_head(n = 5) %>%
+    dplyr::select(name, ends_with("pct")) %>%
+    gt() %>%
+    tab_spanner_delim(delim = "_", split = "first", limit = 1)
+
+  tbl_html_first_1 %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    rvest::html_nodes("[colspan='1']") %>%
+    rvest::html_text() %>%
+    expect_equal(
+      c(
+        "name",
+        "change_1996_2001_pct",
+        "change_2001_2006_pct",
+        "change_2006_2011_pct",
+        "change_2011_2016_pct",
+        "change_2016_2021_pct"
+      )
+    )
+
+  # Expect no difference if constraining to columns where the columns
+  # have the expected delimiter
+  expect_equal(
+    towny %>%
+      dplyr::arrange(desc(population_2021)) %>%
+      dplyr::slice_head(n = 5) %>%
+      dplyr::select(name, ends_with("pct")) %>%
+      gt() %>%
+      tab_spanner_delim(
+        delim = "_",
+        split = "first",
+        limit = 1
+      ) %>%
+      render_as_html(),
+    towny %>%
+      dplyr::arrange(desc(population_2021)) %>%
+      dplyr::slice_head(n = 5) %>%
+      dplyr::select(name, ends_with("pct")) %>%
+      gt() %>%
+      tab_spanner_delim(
+        columns = starts_with("pop"),
+        delim = "_",
+        split = "first",
+        limit = 1
+      ) %>%
+      render_as_html()
+  )
+
+  # Use a `limit` value of `2`
+  tbl_html_first_2 <-
+    towny %>%
+    dplyr::arrange(desc(population_2021)) %>%
+    dplyr::slice_head(n = 5) %>%
+    dplyr::select(name, ends_with("pct")) %>%
+    gt() %>%
+    tab_spanner_delim(delim = "_", split = "first", limit = 2)
+
+  tbl_html_first_2 %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    rvest::html_nodes("[colspan='1']") %>%
+    rvest::html_text() %>%
+    expect_equal(
+      c(
+        "",
+        "name",
+        "1996_2001_pct",
+        "2001_2006_pct",
+        "2006_2011_pct",
+        "2011_2016_pct",
+        "2016_2021_pct"
+      )
+    )
+
+  # Use a `limit` value of `3`
+  tbl_html_first_3 <-
+    towny %>%
+    dplyr::arrange(desc(population_2021)) %>%
+    dplyr::slice_head(n = 5) %>%
+    dplyr::select(name, ends_with("pct")) %>%
+    gt() %>%
+    tab_spanner_delim(delim = "_", split = "first", limit = 3)
+
+  tbl_html_first_3 %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    rvest::html_nodes("[colspan='1']") %>%
+    rvest::html_text() %>%
+    expect_equal(
+      c(
+        "",
+        "",
+        "name",
+        "\n        1996\n      ",
+        "\n        2001\n      ",
+        "\n        2006\n      ",
+        "\n        2011\n      ",
+        "\n        2016\n      ",
+        "2001_pct",
+        "2006_pct",
+        "2011_pct",
+        "2016_pct",
+        "2021_pct"
+      )
+    )
+
+  # Use a `limit` value of `4`
+  tbl_html_first_4 <-
+    towny %>%
+    dplyr::arrange(desc(population_2021)) %>%
+    dplyr::slice_head(n = 5) %>%
+    dplyr::select(name, ends_with("pct")) %>%
+    gt() %>%
+    tab_spanner_delim(delim = "_", split = "first", limit = 4)
+
+  tbl_html_first_4 %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    rvest::html_nodes("[colspan='1']") %>%
+    rvest::html_text() %>%
+    expect_equal(
+      c(
+        "",
+        "",
+        "",
+        "\n        1996\n      ",
+        "\n        2001\n      ",
+        "\n        2006\n      ",
+        "\n        2011\n      ",
+        "\n        2016\n      ",
+        "name",
+        "\n        2001\n      ",
+        "\n        2006\n      ",
+        "\n        2011\n      ",
+        "\n        2016\n      ",
+        "\n        2021\n      ",
+        "pct",
+        "pct",
+        "pct",
+        "pct",
+        "pct"
+      )
+    )
+
+  # Expect no difference if setting a limit higher than 4 for
+  # these column names (i.e., going beyond the max number of splits)
+  expect_equal(
+    towny %>%
+      dplyr::arrange(desc(population_2021)) %>%
+      dplyr::slice_head(n = 5) %>%
+      dplyr::select(name, ends_with("pct")) %>%
+      gt() %>%
+      tab_spanner_delim(
+        delim = "_",
+        split = "first",
+        limit = 4
+      ) %>%
+      render_as_html(),
+    towny %>%
+      dplyr::arrange(desc(population_2021)) %>%
+      dplyr::slice_head(n = 5) %>%
+      dplyr::select(name, ends_with("pct")) %>%
+      gt() %>%
+      tab_spanner_delim(
+        delim = "_",
+        split = "first",
+        limit = 5
+      ) %>%
+      render_as_html()
+  )
+
+  # Create a `tbl_html` object with `gt()`; split the column
+  # names into spanner headings and column labels, use the
+  # default `split` option (`"last"`) in conjunction with `limit = 1`
+  tbl_html_last_1 <-
+    towny %>%
+    dplyr::arrange(desc(population_2021)) %>%
+    dplyr::slice_head(n = 5) %>%
+    dplyr::select(name, ends_with("pct")) %>%
+    gt() %>%
+    tab_spanner_delim(delim = "_", limit = 1)
+
+  tbl_html_last_1 %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    rvest::html_nodes("[colspan='1']") %>%
+    rvest::html_text() %>%
+    expect_equal(
+      c(
+        "name",
+        "\n        pop_change_1996_2001\n      ",
+        "\n        pop_change_2001_2006\n      ",
+        "\n        pop_change_2006_2011\n      ",
+        "\n        pop_change_2011_2016\n      ",
+        "\n        pop_change_2016_2021\n      ",
+        "pct", "pct", "pct", "pct", "pct"
+      )
+    )
+
+  # Expect no difference if constraining to columns where the columns
+  # have the expected delimiter
+  expect_equal(
+    towny %>%
+      dplyr::arrange(desc(population_2021)) %>%
+      dplyr::slice_head(n = 5) %>%
+      dplyr::select(name, ends_with("pct")) %>%
+      gt() %>%
+      tab_spanner_delim(
+        delim = "_",
+        limit = 1
+      ) %>%
+      render_as_html(),
+    towny %>%
+      dplyr::arrange(desc(population_2021)) %>%
+      dplyr::slice_head(n = 5) %>%
+      dplyr::select(name, ends_with("pct")) %>%
+      gt() %>%
+      tab_spanner_delim(
+        columns = starts_with("pop"),
+        delim = "_",
+        limit = 1
+      ) %>%
+      render_as_html()
+  )
+
+  # Use a `limit` value of `2`
+  tbl_html_last_2 <-
+    towny %>%
+    dplyr::arrange(desc(population_2021)) %>%
+    dplyr::slice_head(n = 5) %>%
+    dplyr::select(name, ends_with("pct")) %>%
+    gt() %>%
+    tab_spanner_delim(delim = "_", limit = 2)
+
+  tbl_html_last_2 %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    rvest::html_nodes("[colspan='1']") %>%
+    rvest::html_text() %>%
+    expect_equal(
+      c(
+        "",
+        "\n        pop_change_1996\n      ",
+        "\n        pop_change_2001\n      ",
+        "\n        pop_change_2006\n      ",
+        "\n        pop_change_2011\n      ",
+        "\n        pop_change_2016\n      ",
+        "name",
+        "\n        2001\n      ",
+        "\n        2006\n      ",
+        "\n        2011\n      ",
+        "\n        2016\n      ",
+        "\n        2021\n      ",
+        "pct", "pct", "pct", "pct", "pct"
+      )
+    )
+
+  # Use a `limit` value of `3`
+  tbl_html_last_3 <-
+    towny %>%
+    dplyr::arrange(desc(population_2021)) %>%
+    dplyr::slice_head(n = 5) %>%
+    dplyr::select(name, ends_with("pct")) %>%
+    gt() %>%
+    tab_spanner_delim(delim = "_", limit = 3)
+
+  tbl_html_last_3 %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    rvest::html_nodes("[colspan='1']") %>%
+    rvest::html_text() %>%
+    expect_equal(
+      c(
+        "",
+        "",
+        "\n        1996\n      ",
+        "\n        2001\n      ",
+        "\n        2006\n      ",
+        "\n        2011\n      ",
+        "\n        2016\n      ",
+        "name",
+        "\n        2001\n      ",
+        "\n        2006\n      ",
+        "\n        2011\n      ",
+        "\n        2016\n      ",
+        "\n        2021\n      ",
+        "pct", "pct", "pct", "pct", "pct"
+      )
+    )
+
+  # Use a `limit` value of `4`
+  tbl_html_last_4 <-
+    towny %>%
+    dplyr::arrange(desc(population_2021)) %>%
+    dplyr::slice_head(n = 5) %>%
+    dplyr::select(name, ends_with("pct")) %>%
+    gt() %>%
+    tab_spanner_delim(delim = "_", limit = 4)
+
+  tbl_html_last_4 %>%
+    render_as_html() %>%
+    xml2::read_html() %>%
+    rvest::html_nodes("[colspan='1']") %>%
+    rvest::html_text() %>%
+    expect_equal(
+      c(
+        "",
+        "",
+        "",
+        "\n        1996\n      ",
+        "\n        2001\n      ",
+        "\n        2006\n      ",
+        "\n        2011\n      ",
+        "\n        2016\n      ",
+        "name",
+        "\n        2001\n      ",
+        "\n        2006\n      ",
+        "\n        2011\n      ",
+        "\n        2016\n      ",
+        "\n        2021\n      ",
+        "pct",
+        "pct",
+        "pct",
+        "pct",
+        "pct"
+      )
+    )
+
+  # Expect no difference if setting a limit higher than 4 for
+  # these column names (i.e., going beyond the max number of splits)
+  expect_equal(
+    towny %>%
+      dplyr::arrange(desc(population_2021)) %>%
+      dplyr::slice_head(n = 5) %>%
+      dplyr::select(name, ends_with("pct")) %>%
+      gt() %>%
+      tab_spanner_delim(
+        delim = "_",
+        limit = 4
+      ) %>%
+      render_as_html(),
+    towny %>%
+      dplyr::arrange(desc(population_2021)) %>%
+      dplyr::slice_head(n = 5) %>%
+      dplyr::select(name, ends_with("pct")) %>%
+      gt() %>%
+      tab_spanner_delim(
+        delim = "_",
+        limit = 5
+      ) %>%
+      render_as_html()
+  )
 })
 
 test_that("`tab_spanner_delim()` works on higher-order spanning", {
@@ -561,15 +1010,22 @@ test_that("`tab_spanner_delim()` works on higher-order spanning", {
     gt(tbl_6) %>%
     tab_spanner_delim(delim = ".", split = "first")
 
-  # Take snapshots of `gt_tbl_6_first`
+  # Take snapshot of `gt_tbl_6_first`
   gt_tbl_6_first %>% render_as_html() %>% expect_snapshot()
 
   gt_tbl_6_last <-
     gt(tbl_6) %>%
     tab_spanner_delim(delim = ".", split = "last")
 
-  # Take snapshots of `gt_tbl_6_last`
+  # Take snapshot of `gt_tbl_6_last`
   gt_tbl_6_last %>% render_as_html() %>% expect_snapshot()
+
+  gt_tbl_6_first_rev <-
+    gt(tbl_6) %>%
+    tab_spanner_delim(delim = ".", split = "first", reverse = TRUE)
+
+  # Take snapshot of `gt_tbl_6_first_rev`
+  gt_tbl_6_first_rev %>% render_as_html() %>% expect_snapshot()
 
   # Expect an error should a `id` value be reused (here,
   # it's `"**Z**"` that's used twice)
@@ -586,7 +1042,7 @@ test_that("`tab_spanner_delim()` works on higher-order spanning", {
     tab_spanner(label = md("**Z**"), columns = 5, level = 2, id = "Z2") %>%
     tab_spanner(label = md("**Z**"), columns = 5, level = 1, id = "Z1")
 
-  # Take snapshots of `gt_tbl_6_z`
+  # Take snapshot of `gt_tbl_6_z`
   gt_tbl_6_z %>% render_as_html() %>% expect_snapshot()
 
   # A replacement of an spanner with the same `id` doesn't work (even
@@ -613,8 +1069,137 @@ test_that("`tab_spanner_delim()` works on higher-order spanning", {
       replace = TRUE
     )
 
-  # Take snapshots of `gt_tbl_6_yzzz`
+  # Take snapshot of `gt_tbl_6_yzzz`
   gt_tbl_6_yzzz %>% render_as_html() %>% expect_snapshot()
+
+
+  tbl_7 <-
+    dplyr::tibble(
+      A..B..C..D..E = 1,
+      A..B..C..D = 2,
+      A..B..C = 3,
+      A..B = 4,
+      A = 5
+    )
+
+  gt_tbl_7a <-
+    gt(tbl_7) %>%
+    tab_spanner_delim(delim = ".", split = "first")
+
+  gt_tbl_7b <-
+    gt(tbl_7) %>%
+    tab_spanner_delim(delim = ".", split = "last")
+
+  gt_tbl_7c <-
+    gt(tbl_7) %>%
+    tab_spanner_delim(delim = ".", split = "first", limit = 20)
+
+  gt_tbl_7d <-
+    gt(tbl_7) %>%
+    tab_spanner_delim(delim = ".", split = "last", limit = 20)
+
+  # Take snapshot of `gt_tbl_7a`
+  gt_tbl_7a %>% render_as_html() %>% expect_snapshot()
+
+  # Expect all tables to be the same
+  expect_equal(
+    gt_tbl_7a %>% render_as_html(),
+    gt_tbl_7b %>% render_as_html()
+  )
+  expect_equal(
+    gt_tbl_7a %>% render_as_html(),
+    gt_tbl_7c %>% render_as_html()
+  )
+  expect_equal(
+    gt_tbl_7a %>% render_as_html(),
+    gt_tbl_7d %>% render_as_html()
+  )
+
+
+  tbl_8 <-
+    dplyr::tibble(
+      .A..B..C..D..E. = 1,
+      .A..B..C..D. = 2,
+      .A..B..C. = 3,
+      .A..B. = 4,
+      .A. = 5
+    )
+
+  gt_tbl_8a <-
+    gt(tbl_8) %>%
+    tab_spanner_delim(delim = ".", split = "first")
+
+  gt_tbl_8b <-
+    gt(tbl_8) %>%
+    tab_spanner_delim(delim = ".", split = "last")
+
+  gt_tbl_8c <-
+    gt(tbl_8) %>%
+    tab_spanner_delim(delim = ".", split = "first", limit = 20)
+
+  gt_tbl_8d <-
+    gt(tbl_8) %>%
+    tab_spanner_delim(delim = ".", split = "last", limit = 20)
+
+  # Take snapshot of `gt_tbl_8a`
+  gt_tbl_8a %>% render_as_html() %>% expect_snapshot()
+
+  # Expect all tables to be the same
+  expect_equal(
+    gt_tbl_8a %>% render_as_html(),
+    gt_tbl_8b %>% render_as_html()
+  )
+  expect_equal(
+    gt_tbl_8a %>% render_as_html(),
+    gt_tbl_8c %>% render_as_html()
+  )
+  expect_equal(
+    gt_tbl_8a %>% render_as_html(),
+    gt_tbl_8d %>% render_as_html()
+  )
+
+
+  tbl_9 <-
+    dplyr::tibble(
+      `__` = 1,
+      A__B__C__D = 2,
+      `__A__B__C__` = 3,
+      `A__B__` = 4,
+      `__A__` = 5
+    )
+
+  gt_tbl_9a <-
+    gt(tbl_9) %>%
+    tab_spanner_delim(delim = "_", split = "first")
+
+  gt_tbl_9b <-
+    gt(tbl_9) %>%
+    tab_spanner_delim(delim = "_", split = "last")
+
+  gt_tbl_9c <-
+    gt(tbl_9) %>%
+    tab_spanner_delim(delim = "_", split = "first", limit = 20)
+
+  gt_tbl_9d <-
+    gt(tbl_9) %>%
+    tab_spanner_delim(delim = "_", split = "last", limit = 20)
+
+  # Take snapshot of `gt_tbl_9a`
+  gt_tbl_9a %>% render_as_html() %>% expect_snapshot()
+
+  # Expect all tables to be the same
+  expect_equal(
+    gt_tbl_9a %>% render_as_html(),
+    gt_tbl_9b %>% render_as_html()
+  )
+  expect_equal(
+    gt_tbl_9a %>% render_as_html(),
+    gt_tbl_9c %>% render_as_html()
+  )
+  expect_equal(
+    gt_tbl_9a %>% render_as_html(),
+    gt_tbl_9d %>% render_as_html()
+  )
 })
 
 test_that("`tab_spanner_delim()` works with complex splits", {
@@ -655,21 +1240,39 @@ test_that("`tab_spanner_delim()` works with complex splits", {
         split = "last"
       )
   )
+  expect_error(
+    regexp = NA,
+    gt_tbl %>%
+      tab_spanner_delim(
+        delim = ".",
+        split = "first",
+        reverse = TRUE
+      )
+  )
+  expect_error(
+    regexp = NA,
+    gt_tbl %>%
+      tab_spanner_delim(
+        delim = ".",
+        split = "last",
+        reverse = TRUE
+      )
+  )
 
   #
   # Ensure that the generated IDs correctly increments their index
   # values where appropriate
   #
 
-  first_delim <-
+  reverse_delim <-
     gt_tbl %>%
     tab_spanner_delim(
       delim = ".",
-      split = "first"
+      reverse = TRUE
     )
 
   expect_equal(
-    first_delim$`_spanners`$spanner_id,
+    reverse_delim$`_spanners`$spanner_id,
     c(
       "spanner-i.a", "spanner-j.a", "spanner:1-i.a", "spanner:1-j.a",
       "spanner:2-i.a", "spanner:2-j.a", "spanner-x.i.a", "spanner-y.i.a",
@@ -741,19 +1344,19 @@ test_that("`tab_spanner_delim()` won't overwrite any set column labels", {
       A = 5
     )
 
-  gt_tbl_first_1 <-
+  gt_tbl_reverse_1 <-
     gt(data_tbl) %>%
     cols_label(A.B.C.D.E = "ABCDE") %>%
-    tab_spanner_delim(delim = ".", split = "first")
+    tab_spanner_delim(delim = ".", reverse = TRUE)
 
-  gt_tbl_first_2 <-
+  gt_tbl_reverse_2 <-
     gt(data_tbl) %>%
-    tab_spanner_delim(delim = ".", split = "first") %>%
+    tab_spanner_delim(delim = ".", reverse = TRUE) %>%
     cols_label(A.B.C.D.E = "ABCDE")
 
   expect_equal(
-    gt_tbl_first_1 %>% render_as_html(),
-    gt_tbl_first_2 %>% render_as_html()
+    gt_tbl_reverse_1 %>% render_as_html(),
+    gt_tbl_reverse_2 %>% render_as_html()
   )
 
   gt_tbl_last_1 <-

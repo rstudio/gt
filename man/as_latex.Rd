@@ -2,12 +2,17 @@
 % Please edit documentation in R/export.R
 \name{as_latex}
 \alias{as_latex}
-\title{Output a gt object as LaTeX}
+\title{Output a \strong{gt} object as LaTeX}
 \usage{
 as_latex(data)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
+
+\verb{obj:<gt_tbl>} // \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
 }
 \description{
 Get the LaTeX content from a \code{gt_tbl} object as a \code{knit_asis} object. This
@@ -18,7 +23,7 @@ containing the LaTeX code.
 }
 \details{
 LaTeX packages required to generate tables are:
-amsmath, booktabs, caption, longtable.
+booktabs, caption, longtable, colortbl, array.
 
 In the event packages are not automatically added during the render phase
 of the document, please create and include a style file to load them.
@@ -35,14 +40,15 @@ output:
 The \code{gt_packages.sty} file would then contain the listed dependencies above:
 
 \preformatted{
-  \usepackage{amsmath, booktabs, caption, longtable}
+  \usepackage{booktabs, caption, longtable, colortbl, array}
 }
 }
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header and then export as an
-object with LaTeX code.
+Use a subset of the \code{\link{gtcars}} dataset to create a \strong{gt} table. Add a header
+with \code{\link[=tab_header]{tab_header()}} and then export the table as LaTeX code using the
+\code{as_latex()} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_latex <-
   gtcars |>

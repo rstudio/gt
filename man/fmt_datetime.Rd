@@ -18,56 +18,99 @@ fmt_datetime(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The columns to format. Can either be a series of column names
-provided in \code{\link[=c]{c()}}, a vector of column indices, or a helper function
-focused on selections. The select helper functions are: \code{\link[=starts_with]{starts_with()}},
+\verb{obj:<gt_tbl>} // \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
+
+Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
+column indices, or a select helper function. Examples of select helper
+functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+
+\item{rows}{\emph{Rows to target}
+
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
+
+In conjunction with \code{columns}, we can specify which of their rows should
+undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
+\code{columns} being formatted. Alternatively, we can supply a vector of row
+captions within \code{\link[=c]{c()}}, a vector of row indices, or a select helper
+function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}.}
+\code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
+need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{rows}{Optional rows to format. Providing \code{\link[=everything]{everything()}} (the
-default) results in all rows in \code{columns} being formatted. Alternatively,
-we can supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row
-indices, or a helper function focused on selections. The select helper
-functions are: \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
-\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions
-to filter down to the rows we need (e.g.,
-\verb{[colname_1] > 100 & [colname_2] < 50}).}
+\item{date_style}{\emph{Predefined style for dates}
 
-\item{date_style}{The date style to use. By default this is \code{"iso"} which
-corresponds to ISO 8601 date formatting. The other date styles can be
-viewed using \code{\link[=info_date_style]{info_date_style()}}.}
+\verb{scalar<character>|scalar<numeric|integer>(1<=val<=41)} // \emph{default:} \code{"iso"}
 
-\item{time_style}{The time style to use. By default this is \code{"iso"} which
-corresponds to how times are formatted within ISO 8601 datetime values. The
-other time styles can be viewed using \code{\link[=info_time_style]{info_time_style()}}.}
+The date style to use. By default this is the short name \code{"iso"} which
+corresponds to ISO 8601 date formatting. There are 41 date styles in total
+and their short names can be viewed using \code{\link[=info_date_style]{info_date_style()}}.}
 
-\item{sep}{The separator string to use between the date and time components.
-By default, this is a single space character (\code{" "}). Only used when not
+\item{time_style}{\emph{Predefined style for times}
+
+\verb{scalar<character>|scalar<numeric|integer>(1<=val<=25)} // \emph{default:} \code{"iso"}
+
+The time style to use. By default this is the short name \code{"iso"} which
+corresponds to how times are formatted within ISO 8601 datetime values.
+There are 25 time styles in total and their short names can be viewed using
+\code{\link[=info_time_style]{info_time_style()}}.}
+
+\item{sep}{\emph{Separator between date and time components}
+
+\verb{scalar<character>} // \emph{default:} \code{" "}
+
+The separator string to use between the date and time components. By
+default, this is a single space character (\code{" "}). Only used when not
 specifying a \code{format} code.}
 
-\item{format}{An optional formatting string used for generating custom
-dates/times. If used then the arguments governing preset styles
-(\code{date_style} and \code{time_style}) will be ignored in favor of formatting via
-the \code{format} string.}
+\item{format}{\emph{Date/time formatting string}
 
-\item{tz}{The time zone for printing dates/times (i.e., the output). The
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional formatting string used for generating custom dates/times. If
+used then the arguments governing preset styles (\code{date_style} and
+\code{time_style}) will be ignored in favor of formatting via the \code{format}
+string.}
+
+\item{tz}{\emph{Time zone}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+The time zone for printing dates/times (i.e., the output). The
 default of \code{NULL} will preserve the time zone of the input data in the
 output. If providing a time zone, it must be one that is recognized by the
 user's operating system (a vector of all valid \code{tz} values can be produced
 with \code{\link[=OlsonNames]{OlsonNames()}}).}
 
-\item{pattern}{A formatting pattern that allows for decoration of the
-formatted value. The value itself is represented by \code{{x}} and all other
-characters are taken to be string literals.}
+\item{pattern}{\emph{Specification of the formatting pattern}
 
-\item{locale}{An optional locale identifier that can be used for formatting
-the value according the locale's rules. Examples include \code{"en"} for English
-(United States) and \code{"fr"} for French (France). The use of a locale ID will
-override any locale-specific values provided. We can use the
-\code{\link[=info_locales]{info_locales()}} function as a useful reference for all of the locales that
-are supported.}
+\verb{scalar<character>} // \emph{default:} \code{"{x}"}
+
+A formatting pattern that allows for decoration of the formatted value. The
+formatted value is represented by the \code{{x}} (which can be used multiple
+times, if needed) and all other characters will be interpreted as string
+literals.}
+
+\item{locale}{\emph{Locale identifier}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional locale identifier that can be used for formatting values
+according the locale's rules. Examples include \code{"en"} for English (United
+States) and \code{"fr"} for French (France). We can use the \code{\link[=info_locales]{info_locales()}}
+function as a useful reference for all of the locales that are supported. A
+locale ID can be also set in the initial \code{\link[=gt]{gt()}} function call (where it
+would be used automatically by any function with a \code{locale} argument) but a
+\code{locale} value provided here will override that global locale.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -102,8 +145,8 @@ helper like \code{starts_with()}, or, providing a more complex incantation like
 
 \code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
 
-which targets numeric columns that have a maximum value of 100,000 (excluding
-\code{NA}s from consideration).
+which targets numeric columns that have a maximum value greater than
+1,000,000 (excluding any \code{NA}s from consideration).
 
 By default all columns and rows are selected (with the \code{everything()}
 defaults). Cell values that are incompatible with a given formatting function
@@ -128,6 +171,33 @@ expression that takes column values (can involve any of the available columns
 in the table) and returns a logical vector. This is nice if you want to base
 formatting on values in the column or another column, or, you'd like to use a
 more complex predicate expression.
+}
+
+\section{Compatibility of arguments with the \code{from_column()} helper function}{
+
+
+The \code{\link[=from_column]{from_column()}} helper function can be used with certain arguments of
+\code{fmt_datetime()} to obtain varying parameter values from a specified column
+within the table. This means that each row could be formatted a little bit
+differently. These arguments provide support for \code{\link[=from_column]{from_column()}}:
+\itemize{
+\item \code{date_style}
+\item \code{time_style}
+\item \code{sep}
+\item \code{format}
+\item \code{tz}
+\item \code{pattern}
+\item \code{locale}
+}
+
+Please note that for each of the aforementioned arguments, a \code{\link[=from_column]{from_column()}}
+call needs to reference a column that has data of the correct type (this is
+different for each argument). Additional columns for parameter values can be
+generated with the \code{\link[=cols_add]{cols_add()}} function (if not already present). Columns
+that contain parameter data can also be hidden from final display with
+\code{\link[=cols_hide]{cols_hide()}}. Finally, there is no limitation to how many arguments the
+\code{\link[=from_column]{from_column()}} helper is applied so long as the arguments belong to this
+closed set.
 }
 
 \section{Formatting with the \code{date_style} argument}{
@@ -832,15 +902,15 @@ can use the \code{\link[=info_locales]{info_locales()}} function to view an info
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. Keep only the \code{datetime} column.
-Format the column to have dates formatted with the \code{"month_day_year"} style
-and times with the \code{"h_m_s_p"} 12-hour time style.
+Use the \code{\link{exibble}} dataset to create a single-column \strong{gt} table (with only
+the \code{datetime} column). With \code{fmt_datetime()} we'll format the \code{datetime}
+column to have dates formatted with the \code{"month_day_year"} style and times
+with the \code{"h_m_s_p"} 12-hour time style.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(datetime) |>
   gt() |>
   fmt_datetime(
-    columns = datetime,
     date_style = "month_day_year",
     time_style = "h_m_s_p"
   )
@@ -850,22 +920,23 @@ and times with the \code{"h_m_s_p"} 12-hour time style.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_datetime_1.png" alt="This image of a table was generated from the first code example in the `fmt_datetime()` help file." style="width:100\%;">
 }}
 
-Using the same input table, we can use flexible date and time styles. Two
-that work well together are \code{"MMMEd"} and \code{"Hms"}. These will mutate
-depending on the locale. Let's use the default locale for the first 3 rows
-and the Danish locale (\code{"da"}) for the remaining rows.
+Using the same input table, we can use \code{fmt_datetime()} with flexible date
+and time styles. Two that work well together are \code{"MMMEd"} and \code{"Hms"}. These
+date and time styles will, being flexible, create outputs that conform to the
+locale value given to the \code{locale} argument. Let's use two calls of
+\code{fmt_datetime()}: the first will format all rows in \code{datetime} to the Danish
+locale (with \code{locale = "da"}) and the second call will target the first three
+rows with the same formatting, but in the default locale (which is \code{"en"}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(datetime) |>
   gt() |>
   fmt_datetime(
-    columns = datetime,
     date_style = "MMMEd",
     time_style = "Hms",
     locale = "da"
   ) |>
   fmt_datetime(
-    columns = datetime,
     rows = 1:3,
     date_style = "MMMEd",
     time_style = "Hms"
@@ -886,7 +957,6 @@ zone formatting. Let's provide a time zone ID (\code{"America/Vancouver"}) to th
   dplyr::select(datetime) |>
   gt() |>
   fmt_datetime(
-    columns = datetime,
     format = "EEEE, MMMM d, y 'at' h:mm a (zzzz)",
     tz = "America/Vancouver"
   )
@@ -934,6 +1004,7 @@ Other data formatting functions:
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
 \code{\link{fmt_time}()},
+\code{\link{fmt_units}()},
 \code{\link{fmt_url}()},
 \code{\link{fmt}()},
 \code{\link{sub_large_vals}()},

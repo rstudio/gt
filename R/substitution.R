@@ -1,3 +1,27 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2023 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 #' Substitute missing values in the table body
 #'
 #' @description
@@ -8,23 +32,37 @@
 #' `missing_text` argument (where an em dash serves as the default).
 #'
 #' @inheritParams fmt_number
-#' @param columns Optional columns for constraining the targeting process.
-#'   Providing [everything()] (the default) results in cells in all `columns`
-#'   being targeting (this can be limited by `rows` however). Can either be a
-#'   series of column names provided in [c()], a vector of column indices, or a
-#'   helper function focused on selections. The select helper functions are:
+#'
+#' @param columns *Columns to target*
+#'
+#'   `<column-targeting expression>` // *default:* `everything()`
+#'
+#'   The columns to which substitution operations are constrained. Can either
+#'   be a series of column names provided in [c()], a vector of column indices,
+#'   or a select helper function. Examples of select helper functions include
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()].
-#' @param rows Optional rows for constraining the targeting process. Providing
-#'   [everything()] (the default) results in all rows in `columns` being
-#'   targeted. Alternatively, we can supply a vector of row captions within
-#'   [c()], a vector of row indices, or a helper function focused on selections.
-#'   The select helper functions are: [starts_with()], [ends_with()],
-#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
-#'   We can also use expressions to filter down to the rows we need (e.g.,
-#'   `[colname_1] > 100 & [colname_2] < 50`).
-#' @param missing_text The text to be used in place of `NA` values in the
-#'   rendered table.
+#'
+#' @param rows *Rows to target*
+#'
+#'   `<row-targeting expression>` // *default:* `everything()`
+#'
+#'   In conjunction with `columns`, we can specify which of their rows should
+#'   form a constraint for targeting operations. The default [everything()]
+#'   results in all rows in `columns` being formatted. Alternatively, we can
+#'   supply a vector of row captions within [c()], a vector of row indices, or a
+#'   select helper function. Examples of select helper functions include
+#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
+#'   [num_range()], and [everything()]. We can also use expressions to filter
+#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'
+#' @param missing_text *Replacement text for `NA` values*
+#'
+#'   `scalar<character>` // *default:* `"---"`
+#'
+#'   The text to be used in place of `NA` values in the rendered table. We can
+#'   optionally use the [md()] and [html()] functions to style the text as
+#'   Markdown or to retain HTML elements in the text.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -40,8 +78,8 @@
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given substitution
@@ -68,8 +106,10 @@
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table. The `NA` values in different
-#' columns will be given replacement text with two calls of `sub_missing()`.
+#' Use select columns from the [`exibble`] dataset to create a **gt** table. The
+#' `NA` values in different columns (here, we are using column indices in
+#' `columns`) will be given two variations of replacement text with two separate
+#' calls of `sub_missing()`.
 #'
 #' ```r
 #' exibble |>
@@ -91,7 +131,7 @@
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-25
+#' 3-26
 #'
 #' @section Function Introduced:
 #' `v0.6.0` (May 24, 2022)
@@ -197,23 +237,37 @@ fmt_missing <- function(
 #' replacement through its `zero_text` argument.
 #'
 #' @inheritParams fmt_number
-#' @param columns Optional columns for constraining the targeting process.
-#'   Providing [everything()] (the default) results in cells in all `columns`
-#'   being targeting (this can be limited by `rows` however). Can either be a
-#'   series of column names provided in [c()], a vector of column indices, or a
-#'   helper function focused on selections. The select helper functions are:
+#'
+#' @param columns *Columns to target*
+#'
+#'   `<column-targeting expression>` // *default:* `everything()`
+#'
+#'   The columns to which substitution operations are constrained. Can either
+#'   be a series of column names provided in [c()], a vector of column indices,
+#'   or a select helper function. Examples of select helper functions include
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()].
-#' @param rows Optional rows for constraining the targeting process. Providing
-#'   [everything()] (the default) results in all rows in `columns` being
-#'   targeted. Alternatively, we can supply a vector of row captions within
-#'   [c()], a vector of row indices, or a helper function focused on selections.
-#'   The select helper functions are: [starts_with()], [ends_with()],
-#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
-#'   We can also use expressions to filter down to the rows we need (e.g.,
-#'   `[colname_1] > 100 & [colname_2] < 50`).
-#' @param zero_text The text to be used in place of zero values in the rendered
-#'   table.
+#'
+#' @param rows *Rows to target*
+#'
+#'   `<row-targeting expression>` // *default:* `everything()`
+#'
+#'   In conjunction with `columns`, we can specify which of their rows should
+#'   form a constraint for targeting operations. The default [everything()]
+#'   results in all rows in `columns` being formatted. Alternatively, we can
+#'   supply a vector of row captions within [c()], a vector of row indices, or a
+#'   select helper function. Examples of select helper functions include
+#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
+#'   [num_range()], and [everything()]. We can also use expressions to filter
+#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'
+#' @param zero_text *Replacement text for zero values*
+#'
+#'   `scalar<character>` // *default:* `"nil"`
+#'
+#'   The text to be used in place of zero values in the rendered table. We can
+#'   optionally use the [md()] and [html()] functions to style the text as
+#'   Markdown or to retain HTML elements in the text.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -229,8 +283,8 @@ fmt_missing <- function(
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given substitution
@@ -282,7 +336,7 @@ fmt_missing <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-26
+#' 3-27
 #'
 #' @section Function Introduced:
 #' `v0.6.0` (May 24, 2022)
@@ -343,28 +397,51 @@ sub_zero <- function(
 #' to include zero values, use the [sub_zero()] function.
 #'
 #' @inheritParams fmt_number
-#' @param columns Optional columns for constraining the targeting process.
-#'   Providing [everything()] (the default) results in cells in all `columns`
-#'   being targeting (this can be limited by `rows` however). Can either be a
-#'   series of column names provided in [c()], a vector of column indices, or a
-#'   helper function focused on selections. The select helper functions are:
+#'
+#' @param columns *Columns to target*
+#'
+#'   `<column-targeting expression>` // *default:* `everything()`
+#'
+#'   The columns to which substitution operations are constrained. Can either
+#'   be a series of column names provided in [c()], a vector of column indices,
+#'   or a select helper function. Examples of select helper functions include
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()].
-#' @param rows Optional rows for constraining the targeting process. Providing
-#'   [everything()] (the default) results in all rows in `columns` being
-#'   targeted. Alternatively, we can supply a vector of row captions within
-#'   [c()], a vector of row indices, or a helper function focused on selections.
-#'   The select helper functions are: [starts_with()], [ends_with()],
-#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
-#'   We can also use expressions to filter down to the rows we need (e.g.,
-#'   `[colname_1] > 100 & [colname_2] < 50`).
-#' @param threshold The threshold value with which values should be considered
-#'   small enough for replacement.
-#' @param small_pattern The pattern text to be used in place of the suitably
-#'   small values in the rendered table.
-#' @param sign The sign of the numbers to be considered in the replacement. By
-#'   default, we only consider positive values (`"+"`). The other option (`"-"`)
-#'   can be used to consider only negative values.
+#'
+#' @param rows *Rows to target*
+#'
+#'   `<row-targeting expression>` // *default:* `everything()`
+#'
+#'   In conjunction with `columns`, we can specify which of their rows should
+#'   form a constraint for targeting operations. The default [everything()]
+#'   results in all rows in `columns` being formatted. Alternatively, we can
+#'   supply a vector of row captions within [c()], a vector of row indices, or a
+#'   select helper function. Examples of select helper functions include
+#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
+#'   [num_range()], and [everything()]. We can also use expressions to filter
+#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'
+#' @param threshold *Threshold value*
+#'
+#'   `scalar<numeric|integer>` // *default:* `0.01`
+#'
+#'   The threshold value with which values should be considered small enough for
+#'   replacement.
+#'
+#' @param small_pattern *Pattern specification for small values*
+#'
+#'   `scalar<character>` // *default:* `if (sign == "+") "<{x}" else md("<*abs*(-{x})")`
+#'
+#'   The pattern text to be used in place of the suitably small values in the
+#'   rendered table.
+#'
+#' @param sign *Consider positive or negative values?*
+#'
+#'   `scalar<character>` // *default:* `"+"`
+#'
+#'   The sign of the numbers to be considered in the replacement. By default, we
+#'   only consider positive values (`"+"`). The other option (`"-"`) can be used
+#'   to consider only negative values.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -380,8 +457,8 @@ sub_zero <- function(
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given substitution
@@ -469,7 +546,7 @@ sub_zero <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-27
+#' 3-28
 #'
 #' @section Function Introduced:
 #' `v0.6.0` (May 24, 2022)
@@ -595,28 +672,51 @@ sub_small_vals <- function(
 #' considered.
 #'
 #' @inheritParams fmt_number
-#' @param columns Optional columns for constraining the targeting process.
-#'   Providing [everything()] (the default) results in cells in all `columns`
-#'   being targeting (this can be limited by `rows` however). Can either be a
-#'   series of column names provided in [c()], a vector of column indices, or a
-#'   helper function focused on selections. The select helper functions are:
+#'
+#' @param columns *Columns to target*
+#'
+#'   `<column-targeting expression>` // *default:* `everything()`
+#'
+#'   The columns to which substitution operations are constrained. Can either
+#'   be a series of column names provided in [c()], a vector of column indices,
+#'   or a select helper function. Examples of select helper functions include
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()].
-#' @param rows Optional rows for constraining the targeting process. Providing
-#'   [everything()] (the default) results in all rows in `columns` being
-#'   targeted. Alternatively, we can supply a vector of row captions within
-#'   [c()], a vector of row indices, or a helper function focused on selections.
-#'   The select helper functions are: [starts_with()], [ends_with()],
-#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
-#'   We can also use expressions to filter down to the rows we need (e.g.,
-#'   `[colname_1] > 100 & [colname_2] < 50`).
-#' @param threshold The threshold value with which values should be considered
-#'   large enough for replacement.
-#' @param large_pattern The pattern text to be used in place of the suitably
-#'   large values in the rendered table.
-#' @param sign The sign of the numbers to be considered in the replacement. By
-#'   default, we only consider positive values (`"+"`). The other option (`"-"`)
-#'   can be used to consider only negative values.
+#'
+#' @param rows *Rows to target*
+#'
+#'   `<row-targeting expression>` // *default:* `everything()`
+#'
+#'   In conjunction with `columns`, we can specify which of their rows should
+#'   form a constraint for targeting operations. The default [everything()]
+#'   results in all rows in `columns` being formatted. Alternatively, we can
+#'   supply a vector of row captions within [c()], a vector of row indices, or a
+#'   select helper function. Examples of select helper functions include
+#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
+#'   [num_range()], and [everything()]. We can also use expressions to filter
+#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'
+#' @param threshold *Threshold value*
+#'
+#'   `scalar<numeric|integer>` // *default:* `1E12`
+#'
+#'   The threshold value with which values should be considered large enough for
+#'   replacement.
+#'
+#' @param large_pattern *Pattern specification for large values*
+#'
+#'   `scalar<character>` // *default:* `">={x}"`
+#'
+#'   The pattern text to be used in place of the suitably large values in the
+#'   rendered table.
+#'
+#' @param sign *Consider positive or negative values?*
+#'
+#'   `scalar<character>` // *default:* `"+"`
+#'
+#'   The sign of the numbers to be considered in the replacement. By default, we
+#'   only consider positive values (`"+"`). The other option (`"-"`) can be used
+#'   to consider only negative values.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -632,8 +732,8 @@ sub_small_vals <- function(
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given substitution
@@ -722,7 +822,7 @@ sub_small_vals <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-28
+#' 3-29
 #'
 #' @section Function Introduced:
 #' `v0.6.0` (May 24, 2022)
@@ -855,40 +955,70 @@ check_sub_fn_sign <- function(sign) {
 #' replacement though value, regex, and custom matching rules.
 #'
 #' @inheritParams fmt_number
-#' @param columns Optional columns for constraining the targeting process.
-#'   Providing [everything()] (the default) results in cells in all `columns`
-#'   being targeting (this can be limited by `rows` however). Can either be a
-#'   series of column names provided in [c()], a vector of column indices, or a
-#'   helper function focused on selections. The select helper functions are:
+#'
+#' @param columns *Columns to target*
+#'
+#'   `<column-targeting expression>` // *default:* `everything()`
+#'
+#'   The columns to which substitution operations are constrained. Can either
+#'   be a series of column names provided in [c()], a vector of column indices,
+#'   or a select helper function. Examples of select helper functions include
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()].
-#' @param rows Optional rows for constraining the targeting process. Providing
-#'   [everything()] (the default) results in all rows in `columns` being
-#'   targeted. Alternatively, we can supply a vector of row captions within
-#'   [c()], a vector of row indices, or a helper function focused on selections.
-#'   The select helper functions are: [starts_with()], [ends_with()],
-#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
-#'   We can also use expressions to filter down to the rows we need (e.g.,
-#'   `[colname_1] > 100 & [colname_2] < 50`).
-#' @param values The specific value or values that should be replaced with a
-#'   `replacement` value. If `pattern` is also supplied then `values` will be
-#'   ignored.
-#' @param pattern A regex pattern that can target solely those values in
-#'   `character`-based columns. If `values` is also supplied, `pattern` will
-#'   take precedence.
-#' @param fn A supplied function that operates on `x` (the data in a column) and
-#'   should return a logical vector that matches the length of `x` (i.e., number
-#'   of rows in the input table). If either of `values` or `pattern` is also
+#'
+#' @param rows *Rows to target*
+#'
+#'   `<row-targeting expression>` // *default:* `everything()`
+#'
+#'   In conjunction with `columns`, we can specify which of their rows should
+#'   form a constraint for targeting operations. The default [everything()]
+#'   results in all rows in `columns` being formatted. Alternatively, we can
+#'   supply a vector of row captions within [c()], a vector of row indices, or a
+#'   select helper function. Examples of select helper functions include
+#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
+#'   [num_range()], and [everything()]. We can also use expressions to filter
+#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'
+#' @param values *Values to match on*
+#'
+#'   `scalar<character|numeric|integer>` // *default:* `NULL` (`optional`)
+#'
+#'   The specific value or values that should be replaced with a `replacement`
+#'   value. If `pattern` is also supplied then `values` will be ignored.
+#'
+#' @param pattern *Regex pattern to match with*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   A regex pattern that can target solely those values in `character`-based
+#'   columns. If `values` is also supplied, `pattern` will take precedence.
+#'
+#' @param fn *Function to return logical values*
+#'
+#'   `<function>` // *default:* `NULL` (`optional`)
+#'
+#'   A supplied function that operates on `x` (the data in a column) and should
+#'   return a logical vector that matches the length of `x` (i.e., number of
+#'   rows in the input table). If either of `values` or `pattern` is also
 #'   supplied, `fn` will take precedence.
-#' @param replacement The replacement value for any cell values matched by
-#'   either `values` or `pattern`. Must be a character or numeric vector of
-#'   length 1.
-#' @param escape An option to escape replacement text according to the final
-#'   output format of the table. For example, if a LaTeX table is to be
-#'   generated then LaTeX escaping would be performed on the replacements during
-#'   rendering. By default this is set to `TRUE` but setting to `FALSE` would be
-#'   useful in the case where replacement text is crafted for a specific output
-#'   format in mind.
+#'
+#' @param replacement *Replacement value for matches*
+#'
+#'   `scalar<character|numeric|integer>` // *default:* `NULL` (`optional`)
+#'
+#'   The replacement value for any cell values matched by either `values` or
+#'   `pattern`. Must be a character or numeric vector of length 1.
+#'
+#' @param escape *Text escaping*
+#'
+#'   `scalar<logical>` // *default:* `TRUE`
+#'
+#'   An option to escape replacement text according to the final output format
+#'   of the table. For example, if a LaTeX table is to be generated then LaTeX
+#'   escaping would be performed on the replacements during rendering. By
+#'   default this is set to `TRUE` but setting to `FALSE` would be useful in the
+#'   case where replacement text is crafted for a specific output format in
+#'   mind.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -904,8 +1034,8 @@ check_sub_fn_sign <- function(sign) {
 #'
 #' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
 #'
-#' which targets numeric columns that have a maximum value of 100,000 (excluding
-#' `NA`s from consideration).
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
 #'
 #' By default all columns and rows are selected (with the `everything()`
 #' defaults). Cell values that are incompatible with a given substitution
@@ -997,7 +1127,7 @@ check_sub_fn_sign <- function(sign) {
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-29
+#' 3-30
 #'
 #' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)

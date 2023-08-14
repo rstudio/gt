@@ -7,8 +7,19 @@
 html(text, ...)
 }
 \arguments{
-\item{text, ...}{The text that is understood to be HTML text, which is to be
-preserved.}
+\item{text}{\emph{HTML text}
+
+\verb{scalar<character>} // \strong{required}
+
+The text that is understood to be HTML text, which is to be preserved in
+the HTML output context.}
+
+\item{...}{\emph{Optional parameters for \code{htmltools::HTML()}}
+
+\verb{<multiple expressions>} // (\code{optional})
+
+The \code{htmltools::HTML()} function contains \code{...} and anything provided here
+will be passed to that internal function call.}
 }
 \value{
 A character object of class \code{html}. It's tagged as an HTML fragment
@@ -24,8 +35,9 @@ rendered... to HTML.
 \section{Examples}{
 
 
-Use \code{\link{exibble}} to create a \strong{gt} table. When adding a title, use the
-\code{html()} helper to use HTML formatting.
+Use the \code{\link{exibble}} dataset to create a \strong{gt} table. When adding a title
+through the \code{\link[=tab_header]{tab_header()}} function, we'll use the \code{html()} helper to signify
+to \strong{gt} that we're using HTML formatting.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(currency, char) |>
@@ -69,13 +81,16 @@ Other helper functions:
 \code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
+\code{\link{define_units}()},
 \code{\link{escape_latex}()},
+\code{\link{from_column}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{md}()},
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},
-\code{\link{stub}()}
+\code{\link{stub}()},
+\code{\link{system_fonts}()}
 }
 \concept{helper functions}

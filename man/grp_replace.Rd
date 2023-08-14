@@ -7,16 +7,33 @@
 grp_replace(.data, ..., .list = list2(...), .which)
 }
 \arguments{
-\item{.data}{A \code{gt_group} container object, typically generated through use
-of the \code{\link[=gt_group]{gt_group()}} function along with one or more \code{gt_tbl} objects.}
+\item{.data}{\emph{The gt table group object}
 
-\item{...}{One or more \strong{gt} table (\code{gt_tbl}) objects, typically generated
-via the \code{\link[=gt]{gt()}} function.}
+\verb{obj:<gt_group>} // \strong{required}
 
-\item{.list}{Allows for the use of a list as an input alternative to \code{...}.}
+This is a \code{gt_group} container object. It is typically generated through
+use of the \code{\link[=gt_group]{gt_group()}} function along with one or more \code{gt_tbl} objects,
+or, made by splitting a \strong{gt} table with \code{\link[=gt_split]{gt_split()}}.}
 
-\item{.which}{Index values denoting which \code{gt_tbl} tables should be replaced
-in the \code{gt_group} object.}
+\item{...}{\emph{One or more gt table objects}
+
+\verb{obj:<gt_tbl>} // \strong{required} (or, use \code{...})
+
+One or more \strong{gt} table (\code{gt_tbl}) objects, typically generated via the
+\code{\link[=gt]{gt()}} function.}
+
+\item{.list}{\emph{Alternative to \code{...}}
+
+\verb{<list of multiple expressions>} // (or, use \code{...})
+
+Allows for the use of a list as an input alternative to \code{...}.}
+
+\item{.which}{\emph{The tables to replace}
+
+\verb{vector<numeric|integer>} // \emph{default:} \code{NULL} (\code{optional})
+
+A vector of index values denoting which \strong{gt} tables should be replaced
+inside of the \code{gt_group} object.}
 }
 \value{
 An object of class \code{gt_group}.
@@ -36,7 +53,7 @@ tables provided must equal the number of indices for tables present in the
 
 \section{Function Introduced}{
 
-\emph{In Development}
+\code{v0.9.0} (Mar 31, 2023)
 }
 
 \seealso{

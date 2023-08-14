@@ -7,14 +7,34 @@
 tab_header(data, title, subtitle = NULL, preheader = NULL)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{title, subtitle}{Text to be used in the table title and, optionally, for
-the table subtitle. We can elect to use the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} helper
-functions to style the text as Markdown or to retain HTML elements in the
-text.}
+\verb{obj:<gt_tbl>} // \strong{required}
 
-\item{preheader}{Optional preheader content that is rendered above the table.
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{title}{\emph{Header title}
+
+\verb{scalar<character>} // \strong{required}
+
+Text to be used in the table title. We can elect to use the \code{\link[=md]{md()}} and
+\code{\link[=html]{html()}} helper functions to style the text as Markdown or to retain HTML
+elements in the text.}
+
+\item{subtitle}{\emph{Header subtitle}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+Text to be used in the table subtitle. We can elect to use the \code{\link[=md]{md()}} and
+\code{\link[=html]{html()}} helper functions to style the text as Markdown or to retain HTML
+elements in the text.}
+
+\item{preheader}{\emph{RTF preheader text}
+
+\verb{vector<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+Optional preheader content that is rendered above the table for RTF output.
 Can be supplied as a vector of text.}
 }
 \value{
@@ -22,16 +42,19 @@ An object of class \code{gt_tbl}.
 }
 \description{
 We can add a table header to the \strong{gt} table with a title and even a
-subtitle. A table header is an optional table part that is positioned above
-the column labels. We have the flexibility to use Markdown formatting for the
-header's title and subtitle. Furthermore, if the table is intended for HTML
-output, we can use HTML in either of the title or subtitle.
+subtitle using the \code{tab_header()} function. A table header is an optional
+table part that is positioned just above the column labels table part. We
+have the flexibility to use Markdown or HTML formatting for the header's
+title and subtitle with the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} helper functions.
 }
 \section{Examples}{
 
 
-Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header part with the
-\code{tab_header()} function so that we get a title and a subtitle for the table.
+Let's use a small portion of the \code{\link{gtcars}} dataset to create a \strong{gt} table.
+A header part can be added to the table with the \code{tab_header()} function.
+We'll add a title and the optional subtitle as well. With the \code{\link[=md]{md()}} helper
+function, we can make sure the Markdown formatting is interpreted and
+transformed.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
   dplyr::select(mfr, model, msrp) |>
@@ -45,6 +68,55 @@ Use \code{\link{gtcars}} to create a \strong{gt} table. Add a header part with t
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_header_1.png" alt="This image of a table was generated from the first code example in the `tab_header()` help file." style="width:100\%;">
+}}
+
+If the table is intended solely as an HTML table, you could introduce your
+own HTML elements into the header. You can even use the \strong{htmltools} package
+to help arrange and generate the HTML. Here's an example of that, where two
+\verb{<div>} elements are placed in a \code{htmltools::tagList()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::select(mfr, model, msrp) |>
+  dplyr::slice(1:5) |>
+  gt() |>
+  tab_header(
+    title =
+      htmltools::tagList(
+        htmltools::tags$div(
+          style = htmltools::css(
+            `text-align` = "center"
+          ),
+          htmltools::HTML(
+            web_image("https://www.r-project.org/logo/Rlogo.png")
+          )
+        ),
+        htmltools::tags$div(
+          "Data listing from ",
+          htmltools::tags$strong("gtcars")
+        )
+      )
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_header_2.png" alt="This image of a table was generated from the second code example in the `tab_header()` help file." style="width:100\%;">
+}}
+
+If using HTML but doing something far simpler, we can use the \code{\link[=html]{html()}} helper
+function to declare that the text provided is HTML.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::select(mfr, model, msrp) |>
+  dplyr::slice(1:5) |>
+  gt() |>
+  tab_header(
+    title = html("Data listing from <strong>gtcars</strong>"),
+    subtitle = html("From <span style='color:red;'>gtcars</span>")
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_header_3.png" alt="This image of a table was generated from the third code example in the `tab_header()` help file." style="width:100\%;">
 }}
 }
 

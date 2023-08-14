@@ -1,3 +1,27 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2023 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 #' View a table with info on date styles
 #'
 #' @description
@@ -231,14 +255,23 @@ info_time_style <- function() {
 #' filter currencies in the info table to just the set beginning with the
 #' supplied letter.
 #'
-#' @param type The type of currency information provided. Can either be `code`
-#'   where currency information corresponding to 3-letter currency codes is
-#'   provided, or `symbol` where currency info for common currency names (e.g.,
-#'   dollar, pound, yen, etc.) is returned.
-#' @param begins_with Providing a single letter will filter currencies to only
-#'   those that begin with that letter in their currency code. The default
-#'   (`NULL`) will produce a table with all currencies displayed. This option
-#'   only constrains the information table where `type == "code"`.
+#' @param type *Type of currency*
+#'
+#'   `singl-kw:[code|symbol]` // *default:* `"code"`
+#'
+#'   The type of currency information provided. Can either be `code` where
+#'   currency information corresponding to 3-letter currency codes is provided,
+#'   or `symbol` where currency info for common currency names (e.g., dollar,
+#'   pound, yen, etc.) is returned.
+#'
+#' @param begins_with *Show currencies beginning with a specific letter*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   Providing a single letter will filter currencies to only those that begin
+#'   with that letter in their currency code. The default (`NULL`) will produce
+#'   a table with all currencies displayed. This option only constrains the
+#'   information table where `type == "code"`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -403,9 +436,13 @@ info_currencies <- function(
 #' locales in the info table to just the set that begins with the supplied
 #' letter.
 #'
-#' @param begins_with Providing a single letter will filter locales to only
-#'   those that begin with that letter in their base locale ID. The default
-#'   (`NULL`) will produce a table with all locales displayed.
+#' @param begins_with *Show locales beginning with a specific letter*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   Providing a single letter will filter locales to only those that begin
+#'   with that letter in their locale ID. The default (`NULL`) will produce
+#'   a table with all locales displayed
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -533,6 +570,7 @@ info_locales <- function(begins_with = NULL) {
 #' color palettes available in **paletteer**.
 #'
 #' @details
+#'
 #' The palettes displayed are organized by package and by palette name. These
 #' values are required when obtaining a palette (as a vector of hexadecimal
 #' colors), from the the `paletteer::paletteer_d()` function. Once we are
@@ -568,10 +606,14 @@ info_locales <- function(begins_with = NULL) {
 #' \item **yarrr**, 21 palettes
 #' }
 #'
-#' @param color_pkgs A vector of color packages that determines which sets of
-#'   palettes should be displayed in the information table. If this is
-#'   `NULL` (the default) then all of the discrete palettes from all of the
-#'   color packages represented in **paletteer** will be displayed.
+#' @param color_pkgs *Filter to specific color packages*
+#'
+#'   `vector<character>` // *default:* `NULL` (`optional`)
+#'
+#'   A vector of color packages that determines which sets of palettes should be
+#'   displayed in the information table. If this is `NULL` (the default) then
+#'   all of the discrete palettes from all of the color packages represented in
+#'   **paletteer** will be displayed.
 #'
 #' @return An object of class `gt_tbl`.
 #'

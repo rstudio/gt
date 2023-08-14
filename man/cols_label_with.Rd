@@ -7,16 +7,31 @@
 cols_label_with(data, columns = everything(), fn)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{columns}{The column names to which the function or function call in
-\code{fn} should be applied. By default this is set as \code{everything()} which
-select every column in the table.}
+\verb{obj:<gt_tbl>} // \strong{required}
 
-\item{fn}{The function or function call to be applied to the column labels.
-This can take the form of a bare function (e.g., \code{tools::toTitleCase}), a
-function call as a RHS formula (e.g., \code{~ tools::toTitleCase(.)}), or an
-anonymous function as in \code{function(x) tools::toTitleCase(x)}.}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
+
+The columns for which the column-labeling operations should be applied. Can
+either be a series of column names provided in \code{\link[=c]{c()}}, a vector of column
+indices, or a select helper function. Examples of select helper functions
+include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+
+\item{fn}{\emph{Function to apply}
+
+\verb{function|formula} // \strong{required}
+
+The function or function call to be applied to the column labels. This can
+take the form of a bare function (e.g., \code{tools::toTitleCase}), a function
+call as a RHS formula (e.g., \code{~ tools::toTitleCase(.)}), or an anonymous
+function as in \code{function(x) tools::toTitleCase(x)}.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -39,23 +54,23 @@ function (e.g., \code{function(x) tools::toTitleCase(x)}).
 
 It's important to note that while columns can be freely relabeled, we
 continue to refer to columns by their original column names. Column names in
-a tibble or data frame must be unique whereas column labels in \strong{gt} have
-no requirement for uniqueness (which is useful for labeling columns as, say,
+a tibble or data frame must be unique whereas column labels in \strong{gt} have no
+requirement for uniqueness (which is useful for labeling columns as, say,
 measurement units that may be repeated several times---usually under
-different spanner column labels). Thus, we can still easily distinguish
-between columns in other \strong{gt} function calls (e.g., in all of the
-\verb{fmt*()} functions) even though we may lose distinguishability in column
-labels once they have been relabeled.
+different spanner labels). Thus, we can still easily distinguish between
+columns in other \strong{gt} function calls (e.g., in all of the \verb{fmt*()}
+functions) even though we may lose distinguishability in column labels once
+they have been relabeled.
 }
 
 \section{Examples}{
 
 
-Use \code{\link{sp500}} to create a \strong{gt} table. We want all the column labels to be
-entirely capitalized versions of the default labels but, instead of using
-\code{\link[=cols_label]{cols_label()}} and rewriting each label manually in capital letters we can
-use \code{cols_label_with()} and instruct it to apply the \code{toupper()} function to
-all column labels.
+Use a subset of the \code{\link{sp500}} dataset to create a \strong{gt} table. We want all
+the column labels to be entirely capitalized versions of the default labels
+but, instead of using \code{\link[=cols_label]{cols_label()}} and rewriting each label manually in
+capital letters we can use \code{cols_label_with()} and instruct it to apply the
+\code{toupper()} function to all column labels.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
   dplyr::filter(
@@ -71,13 +86,13 @@ all column labels.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_with_1.png" alt="This image of a table was generated from the first code example in the `cols_label_with()` help file." style="width:100\%;">
 }}
 
-Use \code{\link{countrypops}} to create a \strong{gt} table. To improve the presentation of
-the table, we are again going to change the default column labels via
-function calls supplied within \code{cols_label_with()}. We can, if we prefer,
-apply multiple types of column label changes in sequence with multiple calls
-of \code{cols_label_with()}. Here, we use the \code{make_clean_names()} functions from
-the \strong{janitor} package and follow up with the removal of a numeral with
-\code{gsub()}.
+Use the \code{\link{countrypops}} dataset to create a \strong{gt} table. To improve the
+presentation of the table, we are again going to change the default column
+labels via function calls supplied within \code{cols_label_with()}. We can, if we
+prefer, apply multiple types of column label changes in sequence with
+multiple calls of \code{cols_label_with()}. Here, we use the \code{make_clean_names()}
+functions from the \strong{janitor} package and follow up with the removal of a
+numeral with \code{gsub()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::filter(year == 2021) |>
@@ -140,8 +155,14 @@ interpreted as Markdown text.
 5-5
 }
 
+\section{Function Introduced}{
+
+\code{v0.9.0} (March 31, 2023)
+}
+
 \seealso{
 Other column modification functions: 
+\code{\link{cols_add}()},
 \code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
@@ -154,6 +175,7 @@ Other column modification functions:
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
 \code{\link{cols_unhide}()},
+\code{\link{cols_units}()},
 \code{\link{cols_width}()}
 }
 \concept{column modification functions}

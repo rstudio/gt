@@ -489,6 +489,18 @@ test_that("The `fmt_engineering()` function works correctly", {
     )
   )
 
+  # Format the `num` column and choose a exponent style of `"E1"`; extract
+  # in the default context and compare to expected values
+  expect_equal(
+    (tab_2 %>%
+       fmt_engineering(columns = "num", exp_style = "E1") %>%
+       render_formats_test("default"))[["num"]],
+    c(
+      "-34.90E12", "-3.45E3", "-234.00E-6", "0.00E0", "75.34E-6",
+      "82.79E3", "716.00E12"
+    )
+  )
+
   # Format the `num` column and choose a exponent style of `"low-ten"`; extract
   # in the default context and compare to expected values
   expect_equal(

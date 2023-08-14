@@ -1,3 +1,27 @@
+#------------------------------------------------------------------------------#
+#
+#                /$$
+#               | $$
+#     /$$$$$$  /$$$$$$
+#    /$$__  $$|_  $$_/
+#   | $$  \ $$  | $$
+#   | $$  | $$  | $$ /$$
+#   |  $$$$$$$  |  $$$$/
+#    \____  $$   \___/
+#    /$$  \ $$
+#   |  $$$$$$/
+#    \______/
+#
+#  This file is part of the 'rstudio/gt' project.
+#
+#  Copyright (c) 2018-2023 gt authors
+#
+#  For full copyright and license information, please look at
+#  https://gt.rstudio.com/LICENSE.html
+#
+#------------------------------------------------------------------------------#
+
+
 #' Stylize your table with a colorful look
 #'
 #' @description
@@ -14,12 +38,26 @@
 #' from.
 #'
 #' @inheritParams fmt_number
-#' @param style Six numbered styles are available. Simply provide a number from
-#'   `1` (the default) to `6` to choose a distinct look.
-#' @param color There are six color variations: `"blue"` (the default),
-#'   `"cyan"`, `"pink"`, `"green"`, `"red"`, and `"gray"`.
-#' @param add_row_striping An option to enable row striping in the table body
-#'   for the style chosen. By default, this is `TRUE`.
+#'
+#' @param style *Table style*
+#'
+#'   `scalar<numeric|integer>(1>=val>=6)` // *default:* `1`
+#'
+#'   Six numbered styles are available. Simply provide a number from `1` (the
+#'   default) to `6` to choose a distinct look.
+#'
+#' @param color *Color variation*
+#'
+#'   `scalar<character>` // *default:* `"blue"`
+#'
+#'   There are six color variations: `"blue"`, `"cyan"`, `"pink"`, `"green"`,
+#'   `"red"`, and `"gray"`.
+#'
+#' @param add_row_striping *Allow row striping*
+#'
+#'   `scalar<logical>` // *default:* `TRUE`
+#'
+#'   An option to enable row striping in the table body for the `style` chosen.
 #'
 #' @return an object of class `gt_tbl`.
 #'
@@ -184,51 +222,126 @@ get_colorized_params <- function(
 #' - `ihtml.pagination_type`
 #'
 #' @inheritParams fmt_number
-#' @param active The `active` option will either enable or disable interactive
-#'   features for an HTML table. The individual features of an interactive HTML
-#'   table are controlled by the other options.
-#' @param use_pagination This is the option for using pagination controls (below
-#'   the table body). By default, this is `TRUE` and it will allow the use to
-#'   page through table content.
-#' @param use_pagination_info If `use_pagination` is `TRUE` then the
-#'   `use_pagination_info` option can be used to display informational text
-#'   regarding the current page view (this is set to `TRUE` by default).
-#' @param use_sorting This option provides controls for sorting column values.
-#'   By default, this is `TRUE`.
-#' @param use_search The `use_search` option places a search field for globally
-#'   filtering rows to the requested content. By default, this is `FALSE`.
-#' @param use_filters The `use_filters` option places search fields below each
-#'   column header and allows for filtering by column. By default, this is
-#'   `FALSE`.
-#' @param use_resizers This option allows for the interactive resizing of
-#'   columns. By default, this is `FALSE`.
-#' @param use_highlight The `use_highlight` option highlights individual rows
-#'   upon hover. By default, this is `FALSE`.
-#' @param use_compact_mode To reduce vertical padding and thus make the table
-#'   consume less vertical space the `use_compact_mode` option can be used. By
+#'
+#' @param active *Display interactive HTML table*
+#'
+#'   `scalar<logical>` // *default:* `TRUE`
+#'
+#'   The `active` option will either enable or disable interactive features for
+#'   an HTML table. The individual features of an interactive HTML table are
+#'   controlled by the other options.
+#'
+#' @param use_pagination *Display pagination controls*
+#'
+#'   `scalar<logical>` // *default:* `TRUE`
+#'
+#'   This is the option for using pagination controls (below the table body). By
+#'   default, this is `TRUE` and it will allow the use to page through table
+#'   content.
+#'
+#' @param use_pagination_info *Display pagination info*
+#'
+#'   `scalar<logical>` // *default:* `TRUE`
+#'
+#'   If `use_pagination` is `TRUE` then the `use_pagination_info` option can be
+#'   used to display informational text regarding the current page view (this is
+#'   set to `TRUE` by default).
+#'
+#' @param use_sorting *Provide column sorting controls*
+#'
+#'   `scalar<logical>` // *default:* `TRUE`
+#'
+#'   This option provides controls for sorting column values. By default, this
+#'   is `TRUE`.
+#'
+#' @param use_search *Provide a global search field*
+#'
+#'   `scalar<logical>` // *default:* `FALSE`
+#'
+#'   The `use_search` option places a search field for globally filtering rows
+#'   to the requested content. By default, this is `FALSE`.
+#'
+#' @param use_filters *Display filtering fields*
+#'
+#'   `scalar<logical>` // *default:* `FALSE`
+#'
+#'   The `use_filters` option places search fields below each column header and
+#'   allows for filtering by column. By default, this is `FALSE`.
+#'
+#' @param use_resizers *Allow column resizing*
+#'
+#'   `scalar<logical>` // *default:* `FALSE`
+#'
+#'   This option allows for the interactive resizing of columns. By default,
+#'   this is `FALSE`.
+#'
+#' @param use_highlight *Enable row highlighting on hover*
+#'
+#'   `scalar<logical>` // *default:* `FALSE`
+#'
+#'   The `use_highlight` option highlights individual rows upon hover. By
 #'   default, this is `FALSE`.
-#' @param use_page_size_select,page_size_default,page_size_values The
-#'   `use_page_size_select` option lets us display a dropdown menu for the
-#'   number of rows to show per page of data. By default, this is the vector
-#'   `c(10, 25, 50, 100)` which corresponds to options for `10`, `25`, `50`, and
-#'   `100` rows of data per page. To modify these page-size options, provide a
-#'   numeric vector to `page_size_values`. The default page size (initially set
-#'   as `10`) can be modified with `page_size_default` and this works whether or
-#'   not `use_page_size_select` is set to `TRUE`.
-#' @param pagination_type When using pagination the `pagination_type` option
-#'   lets us select between one of three options for the layout of pagination
-#'   controls. The default is `"numbers"`, where a series of page-number buttons
-#'   is presented along with 'previous' and 'next' buttons. The `"jump"` option
-#'   provides an input field with a stepper for the page number. With
-#'   `"simple"`, only the 'previous' and 'next' buttons are displayed.
+#'
+#' @param use_compact_mode *Use compact mode*
+#'
+#'   `scalar<logical>` // *default:* `FALSE`
+#'
+#'   To reduce vertical padding and thus make the table consume less vertical
+#'   space the `use_compact_mode` option can be used. By default, this is
+#'   `FALSE`.
+#'
+#' @param use_text_wrapping *Use text wrapping*
+#'
+#'   `scalar<logical>` // *default:* `TRUE`
+#'
+#'   The `use_text_wrapping` option controls whether text wrapping occurs
+#'   throughout the table. This is `TRUE` by default and with that text will be
+#'   wrapped to multiple lines. If `FALSE`, text will be truncated to a single
+#'   line.
+#'
+#' @param use_page_size_select *Allow for page size selection*
+#'
+#'   `scalar<logical>` // *default:* `FALSE`
+#'
+#'   The `use_page_size_select` option lets us display a dropdown menu for the
+#'   number of rows to show per page of data.
+#'
+#' @param page_size_default *Change the default page size*
+#'
+#'   `scalar<numeric|integer>` // *default:* `10`
+#'
+#'   The default page size (initially set as `10`) can be modified with
+#'   `page_size_default` and this works whether or not `use_page_size_select` is
+#'   set to `TRUE`.
+#'
+#' @param page_size_values *Set of page-size values*
+#'
+#'   `vector<numeric|integer>` // *default:* `c(10, 25, 50, 100)`
+#'
+#'   By default, this is the vector `c(10, 25, 50, 100)` which corresponds to
+#'   options for `10`, `25`, `50`, and `100` rows of data per page. To modify
+#'   these page-size options, provide a numeric vector to `page_size_values`.
+#'
+#' @param pagination_type *Change pagination mode*
+#'
+#'   `scalar<character>` // *default:* `"numbers"`
+#'
+#'   When using pagination the `pagination_type` option lets us select between
+#'   one of three options for the layout of pagination controls. The default is
+#'   `"numbers"`, where a series of page-number buttons is presented along with
+#'   'previous' and 'next' buttons. The `"jump"` option provides an input field
+#'   with a stepper for the page number. With `"simple"`, only the 'previous'
+#'   and 'next' buttons are displayed.
 #'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
 #'
-#' Use the [`towny`] dataset to create a **gt** table with a header and a source
-#' note. Next, we add interactive HTML features through `opt_interactive()`.
-#' It'll just be the default set of interactive options.
+#' Use select columns from the [`towny`] dataset to create a **gt** table with a
+#' header (through [tab_header()]) and a source note (through
+#' [tab_source_note()]). Next, we will add interactive HTML features (and
+#' otherwise activate interactive HTML mode) through `opt_interactive()`. It'll
+#' just be the default set of interactive options.
 #'
 #' ```r
 #' towny |>
@@ -282,7 +395,7 @@ get_colorized_params <- function(
 #' 10-2
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @export
 opt_interactive <- function(
@@ -296,6 +409,7 @@ opt_interactive <- function(
     use_resizers = FALSE,
     use_highlight = FALSE,
     use_compact_mode = FALSE,
+    use_text_wrapping = TRUE,
     use_page_size_select = FALSE,
     page_size_default = 10,
     page_size_values = c(10, 25, 50, 100),
@@ -318,6 +432,7 @@ opt_interactive <- function(
     ihtml.use_resizers = use_resizers,
     ihtml.use_highlight = use_highlight,
     ihtml.use_compact_mode = use_compact_mode,
+    ihtml.use_text_wrapping = use_text_wrapping,
     ihtml.use_page_size_select = use_page_size_select,
     ihtml.page_size_default = page_size_default,
     ihtml.page_size_values = page_size_values,
@@ -335,10 +450,15 @@ opt_interactive <- function(
 #' serves as a shortcut for using `tab_options(footnotes.marks = {marks})`
 #'
 #' @inheritParams fmt_number
-#' @param marks Either a character vector of length greater than 1 (that will
-#'   represent the series of marks) or a single keyword that represents a preset
-#'   sequence of marks. The valid keywords are: `"numbers"` (for numeric marks),
-#'   `"letters"` and `"LETTERS"` (for lowercase and uppercase alphabetic marks),
+#'
+#' @param marks *Sequence of footnote marks*
+#'
+#'   `vector<character>` // *default:* `"numbers"`
+#'
+#'   Either a character vector of length greater than 1 (that will represent the
+#'   series of marks) or a single keyword that represents a preset sequence of
+#'   marks. The valid keywords are: `"numbers"` (for numeric marks), `"letters"`
+#'   and `"LETTERS"` (for lowercase and uppercase alphabetic marks),
 #'   `"standard"` (for a traditional set of four symbol marks), and `"extended"`
 #'   (which adds two more symbols to the standard set).
 #'
@@ -346,11 +466,11 @@ opt_interactive <- function(
 #'
 #' @section Specification of footnote marks:
 #'
-#' We can supply a vector of that will represent the series of marks.
-#' The series of footnote marks is recycled when its usage goes beyond the
-#' length of the set. At each cycle, the marks are simply doubled, tripled, and
-#' so on (e.g., `*` -> `**` -> `***`). The option exists for providing keywords
-#' for certain types of footnote marks. The keywords are:
+#' We can supply a vector that will represent the series of marks. The series of
+#' footnote marks is recycled when its usage goes beyond the length of the set.
+#' At each cycle, the marks are simply doubled, tripled, and so on (e.g., `*` ->
+#' `**` -> `***`). The option exists for providing keywords for certain types of
+#' footnote marks. The keywords are:
 #'
 #' - `"numbers"`: numeric marks, they begin from 1 and these marks are not
 #' subject to recycling behavior
@@ -362,10 +482,16 @@ opt_interactive <- function(
 #' - `"extended"`: symbolic marks, extends the standard set by adding two
 #' more symbols, making six
 #'
+#' The symbolic marks are the: (1) Asterisk, (2) Dagger, (3) Double Dagger,
+#' (4) Section Sign, (5) Double Vertical Line, and (6) Paragraph Sign; the
+#' `"standard"` set has the first four, `"extended"` contains all.
+#'
 #' @section Examples:
 #'
-#' Use [`sza`] to create a **gt** table, adding three footnotes. Call
-#' `opt_footnote_marks()` to specify which footnote marks to use.
+#' Use a summarized version of the [`sza`] dataset to create a **gt** table,
+#' adding three footnotes (with three calls of [tab_footnote()]). We can modify
+#' the footnote marks to use with the `opt_footnote_marks()` function. With the
+#' keyword `"standard"` we get four commonly-used typographic marks.
 #'
 #' ```r
 #' sza |>
@@ -449,10 +575,15 @@ opt_footnote_marks <- function(
 #' `tab_options(footnotes.spec_ftr = {spec})`.
 #'
 #' @inheritParams fmt_number
-#' @param spec_ref,spec_ftr Specification of the footnote marks when behaving as
-#'   footnote references and as marks in the footer section of the table. This
-#'   is a string containing spec characters. The default is the spec string
-#'   `"^i"`, which is superscript text set in italics.
+#'
+#' @param spec_ref,spec_ftr *Specifications for formatting of footnote marks*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   Specification of the footnote marks when behaving as footnote references
+#'   and as marks in the footer section of the table. This is a string
+#'   containing spec characters. The default is the spec string `"^i"`, which is
+#'   superscript text set in italics.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -479,10 +610,11 @@ opt_footnote_marks <- function(
 #'
 #' @section Examples:
 #'
-#' Use [`sp500`] to create a **gt** table, adding two footnotes. We can call
-#' `opt_footnote_spec()` to specify that the marks of the footnote reference
-#' should be superscripts in bold, and, the marks in the footer section should
-#' be enclosed in parentheses.
+#' Use a modified version of [`sp500`] the dataset to create a **gt** table with
+#' row labels. We'll add two footnotes using the `tab_footnote()` function. We
+#' can call `opt_footnote_spec()` to specify that the marks of the footnote
+#' reference should be superscripts in bold, and, the marks in the footer
+#' section should be enclosed in parentheses.
 #'
 #' ```r
 #' sp500 |>
@@ -523,7 +655,7 @@ opt_footnote_marks <- function(
 #' 10-4
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @export
 opt_footnote_spec <- function(
@@ -556,16 +688,22 @@ opt_footnote_spec <- function(
 #' `<gt_tbl> |> tab_options(row.striping.include_table_body = TRUE|FALSE)`.
 #'
 #' @inheritParams fmt_number
-#' @param row_striping A logical value to indicate whether row striping should
-#'   be added or removed.
+#'
+#' @param row_striping *Use alternating row stripes*
+#'
+#'   `scalar<logical>` // *default:* `TRUE`
+#'
+#'   A logical value to indicate whether row striping should be added or
+#'   removed.
 #'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table with a number of table parts added.
-#' Next, we add row striping to every second row with the `opt_row_striping()`
-#' function.
+#' Use the [`exibble`] dataset to create a **gt** table with a number of table
+#' parts added (using functions like [summary_rows()], [grand_summary_rows()],
+#' and more). Following that, we'll add row striping to every second row with
+#' the `opt_row_striping()` function.
 #'
 #' ```r
 #' exibble |>
@@ -628,16 +766,23 @@ opt_row_striping <- function(
 #' convenient shortcut for `<gt_tbl> |> tab_options(heading.align = <align>)`.
 #'
 #' @inheritParams fmt_number
-#' @param align The alignment of the title and subtitle elements in the table
-#' header. Options are `"left"` (the default), `"center"`, or `"right"`.
+#'
+#' @param align *Header alignment*
+#'
+#'   `singl-kw:[left|center|right]` // *default:* `"left"`
+#'
+#'   The alignment of the title and subtitle elements in the table header.
+#'   Options are `"left"` (the default), `"center"`, or `"right"`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table with a number of table parts added.
-#' The header (consisting of the title and the subtitle) are to be aligned to
-#' the left with the `opt_align_table_header()` function.
+#' Use the [`exibble`] dataset to create a **gt** table with a number of table
+#' parts added (using functions like [summary_rows()], [grand_summary_rows()],
+#' and more). Following that, we'll align the header contents (consisting of the
+#' title and the subtitle) to the left with the `opt_align_table_header()`
+#' function.
 #'
 #' ```r
 #' exibble |>
@@ -710,16 +855,24 @@ opt_align_table_header <- function(
 #' - `source_notes.padding`
 #'
 #' @inheritParams fmt_number
-#' @param scale A scale factor by which the vertical padding will be adjusted.
-#'   Must be a number between `0` and `3`.
+#'
+#' @param scale *Scale factor*
+#'
+#'   `scalar<numeric|integer>(0>=val>=3)` // *default:* `1`
+#'
+#'   A scale factor by which the vertical padding will be adjusted. Must be a
+#'   number between `0` and `3`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table with a number of table parts added.
-#' Contract the vertical padding across the entire table with
-#' `opt_vertical_padding()`.
+#' Use the [`exibble`] dataset to create a **gt** table with a number of table
+#' parts added (using functions like [summary_rows()], [grand_summary_rows()],
+#' and more). Following that, we'll lessen the amount of vertical padding across
+#' the entire table with `opt_vertical_padding()`. Using a `scale` value of
+#' `0.25` (down from the default of `1`) means the the vertical space will be
+#' greatly reduced, resulting in a more compact table.
 #'
 #'
 #' ```r
@@ -794,16 +947,24 @@ opt_vertical_padding <- function(
 #' - `source_notes.padding.horizontal`
 #'
 #' @inheritParams fmt_number
-#' @param scale A scale factor by which the horizontal padding will be adjusted.
-#'   Must be a number between `0` and `3`.
+#'
+#' @param scale *Scale factor*
+#'
+#'   `scalar<numeric|integer>(0>=val>=3)` // *default:* `1`
+#'
+#'   A scale factor by which the horizontal padding will be adjusted. Must be a
+#'   number between `0` and `3`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table with a number of table parts added.
-#' Expand the horizontal padding across the entire table with
-#' `opt_horizontal_padding()`.
+#' Use the [`exibble`] dataset to create a **gt** table with a number of table
+#' parts added (using functions like [summary_rows()], [grand_summary_rows()],
+#' and more). Following that, we'll increase the amount of horizontal padding
+#' across the entire table with `opt_horizontal_padding()`. Using a `scale`
+#' value of `3` (up from the default of `1`) means the the horizontal space will
+#' be greatly increased, resulting in a more spacious table.
 #'
 #' ```r
 #' exibble |>
@@ -908,20 +1069,32 @@ get_padding_option_value_list <- function(scale, type) {
 #' pct(80), <location>.font.weight = "bolder")` (for all `locations` selected).
 #'
 #' @inheritParams fmt_number
-#' @param all_caps A logical value to indicate whether the text transformation
-#'   to all caps should be performed (`TRUE`, the default) or reset to default
-#'   values (`FALSE`) for the `locations` targeted.
-#' @param locations Which locations should undergo this text transformation? By
-#'   default it includes all of the `"column_labels"`, the `"stub"`, and the
-#'   `"row_group"` locations. However, we could just choose one or two of those.
+#'
+#' @param all_caps *Use all-caps transformation*
+#'
+#'   `scalar<logical>` // *default:* `TRUE`
+#'
+#'   A logical value to indicate whether the text transformation to all caps
+#'   should be performed (`TRUE`, the default) or reset to default values
+#'   (`FALSE`) for the `locations` targeted.
+#'
+#' @param locations *Locations to target*
+#'
+#'   `mult-kw:[column_labels|stub|row_group]` // *default:* `c("column_labels", "stub", "row_group")`
+#'
+#'   Which locations should undergo this text transformation? By default it
+#'   includes all of the `"column_labels"`, the `"stub"`, and the `"row_group"`
+#'   locations. However, we could just choose one or two of those.
 #'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table with a number of table parts added.
-#' All text in the column labels, the stub, and in all row groups is to be
-#' transformed to all caps using `opt_all_caps()`.
+#' Use the [`exibble`] dataset to create a **gt** table with a number of table
+#' parts added (using functions like [summary_rows()], [grand_summary_rows()],
+#' and more). Following that, we'll ensure that all text in the column labels,
+#' the stub, and in all row groups is transformed to all caps using
+#' `opt_all_caps()`.
 #'
 #' ```r
 #' exibble |>
@@ -1017,16 +1190,23 @@ opt_all_caps <- function(
 #' completely lineless table, adding individual lines as needed.
 #'
 #' @inheritParams fmt_number
-#' @param extent The extent to which lines will be visible in the table. Options
-#' are `"all"`, `"none"`, or `"default"`.
+#'
+#' @param extent *Extent of lines added*
+#'
+#'   `singl-kw:[all|none|default]` // *default:* `"all"`
+#'
+#'   The extent to which lines will be visible in the table. Options are
+#'   `"all"`, `"none"`, or `"default"`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table with a number of table parts added.
-#' Then, use the `opt_table_lines()` function to haves lines everywhere there
-#' can possibly be lines.
+#' Use the [`exibble`] dataset to create a **gt** table with a number of table
+#' parts added (using functions like [summary_rows()], [grand_summary_rows()],
+#' and more). Following that, we'll use the `opt_table_lines()` function to
+#' generate lines everywhere there can possibly be lines (the default for the
+#' `extent` argument is `"all"`).
 #'
 #' ```r
 #' exibble |>
@@ -1103,17 +1283,36 @@ opt_table_lines <- function(
 #' will remove any present outline.
 #'
 #' @inheritParams fmt_number
-#' @param style,width,color The style, width, and color properties for the table
-#'   outline. By default, these are `"solid"`, `px(3)` (or, `"3px"`), and
-#'   `"#D3D3D3"`. If `"none"` is used then the outline is removed and any values
-#'   provided for `width` and `color` will be ignored (i.e., not set).
+#'
+#' @param style *Outline style property*
+#'
+#'   `scalar<character>` // *default:* `"solid"`
+#'
+#'   The style property for the table outline. By default, this is `"solid"`. If
+#'   `"none"` is used then the outline is removed and any values provided for
+#'   `width` and `color` will be ignored (i.e., not set).
+#'
+#' @param width *Outline width value*
+#'
+#'   `scalar<character>` // *default:* `px(3)`
+#'
+#'   The width property for the table outline. By default, this is `px(3)` (or,
+#'   `"3px"`).
+#'
+#' @param color *Color of outline*
+#'
+#'   `scalar<character>` // *default:* `"#D3D3D3"`
+#'
+#'   The color of the table outline. By default, this is `"#D3D3D3"`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table with a number of table parts added.
-#' Have an outline wrap around the entire table by using `opt_table_outline()`.
+#' Use the [`exibble`] dataset to create a **gt** table with a number of table
+#' parts added (using functions like [summary_rows()], [grand_summary_rows()],
+#' and more). Following that, let's make it so that we have an outline wrap
+#' around the entire table by using the `opt_table_outline()` function.
 #'
 #' ```r
 #' tab_1 <-
@@ -1209,44 +1408,107 @@ opt_table_outline <- function(
   )
 }
 
-#' Option to define a custom font for the table
+#' Options to define font choices for the entire table
 #'
 #' @description
 #'
-#' The `opt_table_font()` function makes it possible to define a custom font for
-#' the entire **gt** table. The standard fallback fonts are still set by default
-#' but the font defined here will take precedence. You could still have
-#' different fonts in select locations in the table, and for that you would need
-#' to use [tab_style()] in conjunction with the [cell_text()] helper function.
+#' The `opt_table_font()` function makes it possible to define fonts used for an
+#' entire **gt** table. Any font names supplied in `font` will (by default, with
+#' `add = TRUE`) be placed before the names present in the existing font stack
+#' (i.e., they will take precedence). You can choose to base the font stack on
+#' those provided by [system_fonts()] by providing a valid keyword for a themed
+#' set and optionally prepending `font` values to that.
+#'
+#' Take note that you could still have entirely different fonts in specific
+#' locations of the table. For that you would need to use [tab_style()] or
+#' [tab_style_body()] in conjunction with the [cell_text()] helper function.
 #'
 #' @inheritParams fmt_number
-#' @param font Either the name of a font available in the user system or a call
-#'   to [google_font()], which has a large selection of typefaces.
-#' @param style The text style. Can be one of either `"normal"`, `"italic"`, or
-#'   `"oblique"`.
-#' @param weight The weight of the font. Can be a text-based keyword such as
+#'
+#' @param font *Default table fonts*
+#'
+#'   `vector<character>|list|obj:<font_css>` // *default:* `NULL` (`optional`)
+#'
+#'   One or more font names available as system or web fonts. These can be
+#'   combined with a `c()` or a `list()`. To choose fonts from the
+#'   *Google Fonts* service, we can call the [google_font()] helper function.
+#'
+#' @param stack *Name of font stack*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   A name that is representative of a font stack (obtained via internally via
+#'   the [system_fonts()] helper function). If provided, this new stack will
+#'   replace any defined fonts and any `font` values will be prepended.
+#'
+#' @param style *Text style*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An option to modify the text style. Can be one of either `"normal"`,
+#'   `"italic"`, or `"oblique"`.
+#'
+#' @param weight *Text weight*
+#'
+#'   `scalar<character|numeric|integer>` // *default:* `NULL` (`optional`)
+#'
+#'   Option to set the weight of the font. Can be a text-based keyword such as
 #'   `"normal"`, `"bold"`, `"lighter"`, `"bolder"`, or, a numeric value between
-#'   `1` and `1000`, inclusive. Note that only variable fonts may support the
-#'   numeric mapping of weight.
-#' @param add Should this font be added to the front of the already-defined
-#'   fonts for the table? By default, this is `TRUE` and is recommended since
-#'   the list serves as fallbacks when certain fonts are not available.
+#'   `1` and `1000`, inclusive. Please note that typefaces have varying support
+#'   for the numeric mapping of weight.
+#'
+#' @param add *Add to existing fonts*
+#'
+#'   `scalar<logical>` // *default:* `TRUE`
+#'
+#'   Should fonts be added to the beginning of any already-defined fonts for the
+#'   table? By default, this is `TRUE` and is recommended since those fonts
+#'   already present can serve as fallbacks when everything specified in `font`
+#'   is not available. If a `stack` is provided, then `add` will automatically
+#'   set to `FALSE`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
-#' @details
+#' @section Possibilities for the `font` argument:
 #'
-#' We have the option to supply either a system font for the `font_name`, or, a
-#' font available at the Google Fonts service by use of the [google_font()]
-#' helper function.
+#' We have the option to supply one or more font names for the `font` argument.
+#' They can be enclosed in `c()` or a `list()`. You can generate this list or
+#' vector with a combination of font names, and you can freely use the
+#' [google_font()], [default_fonts()], and [system_fonts()] functions to help
+#' compose your font family.
+#'
+#' @section Possibilities for the `stack` argument:
+#'
+#' There are several themed font stacks available via the [system_fonts()]
+#' helper function. That function can be used to generate all or a segment of a
+#' vector supplied to the `font` argument. However, using the `stack` argument
+#' with one of the 15 keywords for the font stacks available in
+#' [system_fonts()], we could be sure that the typeface class will work across
+#' multiple computer systems. Any of the following keywords can be used:
+#'
+#' - `"system-ui"`
+#' - `"transitional"`
+#' - `"old-style"`
+#' - `"humanist"`
+#' - `"geometric-humanist"`
+#' - `"classical-humanist"`
+#' - `"neo-grotesque"`
+#' - `"monospace-slab-serif"`
+#' - `"monospace-code"`
+#' - `"industrial"`
+#' - `"rounded-sans"`
+#' - `"slab-serif"`
+#' - `"antique"`
+#' - `"didone"`
+#' - `"handwritten"`
 #'
 #' @section Examples:
 #'
-#' Use [`sp500`] to create a small **gt** table, using [fmt_currency()] to
-#' provide a dollar sign for the first row of monetary values. Then, set a
-#' larger font size for the table and use the `"Merriweather"` font (from
-#' *Google Fonts*, via [google_font()]) with two font fallbacks (`"Cochin"` and
-#' the catchall `"Serif"` group).
+#' Use a subset of the [`sp500`] dataset to create a small **gt** table. We'll
+#' use the [fmt_currency()] function to display a dollar sign for the first row
+#' of monetary values. Then, set a larger font size for the table and use the
+#' `"Merriweather"` font (from *Google Fonts*, via [google_font()]) with two
+#' system font fallbacks (`"Cochin"` and the generic `"serif"`).
 #'
 #' ```r
 #' sp500 |>
@@ -1254,16 +1516,13 @@ opt_table_outline <- function(
 #'   dplyr::select(-volume, -adj_close) |>
 #'   gt() |>
 #'   fmt_currency(
-#'     columns = 2:5,
 #'     rows = 1,
-#'     currency = "USD",
 #'     use_seps = FALSE
 #'   ) |>
-#'   tab_options(table.font.size = px(18)) |>
 #'   opt_table_font(
 #'     font = list(
 #'       google_font(name = "Merriweather"),
-#'       "Cochin", "Serif"
+#'       "Cochin", "serif"
 #'     )
 #'   )
 #' ```
@@ -1272,9 +1531,11 @@ opt_table_outline <- function(
 #' `r man_get_image_tag(file = "man_opt_table_font_1.png")`
 #' }}
 #'
-#' Use [`sza`] to create an eleven-row table. Within `opt_table_font()`, set up
-#' a preferred list of sans-serif fonts that are commonly available in macOS
-#' (using part of the [default_fonts()] vector as a fallback).
+#' Use the [`sza`] dataset to create an eleven-row table, two-column table.
+#' Within `opt_table_font()`, use the `stack` argument to define the use of the
+#' `"rounded-sans"` font stack. This sets up a family of fonts with rounded,
+#' curved letterforms that should be locally available in different computing
+#' environments.
 #'
 #' ```r
 #' sza |>
@@ -1285,12 +1546,7 @@ opt_table_outline <- function(
 #'   ) |>
 #'   dplyr::select(-latitude, -month) |>
 #'   gt() |>
-#'   opt_table_font(
-#'     font = c(
-#'       "Helvetica Neue", "Segoe UI",
-#'       default_fonts()[-c(1:3)]
-#'     )
-#'   ) |>
+#'   opt_table_font(stack = "rounded-sans") |>
 #'   opt_all_caps()
 #' ```
 #'
@@ -1308,7 +1564,8 @@ opt_table_outline <- function(
 #' @export
 opt_table_font <- function(
     data,
-    font,
+    font = NULL,
+    stack = NULL,
     weight = NULL,
     style = NULL,
     add = TRUE
@@ -1329,21 +1586,36 @@ opt_table_font <- function(
       option = "table_additional_css"
     )
 
-  font <- normalize_font_input(font_input = font)
+  if (!is.null(font)) {
 
-  additional_css <- c(font$import_stmt, existing_additional_css)
+    font <- normalize_font_input(font_input = font)
+    additional_css <- c(font$import_stmt, existing_additional_css)
 
-  data <-
-    tab_options(
-      data = data,
-      table.font.names = c(font$name, if (add) existing_fonts)
-    )
+    data <-
+      tab_options(
+        data = data,
+        table.additional_css = additional_css
+      )
+  }
 
-  data <-
-    tab_options(
-      data = data,
-      table.additional_css = additional_css
-    )
+  if (!is.null(stack)) {
+
+    font_stack <- system_fonts(name = stack)
+
+    data <-
+      tab_options(
+        data = data,
+        table.font.names = c(font$name, font_stack)
+      )
+
+  } else {
+
+    data <-
+      tab_options(
+        data = data,
+        table.font.names = c(font$name, if (add) existing_fonts)
+      )
+  }
 
   if (!is.null(weight)) {
 
@@ -1384,24 +1656,39 @@ opt_table_font <- function(
 #' as a vector of lines or as a single string.
 #'
 #' @inheritParams fmt_number
-#' @param css The CSS to include as part of the rendered table's `<style>`
-#'   element.
-#' @param add If `TRUE`, the default, the CSS is added to any already-defined
-#'   CSS (typically from previous calls of [opt_table_font()], `opt_css()`, or,
+#'
+#' @param css *CSS declarations*
+#'
+#'   `scalar<character>` // **required**
+#'
+#'   The CSS to include as part of the rendered table's `<style>` element.
+#'
+#' @param add *Add to existing CSS*
+#'
+#'   `scalar<logical>` // *default:* `TRUE`
+#'
+#'   If `TRUE`, the default, the CSS is added to any already-defined CSS
+#'   (typically from previous calls of [opt_table_font()], `opt_css()`, or,
 #'   directly setting CSS the `table.additional_css` value in [tab_options()]).
 #'   If this is set to `FALSE`, the CSS provided here will replace any
 #'   previously-stored CSS.
-#' @param allow_duplicates When this is `FALSE` (the default), the CSS provided
-#'   here won't be added (provided that `add = TRUE`) if it is seen in the
-#'   already-defined CSS.
+#'
+#' @param allow_duplicates *Allow for CSS duplication*
+#'
+#'   `scalar<logical>` // *default:* `FALSE`
+#'
+#'   When this is `FALSE` (the default), the CSS provided here won't be added
+#'   (provided that `add = TRUE`) if it is seen in the already-defined CSS.
 #'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
 #'
-#' Use [`exibble`] to create a **gt** table and format the data in both columns.
-#' With `opt_css()`, insert CSS rulesets as as string and be sure to set the
-#' table ID explicitly (here as `"one"`).
+#' Let's use the [`exibble`] dataset to create a simple, two-column **gt** table
+#' (keeping only the `num` and `currency` columns). Through use of the
+#' `opt_css()` function, we can insert CSS rulesets as as string. We need to
+#' ensure that the the table ID is set explicitly (we've done so here with the
+#' ID value of `"one"`, setting it in the [gt()] function).
 #'
 #' ```r
 #' exibble |>

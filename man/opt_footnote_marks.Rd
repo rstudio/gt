@@ -7,12 +7,21 @@
 opt_footnote_marks(data, marks = "numbers")
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{marks}{Either a character vector of length greater than 1 (that will
-represent the series of marks) or a single keyword that represents a preset
-sequence of marks. The valid keywords are: \code{"numbers"} (for numeric marks),
-\code{"letters"} and \code{"LETTERS"} (for lowercase and uppercase alphabetic marks),
+\verb{obj:<gt_tbl>} // \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{marks}{\emph{Sequence of footnote marks}
+
+\verb{vector<character>} // \emph{default:} \code{"numbers"}
+
+Either a character vector of length greater than 1 (that will represent the
+series of marks) or a single keyword that represents a preset sequence of
+marks. The valid keywords are: \code{"numbers"} (for numeric marks), \code{"letters"}
+and \code{"LETTERS"} (for lowercase and uppercase alphabetic marks),
 \code{"standard"} (for a traditional set of four symbol marks), and \code{"extended"}
 (which adds two more symbols to the standard set).}
 }
@@ -28,11 +37,11 @@ serves as a shortcut for using \code{tab_options(footnotes.marks = {marks})}
 \section{Specification of footnote marks}{
 
 
-We can supply a vector of that will represent the series of marks.
-The series of footnote marks is recycled when its usage goes beyond the
-length of the set. At each cycle, the marks are simply doubled, tripled, and
-so on (e.g., \code{*} -> \verb{**} -> \verb{***}). The option exists for providing keywords
-for certain types of footnote marks. The keywords are:
+We can supply a vector that will represent the series of marks. The series of
+footnote marks is recycled when its usage goes beyond the length of the set.
+At each cycle, the marks are simply doubled, tripled, and so on (e.g., \code{*} ->
+\verb{**} -> \verb{***}). The option exists for providing keywords for certain types of
+footnote marks. The keywords are:
 \itemize{
 \item \code{"numbers"}: numeric marks, they begin from 1 and these marks are not
 subject to recycling behavior
@@ -44,13 +53,19 @@ which has 26 uppercase letters of the Roman alphabet
 \item \code{"extended"}: symbolic marks, extends the standard set by adding two
 more symbols, making six
 }
+
+The symbolic marks are the: (1) Asterisk, (2) Dagger, (3) Double Dagger,
+(4) Section Sign, (5) Double Vertical Line, and (6) Paragraph Sign; the
+\code{"standard"} set has the first four, \code{"extended"} contains all.
 }
 
 \section{Examples}{
 
 
-Use \code{\link{sza}} to create a \strong{gt} table, adding three footnotes. Call
-\code{opt_footnote_marks()} to specify which footnote marks to use.
+Use a summarized version of the \code{\link{sza}} dataset to create a \strong{gt} table,
+adding three footnotes (with three calls of \code{\link[=tab_footnote]{tab_footnote()}}). We can modify
+the footnote marks to use with the \code{opt_footnote_marks()} function. With the
+keyword \code{"standard"} we get four commonly-used typographic marks.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sza |>
   dplyr::filter(latitude == 30) |>

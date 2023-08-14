@@ -11,17 +11,32 @@ cols_align(
 )
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{align}{The alignment type. This can be any of \code{"center"}, \code{"left"}, or
-\code{"right"} for center-, left-, or right-alignment. Alternatively, the
-\code{"auto"} option (the default), will automatically align values in columns
-according to the data type (see the Details section for specifics on which
-alignments are applied).}
+\verb{obj:<gt_tbl>} // \strong{required}
 
-\item{columns}{The columns for which the alignment should be applied. By
-default this is set to \code{everything()} which means that the chosen alignment
-affects all columns.}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{align}{\emph{Alignment type}
+
+\verb{singl-kw:[auto|left|center|right]} // \emph{default:} \code{"auto"}
+
+This can be any of \code{"center"}, \code{"left"}, or \code{"right"} for center-, left-,
+or right-alignment. Alternatively, the \code{"auto"} option (the default), will
+automatically align values in columns according to the data type (see the
+Details section for specifics on which alignments are applied).}
+
+\item{columns}{\emph{Columns to target}
+
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
+
+The columns for which the alignment should be applied. Can either be a
+series of column names provided in \code{\link[=c]{c()}}, a vector of column indices, or a
+select helper function. Examples of select helper functions include
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. By default this is set to \code{\link[=everything]{everything()}}
+which means that the chosen alignment affects all columns.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -74,6 +89,7 @@ data to the left.
 
 \seealso{
 Other column modification functions: 
+\code{\link{cols_add}()},
 \code{\link{cols_align_decimal}()},
 \code{\link{cols_hide}()},
 \code{\link{cols_label_with}()},
@@ -86,6 +102,7 @@ Other column modification functions:
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
 \code{\link{cols_unhide}()},
+\code{\link{cols_units}()},
 \code{\link{cols_width}()}
 }
 \concept{column modification functions}
