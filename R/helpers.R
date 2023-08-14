@@ -323,6 +323,71 @@ pct <- function(x) {
 #' and sections like these describe which arguments support the use of
 #' `from_column()`.
 #'
+#' @section Examples:
+#'
+#' The `from_column()` function can be used in a variety of formatting functions
+#' so that values for common options don't have to be static, they can change in
+#' every row (so long as you have a column of compatible option values). Here's
+#' an example where we have a table of repeating numeric values along with a
+#' column of currency codes. We can format the numbers to currencies with
+#' [fmt_currency()] and use `from_column()` to reference the column of currency
+#' codes, giving us values that are each formatted as having a different
+#' currency.
+#'
+#' ```r
+#' dplyr::tibble(
+#'   amount = rep(30.75, 6),
+#'   curr = c("USD", "EUR", "GBP", "CAD", "AUD", "JPY"),
+#' ) |>
+#'   gt() |>
+#'   fmt_currency(currency = from_column(column = "curr"))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_from_column_1.png")`
+#' }}
+#'
+#' Let's summarize the [`gtcars`] dataset to get a set of rankings of car
+#' manufacturer by country of origin. The `n` column represents the number of
+#' cars a manufacturer has within this dataset and we can use that column as a
+#' way to size the text. We do that in the [tab_style()] call; the
+#' `from_column()` function is used within the [cell_text()] statement to
+#' fashion different font sizes from that `n` column. This is done in
+#' conjunction with the `fn` argument of `from_column()`, which helps to tweak
+#' the values in `n` to get a useful range of font sizes.
+#'
+#' ```r
+#' gtcars |>
+#'   dplyr::select(mfr, ctry_origin) |>
+#'   dplyr::group_by(mfr, ctry_origin) |>
+#'   dplyr::count() |>
+#'   dplyr::ungroup() |>
+#'   dplyr::arrange(ctry_origin) |>
+#'   gt(groupname_col = "ctry_origin") |>
+#'   tab_style(
+#'     style = cell_text(
+#'       size = from_column(
+#'         column = "n",
+#'         fn = function(x) paste0(5 + (x * 3), "px")
+#'       )
+#'     ),
+#'     locations = cells_body()
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(align = "center"),
+#'     locations = cells_row_groups()
+#'   ) |>
+#'   cols_hide(columns = n) |>
+#'   tab_options(column_labels.hidden = TRUE) |>
+#'   opt_all_caps() |>
+#'   opt_vertical_padding(scale = 0.25) |>
+#'   cols_align(align = "center", columns = mfr)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_from_column_2.png")`
+#' }}
+#'
 #' @family helper functions
 #' @section Function ID:
 #' 8-5
