@@ -4121,6 +4121,32 @@ fmt_currency <- function(
 #' `r man_get_image_tag(file = "man_fmt_roman_1.png")`
 #' }}
 #'
+#' Formatting values to Roman numerals can be very useful when combining such
+#' output with row labels (usually through [cols_merge()]). Here's an example
+#' where we take a portion of the [`illness`] dataset and generate some row
+#' labels that combine (1) a row number (in lowercase Roman numerals), (2) the
+#' name of the test, and (3) the measurement units for the test (nicely
+#' formatted by way of [fmt_units()]):
+#'
+#' ```r
+#' illness |>
+#'   dplyr::slice_head(n = 6) |>
+#'   gt(rowname_col = "test") |>
+#'   fmt_units(columns = units) |>
+#'   cols_hide(columns = starts_with("day")) |>
+#'   sub_missing(missing_text = "") |>
+#'   cols_merge_range(col_begin = norm_l, col_end = norm_u) |>
+#'   cols_add(i = 1:6) |>
+#'   fmt_roman(columns = i, case = "lower", pattern = "{x}.") |>
+#'   cols_merge(columns = c(test, i, units), pattern = "{2} {1} ({3})") |>
+#'   cols_label(norm_l = "Normal Range") |>
+#'   tab_stubhead(label = "Test")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_roman_2.png")`
+#' }}
+#'
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-9
