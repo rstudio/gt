@@ -290,6 +290,44 @@ text treatment.
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_4.png" alt="This image of a table was generated from the fourth code example in the `tab_style()` help file." style="width:100\%;">
 }}
+
+The \code{\link[=from_column]{from_column()}} helper function can be used to get values from a column.
+We'll use it in the next example, which begins with a table having a color
+name column and a column with the associated hexadecimal color code. To show
+the color in a separate column, we first create one with \code{\link[=cols_add]{cols_add()}} (
+ensuring that missing values are replaced with \code{""} via \code{\link[=sub_missing]{sub_missing()}}).
+Then, \code{tab_style()} is used to style that column, calling \code{\link[=from_column]{from_column()}} in
+the \code{color} argument of the \code{\link[=cell_fill]{cell_fill()}} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
+  name = c(
+    "red", "green", "blue", "yellow", "orange",
+    "cyan", "purple", "magenta", "lime", "pink"
+  ),
+  hex = c(
+    "#E6194B", "#3CB44B", "#4363D8", "#FFE119", "#F58231",
+    "#42D4F4", "#911EB4", "#F032E6", "#BFEF45", "#FABED4"
+  )
+) |>
+  gt(rowname_col = "name") |>
+  cols_add(color = rep(NA_character_, 10)) |>
+  sub_missing(missing_text = "") |>
+  tab_style(
+    style = cell_fill(color = from_column(column = "hex")),
+    locations = cells_body(columns = color)
+  ) |>
+  tab_style(
+    style = cell_text(font = system_fonts(name = "monospace-code")),
+    locations = cells_body()
+  ) |>
+  opt_all_caps() |>
+  cols_width(everything() ~ px(100)) |>
+  tab_options(table_body.hlines.style = "none")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_5.png" alt="This image of a table was generated from the fifth code example in the `tab_style()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
