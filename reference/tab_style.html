@@ -358,6 +358,66 @@ text treatment.</p>
 <span>    locations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/cells_column_labels.html">cells_column_labels</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="../reference/cells_stubhead.html">cells_stubhead</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_4.png" alt="This image of a table was generated from the fourth code example in the `tab_style()` help file." style="width:100%;"></p>
+<p>The <code><a href="from_column.html">from_column()</a></code> helper function can be used to get values from a column.
+We'll use it in the next example, which begins with a table having a color
+name column and a column with the associated hexadecimal color code. To show
+the color in a separate column, we first create one with <code><a href="cols_add.html">cols_add()</a></code> (
+ensuring that missing values are replaced with <code>""</code> via <code><a href="sub_missing.html">sub_missing()</a></code>).
+Then, <code>tab_style()</code> is used to style that column, calling <code><a href="from_column.html">from_column()</a></code> in
+the <code>color</code> argument of the <code><a href="cell_fill.html">cell_fill()</a></code> function.</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span>  name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"red"</span>, <span class="st">"green"</span>, <span class="st">"blue"</span>, <span class="st">"yellow"</span>, <span class="st">"orange"</span>,</span>
+<span>    <span class="st">"cyan"</span>, <span class="st">"purple"</span>, <span class="st">"magenta"</span>, <span class="st">"lime"</span>, <span class="st">"pink"</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  hex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"#E6194B"</span>, <span class="st">"#3CB44B"</span>, <span class="st">"#4363D8"</span>, <span class="st">"#FFE119"</span>, <span class="st">"#F58231"</span>,</span>
+<span>    <span class="st">"#42D4F4"</span>, <span class="st">"#911EB4"</span>, <span class="st">"#F032E6"</span>, <span class="st">"#BFEF45"</span>, <span class="st">"#FABED4"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"name"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_add.html">cols_add</a></span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="cn">NA_character_</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/sub_missing.html">sub_missing</a></span><span class="op">(</span>missing_text <span class="op">=</span> <span class="st">""</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_fill.html">cell_fill</a></span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="../reference/from_column.html">from_column</a></span><span class="op">(</span>column <span class="op">=</span> <span class="st">"hex"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">color</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_text.html">cell_text</a></span><span class="op">(</span>font <span class="op">=</span> <span class="fu"><a href="../reference/system_fonts.html">system_fonts</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"monospace-code"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/opt_all_caps.html">opt_all_caps</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_width.html">cols_width</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>table_body.hlines.style <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_5.png" alt="This image of a table was generated from the fifth code example in the `tab_style()` help file." style="width:100%;"></p>
+<p>The <code><a href="cell_text.html">cell_text()</a></code> function also allows the use of <code><a href="from_column.html">from_column()</a></code> for many of
+its arguments. Let's take a small portion of data from <code><a href="sp500.html">sp500</a></code> and add an
+up or down arrow based on the values in the <code>open</code> and <code>close</code> columns.
+Within <code><a href="cols_add.html">cols_add()</a></code> we can create a new column (<code>dir</code>) with an expression to
+get either <code>"red"</code> or <code>"green"</code> text from a comparison of the <code>open</code> and
+<code>close</code> values. These values are transformed to up or down arrows with the
+<code><a href="text_case_match.html">text_case_match()</a></code> function, using <strong>fontawesome</strong> icons in the end.
+However, the text values are still present and can be used by <code><a href="cell_text.html">cell_text()</a></code>
+within <code>tab_style()</code>. The <code><a href="from_column.html">from_column()</a></code> helper function makes it possible
+to use the text in the cells of the <code>dir</code> column as <code>color</code> input values.</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">sp500</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">date</span> <span class="op">&gt;</span> <span class="st">"2015-01-01"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">open</span>, <span class="va">close</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"date"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_currency.html">fmt_currency</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">open</span>, <span class="va">close</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_add.html">cols_add</a></span><span class="op">(</span>dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">close</span> <span class="op">&lt;</span> <span class="va">open</span>, <span class="st">"red"</span>, <span class="st">"forestgreen"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_label.html">cols_label</a></span><span class="op">(</span>dir <span class="op">=</span> <span class="st">""</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/text_case_match.html">text_case_match</a></span><span class="op">(</span></span>
+<span>    <span class="st">"red"</span> <span class="op">~</span> <span class="fu">fontawesome</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/fontawesome/reference/fa.html" class="external-link">fa</a></span><span class="op">(</span><span class="st">"arrow-down"</span><span class="op">)</span>,</span>
+<span>    <span class="st">"forestgreen"</span> <span class="op">~</span> <span class="fu">fontawesome</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/fontawesome/reference/fa.html" class="external-link">fa</a></span><span class="op">(</span><span class="st">"arrow-up"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_text.html">cell_text</a></span><span class="op">(</span>color <span class="op">=</span> <span class="fu"><a href="../reference/from_column.html">from_column</a></span><span class="op">(</span><span class="st">"dir"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">dir</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_style_6.png" alt="This image of a table was generated from the sixth code example in the `tab_style()` help file." style="width:100%;"></p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>

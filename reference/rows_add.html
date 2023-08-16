@@ -304,6 +304,47 @@ both the <code>a</code> and <code>b</code> columns. A similar approach was taken
 <code>72.63</code> value to the <code>quantity_x</code> and <code>quantity_y</code> columns though we used the
 <code>starts_with("quantity")</code> expression to get <strong>gt</strong> to resolve those two
 columns.</p>
+<p>You can start with an empty table (i.e., no columns and no rows) and add one
+or more rows to it. In the completely empty table scenario, where you would
+use something like <code><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">dplyr::tibble()</a></code> or <code><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame()</a></code> with <code><a href="gt.html">gt()</a></code>, the first
+<code>rows_add()</code> could have rows of arbitrary width. In other words, you get to
+generate table columns (and rows) with a completely empty table via
+<code>rows_add()</code>. Here's an example of that:</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/rows_add.html">rows_add</a></span><span class="op">(</span></span>
+<span>    msrp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">29.95</span>, <span class="fl">49.95</span>, <span class="fl">79.95</span><span class="op">)</span>,</span>
+<span>    item <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Klax"</span>, <span class="st">"Rez"</span>, <span class="st">"Ys"</span><span class="op">)</span>,</span>
+<span>    type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"X"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/rows_add.html">rows_add</a></span><span class="op">(</span></span>
+<span>    msrp <span class="op">=</span> <span class="fl">14.95</span>,</span>
+<span>    item <span class="op">=</span> <span class="st">"D"</span>,</span>
+<span>    type <span class="op">=</span> <span class="st">"Z"</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rows_add_7.png" alt="This image of a table was generated from the seventh code example in the `rows_add()` help file." style="width:100%;"></p>
+<p>In the above, three columns and three rows were generated. The second usage
+of <code>rows_add()</code> had to use of a subset of those columns (all three were used
+to create a complete, new row).</p>
+<p>We can also start with a virtually empty table: one that has columns but no
+actual rows. With this type of multi-column, zero-row table, one needs to use
+a subset of the columns when generating new rows through <code>rows_add()</code>.</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span>  msrp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">numeric</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>,</span>
+<span>  item <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>,</span>
+<span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">character</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/rows_add.html">rows_add</a></span><span class="op">(</span></span>
+<span>    msrp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">29.95</span>, <span class="fl">49.95</span>, <span class="fl">79.95</span>, <span class="fl">14.95</span><span class="op">)</span>,</span>
+<span>    item <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Klax"</span>, <span class="st">"Rez"</span>, <span class="st">"Ys"</span>, <span class="st">"D"</span><span class="op">)</span>,</span>
+<span>    type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"X"</span>, <span class="st">"Z"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_add.html">cols_add</a></span><span class="op">(</span></span>
+<span>    genre <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"puzzle"</span>, <span class="st">"action"</span>, <span class="st">"RPG"</span>, <span class="st">"adventure"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_currency.html">fmt_currency</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_move_to_end.html">cols_move_to_end</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">msrp</span><span class="op">)</span></span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rows_add_8.png" alt="This image of a table was generated from the eighth code example in the `rows_add()` help file." style="width:100%;"></p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
