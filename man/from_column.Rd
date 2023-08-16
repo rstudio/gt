@@ -79,6 +79,71 @@ and sections like these describe which arguments support the use of
 \code{from_column()}.
 }
 
+\section{Examples}{
+
+
+The \code{from_column()} function can be used in a variety of formatting functions
+so that values for common options don't have to be static, they can change in
+every row (so long as you have a column of compatible option values). Here's
+an example where we have a table of repeating numeric values along with a
+column of currency codes. We can format the numbers to currencies with
+\code{\link[=fmt_currency]{fmt_currency()}} and use \code{from_column()} to reference the column of currency
+codes, giving us values that are each formatted as having a different
+currency.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
+  amount = rep(30.75, 6),
+  curr = c("USD", "EUR", "GBP", "CAD", "AUD", "JPY"),
+) |>
+  gt() |>
+  fmt_currency(currency = from_column(column = "curr"))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_from_column_1.png" alt="This image of a table was generated from the first code example in the `from_column()` help file." style="width:100\%;">
+}}
+
+Let's summarize the \code{\link{gtcars}} dataset to get a set of rankings of car
+manufacturer by country of origin. The \code{n} column represents the number of
+cars a manufacturer has within this dataset and we can use that column as a
+way to size the text. We do that in the \code{\link[=tab_style]{tab_style()}} call; the
+\code{from_column()} function is used within the \code{\link[=cell_text]{cell_text()}} statement to
+fashion different font sizes from that \code{n} column. This is done in
+conjunction with the \code{fn} argument of \code{from_column()}, which helps to tweak
+the values in \code{n} to get a useful range of font sizes.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
+  dplyr::select(mfr, ctry_origin) |>
+  dplyr::group_by(mfr, ctry_origin) |>
+  dplyr::count() |>
+  dplyr::ungroup() |>
+  dplyr::arrange(ctry_origin) |>
+  gt(groupname_col = "ctry_origin") |>
+  tab_style(
+    style = cell_text(
+      size = from_column(
+        column = "n",
+        fn = function(x) paste0(5 + (x * 3), "px")
+      )
+    ),
+    locations = cells_body()
+  ) |>
+  tab_style(
+    style = cell_text(align = "center"),
+    locations = cells_row_groups()
+  ) |>
+  cols_hide(columns = n) |>
+  tab_options(column_labels.hidden = TRUE) |>
+  opt_all_caps() |>
+  opt_vertical_padding(scale = 0.25) |>
+  cols_align(align = "center", columns = mfr)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_from_column_2.png" alt="This image of a table was generated from the second code example in the `from_column()` help file." style="width:100\%;">
+}}
+}
+
 \section{Function ID}{
 
 8-5

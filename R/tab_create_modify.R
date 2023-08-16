@@ -3033,6 +3033,80 @@ tab_caption <- function(
 #' `r man_get_image_tag(file = "man_tab_style_4.png")`
 #' }}
 #'
+#' The [from_column()] helper function can be used to get values from a column.
+#' We'll use it in the next example, which begins with a table having a color
+#' name column and a column with the associated hexadecimal color code. To show
+#' the color in a separate column, we first create one with [cols_add()] (
+#' ensuring that missing values are replaced with `""` via [sub_missing()]).
+#' Then, `tab_style()` is used to style that column, calling [from_column()] in
+#' the `color` argument of the [cell_fill()] function.
+#'
+#' ```r
+#' dplyr::tibble(
+#'   name = c(
+#'     "red", "green", "blue", "yellow", "orange",
+#'     "cyan", "purple", "magenta", "lime", "pink"
+#'   ),
+#'   hex = c(
+#'     "#E6194B", "#3CB44B", "#4363D8", "#FFE119", "#F58231",
+#'     "#42D4F4", "#911EB4", "#F032E6", "#BFEF45", "#FABED4"
+#'   )
+#' ) |>
+#'   gt(rowname_col = "name") |>
+#'   cols_add(color = rep(NA_character_, 10)) |>
+#'   sub_missing(missing_text = "") |>
+#'   tab_style(
+#'     style = cell_fill(color = from_column(column = "hex")),
+#'     locations = cells_body(columns = color)
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(font = system_fonts(name = "monospace-code")),
+#'     locations = cells_body()
+#'   ) |>
+#'   opt_all_caps() |>
+#'   cols_width(everything() ~ px(100)) |>
+#'   tab_options(table_body.hlines.style = "none")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_style_5.png")`
+#' }}
+#'
+#' The [cell_text()] function also allows the use of [from_column()] for many of
+#' its arguments. Let's take a small portion of data from [`sp500`] and add an
+#' up or down arrow based on the values in the `open` and `close` columns.
+#' Within [cols_add()] we can create a new column (`dir`) with an expression to
+#' get either `"red"` or `"green"` text from a comparison of the `open` and
+#' `close` values. These values are transformed to up or down arrows with the
+#' [text_case_match()] function, using **fontawesome** icons in the end.
+#' However, the text values are still present and can be used by [cell_text()]
+#' within `tab_style()`. The [from_column()] helper function makes it possible
+#' to use the text in the cells of the `dir` column as `color` input values.
+#'
+#' ```r
+#' sp500 |>
+#'   dplyr::filter(date > "2015-01-01") |>
+#'   dplyr::arrange(date) |>
+#'   dplyr::slice_head(n = 5) |>
+#'   dplyr::select(date, open, close) |>
+#'   gt(rowname_col = "date") |>
+#'   fmt_currency(columns = c(open, close)) |>
+#'   cols_add(dir = ifelse(close < open, "red", "forestgreen")) |>
+#'   cols_label(dir = "") |>
+#'   text_case_match(
+#'     "red" ~ fontawesome::fa("arrow-down"),
+#'     "forestgreen" ~ fontawesome::fa("arrow-up")
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(color = from_column("dir")),
+#'     locations = cells_body(columns = dir)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_style_6.png")`
+#' }}
+#'
 #' @family part creation/modification functions
 #' @section Function ID:
 #' 2-10

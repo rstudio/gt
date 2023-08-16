@@ -151,6 +151,31 @@ the \code{roman} column to appear as Roman numerals with \code{fmt_roman()}.
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_roman_1.png" alt="This image of a table was generated from the first code example in the `fmt_roman()` help file." style="width:100\%;">
 }}
+
+Formatting values to Roman numerals can be very useful when combining such
+output with row labels (usually through \code{\link[=cols_merge]{cols_merge()}}). Here's an example
+where we take a portion of the \code{\link{illness}} dataset and generate some row
+labels that combine (1) a row number (in lowercase Roman numerals), (2) the
+name of the test, and (3) the measurement units for the test (nicely
+formatted by way of \code{\link[=fmt_units]{fmt_units()}}):
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{illness |>
+  dplyr::slice_head(n = 6) |>
+  gt(rowname_col = "test") |>
+  fmt_units(columns = units) |>
+  cols_hide(columns = starts_with("day")) |>
+  sub_missing(missing_text = "") |>
+  cols_merge_range(col_begin = norm_l, col_end = norm_u) |>
+  cols_add(i = 1:6) |>
+  fmt_roman(columns = i, case = "lower", pattern = "\{x\}.") |>
+  cols_merge(columns = c(test, i, units), pattern = "\{2\} \{1\} (\{3\})") |>
+  cols_label(norm_l = "Normal Range") |>
+  tab_stubhead(label = "Test")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_roman_2.png" alt="This image of a table was generated from the second code example in the `fmt_roman()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{

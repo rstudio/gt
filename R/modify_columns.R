@@ -1767,6 +1767,55 @@ cols_units <- function(
 #' `r man_get_image_tag(file = "man_cols_add_3.png")`
 #' }}
 #'
+#' It's possible to start with an empty table (i.e., no columns and no rows) and
+#' add one or more columns to that. You can, for example, use `dplyr::tibble()`
+#' or `data.frame()` to create a completely empty table. The first `cols_add()`
+#' call for an empty table can have columns of arbitrary length but subsequent
+#' uses of `cols_add()` must adhere to the rule of new columns being the same
+#' length as existing.
+#'
+#' ```r
+#' dplyr::tibble() |>
+#'   gt() |>
+#'   cols_add(
+#'     num = 1:5,
+#'     chr = vec_fmt_spelled_num(1:5)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_add_4.png")`
+#' }}
+#'
+#' Tables can contain no rows, yet have columns. In the following example, we'll
+#' create a zero-row table with three columns (`num`, `chr`, and `ext`) and
+#' perform the same `cols_add()`-based addition of two columns of data. This is
+#' another case where the function allows for arbitrary-length columns (since
+#' always adding zero-length columns is impractical). Furthermore, here we can
+#' reference columns that already exist (`num` and `chr`) and add values to
+#' them.
+#'
+#' ```r
+#' dplyr::tibble(
+#'   num = numeric(0),
+#'   chr = character(0),
+#'   ext = character(0)
+#' ) |>
+#'   gt() |>
+#'   cols_add(
+#'     num = 1:5,
+#'     chr = vec_fmt_spelled_num(1:5)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_add_5.png")`
+#' }}
+#'
+#' We should note that the `ext` column did not receive any values from
+#' `cols_add()` but the table was expanded to having five rows nonetheless. So,
+#' each cell of `ext` was by necessity filled with an `NA` value.
+#'
 #' @family column modification functions
 #' @section Function ID:
 #' 5-7

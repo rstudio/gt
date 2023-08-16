@@ -379,6 +379,57 @@
 #' `r man_get_image_tag(file = "man_fmt_number_3.png")`
 #' }}
 #'
+#' There can be cases where you want to show numbers to a large number of
+#' decimal places but also drop the unnecessary trailing zeros for low-precision
+#' values. Let's take a portion of the [`towny`] dataset and format the
+#' `latitude` and `longitude` columns with `fmt_number()`. We'll have up to 5
+#' digits displayed as decimal values, but we'll also unconditionally drop any
+#' runs of trailing zeros in the decimal part with `drop_trailing_zeros = TRUE`.
+#'
+#' ```r
+#' towny |>
+#'   dplyr::select(name, latitude, longitude) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt() |>
+#'   fmt_number(decimals = 5, drop_trailing_zeros = TRUE) |>
+#'   cols_merge(columns = -name, pattern = "{1}, {2}") |>
+#'   cols_label(
+#'     name ~ "Municipality",
+#'     latitude = "Location"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_number_4.png")`
+#' }}
+#'
+#' Another strategy for dealing with precision of decimals is to have a separate
+#' column of values that specify how many decimal digits to retain. Such a
+#' column can be added via [cols_add()] or it can be part of the input table for
+#' [gt()]. With that column available, it can be referenced in the `decimals`
+#' argument with the [from_column()] helper function. This approach yields a
+#' display of coordinate values that reflects the measurement precision of each
+#' value.
+#'
+#' ```r
+#' towny |>
+#'   dplyr::select(name, latitude, longitude) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt() |>
+#'   cols_add(dec_digits = c(1, 2, 2, 5, 5, 2, 3, 2, 3, 3)) |>
+#'   fmt_number(decimals = from_column(column = "dec_digits")) |>
+#'   cols_merge(columns = -name, pattern = "{1}, {2}") |>
+#'   cols_label(
+#'     name ~ "Municipality",
+#'     latitude = "Location"
+#'   ) |>
+#'   cols_hide(columns = dec_digits)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_number_5.png")`
+#' }}
+#'
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-1
@@ -764,6 +815,55 @@ fmt_number <- function(
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_fmt_integer_1.png")`
+#' }}
+#'
+#' Let's use a modified version of the [`countrypops`] dataset to create a
+#' **gt** table with row labels. We will format all numeric columns with
+#' `fmt_integer()` and scale all values by `1 / 1E6`, giving us integer values
+#' representing millions of people. We can make clear what the values represent
+#' with an informative spanner label via [tab_spanner()].
+#'
+#' ```r
+#' countrypops |>
+#'   dplyr::select(country_code_3, year, population) |>
+#'   dplyr::filter(country_code_3 %in% c("CHN", "IND", "USA", "PAK", "IDN")) |>
+#'   dplyr::filter(year > 1975 & year %% 5 == 0) |>
+#'   tidyr::spread(year, population) |>
+#'   dplyr::arrange(desc(`2015`)) |>
+#'   gt(rowname_col = "country_code_3") |>
+#'   fmt_integer(scale_by = 1 / 1E6) |>
+#'   tab_spanner(label = "Millions of People", columns = everything())
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_integer_2.png")`
+#' }}
+#'
+#' Using a subset of the [`towny`] dataset, we can do interesting things with
+#' integer values. Through [cols_add()] we'll add the `difference` column (which
+#' calculates the difference between 2021 and 2001 populations). All numeric
+#' values will be formatted with a first pass of `fmt_integer()`; a second pass
+#' of `fmt_integer()` focuses on the `difference` column and here we use the
+#' `force_sign = TRUE` option to draw attention to positive and negative
+#' difference values.
+#'
+#' ```r
+#' towny |>
+#'   dplyr::select(name, population_2001, population_2021) |>
+#'   dplyr::slice_tail(n = 10) |>
+#'   gt() |>
+#'   cols_add(difference = population_2021 - population_2001) |>
+#'   fmt_integer() |>
+#'   fmt_integer(columns = difference, force_sign = TRUE) |>
+#'   cols_label_with(fn = function(x) gsub("population_", "", x)) |>
+#'   tab_style(
+#'     style = cell_fill(color = "gray90"),
+#'     locations = cells_body(columns = difference)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_integer_3.png")`
 #' }}
 #'
 #' @family data formatting functions
@@ -3619,6 +3719,27 @@ round_gt <- function(x, digits = 0) {
 #' `r man_get_image_tag(file = "man_fmt_currency_1.png")`
 #' }}
 #'
+#' Let's take a single column from [`exibble`] (`currency`) and format it with a
+#' currency name (this differs from the 3-letter currency code). In this case,
+#' we'll use the `"euro"` currency and set the placement of the symbol to the
+#' right of any value. Additionally, the currency symbol will separated from the
+#' value with a single space character (using `incl_space = TRUE`).
+#'
+#' ```r
+#' exibble |>
+#'   select(currency) |>
+#'   gt() |>
+#'   fmt_currency(
+#'     currency = "euro",
+#'     placement = "right",
+#'     incl_space = TRUE
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_currency_2.png")`
+#' }}
+#'
 #' With the [`pizzaplace`] dataset, let's make a summary table that gets the
 #' number of `"hawaiian"` pizzas sold (and revenue generated) by month. In the
 #' **gt** table, we'll format only the `revenue` column. The `currency` value is
@@ -3648,7 +3769,68 @@ round_gt <- function(x, digits = 0) {
 #' ```
 #'
 #' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_fmt_currency_2.png")`
+#' `r man_get_image_tag(file = "man_fmt_currency_3.png")`
+#' }}
+#'
+#' If supplying a `locale` value to `fmt_currency()`, we can opt use the
+#' locale's assumed currency and not have to supply a `currency` value (doing so
+#' would override the locale's default currency). With a column of locale
+#' values, we can format currency values on a row-by-row basis through the use
+#' of the [from_column()] helper function. Here, we'll reference the `locale`
+#' column in the argument of the same name.
+#'
+#' ```r
+#' dplyr::tibble(
+#'   amount = rep(50.84, 5),
+#'   currency = c("JPY", "USD", "GHS", "KRW", "CNY"),
+#'   locale = c("ja", "en", "ee", "ko", "zh"),
+#' ) |>
+#'   gt() |>
+#'   fmt_currency(
+#'     columns = amount,
+#'     locale = from_column(column = "locale")
+#'   ) |>
+#'   cols_hide(columns = locale)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_currency_4.png")`
+#' }}
+#'
+#' We can similarly use [from_column()] to reference a column that has currency
+#' code values. Here's an example of how to create a simple currency conversion
+#' table. The `curr` column contains the 3-letter currency codes, and that
+#' column is referenced via [from_column()] in the `currency` argument of
+#' `fmt_currency()`.
+#'
+#' ```r
+#' dplyr::tibble(
+#'   flag = c("EU", "GB", "CA", "AU", "JP", "IN"),
+#'   curr = c("EUR", "GBP", "CAD", "AUD", "JPY", "INR"),
+#'   conv = c(
+#'     0.912952, 0.787687, 1.34411,
+#'     1.53927, 144.751, 82.9551
+#'   )
+#' ) |>
+#'   gt() |>
+#'   fmt_currency(
+#'     columns = conv,
+#'     currency = from_column(column = "curr")
+#'   ) |>
+#'   fmt_flag(columns = flag) |>
+#'   cols_merge(columns = c(flag, curr)) |>
+#'   cols_label(
+#'     flag = "Currency",
+#'     conv = "Amount"
+#'   ) |>
+#'   tab_header(
+#'     title = "Conversion of 1 USD to Six Other Currencies",
+#'     subtitle = md("Conversion rates obtained on **Aug 13, 2023**")
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_currency_5.png")`
 #' }}
 #'
 #' @family data formatting functions
@@ -3937,6 +4119,32 @@ fmt_currency <- function(
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_fmt_roman_1.png")`
+#' }}
+#'
+#' Formatting values to Roman numerals can be very useful when combining such
+#' output with row labels (usually through [cols_merge()]). Here's an example
+#' where we take a portion of the [`illness`] dataset and generate some row
+#' labels that combine (1) a row number (in lowercase Roman numerals), (2) the
+#' name of the test, and (3) the measurement units for the test (nicely
+#' formatted by way of [fmt_units()]):
+#'
+#' ```r
+#' illness |>
+#'   dplyr::slice_head(n = 6) |>
+#'   gt(rowname_col = "test") |>
+#'   fmt_units(columns = units) |>
+#'   cols_hide(columns = starts_with("day")) |>
+#'   sub_missing(missing_text = "") |>
+#'   cols_merge_range(col_begin = norm_l, col_end = norm_u) |>
+#'   cols_add(i = 1:6) |>
+#'   fmt_roman(columns = i, case = "lower", pattern = "{x}.") |>
+#'   cols_merge(columns = c(test, i, units), pattern = "{2} {1} ({3})") |>
+#'   cols_label(norm_l = "Normal Range") |>
+#'   tab_stubhead(label = "Test")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_roman_2.png")`
 #' }}
 #'
 #' @family data formatting functions
