@@ -2,7 +2,7 @@ library(tidyverse)
 
 constants <-
   dplyr::tribble(
-    ~name,                                                       ~value,                 ~uncert,              ~sd_value,  ~sd_uncert,  ~units,
+    ~name,                                                       ~value,                 ~uncert,              ~sf_value,  ~sf_uncert,  ~units,
     "alpha particle-electron mass ratio",                        7294.29954142,          0.00000024,           12,         2,           NA,
     "alpha particle mass",                                       6.6446573357e-27,       0.0000000020e-27,     11,         2,           "kg",
     "alpha particle mass energy equivalent",                     5.9719201914e-10,       0.0000000018e-10,     11,         2,           "J",
