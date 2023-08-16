@@ -12,6 +12,8 @@ A tibble with 354 rows and 4 variables:
 \item{uncert}{The uncertainty associated with the value. If \code{NA} then the
 value is seen as an 'exact' value (e.g., an electron volt has the exact value
 of 1.602 176 634 e-19 J).}
+\item{sf_value,sf_uncert}{The number of significant figures associated with
+the value and any uncertainty value.}
 \item{units}{The units associated with the constant.}
 }
 }
@@ -38,11 +40,13 @@ Here is a glimpse at the data available in \code{constants}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::glimpse(constants)
 #> Rows: 354
-#> Columns: 4
-#> $ name   <chr> "alpha particle-electron mass ratio", "alpha particle mass", "a~
-#> $ value  <dbl> 7.294300e+03, 6.644657e-27, 5.971920e-10, 3.727379e+03, 4.00150~
-#> $ uncert <dbl> 2.4e-07, 2.0e-36, 1.8e-19, 1.1e-06, 6.3e-11, 1.2e-12, 2.2e-10, ~
-#> $ units  <chr> NA, "kg", "J", "MeV", "u", "kg mol^-1", NA, NA, "m", "kg", "J",~
+#> Columns: 6
+#> $ name      <chr> "alpha particle-electron mass ratio", "alpha particle mass",~
+#> $ value     <dbl> 7.294300e+03, 6.644657e-27, 5.971920e-10, 3.727379e+03, 4.00~
+#> $ uncert    <dbl> 2.4e-07, 2.0e-36, 1.8e-19, 1.1e-06, 6.3e-11, 1.2e-12, 2.2e-1~
+#> $ sf_value  <dbl> 12, 11, 11, 11, 13, 11, 12, 13, 9, 12, 12, 11, 11, 11, 12, 1~
+#> $ sf_uncert <dbl> 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, ~
+#> $ units     <chr> NA, "kg", "J", "MeV", "u", "kg mol^-1", NA, NA, "m", "kg", "~
 }\if{html}{\out{</div>}}
 }
 
