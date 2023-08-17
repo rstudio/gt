@@ -582,8 +582,8 @@ test_that("The correct color values are obtained when defining a palette", {
     gsub("(background-color: |; color: .*)", "", .) %>%
     expect_equal(
       c(
-        "#808080", "#FF0000", "#FF5A00", "#FF8700", "#F3B000",
-        "#BBD700", "#57F800", "#76BC80", "#746BC7", "#0000FF"
+        "#808080", "#FF0000", "#FF5E00", "#FF8D00", "#EAB800",
+        "#ACDE00", "#0EFF00", "#7AAF8C", "#7368C9", "#0000FF"
       )
     )
 })
@@ -1033,8 +1033,8 @@ test_that("Columns can indirectly apply coloring to other columns", {
   tbl_gt_1 <-
     cp_gt_tbl %>%
     data_color(
-      columns = `2012`,
-      target_columns = `2021`,
+      columns = `2013`,
+      target_columns = `2022`,
       domain = c(2700000, 3400000),
       palette = c("green", "black")
     )
@@ -1046,8 +1046,8 @@ test_that("Columns can indirectly apply coloring to other columns", {
   tbl_gt_2 <-
     cp_gt_tbl %>%
     data_color(
-      columns = `2012`,
-      target_columns = c(`2019`, `2020`, `2021`),
+      columns = `2013`,
+      target_columns = c(`2020`, `2021`, `2022`),
       domain = c(2700000, 3400000),
       palette = c("green", "black")
     )
@@ -1060,8 +1060,8 @@ test_that("Columns can indirectly apply coloring to other columns", {
   tbl_gt_3 <-
     cp_gt_tbl %>%
     data_color(
-      columns = c(`2012`, `2013`, `2014`),
-      target_columns = c(`2019`, `2020`, `2021`),
+      columns = c(`2013`, `2014`, `2015`),
+      target_columns = c(`2020`, `2021`, `2022`),
       domain = c(2700000, 3400000),
       palette = c("green", "black")
     )
@@ -1074,8 +1074,8 @@ test_that("Columns can indirectly apply coloring to other columns", {
   tbl_gt_4 <-
     cp_gt_tbl %>%
     data_color(
-      columns = c(`2012`, `2013`, `2014`),
-      target_columns = c(`2019`, `2020`, `2021`),
+      columns = c(`2013`, `2014`, `2015`),
+      target_columns = c(`2020`, `2021`, `2022`),
       domain = c(2700000, 3400000),
       palette = c("green", "black"),
       reverse = TRUE
