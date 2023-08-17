@@ -7,6 +7,7 @@
 vec_fmt_scientific(
   x,
   decimals = 2,
+  n_sigfig = NULL,
   drop_trailing_zeros = FALSE,
   drop_trailing_dec_mark = TRUE,
   scale_by = 1,
@@ -38,6 +39,17 @@ it would result in \code{"2"}. With \code{4} decimal places, the formatted value
 becomes \code{"2.3400"}. The trailing zeros can be removed with
 \code{drop_trailing_zeros = TRUE}. If you always need \code{decimals = 0}, the
 \code{\link[=fmt_integer]{fmt_integer()}} function should be considered.}
+
+\item{n_sigfig}{\emph{Number of significant figures}
+
+\code{scalar<numeric|integer>(val>=1)} // \emph{default:} \code{NULL} (\code{optional})
+
+A option to format numbers to \emph{n} significant figures. By default, this is
+\code{NULL} and thus number values will be formatted according to the number of
+decimal places set via \code{decimals}. If opting to format according to the
+rules of significant figures, \code{n_sigfig} must be a number greater than or
+equal to \code{1}. Any values passed to the \code{decimals} and \code{drop_trailing_zeros}
+arguments will be ignored.}
 
 \item{drop_trailing_zeros}{\emph{Drop any trailing zeros}
 
