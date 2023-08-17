@@ -2,36 +2,36 @@ test_that("The different removal functions work correctly", {
 
   # Generate a table that will be used to check the effect of removals
   gt_tbl <-
-    exibble |>
-    gt(rowname_col = "row", groupname_col = "group") |>
+    exibble %>%
+    gt(rowname_col = "row", groupname_col = "group") %>%
     summary_rows(
       groups = "grp_a",
       columns = c(num, currency),
       fns = c("min", "max")
-    ) |>
+    ) %>%
     grand_summary_rows(
       columns = currency,
       fns = total ~ sum(., na.rm = TRUE)
-    ) |>
+    ) %>%
     tab_footnote(
       footnote = "This is a footnote.",
       locations = cells_body(columns = 1, rows = 1)
-    ) |>
+    ) %>%
     tab_footnote(
       footnote = "This is a second footnote.",
       locations = cells_body(columns = 1, rows = 2)
-    ) |>
-    tab_source_note(source_note = "This is a source note.") |>
-    tab_source_note(source_note = "This is a second source note.") |>
+    ) %>%
+    tab_source_note(source_note = "This is a source note.") %>%
+    tab_source_note(source_note = "This is a second source note.") %>%
     tab_header(
       title = "The title of the table",
       subtitle = "The table's subtitle"
-    ) |>
-    tab_caption(caption = "This is a caption") |>
-    tab_spanner(label = "Date and Time", columns = c(date, time, datetime)) |>
-    tab_spanner(label = "Numbers", columns = c(num, currency), gather = FALSE) |>
-    tab_spanner(label = "Words", columns = c(char, fctr)) |>
-    tab_spanner(label = "Grand Spanner", columns = everything()) |>
+    ) %>%
+    tab_caption(caption = "This is a caption") %>%
+    tab_spanner(label = "Date and Time", columns = c(date, time, datetime)) %>%
+    tab_spanner(label = "Numbers", columns = c(num, currency), gather = FALSE) %>%
+    tab_spanner(label = "Words", columns = c(char, fctr)) %>%
+    tab_spanner(label = "Grand Spanner", columns = everything()) %>%
     tab_stubhead(label = "A Stubhead Label")
 
   #

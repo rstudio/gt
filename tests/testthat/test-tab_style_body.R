@@ -2,11 +2,11 @@ test_that("The `tab_style_body()` function works correctly", {
 
   # Generate a table that will be used in checks of body styling
   gt_tbl <-
-    sp500 |>
-    dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") |>
-    dplyr::arrange(date) |>
-    dplyr::mutate(week = paste0("W", strftime(date, format = "%V"))) |>
-    dplyr::select(-adj_close, -volume) |>
+    sp500 %>%
+    dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") %>%
+    dplyr::arrange(date) %>%
+    dplyr::mutate(week = paste0("W", strftime(date, format = "%V"))) %>%
+    dplyr::select(-adj_close, -volume) %>%
     gt(
       rowname_col = "date",
       groupname_col = "week"
@@ -17,7 +17,7 @@ test_that("The `tab_style_body()` function works correctly", {
   #
 
   gt_tbl_2 <-
-    gt_tbl |>
+    gt_tbl %>%
     tab_style_body(
       style = cell_fill(color = "orange"),
       values = c(2046.13, 2028.26, 2018.40, 1988.12, 2030.25)
@@ -26,7 +26,7 @@ test_that("The `tab_style_body()` function works correctly", {
   gt_tbl_2 %>% render_as_html() %>% expect_snapshot()
 
   gt_tbl_3 <-
-    gt_tbl |>
+    gt_tbl %>%
     tab_style_body(
       style = list(
         cell_text(font = google_font("Inter"), color = "white"),
@@ -47,7 +47,7 @@ test_that("The `tab_style_body()` function works correctly", {
   #
 
   gt_tbl_4 <-
-    gt_tbl |>
+    gt_tbl %>%
     tab_style_body(
       style = cell_fill(color = "orange"),
       values = c(1988.12, 2030.25),
@@ -57,7 +57,7 @@ test_that("The `tab_style_body()` function works correctly", {
   gt_tbl_4 %>% render_as_html() %>% expect_snapshot()
 
   gt_tbl_5 <-
-    gt_tbl |>
+    gt_tbl %>%
     tab_style_body(
       style = cell_fill(color = "orange"),
       values = c(1988.12, 2030.25),
@@ -67,12 +67,12 @@ test_that("The `tab_style_body()` function works correctly", {
   gt_tbl_5 %>% render_as_html() %>% expect_snapshot()
 
   gt_tbl_6 <-
-    gt_tbl |>
+    gt_tbl %>%
     tab_style_body(
       style = cell_fill(color = "orange"),
       values = c(1988.12, 2030.25),
       targets = "column"
-    ) |>
+    ) %>%
     tab_style_body(
       style = cell_fill(color = "lightblue"),
       values = c(1988.12, 2030.25),
@@ -82,12 +82,12 @@ test_that("The `tab_style_body()` function works correctly", {
   gt_tbl_6 %>% render_as_html() %>% expect_snapshot()
 
   gt_tbl_7 <-
-    gt_tbl |>
+    gt_tbl %>%
     tab_style_body(
       style = cell_fill(color = "lightblue"),
       values = c(1988.12, 2030.25),
       targets = "row"
-    ) |>
+    ) %>%
     tab_style_body(
       style = cell_fill(color = "orange"),
       values = c(1988.12, 2030.25),
@@ -97,7 +97,7 @@ test_that("The `tab_style_body()` function works correctly", {
   gt_tbl_7 %>% render_as_html() %>% expect_snapshot()
 
   gt_tbl_8 <-
-    gt_tbl |>
+    gt_tbl %>%
     tab_style_body(
       style = cell_fill(color = "yellow"),
       values = c(1988.12, 2030.25),
@@ -111,7 +111,7 @@ test_that("The `tab_style_body()` function works correctly", {
   #
 
   gt_tbl_9 <-
-    gt_tbl |>
+    gt_tbl %>%
     tab_style_body(
       style = cell_fill(color = "yellow"),
       values = c(1988.12, 2030.25),
@@ -122,7 +122,7 @@ test_that("The `tab_style_body()` function works correctly", {
   gt_tbl_9 %>% render_as_html() %>% expect_snapshot()
 
   gt_tbl_10 <-
-    gt_tbl |>
+    gt_tbl %>%
     tab_style_body(
       style = cell_fill(color = "yellow"),
       values = c(1988.12, 2030.25),
@@ -133,7 +133,7 @@ test_that("The `tab_style_body()` function works correctly", {
   gt_tbl_10 %>% render_as_html() %>% expect_snapshot()
 
   gt_tbl_11 <-
-    gt_tbl |>
+    gt_tbl %>%
     tab_style_body(
       style = cell_fill(color = "yellow"),
       values = c(1988.12, 2030.25),
@@ -144,7 +144,7 @@ test_that("The `tab_style_body()` function works correctly", {
   gt_tbl_11 %>% render_as_html() %>% expect_snapshot()
 
   gt_tbl_12 <-
-    gt_tbl |>
+    gt_tbl %>%
     tab_style_body(
       style = cell_fill(color = "yellow"),
       values = c(1988.12, 2030.25),
@@ -156,7 +156,7 @@ test_that("The `tab_style_body()` function works correctly", {
 
   # Generate an alternate table that will be used in checks of body styling
   gt_tbl_alt <-
-    exibble |>
+    exibble %>%
     gt(rowname_col = "row", groupname_col = "group")
 
   #
@@ -164,7 +164,7 @@ test_that("The `tab_style_body()` function works correctly", {
   #
 
   gt_tbl_13 <-
-    gt_tbl_alt |>
+    gt_tbl_alt %>%
     tab_style_body(
       style = cell_fill(color = "yellow"),
       pattern = "ne|na"
@@ -173,7 +173,7 @@ test_that("The `tab_style_body()` function works correctly", {
   gt_tbl_13 %>% render_as_html() %>% expect_snapshot()
 
   gt_tbl_14 <-
-    gt_tbl_alt |>
+    gt_tbl_alt %>%
     tab_style_body(
       style = cell_fill(color = "lightgreen"),
       pattern = "2015-01-15"
@@ -182,7 +182,7 @@ test_that("The `tab_style_body()` function works correctly", {
   gt_tbl_14 %>% render_as_html() %>% expect_snapshot()
 
   gt_tbl_15 <-
-    gt_tbl_alt |>
+    gt_tbl_alt %>%
     tab_style_body(
       style = cell_fill(color = "lightgreen"),
       pattern = "a$"
@@ -195,7 +195,7 @@ test_that("The `tab_style_body()` function works correctly", {
   #
 
   gt_tbl_16 <-
-    gt_tbl_alt |>
+    gt_tbl_alt %>%
     tab_style_body(
       columns = where(is.numeric),
       style = cell_fill(color = "#FF8AF3"),

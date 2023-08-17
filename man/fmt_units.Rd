@@ -174,14 +174,14 @@ The \code{\link{constants}} dataset contains values for hundreds of fundamental
 physical constants. We'll take a subset of values that have some molar basis
 and generate a \strong{gt} table from that. Like the \code{\link{illness}} dataset, this one
 has a \code{units} column so, again, the \code{fmt_units()} function will be used to
-format those units. Here, the preference preference in units typesetting
-was for positive and negative exponents (e.g., not \code{"<unit_1> / <unit_2>"}
+format those units. Here, the preference for typesetting measurement units is
+to have positive and negative exponents (e.g., not \code{"<unit_1> / <unit_2>"}
 but rather \code{"<unit_1> <unit_2>^-1"}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{constants |>
   dplyr::filter(grepl("molar", name)) |>
   gt() |>
-  cols_hide(columns = uncert) |>
+  cols_hide(columns = c(uncert, starts_with("sf"))) |>
   fmt_units(columns = units) |>
   fmt_scientific(columns = value, decimals = 3) |>
   tab_header(title = "Physical Constants Having a Molar Basis") |>

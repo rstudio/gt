@@ -22,7 +22,7 @@
 #------------------------------------------------------------------------------#
 
 
-#' Yearly populations of countries from 1960 to 2021
+#' Yearly populations of countries from 1960 to 2022
 #'
 #' @description
 #'
@@ -30,10 +30,10 @@
 #' population is based on counts of all residents regardless of legal status or
 #' citizenship. Country identifiers include the English-language country names,
 #' and the 2- and 3-letter ISO 3166-1 country codes. Each row contains a
-#' `population` value for a given `year` (from 1960 to 2021). Any `NA` values
+#' `population` value for a given `year` (from 1960 to 2022). Any `NA` values
 #' for `populations` indicate the non-existence of the entity during that year.
 #'
-#' @format A tibble with 13,330 rows and 5 variables:
+#' @format A tibble with 13,545 rows and 5 variables:
 #' \describe{
 #' \item{country_name}{The name of the country.}
 #' \item{country_code_2, country_code_3}{The 2- and 3-letter ISO 3166-1 country
@@ -588,6 +588,8 @@
 #' \item{uncert}{The uncertainty associated with the value. If `NA` then the
 #' value is seen as an 'exact' value (e.g., an electron volt has the exact value
 #' of 1.602 176 634 e-19 J).}
+#' \item{sf_value,sf_uncert}{The number of significant figures associated with
+#' the value and any uncertainty value.}
 #' \item{units}{The units associated with the constant.}
 #' }
 #'
