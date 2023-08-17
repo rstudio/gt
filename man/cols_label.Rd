@@ -125,14 +125,14 @@ fully or partially italicized/emboldened by surrounding text with \code{"*"} or
 
 
 Let's use a portion of the \code{\link{countrypops}} dataset to create a \strong{gt} table.
-Relabel all the table's columns with the \code{cols_label()} function to improve
-its presentation. In this simple case we are supplying the name of the column
-on the left-hand side, and the label text on the right-hand side.
+We can relabel all the table's columns with the \code{cols_label()} function to
+improve its presentation. In this simple case we are supplying the name of
+the column on the left-hand side, and the label text on the right-hand side.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>
-  dplyr::filter(country_name == "Mongolia") |>
-  tail(5) |>
+  dplyr::filter(country_name == "Uganda") |>
+  dplyr::slice_tail(n = 5) |>
   gt() |>
   cols_label(
     country_name = "Name",
@@ -152,8 +152,8 @@ a \code{~} between the column name and the label text.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>
-  dplyr::filter(country_name == "Mongolia") |>
-  tail(5) |>
+  dplyr::filter(country_name == "Uganda") |>
+  dplyr::slice_tail(n = 5) |>
   gt() |>
   cols_label(
     country_name = md("**Name**"),
@@ -270,8 +270,8 @@ are in a format where the units are included within \code{"{{"}/\code{"}}"}, so,
 use \code{cols_label()} with the \code{.process_units = TRUE} option to register the
 measurement units. In addition to this, because there is a \verb{<br>} included
 (for a line break), we should use the \code{.fn} option and provide the \code{\link[=md]{md()}}
-helper function (as a bare function name). This ensures that any linebreaks
-do materialize.
+helper function (as a bare function name). This ensures that any line breaks
+will materialize.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{illness |>
   dplyr::mutate(test = paste0(test, ",<br>\{\{", units, "\}\}")) |>
