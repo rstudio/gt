@@ -1136,11 +1136,12 @@ fmt_integer <- function(
 #'
 #' @section Examples:
 #'
-#' Use the [`exibble`] dataset to create a **gt** table. Format the `num` column
-#' as partially numeric and partially in scientific notation. This is done with
-#' two separate calls of [fmt_number()] and `fmt_scientific()`. We'll use the
-#' expressions `num > 500` and `num <= 500` in the functions' respective `rows`
-#' arguments.
+#' Let's use the [`exibble`] dataset to create a simple **gt** table. We'll
+#' elect to the `num` column as partially numeric and partially in scientific
+#' notation. This is done with two separate calls of [fmt_number()] and
+#' `fmt_scientific()`. We'll use the expressions `num > 500` and `num <= 500` in
+#' the functions' respective `rows` arguments to target formatting to specific
+#' cells.
 #'
 #' ```r
 #' exibble |>
@@ -1161,6 +1162,37 @@ fmt_integer <- function(
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_fmt_scientific_1.png")`
+#' }}
+#'
+#' The [`constants`] table contains a plethora of data on the fundamental
+#' physical constant and most values (in the units used) are either very small
+#' or very large, so scientific formatting is suitable. The values differ in the
+#' degree of measurement precision and separate columns (`sf_value` and
+#' `sf_uncert`) contain the exact number of significant figures for each
+#' measurement value and the associated uncertainty value. We can use the
+#' `n_sigfig` argument of `fmt_scientific()` in conjunction with the
+#' [from_column()] helper to get the correct number of significant digits for
+#' each value.
+#'
+#' ```r
+#' constants |>
+#'   dplyr::filter(grepl("Planck", name)) |>
+#'   gt() |>
+#'   fmt_scientific(
+#'     columns = value,
+#'     n_sigfig = from_column(column = "sf_value")
+#'   ) |>
+#'   fmt_scientific(
+#'     columns = uncert,
+#'     n_sigfig = from_column(column = "sf_uncert")
+#'   ) |>
+#'   cols_hide(columns = starts_with("sf")) |>
+#'   fmt_units(columns = units) |>
+#'   sub_missing(missing_text = "")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_scientific_2.png")`
 #' }}
 #'
 #' @family data formatting functions
