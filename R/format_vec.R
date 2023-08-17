@@ -618,6 +618,7 @@ vec_fmt_integer <- function(
 vec_fmt_scientific <- function(
     x,
     decimals = 2,
+    n_sigfig = NULL,
     drop_trailing_zeros = FALSE,
     drop_trailing_dec_mark = TRUE,
     scale_by = 1.0,
@@ -654,6 +655,7 @@ vec_fmt_scientific <- function(
       columns = "x",
       rows = everything(),
       decimals = decimals,
+      n_sigfig = n_sigfig,
       drop_trailing_zeros = drop_trailing_zeros,
       drop_trailing_dec_mark = drop_trailing_dec_mark,
       scale_by = scale_by,
