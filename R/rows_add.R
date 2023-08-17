@@ -36,14 +36,14 @@
 #'
 #' @param .data *The gt table data object*
 #'
-#'   `obj:<gt_tbl>` --- **required**
+#'   `obj:<gt_tbl>` // **required**
 #'
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
 #' @param ... *Cell data assignments*
 #'
-#'   `<multiple expressions>` --- (or, use `.list`)
+#'   `<multiple expressions>` // (or, use `.list`)
 #'
 #'   Expressions for the assignment of cell values to the new rows by column
 #'   name in `.data`. Name-value pairs, in the form of
@@ -59,13 +59,13 @@
 #'
 #' @param .list *Alternative to `...`*
 #'
-#'   `<list of multiple expressions>` --- (or, use `...`)
+#'   `<list of multiple expressions>` // (or, use `...`)
 #'
 #'   Allows for the use of a list as an input alternative to `...`.
 #'
 #' @param .before,.after *Row used as anchor*
 #'
-#'   `<row-targeting expression>` --- *default:* `NULL` (`optional`)
+#'   `<row-targeting expression>` // *default:* `NULL` (`optional`)
 #'
 #'   A single row-resolving expression or row index an be given to either
 #'   `.before` or `.after`. The row specifies where the new rows should be
@@ -79,7 +79,7 @@
 #'
 #' @param .n_empty *Number of empty rows to add*
 #'
-#'   `scalar<numeric|integer>(val>=0)` --- *default:* `NULL` (`optional`)
+#'   `scalar<numeric|integer>(val>=0)` // *default:* `NULL` (`optional`)
 #'
 #'   An option to add empty rows in lieu of rows containing data that would
 #'   otherwise be supplied to `...` or `.list`. If the option is taken, provide
@@ -89,7 +89,7 @@
 #'
 #' @section Targeting the row for insertion with `.before` or `.after`:
 #'
-#' The targeting of a rows for insertion is done through the `.before` or
+#' The targeting of a row for insertion is done through the `.before` or
 #' `.after` arguments (only one of these options should be be used). This can be
 #' done in a variety of ways. If a stub is present, then we potentially have row
 #' identifiers. This is the ideal method to use for establishing a row target.
@@ -98,8 +98,8 @@
 #' must correspond to the row numbers of the input data (the indices won't
 #' necessarily match those of rearranged rows if row groups are present). One
 #' more type of expression is possible, an expression that takes column values
-#' (can involve any of the available columns in the table) and returns a
-#' logical vector.
+#' (can involve any of the available columns in the table) and returns a logical
+#' vector.
 #'
 #' @section Examples:
 #'
@@ -278,6 +278,62 @@
 #' `starts_with("quantity")` expression to get **gt** to resolve those two
 #' columns.
 #'
+#' You can start with an empty table (i.e., no columns and no rows) and add one
+#' or more rows to it. In the completely empty table scenario, where you would
+#' use something like `dplyr::tibble()` or `data.frame()` with [gt()], the first
+#' `rows_add()` could have rows of arbitrary width. In other words, you get to
+#' generate table columns (and rows) with a completely empty table via
+#' `rows_add()`. Here's an example of that:
+#'
+#' ```r
+#' gt(dplyr::tibble()) |>
+#'   rows_add(
+#'     msrp = c(29.95, 49.95, 79.95),
+#'     item = c("Klax", "Rez", "Ys"),
+#'     type = c("A", "B", "X")
+#'   ) |>
+#'   rows_add(
+#'     msrp = 14.95,
+#'     item = "D",
+#'     type = "Z"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_rows_add_7.png")`
+#' }}
+#'
+#' In the above, three columns and three rows were generated. The second usage
+#' of `rows_add()` had to use of a subset of those columns (all three were used
+#' to create a complete, new row).
+#'
+#' We can also start with a virtually empty table: one that has columns but no
+#' actual rows. With this type of multi-column, zero-row table, one needs to use
+#' a subset of the columns when generating new rows through `rows_add()`.
+#'
+#' ```r
+#' dplyr::tibble(
+#'   msrp = numeric(0),
+#'   item = character(0),
+#'   type = character(0)
+#' ) |>
+#'   gt() |>
+#'   rows_add(
+#'     msrp = c(29.95, 49.95, 79.95, 14.95),
+#'     item = c("Klax", "Rez", "Ys", "D"),
+#'     type = c("A", "B", "X", "Z")
+#'   ) |>
+#'   cols_add(
+#'     genre = c("puzzle", "action", "RPG", "adventure")
+#'   ) |>
+#'   fmt_currency() |>
+#'   cols_move_to_end(columns = msrp)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_rows_add_8.png")`
+#' }}
+#'
 #' @family row addition/modification functions
 #' @section Function ID:
 #' 6-4
@@ -307,8 +363,21 @@ rows_add <- function(
     return(.data)
   }
 
-  # Get the column names from the internal dataset
+  # Get the internal dataset and a vector of its column names
   data_tbl <- dt_data_get(data = .data)
+  data_tbl_columns <- colnames(data_tbl)
+
+  #
+  # Special case where data table has no columns (and no rows); here, we allow
+  # for one or more rows to be added with an arbitrary number of columns
+  #
+
+  if (nrow(data_tbl) < 1 && length(data_tbl_columns) < 1) {
+
+    .data <- cols_add(.data = .data, ...)
+
+    return(.data)
+  }
 
   if (!is.null(.n_empty)) {
 
@@ -451,6 +520,27 @@ rows_add <- function(
   # Stop function if expressions are given to both `.before` and `.after`
   if (!is.null(resolved_rows_before_idx) && !is.null(resolved_rows_after_idx)) {
     cli::cli_abort("Expressions cannot be given to both `.before` and `.after`.")
+  }
+
+  #
+  # Special case where all components of `row_data_list` are empty (have
+  # zero length); in this case we need to return the data unchanged
+  #
+
+  row_data_list_empty <-
+    all(
+      vapply(
+        seq_along(row_data_list),
+        FUN.VALUE = logical(1),
+        USE.NAMES = FALSE,
+        FUN = function(x) {
+          length(row_data_list[[x]]) < 1
+        }
+      )
+    )
+
+  if (row_data_list_empty) {
+    return(.data)
   }
 
   dt_data_add_rows(

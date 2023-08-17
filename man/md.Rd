@@ -9,7 +9,7 @@ md(text)
 \arguments{
 \item{text}{\emph{Markdown text}
 
-\verb{scalar<character>} --- \strong{required}
+\verb{scalar<character>} // \strong{required}
 
 The text that is understood to contain Markdown formatting.}
 }
@@ -18,11 +18,13 @@ A character object of class \code{from_markdown}. It's tagged as being
 Markdown text and it will undergo conversion to the desired output context.
 }
 \description{
-Markdown! It's a wonderful thing. We can use it in certain places (e.g.,
-footnotes, source notes, the table title, etc.) and expect it to render to
-HTML as Markdown does. There is the \code{\link[=html]{html()}} helper that allows you to ferry
-in HTML but this function \code{md()}... it's almost like a two-for-one deal (you
-get to use Markdown plus any HTML fragments \emph{at the same time}).
+Markdown text can be used in certain places in a \strong{gt} table, and this is
+wherever new text is defined (e.g., footnotes, source notes, the table title,
+etc.). Using Markdown is advantageous for styling text since it will be
+rendered correctly to the the output format of the \strong{gt} table. There is
+also the \code{\link[=html]{html()}} helper that allows you use HTML exclusively (for tables
+expressly meant for HTML output) but \code{md()} allows for both; you get to use
+Markdown plus any HTML fragments at the same time.
 }
 \section{Examples}{
 
@@ -73,7 +75,9 @@ Other helper functions:
 \code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
+\code{\link{define_units}()},
 \code{\link{escape_latex}()},
+\code{\link{from_column}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},

@@ -19,14 +19,14 @@ summary_rows(
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{groups}{\emph{Specification of row group IDs}
 
-\verb{<row-group-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<row-group-targeting expression>} // \emph{default:} \code{everything()}
 
 The row groups to which targeting operations are constrained. Can either be
 a series of row group ID values provided in \code{\link[=c]{c()}} or a select helper
@@ -37,7 +37,7 @@ all available groups will obtain summary rows.}
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 The columns for which the summaries should be calculated. Can either
 be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,
@@ -71,14 +71,14 @@ Optionally, the LHS could contain a group-targeting expression (e.g.,
 
 \item{side}{\emph{Side used for placement of summary rows}
 
-\verb{singl-kw:[bottom|top]} --- \emph{default:} \code{"bottom"}
+\verb{singl-kw:[bottom|top]} // \emph{default:} \code{"bottom"}
 
 Should the summary rows be placed at the \code{"bottom"} (the default) or the
 \code{"top"} of the row group?}
 
 \item{missing_text}{\emph{Replacement text for \code{NA} values}
 
-\verb{scalar<character>} --- \emph{default:} \code{"---"}
+\verb{scalar<character>} // \emph{default:} \code{"---"}
 
 The text to be used in place of \code{NA} values in summary cells with no data
 outputs.}

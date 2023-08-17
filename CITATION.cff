@@ -3,7 +3,7 @@ message: 'If you wish to cite the "gt" package use:'
 type: software
 license: MIT
 title: 'gt: Easily Create Presentation-Ready Display Tables'
-version: 0.8.0
+version: 0.9.0
 abstract: Build display tables from tabular data with an easy-to-use set of functions.
   With its progressive approach, we can construct display tables with a cohesive set
   of table parts. Table values can be formatted using any of the included formatting
@@ -26,6 +26,10 @@ authors:
   given-names: Ellis
   email: ellis.h.hughes@gsk.com
   orcid: https://orcid.org/0000-0003-0637-4436
+- family-names: Lauer
+  given-names: Alexandra
+  email: alexandralauer1@gmail.com
+  orcid: https://orcid.org/0000-0002-4191-6301
 - family-names: Seo
   given-names: JooYoung
   email: jseo1005@illinois.edu
@@ -36,5 +40,5 @@ url: https://gt.rstudio.com/
 contact:
 - family-names: Iannone
   given-names: Richard
-  email: posit.co
+  email: rich@posit.co
   orcid: https://orcid.org/0000-0003-3925-190X

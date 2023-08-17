@@ -9,7 +9,7 @@ gt_output(outputId)
 \arguments{
 \item{outputId}{\emph{Shiny output ID}
 
-\verb{scalar<character>} --- \strong{required}
+\verb{scalar<character>} // \strong{required}
 
 An output variable from which to read the table.}
 }

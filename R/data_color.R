@@ -69,7 +69,7 @@
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` --- *default:* `everything()`
+#'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns to which cell data color operations are constrained. Can either
 #'   be a series of column names provided in [c()], a vector of column indices,
@@ -79,7 +79,7 @@
 #'
 #' @param rows *Rows to target*
 #'
-#'   `<row-targeting expression>` --- *default:* `everything()`
+#'   `<row-targeting expression>` // *default:* `everything()`
 #'
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   form a constraint for cell data color operations. The default
@@ -93,7 +93,7 @@
 #'
 #' @param direction *Color computation direction*
 #'
-#'   `singl-kw:[column|row]` --- *default:* `"column"`
+#'   `singl-kw:[column|row]` // *default:* `"column"`
 #'
 #'   Should the color computations be performed column-wise or row-wise? By
 #'   default this is set with the `"column"` keyword and colors will be applied
@@ -102,7 +102,7 @@
 #'
 #' @param target_columns *Indirect columns to target*
 #'
-#'   `<row-targeting expression>` --- *default:* `NULL` `optional`
+#'   `<row-targeting expression>` // *default:* `NULL` `optional`
 #'
 #'   For indirect column coloring treatments, we can supply the columns that
 #'   will receive the styling. The necessary precondition is that we must use
@@ -113,7 +113,7 @@
 #'
 #' @param method *Color computation method*
 #'
-#'   `singl-kw:[auto|numeric|bin|quantile|factor]` --- *default:* `"auto"`
+#'   `singl-kw:[auto|numeric|bin|quantile|factor]` // *default:* `"auto"`
 #'
 #'   A method for computing color based on the data within body cells. Can be
 #'   `"auto"` (the default), `"numeric"`, `"bin"`, `"quantile"`, or `"factor"`.
@@ -122,7 +122,7 @@
 #'
 #' @param palette *Color palette*
 #'
-#'   `vector<character>` --- *default:* `NULL` (`optional`)
+#'   `vector<character>` // *default:* `NULL` (`optional`)
 #'
 #'   A vector of color names, the name of an **RColorBrewer** palette, the name
 #'   of a **viridis** palette, or a discrete palette accessible from the
@@ -135,7 +135,7 @@
 #'
 #' @param domain *Value domain*
 #'
-#'   `vector<numeric|integer|character>` --- *default:* `NULL` (`optional`)
+#'   `vector<numeric|integer|character>` // *default:* `NULL` (`optional`)
 #'
 #'   The possible values that can be mapped. For the `"numeric"` and `"bin"`
 #'   methods, this can be a numeric range specified with a length of two vector.
@@ -146,7 +146,7 @@
 #'
 #' @param bins *Specification of bin number*
 #'
-#'   `scalar<numeric|integer>` --- *default:* `8`
+#'   `scalar<numeric|integer>` // *default:* `8`
 #'
 #'   For `method = "bin"` this can either be a numeric vector of two or more
 #'   unique cut points, or, a single numeric value (greater than or equal to
@@ -155,14 +155,14 @@
 #'
 #' @param quantiles *Specification of quantile number*
 #'
-#'   `scalar<numeric|integer>` --- *default:* `4`
+#'   `scalar<numeric|integer>` // *default:* `4`
 #'
 #'   For `method = "quantile"` this is the number of equal-size quantiles to
 #'   use. By default, this is set to `4`.
 #'
 #' @param levels *Specification of factor levels*
 #'
-#'   `vector<character>` --- *default:* `NULL` (`optional`)
+#'   `vector<character>` // *default:* `NULL` (`optional`)
 #'
 #'   For `method = "factor"` this allows for an alternate way of specifying
 #'   levels. If anything is provided here then any value supplied to `domain`
@@ -170,7 +170,7 @@
 #'
 #' @param ordered *Use an ordered factor*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   For `method = "factor"`, setting this to `TRUE` means that the vector
 #'   supplied to `domain` will be treated as being in the correct order if that
@@ -178,7 +178,7 @@
 #'
 #' @param na_color *Default color for `NA` values*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   The color to use for missing values. By default (with `na_color = NULL`),
 #'   the color gray (`"#808080"`) will be used. This option has no effect if
@@ -186,7 +186,7 @@
 #'
 #' @param alpha *Transparency value*
 #'
-#'   `scalar<numeric|integer>(0>=val>=1)` --- *default:* `NULL` (`optional`)
+#'   `scalar<numeric|integer>(0>=val>=1)` // *default:* `NULL` (`optional`)
 #'
 #'   An optional, fixed alpha transparency value that will be applied to all of
 #'   the `colors` provided (regardless of whether a color palette was directly
@@ -194,7 +194,7 @@
 #'
 #' @param reverse *Reverse order of computed colors*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   Should the colors computed operate in the reverse order? If `TRUE` then
 #'   colors that normally change from red to blue will change in the opposite
@@ -202,7 +202,7 @@
 #'
 #' @param fn *Color-mapping function*
 #'
-#'   `function` --- *default:* `NULL` (`optional`)
+#'   `function` // *default:* `NULL` (`optional`)
 #'
 #'   A color-mapping function. The function should be able to take a vector of
 #'   data values as input and return an equal-length vector of color values. The
@@ -213,7 +213,7 @@
 #'
 #' @param apply_to *How to apply color*
 #'
-#'   `singl-kw:[fill|text]` --- *default:* `"fill"`
+#'   `singl-kw:[fill|text]` // *default:* `"fill"`
 #'
 #'   Which style element should the colors be applied to? Options include the
 #'   cell background (the default, given as `"fill"`) or the cell text
@@ -221,7 +221,7 @@
 #'
 #' @param autocolor_text *Automatically recolor text*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   An option to let **gt** modify the coloring of text within cells undergoing
 #'   background coloring. This will result in better text-to-background color
@@ -229,7 +229,7 @@
 #'
 #' @param contrast_algo *Color contrast algorithm choice*
 #'
-#'   `singl-kw:[apca|wcag]` --- *default:* `"apca"`
+#'   `singl-kw:[apca|wcag]` // *default:* `"apca"`
 #'
 #'   The color contrast algorithm to use when `autocolor_text = TRUE`. By
 #'   default this is `"apca"` (Accessible Perceptual Contrast Algorithm) and the
@@ -237,7 +237,7 @@
 #'
 #' @param colors *[Deprecated] Color mapping function*
 #'
-#'   `function` --- *default:* `NULL` (`optional`)
+#'   `function` // *default:* `NULL` (`optional`)
 #'
 #'   This argument is deprecated. Use the `fn` argument instead to provide a
 #'   **scales**-based color-mapping function. If providing a palette, use the
@@ -477,15 +477,16 @@
 #'
 #' ```r
 #' countrypops |>
-#'   dplyr::filter(country_name == "Mongolia") |>
+#'   dplyr::filter(country_name == "Bangladesh") |>
 #'   dplyr::select(-contains("code")) |>
-#'   tail(10) |>
+#'   dplyr::slice_tail(n = 10) |>
 #'   gt() |>
 #'   data_color(
 #'     columns = population,
 #'     method = "numeric",
 #'     palette = "viridis",
-#'     domain = c(2.5E6, 3.4E6)
+#'     domain = c(150E6, 170E6),
+#'     reverse = TRUE
 #'   )
 #' ```
 #'
@@ -496,20 +497,21 @@
 #' We can alternatively use the `fn` argument for supplying the **scales**-based
 #' function [scales::col_numeric()]. That function call will itself return a
 #' function (which is what the `fn` argument actually requires) that takes a
-#' vector of numeric values and returns color values. Here is the more complex
+#' vector of numeric values and returns color values. Here is an alternate
 #' version of the code that returns the same table as in the previous example.
 #'
 #' ```r
 #' countrypops |>
-#'   dplyr::filter(country_name == "Mongolia") |>
+#'   dplyr::filter(country_name == "Bangladesh") |>
 #'   dplyr::select(-contains("code")) |>
-#'   tail(10) |>
+#'   dplyr::slice_tail(n = 10) |>
 #'   gt() |>
 #'   data_color(
 #'     columns = population,
 #'     fn = scales::col_numeric(
 #'       palette = "viridis",
-#'       domain = c(2.5E6, 3.4E6)
+#'       domain = c(150E6, 170E6),
+#'       reverse = TRUE
 #'     )
 #'   )
 #' ```
@@ -675,7 +677,7 @@
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-30
+#' 3-31
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)

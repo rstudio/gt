@@ -9,14 +9,14 @@ tab_stub_indent(data, rows, indent = "increase")
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{rows}{\emph{Rows to target}
 
-\verb{<row-targeting expression>} --- \strong{required}
+\verb{<row-targeting expression>} // \strong{required}
 
 The rows to consider for the indentation change. The default \code{\link[=everything]{everything()}}
 results in all rows being targeted. Alternatively, we can supply a vector
@@ -28,7 +28,7 @@ need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{indent}{\emph{Indentation directive}
 
-\verb{scalar<character|numeric|integer>} --- \emph{default:} \code{"increase"}
+\verb{scalar<character|numeric|integer>} // \emph{default:} \code{"increase"}
 
 An indentation directive either as a keyword describing the indentation
 change or as an explicit integer value for directly setting the indentation
@@ -46,6 +46,21 @@ table stub. The \code{tab_stub_indent()} function allows for fine control over
 row label indentation in the stub. We can use an explicit definition of an
 indentation level, or, employ an indentation directive using keywords.
 }
+\section{Compatibility of arguments with the \code{from_column()} helper function}{
+
+
+The \code{\link[=from_column]{from_column()}} helper function can be used with the \code{indent} argument
+of \code{tab_stub_indent()} to obtain varying parameter values from a specified
+column within the table. This means that each row label could be indented a
+little bit differently.
+
+Please note that for this argument (\code{indent}), a \code{\link[=from_column]{from_column()}} call needs
+to reference a column that has data of the \code{numeric} or \code{integer} type.
+Additional columns for parameter values can be generated with the
+\code{\link[=cols_add]{cols_add()}} function (if not already present). Columns that contain
+parameter data can also be hidden from final display with \code{\link[=cols_hide]{cols_hide()}}.
+}
+
 \section{Examples}{
 
 

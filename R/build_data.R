@@ -30,6 +30,12 @@ build_data <- function(data, context) {
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
+  # For an empty table, ensure that some basic
+  # messaging is in place
+  if (is_gt_tbl_empty(data = data)) {
+    data <- adjust_gt_tbl_empty(data = data)
+  }
+
   # Create `body` with rendered values; move
   # input data cells to `body` that didn't have
   # any rendering applied during `render_formats()`;

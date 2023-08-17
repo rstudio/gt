@@ -14,14 +14,14 @@ fmt_missing(
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
 column indices, or a select helper function. Examples of select helper
@@ -30,7 +30,7 @@ functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_w
 
 \item{rows}{\emph{Rows to target}
 
-\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
 
 In conjunction with \code{columns}, we can specify which of their rows should
 undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in

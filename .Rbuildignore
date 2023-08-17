@@ -28,6 +28,7 @@ tests/testthat/test-cols_merge.R
 tests/testthat/test-cols_width_rtf.R
 tests/testthat/test-cols_width.R
 tests/testthat/test-data_color.R
+tests/testthat/test-empty_tbl.R
 tests/testthat/test-escaping.R
 tests/testthat/test-extract_cells.R
 tests/testthat/test-fmt_auto.R
@@ -54,9 +55,11 @@ tests/testthat/test-fmt_url.R
 tests/testthat/test-footer.R
 tests/testthat/test-group_column_label.R
 tests/testthat/test-gt_group.R
+tests/testthat/test-gt_object.R
 tests/testthat/test-gt_split.R
 tests/testthat/test-gtsave.R
 tests/testthat/test-h_md_html.R
+tests/testthat/test-helper_functions.R
 tests/testthat/test-i_html.R
 tests/testthat/test-image.R
 tests/testthat/test-info_tables.R
@@ -87,5 +90,6 @@ tests/testthat/test-text_transform.R
 tests/testthat/test-util_functions.R
 tests/testthat/test-utils_formatters.R
 tests/testthat/test-utils_render_html.R
+tests/testthat/test-utils_units.R
 tests/testthat/test-utils.R
 tests/testthat/test-vec_fmt.R

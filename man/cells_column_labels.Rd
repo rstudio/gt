@@ -9,7 +9,7 @@ cells_column_labels(columns = everything())
 \arguments{
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 The columns to which targeting operations are constrained. Can either
 be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,
@@ -121,7 +121,7 @@ Add footnotes to the column labels with \code{\link[=tab_footnote]{tab_footnote(
 
 \section{Function ID}{
 
-8-9
+8-13
 }
 
 \section{Function Introduced}{
@@ -149,7 +149,9 @@ Other helper functions:
 \code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
+\code{\link{define_units}()},
 \code{\link{escape_latex}()},
+\code{\link{from_column}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},

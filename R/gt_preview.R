@@ -35,13 +35,13 @@
 #'
 #' @param data *Input data table*
 #'
-#'   `obj:<data.frame>|obj:<tbl_df>` --- **required**
+#'   `obj:<data.frame>|obj:<tbl_df>` // **required**
 #'
 #'   A `data.frame` object or a tibble (`tbl_df`).
 #'
 #' @param top_n *Top n rows to display*
 #'
-#'   `scalar<numeric|integer>` --- *default:* `5`
+#'   `scalar<numeric|integer>` // *default:* `5`
 #'
 #'   The `top_n` value will be used as the number of rows from the top of the
 #'   table to display. The default, `5`, will show the first five rows of the
@@ -49,7 +49,7 @@
 #'
 #' @param bottom_n *Bottom n rows to display*
 #'
-#'   `scalar<numeric|integer>` --- *default:* `1`
+#'   `scalar<numeric|integer>` // *default:* `1`
 #'
 #'   The `bottom_n` value will be used as the number of rows from the bottom
 #'   of the table to display. The default, `1`, will show the final row of the
@@ -57,7 +57,7 @@
 #'
 #' @param incl_rownums *Display row numbers*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   An option to include the row numbers for `data` in the table stub.
 #'

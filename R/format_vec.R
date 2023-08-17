@@ -44,14 +44,14 @@
 #'
 #' @param x *The input vector*
 #'
-#'   `vector(numeric|integer)` --- **required**
+#'   `vector(numeric|integer)` // **required**
 #'
 #'   This is the input vector that will undergo transformation to a character
 #'   vector of the same length. Values within the vector will be formatted.
 #'
 #' @param decimals *Number of decimal places*
 #'
-#'   `scalar<numeric|integer>(val>=0)` --- *default:* `2`
+#'   `scalar<numeric|integer>(val>=0)` // *default:* `2`
 #'
 #'   This corresponds to the exact number of decimal places to use. A value
 #'   such as `2.34` can, for example, be formatted with `0` decimal places and
@@ -62,7 +62,7 @@
 #'
 #' @param n_sigfig *Number of significant figures*
 #'
-#'   `scalar<numeric|integer>(val>=1)` --- *default:* `NULL` (`optional`)
+#'   `scalar<numeric|integer>(val>=1)` // *default:* `NULL` (`optional`)
 #'
 #'   A option to format numbers to *n* significant figures. By default, this is
 #'   `NULL` and thus number values will be formatted according to the number of
@@ -73,14 +73,14 @@
 #'
 #' @param drop_trailing_zeros *Drop any trailing zeros*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   A logical value that allows for removal of trailing zeros (those redundant
 #'   zeros after the decimal mark).
 #'
 #' @param drop_trailing_dec_mark *Drop the trailing decimal mark*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   A logical value that determines whether decimal marks should always appear
 #'   even if there are no decimal digits to display after formatting (e.g., `23`
@@ -88,7 +88,7 @@
 #'
 #' @param use_seps *Use digit group separators*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   An option to use digit group separators. The type of digit group separator
 #'   is set by `sep_mark` and overridden if a locale ID is provided to `locale`.
@@ -96,7 +96,7 @@
 #'
 #' @param accounting *Use accounting style*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   An option to use accounting style for values. Normally, negative values
 #'   will be shown with a minus sign but using accounting style will instead put
@@ -104,7 +104,7 @@
 #'
 #' @param scale_by *Scale values by a fixed multiplier*
 #'
-#'   `scalar<numeric|integer>` --- *default:* `1`
+#'   `scalar<numeric|integer>` // *default:* `1`
 #'
 #'   All numeric values will be multiplied by the `scale_by` value before
 #'   undergoing formatting. Since the `default` value is `1`, no values will be
@@ -114,7 +114,7 @@
 #'
 #' @param suffixing *Specification for large-number suffixing*
 #'
-#'   `scalar<logical>|vector<character>` --- *default:* `FALSE`
+#'   `scalar<logical>|vector<character>` // *default:* `FALSE`
 #'
 #'   The `suffixing` option allows us to scale and apply suffixes to larger
 #'   numbers (e.g., `1924000` can be transformed to `1.92M`). This option can
@@ -140,7 +140,7 @@
 #'
 #' @param pattern *Specification of the formatting pattern*
 #'
-#'   `scalar<character>` --- *default:* `"{x}"`
+#'   `scalar<character>` // *default:* `"{x}"`
 #'
 #'   A formatting pattern that allows for decoration of the formatted value. The
 #'   formatted value is represented by the `{x}` (which can be used multiple
@@ -149,7 +149,7 @@
 #'
 #' @param sep_mark *Separator mark for digit grouping*
 #'
-#'   `scalar<character>` --- *default:* `","`
+#'   `scalar<character>` // *default:* `","`
 #'
 #'   The string to use as a separator between groups of digits. For example,
 #'   using `sep_mark = ","` with a value of `1000` would result in a formatted
@@ -158,7 +158,7 @@
 #'
 #' @param dec_mark *Decimal mark*
 #'
-#'   `scalar<character>` --- *default:* `"."`
+#'   `scalar<character>` // *default:* `"."`
 #'
 #'   The string to be used as the decimal mark. For example, using
 #'   `dec_mark = ","` with the value `0.152` would result in a formatted value
@@ -167,7 +167,7 @@
 #'
 #' @param force_sign *Forcing the display of a positive sign*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   Should the positive sign be shown for positive values (effectively showing
 #'   a sign for all values except zero)? If so, use `TRUE` for this option. The
@@ -177,7 +177,7 @@
 #'
 #' @param locale *Locale identifier*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional locale identifier that can be used for formatting values
 #'   according the locale's rules. Examples include `"en"` for English (United
@@ -189,7 +189,7 @@
 #'
 #' @param output *Output format*
 #'
-#'   `singl-kw:[auto|plain|html|latex|rtf|word]` --- *default:* `"auto"`
+#'   `singl-kw:[auto|plain|html|latex|rtf|word]` // *default:* `"auto"`
 #'
 #'   The output style of the resulting character vector. This can either be
 #'   `"auto"` (the default), `"plain"`, `"html"`, `"latex"`, `"rtf"`, or
@@ -361,7 +361,7 @@ vec_fmt_number <- function(
 #'
 #' @param suffixing *Specification for large-number suffixing*
 #'
-#'   `scalar<logical>|vector<character>` --- *default:* `FALSE`
+#'   `scalar<logical>|vector<character>` // *default:* `FALSE`
 #'
 #'   The `suffixing` option allows us to scale and apply suffixes to larger
 #'   numbers (e.g., `1924000` can be transformed to `2M`). This option can
@@ -516,7 +516,7 @@ vec_fmt_integer <- function(
 #'
 #' @param scale_by *Scale values by a fixed multiplier*
 #'
-#'   `scalar<numeric|integer>` --- *default:* `1`
+#'   `scalar<numeric|integer>` // *default:* `1`
 #'
 #'   All numeric values will be multiplied by the `scale_by` value before
 #'   undergoing formatting. Since the `default` value is `1`, no values will be
@@ -524,7 +524,7 @@ vec_fmt_integer <- function(
 #'
 #' @param exp_style *Style declaration for exponent formatting*
 #'
-#'   `scalar<character>` --- *default:* `"x10n"`
+#'   `scalar<character>` // *default:* `"x10n"`
 #'
 #'   Style of formatting to use for the scientific notation formatting. By
 #'   default this is `"x10n"` but other options include using a single letter
@@ -534,7 +534,7 @@ vec_fmt_integer <- function(
 #'
 #' @param force_sign_m,force_sign_n *Forcing the display of a positive sign*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   Should the plus sign be shown for positive values of the mantissa (first
 #'   component, `force_sign_m`) or the exponent (`force_sign_n`)? This would
@@ -619,6 +619,7 @@ vec_fmt_scientific <- function(
     x,
     decimals = 2,
     drop_trailing_zeros = FALSE,
+    drop_trailing_dec_mark = TRUE,
     scale_by = 1.0,
     exp_style = "x10n",
     pattern = "{x}",
@@ -654,6 +655,7 @@ vec_fmt_scientific <- function(
       rows = everything(),
       decimals = decimals,
       drop_trailing_zeros = drop_trailing_zeros,
+      drop_trailing_dec_mark = drop_trailing_dec_mark,
       scale_by = scale_by,
       exp_style = exp_style,
       pattern = pattern,
@@ -694,7 +696,7 @@ vec_fmt_scientific <- function(
 #'
 #' @param scale_by *Scale values by a fixed multiplier*
 #'
-#'   `scalar<numeric|integer>` --- *default:* `1`
+#'   `scalar<numeric|integer>` // *default:* `1`
 #'
 #'   All numeric values will be multiplied by the `scale_by` value before
 #'   undergoing formatting. Since the `default` value is `1`, no values will be
@@ -702,7 +704,7 @@ vec_fmt_scientific <- function(
 #'
 #' @param exp_style *Style declaration for exponent formatting*
 #'
-#'   `scalar<character>` --- *default:* `"x10n"`
+#'   `scalar<character>` // *default:* `"x10n"`
 #'
 #'   Style of formatting to use for the scientific notation formatting. By
 #'   default this is `"x10n"` but other options include using a single letter
@@ -712,7 +714,7 @@ vec_fmt_scientific <- function(
 #'
 #' @param force_sign_m,force_sign_n *Forcing the display of a positive sign*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   Should the plus sign be shown for positive values of the mantissa (first
 #'   component, `force_sign_m`) or the exponent (`force_sign_n`)? This would
@@ -797,6 +799,7 @@ vec_fmt_engineering <- function(
     x,
     decimals = 2,
     drop_trailing_zeros = FALSE,
+    drop_trailing_dec_mark = TRUE,
     scale_by = 1.0,
     exp_style = "x10n",
     pattern = "{x}",
@@ -832,6 +835,7 @@ vec_fmt_engineering <- function(
       rows = everything(),
       decimals = decimals,
       drop_trailing_zeros = drop_trailing_zeros,
+      drop_trailing_dec_mark = drop_trailing_dec_mark,
       scale_by = scale_by,
       exp_style = exp_style,
       pattern = pattern,
@@ -872,7 +876,7 @@ vec_fmt_engineering <- function(
 #'
 #' @param scale_values *Multiply input values by 100*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   Should the values be scaled through multiplication by 100? By default this
 #'   scaling is performed since the expectation is that incoming values are
@@ -881,14 +885,14 @@ vec_fmt_engineering <- function(
 #'
 #' @param incl_space *Include a space between the value and the % sign*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   An option for whether to include a space between the value and the percent
 #'   sign. The default is to not introduce a space character.
 #'
 #' @param placement *Percent sign placement*
 #'
-#'   `scalar<character>` --- *default:* `"right"`
+#'   `scalar<character>` // *default:* `"right"`
 #'
 #'   This option governs the placement of the percent sign. This can be either
 #'   be `right` (the default) or `left`.
@@ -1074,7 +1078,7 @@ vec_fmt_percent <- function(
 #'
 #' @param to_units *Output Quantity*
 #'
-#'   `singl-kw:[per-mille|per-myriad|pcm|ppm|ppb|ppt|ppq]` --- *default:* `"per-mille"`
+#'   `singl-kw:[per-mille|per-myriad|pcm|ppm|ppb|ppt|ppq]` // *default:* `"per-mille"`
 #'
 #'   A keyword that signifies the desired output quantity. This can be any from
 #'   the following set: `"per-mille"`, `"per-myriad"`, `"pcm"`, `"ppm"`,
@@ -1082,7 +1086,7 @@ vec_fmt_percent <- function(
 #'
 #' @param symbol *Symbol or units to use in output display*
 #'
-#'   `scalar<character>` --- *default:* `"auto"`
+#'   `scalar<character>` // *default:* `"auto"`
 #'
 #'   The symbol/units to use for the quantity. By default, this is set to
 #'   `"auto"` and **gt** will choose the appropriate symbol based on the
@@ -1091,7 +1095,7 @@ vec_fmt_percent <- function(
 #'
 #' @param scale_values *Scale input values accordingly*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   Should the values be scaled through multiplication according to the keyword
 #'   set in `to_units`? By default this is `TRUE` since the expectation is that
@@ -1101,7 +1105,7 @@ vec_fmt_percent <- function(
 #'
 #' @param incl_space *Include a space between the value and the symbol/units*
 #'
-#'   `scalar<character>|scalar<logical>` --- *default:* `"auto"`
+#'   `scalar<character>|scalar<logical>` // *default:* `"auto"`
 #'
 #'   An option for whether to include a space between the value and the
 #'   symbol/units. The default is `"auto"` which provides spacing dependent on
@@ -1276,7 +1280,7 @@ vec_fmt_partsper <- function(
 #'
 #' @param accuracy *Accuracy of fractions*
 #'
-#'   `singl-kw:[low|med|high]|scalar<numeric|integer>(val>=1)` --- *default:* `"low"`
+#'   `singl-kw:[low|med|high]|scalar<numeric|integer>(val>=1)` // *default:* `"low"`
 #'
 #'   The type of fractions to generate. This can either be one of the keywords
 #'   `"low"`, `"med"`, or `"high"` (to generate fractions with denominators of
@@ -1288,7 +1292,7 @@ vec_fmt_partsper <- function(
 #'
 #' @param simplify *Simplify the fraction*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   If choosing to provide a numeric value for `accuracy`, the option to
 #'   simplify the fraction (where possible) can be taken with `TRUE` (the
@@ -1297,7 +1301,7 @@ vec_fmt_partsper <- function(
 #'
 #' @param layout *Layout of fractions in HTML output*
 #'
-#'   `singl-kw:[inline|diagonal]` --- *default:* `"inline"`
+#'   `singl-kw:[inline|diagonal]` // *default:* `"inline"`
 #'
 #'   For HTML output, the `"inline"` layout is the default. This layout places
 #'   the numerals of the fraction on the baseline and uses a standard slash
@@ -1435,8 +1439,9 @@ vec_fmt_fraction <- function(
 #' be autoscaled and decorated with the appropriate suffixes
 #' - pattern: option to use a text pattern for decoration of the formatted
 #' currency values
-#' - locale-based formatting: providing a locale ID will result in
-#' currency formatting specific to the chosen locale
+#' - locale-based formatting: providing a locale ID will result in currency
+#' formatting specific to the chosen locale; it will also retrieve the locale's
+#' currency if none is explicitly given
 #'
 #' We can use the [info_currencies()] function for a useful reference on all of
 #' the possible inputs to the `currency` argument.
@@ -1445,7 +1450,7 @@ vec_fmt_fraction <- function(
 #'
 #' @param currency *Currency to use*
 #'
-#'   `scalar<character>|obj:<gt_currency>` --- *default:* `"USD"`
+#'   `scalar<character>|obj:<gt_currency>` // *default:* `NULL` (`optional`)
 #'
 #'   The currency to use for the numeric value. This input can be
 #'   supplied as a 3-letter currency code (e.g., `"USD"` for U.S. Dollars,
@@ -1464,9 +1469,17 @@ vec_fmt_fraction <- function(
 #'   the letter "f" in all other output contexts). Please note that `decimals`
 #'   will default to `2` when using the [currency()] helper function.
 #'
+#'   If nothing is provided here but a `locale` value has been set (either in
+#'   this function call or as part of the initial [gt()] call), the currency
+#'   will be obtained from that locale. Virtually all locales are linked to a
+#'   territory that is a country (use [info_locales()] for details on all
+#'   locales used in this package), so, the in-use (or *de facto*) currency will
+#'   be obtained. As the default locale is `"en"`, the `"USD"` currency will be
+#'   used if neither a `locale` nor a `currency` value is given.
+#'
 #' @param use_subunits *Show or hide currency subunits*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   An option for whether the subunits portion of a currency value should be
 #'   displayed. For example, with an input value of `273.81`, the default
@@ -1475,14 +1488,14 @@ vec_fmt_fraction <- function(
 #'
 #' @param placement *Currency symbol placement*
 #'
-#'   `scalar<character>` --- *default:* `"left"`
+#'   `scalar<character>` // *default:* `"left"`
 #'
 #'   The placement of the currency symbol. This can be either be `left` (as
 #'   in `"$450"`) or `right` (which yields `"450$"`).
 #'
 #' @param incl_space *Include a space between the value and the currency symbol*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   An option for whether to include a space between the value and the currency
 #'   symbol. The default is to not introduce a space character.
@@ -1524,7 +1537,7 @@ vec_fmt_fraction <- function(
 #' and let **gt** handle all locale-specific formatting options:
 #'
 #' ```r
-#' vec_fmt_currency(num_vals, currency = "EUR", locale = "fr")
+#' vec_fmt_currency(num_vals, locale = "fr")
 #' ```
 #' ```
 #' #> [1] "EUR5,20" "EUR8,65" "EUR0,00" "-EUR5,30" "NA"
@@ -1563,7 +1576,7 @@ vec_fmt_fraction <- function(
 #' @export
 vec_fmt_currency <- function(
     x,
-    currency = "USD",
+    currency = NULL,
     use_subunits = TRUE,
     decimals = NULL,
     drop_trailing_dec_mark = TRUE,
@@ -1634,7 +1647,7 @@ vec_fmt_currency <- function(
 #'
 #' @param case *Use uppercase or lowercase letters*
 #'
-#'   `singl-kw:[upper|lower]` --- *default:* `"upper"`
+#'   `singl-kw:[upper|lower]` // *default:* `"upper"`
 #'
 #'   Should Roman numerals should be rendered as uppercase (`"upper"`) or
 #'   lowercase (`"lower"`) letters? By default, this is set to `"upper"`.
@@ -1750,14 +1763,14 @@ vec_fmt_roman <- function(
 #'
 #' @param case *Use uppercase or lowercase letters*
 #'
-#'   `singl-kw:[upper|lower]` --- *default:* `"upper"`
+#'   `singl-kw:[upper|lower]` // *default:* `"upper"`
 #'
 #'   Should the resulting index characters be rendered as uppercase (`"upper"`)
 #'   or lowercase (`"lower"`) letters? By default, this is set to `"upper"`.
 #'
 #' @param index_algo *Indexing algorithm*
 #'
-#'   `singl-kw:[repeat|excel]` --- *default:* `"repeat"`
+#'   `singl-kw:[repeat|excel]` // *default:* `"repeat"`
 #'
 #'   The indexing algorithm handles the recycling of the index character set. By
 #'   default, the `"repeat"` option is used where characters are doubled,
@@ -2039,7 +2052,7 @@ vec_fmt_spelled_num <- function(
 #'
 #' @param standard *Standard used to express byte sizes*
 #'
-#'   `singl-kw:[decimal|binary]` --- *default:* `"decimal"`
+#'   `singl-kw:[decimal|binary]` // *default:* `"decimal"`
 #'
 #'   The form of expressing large byte sizes is divided between: (1) decimal
 #'   units (powers of 1000; e.g., `"kB"` and `"MB"`), and (2) binary units
@@ -2047,7 +2060,7 @@ vec_fmt_spelled_num <- function(
 #'
 #' @param decimals *Number of decimal places*
 #'
-#'   `scalar<numeric|integer>(val>=0)` --- *default:* `1`
+#'   `scalar<numeric|integer>(val>=0)` // *default:* `1`
 #'
 #'   This corresponds to the exact number of decimal places to use. A value
 #'   such as `2.34` can, for example, be formatted with `0` decimal places and
@@ -2057,7 +2070,7 @@ vec_fmt_spelled_num <- function(
 #'
 #' @param force_sign *Forcing the display of a positive sign*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   Should the positive sign be shown for positive numbers (effectively showing
 #'   a sign for all numbers except zero)? If so, use `TRUE` for this option. The
@@ -2065,7 +2078,7 @@ vec_fmt_spelled_num <- function(
 #'
 #' @param incl_space *Include a space between the value and the units*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   An option for whether to include a space between the value and the units.
 #'   The default is to use a space character for separation.
@@ -2214,7 +2227,7 @@ vec_fmt_bytes <- function(
 #'
 #' @param date_style *Predefined style for dates*
 #'
-#'   `scalar<character>|scalar<numeric|integer>(1<=val<=41)` --- *default:* `"iso"`
+#'   `scalar<character>|scalar<numeric|integer>(1<=val<=41)` // *default:* `"iso"`
 #'
 #'   The date style to use. By default this is the short name `"iso"` which
 #'   corresponds to ISO 8601 date formatting. There are 41 date styles in total
@@ -2400,7 +2413,7 @@ vec_fmt_date <- function(
 #'
 #' @param time_style *Predefined style for times*
 #'
-#'   `scalar<character>|scalar<numeric|integer>(1<=val<=25)` --- *default:* `"iso"`
+#'   `scalar<character>|scalar<numeric|integer>(1<=val<=25)` // *default:* `"iso"`
 #'
 #'   The time style to use. By default this is the short name `"iso"` which
 #'   corresponds to how times are formatted within ISO 8601 datetime values.
@@ -2581,7 +2594,7 @@ vec_fmt_time <- function(
 #'
 #' @param sep *Separator between date and time components*
 #'
-#'   `scalar<character>` --- *default:* `" "`
+#'   `scalar<character>` // *default:* `" "`
 #'
 #'   The separator string to use between the date and time components. By
 #'   default, this is a single space character (`" "`). Only used when not
@@ -2589,7 +2602,7 @@ vec_fmt_time <- function(
 #'
 #' @param format *Date/time formatting string*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional formatting string used for generating custom dates/times. If
 #'   used then the arguments governing preset styles (`date_style` and
@@ -2598,7 +2611,7 @@ vec_fmt_time <- function(
 #'
 #' @param tz *Time zone*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   The time zone for printing dates/times (i.e., the output). The
 #'   default of `NULL` will preserve the time zone of the input data in the
@@ -3448,7 +3461,7 @@ vec_fmt_datetime <- function(
 #'
 #' @param input_units *Declaration of duration units for numerical values*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   If one or more selected columns contains numeric values (not `difftime`
 #'   values, which contain the duration units), a keyword must be provided for
@@ -3458,7 +3471,7 @@ vec_fmt_datetime <- function(
 #'
 #' @param output_units *Choice of output units*
 #'
-#'   `mult-kw:[weeks|days|hours|minutes|seconds]` --- *default:* `NULL` (`optional`)
+#'   `mult-kw:[weeks|days|hours|minutes|seconds]` // *default:* `NULL` (`optional`)
 #'
 #'   Controls the output time units. The default, `NULL`, means that **gt** will
 #'   automatically choose time units based on the input duration value. To
@@ -3469,7 +3482,7 @@ vec_fmt_datetime <- function(
 #'
 #' @param duration_style *Style for representing duration values*
 #'
-#'   `singl-kw:[narrow|wide|colon-sep|iso]` --- *default:* `"narrow"`
+#'   `singl-kw:[narrow|wide|colon-sep|iso]` // *default:* `"narrow"`
 #'
 #'   A choice of four formatting styles for the output duration values. With
 #'   `"narrow"` (the default style), duration values will be formatted with
@@ -3482,7 +3495,7 @@ vec_fmt_datetime <- function(
 #'
 #' @param trim_zero_units *Trimming of zero values*
 #'
-#'   `scalar<logical>|mult-kw:[leading|trailing|internal]` --- *default:* `TRUE`
+#'   `scalar<logical>|mult-kw:[leading|trailing|internal]` // *default:* `TRUE`
 #'
 #'   Provides methods to remove output time units that have zero values. By
 #'   default this is `TRUE` and duration values that might otherwise be
@@ -3496,7 +3509,7 @@ vec_fmt_datetime <- function(
 #'
 #' @param max_output_units *Maximum number of time units to display*
 #'
-#'   `scalar<numeric|integer>(val>=1)` --- *default:* `NULL` (`optional`)
+#'   `scalar<numeric|integer>(val>=1)` // *default:* `NULL` (`optional`)
 #'
 #'   If `output_units` is `NULL`, where the output time units are unspecified
 #'   and left to **gt** to handle, a numeric value provided for
@@ -3508,7 +3521,7 @@ vec_fmt_datetime <- function(
 #'
 #' @param force_sign *Forcing the display of a positive sign*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   Should the positive sign be shown for positive values (effectively showing
 #'   a sign for all values except zero)? If so, use `TRUE` for this option. By
@@ -3562,7 +3575,7 @@ vec_fmt_datetime <- function(
 #' vec_fmt_duration(num_vals, input_units = "days")
 #' ```
 #' ```
-#' #> [1] "3d 5h 38m 23s" "5h 31m 12s" "7m 12s" "NA"
+#' #> [1] "3d 5h 38m 24s" "5h 31m 12s" "7m 12s" "NA"
 #' ```
 #'
 #' We can define a set of output time units that we want to see.
@@ -3589,7 +3602,7 @@ vec_fmt_datetime <- function(
 #' )
 #' ```
 #' ```
-#' #> [1] "3 days 5 hours 38 minutes 23 seconds"
+#' #> [1] "3 days 5 hours 38 minutes 24 seconds"
 #' #> [2] "5 hours 31 minutes 12 seconds"
 #' #> [3] "7 minutes 12 seconds"
 #' #> [4] "NA"
@@ -3608,7 +3621,7 @@ vec_fmt_datetime <- function(
 #' )
 #' ```
 #' ```
-#' #> [1] "3 dagen 5 uur 38 minuten 23 seconden"
+#' #> [1] "3 dagen 5 uur 38 minuten 24 seconden"
 #' #> [2] "5 uur 31 minuten 12 seconden"
 #' #> [3] "7 minuten 12 seconden"
 #' #> [4] "NA"
@@ -3691,7 +3704,7 @@ vec_fmt_duration <- function(
 #'
 #' @param md_engine *Choice of Markdown engine*
 #'
-#'   `singl-kw:[markdown|commonmark]` --- *default:* `"markdown"`
+#'   `singl-kw:[markdown|commonmark]` // *default:* `"markdown"`
 #'
 #'   The engine preference for Markdown rendering. By default, this is set to
 #'   `"markdown"` where **gt** will use the **markdown** package for Markdown

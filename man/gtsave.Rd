@@ -9,14 +9,14 @@ gtsave(data, filename, path = NULL, ...)
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{filename}{\emph{Output filename}
 
-\verb{scalar<character>} --- \strong{required}
+\verb{scalar<character>} // \strong{required}
 
 The file name to create on disk. Ensure that an extension compatible with
 the output types is provided (\code{.html}, \code{.tex}, \code{.ltx}, \code{.rtf}, \code{.docx}). If
@@ -24,7 +24,7 @@ a custom save function is provided then the file extension is disregarded.}
 
 \item{path}{\emph{Output path}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 An optional path to which the file should be saved (combined with
 \code{filename}).}

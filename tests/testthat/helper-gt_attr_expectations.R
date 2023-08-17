@@ -67,7 +67,7 @@ expect_tab <- function(tab, df) {
 
   (dt_boxhead_get(data = tab) %>%
     dim())[2] %>%
-    expect_equal(6)
+    expect_equal(8)
 
   dt_stub_df_get(data = tab) %>%
     dim() %>%
@@ -107,7 +107,7 @@ expect_tab <- function(tab, df) {
 
   dt_options_get(data = tab) %>%
     dim() %>%
-    expect_equal(c(189, 5))
+    expect_equal(c(190, 5))
 
   dt_transforms_get(data = tab) %>%
     length() %>%

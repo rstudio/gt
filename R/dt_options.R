@@ -122,6 +122,7 @@ dt_options_tbl <-
     "column_labels_border_lr_width",      TRUE,  "column_labels",    "px",      "1px",
     "column_labels_border_lr_color",      TRUE,  "column_labels",    "value",   "#D3D3D3",
     "column_labels_hidden",              FALSE,  "column_labels",    "logical", FALSE,
+    "column_labels_units_pattern",       FALSE,  "column_labels",    "value",   "{1}, {2}",
     "row_group_background_color",         TRUE,  "row_group",        "value",   NA_character_,
     "row_group_font_size",                TRUE,  "row_group",        "px",      "100%",
     "row_group_font_weight",              TRUE,  "row_group",        "value",   "initial",

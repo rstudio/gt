@@ -24,7 +24,13 @@
 
 #nocov start
 
-register_s3_method <- function(pkg, generic, class, fun = NULL) {
+register_s3_method <- function(
+    pkg,
+    generic,
+    class,
+    fun = NULL
+) {
+
   stopifnot(is.character(pkg), length(pkg) == 1)
   stopifnot(is.character(generic), length(generic) == 1)
   stopifnot(is.character(class), length(class) == 1)
@@ -76,6 +82,7 @@ utils::globalVariables(
     "decimal",
     "designer",
     "display_name",
+    "examples",
     "flexible",
     "footnotes",
     "footnotes_to_list",
@@ -104,6 +111,8 @@ utils::globalVariables(
     "n_cols",
     "name",
     "name_copy",
+    "no_data",
+    "no_table_data_text",
     "obtain_group_ordering",
     "package",
     "palette",
@@ -166,18 +175,20 @@ utils::globalVariables(
 #' incompatible with the function. This is `FALSE` by default.
 #' - `gt.latex_packages`: A vector of LaTeX package names to use when generating
 #' tables in the LaTeX output context. The set of packages loaded is controlled
-#' by this default vector: `c("booktabs", "caption", "longtable")`.
+#' by this default vector:
+#' `c("booktabs", "caption", "longtable", "colortbl", "array")`.
 #'
 #' @keywords internal
 #' @name gt-options
 NULL
 
-gt_default_options <- list(
-  gt.row_group.sep = " - ",
-  gt.html_tag_check = TRUE,
-  gt.strict_column_fmt = FALSE,
-  gt.latex_packages = c("booktabs", "caption", "longtable")
-)
+gt_default_options <-
+  list(
+    gt.row_group.sep = " - ",
+    gt.html_tag_check = TRUE,
+    gt.strict_column_fmt = FALSE,
+    gt.latex_packages = c("booktabs", "caption", "longtable", "colortbl", "array")
+  )
 
 # R 3.5 and earlier have a bug on Windows where if x is latin1 or unknown and
 # replacement is UTF-8, the UTF-8 bytes are inserted into the result but the

@@ -22,20 +22,20 @@ cell_text(
 \arguments{
 \item{color}{\emph{Text color}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 The text color can be modified through the \code{color} argument.}
 
 \item{font}{\emph{Font (or collection of fonts) used for text}
 
-\verb{vector<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{vector<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 The font or collection of fonts (subsequent font names are) used as
 fallbacks.}
 
 \item{size}{\emph{Text size}
 
-\verb{scalar<numeric|integer|character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<numeric|integer|character>} // \emph{default:} \code{NULL} (\code{optional})
 
 The size of the font. Can be provided as a number that is assumed to
 represent \code{px} values (or could be wrapped in the \code{\link[=px]{px()}}) helper function.
@@ -45,27 +45,27 @@ We can also use one of the following absolute size keywords: \code{"xx-small"},
 
 \item{align}{\emph{Text alignment}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 The text in a cell can be aligned though one of the following options:
 \code{"center"}, \code{"left"}, \code{"right"}, or \code{"justify"}.}
 
 \item{v_align}{\emph{Vertical alignment}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 The vertical alignment of the text in the cell can be modified through the
 options \code{"middle"}, \code{"top"}, or \code{"bottom"}.}
 
 \item{style}{\emph{Text style}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 Can be one of either \code{"normal"}, \code{"italic"}, or \code{"oblique"}.}
 
 \item{weight}{\emph{Font weight}
 
-\verb{scalar<character|numeric|integer>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character|numeric|integer>} // \emph{default:} \code{NULL} (\code{optional})
 
 The weight of the font can be modified thorough a text-based option such as
 \code{"normal"}, \code{"bold"}, \code{"lighter"}, \code{"bolder"}, or, a numeric value between
@@ -74,7 +74,7 @@ numeric mapping of weight.}
 
 \item{stretch}{\emph{Stretch text}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 Allows for text to either be condensed or expanded. We can use one of the
 following text-based keywords to describe the degree of
@@ -86,21 +86,21 @@ percentage values are not allowed.}
 
 \item{decorate}{\emph{Decorate text}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 Allows for text decoration effect to be applied. Here, we can use
 \code{"overline"}, \code{"line-through"}, or \code{"underline"}.}
 
 \item{transform}{\emph{Transform text}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 Allows for the transformation of text. Options are \code{"uppercase"},
 \code{"lowercase"}, or \code{"capitalize"}.}
 
 \item{whitespace}{\emph{White-space options}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 A white-space preservation option. By default, runs of white-space will be
 collapsed into single spaces but several options exist to govern how
@@ -110,7 +110,7 @@ opportunities. The options are \code{"normal"}, \code{"nowrap"}, \code{"pre"},
 
 \item{indent}{\emph{Text indentation}
 
-\verb{scalar<numeric|integer|character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<numeric|integer|character>} // \emph{default:} \code{NULL} (\code{optional})
 
 The indentation of the text. Can be provided as a number that is assumed to
 represent \code{px} values (or could be wrapped in the \code{\link[=px]{px()}}) helper function.
@@ -162,7 +162,7 @@ the \code{style} argument of \code{\link[=tab_style]{tab_style()}}.
 
 \section{Function ID}{
 
-8-20
+8-23
 }
 
 \section{Function Introduced}{
@@ -190,7 +190,9 @@ Other helper functions:
 \code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
+\code{\link{define_units}()},
 \code{\link{escape_latex}()},
+\code{\link{from_column}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},

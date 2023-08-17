@@ -9,7 +9,7 @@ as_latex(data)
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
@@ -23,7 +23,7 @@ containing the LaTeX code.
 }
 \details{
 LaTeX packages required to generate tables are:
-booktabs, caption, longtable.
+booktabs, caption, longtable, colortbl, array.
 
 In the event packages are not automatically added during the render phase
 of the document, please create and include a style file to load them.
@@ -40,7 +40,7 @@ output:
 The \code{gt_packages.sty} file would then contain the listed dependencies above:
 
 \preformatted{
-  \usepackage{amsmath, booktabs, caption, longtable}
+  \usepackage{booktabs, caption, longtable, colortbl, array}
 }
 }
 \section{Examples}{

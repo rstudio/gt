@@ -16,14 +16,14 @@ opt_table_font(
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{font}{\emph{Default table fonts}
 
-\verb{vector<character>|list|obj:<font_css>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{vector<character>|list|obj:<font_css>} // \emph{default:} \code{NULL} (\code{optional})
 
 One or more font names available as system or web fonts. These can be
 combined with a \code{c()} or a \code{list()}. To choose fonts from the
@@ -31,7 +31,7 @@ combined with a \code{c()} or a \code{list()}. To choose fonts from the
 
 \item{stack}{\emph{Name of font stack}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 A name that is representative of a font stack (obtained via internally via
 the \code{\link[=system_fonts]{system_fonts()}} helper function). If provided, this new stack will
@@ -39,7 +39,7 @@ replace any defined fonts and any \code{font} values will be prepended.}
 
 \item{weight}{\emph{Text weight}
 
-\verb{scalar<character|numeric|integer>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character|numeric|integer>} // \emph{default:} \code{NULL} (\code{optional})
 
 Option to set the weight of the font. Can be a text-based keyword such as
 \code{"normal"}, \code{"bold"}, \code{"lighter"}, \code{"bolder"}, or, a numeric value between
@@ -48,14 +48,14 @@ for the numeric mapping of weight.}
 
 \item{style}{\emph{Text style}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 An option to modify the text style. Can be one of either \code{"normal"},
 \code{"italic"}, or \code{"oblique"}.}
 
 \item{add}{\emph{Add to existing fonts}
 
-\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 Should fonts be added to the beginning of any already-defined fonts for the
 table? By default, this is \code{TRUE} and is recommended since those fonts

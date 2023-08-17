@@ -9,14 +9,14 @@ cols_unhide(data, columns)
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 The columns to unhide in the output display table. Can either be a series
 of column names provided in \code{\link[=c]{c()}}, a vector of column indices, or a select
@@ -51,8 +51,8 @@ table. We'll hide the \code{country_code_2} and \code{country_code_3} columns wi
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
   countrypops |>
-  dplyr::filter(country_name == "Mongolia") |>
-  tail(5) |>
+  dplyr::filter(country_name == "Singapore") |>
+  dplyr::slice_tail(n = 5) |>
   gt() |>
   cols_hide(columns = c(country_code_2, country_code_3))
 
@@ -77,7 +77,7 @@ the \code{cols_unhide()} function becomes useful.
 
 \section{Function ID}{
 
-5-10
+5-12
 }
 
 \section{Function Introduced}{
@@ -89,6 +89,7 @@ the \code{cols_unhide()} function becomes useful.
 \code{\link[=cols_hide]{cols_hide()}} to perform the inverse operation.
 
 Other column modification functions: 
+\code{\link{cols_add}()},
 \code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
@@ -101,6 +102,7 @@ Other column modification functions:
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
+\code{\link{cols_units}()},
 \code{\link{cols_width}()}
 }
 \concept{column modification functions}

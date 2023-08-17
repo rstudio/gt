@@ -14,14 +14,14 @@ sub_missing(
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 The columns to which substitution operations are constrained. Can either
 be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,
@@ -31,7 +31,7 @@ or a select helper function. Examples of select helper functions include
 
 \item{rows}{\emph{Rows to target}
 
-\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
 
 In conjunction with \code{columns}, we can specify which of their rows should
 form a constraint for targeting operations. The default \code{\link[=everything]{everything()}}
@@ -44,7 +44,7 @@ down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{missing_text}{\emph{Replacement text for \code{NA} values}
 
-\verb{scalar<character>} --- \emph{default:} \code{"---"}
+\verb{scalar<character>} // \emph{default:} \code{"---"}
 
 The text to be used in place of \code{NA} values in the rendered table. We can
 optionally use the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} functions to style the text as
@@ -126,7 +126,7 @@ calls of \code{sub_missing()}.
 
 \section{Function ID}{
 
-3-25
+3-26
 }
 
 \section{Function Introduced}{
@@ -159,6 +159,7 @@ Other data formatting functions:
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
 \code{\link{fmt_time}()},
+\code{\link{fmt_units}()},
 \code{\link{fmt_url}()},
 \code{\link{fmt}()},
 \code{\link{sub_large_vals}()},

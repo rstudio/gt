@@ -9,7 +9,7 @@ adjust_luminance(colors, steps)
 \arguments{
 \item{colors}{\emph{Color vector}
 
-\verb{vector<character>} --- \strong{required}
+\verb{vector<character>} // \strong{required}
 
 This is the vector of colors that will undergo an adjustment in luminance.
 Each color value provided must either be a color name (in the set of colors
@@ -18,7 +18,7 @@ provided by \code{grDevices::colors()}) or a hexadecimal string in the form of
 
 \item{steps}{\emph{Adjustment level}
 
-\verb{scalar<numeric|integer>(-2>=val>=2)} --- \strong{required}
+\verb{scalar<numeric|integer>(-2>=val>=2)} // \strong{required}
 
 A positive or negative factor by which the luminance of colors in the
 \code{colors} vector will be adjusted. Must be a number between \code{-2.0} and
@@ -91,7 +91,7 @@ of increasingly darker palettes (with \code{\link[=data_color]{data_color()}}).
 
 \section{Function ID}{
 
-8-23
+8-7
 }
 
 \section{Function Introduced}{
@@ -119,7 +119,9 @@ Other helper functions:
 \code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
+\code{\link{define_units}()},
 \code{\link{escape_latex}()},
+\code{\link{from_column}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},

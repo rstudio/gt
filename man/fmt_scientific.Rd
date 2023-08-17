@@ -10,6 +10,7 @@ fmt_scientific(
   rows = everything(),
   decimals = 2,
   drop_trailing_zeros = FALSE,
+  drop_trailing_dec_mark = TRUE,
   scale_by = 1,
   exp_style = "x10n",
   pattern = "{x}",
@@ -23,14 +24,14 @@ fmt_scientific(
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
 column indices, or a select helper function. Examples of select helper
@@ -39,7 +40,7 @@ functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_w
 
 \item{rows}{\emph{Rows to target}
 
-\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
 
 In conjunction with \code{columns}, we can specify which of their rows should
 undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
@@ -52,7 +53,7 @@ need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{decimals}{\emph{Number of decimal places}
 
-\code{scalar<numeric|integer>(val>=0)} --- \emph{default:} \code{2}
+\code{scalar<numeric|integer>(val>=0)} // \emph{default:} \code{2}
 
 This corresponds to the exact number of decimal places to use. A value
 such as \code{2.34} can, for example, be formatted with \code{0} decimal places and
@@ -63,14 +64,22 @@ becomes \code{"2.3400"}. The trailing zeros can be removed with
 
 \item{drop_trailing_zeros}{\emph{Drop any trailing zeros}
 
-\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
 
 A logical value that allows for removal of trailing zeros (those redundant
 zeros after the decimal mark).}
 
+\item{drop_trailing_dec_mark}{\emph{Drop the trailing decimal mark}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+A logical value that determines whether decimal marks should always appear
+even if there are no decimal digits to display after formatting (e.g., \code{23}
+becomes \code{23.} if \code{FALSE}). By default trailing decimal marks are not shown.}
+
 \item{scale_by}{\emph{Scale values by a fixed multiplier}
 
-\verb{scalar<numeric|integer>} --- \emph{default:} \code{1}
+\verb{scalar<numeric|integer>} // \emph{default:} \code{1}
 
 All numeric values will be multiplied by the \code{scale_by} value before
 undergoing formatting. Since the \code{default} value is \code{1}, no values will be
@@ -78,7 +87,7 @@ changed unless a different multiplier value is supplied.}
 
 \item{exp_style}{\emph{Style declaration for exponent formatting}
 
-\verb{scalar<character>} --- \emph{default:} \code{"x10n"}
+\verb{scalar<character>} // \emph{default:} \code{"x10n"}
 
 Style of formatting to use for the scientific notation formatting. By
 default this is \code{"x10n"} but other options include using a single letter
@@ -88,7 +97,7 @@ marker.}
 
 \item{pattern}{\emph{Specification of the formatting pattern}
 
-\verb{scalar<character>} --- \emph{default:} \code{"{x}"}
+\verb{scalar<character>} // \emph{default:} \code{"{x}"}
 
 A formatting pattern that allows for decoration of the formatted value. The
 formatted value is represented by the \code{{x}} (which can be used multiple
@@ -97,7 +106,7 @@ literals.}
 
 \item{sep_mark}{\emph{Separator mark for digit grouping}
 
-\verb{scalar<character>} --- \emph{default:} \code{","}
+\verb{scalar<character>} // \emph{default:} \code{","}
 
 The string to use as a separator between groups of digits. For example,
 using \code{sep_mark = ","} with a value of \code{1000} would result in a formatted
@@ -106,7 +115,7 @@ value of \code{"1,000"}. This argument is ignored if a \code{locale} is supplied
 
 \item{dec_mark}{\emph{Decimal mark}
 
-\verb{scalar<character>} --- \emph{default:} \code{"."}
+\verb{scalar<character>} // \emph{default:} \code{"."}
 
 The string to be used as the decimal mark. For example, using
 \code{dec_mark = ","} with the value \code{0.152} would result in a formatted value
@@ -115,7 +124,7 @@ not \code{NULL}).}
 
 \item{force_sign_m, force_sign_n}{\emph{Forcing the display of a positive sign}
 
-\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
 
 Should the plus sign be shown for positive values of the mantissa (first
 component, \code{force_sign_m}) or the exponent (\code{force_sign_n})? This would
@@ -126,7 +135,7 @@ will display a sign.}
 
 \item{locale}{\emph{Locale identifier}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 An optional locale identifier that can be used for formatting values
 according the locale's rules. Examples include \code{"en"} for English (United
@@ -210,6 +219,37 @@ expression that takes column values (can involve any of the available columns
 in the table) and returns a logical vector. This is nice if you want to base
 formatting on values in the column or another column, or, you'd like to use a
 more complex predicate expression.
+}
+
+\section{Compatibility of arguments with the \code{from_column()} helper function}{
+
+
+The \code{\link[=from_column]{from_column()}} helper function can be used with certain arguments of
+\code{fmt_scientific()} to obtain varying parameter values from a specified column
+within the table. This means that each row could be formatted a little bit
+differently. These arguments provide support for \code{\link[=from_column]{from_column()}}:
+\itemize{
+\item \code{decimals}
+\item \code{drop_trailing_zeros}
+\item \code{drop_trailing_dec_mark}
+\item \code{scale_by}
+\item \code{exp_style}
+\item \code{pattern}
+\item \code{sep_mark}
+\item \code{dec_mark}
+\item \code{force_sign_m}
+\item \code{force_sign_n}
+\item \code{locale}
+}
+
+Please note that for all of the aforementioned arguments, a \code{\link[=from_column]{from_column()}}
+call needs to reference a column that has data of the correct type (this is
+different for each argument). Additional columns for parameter values can be
+generated with the \code{\link[=cols_add]{cols_add()}} function (if not already present). Columns
+that contain parameter data can also be hidden from final display with
+\code{\link[=cols_hide]{cols_hide()}}. Finally, there is no limitation to how many arguments the
+\code{\link[=from_column]{from_column()}} helper is applied so long as the arguments belong to this
+closed set.
 }
 
 \section{Adapting output to a specific \code{locale}}{
@@ -296,6 +336,7 @@ Other data formatting functions:
 \code{\link{fmt_roman}()},
 \code{\link{fmt_spelled_num}()},
 \code{\link{fmt_time}()},
+\code{\link{fmt_units}()},
 \code{\link{fmt_url}()},
 \code{\link{fmt}()},
 \code{\link{sub_large_vals}()},

@@ -13,14 +13,14 @@ cols_align(
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{align}{\emph{Alignment type}
 
-\verb{singl-kw:[auto|left|center|right]} --- \emph{default:} \code{"auto"}
+\verb{singl-kw:[auto|left|center|right]} // \emph{default:} \code{"auto"}
 
 This can be any of \code{"center"}, \code{"left"}, or \code{"right"} for center-, left-,
 or right-alignment. Alternatively, the \code{"auto"} option (the default), will
@@ -29,7 +29,7 @@ Details section for specifics on which alignments are applied).}
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 The columns for which the alignment should be applied. Can either be a
 series of column names provided in \code{\link[=c]{c()}}, a vector of column indices, or a
@@ -58,14 +58,15 @@ right-alignment is used for the \code{numeric} and \code{integer} columns.
 \section{Examples}{
 
 
-Use \code{\link{countrypops}} to create a \strong{gt} table. Align the \code{population} column
-data to the left.
+Let's use \code{\link{countrypops}} to create a small \strong{gt} table. We can change the
+alignment of the \code{population} column with \code{cols_align()}. In this example,
+the label and body cells of \code{population} will be aligned to the left.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>
-  dplyr::filter(country_name == "Mongolia") |>
-  tail(5) |>
-  gt() |>
+  dplyr::filter(country_name == "San Marino") |>
+  dplyr::slice_tail(n = 5) |>
+  gt(rowname_col = "year", groupname_col = "country_name") |>
   cols_align(
     align = "left",
     columns = population
@@ -89,6 +90,7 @@ data to the left.
 
 \seealso{
 Other column modification functions: 
+\code{\link{cols_add}()},
 \code{\link{cols_align_decimal}()},
 \code{\link{cols_hide}()},
 \code{\link{cols_label_with}()},
@@ -101,6 +103,7 @@ Other column modification functions:
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
 \code{\link{cols_unhide}()},
+\code{\link{cols_units}()},
 \code{\link{cols_width}()}
 }
 \concept{column modification functions}

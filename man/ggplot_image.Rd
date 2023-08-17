@@ -9,20 +9,20 @@ ggplot_image(plot_object, height = 100, aspect_ratio = 1)
 \arguments{
 \item{plot_object}{\emph{A ggplot plot object}
 
-\verb{obj:<ggplot>} --- \strong{required}
+\verb{obj:<ggplot>} // \strong{required}
 
 A \code{ggplot} plot object.}
 
 \item{height}{\emph{Height of image}
 
-\verb{scalar<numeric|integer>} --- \emph{default:} \code{100}
+\verb{scalar<numeric|integer>} // \emph{default:} \code{100}
 
 The absolute height of the output image in the table cell (in \code{"px"}
 units). By default, this is set to \code{"100px"}.}
 
 \item{aspect_ratio}{\emph{The final aspect ratio of plot}
 
-\verb{scalar<numeric|integer>} --- \emph{default:} \code{1.0}
+\verb{scalar<numeric|integer>} // \emph{default:} \code{1.0}
 
 This is the plot's final aspect ratio. Where the height of the plot is
 fixed using the \code{height} argument, the \code{aspect_ratio} will either compress

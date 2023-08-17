@@ -20,14 +20,14 @@ fmt_url(
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
 column indices, or a select helper function. Examples of select helper
@@ -36,7 +36,7 @@ functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_w
 
 \item{rows}{\emph{Rows to target}
 
-\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
 
 In conjunction with \code{columns}, we can specify which of their rows should
 undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
@@ -49,7 +49,7 @@ need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{label}{\emph{Link label}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 The visible 'label' to use for the link. If \code{NULL} (the default)
 the URL will serve as the label. There are two non-\code{NULL} options: (1) a
@@ -58,7 +58,7 @@ function can be provided to fashion a label from every URL.}
 
 \item{as_button}{\emph{Style link as a button}
 
-\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
 
 An option to style the link as a button. By default, this is
 \code{FALSE}. If this option is chosen then the \code{button_fill} argument becomes
@@ -66,7 +66,7 @@ usable.}
 
 \item{color}{\emph{Link color}
 
-\verb{scalar<character>} --- \emph{default:} \code{"auto"}
+\verb{scalar<character>} // \emph{default:} \code{"auto"}
 
 The color used for the resulting link and its underline. This is
 \code{"auto"} by default; this allows \strong{gt} to choose an appropriate color
@@ -75,7 +75,7 @@ based on various factors (such as the background \code{button_fill} when
 
 \item{show_underline}{\emph{Show the link underline}
 
-\verb{scalar<character>|scalar<logical>} --- \emph{default:} \code{"auto"}
+\verb{scalar<character>|scalar<logical>} // \emph{default:} \code{"auto"}
 
 Should the link be decorated with an underline? By
 default this is \code{"auto"} which means that \strong{gt} will choose \code{TRUE} when
@@ -84,7 +84,7 @@ be the same color as that set in the \code{color} option.}
 
 \item{button_fill, button_width, button_outline}{\emph{Button options}
 
-\verb{scalar<character>} --- \emph{default:} \code{"auto"}
+\verb{scalar<character>} // \emph{default:} \code{"auto"}
 
 Options for styling a link-as-button (and only applies if
 \code{as_button = TRUE}). All of these options are by default set to \code{"auto"},
@@ -156,6 +156,33 @@ expression that takes column values (can involve any of the available columns
 in the table) and returns a logical vector. This is nice if you want to base
 formatting on values in the column or another column, or, you'd like to use a
 more complex predicate expression.
+}
+
+\section{Compatibility of arguments with the \code{from_column()} helper function}{
+
+
+The \code{\link[=from_column]{from_column()}} helper function can be used with certain arguments of
+\code{fmt_url()} to obtain varying parameter values from a specified column within
+the table. This means that each row could be formatted a little bit
+differently. These arguments provide support for \code{\link[=from_column]{from_column()}}:
+\itemize{
+\item \code{label}
+\item \code{as_button}
+\item \code{color}
+\item \code{show_underline}
+\item \code{button_fill}
+\item \code{button_width}
+\item \code{button_outline}
+}
+
+Please note that for each of the aforementioned arguments, a \code{\link[=from_column]{from_column()}}
+call needs to reference a column that has data of the correct type (this is
+different for each argument). Additional columns for parameter values can be
+generated with the \code{\link[=cols_add]{cols_add()}} function (if not already present). Columns
+that contain parameter data can also be hidden from final display with
+\code{\link[=cols_hide]{cols_hide()}}. Finally, there is no limitation to how many arguments the
+\code{\link[=from_column]{from_column()}} helper is applied so long as the arguments belong to this
+closed set.
 }
 
 \section{Examples}{
@@ -299,7 +326,7 @@ you to handle them with \code{\link[=sub_missing]{sub_missing()}}. Here's an exa
 
 \section{Function ID}{
 
-3-18
+3-19
 }
 
 \section{Function Introduced}{
@@ -332,6 +359,7 @@ Other data formatting functions:
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
 \code{\link{fmt_time}()},
+\code{\link{fmt_units}()},
 \code{\link{fmt}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},

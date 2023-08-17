@@ -16,7 +16,7 @@ development:
   mode: release
 
 reference:
-  - title: Creating a table
+  - title: Table creation
     desc: >
       All **gt** tables begin with a call to `gt()`, where we would supply the
       input data table (data frame or tibble) and some basic options for
@@ -53,7 +53,7 @@ reference:
     - tab_options
     - tab_info
 
-  - title: Formatting data
+  - title: Formatting column data
     desc: >
       Columns of data can be formatted with the `fmt_*()` functions. We can
       specify the rows of these columns quite precisely with the `rows`
@@ -82,6 +82,7 @@ reference:
     - fmt_duration
     - fmt_bins
     - fmt_markdown
+    - fmt_units
     - fmt_url
     - fmt_image
     - fmt_flag
@@ -95,7 +96,7 @@ reference:
     - sub_values
     - data_color
 
-  - title: Text transformation functions
+  - title: Text transformation
     desc: >
       The `text_*()` functions take cell data that are solidified into
       strings and allow for flexible transformations of those string values.
@@ -123,6 +124,8 @@ reference:
     - cols_width
     - cols_label
     - cols_label_with
+    - cols_units
+    - cols_add
     - cols_move
     - cols_move_to_start
     - cols_move_to_end
@@ -175,6 +178,10 @@ reference:
     - html
     - px
     - pct
+    - from_column
+    - currency
+    - adjust_luminance
+    - define_units
     - stub
     - cells_title
     - cells_stubhead
@@ -189,11 +196,9 @@ reference:
     - cells_stub_grand_summary
     - cells_footnotes
     - cells_source_notes
-    - currency
     - cell_text
     - cell_fill
     - cell_borders
-    - adjust_luminance
     - random_id
     - escape_latex
     - gt_latex_dependencies
@@ -201,7 +206,7 @@ reference:
     - default_fonts
     - system_fonts
 
-  - title: Image addition functions
+  - title: Image addition utilities
     desc: >
       We can add images into a **gt** table with the help of the `*_image()`
       functions. Two common ways to do this: (1) use `text_transform()` to
@@ -214,7 +219,7 @@ reference:
     - ggplot_image
     - test_image
 
-  - title: Table option functions
+  - title: Table options
     desc: >
       With the `opt_*()` functions, we have an easy way to set commonly-used
       table options without having to use `tab_options()` directly. Like, we can
@@ -237,7 +242,7 @@ reference:
     - opt_table_font
     - opt_css
 
-  - title: Information functions
+  - title: Informational tables for reference
     desc: >
       These `info_*()` functions present us with **gt** tables containing
       useful information. So far, we can get reference information on
@@ -255,7 +260,7 @@ reference:
     - info_paletteer
     - info_google_fonts
 
-  - title: Shiny functions
+  - title: Shiny
     desc: >
       Shiny is great for building interactive web apps with R. There's
       really nothing quite like it. The **gt** package includes two
@@ -285,7 +290,7 @@ reference:
     - extract_summary
     - extract_cells
 
-  - title: Table group functions
+  - title: Working with table groups
     desc: >
       Sometimes you want to deal with a multitude of **gt** tables, all at once.
       There are some advantages to having a group of tables bundled together in
@@ -304,7 +309,7 @@ reference:
     - grp_rm
     - grp_options
 
-  - title: Vector formatting functions
+  - title: Vector formatting
     desc: >
       Why should columns have all the formatting fun? If you have vectors in
       need of formatting, we have a set of `vec_fmt_*()` functions that have
@@ -330,10 +335,10 @@ reference:
 
   - title: Built in datasets
     desc: >
-      The **gt** package is equipped with ten datasets that come in all shapes
-      and sizes. Use them to experiment with the package! Many examples in the
-      internal help documents use these datasets to quickly demonstrate the
-      awesome features of **gt**.
+      The **gt** package is equipped with twelve datasets that come in all
+      shapes and sizes. Use them to experiment with the package! Many examples
+      in the internal help documents use these datasets to quickly demonstrate
+      the awesome features of **gt**.
     contents:
     - countrypops
     - sza
@@ -343,6 +348,8 @@ reference:
     - exibble
     - towny
     - metro
+    - constants
+    - illness
     - rx_adsl
     - rx_addv
 

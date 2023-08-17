@@ -9,7 +9,7 @@ test_image(type = c("png", "svg"))
 \arguments{
 \item{type}{\emph{The image type}
 
-\verb{singl-kw:[png|svg]} --- \emph{default:} \code{"png"}
+\verb{singl-kw:[png|svg]} // \emph{default:} \code{"png"}
 
 The type of image to produce here can either be \code{"png"} (the default) or
 \code{"svg"}.}

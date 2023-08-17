@@ -9,14 +9,14 @@ fmt(data, columns = everything(), rows = everything(), compat = NULL, fns)
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
 column indices, or a select helper function. Examples of select helper
@@ -25,7 +25,7 @@ functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_w
 
 \item{rows}{\emph{Rows to target}
 
-\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
 
 In conjunction with \code{columns}, we can specify which of their rows should
 undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
@@ -38,14 +38,14 @@ need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{compat}{\emph{Formatting compatibility}
 
-\verb{vector<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{vector<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 An optional vector that provides the compatible classes for the formatting.
 By default this is \code{NULL}.}
 
 \item{fns}{\emph{Formatting functions}
 
-\verb{function|list of functions} --- \strong{required}
+\verb{function|list of functions} // \strong{required}
 
 Either a single formatting function or a named list of functions.}
 }
@@ -139,7 +139,7 @@ the column (\code{x}), multiply them by 1000, and exclose them in single quotes.
 
 \section{Function ID}{
 
-3-24
+3-25
 }
 
 \section{Function Introduced}{
@@ -172,6 +172,7 @@ Other data formatting functions:
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
 \code{\link{fmt_time}()},
+\code{\link{fmt_units}()},
 \code{\link{fmt_url}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},

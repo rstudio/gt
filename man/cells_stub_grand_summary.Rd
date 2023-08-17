@@ -9,7 +9,7 @@ cells_stub_grand_summary(rows = everything())
 \arguments{
 \item{rows}{\emph{Rows to target}
 
-\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
 
 We can specify which rows should be targeted. The default \code{\link[=everything]{everything()}}
 results in all rows in \code{columns} being formatted. Alternatively, we can
@@ -119,7 +119,7 @@ using \code{cells_stub_grand_summary()} in the \code{locations} argument.
 
 \section{Function ID}{
 
-8-16
+8-20
 }
 
 \section{Function Introduced}{
@@ -147,7 +147,9 @@ Other helper functions:
 \code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
+\code{\link{define_units}()},
 \code{\link{escape_latex}()},
+\code{\link{from_column}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},

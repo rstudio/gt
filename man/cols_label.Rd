@@ -4,19 +4,19 @@
 \alias{cols_label}
 \title{Relabel one or more columns}
 \usage{
-cols_label(.data, ..., .list = list2(...), .fn = NULL)
+cols_label(.data, ..., .list = list2(...), .fn = NULL, .process_units = NULL)
 }
 \arguments{
 \item{.data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{...}{\emph{Column label assignments}
 
-\verb{<multiple expressions>} --- \strong{required} (or, use \code{.list})
+\verb{<multiple expressions>} // \strong{required} (or, use \code{.list})
 
 Expressions for the assignment of column labels for the table columns in
 \code{.data}. Two-sided formulas (e.g., \verb{<LHS> ~ <RHS>}) can be used, where the
@@ -26,20 +26,30 @@ should be enclosed in \code{\link[=c]{c()}}. Select helpers like \code{\link[=st
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, and \code{\link[=everything]{everything()}}
 can be used in the LHS. Named arguments are also valid as input for simple
 mappings of column name to label text; they should be of the form \verb{<column name> = <label>}. Subsequent expressions that operate on the columns
-assigned previously will result in overwriting column width values.}
+assigned previously will result in overwriting column label values.}
 
 \item{.list}{\emph{Alternative to \code{...}}
 
-\verb{<list of multiple expressions>} --- \strong{required} (or, use \code{...})
+\verb{<list of multiple expressions>} // \strong{required} (or, use \code{...})
 
 Allows for the use of a list as an input alternative to \code{...}.}
 
 \item{.fn}{\emph{Function to apply}
 
-\code{function} --- \emph{default:} \code{NULL} (\code{optional})
+\code{function} // \emph{default:} \code{NULL} (\code{optional})
 
 An option to specify a function that will be applied to all of the provided
 label values.}
+
+\item{.process_units}{\emph{Option to process any available units throughout}
+
+\verb{scalar<logical>} // \emph{default:} \code{NULL} (\code{optional})
+
+Should your column text contain text that is already in \strong{gt}'s units
+notation (and, importantly, is surrounded by \code{"{{"}/\code{"}}"}), using \code{TRUE}
+here reprocesses all column such that the units are properly registered for
+each of the column labels. This ignores any column label assignments in
+\code{...} or \code{.list}.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -49,10 +59,10 @@ Column labels can be modified from their default values (the names of the
 columns from the input table data). When you create a \strong{gt} table object
 using \code{\link[=gt]{gt()}}, column names effectively become the column labels. While this
 serves as a good first approximation, column names as label defaults aren't
-often appealing as the alternative for custom column labels in a \strong{gt}
-output table. The \code{cols_label()} function provides the flexibility to relabel
-one or more columns and we even have the option to use the \code{\link[=md]{md()}} or \code{\link[=html]{html()}}
-helper functions for rendering column labels from Markdown or using HTML.
+often as appealing in a \strong{gt} table as the option for custom column labels.
+The \code{cols_label()} function provides the flexibility to relabel one or more
+columns and we even have the option to use the \code{\link[=md]{md()}} or \code{\link[=html]{html()}} helper
+functions for rendering column labels from Markdown or using HTML.
 }
 \section{A note on column names and column labels}{
 
@@ -64,22 +74,65 @@ no requirement for uniqueness (which is useful for labeling columns as, say,
 measurement units that may be repeated several times---usually under
 different spanner labels). Thus, we can still easily distinguish
 between columns in other \strong{gt} function calls (e.g., in all of the
-\verb{fmt*()} functions) even though we may lose distinguishability in column
-labels once they have been relabeled.
+\verb{fmt*()} functions) even though we may lose distinguishability between column
+labels once they have undergone relabeling.
+}
+
+\section{Incorporating units with \strong{gt}'s units notation}{
+
+
+Measurement units are often seen as part of column labels and indeed it can
+be much more straightforward to include them here rather than using other
+devices to make readers aware of units for specific columns. The \strong{gt}
+package offers the function \code{\link[=cols_units]{cols_units()}} to apply units to various columns
+with an interface that's similar to that of this function. However, it is
+also possible to define units here along with the column label, obviating the
+need for pattern syntax that joins the two text components. To do this, we
+have to surround the portion of text in the label that corresponds to the
+units definition with \code{"{{"}/\code{"}}"}.
+
+Now that we know how to mark text for units definition, we know need to know
+how to write proper units with the notation. Such notation uses a succinct
+method of writing units and it should feel somewhat familiar though it is
+particular to the task at hand. Each unit is treated as a separate entity
+(parentheses and other symbols included) and the addition of subscript text
+and exponents is flexible and relatively easy to formulate. This is all best
+shown with a few examples:
+\itemize{
+\item \code{"m/s"} and \code{"m / s"} both render as \code{"m/s"}
+\item \code{"m s^-1"} will appear with the \code{"-1"} exponent intact
+\item \code{"m \\s"} gives the the same result, as \code{"\\<unit>"} is equivalent to
+\code{"<unit>^-1"}
+\item \code{"E_h"} will render an \code{"E"} with the \code{"h"} subscript
+\item \code{"t_i^2.5"} provides a \code{t} with an \code{"i"} subscript and a \code{"2.5"} exponent
+\item \code{"m[_0^2]"} will use overstriking to set both scripts vertically
+\item \code{"g/L \%C6H12O6\%"} uses a chemical formula (enclosed in a pair of \code{"\%"}
+characters) as a unit partial, and the formula will render correctly with
+subscripted numbers
+\item Common units that are difficult to write using ASCII text may be implicitly
+converted to the correct characters (e.g., the \code{"u"} in \code{"ug"}, \code{"um"},
+\code{"uL"}, and \code{"umol"} will be converted to the Greek \emph{mu} symbol; \code{"degC"}
+and \code{"degF"} will render a degree sign before the temperature unit)
+\item We can transform shorthand symbol/unit names enclosed in \code{":"} (e.g.,
+\code{":angstrom:"}, \code{":ohm:"}, etc.) into proper symbols
+\item The components of a unit (unit name, subscript, and exponent) can be
+fully or partially italicized/emboldened by surrounding text with \code{"*"} or
+\code{"**"}
+}
 }
 
 \section{Examples}{
 
 
 Let's use a portion of the \code{\link{countrypops}} dataset to create a \strong{gt} table.
-Relabel all the table's columns with the \code{cols_label()} function to improve
-its presentation. In this simple case we are supplying the name of the column
-on the left-hand side, and the label text on the right-hand side.
+We can relabel all the table's columns with the \code{cols_label()} function to
+improve its presentation. In this simple case we are supplying the name of
+the column on the left-hand side, and the label text on the right-hand side.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>
-  dplyr::filter(country_name == "Mongolia") |>
-  tail(5) |>
+  dplyr::filter(country_name == "Uganda") |>
+  dplyr::slice_tail(n = 5) |>
   gt() |>
   cols_label(
     country_name = "Name",
@@ -99,8 +152,8 @@ a \code{~} between the column name and the label text.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>
-  dplyr::filter(country_name == "Mongolia") |>
-  tail(5) |>
+  dplyr::filter(country_name == "Uganda") |>
+  dplyr::slice_tail(n = 5) |>
   gt() |>
   cols_label(
     country_name = md("**Name**"),
@@ -174,6 +227,81 @@ is not a single column name, we must use formula syntax (i.e., with the \code{~}
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_4.png" alt="This image of a table was generated from the fourth code example in the `cols_label()` help file." style="width:100\%;">
 }}
+
+Here's another table that uses the \code{\link{towny}} dataset. The big difference
+compared to the previous \emph{gt} table is that \code{cols_label()} as used here
+incorporates unit notation text (within \code{"{{"}/\code{"}}"}).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
+  dplyr::select(
+    name, population_2021, density_2021, land_area_km2, latitude, longitude
+  ) |>
+  dplyr::filter(population_2021 > 100000) |>
+  dplyr::arrange(desc(population_2021)) |>
+  dplyr::slice_head(n = 10) |>
+  gt() |>
+  fmt_integer(columns = population_2021) |>
+  fmt_number(
+    columns = c(density_2021, land_area_km2),
+    decimals = 1
+  ) |>
+  fmt_number(columns = latitude, decimals = 2) |>
+  fmt_number(columns = longitude, decimals = 2, scale_by = -1) |>
+  cols_label(
+    starts_with("population") ~ "Population",
+    starts_with("density") ~ "Density, \{\{*persons* km^-2\}\}",
+    land_area_km2 ~ "Area, \{\{km^2\}\}",
+    latitude ~ "Latitude, \{\{:degrees:N\}\}",
+    longitude ~ "Longitude, \{\{:degrees:W\}\}"
+  ) |>
+  cols_width(everything() ~ px(120))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_5.png" alt="This image of a table was generated from the fifth code example in the `cols_label()` help file." style="width:100\%;">
+}}
+
+The \code{\link{illness}} dataset has units within the \code{units} column. They're
+formatted in just the right way for \strong{gt} too. Let's do some text
+manipulation through \code{dplyr::mutate()} and some pivoting with
+\strong{tidyr}'s \code{pivot_longer()} and \code{pivot_wider()} in order to include the
+units as part of the column names in the reworked table. These column names
+are in a format where the units are included within \code{"{{"}/\code{"}}"}, so, we can
+use \code{cols_label()} with the \code{.process_units = TRUE} option to register the
+measurement units. In addition to this, because there is a \verb{<br>} included
+(for a line break), we should use the \code{.fn} option and provide the \code{\link[=md]{md()}}
+helper function (as a bare function name). This ensures that any line breaks
+will materialize.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{illness |>
+  dplyr::mutate(test = paste0(test, ",<br>\{\{", units, "\}\}")) |>
+  dplyr::slice_head(n = 8) |>
+  dplyr::select(-c(starts_with("norm"), units)) |>
+  tidyr::pivot_longer(
+    cols = starts_with("day"),
+    names_to = "day",
+    names_prefix = "day_",
+    values_to = "value"
+  ) |>
+  tidyr::pivot_wider(
+    names_from = test,
+    values_from = value
+  ) |>
+  gt(rowname_col = "day") |>
+  tab_stubhead(label = "Day") |>
+  cols_label(
+    .fn = md,
+    .process_units = TRUE
+  ) |>
+  cols_width(
+    stub() ~ px(50),
+    everything() ~ px(120)
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_label_6.png" alt="This image of a table was generated from the sixth code example in the `cols_label()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
@@ -188,6 +316,7 @@ is not a single column name, we must use formula syntax (i.e., with the \code{~}
 
 \seealso{
 Other column modification functions: 
+\code{\link{cols_add}()},
 \code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
 \code{\link{cols_hide}()},
@@ -200,6 +329,7 @@ Other column modification functions:
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
 \code{\link{cols_unhide}()},
+\code{\link{cols_units}()},
 \code{\link{cols_width}()}
 }
 \concept{column modification functions}

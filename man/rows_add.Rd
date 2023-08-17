@@ -16,14 +16,14 @@ rows_add(
 \arguments{
 \item{.data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{...}{\emph{Cell data assignments}
 
-\verb{<multiple expressions>} --- (or, use \code{.list})
+\verb{<multiple expressions>} // (or, use \code{.list})
 
 Expressions for the assignment of cell values to the new rows by column
 name in \code{.data}. Name-value pairs, in the form of
@@ -39,13 +39,13 @@ in cases where there are multiple rows to be added.}
 
 \item{.list}{\emph{Alternative to \code{...}}
 
-\verb{<list of multiple expressions>} --- (or, use \code{...})
+\verb{<list of multiple expressions>} // (or, use \code{...})
 
 Allows for the use of a list as an input alternative to \code{...}.}
 
 \item{.before, .after}{\emph{Row used as anchor}
 
-\verb{<row-targeting expression>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{<row-targeting expression>} // \emph{default:} \code{NULL} (\code{optional})
 
 A single row-resolving expression or row index an be given to either
 \code{.before} or \code{.after}. The row specifies where the new rows should be
@@ -59,7 +59,7 @@ table.}
 
 \item{.n_empty}{\emph{Number of empty rows to add}
 
-\code{scalar<numeric|integer>(val>=0)} --- \emph{default:} \code{NULL} (\code{optional})
+\code{scalar<numeric|integer>(val>=0)} // \emph{default:} \code{NULL} (\code{optional})
 
 An option to add empty rows in lieu of rows containing data that would
 otherwise be supplied to \code{...} or \code{.list}. If the option is taken, provide
@@ -80,7 +80,7 @@ table.
 \section{Targeting the row for insertion with \code{.before} or \code{.after}}{
 
 
-The targeting of a rows for insertion is done through the \code{.before} or
+The targeting of a row for insertion is done through the \code{.before} or
 \code{.after} arguments (only one of these options should be be used). This can be
 done in a variety of ways. If a stub is present, then we potentially have row
 identifiers. This is the ideal method to use for establishing a row target.
@@ -89,8 +89,8 @@ possible to use row indices (e.g., \code{c(3, 5, 6)}) though these index values
 must correspond to the row numbers of the input data (the indices won't
 necessarily match those of rearranged rows if row groups are present). One
 more type of expression is possible, an expression that takes column values
-(can involve any of the available columns in the table) and returns a
-logical vector.
+(can involve any of the available columns in the table) and returns a logical
+vector.
 }
 
 \section{Examples}{
@@ -264,6 +264,60 @@ both the \code{a} and \code{b} columns. A similar approach was taken with adding
 \code{72.63} value to the \code{quantity_x} and \code{quantity_y} columns though we used the
 \code{starts_with("quantity")} expression to get \strong{gt} to resolve those two
 columns.
+
+You can start with an empty table (i.e., no columns and no rows) and add one
+or more rows to it. In the completely empty table scenario, where you would
+use something like \code{dplyr::tibble()} or \code{data.frame()} with \code{\link[=gt]{gt()}}, the first
+\code{rows_add()} could have rows of arbitrary width. In other words, you get to
+generate table columns (and rows) with a completely empty table via
+\code{rows_add()}. Here's an example of that:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gt(dplyr::tibble()) |>
+  rows_add(
+    msrp = c(29.95, 49.95, 79.95),
+    item = c("Klax", "Rez", "Ys"),
+    type = c("A", "B", "X")
+  ) |>
+  rows_add(
+    msrp = 14.95,
+    item = "D",
+    type = "Z"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rows_add_7.png" alt="This image of a table was generated from the seventh code example in the `rows_add()` help file." style="width:100\%;">
+}}
+
+In the above, three columns and three rows were generated. The second usage
+of \code{rows_add()} had to use of a subset of those columns (all three were used
+to create a complete, new row).
+
+We can also start with a virtually empty table: one that has columns but no
+actual rows. With this type of multi-column, zero-row table, one needs to use
+a subset of the columns when generating new rows through \code{rows_add()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
+  msrp = numeric(0),
+  item = character(0),
+  type = character(0)
+) |>
+  gt() |>
+  rows_add(
+    msrp = c(29.95, 49.95, 79.95, 14.95),
+    item = c("Klax", "Rez", "Ys", "D"),
+    type = c("A", "B", "X", "Z")
+  ) |>
+  cols_add(
+    genre = c("puzzle", "action", "RPG", "adventure")
+  ) |>
+  fmt_currency() |>
+  cols_move_to_end(columns = msrp)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rows_add_8.png" alt="This image of a table was generated from the eighth code example in the `rows_add()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{

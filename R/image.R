@@ -47,13 +47,13 @@
 #'
 #' @param url *An image URL*
 #'
-#'   `scalar<character>` --- **required**
+#'   `scalar<character>` // **required**
 #'
 #'   A url that resolves to an image file.
 #'
 #' @param height *Height of image*
 #'
-#'   `scalar<numeric|integer>` --- *default:* `30`
+#'   `scalar<numeric|integer>` // *default:* `30`
 #'
 #'   The absolute height of the image in the table cell (in `"px"` units). By
 #'   default, this is set to `"30px"`.
@@ -181,13 +181,13 @@ web_image <- function(
 #'
 #' @param filename *Path to image file*
 #'
-#'   `scalar<character>` --- **required**
+#'   `scalar<character>` // **required**
 #'
 #'   A local path to an image file on disk.
 #'
 #' @param height *Height of image*
 #'
-#'   `scalar<numeric|integer>` --- *default:* `30`
+#'   `scalar<numeric|integer>` // *default:* `30`
 #'
 #'   The absolute height of the image in the table cell (in `"px"` units). By
 #'   default, this is set to `"30px"`.
@@ -279,20 +279,20 @@ local_image <- function(
 #'
 #' @param plot_object *A ggplot plot object*
 #'
-#'   `obj:<ggplot>` --- **required**
+#'   `obj:<ggplot>` // **required**
 #'
 #'   A `ggplot` plot object.
 #'
 #' @param height *Height of image*
 #'
-#'   `scalar<numeric|integer>` --- *default:* `100`
+#'   `scalar<numeric|integer>` // *default:* `100`
 #'
 #'   The absolute height of the output image in the table cell (in `"px"`
 #'   units). By default, this is set to `"100px"`.
 #'
 #' @param aspect_ratio *The final aspect ratio of plot*
 #'
-#'   `scalar<numeric|integer>` --- *default:* `1.0`
+#'   `scalar<numeric|integer>` // *default:* `1.0`
 #'
 #'   This is the plot's final aspect ratio. Where the height of the plot is
 #'   fixed using the `height` argument, the `aspect_ratio` will either compress
@@ -405,7 +405,7 @@ ggplot_image <- function(
 #'
 #' @param type *The image type*
 #'
-#'   `singl-kw:[png|svg]` --- *default:* `"png"`
+#'   `singl-kw:[png|svg]` // *default:* `"png"`
 #'
 #'   The type of image to produce here can either be `"png"` (the default) or
 #'   `"svg"`.

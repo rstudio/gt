@@ -27,7 +27,7 @@
 #'
 #' @param style *Style declarations*
 #'
-#'   `<style expressions>` --- **required**
+#'   `<style expressions>` // **required**
 #'
 #'   The styles to use for the targeted cells. The [cell_text()], [cell_fill()],
 #'   and [cell_borders()] helper functions can be used here to more easily
@@ -38,7 +38,7 @@
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` --- *default:* `everything()`
+#'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns to which the targeting operations are constrained.  Can either
 #'   be a series of column names provided in [c()], a vector of column indices,
@@ -49,7 +49,7 @@
 #'
 #' @param rows *Rows to target*
 #'
-#'   `<row-targeting expression>` --- *default:* `everything()`
+#'   `<row-targeting expression>` // *default:* `everything()`
 #'
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   form a constraint for targeting operations. The default [everything()]
@@ -62,21 +62,21 @@
 #'
 #' @param values *Values for targeting*
 #'
-#'   `vector<character|numeric|integer>` --- *default:* `NULL` (`optional`)
+#'   `vector<character|numeric|integer>` // *default:* `NULL` (`optional`)
 #'
 #'   The specific value or values that should be targeted for styling. If
 #'   `pattern` is also supplied then `values` will be ignored.
 #'
 #' @param pattern *Regex pattern for targeting*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   A regex pattern that can target solely those values in `character`-based
 #'   columns. If `values` is also supplied, `pattern` will take precedence.
 #'
 #' @param fn *Function to return logical values*
 #'
-#'   `<function>` --- *default:* `NULL` (`optional`)
+#'   `<function>` // *default:* `NULL` (`optional`)
 #'
 #'   A supplied function that operates on each cell of each column specified
 #'   through `columns` and `rows`. The function should be fashioned such that a
@@ -85,7 +85,7 @@
 #'
 #' @param targets *Styling targets*
 #'
-#'   `vector<character>` --- *default:* `"cell"`
+#'   `vector<character>` // *default:* `"cell"`
 #'
 #'   A vector of styling target keywords to contain or expand the target of each
 #'   cell. By default, this is a vector just containing `"cell"`. However, the
@@ -94,7 +94,7 @@
 #'
 #' @param extents *Styling extents*
 #'
-#'   `vector<character>` --- *default:* `"body"`
+#'   `vector<character>` // *default:* `"body"`
 #'
 #'   A vector of locations to project styling. By default, this is a vector just
 #'   containing `"body"`, whereby styled rows or columns (facilitated via
@@ -278,6 +278,22 @@
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_tab_style_body_6.png")`
+#' }}
+#'
+#' Styling every `NA` value in a table is also easily accomplished with the `fn`
+#' argument by way of the `is.na()` function.
+#'
+#' ```r
+#' gt_tbl |>
+#'   tab_style_body(
+#'     style = cell_text(color = "red3"),
+#'     fn = function(x) is.na(x)
+#'   ) |>
+#'   sub_missing(missing_text = "Not Available")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_style_body_7.png")`
 #' }}
 #'
 #' @family part creation/modification functions

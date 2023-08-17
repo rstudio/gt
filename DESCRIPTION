@@ -127,6 +127,7 @@ Collate:
     'text_transform.R'
     'utils.R'
     'utils_color_contrast.R'
+    'utils_examples.R'
     'utils_formatters.R'
     'utils_general_str_formatting.R'
     'utils_pipe.R'
@@ -136,6 +137,7 @@ Collate:
     'utils_render_latex.R'
     'utils_render_rtf.R'
     'utils_render_xml.R'
+    'utils_units.R'
     'z_utils_render_footnotes.R'
     'zzz.R'
 Config/testthat/edition: 3

@@ -25,7 +25,7 @@ introduced to \code{\link[=gt]{gt()}} with its default options).}
 
 \item{width, height}{\emph{Dimensions of table container}
 
-\verb{scalar<numeric|integer|character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<numeric|integer|character>} // \emph{default:} \code{NULL} (\code{optional})
 
 The width and height of the table's container. Either can be specified as a
 single-length character vector with units of pixels or as a percentage. If
@@ -36,7 +36,7 @@ units.}
 
 \item{align}{\emph{Table alignment}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 The alignment of the table in its container. If \code{NULL}, the table will be
 center-aligned. Valid options for this are: \code{"center"}, \code{"left"}, and
@@ -44,20 +44,20 @@ center-aligned. Valid options for this are: \code{"center"}, \code{"left"}, and
 
 \item{env}{\emph{Evaluation environment}
 
-\verb{<environment>} --- \emph{default:} \code{parent.frame()}
+\verb{<environment>} // \emph{default:} \code{parent.frame()}
 
 The environment in which to evaluate the \code{expr}.}
 
 \item{quoted}{\emph{Option to \code{quote()} \code{expr}}
 
-\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
 
 Is \code{expr} a quoted expression (with \code{quote()})? This is useful if you want
 to save an expression in a variable.}
 
 \item{outputArgs}{\emph{Output arguments}
 
-\code{list} --- \emph{default:} \code{list()}
+\code{list} // \emph{default:} \code{list()}
 
 A list of arguments to be passed through to the implicit call to
 \code{\link[=gt_output]{gt_output()}} when \code{render_gt()} is used in an interactive R Markdown

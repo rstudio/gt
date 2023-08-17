@@ -14,14 +14,14 @@ fmt_markdown(
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
 column indices, or a select helper function. Examples of select helper
@@ -30,7 +30,7 @@ functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_w
 
 \item{rows}{\emph{Rows to target}
 
-\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
 
 In conjunction with \code{columns}, we can specify which of their rows should
 undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
@@ -43,7 +43,7 @@ need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{md_engine}{\emph{Choice of Markdown engine}
 
-\verb{singl-kw:[markdown|commonmark]} --- \emph{default:} \code{"markdown"}
+\verb{singl-kw:[markdown|commonmark]} // \emph{default:} \code{"markdown"}
 
 The engine preference for Markdown rendering. By default, this is set to
 \code{"markdown"} where \strong{gt} will use the \strong{markdown} package for Markdown
@@ -96,6 +96,21 @@ expression that takes column values (can involve any of the available columns
 in the table) and returns a logical vector. This is nice if you want to base
 formatting on values in the column or another column, or, you'd like to use a
 more complex predicate expression.
+}
+
+\section{Compatibility of arguments with the \code{from_column()} helper function}{
+
+
+The \code{\link[=from_column]{from_column()}} helper function can be used with the \code{md_engine} argument
+of \code{fmt_markdown()} to obtain varying parameter values from a specified
+column within the table. This means that each row could be formatted a little
+bit differently.
+
+Please note that for this argument (\code{md_engine}), a \code{\link[=from_column]{from_column()}} call
+needs to reference a column that has data of the \code{character} type. Additional
+columns for parameter values can be generated with the \code{\link[=cols_add]{cols_add()}} function
+(if not already present). Columns that contain parameter data can also be
+hidden from final display with \code{\link[=cols_hide]{cols_hide()}}.
 }
 
 \section{Examples}{
@@ -154,7 +169,7 @@ then, create a \strong{gt} table and format all columns with \code{fmt_markdown(
 
 \section{Function ID}{
 
-3-21
+3-22
 }
 
 \section{Function Introduced}{
@@ -189,6 +204,7 @@ Other data formatting functions:
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
 \code{\link{fmt_time}()},
+\code{\link{fmt_units}()},
 \code{\link{fmt_url}()},
 \code{\link{fmt}()},
 \code{\link{sub_large_vals}()},

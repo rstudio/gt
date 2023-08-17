@@ -9,7 +9,7 @@ random_id(n = 10)
 \arguments{
 \item{n}{\emph{Number of letters}
 
-\verb{scalar<numeric|integer>} --- \emph{default:} \code{10}
+\verb{scalar<numeric|integer>} // \emph{default:} \code{10}
 
 The \code{n} argument defines the number of lowercase letters to use for the
 random ID.}
@@ -24,7 +24,7 @@ letters).
 }
 \section{Function ID}{
 
-8-24
+8-26
 }
 
 \section{Function Introduced}{
@@ -53,7 +53,9 @@ Other helper functions:
 \code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
+\code{\link{define_units}()},
 \code{\link{escape_latex}()},
+\code{\link{from_column}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},

@@ -1,5 +1,12 @@
 # gt (development version)
 
+* Update to `col_hide(columns=)` and `cols_unhide(columns=)` arguments. The functions no longer return an error if no columns are selected. (#1342)
+
+* Update word processing to htmlEscape all characters before it goes into xml_t. This means now footnotes are escaped too. (#1303)
+
+* Update word processing to handle the new `summary_rows()` and `grand_summary_rows()` `side` argument, as well as handle cases where a table doesn't have rownames. (#1325)
+
+
 # gt 0.9.0
 
 ## New features
@@ -139,7 +146,7 @@
 
 * The `docx` output format is now better detected in R Markdown and Quarto (#1040). (#1084, thanks @cderv!)
 
-* Replaced all `match.arg()` calls with **rlang*'s `match_arg()` for better error output (#672). (#1099, thanks @mojister!)
+* Replaced all `match.arg()` calls with **rlang**'s `match_arg()` for better error output (#672). (#1099, thanks @mojister!)
 
 * Project website improvements; we now have a doublet of sites: (1) https://gt.rstudio.com and (2) https://gt.rstudio.com/dev (#1074, thanks @ddsjoberg!)
 

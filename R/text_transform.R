@@ -34,27 +34,27 @@
 #'
 #' @param data *The gt table data object*
 #'
-#'   `obj:<gt_tbl>` --- **required**
+#'   `obj:<gt_tbl>` // **required**
 #'
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
 #' @param pattern *Regex pattern to match with*
 #'
-#'   `scalar<character>` --- **required**
+#'   `scalar<character>` // **required**
 #'
 #'   A regex pattern used to target text fragments in the cells resolved in
 #'   locations.
 #'
 #' @param replacement *Replacement text*
 #'
-#'   `scalar<character>` --- **required**
+#'   `scalar<character>` // **required**
 #'
 #'   The replacement text for any matched text fragments.
 #'
 #' @param locations *Locations to target*
 #'
-#'   `<locations expressions>` --- *default:* `cells_body()`
+#'   `<locations expressions>` // *default:* `cells_body()`
 #'
 #'   The cell or set of cells to be associated with the text transformation.
 #'   Only the [cells_body()], [cells_stub()], [cells_row_groups()],
@@ -141,14 +141,14 @@ text_replace <- function(
 #'
 #' @param .data *The gt table data object*
 #'
-#'   `obj:<gt_tbl>` --- **required**
+#'   `obj:<gt_tbl>` // **required**
 #'
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
 #' @param ... *Matching expressions*
 #'
-#'   `<multiple expressions>` --- **required**
+#'   `<multiple expressions>` // **required**
 #'
 #'   A sequence of two-sided formulas. The left hand side (LHS)
 #'   determines which values match this case. The right hand side (RHS) provides
@@ -157,14 +157,14 @@ text_replace <- function(
 #'
 #' @param .default *Default replacement text*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   The replacement text to use when cell values aren't matched by any of the
 #'   LHS inputs. If `NULL`, the default, no replacement text will be used.
 #'
 #' @param .locations *Locations to target*
 #'
-#'   `<locations expressions>` --- *default:* `cells_body()`
+#'   `<locations expressions>` // *default:* `cells_body()`
 #'
 #'   The cell or set of cells to be associated with the text transformation.
 #'   Only the [cells_body()], [cells_stub()], [cells_row_groups()],
@@ -290,14 +290,14 @@ text_case_when <- function(
 #'
 #' @param .data *The gt table data object*
 #'
-#'   `obj:<gt_tbl>` --- **required**
+#'   `obj:<gt_tbl>` // **required**
 #'
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
 #' @param ... *Matching expressions*
 #'
-#'   `<multiple expressions>` --- **required**
+#'   `<multiple expressions>` // **required**
 #'
 #'   A sequence of two-sided formulas matching this general construction:
 #'   `<old_text> ~ <new_text>`. The left hand side (LHS) determines which values
@@ -308,14 +308,14 @@ text_case_when <- function(
 #'
 #' @param .default *Default replacement text*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   The replacement text to use when cell values aren't matched by any of the
 #'   LHS inputs. If `NULL`, the default, no replacement text will be used.
 #'
 #' @param .replace *Method for text replacement*
 #'
-#'   `singl-kw:[all|partial]` --- *default:* `"all"`
+#'   `singl-kw:[all|partial]` // *default:* `"all"`
 #'
 #'   A choice in how the matching is to be done. The default `"all"` means that
 #'   the `old_text` (on the LHS of formulas given in `...`) must match the cell
@@ -326,7 +326,7 @@ text_case_when <- function(
 #'
 #' @param .locations *Locations to target*
 #'
-#'   `<locations expressions>` --- *default:* `cells_body()`
+#'   `<locations expressions>` // *default:* `cells_body()`
 #'
 #'   The cell or set of cells to be associated with the text transformation.
 #'   Only the [cells_body()], [cells_stub()], [cells_row_groups()],
@@ -504,21 +504,21 @@ text_case_match <- function(
 #'
 #' @param data *The gt table data object*
 #'
-#'   `obj:<gt_tbl>` --- **required**
+#'   `obj:<gt_tbl>` // **required**
 #'
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
 #' @param fn *Function for text transformation*
 #'
-#'   `<function>` --- **required**
+#'   `<function>` // **required**
 #'
 #'   The function to use for text transformation. It should include `x` as an
 #'   argument and return a character vector of the same length as the input `x`.
 #'
 #' @param locations *Locations to target*
 #'
-#'   `<locations expressions>` --- *default:* `cells_body()`
+#'   `<locations expressions>` // *default:* `cells_body()`
 #'
 #'   The cell or set of cells to be associated with the text transformation.
 #'   Only the [cells_body()], [cells_stub()], [cells_row_groups()],
@@ -599,6 +599,44 @@ text_case_match <- function(
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_text_transform_2.png")`
+#' }}
+#'
+#' There may be occasions where you'd want to remove all text. Here in this
+#' example based on the [`pizzaplace`] dataset, we generate a **gt** table that
+#' summarizes an entire year of data by colorizing the daily sales revenue.
+#' Individual cell values are not needed here (since the encoding by color
+#' suffices), so, `text_transform()` is used to turn every value to an empty
+#' string: `""`.
+#'
+#' ```r
+#' pizzaplace |>
+#'   dplyr::group_by(date) |>
+#'   dplyr::summarize(rev = sum(price)) |>
+#'   dplyr::ungroup() |>
+#'   dplyr::mutate(
+#'     month = lubridate::month(date, label = TRUE),
+#'     day_num = lubridate::mday(date)
+#'   ) |>
+#'   dplyr::select(-date) |>
+#'   tidyr::pivot_wider(names_from = month, values_from = rev) |>
+#'   gt(rowname_col = "day_num") |>
+#'   data_color(
+#'     method = "numeric",
+#'     palette = "wesanderson::Zissou1",
+#'     na_color = "white"
+#'   ) |>
+#'   text_transform(
+#'     fn = function(x) "",
+#'     locations = cells_body()
+#'   ) |>
+#'   opt_table_lines(extent = "none") |>
+#'   opt_all_caps() |>
+#'   cols_width(everything() ~ px(35)) |>
+#'   cols_align(align = "center")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_text_transform_3.png")`
 #' }}
 #'
 #' @family text transforming functions

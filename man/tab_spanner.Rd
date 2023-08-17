@@ -18,14 +18,14 @@ tab_spanner(
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{label}{\emph{Spanner label text}
 
-\verb{scalar<character>} --- \strong{required}
+\verb{scalar<character>} // \strong{required}
 
 The text to use for the spanner label. We can optionally use the \code{\link[=md]{md()}} and
 \code{\link[=html]{html()}} functions to style the text as Markdown or to retain HTML elements
@@ -33,7 +33,7 @@ in the text.}
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{<column-targeting expression>} // \emph{default:} \code{NULL} (\code{optional})
 
 The columns to serve as components of the spanner. Can either be a series
 of column names provided in \code{\link[=c]{c()}}, a vector of column indices, or a select
@@ -44,7 +44,7 @@ helper function. Examples of select helper functions include
 
 \item{spanners}{\emph{Spanners to target}
 
-\verb{vector<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{vector<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 The spanners that should be spanned over, should they already be defined.
 One or more spanner ID values (in quotes) can be supplied here. This
@@ -52,7 +52,7 @@ argument works in tandem with the \code{columns} argument.}
 
 \item{level}{\emph{Spanner level for insertion}
 
-\verb{scalar<numeric|integer>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<numeric|integer>} // \emph{default:} \code{NULL} (\code{optional})
 
 An explicit level to which the spanner should be placed. If not provided,
 \strong{gt} will choose the level based on the inputs provided within \code{columns}
@@ -61,7 +61,7 @@ spanner level (right above the column labels) is \code{1}.}
 
 \item{id}{\emph{Spanner ID}
 
-\verb{scalar<character>} --- \emph{default:} \code{label}
+\verb{scalar<character>} // \emph{default:} \code{label}
 
 The ID for the spanner. When accessing a spanner through the \code{spanners}
 argument of \code{tab_spanner()} or \code{\link[=cells_column_spanners]{cells_column_spanners()}} (when using
@@ -76,7 +76,7 @@ if \code{id} isn't unique).}
 
 \item{gather}{\emph{Gather columns together}
 
-\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 An option to move the specified \code{columns} such that they are unified under
 the spanner. Ordering of the moved-into-place columns will be preserved in
@@ -84,7 +84,7 @@ all cases. By default, this is set to \code{TRUE}.}
 
 \item{replace}{\emph{Replace existing spanners}
 
-\verb{scalar<logical>} --- \emph{default:} \code{FALSE}
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
 
 Should new spanners be allowed to partially or fully replace existing
 spanners? (This is a possibility if setting spanners at an already

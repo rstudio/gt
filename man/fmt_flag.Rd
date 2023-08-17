@@ -16,14 +16,14 @@ fmt_flag(
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 Can either be a series of column names provided in \code{\link[=c]{c()}}, a vector of
 column indices, or a select helper function. Examples of select helper
@@ -32,7 +32,7 @@ functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_w
 
 \item{rows}{\emph{Rows to target}
 
-\verb{<row-targeting expression>} --- \emph{default:} \code{everything()}
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
 
 In conjunction with \code{columns}, we can specify which of their rows should
 undergo formatting. The default \code{\link[=everything]{everything()}} results in all rows in
@@ -45,14 +45,14 @@ need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{height}{\emph{Height of flag}
 
-\verb{scalar<character>} --- \emph{default:} \code{"1em"}
+\verb{scalar<character>} // \emph{default:} \code{"1em"}
 
 The absolute height of the flag icon in the table cell. By default, this is
 set to \code{"1em"}.}
 
 \item{sep}{\emph{Separator between flags}
 
-\verb{scalar<character>} --- \emph{default:} \code{" "}
+\verb{scalar<character>} // \emph{default:} \code{" "}
 
 In the output of flag icons within a body cell, \code{sep} provides the
 separator between each icon. By default, this is a single space character
@@ -60,7 +60,7 @@ separator between each icon. By default, this is a single space character
 
 \item{use_title}{\emph{Display country name on hover}
 
-\verb{scalar<logical>} --- \emph{default:} \code{TRUE}
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 An option to display a tooltip for the country name (in English) when
 hovering over the flag icon.}
@@ -131,6 +131,29 @@ expression that takes column values (can involve any of the available columns
 in the table) and returns a logical vector. This is nice if you want to base
 formatting on values in the column or another column, or, you'd like to use a
 more complex predicate expression.
+}
+
+\section{Compatibility of arguments with the \code{from_column()} helper function}{
+
+
+The \code{\link[=from_column]{from_column()}} helper function can be used with certain arguments of
+\code{fmt_flag()} to obtain varying parameter values from a specified column
+within the table. This means that each row could be formatted a little bit
+differently. These arguments provide support for \code{\link[=from_column]{from_column()}}:
+\itemize{
+\item \code{height}
+\item \code{sep}
+\item \code{use_title}
+}
+
+Please note that for each of the aforementioned arguments, a \code{\link[=from_column]{from_column()}}
+call needs to reference a column that has data of the correct type (this is
+different for each argument). Additional columns for parameter values can be
+generated with the \code{\link[=cols_add]{cols_add()}} function (if not already present). Columns
+that contain parameter data can also be hidden from final display with
+\code{\link[=cols_hide]{cols_hide()}}. Finally, there is no limitation to how many arguments the
+\code{\link[=from_column]{from_column()}} helper is applied so long as the arguments belong to this
+closed set.
 }
 
 \section{Examples}{
@@ -230,7 +253,7 @@ tooltip text showing the name of the country.
 
 \section{Function ID}{
 
-3-20
+3-21
 }
 
 \section{Function Introduced}{
@@ -262,6 +285,7 @@ Other data formatting functions:
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
 \code{\link{fmt_time}()},
+\code{\link{fmt_units}()},
 \code{\link{fmt_url}()},
 \code{\link{fmt}()},
 \code{\link{sub_large_vals}()},

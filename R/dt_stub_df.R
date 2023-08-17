@@ -53,6 +53,13 @@ dt_stub_df_init <- function(
       built_group_label = rep(NA_character_, nrow(data_tbl))
     )
 
+  # Handle case where table has no columns
+  if (ncol(data_tbl) < 1) {
+
+    data <- dt_stub_df_set(data = data, stub_df = stub_df)
+    return(data)
+  }
+
   #
   # Handle column of data specified as the `rowname_col`
   #

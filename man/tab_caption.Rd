@@ -9,14 +9,14 @@ tab_caption(data, caption)
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{caption}{\emph{Table caption text}
 
-\verb{scalar<character>} --- \strong{required}
+\verb{scalar<character>} // \strong{required}
 
 The table caption to use for cross-referencing in R Markdown, Quarto, or
 \strong{bookdown}.}

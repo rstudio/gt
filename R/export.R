@@ -71,14 +71,14 @@
 #'
 #' @param data *The gt table data object*
 #'
-#'   `obj:<gt_tbl>` --- **required**
+#'   `obj:<gt_tbl>` // **required**
 #'
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
 #' @param filename *Output filename*
 #'
-#'   `scalar<character>` --- **required**
+#'   `scalar<character>` // **required**
 #'
 #'   The file name to create on disk. Ensure that an extension compatible with
 #'   the output types is provided (`.html`, `.tex`, `.ltx`, `.rtf`, `.docx`). If
@@ -86,7 +86,7 @@
 #'
 #' @param path *Output path*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional path to which the file should be saved (combined with
 #'   `filename`).
@@ -234,16 +234,33 @@ gt_save_html <- function(
 
   filename <- gtsave_filename(path = path, filename = filename)
 
-  if (inline_css) {
+  if (is_gt_tbl(data = data)) {
 
-     html <- as_raw_html(data, inline_css = inline_css)
-     html <- htmltools::HTML(html)
-     htmltools::save_html(html, filename, ...)
+    if (inline_css) {
 
-  } else {
+      html <- as_raw_html(data, inline_css = inline_css)
+      html <- htmltools::HTML(html)
 
-    html <- htmltools::as.tags(data)
-    htmltools::save_html(html, filename, ...)
+    } else {
+
+      html <- htmltools::as.tags(data)
+    }
+
+    return(htmltools::save_html(html, filename, ...))
+
+  } else if (is_gt_group(data = data)) {
+
+    seq_tbls <- seq_len(nrow(data$gt_tbls))
+
+    html_tbls <- htmltools::tagList()
+
+    for (i in seq_tbls) {
+
+      html_tbl_i <- as_raw_html(grp_pull(data, which = i), inline_css = inline_css)
+      html_tbls <- htmltools::tagList(html_tbls, html_tbl_i)
+    }
+
+    return(htmltools::save_html(html_tbls, filename, ...))
   }
 }
 
@@ -259,6 +276,14 @@ gt_save_webshot <- function(
     zoom = 2,
     expand = 5
 ) {
+
+  if (is_gt_group(data = data)) {
+
+    cli::cli_abort(c(
+      "The `gtsave()` function cannot be used with `gt_group` objects.",
+      "*" = "Alternatively, you can use `grp_pull()` -> `gtsave()` for each gt table."
+    ))
+  }
 
   filename <- gtsave_filename(path = path, filename = filename)
 
@@ -301,7 +326,31 @@ gt_save_latex <- function(
 
   filename <- gtsave_filename(path = path, filename = filename)
 
-  writeLines(text = as_latex(data = data), con = filename)
+  if (is_gt_tbl(data = data)) {
+
+    latex_lines <- as_latex(data = data)
+
+  } else if (is_gt_group(data = data)) {
+
+    latex_lines <- c()
+
+    seq_tbls <- seq_len(nrow(data$gt_tbls))
+
+    for (i in seq_tbls) {
+
+      latex_lines_i <- as_latex(grp_pull(data, which = i))
+
+      latex_lines <- c(latex_lines, latex_lines_i)
+    }
+
+    latex_lines <-
+      paste(
+        latex_lines,
+        collapse = "\n\\newpage\n\n"
+      )
+  }
+
+  writeLines(text = latex_lines, con = filename)
 }
 
 #' Saving function for an RTF file
@@ -320,7 +369,7 @@ gt_save_rtf <- function(
 
     rtf_lines <- as_rtf(data = data)
 
-  } else {
+  } else if (is_gt_group(data = data)) {
 
     rtf_lines <- c()
 
@@ -399,7 +448,7 @@ gt_save_docx <- function(
         collapse = "\n"
       )
 
-  } else {
+  } else if (is_gt_group(data = data)) {
 
     word_tbls <- c()
 
@@ -440,9 +489,8 @@ gt_save_docx <- function(
   )
 
   if (needs_gt_as_word_post_processing(word_md_text)) {
-    gt_as_word_post_processing(filename)
+    gt_as_word_post_processing(path = filename)
   }
-
 }
 
 #' Get the lowercase extension from a filename
@@ -485,14 +533,14 @@ gtsave_filename <- function(path, filename) {
 #'
 #' @param data *The gt table data object*
 #'
-#'   `obj:<gt_tbl>` --- **required**
+#'   `obj:<gt_tbl>` // **required**
 #'
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
 #' @param inline_css *Use inline CSS*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   An option to supply styles to table elements as inlined CSS styles. This is
 #'   useful when including the table HTML as part of an HTML email message body,
@@ -579,7 +627,7 @@ as_raw_html <- function(
 #'
 #' @param data *The gt table data object*
 #'
-#'   `obj:<gt_tbl>` --- **required**
+#'   `obj:<gt_tbl>` // **required**
 #'
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
@@ -604,7 +652,7 @@ as_raw_html <- function(
 #' The `gt_packages.sty` file would then contain the listed dependencies above:
 #'
 #' \preformatted{
-#'   \usepackage{amsmath, booktabs, caption, longtable}
+#'   \usepackage{booktabs, caption, longtable, colortbl, array}
 #' }
 #'
 #' @section Examples:
@@ -700,35 +748,35 @@ as_latex <- function(data) {
 #'
 #' @param data *The gt table data object*
 #'
-#'   `obj:<gt_tbl>` --- **required**
+#'   `obj:<gt_tbl>` // **required**
 #'
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
 #' @param incl_open,incl_close *Include opening/closing braces*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   Options that govern whether the opening or closing `"{"` and `"}"` should
 #'   be included. By default, both options are `TRUE`.
 #'
 #' @param incl_header *Include RTF header*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   Should the RTF header be included in the output? By default, this is
 #'   `TRUE`.
 #'
 #' @param incl_page_info *Include RTF page information*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   Should the RTF output include directives for the document pages? This is
 #'   `TRUE` by default.
 #'
 #' @param incl_body *Include RTF body*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   An option to include the body of RTF document. By default, this is `TRUE`.
 #'
@@ -846,21 +894,21 @@ as_rtf <- function(
 #'
 #' @param data *The gt table data object*
 #'
-#'   `obj:<gt_tbl>` --- **required**
+#'   `obj:<gt_tbl>` // **required**
 #'
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
 #' @param align *Table alignment*
 #'
-#'   `scalar<character>` --- *default:* `"center"`
+#'   `scalar<character>` // *default:* `"center"`
 #'
 #'   An option for table alignment. Can either be `"center"`, `"left"`, or
 #'   `"right"`.
 #'
 #' @param caption_location *Caption location*
 #'
-#'   `singl-kw:[top|bottom|embed]` --- *default:* `"top"`
+#'   `singl-kw:[top|bottom|embed]` // *default:* `"top"`
 #'
 #'   Determines where the caption should be positioned. This can either be
 #'   `"top"`, `"bottom"`, or `"embed"`.
@@ -873,14 +921,14 @@ as_rtf <- function(
 #'
 #' @param split *Allow splitting*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   A logical value that indicates whether to activate the Word option
 #'   `Allow row to break across pages`.
 #'
 #' @param keep_with_next *Keeping rows together*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   A logical value that indicates whether a table should use Word option
 #'   `keep rows together`.
@@ -1087,7 +1135,7 @@ as_word_tbl_body <- function(
 #'
 #' @param data *The gt table data object*
 #'
-#'   `obj:<gt_tbl>` --- **required**
+#'   `obj:<gt_tbl>` // **required**
 #'
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
@@ -1207,14 +1255,14 @@ extract_summary <- function(data) {
 #'
 #' @param data *The gt table data object*
 #'
-#'   `obj:<gt_tbl>` --- **required**
+#'   `obj:<gt_tbl>` // **required**
 #'
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` --- *default:* `everything()`
+#'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   Can either be a series of column names provided in [c()], a vector of
 #'   column indices, or a select helper function. Examples of select helper
@@ -1223,7 +1271,7 @@ extract_summary <- function(data) {
 #'
 #' @param rows *Rows to target*
 #'
-#'   `<row-targeting expression>` --- *default:* `everything()`
+#'   `<row-targeting expression>` // *default:* `everything()`
 #'
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   form a constraint for extraction. The default [everything()] results in all
@@ -1236,7 +1284,7 @@ extract_summary <- function(data) {
 #'
 #' @param output *Output format*
 #'
-#'   `singl-kw:[auto|plain|html|latex|rtf|word]` --- *default:* `"auto"`
+#'   `singl-kw:[auto|plain|html|latex|rtf|word]` // *default:* `"auto"`
 #'
 #'   The output style of the resulting character vector. This can either be
 #'   `"auto"` (the default), `"plain"`, `"html"`, `"latex"`, `"rtf"`, or

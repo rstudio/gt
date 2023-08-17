@@ -9,14 +9,14 @@ tab_row_group(data, label, rows, id = label, others_label = NULL, group = NULL)
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{label}{\emph{Row group label text}
 
-\verb{scalar<character>} --- \strong{required}
+\verb{scalar<character>} // \strong{required}
 
 The text to use for the row group label. We can optionally use the \code{\link[=md]{md()}}
 and \code{\link[=html]{html()}} functions to style the text as Markdown or to retain HTML
@@ -24,7 +24,7 @@ elements in the text.}
 
 \item{rows}{\emph{Rows to target}
 
-\verb{<row-targeting expression>} --- \strong{required}
+\verb{<row-targeting expression>} // \strong{required}
 
 The rows to be made components of the row group. The default \code{\link[=everything]{everything()}}
 results in all rows in \code{columns} being formatted. Alternatively, we can
@@ -36,7 +36,7 @@ down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{id}{\emph{Row group ID}
 
-\verb{scalar<character>} --- \emph{default:} \code{label}
+\verb{scalar<character>} // \emph{default:} \code{label}
 
 The ID for the row group. When accessing a row group through
 \code{\link[=cells_row_groups]{cells_row_groups()}} (when using \code{\link[=tab_style]{tab_style()}} or \code{\link[=tab_footnote]{tab_footnote()}}) the
@@ -50,14 +50,14 @@ function will stop if \code{id} isn't unique).}
 
 \item{others_label}{\emph{\link{Deprecated} Label for default row group}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 This argument is deprecated. Instead use
 \verb{tab_options(row_group.default_label = <label>)}.}
 
 \item{group}{\emph{\link{Deprecated} The group label}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 This argument is deprecated. Instead use \code{label}.}
 }

@@ -15,14 +15,14 @@ text_case_match(
 \arguments{
 \item{.data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{...}{\emph{Matching expressions}
 
-\verb{<multiple expressions>} --- \strong{required}
+\verb{<multiple expressions>} // \strong{required}
 
 A sequence of two-sided formulas matching this general construction:
 \verb{<old_text> ~ <new_text>}. The left hand side (LHS) determines which values
@@ -33,14 +33,14 @@ class).}
 
 \item{.default}{\emph{Default replacement text}
 
-\verb{scalar<character>} --- \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 The replacement text to use when cell values aren't matched by any of the
 LHS inputs. If \code{NULL}, the default, no replacement text will be used.}
 
 \item{.replace}{\emph{Method for text replacement}
 
-\verb{singl-kw:[all|partial]} --- \emph{default:} \code{"all"}
+\verb{singl-kw:[all|partial]} // \emph{default:} \code{"all"}
 
 A choice in how the matching is to be done. The default \code{"all"} means that
 the \code{old_text} (on the LHS of formulas given in \code{...}) must match the cell
@@ -51,7 +51,7 @@ matched substrings.}
 
 \item{.locations}{\emph{Locations to target}
 
-\verb{<locations expressions>} --- \emph{default:} \code{cells_body()}
+\verb{<locations expressions>} // \emph{default:} \code{cells_body()}
 
 The cell or set of cells to be associated with the text transformation.
 Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_row_groups]{cells_row_groups()}},

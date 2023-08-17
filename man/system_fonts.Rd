@@ -9,7 +9,7 @@ system_fonts(name)
 \arguments{
 \item{name}{\emph{Name of font stack}
 
-\verb{scalar<character>} --- \strong{required}
+\verb{scalar<character>} // \strong{required}
 
 The name of a font stack. Must be drawn from the set of \code{"system-ui"},
 \code{"transitional"}, \code{"old-style"}, \code{"humanist"}, \code{"geometric-humanist"},
@@ -233,7 +233,7 @@ used if the aforementioned fonts aren't available).
 
 \section{Function ID}{
 
-8-29
+8-31
 }
 
 \section{Function Introduced}{
@@ -262,7 +262,9 @@ Other helper functions:
 \code{\link{cells_title}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
+\code{\link{define_units}()},
 \code{\link{escape_latex}()},
+\code{\link{from_column}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},

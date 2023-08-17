@@ -9,14 +9,14 @@ opt_footnote_marks(data, marks = "numbers")
 \arguments{
 \item{data}{\emph{The gt table data object}
 
-\verb{obj:<gt_tbl>} --- \strong{required}
+\verb{obj:<gt_tbl>} // \strong{required}
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{marks}{\emph{Sequence of footnote marks}
 
-\verb{vector<character>} --- \emph{default:} \code{"numbers"}
+\verb{vector<character>} // \emph{default:} \code{"numbers"}
 
 Either a character vector of length greater than 1 (that will represent the
 series of marks) or a single keyword that represents a preset sequence of

@@ -36,7 +36,7 @@
 #'
 #' @param title *Header title*
 #'
-#'   `scalar<character>` --- **required**
+#'   `scalar<character>` // **required**
 #'
 #'   Text to be used in the table title. We can elect to use the [md()] and
 #'   [html()] helper functions to style the text as Markdown or to retain HTML
@@ -44,7 +44,7 @@
 #'
 #' @param subtitle *Header subtitle*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   Text to be used in the table subtitle. We can elect to use the [md()] and
 #'   [html()] helper functions to style the text as Markdown or to retain HTML
@@ -52,7 +52,7 @@
 #'
 #' @param preheader *RTF preheader text*
 #'
-#'   `vector<character>` --- *default:* `NULL` (`optional`)
+#'   `vector<character>` // *default:* `NULL` (`optional`)
 #'
 #'   Optional preheader content that is rendered above the table for RTF output.
 #'   Can be supplied as a vector of text.
@@ -180,7 +180,7 @@ tab_header <- function(
 #'
 #' @param label *Spanner label text*
 #'
-#'   `scalar<character>` --- **required**
+#'   `scalar<character>` // **required**
 #'
 #'   The text to use for the spanner label. We can optionally use the [md()] and
 #'   [html()] functions to style the text as Markdown or to retain HTML elements
@@ -188,7 +188,7 @@ tab_header <- function(
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` --- *default:* `NULL` (`optional`)
+#'   `<column-targeting expression>` // *default:* `NULL` (`optional`)
 #'
 #'   The columns to serve as components of the spanner. Can either be a series
 #'   of column names provided in [c()], a vector of column indices, or a select
@@ -199,7 +199,7 @@ tab_header <- function(
 #'
 #' @param spanners *Spanners to target*
 #'
-#'   `vector<character>` --- *default:* `NULL` (`optional`)
+#'   `vector<character>` // *default:* `NULL` (`optional`)
 #'
 #'   The spanners that should be spanned over, should they already be defined.
 #'   One or more spanner ID values (in quotes) can be supplied here. This
@@ -207,7 +207,7 @@ tab_header <- function(
 #'
 #' @param level *Spanner level for insertion*
 #'
-#'   `scalar<numeric|integer>` --- *default:* `NULL` (`optional`)
+#'   `scalar<numeric|integer>` // *default:* `NULL` (`optional`)
 #'
 #'   An explicit level to which the spanner should be placed. If not provided,
 #'   **gt** will choose the level based on the inputs provided within `columns`
@@ -216,7 +216,7 @@ tab_header <- function(
 #'
 #' @param id *Spanner ID*
 #'
-#'   `scalar<character>` --- *default:* `label`
+#'   `scalar<character>` // *default:* `label`
 #'
 #'   The ID for the spanner. When accessing a spanner through the `spanners`
 #'   argument of `tab_spanner()` or [cells_column_spanners()] (when using
@@ -231,7 +231,7 @@ tab_header <- function(
 #'
 #' @param gather *Gather columns together*
 #'
-#'   `scalar<logical>` --- *default:* `TRUE`
+#'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   An option to move the specified `columns` such that they are unified under
 #'   the spanner. Ordering of the moved-into-place columns will be preserved in
@@ -239,7 +239,7 @@ tab_header <- function(
 #'
 #' @param replace *Replace existing spanners*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   Should new spanners be allowed to partially or fully replace existing
 #'   spanners? (This is a possibility if setting spanners at an already
@@ -734,14 +734,14 @@ resolve_spanned_column_names <- function(
 #'
 #' @param delim *Delimiter for splitting*
 #'
-#'   `scalar<character>` --- **required**
+#'   `scalar<character>` // **required**
 #'
 #'   The delimiter to use to split an input column name. This should be a single
 #'   character (e.g., `"_"`, `"."`, etc.).
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` --- *default:* `everything()`
+#'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns to consider for the splitting, relabeling, and spanner setting
 #'   operations. Can either be a series of column names provided in [c()], a
@@ -752,7 +752,7 @@ resolve_spanned_column_names <- function(
 #'
 #' @param split *Splitting side*
 #'
-#'   `singl-kw:[last|first]` --- *default:* `"last"`
+#'   `singl-kw:[last|first]` // *default:* `"last"`
 #'
 #'   Should the delimiter splitting occur from the `"last"` instance of the
 #'   `delim` character or from the `"first"`? The default here uses the `"last"`
@@ -764,7 +764,7 @@ resolve_spanned_column_names <- function(
 #'
 #' @param limit *Limit for splitting*
 #'
-#'   `scalar<numeric|integer|character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<numeric|integer|character>` // *default:* `NULL` (`optional`)
 #'
 #'   An optional limit to place on the splitting procedure. The default `NULL`
 #'   means that a column name will be split as many times are there are
@@ -776,7 +776,7 @@ resolve_spanned_column_names <- function(
 #'
 #' @param reverse *Reverse vector of split names*
 #'
-#'   `scalar<logical>` --- *default:* `FALSE`
+#'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   Should the order of split names be reversed? By default, this is `FALSE`.
 #'
@@ -939,12 +939,16 @@ resolve_spanned_column_names <- function(
 #'
 #' ```r
 #' pizzaplace |>
-#'   select(name, date, type, price) |>
-#'   group_by(name, date, type) |>
-#'   summarize(revenue = sum(price), sold = n(), .groups = "drop") |>
-#'   filter(date %in% c("2015-01-01", "2015-01-02", "2015-01-03")) |>
-#'   filter(type %in% c("classic", "veggie")) |>
-#'   pivot_wider(
+#'   dplyr::select(name, date, type, price) |>
+#'   dplyr::group_by(name, date, type) |>
+#'   dplyr::summarize(
+#'     revenue = sum(price),
+#'     sold = dplyr::n(),
+#'     .groups = "drop"
+#'   ) |>
+#'   dplyr::filter(date %in% c("2015-01-01", "2015-01-02", "2015-01-03")) |>
+#'   dplyr::filter(type %in% c("classic", "veggie")) |>
+#'   tidyr::pivot_wider(
 #'     names_from = date,
 #'     names_sep = ".",
 #'     values_from = c(revenue, sold),
@@ -1340,7 +1344,7 @@ str_split_across <- function(
 #'
 #' @param label *Row group label text*
 #'
-#'   `scalar<character>` --- **required**
+#'   `scalar<character>` // **required**
 #'
 #'   The text to use for the row group label. We can optionally use the [md()]
 #'   and [html()] functions to style the text as Markdown or to retain HTML
@@ -1348,7 +1352,7 @@ str_split_across <- function(
 #'
 #' @param rows *Rows to target*
 #'
-#'   `<row-targeting expression>` --- **required**
+#'   `<row-targeting expression>` // **required**
 #'
 #'   The rows to be made components of the row group. The default [everything()]
 #'   results in all rows in `columns` being formatted. Alternatively, we can
@@ -1360,7 +1364,7 @@ str_split_across <- function(
 #'
 #' @param id *Row group ID*
 #'
-#'   `scalar<character>` --- *default:* `label`
+#'   `scalar<character>` // *default:* `label`
 #'
 #'   The ID for the row group. When accessing a row group through
 #'   [cells_row_groups()] (when using [tab_style()] or [tab_footnote()]) the
@@ -1374,14 +1378,14 @@ str_split_across <- function(
 #'
 #' @param others_label *[Deprecated] Label for default row group*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   This argument is deprecated. Instead use
 #'   `tab_options(row_group.default_label = <label>)`.
 #'
 #' @param group *[Deprecated] The group label*
 #'
-#'   `scalar<character>` --- *default:* `NULL` (`optional`)
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   This argument is deprecated. Instead use `label`.
 #'
@@ -1653,7 +1657,7 @@ tab_row_group <- function(
 #'
 #' @param label *Stubhead label text*
 #'
-#'   `scalar<character>` --- **required**
+#'   `scalar<character>` // **required**
 #'
 #'   The text to be used as the stubhead label. We can optionally use the [md()]
 #'   and [html()] functions to style the text as Markdown or to retain HTML
@@ -1729,7 +1733,7 @@ tab_stubhead <- function(
 #'
 #' @param rows *Rows to target*
 #'
-#'   `<row-targeting expression>` --- **required**
+#'   `<row-targeting expression>` // **required**
 #'
 #'   The rows to consider for the indentation change. The default [everything()]
 #'   results in all rows being targeted. Alternatively, we can supply a vector
@@ -1741,7 +1745,7 @@ tab_stubhead <- function(
 #'
 #' @param indent *Indentation directive*
 #'
-#'   `scalar<character|numeric|integer>` --- *default:* `"increase"`
+#'   `scalar<character|numeric|integer>` // *default:* `"increase"`
 #'
 #'   An indentation directive either as a keyword describing the indentation
 #'   change or as an explicit integer value for directly setting the indentation
@@ -1751,6 +1755,19 @@ tab_stubhead <- function(
 #'   serves as a lower bound. The upper bound for indentation is at level `5`.
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @section Compatibility of arguments with the `from_column()` helper function:
+#'
+#' The [from_column()] helper function can be used with the `indent` argument
+#' of `tab_stub_indent()` to obtain varying parameter values from a specified
+#' column within the table. This means that each row label could be indented a
+#' little bit differently.
+#'
+#' Please note that for this argument (`indent`), a [from_column()] call needs
+#' to reference a column that has data of the `numeric` or `integer` type.
+#' Additional columns for parameter values can be generated with the
+#' [cols_add()] function (if not already present). Columns that contain
+#' parameter data can also be hidden from final display with [cols_hide()].
 #'
 #' @section Examples:
 #'
@@ -1825,55 +1842,104 @@ tab_stub_indent <- function(
       data = data
     )
 
-  # Set indent levels appropriately
+  # Get existing indentation values
   indent_vals <- stub_df[stub_df$rownum_i %in% resolved_rows_idx, ][["indent"]]
 
-  for (i in seq_along(indent_vals)) {
+  # Implement support for the `from_column()` helper function; when
+  # used for the `indent` arg, a `gt_column` object is provided
+  if (inherits(indent, "gt_column")) {
 
-    if (is.na(indent_vals[i])) {
-      indent_val_i <- 0L
-    } else if (grepl("^[0-9]$", indent_vals[i])) {
-      indent_val_i <- as.integer(indent_vals[i])
-    } else {
-      indent_val_i <- indent_vals[i]
+    # Obtain the underlying data table
+    data_df <- dt_data_get(data = data)
+
+    # Obtain a `resolved_column` from a column name in the table
+    resolved_column <- resolve_cols_c(expr = indent[["column"]], data = data)
+
+    indent_vals <- data_df[resolved_rows_idx, ][[resolved_column]]
+
+    # Stop function if indentation values aren't numeric
+    if (!is.numeric(indent_vals)) {
+      cli::cli_abort("Values taken from a column must be numeric.")
     }
 
-    # Modify `indent_val_i` based on keyword directives
-    if (is.character(indent)) {
+    # If a function supplied with `fn` in the `from_column()` output,
+    # apply that function to any `indent_vals`
+    if (!is.null(indent[["fn"]])) {
 
-      # Move `indent_val_i` up or down by one
-      if (indent == "increase") {
-        indent_val_i <- indent_val_i + 1L
-      } else if (indent == "decrease") {
-        indent_val_i <- indent_val_i - 1L
+      fn <- indent[["fn"]]
+      indent_vals <- fn(indent_vals)
+    }
+
+    # If there is an `na_value` provided along with `from_column()`, apply
+    # that to the `indent_vals` vector
+    if (!is.null(indent[["na_value"]])) {
+
+      na_value <- indent[["na_value"]]
+
+      # Stop function if the `na_value` isn't numeric
+      if (!is.numeric(na_value)) {
+        cli::cli_abort("The `na_value` provided must be numeric.")
       }
 
-      # Set hard boundaries on the indentation value (LB is `0`, UB is `5`)
-      if (indent_val_i > 5) indent_val_i <- 5L
-      if (indent_val_i < 0) indent_val_i <- 0L
+      indent_vals[is.na(indent_vals)] <- na_value
     }
 
-    # Modify `indent_val_i` using a fixed value
-    if (
-      is.numeric(indent) &&
-      !is.na(indent) &&
-      !is.infinite(indent)
-    ) {
+    indent_vals <- abs(as.integer(indent_vals))
 
-      # Stop function if `indent` value doesn't fall into the acceptable range
-      if (indent < 0 | indent > 5) {
-        cli::cli_abort(c(
-          "If given as a numeric value, `indent` should be one of the following:",
-          "*" = "0, 1, 2, 3, 4, or 5"
-        ))
+    indent_vals[indent_vals > 5] <- 5L
+
+    indent_vals <- as.character(indent_vals)
+
+  } else {
+
+    for (i in seq_along(indent_vals)) {
+
+      if (is.na(indent_vals[i])) {
+        indent_val_i <- 0L
+      } else if (grepl("^[0-9]$", indent_vals[i])) {
+        indent_val_i <- as.integer(indent_vals[i])
+      } else {
+        indent_val_i <- indent_vals[i]
       }
 
-      # Coerce `indent` to an integer value
-      indent_val_i <- as.integer(indent)
-    }
+      # Modify `indent_val_i` based on keyword directives
+      if (is.character(indent)) {
 
-    # Ensure that `indent_val_i` is assigned to indent_vals as a character value
-    indent_vals[i] <- as.character(indent_val_i)
+        # Move `indent_val_i` up or down by one
+        if (indent == "increase") {
+          indent_val_i <- indent_val_i + 1L
+        } else if (indent == "decrease") {
+          indent_val_i <- indent_val_i - 1L
+        }
+
+        # Set hard boundaries on the indentation value (LB is `0`, UB is `5`)
+        if (indent_val_i > 5) indent_val_i <- 5L
+        if (indent_val_i < 0) indent_val_i <- 0L
+      }
+
+      # Modify `indent_val_i` using a fixed value
+      if (
+        is.numeric(indent) &&
+        !is.na(indent) &&
+        !is.infinite(indent)
+      ) {
+
+        # Stop function if `indent` value doesn't fall into the acceptable range
+        if (indent < 0 | indent > 5) {
+          cli::cli_abort(c(
+            "If given as a numeric value, `indent` should be one of the following:",
+            "*" = "0, 1, 2, 3, 4, or 5"
+          ))
+        }
+
+        # Coerce `indent` to an integer value
+        indent_val_i <- as.integer(indent)
+      }
+
+      # Ensure that `indent_val_i` is assigned to `indent_vals` as
+      # a character value
+      indent_vals[i] <- as.character(indent_val_i)
+    }
   }
 
   stub_df[stub_df$rownum_i %in% resolved_rows_idx, ][["indent"]] <- indent_vals
@@ -1914,7 +1980,7 @@ tab_stub_indent <- function(
 #'
 #' @param footnote *Footnote text*
 #'
-#'   `scalar<character>` --- **required**
+#'   `scalar<character>` // **required**
 #'
 #'   The text to be used in the footnote. We can optionally use the [md()] and
 #'   [html()] functions to style the text as Markdown or to retain HTML elements
@@ -1922,7 +1988,7 @@ tab_stub_indent <- function(
 #'
 #' @param locations *Locations to target*
 #'
-#'   `<locations expressions>` --- *default:* `NULL` (`optional`)
+#'   `<locations expressions>` // *default:* `NULL` (`optional`)
 #'
 #'   The cell or set of cells to be associated with the footnote. Supplying any
 #'   of the `cells_*()` helper functions is a useful way to target the location
@@ -1937,7 +2003,7 @@ tab_stub_indent <- function(
 #'
 #' @param placement *Placement of footnote mark*
 #'
-#'   `singl-kw:[auto|right|left]` --- *default:* `"auto"`
+#'   `singl-kw:[auto|right|left]` // *default:* `"auto"`
 #'
 #'   Where to affix footnote marks to the table content. Two options for this
 #'   are `"left` or `"right"`, where the placement is either to the absolute
@@ -2572,7 +2638,7 @@ set_footnote.cells_footnotes <- function(
 #'
 #' @param source_note *Source note text*
 #'
-#'   `scalar<character>` --- **required**
+#'   `scalar<character>` // **required**
 #'
 #'   Text to be used in the source note. We can optionally use the [md()] and
 #'   [html()] functions to style the text as Markdown or to retain HTML elements
@@ -2635,7 +2701,7 @@ tab_source_note <- function(
 #'
 #' @param caption *Table caption text*
 #'
-#'   `scalar<character>` --- **required**
+#'   `scalar<character>` // **required**
 #'
 #'   The table caption to use for cross-referencing in R Markdown, Quarto, or
 #'   **bookdown**.
@@ -2713,7 +2779,7 @@ tab_caption <- function(
 #'
 #' @param style *Style declarations*
 #'
-#'   `<style expressions>` --- **required**
+#'   `<style expressions>` // **required**
 #'
 #'   The styles to use for the cells at the targeted `locations`. The
 #'   [cell_text()], [cell_fill()], and [cell_borders()] helper functions can be
@@ -2724,7 +2790,7 @@ tab_caption <- function(
 #'
 #' @param locations *Locations to target*
 #'
-#'   `<locations expressions>` --- **required**
+#'   `<locations expressions>` // **required**
 #'
 #'   The cell or set of cells to be associated with the style. Supplying any of
 #'   the `cells_*()` helper functions is a useful way to target the location
@@ -2739,6 +2805,40 @@ tab_caption <- function(
 #'   title, etc.).
 #'
 #' @return An object of class `gt_tbl`.
+#'
+#' @section Using `from_column()` with `cell_*()` styling functions:
+#'
+#' The [from_column()] helper function can be used with certain arguments of
+#' [cell_fill()] and [cell_text()]; this allows you to get parameter values from
+#' a specified column within the table. This means that body cells targeted for
+#' styling could be formatted a little bit differently, using options taken from
+#' a column. For [cell_fill()], we can use [from_column()] for its `color`
+#' argument. The [cell_text()] function allows the use of [from_column()] in the
+#' following arguments:
+#'
+#' - `color`
+#' - `size`
+#' - `align`
+#' - `v_align`
+#' - `style`
+#' - `weight`
+#' - `stretch`
+#' - `decorate`
+#' - `transform`
+#' - `whitespace`
+#' - `indent`
+#'
+#' Please note that for all of the aforementioned arguments, a [from_column()]
+#' call needs to reference a column that has data of the correct type (this is
+#' different for each argument). Additional columns for parameter values can be
+#' generated with the [cols_add()] function (if not already present). Columns
+#' that contain parameter data can also be hidden from final display with
+#' [cols_hide()].
+#'
+#' Importantly, a call of `tab_style()` with any use of [from_column()] within
+#' styling expressions must only use [cells_body()] within `locations`. This is
+#' because we cannot map multiple options taken from a column onto other
+#' locations.
 #'
 #' @section Examples:
 #'
@@ -2933,6 +3033,80 @@ tab_caption <- function(
 #' `r man_get_image_tag(file = "man_tab_style_4.png")`
 #' }}
 #'
+#' The [from_column()] helper function can be used to get values from a column.
+#' We'll use it in the next example, which begins with a table having a color
+#' name column and a column with the associated hexadecimal color code. To show
+#' the color in a separate column, we first create one with [cols_add()] (
+#' ensuring that missing values are replaced with `""` via [sub_missing()]).
+#' Then, `tab_style()` is used to style that column, calling [from_column()] in
+#' the `color` argument of the [cell_fill()] function.
+#'
+#' ```r
+#' dplyr::tibble(
+#'   name = c(
+#'     "red", "green", "blue", "yellow", "orange",
+#'     "cyan", "purple", "magenta", "lime", "pink"
+#'   ),
+#'   hex = c(
+#'     "#E6194B", "#3CB44B", "#4363D8", "#FFE119", "#F58231",
+#'     "#42D4F4", "#911EB4", "#F032E6", "#BFEF45", "#FABED4"
+#'   )
+#' ) |>
+#'   gt(rowname_col = "name") |>
+#'   cols_add(color = rep(NA_character_, 10)) |>
+#'   sub_missing(missing_text = "") |>
+#'   tab_style(
+#'     style = cell_fill(color = from_column(column = "hex")),
+#'     locations = cells_body(columns = color)
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(font = system_fonts(name = "monospace-code")),
+#'     locations = cells_body()
+#'   ) |>
+#'   opt_all_caps() |>
+#'   cols_width(everything() ~ px(100)) |>
+#'   tab_options(table_body.hlines.style = "none")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_style_5.png")`
+#' }}
+#'
+#' The [cell_text()] function also allows the use of [from_column()] for many of
+#' its arguments. Let's take a small portion of data from [`sp500`] and add an
+#' up or down arrow based on the values in the `open` and `close` columns.
+#' Within [cols_add()] we can create a new column (`dir`) with an expression to
+#' get either `"red"` or `"green"` text from a comparison of the `open` and
+#' `close` values. These values are transformed to up or down arrows with the
+#' [text_case_match()] function, using **fontawesome** icons in the end.
+#' However, the text values are still present and can be used by [cell_text()]
+#' within `tab_style()`. The [from_column()] helper function makes it possible
+#' to use the text in the cells of the `dir` column as `color` input values.
+#'
+#' ```r
+#' sp500 |>
+#'   dplyr::filter(date > "2015-01-01") |>
+#'   dplyr::arrange(date) |>
+#'   dplyr::slice_head(n = 5) |>
+#'   dplyr::select(date, open, close) |>
+#'   gt(rowname_col = "date") |>
+#'   fmt_currency(columns = c(open, close)) |>
+#'   cols_add(dir = ifelse(close < open, "red", "forestgreen")) |>
+#'   cols_label(dir = "") |>
+#'   text_case_match(
+#'     "red" ~ fontawesome::fa("arrow-down"),
+#'     "forestgreen" ~ fontawesome::fa("arrow-up")
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(color = from_column("dir")),
+#'     locations = cells_body(columns = dir)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_style_6.png")`
+#' }}
+#'
 #' @family part creation/modification functions
 #' @section Function ID:
 #' 2-10
@@ -2954,10 +3128,177 @@ tab_style <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
+  # Resolve into a list of locations
+  locations <- as_locations(locations)
+
   # Upgrade `style` to be within a list if not provided as such
   if (inherits(style, "cell_styles")) {
     style <- list(style)
   }
+
+  #
+  # Begin support for `from_column()`
+  #
+
+  cell_helpers <-
+    vapply(
+      style,
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
+      FUN = function(x) {
+        x <- names(x)
+        if (is.null(x)) {
+          x <- "bare"
+        }
+        if (any(grepl("cell_border", x))) {
+          x <- "cell_border"
+        }
+        x
+      }
+    )
+
+  # Set `has_gt_column` as FALSE initially and toggle to TRUE if there is
+  # any instance of `from_column()` used (a `gt_column` object will be present)
+  has_gt_column <- FALSE
+
+  for (i in seq_along(cell_helpers)) {
+
+    if (!is.character(style) && is.list(style)) {
+      style_i <- unlist(style, recursive = FALSE)
+    } else {
+      style_i <- style
+    }
+
+    if (cell_helpers[i] == "bare") {
+      any_gt_column <- FALSE
+    } else {
+      any_gt_column <-
+        any(
+          vapply(
+            style_i[[cell_helpers[i]]],
+            FUN.VALUE = logical(1),
+            USE.NAMES = FALSE,
+            FUN = function(x) {
+              inherits(x, "gt_column")
+            }
+          )
+        )
+    }
+
+    if (any_gt_column) {
+      has_gt_column <- TRUE
+    }
+  }
+
+  if (has_gt_column) {
+
+    # Stop if `locations` only refers to locations other than `cells_body()`
+    for (i in seq_along(locations)) {
+
+      any_non_body_location <-
+        any(
+          vapply(
+            locations,
+            FUN.VALUE = logical(1),
+            USE.NAMES = FALSE,
+            FUN = function(x) {
+              !inherits(x, "cells_body")
+            }
+          )
+        )
+
+      if (any_non_body_location) {
+        cli::cli_abort(c(
+          "If using `from_column()` in a `cell_*()` function, the location helper
+          used must be `cells_body().",
+          "*" = "Please remove any other location helpers."
+        ))
+      }
+    }
+
+    # TODO: Extract only the body location from the `locations` object
+    body_location <- locations[[1]]
+
+    # Remove the outer list from the `style` object
+    style <- unlist(style, recursive = FALSE)
+
+    # Resolve the row numbers using the `resolve_rows_i` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = !!body_location$rows,
+        data = data
+      )
+
+    for (i in seq_along(style)) {
+
+      arg_vals <- unclass(style[[i]])
+
+      param_tbl <-
+        generate_param_tbl(
+          data = data,
+          arg_vals = arg_vals,
+          resolved_rows_idx = resolved_rows_idx
+        )
+
+      if (names(style[i]) == "cell_fill") {
+
+        for (j in seq_len(nrow(param_tbl))) {
+
+          p_j <- as.list(param_tbl[j, ])
+
+          data <-
+            tab_style(
+              data = data,
+              style = cell_fill(
+                color = p_j$color
+              ),
+              locations = cells_body(
+                columns = !!body_location$columns,
+                rows = resolved_rows_idx[j]
+              )
+            )
+        }
+      }
+
+      if (names(style[i]) == "cell_text") {
+
+        for (j in seq_len(nrow(param_tbl))) {
+
+          p_j <- as.list(param_tbl[j, ])
+
+          data <-
+            tab_style(
+              data = data,
+              style = cell_text(
+                color = p_j$color,
+                font = p_j$font,
+                size = p_j$size,
+                align = p_j$align,
+                v_align = p_j$v_align,
+                style = p_j$style,
+                weight = p_j$weight,
+                stretch = p_j$stretch,
+                decorate = p_j$decorate,
+                transform = p_j$transform,
+                whitespace = p_j$whitespace,
+                indent = p_j$indent
+              ),
+              locations = cells_body(
+                columns = !!body_location$columns,
+                rows = resolved_rows_idx[j]
+              )
+            )
+        }
+      }
+
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()`
+  #
 
   # Determine if there is a `cell_text` list within the main list;
   # because we need to intercept any provided `font` inputs in `cell_text`
@@ -3004,9 +3345,6 @@ tab_style <- function(
         )
     }
   }
-
-  # Resolve into a list of locations
-  locations <- as_locations(locations)
 
   style <- as_style(style = style)
 
@@ -3477,6 +3815,17 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   An option to hide the column labels. If providing `TRUE` then the entire
 #'   `column_labels` location won't be seen and the table header (if present)
 #'   will collapse downward.
+#'
+#' @param column_labels.units_pattern *Pattern to combine column labels and units*
+#'
+#'   The default pattern for combining column labels with any defined units for
+#'   column labels. The pattern is initialized as `"{1}, {2}"`, where `"{1}"`
+#'   refers to the column label text and `"{2}"` is the text related to the
+#'   associated units. When using [cols_units()], there is the opportunity to
+#'   provide a specific pattern that overrides the units pattern unit. Further
+#'   to this, if specifying units directly in [cols_label()] (through the units
+#'   syntax surrounded by `"{{"`/`"}}"`) there is no need for a units pattern
+#'   and any value here will be disregarded.
 #'
 #' @param row_group.border.top.style,row_group.border.top.width,row_group.border.top.color,row_group.border.bottom.style,row_group.border.bottom.width,row_group.border.bottom.color,row_group.border.left.style,row_group.border.left.width,row_group.border.left.color,row_group.border.right.style,row_group.border.right.width,row_group.border.right.color
 #'   *Border properties associated with the `row_group` location*
@@ -3967,6 +4316,7 @@ tab_options <- function(
     column_labels.border.lr.width = NULL,
     column_labels.border.lr.color = NULL,
     column_labels.hidden = NULL,
+    column_labels.units_pattern = NULL,
     row_group.background.color = NULL,
     row_group.font.size = NULL,
     row_group.font.weight = NULL,
