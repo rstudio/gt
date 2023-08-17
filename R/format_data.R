@@ -8441,15 +8441,15 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #' physical constants. We'll take a subset of values that have some molar basis
 #' and generate a **gt** table from that. Like the [`illness`] dataset, this one
 #' has a `units` column so, again, the `fmt_units()` function will be used to
-#' format those units. Here, the preference preference in units typesetting
-#' was for positive and negative exponents (e.g., not `"<unit_1> / <unit_2>"`
+#' format those units. Here, the preference for typesetting measurement units is
+#' to have positive and negative exponents (e.g., not `"<unit_1> / <unit_2>"`
 #' but rather `"<unit_1> <unit_2>^-1"`).
 #'
 #' ```r
 #' constants |>
 #'   dplyr::filter(grepl("molar", name)) |>
 #'   gt() |>
-#'   cols_hide(columns = uncert) |>
+#'   cols_hide(columns = c(uncert, starts_with("sf"))) |>
 #'   fmt_units(columns = units) |>
 #'   fmt_scientific(columns = value, decimals = 3) |>
 #'   tab_header(title = "Physical Constants Having a Molar Basis") |>
