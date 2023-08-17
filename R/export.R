@@ -1209,7 +1209,7 @@ extract_summary <- function(data) {
 
     cli::cli_abort(c(
       "There is no summary list to extract.",
-      "*" = "Use the {.help [{.fn summary_rows}](gt::summary_rows)}/`grand_summary_rows()` functions
+      "*" = "Use the `{.help [summary_rows](gt::summary_rows)}()` / `{.help [grand_summary_rows](gt::grand_summary_rows)}()` functions
       to generate summaries."
     ))
   }
