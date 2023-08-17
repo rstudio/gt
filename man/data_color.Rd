@@ -496,15 +496,16 @@ to the \code{population} column with the \code{"numeric"} method, use a domain b
 2.5 and 3.4 million, and specify \code{palette = "viridis"}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
-  dplyr::filter(country_name == "Mongolia") |>
+  dplyr::filter(country_name == "Bangladesh") |>
   dplyr::select(-contains("code")) |>
-  tail(10) |>
+  dplyr::slice_tail(n = 10) |>
   gt() |>
   data_color(
     columns = population,
     method = "numeric",
     palette = "viridis",
-    domain = c(2.5E6, 3.4E6)
+    domain = c(150E6, 170E6),
+    reverse = TRUE
   )
 }\if{html}{\out{</div>}}
 
@@ -515,19 +516,20 @@ to the \code{population} column with the \code{"numeric"} method, use a domain b
 We can alternatively use the \code{fn} argument for supplying the \strong{scales}-based
 function \code{\link[scales:col_numeric]{scales::col_numeric()}}. That function call will itself return a
 function (which is what the \code{fn} argument actually requires) that takes a
-vector of numeric values and returns color values. Here is the more complex
+vector of numeric values and returns color values. Here is an alternate
 version of the code that returns the same table as in the previous example.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
-  dplyr::filter(country_name == "Mongolia") |>
+  dplyr::filter(country_name == "Bangladesh") |>
   dplyr::select(-contains("code")) |>
-  tail(10) |>
+  dplyr::slice_tail(n = 10) |>
   gt() |>
   data_color(
     columns = population,
     fn = scales::col_numeric(
       palette = "viridis",
-      domain = c(2.5E6, 3.4E6)
+      domain = c(150E6, 170E6),
+      reverse = TRUE
     )
   )
 }\if{html}{\out{</div>}}
