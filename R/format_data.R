@@ -586,10 +586,10 @@ fmt_number <- function(
 
   # Set the `formatC_format` option according to whether number
   # formatting with significant figures is to be performed
-  if (!is.null(n_sigfig)) {
+  if (!is.null(n_sigfig) && !is.na(n_sigfig[1])) {
 
     # Stop function if `n_sigfig` does not have a valid value
-    validate_n_sigfig(n_sigfig)
+    validate_n_sigfig(n_sigfig = n_sigfig)
 
     formatC_format <- "fg"
   } else {
@@ -1180,6 +1180,7 @@ fmt_scientific <- function(
     columns = everything(),
     rows = everything(),
     decimals = 2,
+    n_sigfig = NULL,
     drop_trailing_zeros = FALSE,
     drop_trailing_dec_mark = TRUE,
     scale_by = 1.0,
@@ -1202,6 +1203,7 @@ fmt_scientific <- function(
   # Supports parameters:
   #
   # - decimals
+  # - n_sigfig
   # - drop_trailing_zeros
   # - drop_trailing_dec_mark
   # - scale_by
@@ -1247,6 +1249,7 @@ fmt_scientific <- function(
           columns = {{ columns }},
           rows = resolved_rows_idx[i],
           decimals = p_i$decimals %||% decimals,
+          n_sigfig = p_i$n_sigfig %||% n_sigfig,
           drop_trailing_zeros = p_i$drop_trailing_zeros %||% drop_trailing_zeros,
           drop_trailing_dec_mark = p_i$drop_trailing_dec_mark %||% drop_trailing_dec_mark,
           scale_by = p_i$scale_by %||% scale_by,
@@ -1304,6 +1307,17 @@ fmt_scientific <- function(
       with numeric data."
       )
     }
+  }
+
+  # If `n_sigfig` is defined (and not `NA`) modify the number of
+  # decimal places and keep all trailing zeros
+  if (!is.null(n_sigfig) && !is.na(n_sigfig[1])) {
+
+    # Stop function if `n_sigfig` does not have a valid value
+    validate_n_sigfig(n_sigfig = n_sigfig)
+
+    decimals <- n_sigfig - 1
+    drop_trailing_zeros <- FALSE
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
