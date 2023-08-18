@@ -57,11 +57,6 @@ is_gt_tbl_empty_w_cols <- function(data) {
   ncol(data_tbl) > 0 && nrow(data_tbl) == 0
 }
 
-is_gt_tbl_empty_w_rows <- function(data) {
-  data_tbl <- dt_data_get(data = data)
-  ncol(data_tbl) == 0 && nrow(data_tbl) > 0
-}
-
 # Adjustments for a completely empty table (no columns and no rows)
 adjust_gt_tbl_empty <- function(data) {
 
@@ -1751,6 +1746,7 @@ derive_summary_label <- function(fn) {
 }
 
 #nocov start
+
 #' A `system.file()` replacement specific to this package
 #'
 #' This is a conveient wrapper for `system.file()` where the `package` refers to
@@ -1759,6 +1755,7 @@ derive_summary_label <- function(fn) {
 system_file <- function(file) {
   system.file(file, package = "gt")
 }
+
 #nocov end
 
 #' Remove all HTML tags from input text
