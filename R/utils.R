@@ -753,10 +753,14 @@ md_to_html <- function(x, md_engine) {
 
   } else {
 
+    #nocov start
+
     non_na_x <- x[!is.na(x)]
 
     non_na_x <- tidy_gsub(non_na_x, "^", "<span data-qmd=\"")
     non_na_x <- tidy_gsub(non_na_x, "$", "\"></span>")
+
+    #nocov end
   }
 
   x[!is.na(x)] <- non_na_x
@@ -1272,11 +1276,15 @@ cmark_rules_rtf <- list(
   }
 )
 
+#nocov start
+
 is_last <- function(x) {
   children <- xml2::xml_children(xml2::xml_parent(x))
   last <- children[[xml2::xml_length(xml2::xml_parent(x))]]
   identical(last, x)
 }
+
+#nocov end
 
 markdown_to_rtf <- function(text) {
 
@@ -1317,34 +1325,52 @@ markdown_to_rtf <- function(text) {
         apply_rules <- function(x) {
 
           if (inherits(x, "xml_nodeset")) {
+
             len <- length(x)
-            results <- character(len) # preallocate vector
+            results <- character(len)
+
             for (i in seq_len(len)) {
               results[[i]] <- apply_rules(x[[i]])
             }
-            # TODO: is collapse = "" correct?
+
+            # TODO: Is `collapse = ""` correct here?
             rtf_raw(paste0("", results, collapse = ""))
+
           } else {
+
             output <- if (xml2::xml_type(x) == "element") {
 
               rule <- cmark_rules_rtf[[xml2::xml_name(x)]]
+
               if (is.null(rule)) {
+
+                #nocov start
+
                 rlang::warn(
                   paste0("Unknown commonmark element encountered: ", xml2::xml_name(x)),
                   .frequency = "once",
                   .frequency_id = "gt_commonmark_unknown_element"
                 )
+
+                #nocov end
+
                 apply_rules(xml2::xml_contents(x))
+
               } else if (is.character(rule)) {
+
                 rtf_wrap(rule, x, apply_rules)
+
               } else if (is.function(rule)) {
+
                 rule(x, apply_rules)
               }
             }
+
             if (!is_rtf(output)) {
               cli::cli_warn("Rule for {xml2::xml_name(x)} did not return RTF.")
             }
-            # TODO: is collapse = "" correct?
+
+            # TODO: Is `collapse = ""` correct here?
             rtf_raw(paste0("", output, collapse = ""))
           }
         }
@@ -1383,11 +1409,13 @@ markdown_to_text <- function(text) {
           if (isTRUE(getOption("gt.html_tag_check", TRUE))) {
 
             if (grepl("<[a-zA-Z\\/][^>]*>", x)) {
+
               cli::cli_warn(c(
                 "HTML tags found, and they will be removed.",
                 "*" = "Set `options(gt.html_tag_check = FALSE)` to disable this check."
               ))
             }
+
           }
 
           tidy_gsub(commonmark::markdown_text(x), "\\n$", "")
@@ -1724,27 +1752,6 @@ warn_on_scale_by_input <- function(scale_by) {
   }
 }
 
-#' Derive a label based on a formula or a function name
-#'
-#' @noRd
-derive_summary_label <- function(fn) {
-
-  if (is.function(fn)) {
-
-    # Stop the function if any functions provided
-    # as bare names (e.g., `mean`) don't have
-    # names provided
-    cli::cli_abort(
-      "All functions provided as bare names in `fns` need a label."
-    )
-
-  } else if (inherits(fn, "formula")) {
-    as.character(rlang::f_rhs(fn)[[1]])
-  } else {
-    as.character(fn)
-  }
-}
-
 #nocov start
 
 #' A `system.file()` replacement specific to this package
@@ -1763,10 +1770,6 @@ system_file <- function(file) {
 #' @noRd
 remove_html <- function(text) {
   gsub("<.+?>", "", text)
-}
-
-extract_strings <- function(text, pattern, perl = TRUE) {
-  sapply(regmatches(text, regexec(pattern, text, perl = perl)), "[", 1)
 }
 
 any_labeled_columns_in_data_tbl <- function(data) {
