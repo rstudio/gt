@@ -133,6 +133,62 @@ test_that("The `fmt_scientific()` function works correctly", {
     )
   )
 
+  # Format the `num` column to exactly 4 decimal places
+  expect_equal(
+    (tab %>%
+       fmt_scientific(columns = "num_1", decimals = 4, exp_style = "E") %>%
+       render_formats_test("default"))[["num_1"]],
+    c(
+      "1.8362E03", "2.7634E03", "9.3729E02", "6.4300E02",
+      "2.2320E00", "0.0000E00", "-2.3240E01"
+    )
+  )
+
+  # Format the `num` column to exactly 6 significant figures
+  expect_equal(
+    (tab %>%
+       fmt_scientific(columns = "num_1", n_sigfig = 6, exp_style = "E") %>%
+       render_formats_test("default"))[["num_1"]],
+    c(
+      "1.83623E03", "2.76339E03", "9.37290E02", "6.43000E02", "2.23200E00",
+      "0.00000E00", "-2.32400E01"
+    )
+  )
+
+  # Verify that setting `drop_trailing_zeros` to TRUE has no effect when
+  # using significant figures
+  expect_equal(
+    (tab %>%
+       fmt_scientific(
+         columns = "num_1",
+         n_sigfig = 6,
+         drop_trailing_zeros = TRUE,
+         exp_style = "E"
+       ) %>%
+       render_formats_test("default"))[["num_1"]],
+    c(
+      "1.83623E03", "2.76339E03", "9.37290E02", "6.43000E02", "2.23200E00",
+      "0.00000E00", "-2.32400E01"
+    )
+  )
+
+  # Should `n_sigfig` be set to `NA` then significant figures cannot be
+  # used and any value for `decimals` is no longer ignored
+  expect_equal(
+    (tab %>%
+       fmt_scientific(
+         columns = "num_1",
+         decimals = 8,
+         n_sigfig = NA,
+         exp_style = "E"
+       ) %>%
+       render_formats_test("default"))[["num_1"]],
+    c(
+      "1.83623000E03", "2.76339000E03", "9.37290000E02", "6.43000000E02",
+      "2.23200000E00", "0.00000000E00", "-2.32400000E01"
+    )
+  )
+
   # Format the `num_1` column to 2 decimal places, use a period for the
   # digit grouping separators and a comma for the decimal mark, use
   # all other defaults; extract `output_df` in the HTML context and
