@@ -6,7 +6,150 @@ rtf_with <- function(open, text, close = paste0(open, "0")) {
   paste0("\\", open, " ", text, "\\", close, " ")
 }
 
-test_that("Basic markdown_to_rtf works", {
+test_that("Various `is_*()` utility functions work properly", {
+
+  empty_tbl <- dplyr::tibble()
+  empty_df <- data.frame()
+
+  empty_w_cols_tbl <- dplyr::tibble(a = character(0), b = numeric(0))
+  empty_w_cols_df <- data.frame(a = character(0), b = numeric(0))
+
+  empty_w_rows_tbl <- dplyr::tibble(.rows = 5)
+  empty_w_rows_df <- as.data.frame(empty_w_rows_tbl)
+
+  # Expect that `is_gt_tbl()` is TRUE with a `gt_tbl` and FALSE in other cases
+  expect_true(is_gt_tbl(gt(exibble)))
+  expect_true(is_gt_tbl(gt_preview(gtcars)))
+  expect_false(is_gt_tbl(exibble))
+  expect_false(is_gt_tbl(gt_group(gt(exibble), gt(exibble))))
+  expect_false(is_gt_tbl(gt(exibble) %>% as_raw_html()))
+
+  # Expect that `is_gt_group()` is TRUE with a `gt_group` and FALSE in other cases
+  expect_true(is_gt_group(gt_group(gt(exibble), gt(exibble))))
+  expect_false(is_gt_group(gt(exibble)))
+  expect_false(is_gt_group(gt_preview(gtcars)))
+  expect_false(is_gt_group(exibble))
+  expect_false(is_gt_group(gt(exibble) %>% as_raw_html()))
+
+  # Expect that `is_gt_tbl_or_group()` is TRUE with a `gt_group` or a
+  # `gt_tbl` and FALSE in other cases
+  expect_true(is_gt_tbl_or_group(gt_group(gt(exibble), gt(exibble))))
+  expect_true(is_gt_tbl_or_group(gt(exibble)))
+  expect_true(is_gt_tbl_or_group(gt_preview(gtcars)))
+  expect_false(is_gt_tbl_or_group(exibble))
+  expect_false(is_gt_tbl_or_group(gt(exibble) %>% as_raw_html()))
+
+  # Expect that a completely empty table *and* a table with rows but no
+  # columns in a gt object yields TRUE via the `is_gt_tbl_empty()` function
+  expect_true(is_gt_tbl_empty(gt(empty_tbl)))
+  expect_true(is_gt_tbl_empty(gt(empty_df)))
+  expect_false(is_gt_tbl_empty(gt(empty_w_cols_tbl)))
+  expect_false(is_gt_tbl_empty(gt(empty_w_cols_df)))
+  expect_true(is_gt_tbl_empty(gt(empty_w_rows_tbl)))
+  expect_true(is_gt_tbl_empty(gt(empty_w_rows_df)))
+
+  # Expect that a table with columns but no rows in a gt object yields
+  # TRUE via the `is_gt_tbl_empty_w_cols()` function
+  expect_true(is_gt_tbl_empty_w_cols(gt(empty_w_cols_tbl)))
+  expect_true(is_gt_tbl_empty_w_cols(gt(empty_w_cols_df)))
+  expect_false(is_gt_tbl_empty_w_cols(gt(empty_tbl)))
+  expect_false(is_gt_tbl_empty_w_cols(gt(empty_df)))
+  expect_false(is_gt_tbl_empty_w_cols(gt(empty_w_rows_tbl)))
+  expect_false(is_gt_tbl_empty_w_cols(gt(empty_w_rows_df)))
+
+  # Expect that a vector is non-empty with `is_nonempty_string()`
+  expect_true(is_nonempty_string("asdf"))
+  expect_true(is_nonempty_string(c("1", "2")))
+  expect_false(is_nonempty_string(c("", "")))
+  expect_false(is_nonempty_string(c("")))
+  expect_false(is_nonempty_string(""))
+  expect_false(is_nonempty_string(c()))
+  expect_false(is_nonempty_string(NULL))
+  expect_true(is_nonempty_string(c(1, 2)))
+  expect_true(is_nonempty_string(1))
+
+  # Expect that `stop_if_not_gt_tbl()` yields an error for non-`gt_tbl` objects
+  expect_error(regexp = NA, stop_if_not_gt_tbl(gt(exibble)))
+  expect_error(regexp = NA, stop_if_not_gt_tbl(gt_preview(gtcars)))
+  expect_error(stop_if_not_gt_tbl(exibble))
+  expect_error(stop_if_not_gt_tbl(gt_group(gt(exibble), gt(exibble))))
+  expect_error(stop_if_not_gt_tbl(gt(exibble) %>% as_raw_html()))
+
+  # Expect that `stop_if_not_gt_group()` yields an error for non-`gt_group` objects
+  expect_error(regexp = NA, stop_if_not_gt_group(gt_group(gt(exibble), gt(exibble))))
+  expect_error(stop_if_not_gt_group(gt(exibble)))
+  expect_error(stop_if_not_gt_group(gt_preview(gtcars)))
+  expect_error(stop_if_not_gt_group(exibble))
+  expect_error(stop_if_not_gt_group(gt(exibble) %>% as_raw_html()))
+
+  # Expect that `stop_if_not_gt_tbl_or_group()` yields an error if a `gt_tbl` or
+  # `gt_group` object isn't provided to it
+  expect_error(regexp = NA, stop_if_not_gt_tbl_or_group(gt(exibble)))
+  expect_error(regexp = NA, stop_if_not_gt_tbl_or_group(gt_preview(gtcars)))
+  expect_error(regexp = NA, stop_if_not_gt_tbl_or_group(gt_group(gt(exibble), gt(exibble))))
+  expect_error(stop_if_not_gt_tbl_or_group(exibble))
+  expect_error(stop_if_not_gt_tbl_or_group(gt(exibble) %>% as_raw_html()))
+
+  # Expect that the `is_html()` function returns TRUE only for objects with the
+  # `html` class
+  expect_true(is_html(html("This is <span>HTML</span>")))
+  expect_true(is_html(shiny::HTML("This is <span>HTML</span>")))
+  expect_true(is_html(htmltools::HTML("This is <span>HTML</span>")))
+  expect_false(is_html("This is <span>HTML</span>"))
+
+  # Expect that the `is_html()` function returns TRUE only for objects with the
+  # `rtf` class
+  expect_true(is_rtf(rtf_raw("This is RTF text")))
+  expect_false(is_rtf(shiny::HTML("This is RTF text")))
+  expect_false(is_rtf(htmltools::HTML("This is RTF text")))
+  expect_false(is_rtf("This is RTF text"))
+})
+
+test_that("The `get_date_format()` function works properly", {
+
+  # Expect that integers (even in character form) work with `get_date_format()`
+  # so long as the values are within range
+  for (i in 1:41) {
+    expect_error(regexp = NA, get_date_format(date_style = i))
+    expect_error(regexp = NA, get_date_format(date_style = as.character(i)))
+  }
+
+  # Expect an error if going out of range or providing improper values
+  expect_error(get_date_format(date_style = 42))
+  expect_error(get_date_format(date_style = "42"))
+  expect_error(get_date_format(date_style = 0))
+  expect_error(get_date_format(date_style = "0"))
+  expect_error(get_date_format(date_style = -5))
+  expect_error(get_date_format(date_style = "-5"))
+  expect_error(get_date_format(date_style = NA))
+  expect_error(get_date_format(date_style = NULL))
+  expect_error(get_date_format(date_style = c(1, 2)))
+
+  # Expect that character-based keywords work with `get_date_format()` so long
+  # as the values are from the defined set
+  for (format_name in date_formats()[["format_name"]]) {
+    expect_error(regexp = NA, get_date_format(date_style = format_name))
+  }
+
+  # Expect an error if providing an improper value
+  expect_error(get_date_format(date_style = "daym"))
+
+  # Expect that date formats 1-17 are not flexible
+  for (i in 1:17) {
+    date_fmt_i <- get_date_format(date_style = i)
+    expect_false(inherits(date_fmt_i, "flex_d"))
+    expect_false(inherits(date_fmt_i, "date_time_pattern"))
+  }
+
+  # Expect that date formats 18-41 are flexible
+  for (i in 18:41) {
+    date_fmt_i <- get_date_format(date_style = i)
+    expect_true(inherits(date_fmt_i, "flex_d"))
+    expect_true(inherits(date_fmt_i, "date_time_pattern"))
+  }
+})
+
+test_that("The `markdown_to_rtf()` function works", {
 
   # list
   md_rtf(
@@ -143,7 +286,8 @@ test_that("Basic markdown_to_rtf works", {
   md_rtf("**_this &amp;** that_", "{\\b _this &} that_")
 })
 
-test_that("markdown_to_rtf escaping", {
+test_that("Escaping is working when using `markdown_to_rtf()`", {
+
   md_rtf("\\b{}", "\\'5cb\\'7b\\'7d")
   md_rtf("&lt;&amp;", "<&")
 })
