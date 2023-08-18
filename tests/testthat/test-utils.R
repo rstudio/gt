@@ -285,6 +285,67 @@ test_that("The `process_footnote_marks()` function works properly", {
   expect_error(process_footnote_marks(Inf, marks = "letters"))
 })
 
+test_that("The `resolve_border_side()` function works properly", {
+
+  expect_equal(resolve_border_side("l"), "left")
+  expect_equal(resolve_border_side("left"), "left")
+  expect_equal(resolve_border_side("r"), "right")
+  expect_equal(resolve_border_side("right"), "right")
+  expect_equal(resolve_border_side("t"), "top")
+  expect_equal(resolve_border_side("top"), "top")
+  expect_equal(resolve_border_side("b"), "bottom")
+  expect_equal(resolve_border_side("bottom"), "bottom")
+  expect_equal(resolve_border_side("a"), "all")
+  expect_equal(resolve_border_side("everything"), "all")
+  expect_equal(resolve_border_side("all"), "all")
+})
+
+test_that("The `validate_length_one()` function works for vectors", {
+
+  expect_error(regexp = NA, validate_length_one("1", "vector"))
+  expect_error(regexp = NA, validate_length_one(1, "vector"))
+  expect_error(regexp = NA, validate_length_one(list(1), "vector"))
+  expect_error(validate_length_one(c(), "vector"))
+  expect_error(validate_length_one(c(1, 2), "vector"))
+  expect_error(validate_length_one(list(), "vector"))
+})
+
+test_that("Tables with labeled columns work with certail utility functions", {
+
+  df_df <- data.frame(a = 1:3, b = 6:8, d = c(TRUE, FALSE, TRUE), e = 10:12)
+  tbl_df <- dplyr::tibble(a = 1:3, b = 6:8, d = c(TRUE, FALSE, TRUE), e = 10:12)
+
+  attr(df_df$a, "label") <- attr(tbl_df$a, "label") <- "One to three"
+  attr(df_df$b, "label") <- attr(tbl_df$b, "label") <- "Six to Eight"
+  attr(df_df$d, "label") <- attr(tbl_df$d, "label") <- "True or False"
+
+  expect_true(gt(df_df) %>% any_labeled_columns_in_data_tbl())
+  expect_true(gt(tbl_df) %>% any_labeled_columns_in_data_tbl())
+  expect_false(gt(exibble) %>% any_labeled_columns_in_data_tbl())
+  expect_false(gt(dplyr::tibble()) %>% any_labeled_columns_in_data_tbl())
+  expect_false(gt(data.frame()) %>% any_labeled_columns_in_data_tbl())
+
+  expect_equal(
+    gt(df_df) %>% get_columns_labels_from_attrs(),
+    c("One to three", "Six to Eight", "True or False", "e")
+  )
+  expect_equal(
+    gt(tbl_df) %>% get_columns_labels_from_attrs(),
+    c("One to three", "Six to Eight", "True or False", "e")
+  )
+  expect_equal(
+    gt(dplyr::tibble()) %>% get_columns_labels_from_attrs(),
+    character(0)
+  )
+  expect_equal(
+    gt(exibble) %>% get_columns_labels_from_attrs(),
+    c(
+      "num", "char", "fctr", "date", "time", "datetime",
+      "currency", "row", "group"
+    )
+  )
+})
+
 test_that("The `markdown_to_rtf()` function works", {
 
   # list
