@@ -121,6 +121,7 @@ formatting specific to the chosen locale</p></li>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">vec_fmt_scientific</span><span class="op">(</span></span>
 <span>  <span class="va">x</span>,</span>
 <span>  decimals <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>  n_sigfig <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  drop_trailing_zeros <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  drop_trailing_dec_mark <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  scale_by <span class="op">=</span> <span class="fl">1</span>,</span>
@@ -153,6 +154,17 @@ it would result in <code>"2"</code>. With <code>4</code> decimal places, the for
 becomes <code>"2.3400"</code>. The trailing zeros can be removed with
 <code>drop_trailing_zeros = TRUE</code>. If you always need <code>decimals = 0</code>, the
 <code><a href="fmt_integer.html">fmt_integer()</a></code> function should be considered.</p></dd>
+
+
+<dt>n_sigfig</dt>
+<dd><p><em>Number of significant figures</em></p>
+<p><code>scalar&lt;numeric|integer&gt;(val&gt;=1)</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>A option to format numbers to <em>n</em> significant figures. By default, this is
+<code>NULL</code> and thus number values will be formatted according to the number of
+decimal places set via <code>decimals</code>. If opting to format according to the
+rules of significant figures, <code>n_sigfig</code> must be a number greater than or
+equal to <code>1</code>. Any values passed to the <code>decimals</code> and <code>drop_trailing_zeros</code>
+arguments will be ignored.</p></dd>
 
 
 <dt>drop_trailing_zeros</dt>
