@@ -3773,7 +3773,7 @@ round_gt <- function(x, digits = 0) {
 #'
 #' ```r
 #' exibble |>
-#'   select(currency) |>
+#'   dplyr::select(currency) |>
 #'   gt() |>
 #'   fmt_currency(
 #'     currency = "euro",
