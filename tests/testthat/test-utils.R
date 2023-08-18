@@ -198,6 +198,27 @@ test_that("The `get_time_format()` function works properly", {
   expect_true(inherits(get_time_format(time_style = 25), "date_time_pattern"))
 })
 
+test_that("The `check_format_code()` function works for date and time formats", {
+
+  # Ensure that all format codes work with `check_format_code()`
+  for (format_name in c(date_formats()[["format_name"]], time_formats()[["format_name"]])) {
+    expect_error(regexp = NA, check_format_code(format_name))
+  }
+
+  # Expect an error if providing an improper inputs
+  expect_error(check_format_code(1))
+  expect_error(check_format_code(c("yM", "Md")))
+  expect_error(check_format_code(c()))
+  expect_error(check_format_code(NULL))
+})
+
+test_that("The `unescape_html()` function works properly", {
+
+  # Expect that 'unescaping' certain escaped HTML tags is possible with `unescape_html()`
+  expect_equal(unescape_html("&lt;span&gt;Text&lt;/span&gt;"), "<span>Text</span>")
+  expect_equal(unescape_html("&lt;span&gt;T&amp;T&lt;/span&gt;"), "<span>T&T</span>")
+})
+
 test_that("The `markdown_to_rtf()` function works", {
 
   # list
