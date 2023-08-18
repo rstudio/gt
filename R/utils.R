@@ -1819,6 +1819,8 @@ split_scientific_notn <- function(x_str) {
   list(num = num_part, exp = exp_part)
 }
 
+#nocov start
+
 #' Wrapper for `gsub()` where `x` is the first argument
 #'
 #' This function is wrapper for `gsub()` that uses default argument values and
@@ -1829,6 +1831,7 @@ split_scientific_notn <- function(x_str) {
 tidy_gsub <- function(x, pattern, replacement, fixed = FALSE) {
 
   if (!utf8_aware_sub) {
+
     # See variable definition for utf8_aware_sub for more info
     x <- enc2utf8(as.character(x))
     replacement <- enc2utf8(as.character(replacement))
@@ -1836,6 +1839,7 @@ tidy_gsub <- function(x, pattern, replacement, fixed = FALSE) {
     res <- gsub(pattern, replacement, x, fixed = fixed)
     Encoding(res) <- "UTF-8"
     res
+
   } else {
     gsub(pattern, replacement, x, fixed = fixed)
   }
@@ -1867,6 +1871,8 @@ tidy_grepl <- function(x, pattern) {
     USE.NAMES = FALSE
   )
 }
+
+#nocov end
 
 #' Create a vector of marks to use for footnotes
 #'
@@ -1905,8 +1911,6 @@ process_footnote_marks <- function(x, marks) {
     )
   )
 }
-
-
 
 #' Resolve the selection of border elements for a table cell
 #'
