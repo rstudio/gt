@@ -219,6 +219,72 @@ test_that("The `unescape_html()` function works properly", {
   expect_equal(unescape_html("&lt;span&gt;T&amp;T&lt;/span&gt;"), "<span>T&T</span>")
 })
 
+test_that("The `process_footnote_marks()` function works properly", {
+
+  # With various types of `marks`, we expect correctly formatted marks
+  expect_equal(
+    process_footnote_marks(1:5, marks = "numbers"),
+    c("1", "2", "3", "4", "5")
+  )
+  expect_equal(
+    process_footnote_marks(1:5, marks = "letters"),
+    c("a", "b", "c", "d", "e")
+  )
+  expect_equal(
+    process_footnote_marks(1:5, marks = "letters"),
+    process_footnote_marks(1:5, marks = letters)
+  )
+  expect_equal(
+    process_footnote_marks(1:5, marks = "LETTERS"),
+    c("A", "B", "C", "D", "E")
+  )
+  expect_equal(
+    process_footnote_marks(1:5, marks = "LETTERS"),
+    process_footnote_marks(1:5, marks = LETTERS)
+  )
+  expect_equal(
+    process_footnote_marks(1:5, marks = "standard"),
+    c("\U0002A", "\U02020", "\U02021", "\U000A7", "\U0002A\U0002A")
+  )
+  expect_equal(
+    process_footnote_marks(1:6, marks = "extended"),
+    c("\U0002A", "\U02020", "\U02021", "\U000A7", "\U02016", "\U000B6")
+  )
+  expect_equal(
+    process_footnote_marks(1:12, marks = "extended"),
+    c(
+      "\U0002A", "\U02020", "\U02021", "\U000A7", "\U02016", "\U000B6",
+      "\U0002A\U0002A", "\U02020\U02020", "\U02021\U02021",
+      "\U000A7\U000A7", "\U02016\U02016", "\U000B6\U000B6"
+    )
+  )
+  expect_equal(
+    process_footnote_marks(1:4, marks = c("one", "two", "three", "four")),
+    c(
+      c("one", "two", "three", "four")
+    )
+  )
+  expect_equal(
+    process_footnote_marks(4:1, marks = c("one", "two", "three", "four")),
+    c(
+      c("four", "three", "two", "one")
+    )
+  )
+  expect_equal(
+    process_footnote_marks(1:4, marks = 10:13), c("10", "11", "12", "13")
+  )
+
+  # Expect spurious outputs for improper values of `x`
+  expect_equal(process_footnote_marks(c(0, -1), marks = "letters"), c("", ""))
+  expect_equal(process_footnote_marks(c(1.6, 2.9), marks = "letters"), c("a", "b"))
+  expect_equal(process_footnote_marks(numeric(0), marks = "letters"), list())
+
+  # Expect an error if providing an improper inputs
+  expect_error(process_footnote_marks(as.character(1:12), marks = "extended"))
+  expect_error(process_footnote_marks(list(1, 2), marks = "letters"))
+  expect_error(process_footnote_marks(Inf, marks = "letters"))
+})
+
 test_that("The `markdown_to_rtf()` function works", {
 
   # list
