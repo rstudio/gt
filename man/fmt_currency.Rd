@@ -416,7 +416,7 @@ right of any value. Additionally, the currency symbol will separated from the
 value with a single space character (using \code{incl_space = TRUE}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
-  select(currency) |>
+  dplyr::select(currency) |>
   gt() |>
   fmt_currency(
     currency = "euro",
