@@ -1967,11 +1967,15 @@ validate_marks <- function(marks) {
 
   if (length(marks) == 1 && !any(marks_keywords %in% marks)) {
 
+    #nocov start
+
     cli::cli_abort(c(
       "The `marks` keyword provided (\"{marks}\") is not valid.",
       "*" = "Either of \"numbers\", \"letters\", \"LETTERS\", \"standard\",
       or \"extended\" can be used."
     ))
+
+    #nocov end
   }
 }
 
@@ -2046,13 +2050,6 @@ flatten_list <- function(x) {
 #' @noRd
 prepend_vec <- function(x, values, after = 0) {
   append(x, values, after = after)
-}
-
-#' Convert a single-length vector to a repeating list of lists
-#'
-#' @noRd
-rep_vec_as_list <- function(x, length_out) {
-  rep_len(list(x), length_out)
 }
 
 validate_length_one <- function(x, name) {
