@@ -149,6 +149,55 @@ test_that("The `get_date_format()` function works properly", {
   }
 })
 
+test_that("The `get_time_format()` function works properly", {
+
+  # Expect that integers (even in character form) work with `get_time_format()`
+  # so long as the values are within range
+  for (i in 1:25) {
+    expect_error(regexp = NA, get_time_format(time_style = i))
+    expect_error(regexp = NA, get_time_format(time_style = as.character(i)))
+  }
+
+  # Expect an error if going out of range or providing improper values
+  expect_error(get_time_format(time_style = 26))
+  expect_error(get_time_format(time_style = "26"))
+  expect_error(get_time_format(time_style = 0))
+  expect_error(get_time_format(time_style = "0"))
+  expect_error(get_time_format(time_style = -5))
+  expect_error(get_time_format(time_style = "-5"))
+  expect_error(get_time_format(time_style = NA))
+  expect_error(get_time_format(time_style = NULL))
+  expect_error(get_time_format(time_style = c(1, 2)))
+
+  # Expect that character-based keywords work with `get_time_format()` so long
+  # as the values are from the defined set
+  for (format_name in time_formats()[["format_name"]]) {
+    expect_error(regexp = NA, get_time_format(time_style = format_name))
+  }
+
+  # Expect an error if providing an improper value
+  expect_error(get_time_format(time_style = "Hmsa"))
+
+  # Expect that time formats 1-5 are not flexible
+  for (i in 1:5) {
+    time_fmt_i <- get_time_format(time_style = i)
+    expect_false(inherits(time_fmt_i, "date_time_pattern"))
+  }
+
+  # Expect that time formats 6-12 are flexible 24-hour times
+  for (i in 6:12) {
+    time_fmt_i <- get_time_format(time_style = i)
+    expect_true(inherits(time_fmt_i, "flex_t24"))
+    expect_true(inherits(time_fmt_i, "date_time_pattern"))
+  }
+
+  # Expect that although time format 25 is not really 12- or 24-hour time (but
+  # floating, with no hours in format), it is still classed as `flex_t24`
+  expect_equal(as.character(get_time_format(time_style = 25)), "ms")
+  expect_true(inherits(get_time_format(time_style = 25), "flex_t24"))
+  expect_true(inherits(get_time_format(time_style = 25), "date_time_pattern"))
+})
+
 test_that("The `markdown_to_rtf()` function works", {
 
   # list
