@@ -10160,7 +10160,7 @@ fmt_flag <- function(
 #' - `stroke_alpha`
 #' - `fill_color`
 #' - `fill_alpha`
-#' - `vertical_align`
+#' - `vertical_adj`
 #' - `margin_left`
 #' - `margin_right`
 #' - `a11y`
@@ -10194,7 +10194,7 @@ fmt_icon <- function(
     stroke_alpha = NULL,
     fill_color = NULL,
     fill_alpha = NULL,
-    vertical_align = NULL,
+    vertical_adj = NULL,
     margin_left = NULL,
     margin_right = NULL,
     a11y = c("semantic", "decorative", "none")
@@ -10227,7 +10227,7 @@ fmt_icon <- function(
   # - stroke_alpha
   # - fill_color
   # - fill_alpha
-  # - vertical_align
+  # - vertical_adj
   # - margin_left
   # - margin_right
   # - a11y
@@ -10272,7 +10272,7 @@ fmt_icon <- function(
           stroke_alpha = p_i$stroke_alpha %||% stroke_alpha,
           fill_color = p_i$fill_color %||% fill_color,
           fill_alpha = p_i$fill_alpha %||% fill_alpha,
-          vertical_align = p_i$vertical_align %||% vertical_align,
+          vertical_adj = p_i$vertical_adj %||% vertical_adj,
           margin_left = p_i$margin_left %||% margin_left,
           margin_right = p_i$margin_right %||% margin_right,
           a11y = p_i$a11y %||% a11y
@@ -10371,7 +10371,7 @@ fmt_icon <- function(
                       width = NULL,
                       margin_left = margin_left,
                       margin_right = margin_right,
-                      vertical_align = vertical_align,
+                      vertical_align = vertical_adj,
                       position = NULL,
                       prefer_type = "regular",
                       a11y = a11y
