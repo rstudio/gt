@@ -233,6 +233,148 @@ that contain parameter data can also be hidden from final display with
 closed set.
 }
 
+\section{Examples}{
+
+
+For this first example of generating icons with \code{fmt_icon()}, let's make a
+simple tibble that has two columns of \emph{Font Awesome} icon names. We separate
+multiple icons per cell with commas. By default, the icons are 1 em in
+height; we're going to make the icons slightly larger here (so we can see the
+fine details of them) by setting \code{height = "4em"}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
+  animals = c(
+    "hippo", "fish,spider", "mosquito,locust,frog",
+    "dog,cat", "kiwi-bird"
+  ),
+  foods = c(
+    "bowl-rice", "egg,pizza-slice", "burger,lemon,cheese",
+    "carrot,hotdog", "bacon"
+  )
+) |>
+  gt() |>
+  fmt_icon(height = "4em") |>
+  cols_align(align = "center", columns = everything())
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_icon_1.png" alt="This image of a table was generated from the first code example in the `fmt_icon()` help file." style="width:100\%;">
+}}
+
+Let's take a few rows from the \code{\link{towny}} dataset and make it so the
+\code{csd_type} column contains \emph{Font Awesome} icon names (we want only the
+\code{"city"} and \code{"house-chimney"} icons here). After using \code{fmt_icon()} to
+format the \code{csd_type} column, we get icons that are representative of the two
+categories of municipality for this subset of data.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
+  dplyr::select(name, csd_type, population_2021) |>
+  dplyr::filter(csd_type \%in\% c("city", "town")) |>
+  dplyr::group_by(csd_type) |>
+  dplyr::arrange(desc(population_2021)) |>
+  dplyr::slice_head(n = 5) |>
+  dplyr::ungroup() |>
+  dplyr::mutate(
+    csd_type = ifelse(csd_type == "town", "house-chimney", "city")
+  ) |>
+  gt() |>
+  fmt_integer() |>
+  fmt_icon(columns = csd_type) |>
+  cols_move_to_start(columns = csd_type) |>
+  cols_label(
+    csd_type = "",
+    name = "City/Town",
+    population_2021 = "Population"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_icon_2.png" alt="This image of a table was generated from the second code example in the `fmt_icon()` help file." style="width:100\%;">
+}}
+
+Let's use a portion of the \code{\link{metro}} dataset to create a \strong{gt} table.
+Depending on which train services are offered at the subset of stations,
+\emph{Font Awesome} icon names will be applied to cells where the different
+services exist (the specific names are \code{"train-subway"}, \code{"train"}, and
+\code{"train-tram"}). With \strong{tidyr}'s \code{unite()} function, those icon names
+can be converged into a single column (\code{services}) with the \code{NA} values
+removed. Since the names correspond to icons and they are in the correct
+format (separated by commas), they can be formatted as \emph{Font Awesome} icons
+with the \code{fmt_icon()} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{metro |>
+  dplyr::select(name, lines, connect_rer, connect_tramway, location) |>
+  dplyr::slice_tail(n = 10) |>
+  dplyr::mutate(lines = "train-subway") |>
+  dplyr::mutate(connect_rer = ifelse(!is.na(connect_rer), "train", NA)) |>
+  dplyr::mutate(
+    connect_tramway = ifelse(!is.na(connect_tramway), "train-tram", NA)
+  ) |>
+  tidyr::unite(
+    col = services,
+    lines:connect_tramway,
+    sep = ",",
+    na.rm = TRUE
+  ) |>
+  gt() |>
+  fmt_icon(
+    columns = services,
+    a11y = "decorative"
+  ) |>
+  cols_merge(
+    columns = c(name, services),
+    pattern = "\{1\} (\{2\})"
+  ) |>
+  cols_label(
+    name = "Station",
+    location = "Location"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_icon_3.png" alt="This image of a table was generated from the third code example in the `fmt_icon()` help file." style="width:100\%;">
+}}
+
+Taking a handful of starred reviews from a popular film review website, we
+will attempt to format a numerical score (0 to 4) to use the \code{"star"} and
+\code{"star-half"} icons. In this case, it is useful to generate the repeating
+sequence of icon names (separated by commas) in the \code{rating} column before
+introducing the table to \code{\link[=gt]{gt()}}. We can make use of the numerical rating
+values in \code{stars} within the \code{fmt_icon()} function with a little help from
+the \code{\link[=from_column]{from_column()}} helper. Using that, we can dynamically adjust the icon's
+\code{fill_alpha} (i.e., opacity) value and accentuate the films with higher
+scores.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
+  film = c(
+    "The Passengers of the Night", "Serena", "The Father",
+    "Roma", "The Handmaiden", "Violet", "Vice"
+  ),
+  stars = c(3, 1, 3.5, 4, 4, 2.5, 1.5)
+) |>
+  dplyr::mutate(rating = dplyr::case_when(
+    stars \%\% 1 == 0 ~ strrep("star,", stars),
+    stars \%\% 1 != 0 ~ paste0(strrep("star,", floor(stars)), "star-half")
+  )) |>
+  gt() |>
+  fmt_icon(
+    columns = rating,
+    fill_color = "red",
+    fill_alpha = from_column("stars", fn = function(x) x / 4)
+  ) |>
+  cols_hide(columns = stars) |>
+  tab_source_note(
+    source_note = md(
+      "Data obtained from <https://www.rogerebert.com/reviews>."
+    )
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_icon_4.png" alt="This image of a table was generated from the fourth code example in the `fmt_icon()` help file." style="width:100\%;">
+}}
+}
+
 \section{Function ID}{
 
 3-22
