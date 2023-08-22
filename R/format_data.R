@@ -586,10 +586,10 @@ fmt_number <- function(
 
   # Set the `formatC_format` option according to whether number
   # formatting with significant figures is to be performed
-  if (!is.null(n_sigfig)) {
+  if (!is.null(n_sigfig) && !is.na(n_sigfig[1])) {
 
     # Stop function if `n_sigfig` does not have a valid value
-    validate_n_sigfig(n_sigfig)
+    validate_n_sigfig(n_sigfig = n_sigfig)
 
     formatC_format <- "fg"
   } else {
@@ -1136,11 +1136,12 @@ fmt_integer <- function(
 #'
 #' @section Examples:
 #'
-#' Use the [`exibble`] dataset to create a **gt** table. Format the `num` column
-#' as partially numeric and partially in scientific notation. This is done with
-#' two separate calls of [fmt_number()] and `fmt_scientific()`. We'll use the
-#' expressions `num > 500` and `num <= 500` in the functions' respective `rows`
-#' arguments.
+#' Let's use the [`exibble`] dataset to create a simple **gt** table. We'll
+#' elect to the `num` column as partially numeric and partially in scientific
+#' notation. This is done with two separate calls of [fmt_number()] and
+#' `fmt_scientific()`. We'll use the expressions `num > 500` and `num <= 500` in
+#' the functions' respective `rows` arguments to target formatting to specific
+#' cells.
 #'
 #' ```r
 #' exibble |>
@@ -1163,6 +1164,37 @@ fmt_integer <- function(
 #' `r man_get_image_tag(file = "man_fmt_scientific_1.png")`
 #' }}
 #'
+#' The [`constants`] table contains a plethora of data on the fundamental
+#' physical constant and most values (in the units used) are either very small
+#' or very large, so scientific formatting is suitable. The values differ in the
+#' degree of measurement precision and separate columns (`sf_value` and
+#' `sf_uncert`) contain the exact number of significant figures for each
+#' measurement value and the associated uncertainty value. We can use the
+#' `n_sigfig` argument of `fmt_scientific()` in conjunction with the
+#' [from_column()] helper to get the correct number of significant digits for
+#' each value.
+#'
+#' ```r
+#' constants |>
+#'   dplyr::filter(grepl("Planck", name)) |>
+#'   gt() |>
+#'   fmt_scientific(
+#'     columns = value,
+#'     n_sigfig = from_column(column = "sf_value")
+#'   ) |>
+#'   fmt_scientific(
+#'     columns = uncert,
+#'     n_sigfig = from_column(column = "sf_uncert")
+#'   ) |>
+#'   cols_hide(columns = starts_with("sf")) |>
+#'   fmt_units(columns = units) |>
+#'   sub_missing(missing_text = "")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_scientific_2.png")`
+#' }}
+#'
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-3
@@ -1180,6 +1212,7 @@ fmt_scientific <- function(
     columns = everything(),
     rows = everything(),
     decimals = 2,
+    n_sigfig = NULL,
     drop_trailing_zeros = FALSE,
     drop_trailing_dec_mark = TRUE,
     scale_by = 1.0,
@@ -1202,6 +1235,7 @@ fmt_scientific <- function(
   # Supports parameters:
   #
   # - decimals
+  # - n_sigfig
   # - drop_trailing_zeros
   # - drop_trailing_dec_mark
   # - scale_by
@@ -1247,6 +1281,7 @@ fmt_scientific <- function(
           columns = {{ columns }},
           rows = resolved_rows_idx[i],
           decimals = p_i$decimals %||% decimals,
+          n_sigfig = p_i$n_sigfig %||% n_sigfig,
           drop_trailing_zeros = p_i$drop_trailing_zeros %||% drop_trailing_zeros,
           drop_trailing_dec_mark = p_i$drop_trailing_dec_mark %||% drop_trailing_dec_mark,
           scale_by = p_i$scale_by %||% scale_by,
@@ -1304,6 +1339,17 @@ fmt_scientific <- function(
       with numeric data."
       )
     }
+  }
+
+  # If `n_sigfig` is defined (and not `NA`) modify the number of
+  # decimal places and keep all trailing zeros
+  if (!is.null(n_sigfig) && !is.na(n_sigfig[1])) {
+
+    # Stop function if `n_sigfig` does not have a valid value
+    validate_n_sigfig(n_sigfig = n_sigfig)
+
+    decimals <- n_sigfig - 1
+    drop_trailing_zeros <- FALSE
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -3727,7 +3773,7 @@ round_gt <- function(x, digits = 0) {
 #'
 #' ```r
 #' exibble |>
-#'   select(currency) |>
+#'   dplyr::select(currency) |>
 #'   gt() |>
 #'   fmt_currency(
 #'     currency = "euro",

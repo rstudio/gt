@@ -9,6 +9,7 @@ fmt_scientific(
   columns = everything(),
   rows = everything(),
   decimals = 2,
+  n_sigfig = NULL,
   drop_trailing_zeros = FALSE,
   drop_trailing_dec_mark = TRUE,
   scale_by = 1,
@@ -61,6 +62,17 @@ it would result in \code{"2"}. With \code{4} decimal places, the formatted value
 becomes \code{"2.3400"}. The trailing zeros can be removed with
 \code{drop_trailing_zeros = TRUE}. If you always need \code{decimals = 0}, the
 \code{\link[=fmt_integer]{fmt_integer()}} function should be considered.}
+
+\item{n_sigfig}{\emph{Number of significant figures}
+
+\code{scalar<numeric|integer>(val>=1)} // \emph{default:} \code{NULL} (\code{optional})
+
+A option to format numbers to \emph{n} significant figures. By default, this is
+\code{NULL} and thus number values will be formatted according to the number of
+decimal places set via \code{decimals}. If opting to format according to the
+rules of significant figures, \code{n_sigfig} must be a number greater than or
+equal to \code{1}. Any values passed to the \code{decimals} and \code{drop_trailing_zeros}
+arguments will be ignored.}
 
 \item{drop_trailing_zeros}{\emph{Drop any trailing zeros}
 
@@ -272,11 +284,12 @@ useful reference on which locales are supported, we can use the
 \section{Examples}{
 
 
-Use the \code{\link{exibble}} dataset to create a \strong{gt} table. Format the \code{num} column
-as partially numeric and partially in scientific notation. This is done with
-two separate calls of \code{\link[=fmt_number]{fmt_number()}} and \code{fmt_scientific()}. We'll use the
-expressions \code{num > 500} and \code{num <= 500} in the functions' respective \code{rows}
-arguments.
+Let's use the \code{\link{exibble}} dataset to create a simple \strong{gt} table. We'll
+elect to the \code{num} column as partially numeric and partially in scientific
+notation. This is done with two separate calls of \code{\link[=fmt_number]{fmt_number()}} and
+\code{fmt_scientific()}. We'll use the expressions \code{num > 500} and \code{num <= 500} in
+the functions' respective \code{rows} arguments to target formatting to specific
+cells.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   gt() |>
@@ -296,6 +309,36 @@ arguments.
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_scientific_1.png" alt="This image of a table was generated from the first code example in the `fmt_scientific()` help file." style="width:100\%;">
+}}
+
+The \code{\link{constants}} table contains a plethora of data on the fundamental
+physical constant and most values (in the units used) are either very small
+or very large, so scientific formatting is suitable. The values differ in the
+degree of measurement precision and separate columns (\code{sf_value} and
+\code{sf_uncert}) contain the exact number of significant figures for each
+measurement value and the associated uncertainty value. We can use the
+\code{n_sigfig} argument of \code{fmt_scientific()} in conjunction with the
+\code{\link[=from_column]{from_column()}} helper to get the correct number of significant digits for
+each value.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{constants |>
+  dplyr::filter(grepl("Planck", name)) |>
+  gt() |>
+  fmt_scientific(
+    columns = value,
+    n_sigfig = from_column(column = "sf_value")
+  ) |>
+  fmt_scientific(
+    columns = uncert,
+    n_sigfig = from_column(column = "sf_uncert")
+  ) |>
+  cols_hide(columns = starts_with("sf")) |>
+  fmt_units(columns = units) |>
+  sub_missing(missing_text = "")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_scientific_2.png" alt="This image of a table was generated from the second code example in the `fmt_scientific()` help file." style="width:100\%;">
 }}
 }
 
