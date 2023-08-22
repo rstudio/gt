@@ -10174,6 +10174,150 @@ fmt_flag <- function(
 #' [from_column()] helper is applied so long as the arguments belong to this
 #' closed set.
 #'
+#' @section Examples:
+#'
+#' For this first example of generating icons with `fmt_icon()`, let's make a
+#' simple tibble that has two columns of *Font Awesome* icon names. We separate
+#' multiple icons per cell with commas. By default, the icons are 1 em in
+#' height; we're going to make the icons slightly larger here (so we can see the
+#' fine details of them) by setting `height = "4em"`.
+#'
+#' ```r
+#' dplyr::tibble(
+#'   animals = c(
+#'     "hippo", "fish,spider", "mosquito,locust,frog",
+#'     "dog,cat", "kiwi-bird"
+#'   ),
+#'   foods = c(
+#'     "bowl-rice", "egg,pizza-slice", "burger,lemon,cheese",
+#'     "carrot,hotdog", "bacon"
+#'   )
+#' ) |>
+#'   gt() |>
+#'   fmt_icon(height = "4em") |>
+#'   cols_align(align = "center", columns = everything())
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_icon_1.png")`
+#' }}
+#'
+#' Let's take a few rows from the [`towny`] dataset and make it so the
+#' `csd_type` column contains *Font Awesome* icon names (we want only the
+#' `"city"` and `"house-chimney"` icons here). After using `fmt_icon()` to
+#' format the `csd_type` column, we get icons that are representative of the two
+#' categories of municipality for this subset of data.
+#'
+#' ```r
+#' towny |>
+#'   dplyr::select(name, csd_type, population_2021) |>
+#'   dplyr::filter(csd_type %in% c("city", "town")) |>
+#'   dplyr::group_by(csd_type) |>
+#'   dplyr::arrange(desc(population_2021)) |>
+#'   dplyr::slice_head(n = 5) |>
+#'   dplyr::ungroup() |>
+#'   dplyr::mutate(
+#'     csd_type = ifelse(csd_type == "town", "house-chimney", "city")
+#'   ) |>
+#'   gt() |>
+#'   fmt_integer() |>
+#'   fmt_icon(columns = csd_type) |>
+#'   cols_move_to_start(columns = csd_type) |>
+#'   cols_label(
+#'     csd_type = "",
+#'     name = "City/Town",
+#'     population_2021 = "Population"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_icon_2.png")`
+#' }}
+#'
+#' Let's use a portion of the [`metro`] dataset to create a **gt** table.
+#' Depending on which train services are offered at the subset of stations,
+#' *Font Awesome* icon names will be applied to cells where the different
+#' services exist (the specific names are `"train-subway"`, `"train"`, and
+#' `"train-tram"`). With **tidyr**'s `unite()` function, those icon names
+#' can be converged into a single column (`services`) with the `NA` values
+#' removed. Since the names correspond to icons and they are in the correct
+#' format (separated by commas), they can be formatted as *Font Awesome* icons
+#' with the `fmt_icon()` function.
+#'
+#' ```r
+#' metro |>
+#'   dplyr::select(name, lines, connect_rer, connect_tramway, location) |>
+#'   dplyr::slice_tail(n = 10) |>
+#'   dplyr::mutate(lines = "train-subway") |>
+#'   dplyr::mutate(connect_rer = ifelse(!is.na(connect_rer), "train", NA)) |>
+#'   dplyr::mutate(
+#'     connect_tramway = ifelse(!is.na(connect_tramway), "train-tram", NA)
+#'   ) |>
+#'   tidyr::unite(
+#'     col = services,
+#'     lines:connect_tramway,
+#'     sep = ",",
+#'     na.rm = TRUE
+#'   ) |>
+#'   gt() |>
+#'   fmt_icon(
+#'     columns = services,
+#'     a11y = "decorative"
+#'   ) |>
+#'   cols_merge(
+#'     columns = c(name, services),
+#'     pattern = "{1} ({2})"
+#'   ) |>
+#'   cols_label(
+#'     name = "Station",
+#'     location = "Location"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_icon_3.png")`
+#' }}
+#'
+#' Taking a handful of starred reviews from a popular film review website, we
+#' will attempt to format a numerical score (0 to 4) to use the `"star"` and
+#' `"star-half"` icons. In this case, it is useful to generate the repeating
+#' sequence of icon names (separated by commas) in the `rating` column before
+#' introducing the table to [gt()]. We can make use of the numerical rating
+#' values in `stars` within the `fmt_icon()` function with a little help from
+#' the [from_column()] helper. Using that, we can dynamically adjust the icon's
+#' `fill_alpha` (i.e., opacity) value and accentuate the films with higher
+#' scores.
+#'
+#' ```r
+#' dplyr::tibble(
+#'   film = c(
+#'     "The Passengers of the Night", "Serena", "The Father",
+#'     "Roma", "The Handmaiden", "Violet", "Vice"
+#'   ),
+#'   stars = c(3, 1, 3.5, 4, 4, 2.5, 1.5)
+#' ) |>
+#'   dplyr::mutate(rating = dplyr::case_when(
+#'     stars %% 1 == 0 ~ strrep("star,", stars),
+#'     stars %% 1 != 0 ~ paste0(strrep("star,", floor(stars)), "star-half")
+#'   )) |>
+#'   gt() |>
+#'   fmt_icon(
+#'     columns = rating,
+#'     fill_color = "red",
+#'     fill_alpha = from_column("stars", fn = function(x) x / 4)
+#'   ) |>
+#'   cols_hide(columns = stars) |>
+#'   tab_source_note(
+#'     source_note = md(
+#'       "Data obtained from <https://www.rogerebert.com/reviews>."
+#'     )
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_icon_4.png")`
+#' }}
+#'
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-22
