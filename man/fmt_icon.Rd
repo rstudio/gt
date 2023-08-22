@@ -15,7 +15,7 @@ fmt_icon(
   stroke_alpha = NULL,
   fill_color = NULL,
   fill_alpha = NULL,
-  vertical_align = NULL,
+  vertical_adj = NULL,
   margin_left = NULL,
   margin_right = NULL,
   a11y = c("semantic", "decorative", "none")
@@ -106,6 +106,13 @@ color of the parent HTML element's color attribute.}
 The level of transparency for the icon fill can be controlled with a
 decimal value between \code{0} and \code{1}.}
 
+\item{vertical_adj}{\emph{Vertical adjustment of icon from baseline}
+
+\verb{scalar<character|numeric|integer>} // \emph{default:} \code{NULL} (\code{optional})
+
+The vertical alignment of the icon. By default, a length of \code{"-0.125em"}
+is used.}
+
 \item{margin_left}{\emph{Margin width left of icon}
 
 \verb{scalar<character|numeric|integer>} // \emph{default:} \code{NULL} (\code{optional})
@@ -131,13 +138,6 @@ a starting point.}
 The accessibility mode for the icon display can be set with the \code{a11y}
 argument. Icons can either be \code{"semantic"} or \code{"decorative"}. Using
 \code{"none"} will result in no accessibility features for the icons.}
-
-\item{vertical_adj}{\emph{Vertical adjustment of icon from baseline}
-
-\verb{scalar<character|numeric|integer>} // \emph{default:} \code{NULL} (\code{optional})
-
-The vertical alignment of the icon. By default, a length of \code{"-0.125em"}
-is used.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -217,7 +217,7 @@ differently. These arguments provide support for \code{\link[=from_column]{from_
 \item \code{stroke_alpha}
 \item \code{fill_color}
 \item \code{fill_alpha}
-\item \code{vertical_align}
+\item \code{vertical_adj}
 \item \code{margin_left}
 \item \code{margin_right}
 \item \code{a11y}
