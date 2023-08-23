@@ -161,7 +161,7 @@ an \code{"s"} character.
 
 \section{Function ID}{
 
-3-23
+3-24
 }
 
 \section{Function Introduced}{
@@ -182,6 +182,7 @@ Other data formatting functions:
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_icon}()},
 \code{\link{fmt_image}()},
 \code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},

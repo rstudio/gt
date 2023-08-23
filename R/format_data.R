@@ -9997,6 +9997,562 @@ fmt_flag <- function(
   )
 }
 
+#' Use icons within a table's body cells
+#'
+#' We can draw from a library of thousands of icons and selectively insert them
+#' into a **gt** table. The `fmt_icon()` function makes this possible and it
+#' operates a lot like [fmt_flag()] in that input cells need to contain some
+#' reference to an icon name. We are exclusively using *Font Awesome* icons here
+#' (and we do need to have the **fontawesome** package installed) so the
+#' reference is the short icon name. Multiple icons can be included per cell by
+#' separating icon names with commas (e.g., `"hard-drive,clock"`). The `sep`
+#' argument allows for a common separator to be applied between flag icons.
+#'
+#' @inheritParams fmt_number
+#'
+#' @param height *Height of icon*
+#'
+#'   `scalar<character>` // *default:* `"1em"`
+#'
+#'   The absolute height of the icon in the table cell. By default, this is set
+#'   to `"1em"`.
+#'
+#' @param sep *Separator between icons*
+#'
+#'   `scalar<character>` // *default:* `" "`
+#'
+#'   In the output of icons within a body cell, `sep` provides the separator
+#'   between each icon. By default, this is a single space character (`" "`).
+#'
+#' @param stroke_color *Color of the icon stroke/outline*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   The icon stroke is essentially the outline of the icon. The color of the
+#'   stroke can be modified by applying a single color here. If not provided
+#'   then the default value of `"currentColor"` is applied so that the stroke
+#'   color matches that of the parent HTML element's color attribute.
+#'
+#' @param stroke_width *Width of the icon stroke/outline*
+#'
+#'   `scalar<character|numeric|integer>` // *default:* `NULL` (`optional`)
+#'
+#'   The `stroke_width` option allows for setting the color of the icon outline
+#'   stroke. By default, the stroke width is very small at `"1px"` so a size
+#'   adjustment here can sometimes be useful.
+#'
+#' @param stroke_alpha *Transparency value for icon stroke/outline*
+#'
+#'   `scalar<numeric>` // *default:* `NULL` (`optional`)
+#'
+#'   The level of transparency for the icon stroke can be controlled with a
+#'   decimal value between `0` and `1`.
+#'
+#' @param fill_color *Color of the icon fill*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   The fill color of the icon can be set with `fill_color`; providing a single
+#'   color here will change the color of the fill but not of the icon's 'stroke'
+#'   or outline (use `stroke_color` to modify that). If not provided then the
+#'   default value of `"currentColor"` is applied so that the fill matches the
+#'   color of the parent HTML element's color attribute.
+#'
+#' @param fill_alpha *Transparency value for icon fill*
+#'
+#'   `scalar<numeric|integer>(0>=val>=1)` // *default:* `NULL` (`optional`)
+#'
+#'   The level of transparency for the icon fill can be controlled with a
+#'   decimal value between `0` and `1`.
+#'
+#' @param vertical_adj *Vertical adjustment of icon from baseline*
+#'
+#'   `scalar<character|numeric|integer>` // *default:* `NULL` (`optional`)
+#'
+#'   The vertical alignment of the icon. By default, a length of `"-0.125em"`
+#'   is used.
+#'
+#' @param margin_left *Margin width left of icon*
+#'
+#'   `scalar<character|numeric|integer>` // *default:* `NULL` (`optional`)
+#'
+#'   The length value for the margin that's to the left of the icon can be set
+#'   with `margin_left`. By default, `"auto"` is used for this but if space is
+#'   needed on the left-hand side then a length of `"0.2em"` is recommended as a
+#'   starting point.
+#'
+#' @param margin_right *Margin width right of icon*
+#'
+#'   `scalar<character|numeric|integer>` // *default:* `NULL` (`optional`)
+#'
+#'   The length value for the margin that's to the right of the icon can be set
+#'   with `margin_right`. By default, `"auto"` is used for this but if space is
+#'   needed on the right-hand side then a length of `"0.2em"` is recommended as
+#'   a starting point.
+#'
+#' @param a11y *Accessibility mode for icon*
+#'
+#'   `singl-kw:[semantic|decorative|none]` // *default:* `"semantic"`
+#'
+#'   The accessibility mode for the icon display can be set with the `a11y`
+#'   argument. Icons can either be `"semantic"` or `"decorative"`. Using
+#'   `"none"` will result in no accessibility features for the icons.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Compatibility of formatting function with data values:
+#'
+#' The `fmt_icon()` formatting function is compatible with body cells that are
+#' of the `"character"` or `"factor"` types. Any other types of body cells are
+#' ignored during formatting. This is to say that cells of incompatible data
+#' types may be targeted, but there will be no attempt to format them.
+#'
+#' @section Targeting cells with `columns` and `rows`:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to target a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given formatting function
+#' will be skipped over, like `character` values and numeric `fmt_*()`
+#' functions. So it's safe to select all columns with a particular formatting
+#' function (only those values that can be formatted will be formatted), but,
+#' you may not want that. One strategy is to format the bulk of cell values with
+#' one formatting function and then constrain the columns for later passes with
+#' other types of formatting (the last formatting done to a cell is what you get
+#' in the final output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
+#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
+#' the input data (the indices won't necessarily match those of rearranged rows
+#' if row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector. This is nice if you want to base
+#' formatting on values in the column or another column, or, you'd like to use a
+#' more complex predicate expression.
+#'
+#' @section Compatibility of arguments with the `from_column()` helper function:
+#'
+#' The [from_column()] helper function can be used with certain arguments of
+#' `fmt_icon()` to obtain varying parameter values from a specified column
+#' within the table. This means that each row could be formatted a little bit
+#' differently. These arguments provide support for [from_column()]:
+#'
+#' - `height`
+#' - `sep`
+#' - `stroke_color`
+#' - `stroke_width`
+#' - `stroke_alpha`
+#' - `fill_color`
+#' - `fill_alpha`
+#' - `vertical_adj`
+#' - `margin_left`
+#' - `margin_right`
+#' - `a11y`
+#'
+#' Please note that for each of the aforementioned arguments, a [from_column()]
+#' call needs to reference a column that has data of the correct type (this is
+#' different for each argument). Additional columns for parameter values can be
+#' generated with the [cols_add()] function (if not already present). Columns
+#' that contain parameter data can also be hidden from final display with
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
+#' [from_column()] helper is applied so long as the arguments belong to this
+#' closed set.
+#'
+#' @section Examples:
+#'
+#' For this first example of generating icons with `fmt_icon()`, let's make a
+#' simple tibble that has two columns of *Font Awesome* icon names. We separate
+#' multiple icons per cell with commas. By default, the icons are 1 em in
+#' height; we're going to make the icons slightly larger here (so we can see the
+#' fine details of them) by setting `height = "4em"`.
+#'
+#' ```r
+#' dplyr::tibble(
+#'   animals = c(
+#'     "hippo", "fish,spider", "mosquito,locust,frog",
+#'     "dog,cat", "kiwi-bird"
+#'   ),
+#'   foods = c(
+#'     "bowl-rice", "egg,pizza-slice", "burger,lemon,cheese",
+#'     "carrot,hotdog", "bacon"
+#'   )
+#' ) |>
+#'   gt() |>
+#'   fmt_icon(height = "4em") |>
+#'   cols_align(align = "center", columns = everything())
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_icon_1.png")`
+#' }}
+#'
+#' Let's take a few rows from the [`towny`] dataset and make it so the
+#' `csd_type` column contains *Font Awesome* icon names (we want only the
+#' `"city"` and `"house-chimney"` icons here). After using `fmt_icon()` to
+#' format the `csd_type` column, we get icons that are representative of the two
+#' categories of municipality for this subset of data.
+#'
+#' ```r
+#' towny |>
+#'   dplyr::select(name, csd_type, population_2021) |>
+#'   dplyr::filter(csd_type %in% c("city", "town")) |>
+#'   dplyr::group_by(csd_type) |>
+#'   dplyr::arrange(desc(population_2021)) |>
+#'   dplyr::slice_head(n = 5) |>
+#'   dplyr::ungroup() |>
+#'   dplyr::mutate(
+#'     csd_type = ifelse(csd_type == "town", "house-chimney", "city")
+#'   ) |>
+#'   gt() |>
+#'   fmt_integer() |>
+#'   fmt_icon(columns = csd_type) |>
+#'   cols_move_to_start(columns = csd_type) |>
+#'   cols_label(
+#'     csd_type = "",
+#'     name = "City/Town",
+#'     population_2021 = "Population"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_icon_2.png")`
+#' }}
+#'
+#' Let's use a portion of the [`metro`] dataset to create a **gt** table.
+#' Depending on which train services are offered at the subset of stations,
+#' *Font Awesome* icon names will be applied to cells where the different
+#' services exist (the specific names are `"train-subway"`, `"train"`, and
+#' `"train-tram"`). With **tidyr**'s `unite()` function, those icon names
+#' can be converged into a single column (`services`) with the `NA` values
+#' removed. Since the names correspond to icons and they are in the correct
+#' format (separated by commas), they can be formatted as *Font Awesome* icons
+#' with the `fmt_icon()` function.
+#'
+#' ```r
+#' metro |>
+#'   dplyr::select(name, lines, connect_rer, connect_tramway, location) |>
+#'   dplyr::slice_tail(n = 10) |>
+#'   dplyr::mutate(lines = "train-subway") |>
+#'   dplyr::mutate(connect_rer = ifelse(!is.na(connect_rer), "train", NA)) |>
+#'   dplyr::mutate(
+#'     connect_tramway = ifelse(!is.na(connect_tramway), "train-tram", NA)
+#'   ) |>
+#'   tidyr::unite(
+#'     col = services,
+#'     lines:connect_tramway,
+#'     sep = ",",
+#'     na.rm = TRUE
+#'   ) |>
+#'   gt() |>
+#'   fmt_icon(
+#'     columns = services,
+#'     a11y = "decorative"
+#'   ) |>
+#'   cols_merge(
+#'     columns = c(name, services),
+#'     pattern = "{1} ({2})"
+#'   ) |>
+#'   cols_label(
+#'     name = "Station",
+#'     location = "Location"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_icon_3.png")`
+#' }}
+#'
+#' Taking a handful of starred reviews from a popular film review website, we
+#' will attempt to format a numerical score (0 to 4) to use the `"star"` and
+#' `"star-half"` icons. In this case, it is useful to generate the repeating
+#' sequence of icon names (separated by commas) in the `rating` column before
+#' introducing the table to [gt()]. We can make use of the numerical rating
+#' values in `stars` within the `fmt_icon()` function with a little help from
+#' the [from_column()] helper. Using that, we can dynamically adjust the icon's
+#' `fill_alpha` (i.e., opacity) value and accentuate the films with higher
+#' scores.
+#'
+#' ```r
+#' dplyr::tibble(
+#'   film = c(
+#'     "The Passengers of the Night", "Serena", "The Father",
+#'     "Roma", "The Handmaiden", "Violet", "Vice"
+#'   ),
+#'   stars = c(3, 1, 3.5, 4, 4, 2.5, 1.5)
+#' ) |>
+#'   dplyr::mutate(rating = dplyr::case_when(
+#'     stars %% 1 == 0 ~ strrep("star,", stars),
+#'     stars %% 1 != 0 ~ paste0(strrep("star,", floor(stars)), "star-half")
+#'   )) |>
+#'   gt() |>
+#'   fmt_icon(
+#'     columns = rating,
+#'     fill_color = "red",
+#'     fill_alpha = from_column("stars", fn = function(x) x / 4)
+#'   ) |>
+#'   cols_hide(columns = stars) |>
+#'   tab_source_note(
+#'     source_note = md(
+#'       "Data obtained from <https://www.rogerebert.com/reviews>."
+#'     )
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_icon_4.png")`
+#' }}
+#'
+#' @family data formatting functions
+#' @section Function ID:
+#' 3-22
+#'
+#' @section Function Introduced:
+#' `v0.9.0` (Mar 31, 2023)
+#'
+#' @import rlang
+#' @export
+fmt_icon <- function(
+    data,
+    columns = everything(),
+    rows = everything(),
+    height = "1em",
+    sep = " ",
+    stroke_color = NULL,
+    stroke_width = NULL,
+    stroke_alpha = NULL,
+    fill_color = NULL,
+    fill_alpha = NULL,
+    vertical_adj = NULL,
+    margin_left = NULL,
+    margin_right = NULL,
+    a11y = c("semantic", "decorative", "none")
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  # Determine if the fontawesome package is installed and stop the
+  # function if it is not present
+  if (!requireNamespace("fontawesome", quietly = TRUE)) {
+
+    cli::cli_abort(c(
+      "The `fontawesome` package is required for inserting icons with the
+      `fmt_icon()` function.",
+      "*" = "It can be installed with `install.packages(\"fontawesome\")`."
+    ))
+  }
+
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - height
+  # - sep
+  # - stroke_color
+  # - stroke_width
+  # - stroke_alpha
+  # - fill_color
+  # - fill_alpha
+  # - vertical_adj
+  # - margin_left
+  # - margin_right
+  # - a11y
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = "fmt_icon",
+        all_args_except = c("data", "columns", "rows")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using the `resolve_vars` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_icon(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          height = p_i$height %||% height,
+          sep = p_i$sep %||% sep,
+          stroke_color = p_i$stroke_color %||% stroke_color,
+          stroke_width = p_i$stroke_width %||% stroke_width,
+          stroke_alpha = p_i$stroke_alpha %||% stroke_alpha,
+          fill_color = p_i$fill_color %||% fill_color,
+          fill_alpha = p_i$fill_alpha %||% fill_alpha,
+          vertical_adj = p_i$vertical_adj %||% vertical_adj,
+          margin_left = p_i$margin_left %||% margin_left,
+          margin_right = p_i$margin_right %||% margin_right,
+          a11y = p_i$a11y %||% a11y
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()` objects passed to compatible arguments
+  #
+
+  # Ensure that arguments are matched
+  a11y <- rlang::arg_match(a11y)
+
+  if (a11y == "semantic") {
+    a11y <- "sem"
+  }
+  if (a11y == "decorative") {
+    a11y <- "deco"
+  }
+
+  # Declare formatting function compatibility
+  compat <- c("character", "factor")
+
+  # In this case where strict mode is being used (with the option
+  # called "gt.strict_column_fmt"), stop the function if any of the
+  # resolved columns have data that is incompatible with this formatter
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = compat
+    )
+  ) {
+    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
+      cli::cli_abort(
+        "The `fmt_icon()` function can only be used on `columns`
+      with character or factor data."
+      )
+    }
+  }
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    fns = list(
+      html = function(x) {
+
+        # Generate an vector of empty strings that will eventually
+        # contain all of the link text
+        x_str <- character(length(x))
+
+        x_str_non_missing <- x[!is.na(x)]
+
+        x_str_non_missing <-
+          vapply(
+            seq_along(x_str_non_missing),
+            FUN.VALUE = character(1),
+            USE.NAMES = FALSE,
+            FUN = function(x) {
+
+              if (grepl(",", x_str_non_missing[x])) {
+                icons <-
+                  tolower(unlist(strsplit(x_str_non_missing[x], ",\\s*")))
+              } else {
+                icons <- tolower(x_str_non_missing[x])
+              }
+
+              # Automatically append `px` length unit when `height`
+              # is given as a number
+              if (is.numeric(height)) {
+                height <- paste0(height, "px")
+              }
+
+              # TODO: Parse to ensure that `icons` values are valid
+
+              out <- c()
+
+              for (y in seq_along(icons)) {
+
+                out_y <-
+                  as.character(
+                    fontawesome::fa(
+                      name = icons[y],
+                      fill = fill_color,
+                      fill_opacity = fill_alpha,
+                      stroke = stroke_color,
+                      stroke_width = stroke_width,
+                      stroke_opacity = stroke_alpha,
+                      height = height,
+                      width = NULL,
+                      margin_left = margin_left,
+                      margin_right = margin_right,
+                      vertical_align = vertical_adj,
+                      position = NULL,
+                      prefer_type = "regular",
+                      a11y = a11y
+                    )
+                  )
+
+                out <- c(out, out_y)
+              }
+
+              paste0(
+                "<span style=\"white-space:nowrap;\">",
+                paste0(out, collapse = sep),
+                "</span>"
+              )
+            }
+          )
+
+        x_str[!is.na(x)] <- x_str_non_missing
+        x_str[is.na(x)] <- as.character(NA_character_)
+        x_str
+      },
+      latex = function(x) {
+        x
+      },
+      rtf = function(x) {
+        x
+      },
+      word = function(x) {
+        x
+      },
+      default = function(x) {
+        x
+      }
+    )
+  )
+}
+
 #' Format Markdown text
 #'
 #' @description
@@ -10125,7 +10681,7 @@ fmt_flag <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-22
+#' 3-23
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -10342,7 +10898,7 @@ fmt_markdown <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-23
+#' 3-24
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -10604,7 +11160,7 @@ fmt_passthrough <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-24
+#' 3-25
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
@@ -10923,7 +11479,7 @@ fmt_auto <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-25
+#' 3-26
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
