@@ -224,7 +224,7 @@ test_that("word ooxml can be generated from gt object", {
     as_word()
 
   gt_exibble_min_sha1 <- digest::sha1(gt_exibble_min)
-  expect_equal(gt_exibble_min_sha1, "02a08c1cd57afd63d1e8a670579b59a3fffda177")
+  expect_equal(gt_exibble_min_sha1, "818e5b7186faca5038cc62b607d01fd43ee86e11")
 
 })
 
@@ -1784,7 +1784,6 @@ test_that("footnotes styling gets applied to footer marks", {
 
 })
 
-
 test_that("tables with cell & text coloring can be added to a word doc - with summaries (grand/group)", {
 
   check_suggests_xml()
@@ -2263,16 +2262,13 @@ There's a quick reference [here](https://commonmark.org/help/).
       "<w:rPr>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>",
       "<w:rPr>\n  <w:rStyle w:val=\"Macro Text\"/>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>",
       "<w:rPr>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>",
-      "<w:rPr>\n  <w:rStyle w:val=\"Hyperlink\"/>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>",
+      "<w:rPr>\n  <w:rStyle w:val=\"Hyperlink\"/>\n  <w:color w:val=\"0563C1\"/>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>",
       "<w:rPr>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>"
     )
   )
 
 
-
-
 })
-
 
 test_that("markdown with urls work",{
 
@@ -2324,21 +2320,16 @@ test_that("markdown with urls work",{
 
 })
 
-
 test_that("markdown with img refs work",{
 
   skip_on_ci()
   check_suggests_xml()
 
-  text_sample <- "
-  ![test image from gt package](inst/graphics/test_image.png)
-  "
-
   markdown_gt <- dplyr::tribble(
     ~md,
-    text_sample,
-    "this is **bold**, and this is [Rich Iannone's website](https://github.com/rich-iannone)"
-  ) %>%
+    " ![test image from gt package](inst/graphics/test_image.png)",
+    " ![test image from gt package2](inst/graphics/test_image.svg)"
+    ) %>%
     gt() %>%
     fmt_markdown(columns = everything())
 
@@ -2353,29 +2344,130 @@ test_that("markdown with img refs work",{
   ## Programmatic Review
   docx <- officer::read_docx(temp_docx)
 
-  ## get docx table contents
+  ## get docx contents
   docx_contents <- xml2::xml_children(xml2::xml_children(docx$doc_obj$get()))
 
   ## extract table hyperlinks
-  docx_table_hyperlinks <-
+  docx_table_image <-
     docx_contents[1] %>%
-    xml2::xml_find_all(".//w:hyperlink")
+    xml2::xml_find_all(".//a:blip")
 
   ## hyperlinks are preserved and updated to be rId
-  expect_equal(length(docx_table_hyperlinks), 2)
-  expect_true(all(grepl("^rId\\d+$",xml_attr(docx_table_hyperlinks, "id"))))
+  expect_equal(length(docx_table_image),2)
+  expect_true(all(grepl("^rId\\d+$",xml_attr(docx_table_image, "embed"))))
 
-  # first should be commonmark URL
+  # first should be a png
   expect_equal(
-    docx$doc_obj$rel_df()$target[ docx$doc_obj$rel_df()$id == xml_attr(docx_table_hyperlinks[1], "id")],
-    "https://commonmark.org/help/"
+    docx$doc_obj$rel_df()$target[ docx$doc_obj$rel_df()$id == xml_attr(docx_table_image[1], "embed")],
+    "media/testimage.png"
+  )
+
+  # second should be an svg
+  expect_equal(
+    docx$doc_obj$rel_df()$target[ docx$doc_obj$rel_df()$id == xml_attr(docx_table_image[2], "embed")],
+    "media/testimage.svg"
+  )
+
+})
+
+test_that("table with image refs work - local only",{
+
+  skip_on_ci()
+  check_suggests_xml()
+
+  image_gt <- dplyr::tribble(
+    ~md,
+    "inst/graphics/test_image.png, inst/graphics/test_image.svg",
+    "inst/graphics/test_image.svg"
+  ) %>%
+    gt() %>%
+    fmt_image(columns = everything(), sep = ",", height = "2in")
+
+  temp_docx <- tempfile(fileext = ".docx")
+
+  gtsave(image_gt, filename = temp_docx)
+
+  if(interactive() & !testthat::is_testing()){
+    shell.exec(temp_docx)
+  }
+
+  ## Programmatic Review
+  docx <- officer::read_docx(temp_docx)
+
+  ## get docx contents
+  docx_contents <- xml2::xml_children(xml2::xml_children(docx$doc_obj$get()))
+
+  ## extract table hyperlinks
+  docx_table_image <-
+    docx_contents[1] %>%
+    xml2::xml_find_all(".//a:blip")
+
+  ## hyperlinks are preserved and updated to be rId
+  expect_equal(length(docx_table_image),3)
+  expect_true(all(grepl("^rId\\d+$",xml_attr(docx_table_image, "embed"))))
+
+  # first should be a png
+  expect_equal(
+    docx$doc_obj$rel_df()$target[ docx$doc_obj$rel_df()$id == xml_attr(docx_table_image[1], "embed")],
+    "media/testimage.png"
+  )
+
+  # second should be an svg URL
+  expect_equal(
+    docx$doc_obj$rel_df()$target[ docx$doc_obj$rel_df()$id == xml_attr(docx_table_image[2], "embed")],
+    "media/testimage.svg"
   )
 
   # second should be google URL
   expect_equal(
-    docx$doc_obj$rel_df()$target[ docx$doc_obj$rel_df()$id == xml_attr(docx_table_hyperlinks[2], "id")],
-    "https://www.google.com"
+    docx$doc_obj$rel_df()$target[ docx$doc_obj$rel_df()$id == xml_attr(docx_table_image[3], "embed")],
+    "media/testimage.svg"
   )
 
+})
+
+test_that("table with image refs work - https",{
+
+  skip_on_ci()
+  check_suggests_xml()
+
+  https_image_gt <- dplyr::tribble(
+    ~https_image,
+    "https://gt.rstudio.com/reference/figures/logo.svg"
+  ) %>%
+    gt() %>%
+    fmt_image(columns = everything(), sep = ",", height = "2in")
+
+  temp_docx <- tempfile(fileext = ".docx")
+
+  gtsave(https_image_gt, filename = temp_docx)
+
+  if(interactive() & !testthat::is_testing()){
+    shell.exec(temp_docx)
+  }
+
+  ## Programmatic Review
+  docx <- officer::read_docx(temp_docx)
+
+  ## get docx contents
+  docx_contents <- xml2::xml_children(xml2::xml_children(docx$doc_obj$get()))
+
+  ## extract table hyperlinks
+  docx_table_image <-
+    docx_contents[1] %>%
+    xml2::xml_find_all(".//a:blip")
+
+  ## hyperlinks are preserved and updated to be rId
+  expect_equal(length(docx_table_image),1)
+  expect_true(all(grepl("^rId\\d+$",xml_attr(docx_table_image, "embed"))))
+
+  # first should be the logo.svg with some random numbers ahead of it
+  expect_true(
+    grepl("^media/.+?logo[.]svg$",
+    docx$doc_obj$rel_df()$target[ docx$doc_obj$rel_df()$id == xml_attr(docx_table_image[1], "embed")]
+    )
+  )
 
 })
+
+

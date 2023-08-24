@@ -152,6 +152,15 @@ xml_tblGrid <- function(..., app = "word") {
   )
 }
 
+# Table grid
+xml_gridcol <- function(width = NULL, app = "word"){
+
+  htmltools::tag(
+    `_tag_name` = xml_tag_type("gridCol", app),
+    varArgs = list(`w:w` = width, `w:type` = type)
+  )
+}
+
 # Table row
 xml_tr <- function(..., app = "word") {
 
@@ -775,8 +784,10 @@ xml_image <- function(src, height = 1, width = 1, units = "in", alt_text = ""){
         cy = height,
         units = units
       ),
+      # xml_wp_docPr(id = "", description = alt_text),
+      xml_wp_docPr(id = "", description = ""),
+
       xml_wp_effectExtent(),
-      xml_wp_docPr(id = "", description = alt_text),
       xml_wp_cNvGraphicFramePr(
         xml_a_graphic_frame_locks()
       ),
@@ -853,6 +864,7 @@ xml_wp_extent <- function(cx, cy, units = "in"){
 }
 
 convert_to_emu <- function(x, units = "in"){
+
   ## a px is
   emu_conversion <- c(
     "in" = 914400, # https://startbigthinksmall.wordpress.com/2010/01/04/points-inches-and-emus-measuring-units-in-office-open-xml/
@@ -1018,14 +1030,13 @@ xml_pic_blipFill <- function(...){
 }
 
 ### reference the actual picture in relationship
-xml_a_blip <- function(src){
-
-
+xml_a_blip <- function(src, cstate = "print"){
 
   htmltools::tag(
     `_tag_name` = "a:blip",
     varArgs = list(
-      `r:embed` = src
+      `r:embed` = src,
+      `cstate` = cstate
     )
   )
 }
@@ -1130,7 +1141,9 @@ xml_a_ln <- function(...){
 
 # TODO: make table widths work for XML
 # Get the attributes for the table tag
-create_table_props_component_xml <- function(data, align = "center") {
+create_table_props_component_xml <- function(data, align = c("center","start","end","right","left")) {
+
+  align <- match.arg(align)
 
   boxh <- dt_boxhead_get(data = data)
 
@@ -1164,27 +1177,7 @@ create_table_props_component_xml <- function(data, align = "center") {
     boxh %>%
     dplyr::filter(type %in% c("default", "stub")) %>%
     dplyr::arrange(dplyr::desc(type)) %>% # This ensures that the `stub` is first
-    .$column_width %>%
-    unlist()
-
-  # Stop function if all length dimensions (where provided)
-  # don't conform to accepted CSS length definitions
-  validate_css_lengths(widths)
-
-  # If all of the widths are defined as px values for all columns,
-  # then ensure that the width values are strictly respected as
-  # absolute width values (even if a table width has already been set)
-  if (all(grepl("px", widths)) && table_width == "auto") {
-    table_width <- "0px"
-  }
-
-  if (all(grepl("%", widths)) && table_width == "auto") {
-    table_width <- "100%"
-  }
-
-  if (table_width != "auto") {
-    table_style <- paste(table_style, paste0("width: ", table_width), sep = "; ")
-  }
+    .$column_width
 
   table_properties <-
     xml_tblPr(
@@ -1194,12 +1187,21 @@ create_table_props_component_xml <- function(data, align = "center") {
         xml_width("left", width = 60),
         xml_width("right", width = 60)
       ),
-      xml_tblW(),
+      xml_tblW(type = "auto", w = 0),
       xml_tblLook(),
-      xml_jc(val = align)
+      xml_jc(val = c(center="center",start = "start",end = "end",end = "right",start = "left")[[align]])
     )
 
+  # table_cols <- xml_tblGrid(
+  #   lapply(widths,xml_gridcol) %>%
+  #     vapply(as.character, as.character(0))
+  # )
+
+  # htmltools::tagList(c(table_properties, table_cols))
+
   htmltools::tagList(table_properties)
+
+
 }
 
 #' Create the caption component of a table (OOXML)
@@ -2627,6 +2629,8 @@ xml_table_cell <- function(
 
 process_cell_content <- function(x, ...) {
 
+
+
   x %>%
     parse_to_xml() %>%
     process_cell_content_ooxml_t(...) %>%
@@ -2976,11 +2980,10 @@ parse_to_xml <- function(x, ...) {
       paste0("<md_container>", ., "</md_container>")
   }
 
-  parsed_xml_contents <-
-    x %>%
+  parsed_xml_contents <- x %>%
     ## add namespace for later processing
     add_ns() %>%
-    xml2::read_xml() %>%
+    read_xml() %>%
     suppressWarnings()
 
   parsed_xml_contents %>%
@@ -3008,10 +3011,7 @@ as_xml_node <- function(x, create_ns = FALSE) {
 
 add_ns <- function(x) {
 
-  x <-
-    x %>%
-    as_xml_node() %>%
-    suppressWarnings()
+  x <- read_xml(x)
 
   xml2::xml_set_attrs(
     x,
@@ -3077,11 +3077,8 @@ gt_as_word_post_processing <- function(path) {
   rels <- read_xml(rels_doc_path)
 
   ## load content_types
-  content_type_doc_path <- file.path(tmp_word_dir,"[Content_Types].xml")
-  content_types <- read_xml(content_type_doc_path)
-
-  ## update docx_ns
-  # docx <- update_docx_ns(docx)
+  content_type_doc_path <-file.path(tmp_word_dir,"[Content_Types].xml")
+  content_types <- create_xml_contents()
 
   ## update hyperlinks & blips
   update_hyperlink_node_id(docx, rels)
@@ -3090,71 +3087,49 @@ gt_as_word_post_processing <- function(path) {
   ## update all ids
   update_ref_id(docx)
 
+  ## Update settings
+  settings_doc_path <- file.path(tmp_word_dir,"word/settings.xml")
+  doc_settings <- create_doc_settings()
+
   ## end section
   ensure_sect_end(docx)
 
   ## write updates
+  xml2::write_xml(doc_settings, settings_doc_path)
   xml2::write_xml(rels, rels_doc_path)
   xml2::write_xml(content_types, content_type_doc_path)
   xml2::write_xml(docx, content_doc_path)
 
   # Unzip contents
-  wd <- getwd()
-  zip_temp_word_doc(path, tmp_word_dir, wd)
+  zip_temp_word_doc(path, tmp_word_dir)
+
+
 }
 
-update_docx_ns <- function(docx){
+create_doc_settings <- function(){
 
-  ## add ns to document?
-  potential_ns <- c(
-    "xmlns:wpc"="http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas",
-    "xmlns:cx"="http://schemas.microsoft.com/office/drawing/2014/chartex" ,
-    "xmlns:cx1"="http://schemas.microsoft.com/office/drawing/2015/9/8/chartex",
-    "xmlns:cx2"="http://schemas.microsoft.com/office/drawing/2015/10/21/chartex",
-    "xmlns:cx3"="http://schemas.microsoft.com/office/drawing/2016/5/9/chartex",
-    "xmlns:cx4"="http://schemas.microsoft.com/office/drawing/2016/5/10/chartex",
-    "xmlns:cx5"="http://schemas.microsoft.com/office/drawing/2016/5/11/chartex" ,
-    "xmlns:cx6"="http://schemas.microsoft.com/office/drawing/2016/5/12/chartex",
-    "xmlns:cx7"="http://schemas.microsoft.com/office/drawing/2016/5/13/chartex",
-    "xmlns:cx8"="http://schemas.microsoft.com/office/drawing/2016/5/14/chartex" ,
-    "xmlns:mc"="http://schemas.openxmlformats.org/markup-compatibility/2006",
-    "xmlns:aink"="http://schemas.microsoft.com/office/drawing/2016/ink",
-    "xmlns:am3d"="http://schemas.microsoft.com/office/drawing/2017/model3d",
-    "xmlns:o"="urn:schemas-microsoft-com:office:office" ,
-    "xmlns:r"="http://schemas.openxmlformats.org/officeDocument/2006/relationships" ,
-    "xmlns:m"="http://schemas.openxmlformats.org/officeDocument/2006/math" ,
-    "xmlns:v"="urn:schemas-microsoft-com:vml",
-    "xmlns:wp14"="http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing",
-    "xmlns:wp"="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" ,
-    "xmlns:w10"="urn:schemas-microsoft-com:office:word",
-    "xmlns:w"="http://schemas.openxmlformats.org/wordprocessingml/2006/main",
-    "xmlns:w14"="http://schemas.microsoft.com/office/word/2010/wordml",
-    "xmlns:w15"="http://schemas.microsoft.com/office/word/2012/wordml",
-    "xmlns:w16cex"="http://schemas.microsoft.com/office/word/2018/wordml/cex",
-    "xmlns:w16cid"="http://schemas.microsoft.com/office/word/2016/wordml/cid",
-    "xmlns:w16"="http://schemas.microsoft.com/office/word/2018/wordml",
-    "xmlns:w16se"="http://schemas.microsoft.com/office/word/2015/wordml/symex",
-    "xmlns:wpg"="http://schemas.microsoft.com/office/word/2010/wordprocessingGroup",
-    "xmlns:wpi"="http://schemas.microsoft.com/office/word/2010/wordprocessingInk",
-    "xmlns:wne"="http://schemas.microsoft.com/office/word/2006/wordml" ,
-    "xmlns:wps"="http://schemas.microsoft.com/office/word/2010/wordprocessingShape"
+  settings_xml <- as_xml_document("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>
+    <w:settings xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:w15=\"http://schemas.microsoft.com/office/word/2012/wordml\" xmlns:w16cex=\"http://schemas.microsoft.com/office/word/2018/wordml/cex\" xmlns:w16cid=\"http://schemas.microsoft.com/office/word/2016/wordml/cid\" xmlns:w16=\"http://schemas.microsoft.com/office/word/2018/wordml\" xmlns:w16sdtdh=\"http://schemas.microsoft.com/office/word/2020/wordml/sdtdatahash\" xmlns:w16se=\"http://schemas.microsoft.com/office/word/2015/wordml/symex\" xmlns:sl=\"http://schemas.openxmlformats.org/schemaLibrary/2006/main\" mc:Ignorable=\"w14 w15 w16se w16cid w16 w16cex w16sdtdh\">
+    </w:settings>
+    " )
+
+  settings_to_add <- list(
+    zoom = "<w:zoom w:percent=\"130\"/>",
+    defaultTabStop = "<w:defaultTabStop w:val=\"720\"/>",
+    hyphenationZone = "<w:hyphenationZone w:val=\"360\"/>",
+    decimalSymbol = "<w:decimalSymbol w:val=\".\"/>",
+    listSeparator = "<w:listSeparator w:val=\",\"/>",
+    compat = "<w:compat><w:compatSetting w:name=\"compatibilityMode\" w:uri=\"http://schemas.microsoft.com/office/word\" w:val=\"15\"/></w:compat>"
   )
 
-  current_ns <- xml2::xml_attrs(docx)
-
-  new_ns_attr <- c(
-    potential_ns,
-    current_ns[!names(current_ns) %in% names(potential_ns)]
-  )
-
-  for(i in names(new_ns_attr)){
-    xml2::xml_set_attr(docx, i, new_ns_attr[[i]])
+  for(new_setting in names(settings_to_add)){
+    xml_add_child(
+      settings_xml,
+      as_xml_node(settings_to_add[[new_setting]])[[1]]
+    )
   }
 
-  # xml2::xml_attr(docx, "mc:Ignorable") <-  "w14 w15 w16se w16cid w16 w16cex wp14"
-
-  xml2::read_xml(as.character(docx), options = c("NSCLEAN"))
-
+  settings_xml
 }
 
 update_hyperlink_node_id <- function(docx, rels){
@@ -3193,11 +3168,17 @@ update_blip_node_id <- function(docx, rels, content_types, tmp_word_dir){
   max_id <- max(as.numeric(gsub("rId","",rels_ids)))
 
   ## get all blip nodes (binary li)
-  blip_nodes <- docx %>% xml_find_all("//a:blip[@r:embed]")
+  blip_nodes <-
+    docx %>% xml_find_all(
+      "//a:blip[@r:embed]",
+      ns = c(
+        a = "http://schemas.openxmlformats.org/drawingml/2006/main",
+        r = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"
+        )
+    )
 
   ## identify nodes needing updating
-  blip_nodes <- blip_nodes[!grepl("^rId\\d+$", xml_attr(blip_nodes, "embed"))]
-
+  blip_nodes <- blip_nodes[!grepl("^rId\\d+$", xml_attr(blip_nodes, "r:embed", ns = c(r = "http://schemas.openxmlformats.org/officeDocument/2006/relationships")))]
 
   if(length(blip_nodes) > 0){
 
@@ -3207,10 +3188,12 @@ update_blip_node_id <- function(docx, rels, content_types, tmp_word_dir){
       dir.create(tmp_word_dir_media, showWarnings = FALSE)
     }
 
-    for(blip_node in blip_nodes){
+    for(blip_node_idx in seq_along(blip_nodes)){
+
+      blip_node <- blip_nodes[[blip_node_idx]]
 
       max_id <- max_id + 1
-      src <- xml_attr(blip_node, "embed")
+      src <- xml_attr(blip_node, "r:embed", ns = c(r = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"))
       src_rel <- file.path("media",basename_clean(src))
 
       new_id <- paste0("rId", max_id)
@@ -3221,38 +3204,35 @@ update_blip_node_id <- function(docx, rels, content_types, tmp_word_dir){
       # add relationship
       xml2::xml_add_child(
         rels,
-        xml_relationship(id = new_id, target = src_rel, type = "image",target_mode = NA)
+        xml_relationship(id = new_id, target = src_rel, type = "image", target_mode = NA)
       )
 
-      xml_attr(blip_node, "r:embed") <- new_id
+      # xml2::xml_add_child(
+      #   content_types,
+      #   xml_content_type_override(PartName = file.path("/word",src_rel), ContentType = file.path("image", tools::file_ext(src_rel)))
+      # )
+
+
+      xml_attr(blip_node, "r:embed", ns = c(r = "http://schemas.openxmlformats.org/officeDocument/2006/relationships")) <- new_id
+
     }
-
-
-    all_uid <- xml_find_all(docx, "//*[@id]")
-
-    for (z in seq_along(all_uid)) {
-        xml_attr(all_uid[[z]], "id") <- z
-    }
-
-
-    ## add all content types
-
-    xml_add_all_content_types(content_types)
 
   }
-
-
 
 }
 
 update_ref_id <- function(docx){
 
-  id <- 1
-  all_els_with_ids <- xml_find_all(docx, "//*[@id]")
-  for (i in seq_along(all_els_with_ids)) {
-      xml_attr(all_els_with_ids[[i]], "id") <- id
-      id <- id + 1
+  all_uid <- xml_find_all(docx, "//*[@id]")
+  int_id <- 1
+  for (z in seq_along(all_uid)) {
+    if (!grepl("[^0-9]", xml_attr(all_uid[[z]], "id"))) {
+      xml_attr(all_uid[[z]], "id") <- int_id
+      int_id <- int_id + 1
+    }
   }
+  int_id
+
 }
 
 ensure_sect_end <- function(docx){
@@ -3302,16 +3282,22 @@ basename_clean <- function(x){
 }
 
 ## conveniently zip up word doc temp folder
-zip_temp_word_doc <- function(path, temp_dir, cur_dir = getwd()) {
+zip_temp_word_doc <- function(path, temp_dir) {
+
+  cur_dir <- getwd()
 
   setwd(temp_dir)
-  on.exit(setwd(cur_dir))
-
-  utils::zip(
-    zipfile = path,
-    files = list.files(path = ".", recursive = TRUE, all.files = FALSE),
-    flags = "-r9X -q"
+  tryCatch({
+    utils::zip(
+      zipfile = path,
+      files = list.files(path = ".", recursive = TRUE, all.files = TRUE, include.dirs = FALSE),
+      flags = "-r9X -q"
+      )
+  },finally = {
+      setwd(cur_dir)
+  }
   )
+
 }
 
 xml_relationship <- function(id,  target, type = c("hyperlink","image"), target_mode = "External"){
@@ -3319,8 +3305,8 @@ xml_relationship <- function(id,  target, type = c("hyperlink","image"), target_
   type <- paste0("http://schemas.openxmlformats.org/officeDocument/2006/relationships/", match.arg(type))
 
   varArgs <- list(
-    `Type` = type,
     `Id` = id,
+    `Type` = type,
     `Target` = target,
     `TargetMode` = target_mode)
 
@@ -3334,53 +3320,84 @@ xml_relationship <- function(id,  target, type = c("hyperlink","image"), target_
     read_xml()
 }
 
-xml_add_all_content_types <- function(content_types){
+create_xml_contents <- function(){
+
+  content_types <- as_xml_document("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>
+  <Types xmlns=\"http://schemas.openxmlformats.org/package/2006/content-types\"></Types>")
 
   xml2::xml_add_child(
     content_types,
-    xml_content_type_ext(Extension = "jpeg", ContentType = "image/jpeg"),
-    .where = 2
-  )
+    xml_content_type_ext(Extension = "rels", ContentType = "application/vnd.openxmlformats-package.relationships+xml"))
   xml2::xml_add_child(
     content_types,
-    xml_content_type_ext(Extension = "gif", ContentType = "image/gif"),
-    .where = 2
-  )
+    xml_content_type_ext(Extension = "xml", ContentType = "application/xml"))
   xml2::xml_add_child(
     content_types,
-    xml_content_type_ext(Extension = "svg", ContentType = "image/svg+xml"),
-    .where = 2
-  )
+    xml_content_type_ext(Extension = "tiff", ContentType = "image/tiff"))
   xml2::xml_add_child(
     content_types,
-    xml_content_type_ext(Extension = "png", ContentType = "image/png"),
-    .where = 2
-  )
+    xml_content_type_ext(Extension = "wmf", ContentType = "image/x-wmf"))
   xml2::xml_add_child(
     content_types,
-    xml_content_type_ext(Extension = "bmp", ContentType = "image/bmp"),
-    .where = 2
-  )
+    xml_content_type_ext(Extension = "jpg", ContentType = "application/octet-stream"))
   xml2::xml_add_child(
     content_types,
-    xml_content_type_ext(Extension = "emf", ContentType = "image/x-emf"),
-    .where = 2
-  )
+    xml_content_type_ext(Extension = "emf", ContentType = "image/x-emf"))
   xml2::xml_add_child(
     content_types,
-    xml_content_type_ext(Extension = "jpg", ContentType = "application/octet-stream"),
-    .where = 2
-  )
+    xml_content_type_ext(Extension = "bmp", ContentType = "image/bmp"))
   xml2::xml_add_child(
     content_types,
-    xml_content_type_ext(Extension = "wmf", ContentType = "image/x-wmf"),
-    .where = 2
-  )
+    xml_content_type_ext(Extension = "png", ContentType = "image/png"))
   xml2::xml_add_child(
     content_types,
-    xml_content_type_ext(Extension = "tiff", ContentType = "image/tiff"),
-    .where = 2
-  )
+    xml_content_type_ext(Extension = "svg", ContentType = "image/svg+xml"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_ext(Extension = "gif", ContentType = "image/gif"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_ext(Extension = "jpeg", ContentType = "image/jpeg"))
+
+
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_override(PartName = "/word/document.xml", ContentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_override(PartName = "/word/numbering.xml", ContentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.numbering+xml"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_override(PartName = "/word/styles.xml", ContentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_override(PartName = "/word/settings.xml", ContentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.settings+xml"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_override(PartName = "/word/webSettings.xml", ContentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.webSettings+xml"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_override(PartName = "/word/fontTable.xml", ContentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.fontTable+xml"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_override(PartName = "/word/theme/theme1.xml", ContentType = "application/vnd.openxmlformats-officedocument.theme+xml"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_override(PartName = "/docProps/core.xml", ContentType = "application/vnd.openxmlformats-package.core-properties+xml"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_override(PartName = "/docProps/app.xml", ContentType = "application/vnd.openxmlformats-officedocument.extended-properties+xml"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_override(PartName = "/docProps/custom.xml", ContentType = "application/vnd.openxmlformats-officedocument.custom-properties+xml"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_override(PartName = "/word/comments.xml", ContentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.comments+xml"))
+  xml2::xml_add_child(
+    content_types,
+    xml_content_type_override(PartName = "/word/footnotes.xml", ContentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.footnotes+xml"))
+
+  content_types
 
 }
 
@@ -3389,7 +3406,21 @@ xml_content_type_ext <- function(Extension, ContentType){
   htmltools::tag(
     `_tag_name` = "Default",
     varArgs = list(
-      Extention = Extension,
+      Extension = Extension,
+      ContentType = ContentType
+    )
+  ) %>%
+    as.character() %>%
+    read_xml()
+
+}
+
+xml_content_type_override <- function(PartName, ContentType){
+
+  htmltools::tag(
+    `_tag_name` = "Override",
+    varArgs = list(
+      PartName = PartName,
       ContentType = ContentType
     )
   ) %>%
