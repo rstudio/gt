@@ -3011,7 +3011,8 @@ as_xml_node <- function(x, create_ns = FALSE) {
 
 add_ns <- function(x) {
 
-  x <- read_xml(x)
+  x <- read_xml(x)%>%
+    suppressWarnings()
 
   xml2::xml_set_attrs(
     x,
