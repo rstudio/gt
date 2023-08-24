@@ -409,6 +409,26 @@ only the \code{num} and \code{currency}, columns, then, format those columns usi
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_currency_1.png" alt="This image of a table was generated from the first code example in the `fmt_currency()` help file." style="width:100\%;">
 }}
 
+Let's take a single column from \code{\link{exibble}} (\code{currency}) and format it with a
+currency name (this differs from the 3-letter currency code). In this case,
+we'll use the \code{"euro"} currency and set the placement of the symbol to the
+right of any value. Additionally, the currency symbol will separated from the
+value with a single space character (using \code{incl_space = TRUE}).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
+  dplyr::select(currency) |>
+  gt() |>
+  fmt_currency(
+    currency = "euro",
+    placement = "right",
+    incl_space = TRUE
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_currency_2.png" alt="This image of a table was generated from the second code example in the `fmt_currency()` help file." style="width:100\%;">
+}}
+
 With the \code{\link{pizzaplace}} dataset, let's make a summary table that gets the
 number of \code{"hawaiian"} pizzas sold (and revenue generated) by month. In the
 \strong{gt} table, we'll format only the \code{revenue} column. The \code{currency} value is
@@ -437,7 +457,66 @@ with \code{fmt_currency()} and we can do that within the \code{fmt} argument.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_currency_2.png" alt="This image of a table was generated from the second code example in the `fmt_currency()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_currency_3.png" alt="This image of a table was generated from the third code example in the `fmt_currency()` help file." style="width:100\%;">
+}}
+
+If supplying a \code{locale} value to \code{fmt_currency()}, we can opt use the
+locale's assumed currency and not have to supply a \code{currency} value (doing so
+would override the locale's default currency). With a column of locale
+values, we can format currency values on a row-by-row basis through the use
+of the \code{\link[=from_column]{from_column()}} helper function. Here, we'll reference the \code{locale}
+column in the argument of the same name.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
+  amount = rep(50.84, 5),
+  currency = c("JPY", "USD", "GHS", "KRW", "CNY"),
+  locale = c("ja", "en", "ee", "ko", "zh"),
+) |>
+  gt() |>
+  fmt_currency(
+    columns = amount,
+    locale = from_column(column = "locale")
+  ) |>
+  cols_hide(columns = locale)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_currency_4.png" alt="This image of a table was generated from the fourth code example in the `fmt_currency()` help file." style="width:100\%;">
+}}
+
+We can similarly use \code{\link[=from_column]{from_column()}} to reference a column that has currency
+code values. Here's an example of how to create a simple currency conversion
+table. The \code{curr} column contains the 3-letter currency codes, and that
+column is referenced via \code{\link[=from_column]{from_column()}} in the \code{currency} argument of
+\code{fmt_currency()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
+  flag = c("EU", "GB", "CA", "AU", "JP", "IN"),
+  curr = c("EUR", "GBP", "CAD", "AUD", "JPY", "INR"),
+  conv = c(
+    0.912952, 0.787687, 1.34411,
+    1.53927, 144.751, 82.9551
+  )
+) |>
+  gt() |>
+  fmt_currency(
+    columns = conv,
+    currency = from_column(column = "curr")
+  ) |>
+  fmt_flag(columns = flag) |>
+  cols_merge(columns = c(flag, curr)) |>
+  cols_label(
+    flag = "Currency",
+    conv = "Amount"
+  ) |>
+  tab_header(
+    title = "Conversion of 1 USD to Six Other Currencies",
+    subtitle = md("Conversion rates obtained on **Aug 13, 2023**")
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_currency_5.png" alt="This image of a table was generated from the fifth code example in the `fmt_currency()` help file." style="width:100\%;">
 }}
 }
 
@@ -466,6 +545,7 @@ Other data formatting functions:
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_icon}()},
 \code{\link{fmt_image}()},
 \code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},

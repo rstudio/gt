@@ -264,6 +264,60 @@ both the \code{a} and \code{b} columns. A similar approach was taken with adding
 \code{72.63} value to the \code{quantity_x} and \code{quantity_y} columns though we used the
 \code{starts_with("quantity")} expression to get \strong{gt} to resolve those two
 columns.
+
+You can start with an empty table (i.e., no columns and no rows) and add one
+or more rows to it. In the completely empty table scenario, where you would
+use something like \code{dplyr::tibble()} or \code{data.frame()} with \code{\link[=gt]{gt()}}, the first
+\code{rows_add()} could have rows of arbitrary width. In other words, you get to
+generate table columns (and rows) with a completely empty table via
+\code{rows_add()}. Here's an example of that:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{gt(dplyr::tibble()) |>
+  rows_add(
+    msrp = c(29.95, 49.95, 79.95),
+    item = c("Klax", "Rez", "Ys"),
+    type = c("A", "B", "X")
+  ) |>
+  rows_add(
+    msrp = 14.95,
+    item = "D",
+    type = "Z"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rows_add_7.png" alt="This image of a table was generated from the seventh code example in the `rows_add()` help file." style="width:100\%;">
+}}
+
+In the above, three columns and three rows were generated. The second usage
+of \code{rows_add()} had to use of a subset of those columns (all three were used
+to create a complete, new row).
+
+We can also start with a virtually empty table: one that has columns but no
+actual rows. With this type of multi-column, zero-row table, one needs to use
+a subset of the columns when generating new rows through \code{rows_add()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
+  msrp = numeric(0),
+  item = character(0),
+  type = character(0)
+) |>
+  gt() |>
+  rows_add(
+    msrp = c(29.95, 49.95, 79.95, 14.95),
+    item = c("Klax", "Rez", "Ys", "D"),
+    type = c("A", "B", "X", "Z")
+  ) |>
+  cols_add(
+    genre = c("puzzle", "action", "RPG", "adventure")
+  ) |>
+  fmt_currency() |>
+  cols_move_to_end(columns = msrp)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rows_add_8.png" alt="This image of a table was generated from the eighth code example in the `rows_add()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{

@@ -57,11 +57,6 @@ is_gt_tbl_empty_w_cols <- function(data) {
   ncol(data_tbl) > 0 && nrow(data_tbl) == 0
 }
 
-is_gt_tbl_empty_w_rows <- function(data) {
-  data_tbl <- dt_data_get(data = data)
-  ncol(data_tbl) == 0 && nrow(data_tbl) > 0
-}
-
 # Adjustments for a completely empty table (no columns and no rows)
 adjust_gt_tbl_empty <- function(data) {
 
@@ -758,10 +753,14 @@ md_to_html <- function(x, md_engine) {
 
   } else {
 
+    #nocov start
+
     non_na_x <- x[!is.na(x)]
 
     non_na_x <- tidy_gsub(non_na_x, "^", "<span data-qmd=\"")
     non_na_x <- tidy_gsub(non_na_x, "$", "\"></span>")
+
+    #nocov end
   }
 
   x[!is.na(x)] <- non_na_x
@@ -1294,11 +1293,15 @@ cmark_rules_rtf <- list(
   }
 )
 
+#nocov start
+
 is_last <- function(x) {
   children <- xml2::xml_children(xml2::xml_parent(x))
   last <- children[[xml2::xml_length(xml2::xml_parent(x))]]
   identical(last, x)
 }
+
+#nocov end
 
 markdown_to_rtf <- function(text) {
 
@@ -1339,34 +1342,52 @@ markdown_to_rtf <- function(text) {
         apply_rules <- function(x) {
 
           if (inherits(x, "xml_nodeset")) {
+
             len <- length(x)
-            results <- character(len) # preallocate vector
+            results <- character(len)
+
             for (i in seq_len(len)) {
               results[[i]] <- apply_rules(x[[i]])
             }
-            # TODO: is collapse = "" correct?
+
+            # TODO: Is `collapse = ""` correct here?
             rtf_raw(paste0("", results, collapse = ""))
+
           } else {
+
             output <- if (xml2::xml_type(x) == "element") {
 
               rule <- cmark_rules_rtf[[xml2::xml_name(x)]]
+
               if (is.null(rule)) {
+
+                #nocov start
+
                 rlang::warn(
                   paste0("Unknown commonmark element encountered: ", xml2::xml_name(x)),
                   .frequency = "once",
                   .frequency_id = "gt_commonmark_unknown_element"
                 )
+
+                #nocov end
+
                 apply_rules(xml2::xml_contents(x))
+
               } else if (is.character(rule)) {
+
                 rtf_wrap(rule, x, apply_rules)
+
               } else if (is.function(rule)) {
+
                 rule(x, apply_rules)
               }
             }
+
             if (!is_rtf(output)) {
               cli::cli_warn("Rule for {xml2::xml_name(x)} did not return RTF.")
             }
-            # TODO: is collapse = "" correct?
+
+            # TODO: Is `collapse = ""` correct here?
             rtf_raw(paste0("", output, collapse = ""))
           }
         }
@@ -1405,11 +1426,13 @@ markdown_to_text <- function(text) {
           if (isTRUE(getOption("gt.html_tag_check", TRUE))) {
 
             if (grepl("<[a-zA-Z\\/][^>]*>", x)) {
+
               cli::cli_warn(c(
                 "HTML tags found, and they will be removed.",
                 "*" = "Set `options(gt.html_tag_check = FALSE)` to disable this check."
               ))
             }
+
           }
 
           tidy_gsub(commonmark::markdown_text(x), "\\n$", "")
@@ -1746,28 +1769,8 @@ warn_on_scale_by_input <- function(scale_by) {
   }
 }
 
-#' Derive a label based on a formula or a function name
-#'
-#' @noRd
-derive_summary_label <- function(fn) {
-
-  if (is.function(fn)) {
-
-    # Stop the function if any functions provided
-    # as bare names (e.g., `mean`) don't have
-    # names provided
-    cli::cli_abort(
-      "All functions provided as bare names in `fns` need a label."
-    )
-
-  } else if (inherits(fn, "formula")) {
-    as.character(rlang::f_rhs(fn)[[1]])
-  } else {
-    as.character(fn)
-  }
-}
-
 #nocov start
+
 #' A `system.file()` replacement specific to this package
 #'
 #' This is a conveient wrapper for `system.file()` where the `package` refers to
@@ -1776,6 +1779,7 @@ derive_summary_label <- function(fn) {
 system_file <- function(file) {
   system.file(file, package = "gt")
 }
+
 #nocov end
 
 #' Remove all HTML tags from input text
@@ -1783,10 +1787,6 @@ system_file <- function(file) {
 #' @noRd
 remove_html <- function(text) {
   gsub("<.+?>", "", text)
-}
-
-extract_strings <- function(text, pattern, perl = TRUE) {
-  sapply(regmatches(text, regexec(pattern, text, perl = perl)), "[", 1)
 }
 
 any_labeled_columns_in_data_tbl <- function(data) {
@@ -1836,6 +1836,8 @@ split_scientific_notn <- function(x_str) {
   list(num = num_part, exp = exp_part)
 }
 
+#nocov start
+
 #' Wrapper for `gsub()` where `x` is the first argument
 #'
 #' This function is wrapper for `gsub()` that uses default argument values and
@@ -1846,6 +1848,7 @@ split_scientific_notn <- function(x_str) {
 tidy_gsub <- function(x, pattern, replacement, fixed = FALSE) {
 
   if (!utf8_aware_sub) {
+
     # See variable definition for utf8_aware_sub for more info
     x <- enc2utf8(as.character(x))
     replacement <- enc2utf8(as.character(replacement))
@@ -1853,6 +1856,7 @@ tidy_gsub <- function(x, pattern, replacement, fixed = FALSE) {
     res <- gsub(pattern, replacement, x, fixed = fixed)
     Encoding(res) <- "UTF-8"
     res
+
   } else {
     gsub(pattern, replacement, x, fixed = fixed)
   }
@@ -1884,6 +1888,8 @@ tidy_grepl <- function(x, pattern) {
     USE.NAMES = FALSE
   )
 }
+
+#nocov end
 
 #' Create a vector of marks to use for footnotes
 #'
@@ -1922,8 +1928,6 @@ process_footnote_marks <- function(x, marks) {
     )
   )
 }
-
-
 
 #' Resolve the selection of border elements for a table cell
 #'
@@ -1980,11 +1984,15 @@ validate_marks <- function(marks) {
 
   if (length(marks) == 1 && !any(marks_keywords %in% marks)) {
 
+    #nocov start
+
     cli::cli_abort(c(
       "The `marks` keyword provided (\"{marks}\") is not valid.",
       "*" = "Either of \"numbers\", \"letters\", \"LETTERS\", \"standard\",
       or \"extended\" can be used."
     ))
+
+    #nocov end
   }
 }
 
@@ -2059,13 +2067,6 @@ flatten_list <- function(x) {
 #' @noRd
 prepend_vec <- function(x, values, after = 0) {
   append(x, values, after = after)
-}
-
-#' Convert a single-length vector to a repeating list of lists
-#'
-#' @noRd
-rep_vec_as_list <- function(x, length_out) {
-  rep_len(list(x), length_out)
 }
 
 validate_length_one <- function(x, name) {

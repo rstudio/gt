@@ -71,15 +71,16 @@
 #'
 #' @section Examples:
 #'
-#' Use [`countrypops`] to create a **gt** table. Align the `population` column
-#' data to the left.
+#' Let's use [`countrypops`] to create a small **gt** table. We can change the
+#' alignment of the `population` column with `cols_align()`. In this example,
+#' the label and body cells of `population` will be aligned to the left.
 #'
 #' ```r
 #' countrypops |>
 #'   dplyr::select(-contains("code")) |>
-#'   dplyr::filter(country_name == "Mongolia") |>
-#'   tail(5) |>
-#'   gt() |>
+#'   dplyr::filter(country_name == "San Marino") |>
+#'   dplyr::slice_tail(n = 5) |>
+#'   gt(rowname_col = "year", groupname_col = "country_name") |>
 #'   cols_align(
 #'     align = "left",
 #'     columns = population
@@ -726,15 +727,15 @@ cols_width <- function(
 #' @section Examples:
 #'
 #' Let's use a portion of the [`countrypops`] dataset to create a **gt** table.
-#' Relabel all the table's columns with the `cols_label()` function to improve
-#' its presentation. In this simple case we are supplying the name of the column
-#' on the left-hand side, and the label text on the right-hand side.
+#' We can relabel all the table's columns with the `cols_label()` function to
+#' improve its presentation. In this simple case we are supplying the name of
+#' the column on the left-hand side, and the label text on the right-hand side.
 #'
 #' ```r
 #' countrypops |>
 #'   dplyr::select(-contains("code")) |>
-#'   dplyr::filter(country_name == "Mongolia") |>
-#'   tail(5) |>
+#'   dplyr::filter(country_name == "Uganda") |>
+#'   dplyr::slice_tail(n = 5) |>
 #'   gt() |>
 #'   cols_label(
 #'     country_name = "Name",
@@ -755,8 +756,8 @@ cols_width <- function(
 #' ```r
 #' countrypops |>
 #'   dplyr::select(-contains("code")) |>
-#'   dplyr::filter(country_name == "Mongolia") |>
-#'   tail(5) |>
+#'   dplyr::filter(country_name == "Uganda") |>
+#'   dplyr::slice_tail(n = 5) |>
 #'   gt() |>
 #'   cols_label(
 #'     country_name = md("**Name**"),
@@ -876,8 +877,8 @@ cols_width <- function(
 #' use `cols_label()` with the `.process_units = TRUE` option to register the
 #' measurement units. In addition to this, because there is a `<br>` included
 #' (for a line break), we should use the `.fn` option and provide the [md()]
-#' helper function (as a bare function name). This ensures that any linebreaks
-#' do materialize.
+#' helper function (as a bare function name). This ensures that any line breaks
+#' will materialize.
 #'
 #' ```r
 #' illness |>
@@ -1767,6 +1768,55 @@ cols_units <- function(
 #' `r man_get_image_tag(file = "man_cols_add_3.png")`
 #' }}
 #'
+#' It's possible to start with an empty table (i.e., no columns and no rows) and
+#' add one or more columns to that. You can, for example, use `dplyr::tibble()`
+#' or `data.frame()` to create a completely empty table. The first `cols_add()`
+#' call for an empty table can have columns of arbitrary length but subsequent
+#' uses of `cols_add()` must adhere to the rule of new columns being the same
+#' length as existing.
+#'
+#' ```r
+#' dplyr::tibble() |>
+#'   gt() |>
+#'   cols_add(
+#'     num = 1:5,
+#'     chr = vec_fmt_spelled_num(1:5)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_add_4.png")`
+#' }}
+#'
+#' Tables can contain no rows, yet have columns. In the following example, we'll
+#' create a zero-row table with three columns (`num`, `chr`, and `ext`) and
+#' perform the same `cols_add()`-based addition of two columns of data. This is
+#' another case where the function allows for arbitrary-length columns (since
+#' always adding zero-length columns is impractical). Furthermore, here we can
+#' reference columns that already exist (`num` and `chr`) and add values to
+#' them.
+#'
+#' ```r
+#' dplyr::tibble(
+#'   num = numeric(0),
+#'   chr = character(0),
+#'   ext = character(0)
+#' ) |>
+#'   gt() |>
+#'   cols_add(
+#'     num = 1:5,
+#'     chr = vec_fmt_spelled_num(1:5)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_add_5.png")`
+#' }}
+#'
+#' We should note that the `ext` column did not receive any values from
+#' `cols_add()` but the table was expanded to having five rows nonetheless. So,
+#' each cell of `ext` was by necessity filled with an `NA` value.
+#'
 #' @family column modification functions
 #' @section Function ID:
 #' 5-7
@@ -2131,13 +2181,14 @@ cols_add <- function(
 #' ```r
 #' countrypops |>
 #'   dplyr::select(-contains("code")) |>
-#'   dplyr::filter(country_name == "Mongolia") |>
-#'   tail(5) |>
+#'   dplyr::filter(country_name == "Japan") |>
+#'   dplyr::slice_tail(n = 10) |>
 #'   gt() |>
 #'   cols_move(
 #'     columns = population,
 #'     after = country_name
-#'   )
+#'   ) |>
+#'   fmt_integer(columns = population)
 #' ```
 #'
 #' \if{html}{\out{
@@ -2255,15 +2306,16 @@ cols_move <- function(
 #'
 #' @section Examples:
 #'
-#' Use a portion of the [`countrypops`] dataset to create a **gt** table. Let's
-#' move the `year` column to the start of the column series with the
+#' For this example, we'll use a portion of the [`countrypops`] dataset to
+#' create a simple **gt** table. Let's move the `year` column, which is the
+#' middle column, to the start of the column series with the
 #' `cols_move_to_start()` function.
 #'
 #' ```r
 #' countrypops |>
 #'   dplyr::select(-contains("code")) |>
-#'   dplyr::filter(country_name == "Mongolia") |>
-#'   tail(5) |>
+#'   dplyr::filter(country_name == "Fiji") |>
+#'   dplyr::slice_tail(n = 5) |>
 #'   gt() |>
 #'   cols_move_to_start(columns = year)
 #' ```
@@ -2272,16 +2324,15 @@ cols_move <- function(
 #' `r man_get_image_tag(file = "man_cols_move_to_start_1.png")`
 #' }}
 #'
-#'
-#' Use a portion of the [`countrypops`] dataset to create a **gt** table. Let's
-#' move both the `year` and `population` columns to the start of the column
-#' series.
+#' We can also move multiple columns at a time. With the same
+#' [`countrypops`]-based table, let's move both the `year` and `population`
+#' columns to the start of the column series.
 #'
 #' ```r
 #' countrypops |>
 #'   dplyr::select(-contains("code")) |>
-#'   dplyr::filter(country_name == "Mongolia") |>
-#'   tail(5) |>
+#'   dplyr::filter(country_name == "Fiji") |>
+#'   dplyr::slice_tail(n = 5) |>
 #'   gt() |>
 #'   cols_move_to_start(columns = c(year, population))
 #' ```
@@ -2375,15 +2426,16 @@ cols_move_to_start <- function(
 #'
 #' @section Examples:
 #'
-#' Use a portion of the [`countrypops`] dataset to create a **gt** table. Let's
-#' move the `year` column to the end of the column series with the
+#' For this example, we'll use a portion of the [`countrypops`] dataset to
+#' create a simple **gt** table. Let's move the `year` column, which is the
+#' middle column, to the end of the column series with the
 #' `cols_move_to_end()` function.
 #'
 #' ```r
 #' countrypops |>
 #'   dplyr::select(-contains("code")) |>
-#'   dplyr::filter(country_name == "Mongolia") |>
-#'   tail(5) |>
+#'   dplyr::filter(country_name == "Benin") |>
+#'   dplyr::slice_tail(n = 5) |>
 #'   gt() |>
 #'   cols_move_to_end(columns = year)
 #' ```
@@ -2392,14 +2444,15 @@ cols_move_to_start <- function(
 #' `r man_get_image_tag(file = "man_cols_move_to_end_1.png")`
 #' }}
 #'
-#' Let's again use [`countrypops`] for a **gt** example table. This time we'll
-#' move the `year` and `country_name` columns to the end of the column series.
+#' We can also move multiple columns at a time. With the same
+#' [`countrypops`]-based table, let's move both the `year` and `population`
+#' columns to the end of the column series.
 #'
 #' ```r
 #' countrypops |>
 #'   dplyr::select(-contains("code")) |>
-#'   dplyr::filter(country_name == "Mongolia") |>
-#'   tail(5) |>
+#'   dplyr::filter(country_name == "Benin") |>
+#'   dplyr::slice_tail(n = 5) |>
 #'   gt() |>
 #'   cols_move_to_end(columns = c(year, country_name))
 #' ```
@@ -2496,14 +2549,14 @@ cols_move_to_end <- function(
 #'
 #' @section Examples:
 #'
-#' Use a small portion of the [`countrypops`] dataset to create a **gt** table.
-#' We can hide the `country_code_2` and `country_code_3` columns with the
+#' Let's use a small portion of the [`countrypops`] dataset to create a **gt**
+#' table. We can hide the `country_code_2` and `country_code_3` columns with the
 #' `cols_hide()` function.
 #'
 #' ```r
 #' countrypops |>
-#'   dplyr::filter(country_name == "Mongolia") |>
-#'   tail(5) |>
+#'   dplyr::filter(country_name == "Egypt") |>
+#'   dplyr::slice_tail(n = 5) |>
 #'   gt() |>
 #'   cols_hide(columns = c(country_code_2, country_code_3))
 #' ```
@@ -2520,15 +2573,15 @@ cols_move_to_end <- function(
 #'
 #' ```r
 #' countrypops |>
-#'   dplyr::filter(country_name == "Mongolia") |>
-#'   tail(5) |>
+#'   dplyr::filter(country_name == "Pakistan") |>
+#'   dplyr::slice_tail(n = 5) |>
 #'   gt() |>
 #'   cols_hide(columns = c(country_code_3, population)) |>
 #'   tab_footnote(
-#'     footnote = "Population above 3,200,000.",
+#'     footnote = "Population above 220,000,000.",
 #'     locations = cells_body(
 #'       columns = year,
-#'       rows = population > 3200000
+#'       rows = population > 220E6
 #'     )
 #'   )
 #' ```
@@ -2625,8 +2678,8 @@ cols_hide <- function(
 #' ```r
 #' tab_1 <-
 #'   countrypops |>
-#'   dplyr::filter(country_name == "Mongolia") |>
-#'   tail(5) |>
+#'   dplyr::filter(country_name == "Singapore") |>
+#'   dplyr::slice_tail(n = 5) |>
 #'   gt() |>
 #'   cols_hide(columns = c(country_code_2, country_code_3))
 #'

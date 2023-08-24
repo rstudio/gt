@@ -278,6 +278,62 @@
 #' `starts_with("quantity")` expression to get **gt** to resolve those two
 #' columns.
 #'
+#' You can start with an empty table (i.e., no columns and no rows) and add one
+#' or more rows to it. In the completely empty table scenario, where you would
+#' use something like `dplyr::tibble()` or `data.frame()` with [gt()], the first
+#' `rows_add()` could have rows of arbitrary width. In other words, you get to
+#' generate table columns (and rows) with a completely empty table via
+#' `rows_add()`. Here's an example of that:
+#'
+#' ```r
+#' gt(dplyr::tibble()) |>
+#'   rows_add(
+#'     msrp = c(29.95, 49.95, 79.95),
+#'     item = c("Klax", "Rez", "Ys"),
+#'     type = c("A", "B", "X")
+#'   ) |>
+#'   rows_add(
+#'     msrp = 14.95,
+#'     item = "D",
+#'     type = "Z"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_rows_add_7.png")`
+#' }}
+#'
+#' In the above, three columns and three rows were generated. The second usage
+#' of `rows_add()` had to use of a subset of those columns (all three were used
+#' to create a complete, new row).
+#'
+#' We can also start with a virtually empty table: one that has columns but no
+#' actual rows. With this type of multi-column, zero-row table, one needs to use
+#' a subset of the columns when generating new rows through `rows_add()`.
+#'
+#' ```r
+#' dplyr::tibble(
+#'   msrp = numeric(0),
+#'   item = character(0),
+#'   type = character(0)
+#' ) |>
+#'   gt() |>
+#'   rows_add(
+#'     msrp = c(29.95, 49.95, 79.95, 14.95),
+#'     item = c("Klax", "Rez", "Ys", "D"),
+#'     type = c("A", "B", "X", "Z")
+#'   ) |>
+#'   cols_add(
+#'     genre = c("puzzle", "action", "RPG", "adventure")
+#'   ) |>
+#'   fmt_currency() |>
+#'   cols_move_to_end(columns = msrp)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_rows_add_8.png")`
+#' }}
+#'
 #' @family row addition/modification functions
 #' @section Function ID:
 #' 6-4

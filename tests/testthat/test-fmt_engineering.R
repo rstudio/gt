@@ -364,6 +364,17 @@ test_that("The `fmt_engineering()` function works correctly", {
     ) %>%
     gt()
 
+  # Format the `num` column to exactly 4 decimal places
+  expect_equal(
+    (tab_2 %>%
+       fmt_engineering(columns = "num", decimals = 4, exp_style = "E") %>%
+       render_formats_test("default"))[["num"]],
+    c(
+      "-34.9000E12", "-3.4530E03", "-234.0000E-06", "0.0000E00",
+      "75.3400E-06", "82.7940E03", "716.0000E12"
+    )
+  )
+
   # Format the `num` column and force the sign on the 'm' part of the
   # notation; extract in the default context and compare to expected values
   expect_equal(
