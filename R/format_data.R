@@ -10323,7 +10323,7 @@ fmt_flag <- function(
 #' 3-22
 #'
 #' @section Function Introduced:
-#' `v0.9.0` (Mar 31, 2023)
+#' *In Development*
 #'
 #' @import rlang
 #' @export
