@@ -10174,6 +10174,19 @@ fmt_flag <- function(
 #' [from_column()] helper is applied so long as the arguments belong to this
 #' closed set.
 #'
+#' @section Icons that can be used:
+#'
+#' The `fmt_icon()` function relies on an installation of the **fontawesome**
+#' package to operate and every icon within that package can be accessed here
+#' with either an icon name or a full name. For example, the *Arrow Down* icon
+#' has an icon name of `"arrow-down"` and its corresponding full name is
+#' `"fas fa-arrow-down"`. In most cases you'll want to use the shorter name, but
+#' some icons have both a *Solid* (`"fas"`) and a *Regular* (`"far"`) variant so
+#' only the full name can disambiguate the pairing. In the latest release of
+#' **fontawesome** (`v0.5.2`), there are 2,025 icons and you can view the entire
+#' icon listing by using the [info_icon()] function. What you'll get from that
+#' is an information table showing every icon and associated set of identifiers.
+#'
 #' @section Examples:
 #'
 #' For this first example of generating icons with `fmt_icon()`, let's make a
