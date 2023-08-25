@@ -382,7 +382,7 @@ scores.
 
 \section{Function Introduced}{
 
-\code{v0.9.0} (Mar 31, 2023)
+\emph{In Development}
 }
 
 \seealso{

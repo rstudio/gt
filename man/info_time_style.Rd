@@ -44,6 +44,7 @@ Other information functions:
 \code{\link{info_currencies}()},
 \code{\link{info_date_style}()},
 \code{\link{info_google_fonts}()},
+\code{\link{info_icons}()},
 \code{\link{info_locales}()},
 \code{\link{info_paletteer}()}
 }
