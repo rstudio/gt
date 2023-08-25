@@ -641,23 +641,14 @@ info_locales <- function(begins_with = NULL) {
 info_paletteer <- function(color_pkgs = NULL) {
 
   if (is.null(color_pkgs)) {
-
-    color_pkgs <-
-      c(
-        "awtools", "dichromat", "dutchmasters", "ggsci", "ggpomological",
-        "ggthemes", "ghibli", "grDevices", "jcolors", "LaCroixColoR",
-        "NineteenEightyR", "nord", "ochRe", "palettetown", "pals",
-        "Polychrome", "quickpalette", "rcartocolor", "RColorBrewer",
-        "Redmonder", "tidyquant", "wesanderson", "yarrr")
+    return(readRDS(system_file("gt_tables/info_paletteer.rds")))
   }
 
   palettes_strips_df <-
-    palettes_strips %>%
-    dplyr::filter(package %in% color_pkgs)
+    dplyr::filter(palettes_strips, package %in% color_pkgs)
 
   palettes_strips <-
-    palettes_strips_df %>%
-    dplyr::pull(colors)
+    dplyr::pull(palettes_strips_df, colors)
 
   palettes_strips_df %>%
     dplyr::select(package, palette, length) %>%
@@ -750,173 +741,44 @@ info_paletteer <- function(color_pkgs = NULL) {
 #'
 #' @export
 info_google_fonts <- function() {
+  readRDS(system_file("gt_tables/info_google_fonts.rds"))
+}
 
-  # Recommended Fonts
-  recommended <-
-    c(
-      "Anonymous Pro",
-      "Archivo Narrow",
-      "Bio Rhyme",
-      "Cabin",
-      "Cardo",
-      "Chivo",
-      "Crimson Text",
-      "Encode Sans",
-      "Exo 2",
-      "Fira Code",
-      "Fira Sans",
-      "IBM Plex Mono",
-      "IBM Plex Sans",
-      "Inconsolata",
-      "Inter",
-      "Karla",
-      "Lato",
-      "Libre Baskerville",
-      "Libre Franklin",
-      "Lora",
-      "Merriweather",
-      "Montserrat",
-      "Mulish",
-      "Open Sans",
-      "Playfair Display",
-      "Poppins",
-      "Proza Libre",
-      "PT Sans",
-      "PT Serif",
-      "Public Sans",
-      "Raleway",
-      "Roboto",
-      "Rubik",
-      "Source Sans Pro",
-      "Source Serif Pro",
-      "Space Mono",
-      "Spectral",
-      "Work Sans"
-    )
-
-  to_title_case <- function(x) {
-
-    title_case_i <- function(y) {
-
-      s <- strsplit(y, " ")[[1]]
-
-      paste(
-        toupper(substring(s, 1,1)),
-        substring(s, 2),
-        sep = "", collapse = " "
-      )
-    }
-
-    vapply(x, FUN.VALUE = character(1), USE.NAMES = FALSE, FUN = title_case_i)
-  }
-
-  styles_summary <-
-    google_styles_tbl %>%
-    dplyr::mutate(weight = as.integer(weight)) %>%
-    dplyr::filter(name %in% recommended) %>%
-    dplyr::group_by(name, style) %>%
-    dplyr::summarize(min_weight = min(weight), max_weight = max(weight), .groups = "keep") %>%
-    dplyr::ungroup() %>%
-    dplyr::arrange(name, dplyr::desc(style)) %>%
-    dplyr::mutate(weight_range = dplyr::case_when(
-      style == "normal" & min_weight != max_weight ~ paste0("n&nbsp;", min_weight, "&#8209;", max_weight),
-      style == "normal" & min_weight == max_weight ~ paste0("n&nbsp;", min_weight),
-      style == "italic" & min_weight != max_weight ~ paste0("*i*&nbsp;", min_weight, "&#8209;", max_weight),
-      style == "italic" & min_weight == max_weight ~ paste0("*i*&nbsp;", min_weight)
-    )) %>%
-    dplyr::group_by(name) %>%
-    dplyr::summarize(weight_ranges = paste(weight_range, collapse = "<br>"), .groups = "keep")
-
-  source_notes <-
-    google_styles_tbl %>%
-    dplyr::filter(name %in% recommended) %>%
-    dplyr::select(name, copyright) %>%
-    dplyr::distinct() %>%
-    dplyr::mutate(name = paste0("**", name, "** ")) %>%
-    dplyr::mutate(name_copy = paste0(name, copyright)) %>%
-    dplyr::pull(name_copy) %>%
-    paste(collapse = ". ") %>%
-    gsub("..", ".", ., fixed = TRUE) %>%
-    paste_right(".")
-
-  google_font_tbl_int <-
-    google_font_tbl %>%
-    dplyr::filter(name %in% recommended) %>%
-    dplyr::left_join(styles_summary, by = "name") %>%
-    dplyr::mutate(
-      category = to_title_case(tolower(category)) %>%
-        tidy_gsub("_", " ") %>%
-        tidy_gsub("serif", "Serif")
-    ) %>%
-    dplyr::select(-license, -date_added, -designer) %>%
-    dplyr::mutate(samp = paste0(LETTERS[1:13], letters[1:13], collapse = ""))
-
-  google_font_tbl_gt <-
-    google_font_tbl_int %>%
-    dplyr::arrange(category) %>%
-    gt(rowname_col = "name", groupname_col = "category") %>%
-    fmt_markdown(columns = "weight_ranges") %>%
-    tab_style(
-      style = list(
-        cell_text(size = px(8), font = "Courier"),
-        cell_fill(color = "#F7F7F7")
-      ),
-      locations = cells_body(columns = "weight_ranges")
-    ) %>%
-    tab_style(
-      style = cell_text(size = px(24)),
-      locations = cells_title(groups = "title")
-    ) %>%
-    tab_style(
-      style = cell_text(size = px(18)),
-      locations = cells_title(groups = "subtitle")
-    ) %>%
-    tab_style(
-      style = cell_text(size = px(28), indent = px(5)),
-      locations = cells_body(columns = "samp")
-    ) %>%
-    tab_style(
-      style = cell_text(size = px(14)),
-      locations = cells_stub()
-    ) %>%
-    tab_style(
-      style = cell_text(size = px(18), weight = "600"),
-      locations = cells_row_groups()
-    ) %>%
-    tab_header(
-      title = md("Recommended *Google Fonts* for **gt**"),
-      subtitle = md("Fonts like these can be accessed using the `google_font()` function.<br><br>")
-    ) %>%
-    opt_align_table_header("left") %>%
-    opt_table_lines("none") %>%
-    tab_options(
-      table.width = px(800),
-      column_labels.hidden = TRUE,
-      row_group.padding = px(12),
-      data_row.padding = px(4),
-      table_body.hlines.style = "solid",
-      table_body.hlines.width = px(1),
-      table_body.hlines.color = "#F7F7F7",
-      row_group.border.top.style = "solid",
-      row_group.border.top.width = px(1),
-      row_group.border.bottom.width = px(1),
-      table.border.bottom.style = "solid",
-      table.border.bottom.width = px(1),
-      table.border.bottom.color = "#F7F7F7",
-      source_notes.font.size = px(10),
-      source_notes.padding = px(6)
-    ) %>%
-    tab_source_note(md(source_notes))
-
-  for (i in seq(nrow(google_font_tbl_int))) {
-
-    google_font_tbl_gt <-
-      google_font_tbl_gt %>%
-      tab_style(
-        style = cell_text(font = google_font(name = google_font_tbl_int$name[i])),
-        locations = cells_body(columns = samp, rows = google_font_tbl_int$name[i])
-      )
-  }
-
-  google_font_tbl_gt
+#' View a table with all available Font Awesome icons
+#'
+#' @description
+#'
+#' The [fmt_icon()] function can be used to render *Font Awesome* icons within
+#' body cells that reference the icon names. Further to this, the text
+#' transformation functions (e.g., [text_case_match()]) allow for the insertion
+#' of these icons as replacement text (so long as you use the `fa()` function
+#' from the **fontawesome** package). Because there is a very large number of
+#' icons available to use in *Font Awesome*, `info_icons()` can be used to
+#' provide us with a table that lists all the icons along with their short and
+#' full names (either can be used with [fmt_icon()]).
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Get a table of info on all the available *Font Awesome* icons.
+#'
+#' ```r
+#' info_icons()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_info_icons_1.png")`
+#' }}
+#'
+#' @family information functions
+#' @section Function ID:
+#' 11-7
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @export
+info_icons <- function() {
+  readRDS(system_file("gt_tables/info_icons.rds"))
 }
