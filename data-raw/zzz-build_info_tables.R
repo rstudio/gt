@@ -3,6 +3,89 @@ library(gt)
 library(fontawesome)
 
 #
+# Build table for `info_flags()` -> `info_flags.rds`
+#
+
+flags_tbl_gt <-
+  countrypops %>%
+  dplyr::select(country_name, country_code_2) %>%
+  dplyr::distinct() %>%
+  tibble::add_row(country_name = "European Union", country_code_2 = "EU") %>%
+  dplyr::arrange(country_code_2) %>%
+  dplyr::mutate(flag = country_code_2) %>%
+  gt() %>%
+  fmt_flag(columns = flag) %>%
+  cols_move_to_start(columns = flag) %>%
+  cols_label(
+    flag = "",
+    country_name = "Entity",
+    country_code_2 = "Code"
+  ) %>%
+  tab_style(
+    style = list(
+      cell_text(
+        font = system_fonts(name = "monospace-code"),
+        size = px(12)
+      ),
+      cell_borders(
+        sides = c("l", "r"),
+        color = "lightblue",
+        weight = px(1.5))
+    ),
+    locations = cells_body(columns = country_name)
+  ) %>%
+  tab_style(
+    style = cell_text(
+      font = system_fonts(name = "monospace-code"),
+      size = px(12)
+    ),
+    locations = cells_body(columns = c(country_name, country_code_2))
+  ) %>%
+  tab_style(
+    style = css(position = "sticky", top = "-1em", `z-index` = 10),
+    locations = cells_column_labels()
+  ) %>%
+  tab_style(
+    style = cell_fill(color = "white"),
+    locations = cells_body(columns = flag)
+  ) %>%
+  cols_align(align = "center", columns = flag) %>%
+  cols_width(
+    flag ~ px(80),
+    country_name ~ px(480),
+    country_code_2 ~ px(240)
+  ) %>%
+  opt_all_caps() %>%
+  opt_stylize(style = 6) %>%
+  tab_style(
+    style = cell_text(size = px(24)),
+    locations = cells_title(groups = "title")
+  ) %>%
+  tab_style(
+    style = cell_text(size = px(18)),
+    locations = cells_title(groups = "subtitle")
+  ) %>%
+  tab_options(
+    table.border.top.style = "hidden",
+    column_labels.border.bottom.style = "hidden",
+    container.height = px(620)
+  ) %>%
+  tab_header(
+    title = md("Complete List of Flag Icons Usable in **gt**"),
+    subtitle = md("Flags like these can be used with the `fmt_flag()` function.<br><br>")
+  ) %>%
+  opt_align_table_header("left") %>%
+  opt_table_lines("none")
+
+readr::write_rds(
+  flags_tbl_gt,
+  file = "inst/gt_tables/info_flags.rds",
+  compress = "xz"
+)
+
+rm(flags_tbl_gt)
+
+#
 # Build table for `info_icons()` -> `info_icons.rds`
 #
 
@@ -20,9 +103,7 @@ icons_tbl_gt <-
   dplyr::mutate(icon = fa_icons_vec) %>%
   gt() %>%
   fmt_markdown(columns = icon) %>%
-  cols_label(
-    icon = ""
-  ) %>%
+  cols_label(icon = "") %>%
   cols_label_with(fn = function(x) gsub("_", " ", x)) %>%
   tab_style(
     style = list(
