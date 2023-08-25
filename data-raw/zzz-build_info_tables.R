@@ -80,12 +80,6 @@ readr::write_rds(
   compress = "xz"
 )
 
-readr::write_rds(
-  icon_tbl_html,
-  file = "inst/gt_tables/info_icons_raw.rds",
-  compress = "xz"
-)
-
 rm(
   icon_svg_i, fa_icons_vec, icons_tbl_gt, i
 )
