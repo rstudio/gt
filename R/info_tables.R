@@ -744,7 +744,42 @@ info_google_fonts <- function() {
   readRDS(system_file("gt_tables/info_google_fonts.rds"))
 }
 
-#' View a table with all available Font Awesome icons
+#' View a table with all available flags for `fmt_flag()`
+#'
+#' @description
+#'
+#' The [fmt_flag()] function can be used to render flag icons within
+#' body cells that have 2-letter country codes. There are a lot of countries,
+#' so, the `info_flags()` function can be helpful in showing all of the valid
+#' and supported country codes along with their flag icons.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Examples:
+#'
+#' Get a table of info on all the available flag icons.
+#'
+#' ```r
+#' info_flags()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_info_flags_1.png")`
+#' }}
+#'
+#' @family information functions
+#' @section Function ID:
+#' 11-7
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @export
+info_flags <- function() {
+  readRDS(system_file("gt_tables/info_flags.rds"))
+}
+
+#' View a table with all available Font Awesome icons for `fmt_icon()`
 #'
 #' @description
 #'
@@ -773,7 +808,7 @@ info_google_fonts <- function() {
 #'
 #' @family information functions
 #' @section Function ID:
-#' 11-7
+#' 11-8
 #'
 #' @section Function Introduced:
 #' *In Development*
