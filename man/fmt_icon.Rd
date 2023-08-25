@@ -233,6 +233,21 @@ that contain parameter data can also be hidden from final display with
 closed set.
 }
 
+\section{Icons that can be used}{
+
+
+The \code{fmt_icon()} function relies on an installation of the \strong{fontawesome}
+package to operate and every icon within that package can be accessed here
+with either an icon name or a full name. For example, the \emph{Arrow Down} icon
+has an icon name of \code{"arrow-down"} and its corresponding full name is
+\code{"fas fa-arrow-down"}. In most cases you'll want to use the shorter name, but
+some icons have both a \emph{Solid} (\code{"fas"}) and a \emph{Regular} (\code{"far"}) variant so
+only the full name can disambiguate the pairing. In the latest release of
+\strong{fontawesome} (\code{v0.5.2}), there are 2,025 icons and you can view the entire
+icon listing by using the \code{\link[=info_icons]{info_icons()}} function. What you'll get from that
+is an information table showing every icon and associated set of identifiers.
+}
+
 \section{Examples}{
 
 
@@ -382,7 +397,7 @@ scores.
 
 \section{Function Introduced}{
 
-\code{v0.9.0} (Mar 31, 2023)
+\emph{In Development}
 }
 
 \seealso{

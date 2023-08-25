@@ -260,6 +260,8 @@ reference:
     - info_locales
     - info_paletteer
     - info_google_fonts
+    - info_flags
+    - info_icons
 
   - title: Shiny
     desc: >
