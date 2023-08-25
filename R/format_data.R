@@ -9696,6 +9696,13 @@ fmt_image <- function(
 #' [from_column()] helper is applied so long as the arguments belong to this
 #' closed set.
 #'
+#' @section Flag icons that can be used:
+#'
+#' You can view the entire set of supported flag icons as an informative table
+#' by using the [info_flags()] function. In the information table that is
+#' provided, you'll see every flag icon and the associated identifier that can
+#' be used with `fmt_flag()`.
+#'
 #' @section Examples:
 #'
 #' Use the [`countrypops`] dataset to create a **gt** table. We will only
@@ -10184,7 +10191,7 @@ fmt_flag <- function(
 #' some icons have both a *Solid* (`"fas"`) and a *Regular* (`"far"`) variant so
 #' only the full name can disambiguate the pairing. In the latest release of
 #' **fontawesome** (`v0.5.2`), there are 2,025 icons and you can view the entire
-#' icon listing by using the [info_icon()] function. What you'll get from that
+#' icon listing by using the [info_icons()] function. What you'll get from that
 #' is an information table showing every icon and associated set of identifiers.
 #'
 #' @section Examples:
