@@ -93,6 +93,7 @@ from the \strong{paletteer} package).
 Other information functions: 
 \code{\link{info_currencies}()},
 \code{\link{info_date_style}()},
+\code{\link{info_flags}()},
 \code{\link{info_google_fonts}()},
 \code{\link{info_icons}()},
 \code{\link{info_locales}()},

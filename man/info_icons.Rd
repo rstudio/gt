@@ -2,7 +2,7 @@
 % Please edit documentation in R/info_tables.R
 \name{info_icons}
 \alias{info_icons}
-\title{View a table with all available Font Awesome icons}
+\title{View a table with all available Font Awesome icons for \code{fmt_icon()}}
 \usage{
 info_icons()
 }
@@ -34,7 +34,7 @@ Get a table of info on all the available \emph{Font Awesome} icons.
 
 \section{Function ID}{
 
-11-7
+11-8
 }
 
 \section{Function Introduced}{
@@ -46,6 +46,7 @@ Get a table of info on all the available \emph{Font Awesome} icons.
 Other information functions: 
 \code{\link{info_currencies}()},
 \code{\link{info_date_style}()},
+\code{\link{info_flags}()},
 \code{\link{info_google_fonts}()},
 \code{\link{info_locales}()},
 \code{\link{info_paletteer}()},

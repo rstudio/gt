@@ -42,6 +42,7 @@ by supplying a number code to the \code{\link[=fmt_date]{fmt_date()}} function).
 \seealso{
 Other information functions: 
 \code{\link{info_currencies}()},
+\code{\link{info_flags}()},
 \code{\link{info_google_fonts}()},
 \code{\link{info_icons}()},
 \code{\link{info_locales}()},

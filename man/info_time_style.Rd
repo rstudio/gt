@@ -43,6 +43,7 @@ by supplying a number code to the \code{\link[=fmt_time]{fmt_time()}} function).
 Other information functions: 
 \code{\link{info_currencies}()},
 \code{\link{info_date_style}()},
+\code{\link{info_flags}()},
 \code{\link{info_google_fonts}()},
 \code{\link{info_icons}()},
 \code{\link{info_locales}()},
