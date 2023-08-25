@@ -396,6 +396,22 @@ str_catalog <- function(
   }
 }
 
+str_title_case <- function(x) {
+
+  title_case_i <- function(y) {
+
+    s <- strsplit(y, " ")[[1]]
+
+    paste(
+      toupper(substring(s, 1,1)),
+      substring(s, 2),
+      sep = "", collapse = " "
+    )
+  }
+
+  vapply(x, FUN.VALUE = character(1), USE.NAMES = FALSE, FUN = title_case_i)
+}
+
 str_substitute <- function(string, start = 1L, end = -1L) {
 
   if (is.matrix(start)) {
