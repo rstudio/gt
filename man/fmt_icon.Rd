@@ -244,7 +244,7 @@ has an icon name of \code{"arrow-down"} and its corresponding full name is
 some icons have both a \emph{Solid} (\code{"fas"}) and a \emph{Regular} (\code{"far"}) variant so
 only the full name can disambiguate the pairing. In the latest release of
 \strong{fontawesome} (\code{v0.5.2}), there are 2,025 icons and you can view the entire
-icon listing by using the \code{\link[=info_icon]{info_icon()}} function. What you'll get from that
+icon listing by using the \code{\link[=info_icons]{info_icons()}} function. What you'll get from that
 is an information table showing every icon and associated set of identifiers.
 }
 
