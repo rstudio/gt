@@ -3154,8 +3154,7 @@ cols_merge_uncert <- function(
     cols_merge_resolver(
       data = data,
       col_begin = {{ col_val }},
-      col_end = {{ col_uncert }},
-      sep = sep
+      col_end = {{ col_uncert }}
     )
 
   # Resolve the rows supplied in the `rows` argument
@@ -3335,8 +3334,7 @@ cols_merge_range <- function(
     cols_merge_resolver(
       data = data,
       col_begin = {{ col_begin }},
-      col_end = {{ col_end }},
-      sep = sep
+      col_end = {{ col_end }}
     )
 
   # Resolve the rows supplied in the `rows` argument
@@ -3378,7 +3376,11 @@ cols_merge_range <- function(
   data
 }
 
-cols_merge_resolver <- function(data, col_begin, col_end, sep) {
+cols_merge_resolver <- function(
+    data,
+    col_begin,
+    col_end
+) {
 
   # Get the columns supplied in `col_begin` as a character vector
   col_begin <-
@@ -3560,8 +3562,7 @@ cols_merge_n_pct <- function(
     cols_merge_resolver(
       data = data,
       col_begin = {{ col_n }},
-      col_end = {{ col_pct }},
-      sep = ""
+      col_end = {{ col_pct }}
     )
 
   # Resolve the rows supplied in the `rows` argument
