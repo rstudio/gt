@@ -9637,10 +9637,12 @@ fmt_image <- function(
 
                 }
 
+                hw_ratio <- get_image_hw_ratio(filename)
+
                 out_y <-
                   xml_r(
                     xml_rPr(),
-                    xml_image(filename, height = height, width = height, units = "px")
+                    xml_image(filename, height = height, width = round(height/hw_ratio,0), units = "px")
                   )
 
                 out <- c(out, list(out_y))
@@ -9698,6 +9700,32 @@ convert_to_px <- function(x){
         )
       )
   }
+
+}
+
+#' @importFrom rlang is_installed
+#' @importFrom tools file_ext
+get_image_hw_ratio <- function(filepath, height){
+
+  if(rlang::is_installed("magick")){
+    if(tolower(file_ext(filepath)) == "svg"){
+      image <- magick::image_read_svg(filepath)
+    }else if(tolower(file_ext(filepath)) == "pdf"){
+      image <- magick::image_read_pdf(filepath)
+    }else{
+      image <- magick::image_read(filepath)
+    }
+
+    image_dims <- magick::image_info(image)
+
+    ratio <- image_dims$height/image_dims$width
+
+  }else{
+    warning("magick must be installed to derive image height/width ratio")
+    ratio <- 1
+  }
+
+  ratio
 
 }
 

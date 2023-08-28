@@ -2378,7 +2378,8 @@ test_that("table with image refs work - local only",{
   image_gt <- dplyr::tribble(
     ~md,
     "inst/graphics/test_image.png, inst/graphics/test_image.svg",
-    "inst/graphics/test_image.svg"
+    "inst/graphics/test_image.svg",
+    "man/figures/gt_parts_of_a_table.svg" # a wide image is respected
   ) %>%
     gt() %>%
     fmt_image(columns = everything(), sep = ",", height = "2in")
@@ -2403,7 +2404,7 @@ test_that("table with image refs work - local only",{
     xml2::xml_find_all(".//a:blip")
 
   ## hyperlinks are preserved and updated to be rId
-  expect_equal(length(docx_table_image),3)
+  expect_equal(length(docx_table_image),4)
   expect_true(all(grepl("^rId\\d+$",xml_attr(docx_table_image, "embed"))))
 
   # first should be a png
@@ -2412,17 +2413,33 @@ test_that("table with image refs work - local only",{
     "media/testimage.png"
   )
 
-  # second should be an svg URL
+  # second should be an svg of testimage
   expect_equal(
     docx$doc_obj$rel_df()$target[ docx$doc_obj$rel_df()$id == xml_attr(docx_table_image[2], "embed")],
     "media/testimage.svg"
   )
 
-  # second should be google URL
+  # third should also be an svg of testimage
   expect_equal(
     docx$doc_obj$rel_df()$target[ docx$doc_obj$rel_df()$id == xml_attr(docx_table_image[3], "embed")],
     "media/testimage.svg"
   )
+
+  # foruth should be an svg of gtpartsofatable
+  expect_equal(
+    docx$doc_obj$rel_df()$target[ docx$doc_obj$rel_df()$id == xml_attr(docx_table_image[4], "embed")],
+    "media/gtpartsofatable/svg"
+  )
+
+  ## Check that the image h/w ratios are preserved
+  docx$doc_obj$get() %>%
+    xml2::xml_find_all(".//wp:extent") %>%
+    xml2::xml_attrs() %>%
+    sapply(function(x){as.numeric(x[["cy"]])/as.numeric(x[["cx"]])}) %>%
+    expect_equal(
+      c(1,1,1,0.627451),
+      tolerance = .0000001 ## check out to 6 decimals for the ratio
+    )
 
 })
 
