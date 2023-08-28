@@ -9637,7 +9637,7 @@ fmt_image <- function(
 
                 }
 
-                hw_ratio <- get_image_hw_ratio(filename)
+                hw_ratio <- get_image_hw_ratio(filename, height = height)
 
                 out_y <-
                   xml_r(
@@ -9709,7 +9709,7 @@ get_image_hw_ratio <- function(filepath, height){
 
   if(rlang::is_installed("magick")){
     if(tolower(file_ext(filepath)) == "svg"){
-      image <- magick::image_read_svg(filepath)
+      image <- magick::image_read_svg(filepath, height = height)
     }else if(tolower(file_ext(filepath)) == "pdf"){
       image <- magick::image_read_pdf(filepath)
     }else{

@@ -2325,10 +2325,19 @@ test_that("markdown with img refs work",{
   skip_on_ci()
   check_suggests_xml()
 
+  ref_png <- file.path(system.file(package = "gt"),"/graphics/test_image.png")
+  ref_svg <- file.path(system.file(package = "gt"),"/graphics/test_image.svg")
+
+  temp_png <- file.path(tempdir(),"test_image.png")
+  temp_svg <- file.path(tempdir(),"test_image.svg")
+
+  file.copy(ref_png, temp_png)
+  file.copy(ref_svg, temp_svg)
+
   markdown_gt <- dplyr::tribble(
     ~md,
-    " ![test image from gt package](inst/graphics/test_image.png)",
-    " ![test image from gt package2](inst/graphics/test_image.svg)"
+    paste0(" ![test image from gt package](",temp_png,")"),
+    paste0(" ![test image from gt package2](",temp_svg,")")
     ) %>%
     gt() %>%
     fmt_markdown(columns = everything())
@@ -2375,11 +2384,23 @@ test_that("table with image refs work - local only",{
   skip_on_ci()
   check_suggests_xml()
 
+  ref_png <- file.path(system.file(package = "gt"),"/graphics/test_image.png")
+  ref_svg <- file.path(system.file(package = "gt"),"/graphics/test_image.svg")
+  ref_wide_svg <- file.path(system.file(package = "gt"),"/graphics/gt_parts_of_a_table.svg")
+
+  temp_png <- file.path(tempdir(),"test_image.png")
+  temp_svg <- file.path(tempdir(),"test_image.svg")
+  temp_wide_svg <- file.path(tempdir(),"gt_parts_of_a_table.svg")
+
+  file.copy(ref_png, temp_png)
+  file.copy(ref_svg, temp_svg)
+  file.copy(ref_wide_svg, temp_wide_svg)
+
   image_gt <- dplyr::tribble(
     ~md,
-    "inst/graphics/test_image.png, inst/graphics/test_image.svg",
-    "inst/graphics/test_image.svg",
-    "man/figures/gt_parts_of_a_table.svg" # a wide image is respected
+    paste0(c(temp_png,temp_svg), collapse = ", "), ## two images next to each other
+    temp_svg, # single image, square
+    ref_wide_svg # a wide image is respected
   ) %>%
     gt() %>%
     fmt_image(columns = everything(), sep = ",", height = "2in")
@@ -2428,7 +2449,7 @@ test_that("table with image refs work - local only",{
   # foruth should be an svg of gtpartsofatable
   expect_equal(
     docx$doc_obj$rel_df()$target[ docx$doc_obj$rel_df()$id == xml_attr(docx_table_image[4], "embed")],
-    "media/gtpartsofatable/svg"
+    "media/gtpartsofatable.svg"
   )
 
   ## Check that the image h/w ratios are preserved
