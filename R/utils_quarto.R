@@ -23,5 +23,5 @@
 
 
 check_quarto <- function() {
-  Sys.getenv("QUARTO_MESSAGES_FILE") != ""
+  Sys.getenv("QUARTO_BIN_PATH") != ""
 }
