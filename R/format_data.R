@@ -9230,7 +9230,7 @@ fmt_url <- function(
 #'   height is preserved. If `width` and `height` are both NULL, height defaults
 #'   to `"2em"`.
 #'
-#' @param width *width of image*
+#' @param width *Width of image*
 #'
 #'   `scalar<character>` // *default:* `NULL`
 #'
@@ -9315,6 +9315,7 @@ fmt_url <- function(
 #'   differently. These arguments provide support for [from_column()]:
 #'
 #' - `height`
+#' - `width`
 #' - `sep`
 #' - `path`
 #' - `file_pattern`
@@ -9567,7 +9568,7 @@ fmt_image <- function(
                 out_y <-
                   paste0(
                     "<img src=\"", uri, "\" ",
-                    "style=\"", style_string, "\"",
+                    "style=\"", style_string,
                     "vertical-align:middle;\">"
                   )
 

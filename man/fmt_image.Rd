@@ -55,7 +55,7 @@ to \code{NULL}. If \code{width} is set and \code{height} is NULL, the ratio of w
 height is preserved. If \code{width} and \code{height} are both NULL, height defaults
 to \code{"2em"}.}
 
-\item{width}{\emph{width of image}
+\item{width}{\emph{Width of image}
 
 \verb{scalar<character>} // \emph{default:} \code{NULL}
 
@@ -157,6 +157,7 @@ within the table. This means that each row could be formatted a little bit
 differently. These arguments provide support for \code{\link[=from_column]{from_column()}}:
 \itemize{
 \item \code{height}
+\item \code{width}
 \item \code{sep}
 \item \code{path}
 \item \code{file_pattern}
