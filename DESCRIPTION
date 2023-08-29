@@ -60,6 +60,7 @@ Suggests:
     ggplot2,
     knitr,
     lubridate,
+    magick,
     paletteer,
     RColorBrewer,
     rmarkdown (>= 2.20),
