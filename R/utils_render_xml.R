@@ -775,6 +775,7 @@ footnote_mark_to_xml <- function(
 #'
 #' To be inserted as part of a run
 #'
+#' @noRd
 xml_image <- function(src, height = 1, width = 1, units = "in", alt_text = ""){
 
   xml_drawing(
