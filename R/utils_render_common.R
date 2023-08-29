@@ -623,6 +623,12 @@ perform_col_merge <- function(data, context) {
       pattern <- col_merge[[i]][["pattern"]]
       sep <- col_merge[[i]][["sep"]]
 
+      # Replace any fullwidth tilde characters (the range separator in
+      # the 'ja' locale) with standard `~` in the LaTeX rendering context
+      if (grepl("\UFF5E", sep) && context == "latex") {
+        sep <- gsub("\UFF5E", "~", sep)
+      }
+
       # Transform the separator text depending on specific
       # inputs and the `context`
       sep <- context_dash_mark(sep, context = context)
