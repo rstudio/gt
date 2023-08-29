@@ -3239,16 +3239,6 @@ cols_merge_uncert <- function(
 #'   [num_range()], and [everything()]. We can also use expressions to filter
 #'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
-#' @param sep *Separator text for ranges*
-#'
-#'   `scalar<character>` // *default:* `"--"`
-#'
-#'   The separator text that indicates the values are ranged. The default value
-#'   of `"--"` will be transformed to an en dash for the range separator. Using
-#'   `"---"` will be taken to mean that an em dash should be used. Should you
-#'   want these special symbols to be taken literally, they can be supplied
-#'   within the base [I()] function.
-#'
 #' @param autohide *Automatic hiding of the `col_end` column*
 #'
 #'   `scalar<logical>` // *default:* `TRUE`
@@ -3256,6 +3246,30 @@ cols_merge_uncert <- function(
 #'   An option to automatically hide the column specified as
 #'   `col_end`. Any columns with their state changed to hidden will behave
 #'   the same as before, they just won't be displayed in the finalized table.
+#'
+#' @param sep *Separator text for ranges*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   The separator text that indicates the values are ranged. If a `sep` value
+#'   is not provided then the range separator specific to the `locale` provided
+#'   will be used (if a locale isn't specified then an en dash will be used).
+#'   You can specify the use of an en dash with `"--"`; a triple-hyphen sequence
+#'   (`"---"`) will be transformed to an em dash. Should you want hyphens to be
+#'   taken literally, the `sep` value can be supplied within the base [I()]
+#'   function.
+#'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for applying a `sep` pattern
+#'   specific to a locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can use the [info_locales()]
+#'   function as a useful reference for all of the locales that are supported. A
+#'   locale ID can be also set in the initial [gt()] function call (where it
+#'   would be used automatically by any function with a `locale` argument) but a
+#'   `locale` value provided here will override that global locale.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -3323,8 +3337,9 @@ cols_merge_range <- function(
     col_begin,
     col_end,
     rows = everything(),
-    sep = "--",
-    autohide = TRUE
+    autohide = TRUE,
+    sep = NULL,
+    locale = NULL
 ) {
 
   # Perform input object validation
@@ -3343,6 +3358,23 @@ cols_merge_range <- function(
       expr = {{ rows }},
       data = data
     )
+
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
+  locale <- resolve_locale(data = data, locale = locale)
+
+  # Use locale-based marks if a `sep` value is not provided
+  if (is.null(sep)) {
+
+    # Get the range pattern for the locale (if not specified then 'en' is used)
+    range_pattern <- get_locale_range_pattern(locale = locale)
+
+    # Remove the placeholders from `range_pattern` since `cols_merge_range()`
+    # only requires the internal separator text for `sep`
+    sep <- gsub("\\{1\\}|\\{2\\}", "", range_pattern)
+  }
 
   # Create an entry and add it to the `_col_merge` attribute
   data <-
