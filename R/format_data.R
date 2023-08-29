@@ -9706,7 +9706,6 @@ convert_to_px <- function(x){
 
 #' @importFrom rlang is_installed
 #' @importFrom tools file_ext
-#' @importFrom magick image_read image_read_svg image_read_pdf image_info
 get_image_hw_ratio <- function(filepath, height){
 
   if(rlang::is_installed("magick")){
