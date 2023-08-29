@@ -81,7 +81,9 @@ used with \code{\link[=fmt_currency]{fmt_currency()}}.
 \seealso{
 Other information functions: 
 \code{\link{info_date_style}()},
+\code{\link{info_flags}()},
 \code{\link{info_google_fonts}()},
+\code{\link{info_icons}()},
 \code{\link{info_locales}()},
 \code{\link{info_paletteer}()},
 \code{\link{info_time_style}()}
