@@ -3249,7 +3249,7 @@ ensure_sect_end <- function(docx){
       " xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\">",
       "<w:type w:val=\"continuous\"/></w:sectPr>"
     ) %>%
-    as_xml_document(str)
+    as_xml_document()
 
   if (!xml_name(last_body_node) %in% "sectPr") {
     xml_add_child(body,new_last_node)
