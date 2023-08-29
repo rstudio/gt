@@ -9579,13 +9579,155 @@ fmt_image <- function(
         x
       },
       word = function(x) {
-        x
+
+        x_str <- character(length(x))
+
+        x_str_non_missing <- x[!is.na(x)]
+
+        # Automatically append `px` length unit when `height`
+        # is given as a number
+        if (is.numeric(height)) {
+          height <- paste0(height, "px")
+        }else{
+          height <- convert_to_px(height)
+        }
+
+        x_str_non_missing <-
+          vapply(
+            seq_along(x_str_non_missing),
+            FUN.VALUE = character(1),
+            USE.NAMES = FALSE,
+            FUN = function(x) {
+
+              if (grepl(",", x_str_non_missing[x])) {
+                files <- unlist(strsplit(x_str_non_missing[x], ",\\s*"))
+              } else {
+                files <- x_str_non_missing[x]
+              }
+
+              # Handle formatting of `file_pattern`
+              files <-
+                apply_pattern_fmt_x(
+                  pattern = file_pattern,
+                  values = files
+                )
+
+              out <- list()
+
+              for (y in seq_along(files)) {
+
+                ## if the image is online
+                if ((!is.null(path) && grepl("https?://", path)) || grepl("https?://", files[y])) {
+
+                  if (!is.null(path)) {
+                    # Normalize ending of `path`
+                    path <- gsub("/\\s+$", "", path)
+                    uri <- paste0(path, "/", files[y])
+                  } else {
+                    uri <- files[y]
+                  }
+
+                  filename <- download_file(uri)
+
+                } else {
+
+                  # Compose and normalize the local file path
+                  filename <- gtsave_filename(path = path, filename = files[y])
+                  filename <- path_expand(filename)
+
+                }
+
+                hw_ratio <- get_image_hw_ratio(filename, height = height)
+
+                out_y <-
+                  xml_r(
+                    xml_rPr(),
+                    xml_image(filename, height = height, width = round(height/hw_ratio,0), units = "px")
+                  )
+
+                out <- c(out, list(out_y))
+              }
+
+              paste0(
+                "<md_container>",
+                as.character(xml_p(xml_pPr(), htmltools::tagList(c(out)))),
+               "</md_container>"
+               )
+          })
+
+        x_str[!is.na(x)] <- x_str_non_missing
+        x_str[is.na(x)] <- as.character(NA_character_)
+
+        x_str
+
       },
       default = function(x) {
         x
       }
     )
   )
+}
+
+#' @importFrom utils download.file
+download_file <- function(uri){
+  filename <- tempfile(fileext = paste0("_",basename(uri)))
+  download.file(uri, destfile = filename, quiet = TRUE)
+  filename
+}
+
+convert_to_px <- function(x){
+
+  units <- tolower(gsub("\\d+","", x))
+  value <- as.numeric(gsub(units, "", x))
+
+  px_conversion <- c(
+    "in" = 96,
+    "cm" = 37.7952755906,
+    "emu"= 1/9525,
+    "em" = 16 # https://www.w3schools.com/tags/ref_pxtoemconversion.asp
+  )
+
+  if(units %in% c("px",names(px_conversion))){
+    if(units == "px"){
+      value
+    }else{
+      round(value * px_conversion[[units]], 0)
+    }
+  }else{
+    abort(
+      paste0(
+        "invalid units provided - `",units,
+        "`. Must be one of of type ", paste0("`",names(px_conversion), "`", collapse = "")
+        )
+      )
+  }
+
+}
+
+#' @importFrom rlang is_installed
+#' @importFrom tools file_ext
+get_image_hw_ratio <- function(filepath, height){
+
+  if(rlang::is_installed("magick")){
+    if(tolower(file_ext(filepath)) == "svg"){
+      image <- magick::image_read_svg(filepath, height = height)
+    }else if(tolower(file_ext(filepath)) == "pdf"){
+      image <- magick::image_read_pdf(filepath)
+    }else{
+      image <- magick::image_read(filepath)
+    }
+
+    image_dims <- magick::image_info(image)
+
+    ratio <- image_dims$height/image_dims$width
+
+  }else{
+    warning("magick must be installed to derive image height/width ratio")
+    ratio <- 1
+  }
+
+  ratio
+
 }
 
 #' Generate flag icons for countries from their country codes
