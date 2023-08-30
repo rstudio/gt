@@ -2453,7 +2453,6 @@ summary_rows_xml <- function(
   summary_row_lines
 }
 
-
 # Constructing Table Cells ----
 
 cell_border <- function(
@@ -2630,8 +2629,6 @@ xml_table_cell <- function(
 
 process_cell_content <- function(x, ...) {
 
-
-
   x %>%
     parse_to_xml() %>%
     process_cell_content_ooxml_t(...) %>%
@@ -2712,16 +2709,16 @@ process_cell_content_ooxml_r <- function(
       run_image <- run %>% xml_find_first(".//w:drawing")
       run_style <- run %>% xml_find_first(".//w:rPr")
 
-      if(length(run_image) > 0){
+      if (length(run_image) > 0) {
 
-        if(length(run %>% xml_find_first(".//w:noProof")) == 0){
+        if (length(run %>% xml_find_first(".//w:noProof")) == 0) {
           xml_add_child(
             run_style,
             as_xml_node(xml_noProof())[[1]]
-            )
+          )
         }
 
-      }else{
+      } else {
 
         run_style_children <- run_style %>% xml_children()
         run_style_children_types <- sapply(run_style_children,xml_name, ns = xml_ns(x))
@@ -2729,11 +2726,11 @@ process_cell_content_ooxml_r <- function(
         ## which styles are new. Add those. Respect ones that already exist and do not update
         new_cell_styles <- which(!cell_styles_types %in% run_style_children_types)
 
-        for(cell_style_idx in new_cell_styles){
+        for (cell_style_idx in new_cell_styles) {
           xml_add_child(
             run_style,
             cell_styles[[cell_style_idx]][[1]]
-            )
+          )
         }
       }
   }
@@ -2795,7 +2792,7 @@ process_cell_content_ooxml_p <- function(
 
     paragraph_image <- paragraph %>% xml_find_first(".//w:drawing")
 
-    if(length(paragraph_image) > 0){
+    if (length(paragraph_image) > 0) {
       next
     }
 
@@ -2819,7 +2816,7 @@ process_cell_content_ooxml_p <- function(
 }
 
 #' @importFrom xml2 xml_find_all xml_find_first xml_children xml_child xml_add_sibling xml_remove xml_ns xml_name
-process_white_space_br_in_xml <- function(x, ..., whitespace = NULL){
+process_white_space_br_in_xml <- function(x, ..., whitespace = NULL) {
 
   ## Options for white space: normal, nowrap, pre, pre-wrap, pre-line, break-spaces
   ## normal drops all newlines and collapse spaces
@@ -2845,7 +2842,7 @@ process_white_space_br_in_xml <- function(x, ..., whitespace = NULL){
           break_tag <- paragraph_children[[break_tag_loc]]
 
           ## if the br is between two runs, replace with space
-          if (any(run_tags_locs > break_tag_loc) & any(run_tags_locs < break_tag_loc )) {
+          if (any(run_tags_locs > break_tag_loc) & any(run_tags_locs < break_tag_loc)) {
 
             replacement_br <-
               xml_r(xml_rPr(), xml_t(" ", xml_space = "preserve")) %>%
@@ -2871,7 +2868,7 @@ process_white_space_br_in_xml <- function(x, ..., whitespace = NULL){
 }
 
 #' @importFrom xml2 xml_find_all xml_children xml_child xml_add_sibling xml_remove xml_ns xml_name
-process_drop_empty_styling_nodes <- function(x){
+process_drop_empty_styling_nodes <- function(x) {
 
   paragraph_styles <- x %>% xml_find_all(".//w:pPr")
 
@@ -2896,8 +2893,8 @@ process_drop_empty_styling_nodes <- function(x){
   x
 }
 
-add_text_style <- function(x, style){
-  UseMethod("add_text_style",x)
+add_text_style <- function(x, style) {
+  UseMethod("add_text_style", x)
 }
 
 add_text_style.character <- function(x, style) {
@@ -2981,8 +2978,9 @@ parse_to_xml <- function(x, ...) {
       paste0("<md_container>", ., "</md_container>")
   }
 
-  parsed_xml_contents <- x %>%
-    ## add namespace for later processing
+  ## add namespace for later processing
+  parsed_xml_contents <-
+    x %>%
     add_ns() %>%
     read_xml() %>%
     suppressWarnings()
@@ -3012,7 +3010,8 @@ as_xml_node <- function(x, create_ns = FALSE) {
 
 add_ns <- function(x) {
 
-  x <- read_xml(x)%>%
+  x <-
+    read_xml(x) %>%
     suppressWarnings()
 
   xml2::xml_set_attrs(
@@ -3053,11 +3052,10 @@ paste_footnote_xml <- function(
     paste0("<md_container>",.,"</md_container>")
 }
 
-
 # Post-Processing word documents as needed -----
 
 ## if hyperlinks are in gt, postprocessing will be necessary
-needs_gt_as_word_post_processing <- function(x){
+needs_gt_as_word_post_processing <- function(x) {
   any(grepl("<w:hyperlink", x)) |
     any(grepl("<a:blip", x))
 }
@@ -3079,7 +3077,7 @@ gt_as_word_post_processing <- function(path) {
   rels <- read_xml(rels_doc_path)
 
   ## load content_types
-  content_type_doc_path <-file.path(tmp_word_dir,"[Content_Types].xml")
+  content_type_doc_path <- file.path(tmp_word_dir,"[Content_Types].xml")
   content_types <- create_xml_contents()
 
   ## update hyperlinks & blips
@@ -3104,11 +3102,9 @@ gt_as_word_post_processing <- function(path) {
 
   # Unzip contents
   zip_temp_word_doc(path, tmp_word_dir)
-
-
 }
 
-create_doc_settings <- function(){
+create_doc_settings <- function() {
 
   settings_xml <- as_xml_document("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>
     <w:settings xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:w15=\"http://schemas.microsoft.com/office/word/2012/wordml\" xmlns:w16cex=\"http://schemas.microsoft.com/office/word/2018/wordml/cex\" xmlns:w16cid=\"http://schemas.microsoft.com/office/word/2016/wordml/cid\" xmlns:w16=\"http://schemas.microsoft.com/office/word/2018/wordml\" xmlns:w16sdtdh=\"http://schemas.microsoft.com/office/word/2020/wordml/sdtdatahash\" xmlns:w16se=\"http://schemas.microsoft.com/office/word/2015/wordml/symex\" xmlns:sl=\"http://schemas.openxmlformats.org/schemaLibrary/2006/main\" mc:Ignorable=\"w14 w15 w16se w16cid w16 w16cex w16sdtdh\">
@@ -3124,7 +3120,8 @@ create_doc_settings <- function(){
     compat = "<w:compat><w:compatSetting w:name=\"compatibilityMode\" w:uri=\"http://schemas.microsoft.com/office/word\" w:val=\"15\"/></w:compat>"
   )
 
-  for(new_setting in names(settings_to_add)){
+  for (new_setting in names(settings_to_add)) {
+
     xml_add_child(
       settings_xml,
       as_xml_node(settings_to_add[[new_setting]])[[1]]
@@ -3134,7 +3131,7 @@ create_doc_settings <- function(){
   settings_xml
 }
 
-update_hyperlink_node_id <- function(docx, rels){
+update_hyperlink_node_id <- function(docx, rels) {
 
   rels_relationships <- rels %>% xml_children()
   rels_ids <- rels_relationships %>% xml_attr("Id")
@@ -3162,7 +3159,7 @@ update_hyperlink_node_id <- function(docx, rels){
   }
 }
 
-update_blip_node_id <- function(docx, rels, content_types, tmp_word_dir){
+update_blip_node_id <- function(docx, rels, content_types, tmp_word_dir) {
 
   ## get relationships
   rels_relationships <- rels %>% xml_children()
@@ -3182,15 +3179,15 @@ update_blip_node_id <- function(docx, rels, content_types, tmp_word_dir){
   ## identify nodes needing updating
   blip_nodes <- blip_nodes[!grepl("^rId\\d+$", xml_attr(blip_nodes, "r:embed", ns = c(r = "http://schemas.openxmlformats.org/officeDocument/2006/relationships")))]
 
-  if(length(blip_nodes) > 0){
+  if (length(blip_nodes) > 0) {
 
     tmp_word_dir_media <- file.path(tmp_word_dir,"word","media")
 
-    if(!dir.exists(tmp_word_dir_media)){
+    if (!dir.exists(tmp_word_dir_media)) {
       dir.create(tmp_word_dir_media, showWarnings = FALSE)
     }
 
-    for(blip_node_idx in seq_along(blip_nodes)){
+    for (blip_node_idx in seq_along(blip_nodes)) {
 
       blip_node <- blip_nodes[[blip_node_idx]]
 
@@ -3214,30 +3211,28 @@ update_blip_node_id <- function(docx, rels, content_types, tmp_word_dir){
       #   xml_content_type_override(PartName = file.path("/word",src_rel), ContentType = file.path("image", tools::file_ext(src_rel)))
       # )
 
-
       xml_attr(blip_node, "r:embed", ns = c(r = "http://schemas.openxmlformats.org/officeDocument/2006/relationships")) <- new_id
 
     }
-
   }
-
 }
 
-update_ref_id <- function(docx){
+update_ref_id <- function(docx) {
 
   all_uid <- xml_find_all(docx, "//*[@id]")
   int_id <- 1
+
   for (z in seq_along(all_uid)) {
     if (!grepl("[^0-9]", xml_attr(all_uid[[z]], "id"))) {
       xml_attr(all_uid[[z]], "id") <- int_id
       int_id <- int_id + 1
     }
   }
-  int_id
 
+  int_id
 }
 
-ensure_sect_end <- function(docx){
+ensure_sect_end <- function(docx) {
 
   body <- xml_child(docx)
   last_body_node <- xml_child(body, search = xml2::xml_length(body))
@@ -3253,8 +3248,11 @@ ensure_sect_end <- function(docx){
     as_xml_document()
 
   if (!xml_name(last_body_node) %in% "sectPr") {
+
     xml_add_child(body,new_last_node)
-  }else{
+
+  } else {
+
     xml2::xml_replace(
       last_body_node,
       new_last_node
@@ -3262,14 +3260,17 @@ ensure_sect_end <- function(docx){
   }
 }
 
-copy_to_media <- function(path, media_dir){
+copy_to_media <- function(path, media_dir) {
 
-  if(grepl("https?://", path)){
-    download.file(
+  if (grepl("https?://", path)) {
+
+    utils::download.file(
       url = path,
       destfile = file.path(media_dir, basename_clean(path))
     )
-  }else{
+
+  } else {
+
     file.copy(
       from = path,
       to = file.path(media_dir, basename_clean(path))
@@ -3277,7 +3278,8 @@ copy_to_media <- function(path, media_dir){
   }
 }
 
-basename_clean <- function(x){
+basename_clean <- function(x) {
+
   basename(x) %>%
     tidy_gsub("\\s+","") %>%
     tidy_gsub("_","")
@@ -3294,15 +3296,13 @@ zip_temp_word_doc <- function(path, temp_dir) {
       zipfile = path,
       files = list.files(path = ".", recursive = TRUE, all.files = TRUE, include.dirs = FALSE),
       flags = "-r9X -q"
-      )
-  },finally = {
-      setwd(cur_dir)
-  }
-  )
-
+    )
+  }, finally = {
+    setwd(cur_dir)
+  })
 }
 
-xml_relationship <- function(id,  target, type = c("hyperlink","image"), target_mode = "External"){
+xml_relationship <- function(id, target, type = c("hyperlink","image"), target_mode = "External") {
 
   type <- paste0("http://schemas.openxmlformats.org/officeDocument/2006/relationships/", match.arg(type))
 
@@ -3322,7 +3322,7 @@ xml_relationship <- function(id,  target, type = c("hyperlink","image"), target_
     read_xml()
 }
 
-create_xml_contents <- function(){
+create_xml_contents <- function() {
 
   content_types <- as_xml_document("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>
   <Types xmlns=\"http://schemas.openxmlformats.org/package/2006/content-types\"></Types>")
@@ -3360,7 +3360,6 @@ create_xml_contents <- function(){
   xml2::xml_add_child(
     content_types,
     xml_content_type_ext(Extension = "jpeg", ContentType = "image/jpeg"))
-
 
   xml2::xml_add_child(
     content_types,
@@ -3400,10 +3399,9 @@ create_xml_contents <- function(){
     xml_content_type_override(PartName = "/word/footnotes.xml", ContentType = "application/vnd.openxmlformats-officedocument.wordprocessingml.footnotes+xml"))
 
   content_types
-
 }
 
-xml_content_type_ext <- function(Extension, ContentType){
+xml_content_type_ext <- function(Extension, ContentType) {
 
   htmltools::tag(
     `_tag_name` = "Default",
@@ -3414,10 +3412,9 @@ xml_content_type_ext <- function(Extension, ContentType){
   ) %>%
     as.character() %>%
     read_xml()
-
 }
 
-xml_content_type_override <- function(PartName, ContentType){
+xml_content_type_override <- function(PartName, ContentType) {
 
   htmltools::tag(
     `_tag_name` = "Override",
@@ -3428,6 +3425,4 @@ xml_content_type_override <- function(PartName, ContentType){
   ) %>%
     as.character() %>%
     read_xml()
-
 }
-
