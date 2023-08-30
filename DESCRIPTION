@@ -56,9 +56,11 @@ Imports:
 Suggests:
     covr,
     digest (>= 0.6.31),
+    fontawesome (>= 0.5.2),
     ggplot2,
     knitr,
     lubridate,
+    magick,
     paletteer,
     RColorBrewer,
     rmarkdown (>= 2.20),

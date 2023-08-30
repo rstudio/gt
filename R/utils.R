@@ -908,6 +908,18 @@ cmark_rules_xml <- list(
       )
     ) %>% as.character()
   },
+
+  image = function(x, process, ...){
+    xml_r(
+      xml_rPr(),
+      xml_image(
+        src = xml_attr(x, "destination"),
+        alt_text = xml2::xml_text(x)
+        )
+    ) %>% as.character()
+
+  },
+
   ## basic styling
   strong = function(x, process, ...) {
     x <- process(xml2::xml_children(x))
@@ -1117,7 +1129,12 @@ cmark_rules_xml <- list(
     # a relationship must be provided in the 'document.xml.rels' file
     xml_hyperlink(
       url = xml_attr(x, "destination"),
-      xml_r(xml_rPr(xml_rStyle(val = "Hyperlink")), xml_t(xml2::xml_text(x)))
+      xml_r(xml_rPr(
+        xml_rStyle(val = "Hyperlink"),
+        xml_color(color = "#0563C1")
+        ),
+        xml_t(xml2::xml_text(x))
+      )
     ) %>% as.character()
   },
 

@@ -156,6 +156,15 @@ that contain parameter data can also be hidden from final display with
 closed set.
 }
 
+\section{Flag icons that can be used}{
+
+
+You can view the entire set of supported flag icons as an informative table
+by using the \code{\link[=info_flags]{info_flags()}} function. In the information table that is
+provided, you'll see every flag icon and the associated identifier that can
+be used with \code{fmt_flag()}.
+}
+
 \section{Examples}{
 
 
@@ -273,6 +282,7 @@ Other data formatting functions:
 \code{\link{fmt_duration}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_icon}()},
 \code{\link{fmt_image}()},
 \code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},

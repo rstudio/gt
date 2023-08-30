@@ -173,6 +173,27 @@ get_locale_dec_mark <- function(locale = NULL, default) {
   filter_table_to_value(locales, decimal, locale == {{ locale }})
 }
 
+#' Get the range pattern based on a locale
+#'
+#' @param locale The user-supplied `locale` value, found in several `fmt_*()`
+#'   functions. This is expected as `NULL` if not supplied by the user.
+#' @noRd
+get_locale_range_pattern <- function(locale = NULL) {
+
+  # If `locale` is NULL then set the locale to 'en'
+  if (is.null(locale)) {
+    locale <- "en"
+  }
+
+  # Get the correct `range_pattern` value from the `gt:::locales` lookup table
+  range_pattern <-
+    filter_table_to_value(locales, range_pattern, locale == {{ locale }})
+
+  range_pattern <- gsub("1", "2", range_pattern)
+  range_pattern <- gsub("0", "1", range_pattern)
+  range_pattern
+}
+
 #' Get the currency code value associated with a locale's territory
 #'
 #' @param locale The user-supplied `locale` value, found in several `fmt_*()`
