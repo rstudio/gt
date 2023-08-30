@@ -48,16 +48,16 @@ need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{height}{\emph{Height of image}
 
-\verb{scalar<character>} // \emph{default:} \code{NULL}
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 The absolute height of the image in the table cell. By default, this is set
-to \code{NULL}. If \code{width} is set and \code{height} is NULL, the ratio of width to
-height is preserved. If \code{width} and \code{height} are both NULL, height defaults
-to \code{"2em"}.}
+to \code{NULL}. If \code{width} is set and \code{height} is \code{NULL}, the ratio of width to
+height is preserved. If \code{width} and \code{height} are both \code{NULL}, \code{height}
+defaults to \code{"2em"}.}
 
 \item{width}{\emph{Width of image}
 
-\verb{scalar<character>} // \emph{default:} \code{NULL}
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 The absolute width of the image in the table cell. By default, this is set
 to \code{NULL}, meaning the ratio of width to height is respected.}
@@ -110,8 +110,8 @@ separator to be applied between images.
 \section{Targeting cells with \code{columns} and \code{rows}}{
 
 
-Targeting of values is done through \code{columns} and additionally by \code{rows}
-(if nothing is provided for \code{rows} then entire columns are selected). The
+Targeting of values is done through \code{columns} and additionally by \code{rows} (if
+nothing is provided for \code{rows} then entire columns are selected). The
 \code{columns} argument allows us to target a subset of cells contained in the
 resolved columns. We say resolved because aside from declaring column names
 in \code{c()} (with bare column names or names in quotes) we can use
@@ -124,28 +124,28 @@ which targets numeric columns that have a maximum value greater than
 1,000,000 (excluding any \code{NA}s from consideration).
 
 By default all columns and rows are selected (with the \code{everything()}
-defaults). Cell values that are incompatible with a given formatting
-function will be skipped over, like \code{character} values and numeric
-\verb{fmt_*()} functions. So it's safe to select all columns with a particular
-formatting function (only those values that can be formatted will be
-formatted), but, you may not want that. One strategy is to format the bulk
-of cell values with one formatting function and then constrain the columns
-for later passes with other types of formatting (the last formatting done
-to a cell is what you get in the final output).
+defaults). Cell values that are incompatible with a given formatting function
+will be skipped over, like \code{character} values and numeric \verb{fmt_*()}
+functions. So it's safe to select all columns with a particular formatting
+function (only those values that can be formatted will be formatted), but,
+you may not want that. One strategy is to format the bulk of cell values with
+one formatting function and then constrain the columns for later passes with
+other types of formatting (the last formatting done to a cell is what you get
+in the final output).
 
 Once the columns are targeted, we may also target the \code{rows} within those
-columns. This can be done in a variety of ways. If a stub is present, then
-we potentially have row identifiers. Those can be used much like column
-names in the \code{columns}-targeting scenario. We can use simpler
+columns. This can be done in a variety of ways. If a stub is present, then we
+potentially have row identifiers. Those can be used much like column names in
+the \code{columns}-targeting scenario. We can use simpler
 \strong{tidyselect}-style expressions (the select helpers should work well here)
-and we can use quoted row identifiers in \code{c()}. It's also possible to use
-row indices (e.g., \code{c(3, 5, 6)}) though these index values must correspond
-to the row numbers of the input data (the indices won't necessarily match
-those of rearranged rows if row groups are present). One more type of
-expression is possible, an expression that takes column values (can involve
-any of the available columns in the table) and returns a logical vector.
-This is nice if you want to base formatting on values in the column or
-another column, or, you'd like to use a more complex predicate expression.
+and we can use quoted row identifiers in \code{c()}. It's also possible to use row
+indices (e.g., \code{c(3, 5, 6)}) though these index values must correspond to the
+row numbers of the input data (the indices won't necessarily match those of
+rearranged rows if row groups are present). One more type of expression is
+possible, an expression that takes column values (can involve any of the
+available columns in the table) and returns a logical vector. This is nice if
+you want to base formatting on values in the column or another column, or,
+you'd like to use a more complex predicate expression.
 }
 
 \section{Compatibility of arguments with the \code{from_column()} helper function}{
@@ -162,16 +162,16 @@ differently. These arguments provide support for \code{\link[=from_column]{from_
 \item \code{path}
 \item \code{file_pattern}
 \item \code{encode}
-
-Please note that for each of the aforementioned arguments, a
-\code{\link[=from_column]{from_column()}} call needs to reference a column that has data of the
-correct type (this is different for each argument). Additional columns for
-parameter values can be generated with the \code{\link[=cols_add]{cols_add()}} function (if not
-already present). Columns that contain parameter data can also be hidden
-from final display with \code{\link[=cols_hide]{cols_hide()}}. Finally, there is no limitation to
-how many arguments the \code{\link[=from_column]{from_column()}} helper is applied so long as the
-arguments belong to this closed set.
 }
+
+Please note that for each of the aforementioned arguments, a \code{\link[=from_column]{from_column()}}
+call needs to reference a column that has data of the correct type (this is
+different for each argument). Additional columns for parameter values can be
+generated with the \code{\link[=cols_add]{cols_add()}} function (if not already present). Columns
+that contain parameter data can also be hidden from final display with
+\code{\link[=cols_hide]{cols_hide()}}. Finally, there is no limitation to how many arguments the
+\code{\link[=from_column]{from_column()}} helper is applied so long as the arguments belong to this
+closed set.
 }
 
 \section{Examples}{
@@ -186,8 +186,8 @@ directory can be accessed via \code{system.file("metro_svg", package = "gt")}),
 and the filenames roughly correspond to the data in those two columns. The
 \code{fmt_image()} function can be used with these inputs since the \code{path} and
 \code{file_pattern} arguments allow us to compose complete and valid file
-locations. What you get from this are sequences of images in the table
-cells, taken from the referenced graphics files on disk.
+locations. What you get from this are sequences of images in the table cells,
+taken from the referenced graphics files on disk.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{metro |>
   dplyr::select(name, caption, lines, connect_rer) |>
