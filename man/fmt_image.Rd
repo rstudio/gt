@@ -238,11 +238,13 @@ taken from the referenced graphics files on disk.
 }
 
 \section{Function ID}{
- 3-20
+
+3-20
 }
 
 \section{Function Introduced}{
- \code{v0.9.0} (Mar 31, 2023)
+
+\code{v0.9.0} (Mar 31, 2023)
 }
 
 \seealso{
