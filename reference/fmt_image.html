@@ -98,7 +98,8 @@ separator to be applied between images.</p>
 <span>  <span class="va">data</span>,</span>
 <span>  columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  height <span class="op">=</span> <span class="st">"2em"</span>,</span>
+<span>  height <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  sep <span class="op">=</span> <span class="st">" "</span>,</span>
 <span>  path <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  file_pattern <span class="op">=</span> <span class="st">"{x}"</span>,</span>
@@ -139,9 +140,18 @@ need (e.g., <code>[colname_1] &gt; 100 &amp; [colname_2] &lt; 50</code>).</p></d
 
 <dt>height</dt>
 <dd><p><em>Height of image</em></p>
-<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>"1em"</code></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>The absolute height of the image in the table cell. By default, this is set
-to <code>"1em"</code>.</p></dd>
+to <code>NULL</code>. If <code>width</code> is set and <code>height</code> is <code>NULL</code>, the ratio of width to
+height is preserved. If <code>width</code> and <code>height</code> are both <code>NULL</code>, <code>height</code>
+defaults to <code>"2em"</code>.</p></dd>
+
+
+<dt>width</dt>
+<dd><p><em>Width of image</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>The absolute width of the image in the table cell. By default, this is set
+to <code>NULL</code>, meaning the ratio of width to height is respected.</p></dd>
 
 
 <dt>sep</dt>
@@ -206,16 +216,16 @@ in the final output).</p>
 <p>Once the columns are targeted, we may also target the <code>rows</code> within those
 columns. This can be done in a variety of ways. If a stub is present, then we
 potentially have row identifiers. Those can be used much like column names in
-the <code>columns</code>-targeting scenario. We can use simpler <strong>tidyselect</strong>-style
-expressions (the select helpers should work well here) and we can use quoted
-row identifiers in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>. It's also possible to use row indices (e.g.,
-<code>c(3, 5, 6)</code>) though these index values must correspond to the row numbers of
-the input data (the indices won't necessarily match those of rearranged rows
-if row groups are present). One more type of expression is possible, an
-expression that takes column values (can involve any of the available columns
-in the table) and returns a logical vector. This is nice if you want to base
-formatting on values in the column or another column, or, you'd like to use a
-more complex predicate expression.</p>
+the <code>columns</code>-targeting scenario. We can use simpler
+<strong>tidyselect</strong>-style expressions (the select helpers should work well here)
+and we can use quoted row identifiers in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>. It's also possible to use row
+indices (e.g., <code>c(3, 5, 6)</code>) though these index values must correspond to the
+row numbers of the input data (the indices won't necessarily match those of
+rearranged rows if row groups are present). One more type of expression is
+possible, an expression that takes column values (can involve any of the
+available columns in the table) and returns a logical vector. This is nice if
+you want to base formatting on values in the column or another column, or,
+you'd like to use a more complex predicate expression.</p>
     </div>
     <div class="section level2">
     <h2 id="compatibility-of-arguments-with-the-from-column-helper-function">Compatibility of arguments with the <code><a href="from_column.html">from_column()</a></code> helper function<a class="anchor" aria-label="anchor" href="#compatibility-of-arguments-with-the-from-column-helper-function"></a></h2>
@@ -226,6 +236,7 @@ more complex predicate expression.</p>
 <code>fmt_image()</code> to obtain varying parameter values from a specified column
 within the table. This means that each row could be formatted a little bit
 differently. These arguments provide support for <code><a href="from_column.html">from_column()</a></code>:</p><ul><li><p><code>height</code></p></li>
+<li><p><code>width</code></p></li>
 <li><p><code>sep</code></p></li>
 <li><p><code>path</code></p></li>
 <li><p><code>file_pattern</code></p></li>
