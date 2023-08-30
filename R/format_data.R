@@ -9395,9 +9395,11 @@ fmt_url <- function(
 #' }}
 #'
 #' @family data formatting functions
-#' @section Function ID: 3-20
+#' @section Function ID:
+#' 3-20
 #'
-#' @section Function Introduced: `v0.9.0` (Mar 31, 2023)
+#' @section Function Introduced:
+#' `v0.9.0` (Mar 31, 2023)
 #'
 #' @import rlang
 #' @export
