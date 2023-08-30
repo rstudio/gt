@@ -9207,6 +9207,8 @@ fmt_url <- function(
 
 #' Format image paths to generate images in cells
 #'
+#' @description
+#'
 #' To more easily insert graphics into body cells, we can use the `fmt_image()`
 #' function. This allows for one or more images to be placed in the targeted
 #' cells. The cells need to contain some reference to an image file, either: (1)
@@ -9223,10 +9225,19 @@ fmt_url <- function(
 #'
 #' @param height *Height of image*
 #'
-#'   `scalar<character>` // *default:* `"1em"`
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   The absolute height of the image in the table cell. By default, this is set
-#'   to `"1em"`.
+#'   to `NULL`. If `width` is set and `height` is `NULL`, the ratio of width to
+#'   height is preserved. If `width` and `height` are both `NULL`, `height`
+#'   defaults to `"2em"`.
+#'
+#' @param width *Width of image*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   The absolute width of the image in the table cell. By default, this is set
+#'   to `NULL`, meaning the ratio of width to height is respected.
 #'
 #' @param sep *Separator between images*
 #'
@@ -9287,16 +9298,16 @@ fmt_url <- function(
 #' Once the columns are targeted, we may also target the `rows` within those
 #' columns. This can be done in a variety of ways. If a stub is present, then we
 #' potentially have row identifiers. Those can be used much like column names in
-#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
-#' expressions (the select helpers should work well here) and we can use quoted
-#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
-#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
-#' the input data (the indices won't necessarily match those of rearranged rows
-#' if row groups are present). One more type of expression is possible, an
-#' expression that takes column values (can involve any of the available columns
-#' in the table) and returns a logical vector. This is nice if you want to base
-#' formatting on values in the column or another column, or, you'd like to use a
-#' more complex predicate expression.
+#' the `columns`-targeting scenario. We can use simpler
+#' **tidyselect**-style expressions (the select helpers should work well here)
+#' and we can use quoted row identifiers in `c()`. It's also possible to use row
+#' indices (e.g., `c(3, 5, 6)`) though these index values must correspond to the
+#' row numbers of the input data (the indices won't necessarily match those of
+#' rearranged rows if row groups are present). One more type of expression is
+#' possible, an expression that takes column values (can involve any of the
+#' available columns in the table) and returns a logical vector. This is nice if
+#' you want to base formatting on values in the column or another column, or,
+#' you'd like to use a more complex predicate expression.
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
@@ -9306,6 +9317,7 @@ fmt_url <- function(
 #' differently. These arguments provide support for [from_column()]:
 #'
 #' - `height`
+#' - `width`
 #' - `sep`
 #' - `path`
 #' - `file_pattern`
@@ -9395,7 +9407,8 @@ fmt_image <- function(
     data,
     columns = everything(),
     rows = everything(),
-    height = "2em",
+    height = NULL,
+    width = NULL,
     sep = " ",
     path = NULL,
     file_pattern = "{x}",
@@ -9412,6 +9425,7 @@ fmt_image <- function(
   # Supports parameters:
   #
   # - height
+  # - width
   # - sep
   # - path
   # - file_pattern
@@ -9451,6 +9465,7 @@ fmt_image <- function(
           columns = {{ columns }},
           rows = resolved_rows_idx[i],
           height = p_i$height %||% height,
+          width = p_i$width %||% width,
           sep = p_i$sep %||% sep,
           path = p_i$path %||% path,
           file_pattern = p_i$file_pattern %||% file_pattern,
@@ -9464,6 +9479,11 @@ fmt_image <- function(
   #
   # End support for `gt_column()` objects passed to compatible arguments
   #
+
+  # If width & height not provided, default width to '2em' and let width scale
+  if (is.null(height) & is.null(width)) {
+    height <- "2em"
+  }
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -9524,15 +9544,6 @@ fmt_image <- function(
                     uri <- files[y]
                   }
 
-                  # Place the `uri` value it within an <img>, setting the
-                  # height and always preferring vertical alignment as 'middle'
-                  out_y <-
-                    paste0(
-                      "<img src=\"", uri, "\" ",
-                      "style=\"height:", height, ";",
-                      "vertical-align:middle;\">"
-                    )
-
                 } else {
 
                   # Compose and normalize the local file path
@@ -9546,16 +9557,24 @@ fmt_image <- function(
                   } else {
                     uri <- filename
                   }
-
-                  # Place the `uri` value it within an <img>, setting the
-                  # height and always preferring vertical alignment as 'middle'
-                  out_y <-
-                    paste0(
-                      "<img src=\"", uri, "\" ",
-                      "style=\"height:", height, ";",
-                      "vertical-align:middle;\">"
-                    )
                 }
+
+                style_string <- paste0(
+                    c(
+                      ifelse(!is.null(height), paste0("height:", height, ";"), ""),
+                      ifelse(!is.null(width), paste0("width:", width, ";"), "")
+                    ),
+                    collapse = ""
+                  )
+
+                # Place the `uri` value within an <img>, setting the
+                # height and always preferring vertical alignment as 'middle'
+                out_y <-
+                  paste0(
+                    "<img src=\"", uri, "\" ",
+                    "style=\"", style_string,
+                    "vertical-align:middle;\">"
+                  )
 
                 out <- c(out, out_y)
               }
@@ -9584,12 +9603,27 @@ fmt_image <- function(
 
         x_str_non_missing <- x[!is.na(x)]
 
-        # Automatically append `px` length unit when `height`
+        # Automatically append `px` length unit when `height` or `width`
         # is given as a number
-        if (is.numeric(height)) {
-          height <- paste0(height, "px")
-        }else{
-          height <- convert_to_px(height)
+
+        if (!is.null(height)) {
+          if (is.numeric(height)) {
+            height <- paste0(height, "px")
+            } else {
+              if (is.character(height)) {
+                height <- convert_to_px(height)
+              }
+            }
+        }
+
+        if (!is.null(width)) {
+          if (is.numeric(width)) {
+            width <- paste0(width, "px")
+          } else {
+            if (is.character(width)) {
+              width <- convert_to_px(width)
+            }
+          }
         }
 
         x_str_non_missing <-
@@ -9616,13 +9650,18 @@ fmt_image <- function(
 
               for (y in seq_along(files)) {
 
-                ## if the image is online
-                if ((!is.null(path) && grepl("https?://", path)) || grepl("https?://", files[y])) {
+                # Handle case where the image is online
+                if (
+                  (!is.null(path) && grepl("https?://", path)) ||
+                  grepl("https?://", files[y])
+                ) {
 
                   if (!is.null(path)) {
+
                     # Normalize ending of `path`
                     path <- gsub("/\\s+$", "", path)
                     uri <- paste0(path, "/", files[y])
+
                   } else {
                     uri <- files[y]
                   }
@@ -9634,15 +9673,23 @@ fmt_image <- function(
                   # Compose and normalize the local file path
                   filename <- gtsave_filename(path = path, filename = files[y])
                   filename <- path_expand(filename)
-
                 }
 
-                hw_ratio <- get_image_hw_ratio(filename, height = height)
+                if (is.null(height) | is.null(width)) {
+
+                  hw_ratio <- get_image_hw_ratio(filename)
+
+                  if (is.null(width)) {
+                    width <- round(height / hw_ratio, 0)
+                  } else {
+                    height <- round(width * hw_ratio, 0)
+                  }
+                }
 
                 out_y <-
                   xml_r(
                     xml_rPr(),
-                    xml_image(filename, height = height, width = round(height/hw_ratio,0), units = "px")
+                    xml_image(filename, height = height, width = width, units = "px")
                   )
 
                 out <- c(out, list(out_y))
@@ -9651,15 +9698,15 @@ fmt_image <- function(
               paste0(
                 "<md_container>",
                 as.character(xml_p(xml_pPr(), htmltools::tagList(c(out)))),
-               "</md_container>"
-               )
-          })
+                "</md_container>"
+              )
+            }
+          )
 
         x_str[!is.na(x)] <- x_str_non_missing
         x_str[is.na(x)] <- as.character(NA_character_)
 
         x_str
-
       },
       default = function(x) {
         x
@@ -9668,14 +9715,13 @@ fmt_image <- function(
   )
 }
 
-#' @importFrom utils download.file
-download_file <- function(uri){
-  filename <- tempfile(fileext = paste0("_",basename(uri)))
-  download.file(uri, destfile = filename, quiet = TRUE)
+download_file <- function(uri) {
+  filename <- tempfile(fileext = paste0("_", basename(uri)))
+  utils::download.file(uri, destfile = filename, quiet = TRUE)
   filename
 }
 
-convert_to_px <- function(x){
+convert_to_px <- function(x) {
 
   units <- tolower(gsub("\\d+","", x))
   value <- as.numeric(gsub(units, "", x))
@@ -9683,54 +9729,62 @@ convert_to_px <- function(x){
   px_conversion <- c(
     "in" = 96,
     "cm" = 37.7952755906,
-    "emu"= 1/9525,
+    "emu" = 1 / 9525,
     "em" = 16 # https://www.w3schools.com/tags/ref_pxtoemconversion.asp
   )
 
-  if(units %in% c("px",names(px_conversion))){
-    if(units == "px"){
+  if (units %in% c("px", names(px_conversion))) {
+
+    if (units == "px") {
       value
-    }else{
+    } else {
       round(value * px_conversion[[units]], 0)
     }
-  }else{
-    abort(
-      paste0(
-        "invalid units provided - `",units,
-        "`. Must be one of of type ", paste0("`",names(px_conversion), "`", collapse = "")
-        )
-      )
-  }
 
+  } else {
+
+    rlang::abort(
+      paste0(
+        "invalid units provided - `", units,
+        "`. Must be one of of type ", paste0("`", names(px_conversion), "`", collapse = "")
+      )
+    )
+  }
 }
 
-#' @importFrom rlang is_installed
-#' @importFrom tools file_ext
-get_image_hw_ratio <- function(filepath, height){
+get_image_hw_ratio <- function(filepath) {
 
-  if(rlang::is_installed("magick")){
-    if(tolower(file_ext(filepath)) == "svg"){
-      image <- magick::image_read_svg(filepath, height = height)
-    }else if(tolower(file_ext(filepath)) == "pdf"){
+  if (rlang::is_installed("magick")) {
+
+    if (tolower(tools::file_ext(filepath)) == "svg") {
+
+      image <- magick::image_read_svg(filepath)
+
+    } else if (tolower(tools::file_ext(filepath)) == "pdf") {
+
       image <- magick::image_read_pdf(filepath)
-    }else{
+
+    } else {
+
       image <- magick::image_read(filepath)
     }
 
     image_dims <- magick::image_info(image)
 
-    ratio <- image_dims$height/image_dims$width
+    ratio <- image_dims$height / image_dims$width
 
-  }else{
+  } else {
+
     warning("magick must be installed to derive image height/width ratio")
     ratio <- 1
   }
 
   ratio
-
 }
 
 #' Generate flag icons for countries from their country codes
+#'
+#' @description
 #'
 #' While it is fairly straightforward to insert images into body cells (using
 #' [fmt_image()] is one way to it), there is often the need to incorporate
@@ -10147,6 +10201,8 @@ fmt_flag <- function(
 }
 
 #' Use icons within a table's body cells
+#'
+#' @description
 #'
 #' We can draw from a library of thousands of icons and selectively insert them
 #' into a **gt** table. The `fmt_icon()` function makes this possible and it

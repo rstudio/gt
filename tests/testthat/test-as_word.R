@@ -2509,3 +2509,104 @@ test_that("table with image refs work - https",{
 })
 
 
+test_that("table with image refs work - local only - setting image widths and heights",{
+
+  skip_on_ci()
+  check_suggests_xml()
+
+  ref_png <- file.path(system.file(package = "gt"),"/graphics/test_image.png")
+  ref_svg <- file.path(system.file(package = "gt"),"/graphics/test_image.svg")
+  ref_wide_svg <- file.path(system.file(package = "gt"),"/graphics/gt_parts_of_a_table.svg")
+
+  temp_png <- file.path(tempdir(),"test_image.png")
+  temp_svg <- file.path(tempdir(),"test_image.svg")
+  temp_wide_svg <- file.path(tempdir(),"gt_parts_of_a_table.svg")
+
+  file.copy(ref_png, temp_png)
+  file.copy(ref_svg, temp_svg)
+  file.copy(ref_wide_svg, temp_wide_svg)
+
+  image_gt_height_and_width <- dplyr::tribble(
+    ~md,
+    paste0(c(temp_png,temp_svg), collapse = ", "), ## two images next to each other
+    temp_svg, # single image, square
+    ref_wide_svg # a wide image is respected
+  ) %>%
+    gt() %>%
+    fmt_image(columns = everything(), sep = ",", height = "1in", width = "2in")
+
+  image_gt_height <- dplyr::tribble(
+    ~md,
+    paste0(c(temp_png,temp_svg), collapse = ", "), ## two images next to each other
+    temp_svg, # single image, square
+    ref_wide_svg # a wide image is respected
+  ) %>%
+    gt() %>%
+    fmt_image(columns = everything(), sep = ",", height = "2in")
+
+  image_gt_width <- dplyr::tribble(
+    ~md,
+    paste0(c(temp_png,temp_svg), collapse = ", "), ## two images next to each other
+    temp_svg, # single image, square
+    ref_wide_svg # a wide image is respected
+  ) %>%
+    gt() %>%
+    fmt_image(columns = everything(), sep = ",", width = "1in")
+
+  temp_docx_1 <- tempfile(fileext = ".docx")
+  temp_docx_2 <- tempfile(fileext = ".docx")
+  temp_docx_3 <- tempfile(fileext = ".docx")
+
+  gtsave(image_gt_height_and_width, filename = temp_docx_1)
+  gtsave(image_gt_height, filename = temp_docx_2)
+  gtsave(image_gt_width, filename = temp_docx_3)
+
+  if(interactive() & !testthat::is_testing()){
+    shell.exec(temp_docx_1)
+    shell.exec(temp_docx_2)
+    shell.exec(temp_docx_3)
+
+  }
+
+  ## Check that the image h/w ratios are overwritten when both height and width are set
+  docx1 <- officer::read_docx(temp_docx_1)
+  docx1$doc_obj$get() %>%
+    xml2::xml_find_all(".//wp:extent") %>%
+    xml2::xml_attrs() %>%
+    lapply(function(x){list(height = x[["cy"]], width = x[["cx"]], ratio = as.numeric(x[["cy"]])/as.numeric(x[["cx"]]))}) %>%
+    expect_equal(
+      list(list(height = "914400", width = "1828800", ratio = 0.5),
+           list(height = "914400", width = "1828800", ratio = 0.5),
+           list(height = "914400", width = "1828800", ratio = 0.5),
+           list(height = "914400", width = "1828800", ratio = 0.5)),
+      tolerance = .0000001 ## check out to 6 decimals for the ratio
+    )
+
+  ## Check that the image h/w ratios are preserved
+  docx2 <- officer::read_docx(temp_docx_2)
+  docx2$doc_obj$get() %>%
+    xml2::xml_find_all(".//wp:extent") %>%
+    xml2::xml_attrs() %>%
+    lapply(function(x){list(height = x[["cy"]], width = x[["cx"]], ratio = as.numeric(x[["cy"]])/as.numeric(x[["cx"]]))}) %>%
+    expect_equal(
+      list(list(height = "1828800", width = "1828800", ratio = 1),
+           list(height = "1828800", width = "1828800", ratio = 1),
+           list(height = "1828800", width = "1828800", ratio = 1),
+           list(height = "1828800", width = "2914650", ratio = 0.627451)),
+      tolerance = .0000001 ## check out to 6 decimals for the ratio
+    )
+
+  ## Check that the image h/w ratios are preserved
+  docx3 <- officer::read_docx(temp_docx_3)
+  docx3$doc_obj$get() %>%
+    xml2::xml_find_all(".//wp:extent") %>%
+    xml2::xml_attrs() %>%
+    lapply(function(x){list(height = x[["cy"]], width = x[["cx"]], ratio = as.numeric(x[["cy"]])/as.numeric(x[["cx"]]))}) %>%
+    expect_equal(
+      list(list(height = "914400", width = "914400", ratio = 1),
+           list(height = "914400", width = "914400", ratio = 1),
+           list(height = "914400", width = "914400", ratio = 1),
+           list(height = "571500", width = "914400", ratio = 0.625))
+    )
+
+})

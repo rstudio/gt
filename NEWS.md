@@ -8,6 +8,7 @@
 
 * Add word processing for images, so fmt_image now works for word as well, and markdown image designation also works. (#1272)
 
+* Add `width` argument to `fmt_image()`, letting users set width, height, or both of the image to be added into the table.
 
 # gt 0.9.0
 
