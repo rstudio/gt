@@ -84,8 +84,9 @@ the output table.</p>
 <span>  <span class="va">col_begin</span>,</span>
 <span>  <span class="va">col_end</span>,</span>
 <span>  rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  sep <span class="op">=</span> <span class="st">"--"</span>,</span>
-<span>  autohide <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  autohide <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  sep <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  locale <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -129,22 +130,36 @@ helper function. Examples of select helper functions include
 down to the rows we need (e.g., <code>[colname_1] &gt; 100 &amp; [colname_2] &lt; 50</code>).</p></dd>
 
 
-<dt>sep</dt>
-<dd><p><em>Separator text for ranges</em></p>
-<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>"--"</code></p>
-<p>The separator text that indicates the values are ranged. The default value
-of <code>"--"</code> will be transformed to an en dash for the range separator. Using
-<code>"---"</code> will be taken to mean that an em dash should be used. Should you
-want these special symbols to be taken literally, they can be supplied
-within the base <code><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I()</a></code> function.</p></dd>
-
-
 <dt>autohide</dt>
 <dd><p><em>Automatic hiding of the <code>col_end</code> column</em></p>
 <p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
 <p>An option to automatically hide the column specified as
 <code>col_end</code>. Any columns with their state changed to hidden will behave
 the same as before, they just won't be displayed in the finalized table.</p></dd>
+
+
+<dt>sep</dt>
+<dd><p><em>Separator text for ranges</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>The separator text that indicates the values are ranged. If a <code>sep</code> value
+is not provided then the range separator specific to the <code>locale</code> provided
+will be used (if a locale isn't specified then an en dash will be used).
+You can specify the use of an en dash with <code>"--"</code>; a triple-hyphen sequence
+(<code>"---"</code>) will be transformed to an em dash. Should you want hyphens to be
+taken literally, the <code>sep</code> value can be supplied within the base <code><a href="https://rdrr.io/r/base/AsIs.html" class="external-link">I()</a></code>
+function.</p></dd>
+
+
+<dt>locale</dt>
+<dd><p><em>Locale identifier</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>An optional locale identifier that can be used for applying a <code>sep</code> pattern
+specific to a locale's rules. Examples include <code>"en"</code> for English (United
+States) and <code>"fr"</code> for French (France). We can use the <code><a href="info_locales.html">info_locales()</a></code>
+function as a useful reference for all of the locales that are supported. A
+locale ID can be also set in the initial <code><a href="gt.html">gt()</a></code> function call (where it
+would be used automatically by any function with a <code>locale</code> argument) but a
+<code>locale</code> value provided here will override that global locale.</p></dd>
 
 </dl></div>
     <div class="section level2">
