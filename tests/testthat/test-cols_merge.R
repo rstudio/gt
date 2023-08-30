@@ -568,7 +568,7 @@ test_that("The `cols_merge_range()` function works correctly", {
     expect_equal("merge_range")
 
   dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep %>%
-    expect_equal("--")
+    expect_equal("\U2013")
 
   # Create a `tbl_html` object with `gt()`; merge two columns
   # with `cols_merge_range()`
@@ -591,7 +591,7 @@ test_that("The `cols_merge_range()` function works correctly", {
     expect_equal("merge_range")
 
   dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep %>%
-    expect_equal("--")
+    expect_equal("\U2013")
 
   # Create a `tbl_html` object with `gt()`; merge two columns, twice,
   # with `cols_merge_range()`
@@ -618,7 +618,7 @@ test_that("The `cols_merge_range()` function works correctly", {
     expect_equal("merge_range")
 
   dt_col_merge_get(data = tbl_html) %>% .[[1]] %>% .$sep %>%
-    expect_equal("--")
+    expect_equal("\U2013")
 
   dt_col_merge_get(data = tbl_html) %>% .[[2]] %>% .$pattern %>%
     expect_equal("{1}{sep}{2}")
@@ -630,7 +630,44 @@ test_that("The `cols_merge_range()` function works correctly", {
     expect_equal("merge_range")
 
   dt_col_merge_get(data = tbl_html) %>% .[[2]] %>% .$sep %>%
-    expect_equal("--")
+    expect_equal("\U2013")
+
+  # Expect a variety of different range separators depending on
+  # the `locale` value provided to `cols_merge_range()`
+  gt(tbl) %>% cols_merge_range(col_begin = "col_1", col_end = "col_2", locale = "en") %>%
+    dt_col_merge_get() %>% .[[1]] %>% .$sep %>% expect_equal("\U2013")
+  gt(tbl) %>% cols_merge_range(col_begin = "col_1", col_end = "col_2", locale = "es") %>%
+    dt_col_merge_get() %>% .[[1]] %>% .$sep %>% expect_equal("-")
+  gt(tbl) %>% cols_merge_range(col_begin = "col_1", col_end = "col_2", locale = "nl") %>%
+    dt_col_merge_get() %>% .[[1]] %>% .$sep %>% expect_equal("-")
+  gt(tbl) %>% cols_merge_range(col_begin = "col_1", col_end = "col_2", locale = "zh") %>%
+    dt_col_merge_get() %>% .[[1]] %>% .$sep %>% expect_equal("-")
+  gt(tbl) %>% cols_merge_range(col_begin = "col_1", col_end = "col_2", locale = "ja") %>%
+    dt_col_merge_get() %>% .[[1]] %>% .$sep %>% expect_equal("\UFF5E")
+  gt(tbl) %>% cols_merge_range(col_begin = "col_1", col_end = "col_2", locale = "ko") %>%
+    dt_col_merge_get() %>% .[[1]] %>% .$sep %>% expect_equal("~")
+  gt(tbl) %>% cols_merge_range(col_begin = "col_1", col_end = "col_2", locale = "to") %>%
+    dt_col_merge_get() %>% .[[1]] %>% .$sep %>% expect_equal("\U2014")
+  gt(tbl) %>% cols_merge_range(col_begin = "col_1", col_end = "col_2", locale = "bg") %>%
+    dt_col_merge_get() %>% .[[1]] %>% .$sep %>% expect_equal(" \U2013 ")
+  gt(tbl) %>% cols_merge_range(col_begin = "col_1", col_end = "col_2", locale = "bs") %>%
+    dt_col_merge_get() %>% .[[1]] %>% .$sep %>% expect_equal(" \U2013 ")
+  gt(tbl) %>% cols_merge_range(col_begin = "col_1", col_end = "col_2", locale = "pt") %>%
+    dt_col_merge_get() %>% .[[1]] %>% .$sep %>% expect_equal("\U2013")
+  gt(tbl) %>% cols_merge_range(col_begin = "col_1", col_end = "col_2", locale = "pt-PT") %>%
+    dt_col_merge_get() %>% .[[1]] %>% .$sep %>% expect_equal(" - ")
+
+  # Expect that different `locale` priorities and `sep` overrides work correctly
+  gt(tbl, locale = "pt-PT") %>% cols_merge_range(col_begin = "col_1", col_end = "col_2") %>%
+    dt_col_merge_get() %>% .[[1]] %>% .$sep %>% expect_equal(" - ")
+  gt(tbl, locale = "ja") %>% cols_merge_range(col_begin = "col_1", col_end = "col_2") %>%
+    dt_col_merge_get() %>% .[[1]] %>% .$sep %>% expect_equal("\UFF5E")
+  gt(tbl, locale = "ja") %>% cols_merge_range(col_begin = "col_1", col_end = "col_2", locale = "ja") %>%
+    dt_col_merge_get() %>% .[[1]] %>% .$sep %>% expect_equal("\UFF5E")
+  gt(tbl, locale = "ja") %>% cols_merge_range(col_begin = "col_1", col_end = "col_2", locale = "en") %>%
+    dt_col_merge_get() %>% .[[1]] %>% .$sep %>% expect_equal("\U2013")
+  gt(tbl, locale = "ja") %>% cols_merge_range(col_begin = "col_1", col_end = "col_2", sep = "q", locale = "ko") %>%
+    dt_col_merge_get() %>% .[[1]] %>% .$sep %>% expect_equal("q")
 
   # Create a `tbl_html` object with `gt()`; merge two
   # columns with `cols_merge_range()` but use the `I()`
