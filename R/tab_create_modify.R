@@ -603,12 +603,25 @@ tab_spanner <- function(
       level = level
     )
 
+  if (grepl("\\{\\{.*?\\}\\}", label)) {
+
+    spanner_units <- gsub("^.*?(\\{\\{.*?\\}\\}).*?$", "\\1", label)
+    spanner_pattern <- ""
+
+  } else {
+
+    spanner_units <- NA_character_
+    spanner_pattern <- NA_character_
+  }
+
   # Add the spanner to the `_spanners` table
   data <-
     dt_spanners_add(
       data = data,
       vars = column_names,
       spanner_label = label,
+      spanner_units = spanner_units,
+      spanner_pattern = spanner_pattern,
       spanner_id = id,
       spanner_level = level,
       gather = gather,
