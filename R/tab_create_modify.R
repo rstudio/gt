@@ -226,8 +226,8 @@ tab_header <- function(
 #'   value if you plan to access this cell in a later function call and the
 #'   label text is complicated (e.g., contains markup, is lengthy, or both).
 #'   Finally, when providing an `id` value you must ensure that it is unique
-#'   across all ID values set for column spanner labels (the function will stop
-#'   if `id` isn't unique).
+#'   across all ID values set for spanner labels (the function will stop if `id`
+#'   isn't unique).
 #'
 #' @param gather *Gather columns together*
 #'
@@ -299,6 +299,43 @@ tab_header <- function(
 #' As a final note, the column labels (by default deriving from the column
 #' names) will likely need to change and that's especially true in the above
 #' case. This can be done with either of [cols_label()] or [cols_label_with()].
+#'
+#' @section Incorporating units with **gt**'s units notation:
+#'
+#' Measurement units are often seen as part of spanner labels and indeed it can
+#' be much more straightforward to include them here rather than using other
+#' devices to make readers aware of units for specific columns. Any text
+#' pertaining units is to be defined alongside the spanner label. To do this, we
+#' have to surround the portion of text in the label that corresponds to the
+#' units definition with `"{{"`/`"}}"`.
+#'
+#' Now that we know how to mark text for units definition, we know need to know
+#' how to write proper units with the notation. Such notation uses a succinct
+#' method of writing units and it should feel somewhat familiar though it is
+#' particular to the task at hand. Each unit is treated as a separate entity
+#' (parentheses and other symbols included) and the addition of subscript text
+#' and exponents is flexible and relatively easy to formulate. This is all best
+#' shown with a few examples:
+#'
+#' - `"m/s"` and `"m / s"` both render as `"m/s"`
+#' - `"m s^-1"` will appear with the `"-1"` exponent intact
+#' - `"m \s"` gives the the same result, as `"\<unit>"` is equivalent to
+#'   `"<unit>^-1"`
+#' - `"E_h"` will render an `"E"` with the `"h"` subscript
+#' - `"t_i^2.5"` provides a `t` with an `"i"` subscript and a `"2.5"` exponent
+#' - `"m[_0^2]"` will use overstriking to set both scripts vertically
+#' - `"g/L %C6H12O6%"` uses a chemical formula (enclosed in a pair of `"%"`
+#'   characters) as a unit partial, and the formula will render correctly with
+#'   subscripted numbers
+#' - Common units that are difficult to write using ASCII text may be implicitly
+#'   converted to the correct characters (e.g., the `"u"` in `"ug"`, `"um"`,
+#'   `"uL"`, and `"umol"` will be converted to the Greek *mu* symbol; `"degC"`
+#'   and `"degF"` will render a degree sign before the temperature unit)
+#' - We can transform shorthand symbol/unit names enclosed in `":"` (e.g.,
+#'   `":angstrom:"`, `":ohm:"`, etc.) into proper symbols
+#' - The components of a unit (unit name, subscript, and exponent) can be
+#'   fully or partially italicized/emboldened by surrounding text with `"*"` or
+#'   `"**"`
 #'
 #' @section Examples:
 #'
