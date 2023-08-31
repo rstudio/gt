@@ -536,6 +536,45 @@ tab_header <- function(
 #' behaviors are indicative of Tetris-like rules though they tend to work well
 #' for the application of spanners.
 #'
+#' Using a subset of the [`towny`] dataset, we can create an interesting **gt**
+#' table. First, only certain columns are selected from the dataset, some
+#' filtering of rows is done, rows are sorted, and then only the first 10 rows
+#' are kept. After the data is introduced to [gt()], we then apply some spanner
+#' labels using two calls of [tab_spanner()]. In the second of those, we
+#' incorporate unit notation text (within `"{{"`/`"}}"`) in the `label` to get a
+#' display of nicely-formatted units.
+#'
+#' ```r
+#' towny |>
+#'   dplyr::select(
+#'     name, ends_with("2001"), ends_with("2006"), matches("2001_2006")
+#'   ) |>
+#'   dplyr::filter(population_2001 > 100000) |>
+#'   dplyr::arrange(desc(pop_change_2001_2006_pct)) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt() |>
+#'   fmt_integer() |>
+#'   fmt_percent(columns = matches("change"), decimals = 1) |>
+#'   tab_spanner(
+#'     label = "Population",
+#'     columns = starts_with("population")
+#'   ) |>
+#'   tab_spanner(
+#'     label = "Density, {{*persons* km^-2}}",
+#'     columns = starts_with("density")
+#'   ) |>
+#'   cols_label(
+#'     ends_with("01") ~ "2001",
+#'     ends_with("06") ~ "2006",
+#'     matches("change") ~ md("Population Change,<br>2001 to 2006")
+#'   ) |>
+#'   cols_width(everything() ~ px(120))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_spanner_7.png")`
+#' }}
+#'
 #' @family part creation/modification functions
 #' @section Function ID:
 #' 2-2
