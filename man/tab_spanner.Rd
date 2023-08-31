@@ -398,6 +398,44 @@ with the \code{replace = TRUE} option). If you choose a level higher than the
 maximum occupied, then the spanner will be dropped down. Again, these
 behaviors are indicative of Tetris-like rules though they tend to work well
 for the application of spanners.
+
+Using a subset of the \code{\link{towny}} dataset, we can create an interesting \strong{gt}
+table. First, only certain columns are selected from the dataset, some
+filtering of rows is done, rows are sorted, and then only the first 10 rows
+are kept. After the data is introduced to \code{\link[=gt]{gt()}}, we then apply some spanner
+labels using two calls of \code{\link[=tab_spanner]{tab_spanner()}}. In the second of those, we
+incorporate unit notation text (within \code{"{{"}/\code{"}}"}) in the \code{label} to get a
+display of nicely-formatted units.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
+  dplyr::select(
+    name, ends_with("2001"), ends_with("2006"), matches("2001_2006")
+  ) |>
+  dplyr::filter(population_2001 > 100000) |>
+  dplyr::arrange(desc(pop_change_2001_2006_pct)) |>
+  dplyr::slice_head(n = 10) |>
+  gt() |>
+  fmt_integer() |>
+  fmt_percent(columns = matches("change"), decimals = 1) |>
+  tab_spanner(
+    label = "Population",
+    columns = starts_with("population")
+  ) |>
+  tab_spanner(
+    label = "Density, \{\{*persons* km^-2\}\}",
+    columns = starts_with("density")
+  ) |>
+  cols_label(
+    ends_with("01") ~ "2001",
+    ends_with("06") ~ "2006",
+    matches("change") ~ md("Population Change,<br>2001 to 2006")
+  ) |>
+  cols_width(everything() ~ px(120))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_spanner_7.png" alt="This image of a table was generated from the seventh code example in the `tab_spanner()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
