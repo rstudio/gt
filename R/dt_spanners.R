@@ -150,6 +150,10 @@ dt_spanners_build <- function(data, context) {
         (
           grepl("\\{\\{", spanner_label, fixed = TRUE) &&
           grepl("\\}\\}", spanner_label, fixed = TRUE)
+        ) ||
+        (
+          grepl("\\'7b\\'7b", spanner_label, fixed = TRUE) &&
+          grepl("\\'7d\\'7d", spanner_label, fixed = TRUE)
         )
       ) {
 
@@ -160,13 +164,29 @@ dt_spanners_build <- function(data, context) {
 
           spanner_label <- gsub("\\{\\{", "{{", spanner_label, fixed = TRUE)
           spanner_label <- gsub("\\}\\}", "}}", spanner_label, fixed = TRUE)
+
           spanner_label <-
-            gsub("\\{\\{.*?\\}\\}", gsub("\\", "\\\\", units_built, fixed = TRUE), spanner_label)
+            gsub(
+              "\\{\\{.*?\\}\\}",
+              gsub("\\", "\\\\", units_built, fixed = TRUE),
+              spanner_label
+            )
+
+        } else if (context == "rtf") {
+
+          spanner_label <- gsub("\\'7b\\'7b", "{{", spanner_label, fixed = TRUE)
+          spanner_label <- gsub("\\'7d\\'7d", "}}", spanner_label, fixed = TRUE)
+
+          spanner_label <-
+            gsub(
+              "\\{\\{.*?\\}\\}",
+              gsub("\\", "\\\\", units_built, fixed = TRUE),
+              spanner_label
+            )
 
         } else {
 
-          spanner_label <-
-            gsub("\\{\\{.*?\\}\\}", units_built, spanner_label)
+          spanner_label <- gsub("\\{\\{.*?\\}\\}", units_built, spanner_label)
         }
 
       } else {
