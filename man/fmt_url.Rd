@@ -14,7 +14,13 @@ fmt_url(
   show_underline = "auto",
   button_fill = "auto",
   button_width = "auto",
-  button_outline = "auto"
+  button_outline = "auto",
+  hreflang = NULL,
+  ping = NULL,
+  referrerpolicy = NULL,
+  rel = NULL,
+  target = NULL,
+  type = NULL
 )
 }
 \arguments{
@@ -89,6 +95,16 @@ be the same color as that set in the \code{color} option.}
 Options for styling a link-as-button (and only applies if
 \code{as_button = TRUE}). All of these options are by default set to \code{"auto"},
 allowing \strong{gt} to choose appropriate fill, width, and outline values.}
+
+\item{hreflang, ping, referrerpolicy, rel, target, type}{\emph{Anchor element attributes}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL}
+
+Additional anchor element attributes. Non-scalar character vectors are
+supported for the \code{ping} attribute. For descriptions of each attribute and
+allowed values, refer to the \href{https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attributes}{mdn webdocs reference on the anchor HTML element}.
+The download or filename attribute, global attributes, and event attributes
+are not currently supported.}
 }
 \value{
 An object of class \code{gt_tbl}.
