@@ -40,7 +40,11 @@ dt_spanners_init <- function(data) {
       vars = list(),
       # The spanner label
       spanner_label = list(),
-      # The spanner id
+      # The spanner units
+      spanner_units = character(0),
+      # The spanner pattern
+      spanner_pattern = character(0),
+      # The spanner ID
       spanner_id = character(0),
       # The spanner level
       spanner_level = integer(0),
@@ -56,6 +60,8 @@ dt_spanners_add <- function(
     data,
     vars,
     spanner_label,
+    spanner_units,
+    spanner_pattern,
     spanner_id,
     spanner_level,
     gather,
@@ -90,6 +96,8 @@ dt_spanners_add <- function(
       tibble::tibble(
         vars = list(vars),
         spanner_label = list(spanner_label),
+        spanner_units = as.character(spanner_units),
+        spanner_pattern = as.character(spanner_pattern),
         spanner_id = as.character(spanner_id),
         spanner_level = as.integer(spanner_level),
         gather = gather,
@@ -117,6 +125,96 @@ dt_spanners_build <- function(data, context) {
       FUN.VALUE = character(1),
       FUN = function(label) process_text(label, context = context)
     )
+
+  # Merge spanner units into built spanner labels
+  if (!all(is.na(spanners$spanner_units))) {
+
+    for (i in seq_along(spanners$spanner_label)) {
+
+      if (is.na(spanners[["spanner_units"]][i])) next
+
+      spanner_label <- spanners[["built"]][i]
+
+      units <- spanners[["spanner_units"]][i]
+      spanner_pattern <- spanners[["spanner_pattern"]][i]
+
+      units_built <-
+        render_units(
+          define_units(units_notation = units),
+          context = context
+        )
+
+      if (
+        spanner_pattern == "" &&
+        grepl("\\{\\{.*?\\}\\}", spanner_label) ||
+        (
+          grepl("\\{\\{", spanner_label, fixed = TRUE) &&
+          grepl("\\}\\}", spanner_label, fixed = TRUE)
+        ) ||
+        (
+          grepl("\\'7b\\'7b", spanner_label, fixed = TRUE) &&
+          grepl("\\'7d\\'7d", spanner_label, fixed = TRUE)
+        )
+      ) {
+
+        # With `spanner_pattern` equal to `""`, we can surmise that this was
+        # set automatically by `tab_spanner()`; the mechanism now is to replace
+        # the units text in the label with the 'built' units text
+        if (context == "latex") {
+
+          spanner_label <- gsub("\\{\\{", "{{", spanner_label, fixed = TRUE)
+          spanner_label <- gsub("\\}\\}", "}}", spanner_label, fixed = TRUE)
+
+          spanner_label <-
+            gsub(
+              "\\{\\{.*?\\}\\}",
+              gsub("\\", "\\\\", units_built, fixed = TRUE),
+              spanner_label
+            )
+
+        } else if (context == "rtf") {
+
+          spanner_label <- gsub("\\'7b\\'7b", "{{", spanner_label, fixed = TRUE)
+          spanner_label <- gsub("\\'7d\\'7d", "}}", spanner_label, fixed = TRUE)
+
+          spanner_label <-
+            gsub(
+              "\\{\\{.*?\\}\\}",
+              gsub("\\", "\\\\", units_built, fixed = TRUE),
+              spanner_label
+            )
+
+        } else {
+
+          spanner_label <- gsub("\\{\\{.*?\\}\\}", units_built, spanner_label)
+        }
+
+      } else {
+
+        if (is.na(spanner_pattern)) {
+
+          # Obtain the default `spanner_pattern` (which that is settable in the
+          # `column_labels.units_pattern` option of `tab_options()`
+          spanner_pattern <-
+            dt_options_get_value(
+              data = data,
+              option = "column_labels_units_pattern"
+            )
+        }
+
+        if (context == "latex") {
+          spanner_label <- gsub("\\{\\{", "{{", spanner_label, fixed = TRUE)
+          spanner_label <- gsub("\\}\\}", "{{", spanner_label, fixed = TRUE)
+        }
+
+        spanner_pattern <- gsub("{1}", spanner_label, spanner_pattern, fixed = TRUE)
+        spanner_pattern <- gsub("{2}", units_built, spanner_pattern, fixed = TRUE)
+        spanner_label <- spanner_pattern
+      }
+
+      spanners$built[i] <- spanner_label
+    }
+  }
 
   dt_spanners_set(data = data, spanners = spanners)
 }
