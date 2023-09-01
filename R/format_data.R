@@ -9177,9 +9177,9 @@ fmt_url <- function(
         }
 
         add_anchor_attr <- function(init = NULL,
-                                    arg = NULL,
+                                    arg,
+                                    nm,
                                     values = NULL,
-                                    nm = caller_arg(arg),
                                     error_arg = caller_arg(arg),
                                     error_call = caller_env()) {
           if (!is.null(values)) {
@@ -9193,12 +9193,12 @@ fmt_url <- function(
 
           if (!is_string(arg)) {
             cli::cli_abort(
-              "{.arg {arg}} must be a string, not a {.obj_simple_type {arg}}",
+              "{.arg {arg}} must be a string, not a {.obj_type_friendly {arg}}",
               call = error_call
             )
           }
 
-          paste0(init, nm, "=\"", arg, "\" ")
+          paste0(init, " ", nm, "=\"", arg, "\"")
         }
 
         target <- target %||% "_blank"
@@ -9208,12 +9208,17 @@ fmt_url <- function(
           target_values <- c("_blank", "_self", "_parent", "_top")
         }
 
-        href_attr <- add_anchor_attr(arg = target, values = target_values)
+        anchor_attr <- add_anchor_attr(
+          arg = target,
+          nm = "target",
+          values = target_values
+          )
 
         if (!is.null(rel)) {
-          href_attr <- add_anchor_attr(
-            href_attr,
+          anchor_attr <- add_anchor_attr(
+            anchor_attr,
             rel,
+            nm = "rel",
             values = c(
               "alternate", "author", "bookmark", "external", "help", "license",
               "next", "nofollow", "noreferrer", "noopener", "prev", "search", "tag"
@@ -9222,9 +9227,10 @@ fmt_url <- function(
         }
 
         if (!is.null(referrerpolicy)) {
-          href_attr <- add_anchor_attr(
-            href_attr,
+          anchor_attr <- add_anchor_attr(
+            anchor_attr,
             referrerpolicy,
+            nm = "referrerpolicy",
             values = c(
               "no-referrer", "no-referrer-when-downgrade", "origin",
               "origin-when-cross-origin", "same-origin", "strict-origin",
@@ -9236,29 +9242,31 @@ fmt_url <- function(
         if (!is.null(ping)) {
           stopifnot(all(is.character(ping)))
 
-          href_attr <- add_anchor_attr(
-            href_attr,
+          anchor_attr <- add_anchor_attr(
+            anchor_attr,
             arg = paste(ping),
             nm = "ping"
           )
         }
 
         if (!is.null(hreflang)) {
-          href_attr <- add_anchor_attr(
-            href_attr,
-            arg = hreflang
+          anchor_attr <- add_anchor_attr(
+            anchor_attr,
+            arg = hreflang,
+            nm = "hreflang"
           )
         }
 
         if (!is.null(type)) {
-          href_attr <- add_anchor_attr(
-            href_attr,
-            arg = type
+          anchor_attr <- add_anchor_attr(
+            anchor_attr,
+            arg = type,
+            nm = "type"
           )
         }
 
-        href_attr <- add_anchor_attr(
-          href_attr,
+        anchor_attr <- add_anchor_attr(
+          anchor_attr,
           arg = paste0(
             "color:", color[1], ";",
             "text-decoration:",
@@ -9287,9 +9295,9 @@ fmt_url <- function(
 
         x_str_non_missing <-
           paste0(
-            "<a ",
-            "href=\"", x_str_non_missing, "\" ",
-            href_attr,
+            "<a",
+            " href=\"", x_str_non_missing, "\"",
+            anchor_attr,
             ">",
             label_str,
             "</a>"
