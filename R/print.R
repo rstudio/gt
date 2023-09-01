@@ -35,6 +35,10 @@
 #' @export
 print.gt_tbl <- function(x, ..., view = interactive()) {
 
+  if (check_dbnb()) {
+    return(rlang::exec("displayHTML", as_raw_html(x)))
+  }
+
   html_tbl <- as.tags.gt_tbl(x, ...)
 
   # Use `print()` to print to the console
