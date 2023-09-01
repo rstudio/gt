@@ -165,8 +165,8 @@ be taken from the <code>label</code> value. It is advisable to set an explicit <
 value if you plan to access this cell in a later function call and the
 label text is complicated (e.g., contains markup, is lengthy, or both).
 Finally, when providing an <code>id</code> value you must ensure that it is unique
-across all ID values set for column spanner labels (the function will stop
-if <code>id</code> isn't unique).</p></dd>
+across all ID values set for spanner labels (the function will stop if <code>id</code>
+isn't unique).</p></dd>
 
 
 <dt>gather</dt>
@@ -240,6 +240,43 @@ the <em>Examples</em> section demonstrates some of the more advanced calls of
 names) will likely need to change and that's especially true in the above
 case. This can be done with either of <code><a href="cols_label.html">cols_label()</a></code> or <code><a href="cols_label_with.html">cols_label_with()</a></code>.</p>
     </div>
+    <div class="section level2">
+    <h2 id="incorporating-units-with-gt-s-units-notation">Incorporating units with <strong>gt</strong>'s units notation<a class="anchor" aria-label="anchor" href="#incorporating-units-with-gt-s-units-notation"></a></h2>
+    
+
+
+<p>Measurement units are often seen as part of spanner labels and indeed it can
+be much more straightforward to include them here rather than using other
+devices to make readers aware of units for specific columns. Any text
+pertaining units is to be defined alongside the spanner label. To do this, we
+have to surround the portion of text in the label that corresponds to the
+units definition with <code>"{{"</code>/<code>"}}"</code>.</p>
+<p>Now that we know how to mark text for units definition, we know need to know
+how to write proper units with the notation. Such notation uses a succinct
+method of writing units and it should feel somewhat familiar though it is
+particular to the task at hand. Each unit is treated as a separate entity
+(parentheses and other symbols included) and the addition of subscript text
+and exponents is flexible and relatively easy to formulate. This is all best
+shown with a few examples:</p><ul><li><p><code>"m/s"</code> and <code>"m / s"</code> both render as <code>"m/s"</code></p></li>
+<li><p><code>"m s^-1"</code> will appear with the <code>"-1"</code> exponent intact</p></li>
+<li><p><code>"m \s"</code> gives the the same result, as <code>"\&lt;unit&gt;"</code> is equivalent to
+<code>"&lt;unit&gt;^-1"</code></p></li>
+<li><p><code>"E_h"</code> will render an <code>"E"</code> with the <code>"h"</code> subscript</p></li>
+<li><p><code>"t_i^2.5"</code> provides a <code>t</code> with an <code>"i"</code> subscript and a <code>"2.5"</code> exponent</p></li>
+<li><p><code>"m[_0^2]"</code> will use overstriking to set both scripts vertically</p></li>
+<li><p><code>"g/L %C6H12O6%"</code> uses a chemical formula (enclosed in a pair of <code>"%"</code>
+characters) as a unit partial, and the formula will render correctly with
+subscripted numbers</p></li>
+<li><p>Common units that are difficult to write using ASCII text may be implicitly
+converted to the correct characters (e.g., the <code>"u"</code> in <code>"ug"</code>, <code>"um"</code>,
+<code>"uL"</code>, and <code>"umol"</code> will be converted to the Greek <em>mu</em> symbol; <code>"degC"</code>
+and <code>"degF"</code> will render a degree sign before the temperature unit)</p></li>
+<li><p>We can transform shorthand symbol/unit names enclosed in <code>":"</code> (e.g.,
+<code>":angstrom:"</code>, <code>":ohm:"</code>, etc.) into proper symbols</p></li>
+<li><p>The components of a unit (unit name, subscript, and exponent) can be
+fully or partially italicized/emboldened by surrounding text with <code>"*"</code> or
+<code>"**"</code></p></li>
+</ul></div>
     <div class="section level2">
     <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
     
@@ -397,6 +434,38 @@ with the <code>replace = TRUE</code> option). If you choose a level higher than 
 maximum occupied, then the spanner will be dropped down. Again, these
 behaviors are indicative of Tetris-like rules though they tend to work well
 for the application of spanners.</p>
+<p>Using a subset of the <code><a href="towny.html">towny</a></code> dataset, we can create an interesting <strong>gt</strong>
+table. First, only certain columns are selected from the dataset, some
+filtering of rows is done, rows are sorted, and then only the first 10 rows
+are kept. After the data is introduced to <code><a href="gt.html">gt()</a></code>, we then apply some spanner
+labels using two calls of <code>tab_spanner()</code>. In the second of those, we
+incorporate unit notation text (within <code>"{{"</code>/<code>"}}"</code>) in the <code>label</code> to get a
+display of nicely-formatted units.</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">towny</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span></span>
+<span>    <span class="va">name</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with</a></span><span class="op">(</span><span class="st">"2001"</span><span class="op">)</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with</a></span><span class="op">(</span><span class="st">"2006"</span><span class="op">)</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches</a></span><span class="op">(</span><span class="st">"2001_2006"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">population_2001</span> <span class="op">&gt;</span> <span class="fl">100000</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">pop_change_2001_2006_pct</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_integer.html">fmt_integer</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_percent.html">fmt_percent</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches</a></span><span class="op">(</span><span class="st">"change"</span><span class="op">)</span>, decimals <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_spanner.html">tab_spanner</a></span><span class="op">(</span></span>
+<span>    label <span class="op">=</span> <span class="st">"Population"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"population"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_spanner.html">tab_spanner</a></span><span class="op">(</span></span>
+<span>    label <span class="op">=</span> <span class="st">"Density, {{*persons* km^-2}}"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"density"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_label.html">cols_label</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with</a></span><span class="op">(</span><span class="st">"01"</span><span class="op">)</span> <span class="op">~</span> <span class="st">"2001"</span>,</span>
+<span>    <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with</a></span><span class="op">(</span><span class="st">"06"</span><span class="op">)</span> <span class="op">~</span> <span class="st">"2006"</span>,</span>
+<span>    <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches</a></span><span class="op">(</span><span class="st">"change"</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span><span class="st">"Population Change,&lt;br&gt;2001 to 2006"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_width.html">cols_width</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">120</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_spanner_7.png" alt="This image of a table was generated from the seventh code example in the `tab_spanner()` help file." style="width:100%;"></p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>

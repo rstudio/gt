@@ -254,13 +254,13 @@ will be applied to each label defined in the <code>cols_label()</code> call).</p
 <p>Using a subset of the <code><a href="towny.html">towny</a></code> dataset, we can create an interesting <strong>gt</strong>
 table. First, only certain columns are selected from the dataset, some
 filtering of rows is done, rows are sorted, and then only the first 10 rows
-are kept. When introduced to <code><a href="gt.html">gt()</a></code>, we apply some spanner labels through two
-calls of <code><a href="tab_spanner.html">tab_spanner()</a></code> all the table's columns. Below those spanners, we
-want to label the columns by the years of interest. Using <code>cols_label()</code> and
-select expressions on the left side of the formulas, we can easily relabel
-multiple columns with common label text. Note that we cannot use an <code>=</code> sign
-in any of the expressions within <code>cols_label()</code>; because the left-hand side
-is not a single column name, we must use formula syntax (i.e., with the <code>~</code>).</p>
+are kept. After the data is introduced to <code><a href="gt.html">gt()</a></code>, we then apply some spanner
+labels using two calls of <code><a href="tab_spanner.html">tab_spanner()</a></code>. Below those spanners, we want to
+label the columns by the years of interest. Using <code>cols_label()</code> and select
+expressions on the left side of the formulas, we can easily relabel multiple
+columns with common label text. Note that we cannot use an <code>=</code> sign in any of
+the expressions within <code>cols_label()</code>; because the left-hand side is not a
+single column name, we must use formula syntax (i.e., with the <code>~</code>).</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">towny</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span></span>
 <span>    <span class="va">name</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with</a></span><span class="op">(</span><span class="st">"2001"</span><span class="op">)</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with</a></span><span class="op">(</span><span class="st">"2006"</span><span class="op">)</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches</a></span><span class="op">(</span><span class="st">"2001_2006"</span><span class="op">)</span></span>
