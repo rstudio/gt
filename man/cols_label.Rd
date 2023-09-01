@@ -196,13 +196,13 @@ will be applied to each label defined in the \code{cols_label()} call).
 Using a subset of the \code{\link{towny}} dataset, we can create an interesting \strong{gt}
 table. First, only certain columns are selected from the dataset, some
 filtering of rows is done, rows are sorted, and then only the first 10 rows
-are kept. When introduced to \code{\link[=gt]{gt()}}, we apply some spanner labels through two
-calls of \code{\link[=tab_spanner]{tab_spanner()}} all the table's columns. Below those spanners, we
-want to label the columns by the years of interest. Using \code{cols_label()} and
-select expressions on the left side of the formulas, we can easily relabel
-multiple columns with common label text. Note that we cannot use an \code{=} sign
-in any of the expressions within \code{cols_label()}; because the left-hand side
-is not a single column name, we must use formula syntax (i.e., with the \code{~}).
+are kept. After the data is introduced to \code{\link[=gt]{gt()}}, we then apply some spanner
+labels using two calls of \code{\link[=tab_spanner]{tab_spanner()}}. Below those spanners, we want to
+label the columns by the years of interest. Using \code{cols_label()} and select
+expressions on the left side of the formulas, we can easily relabel multiple
+columns with common label text. Note that we cannot use an \code{=} sign in any of
+the expressions within \code{cols_label()}; because the left-hand side is not a
+single column name, we must use formula syntax (i.e., with the \code{~}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
   dplyr::select(
