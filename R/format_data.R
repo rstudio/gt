@@ -9176,12 +9176,12 @@ fmt_url <- function(
           }
         }
 
-        add_href_attr <- function(init = NULL,
-                                  arg = NULL,
-                                  values = NULL,
-                                  nm = caller_arg(arg),
-                                  error_arg = caller_arg(arg),
-                                  error_call = caller_env()) {
+        add_anchor_attr <- function(init = NULL,
+                                    arg = NULL,
+                                    values = NULL,
+                                    nm = caller_arg(arg),
+                                    error_arg = caller_arg(arg),
+                                    error_call = caller_env()) {
           if (!is.null(values)) {
             arg <- rlang::arg_match(
               arg,
@@ -9195,7 +9195,7 @@ fmt_url <- function(
             cli::cli_abort(
               "{.arg {arg}} must be a string, not a {.obj_simple_type {arg}}",
               call = error_call
-              )
+            )
           }
 
           paste0(init, nm, "=\"", arg, "\" ")
@@ -9208,10 +9208,10 @@ fmt_url <- function(
           target_values <- c("_blank", "_self", "_parent", "_top")
         }
 
-        href_attr <- add_href_attr(arg = target, values = target_values)
+        href_attr <- add_anchor_attr(arg = target, values = target_values)
 
         if (!is.null(rel)) {
-          href_attr <- add_href_attr(
+          href_attr <- add_anchor_attr(
             href_attr,
             rel,
             values = c(
@@ -9222,12 +9222,12 @@ fmt_url <- function(
         }
 
         if (!is.null(referrerpolicy)) {
-          href_attr <- add_href_attr(
+          href_attr <- add_anchor_attr(
             href_attr,
             referrerpolicy,
             values = c(
               "no-referrer", "no-referrer-when-downgrade", "origin",
-              "origin-when-cross-origin", "same-origin",
+              "origin-when-cross-origin", "same-origin", "strict-origin",
               "strict-origin-when-cross-origin", "unsafe-url"
             )
           )
@@ -9236,7 +9236,7 @@ fmt_url <- function(
         if (!is.null(ping)) {
           stopifnot(all(is.character(ping)))
 
-          href_attr <- add_href_attr(
+          href_attr <- add_anchor_attr(
             href_attr,
             arg = paste(ping),
             nm = "ping"
@@ -9244,20 +9244,20 @@ fmt_url <- function(
         }
 
         if (!is.null(hreflang)) {
-          href_attr <- add_href_attr(
+          href_attr <- add_anchor_attr(
             href_attr,
             arg = hreflang
           )
         }
 
         if (!is.null(type)) {
-          href_attr <- add_href_attr(
+          href_attr <- add_anchor_attr(
             href_attr,
             arg = type
           )
         }
 
-        href_attr <- add_href_attr(
+        href_attr <- add_anchor_attr(
           href_attr,
           arg = paste0(
             "color:", color[1], ";",
