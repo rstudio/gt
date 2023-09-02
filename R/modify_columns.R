@@ -2125,6 +2125,33 @@ cols_add <- function(
   .data
 }
 
+#' Add a new column of nanoplots
+#'
+#' @family column modification functions
+#' @section Function ID:
+#' 5-8
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @import rlang
+#' @export
+cols_nanoplot <- function(
+    data,
+    values = NULL,
+    values_from = NULL,
+    style = NULL,
+    before = NULL,
+    after = NULL
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = .data)
+
+
+  data
+}
+
 #' Move one or more columns
 #'
 #' @description
