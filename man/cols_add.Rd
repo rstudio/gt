@@ -30,7 +30,7 @@ the number of rows in the table can also be used.}
 
 \verb{<column-targeting expression>} // \emph{default:} \code{NULL} (\code{optional})
 
-A single column-resolving expression or column index an be given to either
+A single column-resolving expression or column index can be given to either
 \code{.before} or \code{.after}. The column specifies where the new columns should be
 positioned among the existing columns in the input data table. While select
 helper functions such as \code{\link[=starts_with]{starts_with()}} and \code{\link[=ends_with]{ends_with()}} can be used for
