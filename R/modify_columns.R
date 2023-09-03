@@ -2257,7 +2257,6 @@ cols_nanoplot <- function(
 
       data_vals_i <- dplyr::select(data_tbl, dplyr::all_of(resolved_columns))
       data_vals_i <- unname(unlist(as.vector(data_vals_i[i, ])))
-      #data_vals_i <- paste(data_vals_i, collapse = " ")
 
       data_vals_plot <- c(data_vals_plot, list(data_vals_i))
     }
