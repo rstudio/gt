@@ -2,19 +2,99 @@
 % Please edit documentation in R/modify_columns.R
 \name{cols_nanoplot}
 \alias{cols_nanoplot}
-\title{Add a new column of nanoplots}
+\title{Add a new column of nanoplots, taking input data from selected columns}
 \usage{
 cols_nanoplot(
   data,
-  values = NULL,
-  values_from = NULL,
-  style = NULL,
+  columns,
+  rows = everything(),
+  new_col_name = NULL,
+  new_col_label = NULL,
   before = NULL,
-  after = NULL
+  after = NULL,
+  nanoplot_options = NULL
 )
 }
+\arguments{
+\item{data}{\emph{The gt table data object}
+
+\verb{obj:<gt_tbl>} // \strong{required}
+
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{columns}{\emph{Columns from which to obtain data}
+
+\verb{<column-targeting expression>} // \strong{required}
+
+The columns which contain the numeric data to be plotted as nanoplots. Can
+either be a series of column names provided in \code{\link[=c]{c()}}, a vector of column
+indices, or a select helper function. Examples of select helper functions
+include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. The columns move as a group
+to a different position. The order of the remaining columns will be
+preserved.}
+
+\item{rows}{\emph{Rows that should contain nanoplots}
+
+\verb{<row-targeting expression>} // \emph{default:} \code{everything()}
+
+With \code{rows} we can specify which rows should contain nanoplots in the new
+column. The default \code{\link[=everything]{everything()}} results in all rows in \code{columns} being
+formatted. Alternatively, we can supply a vector of row captions within
+\code{\link[=c]{c()}}, a vector of row indices, or a select helper function. Examples of
+select helper functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.
+We can also use expressions to filter down to the rows we need (e.g.,
+\verb{[colname_1] > 100 & [colname_2] < 50}).}
+
+\item{new_col_name}{\emph{Column name for the new column containing the plots}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+A single column name in quotation marks. Values will be extracted from this
+column and provided to compatible arguments. If not provided the new column
+name will be \code{"nanoplots"}.}
+
+\item{new_col_label}{\emph{Column label for the new column containing the plots}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+A single column label. If not supplied then the column label will inherit
+from \code{new_col_name} (if nothing provided to that, the label will be
+\code{"nanoplots"}).}
+
+\item{before, after}{\emph{Column used as anchor}
+
+\verb{<column-targeting expression>} // \emph{default:} \code{NULL} (\code{optional})
+
+A single column-resolving expression or column index can be given to either
+\code{before} or \code{after}. The column specifies where the new column containing
+the nanoplots should be positioned among the existing columns in the input
+data table. While select helper functions such as \code{\link[=starts_with]{starts_with()}} and
+\code{\link[=ends_with]{ends_with()}} can be used for column targeting, it's recommended that a
+single column name or index be used. This is to ensure that exactly one
+column is provided to either of these arguments (otherwise, the function
+will be stopped). If nothing is provided for either argument then the new
+column will be placed at the end of the column series.}
+
+\item{nanoplot_options}{\emph{Option settings for the nanoplots}
+
+\verb{obj:<nanoplot_options} // \emph{default:} \code{NULL} (\code{optional})
+
+By using the \code{nanoplot_options()} helper function here, you can that
+alter the composition and styling of the nanoplots in the new column.}
+}
+\value{
+An object of class \code{gt_tbl}.
+}
 \description{
-Add a new column of nanoplots
+Nanoplots are tiny plots you can use in your \strong{gt} table. They are simple by
+design, mainly because there isn't a lot of space to work with. With that
+simplicity, however, you do get a set of very succinct data visualizations
+(each quick and to the point). With \code{cols_nanoplot()} you take data from one
+or more columns as the basic inputs for the nanoplots and generate a new
+column containing the plots.
 }
 \section{Function ID}{
 
