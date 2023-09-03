@@ -2138,16 +2138,82 @@ cols_add <- function(
 #' @export
 cols_nanoplot <- function(
     data,
-    values = NULL,
-    values_from = NULL,
+    columns,
+    rows = everything(),
+    new_name = NULL,
+    new_label = NULL,
     style = NULL,
     before = NULL,
     after = NULL
 ) {
 
   # Perform input object validation
-  stop_if_not_gt_tbl(data = .data)
+  stop_if_not_gt_tbl(data = data)
 
+  #
+  # Resolution of columns and rows as character vectors
+  #
+
+  resolved_columns <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data,
+      excl_stub = FALSE
+    )
+
+  resolved_rows_idx <-
+    resolve_rows_i(
+      expr = {{ rows }},
+      data = data
+    )
+
+  # Get the internal data table
+  data_tbl <- dt_data_get(data = data)
+
+  data_vals_plot <- list()
+
+  for (i in seq_len(nrow(data_tbl))) {
+
+    if (!(i %in% resolved_rows_idx)) {
+
+      data_vals_plot <- c(data_vals_plot, list(NA_character_))
+
+    } else {
+
+      data_vals_i <- dplyr::select(data_tbl, dplyr::all_of(resolved_columns))
+      data_vals_i <- unname(unlist(as.vector(data_vals_i[i, ])))
+      #data_vals_i <- paste(data_vals_i, collapse = " ")
+
+      data_vals_plot <- c(data_vals_plot, list(data_vals_i))
+    }
+  }
+
+  data_plots <- c()
+
+  for (i in seq_along(data_vals_plot)) {
+
+    data_vals_plot_i <- data_vals_plot[i][[1]]
+
+    data_plot_i <-
+      generate_equal_spaced_miniplot(y_vals = data_vals_plot_i)
+
+    data_plots <- c(data_plots, data_plot_i)
+  }
+
+  data <-
+    cols_add(
+      .data = data,
+      data_plots,
+      .before = before,
+      .after = after
+    )
+
+  data <-
+    fmt_passthrough(
+      data = data,
+      columns = tidyselect::last_col(),
+      escape = FALSE
+    )
 
   data
 }
