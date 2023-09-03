@@ -46,6 +46,13 @@ generate_equal_spaced_miniplot <- function(
     view = FALSE
 ) {
 
+  if (length(y_vals) == 0) {
+    return("")
+  }
+  if (length(y_vals) == 1 && is.na(y_vals[1])) {
+    return("")
+  }
+
   circle_tags <- NULL
   curved_path_tag <- NULL
   area_path_tag <- NULL
