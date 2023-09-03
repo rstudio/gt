@@ -2193,7 +2193,7 @@ cols_add <- function(
 #'   will be stopped). If nothing is provided for either argument then the new
 #'   column will be placed at the end of the column series.
 #'
-#' @param nanoplot_options *Option settings for the nanoplots*
+#' @param options *Set options for the nanoplots*
 #'
 #'   `obj:<nanoplot_options` // *default:* `NULL` (`optional`)
 #'
@@ -2219,7 +2219,7 @@ cols_nanoplot <- function(
     new_col_label = NULL,
     before = NULL,
     after = NULL,
-    nanoplot_options = NULL
+    options = NULL
 ) {
 
   # Perform input object validation
