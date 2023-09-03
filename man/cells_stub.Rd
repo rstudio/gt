@@ -106,7 +106,7 @@ using \code{cells_stub()} in \code{locations}.
 
 \section{Function ID}{
 
-8-15
+8-16
 }
 
 \section{Function Introduced}{
@@ -141,6 +141,7 @@ Other helper functions:
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
 \code{\link{md}()},
+\code{\link{nanoplot_options}()},
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},

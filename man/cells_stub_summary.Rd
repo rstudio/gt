@@ -148,7 +148,7 @@ some styling to the summary data stub cells with \code{\link[=tab_style]{tab_sty
 
 \section{Function ID}{
 
-8-19
+8-20
 }
 
 \section{Function Introduced}{
@@ -183,6 +183,7 @@ Other helper functions:
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
 \code{\link{md}()},
+\code{\link{nanoplot_options}()},
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},

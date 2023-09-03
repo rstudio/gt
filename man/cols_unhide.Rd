@@ -77,7 +77,7 @@ the \code{cols_unhide()} function becomes useful.
 
 \section{Function ID}{
 
-5-12
+5-13
 }
 
 \section{Function Introduced}{

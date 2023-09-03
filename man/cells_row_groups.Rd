@@ -113,7 +113,7 @@ function and then add a footnote to the \code{"peppr_salami"} row group label wi
 
 \section{Function ID}{
 
-8-14
+8-15
 }
 
 \section{Function Introduced}{
@@ -148,6 +148,7 @@ Other helper functions:
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
 \code{\link{md}()},
+\code{\link{nanoplot_options}()},
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},

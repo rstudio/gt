@@ -233,7 +233,7 @@ used if the aforementioned fonts aren't available).
 
 \section{Function ID}{
 
-8-31
+8-32
 }
 
 \section{Function Introduced}{
@@ -269,6 +269,7 @@ Other helper functions:
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
 \code{\link{md}()},
+\code{\link{nanoplot_options}()},
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},

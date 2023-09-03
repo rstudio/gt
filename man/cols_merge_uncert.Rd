@@ -146,7 +146,7 @@ updated with \code{\link[=cols_label]{cols_label()}} to better describe the cont
 
 \section{Function ID}{
 
-5-14
+5-15
 }
 
 \section{Function Introduced}{
