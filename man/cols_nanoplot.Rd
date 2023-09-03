@@ -12,7 +12,7 @@ cols_nanoplot(
   new_col_label = NULL,
   before = NULL,
   after = NULL,
-  nanoplot_options = NULL
+  options = NULL
 )
 }
 \arguments{
@@ -78,7 +78,7 @@ column is provided to either of these arguments (otherwise, the function
 will be stopped). If nothing is provided for either argument then the new
 column will be placed at the end of the column series.}
 
-\item{nanoplot_options}{\emph{Option settings for the nanoplots}
+\item{options}{\emph{Set options for the nanoplots}
 
 \verb{obj:<nanoplot_options} // \emph{default:} \code{NULL} (\code{optional})
 
