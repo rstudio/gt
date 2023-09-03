@@ -21,8 +21,8 @@
 #
 #------------------------------------------------------------------------------#
 
-# This creates a miniplot with equally-spaced y values
-generate_equal_spaced_miniplot <- function(
+# This creates a nanoplot with equally-spaced y values
+generate_equal_spaced_nanoplot <- function(
     y_vals,
     line_stroke = "steelblue",
     line_stroke_width = 8,
