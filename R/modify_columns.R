@@ -2140,8 +2140,8 @@ cols_nanoplot <- function(
     data,
     columns,
     rows = everything(),
-    new_name = NULL,
-    new_label = NULL,
+    new_col_name = NULL,
+    new_col_label = NULL,
     style = NULL,
     before = NULL,
     after = NULL
@@ -2188,7 +2188,7 @@ cols_nanoplot <- function(
     }
   }
 
-  data_plots <- c()
+  nanoplots <- c()
 
   for (i in seq_along(data_vals_plot)) {
 
@@ -2197,23 +2197,83 @@ cols_nanoplot <- function(
     data_plot_i <-
       generate_equal_spaced_miniplot(y_vals = data_vals_plot_i)
 
-    data_plots <- c(data_plots, data_plot_i)
+    nanoplots <- c(nanoplots, data_plot_i)
   }
 
   data <-
     cols_add(
       .data = data,
-      data_plots,
+      nanoplots,
       .before = before,
       .after = after
     )
 
-  data <-
-    fmt_passthrough(
-      data = data,
-      columns = tidyselect::last_col(),
-      escape = FALSE
-    )
+  if (!is.null(new_col_name)) {
+
+    # TODO: Ensure that the new column name is validated for use
+
+    validated_new_col_name <- as.character(new_col_name)
+
+    colnames(data$`_data`) <-
+      sub(
+        "nanoplots",
+        validated_new_col_name,
+        colnames(data$`_data`),
+        fixed = TRUE
+      )
+
+    data$`_boxhead`[["var"]] <-
+      sub(
+        "nanoplots",
+        validated_new_col_name,
+        data$`_boxhead`[["var"]],
+        fixed = TRUE
+      )
+
+    data <-
+      fmt_passthrough(
+        data = data,
+        columns = validated_new_col_name,
+        escape = FALSE
+      )
+
+  } else {
+
+    validated_new_col_name <- "nanoplots"
+
+    data <-
+      fmt_passthrough(
+        data = data,
+        columns = "nanoplots",
+        escape = FALSE
+      )
+  }
+
+  # The label ascribed to the new column needs to be modified in two cases:
+  # (1) If `new_column_name` provided and `new_col_label = NULL`, the label
+  #     should be that provided in `new_column_name`
+  # (2) If `new_col_label` is provided, change the label of that new column
+  #     to the value stored in that argument
+
+  if (!is.null(new_col_name) && is.null(new_col_label)) {
+
+    data <-
+      dt_boxhead_edit_column_label(
+        data = data,
+        var = validated_new_col_name,
+        column_label = validated_new_col_name
+      )
+  }
+
+  if (!is.null(new_col_label)) {
+
+    data <-
+      dt_boxhead_edit_column_label(
+        data = data,
+        var = validated_new_col_name,
+        column_label = new_col_label
+      )
+  }
 
   data
 }
