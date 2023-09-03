@@ -9193,7 +9193,7 @@ fmt_url <- function(
 
           if (!is_string(arg)) {
             cli::cli_abort(
-              "{.arg {arg}} must be a string, not a {.obj_type_friendly {arg}}",
+              "{.arg {nm}} must be a string, not {.obj_type_friendly {arg}}",
               call = error_call
             )
           }
