@@ -2125,7 +2125,82 @@ cols_add <- function(
   .data
 }
 
-#' Add a new column of nanoplots
+#' Add a new column of nanoplots, taking input data from selected columns
+#'
+#' @description
+#'
+#' Nanoplots are tiny plots you can use in your **gt** table. They are simple by
+#' design, mainly because there isn't a lot of space to work with. With that
+#' simplicity, however, you do get a set of very succinct data visualizations
+#' (each quick and to the point). With `cols_nanoplot()` you take data from one
+#' or more columns as the basic inputs for the nanoplots and generate a new
+#' column containing the plots.
+#'
+#' @inheritParams cols_align
+#'
+#' @param columns *Columns from which to obtain data*
+#'
+#'   `<column-targeting expression>` // **required**
+#'
+#'   The columns which contain the numeric data to be plotted as nanoplots. Can
+#'   either be a series of column names provided in [c()], a vector of column
+#'   indices, or a select helper function. Examples of select helper functions
+#'   include [starts_with()], [ends_with()], [contains()], [matches()],
+#'   [one_of()], [num_range()], and [everything()]. The columns move as a group
+#'   to a different position. The order of the remaining columns will be
+#'   preserved.
+#'
+#' @param rows *Rows that should contain nanoplots*
+#'
+#'   `<row-targeting expression>` // *default:* `everything()`
+#'
+#'   With `rows` we can specify which rows should contain nanoplots in the new
+#'   column. The default [everything()] results in all rows in `columns` being
+#'   formatted. Alternatively, we can supply a vector of row captions within
+#'   [c()], a vector of row indices, or a select helper function. Examples of
+#'   select helper functions include [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
+#'   We can also use expressions to filter down to the rows we need (e.g.,
+#'   `[colname_1] > 100 & [colname_2] < 50`).
+#'
+#' @param new_col_name *Column name for the new column containing the plots*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   A single column name in quotation marks. Values will be extracted from this
+#'   column and provided to compatible arguments. If not provided the new column
+#'   name will be `"nanoplots"`.
+#'
+#' @param new_col_label *Column label for the new column containing the plots*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   A single column label. If not supplied then the column label will inherit
+#'   from `new_col_name` (if nothing provided to that, the label will be
+#'   `"nanoplots"`).
+#'
+#' @param before,after *Column used as anchor*
+#'
+#'   `<column-targeting expression>` // *default:* `NULL` (`optional`)
+#'
+#'   A single column-resolving expression or column index can be given to either
+#'   `before` or `after`. The column specifies where the new column containing
+#'   the nanoplots should be positioned among the existing columns in the input
+#'   data table. While select helper functions such as [starts_with()] and
+#'   [ends_with()] can be used for column targeting, it's recommended that a
+#'   single column name or index be used. This is to ensure that exactly one
+#'   column is provided to either of these arguments (otherwise, the function
+#'   will be stopped). If nothing is provided for either argument then the new
+#'   column will be placed at the end of the column series.
+#'
+#' @param nanoplot_options *Option settings for the nanoplots*
+#'
+#'   `obj:<nanoplot_options` // *default:* `NULL` (`optional`)
+#'
+#'   By using the `nanoplot_options()` helper function here, you can that
+#'   alter the composition and styling of the nanoplots in the new column.
+#'
+#' @return An object of class `gt_tbl`.
 #'
 #' @family column modification functions
 #' @section Function ID:
@@ -2142,9 +2217,9 @@ cols_nanoplot <- function(
     rows = everything(),
     new_col_name = NULL,
     new_col_label = NULL,
-    style = NULL,
     before = NULL,
-    after = NULL
+    after = NULL,
+    nanoplot_options = NULL
 ) {
 
   # Perform input object validation
