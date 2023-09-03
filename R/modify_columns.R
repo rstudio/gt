@@ -2262,6 +2262,12 @@ cols_nanoplot <- function(
     }
   }
 
+  if (is.null(options)) {
+    options_plots <- nanoplot_options()
+  } else {
+    options_plots <- options
+  }
+
   nanoplots <- c()
 
   for (i in seq_along(data_vals_plot)) {
@@ -2269,7 +2275,28 @@ cols_nanoplot <- function(
     data_vals_plot_i <- data_vals_plot[i][[1]]
 
     data_plot_i <-
-      generate_equal_spaced_miniplot(y_vals = data_vals_plot_i)
+      generate_equal_spaced_nanoplot(
+        y_vals = data_vals_plot_i,
+        line_stroke = options_plots$line_stroke,
+        line_stroke_width = options_plots$line_stroke_width,
+        line_fill = options_plots$line_fill,
+        data_point_radius = options_plots$data_point_radius,
+        data_point_stroke = options_plots$data_point_stroke,
+        data_point_stroke_width = options_plots$data_point_stroke_width,
+        data_point_fill = options_plots$data_point_fill,
+        vertical_guideline_stroke = options_plots$vertical_guideline_stroke,
+        vertical_guideline_stroke_width = options_plots$vertical_guideline_stroke_width,
+        show_data_points = options_plots$show_data_points,
+        show_curved_data_line = options_plots$show_curved_data_line,
+        show_lower_area = options_plots$show_lower_area,
+        show_vertical_guidelines = options_plots$show_vertical_guidelines,
+        svg_height = options_plots$svg_height,
+        svg_margin_left = options_plots$svg_margin_left,
+        svg_margin_right = options_plots$svg_margin_right,
+        svg_font_size = options_plots$svg_font_size,
+        svg_overflow = options_plots$svg_overflow,
+        svg_position = options_plots$svg_position
+      )
 
     nanoplots <- c(nanoplots, data_plot_i)
   }
@@ -2424,7 +2451,7 @@ cols_nanoplot <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-8
+#' 5-9
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2570,7 +2597,7 @@ cols_move <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-9
+#' 5-10
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2690,7 +2717,7 @@ cols_move_to_start <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-10
+#' 5-11
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2819,7 +2846,7 @@ cols_move_to_end <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-11
+#' 5-12
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2931,7 +2958,7 @@ cols_hide <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-12
+#' 5-13
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
@@ -3145,7 +3172,7 @@ cols_unhide <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-13
+#' 5-14
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3358,7 +3385,7 @@ cols_merge <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-14
+#' 5-15
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3552,7 +3579,7 @@ cols_merge_uncert <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-15
+#' 5-16
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3799,7 +3826,7 @@ cols_merge_resolver <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-16
+#' 5-17
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
