@@ -341,6 +341,7 @@ generate_equal_spaced_nanoplot <- function(
         "margin-right:auto;",
         "font-size:inherit;",
         "overflow:visible;",
+        "vertical-align:middle;",
         "position:relative;\">",
         svg_defs,
         svg_style,
