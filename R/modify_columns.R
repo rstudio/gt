@@ -2219,6 +2219,7 @@ cols_nanoplot <- function(
     new_col_label = NULL,
     before = NULL,
     after = NULL,
+    height = "1.5em",
     options = NULL
 ) {
 
@@ -2290,7 +2291,7 @@ cols_nanoplot <- function(
         show_curved_data_line = options_plots$show_curved_data_line,
         show_lower_area = options_plots$show_lower_area,
         show_vertical_guidelines = options_plots$show_vertical_guidelines,
-        svg_height = options_plots$svg_height,
+        svg_height = height,
         svg_margin_left = options_plots$svg_margin_left,
         svg_margin_right = options_plots$svg_margin_right,
         svg_font_size = options_plots$svg_font_size,
@@ -2375,6 +2376,13 @@ cols_nanoplot <- function(
         column_label = new_col_label
       )
   }
+
+  data <-
+    tab_style(
+      data,
+      style = "padding-top:0; padding-bottom:0; vertical-align: middle",
+      locations = cells_body(columns = validated_new_col_name)
+    )
 
   data
 }
