@@ -12,6 +12,7 @@ cols_nanoplot(
   new_col_label = NULL,
   before = NULL,
   after = NULL,
+  height = "1.5em",
   options = NULL
 )
 }
