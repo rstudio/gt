@@ -18,7 +18,6 @@ nanoplot_options(
   show_curved_data_line = NULL,
   show_lower_area = NULL,
   show_vertical_guidelines = NULL,
-  svg_height = NULL,
   svg_margin_left = NULL,
   svg_margin_right = NULL,
   svg_font_size = NULL,
@@ -26,11 +25,49 @@ nanoplot_options(
   svg_position = NULL
 )
 }
+\arguments{
+\item{line_stroke}{The line stroke.}
+
+\item{line_stroke_width}{The width of the line stroke.}
+
+\item{line_fill}{The line fill.}
+
+\item{data_point_radius}{The data point radius.}
+
+\item{data_point_stroke}{The data point stroke color.}
+
+\item{data_point_stroke_width}{The data point stroke width.}
+
+\item{data_point_fill}{The data point fill width.}
+
+\item{vertical_guideline_stroke}{The stroke color for the vertical guidelines.}
+
+\item{vertical_guideline_stroke_width}{The stroke width for the vertical guidelines.}
+
+\item{show_data_points}{Should the data points be shown?}
+
+\item{show_curved_data_line}{Should a curved data line be shown?}
+
+\item{show_lower_area}{Should the area below the data points filled in?}
+
+\item{show_vertical_guidelines}{Should vertical guidelines be shown?}
+
+\item{svg_margin_left}{The SVG left margin width.}
+
+\item{svg_margin_right}{The SVG right margin width.}
+
+\item{svg_font_size}{The SVG font size.}
+
+\item{svg_overflow}{The SVG font overflow setting.}
+
+\item{svg_position}{The SVG font position setting.}
+}
 \value{
 A list object of class \code{nanoplot_options}.
 }
 \description{
-Supply nanoplot options to \code{cols_nanoplot()}
+When using \code{\link[=cols_nanoplot]{cols_nanoplot()}}, the defaults for the generated nanoplots
+can be modified with \code{nanoplot_options()} within the \code{options} argument.
 }
 \section{Function ID}{
 
