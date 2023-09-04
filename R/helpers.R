@@ -530,6 +530,30 @@ currency <- function(
 
 #' Supply nanoplot options to `cols_nanoplot()`
 #'
+#' @description
+#'
+#' When using [cols_nanoplot()], the defaults for the generated nanoplots
+#' can be modified with `nanoplot_options()` within the `options` argument.
+#'
+#' @param line_stroke The line stroke.
+#' @param line_stroke_width The width of the line stroke.
+#' @param line_fill The line fill.
+#' @param data_point_radius The data point radius.
+#' @param data_point_stroke  The data point stroke color.
+#' @param data_point_stroke_width The data point stroke width.
+#' @param data_point_fill The data point fill width.
+#' @param vertical_guideline_stroke The stroke color for the vertical guidelines.
+#' @param vertical_guideline_stroke_width The stroke width for the vertical guidelines.
+#' @param show_data_points Should the data points be shown?
+#' @param show_curved_data_line Should a curved data line be shown?
+#' @param show_lower_area Should the area below the data points filled in?
+#' @param show_vertical_guidelines Should vertical guidelines be shown?
+#' @param svg_margin_left The SVG left margin width.
+#' @param svg_margin_right The SVG right margin width.
+#' @param svg_font_size The SVG font size.
+#' @param svg_overflow The SVG font overflow setting.
+#' @param svg_position The SVG font position setting.
+#'
 #' @return A list object of class `nanoplot_options`.
 #'
 #' @family helper functions
@@ -554,7 +578,6 @@ nanoplot_options <- function(
     show_curved_data_line = NULL,
     show_lower_area = NULL,
     show_vertical_guidelines = NULL,
-    svg_height = NULL,
     svg_margin_left = NULL,
     svg_margin_right = NULL,
     svg_font_size = NULL,
@@ -601,9 +624,6 @@ nanoplot_options <- function(
   if (is.null(show_vertical_guidelines)) {
     show_vertical_guidelines <- TRUE
   }
-  if (is.null(svg_height)) {
-    svg_height <- "1.5em"
-  }
   if (is.null(svg_margin_left)) {
     svg_margin_left <- "auto"
   }
@@ -635,7 +655,6 @@ nanoplot_options <- function(
       show_curved_data_line = show_curved_data_line,
       show_lower_area = show_lower_area,
       show_vertical_guidelines = show_vertical_guidelines,
-      svg_height = svg_height,
       svg_margin_left = svg_margin_left,
       svg_margin_right = svg_margin_right,
       svg_font_size = svg_font_size,
