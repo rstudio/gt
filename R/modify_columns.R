@@ -2193,6 +2193,13 @@ cols_add <- function(
 #'   will be stopped). If nothing is provided for either argument then the new
 #'   column will be placed at the end of the column series.
 #'
+#' @param height *The height of the nanoplots*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   The height of the nanoplots. If nothing is provided here then **gt** will
+#'   provide a sensible length value.
+#'
 #' @param options *Set options for the nanoplots*
 #'
 #'   `obj:<nanoplot_options` // *default:* `NULL` (`optional`)
@@ -2219,7 +2226,7 @@ cols_nanoplot <- function(
     new_col_label = NULL,
     before = NULL,
     after = NULL,
-    height = "1.5em",
+    height = NULL,
     options = NULL
 ) {
 
@@ -2261,6 +2268,10 @@ cols_nanoplot <- function(
 
       data_vals_plot <- c(data_vals_plot, list(data_vals_i))
     }
+  }
+
+  if (is.null(height)) {
+    height <- "1.5em"
   }
 
   if (is.null(options)) {
