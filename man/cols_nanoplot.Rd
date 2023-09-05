@@ -8,7 +8,7 @@ cols_nanoplot(
   data,
   columns,
   rows = everything(),
-  missing_vals = c("zero", "gap", "remove", "connect"),
+  missing_vals = c("gap", "zero", "remove", "connect"),
   currency = NULL,
   new_col_name = NULL,
   new_col_label = NULL,
@@ -53,13 +53,14 @@ We can also use expressions to filter down to the rows we need (e.g.,
 
 \item{missing_vals}{\emph{Treatment of missing values}
 
-\verb{singl-kw:[zero|gap|connect]} // \emph{default:} \code{"zero"}
+\verb{singl-kw:[gap|zero|remove|connect]} // \emph{default:} \code{"gap"}
 
 If missing values are encountered within the input data, there are three
-strategies available for their handling: (1) \code{"zero"} will replace \code{NA}
-values with zero values; (2) \code{"gap"} will display data gaps at the sites of
-missing data; and (3) \code{"connect"} will connect any lines across missing
-data points.}
+strategies available for their handling: (1) \code{"gap"} will display data gaps
+at the sites of missing data, where data lines will have discontinuities;
+(2) \code{"zero"} will replace \code{NA} values with zero values; (3) \code{"remove"} will
+remove any incoming \code{NA} values; and (4) \code{"connect"} will preserve gaps but
+also connect any lines across those gaps.}
 
 \item{currency}{\emph{Define values as currencies of a specific type}
 
