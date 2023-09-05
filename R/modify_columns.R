@@ -2163,6 +2163,28 @@ cols_add <- function(
 #'   We can also use expressions to filter down to the rows we need (e.g.,
 #'   `[colname_1] > 100 & [colname_2] < 50`).
 #'
+#' @param missing_vals *Treatment of missing values*
+#'
+#'   `singl-kw:[zero|gap|connect]` // *default:* `"zero"`
+#'
+#'   If missing values are encountered within the input data, there are three
+#'   strategies available for their handling: (1) `"zero"` will replace `NA`
+#'   values with zero values; (2) `"gap"` will display data gaps at the sites of
+#'   missing data; and (3) `"connect"` will connect any lines across missing
+#'   data points.
+#'
+#' @param currency *Define values as currencies of a specific type*
+#'
+#'   `scalar<character>|obj:<gt_currency>` // *default:* `NULL` (`optional`)
+#'
+#'   If the values are to be displayed as currency values, supply either: (1) a
+#'   3-letter currency code (e.g., `"USD"` for U.S. Dollars, `"EUR"` for the
+#'   Euro currency), (2) a common currency name (e.g., `"dollar"`, `"pound"`,
+#'   `"yen"`, etc.), or (3) an invocation of the [currency()] helper function
+#'   for specifying a custom currency (where the string could vary across output
+#'   contexts). Use [info_currencies()] to get an information table with all of
+#'   the valid currency codes, and examples of each, for the first two cases.
+#'
 #' @param new_col_name *Column name for the new column containing the plots*
 #'
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
@@ -2222,6 +2244,8 @@ cols_nanoplot <- function(
     data,
     columns,
     rows = everything(),
+    missing_vals = c("zero", "gap", "remove", "connect"),
+    currency = NULL,
     new_col_name = NULL,
     new_col_label = NULL,
     before = NULL,
@@ -2232,6 +2256,9 @@ cols_nanoplot <- function(
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
+
+  # Ensure that arguments are matched
+  missing_vals <- rlang::arg_match(missing_vals)
 
   #
   # Resolution of columns and rows as character vectors
@@ -2289,6 +2316,8 @@ cols_nanoplot <- function(
     data_plot_i <-
       generate_equal_spaced_nanoplot(
         y_vals = data_vals_plot_i,
+        missing_vals = missing_vals,
+        currency = currency,
         line_stroke = options_plots$line_stroke,
         line_stroke_width = options_plots$line_stroke_width,
         line_fill = options_plots$line_fill,
