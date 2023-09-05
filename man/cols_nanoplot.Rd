@@ -12,7 +12,7 @@ cols_nanoplot(
   new_col_label = NULL,
   before = NULL,
   after = NULL,
-  height = "1.5em",
+  height = NULL,
   options = NULL
 )
 }
@@ -78,6 +78,13 @@ single column name or index be used. This is to ensure that exactly one
 column is provided to either of these arguments (otherwise, the function
 will be stopped). If nothing is provided for either argument then the new
 column will be placed at the end of the column series.}
+
+\item{height}{\emph{The height of the nanoplots}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+The height of the nanoplots. If nothing is provided here then \strong{gt} will
+provide a sensible length value.}
 
 \item{options}{\emph{Set options for the nanoplots}
 
