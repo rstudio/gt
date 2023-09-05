@@ -24,7 +24,7 @@
 # This creates a nanoplot with equally-spaced y values
 generate_equal_spaced_nanoplot <- function(
     y_vals,
-    missing_vals = c("zero", "gap", "remove", "connect"),
+    missing_vals = c("gap", "zero", "remove", "connect"),
     currency = NULL,
     line_stroke = "steelblue",
     line_stroke_width = 8,
