@@ -2165,13 +2165,14 @@ cols_add <- function(
 #'
 #' @param missing_vals *Treatment of missing values*
 #'
-#'   `singl-kw:[zero|gap|connect]` // *default:* `"zero"`
+#'   `singl-kw:[gap|zero|remove|connect]` // *default:* `"gap"`
 #'
 #'   If missing values are encountered within the input data, there are three
-#'   strategies available for their handling: (1) `"zero"` will replace `NA`
-#'   values with zero values; (2) `"gap"` will display data gaps at the sites of
-#'   missing data; and (3) `"connect"` will connect any lines across missing
-#'   data points.
+#'   strategies available for their handling: (1) `"gap"` will display data gaps
+#'   at the sites of missing data, where data lines will have discontinuities;
+#'   (2) `"zero"` will replace `NA` values with zero values; (3) `"remove"` will
+#'   remove any incoming `NA` values; and (4) `"connect"` will preserve gaps but
+#'   also connect any lines across those gaps.
 #'
 #' @param currency *Define values as currencies of a specific type*
 #'
@@ -2244,7 +2245,7 @@ cols_nanoplot <- function(
     data,
     columns,
     rows = everything(),
-    missing_vals = c("zero", "gap", "remove", "connect"),
+    missing_vals = c("gap", "zero", "remove", "connect"),
     currency = NULL,
     new_col_name = NULL,
     new_col_label = NULL,
