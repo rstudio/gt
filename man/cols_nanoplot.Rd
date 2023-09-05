@@ -8,6 +8,8 @@ cols_nanoplot(
   data,
   columns,
   rows = everything(),
+  missing_vals = c("zero", "gap", "remove", "connect"),
+  currency = NULL,
   new_col_name = NULL,
   new_col_label = NULL,
   before = NULL,
@@ -48,6 +50,28 @@ select helper functions include \code{\link[=starts_with]{starts_with()}}, \code
 \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.
 We can also use expressions to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
+
+\item{missing_vals}{\emph{Treatment of missing values}
+
+\verb{singl-kw:[zero|gap|connect]} // \emph{default:} \code{"zero"}
+
+If missing values are encountered within the input data, there are three
+strategies available for their handling: (1) \code{"zero"} will replace \code{NA}
+values with zero values; (2) \code{"gap"} will display data gaps at the sites of
+missing data; and (3) \code{"connect"} will connect any lines across missing
+data points.}
+
+\item{currency}{\emph{Define values as currencies of a specific type}
+
+\verb{scalar<character>|obj:<gt_currency>} // \emph{default:} \code{NULL} (\code{optional})
+
+If the values are to be displayed as currency values, supply either: (1) a
+3-letter currency code (e.g., \code{"USD"} for U.S. Dollars, \code{"EUR"} for the
+Euro currency), (2) a common currency name (e.g., \code{"dollar"}, \code{"pound"},
+\code{"yen"}, etc.), or (3) an invocation of the \code{\link[=currency]{currency()}} helper function
+for specifying a custom currency (where the string could vary across output
+contexts). Use \code{\link[=info_currencies]{info_currencies()}} to get an information table with all of
+the valid currency codes, and examples of each, for the first two cases.}
 
 \item{new_col_name}{\emph{Column name for the new column containing the plots}
 
