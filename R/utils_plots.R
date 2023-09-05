@@ -24,6 +24,8 @@
 # This creates a nanoplot with equally-spaced y values
 generate_equal_spaced_nanoplot <- function(
     y_vals,
+    missing_vals = c("zero", "gap", "remove", "connect"),
+    currency = NULL,
     line_stroke = "steelblue",
     line_stroke_width = 8,
     line_fill = "none",
@@ -46,17 +48,35 @@ generate_equal_spaced_nanoplot <- function(
     view = FALSE
 ) {
 
+  # Ensure that arguments are matched
+  missing_vals <- rlang::arg_match(missing_vals)
+
+  # Initialize several local `*_tags` variables with `NULL`
+  circle_tags <- NULL
+  curved_path_tags <- NULL
+  area_path_tags <- NULL
+  g_guide_tags <- NULL
+
   if (length(y_vals) == 0) {
     return("")
   }
-  if (length(y_vals) == 1 && is.na(y_vals[1])) {
+  if (all(is.na(y_vals))) {
     return("")
   }
 
-  circle_tags <- NULL
-  curved_path_tag <- NULL
-  area_path_tag <- NULL
-  g_guide_tags <- NULL
+  # For the `missing_vals` options of 'zero' or 'remove', either replace NAs
+  # with `0` or remove NAs entirely
+  if (missing_vals == "zero") {
+    y_vals[is.na(y_vals)] <- 0
+  }
+  if (missing_vals == "remove") {
+    y_vals <- y_vals[!is.na(y_vals)]
+  }
+
+  # Get a vector of data points that are missing and are to be treated as gaps
+  if (missing_vals == "gap") {
+    y_vals_gaps <- which(is.na(y_vals))
+  }
 
   # Fixed interval between data points in px
   x_d <- 50
@@ -83,12 +103,18 @@ generate_equal_spaced_nanoplot <- function(
   viewbox <- paste(left_x, top_y, right_x, bottom_y, collapse = " ")
 
   normalize_y_vals <- function(x) {
+
+    x_missing <- which(is.na(x))
+    mean_x <- mean(x, na.rm = TRUE)
+    x[x_missing] <- mean_x
     x <- as.matrix(x)
     min_attr <- apply(x, 2, min)
     max_attr <- apply(x, 2, max)
     x <- sweep(x, MARGIN = 2, STATS = min_attr, FUN = "-")
     x <- sweep(x, MARGIN = 2, STATS = max_attr - min_attr, FUN = "/")
-    as.numeric(x)
+    x <- as.numeric(x)
+    x[x_missing] <- NA_real_
+    x
   }
 
   y_proportions <- normalize_y_vals(y_vals)
@@ -118,36 +144,72 @@ generate_equal_spaced_nanoplot <- function(
   vertical_guideline_stroke_width <- normalize_option_vector(vertical_guideline_stroke_width, num_y_vals)
 
   #
+  # Generate data segments by defining `start` and `end` vectors (these
+  # are guaranteed to be of the same length); these the segments of data
+  # they receive line segments and adjoining areas
+  #
+
+  rle_data_y_points <- rle(!is.na(data_y_points))
+
+  end_data_y_points <- cumsum(rle_data_y_points$lengths)
+  start_data_y_points <- end_data_y_points - rle_data_y_points$lengths + 1
+
+  na_indices <- which(is.na(data_y_points))
+
+  is_non_na <- !(start_data_y_points %in% na_indices)
+
+  start_data_y_points <- start_data_y_points[is_non_na]
+  end_data_y_points <- end_data_y_points[is_non_na]
+
+  is_not_length_one <- !(start_data_y_points == end_data_y_points)
+
+  start_data_y_points <- start_data_y_points[is_not_length_one]
+  end_data_y_points <- end_data_y_points[is_not_length_one]
+  n_segments <- length(start_data_y_points)
+
+  #
   # Generate curved data line
   #
 
   if (show_curved_data_line) {
 
-    curved_path_string <- paste0("M ", data_x_points[1], ",", data_y_points[1])
+    curved_path_tags <- c()
 
-    for (i in seq_along(data_x_points)[-1][-length(data_x_points)]) {
+    for (i in seq_len(n_segments)) {
 
-      point_b1 <- paste0(data_x_points[i - 1] + x_d / 2, ",", data_y_points[i - 1])
-      point_b2 <- paste0(data_x_points[i] - x_d / 2, ",", data_y_points[i])
-      point_i <- paste0(data_x_points[i], ",", data_y_points[i])
+      curve_x <- data_x_points[start_data_y_points[i]:end_data_y_points[i]]
+      curve_y <- data_y_points[start_data_y_points[i]:end_data_y_points[i]]
 
-      path_string_i <- paste("C", point_b1, point_b2, point_i)
+      curved_path_string <- paste0("M ", curve_x[1], ",", curve_y[1])
 
-      curved_path_string <- c(curved_path_string, path_string_i)
+      for (j in seq_along(curve_x)[-1][-length(curve_x)]) {
+
+        point_b1 <- paste0(curve_x[j - 1] + x_d / 2, ",", curve_y[j - 1])
+        point_b2 <- paste0(curve_x[j] - x_d / 2, ",", curve_y[j])
+        point_i <- paste0(curve_x[j], ",", curve_y[j])
+
+        path_string_j <- paste("C", point_b1, point_b2, point_i)
+
+        curved_path_string <- c(curved_path_string, path_string_j)
+      }
+
+      curved_path_string_i <- paste0(curved_path_string, collapse = " ")
+
+      curved_path_tags_i <-
+        paste0(
+          "<path ",
+          "d=\"", curved_path_string_i, "\" ",
+          "stroke=\"", line_stroke, "\" ",
+          "stroke-width=\"", line_stroke_width, "\" ",
+          "fill=\"", line_fill, "\" ",
+          ">",
+          "</path>"
+        )
+
+      curved_path_tags <- c(curved_path_tags, curved_path_tags_i)
     }
 
-    curved_path_string <- paste0(curved_path_string, collapse = " ")
-
-    curved_path_tag <-
-      paste0(
-        "<path ",
-        "d=\"", curved_path_string, "\" ",
-        "stroke=\"", line_stroke, "\" ",
-        "stroke-width=\"", line_stroke_width, "\" ",
-        "fill=\"", line_fill, "\" ",
-        ">",
-        "</path>"
-      )
+    curved_path_tags <- paste(curved_path_tags, collapse = "\n")
   }
 
   #
@@ -165,18 +227,45 @@ generate_equal_spaced_nanoplot <- function(
       data_point_stroke_width_i <- data_point_stroke_width[i]
       data_point_fill_i <- data_point_fill[i]
 
-      circle_strings_i <-
-        paste0(
-          "<circle ",
-          "cx=\"", data_x_points[i], "\" ",
-          "cy=\"", data_y_points[i], "\" ",
-          "r=\"", data_point_radius_i, "\" ",
-          "stroke=\"", data_point_stroke_i, "\" ",
-          "stroke-width=\"", data_point_stroke_width_i, "\" ",
-          "fill=\"", data_point_fill_i, "\" ",
-          ">",
-          "</circle>"
-        )
+      if (is.na(data_y_points[i])) {
+
+        if (missing_vals == "gap") {
+
+          # Create a symbol that should denote that a
+          # missing value is present
+          circle_strings_i <-
+            paste0(
+              "<circle ",
+              "cx=\"", data_x_points[i], "\" ",
+              "cy=\"", safe_y_d + (data_y_height / 2), "\" ",
+              "r=\"", data_point_radius_i + (data_point_radius_i / 2), "\" ",
+              "stroke=\"", "red", "\" ",
+              "stroke-width=\"", data_point_stroke_width_i, "\" ",
+              "fill=\"", "white", "\" ",
+              ">",
+              "</circle>",
+              ""
+            )
+
+        } else {
+          next
+        }
+
+      } else {
+
+        circle_strings_i <-
+          paste0(
+            "<circle ",
+            "cx=\"", data_x_points[i], "\" ",
+            "cy=\"", data_y_points[i], "\" ",
+            "r=\"", data_point_radius_i, "\" ",
+            "stroke=\"", data_point_stroke_i, "\" ",
+            "stroke-width=\"", data_point_stroke_width_i, "\" ",
+            "fill=\"", data_point_fill_i, "\" ",
+            ">",
+            "</circle>"
+          )
+      }
 
       circle_strings <- c(circle_strings, circle_strings_i)
     }
@@ -208,7 +297,40 @@ generate_equal_spaced_nanoplot <- function(
           "</rect>"
         )
 
-      y_value_i <- vec_fmt_number(y_vals[i], n_sigfig = 2)
+
+      if (!is.null(currency)) {
+
+        if (!is.na(y_vals[i]) && abs(y_vals[i]) < 10) {
+          use_subunits <- TRUE
+          decimals <- NULL
+        } else {
+          use_subunits <- FALSE
+          decimals <- NULL
+        }
+
+        if (!is.na(y_vals[i]) && abs(y_vals[i]) > 1000) {
+          suffixing <- TRUE
+          decimals <- 1
+        } else {
+          suffixing <- FALSE
+          decimals <- NULL
+        }
+
+        y_value_i <-
+          vec_fmt_currency(
+            y_vals[i],
+            currency = currency,
+            use_subunits = use_subunits,
+            decimals = decimals,
+            suffixing = suffixing,
+            output = "html"
+          )
+
+      } else {
+
+        # TODO: Modify argument values based on input values
+        y_value_i <- vec_fmt_number(y_vals[i], n_sigfig = 2)
+      }
 
       text_strings_i <-
         paste0(
@@ -237,9 +359,7 @@ generate_equal_spaced_nanoplot <- function(
     g_guide_tags <- paste(g_guide_strings, collapse = "\n")
   }
 
-  #
-  # Generate style tag
-  #
+  # Generate style tag for vertical guidelines
   svg_style <-
     paste(
       c(
@@ -298,33 +418,45 @@ generate_equal_spaced_nanoplot <- function(
 
   if (show_lower_area) {
 
-    area_path <- c()
+    area_path_tags <- c()
 
-    for (i in seq_along(data_x_points)) {
+    for (i in seq_len(n_segments)) {
 
-      area_path_i <- paste0(data_x_points[i], ",", data_y_points[i])
-      area_path <- c(area_path, area_path_i)
+      area_x <- data_x_points[start_data_y_points[i]:end_data_y_points[i]]
+      area_y <- data_y_points[start_data_y_points[i]:end_data_y_points[i]]
+
+      area_path_string <- c()
+
+      for (j in seq_along(area_x)) {
+
+        area_path_j <- paste0(area_x[j], ",", area_y[j])
+        area_path_string <- c(area_path_string, area_path_j)
+      }
+
+      area_path_i <-
+        c(
+          area_path_string,
+          paste0(area_x[length(area_x)], ",", bottom_y),
+          paste0(area_x[1], ",", bottom_y)
+        )
+
+      area_path_i <- paste0("M", paste(area_path_i, collapse = ","), "Z")
+
+      area_path_tag_i <-
+        paste0(
+          "<path class=\"area-closed\" ",
+          "d=\"", area_path_i, "\" ",
+          "stroke=\"transparent\" ",
+          "stroke-width=\"2\" ",
+          "fill=\"url(#area_pattern)\" ",
+          "fill-opacity=\"0.7\">",
+          "</path>"
+        )
+
+      area_path_tags <- c(area_path_tags, area_path_tag_i)
     }
 
-    area_path <-
-      c(
-        area_path,
-        paste0(data_x_points[length(data_x_points)], ",", bottom_y),
-        paste0(data_x_points[1], ",", bottom_y)
-      )
-
-    area_path_string <- paste0("M", paste(area_path, collapse = ","), "Z")
-
-    area_path_tag <-
-      paste0(
-        "<path class=\"area-closed\" ",
-        "d=\"", area_path_string, "\" ",
-        "stroke=\"transparent\" ",
-        "stroke-width=\"2\" ",
-        "fill=\"url(#area_pattern)\" ",
-        "fill-opacity=\"0.7\">",
-        "</path>"
-      )
+    area_path_tags <- paste(area_path_tags, collapse = "\n")
   }
 
   #
@@ -345,8 +477,8 @@ generate_equal_spaced_nanoplot <- function(
         "position:relative;\">",
         svg_defs,
         svg_style,
-        area_path_tag,
-        curved_path_tag,
+        area_path_tags,
+        curved_path_tags,
         circle_tags,
         g_guide_tags,
         "</svg>"
