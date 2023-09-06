@@ -2253,6 +2253,36 @@ cols_add <- function(
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @section Examples:
+#'
+#' Let's make some nanoplots with the [`illness`] dataset. The columns beginning
+#' with 'day' all contain ordered measurement values, comprising seven
+#' individual daily results. Using `cols_nanoplot()` we create a new column to
+#' hold the nanoplots (with `new_col_name = "nanoplots"`), referencing the
+#' columns containing the data (with `columns = starts_with("day")`). It's also
+#' possible to define a column label here using the `new_col_label` argument.
+#'
+#' ```r
+#' illness %>%
+#'   dplyr::slice_head(n = 10) |>
+#'   gt(rowname_col = "test") |>
+#'   tab_header("Partial summary of daily tests performed on YF patient") |>
+#'   tab_stubhead(label = md("**Test**")) |>
+#'   cols_hide(columns = c(starts_with("norm"), starts_with("day"))) |>
+#'   fmt_units(columns = units) |>
+#'   cols_nanoplot(
+#'     columns = starts_with("day"),
+#'     new_col_name = "nanoplots",
+#'     new_col_label = md("*Progression*")
+#'   ) |>
+#'   cols_align(align = "center", columns = nanoplots) |>
+#'   cols_merge(columns = c(test, units), pattern = "{1} ({2})") |>
+#'   tab_footnote(
+#'     footnote = "Measurements from Day 3 through to Day 8.",
+#'     locations = cells_column_labels(columns = nanoplots)
+#'   )
+#' ```
+#'
 #' @family column modification functions
 #' @section Function ID:
 #' 5-8
