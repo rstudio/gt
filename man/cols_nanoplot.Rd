@@ -9,6 +9,7 @@ cols_nanoplot(
   columns,
   rows = everything(),
   missing_vals = c("gap", "zero", "remove", "connect"),
+  reference_line = NULL,
   currency = NULL,
   new_col_name = NULL,
   new_col_label = NULL,
@@ -61,6 +62,12 @@ at the sites of missing data, where data lines will have discontinuities;
 (2) \code{"zero"} will replace \code{NA} values with zero values; (3) \code{"remove"} will
 remove any incoming \code{NA} values; and (4) \code{"connect"} will preserve gaps but
 also connect any lines across those gaps.}
+
+\item{reference_line}{\emph{Add a reference line}
+
+\verb{scalar<numeric|integer|character>} // \emph{default:} \code{NULL} (\code{optional})
+
+Supplying a value here will add a horizontal reference line.}
 
 \item{currency}{\emph{Define values as currencies of a specific type}
 
