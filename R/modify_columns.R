@@ -2178,7 +2178,10 @@ cols_add <- function(
 #'
 #'   `scalar<numeric|integer|character>` // *default:* `NULL` (`optional`)
 #'
-#'   Supplying a value here will add a horizontal reference line.
+#'   Supplying a value here will add a horizontal reference line. It could be a
+#'   static value, applied to all nanoplots generated. Or, the input can be one
+#'   of the following for the generation of the value: (1) `"mean"`, (2)
+#'   `"median"`, (3) `"min"`, (4) `"max"`, (5) `"first"`, or (6) `"last"`.
 #'
 #' @param currency *Define values as currencies of a specific type*
 #'
@@ -2269,9 +2272,12 @@ cols_nanoplot <- function(
   missing_vals <- rlang::arg_match(missing_vals)
 
   if (!is.null(reference_line)) {
+
     show_ref_line <- TRUE
     y_ref_line <- reference_line
+
   } else {
+
     show_ref_line <- FALSE
     y_ref_line <- NULL
   }
