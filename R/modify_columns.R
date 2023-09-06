@@ -2178,10 +2178,22 @@ cols_add <- function(
 #'
 #'   `scalar<numeric|integer|character>` // *default:* `NULL` (`optional`)
 #'
-#'   Supplying a value here will add a horizontal reference line. It could be a
-#'   static value, applied to all nanoplots generated. Or, the input can be one
-#'   of the following for the generation of the value: (1) `"mean"`, (2)
-#'   `"median"`, (3) `"min"`, (4) `"max"`, (5) `"first"`, or (6) `"last"`.
+#'   Supplying a single value here will add a horizontal reference line. It
+#'   could be a static numeric value, applied to all nanoplots generated. Or,
+#'   the input can be one of the following for generating the line from the
+#'   underlying data: (1) `"mean"`, (2) `"median"`, (3) `"min"`, (4) `"max"`,
+#'   (5) `"first"`, or (6) `"last"`.
+#'
+#' @param reference_area *Add a reference area*
+#'
+#'   `vector<numeric|integer|character>|list` // *default:* `NULL` (`optional`)
+#'
+#'   A reference area requires two inputs to define bottom and top boundaries
+#'   for a rectangular area. The types of values supplied are the same as those
+#'   expected for `reference_line`, which is either a static numeric value or
+#'   one of the following keywords for the generation of the value: (1)
+#'   `"mean"`, (2) `"median"`, (3) `"min"`, (4) `"max"`, (5) `"first"`, or (6)
+#'   `"last"`. Input can either be a vector or list with two elements.
 #'
 #' @param currency *Define values as currencies of a specific type*
 #'
@@ -2256,6 +2268,7 @@ cols_nanoplot <- function(
     rows = everything(),
     missing_vals = c("gap", "zero", "remove", "connect"),
     reference_line = NULL,
+    reference_area = NULL,
     currency = NULL,
     new_col_name = NULL,
     new_col_label = NULL,
@@ -2280,6 +2293,17 @@ cols_nanoplot <- function(
 
     show_ref_line <- FALSE
     y_ref_line <- NULL
+  }
+
+  if (!is.null(reference_area)) {
+
+    show_ref_area <- TRUE
+    y_ref_area <- reference_area
+
+  } else {
+
+    show_ref_area <- FALSE
+    y_ref_area <- NULL
   }
 
   #
@@ -2339,6 +2363,7 @@ cols_nanoplot <- function(
       generate_equal_spaced_nanoplot(
         y_vals = data_vals_plot_i,
         y_ref_line = y_ref_line,
+        y_ref_area = y_ref_area,
         missing_vals = missing_vals,
         currency = currency,
         line_stroke = options_plots$line_stroke,
@@ -2354,6 +2379,7 @@ cols_nanoplot <- function(
         show_curved_data_line = options_plots$show_curved_data_line,
         show_lower_area = options_plots$show_lower_area,
         show_ref_line = show_ref_line,
+        show_ref_area = show_ref_area,
         show_vertical_guidelines = options_plots$show_vertical_guidelines,
         svg_height = height,
         svg_margin_left = options_plots$svg_margin_left,
