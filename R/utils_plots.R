@@ -129,7 +129,106 @@ generate_equal_spaced_nanoplot <- function(
   # so that there are normalized values in relation to the data points
   #
 
-  if (show_ref_line) {
+  if (show_ref_line && show_ref_area) {
+
+    # Case where there is both a reference line and a reference area
+
+    #
+    # Resolve the reference line
+    #
+
+    if (is.null(y_ref_line)) {
+
+      # When a reference line is requested but there are no directives for
+      # defining the line, we will default to having the line represent the
+      # median of the data
+
+      y_ref_line <- stats::median(y_vals, na.rm = TRUE)
+
+    } else if (
+      !is.null(y_ref_line) &&
+      is.character(y_ref_line) &&
+      length(y_ref_line) == 1 &&
+      y_ref_line %in% c("mean", "median", "min", "max", "first", "last")
+    ) {
+
+      y_ref_line <-
+        generate_ref_line_from_keyword(
+          vals = y_vals,
+          keyword = y_ref_line
+        )
+    }
+
+    #
+    # Resolve the reference area
+    #
+
+    if (is.null(y_ref_area)) {
+
+      # When a reference area is requested but there are no directives for
+      # defining the area, we will default to constraining the area to the
+      # Q1 and Q3 quartiles
+
+      y_ref_area_l <- as.numeric(stats::quantile(y_vals, 0.25, na.rm = TRUE))
+      y_ref_area_u <- as.numeric(stats::quantile(y_vals, 0.75, na.rm = TRUE))
+
+    } else if (!is.null(y_ref_area)) {
+
+      # TODO: Validate input for `y_ref_area`
+
+      y_ref_area_1 <- y_ref_area[[1]]
+      y_ref_area_2 <- y_ref_area[[2]]
+
+      if (is.numeric(y_ref_area_1)) {
+        y_ref_area_line_1 <- y_ref_area_1
+      }
+      if (is.numeric(y_ref_area_2)) {
+        y_ref_area_line_2 <- y_ref_area_2
+      }
+
+      if (
+        is.character(y_ref_area_1) &&
+        y_ref_area_1 %in% c("mean", "median", "min", "max", "first", "last")
+      ) {
+
+        y_ref_area_line_1 <-
+          generate_ref_line_from_keyword(
+            vals = y_vals,
+            keyword = y_ref_area_1
+          )
+      }
+
+      if (
+        is.character(y_ref_area_2) &&
+        y_ref_area_2 %in% c("mean", "median", "min", "max", "first", "last")
+      ) {
+
+        y_ref_area_line_2 <-
+          generate_ref_line_from_keyword(
+            vals = y_vals,
+            keyword = y_ref_area_2
+          )
+      }
+
+      y_ref_area_lines_sorted <- sort(c(y_ref_area_line_1, y_ref_area_line_2))
+      y_ref_area_l <- y_ref_area_lines_sorted[1]
+      y_ref_area_u <- y_ref_area_lines_sorted[2]
+    }
+
+    # Scale to proportional values
+    y_proportions_w_ref_line_area <-
+      normalize_y_vals(c(y_vals, y_ref_line[1], y_ref_area_l, y_ref_area_u))
+    y_proportion_ref_line <- y_proportions_w_ref_line_area[-(1:num_y_vals)][1]
+    y_proportions_ref_area_l <- y_proportions_w_ref_line_area[-(1:num_y_vals)][2]
+    y_proportions_ref_area_u <- y_proportions_w_ref_line_area[-(1:num_y_vals)][3]
+    y_proportions <- y_proportions_w_ref_line_area[(1:num_y_vals)]
+
+    # Scale reference line and reference area boundaries
+    data_y_ref_line <- safe_y_d + ((1 - y_proportion_ref_line) * data_y_height)
+    data_y_ref_area_l <- safe_y_d + ((1 - y_proportions_ref_area_l) * data_y_height)
+    data_y_ref_area_u <- safe_y_d + ((1 - y_proportions_ref_area_u) * data_y_height)
+
+  } else if (show_ref_line) {
 
     # Case where there is a reference line
 
@@ -155,10 +254,12 @@ generate_equal_spaced_nanoplot <- function(
         )
     }
 
+    # Scale to proportional values
     y_proportions_w_ref_line <- normalize_y_vals(c(y_vals, y_ref_line[1]))
     y_proportion_ref_line <- y_proportions_w_ref_line[length(y_proportions_w_ref_line)]
     y_proportions <- y_proportions_w_ref_line[-length(y_proportions_w_ref_line)]
 
+    # Scale reference line
     data_y_ref_line <- safe_y_d + ((1 - y_proportion_ref_line) * data_y_height)
 
   } else if (show_ref_area) {
@@ -217,15 +318,19 @@ generate_equal_spaced_nanoplot <- function(
       y_ref_area_u <- y_ref_area_lines_sorted[2]
     }
 
+    # Scale to proportional values
     y_proportions_w_ref_area <- normalize_y_vals(c(y_vals, y_ref_area_l, y_ref_area_u))
     y_proportions_ref_area_l <- y_proportions_w_ref_area[-(1:num_y_vals)][1]
     y_proportions_ref_area_u <- y_proportions_w_ref_area[-(1:num_y_vals)][2]
     y_proportions <- y_proportions_w_ref_area[(1:num_y_vals)]
 
+    # Scale reference area boundaries
     data_y_ref_area_l <- safe_y_d + ((1 - y_proportions_ref_area_l) * data_y_height)
     data_y_ref_area_u <- safe_y_d + ((1 - y_proportions_ref_area_u) * data_y_height)
 
   } else {
+
+    # Case where there is no reference line or reference area
 
     y_proportions <- normalize_y_vals(y_vals)
   }
@@ -391,8 +496,8 @@ generate_equal_spaced_nanoplot <- function(
 
   if (show_ref_line) {
 
-    stroke <- "#0c859980"
-    stroke_width <- 2
+    stroke <- "#09647380"
+    stroke_width <- 1
     stroke_dasharray <- "4 3"
     transform <- ""
     stroke_linecap <- "round"
@@ -400,6 +505,17 @@ generate_equal_spaced_nanoplot <- function(
 
     ref_line_tags <-
       paste0(
+        "<g class=\"ref-line\">",
+        "<rect ",
+        "x=\"", data_x_points[1] - 10, "\" ",
+        "y=\"", data_y_ref_line - 10, "\" ",
+        "width=\"", data_x_width + 20, "\" ",
+        "height=\"", 20, "\" ",
+        "stroke=\"transparent\" ",
+        "stroke-width=\"1\" ",
+        "fill=\"transparent\"",
+        ">",
+        "</rect>",
         "<line ",
         "class=\"ref-line\" ",
         "x1=\"", data_x_points[1], "\" ",
@@ -413,7 +529,17 @@ generate_equal_spaced_nanoplot <- function(
         "stroke-linecap=\"", stroke_linecap, "\" ",
         "vector-effect=\"", vector_effect, "\" ",
         ">",
-        "</line>"
+        "</line>",
+        "<text ",
+        "x=\"", data_x_points[length(data_x_points)] + 10, "\" ",
+        "y=\"", data_y_ref_line + 10, "\" ",
+        "fill=\"transparent\" ",
+        "stroke=\"transparent\" ",
+        "font-size=\"", "30px", "\"",
+        ">",
+        y_ref_line,
+        "</text>",
+        "</g>"
       )
   }
 
@@ -503,10 +629,16 @@ generate_equal_spaced_nanoplot <- function(
         y_value_i <- vec_fmt_number(y_vals[i], n_sigfig = 2)
       }
 
+      x_text <- data_x_points[i] + 10
+
+      if (y_value_i == "NA") {
+        x_text <- x_text + 2
+      }
+
       text_strings_i <-
         paste0(
           "<text ",
-          "x=\"", data_x_points[i] + 10, "\" ",
+          "x=\"", x_text, "\" ",
           "y=\"", safe_y_d + 5, "\" ",
           "fill=\"transparent\" ",
           "stroke=\"transparent\" ",
@@ -548,9 +680,18 @@ generate_equal_spaced_nanoplot <- function(
           "color: red; ",
           "} ",
           ".vert-line:hover text { ",
-          "fill: #666666; ",
           "stroke: white; ",
-          "fill: black; ",
+          "fill: #212427; ",
+          "} ",
+          ".ref-line:hover rect { ",
+          "stroke: #FFFFFF60; ",
+          "} ",
+          ".ref-line:hover line { ",
+          "stroke: #FF0000; ",
+          "} ",
+          ".ref-line:hover text { ",
+          "stroke: white; ",
+          "fill: #212427; ",
           "}"
         ),
         "</style>"
@@ -707,7 +848,6 @@ mad_double_from_median <- function(x) {
 out_indices_from_vec <- function(x, cutoff = 3) {
   which(mad_double_from_median(x) > cutoff)
 }
-
 
 generate_ref_line_from_keyword <- function(vals, keyword) {
 
