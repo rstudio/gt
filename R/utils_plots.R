@@ -129,10 +129,33 @@ generate_equal_spaced_nanoplot <- function(
   if (show_ref_line) {
 
     if (is.null(y_ref_line)) {
+
       y_ref_line <- mean(y_vals, na.rm = TRUE)
+
+    } else if (
+      !is.null(y_ref_line) &&
+      is.character(y_ref_line) &&
+      length(y_ref_line) == 1 &&
+      y_ref_line %in% c("mean", "median", "min", "max", "first", "last")
+    ) {
+
+      if (y_ref_line == "mean") {
+        y_ref_line <- mean(y_vals, na.rm = TRUE)
+      } else if (y_ref_line == "median") {
+        y_ref_line <- stats::median(y_vals, na.rm = TRUE)
+      } else if (y_ref_line == "min") {
+        y_ref_line <- min(y_vals, na.rm = TRUE)
+      } else if (y_ref_line == "max") {
+        y_ref_line <- max(y_vals, na.rm = TRUE)
+      } else if (y_ref_line == "first") {
+        y_ref_line <- y_vals[!is.na(y_vals)][1]
+      } else {
+        y_vals_non_na <- y_vals[!is.na(y_vals)]
+        y_ref_line <- y_vals_non_na[length(y_vals_non_na)]
+      }
     }
 
-    y_proportions_w_ref_line <- normalize_y_vals(c(y_vals, y_ref_line))
+    y_proportions_w_ref_line <- normalize_y_vals(c(y_vals, y_ref_line[1]))
     y_proportion_ref_line <- y_proportions_w_ref_line[length(y_proportions_w_ref_line)]
     y_proportions <- y_proportions_w_ref_line[-length(y_proportions_w_ref_line)]
 
