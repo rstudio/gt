@@ -181,6 +181,10 @@ possible to define a column label here using the \code{new_col_label} argument.
     locations = cells_column_labels(columns = nanoplots)
   )
 }\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_1.png" alt="This image of a table was generated from the first code example in the `cols_nanoplot()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
