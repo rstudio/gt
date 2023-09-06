@@ -2318,28 +2318,6 @@ cols_nanoplot <- function(
   # Ensure that arguments are matched
   missing_vals <- rlang::arg_match(missing_vals)
 
-  if (!is.null(reference_line)) {
-
-    show_ref_line <- TRUE
-    y_ref_line <- reference_line
-
-  } else {
-
-    show_ref_line <- FALSE
-    y_ref_line <- NULL
-  }
-
-  if (!is.null(reference_area)) {
-
-    show_ref_area <- TRUE
-    y_ref_area <- reference_area
-
-  } else {
-
-    show_ref_area <- FALSE
-    y_ref_area <- NULL
-  }
-
   #
   # Resolution of columns and rows as character vectors
   #
@@ -2396,31 +2374,25 @@ cols_nanoplot <- function(
     data_plot_i <-
       generate_equal_spaced_nanoplot(
         y_vals = data_vals_plot_i,
-        y_ref_line = y_ref_line,
-        y_ref_area = y_ref_area,
+        y_ref_line = reference_line,
+        y_ref_area = reference_area,
         missing_vals = missing_vals,
         currency = currency,
-        line_stroke = options_plots$line_stroke,
-        line_stroke_width = options_plots$line_stroke_width,
-        line_fill = options_plots$line_fill,
         data_point_radius = options_plots$data_point_radius,
-        data_point_stroke = options_plots$data_point_stroke,
+        data_point_stroke_color = options_plots$data_point_stroke_color,
         data_point_stroke_width = options_plots$data_point_stroke_width,
-        data_point_fill = options_plots$data_point_fill,
-        vertical_guideline_stroke = options_plots$vertical_guideline_stroke,
-        vertical_guideline_stroke_width = options_plots$vertical_guideline_stroke_width,
+        data_point_fill_color = options_plots$data_point_fill_color,
+        data_line_stroke_color = options_plots$data_line_stroke_color,
+        data_line_stroke_width = options_plots$data_line_stroke_width,
+        vertical_guide_stroke_color = options_plots$vertical_guide_stroke_color,
+        vertical_guide_stroke_width = options_plots$vertical_guide_stroke_width,
         show_data_points = options_plots$show_data_points,
-        show_curved_data_line = options_plots$show_curved_data_line,
+        show_data_line = options_plots$show_data_line,
         show_lower_area = options_plots$show_lower_area,
-        show_ref_line = show_ref_line,
-        show_ref_area = show_ref_area,
-        show_vertical_guidelines = options_plots$show_vertical_guidelines,
-        svg_height = height,
-        svg_margin_left = options_plots$svg_margin_left,
-        svg_margin_right = options_plots$svg_margin_right,
-        svg_font_size = options_plots$svg_font_size,
-        svg_overflow = options_plots$svg_overflow,
-        svg_position = options_plots$svg_position
+        show_ref_line = options_plots$show_reference_line,
+        show_ref_area = options_plots$show_reference_area,
+        show_vertical_guides = options_plots$show_vertical_guides,
+        svg_height = height
       )
 
     nanoplots <- c(nanoplots, data_plot_i)
