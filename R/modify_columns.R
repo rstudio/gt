@@ -2283,6 +2283,10 @@ cols_add <- function(
 #'   )
 #' ```
 #'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_nanoplot_1.png")`
+#' }}
+#'
 #' @family column modification functions
 #' @section Function ID:
 #' 5-8
