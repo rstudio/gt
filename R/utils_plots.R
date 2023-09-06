@@ -502,3 +502,36 @@ normalize_option_vector <- function(vec, num_y_vals) {
   if (length(vec) == 1) vec <- rep(vec, num_y_vals)
   vec
 }
+
+mad_double <- function(x) {
+
+  x <- x[!is.na(x)]
+  m <- stats::median(x)
+  abs_dev <- abs(x - m)
+  left_mad <- stats::median(abs_dev[x <= m])
+  right_mad <- stats::median(abs_dev[x >= m])
+
+  if (left_mad == 0 || right_mad == 0) {
+
+    if (left_mad  == 0) left_mad  <- NA_real_
+    if (right_mad == 0) right_mad <- NA_real_
+  }
+
+  c(left_mad, right_mad)
+}
+
+mad_double_from_median <- function(x) {
+
+  mad_two_sided <- mad_double(x)
+  m <- stats::median(x, na.rm = TRUE)
+  x_mad <- rep(mad_two_sided[1], length(x))
+  x_mad[x > m] <- mad_two_sided[2]
+  mad_distance <- abs(x - m) / x_mad
+  mad_distance[x == m] <- 0
+  mad_distance
+}
+
+out_indices_from_vec <- function(x, cutoff = 3) {
+  which(mad_double_from_median(x) > cutoff)
+}
+
