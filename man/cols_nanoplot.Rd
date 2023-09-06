@@ -67,7 +67,10 @@ also connect any lines across those gaps.}
 
 \verb{scalar<numeric|integer|character>} // \emph{default:} \code{NULL} (\code{optional})
 
-Supplying a value here will add a horizontal reference line.}
+Supplying a value here will add a horizontal reference line. It could be a
+static value, applied to all nanoplots generated. Or, the input can be one
+of the following for the generation of the value: (1) \code{"mean"}, (2)
+\code{"median"}, (3) \code{"min"}, (4) \code{"max"}, (5) \code{"first"}, or (6) \code{"last"}.}
 
 \item{currency}{\emph{Define values as currencies of a specific type}
 
