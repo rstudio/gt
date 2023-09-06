@@ -535,24 +535,64 @@ currency <- function(
 #' When using [cols_nanoplot()], the defaults for the generated nanoplots
 #' can be modified with `nanoplot_options()` within the `options` argument.
 #'
-#' @param line_stroke The line stroke.
-#' @param line_stroke_width The width of the line stroke.
-#' @param line_fill The line fill.
-#' @param data_point_radius The data point radius.
-#' @param data_point_stroke  The data point stroke color.
-#' @param data_point_stroke_width The data point stroke width.
-#' @param data_point_fill The data point fill width.
-#' @param vertical_guideline_stroke The stroke color for the vertical guidelines.
-#' @param vertical_guideline_stroke_width The stroke width for the vertical guidelines.
-#' @param show_data_points Should the data points be shown?
-#' @param show_curved_data_line Should a curved data line be shown?
-#' @param show_lower_area Should the area below the data points filled in?
-#' @param show_vertical_guidelines Should vertical guidelines be shown?
-#' @param svg_margin_left The SVG left margin width.
-#' @param svg_margin_right The SVG right margin width.
-#' @param svg_font_size The SVG font size.
-#' @param svg_overflow The SVG font overflow setting.
-#' @param svg_position The SVG font position setting.
+#' @param data_point_radius *Radius of data points*
+#'
+#'   `scalar<numeric>|vector<numeric>` // *default:* `NULL` (`optional`)
+#'
+#'   This sets the radius for each of the data points. By default this is set
+#'   to `"10px"`.
+#'
+#' @param data_point_stroke_color *Color of data points*
+#'
+#'   `scalar<character>|vector<character>` // *default:* `NULL` (`optional`)
+#'
+#' @param data_point_stroke_width *Width of surrounding line on data points*
+#'
+#'   `scalar<numeric>|vector<numeric>` // *default:* `NULL` (`optional`)
+#'
+#' @param data_point_fill_color *Fill color for data points*
+#'
+#'   `scalar<character>|vector<character>` // *default:* `NULL` (`optional`)
+#'
+#' @param data_line_stroke_color *Color of the data line*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#' @param data_line_stroke_width *Width of the data line*
+#'
+#'   `scalar<numeric>` // *default:* `NULL` (`optional`)
+#'
+#' @param vertical_guide_stroke_color *Color of vertical guides*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#' @param vertical_guide_stroke_width *Line widths for vertical guides*
+#'
+#'   `scalar<numeric>` // *default:* `NULL` (`optional`)
+#'
+#' @param show_data_points *Should the data points be shown?*
+#'
+#'   `scalar<logical>` // *default:* `NULL` (`optional`)
+#'
+#' @param show_data_line *Should a data line be shown?*
+#'
+#'   `scalar<logical>` // *default:* `NULL` (`optional`)
+#'
+#' @param show_lower_area *Should the area below the data points be filled in?*
+#'
+#'   `scalar<logical>` // *default:* `NULL` (`optional`)
+#'
+#' @param show_vertical_guides *Should vertical guides be shown?*
+#'
+#'   `scalar<logical>` // *default:* `NULL` (`optional`)
+#'
+#' @param show_reference_line *Should a reference line be shown?*
+#'
+#'   `scalar<logical>` // *default:* `NULL` (`optional`)
+#'
+#' @param show_reference_area *Should a reference area be shown?*
+#'
+#'   `scalar<logical>` // *default:* `NULL` (`optional`)
 #'
 #' @return A list object of class `nanoplot_options`.
 #'
@@ -565,101 +605,81 @@ currency <- function(
 #'
 #' @export
 nanoplot_options <- function(
-    line_stroke = NULL,
-    line_stroke_width = NULL,
-    line_fill = NULL,
     data_point_radius = NULL,
-    data_point_stroke = NULL,
+    data_point_stroke_color = NULL,
     data_point_stroke_width = NULL,
-    data_point_fill = NULL,
-    vertical_guideline_stroke = NULL,
-    vertical_guideline_stroke_width = NULL,
+    data_point_fill_color = NULL,
+    data_line_stroke_color = NULL,
+    data_line_stroke_width = NULL,
+    vertical_guide_stroke_color = NULL,
+    vertical_guide_stroke_width = NULL,
     show_data_points = NULL,
-    show_curved_data_line = NULL,
+    show_data_line = NULL,
     show_lower_area = NULL,
-    show_vertical_guidelines = NULL,
-    svg_margin_left = NULL,
-    svg_margin_right = NULL,
-    svg_font_size = NULL,
-    svg_overflow = NULL,
-    svg_position = NULL
+    show_vertical_guides = NULL,
+    show_reference_line = NULL,
+    show_reference_area = NULL
 ) {
 
-  if (is.null(line_stroke)) {
-    line_stroke <- "steelblue"
-  }
-  if (is.null(line_stroke_width)) {
-    line_stroke_width <- 8
-  }
-  if (is.null(line_fill)) {
-    line_fill <- "none"
-  }
   if (is.null(data_point_radius)) {
     data_point_radius <- 10
   }
-  if (is.null(data_point_stroke)) {
-    data_point_stroke <- "white"
+  if (is.null(data_point_stroke_color)) {
+    data_point_stroke_color <- "white"
   }
   if (is.null(data_point_stroke_width)) {
     data_point_stroke_width <- 4
   }
-  if (is.null(data_point_fill)) {
-    data_point_fill <- "red"
+  if (is.null(data_point_fill_color)) {
+    data_point_fill_color <- "red"
   }
-  if (is.null(vertical_guideline_stroke)) {
-    vertical_guideline_stroke <- "purple"
+  if (is.null(data_line_stroke_color)) {
+    data_line_stroke_color <- "steelblue"
   }
-  if (is.null(vertical_guideline_stroke_width)) {
-    vertical_guideline_stroke_width <- 4
+  if (is.null(data_line_stroke_width)) {
+    data_line_stroke_width <- 8
+  }
+  if (is.null(vertical_guide_stroke_color)) {
+    vertical_guide_stroke_color <- "#911EB4"
+  }
+  if (is.null(vertical_guide_stroke_width)) {
+    vertical_guide_stroke_width <- 12
   }
   if (is.null(show_data_points)) {
     show_data_points <- TRUE
   }
-  if (is.null(show_curved_data_line)) {
-    show_curved_data_line <- TRUE
+  if (is.null(show_data_line)) {
+    show_data_line <- TRUE
   }
   if (is.null(show_lower_area)) {
     show_lower_area <- TRUE
   }
-  if (is.null(show_vertical_guidelines)) {
-    show_vertical_guidelines <- TRUE
+  if (is.null(show_vertical_guides)) {
+    show_vertical_guides <- TRUE
   }
-  if (is.null(svg_margin_left)) {
-    svg_margin_left <- "auto"
+  if (is.null(show_reference_line)) {
+    show_reference_line <- TRUE
   }
-  if (is.null(svg_margin_right)) {
-    svg_margin_right <- "auto"
-  }
-  if (is.null(svg_font_size)) {
-    svg_font_size <- "inherit"
-  }
-  if (is.null(svg_overflow)) {
-    svg_overflow <- "visible"
-  }
-  if (is.null(svg_position)) {
-    svg_position <- "relative"
+  if (is.null(show_reference_area)) {
+    show_reference_area <- TRUE
   }
 
   nanoplot_options_list <-
     list(
-      line_stroke = line_stroke,
-      line_stroke_width = line_stroke_width,
-      line_fill = line_fill,
       data_point_radius = data_point_radius,
-      data_point_stroke = data_point_stroke,
+      data_point_stroke_color = data_point_stroke_color,
       data_point_stroke_width = data_point_stroke_width,
-      data_point_fill = data_point_fill,
-      vertical_guideline_stroke = vertical_guideline_stroke,
-      vertical_guideline_stroke_width = vertical_guideline_stroke_width,
+      data_point_fill_color = data_point_fill_color,
+      data_line_stroke_color = data_line_stroke_color,
+      data_line_stroke_width = data_line_stroke_width,
+      vertical_guide_stroke_color = vertical_guide_stroke_color,
+      vertical_guide_stroke_width = vertical_guide_stroke_width,
       show_data_points = show_data_points,
-      show_curved_data_line = show_curved_data_line,
+      show_data_line = show_data_line,
       show_lower_area = show_lower_area,
-      show_vertical_guidelines = show_vertical_guidelines,
-      svg_margin_left = svg_margin_left,
-      svg_margin_right = svg_margin_right,
-      svg_font_size = svg_font_size,
-      svg_overflow = svg_overflow,
-      svg_position = svg_position
+      show_vertical_guides = show_vertical_guides,
+      show_reference_line = show_reference_line,
+      show_reference_area = show_reference_area
     )
 
   class(nanoplot_options_list) <- "nanoplot_options"
