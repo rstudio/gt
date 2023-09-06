@@ -28,27 +28,21 @@ generate_equal_spaced_nanoplot <- function(
     y_ref_area = NULL,
     missing_vals = c("gap", "zero", "remove", "connect"),
     currency = NULL,
-    line_stroke = "steelblue",
-    line_stroke_width = 8,
-    line_fill = "none",
     data_point_radius = 10,
-    data_point_stroke = "white",
+    data_point_stroke_color = "white",
     data_point_stroke_width = 4,
-    data_point_fill = "red",
-    vertical_guideline_stroke = "purple",
-    vertical_guideline_stroke_width = 4,
+    data_point_fill_color = "red",
+    data_line_stroke_color = "steelblue",
+    data_line_stroke_width = 8,
+    vertical_guide_stroke_color = "#911EB4",
+    vertical_guide_stroke_width = 12,
     show_data_points = TRUE,
-    show_curved_data_line = TRUE,
+    show_data_line = TRUE,
     show_lower_area = TRUE,
     show_ref_line = FALSE,
     show_ref_area = FALSE,
-    show_vertical_guidelines = TRUE,
+    show_vertical_guides = TRUE,
     svg_height = "1.5em",
-    svg_margin_left = "auto",
-    svg_margin_right = "auto",
-    svg_font_size = "inherit",
-    svg_overflow = "visible",
-    svg_position = "relative",
     view = FALSE
 ) {
 
@@ -57,7 +51,7 @@ generate_equal_spaced_nanoplot <- function(
 
   # Initialize several local `*_tags` variables with `NULL`
   circle_tags <- NULL
-  curved_path_tags <- NULL
+  data_path_tags <- NULL
   area_path_tags <- NULL
   ref_line_tags <- NULL
   ref_area_tags <- NULL
@@ -358,18 +352,14 @@ generate_equal_spaced_nanoplot <- function(
   #
 
   # - `data_point_radius`
-  # - `data_point_stroke`
+  # - `data_point_stroke_color`
   # - `data_point_stroke_width `
-  # - `data_point_fill`
-  # - `vertical_guideline_stroke`
-  # - `vertical_guideline_stroke_width`
+  # - `data_point_fill_color`
 
   data_point_radius <- normalize_option_vector(data_point_radius, num_y_vals)
-  data_point_stroke <- normalize_option_vector(data_point_stroke, num_y_vals)
+  data_point_stroke_color <- normalize_option_vector(data_point_stroke_color, num_y_vals)
   data_point_stroke_width <- normalize_option_vector(data_point_stroke_width, num_y_vals)
-  data_point_fill <- normalize_option_vector(data_point_fill, num_y_vals)
-  vertical_guideline_stroke <- normalize_option_vector(vertical_guideline_stroke, num_y_vals)
-  vertical_guideline_stroke_width <- normalize_option_vector(vertical_guideline_stroke_width, num_y_vals)
+  data_point_fill_color <- normalize_option_vector(data_point_fill_color, num_y_vals)
 
   #
   # Generate data segments by defining `start` and `end` vectors (these
@@ -399,9 +389,9 @@ generate_equal_spaced_nanoplot <- function(
   # Generate curved data line
   #
 
-  if (show_curved_data_line) {
+  if (show_data_line) {
 
-    curved_path_tags <- c()
+    data_path_tags <- c()
 
     for (i in seq_len(n_segments)) {
 
@@ -423,21 +413,21 @@ generate_equal_spaced_nanoplot <- function(
 
       curved_path_string_i <- paste0(curved_path_string, collapse = " ")
 
-      curved_path_tags_i <-
+      data_path_tags_i <-
         paste0(
           "<path ",
           "d=\"", curved_path_string_i, "\" ",
-          "stroke=\"", line_stroke, "\" ",
-          "stroke-width=\"", line_stroke_width, "\" ",
-          "fill=\"", line_fill, "\" ",
+          "stroke=\"", data_line_stroke_color, "\" ",
+          "stroke-width=\"", data_line_stroke_width, "\" ",
+          "fill=\"none\"",
           ">",
           "</path>"
         )
 
-      curved_path_tags <- c(curved_path_tags, curved_path_tags_i)
+      data_path_tags <- c(data_path_tags, data_path_tags_i)
     }
 
-    curved_path_tags <- paste(curved_path_tags, collapse = "\n")
+    data_path_tags <- paste(data_path_tags, collapse = "\n")
   }
 
   #
@@ -451,9 +441,9 @@ generate_equal_spaced_nanoplot <- function(
     for (i in seq_along(data_x_points)) {
 
       data_point_radius_i <- data_point_radius[i]
-      data_point_stroke_i <- data_point_stroke[i]
+      data_point_stroke_color_i <- data_point_stroke_color[i]
       data_point_stroke_width_i <- data_point_stroke_width[i]
-      data_point_fill_i <- data_point_fill[i]
+      data_point_fill_color_i <- data_point_fill_color[i]
 
       if (is.na(data_y_points[i])) {
 
@@ -487,9 +477,9 @@ generate_equal_spaced_nanoplot <- function(
             "cx=\"", data_x_points[i], "\" ",
             "cy=\"", data_y_points[i], "\" ",
             "r=\"", data_point_radius_i, "\" ",
-            "stroke=\"", data_point_stroke_i, "\" ",
+            "stroke=\"", data_point_stroke_color_i, "\" ",
             "stroke-width=\"", data_point_stroke_width_i, "\" ",
-            "fill=\"", data_point_fill_i, "\" ",
+            "fill=\"", data_point_fill_color_i, "\" ",
             ">",
             "</circle>"
           )
@@ -513,6 +503,40 @@ generate_equal_spaced_nanoplot <- function(
     transform <- ""
     stroke_linecap <- "round"
     vector_effect <- "non-scaling-stroke"
+
+    if (!is.null(currency)) {
+
+      if (!is.na(y_ref_line) && abs(y_ref_line) < 10) {
+        use_subunits <- TRUE
+        decimals <- NULL
+      } else {
+        use_subunits <- FALSE
+        decimals <- NULL
+      }
+
+      if (!is.na(y_ref_line) && abs(y_ref_line) > 1000) {
+        suffixing <- TRUE
+        decimals <- 1
+      } else {
+        suffixing <- FALSE
+        decimals <- NULL
+      }
+
+      y_ref_line <-
+        vec_fmt_currency(
+          y_ref_line,
+          currency = currency,
+          use_subunits = use_subunits,
+          decimals = decimals,
+          suffixing = suffixing,
+          output = "html"
+        )
+
+    } else {
+
+      # TODO: Modify argument values based on input values
+      y_ref_line <- vec_fmt_number(y_ref_line, n_sigfig = 2)
+    }
 
     ref_line_tags <-
       paste0(
@@ -586,7 +610,7 @@ generate_equal_spaced_nanoplot <- function(
   # Generate vertical data point guidelines
   #
 
-  if (show_vertical_guidelines) {
+  if (show_vertical_guides) {
 
     g_guide_strings <- c()
 
@@ -600,7 +624,7 @@ generate_equal_spaced_nanoplot <- function(
           "width=\"20\" ",
           "height=\"", bottom_y, "\" ",
           "stroke=\"transparent\" ",
-          "stroke-width=\"12\" ",
+          "stroke-width=\"", vertical_guide_stroke_width, "\" ",
           "fill=\"transparent\"",
           ">",
           "</rect>"
@@ -686,7 +710,8 @@ generate_equal_spaced_nanoplot <- function(
           "stroke-linejoin: round; ",
           "} ",
           ".vert-line:hover rect { ",
-          "fill: #911EB460; ",
+          "fill: ", vertical_guide_stroke_color, "; ",
+          "fill-opacity: 40%; ",
           "stroke: #FFFFFF60; ",
           "color: red; ",
           "} ",
@@ -802,7 +827,7 @@ generate_equal_spaced_nanoplot <- function(
         svg_style,
         ref_area_tags,
         area_path_tags,
-        curved_path_tags,
+        data_path_tags,
         ref_line_tags,
         circle_tags,
         g_guide_tags,
