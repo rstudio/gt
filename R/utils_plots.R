@@ -84,6 +84,17 @@ generate_equal_spaced_nanoplot <- function(
     y_vals_gaps <- which(is.na(y_vals))
   }
 
+  # Ensure that a reference line or reference area isn't shown if any
+  # of its directives is NA
+  if (!is.null(y_ref_line) && is.na(y_ref_line)) {
+    show_ref_line <- FALSE
+  }
+  if (!is.null(y_ref_area)) {
+    if (is.na(y_ref_area[[1]]) || is.na(y_ref_area[[2]])) {
+      show_ref_area <- FALSE
+    }
+  }
+
   # Fixed interval between data points in px
   x_d <- 50
 
