@@ -2174,6 +2174,12 @@ cols_add <- function(
 #'   remove any incoming `NA` values; and (4) `"connect"` will preserve gaps but
 #'   also connect any lines across those gaps.
 #'
+#' @param reference_line *Add a reference line*
+#'
+#'   `scalar<numeric|integer|character>` // *default:* `NULL` (`optional`)
+#'
+#'   Supplying a value here will add a horizontal reference line.
+#'
 #' @param currency *Define values as currencies of a specific type*
 #'
 #'   `scalar<character>|obj:<gt_currency>` // *default:* `NULL` (`optional`)
@@ -2246,6 +2252,7 @@ cols_nanoplot <- function(
     columns,
     rows = everything(),
     missing_vals = c("gap", "zero", "remove", "connect"),
+    reference_line = NULL,
     currency = NULL,
     new_col_name = NULL,
     new_col_label = NULL,
@@ -2260,6 +2267,14 @@ cols_nanoplot <- function(
 
   # Ensure that arguments are matched
   missing_vals <- rlang::arg_match(missing_vals)
+
+  if (!is.null(reference_line)) {
+    show_ref_line <- TRUE
+    y_ref_line <- reference_line
+  } else {
+    show_ref_line <- FALSE
+    y_ref_line <- NULL
+  }
 
   #
   # Resolution of columns and rows as character vectors
@@ -2317,6 +2332,7 @@ cols_nanoplot <- function(
     data_plot_i <-
       generate_equal_spaced_nanoplot(
         y_vals = data_vals_plot_i,
+        y_ref_line = y_ref_line,
         missing_vals = missing_vals,
         currency = currency,
         line_stroke = options_plots$line_stroke,
@@ -2331,6 +2347,7 @@ cols_nanoplot <- function(
         show_data_points = options_plots$show_data_points,
         show_curved_data_line = options_plots$show_curved_data_line,
         show_lower_area = options_plots$show_lower_area,
+        show_ref_line = show_ref_line,
         show_vertical_guidelines = options_plots$show_vertical_guidelines,
         svg_height = height,
         svg_margin_left = options_plots$svg_margin_left,
@@ -2421,7 +2438,12 @@ cols_nanoplot <- function(
   data <-
     tab_style(
       data,
-      style = "padding-top:0; padding-bottom:0; vertical-align: middle",
+      style = paste0(
+        "padding-top:0; ",
+        "padding-bottom:0; ",
+        "vertical-align: middle; ",
+        "overflow-x: visible;"
+      ),
       locations = cells_body(columns = validated_new_col_name)
     )
 
