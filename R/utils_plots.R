@@ -60,6 +60,7 @@ generate_equal_spaced_nanoplot <- function(
   curved_path_tags <- NULL
   area_path_tags <- NULL
   ref_line_tags <- NULL
+  ref_area_tags <- NULL
   g_guide_tags <- NULL
 
   if (length(y_vals) == 0) {
@@ -122,15 +123,23 @@ generate_equal_spaced_nanoplot <- function(
     x
   }
 
-  # If there is a reference line, the value of it needs to be included
-  # in the `normalize_y_vals()` operation so that it obtains a normalized
-  # value in relation to the data points
+  #
+  # If there is a reference line and/or reference area, the values for these
+  # need to be generated and integrated in the `normalize_y_vals()` operation
+  # so that there are normalized values in relation to the data points
+  #
 
   if (show_ref_line) {
 
+    # Case where there is a reference line
+
     if (is.null(y_ref_line)) {
 
-      y_ref_line <- mean(y_vals, na.rm = TRUE)
+      # When a reference line is requested but there are no directives for
+      # defining the line, we will default to having the line represent the
+      # median of the data
+
+      y_ref_line <- stats::median(y_vals, na.rm = TRUE)
 
     } else if (
       !is.null(y_ref_line) &&
@@ -139,20 +148,11 @@ generate_equal_spaced_nanoplot <- function(
       y_ref_line %in% c("mean", "median", "min", "max", "first", "last")
     ) {
 
-      if (y_ref_line == "mean") {
-        y_ref_line <- mean(y_vals, na.rm = TRUE)
-      } else if (y_ref_line == "median") {
-        y_ref_line <- stats::median(y_vals, na.rm = TRUE)
-      } else if (y_ref_line == "min") {
-        y_ref_line <- min(y_vals, na.rm = TRUE)
-      } else if (y_ref_line == "max") {
-        y_ref_line <- max(y_vals, na.rm = TRUE)
-      } else if (y_ref_line == "first") {
-        y_ref_line <- y_vals[!is.na(y_vals)][1]
-      } else {
-        y_vals_non_na <- y_vals[!is.na(y_vals)]
-        y_ref_line <- y_vals_non_na[length(y_vals_non_na)]
-      }
+      y_ref_line <-
+        generate_ref_line_from_keyword(
+          vals = y_vals,
+          keyword = y_ref_line
+        )
     }
 
     y_proportions_w_ref_line <- normalize_y_vals(c(y_vals, y_ref_line[1]))
@@ -161,7 +161,72 @@ generate_equal_spaced_nanoplot <- function(
 
     data_y_ref_line <- safe_y_d + ((1 - y_proportion_ref_line) * data_y_height)
 
+  } else if (show_ref_area) {
+
+    # Case where there is a reference area
+
+    if (is.null(y_ref_area)) {
+
+      # When a reference area is requested but there are no directives for
+      # defining the area, we will default to constraining the area to the
+      # Q1 and Q3 quartiles
+
+      y_ref_area_l <- as.numeric(stats::quantile(y_vals, 0.25, na.rm = TRUE))
+      y_ref_area_u <- as.numeric(stats::quantile(y_vals, 0.75, na.rm = TRUE))
+
+    } else if (!is.null(y_ref_area)) {
+
+      # TODO: Validate input for `y_ref_area`
+
+      y_ref_area_1 <- y_ref_area[[1]]
+      y_ref_area_2 <- y_ref_area[[2]]
+
+      if (is.numeric(y_ref_area_1)) {
+        y_ref_area_line_1 <- y_ref_area_1
+      }
+      if (is.numeric(y_ref_area_2)) {
+        y_ref_area_line_2 <- y_ref_area_2
+      }
+
+      if (
+        is.character(y_ref_area_1) &&
+        y_ref_area_1 %in% c("mean", "median", "min", "max", "first", "last")
+      ) {
+
+        y_ref_area_line_1 <-
+          generate_ref_line_from_keyword(
+            vals = y_vals,
+            keyword = y_ref_area_1
+          )
+      }
+
+      if (
+        is.character(y_ref_area_2) &&
+        y_ref_area_2 %in% c("mean", "median", "min", "max", "first", "last")
+      ) {
+
+        y_ref_area_line_2 <-
+          generate_ref_line_from_keyword(
+            vals = y_vals,
+            keyword = y_ref_area_2
+          )
+      }
+
+      y_ref_area_lines_sorted <- sort(c(y_ref_area_line_1, y_ref_area_line_2))
+      y_ref_area_l <- y_ref_area_lines_sorted[1]
+      y_ref_area_u <- y_ref_area_lines_sorted[2]
+    }
+
+    y_proportions_w_ref_area <- normalize_y_vals(c(y_vals, y_ref_area_l, y_ref_area_u))
+    y_proportions_ref_area_l <- y_proportions_w_ref_area[-(1:num_y_vals)][1]
+    y_proportions_ref_area_u <- y_proportions_w_ref_area[-(1:num_y_vals)][2]
+    y_proportions <- y_proportions_w_ref_area[(1:num_y_vals)]
+
+    data_y_ref_area_l <- safe_y_d + ((1 - y_proportions_ref_area_l) * data_y_height)
+    data_y_ref_area_u <- safe_y_d + ((1 - y_proportions_ref_area_u) * data_y_height)
+
   } else {
+
     y_proportions <- normalize_y_vals(y_vals)
   }
 
@@ -326,8 +391,6 @@ generate_equal_spaced_nanoplot <- function(
 
   if (show_ref_line) {
 
-    # Convert `y_ref_line` value
-
     stroke <- "#0c859980"
     stroke_width <- 2
     stroke_dasharray <- "4 3"
@@ -351,6 +414,34 @@ generate_equal_spaced_nanoplot <- function(
         "vector-effect=\"", vector_effect, "\" ",
         ">",
         "</line>"
+      )
+  }
+
+  #
+  # Generate reference area
+  #
+
+  if (show_ref_area) {
+
+    fill <- "#90E0EF80"
+
+    p_ul <- paste0(data_x_points[1], ",", data_y_ref_area_u)
+    p_ur <- paste0(data_x_points[length(data_x_points)], ",", data_y_ref_area_u)
+    p_lr <- paste0(data_x_points[length(data_x_points)], ",", data_y_ref_area_l)
+    p_ll <- paste0(data_x_points[1], ",", data_y_ref_area_l)
+
+    ref_area_path <-
+      paste0("M", paste(p_ul, p_ur, p_lr, p_ll, collapse = ","), "Z")
+
+    ref_area_tags <-
+      paste0(
+        "<path ",
+        "d=\"", ref_area_path, "\" ",
+        "stroke=\"transparent\" ",
+        "stroke-width=\"2\" ",
+        "fill=\"", fill, "\" ",
+        "fill-opacity=\"0.8\">",
+        "</path>"
       )
   }
 
@@ -557,6 +648,7 @@ generate_equal_spaced_nanoplot <- function(
         "position:relative;\">",
         svg_defs,
         svg_style,
+        ref_area_tags,
         area_path_tags,
         curved_path_tags,
         ref_line_tags,
@@ -616,3 +708,30 @@ out_indices_from_vec <- function(x, cutoff = 3) {
   which(mad_double_from_median(x) > cutoff)
 }
 
+
+generate_ref_line_from_keyword <- function(vals, keyword) {
+
+  if (length(keyword) != 1) {
+    stop("The keyword length must be one.")
+  }
+
+  if (!(keyword %in% c("mean", "median", "min", "max", "first", "last"))) {
+    stop("A keyword for a reference line needs to be one of six valid options.")
+  }
+
+  if (keyword == "mean") {
+    ref_line <- mean(vals, na.rm = TRUE)
+  } else if (keyword == "median") {
+    ref_line <- stats::median(vals, na.rm = TRUE)
+  } else if (keyword == "min") {
+    ref_line <- min(vals, na.rm = TRUE)
+  } else if (keyword == "max") {
+    ref_line <- max(vals, na.rm = TRUE)
+  } else if (keyword == "first") {
+    ref_line <- vals[!is.na(vals)][1]
+  } else {
+    ref_line <- vals[!is.na(vals)][length(vals[!is.na(vals)])]
+  }
+
+  ref_line
+}
