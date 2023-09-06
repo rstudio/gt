@@ -5,62 +5,81 @@
 \title{Supply nanoplot options to \code{cols_nanoplot()}}
 \usage{
 nanoplot_options(
-  line_stroke = NULL,
-  line_stroke_width = NULL,
-  line_fill = NULL,
   data_point_radius = NULL,
-  data_point_stroke = NULL,
+  data_point_stroke_color = NULL,
   data_point_stroke_width = NULL,
-  data_point_fill = NULL,
-  vertical_guideline_stroke = NULL,
-  vertical_guideline_stroke_width = NULL,
+  data_point_fill_color = NULL,
+  data_line_stroke_color = NULL,
+  data_line_stroke_width = NULL,
+  vertical_guide_stroke_color = NULL,
+  vertical_guide_stroke_width = NULL,
   show_data_points = NULL,
-  show_curved_data_line = NULL,
+  show_data_line = NULL,
   show_lower_area = NULL,
-  show_vertical_guidelines = NULL,
-  svg_margin_left = NULL,
-  svg_margin_right = NULL,
-  svg_font_size = NULL,
-  svg_overflow = NULL,
-  svg_position = NULL
+  show_vertical_guides = NULL,
+  show_reference_line = NULL,
+  show_reference_area = NULL
 )
 }
 \arguments{
-\item{line_stroke}{The line stroke.}
+\item{data_point_radius}{\emph{Radius of data points}
 
-\item{line_stroke_width}{The width of the line stroke.}
+\verb{scalar<numeric>|vector<numeric>} // \emph{default:} \code{NULL} (\code{optional})
 
-\item{line_fill}{The line fill.}
+This sets the radius for each of the data points. By default this is set
+to \code{"10px"}.}
 
-\item{data_point_radius}{The data point radius.}
+\item{data_point_stroke_color}{\emph{Color of data points}
 
-\item{data_point_stroke}{The data point stroke color.}
+\verb{scalar<character>|vector<character>} // \emph{default:} \code{NULL} (\code{optional})}
 
-\item{data_point_stroke_width}{The data point stroke width.}
+\item{data_point_stroke_width}{\emph{Width of surrounding line on data points}
 
-\item{data_point_fill}{The data point fill width.}
+\verb{scalar<numeric>|vector<numeric>} // \emph{default:} \code{NULL} (\code{optional})}
 
-\item{vertical_guideline_stroke}{The stroke color for the vertical guidelines.}
+\item{data_point_fill_color}{\emph{Fill color for data points}
 
-\item{vertical_guideline_stroke_width}{The stroke width for the vertical guidelines.}
+\verb{scalar<character>|vector<character>} // \emph{default:} \code{NULL} (\code{optional})}
 
-\item{show_data_points}{Should the data points be shown?}
+\item{data_line_stroke_color}{\emph{Color of the data line}
 
-\item{show_curved_data_line}{Should a curved data line be shown?}
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})}
 
-\item{show_lower_area}{Should the area below the data points filled in?}
+\item{data_line_stroke_width}{\emph{Width of the data line}
 
-\item{show_vertical_guidelines}{Should vertical guidelines be shown?}
+\verb{scalar<numeric>} // \emph{default:} \code{NULL} (\code{optional})}
 
-\item{svg_margin_left}{The SVG left margin width.}
+\item{vertical_guide_stroke_color}{\emph{Color of vertical guides}
 
-\item{svg_margin_right}{The SVG right margin width.}
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})}
 
-\item{svg_font_size}{The SVG font size.}
+\item{vertical_guide_stroke_width}{\emph{Line widths for vertical guides}
 
-\item{svg_overflow}{The SVG font overflow setting.}
+\verb{scalar<numeric>} // \emph{default:} \code{NULL} (\code{optional})}
 
-\item{svg_position}{The SVG font position setting.}
+\item{show_data_points}{\emph{Should the data points be shown?}
+
+\verb{scalar<logical>} // \emph{default:} \code{NULL} (\code{optional})}
+
+\item{show_data_line}{\emph{Should a data line be shown?}
+
+\verb{scalar<logical>} // \emph{default:} \code{NULL} (\code{optional})}
+
+\item{show_lower_area}{\emph{Should the area below the data points be filled in?}
+
+\verb{scalar<logical>} // \emph{default:} \code{NULL} (\code{optional})}
+
+\item{show_vertical_guides}{\emph{Should vertical guides be shown?}
+
+\verb{scalar<logical>} // \emph{default:} \code{NULL} (\code{optional})}
+
+\item{show_reference_line}{\emph{Should a reference line be shown?}
+
+\verb{scalar<logical>} // \emph{default:} \code{NULL} (\code{optional})}
+
+\item{show_reference_area}{\emph{Should a reference area be shown?}
+
+\verb{scalar<logical>} // \emph{default:} \code{NULL} (\code{optional})}
 }
 \value{
 A list object of class \code{nanoplot_options}.
