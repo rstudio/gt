@@ -152,6 +152,37 @@ simplicity, however, you do get a set of very succinct data visualizations
 or more columns as the basic inputs for the nanoplots and generate a new
 column containing the plots.
 }
+\section{Examples}{
+
+
+Let's make some nanoplots with the \code{\link{illness}} dataset. The columns beginning
+with 'day' all contain ordered measurement values, comprising seven
+individual daily results. Using \code{cols_nanoplot()} we create a new column to
+hold the nanoplots (with \code{new_col_name = "nanoplots"}), referencing the
+columns containing the data (with \code{columns = starts_with("day")}). It's also
+possible to define a column label here using the \code{new_col_label} argument.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{illness \%>\%
+  dplyr::slice_head(n = 10) |>
+  gt(rowname_col = "test") |>
+  tab_header("Partial summary of daily tests performed on YF patient") |>
+  tab_stubhead(label = md("**Test**")) |>
+  cols_hide(columns = c(starts_with("norm"), starts_with("day"))) |>
+  fmt_units(columns = units) |>
+  cols_nanoplot(
+    columns = starts_with("day"),
+    new_col_name = "nanoplots",
+    new_col_label = md("*Progression*")
+  ) |>
+  cols_align(align = "center", columns = nanoplots) |>
+  cols_merge(columns = c(test, units), pattern = "\{1\} (\{2\})") |>
+  tab_footnote(
+    footnote = "Measurements from Day 3 through to Day 8.",
+    locations = cells_column_labels(columns = nanoplots)
+  )
+}\if{html}{\out{</div>}}
+}
+
 \section{Function ID}{
 
 5-8
