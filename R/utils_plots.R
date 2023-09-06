@@ -24,6 +24,8 @@
 # This creates a nanoplot with equally-spaced y values
 generate_equal_spaced_nanoplot <- function(
     y_vals,
+    y_ref_line = NULL,
+    y_ref_area = NULL,
     missing_vals = c("gap", "zero", "remove", "connect"),
     currency = NULL,
     line_stroke = "steelblue",
@@ -38,6 +40,8 @@ generate_equal_spaced_nanoplot <- function(
     show_data_points = TRUE,
     show_curved_data_line = TRUE,
     show_lower_area = TRUE,
+    show_ref_line = FALSE,
+    show_ref_area = FALSE,
     show_vertical_guidelines = TRUE,
     svg_height = "1.5em",
     svg_margin_left = "auto",
@@ -55,6 +59,7 @@ generate_equal_spaced_nanoplot <- function(
   circle_tags <- NULL
   curved_path_tags <- NULL
   area_path_tags <- NULL
+  ref_line_tags <- NULL
   g_guide_tags <- NULL
 
   if (length(y_vals) == 0) {
@@ -117,7 +122,26 @@ generate_equal_spaced_nanoplot <- function(
     x
   }
 
-  y_proportions <- normalize_y_vals(y_vals)
+  # If there is a reference line, the value of it needs to be included
+  # in the `normalize_y_vals()` operation so that it obtains a normalized
+  # value in relation to the data points
+
+  if (show_ref_line) {
+
+    if (is.null(y_ref_line)) {
+      y_ref_line <- mean(y_vals, na.rm = TRUE)
+    }
+
+    y_proportions_w_ref_line <- normalize_y_vals(c(y_vals, y_ref_line))
+    y_proportion_ref_line <- y_proportions_w_ref_line[length(y_proportions_w_ref_line)]
+    y_proportions <- y_proportions_w_ref_line[-length(y_proportions_w_ref_line)]
+
+    data_y_ref_line <- safe_y_d + ((1 - y_proportion_ref_line) * data_y_height)
+
+  } else {
+    y_proportions <- normalize_y_vals(y_vals)
+  }
+
   x_proportions <- seq(0, 1, length.out = num_y_vals)
 
   # Create normalized (and inverted for SVG) data `x` and `y` values
@@ -274,6 +298,40 @@ generate_equal_spaced_nanoplot <- function(
   }
 
   #
+  # Generate reference line
+  #
+
+  if (show_ref_line) {
+
+    # Convert `y_ref_line` value
+
+    stroke <- "#0c859980"
+    stroke_width <- 2
+    stroke_dasharray <- "4 3"
+    transform <- ""
+    stroke_linecap <- "round"
+    vector_effect <- "non-scaling-stroke"
+
+    ref_line_tags <-
+      paste0(
+        "<line ",
+        "class=\"ref-line\" ",
+        "x1=\"", data_x_points[1], "\" ",
+        "y1=\"", data_y_ref_line, "\" ",
+        "x2=\"", data_x_points[length(data_x_points)], "\" ",
+        "y2=\"", data_y_ref_line, "\" ",
+        "stroke=\"", stroke, "\" ",
+        "stroke-width=\"", stroke_width, "\" ",
+        "stroke-dasharray=\"", stroke_dasharray, "\" ",
+        "transform=\"", transform, "\" ",
+        "stroke-linecap=\"", stroke_linecap, "\" ",
+        "vector-effect=\"", vector_effect, "\" ",
+        ">",
+        "</line>"
+      )
+  }
+
+  #
   # Generate vertical data point guidelines
   #
 
@@ -296,7 +354,6 @@ generate_equal_spaced_nanoplot <- function(
           ">",
           "</rect>"
         )
-
 
       if (!is.null(currency)) {
 
@@ -479,6 +536,7 @@ generate_equal_spaced_nanoplot <- function(
         svg_style,
         area_path_tags,
         curved_path_tags,
+        ref_line_tags,
         circle_tags,
         g_guide_tags,
         "</svg>"
