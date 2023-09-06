@@ -10,6 +10,7 @@ cols_nanoplot(
   rows = everything(),
   missing_vals = c("gap", "zero", "remove", "connect"),
   reference_line = NULL,
+  reference_area = NULL,
   currency = NULL,
   new_col_name = NULL,
   new_col_label = NULL,
@@ -67,10 +68,22 @@ also connect any lines across those gaps.}
 
 \verb{scalar<numeric|integer|character>} // \emph{default:} \code{NULL} (\code{optional})
 
-Supplying a value here will add a horizontal reference line. It could be a
-static value, applied to all nanoplots generated. Or, the input can be one
-of the following for the generation of the value: (1) \code{"mean"}, (2)
-\code{"median"}, (3) \code{"min"}, (4) \code{"max"}, (5) \code{"first"}, or (6) \code{"last"}.}
+Supplying a single value here will add a horizontal reference line. It
+could be a static numeric value, applied to all nanoplots generated. Or,
+the input can be one of the following for generating the line from the
+underlying data: (1) \code{"mean"}, (2) \code{"median"}, (3) \code{"min"}, (4) \code{"max"},
+(5) \code{"first"}, or (6) \code{"last"}.}
+
+\item{reference_area}{\emph{Add a reference area}
+
+\verb{vector<numeric|integer|character>|list} // \emph{default:} \code{NULL} (\code{optional})
+
+A reference area requires two inputs to define bottom and top boundaries
+for a rectangular area. The types of values supplied are the same as those
+expected for \code{reference_line}, which is either a static numeric value or
+one of the following keywords for the generation of the value: (1)
+\code{"mean"}, (2) \code{"median"}, (3) \code{"min"}, (4) \code{"max"}, (5) \code{"first"}, or (6)
+\code{"last"}. Input can either be a vector or list with two elements.}
 
 \item{currency}{\emph{Define values as currencies of a specific type}
 
