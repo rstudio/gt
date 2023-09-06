@@ -2132,9 +2132,9 @@ cols_add <- function(
 #' Nanoplots are tiny plots you can use in your **gt** table. They are simple by
 #' design, mainly because there isn't a lot of space to work with. With that
 #' simplicity, however, you do get a set of very succinct data visualizations
-#' (each quick and to the point). With `cols_nanoplot()` you take data from one
-#' or more columns as the basic inputs for the nanoplots and generate a new
-#' column containing the plots.
+#' that adapt nicely to the amount of data you feed into them. With
+#' `cols_nanoplot()` you take data from one or more columns as the basic inputs
+#' for the nanoplots and generate a new column containing the plots.
 #'
 #' @inheritParams cols_align
 #'
