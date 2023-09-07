@@ -2239,8 +2239,8 @@ cols_add <- function(
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   A single column label. If not supplied then the column label will inherit
-#'   from `new_col_name` (if nothing provided to that, the label will be
-#'   `"nanoplots"`).
+#'   from `new_col_name` (if nothing provided to that argument, the label will
+#'   be `"nanoplots"`).
 #'
 #' @param before,after *Column used as anchor*
 #'
@@ -2261,14 +2261,14 @@ cols_add <- function(
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   The height of the nanoplots. If nothing is provided here then **gt** will
-#'   provide a sensible length value.
+#'   provide a sensible length value of `"1.5em"`.
 #'
 #' @param options *Set options for the nanoplots*
 #'
 #'   `obj:<nanoplot_options` // *default:* `NULL` (`optional`)
 #'
-#'   By using the [nanoplot_options()] helper function here, you can that
-#'   alter the composition and styling of the nanoplots in the new column.
+#'   By using the [nanoplot_options()] helper function here, you can alter the
+#'   layout and styling of the nanoplots in the new column.
 #'
 #' @return An object of class `gt_tbl`.
 #'
