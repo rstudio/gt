@@ -171,6 +171,34 @@ invoked at the \code{options} argument of \code{cols_nanoplot()}. Through that h
 function, layers of the nanoplots can be selectively removed and aesthetics
 of the remaining plot components can modified.
 }
+\section{Targeting cells with \code{columns} and \code{rows}}{
+
+
+Targeting of values to insert into the nanoplots is done through \code{columns}
+and additionally by \code{rows} (if nothing is provided for \code{rows} then entire
+columns are selected). Aside from declaring column names in \code{c()} (with bare
+column names or names in quotes) we can use also
+\strong{tidyselect}-style expressions. This can be as basic as supplying a select
+helper like \code{starts_with()}, or, providing a more complex incantation like
+
+\code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
+
+which targets numeric columns that have a maximum value greater than
+1,000,000 (excluding any \code{NA}s from consideration).
+
+Once the columns are targeted, we may also target the \code{rows} within those
+columns. This can be done in a variety of ways. If a stub is present, then we
+potentially have row identifiers. Those can be used much like column names in
+the \code{columns}-targeting scenario. We can use simpler \strong{tidyselect}-style
+expressions (the select helpers should work well here) and we can use quoted
+row identifiers in \code{c()}. It's also possible to use row indices (e.g.,
+\code{c(3, 5, 6)}) though these index values must correspond to the row numbers of
+the input data (the indices won't necessarily match those of rearranged rows
+if row groups are present). One more type of expression is possible, an
+expression that takes column values (can involve any of the available columns
+in the table) and returns a logical vector.
+}
+
 \section{Examples}{
 
 
