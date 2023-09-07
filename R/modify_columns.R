@@ -2388,7 +2388,7 @@ cols_nanoplot <- function(
         vertical_guide_stroke_width = options_plots$vertical_guide_stroke_width,
         show_data_points = options_plots$show_data_points,
         show_data_line = options_plots$show_data_line,
-        show_lower_area = options_plots$show_lower_area,
+        show_data_area = options_plots$show_data_area,
         show_ref_line = options_plots$show_reference_line,
         show_ref_area = options_plots$show_reference_area,
         show_vertical_guides = options_plots$show_vertical_guides,
