@@ -539,12 +539,21 @@ currency <- function(
 #'
 #'   `scalar<numeric>|vector<numeric>` // *default:* `NULL` (`optional`)
 #'
-#'   This sets the radius for each of the data points. By default this is set
-#'   to `"10px"`.
+#'   Th `data_point_radius` option lets you set the radius for each of the data
+#'   points. By default this is set to `10`. Individual radius values can be
+#'   set by using a vector of numeric values; however, the vector provided must
+#'   match the number of data points.
 #'
 #' @param data_point_stroke_color *Color of data points*
 #'
 #'   `scalar<character>|vector<character>` // *default:* `NULL` (`optional`)
+#'
+#'   The default stroke color of the data points is `"#FFFFFF"` (`"white"`).
+#'   This works well when there is a visible data line combined with data points
+#'   with a darker fill color. The stroke color can be modified with
+#'   `data_point_stroke_color` for all data points by supplying a single color
+#'   value. With a vector of colors, each data point's stroke color can be
+#'   changed (ensure that the vector length matches the number of data points).
 #'
 #' @param data_point_stroke_width *Width of surrounding line on data points*
 #'
@@ -554,45 +563,90 @@ currency <- function(
 #'
 #'   `scalar<character>|vector<character>` // *default:* `NULL` (`optional`)
 #'
+#'   By default, all data points have a fill color of `"#FF0000"` (`"red"`).
+#'   This can be changed for all data points by providing a different color
+#'   to `data_point_fill_color`. And, a vector of different colors can be
+#'   supplied so long as the length is equal to the number of data points; the
+#'   fill color values will be applied in order of left to right.
+#'
 #' @param data_line_stroke_color *Color of the data line*
 #'
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   The color of the data line can be modified from its default `"#4682B4"`
+#'   (`"steelblue"`) color by supplying a color to the `data_line_stroke_color`
+#'   option.
 #'
 #' @param data_line_stroke_width *Width of the data line*
 #'
 #'   `scalar<numeric>` // *default:* `NULL` (`optional`)
 #'
+#'   The width of the connecting data line can be modified with the
+#'   `data_line_stroke_width` option. By default, a value of `4` (as in
+#'   `"4px"`) is used.
+#'
 #' @param vertical_guide_stroke_color *Color of vertical guides*
 #'
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   Vertical guides appear when hovering in the vicinity of data points. Their
+#'   default color is `"#911EB4"` (a strong magenta color) and a fill opacity
+#'   value of `0.4` is automatically applied to this. However, the base color
+#'   can be changed with the `vertical_guide_stroke_color` option.
 #'
 #' @param vertical_guide_stroke_width *Line widths for vertical guides*
 #'
 #'   `scalar<numeric>` // *default:* `NULL` (`optional`)
 #'
+#'   The vertical guide's stroke width, by default, is relatively large at `12`.
+#'   This is fully modifiable by setting a different value with the
+#'   `vertical_guide_stroke_width` option.
+#'
 #' @param show_data_points *Should the data points be shown?*
 #'
 #'   `scalar<logical>` // *default:* `NULL` (`optional`)
+#'
+#'   By default, all data points in a nanoplot are shown but this layer can be
+#'   hidden by setting `show_data_points` to `FALSE`.
 #'
 #' @param show_data_line *Should a data line be shown?*
 #'
 #'   `scalar<logical>` // *default:* `NULL` (`optional`)
 #'
+#'   The data line connects data points together and it is shown by default.
+#'   This data line layer can be hidden by setting `show_data_line` to `FALSE`.
+#'
 #' @param show_data_area *Should a data-point-bounded area be shown?*
 #'
 #'   `scalar<logical>` // *default:* `NULL` (`optional`)
+#'
+#'   The data area layer is adjacent to the data points and the data line. It is
+#'   shown by default but can be hidden with `show_data_area = FALSE`.
 #'
 #' @param show_vertical_guides *Should vertical guides be shown?*
 #'
 #'   `scalar<logical>` // *default:* `NULL` (`optional`)
 #'
+#'   Vertical guides appear when hovering over data points. This hidden layer is
+#'   active by default but can be deactivated by using
+#'   `show_vertical_guides = FALSE`.
+#'
 #' @param show_reference_line *Should a reference line be shown?*
 #'
 #'   `scalar<logical>` // *default:* `NULL` (`optional`)
 #'
+#'   The layer with a horizontal reference line appears underneath that of the
+#'   data points and the data line. Like vertical guides, hovering over a
+#'   reference will show its value. The reference line (if available) is shown
+#'   by default but can be hidden by setting `show_reference_line` to `FALSE`.
+#'
 #' @param show_reference_area *Should a reference area be shown?*
 #'
 #'   `scalar<logical>` // *default:* `NULL` (`optional`)
+#'
+#'   The reference area appears at the very bottom of the layer stack, if it is
+#'   available. It will be shown in the default case but can be hidden by using
+#'   `show_reference_area = FALSE`.
 #'
 #' @return A list object of class `nanoplot_options`.
 #'
