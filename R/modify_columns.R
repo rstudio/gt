@@ -2146,9 +2146,8 @@ cols_add <- function(
 #'   either be a series of column names provided in [c()], a vector of column
 #'   indices, or a select helper function. Examples of select helper functions
 #'   include [starts_with()], [ends_with()], [contains()], [matches()],
-#'   [one_of()], [num_range()], and [everything()]. The columns move as a group
-#'   to a different position. The order of the remaining columns will be
-#'   preserved.
+#'   [one_of()], [num_range()], and [everything()]. Data collected from the
+#'   columns will be concatenated together in the order of resolution.
 #'
 #' @param rows *Rows that should contain nanoplots*
 #'
