@@ -36,9 +36,8 @@ The columns which contain the numeric data to be plotted as nanoplots. Can
 either be a series of column names provided in \code{\link[=c]{c()}}, a vector of column
 indices, or a select helper function. Examples of select helper functions
 include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
-\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. The columns move as a group
-to a different position. The order of the remaining columns will be
-preserved.}
+\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. Data collected from the
+columns will be concatenated together in the order of resolution.}
 
 \item{rows}{\emph{Rows that should contain nanoplots}
 
