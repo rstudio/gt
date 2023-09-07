@@ -26,7 +26,7 @@ generate_equal_spaced_nanoplot <- function(
     y_vals,
     y_ref_line = NULL,
     y_ref_area = NULL,
-    missing_vals = c("gap", "zero", "remove", "connect"),
+    missing_vals = c("gap", "zero", "remove"),
     currency = NULL,
     data_point_radius = 10,
     data_point_stroke_color = "white",
