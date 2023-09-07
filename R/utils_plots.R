@@ -504,39 +504,7 @@ generate_equal_spaced_nanoplot <- function(
     stroke_linecap <- "round"
     vector_effect <- "non-scaling-stroke"
 
-    if (!is.null(currency)) {
-
-      if (!is.na(y_ref_line) && abs(y_ref_line) < 10) {
-        use_subunits <- TRUE
-        decimals <- NULL
-      } else {
-        use_subunits <- FALSE
-        decimals <- NULL
-      }
-
-      if (!is.na(y_ref_line) && abs(y_ref_line) > 1000) {
-        suffixing <- TRUE
-        decimals <- 1
-      } else {
-        suffixing <- FALSE
-        decimals <- NULL
-      }
-
-      y_ref_line <-
-        vec_fmt_currency(
-          y_ref_line,
-          currency = currency,
-          use_subunits = use_subunits,
-          decimals = decimals,
-          suffixing = suffixing,
-          output = "html"
-        )
-
-    } else {
-
-      # TODO: Modify argument values based on input values
-      y_ref_line <- vec_fmt_number(y_ref_line, n_sigfig = 2)
-    }
+    y_ref_line <- format_number_compactly(val = y_ref_line, currency = currency)
 
     ref_line_tags <-
       paste0(
@@ -630,39 +598,7 @@ generate_equal_spaced_nanoplot <- function(
           "</rect>"
         )
 
-      if (!is.null(currency)) {
-
-        if (!is.na(y_vals[i]) && abs(y_vals[i]) < 10) {
-          use_subunits <- TRUE
-          decimals <- NULL
-        } else {
-          use_subunits <- FALSE
-          decimals <- NULL
-        }
-
-        if (!is.na(y_vals[i]) && abs(y_vals[i]) > 1000) {
-          suffixing <- TRUE
-          decimals <- 1
-        } else {
-          suffixing <- FALSE
-          decimals <- NULL
-        }
-
-        y_value_i <-
-          vec_fmt_currency(
-            y_vals[i],
-            currency = currency,
-            use_subunits = use_subunits,
-            decimals = decimals,
-            suffixing = suffixing,
-            output = "html"
-          )
-
-      } else {
-
-        # TODO: Modify argument values based on input values
-        y_value_i <- vec_fmt_number(y_vals[i], n_sigfig = 2)
-      }
+      y_value_i <- format_number_compactly(val = y_vals[i], currency = currency)
 
       x_text <- data_x_points[i] + 10
 
@@ -910,4 +846,145 @@ generate_ref_line_from_keyword <- function(vals, keyword) {
   }
 
   ref_line
+}
+
+format_number_compactly <- function(val, currency) {
+
+  if (is.na(val)) {
+    return("NA")
+  }
+
+  if (val == 0) {
+    return("0")
+  }
+
+  if (abs(val) < 0.01) {
+
+    use_subunits <- TRUE
+    decimals <- NULL
+
+    n_sigfig <- 2
+    suffixing <- FALSE
+
+  } else if (abs(val) < 1) {
+
+    use_subunits <- TRUE
+    decimals <- NULL
+
+    n_sigfig <- 2
+    suffixing <- FALSE
+
+  } else if (abs(val) < 100) {
+
+    use_subunits <- TRUE
+    decimals <- NULL
+
+    n_sigfig <- 3
+    suffixing <- FALSE
+
+  } else if (abs(val) < 1000) {
+
+    use_subunits <- TRUE
+    decimals <- NULL
+
+    n_sigfig <- 3
+    suffixing <- FALSE
+
+  } else if (abs(val) < 10000) {
+
+    use_subunits <- FALSE
+    decimals <- 2
+
+    n_sigfig <- 3
+    suffixing <- TRUE
+
+  } else if (abs(val) < 100000) {
+
+    use_subunits <- FALSE
+    decimals <- 1
+
+    n_sigfig <- 3
+    suffixing <- TRUE
+
+  } else if (abs(val) < 1000000) {
+
+    use_subunits <- FALSE
+    decimals <- 0
+
+    n_sigfig <- 3
+    suffixing <- TRUE
+
+  } else if (abs(val) < 1e15) {
+
+    use_subunits <- FALSE
+    decimals <- 1
+
+    n_sigfig <- 3
+    suffixing <- TRUE
+
+  } else {
+
+    use_subunits <- FALSE
+    decimals <- NULL
+    n_sigfig <- 2
+    suffixing <- FALSE
+  }
+
+  # Format value accordingly
+
+  if (!is.null(currency)) {
+
+    if (abs(val) >= 1e15) {
+
+      val_formatted <-
+        vec_fmt_currency(
+          1e15,
+          currency = currency,
+          use_subunits = FALSE,
+          decimals = 0,
+          suffixing = TRUE,
+          output = "html"
+        )
+
+      val_formatted <- paste0(">", val_formatted)
+
+    } else {
+
+      val_formatted <-
+        vec_fmt_currency(
+          val,
+          currency = currency,
+          use_subunits = use_subunits,
+          decimals = decimals,
+          suffixing = suffixing,
+          output = "html"
+        )
+    }
+
+  } else {
+
+    if (abs(val) < 0.01 || abs(val) >= 1e15) {
+
+      val_formatted <-
+        vec_fmt_scientific(
+          val,
+          n_sigfig = n_sigfig,
+          decimals = 1,
+          output = "html"
+        )
+
+    } else {
+
+      val_formatted <-
+        vec_fmt_number(
+          val,
+          n_sigfig = n_sigfig,
+          decimals = 1,
+          suffixing = suffixing,
+          output = "html"
+        )
+    }
+  }
+
+  val_formatted
 }
