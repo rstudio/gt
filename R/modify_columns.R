@@ -2136,6 +2136,27 @@ cols_add <- function(
 #' `cols_nanoplot()` you take data from one or more columns as the basic inputs
 #' for the nanoplots and generate a new column containing the plots.
 #'
+#' Each nanoplot contains data points with reasonably good visibility, having
+#' smooth connecting lines between them to allow for easier scanning of values.
+#' By default, a nanoplot will have basic interactivity. One can hover over the
+#' data points and vertical guides will display values ascribed to each. A
+#' horizontal *reference line* is also present in the standard view (denoting
+#' the median of the data). This reference line can be customized by providing a
+#' static value or by choosing a keyword that computes a particular *y* value
+#' using a nanoplot's data values. Aside from a reference line, there is also an
+#' associated *reference area* which, by default, tries to make itself useful by
+#' bounding the area between the lower and upper quartiles of the data. These
+#' boundaries can also be customized in a similar fashion as the reference line.
+#' The nanoplots are robust against missing values, are multiple strategies are
+#' available for handling missingness.
+#'
+#' While basic customization options are present in the `cols_nanoplot()`, many
+#' more opportunities for customizing nanoplots on a more granular level are
+#' possible with the [nanoplot_options()] helper function. That is to be
+#' invoked at the `options` argument of `cols_nanoplot()`. Through that helper
+#' function, layers of the nanoplots can be selectively removed and aesthetics
+#' of the remaining plot components can modified.
+#'
 #' @inheritParams cols_align
 #'
 #' @param columns *Columns from which to obtain data*
@@ -2164,14 +2185,13 @@ cols_add <- function(
 #'
 #' @param missing_vals *Treatment of missing values*
 #'
-#'   `singl-kw:[gap|zero|remove|connect]` // *default:* `"gap"`
+#'   `singl-kw:[gap|zero|remove]` // *default:* `"gap"`
 #'
 #'   If missing values are encountered within the input data, there are three
 #'   strategies available for their handling: (1) `"gap"` will display data gaps
 #'   at the sites of missing data, where data lines will have discontinuities;
-#'   (2) `"zero"` will replace `NA` values with zero values; (3) `"remove"` will
-#'   remove any incoming `NA` values; and (4) `"connect"` will preserve gaps but
-#'   also connect any lines across those gaps.
+#'   (2) `"zero"` will replace `NA` values with zero values; and (3) `"remove"`
+#'   will remove any incoming `NA` values.
 #'
 #' @param reference_line *Add a reference line*
 #'
@@ -2247,7 +2267,7 @@ cols_add <- function(
 #'
 #'   `obj:<nanoplot_options` // *default:* `NULL` (`optional`)
 #'
-#'   By using the `nanoplot_options()` helper function here, you can that
+#'   By using the [nanoplot_options()] helper function here, you can that
 #'   alter the composition and styling of the nanoplots in the new column.
 #'
 #' @return An object of class `gt_tbl`.
@@ -2299,7 +2319,7 @@ cols_nanoplot <- function(
     data,
     columns,
     rows = everything(),
-    missing_vals = c("gap", "zero", "remove", "connect"),
+    missing_vals = c("gap", "zero", "remove"),
     reference_line = NULL,
     reference_area = NULL,
     currency = NULL,
