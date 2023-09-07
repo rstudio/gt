@@ -15,7 +15,7 @@ nanoplot_options(
   vertical_guide_stroke_width = NULL,
   show_data_points = NULL,
   show_data_line = NULL,
-  show_lower_area = NULL,
+  show_data_area = NULL,
   show_vertical_guides = NULL,
   show_reference_line = NULL,
   show_reference_area = NULL
@@ -65,7 +65,7 @@ to \code{"10px"}.}
 
 \verb{scalar<logical>} // \emph{default:} \code{NULL} (\code{optional})}
 
-\item{show_lower_area}{\emph{Should the area below the data points be filled in?}
+\item{show_data_area}{\emph{Should a data-point-bounded area be shown?}
 
 \verb{scalar<logical>} // \emph{default:} \code{NULL} (\code{optional})}
 
