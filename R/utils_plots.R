@@ -38,7 +38,7 @@ generate_equal_spaced_nanoplot <- function(
     vertical_guide_stroke_width = 12,
     show_data_points = TRUE,
     show_data_line = TRUE,
-    show_lower_area = TRUE,
+    show_data_area = TRUE,
     show_ref_line = FALSE,
     show_ref_area = FALSE,
     show_vertical_guides = TRUE,
@@ -761,10 +761,10 @@ generate_equal_spaced_nanoplot <- function(
     )
 
   #
-  # Optionally create an area path in the bottom of the data area
+  # Optionally create an area path adjacent to the data points and data line
   #
 
-  if (show_lower_area) {
+  if (show_data_area) {
 
     area_path_tags <- c()
 
