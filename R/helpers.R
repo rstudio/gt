@@ -578,7 +578,7 @@ currency <- function(
 #'
 #'   `scalar<logical>` // *default:* `NULL` (`optional`)
 #'
-#' @param show_lower_area *Should the area below the data points be filled in?*
+#' @param show_data_area *Should a data-point-bounded area be shown?*
 #'
 #'   `scalar<logical>` // *default:* `NULL` (`optional`)
 #'
@@ -615,7 +615,7 @@ nanoplot_options <- function(
     vertical_guide_stroke_width = NULL,
     show_data_points = NULL,
     show_data_line = NULL,
-    show_lower_area = NULL,
+    show_data_area = NULL,
     show_vertical_guides = NULL,
     show_reference_line = NULL,
     show_reference_area = NULL
@@ -651,8 +651,8 @@ nanoplot_options <- function(
   if (is.null(show_data_line)) {
     show_data_line <- TRUE
   }
-  if (is.null(show_lower_area)) {
-    show_lower_area <- TRUE
+  if (is.null(show_data_area)) {
+    show_data_area <- TRUE
   }
   if (is.null(show_vertical_guides)) {
     show_vertical_guides <- TRUE
@@ -676,7 +676,7 @@ nanoplot_options <- function(
       vertical_guide_stroke_width = vertical_guide_stroke_width,
       show_data_points = show_data_points,
       show_data_line = show_data_line,
-      show_lower_area = show_lower_area,
+      show_data_area = show_data_area,
       show_vertical_guides = show_vertical_guides,
       show_reference_line = show_reference_line,
       show_reference_area = show_reference_area
