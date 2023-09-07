@@ -209,7 +209,7 @@ hold the nanoplots (with \code{new_col_name = "nanoplots"}), referencing the
 columns containing the data (with \code{columns = starts_with("day")}). It's also
 possible to define a column label here using the \code{new_col_label} argument.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{illness \%>\%
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{illness |>
   dplyr::slice_head(n = 10) |>
   gt(rowname_col = "test") |>
   tab_header("Partial summary of daily tests performed on YF patient") |>
@@ -219,7 +219,11 @@ possible to define a column label here using the \code{new_col_label} argument.
   cols_nanoplot(
     columns = starts_with("day"),
     new_col_name = "nanoplots",
-    new_col_label = md("*Progression*")
+    new_col_label = md("*Progression*"),
+    options = nanoplot_options(
+      show_reference_line = FALSE,
+      show_reference_area = FALSE
+    )
   ) |>
   cols_align(align = "center", columns = nanoplots) |>
   cols_merge(columns = c(test, units), pattern = "\{1\} (\{2\})") |>
@@ -231,6 +235,62 @@ possible to define a column label here using the \code{new_col_label} argument.
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_1.png" alt="This image of a table was generated from the first code example in the `cols_nanoplot()` help file." style="width:100\%;">
+}}
+
+Now we'll make another table that contains two columns of nanoplots. Starting
+from the \code{\link{towny}} dataset, we first reduce it down to a subset of columns
+and rows. All of the columns related to either population or density will be
+used as input data for the two nanoplots. Both nanoplots will use a reference
+line that is generated from the median of the input data. And by naming the
+new nanoplot-laden columns in a similar manner as the input data columns, we
+can take advantage of select helpers (e.g., when using \code{\link[=tab_spanner]{tab_spanner()}}). Many
+of the input data columns are now redundant because of the plots, so we'll
+elect to hide most of those with \code{\link[=cols_hide]{cols_hide()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
+  dplyr::select(name, starts_with("population"), starts_with("density")) |>
+  dplyr::filter(population_2021 > 200000) |>
+  dplyr::arrange(desc(population_2021)) |>
+  gt() |>
+  fmt_integer(columns = starts_with("population")) |>
+  fmt_number(columns = starts_with("density"), decimals = 1) |>
+  cols_nanoplot(
+    columns = starts_with("population"),
+    reference_line = "median",
+    reference_area = NA,
+    new_col_name = "population_plot",
+    new_col_label = md("*Change*")
+  ) |>
+  cols_nanoplot(
+    columns = starts_with("density"),
+    reference_line = "median",
+    reference_area = NA,
+    new_col_name = "density_plot",
+    new_col_label = md("*Change*")
+  ) |>
+  cols_hide(columns = matches("2001|2006|2011|2016")) |>
+  tab_spanner(
+    label = "Population",
+    columns = starts_with("population")
+  ) |>
+  tab_spanner(
+    label = "Density (\{\{*persons* km^-2\}\})",
+    columns = starts_with("density")
+  ) |>
+  cols_label_with(
+    columns = -matches("plot"),
+    fn = function(x) gsub("\\\\D+", "", x)
+  ) |>
+  cols_align(align = "center", columns = matches("plot")) |>
+  cols_width(
+    name ~ px(140),
+    everything() ~ px(100)
+  ) |>
+  opt_horizontal_padding(scale = 2)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_2.png" alt="This image of a table was generated from the second code example in the `cols_nanoplot()` help file." style="width:100\%;">
 }}
 }
 
