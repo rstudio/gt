@@ -108,8 +108,8 @@ name will be \code{"nanoplots"}.}
 \verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 A single column label. If not supplied then the column label will inherit
-from \code{new_col_name} (if nothing provided to that, the label will be
-\code{"nanoplots"}).}
+from \code{new_col_name} (if nothing provided to that argument, the label will
+be \code{"nanoplots"}).}
 
 \item{before, after}{\emph{Column used as anchor}
 
@@ -130,14 +130,14 @@ column will be placed at the end of the column series.}
 \verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 The height of the nanoplots. If nothing is provided here then \strong{gt} will
-provide a sensible length value.}
+provide a sensible length value of \code{"1.5em"}.}
 
 \item{options}{\emph{Set options for the nanoplots}
 
 \verb{obj:<nanoplot_options} // \emph{default:} \code{NULL} (\code{optional})
 
-By using the \code{\link[=nanoplot_options]{nanoplot_options()}} helper function here, you can that
-alter the composition and styling of the nanoplots in the new column.}
+By using the \code{\link[=nanoplot_options]{nanoplot_options()}} helper function here, you can alter the
+layout and styling of the nanoplots in the new column.}
 }
 \value{
 An object of class \code{gt_tbl}.
