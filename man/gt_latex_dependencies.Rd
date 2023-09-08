@@ -47,7 +47,7 @@ gt(exibble)
 }
 \section{Function ID}{
 
-8-28
+8-29
 }
 
 \section{Function Introduced}{
@@ -82,6 +82,7 @@ Other helper functions:
 \code{\link{google_font}()},
 \code{\link{html}()},
 \code{\link{md}()},
+\code{\link{nanoplot_options}()},
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},
