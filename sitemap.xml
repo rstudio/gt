@@ -154,6 +154,9 @@
     <loc>https://gt.rstudio.com/reference/cols_move_to_start.html</loc>
   </url>
   <url>
+    <loc>https://gt.rstudio.com/reference/cols_nanoplot.html</loc>
+  </url>
+  <url>
     <loc>https://gt.rstudio.com/reference/cols_unhide.html</loc>
   </url>
   <url>
@@ -374,6 +377,9 @@
   </url>
   <url>
     <loc>https://gt.rstudio.com/reference/metro.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/reference/nanoplot_options.html</loc>
   </url>
   <url>
     <loc>https://gt.rstudio.com/reference/opt_align_table_header.html</loc>
