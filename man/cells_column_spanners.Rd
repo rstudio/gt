@@ -101,7 +101,7 @@ we are making the text of the column spanner label appear as bold.
 
 \section{Function ID}{
 
-8-12
+8-13
 }
 
 \section{Function Introduced}{
@@ -136,6 +136,7 @@ Other helper functions:
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
 \code{\link{md}()},
+\code{\link{nanoplot_options}()},
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},

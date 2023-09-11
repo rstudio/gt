@@ -91,7 +91,7 @@ display of the table.
 
 \section{Function ID}{
 
-5-11
+5-12
 }
 
 \section{Function Introduced}{
@@ -115,6 +115,7 @@ Other column modification functions:
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
+\code{\link{cols_nanoplot}()},
 \code{\link{cols_unhide}()},
 \code{\link{cols_units}()},
 \code{\link{cols_width}()}

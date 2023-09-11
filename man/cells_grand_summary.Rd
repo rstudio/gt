@@ -148,7 +148,7 @@ some styling to a grand summary cells with the \code{\link[=tab_style]{tab_style
 
 \section{Function ID}{
 
-8-18
+8-19
 }
 
 \section{Function Introduced}{
@@ -183,6 +183,7 @@ Other helper functions:
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
 \code{\link{md}()},
+\code{\link{nanoplot_options}()},
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},
