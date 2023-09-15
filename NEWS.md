@@ -1,14 +1,56 @@
 # gt (development version)
 
-* Update to `col_hide(columns=)` and `cols_unhide(columns=)` arguments. The functions no longer return an error if no columns are selected. (#1342)
+## New features
+
+* Brand new rows can be added to a **gt** table with the new `rows_add()` function. The user can supply the new row data through name value pairs. You have control over where they are placed by way of the `.before` and `.after` arguments (new rows are added to the bottom of the table by default). You can also add empty (i.e., all NA) rows with the `.n_empty` option. (#1323)
+
+* To complement `rows_add()`, the `cols_add()` function was added. New columns can indeed be added to a **gt** table with this function, which has an interface close to that of `dplyr::mutate()`. (#1367)
+
+* You can now use an empty table as the starting point for a **gt** table. This can be used in conjunction with `cols_add()` and `rows_add()` to build a table piece-by-piece in specific workflows/settings. What constitutes empty tables can be any of: `0 x 0` tables, `0 x n` tables (no rows, some columns), or `n x 0` tables (some rows, no columns; treated the same as `0 x 0` tables). (#1376)
+
+* With the new `fmt_icon()` function we are able to add icons from the Font Awesome icon library. It works in a way that's similar to `fmt_flag()`, in that identifiers in the formatted cells are transformed in-place to SVG-based icons. (#1413)
+
+* The `illness` and `constants` datasets were added. Both datasets have a `units` column and this is useful for making examples with the `fmt_units()` function. (#1357)
+
+## Improvements to the Word output format
 
 * Update word processing to htmlEscape all characters before it goes into xml_t. This means now footnotes are escaped too. (#1303)
 
-* Update word processing to handle the new `summary_rows()` and `grand_summary_rows()` `side` argument, as well as handle cases where a table doesn't have rownames. (#1325)
+* The Word output format can now handle the `side` argument present in `summary_rows()` and `grand_summary_rows()`. (#1325)
 
-* Add word processing for images, so fmt_image now works for word as well, and markdown image designation also works. (#1272)
+* Tables rendered as Word output can now handle the case where a table with summary rows doesn't have rownames. (#1325)
+
+* Add processing for images in Word outputs. This means that `fmt_image()` now works with Word-based tables; images declared through Markdown (local and remote) also work (#1272). (#1273)
 
 * Add `width` argument to `fmt_image()`, letting users set width, height, or both of the image to be added into the table.
+
+## Documentation enhancements
+
+* The **gt** website has been updated with a slightly different look; section names have been updated for consistency. (#1287, #1340, #1341)
+
+* Several small documentation updates were made, with an emphasis on improving examples. (#1293, #1316, #1324, #1329, #1330, #1331, #1334, #1381, #1383, #1395, #1404)
+
+* Improve the formatting of arguments. (#1338)
+
+## Minor improvements and bug fixes
+
+* The `tab_spanner_delim()` function was given a `limit` arg so that splitting from a particular side can stop early and precisely. (#1328)
+
+* Significant figures support has been added to the `fmt_scientific()` and `vec_fmt_scientific()` functions; there is a new `n_sigfig` argument in both. (#1411)
+
+* The `columns` argument in `cols_hide()` and `cols_unhide()` can now accept `NULL` (i.e., no columns resolved). These functions will no longer error in such a case (#1342). (#1343)
+
+* The `countrypops` dataset was updated with recent (as of August 2023) World Bank data that revises population estimates and brings the final year up to 2022. All examples, tests, and articles using the dataset were also updated. (#1410)
+
+* The Databricks notebook environment is now detected by **gt**, so tables will now be automatically displayed without having to call extra printing functions. (#1427)
+
+* Display issues with scientific and engineering notation formatting (lack of dropping trailing zeros, as promised with the `drop_trailing_zeros` argument) were fixed. Part of the fix involves adding the `drop_trailing_dec_mark` argument to the four functions `fmt_scientific()`, `fmt_engineering()`, `vec_fmt_scientific()` and `vec_fmt_engineering()`. (#1380)
+
+* Fixed an incorrect country code reference for the Netherlands that would cause an incorrect flag to appear when using `fmt_flag()`. (#1319)
+
+* Many flags were added to `fmt_flag()` (#1333, #1335). (#1336)
+
+* Fixed an issue with `cols_label_with()` where column names wouldn't be relabeled if the resolved columns were only a subset of the total columns available. (#1326)
 
 # gt 0.9.0
 
