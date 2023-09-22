@@ -668,10 +668,10 @@ test_that("The `fmt_number()` function format to specified significant figures",
 
   # Don't expect an error if `n_sigfig` is NA (if `n_sigfig` has NA) then
   # `decimals` is used
-  expect_error(regexp = NA, tab %>% fmt_number(columns = num, n_sigfig = NA))
-  expect_error(regexp = NA, tab %>% fmt_number(columns = num, n_sigfig = NA_integer_))
-  expect_error(regexp = NA, tab %>% fmt_number(columns = num, n_sigfig = NA_real_))
-  expect_error(regexp = NA, tab %>% fmt_number(columns = num, n_sigfig = NA_integer_))
+  expect_no_error(tab %>% fmt_number(columns = num, n_sigfig = NA))
+  expect_no_error(tab %>% fmt_number(columns = num, n_sigfig = NA_integer_))
+  expect_no_error(tab %>% fmt_number(columns = num, n_sigfig = NA_real_))
+  expect_no_error(tab %>% fmt_number(columns = num, n_sigfig = NA_integer_))
 
   # Expect an error if `n_sigfig` is not numeric
   expect_error(tab %>% fmt_number(columns = num, n_sigfig = "3"))
@@ -679,8 +679,8 @@ test_that("The `fmt_number()` function format to specified significant figures",
   expect_error(tab %>% fmt_number(columns = num, n_sigfig = factor(3)))
 
   # Don't expect errors when using integers or doubles
-  expect_error(regexp = NA, tab %>% fmt_number(columns = num, n_sigfig = 2L))
-  expect_error(regexp = NA, tab %>% fmt_number(columns = num, n_sigfig = 2))
+  expect_no_error(tab %>% fmt_number(columns = num, n_sigfig = 2L))
+  expect_no_error(tab %>% fmt_number(columns = num, n_sigfig = 2))
 
   # Expect an error if `n_sigfig` is less than 1
   expect_error(tab %>% fmt_number(columns = num, n_sigfig = 0L))

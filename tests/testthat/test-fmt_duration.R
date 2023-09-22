@@ -1855,7 +1855,7 @@ test_that("The `fmt_duration()` function will error in specific cases", {
   # to be formatted
   expect_error(tab_6 %>% fmt_duration(columns = "num_1"))
   expect_error(tab_6 %>% fmt_duration(columns = c("num_1", "dur_1")))
-  expect_error(regexp = NA, tab_6 %>% fmt_duration(columns = "dur_1"))
+  expect_no_error(tab_6 %>% fmt_duration(columns = "dur_1"))
 
   # Expect an error if `input_units` is invalid
   expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "Stunden"))
@@ -1883,6 +1883,6 @@ test_that("The `fmt_duration()` function will error in specific cases", {
   expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", max_output_units = 0))
   expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", max_output_units = -1))
   expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", max_output_units = c(2, 3)))
-  expect_error(regexp = NA, tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", max_output_units = NULL))
-  expect_error(regexp = NA, tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", max_output_units = Inf))
+  expect_no_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", max_output_units = NULL))
+  expect_no_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", max_output_units = Inf))
 })

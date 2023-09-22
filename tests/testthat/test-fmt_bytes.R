@@ -486,8 +486,8 @@ test_that("The `fmt_bytes()` function format to specified significant figures", 
   expect_error(tab %>% fmt_bytes(columns = num, n_sigfig = factor(3)))
 
   # Don't expect errors when using integers or doubles
-  expect_error(regexp = NA, tab %>% fmt_bytes(columns = num, n_sigfig = 2L))
-  expect_error(regexp = NA, tab %>% fmt_bytes(columns = num, n_sigfig = 2))
+  expect_no_error(tab %>% fmt_bytes(columns = num, n_sigfig = 2L))
+  expect_no_error(tab %>% fmt_bytes(columns = num, n_sigfig = 2))
 
   # Expect an error if `n_sigfig` is less than 1
   expect_error(tab %>% fmt_bytes(columns = num, n_sigfig = 0L))

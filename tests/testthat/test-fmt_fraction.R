@@ -56,7 +56,7 @@ test_that("The `fmt_fraction()` function works correctly", {
   # Expect an error when using an invalid accuracy value
   expect_error(tab %>% fmt_fraction(columns = num, accuracy = "invalid"))
   expect_error(tab %>% fmt_fraction(columns = num, accuracy = 0))
-  expect_error(regexp = NA, tab %>% fmt_fraction(columns = num, accuracy = 1))
+  expect_no_error(tab %>% fmt_fraction(columns = num, accuracy = 1))
   expect_error(tab %>% fmt_fraction(columns = num, accuracy = FALSE))
 
   # Format the `num` column to fractions with the 'low' accuracy

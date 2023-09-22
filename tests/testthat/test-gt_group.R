@@ -106,7 +106,7 @@ test_that("The `grp_add()` function can be used to add a table to a group", {
 
   # Expect that adding nothing via `grp_add()` doesn't error but also
   # it doesn't change the `gt_tbls_1` object
-  expect_error(regexp = NA, gt_tbls_1 %>% grp_add())
+  expect_no_error(gt_tbls_1 %>% grp_add())
   expect_equal(gt_tbls_1, gt_tbls_1 %>% grp_add())
 
   # Add a table to the empty table group; expect that the table group
@@ -207,16 +207,16 @@ test_that("The `grp_add()` function can be used to add a table to a group", {
   # Expect the `grp_add()` to stop if either the `.before`
   # or `.after` values are not valid indices
   expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 0))
-  expect_error(regexp = NA, gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 1))
-  expect_error(regexp = NA, gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 2))
-  expect_error(regexp = NA, gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 3))
+  expect_no_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 1))
+  expect_no_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 2))
+  expect_no_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 3))
   expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 4))
   expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = -1))
 
   expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 0))
-  expect_error(regexp = NA, gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 1))
-  expect_error(regexp = NA, gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 2))
-  expect_error(regexp = NA, gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 3))
+  expect_no_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 1))
+  expect_no_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 2))
+  expect_no_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 3))
   expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 4))
   expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = -1))
 
