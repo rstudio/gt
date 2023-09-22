@@ -1100,7 +1100,7 @@ units_list_item <- function(
 #'
 #' ```r
 #' tbl <-
-#'   tibble::tibble(
+#'   dplyr::tibble(
 #'     row = 1:6,
 #'     group = c(rep("Group A", 3), rep("Group B", 3)),
 #'     vals = 1:6

@@ -894,7 +894,7 @@ data_color <- function(
   # body cells; in the end, this (along with all previously set styles) will
   # be used in a concluding `dt_styles_set()` call
   data_color_styles_tbl <-
-    tibble::tibble(
+    dplyr::tibble(
       locname = character(0),
       grpname = character(0),
       colname = character(0),
@@ -1185,7 +1185,7 @@ data_color <- function(
 
 generate_data_color_styles_tbl <- function(columns, rows, color_styles) {
 
-  tibble::tibble(
+  dplyr::tibble(
     locname = "data",
     grpname = NA_character_,
     colname = columns,

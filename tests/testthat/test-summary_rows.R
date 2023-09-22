@@ -851,7 +851,7 @@ test_that("The ordering of groups shouldn't affect group/grand summary calcs", {
 
   # Create tibbles with rows in different orders
   tbl_1 <-
-    tibble::tibble(
+    dplyr::tibble(
       id = c("1", "2", "3", "4", "5", "6"),
       value = c(1, 10, 1, 10, 99, 1),
       group = c("b", "a", "b", "a", "c", "b")
@@ -955,7 +955,7 @@ test_that("The ordering of groups shouldn't affect group/grand summary calcs", {
 
   # Example where a columns is named `columns`
   tbl_4 <-
-    tibble::tibble(
+    dplyr::tibble(
       id = c("1", "2", "3", "4", "5", "6"),
       value = c(1, 10, 1, 10, 99, 1),
       columns = c(2, 20, 2, 20, 198, 2),
@@ -1002,7 +1002,7 @@ test_that("Summary cells can be created with NA/NaN-resulting values", {
 
   # Generate a tibble with two columns containing just NA values
   na_tbl <-
-    tibble::tibble(
+    dplyr::tibble(
       group = c(rep("one", 5), rep("two", 5)),
       na_1 = rep(NA_real_, 10),
       na_2 = rep(NA_integer_, 10)

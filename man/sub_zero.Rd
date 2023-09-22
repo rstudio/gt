@@ -98,7 +98,7 @@ use a more complex predicate expression.
 Let's generate a simple, single-column tibble that contains an assortment of
 values that could potentially undergo some substitution.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- tibble::tibble(num = c(10^(-1:2), 0, 0, 10^(4:6)))
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{tbl <- dplyr::tibble(num = c(10^(-1:2), 0, 0, 10^(4:6)))
 
 tbl
 #> # A tibble: 9 x 1

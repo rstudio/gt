@@ -1218,7 +1218,7 @@ test_that("long tables can be added to a word doc", {
   check_suggests_xml()
 
   ## simple table
-  gt_letters <- tibble::tibble(
+  gt_letters <- dplyr::tibble(
     upper_case = c(LETTERS,LETTERS),
     lower_case = c(letters,letters)
     ) %>%
@@ -1287,7 +1287,7 @@ test_that("long tables with spans can be added to a word doc", {
   check_suggests_xml()
 
   ## simple table
-  gt_letters <- tibble::tibble(
+  gt_letters <- dplyr::tibble(
     upper_case = c(LETTERS,LETTERS),
     lower_case = c(letters,letters)
     ) %>%

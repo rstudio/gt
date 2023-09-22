@@ -68,7 +68,7 @@ hard to scan through because the decimal mark isn't fixed horizontally. We
 could remedy this and align the numbers by the decimal mark with
 \code{cols_align_decimal()}.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tibble::tibble(
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
   char = LETTERS[1:9],
   num = c(1.2, -33.52, 9023.2, -283.527, NA, 0.401, -123.1, NA, 41)
 ) |>

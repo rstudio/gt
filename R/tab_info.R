@@ -59,7 +59,7 @@
 tab_info <- function(data) {
 
   empty_tbl <-
-    tibble::tibble(
+    dplyr::tibble(
       id = character(0),
       i = integer(0),
       label = character(0),
@@ -106,7 +106,7 @@ tab_info <- function(data) {
   } else if (nrow(stub_df) == 1) {
 
     rownames <-
-      tibble::tibble(
+      dplyr::tibble(
         id = "<< Single index value of 1 >>",
         i = NA_integer_,
         label = NA_character_,
@@ -117,7 +117,7 @@ tab_info <- function(data) {
   } else if (nrow(stub_df) == 0) {
 
     rownames <-
-      tibble::tibble(
+      dplyr::tibble(
         id = "<< No rows in table >>",
         i = NA_integer_,
         label = NA_character_,
@@ -132,7 +132,7 @@ tab_info <- function(data) {
     rownum_desc <- paste0("<< Index values ", min(rownum_i), " to ", max(rownum_i), " >>")
 
     rownames <-
-      tibble::tibble(
+      dplyr::tibble(
         id = rownum_desc,
         i = NA_integer_,
         label = NA_character_,
@@ -207,14 +207,14 @@ tab_info <- function(data) {
 
           group_summary_i <-
             dplyr::bind_rows(
-              tibble::tibble(
+              dplyr::tibble(
                 id = group_id,
                 i = NA_integer_,
                 label = NA_character_,
                 type = "::group_id::",
                 location = "Group Summary"
               ),
-              tibble::tibble(
+              dplyr::tibble(
                 id = group_summary_row_id,
                 i = seq_len(length(group_summary_row_id)),
                 label = group_summary_row_id,
@@ -242,7 +242,7 @@ tab_info <- function(data) {
         names(list_of_summaries$summary_df_data_list[[grand_summary_col]][["rowname"]])
 
       grand_summary <-
-        tibble::tibble(
+        dplyr::tibble(
           id = grand_summary_row_id,
           i = seq_len(length(grand_summary_row_id)),
           label = grand_summary_row_id,

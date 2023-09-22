@@ -405,7 +405,7 @@ parse_length_str <- function(
     ))
   }
 
-  tibble::tibble(value = vals, unit = units)
+  dplyr::tibble(value = vals, unit = units)
 }
 
 abs_len_to_twips <- function(lengths_df) {

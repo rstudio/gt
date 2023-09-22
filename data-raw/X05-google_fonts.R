@@ -44,7 +44,7 @@ all_files <- fs::dir_ls(work_dir, glob = "*.pb")
 
 # Initialize tibbles
 google_font_tbl <-
-  tibble::tibble(
+  dplyr::tibble(
     name = character(0),
     designer = character(0),
     license = character(0),
@@ -52,7 +52,7 @@ google_font_tbl <-
     date_added = character(0)
   )
 google_styles_tbl <-
-  tibble::tibble(
+  dplyr::tibble(
     name = character(0),
     style = character(0),
     weight = character(0),
@@ -62,7 +62,7 @@ google_styles_tbl <-
     copyright = character(0)
   )
 google_axes_tbl <-
-  tibble::tibble(
+  dplyr::tibble(
     name = character(0),
     tag = character(0),
     min_value = character(0),

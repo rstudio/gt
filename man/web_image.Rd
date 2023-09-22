@@ -57,7 +57,7 @@ string, the other as numerical values), then, create a \strong{gt} table. Use th
 \code{\link[=text_transform]{text_transform()}} function to insert the R logo PNG image with the various
 sizes.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tibble::tibble(
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
   pixels = px(seq(10, 35, 5)),
   image = seq(10, 35, 5)
 ) |>
@@ -87,7 +87,7 @@ string, the other as numerical values), then, create a \strong{gt} table. Use th
 \code{\link[=tab_header]{tab_header()}} function to insert the \strong{R} logo SVG image once in the title
 and five times in the subtitle.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tibble::tibble(
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
   pixels = px(seq(10, 35, 5)),
   image = seq(10, 35, 5)
 ) |>

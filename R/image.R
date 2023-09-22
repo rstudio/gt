@@ -75,7 +75,7 @@
 #' sizes.
 #'
 #' ```r
-#' tibble::tibble(
+#' dplyr::tibble(
 #'   pixels = px(seq(10, 35, 5)),
 #'   image = seq(10, 35, 5)
 #' ) |>
@@ -107,7 +107,7 @@
 #' and five times in the subtitle.
 #'
 #' ```r
-#' tibble::tibble(
+#' dplyr::tibble(
 #'   pixels = px(seq(10, 35, 5)),
 #'   image = seq(10, 35, 5)
 #' ) |>
@@ -203,7 +203,7 @@ web_image <- function(
 #' various sizes.
 #'
 #' ```r
-#' tibble::tibble(
+#' dplyr::tibble(
 #'   pixels = px(seq(10, 35, 5)),
 #'   image = seq(10, 35, 5)
 #' ) |>
@@ -325,7 +325,7 @@ local_image <- function(
 #' function.
 #'
 #' ```r
-#' tibble::tibble(
+#' dplyr::tibble(
 #'   text = "Here is a ggplot:",
 #'   ggplot = NA
 #' ) |>

@@ -254,7 +254,7 @@ determine_which_character_number <- function(
 #' `cols_align_decimal()`.
 #'
 #' ```r
-#' tibble::tibble(
+#' dplyr::tibble(
 #'   char = LETTERS[1:9],
 #'   num = c(1.2, -33.52, 9023.2, -283.527, NA, 0.401, -123.1, NA, 41)
 #' ) |>

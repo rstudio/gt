@@ -48,7 +48,7 @@ dt_boxhead_init <- function(data) {
   empty_list <- lapply(seq_along(vars), function(x) NULL)
 
   boxh_df <-
-    tibble::tibble(
+    dplyr::tibble(
       # Matches to the name of the `data` column
       var = vars,
       # The mode of the column in the rendered table
@@ -123,7 +123,7 @@ dt_boxhead_add_var <- function(
   dt_boxhead <- dt_boxhead_get(data = data)
 
   dt_boxhead_row <-
-    tibble::tibble(
+    dplyr::tibble(
       var = var,
       type = type,
       column_label = column_label,

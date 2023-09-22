@@ -1539,7 +1539,7 @@ num_suffix <- function(
   if (length(suffixes) == 0) {
 
     return(
-      tibble::tibble(
+      dplyr::tibble(
         scale_by = rep_len(scale_by, length(x)),
         suffix = rep_len("", length(x))
       )
@@ -1592,7 +1592,7 @@ num_suffix <- function(
 
   # Create and return a tibble with `scale_by`
   # and `suffix` values
-  tibble::tibble(
+  dplyr::tibble(
     scale_by = 1 / base^suffix_index,
     suffix = suffix_labels
   )
@@ -1616,7 +1616,7 @@ num_suffix_ind <- function(
   if (length(suffixes) == 0) {
 
     return(
-      tibble::tibble(
+      dplyr::tibble(
         scale_by = rep_len(scale_by, length(x)),
         suffix = rep_len("", length(x))
       )
@@ -1672,7 +1672,7 @@ num_suffix_ind <- function(
 
   # Create and return a tibble with `scale_by`
   # and `suffix` values
-  tibble::tibble(
+  dplyr::tibble(
     scale_by = 10^(-ifelse(suffix_index == 0, 0, (suffix_index * 2) + 1)),
     suffix = suffix_labels
   )

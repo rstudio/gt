@@ -35,7 +35,7 @@ dt_footnotes_set <- function(data, footnotes) {
 dt_footnotes_init <- function(data) {
 
   footnotes_df <-
-    tibble::tibble(
+    dplyr::tibble(
       locname = character(0),
       grpname = character(0),
       colname = character(0),
@@ -69,7 +69,7 @@ dt_footnotes_add <- function(
     )
 
   result <-
-    tibble::tibble(
+    dplyr::tibble(
       locname = locname,
       grpname = grid$grpname,
       colname = grid$colname,

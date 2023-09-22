@@ -140,7 +140,7 @@ dt_data_add_rows <- function(
 
   # Create the `stub_df_add` table
   stub_df_add <-
-    tibble::tibble(
+    dplyr::tibble(
       rownum_i = seq(next_i, next_i + nrow_row_data_tbl - 1L),
       row_id = if (row_data_tbl_has_var_stub) {
         as.character(row_data_tbl[[var_stub]])

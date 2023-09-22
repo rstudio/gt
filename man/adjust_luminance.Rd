@@ -59,7 +59,7 @@ pal_lighter <- pal |> adjust_luminance(+1.0)
 Create a tibble and make a \strong{gt} table from it. Color each column in order
 of increasingly darker palettes (with \code{\link[=data_color]{data_color()}}).
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tibble::tibble(a = 1:8, b = 1:8, c = 1:8) |>
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(a = 1:8, b = 1:8, c = 1:8) |>
   gt() |>
   data_color(
     columns = a,

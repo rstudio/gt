@@ -54,7 +54,7 @@ string, the other as numerical values), then, create a \strong{gt} table. Use th
 \code{\link[=text_transform]{text_transform()}} function to insert a local test image (PNG) image with the
 various sizes.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{tibble::tibble(
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
   pixels = px(seq(10, 35, 5)),
   image = seq(10, 35, 5)
 ) |>
