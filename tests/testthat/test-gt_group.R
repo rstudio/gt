@@ -122,7 +122,7 @@ test_that("The `grp_add()` function can be used to add a table to a group", {
   gt_tbl_1_pulled <- grp_pull(gt_tbls_1, which = 1)
   expect_equal(gt_tbl_1, gt_tbl_1_pulled)
   expect_equal(nrow(gt_tbls_1[["gt_tbls"]]), 1)
-  expect_true(inherits(gt_tbls_1[["gt_tbls"]][["gt_tbl"]][[1]], "gt_tbl"))
+  expect_s3_class(gt_tbls_1[["gt_tbls"]][["gt_tbl"]][[1]], "gt_tbl")
 
   # Add a second table to the table group; expect that the table group now
   # contains two gt tables
@@ -131,8 +131,8 @@ test_that("The `grp_add()` function can be used to add a table to a group", {
     grp_add(gt_tbl_2)
 
   expect_equal(nrow(gt_tbls_2[["gt_tbls"]]), 2)
-  expect_true(inherits(gt_tbls_2[["gt_tbls"]][["gt_tbl"]][[1]], "gt_tbl"))
-  expect_true(inherits(gt_tbls_2[["gt_tbls"]][["gt_tbl"]][[2]], "gt_tbl"))
+  expect_s3_class(gt_tbls_2[["gt_tbls"]][["gt_tbl"]][[1]], "gt_tbl")
+  expect_s3_class(gt_tbls_2[["gt_tbls"]][["gt_tbl"]][[2]], "gt_tbl")
 
   # Pull both tables (first is based on `exibble`, the second on `gtcars`)
   # from the group object and expect that second table added was added to the
@@ -151,9 +151,9 @@ test_that("The `grp_add()` function can be used to add a table to a group", {
     grp_add(gt_tbl_3, .before = 1)
 
   expect_equal(nrow(gt_tbls_3[["gt_tbls"]]), 3)
-  expect_true(inherits(gt_tbls_3[["gt_tbls"]][["gt_tbl"]][[1]], "gt_tbl"))
-  expect_true(inherits(gt_tbls_3[["gt_tbls"]][["gt_tbl"]][[2]], "gt_tbl"))
-  expect_true(inherits(gt_tbls_3[["gt_tbls"]][["gt_tbl"]][[3]], "gt_tbl"))
+  expect_s3_class(gt_tbls_3[["gt_tbls"]][["gt_tbl"]][[1]], "gt_tbl")
+  expect_s3_class(gt_tbls_3[["gt_tbls"]][["gt_tbl"]][[2]], "gt_tbl")
+  expect_s3_class(gt_tbls_3[["gt_tbls"]][["gt_tbl"]][[3]], "gt_tbl")
 
   # Pull all three tables, this is the expected ordering:
   # 1. based on `towny` (`gt_tbl_3`)
@@ -177,10 +177,10 @@ test_that("The `grp_add()` function can be used to add a table to a group", {
     grp_add(gt_tbl_4, .after = 1)
 
   expect_equal(nrow(gt_tbls_4[["gt_tbls"]]), 4)
-  expect_true(inherits(gt_tbls_4[["gt_tbls"]][["gt_tbl"]][[1]], "gt_tbl"))
-  expect_true(inherits(gt_tbls_4[["gt_tbls"]][["gt_tbl"]][[2]], "gt_tbl"))
-  expect_true(inherits(gt_tbls_4[["gt_tbls"]][["gt_tbl"]][[3]], "gt_tbl"))
-  expect_true(inherits(gt_tbls_4[["gt_tbls"]][["gt_tbl"]][[4]], "gt_tbl"))
+  expect_s3_class(gt_tbls_4[["gt_tbls"]][["gt_tbl"]][[1]], "gt_tbl")
+  expect_s3_class(gt_tbls_4[["gt_tbls"]][["gt_tbl"]][[2]], "gt_tbl")
+  expect_s3_class(gt_tbls_4[["gt_tbls"]][["gt_tbl"]][[3]], "gt_tbl")
+  expect_s3_class(gt_tbls_4[["gt_tbls"]][["gt_tbl"]][[4]], "gt_tbl")
 
   # Pull all four tables, this is the expected ordering:
   # 1. based on `towny` (`gt_tbl_3`)

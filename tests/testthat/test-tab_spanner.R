@@ -54,8 +54,7 @@ test_that("A gt table contains the expected spanner column labels", {
   # is `perimeter`
   tbl_html %>%
     selection_text("[class='gt_center gt_columns_top_border gt_column_spanner_outer']") %>%
-    grepl("perimeter", .) %>%
-    expect_true()
+    expect_match("perimeter")
 
   # Create a `tbl_html` object with `gt()`; this table
   # contains the spanner heading `perimeter` that is formatted
@@ -68,9 +67,7 @@ test_that("A gt table contains the expected spanner column labels", {
     render_as_html()
 
   # Expect that the `perimeter` word is wrapped in `<em>` tags
-  expect_true(
-    grepl("<em>perimeter</em>", tbl_html)
-  )
+  expect_match(tbl_html, "<em>perimeter</em>")
 
   # Create a `tbl_html` object with `gt()`; this table
   # contains the spanner heading `perimeter` that is formatted
@@ -83,9 +80,7 @@ test_that("A gt table contains the expected spanner column labels", {
     render_as_html()
 
   # Expect that the `perimeter` word is wrapped in `<em>` tags
-  expect_true(
-    grepl("<em>perimeter</em>", tbl_html)
-  )
+  expect_match(tbl_html, "<em>perimeter</em>")
 
   # Expect an error when using column labels
   # that don't exist

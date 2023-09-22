@@ -2300,8 +2300,8 @@ test_that("markdown with urls work",{
     xml2::xml_find_all(".//w:hyperlink")
 
   ## hyperlinks are preserved and updated to be rId
-  expect_equal(length(docx_table_hyperlinks), 2)
-  expect_true(all(grepl("^rId\\d+$",xml_attr(docx_table_hyperlinks, "id"))))
+  expect_length(docx_table_hyperlinks, 2)
+  expect_match(xml_attr(docx_table_hyperlinks, "id"), "^rId\\d+$")
 
   # first should be commonmark URL
   expect_equal(
@@ -2360,7 +2360,7 @@ test_that("markdown with img refs work",{
     xml2::xml_find_all(".//a:blip")
 
   ## hyperlinks are preserved and updated to be rId
-  expect_equal(length(docx_table_image),2)
+  expect_length(docx_table_image, 2)
   expect_true(all(grepl("^rId\\d+$",xml_attr(docx_table_image, "embed"))))
 
   # first should be a png
@@ -2423,8 +2423,9 @@ test_that("table with image refs work - local only",{
     xml2::xml_find_all(".//a:blip")
 
   ## hyperlinks are preserved and updated to be rId
-  expect_equal(length(docx_table_image),4)
-  expect_true(all(grepl("^rId\\d+$",xml_attr(docx_table_image, "embed"))))
+  expect_length(docx_table_image, 4)
+  # Expect match has all = TRUE as a default
+  expect_match(xml_attr(docx_table_image, "embed"), "^rId\\d+$")
 
   # first should be a png
   expect_equal(
@@ -2494,14 +2495,13 @@ test_that("table with image refs work - https",{
     xml2::xml_find_all(".//a:blip")
 
   ## hyperlinks are preserved and updated to be rId
-  expect_equal(length(docx_table_image),1)
-  expect_true(all(grepl("^rId\\d+$",xml_attr(docx_table_image, "embed"))))
+  expect_length(docx_table_image, 1)
+  expect_match(xml_attr(docx_table_image, "embed"), "^rId\\d+$")
 
   # first should be the logo.svg with some random numbers ahead of it
-  expect_true(
-    grepl("^media/.+?logo[.]svg$",
-    docx$doc_obj$rel_df()$target[ docx$doc_obj$rel_df()$id == xml_attr(docx_table_image[1], "embed")]
-    )
+  expect_match(
+    docx$doc_obj$rel_df()$target[ docx$doc_obj$rel_df()$id == xml_attr(docx_table_image[1], "embed")],
+    "^media/.+?logo[.]svg$"
   )
 
 })
