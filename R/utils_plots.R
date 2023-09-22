@@ -22,11 +22,12 @@
 #------------------------------------------------------------------------------#
 
 # This creates a nanoplot with equally-spaced y values
-generate_equal_spaced_nanoplot <- function(
+generate_1d_line_plot <- function(
     y_vals,
     y_ref_line = NULL,
     y_ref_area = NULL,
     missing_vals = c("gap", "zero", "remove"),
+    line_type = c("curved", "straight"),
     currency = NULL,
     data_point_radius = 10,
     data_point_stroke_color = "#FFFFFF",
@@ -48,6 +49,7 @@ generate_equal_spaced_nanoplot <- function(
 
   # Ensure that arguments are matched
   missing_vals <- rlang::arg_match(missing_vals)
+  line_type <- rlang::arg_match(line_type)
 
   # Initialize several local `*_tags` variables with `NULL`
   circle_tags <- NULL
@@ -89,11 +91,18 @@ generate_equal_spaced_nanoplot <- function(
     }
   }
 
-  # Fixed interval between data points in px
-  x_d <- 50
-
   # Get the number of data points
   num_y_vals <- length(y_vals)
+
+  # Obtain a sensible, fixed interval between data points in px
+  x_d <-
+    dplyr::case_when(
+      num_y_vals <= 20 ~ 50,
+      num_y_vals <= 30 ~ 40,
+      num_y_vals <= 40 ~ 30,
+      num_y_vals <= 50 ~ 25,
+      .default = 20
+    )
 
   # Define the top-left of the plot area
   left_x <- 0
@@ -112,21 +121,6 @@ generate_equal_spaced_nanoplot <- function(
   right_x <- safe_x_d + data_x_width + safe_x_d
 
   viewbox <- paste(left_x, top_y, right_x, bottom_y, collapse = " ")
-
-  normalize_y_vals <- function(x) {
-
-    x_missing <- which(is.na(x))
-    mean_x <- mean(x, na.rm = TRUE)
-    x[x_missing] <- mean_x
-    x <- as.matrix(x)
-    min_attr <- apply(x, 2, min)
-    max_attr <- apply(x, 2, max)
-    x <- sweep(x, MARGIN = 2, STATS = min_attr, FUN = "-")
-    x <- sweep(x, MARGIN = 2, STATS = max_attr - min_attr, FUN = "/")
-    x <- as.numeric(x)
-    x[x_missing] <- NA_real_
-    x
-  }
 
   #
   # If there is a reference line and/or reference area, the values for these
@@ -389,7 +383,7 @@ generate_equal_spaced_nanoplot <- function(
   # Generate curved data line
   #
 
-  if (show_data_line) {
+  if (show_data_line && line_type == "curved") {
 
     data_path_tags <- c()
 
@@ -789,6 +783,21 @@ normalize_option_vector <- function(vec, num_y_vals) {
   vec
 }
 
+normalize_y_vals <- function(x) {
+
+  x_missing <- which(is.na(x))
+  mean_x <- mean(x, na.rm = TRUE)
+  x[x_missing] <- mean_x
+  x <- as.matrix(x)
+  min_attr <- apply(x, 2, min)
+  max_attr <- apply(x, 2, max)
+  x <- sweep(x, MARGIN = 2, STATS = min_attr, FUN = "-")
+  x <- sweep(x, MARGIN = 2, STATS = max_attr - min_attr, FUN = "/")
+  x <- as.numeric(x)
+  x[x_missing] <- NA_real_
+  x
+}
+
 mad_double <- function(x) {
 
   x <- x[!is.na(x)]
@@ -987,4 +996,15 @@ format_number_compactly <- function(val, currency) {
   }
 
   val_formatted
+}
+
+process_number_stream <- function(number_stream) {
+
+  number_stream <- gsub("[;,]", " ", number_stream)
+  number_stream <- gsub("\\[|\\]", " ", number_stream)
+  number_stream <- gsub("^\\s+|\\s+$", "", number_stream)
+  number_stream <- unlist(strsplit(number_stream, split = "\\s+"))
+  number_stream <- gsub("[\\(\\)a-dA-Df-zF-Z]", "", number_stream)
+  number_stream <- as.numeric(number_stream)
+  number_stream
 }
