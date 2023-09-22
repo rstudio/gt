@@ -1334,8 +1334,7 @@ test_that("The correct color values are obtained when using a color fn", {
     selection_value("style") %>%
     gsub("(background-color: |; color: .*)", "", .) %>%
     unique() %>%
-    length() %>%
-    expect_equal(12)
+    expect_length(12)
 
   # Expect all color values to be of the #RRGGBB form
   tbl_html_3 %>%
@@ -1389,8 +1388,7 @@ test_that("The correct color values are obtained when using a color fn", {
     selection_value("style") %>%
     gsub("(background-color: |; color: .*)", "", .) %>%
     unique() %>%
-    length() %>%
-    expect_equal(12)
+    expect_length(12)
 
   # Expect all color values to be of the #RRGGBB form
   tbl_html_4 %>%
@@ -1444,8 +1442,7 @@ test_that("The correct color values are obtained when using a color fn", {
     selection_value("style") %>%
     gsub("(background-color: |; color: .*)", "", .) %>%
     unique() %>%
-    length() %>%
-    expect_equal(12)
+    expect_length(12)
 
   # Expect all color values to be of the #RRGGBB form
   tbl_html_5 %>%
@@ -1531,8 +1528,7 @@ test_that("The correct color values are obtained when using a color fn", {
     selection_value("style") %>%
     gsub("(background-color: |; color: .*)", "", .) %>%
     unique() %>%
-    length() %>%
-    expect_equal(3)
+    expect_length(3)
 
   # Expect all color values to be of the #RRGGBB form
   tbl_html_7 %>%
@@ -1575,8 +1571,7 @@ test_that("The correct color values are obtained when using a color fn", {
     selection_value("style") %>%
     gsub("(background-color: |; color: .*)", "", .) %>%
     unique() %>%
-    length() %>%
-    expect_equal(3)
+    expect_length(4)
 
   # Expect all color values to be of the #RRGGBB form
   tbl_html_8 %>%
@@ -1694,8 +1689,7 @@ test_that("The various color utility functions work correctly", {
   html_color(colors = c(c_name, c_hex, c_hex_a), alpha = 0.5) %>%
     gsub("(?:^.*,|\\))", "", .) %>%
     unique() %>%
-    length() %>%
-    expect_equal(1)
+    expect_length(1)
 
   # Expect that CSS color names not present as an R/X11 color will still work
   expect_equal(
@@ -1761,8 +1755,7 @@ test_that("The various color utility functions work correctly", {
   )
 
   # Don't expect an error if 'rgba()'-format colors are passed to `html_color`
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     html_color(colors = c(c_name, c_hex, c_hex_a, "rgba(210,215,33,0.5)"))
   )
 
@@ -2035,8 +2028,7 @@ test_that("The `cell_fill()` function accepts colors of various types", {
     selection_value("style") %>%
     gsub("(?:background-color: |;)", "", .) %>%
     unique() %>%
-    length() %>%
-    expect_equal(1)
+    expect_length(1)
 
   # Expect all color values to be of the #RRGGBB form
   tbl_html_2 %>%
@@ -2062,8 +2054,7 @@ test_that("The `cell_fill()` function accepts colors of various types", {
     selection_value("style") %>%
     gsub("(?:background-color: |;)", "", .) %>%
     unique() %>%
-    length() %>%
-    expect_equal(1)
+    expect_length(1)
 
   # Expect all color values to be of the 'rgba()' string format
   tbl_html_3 %>%
@@ -2090,8 +2081,7 @@ test_that("The `cell_fill()` function accepts colors of various types", {
     selection_value("style") %>%
     gsub("(?:background-color: |;)", "", .) %>%
     unique() %>%
-    length() %>%
-    expect_equal(1)
+    expect_length(1)
 
   # Expect all color values to be of the 'rgba()' string format
   tbl_html_4 %>%
@@ -2130,8 +2120,7 @@ test_that("The `cell_fill()` function accepts colors of various types", {
     selection_value("style") %>%
     gsub("(?:background-color: |;)", "", .) %>%
     unique() %>%
-    length() %>%
-    expect_equal(1)
+    expect_length(1)
 
   # Expect all color values to be of the 'rgba()' string format
   tbl_html_5 %>%

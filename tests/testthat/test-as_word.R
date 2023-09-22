@@ -2361,7 +2361,7 @@ test_that("markdown with img refs work",{
 
   ## hyperlinks are preserved and updated to be rId
   expect_length(docx_table_image, 2)
-  expect_true(all(grepl("^rId\\d+$",xml_attr(docx_table_image, "embed"))))
+  expect_match(xml_attr(docx_table_image, "embed"), "^rId\\d+$")
 
   # first should be a png
   expect_equal(
