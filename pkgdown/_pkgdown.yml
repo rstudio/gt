@@ -86,6 +86,7 @@ reference:
     - fmt_url
     - fmt_image
     - fmt_flag
+    - fmt_icon
     - fmt_passthrough
     - fmt_auto
     - fmt
@@ -126,6 +127,7 @@ reference:
     - cols_label_with
     - cols_units
     - cols_add
+    - cols_nanoplot
     - cols_move
     - cols_move_to_start
     - cols_move_to_end
@@ -178,7 +180,9 @@ reference:
     - html
     - px
     - pct
+    - from_column
     - currency
+    - nanoplot_options
     - adjust_luminance
     - define_units
     - stub
@@ -258,6 +262,8 @@ reference:
     - info_locales
     - info_paletteer
     - info_google_fonts
+    - info_flags
+    - info_icons
 
   - title: Shiny
     desc: >

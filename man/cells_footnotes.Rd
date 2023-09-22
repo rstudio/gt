@@ -105,7 +105,7 @@ style the footnotes section. The styling is done through the use of the
 
 \section{Function ID}{
 
-8-20
+8-22
 }
 
 \section{Function Introduced}{
@@ -135,10 +135,12 @@ Other helper functions:
 \code{\link{default_fonts}()},
 \code{\link{define_units}()},
 \code{\link{escape_latex}()},
+\code{\link{from_column}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
 \code{\link{md}()},
+\code{\link{nanoplot_options}()},
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},

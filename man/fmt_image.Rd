@@ -8,7 +8,8 @@ fmt_image(
   data,
   columns = everything(),
   rows = everything(),
-  height = "2em",
+  height = NULL,
+  width = NULL,
   sep = " ",
   path = NULL,
   file_pattern = "{x}",
@@ -47,10 +48,19 @@ need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{height}{\emph{Height of image}
 
-\verb{scalar<character>} // \emph{default:} \code{"1em"}
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 The absolute height of the image in the table cell. By default, this is set
-to \code{"1em"}.}
+to \code{NULL}. If \code{width} is set and \code{height} is \code{NULL}, the ratio of width to
+height is preserved. If \code{width} and \code{height} are both \code{NULL}, \code{height}
+defaults to \code{"2em"}.}
+
+\item{width}{\emph{Width of image}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+The absolute width of the image in the table cell. By default, this is set
+to \code{NULL}, meaning the ratio of width to height is respected.}
 
 \item{sep}{\emph{Separator between images}
 
@@ -126,16 +136,42 @@ in the final output).
 Once the columns are targeted, we may also target the \code{rows} within those
 columns. This can be done in a variety of ways. If a stub is present, then we
 potentially have row identifiers. Those can be used much like column names in
-the \code{columns}-targeting scenario. We can use simpler \strong{tidyselect}-style
-expressions (the select helpers should work well here) and we can use quoted
-row identifiers in \code{c()}. It's also possible to use row indices (e.g.,
-\code{c(3, 5, 6)}) though these index values must correspond to the row numbers of
-the input data (the indices won't necessarily match those of rearranged rows
-if row groups are present). One more type of expression is possible, an
-expression that takes column values (can involve any of the available columns
-in the table) and returns a logical vector. This is nice if you want to base
-formatting on values in the column or another column, or, you'd like to use a
-more complex predicate expression.
+the \code{columns}-targeting scenario. We can use simpler
+\strong{tidyselect}-style expressions (the select helpers should work well here)
+and we can use quoted row identifiers in \code{c()}. It's also possible to use row
+indices (e.g., \code{c(3, 5, 6)}) though these index values must correspond to the
+row numbers of the input data (the indices won't necessarily match those of
+rearranged rows if row groups are present). One more type of expression is
+possible, an expression that takes column values (can involve any of the
+available columns in the table) and returns a logical vector. This is nice if
+you want to base formatting on values in the column or another column, or,
+you'd like to use a more complex predicate expression.
+}
+
+\section{Compatibility of arguments with the \code{from_column()} helper function}{
+
+
+The \code{\link[=from_column]{from_column()}} helper function can be used with certain arguments of
+\code{fmt_image()} to obtain varying parameter values from a specified column
+within the table. This means that each row could be formatted a little bit
+differently. These arguments provide support for \code{\link[=from_column]{from_column()}}:
+\itemize{
+\item \code{height}
+\item \code{width}
+\item \code{sep}
+\item \code{path}
+\item \code{file_pattern}
+\item \code{encode}
+}
+
+Please note that for each of the aforementioned arguments, a \code{\link[=from_column]{from_column()}}
+call needs to reference a column that has data of the correct type (this is
+different for each argument). Additional columns for parameter values can be
+generated with the \code{\link[=cols_add]{cols_add()}} function (if not already present). Columns
+that contain parameter data can also be hidden from final display with
+\code{\link[=cols_hide]{cols_hide()}}. Finally, there is no limitation to how many arguments the
+\code{\link[=from_column]{from_column()}} helper is applied so long as the arguments belong to this
+closed set.
 }
 
 \section{Examples}{
@@ -224,6 +260,7 @@ Other data formatting functions:
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_icon}()},
 \code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},
 \code{\link{fmt_markdown}()},

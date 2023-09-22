@@ -46,7 +46,7 @@ column here with the \code{stub()} select helper.
 
 \section{Function ID}{
 
-8-8
+8-10
 }
 
 \section{Function Introduced}{
@@ -77,10 +77,12 @@ Other helper functions:
 \code{\link{default_fonts}()},
 \code{\link{define_units}()},
 \code{\link{escape_latex}()},
+\code{\link{from_column}()},
 \code{\link{google_font}()},
 \code{\link{gt_latex_dependencies}()},
 \code{\link{html}()},
 \code{\link{md}()},
+\code{\link{nanoplot_options}()},
 \code{\link{pct}()},
 \code{\link{px}()},
 \code{\link{random_id}()},

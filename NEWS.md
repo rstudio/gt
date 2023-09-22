@@ -1,6 +1,60 @@
 # gt (development version)
 
-* Update to `col_hide(columns=)` and `cols_unhide(columns=)` arguments. The functions no longer return an error if no columns are selected. (#1342)
+## New features
+
+* Brand new rows can be added to a **gt** table with the new `rows_add()` function. The user can supply the new row data through name value pairs. You have control over where they are placed by way of the `.before` and `.after` arguments (new rows are added to the bottom of the table by default). You can also add empty (i.e., all `NA`) rows with the `.n_empty` option. (#1323)
+
+* To complement `rows_add()`, the `cols_add()` function was added. New columns can indeed be added to a **gt** table with this function, which has an interface close to that of `dplyr::mutate()`. (#1367)
+
+* You can now use an empty table as the starting point for a **gt** table. This can be used in conjunction with `cols_add()` and `rows_add()` to build a table piece-by-piece in specific workflows/settings. What constitutes empty tables can be any of: `0 x 0` tables, `0 x n` tables (no rows, some columns), or `n x 0` tables (some rows, no columns; treated the same as `0 x 0` tables). (#1376)
+
+* There is now a way to better express measurement units and we do this in **gt** with something called units notation. With an intuitive and easy-to-learn syntax, **gt** will ensure that any measurement units are formatted correctly no matter what the output type is. We can format units in the table body with `fmt_units()`, we can attach units to column labels with `cols_units()`, and we can integrate units notation in the already-available `cols_label()` and `tab_spanner()` functions (#417, #533). (#1357, #1426)
+
+* With the new `fmt_icon()` function we are able to add icons from the Font Awesome icon library. It works in a way that's similar to `fmt_flag()`, in that identifiers in the formatted cells are transformed in-place to SVG-based icons. (#1413)
+
+* The `illness` and `constants` datasets were added. Both datasets have a `units` column and this is useful for making examples with the `fmt_units()` function. (#1357)
+
+* A useful new helper function, `from_column()`, has been added so you can fetch values (for compatible arguments) from a column in the input table. For example, if you are using `fmt_scientific()` and the number of significant figures should vary across the values to be formatted, a column containing those values for the `n_sigfig` argument can be referenced by `from_column()`.
+
+## Improvements to the Word output format
+
+* Processing to Word output now escapes HTML in more places. (#1303)
+
+* The Word output format now uses the `side` argument present in `summary_rows()` and `grand_summary_rows()` to place the new summary rows either the top or bottom of the row group (with `summary_rows()`) or table as a whole (with `grand_summary_rows()`). (#1325)
+
+* Tables rendered as Word output can now handle the specific case where a table with summary rows doesn't have rownames. (#1325)
+
+* Word output tables can now contain images. This entails compatibility with the `fmt_image()` function, and, images (local and remote) can be inserted through Markdown (#1272). (#1273)
+
+## Documentation enhancements
+
+* The **gt** website has been updated with a slightly different look; section names have been updated for consistency. (#1287, #1340, #1341)
+
+* We've improved the formatting of arguments in the documentation so that they all have short titles and descriptions regarding expected inputs and default values. This looks great both in the internal R help pages and in the **pkgdown**-generated website. (#1338)
+
+* Several small documentation updates were made, with an emphasis on improving examples. (#1293, #1316, #1324, #1329, #1330, #1331, #1334, #1381, #1383, #1395, #1404)
+
+## Minor improvements and bug fixes
+
+* The `tab_spanner_delim()` function was given a `limit` argument so that splitting from a particular side can stop early and precisely. (#1328)
+
+* The `width` argument was added to `fmt_image()`. With this change you can variously set the width, the height, or both.
+
+* Significant figures support has been added to the `fmt_scientific()` and `vec_fmt_scientific()` functions; there is a new `n_sigfig` argument in both. (#1411)
+
+* The `columns` argument in `cols_hide()` and `cols_unhide()` can now accept `NULL` (i.e., no columns resolved). These functions will no longer error in such a case (#1342). (#1343)
+
+* The `countrypops` dataset was updated with recent (as of August 2023) World Bank data that revises population estimates and brings the final year up to 2022. All examples, tests, and articles using the dataset were also updated. (#1410)
+
+* The Databricks notebook environment is now detected by **gt**, so tables will now be automatically displayed without having to call extra printing functions. (#1427)
+
+* Display issues with scientific and engineering notation formatting (lack of dropping trailing zeros, as promised with the `drop_trailing_zeros` argument) were fixed. Part of the fix involves adding the `drop_trailing_dec_mark` argument to the four functions `fmt_scientific()`, `fmt_engineering()`, `vec_fmt_scientific()` and `vec_fmt_engineering()`. (#1380)
+
+* Fixed an incorrect country code reference for the Netherlands that would cause an incorrect flag to appear when using `fmt_flag()`. (#1319)
+
+* Many flags were added to `fmt_flag()` (#1333, #1335). (#1336)
+
+* Fixed an issue with `cols_label_with()` where column names wouldn't be relabeled if the resolved columns were only a subset of the total columns available. (#1326)
 
 # gt 0.9.0
 
@@ -141,7 +195,7 @@
 
 * The `docx` output format is now better detected in R Markdown and Quarto (#1040). (#1084, thanks @cderv!)
 
-* Replaced all `match.arg()` calls with **rlang*'s `match_arg()` for better error output (#672). (#1099, thanks @mojister!)
+* Replaced all `match.arg()` calls with **rlang**'s `match_arg()` for better error output (#672). (#1099, thanks @mojister!)
 
 * Project website improvements; we now have a doublet of sites: (1) https://gt.rstudio.com and (2) https://gt.rstudio.com/dev (#1074, thanks @ddsjoberg!)
 

@@ -115,6 +115,28 @@ formatting on values in the column or another column, or, you'd like to use a
 more complex predicate expression.
 }
 
+\section{Compatibility of arguments with the \code{from_column()} helper function}{
+
+
+The \code{\link[=from_column]{from_column()}} helper function can be used with certain arguments of
+\code{fmt_roman()} to obtain varying parameter values from a specified column
+within the table. This means that each row could be formatted a little bit
+differently. These arguments provide support for \code{\link[=from_column]{from_column()}}:
+\itemize{
+\item \code{case}
+\item \code{pattern}
+}
+
+Please note that for both of the aforementioned arguments, a \code{\link[=from_column]{from_column()}}
+call needs to reference a column that has data of the correct type (this is
+different for each argument). Additional columns for parameter values can be
+generated with the \code{\link[=cols_add]{cols_add()}} function (if not already present). Columns
+that contain parameter data can also be hidden from final display with
+\code{\link[=cols_hide]{cols_hide()}}. Finally, there is no limitation to how many arguments the
+\code{\link[=from_column]{from_column()}} helper is applied so long as the arguments belong to this
+closed set.
+}
+
 \section{Examples}{
 
 
@@ -128,6 +150,31 @@ the \code{roman} column to appear as Roman numerals with \code{fmt_roman()}.
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_roman_1.png" alt="This image of a table was generated from the first code example in the `fmt_roman()` help file." style="width:100\%;">
+}}
+
+Formatting values to Roman numerals can be very useful when combining such
+output with row labels (usually through \code{\link[=cols_merge]{cols_merge()}}). Here's an example
+where we take a portion of the \code{\link{illness}} dataset and generate some row
+labels that combine (1) a row number (in lowercase Roman numerals), (2) the
+name of the test, and (3) the measurement units for the test (nicely
+formatted by way of \code{\link[=fmt_units]{fmt_units()}}):
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{illness |>
+  dplyr::slice_head(n = 6) |>
+  gt(rowname_col = "test") |>
+  fmt_units(columns = units) |>
+  cols_hide(columns = starts_with("day")) |>
+  sub_missing(missing_text = "") |>
+  cols_merge_range(col_begin = norm_l, col_end = norm_u) |>
+  cols_add(i = 1:6) |>
+  fmt_roman(columns = i, case = "lower", pattern = "\{x\}.") |>
+  cols_merge(columns = c(test, i, units), pattern = "\{2\} \{1\} (\{3\})") |>
+  cols_label(norm_l = "Normal Range") |>
+  tab_stubhead(label = "Test")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_roman_2.png" alt="This image of a table was generated from the second code example in the `fmt_roman()` help file." style="width:100\%;">
 }}
 }
 
@@ -156,6 +203,7 @@ Other data formatting functions:
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_icon}()},
 \code{\link{fmt_image}()},
 \code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},

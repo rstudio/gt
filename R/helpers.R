@@ -252,6 +252,169 @@ pct <- function(x) {
   paste0(x, "%")
 }
 
+#' Reference a column of values for certain parameters
+#'
+#' @description
+#'
+#' It can be useful to obtain parameter values from a column in a
+#' **gt** for functions that operate on the table body and stub cells. For
+#' example, you might want to indent row labels in the stub. You could call
+#' [tab_stub_indent()] and indent different rows to various indentation levels.
+#' However, each level of indentation applied necessitates a new call of that
+#' function. To make this better, we can use indentation values available in a
+#' table column via the `from_column()` helper function. For the
+#' [tab_stub_indent()] case, you'd invoke this helper at the `indent` argument
+#' and specify the column that has the values.
+#'
+#' @param column *Column name*
+#'
+#'   `scalar<character>` // **required**
+#'
+#'   A single column name in quotation marks. Values will be extracted from this
+#'   column and provided to compatible arguments.
+#'
+#' @param na_value *Default replacement for `NA` values*
+#'
+#'   `scalar<character|numeric|logical>` // *default:* `NULL` (`optional`)
+#'
+#'   A single value to replace any `NA` values in the `column`. Take care to
+#'   provide a value that is of the same type as the `column` values to avoid
+#'   any undesirable coercion.
+#'
+#' @param fn *Function to apply*
+#'
+#'   `function|formula` // *default:* `NULL` (`optional`)
+#'
+#'   If a function is provided here, any values extracted from the table
+#'   `column` (except `NA` values) can be mutated.
+#'
+#' @return A list object of class `gt_column`.
+#'
+#' @section Functions that allow the use of the `from_column()` helper:
+#'
+#' Only certain functions (and furthermore a subset of arguments within each)
+#' support the use of `from_column()` for accessing varying parameter values.
+#' These functions are:
+#'
+#' - [tab_stub_indent()]
+#' - [fmt_number()]
+#' - [fmt_integer()]
+#' - [fmt_scientific()]
+#' - [fmt_engineering()]
+#' - [fmt_percent()]
+#' - [fmt_partsper()]
+#' - [fmt_fraction()]
+#' - [fmt_currency()]
+#' - [fmt_roman()]
+#' - [fmt_index()]
+#' - [fmt_spelled_num()]
+#' - [fmt_bytes()]
+#' - [fmt_date()]
+#' - [fmt_time()]
+#' - [fmt_datetime()]
+#' - [fmt_url()]
+#' - [fmt_image()]
+#' - [fmt_flag()]
+#' - [fmt_markdown()]
+#' - [fmt_passthrough()]
+#'
+#' Within help documents for each of these functions you'll find the
+#' *Compatibility of arguments with the `from_column()` helper function* section
+#' and sections like these describe which arguments support the use of
+#' `from_column()`.
+#'
+#' @section Examples:
+#'
+#' The `from_column()` function can be used in a variety of formatting functions
+#' so that values for common options don't have to be static, they can change in
+#' every row (so long as you have a column of compatible option values). Here's
+#' an example where we have a table of repeating numeric values along with a
+#' column of currency codes. We can format the numbers to currencies with
+#' [fmt_currency()] and use `from_column()` to reference the column of currency
+#' codes, giving us values that are each formatted as having a different
+#' currency.
+#'
+#' ```r
+#' dplyr::tibble(
+#'   amount = rep(30.75, 6),
+#'   curr = c("USD", "EUR", "GBP", "CAD", "AUD", "JPY"),
+#' ) |>
+#'   gt() |>
+#'   fmt_currency(currency = from_column(column = "curr"))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_from_column_1.png")`
+#' }}
+#'
+#' Let's summarize the [`gtcars`] dataset to get a set of rankings of car
+#' manufacturer by country of origin. The `n` column represents the number of
+#' cars a manufacturer has within this dataset and we can use that column as a
+#' way to size the text. We do that in the [tab_style()] call; the
+#' `from_column()` function is used within the [cell_text()] statement to
+#' fashion different font sizes from that `n` column. This is done in
+#' conjunction with the `fn` argument of `from_column()`, which helps to tweak
+#' the values in `n` to get a useful range of font sizes.
+#'
+#' ```r
+#' gtcars |>
+#'   dplyr::select(mfr, ctry_origin) |>
+#'   dplyr::group_by(mfr, ctry_origin) |>
+#'   dplyr::count() |>
+#'   dplyr::ungroup() |>
+#'   dplyr::arrange(ctry_origin) |>
+#'   gt(groupname_col = "ctry_origin") |>
+#'   tab_style(
+#'     style = cell_text(
+#'       size = from_column(
+#'         column = "n",
+#'         fn = function(x) paste0(5 + (x * 3), "px")
+#'       )
+#'     ),
+#'     locations = cells_body()
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(align = "center"),
+#'     locations = cells_row_groups()
+#'   ) |>
+#'   cols_hide(columns = n) |>
+#'   tab_options(column_labels.hidden = TRUE) |>
+#'   opt_all_caps() |>
+#'   opt_vertical_padding(scale = 0.25) |>
+#'   cols_align(align = "center", columns = mfr)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_from_column_2.png")`
+#' }}
+#'
+#' @family helper functions
+#' @section Function ID:
+#' 8-5
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @export
+from_column <- function(
+    column,
+    na_value = NULL,
+    fn = NULL
+) {
+
+  column_list <-
+    list(
+      column = column,
+      na_value = na_value[1],
+      fn = fn
+    )
+
+  # Set the `gt_currency` class
+  class(column_list) <- "gt_column"
+
+  column_list
+}
+
 #' Supply a custom currency symbol to `fmt_currency()`
 #'
 #' @description
@@ -320,7 +483,7 @@ pct <- function(x) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-5
+#' 8-6
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -362,6 +525,220 @@ currency <- function(
   class(currency_list) <- "gt_currency"
 
   currency_list
+}
+
+
+#' Supply nanoplot options to `cols_nanoplot()`
+#'
+#' @description
+#'
+#' When using [cols_nanoplot()], the defaults for the generated nanoplots
+#' can be modified with `nanoplot_options()` within the `options` argument.
+#'
+#' @param data_point_radius *Radius of data points*
+#'
+#'   `scalar<numeric>|vector<numeric>` // *default:* `NULL` (`optional`)
+#'
+#'   Th `data_point_radius` option lets you set the radius for each of the data
+#'   points. By default this is set to `10`. Individual radius values can be
+#'   set by using a vector of numeric values; however, the vector provided must
+#'   match the number of data points.
+#'
+#' @param data_point_stroke_color *Color of data points*
+#'
+#'   `scalar<character>|vector<character>` // *default:* `NULL` (`optional`)
+#'
+#'   The default stroke color of the data points is `"#FFFFFF"` (`"white"`).
+#'   This works well when there is a visible data line combined with data points
+#'   with a darker fill color. The stroke color can be modified with
+#'   `data_point_stroke_color` for all data points by supplying a single color
+#'   value. With a vector of colors, each data point's stroke color can be
+#'   changed (ensure that the vector length matches the number of data points).
+#'
+#' @param data_point_stroke_width *Width of surrounding line on data points*
+#'
+#'   `scalar<numeric>|vector<numeric>` // *default:* `NULL` (`optional`)
+#'
+#' @param data_point_fill_color *Fill color for data points*
+#'
+#'   `scalar<character>|vector<character>` // *default:* `NULL` (`optional`)
+#'
+#'   By default, all data points have a fill color of `"#FF0000"` (`"red"`).
+#'   This can be changed for all data points by providing a different color
+#'   to `data_point_fill_color`. And, a vector of different colors can be
+#'   supplied so long as the length is equal to the number of data points; the
+#'   fill color values will be applied in order of left to right.
+#'
+#' @param data_line_stroke_color *Color of the data line*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   The color of the data line can be modified from its default `"#4682B4"`
+#'   (`"steelblue"`) color by supplying a color to the `data_line_stroke_color`
+#'   option.
+#'
+#' @param data_line_stroke_width *Width of the data line*
+#'
+#'   `scalar<numeric>` // *default:* `NULL` (`optional`)
+#'
+#'   The width of the connecting data line can be modified with the
+#'   `data_line_stroke_width` option. By default, a value of `4` (as in
+#'   `"4px"`) is used.
+#'
+#' @param vertical_guide_stroke_color *Color of vertical guides*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   Vertical guides appear when hovering in the vicinity of data points. Their
+#'   default color is `"#911EB4"` (a strong magenta color) and a fill opacity
+#'   value of `0.4` is automatically applied to this. However, the base color
+#'   can be changed with the `vertical_guide_stroke_color` option.
+#'
+#' @param vertical_guide_stroke_width *Line widths for vertical guides*
+#'
+#'   `scalar<numeric>` // *default:* `NULL` (`optional`)
+#'
+#'   The vertical guide's stroke width, by default, is relatively large at `12`.
+#'   This is fully modifiable by setting a different value with the
+#'   `vertical_guide_stroke_width` option.
+#'
+#' @param show_data_points *Should the data points be shown?*
+#'
+#'   `scalar<logical>` // *default:* `NULL` (`optional`)
+#'
+#'   By default, all data points in a nanoplot are shown but this layer can be
+#'   hidden by setting `show_data_points` to `FALSE`.
+#'
+#' @param show_data_line *Should a data line be shown?*
+#'
+#'   `scalar<logical>` // *default:* `NULL` (`optional`)
+#'
+#'   The data line connects data points together and it is shown by default.
+#'   This data line layer can be hidden by setting `show_data_line` to `FALSE`.
+#'
+#' @param show_data_area *Should a data-point-bounded area be shown?*
+#'
+#'   `scalar<logical>` // *default:* `NULL` (`optional`)
+#'
+#'   The data area layer is adjacent to the data points and the data line. It is
+#'   shown by default but can be hidden with `show_data_area = FALSE`.
+#'
+#' @param show_vertical_guides *Should vertical guides be shown?*
+#'
+#'   `scalar<logical>` // *default:* `NULL` (`optional`)
+#'
+#'   Vertical guides appear when hovering over data points. This hidden layer is
+#'   active by default but can be deactivated by using
+#'   `show_vertical_guides = FALSE`.
+#'
+#' @param show_reference_line *Should a reference line be shown?*
+#'
+#'   `scalar<logical>` // *default:* `NULL` (`optional`)
+#'
+#'   The layer with a horizontal reference line appears underneath that of the
+#'   data points and the data line. Like vertical guides, hovering over a
+#'   reference will show its value. The reference line (if available) is shown
+#'   by default but can be hidden by setting `show_reference_line` to `FALSE`.
+#'
+#' @param show_reference_area *Should a reference area be shown?*
+#'
+#'   `scalar<logical>` // *default:* `NULL` (`optional`)
+#'
+#'   The reference area appears at the very bottom of the layer stack, if it is
+#'   available. It will be shown in the default case but can be hidden by using
+#'   `show_reference_area = FALSE`.
+#'
+#' @return A list object of class `nanoplot_options`.
+#'
+#' @family helper functions
+#' @section Function ID:
+#' 8-7
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @export
+nanoplot_options <- function(
+    data_point_radius = NULL,
+    data_point_stroke_color = NULL,
+    data_point_stroke_width = NULL,
+    data_point_fill_color = NULL,
+    data_line_stroke_color = NULL,
+    data_line_stroke_width = NULL,
+    vertical_guide_stroke_color = NULL,
+    vertical_guide_stroke_width = NULL,
+    show_data_points = NULL,
+    show_data_line = NULL,
+    show_data_area = NULL,
+    show_vertical_guides = NULL,
+    show_reference_line = NULL,
+    show_reference_area = NULL
+) {
+
+  if (is.null(data_point_radius)) {
+    data_point_radius <- 10
+  }
+  if (is.null(data_point_stroke_color)) {
+    data_point_stroke_color <- "white"
+  }
+  if (is.null(data_point_stroke_width)) {
+    data_point_stroke_width <- 4
+  }
+  if (is.null(data_point_fill_color)) {
+    data_point_fill_color <- "red"
+  }
+  if (is.null(data_line_stroke_color)) {
+    data_line_stroke_color <- "steelblue"
+  }
+  if (is.null(data_line_stroke_width)) {
+    data_line_stroke_width <- 8
+  }
+  if (is.null(vertical_guide_stroke_color)) {
+    vertical_guide_stroke_color <- "#911EB4"
+  }
+  if (is.null(vertical_guide_stroke_width)) {
+    vertical_guide_stroke_width <- 12
+  }
+  if (is.null(show_data_points)) {
+    show_data_points <- TRUE
+  }
+  if (is.null(show_data_line)) {
+    show_data_line <- TRUE
+  }
+  if (is.null(show_data_area)) {
+    show_data_area <- TRUE
+  }
+  if (is.null(show_vertical_guides)) {
+    show_vertical_guides <- TRUE
+  }
+  if (is.null(show_reference_line)) {
+    show_reference_line <- TRUE
+  }
+  if (is.null(show_reference_area)) {
+    show_reference_area <- TRUE
+  }
+
+  nanoplot_options_list <-
+    list(
+      data_point_radius = data_point_radius,
+      data_point_stroke_color = data_point_stroke_color,
+      data_point_stroke_width = data_point_stroke_width,
+      data_point_fill_color = data_point_fill_color,
+      data_line_stroke_color = data_line_stroke_color,
+      data_line_stroke_width = data_line_stroke_width,
+      vertical_guide_stroke_color = vertical_guide_stroke_color,
+      vertical_guide_stroke_width = vertical_guide_stroke_width,
+      show_data_points = show_data_points,
+      show_data_line = show_data_line,
+      show_data_area = show_data_area,
+      show_vertical_guides = show_vertical_guides,
+      show_reference_line = show_reference_line,
+      show_reference_area = show_reference_area
+    )
+
+  class(nanoplot_options_list) <- "nanoplot_options"
+
+  nanoplot_options_list
 }
 
 #' Adjust the luminance for a palette of colors
@@ -452,7 +829,7 @@ currency <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-6
+#' 8-8
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -543,7 +920,7 @@ adjust_luminance <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-7
+#' 8-9
 #'
 #' @section Function Introduced:
 #' *In Development*
@@ -748,7 +1125,7 @@ units_list_item <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-8
+#' 8-10
 #'
 #' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
@@ -843,7 +1220,7 @@ stub <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-9
+#' 8-11
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -956,7 +1333,7 @@ cells_title <- function(groups = c("title", "subtitle")) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-10
+#' 8-12
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1065,7 +1442,7 @@ cells_stubhead <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-11
+#' 8-13
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1196,7 +1573,7 @@ cells_column_spanners <- function(spanners = everything()) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-12
+#' 8-14
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1319,7 +1696,7 @@ cells_column_labels <- function(columns = everything()) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-13
+#' 8-15
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1460,7 +1837,7 @@ cells_group <- function(groups = everything()) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-14
+#' 8-16
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1612,7 +1989,7 @@ cells_stub <- function(rows = everything()) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-15
+#' 8-17
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1810,7 +2187,7 @@ cells_body <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-16
+#' 8-18
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1980,7 +2357,7 @@ cells_summary <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-17
+#' 8-19
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2146,7 +2523,7 @@ cells_grand_summary <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-18
+#' 8-20
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
@@ -2283,7 +2660,7 @@ cells_stub_summary <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-19
+#' 8-21
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
@@ -2402,7 +2779,7 @@ cells_stub_grand_summary <- function(rows = everything()) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-20
+#' 8-22
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
@@ -2503,7 +2880,7 @@ cells_footnotes <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-21
+#' 8-23
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
@@ -2664,7 +3041,7 @@ cells_source_notes <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-22
+#' 8-24
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2700,66 +3077,80 @@ cell_text <- function(
   # Validate textual styles values with `validate_style_in()`
   #
 
-  validate_style_in(
-    style_vals, style_names,
-    arg_name = "align",
-    in_vector = c("center", "left", "right", "justify")
-  )
-
-  validate_style_in(
-    style_vals, style_names,
-    arg_name = "v_align",
-    in_vector = c("middle", "top", "bottom")
-  )
-
-  validate_style_in(
-    style_vals, style_names,
-    arg_name = "style",
-    in_vector = c("normal", "italic", "oblique")
-  )
-
-  validate_style_in(
-    style_vals, style_names,
-    arg_name = "weight",
-    in_vector = c("normal", "bold", "lighter", "bolder"),
-    with_pattern = "[1-9][0-9][0-9]"
-  )
-
-  validate_style_in(
-    style_vals, style_names, arg_name = "stretch",
-    in_vector = c(
-      "ultra-condensed", "extra-condensed", "condensed",
-      "semi-condensed", "normal", "semi-expanded", "expanded",
-      "extra-expanded", "ultra-expanded"
+  if (!inherits(align, "gt_column")) {
+    validate_style_in(
+      style_vals, style_names,
+      arg_name = "align",
+      in_vector = c("center", "left", "right", "justify")
     )
-  )
+  }
 
-  validate_style_in(
-    style_vals, style_names,
-    arg_name = "decorate",
-    in_vector = c("overline", "line-through", "underline", "underline overline")
-  )
-
-  validate_style_in(
-    style_vals, style_names,
-    arg_name = "transform",
-    in_vector = c("uppercase", "lowercase", "capitalize")
-  )
-
-
-  validate_style_in(
-    style_vals, style_names,
-    arg_name = "whitespace",
-    in_vector = c(
-      "normal", "nowrap", "pre", "pre-wrap",
-      "pre-line", "break-spaces"
+  if (!inherits(v_align, "gt_column")) {
+    validate_style_in(
+      style_vals, style_names,
+      arg_name = "v_align",
+      in_vector = c("middle", "top", "bottom")
     )
-  )
+  }
+
+  if (!inherits(style, "gt_column")) {
+    validate_style_in(
+      style_vals, style_names,
+      arg_name = "style",
+      in_vector = c("normal", "italic", "oblique")
+    )
+  }
+
+  if (!inherits(weight, "gt_column")) {
+    validate_style_in(
+      style_vals, style_names,
+      arg_name = "weight",
+      in_vector = c("normal", "bold", "lighter", "bolder"),
+      with_pattern = "[1-9][0-9][0-9]"
+    )
+  }
+
+  if (!inherits(stretch, "gt_column")) {
+    validate_style_in(
+      style_vals, style_names, arg_name = "stretch",
+      in_vector = c(
+        "ultra-condensed", "extra-condensed", "condensed", "semi-condensed",
+        "normal", "semi-expanded", "expanded", "extra-expanded", "ultra-expanded"
+      )
+    )
+  }
+
+  if (!inherits(decorate, "gt_column")) {
+    validate_style_in(
+      style_vals, style_names,
+      arg_name = "decorate",
+      in_vector = c("overline", "line-through", "underline", "underline overline")
+    )
+  }
+
+  if (!inherits(transform, "gt_column")) {
+    validate_style_in(
+      style_vals, style_names,
+      arg_name = "transform",
+      in_vector = c("uppercase", "lowercase", "capitalize")
+    )
+  }
+
+  if (!inherits(whitespace, "gt_column")) {
+    validate_style_in(
+      style_vals = style_vals,
+      style_names = style_names,
+      arg_name = "whitespace",
+      in_vector = c(
+        "normal", "nowrap", "pre", "pre-wrap", "pre-line", "break-spaces"
+      )
+    )
+  }
 
   # Transform the `color` value, if present, so that X11 color names
   # can be used in all output contexts
-  if ("color" %in% style_names) {
-    style_vals$color <- html_color(colors = style_vals$color)
+  if (!inherits(color, "gt_column") && "color" %in% style_names) {
+    style_vals$color <- html_color(colors = color)
   }
 
   cell_style_structure(name = "cell_text", obj = style_vals)
@@ -2853,7 +3244,7 @@ cell_style_to_html.cell_text <- function(style) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-23
+#' 8-25
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2864,17 +3255,20 @@ cell_fill <- function(
     alpha = NULL
 ) {
 
-  if (length(color) != 1) {
+  if (!inherits(color, "gt_column") && length(color) != 1) {
     cli::cli_abort("The length of the `color` vector must be `1`.")
   }
 
-  if (!is.null(alpha) && length(alpha) != 1) {
+  if (!is.null(alpha) && !inherits(color, "gt_column") && length(alpha) != 1) {
     cli::cli_abort("If provided, `alpha` must be a single value.")
   }
 
   # Transform the `color` value, if present, so that X11 color names
   # can be used in all output contexts
-  color <- html_color(colors = color, alpha = alpha)
+
+  if (!inherits(color, "gt_column")) {
+    color <- html_color(colors = color, alpha = alpha)
+  }
 
   style_vals <- list(color = color)
 
@@ -3000,7 +3394,7 @@ cell_style_to_html.cell_fill <- function(style) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-24
+#' 8-26
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3139,7 +3533,7 @@ cell_style_structure <- function(name, obj, subclass = name) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-25
+#' 8-27
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3181,7 +3575,7 @@ latex_special_chars <- c(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-26
+#' 8-28
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3255,7 +3649,7 @@ escape_latex <- function(text) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-27
+#' 8-29
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3366,7 +3760,7 @@ gt_latex_dependencies <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-28
+#' 8-30
 #'
 #' @section Function Introduced:
 #' `v0.2.2` (August 5, 2020)
@@ -3441,7 +3835,7 @@ google_font <- function(name) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-29
+#' 8-31
 #'
 #' @section Function Introduced:
 #' `v0.2.2` (August 5, 2020)
@@ -3681,7 +4075,7 @@ default_fonts <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-30
+#' 8-32
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)

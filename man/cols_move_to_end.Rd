@@ -46,14 +46,15 @@ column.
 \section{Examples}{
 
 
-Use a portion of the \code{\link{countrypops}} dataset to create a \strong{gt} table. Let's
-move the \code{year} column to the end of the column series with the
+For this example, we'll use a portion of the \code{\link{countrypops}} dataset to
+create a simple \strong{gt} table. Let's move the \code{year} column, which is the
+middle column, to the end of the column series with the
 \code{cols_move_to_end()} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>
-  dplyr::filter(country_name == "Mongolia") |>
-  tail(5) |>
+  dplyr::filter(country_name == "Benin") |>
+  dplyr::slice_tail(n = 5) |>
   gt() |>
   cols_move_to_end(columns = year)
 }\if{html}{\out{</div>}}
@@ -62,13 +63,14 @@ move the \code{year} column to the end of the column series with the
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_move_to_end_1.png" alt="This image of a table was generated from the first code example in the `cols_move_to_end()` help file." style="width:100\%;">
 }}
 
-Let's again use \code{\link{countrypops}} for a \strong{gt} example table. This time we'll
-move the \code{year} and \code{country_name} columns to the end of the column series.
+We can also move multiple columns at a time. With the same
+\code{\link{countrypops}}-based table, let's move both the \code{year} and \code{population}
+columns to the end of the column series.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>
-  dplyr::filter(country_name == "Mongolia") |>
-  tail(5) |>
+  dplyr::filter(country_name == "Benin") |>
+  dplyr::slice_tail(n = 5) |>
   gt() |>
   cols_move_to_end(columns = c(year, country_name))
 }\if{html}{\out{</div>}}
@@ -80,7 +82,7 @@ move the \code{year} and \code{country_name} columns to the end of the column se
 
 \section{Function ID}{
 
-5-10
+5-11
 }
 
 \section{Function Introduced}{
@@ -102,6 +104,7 @@ Other column modification functions:
 \code{\link{cols_merge}()},
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
+\code{\link{cols_nanoplot}()},
 \code{\link{cols_unhide}()},
 \code{\link{cols_units}()},
 \code{\link{cols_width}()}

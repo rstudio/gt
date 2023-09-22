@@ -280,6 +280,22 @@
 #' `r man_get_image_tag(file = "man_tab_style_body_6.png")`
 #' }}
 #'
+#' Styling every `NA` value in a table is also easily accomplished with the `fn`
+#' argument by way of the `is.na()` function.
+#'
+#' ```r
+#' gt_tbl |>
+#'   tab_style_body(
+#'     style = cell_text(color = "red3"),
+#'     fn = function(x) is.na(x)
+#'   ) |>
+#'   sub_missing(missing_text = "Not Available")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_style_body_7.png")`
+#' }}
+#'
 #' @family part creation/modification functions
 #' @section Function ID:
 #' 2-11

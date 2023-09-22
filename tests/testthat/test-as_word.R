@@ -224,7 +224,7 @@ test_that("word ooxml can be generated from gt object", {
     as_word()
 
   gt_exibble_min_sha1 <- digest::sha1(gt_exibble_min)
-  expect_equal(gt_exibble_min_sha1, "02a08c1cd57afd63d1e8a670579b59a3fffda177")
+  expect_equal(gt_exibble_min_sha1, "818e5b7186faca5038cc62b607d01fd43ee86e11")
 
 })
 
@@ -237,6 +237,20 @@ test_that("word ooxml escapes special characters in gt object", {
   ## basic table
   exibble_min %>%
     gt() %>%
+    as_word() %>%
+    expect_snapshot()
+
+})
+
+test_that("word ooxml escapes special characters in gt object footer", {
+
+  # Create a one-row table for these tests
+  exibble_min <- exibble[1, ]
+
+  ## basic table with invalid footnote
+  exibble_min %>%
+    gt() %>%
+    tab_footnote(footnote = "p < .05, ><&\n\r\"'") %>%
     as_word() %>%
     expect_snapshot()
 
@@ -792,7 +806,222 @@ test_that("tables with summaries can be added to a word doc", {
       c("s.d.", "4,916,123.25", "—", "—")
     )
   )
+
+
+  ## Now place the summary on the top
+
+  ## simple table
+  gt_exibble_min_top <- exibble %>%
+    dplyr::select(-c(fctr, date, time, datetime)) %>%
+    gt(rowname_col = "row", groupname_col = "group") %>%
+    summary_rows(
+      groups = everything(),
+      columns = num,
+      fns = list(
+        avg = ~mean(., na.rm = TRUE),
+        total = ~sum(., na.rm = TRUE),
+        s.d. = ~sd(., na.rm = TRUE)
+      ),
+      fmt = list(~ fmt_number(.)),
+      side = "top"
+    )
+
+  ## Add table to empty word document
+  word_doc_top <- officer::read_docx() %>%
+    body_add_gt(
+      gt_exibble_min_top,
+      align = "center"
+    )
+
+  ## save word doc to temporary file
+  temp_word_file_top <- tempfile(fileext = ".docx")
+  print(word_doc_top,target = temp_word_file_top)
+
+  ## Manual Review
+  if (!testthat::is_testing() & interactive()) {
+    shell.exec(temp_word_file_top)
+  }
+
+  ## Programmatic Review
+  docx_top <- officer::read_docx(temp_word_file_top)
+
+  ## get docx table contents
+  docx_contents_top <- docx_top$doc_obj$get() %>%
+    xml2::xml_children() %>%
+    xml2::xml_children()
+
+  ## extract table contents
+  docx_table_body_header_top <- docx_contents_top[1] %>%
+    xml2::xml_find_all(".//w:tblHeader/ancestor::w:tr")
+
+  docx_table_body_contents_top <- docx_contents_top[1] %>%
+    xml2::xml_find_all(".//w:tr") %>%
+    setdiff(docx_table_body_header_top)
+
+  ## "" at beginning for stubheader
+  expect_equal(
+    docx_table_body_header_top  %>%
+      xml2::xml_find_all(".//w:p") %>%
+      xml2::xml_text(),
+    c( "", "num", "char", "currency")
+  )
+
+  expect_equal(
+    lapply(docx_table_body_contents_top, function(x)
+      x %>% xml2::xml_find_all(".//w:p") %>% xml2::xml_text()),
+    list(
+      "grp_a",
+      c("avg", "120.02", "—", "—"),
+      c("total", "480.06", "—", "—"),
+      c("s.d.", "216.79", "—", "—"),
+      c("row_1", "1.111e-01", "apricot", "49.950"),
+      c("row_2", "2.222e+00", "banana", "17.950"),
+      c("row_3", "3.333e+01", "coconut", "1.390"),
+      c("row_4", "4.444e+02", "durian", "65100.000"),
+      "grp_b",
+      c("avg", "3,220,850.00", "—", "—"),
+      c("total", "9,662,550.00", "—", "—"),
+      c("s.d.", "4,916,123.25", "—", "—"),
+      c("row_5", "5.550e+03", "NA", "1325.810"),
+      c("row_6", "NA", "fig", "13.255"),
+      c("row_7", "7.770e+05", "grapefruit", "NA"),
+      c("row_8", "8.880e+06", "honeydew", "0.440")
+    )
+  )
+
 })
+
+test_that("tables with grand summaries but no rownames can be added to a word doc", {
+
+  check_suggests_xml()
+
+  ## simple table
+  gt_exibble_min <- exibble %>%
+    dplyr::select(-c(fctr, date, time, datetime, row, group)) %>%
+    dplyr::slice(1:3) %>%
+    gt() %>%
+    grand_summary_rows(
+      c(everything(), -char),
+      fns = c("Total" = ~length(.))
+    )
+
+  ## Add table to empty word document
+  word_doc <- officer::read_docx() %>%
+    body_add_gt(
+      gt_exibble_min,
+      align = "center"
+    )
+
+  ## save word doc to temporary file
+  temp_word_file <- tempfile(fileext = ".docx")
+  print(word_doc,target = temp_word_file)
+
+  ## Manual Review
+  if (!testthat::is_testing() & interactive()) {
+    shell.exec(temp_word_file)
+  }
+
+  ## Programmatic Review
+  docx <- officer::read_docx(temp_word_file)
+
+  ## get docx table contents
+  docx_contents <- docx$doc_obj$get() %>%
+    xml2::xml_children() %>%
+    xml2::xml_children()
+
+  ## extract table contents
+  docx_table_body_header <- docx_contents[1] %>%
+    xml2::xml_find_all(".//w:tblHeader/ancestor::w:tr")
+
+  docx_table_body_contents <- docx_contents[1] %>%
+    xml2::xml_find_all(".//w:tr") %>%
+    setdiff(docx_table_body_header)
+
+  ## "" at beginning for stubheader
+  expect_equal(
+    docx_table_body_header %>%
+      xml2::xml_find_all(".//w:p") %>%
+      xml2::xml_text(),
+    c( "", "num", "char", "currency")
+  )
+
+  expect_equal(
+    lapply(docx_table_body_contents, function(x)
+      x %>% xml2::xml_find_all(".//w:p") %>% xml2::xml_text()),
+    list(
+      c("", "0.1111", "apricot", "49.95"),
+      c("", "2.2220", "banana","17.95"),
+      c("", "33.3300", "coconut", "1.39"),
+      c("Total", "3","—", "3")
+    )
+  )
+
+  ## simple table
+  gt_exibble_min_top <- exibble %>%
+    dplyr::select(-c(fctr, date, time, datetime, row, group)) %>%
+    dplyr::slice(1:3) %>%
+    gt() %>%
+    grand_summary_rows(
+      c(everything(), -char),
+      fns = c("Total" = ~length(.)),
+      side = "top"
+    )
+
+  ## Add table to empty word document
+  word_doc_top <- officer::read_docx() %>%
+    body_add_gt(
+      gt_exibble_min_top,
+      align = "center"
+    )
+
+  ## save word doc to temporary file
+  temp_word_file_top <- tempfile(fileext = ".docx")
+  print(word_doc_top,target = temp_word_file_top)
+
+  ## Manual Review
+  if (!testthat::is_testing() & interactive()) {
+    shell.exec(temp_word_file_top)
+  }
+
+  ## Programmatic Review
+  docx_top <- officer::read_docx(temp_word_file_top)
+
+  ## get docx table contents
+  docx_contents_top <- docx_top$doc_obj$get() %>%
+    xml2::xml_children() %>%
+    xml2::xml_children()
+
+  ## extract table contents
+  docx_table_body_header_top <- docx_contents_top[1] %>%
+    xml2::xml_find_all(".//w:tblHeader/ancestor::w:tr")
+
+  docx_table_body_contents_top <- docx_contents_top[1] %>%
+    xml2::xml_find_all(".//w:tr") %>%
+    setdiff(docx_table_body_header_top)
+
+  ## "" at beginning for stubheader
+  expect_equal(
+    docx_table_body_header_top %>%
+      xml2::xml_find_all(".//w:p") %>%
+      xml2::xml_text(),
+    c( "", "num", "char", "currency")
+  )
+
+  expect_equal(
+    lapply(docx_table_body_contents_top, function(x)
+      x %>% xml2::xml_find_all(".//w:p") %>% xml2::xml_text()),
+    list(
+      c("Total", "3","—", "3"),
+      c("", "0.1111", "apricot", "49.95"),
+      c("", "2.2220", "banana","17.95"),
+      c("", "33.3300", "coconut", "1.39")
+    )
+  )
+
+
+})
+
+
 
 test_that("tables with footnotes can be added to a word doc", {
 
@@ -1555,7 +1784,6 @@ test_that("footnotes styling gets applied to footer marks", {
 
 })
 
-
 test_that("tables with cell & text coloring can be added to a word doc - with summaries (grand/group)", {
 
   check_suggests_xml()
@@ -2034,16 +2262,13 @@ There's a quick reference [here](https://commonmark.org/help/).
       "<w:rPr>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>",
       "<w:rPr>\n  <w:rStyle w:val=\"Macro Text\"/>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>",
       "<w:rPr>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>",
-      "<w:rPr>\n  <w:rStyle w:val=\"Hyperlink\"/>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>",
+      "<w:rPr>\n  <w:rStyle w:val=\"Hyperlink\"/>\n  <w:color w:val=\"0563C1\"/>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>",
       "<w:rPr>\n  <w:rFonts w:ascii=\"Calibri\" w:hAnsi=\"Calibri\"/>\n  <w:sz w:val=\"20\"/>\n</w:rPr>"
     )
   )
 
 
-
-
 })
-
 
 test_that("markdown with urls work",{
 
@@ -2095,3 +2320,293 @@ test_that("markdown with urls work",{
 
 })
 
+test_that("markdown with img refs work",{
+
+  skip_on_ci()
+  check_suggests_xml()
+
+  ref_png <- file.path(system.file(package = "gt"),"/graphics/test_image.png")
+  ref_svg <- file.path(system.file(package = "gt"),"/graphics/test_image.svg")
+
+  temp_png <- file.path(tempdir(),"test_image.png")
+  temp_svg <- file.path(tempdir(),"test_image.svg")
+
+  file.copy(ref_png, temp_png)
+  file.copy(ref_svg, temp_svg)
+
+  markdown_gt <- dplyr::tribble(
+    ~md,
+    paste0(" ![test image from gt package](",temp_png,")"),
+    paste0(" ![test image from gt package2](",temp_svg,")")
+    ) %>%
+    gt() %>%
+    fmt_markdown(columns = everything())
+
+  temp_docx <- tempfile(fileext = ".docx")
+
+  gtsave(markdown_gt, filename = temp_docx)
+
+  if(interactive() & !testthat::is_testing()){
+    shell.exec(temp_docx)
+  }
+
+  ## Programmatic Review
+  docx <- officer::read_docx(temp_docx)
+
+  ## get docx contents
+  docx_contents <- xml2::xml_children(xml2::xml_children(docx$doc_obj$get()))
+
+  ## extract table hyperlinks
+  docx_table_image <-
+    docx_contents[1] %>%
+    xml2::xml_find_all(".//a:blip")
+
+  ## hyperlinks are preserved and updated to be rId
+  expect_equal(length(docx_table_image),2)
+  expect_true(all(grepl("^rId\\d+$",xml_attr(docx_table_image, "embed"))))
+
+  # first should be a png
+  expect_equal(
+    docx$doc_obj$rel_df()$target[ docx$doc_obj$rel_df()$id == xml_attr(docx_table_image[1], "embed")],
+    "media/testimage.png"
+  )
+
+  # second should be an svg
+  expect_equal(
+    docx$doc_obj$rel_df()$target[ docx$doc_obj$rel_df()$id == xml_attr(docx_table_image[2], "embed")],
+    "media/testimage.svg"
+  )
+
+})
+
+test_that("table with image refs work - local only",{
+
+  skip_on_ci()
+  check_suggests_xml()
+
+  ref_png <- file.path(system.file(package = "gt"),"/graphics/test_image.png")
+  ref_svg <- file.path(system.file(package = "gt"),"/graphics/test_image.svg")
+  ref_wide_svg <- file.path(system.file(package = "gt"),"/graphics/gt_parts_of_a_table.svg")
+
+  temp_png <- file.path(tempdir(),"test_image.png")
+  temp_svg <- file.path(tempdir(),"test_image.svg")
+  temp_wide_svg <- file.path(tempdir(),"gt_parts_of_a_table.svg")
+
+  file.copy(ref_png, temp_png)
+  file.copy(ref_svg, temp_svg)
+  file.copy(ref_wide_svg, temp_wide_svg)
+
+  image_gt <- dplyr::tribble(
+    ~md,
+    paste0(c(temp_png,temp_svg), collapse = ", "), ## two images next to each other
+    temp_svg, # single image, square
+    ref_wide_svg # a wide image is respected
+  ) %>%
+    gt() %>%
+    fmt_image(columns = everything(), sep = ",", height = "2in")
+
+  temp_docx <- tempfile(fileext = ".docx")
+
+  gtsave(image_gt, filename = temp_docx)
+
+  if(interactive() & !testthat::is_testing()){
+    shell.exec(temp_docx)
+  }
+
+  ## Programmatic Review
+  docx <- officer::read_docx(temp_docx)
+
+  ## get docx contents
+  docx_contents <- xml2::xml_children(xml2::xml_children(docx$doc_obj$get()))
+
+  ## extract table hyperlinks
+  docx_table_image <-
+    docx_contents[1] %>%
+    xml2::xml_find_all(".//a:blip")
+
+  ## hyperlinks are preserved and updated to be rId
+  expect_equal(length(docx_table_image),4)
+  expect_true(all(grepl("^rId\\d+$",xml_attr(docx_table_image, "embed"))))
+
+  # first should be a png
+  expect_equal(
+    docx$doc_obj$rel_df()$target[ docx$doc_obj$rel_df()$id == xml_attr(docx_table_image[1], "embed")],
+    "media/testimage.png"
+  )
+
+  # second should be an svg of testimage
+  expect_equal(
+    docx$doc_obj$rel_df()$target[ docx$doc_obj$rel_df()$id == xml_attr(docx_table_image[2], "embed")],
+    "media/testimage.svg"
+  )
+
+  # third should also be an svg of testimage
+  expect_equal(
+    docx$doc_obj$rel_df()$target[ docx$doc_obj$rel_df()$id == xml_attr(docx_table_image[3], "embed")],
+    "media/testimage.svg"
+  )
+
+  # foruth should be an svg of gtpartsofatable
+  expect_equal(
+    docx$doc_obj$rel_df()$target[ docx$doc_obj$rel_df()$id == xml_attr(docx_table_image[4], "embed")],
+    "media/gtpartsofatable.svg"
+  )
+
+  ## Check that the image h/w ratios are preserved
+  docx$doc_obj$get() %>%
+    xml2::xml_find_all(".//wp:extent") %>%
+    xml2::xml_attrs() %>%
+    sapply(function(x){as.numeric(x[["cy"]])/as.numeric(x[["cx"]])}) %>%
+    expect_equal(
+      c(1,1,1,0.627451),
+      tolerance = .0000001 ## check out to 6 decimals for the ratio
+    )
+
+})
+
+test_that("table with image refs work - https",{
+
+  skip_on_ci()
+  check_suggests_xml()
+
+  https_image_gt <- dplyr::tribble(
+    ~https_image,
+    "https://gt.rstudio.com/reference/figures/logo.svg"
+  ) %>%
+    gt() %>%
+    fmt_image(columns = everything(), sep = ",", height = "2in")
+
+  temp_docx <- tempfile(fileext = ".docx")
+
+  gtsave(https_image_gt, filename = temp_docx)
+
+  if(interactive() & !testthat::is_testing()){
+    shell.exec(temp_docx)
+  }
+
+  ## Programmatic Review
+  docx <- officer::read_docx(temp_docx)
+
+  ## get docx contents
+  docx_contents <- xml2::xml_children(xml2::xml_children(docx$doc_obj$get()))
+
+  ## extract table hyperlinks
+  docx_table_image <-
+    docx_contents[1] %>%
+    xml2::xml_find_all(".//a:blip")
+
+  ## hyperlinks are preserved and updated to be rId
+  expect_equal(length(docx_table_image),1)
+  expect_true(all(grepl("^rId\\d+$",xml_attr(docx_table_image, "embed"))))
+
+  # first should be the logo.svg with some random numbers ahead of it
+  expect_true(
+    grepl("^media/.+?logo[.]svg$",
+    docx$doc_obj$rel_df()$target[ docx$doc_obj$rel_df()$id == xml_attr(docx_table_image[1], "embed")]
+    )
+  )
+
+})
+
+
+test_that("table with image refs work - local only - setting image widths and heights",{
+
+  skip_on_ci()
+  check_suggests_xml()
+
+  ref_png <- file.path(system.file(package = "gt"),"/graphics/test_image.png")
+  ref_svg <- file.path(system.file(package = "gt"),"/graphics/test_image.svg")
+  ref_wide_svg <- file.path(system.file(package = "gt"),"/graphics/gt_parts_of_a_table.svg")
+
+  temp_png <- file.path(tempdir(),"test_image.png")
+  temp_svg <- file.path(tempdir(),"test_image.svg")
+  temp_wide_svg <- file.path(tempdir(),"gt_parts_of_a_table.svg")
+
+  file.copy(ref_png, temp_png)
+  file.copy(ref_svg, temp_svg)
+  file.copy(ref_wide_svg, temp_wide_svg)
+
+  image_gt_height_and_width <- dplyr::tribble(
+    ~md,
+    paste0(c(temp_png,temp_svg), collapse = ", "), ## two images next to each other
+    temp_svg, # single image, square
+    ref_wide_svg # a wide image is respected
+  ) %>%
+    gt() %>%
+    fmt_image(columns = everything(), sep = ",", height = "1in", width = "2in")
+
+  image_gt_height <- dplyr::tribble(
+    ~md,
+    paste0(c(temp_png,temp_svg), collapse = ", "), ## two images next to each other
+    temp_svg, # single image, square
+    ref_wide_svg # a wide image is respected
+  ) %>%
+    gt() %>%
+    fmt_image(columns = everything(), sep = ",", height = "2in")
+
+  image_gt_width <- dplyr::tribble(
+    ~md,
+    paste0(c(temp_png,temp_svg), collapse = ", "), ## two images next to each other
+    temp_svg, # single image, square
+    ref_wide_svg # a wide image is respected
+  ) %>%
+    gt() %>%
+    fmt_image(columns = everything(), sep = ",", width = "1in")
+
+  temp_docx_1 <- tempfile(fileext = ".docx")
+  temp_docx_2 <- tempfile(fileext = ".docx")
+  temp_docx_3 <- tempfile(fileext = ".docx")
+
+  gtsave(image_gt_height_and_width, filename = temp_docx_1)
+  gtsave(image_gt_height, filename = temp_docx_2)
+  gtsave(image_gt_width, filename = temp_docx_3)
+
+  if(interactive() & !testthat::is_testing()){
+    shell.exec(temp_docx_1)
+    shell.exec(temp_docx_2)
+    shell.exec(temp_docx_3)
+
+  }
+
+  ## Check that the image h/w ratios are overwritten when both height and width are set
+  docx1 <- officer::read_docx(temp_docx_1)
+  docx1$doc_obj$get() %>%
+    xml2::xml_find_all(".//wp:extent") %>%
+    xml2::xml_attrs() %>%
+    lapply(function(x){list(height = x[["cy"]], width = x[["cx"]], ratio = as.numeric(x[["cy"]])/as.numeric(x[["cx"]]))}) %>%
+    expect_equal(
+      list(list(height = "914400", width = "1828800", ratio = 0.5),
+           list(height = "914400", width = "1828800", ratio = 0.5),
+           list(height = "914400", width = "1828800", ratio = 0.5),
+           list(height = "914400", width = "1828800", ratio = 0.5)),
+      tolerance = .0000001 ## check out to 6 decimals for the ratio
+    )
+
+  ## Check that the image h/w ratios are preserved
+  docx2 <- officer::read_docx(temp_docx_2)
+  docx2$doc_obj$get() %>%
+    xml2::xml_find_all(".//wp:extent") %>%
+    xml2::xml_attrs() %>%
+    lapply(function(x){list(height = x[["cy"]], width = x[["cx"]], ratio = as.numeric(x[["cy"]])/as.numeric(x[["cx"]]))}) %>%
+    expect_equal(
+      list(list(height = "1828800", width = "1828800", ratio = 1),
+           list(height = "1828800", width = "1828800", ratio = 1),
+           list(height = "1828800", width = "1828800", ratio = 1),
+           list(height = "1828800", width = "2914650", ratio = 0.627451)),
+      tolerance = .0000001 ## check out to 6 decimals for the ratio
+    )
+
+  ## Check that the image h/w ratios are preserved
+  docx3 <- officer::read_docx(temp_docx_3)
+  docx3$doc_obj$get() %>%
+    xml2::xml_find_all(".//wp:extent") %>%
+    xml2::xml_attrs() %>%
+    lapply(function(x){list(height = x[["cy"]], width = x[["cx"]], ratio = as.numeric(x[["cy"]])/as.numeric(x[["cx"]]))}) %>%
+    expect_equal(
+      list(list(height = "914400", width = "914400", ratio = 1),
+           list(height = "914400", width = "914400", ratio = 1),
+           list(height = "914400", width = "914400", ratio = 1),
+           list(height = "571500", width = "914400", ratio = 0.625))
+    )
+
+})

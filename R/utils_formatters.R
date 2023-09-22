@@ -173,6 +173,27 @@ get_locale_dec_mark <- function(locale = NULL, default) {
   filter_table_to_value(locales, decimal, locale == {{ locale }})
 }
 
+#' Get the range pattern based on a locale
+#'
+#' @param locale The user-supplied `locale` value, found in several `fmt_*()`
+#'   functions. This is expected as `NULL` if not supplied by the user.
+#' @noRd
+get_locale_range_pattern <- function(locale = NULL) {
+
+  # If `locale` is NULL then set the locale to 'en'
+  if (is.null(locale)) {
+    locale <- "en"
+  }
+
+  # Get the correct `range_pattern` value from the `gt:::locales` lookup table
+  range_pattern <-
+    filter_table_to_value(locales, range_pattern, locale == {{ locale }})
+
+  range_pattern <- gsub("1", "2", range_pattern)
+  range_pattern <- gsub("0", "1", range_pattern)
+  range_pattern
+}
+
 #' Get the currency code value associated with a locale's territory
 #'
 #' @param locale The user-supplied `locale` value, found in several `fmt_*()`
@@ -219,6 +240,11 @@ get_locale_num_spellout <- function(locale = NULL) {
   # If `locale` is NULL then set locale as 'en'
   if (is.null(locale)) {
     locale <- "en"
+  }
+
+  # If `locale` contains `sr-Latn` then set locale as 'sr-Latn'
+  if (grepl("sr-Latn", locale)) {
+    locale <- "sr-Latn"
   }
 
   # Get a vector of all locales from the column names of the
@@ -295,6 +321,11 @@ resolve_locale <- function(data, locale) {
 
   if (is.null(locale)) {
     locale <- dt_locale_get_value(data = data)
+  }
+
+  # An 'undetermined' locale should map back to the `"en"` locale
+  if (!is.null(locale) && locale == "und") {
+    locale <- "en"
   }
 
   locale <- normalize_locale(locale = locale)
@@ -887,6 +918,8 @@ context_symbol_str <- function(context, symbol) {
       },
       get_currency_str(currency = symbol, fallback_to_code = TRUE)
     )
+
+  symbol
 }
 
 #' Paste a symbol string to a formatted number
@@ -915,42 +948,45 @@ format_symbol_str <- function(
     return(x_abs_str)
   }
 
-  vapply(
-    seq_along(x),
-    FUN.VALUE = character(1),
-    USE.NAMES = FALSE,
-    FUN = function(i) {
+  x_out <-
+    vapply(
+      seq_along(x),
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
+      FUN = function(i) {
 
-      # Using absolute value format, the minus mark will
-      # be added later
-      x_i <- x[i]
-      x_str_i <- x_abs_str[i]
+        # Using absolute value format, the minus mark will
+        # be added later
+        x_i <- x[i]
+        x_str_i <- x_abs_str[i]
 
-      # Place possible space and symbol on correct side of value
-      x_str_i <-
-        paste_on_side(
-          x_str_i,
-          x_side = ifelse(incl_space, " ", ""),
-          direction = placement
-        )
-      x_str_i <-
-        paste_on_side(
-          x_str_i,
-          x_side = as.character(symbol_str),
-          direction = placement
-        )
+        # Place possible space and symbol on correct side of value
+        x_str_i <-
+          paste_on_side(
+            x_str_i,
+            x_side = ifelse(incl_space, " ", ""),
+            direction = placement
+          )
+        x_str_i <-
+          paste_on_side(
+            x_str_i,
+            x_side = as.character(symbol_str),
+            direction = placement
+          )
 
-      # Create the minus mark for the context
-      minus_mark <- context_minus_mark(context)
+        # Create the minus mark for the context
+        minus_mark <- context_minus_mark(context)
 
-      # Place the `minus_mark` onto the formatted strings
-      if (x_i < 0) {
-        x_str_i <- paste_left(x_str_i, minus_mark)
+        # Place the `minus_mark` onto the formatted strings
+        if (x_i < 0) {
+          x_str_i <- paste_left(x_str_i, minus_mark)
+        }
+
+        x_str_i
       }
+    )
 
-      x_str_i
-    }
-  )
+  x_out
 }
 
 #' Transform currency values to accounting style
@@ -1176,4 +1212,104 @@ num_fmt_factory <- function(
 
     x_str
   }
+}
+
+get_arg_names <- function(
+    function_name,
+    in_args = NULL,
+    all_args_except = NULL
+) {
+
+  if (!is.null(in_args) && !is.null(all_args_except)) {
+    stop("The `in_args` and `all_args_except` args should not both be used.")
+  }
+
+  if (is.null(in_args) && is.null(all_args_except)) {
+
+    arg_names <- names(formals(function_name))
+
+  } else if (!is.null(in_args) && is.null(all_args_except)) {
+
+    arg_names <- in_args
+
+  } else {
+
+    arg_names <-
+      base::setdiff(
+        names(formals(function_name)),
+        all_args_except
+      )
+  }
+
+  arg_names
+}
+
+args_have_gt_column_obj <- function(arg_vals) {
+
+  any(
+    vapply(
+      arg_vals,
+      FUN.VALUE = logical(1),
+      USE.NAMES = FALSE,
+      FUN = function(x) {
+        inherits(x, "gt_column")
+      }
+    )
+  )
+}
+
+generate_param_tbl <- function(
+    data,
+    arg_vals,
+    resolved_rows_idx
+  ) {
+
+  data_df <- dt_data_get(data = data)
+
+  param_tbl <- dplyr::tibble(.rows = length(resolved_rows_idx))
+
+  for (i in seq_along(names(arg_vals))) {
+
+    if (inherits(arg_vals[[i]], "gt_column")) {
+
+      resolved_column <-
+        resolve_cols_c(expr = arg_vals[[i]][["column"]], data = data)
+
+      param_vals <- data_df[resolved_rows_idx, ][[resolved_column]]
+
+      if (!is.null(arg_vals[[i]][["fn"]])) {
+
+        fn <- arg_vals[[i]][["fn"]]
+        param_vals <- fn(param_vals)
+      }
+
+      if (!is.null(arg_vals[[i]][["na_value"]])) {
+
+        na_value <- arg_vals[[i]][["na_value"]]
+        param_vals[is.na(param_vals)] <- na_value
+      }
+
+      param_tbl <-
+        dplyr::bind_cols(
+          param_tbl,
+          dplyr::tibble(!!names(arg_vals)[i] := param_vals)
+        )
+
+    } else {
+
+      arg_name <- names(arg_vals)[i]
+      default_for_arg <- rlang::eval_bare(formals(fmt_number)[[arg_name]])
+
+      if (!identical(arg_vals[[i]], default_for_arg) && !is.null(arg_vals[[i]])) {
+
+        param_tbl <-
+          dplyr::bind_cols(
+            param_tbl,
+            dplyr::tibble(!!arg_name := arg_vals[[i]][1])
+          )
+      }
+    }
+  }
+
+  param_tbl
 }

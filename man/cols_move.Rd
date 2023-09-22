@@ -65,13 +65,14 @@ position the \code{population} column after the \code{country_name} column by us
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>
-  dplyr::filter(country_name == "Mongolia") |>
-  tail(5) |>
+  dplyr::filter(country_name == "Japan") |>
+  dplyr::slice_tail(n = 10) |>
   gt() |>
   cols_move(
     columns = population,
     after = country_name
-  )
+  ) |>
+  fmt_integer(columns = population)
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
@@ -81,7 +82,7 @@ position the \code{population} column after the \code{country_name} column by us
 
 \section{Function ID}{
 
-5-8
+5-9
 }
 
 \section{Function Introduced}{
@@ -103,6 +104,7 @@ Other column modification functions:
 \code{\link{cols_merge}()},
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
+\code{\link{cols_nanoplot}()},
 \code{\link{cols_unhide}()},
 \code{\link{cols_units}()},
 \code{\link{cols_width}()}

@@ -51,8 +51,8 @@ table. We'll hide the \code{country_code_2} and \code{country_code_3} columns wi
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
   countrypops |>
-  dplyr::filter(country_name == "Mongolia") |>
-  tail(5) |>
+  dplyr::filter(country_name == "Singapore") |>
+  dplyr::slice_tail(n = 5) |>
   gt() |>
   cols_hide(columns = c(country_code_2, country_code_3))
 
@@ -77,7 +77,7 @@ the \code{cols_unhide()} function becomes useful.
 
 \section{Function ID}{
 
-5-12
+5-13
 }
 
 \section{Function Introduced}{
@@ -102,6 +102,7 @@ Other column modification functions:
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
+\code{\link{cols_nanoplot}()},
 \code{\link{cols_units}()},
 \code{\link{cols_width}()}
 }

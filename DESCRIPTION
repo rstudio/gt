@@ -56,9 +56,11 @@ Imports:
 Suggests:
     covr,
     digest (>= 0.6.31),
+    fontawesome (>= 0.5.2),
     ggplot2,
     knitr,
     lubridate,
+    magick,
     paletteer,
     RColorBrewer,
     rmarkdown (>= 2.20),
@@ -127,11 +129,12 @@ Collate:
     'text_transform.R'
     'utils.R'
     'utils_color_contrast.R'
+    'utils_environments.R'
     'utils_examples.R'
     'utils_formatters.R'
     'utils_general_str_formatting.R'
     'utils_pipe.R'
-    'utils_quarto.R'
+    'utils_plots.R'
     'utils_render_common.R'
     'utils_render_html.R'
     'utils_render_latex.R'

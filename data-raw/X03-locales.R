@@ -4,9 +4,6 @@ library(jsonlite)
 library(gt)
 library(stringi)
 
-# NOTE: previous version of locale metadata table
-# locales <- readr::read_rds(file = "data-raw/locales.RDS")
-
 all_locales <- i18n::all_locales
 default_locales <- i18n::default_locales
 
@@ -256,15 +253,28 @@ for (i in seq_along(regional_currencies)) {
 regional_currencies_tbl[regional_currencies_tbl$territory_name == "CU", ][["currency_code"]] <- "CUP"
 
 #
-# Create a table of 'no-table-data' text from all possible languages
+# Create a table with label text for all possible languages
 #
 
-no_table_data <-
+i18n_table_labels <-
   readr::read_csv(
-    "data-raw/no_table_data_text.csv",
+    "data-raw/table_label_text.csv",
     col_types = cols(
       lang_name = col_character(),
-      no_table_data_text = col_character()
+      no_table_data_text = col_character(),
+      sort_label_text = col_character(),
+      filter_label_text = col_character(),
+      search_placeholder_text = col_character(),
+      page_next_text = col_character(),
+      page_previous_text = col_character(),
+      page_numbers_text = col_character(),
+      page_info_text = col_character(),
+      page_size_options_text = col_character(),
+      page_next_label_text = col_character(),
+      page_previous_label_text = col_character(),
+      page_number_label_text = col_character(),
+      page_jump_label_text = col_character(),
+      page_size_options_label_text = col_character()
     )
   )
 
@@ -277,7 +287,7 @@ locales <-
   left_join(chr_index_tbl, by = "locale") %>%
   left_join(numbers_metadata_tbl, by = "locale") %>%
   left_join(regional_currencies_tbl, by = "territory_name") %>%
-  left_join(no_table_data, by = "lang_name")
+  left_join(i18n_table_labels, by = "lang_name")
 
 rm(parse_locale)
 rm(i)
@@ -306,5 +316,4 @@ rm(currency_in_use)
 rm(index_chr)
 rm(n_regional_currencies)
 rm(not_tender_j)
-rm(no_table_data)
-
+rm(i18n_table_labels)

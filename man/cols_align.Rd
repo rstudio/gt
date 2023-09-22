@@ -58,14 +58,15 @@ right-alignment is used for the \code{numeric} and \code{integer} columns.
 \section{Examples}{
 
 
-Use \code{\link{countrypops}} to create a \strong{gt} table. Align the \code{population} column
-data to the left.
+Let's use \code{\link{countrypops}} to create a small \strong{gt} table. We can change the
+alignment of the \code{population} column with \code{cols_align()}. In this example,
+the label and body cells of \code{population} will be aligned to the left.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>
-  dplyr::filter(country_name == "Mongolia") |>
-  tail(5) |>
-  gt() |>
+  dplyr::filter(country_name == "San Marino") |>
+  dplyr::slice_tail(n = 5) |>
+  gt(rowname_col = "year", groupname_col = "country_name") |>
   cols_align(
     align = "left",
     columns = population
@@ -101,6 +102,7 @@ Other column modification functions:
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
+\code{\link{cols_nanoplot}()},
 \code{\link{cols_unhide}()},
 \code{\link{cols_units}()},
 \code{\link{cols_width}()}

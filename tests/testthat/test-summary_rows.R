@@ -2160,21 +2160,21 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
   # This table has a single row group and the summary rows are to
   # be styled via `tab_style()`
   summary_tbl_7 <-
-    countrypops |>
-    dplyr::filter(country_name == "Japan", year < 1970) |>
-    dplyr::select(-contains("country")) |>
-    dplyr::mutate(decade = paste0(substr(year, 1, 3), "0s")) |>
+    countrypops %>%
+    dplyr::filter(country_name == "Japan", year < 1970) %>%
+    dplyr::select(-contains("country")) %>%
+    dplyr::mutate(decade = paste0(substr(year, 1, 3), "0s")) %>%
     gt(
       rowname_col = "year",
       groupname_col = "decade"
-    ) |>
-    fmt_integer(columns = population) |>
+    ) %>%
+    fmt_integer(columns = population) %>%
     summary_rows(
       groups = "1960s",
       columns = population,
       fns = list("min", "max"),
       fmt = ~ fmt_integer(.)
-    ) |>
+    ) %>%
     tab_style(
       style = list(
         cell_text(

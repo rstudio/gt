@@ -116,6 +116,43 @@ strings) within a \code{paste0()} so that a period can be properly placed.
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_text_transform_2.png" alt="This image of a table was generated from the second code example in the `text_transform()` help file." style="width:100\%;">
 }}
+
+There may be occasions where you'd want to remove all text. Here in this
+example based on the \code{\link{pizzaplace}} dataset, we generate a \strong{gt} table that
+summarizes an entire year of data by colorizing the daily sales revenue.
+Individual cell values are not needed here (since the encoding by color
+suffices), so, \code{text_transform()} is used to turn every value to an empty
+string: \code{""}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
+  dplyr::group_by(date) |>
+  dplyr::summarize(rev = sum(price)) |>
+  dplyr::ungroup() |>
+  dplyr::mutate(
+    month = lubridate::month(date, label = TRUE),
+    day_num = lubridate::mday(date)
+  ) |>
+  dplyr::select(-date) |>
+  tidyr::pivot_wider(names_from = month, values_from = rev) |>
+  gt(rowname_col = "day_num") |>
+  data_color(
+    method = "numeric",
+    palette = "wesanderson::Zissou1",
+    na_color = "white"
+  ) |>
+  text_transform(
+    fn = function(x) "",
+    locations = cells_body()
+  ) |>
+  opt_table_lines(extent = "none") |>
+  opt_all_caps() |>
+  cols_width(everything() ~ px(35)) |>
+  cols_align(align = "center")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_text_transform_3.png" alt="This image of a table was generated from the third code example in the `text_transform()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{

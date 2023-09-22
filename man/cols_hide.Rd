@@ -49,13 +49,13 @@ warnings or messages when changing the state of already-invisible columns.
 \section{Examples}{
 
 
-Use a small portion of the \code{\link{countrypops}} dataset to create a \strong{gt} table.
-We can hide the \code{country_code_2} and \code{country_code_3} columns with the
+Let's use a small portion of the \code{\link{countrypops}} dataset to create a \strong{gt}
+table. We can hide the \code{country_code_2} and \code{country_code_3} columns with the
 \code{cols_hide()} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
-  dplyr::filter(country_name == "Mongolia") |>
-  tail(5) |>
+  dplyr::filter(country_name == "Egypt") |>
+  dplyr::slice_tail(n = 5) |>
   gt() |>
   cols_hide(columns = c(country_code_2, country_code_3))
 }\if{html}{\out{</div>}}
@@ -71,15 +71,15 @@ the \code{cols_hide()} and \code{\link[=tab_footnote]{tab_footnote()}} statement
 display of the table.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
-  dplyr::filter(country_name == "Mongolia") |>
-  tail(5) |>
+  dplyr::filter(country_name == "Pakistan") |>
+  dplyr::slice_tail(n = 5) |>
   gt() |>
   cols_hide(columns = c(country_code_3, population)) |>
   tab_footnote(
-    footnote = "Population above 3,200,000.",
+    footnote = "Population above 220,000,000.",
     locations = cells_body(
       columns = year,
-      rows = population > 3200000
+      rows = population > 220E6
     )
   )
 }\if{html}{\out{</div>}}
@@ -91,7 +91,7 @@ display of the table.
 
 \section{Function ID}{
 
-5-11
+5-12
 }
 
 \section{Function Introduced}{
@@ -115,6 +115,7 @@ Other column modification functions:
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
+\code{\link{cols_nanoplot}()},
 \code{\link{cols_unhide}()},
 \code{\link{cols_units}()},
 \code{\link{cols_width}()}

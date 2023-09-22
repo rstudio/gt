@@ -477,15 +477,16 @@
 #'
 #' ```r
 #' countrypops |>
-#'   dplyr::filter(country_name == "Mongolia") |>
+#'   dplyr::filter(country_name == "Bangladesh") |>
 #'   dplyr::select(-contains("code")) |>
-#'   tail(10) |>
+#'   dplyr::slice_tail(n = 10) |>
 #'   gt() |>
 #'   data_color(
 #'     columns = population,
 #'     method = "numeric",
 #'     palette = "viridis",
-#'     domain = c(2.5E6, 3.4E6)
+#'     domain = c(150E6, 170E6),
+#'     reverse = TRUE
 #'   )
 #' ```
 #'
@@ -496,20 +497,21 @@
 #' We can alternatively use the `fn` argument for supplying the **scales**-based
 #' function [scales::col_numeric()]. That function call will itself return a
 #' function (which is what the `fn` argument actually requires) that takes a
-#' vector of numeric values and returns color values. Here is the more complex
+#' vector of numeric values and returns color values. Here is an alternate
 #' version of the code that returns the same table as in the previous example.
 #'
 #' ```r
 #' countrypops |>
-#'   dplyr::filter(country_name == "Mongolia") |>
+#'   dplyr::filter(country_name == "Bangladesh") |>
 #'   dplyr::select(-contains("code")) |>
-#'   tail(10) |>
+#'   dplyr::slice_tail(n = 10) |>
 #'   gt() |>
 #'   data_color(
 #'     columns = population,
 #'     fn = scales::col_numeric(
 #'       palette = "viridis",
-#'       domain = c(2.5E6, 3.4E6)
+#'       domain = c(150E6, 170E6),
+#'       reverse = TRUE
 #'     )
 #'   )
 #' ```
@@ -675,7 +677,7 @@
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-31
+#' 3-32
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)

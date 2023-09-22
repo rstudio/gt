@@ -666,11 +666,12 @@ test_that("The `fmt_number()` function format to specified significant figures",
   # Expect an error if the length of `n_sigfig` is not 1
   expect_error(fmt_number(tab, columns = num, n_sigfig = c(1, 2)))
 
-  # Expect an error if `n_sigfig` is NA
-  expect_error(tab %>% fmt_number(columns = num, n_sigfig = NA))
-  expect_error(tab %>% fmt_number(columns = num, n_sigfig = NA_integer_))
-  expect_error(tab %>% fmt_number(columns = num, n_sigfig = NA_real_))
-  expect_error(tab %>% fmt_number(columns = num, n_sigfig = NA_integer_))
+  # Don't expect an error if `n_sigfig` is NA (if `n_sigfig` has NA) then
+  # `decimals` is used
+  expect_error(regexp = NA, tab %>% fmt_number(columns = num, n_sigfig = NA))
+  expect_error(regexp = NA, tab %>% fmt_number(columns = num, n_sigfig = NA_integer_))
+  expect_error(regexp = NA, tab %>% fmt_number(columns = num, n_sigfig = NA_real_))
+  expect_error(regexp = NA, tab %>% fmt_number(columns = num, n_sigfig = NA_integer_))
 
   # Expect an error if `n_sigfig` is not numeric
   expect_error(tab %>% fmt_number(columns = num, n_sigfig = "3"))
@@ -685,7 +686,6 @@ test_that("The `fmt_number()` function format to specified significant figures",
   expect_error(tab %>% fmt_number(columns = num, n_sigfig = 0L))
   expect_error(tab %>% fmt_number(columns = num, n_sigfig = -1L))
 })
-
 
 test_that("The `drop_trailing_dec_mark` option works in select `fmt_*()` functions", {
 

@@ -637,6 +637,7 @@ create_columns_component_h <- function(data) {
   }
 
   if (spanner_row_count > 0) {
+
     spanners <-
       dt_spanners_print_matrix(
         data = data,

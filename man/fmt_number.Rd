@@ -279,6 +279,40 @@ formatting on values in the column or another column, or, you'd like to use a
 more complex predicate expression.
 }
 
+\section{Compatibility of arguments with the \code{from_column()} helper function}{
+
+
+The \code{\link[=from_column]{from_column()}} helper function can be used with certain arguments of
+\code{fmt_number()} to obtain varying parameter values from a specified column
+within the table. This means that each row could be formatted a little bit
+differently. These arguments provide support for \code{\link[=from_column]{from_column()}}:
+\itemize{
+\item \code{decimals}
+\item \code{n_sigfig}
+\item \code{drop_trailing_zeros}
+\item \code{drop_trailing_dec_mark}
+\item \code{use_seps}
+\item \code{accounting}
+\item \code{scale_by}
+\item \code{suffixing}
+\item \code{pattern}
+\item \code{sep_mark}
+\item \code{dec_mark}
+\item \code{force_sign}
+\item \code{system}
+\item \code{locale}
+}
+
+Please note that for all of the aforementioned arguments, a \code{\link[=from_column]{from_column()}}
+call needs to reference a column that has data of the correct type (this is
+different for each argument). Additional columns for parameter values can be
+generated with the \code{\link[=cols_add]{cols_add()}} function (if not already present). Columns
+that contain parameter data can also be hidden from final display with
+\code{\link[=cols_hide]{cols_hide()}}. Finally, there is no limitation to how many arguments the
+\code{\link[=from_column]{from_column()}} helper is applied so long as the arguments belong to this
+closed set.
+}
+
 \section{Adapting output to a specific \code{locale}}{
 
 
@@ -352,6 +386,55 @@ like population figures, \code{n_sigfig = 3} is a very good option.
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_number_3.png" alt="This image of a table was generated from the third code example in the `fmt_number()` help file." style="width:100\%;">
 }}
+
+There can be cases where you want to show numbers to a large number of
+decimal places but also drop the unnecessary trailing zeros for low-precision
+values. Let's take a portion of the \code{\link{towny}} dataset and format the
+\code{latitude} and \code{longitude} columns with \code{fmt_number()}. We'll have up to 5
+digits displayed as decimal values, but we'll also unconditionally drop any
+runs of trailing zeros in the decimal part with \code{drop_trailing_zeros = TRUE}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
+  dplyr::select(name, latitude, longitude) |>
+  dplyr::slice_head(n = 10) |>
+  gt() |>
+  fmt_number(decimals = 5, drop_trailing_zeros = TRUE) |>
+  cols_merge(columns = -name, pattern = "\{1\}, \{2\}") |>
+  cols_label(
+    name ~ "Municipality",
+    latitude = "Location"
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_number_4.png" alt="This image of a table was generated from the fourth code example in the `fmt_number()` help file." style="width:100\%;">
+}}
+
+Another strategy for dealing with precision of decimals is to have a separate
+column of values that specify how many decimal digits to retain. Such a
+column can be added via \code{\link[=cols_add]{cols_add()}} or it can be part of the input table for
+\code{\link[=gt]{gt()}}. With that column available, it can be referenced in the \code{decimals}
+argument with the \code{\link[=from_column]{from_column()}} helper function. This approach yields a
+display of coordinate values that reflects the measurement precision of each
+value.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
+  dplyr::select(name, latitude, longitude) |>
+  dplyr::slice_head(n = 10) |>
+  gt() |>
+  cols_add(dec_digits = c(1, 2, 2, 5, 5, 2, 3, 2, 3, 3)) |>
+  fmt_number(decimals = from_column(column = "dec_digits")) |>
+  cols_merge(columns = -name, pattern = "\{1\}, \{2\}") |>
+  cols_label(
+    name ~ "Municipality",
+    latitude = "Location"
+  ) |>
+  cols_hide(columns = dec_digits)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_number_5.png" alt="This image of a table was generated from the fifth code example in the `fmt_number()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
@@ -383,6 +466,7 @@ Other data formatting functions:
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},
+\code{\link{fmt_icon}()},
 \code{\link{fmt_image}()},
 \code{\link{fmt_index}()},
 \code{\link{fmt_integer}()},

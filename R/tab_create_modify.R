@@ -226,8 +226,8 @@ tab_header <- function(
 #'   value if you plan to access this cell in a later function call and the
 #'   label text is complicated (e.g., contains markup, is lengthy, or both).
 #'   Finally, when providing an `id` value you must ensure that it is unique
-#'   across all ID values set for column spanner labels (the function will stop
-#'   if `id` isn't unique).
+#'   across all ID values set for spanner labels (the function will stop if `id`
+#'   isn't unique).
 #'
 #' @param gather *Gather columns together*
 #'
@@ -299,6 +299,43 @@ tab_header <- function(
 #' As a final note, the column labels (by default deriving from the column
 #' names) will likely need to change and that's especially true in the above
 #' case. This can be done with either of [cols_label()] or [cols_label_with()].
+#'
+#' @section Incorporating units with **gt**'s units notation:
+#'
+#' Measurement units are often seen as part of spanner labels and indeed it can
+#' be much more straightforward to include them here rather than using other
+#' devices to make readers aware of units for specific columns. Any text
+#' pertaining units is to be defined alongside the spanner label. To do this, we
+#' have to surround the portion of text in the label that corresponds to the
+#' units definition with `"{{"`/`"}}"`.
+#'
+#' Now that we know how to mark text for units definition, we know need to know
+#' how to write proper units with the notation. Such notation uses a succinct
+#' method of writing units and it should feel somewhat familiar though it is
+#' particular to the task at hand. Each unit is treated as a separate entity
+#' (parentheses and other symbols included) and the addition of subscript text
+#' and exponents is flexible and relatively easy to formulate. This is all best
+#' shown with a few examples:
+#'
+#' - `"m/s"` and `"m / s"` both render as `"m/s"`
+#' - `"m s^-1"` will appear with the `"-1"` exponent intact
+#' - `"m \s"` gives the the same result, as `"\<unit>"` is equivalent to
+#'   `"<unit>^-1"`
+#' - `"E_h"` will render an `"E"` with the `"h"` subscript
+#' - `"t_i^2.5"` provides a `t` with an `"i"` subscript and a `"2.5"` exponent
+#' - `"m[_0^2]"` will use overstriking to set both scripts vertically
+#' - `"g/L %C6H12O6%"` uses a chemical formula (enclosed in a pair of `"%"`
+#'   characters) as a unit partial, and the formula will render correctly with
+#'   subscripted numbers
+#' - Common units that are difficult to write using ASCII text may be implicitly
+#'   converted to the correct characters (e.g., the `"u"` in `"ug"`, `"um"`,
+#'   `"uL"`, and `"umol"` will be converted to the Greek *mu* symbol; `"degC"`
+#'   and `"degF"` will render a degree sign before the temperature unit)
+#' - We can transform shorthand symbol/unit names enclosed in `":"` (e.g.,
+#'   `":angstrom:"`, `":ohm:"`, etc.) into proper symbols
+#' - The components of a unit (unit name, subscript, and exponent) can be
+#'   fully or partially italicized/emboldened by surrounding text with `"*"` or
+#'   `"**"`
 #'
 #' @section Examples:
 #'
@@ -499,6 +536,45 @@ tab_header <- function(
 #' behaviors are indicative of Tetris-like rules though they tend to work well
 #' for the application of spanners.
 #'
+#' Using a subset of the [`towny`] dataset, we can create an interesting **gt**
+#' table. First, only certain columns are selected from the dataset, some
+#' filtering of rows is done, rows are sorted, and then only the first 10 rows
+#' are kept. After the data is introduced to [gt()], we then apply some spanner
+#' labels using two calls of [tab_spanner()]. In the second of those, we
+#' incorporate unit notation text (within `"{{"`/`"}}"`) in the `label` to get a
+#' display of nicely-formatted units.
+#'
+#' ```r
+#' towny |>
+#'   dplyr::select(
+#'     name, ends_with("2001"), ends_with("2006"), matches("2001_2006")
+#'   ) |>
+#'   dplyr::filter(population_2001 > 100000) |>
+#'   dplyr::arrange(desc(pop_change_2001_2006_pct)) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt() |>
+#'   fmt_integer() |>
+#'   fmt_percent(columns = matches("change"), decimals = 1) |>
+#'   tab_spanner(
+#'     label = "Population",
+#'     columns = starts_with("population")
+#'   ) |>
+#'   tab_spanner(
+#'     label = "Density, {{*persons* km^-2}}",
+#'     columns = starts_with("density")
+#'   ) |>
+#'   cols_label(
+#'     ends_with("01") ~ "2001",
+#'     ends_with("06") ~ "2006",
+#'     matches("change") ~ md("Population Change,<br>2001 to 2006")
+#'   ) |>
+#'   cols_width(everything() ~ px(120))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_spanner_7.png")`
+#' }}
+#'
 #' @family part creation/modification functions
 #' @section Function ID:
 #' 2-2
@@ -603,12 +679,25 @@ tab_spanner <- function(
       level = level
     )
 
+  if (grepl("\\{\\{.*?\\}\\}", label)) {
+
+    spanner_units <- gsub("^.*?(\\{\\{.*?\\}\\}).*?$", "\\1", label)
+    spanner_pattern <- ""
+
+  } else {
+
+    spanner_units <- NA_character_
+    spanner_pattern <- NA_character_
+  }
+
   # Add the spanner to the `_spanners` table
   data <-
     dt_spanners_add(
       data = data,
       vars = column_names,
       spanner_label = label,
+      spanner_units = spanner_units,
+      spanner_pattern = spanner_pattern,
       spanner_id = id,
       spanner_level = level,
       gather = gather,
@@ -1756,6 +1845,19 @@ tab_stubhead <- function(
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @section Compatibility of arguments with the `from_column()` helper function:
+#'
+#' The [from_column()] helper function can be used with the `indent` argument
+#' of `tab_stub_indent()` to obtain varying parameter values from a specified
+#' column within the table. This means that each row label could be indented a
+#' little bit differently.
+#'
+#' Please note that for this argument (`indent`), a [from_column()] call needs
+#' to reference a column that has data of the `numeric` or `integer` type.
+#' Additional columns for parameter values can be generated with the
+#' [cols_add()] function (if not already present). Columns that contain
+#' parameter data can also be hidden from final display with [cols_hide()].
+#'
 #' @section Examples:
 #'
 #' Let's use a summarized version of the [`pizzaplace`] dataset to create a
@@ -1829,55 +1931,104 @@ tab_stub_indent <- function(
       data = data
     )
 
-  # Set indent levels appropriately
+  # Get existing indentation values
   indent_vals <- stub_df[stub_df$rownum_i %in% resolved_rows_idx, ][["indent"]]
 
-  for (i in seq_along(indent_vals)) {
+  # Implement support for the `from_column()` helper function; when
+  # used for the `indent` arg, a `gt_column` object is provided
+  if (inherits(indent, "gt_column")) {
 
-    if (is.na(indent_vals[i])) {
-      indent_val_i <- 0L
-    } else if (grepl("^[0-9]$", indent_vals[i])) {
-      indent_val_i <- as.integer(indent_vals[i])
-    } else {
-      indent_val_i <- indent_vals[i]
+    # Obtain the underlying data table
+    data_df <- dt_data_get(data = data)
+
+    # Obtain a `resolved_column` from a column name in the table
+    resolved_column <- resolve_cols_c(expr = indent[["column"]], data = data)
+
+    indent_vals <- data_df[resolved_rows_idx, ][[resolved_column]]
+
+    # Stop function if indentation values aren't numeric
+    if (!is.numeric(indent_vals)) {
+      cli::cli_abort("Values taken from a column must be numeric.")
     }
 
-    # Modify `indent_val_i` based on keyword directives
-    if (is.character(indent)) {
+    # If a function supplied with `fn` in the `from_column()` output,
+    # apply that function to any `indent_vals`
+    if (!is.null(indent[["fn"]])) {
 
-      # Move `indent_val_i` up or down by one
-      if (indent == "increase") {
-        indent_val_i <- indent_val_i + 1L
-      } else if (indent == "decrease") {
-        indent_val_i <- indent_val_i - 1L
+      fn <- indent[["fn"]]
+      indent_vals <- fn(indent_vals)
+    }
+
+    # If there is an `na_value` provided along with `from_column()`, apply
+    # that to the `indent_vals` vector
+    if (!is.null(indent[["na_value"]])) {
+
+      na_value <- indent[["na_value"]]
+
+      # Stop function if the `na_value` isn't numeric
+      if (!is.numeric(na_value)) {
+        cli::cli_abort("The `na_value` provided must be numeric.")
       }
 
-      # Set hard boundaries on the indentation value (LB is `0`, UB is `5`)
-      if (indent_val_i > 5) indent_val_i <- 5L
-      if (indent_val_i < 0) indent_val_i <- 0L
+      indent_vals[is.na(indent_vals)] <- na_value
     }
 
-    # Modify `indent_val_i` using a fixed value
-    if (
-      is.numeric(indent) &&
-      !is.na(indent) &&
-      !is.infinite(indent)
-    ) {
+    indent_vals <- abs(as.integer(indent_vals))
 
-      # Stop function if `indent` value doesn't fall into the acceptable range
-      if (indent < 0 | indent > 5) {
-        cli::cli_abort(c(
-          "If given as a numeric value, `indent` should be one of the following:",
-          "*" = "0, 1, 2, 3, 4, or 5"
-        ))
+    indent_vals[indent_vals > 5] <- 5L
+
+    indent_vals <- as.character(indent_vals)
+
+  } else {
+
+    for (i in seq_along(indent_vals)) {
+
+      if (is.na(indent_vals[i])) {
+        indent_val_i <- 0L
+      } else if (grepl("^[0-9]$", indent_vals[i])) {
+        indent_val_i <- as.integer(indent_vals[i])
+      } else {
+        indent_val_i <- indent_vals[i]
       }
 
-      # Coerce `indent` to an integer value
-      indent_val_i <- as.integer(indent)
-    }
+      # Modify `indent_val_i` based on keyword directives
+      if (is.character(indent)) {
 
-    # Ensure that `indent_val_i` is assigned to indent_vals as a character value
-    indent_vals[i] <- as.character(indent_val_i)
+        # Move `indent_val_i` up or down by one
+        if (indent == "increase") {
+          indent_val_i <- indent_val_i + 1L
+        } else if (indent == "decrease") {
+          indent_val_i <- indent_val_i - 1L
+        }
+
+        # Set hard boundaries on the indentation value (LB is `0`, UB is `5`)
+        if (indent_val_i > 5) indent_val_i <- 5L
+        if (indent_val_i < 0) indent_val_i <- 0L
+      }
+
+      # Modify `indent_val_i` using a fixed value
+      if (
+        is.numeric(indent) &&
+        !is.na(indent) &&
+        !is.infinite(indent)
+      ) {
+
+        # Stop function if `indent` value doesn't fall into the acceptable range
+        if (indent < 0 | indent > 5) {
+          cli::cli_abort(c(
+            "If given as a numeric value, `indent` should be one of the following:",
+            "*" = "0, 1, 2, 3, 4, or 5"
+          ))
+        }
+
+        # Coerce `indent` to an integer value
+        indent_val_i <- as.integer(indent)
+      }
+
+      # Ensure that `indent_val_i` is assigned to `indent_vals` as
+      # a character value
+      indent_vals[i] <- as.character(indent_val_i)
+    }
   }
 
   stub_df[stub_df$rownum_i %in% resolved_rows_idx, ][["indent"]] <- indent_vals
@@ -2744,6 +2895,40 @@ tab_caption <- function(
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @section Using `from_column()` with `cell_*()` styling functions:
+#'
+#' The [from_column()] helper function can be used with certain arguments of
+#' [cell_fill()] and [cell_text()]; this allows you to get parameter values from
+#' a specified column within the table. This means that body cells targeted for
+#' styling could be formatted a little bit differently, using options taken from
+#' a column. For [cell_fill()], we can use [from_column()] for its `color`
+#' argument. The [cell_text()] function allows the use of [from_column()] in the
+#' following arguments:
+#'
+#' - `color`
+#' - `size`
+#' - `align`
+#' - `v_align`
+#' - `style`
+#' - `weight`
+#' - `stretch`
+#' - `decorate`
+#' - `transform`
+#' - `whitespace`
+#' - `indent`
+#'
+#' Please note that for all of the aforementioned arguments, a [from_column()]
+#' call needs to reference a column that has data of the correct type (this is
+#' different for each argument). Additional columns for parameter values can be
+#' generated with the [cols_add()] function (if not already present). Columns
+#' that contain parameter data can also be hidden from final display with
+#' [cols_hide()].
+#'
+#' Importantly, a call of `tab_style()` with any use of [from_column()] within
+#' styling expressions must only use [cells_body()] within `locations`. This is
+#' because we cannot map multiple options taken from a column onto other
+#' locations.
+#'
 #' @section Examples:
 #'
 #' Let's use the [`exibble`] dataset to create a simple, two-column **gt** table
@@ -2937,6 +3122,80 @@ tab_caption <- function(
 #' `r man_get_image_tag(file = "man_tab_style_4.png")`
 #' }}
 #'
+#' The [from_column()] helper function can be used to get values from a column.
+#' We'll use it in the next example, which begins with a table having a color
+#' name column and a column with the associated hexadecimal color code. To show
+#' the color in a separate column, we first create one with [cols_add()] (
+#' ensuring that missing values are replaced with `""` via [sub_missing()]).
+#' Then, `tab_style()` is used to style that column, calling [from_column()] in
+#' the `color` argument of the [cell_fill()] function.
+#'
+#' ```r
+#' dplyr::tibble(
+#'   name = c(
+#'     "red", "green", "blue", "yellow", "orange",
+#'     "cyan", "purple", "magenta", "lime", "pink"
+#'   ),
+#'   hex = c(
+#'     "#E6194B", "#3CB44B", "#4363D8", "#FFE119", "#F58231",
+#'     "#42D4F4", "#911EB4", "#F032E6", "#BFEF45", "#FABED4"
+#'   )
+#' ) |>
+#'   gt(rowname_col = "name") |>
+#'   cols_add(color = rep(NA_character_, 10)) |>
+#'   sub_missing(missing_text = "") |>
+#'   tab_style(
+#'     style = cell_fill(color = from_column(column = "hex")),
+#'     locations = cells_body(columns = color)
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(font = system_fonts(name = "monospace-code")),
+#'     locations = cells_body()
+#'   ) |>
+#'   opt_all_caps() |>
+#'   cols_width(everything() ~ px(100)) |>
+#'   tab_options(table_body.hlines.style = "none")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_style_5.png")`
+#' }}
+#'
+#' The [cell_text()] function also allows the use of [from_column()] for many of
+#' its arguments. Let's take a small portion of data from [`sp500`] and add an
+#' up or down arrow based on the values in the `open` and `close` columns.
+#' Within [cols_add()] we can create a new column (`dir`) with an expression to
+#' get either `"red"` or `"green"` text from a comparison of the `open` and
+#' `close` values. These values are transformed to up or down arrows with the
+#' [text_case_match()] function, using **fontawesome** icons in the end.
+#' However, the text values are still present and can be used by [cell_text()]
+#' within `tab_style()`. The [from_column()] helper function makes it possible
+#' to use the text in the cells of the `dir` column as `color` input values.
+#'
+#' ```r
+#' sp500 |>
+#'   dplyr::filter(date > "2015-01-01") |>
+#'   dplyr::arrange(date) |>
+#'   dplyr::slice_head(n = 5) |>
+#'   dplyr::select(date, open, close) |>
+#'   gt(rowname_col = "date") |>
+#'   fmt_currency(columns = c(open, close)) |>
+#'   cols_add(dir = ifelse(close < open, "red", "forestgreen")) |>
+#'   cols_label(dir = "") |>
+#'   text_case_match(
+#'     "red" ~ fontawesome::fa("arrow-down"),
+#'     "forestgreen" ~ fontawesome::fa("arrow-up")
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(color = from_column("dir")),
+#'     locations = cells_body(columns = dir)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_style_6.png")`
+#' }}
+#'
 #' @family part creation/modification functions
 #' @section Function ID:
 #' 2-10
@@ -2958,10 +3217,177 @@ tab_style <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
+  # Resolve into a list of locations
+  locations <- as_locations(locations)
+
   # Upgrade `style` to be within a list if not provided as such
   if (inherits(style, "cell_styles")) {
     style <- list(style)
   }
+
+  #
+  # Begin support for `from_column()`
+  #
+
+  cell_helpers <-
+    vapply(
+      style,
+      FUN.VALUE = character(1),
+      USE.NAMES = FALSE,
+      FUN = function(x) {
+        x <- names(x)
+        if (is.null(x)) {
+          x <- "bare"
+        }
+        if (any(grepl("cell_border", x))) {
+          x <- "cell_border"
+        }
+        x
+      }
+    )
+
+  # Set `has_gt_column` as FALSE initially and toggle to TRUE if there is
+  # any instance of `from_column()` used (a `gt_column` object will be present)
+  has_gt_column <- FALSE
+
+  for (i in seq_along(cell_helpers)) {
+
+    if (!is.character(style) && is.list(style)) {
+      style_i <- unlist(style, recursive = FALSE)
+    } else {
+      style_i <- style
+    }
+
+    if (cell_helpers[i] == "bare") {
+      any_gt_column <- FALSE
+    } else {
+      any_gt_column <-
+        any(
+          vapply(
+            style_i[[cell_helpers[i]]],
+            FUN.VALUE = logical(1),
+            USE.NAMES = FALSE,
+            FUN = function(x) {
+              inherits(x, "gt_column")
+            }
+          )
+        )
+    }
+
+    if (any_gt_column) {
+      has_gt_column <- TRUE
+    }
+  }
+
+  if (has_gt_column) {
+
+    # Stop if `locations` only refers to locations other than `cells_body()`
+    for (i in seq_along(locations)) {
+
+      any_non_body_location <-
+        any(
+          vapply(
+            locations,
+            FUN.VALUE = logical(1),
+            USE.NAMES = FALSE,
+            FUN = function(x) {
+              !inherits(x, "cells_body")
+            }
+          )
+        )
+
+      if (any_non_body_location) {
+        cli::cli_abort(c(
+          "If using `from_column()` in a `cell_*()` function, the location helper
+          used must be `cells_body().",
+          "*" = "Please remove any other location helpers."
+        ))
+      }
+    }
+
+    # TODO: Extract only the body location from the `locations` object
+    body_location <- locations[[1]]
+
+    # Remove the outer list from the `style` object
+    style <- unlist(style, recursive = FALSE)
+
+    # Resolve the row numbers using the `resolve_rows_i` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = !!body_location$rows,
+        data = data
+      )
+
+    for (i in seq_along(style)) {
+
+      arg_vals <- unclass(style[[i]])
+
+      param_tbl <-
+        generate_param_tbl(
+          data = data,
+          arg_vals = arg_vals,
+          resolved_rows_idx = resolved_rows_idx
+        )
+
+      if (names(style[i]) == "cell_fill") {
+
+        for (j in seq_len(nrow(param_tbl))) {
+
+          p_j <- as.list(param_tbl[j, ])
+
+          data <-
+            tab_style(
+              data = data,
+              style = cell_fill(
+                color = p_j$color
+              ),
+              locations = cells_body(
+                columns = !!body_location$columns,
+                rows = resolved_rows_idx[j]
+              )
+            )
+        }
+      }
+
+      if (names(style[i]) == "cell_text") {
+
+        for (j in seq_len(nrow(param_tbl))) {
+
+          p_j <- as.list(param_tbl[j, ])
+
+          data <-
+            tab_style(
+              data = data,
+              style = cell_text(
+                color = p_j$color,
+                font = p_j$font,
+                size = p_j$size,
+                align = p_j$align,
+                v_align = p_j$v_align,
+                style = p_j$style,
+                weight = p_j$weight,
+                stretch = p_j$stretch,
+                decorate = p_j$decorate,
+                transform = p_j$transform,
+                whitespace = p_j$whitespace,
+                indent = p_j$indent
+              ),
+              locations = cells_body(
+                columns = !!body_location$columns,
+                rows = resolved_rows_idx[j]
+              )
+            )
+        }
+      }
+
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()`
+  #
 
   # Determine if there is a `cell_text` list within the main list;
   # because we need to intercept any provided `font` inputs in `cell_text`
@@ -3008,9 +3434,6 @@ tab_style <- function(
         )
     }
   }
-
-  # Resolve into a list of locations
-  locations <- as_locations(locations)
 
   style <- as_style(style = style)
 

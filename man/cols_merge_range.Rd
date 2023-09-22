@@ -9,8 +9,9 @@ cols_merge_range(
   col_begin,
   col_end,
   rows = everything(),
-  sep = "--",
-  autohide = TRUE
+  autohide = TRUE,
+  sep = NULL,
+  locale = NULL
 )
 }
 \arguments{
@@ -52,16 +53,6 @@ helper function. Examples of select helper functions include
 \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions to filter
 down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{sep}{\emph{Separator text for ranges}
-
-\verb{scalar<character>} // \emph{default:} \code{"--"}
-
-The separator text that indicates the values are ranged. The default value
-of \code{"--"} will be transformed to an en dash for the range separator. Using
-\code{"---"} will be taken to mean that an em dash should be used. Should you
-want these special symbols to be taken literally, they can be supplied
-within the base \code{\link[=I]{I()}} function.}
-
 \item{autohide}{\emph{Automatic hiding of the \code{col_end} column}
 
 \verb{scalar<logical>} // \emph{default:} \code{TRUE}
@@ -69,6 +60,30 @@ within the base \code{\link[=I]{I()}} function.}
 An option to automatically hide the column specified as
 \code{col_end}. Any columns with their state changed to hidden will behave
 the same as before, they just won't be displayed in the finalized table.}
+
+\item{sep}{\emph{Separator text for ranges}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+The separator text that indicates the values are ranged. If a \code{sep} value
+is not provided then the range separator specific to the \code{locale} provided
+will be used (if a locale isn't specified then an en dash will be used).
+You can specify the use of an en dash with \code{"--"}; a triple-hyphen sequence
+(\code{"---"}) will be transformed to an em dash. Should you want hyphens to be
+taken literally, the \code{sep} value can be supplied within the base \code{\link[=I]{I()}}
+function.}
+
+\item{locale}{\emph{Locale identifier}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional locale identifier that can be used for applying a \code{sep} pattern
+specific to a locale's rules. Examples include \code{"en"} for English (United
+States) and \code{"fr"} for French (France). We can use the \code{\link[=info_locales]{info_locales()}}
+function as a useful reference for all of the locales that are supported. A
+locale ID can be also set in the initial \code{\link[=gt]{gt()}} function call (where it
+would be used automatically by any function with a \code{locale} argument) but a
+\code{locale} value provided here will override that global locale.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -136,7 +151,7 @@ better describe the content.
 
 \section{Function ID}{
 
-5-15
+5-16
 }
 
 \section{Function Introduced}{
@@ -158,6 +173,7 @@ Other column modification functions:
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
+\code{\link{cols_nanoplot}()},
 \code{\link{cols_unhide}()},
 \code{\link{cols_units}()},
 \code{\link{cols_width}()}

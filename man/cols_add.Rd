@@ -30,7 +30,7 @@ the number of rows in the table can also be used.}
 
 \verb{<column-targeting expression>} // \emph{default:} \code{NULL} (\code{optional})
 
-A single column-resolving expression or column index an be given to either
+A single column-resolving expression or column index can be given to either
 \code{.before} or \code{.after}. The column specifies where the new columns should be
 positioned among the existing columns in the input data table. While select
 helper functions such as \code{\link[=starts_with]{starts_with()}} and \code{\link[=ends_with]{ends_with()}} can be used for
@@ -149,6 +149,53 @@ labeling and adjustments to column widths with \code{\link[=cols_label]{cols_lab
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_add_3.png" alt="This image of a table was generated from the third code example in the `cols_add()` help file." style="width:100\%;">
 }}
+
+It's possible to start with an empty table (i.e., no columns and no rows) and
+add one or more columns to that. You can, for example, use \code{dplyr::tibble()}
+or \code{data.frame()} to create a completely empty table. The first \code{cols_add()}
+call for an empty table can have columns of arbitrary length but subsequent
+uses of \code{cols_add()} must adhere to the rule of new columns being the same
+length as existing.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble() |>
+  gt() |>
+  cols_add(
+    num = 1:5,
+    chr = vec_fmt_spelled_num(1:5)
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_add_4.png" alt="This image of a table was generated from the fourth code example in the `cols_add()` help file." style="width:100\%;">
+}}
+
+Tables can contain no rows, yet have columns. In the following example, we'll
+create a zero-row table with three columns (\code{num}, \code{chr}, and \code{ext}) and
+perform the same \code{cols_add()}-based addition of two columns of data. This is
+another case where the function allows for arbitrary-length columns (since
+always adding zero-length columns is impractical). Furthermore, here we can
+reference columns that already exist (\code{num} and \code{chr}) and add values to
+them.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
+  num = numeric(0),
+  chr = character(0),
+  ext = character(0)
+) |>
+  gt() |>
+  cols_add(
+    num = 1:5,
+    chr = vec_fmt_spelled_num(1:5)
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_add_5.png" alt="This image of a table was generated from the fifth code example in the `cols_add()` help file." style="width:100\%;">
+}}
+
+We should note that the \code{ext} column did not receive any values from
+\code{cols_add()} but the table was expanded to having five rows nonetheless. So,
+each cell of \code{ext} was by necessity filled with an \code{NA} value.
 }
 
 \section{Function ID}{
@@ -175,6 +222,7 @@ Other column modification functions:
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
+\code{\link{cols_nanoplot}()},
 \code{\link{cols_unhide}()},
 \code{\link{cols_units}()},
 \code{\link{cols_width}()}

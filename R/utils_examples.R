@@ -21,6 +21,7 @@
 #
 #------------------------------------------------------------------------------#
 
+#nocov start
 
 fetch_rd_db <- utils::getFromNamespace("fetchRdDB", "tools")
 
@@ -191,6 +192,8 @@ write_gt_examples_qmd_files <- function(
           "exibble",
           "towny",
           "metro",
+          "constants",
+          "illness",
           "rx_adsl",
           "rx_addv"
         )
@@ -358,3 +361,5 @@ write_gt_examples_qmd_files <- function(
     )
   }
 }
+
+#nocov end

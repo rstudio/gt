@@ -125,14 +125,14 @@ fully or partially italicized/emboldened by surrounding text with \code{"*"} or
 
 
 Let's use a portion of the \code{\link{countrypops}} dataset to create a \strong{gt} table.
-Relabel all the table's columns with the \code{cols_label()} function to improve
-its presentation. In this simple case we are supplying the name of the column
-on the left-hand side, and the label text on the right-hand side.
+We can relabel all the table's columns with the \code{cols_label()} function to
+improve its presentation. In this simple case we are supplying the name of
+the column on the left-hand side, and the label text on the right-hand side.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>
-  dplyr::filter(country_name == "Mongolia") |>
-  tail(5) |>
+  dplyr::filter(country_name == "Uganda") |>
+  dplyr::slice_tail(n = 5) |>
   gt() |>
   cols_label(
     country_name = "Name",
@@ -152,8 +152,8 @@ a \code{~} between the column name and the label text.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::select(-contains("code")) |>
-  dplyr::filter(country_name == "Mongolia") |>
-  tail(5) |>
+  dplyr::filter(country_name == "Uganda") |>
+  dplyr::slice_tail(n = 5) |>
   gt() |>
   cols_label(
     country_name = md("**Name**"),
@@ -196,13 +196,13 @@ will be applied to each label defined in the \code{cols_label()} call).
 Using a subset of the \code{\link{towny}} dataset, we can create an interesting \strong{gt}
 table. First, only certain columns are selected from the dataset, some
 filtering of rows is done, rows are sorted, and then only the first 10 rows
-are kept. When introduced to \code{\link[=gt]{gt()}}, we apply some spanner labels through two
-calls of \code{\link[=tab_spanner]{tab_spanner()}} all the table's columns. Below those spanners, we
-want to label the columns by the years of interest. Using \code{cols_label()} and
-select expressions on the left side of the formulas, we can easily relabel
-multiple columns with common label text. Note that we cannot use an \code{=} sign
-in any of the expressions within \code{cols_label()}; because the left-hand side
-is not a single column name, we must use formula syntax (i.e., with the \code{~}).
+are kept. After the data is introduced to \code{\link[=gt]{gt()}}, we then apply some spanner
+labels using two calls of \code{\link[=tab_spanner]{tab_spanner()}}. Below those spanners, we want to
+label the columns by the years of interest. Using \code{cols_label()} and select
+expressions on the left side of the formulas, we can easily relabel multiple
+columns with common label text. Note that we cannot use an \code{=} sign in any of
+the expressions within \code{cols_label()}; because the left-hand side is not a
+single column name, we must use formula syntax (i.e., with the \code{~}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
   dplyr::select(
@@ -270,8 +270,8 @@ are in a format where the units are included within \code{"{{"}/\code{"}}"}, so,
 use \code{cols_label()} with the \code{.process_units = TRUE} option to register the
 measurement units. In addition to this, because there is a \verb{<br>} included
 (for a line break), we should use the \code{.fn} option and provide the \code{\link[=md]{md()}}
-helper function (as a bare function name). This ensures that any linebreaks
-do materialize.
+helper function (as a bare function name). This ensures that any line breaks
+will materialize.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{illness |>
   dplyr::mutate(test = paste0(test, ",<br>\{\{", units, "\}\}")) |>
@@ -328,6 +328,7 @@ Other column modification functions:
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
 \code{\link{cols_move}()},
+\code{\link{cols_nanoplot}()},
 \code{\link{cols_unhide}()},
 \code{\link{cols_units}()},
 \code{\link{cols_width}()}
