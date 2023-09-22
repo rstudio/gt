@@ -430,9 +430,7 @@ gt_save_docx <- function(
   # Because creation of a .docx container is somewhat difficult, we
   # require the rmarkdown package to be installed to generate this
   # type of output
-  if (!rlang::is_installed("rmarkdown")) {
-    stop("{rmarkdown} package is necessary to save gt tables as word documents.")
-  }
+  rlang::check_installed("rmarkdown", "to save gt tables as Word documents.")
 
   filename <- gtsave_filename(path = path, filename = filename)
 
@@ -717,7 +715,7 @@ as_latex <- function(data) {
   # If the `rmarkdown` package is available, use the
   # `latex_dependency()` function to load latex packages
   # without requiring the user to do so
-  if (requireNamespace("rmarkdown", quietly = TRUE)) {
+  if (rlang::is_installed("rmarkdown")) {
     latex_packages <- lapply(latex_packages(), rmarkdown::latex_dependency)
   } else {
     latex_packages <- NULL

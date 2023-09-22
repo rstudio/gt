@@ -39,9 +39,7 @@ body_add_gt <- function(
 ) {
 
   ## check that officer is available
-  if (!rlang::is_installed("officer")) {
-    stop("{officer} package is necessary to add gt tables to word documents.")
-  }
+  rlang::check_installed("officer", "to add gt tables to word documents.")
 
   ## check that inputs are an officer rdocx and gt tbl
   stopifnot(inherits(x, "rdocx"))

@@ -330,7 +330,7 @@ gt <- function(
     any(rowname_col %in% groupname_col)
   ) {
     cli::cli_abort(c(
-      "The value \"{rowname_col}\" appears in both `rowname_col` and `groupname_col`.",
+      "The value {.val {rowname_col}} appears in both `rowname_col` and `groupname_col`.",
       "*" = "These arguments must not have any values in common."
     ))
   }
