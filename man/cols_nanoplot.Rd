@@ -8,7 +8,9 @@ cols_nanoplot(
   data,
   columns,
   rows = everything(),
+  type = c("line", "bar"),
   missing_vals = c("gap", "zero", "remove"),
+  columns_x = NULL,
   reference_line = NULL,
   reference_area = NULL,
   currency = NULL,
@@ -28,7 +30,7 @@ cols_nanoplot(
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
-\item{columns}{\emph{Columns from which to obtain data}
+\item{columns}{\emph{Columns from which to get data for the dependent variable}
 
 \verb{<column-targeting expression>} // \strong{required}
 
@@ -61,6 +63,18 @@ strategies available for their handling: (1) \code{"gap"} will display data gaps
 at the sites of missing data, where data lines will have discontinuities;
 (2) \code{"zero"} will replace \code{NA} values with zero values; and (3) \code{"remove"}
 will remove any incoming \code{NA} values.}
+
+\item{columns_x}{\emph{Columns containing values for the optional x variable}
+
+\verb{<column-targeting expression>} // \emph{default:} \code{NULL} (\code{optional})
+
+We can optionally obtain data for the independent variable (i.e., the
+\emph{x}-axis data) if supplying columns in \code{columns_x}. Can either be a series
+of column names provided in \code{\link[=c]{c()}}, a vector of column indices, or a select
+helper function. Examples of select helper functions include
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. Data collected from the columns will be
+concatenated together in the order of resolution.}
 
 \item{reference_line}{\emph{Add a reference line}
 
