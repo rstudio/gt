@@ -2159,7 +2159,7 @@ cols_add <- function(
 #'
 #' @inheritParams cols_align
 #'
-#' @param columns *Columns from which to obtain data*
+#' @param columns *Columns from which to get data for the dependent variable*
 #'
 #'   `<column-targeting expression>` // **required**
 #'
@@ -2192,6 +2192,18 @@ cols_add <- function(
 #'   at the sites of missing data, where data lines will have discontinuities;
 #'   (2) `"zero"` will replace `NA` values with zero values; and (3) `"remove"`
 #'   will remove any incoming `NA` values.
+#'
+#' @param columns_x *Columns containing values for the optional x variable*
+#'
+#'   `<column-targeting expression>` // *default:* `NULL` (`optional`)
+#'
+#'   We can optionally obtain data for the independent variable (i.e., the
+#'   *x*-axis data) if supplying columns in `columns_x`. Can either be a series
+#'   of column names provided in [c()], a vector of column indices, or a select
+#'   helper function. Examples of select helper functions include
+#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
+#'   [num_range()], and [everything()]. Data collected from the columns will be
+#'   concatenated together in the order of resolution.
 #'
 #' @param reference_line *Add a reference line*
 #'
@@ -2406,7 +2418,9 @@ cols_nanoplot <- function(
     data,
     columns,
     rows = everything(),
+    type = c("line", "bar"),
     missing_vals = c("gap", "zero", "remove"),
+    columns_x = NULL,
     reference_line = NULL,
     reference_area = NULL,
     currency = NULL,
@@ -2423,6 +2437,7 @@ cols_nanoplot <- function(
 
   # Ensure that arguments are matched
   missing_vals <- rlang::arg_match(missing_vals)
+  type <- rlang::arg_match(type)
 
   #
   # Resolution of columns and rows as character vectors
@@ -2435,6 +2450,14 @@ cols_nanoplot <- function(
       excl_stub = FALSE
     )
 
+  resolved_columns_x <-
+    resolve_cols_c(
+      expr = {{ columns_x }},
+      data = data,
+      excl_stub = FALSE,
+      null_means = "nothing"
+    )
+
   resolved_rows_idx <-
     resolve_rows_i(
       expr = {{ rows }},
@@ -2444,21 +2467,24 @@ cols_nanoplot <- function(
   # Get the internal data table
   data_tbl <- dt_data_get(data = data)
 
-  data_vals_plot <- list()
+  data_vals_plot <-
+    generate_data_vals_list(
+      data_tbl = data_tbl,
+      resolved_columns = resolved_columns,
+      resolved_rows_idx = resolved_rows_idx
+    )
 
-  for (i in seq_len(nrow(data_tbl))) {
+  if (length(resolved_columns_x) > 0) {
 
-    if (!(i %in% resolved_rows_idx)) {
+    data_vals_plot_x <-
+      generate_data_vals_list(
+        data_tbl = data_tbl,
+        resolved_columns = resolved_columns_x,
+        resolved_rows_idx = resolved_rows_idx
+      )
 
-      data_vals_plot <- c(data_vals_plot, list(NA_character_))
-
-    } else {
-
-      data_vals_i <- dplyr::select(data_tbl, dplyr::all_of(resolved_columns))
-      data_vals_i <- unname(unlist(as.vector(data_vals_i[i, ])))
-
-      data_vals_plot <- c(data_vals_plot, list(data_vals_i))
-    }
+  } else {
+    data_vals_plot_x <- NULL
   }
 
   if (is.null(height)) {
@@ -2471,6 +2497,7 @@ cols_nanoplot <- function(
     options_plots <- options
   }
 
+  # Initialize vector that will contain the nanoplots
   nanoplots <- c()
 
   for (i in seq_along(data_vals_plot)) {
@@ -2478,11 +2505,12 @@ cols_nanoplot <- function(
     data_vals_plot_i <- data_vals_plot[i][[1]]
 
     data_plot_i <-
-      generate_equal_spaced_nanoplot(
+      generate_1d_line_plot(
         y_vals = data_vals_plot_i,
         y_ref_line = reference_line,
         y_ref_area = reference_area,
         missing_vals = missing_vals,
+        line_type = "curved",
         currency = currency,
         data_point_radius = options_plots$data_point_radius,
         data_point_stroke_color = options_plots$data_point_stroke_color,
@@ -2592,6 +2620,52 @@ cols_nanoplot <- function(
     )
 
   data
+}
+
+generate_data_vals_list <- function(
+    data_tbl,
+    resolved_columns,
+    resolved_rows_idx
+) {
+
+  data_vals_plot <- list()
+
+  for (i in seq_len(nrow(data_tbl))) {
+
+    if (!(i %in% resolved_rows_idx)) {
+
+      data_vals_plot <- c(data_vals_plot, list(NA_character_))
+
+    } else {
+
+      data_vals_i <- dplyr::select(data_tbl, dplyr::all_of(resolved_columns))
+
+      data_vals_i <- as.vector(data_vals_i[i, ])
+
+      data_vals_j <- c()
+
+      for (j in seq_along(data_vals_i)) {
+
+        if (
+          !is.na(data_vals_i[j][[1]]) &&
+          is.character(data_vals_i[j][[1]])
+        ) {
+
+          data_vals_j <-
+            c(data_vals_j, process_number_stream(data_vals_i[j][[1]]))
+
+        } else {
+          data_vals_j <- c(data_vals_j, unname(unlist(data_vals_i[j][[1]])))
+        }
+      }
+
+      data_vals_i <- list(data_vals_j)
+
+      data_vals_plot <- c(data_vals_plot, data_vals_i)
+    }
+  }
+
+  data_vals_plot
 }
 
 #' Move one or more columns
