@@ -1483,7 +1483,7 @@ non_na_index <- function(
 
   # If there are no NA values to reconcile, return
   # the index
-  if (!any(is.na(res))) {
+  if (!anyNA(res)) {
     return(index)
   }
 
@@ -2035,7 +2035,7 @@ check_spanner_id_unique <- function(data, spanner_id) {
   if (spanner_id %in% all_existing_ids) {
 
     cli::cli_abort(c(
-      "The spanner `id` provided (\"{spanner_id}\") is not unique.",
+      "The spanner {.arg id} provided ({.val {spanner_id}}) is not unique.",
       "*" = "The `id` must be unique across existing spanner and column IDs.",
       "*" = "Provide a unique ID value for this spanner."
     ))
@@ -2051,7 +2051,7 @@ check_row_group_id_unique <- function(data, row_group_id) {
   if (row_group_id %in% existing_ids) {
 
     cli::cli_abort(c(
-      "The row group `id` provided (\"{row_group_id}\") is not unique.",
+      "The row group {.arg id} provided ({.val {row_group_id}}) is not unique.",
       "*" = "Provide a unique ID value for this row group"
     ))
   }

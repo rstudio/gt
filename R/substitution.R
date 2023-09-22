@@ -1169,7 +1169,7 @@ sub_values <- function(
 
   if (!is.numeric(replacement) && !is.character(replacement)) {
     cli::cli_abort(
-      "The `replacement` must be a numeric, integer, or character vector."
+      "The `replacement` must be a number or a string."
     )
   }
 

@@ -342,7 +342,7 @@ tab_style_body <- function(
   # Validate that the `fn` object is a function
   if (!is.null(fn) && !rlang::is_function(fn)) {
     cli::cli_abort(
-      "A function must be provided to the `fn` argument."
+     "{.arg fn} must be a function."
     )
   }
 
