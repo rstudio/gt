@@ -10559,7 +10559,7 @@ fmt_icon <- function(
 
   # Determine if the fontawesome package is installed and stop the
   # function if it is not present
-  rlang::check_installed("fontawesome", "for inserting icons with `fmt_icons()")
+  rlang::check_installed("fontawesome", "to insert icons with `fmt_icons()`.")
   #
   # Begin support for `from_column()` objects passed to compatible arguments
   #

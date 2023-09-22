@@ -302,7 +302,7 @@ gt_save_webshot <- function(
 
   # Saving an image requires the webshot2 package; if it's
   # not present, stop with a message
-  rlang::check_installed("webshot2", "for saving images of gt tables.")
+  rlang::check_installed("webshot2", "to save gt tables as images.")
   # Save the image in the working directory
   webshot2::webshot(
     url = paste0("file:///", tempfile_),

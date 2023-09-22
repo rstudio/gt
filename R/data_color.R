@@ -788,7 +788,7 @@ data_color <- function(
       # function if it is not present
       rlang::check_installed(
         "paletteer",
-        reason = "for accessing palettes with the <package>::<palette> syntax."
+        reason = "to use palettes with the <package>::<palette> syntax."
         )
 
       # Parse the `palette` string and extract the two different
@@ -1367,7 +1367,7 @@ html_color <- function(colors, alpha = NULL) {
 
   # Stop function if there are any NA values in `colors`
   if (anyNA(colors)) {
-    cli::cli_abort("`colors` should not have any `NA` values.")
+    cli::cli_abort("`colors` should not contain any `NA` values.")
   }
 
   is_rgba <- is_rgba_col(colors = colors)

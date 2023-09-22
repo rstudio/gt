@@ -1730,7 +1730,7 @@ cells_group <- function(groups = everything()) {
 
   cli::cli_warn(c(
     "Since gt v0.2.0.5, the `cells_group()` function has been deprecated.",
-    "*" = "Please use {.help [cell_row_groups()](gt::cell_row_groups)} instead."
+    "*" = "Please use {.help [cells_row_groups()](gt::cells_row_groups)} instead."
   ),
   .frequency = "regularly",
   .frequency_id = "cells_group_fn_deprecation"
