@@ -867,7 +867,7 @@ data_color <- function(
         "Specification of {.arg target_columns} can only be done with the
         `direction = {.val column}` option.",
         "*" = "Please modify the `direction` option or remove any values in
-        `target_columns`."
+        {.arg target_columns}."
       ))
     }
 
@@ -880,8 +880,8 @@ data_color <- function(
     if (resolv_col_length > 1 && resolv_col_length != target_col_length) {
 
       cli::cli_abort(c(
-        "If the length of resolved `columns` is greater than one it must match
-        the length of the resolved `target_columns`.",
+        "If the length of resolved {.arg columns} is greater than one it must match
+        the length of the resolved {.arg target_columns}.",
         "*" = "Please ensure these greater-than-one lengths are the same."
       ))
     }
@@ -982,7 +982,7 @@ data_color <- function(
       if (!is.numeric(data_vals) && direction == "row") {
 
         cli::cli_abort(c(
-          "The {.val numeric} method with `direction == {.val row}` cannot be used
+          "The {.val numeric} method with {.code direction == {.val row}} cannot be used
           when non-numeric columns are included.",
           "*" = "Either specify a collection of numeric columns or use the
           {.val factor} method."

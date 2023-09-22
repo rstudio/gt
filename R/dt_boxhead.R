@@ -91,7 +91,7 @@ dt_boxhead_edit <- function(data, var, ...) {
   val_list <- list(...)
 
   if (length(val_list) != 1) {
-    cli::cli_abort("`dt_boxhead_edit()` expects a single value at `{cli::symbol$ellipsis}`.")
+    cli::cli_abort("{.fn dt_boxhead_edit} expects a single value at `{cli::symbol$ellipsis}`.")
   }
 
   check_names_dt_boxhead_expr(expr = val_list)
