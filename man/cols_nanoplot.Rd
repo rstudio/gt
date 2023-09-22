@@ -161,7 +161,7 @@ using a nanoplot's data values. Aside from a reference line, there is also an
 associated \emph{reference area} which, by default, tries to make itself useful by
 bounding the area between the lower and upper quartiles of the data. These
 boundaries can also be customized in a similar fashion as the reference line.
-The nanoplots are robust against missing values, are multiple strategies are
+The nanoplots are robust against missing values, and multiple strategies are
 available for handling missingness.
 
 While basic customization options are present in the \code{cols_nanoplot()}, many
