@@ -49,8 +49,7 @@ test_that("The `summary_rows()` function can make group-wise summaries", {
   # For the single list component in `summary`, expect specific
   # names within it
   summary[[1]] %>%
-    names() %>%
-    expect_equal(
+    expect_named(
       c(
         "groups", "columns", "fns", "fmt", "side",
         "missing_text", "formatter", "formatter_options"
@@ -81,7 +80,7 @@ test_that("The `summary_rows()` function can make group-wise summaries", {
   expect_type(summary[[1]]$formatter_options, "list")
 
   # Expect that `summary[[1]]$formatter_options` is of length 0
-  summary[[1]]$formatter_options %>% length() %>% expect_equal(0)
+  summary[[1]]$formatter_options %>% expect_length(0)
 
   # Create a table with summary rows for the `W02` group;
   # the 3 summary rows for this group represent the mean, sum,
@@ -126,7 +125,7 @@ test_that("The `summary_rows()` function can make group-wise summaries", {
 
   # Expect that `summary[[1]]$formatter_options` is
   # of length 0
-  summary[[1]]$formatter_options %>% length() %>% expect_equal(0)
+  summary[[1]]$formatter_options %>% expect_length(0)
 
   # Create a table with summary rows for the `W02` and `W03`
   # groups; the 3 summary rows for these groups represent the mean,
@@ -170,7 +169,7 @@ test_that("The `summary_rows()` function can make group-wise summaries", {
   summary[[1]]$formatter_options %>% expect_type("list")
 
   # Expect that `summary[[1]]$formatter_options` is of length 0
-  summary[[1]]$formatter_options %>% length() %>% expect_equal(0)
+  summary[[1]]$formatter_options %>% expect_length(0)
 
   # Create a table with summary rows for the `W02` and `W03`
   # groups; the 3 summary rows for these groups represent the mean,
@@ -216,7 +215,7 @@ test_that("The `summary_rows()` function can make group-wise summaries", {
 
   # Expect that `summary[[1]]$formatter_options` is
   # of length 0
-  summary[[1]]$formatter_options %>% length() %>% expect_equal(0)
+  summary[[1]]$formatter_options %>% expect_length(0)
 
   # Create a table with two sets of summary rows for all groups
   # and all columns
@@ -245,14 +244,12 @@ test_that("The `summary_rows()` function can make group-wise summaries", {
   # Expect that the internal `summary` list
   # object has a length of `2` since there
   # were two calls of `summary_rows()`
-  length(summary) %>%
-    expect_equal(2)
+  summary %>% expect_length(2)
 
   # For the two list components in `summary`, expect specific
   # names within them
   summary[[1]] %>%
-    names() %>%
-    expect_equal(
+    expect_named(
       c(
         "groups", "columns", "fns", "fmt", "side",
         "missing_text", "formatter", "formatter_options"
@@ -260,8 +257,7 @@ test_that("The `summary_rows()` function can make group-wise summaries", {
     )
 
   summary[[2]] %>%
-    names() %>%
-    expect_equal(
+    expect_named(
       c(
         "groups", "columns", "fns", "fmt", "side",
         "missing_text", "formatter", "formatter_options"
@@ -306,8 +302,8 @@ test_that("The `summary_rows()` function can make group-wise summaries", {
 
   # Expect that `summary[[1|2]]$formatter_options` are both
   # of length 0
-  summary[[1]]$formatter_options %>% length() %>% expect_equal(0)
-  summary[[2]]$formatter_options %>% length() %>% expect_equal(0)
+  summary[[1]]$formatter_options %>% expect_length(0)
+  summary[[2]]$formatter_options %>% expect_length(0)
 
   # Create a table with two sets of summary rows for all groups
   # and all columns
@@ -343,8 +339,7 @@ test_that("The `summary_rows()` function can make group-wise summaries", {
   # For the two list components in `summary`, expect specific
   # names within them
   summary[[1]] %>%
-    names() %>%
-    expect_equal(
+    expect_named(
       c(
         "groups", "columns", "fns", "fmt", "side",
         "missing_text", "formatter", "formatter_options"
@@ -352,8 +347,7 @@ test_that("The `summary_rows()` function can make group-wise summaries", {
     )
 
   summary[[2]] %>%
-    names() %>%
-    expect_equal(
+    expect_named(
       c(
         "groups", "columns", "fns", "fmt", "side",
         "missing_text", "formatter", "formatter_options"
@@ -394,8 +388,8 @@ test_that("The `summary_rows()` function can make group-wise summaries", {
 
   # Expect that `summary[[1|2]]$formatter_options` are both
   # of length 0
-  summary[[1]]$formatter_options %>% length() %>% expect_equal(0)
-  summary[[2]]$formatter_options %>% length() %>% expect_equal(0)
+  summary[[1]]$formatter_options %>% expect_length(0)
+  summary[[2]]$formatter_options %>% expect_length(0)
 })
 
 test_that("Grand summaries can be generated with `grand_summary_rows()`", {
@@ -423,8 +417,7 @@ test_that("Grand summaries can be generated with `grand_summary_rows()`", {
   # For the single list component in `summary`, expect specific
   # names within it
   summary[[1]] %>%
-    names() %>%
-    expect_equal(
+    expect_named(
       c(
         "groups", "columns", "fns", "fmt", "side",
         "missing_text", "formatter", "formatter_options"
@@ -484,13 +477,12 @@ test_that("Grand summaries can be generated with `grand_summary_rows()`", {
 
   # Expect that the internal `summary` list object has a length of `2`
   # since there were two calls of `summary_rows()`
-  length(summary) %>% expect_equal(2)
+  expect_length(summary, 2)
 
   # For the two list components in `summary`, expect specific
   # names within them
   summary[[1]] %>%
-    names() %>%
-    expect_equal(
+    expect_named(
       c(
         "groups", "columns", "fns", "fmt", "side",
         "missing_text", "formatter", "formatter_options"
@@ -498,8 +490,7 @@ test_that("Grand summaries can be generated with `grand_summary_rows()`", {
     )
 
   summary[[2]] %>%
-    names() %>%
-    expect_equal(
+    expect_named(
       c(
         "groups", "columns", "fns", "fmt", "side",
         "missing_text", "formatter", "formatter_options"
@@ -539,8 +530,8 @@ test_that("Grand summaries can be generated with `grand_summary_rows()`", {
   summary[[2]]$formatter_options %>% expect_type("list")
 
   # Expect that `summary[[1|2]]$formatter_options` are both of length 0
-  summary[[1]]$formatter_options %>% length() %>% expect_equal(0)
-  summary[[2]]$formatter_options %>% length() %>% expect_equal(0)
+  summary[[1]]$formatter_options %>% expect_length(0)
+  summary[[2]]$formatter_options %>% expect_length(0)
 
   # Create a table with group-wise summaries and a grand summary; all
   # summary rows represent the mean, sum, and standard deviation of
@@ -571,13 +562,12 @@ test_that("Grand summaries can be generated with `grand_summary_rows()`", {
   # Expect that the internal `summary` list
   # object has a length of `2` since there
   # were two calls of `summary_rows()`
-  length(summary) %>% expect_equal(2)
+  summary %>% expect_length(2)
 
   # For the two list components in `summary`, expect specific
   # names within them
   summary[[1]] %>%
-    names() %>%
-    expect_equal(
+    expect_named(
       c(
         "groups", "columns", "fns", "fmt", "side",
         "missing_text", "formatter", "formatter_options"
@@ -585,8 +575,7 @@ test_that("Grand summaries can be generated with `grand_summary_rows()`", {
     )
 
   summary[[2]] %>%
-    names() %>%
-    expect_equal(
+    expect_named(
       c(
         "groups", "columns", "fns", "fmt", "side",
         "missing_text", "formatter", "formatter_options"
@@ -631,8 +620,8 @@ test_that("Grand summaries can be generated with `grand_summary_rows()`", {
   summary[[2]]$formatter_options %>% expect_type("list")
 
   # Expect that `summary[[1|2]]$formatter_options` are both of length 0
-  summary[[1]]$formatter_options %>% length() %>% expect_equal(0)
-  summary[[2]]$formatter_options %>% length() %>% expect_equal(0)
+  summary[[1]]$formatter_options %>% expect_length(0)
+  summary[[2]]$formatter_options %>% expect_length(0)
 })
 
 test_that("Using `groups = FALSE` in `summary_rows()` returns data unchanged", {
@@ -1767,11 +1756,11 @@ test_that("Extracting a summary from a gt table is possible", {
   expect_type(gt_tbl_summary_groupwise, "list")
 
   # Expect that the length of the list is `1`
-  expect_equal(length(gt_tbl_summary_groupwise), 1)
+  expect_length(gt_tbl_summary_groupwise, 1)
 
   # Expect specific names for the list components
-  expect_equal(
-    names(gt_tbl_summary_groupwise$summary_df_data_list),
+  expect_named(
+    gt_tbl_summary_groupwise$summary_df_data_list,
     c("W02", "W03")
   )
 
@@ -1782,13 +1771,13 @@ test_that("Extracting a summary from a gt table is possible", {
 
   # Expect specific column names for each of the
   # tibbles in `gt_tbl_summary_groupwise`
-  expect_equal(
-    names(gt_tbl_summary_groupwise$summary_df_data_list[[1]]),
+  expect_named(
+    gt_tbl_summary_groupwise$summary_df_data_list[[1]],
     c("group_id", "row_id", "rowname", "date", "open", "high", "low", "close", "week")
   )
 
-  expect_equal(
-    names(gt_tbl_summary_groupwise$summary_df_data_list[[2]]),
+  expect_named(
+    gt_tbl_summary_groupwise$summary_df_data_list[[2]],
     c("group_id", "row_id", "rowname", "date", "open", "high", "low", "close", "week")
   )
 
@@ -1853,7 +1842,7 @@ test_that("Extracting a summary from a gt table is possible", {
   expect_type(gt_tbl_summary_grand, "list")
 
   # Expect that the length of the list is `1`
-  expect_equal(length(gt_tbl_summary_grand), 1)
+  expect_length(gt_tbl_summary_grand, 1)
 
   # Expect a specific name for the one list component
   expect_equal(names(gt_tbl_summary_grand), "summary_df_data_list")
@@ -1915,8 +1904,7 @@ test_that("Creating summary rows works for hidden columns", {
   # the `W02` group, and, don't expect an error
   # even though `summary_rows()` includes hidden
   # columns
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     gt_tbl <-
       tbl %>%
       summary_rows(
@@ -1936,13 +1924,12 @@ test_that("Creating summary rows works for hidden columns", {
   # Expect that the internal `summary` list
   # object has a length of `1` since there was
   # only one call of `summary_rows()`
-  length(summary) %>% expect_equal(1)
+  expect_length(summary, 1)
 
   # For the single list component in `summary`, expect specific
   # names within it
   summary[[1]] %>%
-    names() %>%
-    expect_equal(
+    expect_named(
       c(
         "groups", "columns", "fns", "fmt", "side",
         "missing_text", "formatter", "formatter_options"
@@ -1974,7 +1961,7 @@ test_that("Creating summary rows works for hidden columns", {
 
   # Expect that `summary[[1]]$formatter_options` is
   # of length 0
-  summary[[1]]$formatter_options %>% length() %>% expect_equal(0)
+  summary[[1]]$formatter_options %>% expect_length(0)
 
   # Extract the summary from `gt_tbl` and obtain the
   # tibble containing the summary for the `W02` group
@@ -2201,44 +2188,44 @@ test_that("Situtations where `rowname` is a column name don't interfere with int
   expect_no_error(summary_tbl_1 %>% render_as_html())
   expect_no_error(summary_tbl_1 %>% as_latex())
   expect_no_error(summary_tbl_1 %>% as_rtf())
-  expect_warning(regexp = NA, summary_tbl_1 %>% render_as_html())
-  expect_warning(regexp = NA, summary_tbl_1 %>% as_latex())
-  expect_warning(regexp = NA, summary_tbl_1 %>% as_rtf())
+  expect_no_warning(summary_tbl_1 %>% render_as_html())
+  expect_no_warning(summary_tbl_1 %>% as_latex())
+  expect_no_warning(summary_tbl_1 %>% as_rtf())
 
   expect_no_error(summary_tbl_2 %>% render_as_html())
   expect_no_error(summary_tbl_2 %>% as_latex())
   expect_no_error(summary_tbl_2 %>% as_rtf())
-  expect_warning(regexp = NA, summary_tbl_2 %>% render_as_html())
-  expect_warning(regexp = NA, summary_tbl_2 %>% as_latex())
-  expect_warning(regexp = NA, summary_tbl_2 %>% as_rtf())
+  expect_no_warning(summary_tbl_2 %>% render_as_html())
+  expect_no_warning(summary_tbl_2 %>% as_latex())
+  expect_no_warning(summary_tbl_2 %>% as_rtf())
 
   expect_no_error(summary_tbl_3 %>% render_as_html())
   expect_no_error(summary_tbl_3 %>% as_latex())
   expect_no_error(summary_tbl_3 %>% as_rtf())
-  expect_warning(regexp = NA, summary_tbl_3 %>% render_as_html())
-  expect_warning(regexp = NA, summary_tbl_3 %>% as_latex())
-  expect_warning(regexp = NA, summary_tbl_3 %>% as_rtf())
+  expect_no_warning(summary_tbl_3 %>% render_as_html())
+  expect_no_warning(summary_tbl_3 %>% as_latex())
+  expect_no_warning(summary_tbl_3 %>% as_rtf())
 
   expect_no_error(summary_tbl_4 %>% render_as_html())
   expect_no_error(summary_tbl_4 %>% as_latex())
   expect_no_error(summary_tbl_4 %>% as_rtf())
-  expect_warning(regexp = NA, summary_tbl_4 %>% render_as_html())
-  expect_warning(regexp = NA, summary_tbl_4 %>% as_latex())
-  expect_warning(regexp = NA, summary_tbl_4 %>% as_rtf())
+  expect_no_warning(summary_tbl_4 %>% render_as_html())
+  expect_no_warning(summary_tbl_4 %>% as_latex())
+  expect_no_warning(summary_tbl_4 %>% as_rtf())
 
   expect_no_error(summary_tbl_5 %>% render_as_html())
   expect_no_error(summary_tbl_5 %>% as_latex())
   expect_no_error(summary_tbl_5 %>% as_rtf())
-  expect_warning(regexp = NA, summary_tbl_5 %>% render_as_html())
-  expect_warning(regexp = NA, summary_tbl_5 %>% as_latex())
-  expect_warning(regexp = NA, summary_tbl_5 %>% as_rtf())
+  expect_no_warning(summary_tbl_5 %>% render_as_html())
+  expect_no_warning(summary_tbl_5 %>% as_latex())
+  expect_no_warning(summary_tbl_5 %>% as_rtf())
 
   expect_no_error(summary_tbl_6 %>% render_as_html())
   expect_no_error(summary_tbl_6 %>% as_latex())
   expect_no_error(summary_tbl_6 %>% as_rtf())
-  expect_warning(regexp = NA, summary_tbl_6 %>% render_as_html())
-  expect_warning(regexp = NA, summary_tbl_6 %>% as_latex())
-  expect_warning(regexp = NA, summary_tbl_6 %>% as_rtf())
+  expect_no_warning(summary_tbl_6 %>% render_as_html())
+  expect_no_warning(summary_tbl_6 %>% as_latex())
+  expect_no_warning(summary_tbl_6 %>% as_rtf())
 })
 
 test_that("Summary rows can be styled comprehensively", {

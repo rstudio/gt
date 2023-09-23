@@ -2500,9 +2500,10 @@ test_that("table with image refs work - https",{
 
   # first should be the logo.svg with some random numbers ahead of it
   expect_match(
-    docx$doc_obj$rel_df()$target[ docx$doc_obj$rel_df()$id == xml_attr(docx_table_image[1], "embed")],
+    obj <- docx$doc_obj$rel_df()$target[ docx$doc_obj$rel_df()$id == xml_attr(docx_table_image[1], "embed")],
     "^media/.+?logo[.]svg$"
   )
+  expect_length(obj, 1)
 
 })
 

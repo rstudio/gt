@@ -113,11 +113,11 @@ test_that("A caption can be added/removed with `tab_caption()`/`rm_caption()`", 
   #
   # Expect no issues from using `rm_caption()` unnecessarily or repeatedly
   #
-  expect_warning(regexp = NA, gt(exibble) %>% rm_caption())
-  expect_warning(regexp = NA, gt(exibble) %>% rm_caption() %>% rm_caption())
-  expect_warning(regexp = NA, gt(exibble, caption = "cap") %>% rm_caption() %>% rm_caption())
-  expect_warning(regexp = NA, gt(exibble) %>% tab_caption(caption = "cap") %>% rm_caption() %>% rm_caption())
-  expect_warning(regexp = NA, gt(exibble, caption = "cap") %>% tab_caption(caption = "cap") %>% rm_caption() %>% rm_caption())
+  expect_no_warning(gt(exibble) %>% rm_caption())
+  expect_no_warning(gt(exibble) %>% rm_caption() %>% rm_caption())
+  expect_no_warning(gt(exibble, caption = "cap") %>% rm_caption() %>% rm_caption())
+  expect_no_warning(gt(exibble) %>% tab_caption(caption = "cap") %>% rm_caption() %>% rm_caption())
+  expect_no_warning(gt(exibble, caption = "cap") %>% tab_caption(caption = "cap") %>% rm_caption() %>% rm_caption())
 
   #
   # Ensure that a caption element is not rendered when using `rm_caption()`

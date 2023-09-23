@@ -270,31 +270,26 @@ test_that("The `fmt_number()` function works correctly in the HTML context", {
   na_col_tbl <- dplyr::tibble(a = rep(NA_real_, 10), b = 1:10) %>% gt()
 
   # Expect a returned object of class `gt_tbl` with various uses of `fmt_number()`
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>% fmt_number(columns = a) %>%
       as_raw_html()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>%
       fmt_number(columns = a, rows = 1:5) %>%
       as_raw_html()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>%
       fmt_number(columns = a, scale_by = 100) %>%
       as_raw_html()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>%
       fmt_number(columns = a, suffixing = TRUE) %>%
       as_raw_html()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>%
       fmt_number(columns = a, pattern = "a{x}b") %>%
       as_raw_html()
@@ -882,8 +877,7 @@ test_that("Rownames and groupnames aren't included in `columns = TRUE`", {
 
   # This doesn't fail; it won't apply numeric formatting to the
   # "chardata" column but the formatter will skip over it
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     mtcars1 %>%
       gt() %>%
       fmt_number(columns = everything())
@@ -892,15 +886,13 @@ test_that("Rownames and groupnames aren't included in `columns = TRUE`", {
   # These succeed because the "chardata" col no longer counts as a
   # resolvable column if it's a rowname_col or groupname_col, yet, it's
   # still visible as a column in the `rows` expression
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     mtcars1 %>%
       gt(rowname_col = "chardata") %>%
       fmt_number(columns = everything(), rows = chardata == "Mazda RX4")
   )
 
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     mtcars1 %>%
       gt(groupname_col = "chardata") %>%
       fmt_number(columns = everything(), rows = chardata == "Mazda RX4")

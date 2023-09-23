@@ -433,8 +433,7 @@ test_that("The `fmt_time()` function works correctly", {
 
   # Don't expect an error if any string-based date-times have invalid
   # time components
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     dplyr::tibble(date = c("2013-12-30 25:30", "2017-03-15 02:32")) %>%
       gt() %>%
       fmt_time(columns = "date")

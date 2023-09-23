@@ -11,127 +11,85 @@ test_that("We can render empty gt tables with empty data frames", {
   # formats without failing
 
   empty_tbl_html <-
-    expect_error(
-      regexp = NA,
-      gt(empty_tbl) %>% render_as_html()
-    )
+    expect_no_error(gt(empty_tbl) %>% render_as_html())
 
   empty_tbl_latex <-
-    expect_error(
-      regexp = NA,
-      gt(empty_tbl) %>% as_latex() %>% as.character()
-    )
+    expect_no_error(gt(empty_tbl) %>% as_latex() %>% as.character())
 
   empty_tbl_rtf <-
-    expect_error(
-      regexp = NA,
-      gt(empty_tbl) %>% as_rtf()
-    )
+    expect_no_error(gt(empty_tbl) %>% as_rtf())
 
   empty_tbl_word <-
-    expect_error(
-      regexp = NA,
-      gt(empty_tbl) %>% as_word()
-    )
+    expect_no_error(gt(empty_tbl) %>% as_word())
 
   # An empty table (having columns) can be rendered
   # in different output formats without failing
 
   empty_w_cols_tbl_html <-
-    expect_error(
-      regexp = NA,
-      gt(empty_w_cols_tbl) %>% render_as_html()
-    )
+    expect_no_error(gt(empty_w_cols_tbl) %>% render_as_html())
 
   empty_w_cols_tbl_latex <-
-    expect_error(
-      regexp = NA,
-      gt(empty_w_cols_tbl) %>% as_latex() %>% as.character()
-    )
+    expect_no_error(gt(empty_w_cols_tbl) %>% as_latex() %>% as.character())
 
   empty_w_cols_tbl_rtf <-
-    expect_error(
-      regexp = NA,
-      gt(empty_w_cols_tbl) %>% as_rtf()
-    )
+    expect_no_error(gt(empty_w_cols_tbl) %>% as_rtf())
 
   empty_w_cols_tbl_word <-
-    expect_error(
-      regexp = NA,
-      gt(empty_w_cols_tbl) %>% as_word()
-    )
+    expect_no_error(gt(empty_w_cols_tbl) %>% as_word())
 
   # An empty table (having some rows though) can be rendered
   # in different output formats without failing
 
   empty_w_rows_tbl_html <-
-    expect_error(
-      regexp = NA,
-      gt(empty_w_rows_tbl) %>% render_as_html()
-    )
+    expect_no_error(gt(empty_w_rows_tbl) %>% render_as_html())
 
   empty_w_rows_tbl_latex <-
-    expect_error(
-      regexp = NA,
-      gt(empty_w_rows_tbl) %>% as_latex() %>% as.character()
-    )
+    expect_no_error(gt(empty_w_rows_tbl) %>% as_latex() %>% as.character())
 
   empty_w_rows_tbl_rtf <-
-    expect_error(
-      regexp = NA,
-      gt(empty_w_rows_tbl) %>% as_rtf()
-    )
+    expect_no_error(gt(empty_w_rows_tbl) %>% as_rtf())
 
   empty_w_rows_tbl_word <-
-    expect_error(
-      regexp = NA,
-      gt(empty_w_rows_tbl) %>% as_word()
-    )
+    expect_no_error(gt(empty_w_rows_tbl) %>% as_word())
 })
 
 test_that("We can start from empty tables and sometimes add columns", {
 
   # Columns of arbitrary size can be added to a completely empty table
   empty_1_col <-
-    expect_error(
-      regexp = NA,
+    expect_no_error(
       gt(empty_tbl) %>%
         cols_add(a = 1:5)
     )
 
   empty_2_col <-
-    expect_error(
-      regexp = NA,
+    expect_no_error(
       gt(empty_tbl) %>%
         cols_add(a = 1:5, b = letters[1:5])
     )
 
   empty_2_col_no_row <-
-    expect_error(
-      regexp = NA,
+    expect_no_error(
       gt(empty_tbl) %>%
         cols_add(a = double(0), b = character(0))
     )
 
   # Columns of arbitrary size can be added to a zero-row, multicolumn table
   empty_2_col_add_1_more_col <-
-    expect_error(
-      regexp = NA,
+    expect_no_error(
       gt(empty_w_cols_tbl) %>%
         cols_add(a = 1:5)
     )
 
   empty_2_col_add_2_more_col <-
-    expect_error(
-      regexp = NA,
+    expect_no_error(
       gt(empty_w_cols_tbl) %>%
         cols_add(a = 1:5, b = letters[1:5])
     )
 
   # New zero-row columns can be added to a zero-row, multicolumn table
   empty_2_col_no_row_add_cols <-
-    expect_error(
-      regexp = NA,
+    expect_no_error(
       gt(empty_w_cols_tbl) %>%
         cols_add(a = double(0), b = character(0))
     )
@@ -140,22 +98,19 @@ test_that("We can start from empty tables and sometimes add columns", {
   # (same behavior as a completely empty table because gt will strip all
   # rows upon ingestion, leaving a zero-row/zero-column table)
   empty_w_rows_1_col <-
-    expect_error(
-      regexp = NA,
+    expect_no_error(
       gt(empty_w_rows_tbl) %>%
         cols_add(a = 1:5)
     )
 
   empty_w_rows_2_col <-
-    expect_error(
-      regexp = NA,
+    expect_no_error(
       gt(empty_w_rows_tbl) %>%
         cols_add(a = 1:5, b = letters[1:5])
     )
 
   empty_w_rows_2_col_no_row <-
-    expect_error(
-      regexp = NA,
+    expect_no_error(
       gt(empty_w_rows_tbl) %>%
         cols_add(a = double(0), b = character(0))
     )
@@ -165,29 +120,25 @@ test_that("We can start from empty tables and sometimes add rows", {
 
   # Rows of arbitrary size can be added to a completely empty table
   empty_1_row <-
-    expect_error(
-      regexp = NA,
+    expect_no_error(
       gt(empty_tbl) %>%
         rows_add(a = 1, b = letters[2])
     )
 
   empty_2_row <-
-    expect_error(
-      regexp = NA,
+    expect_no_error(
       gt(empty_tbl) %>%
         rows_add(a = 1:2, b = letters[2])
     )
 
   empty_0_row <-
-    expect_error(
-      regexp = NA,
+    expect_no_error(
       gt(empty_tbl) %>%
         rows_add(a = double(0), b = character(0))
     )
 
   empty_2_empty_rows <-
-    expect_error(
-      regexp = NA,
+    expect_no_error(
       gt(empty_tbl) %>%
         rows_add(.n_empty = 2)
     )
@@ -200,15 +151,13 @@ test_that("We can start from empty tables and sometimes add rows", {
 
   # Rows of arbitrary size can be added to a zero-row, multicolumn table
   empty_2_col_add_rows <-
-    expect_error(
-      regexp = NA,
+    expect_no_error(
       gt(empty_w_cols_tbl) %>%
         rows_add(char = letters[1:5], num = 3)
     )
 
   empty_2_col_add_empty_rows <-
-    expect_error(
-      regexp = NA,
+    expect_no_error(
       gt(empty_w_cols_tbl) %>%
         rows_add(.n_empty = 5)
     )
@@ -223,29 +172,25 @@ test_that("We can start from empty tables and sometimes add rows", {
   # (same behavior as a completely empty table because gt will strip all
   # rows upon ingestion, leaving a zero-row/zero-column table)
   empty_w_rows_1_row <-
-    expect_error(
-      regexp = NA,
+    expect_no_error(
       gt(empty_w_rows_tbl) %>%
         rows_add(a = 1, b = letters[2])
     )
 
   empty_w_rows_2_row <-
-    expect_error(
-      regexp = NA,
+    expect_no_error(
       gt(empty_w_rows_tbl) %>%
         rows_add(a = 1:2, b = letters[2])
     )
 
   empty_w_rows_2_col_no_row <-
-    expect_error(
-      regexp = NA,
+    expect_no_error(
       gt(empty_w_rows_tbl) %>%
         rows_add(a = double(0), b = character(0))
     )
 
   empty_w_rows_2_empty_rows <-
-    expect_error(
-      regexp = NA,
+    expect_no_error(
       gt(empty_w_rows_tbl) %>%
         rows_add(.n_empty = 2)
     )

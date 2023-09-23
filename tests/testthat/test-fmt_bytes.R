@@ -319,17 +319,14 @@ test_that("The `fmt_bytes()` function works correctly", {
 
   # Expect a returned object of class `gt_tbl` with various
   # uses of `fmt_bytes()`
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>% fmt_bytes(columns = a) %>% as_raw_html()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>%
       fmt_bytes(columns = a, rows = 1:5) %>% as_raw_html()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>%
       fmt_bytes(columns = a, pattern = "a{x}b", incl_space = FALSE) %>% as_raw_html()
   )

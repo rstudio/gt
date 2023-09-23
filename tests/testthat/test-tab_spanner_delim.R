@@ -264,8 +264,7 @@ test_that("The `tab_spanner_delim()` function works correctly", {
     gt(iris_short) %>%
       tab_spanner_delim(delim = character(0))
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     gt(iris_short) %>%
       tab_spanner_delim(delim = ".")
   )
@@ -279,18 +278,15 @@ test_that("The `tab_spanner_delim()` function works correctly", {
     gt(iris_short) %>%
       tab_spanner_delim(delim = "_", split = NULL)
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     gt(iris_short) %>%
       tab_spanner_delim(delim = "_", split = c("last", "first"))
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     gt(iris_short) %>%
       tab_spanner_delim(delim = "_", split = "last")
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     gt(iris_short) %>%
       tab_spanner_delim(delim = "_", split = "first")
   )
@@ -317,13 +313,11 @@ test_that("The `tab_spanner_delim()` function works correctly", {
     gt(iris_short) %>%
       tab_spanner_delim(delim = ".", limit = 1.5)
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     gt(iris_short) %>%
       tab_spanner_delim(delim = ".", limit = 1.0)
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     gt(iris_short) %>%
       tab_spanner_delim(delim = ".", limit = 2)
   )
@@ -1224,24 +1218,21 @@ test_that("`tab_spanner_delim()` works with complex splits", {
 
   # Ensure that `tab_spanner_delim()` doesn't fail with
   # either of the `split` options
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     gt_tbl %>%
       tab_spanner_delim(
         delim = ".",
         split = "first"
       )
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     gt_tbl %>%
       tab_spanner_delim(
         delim = ".",
         split = "last"
       )
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     gt_tbl %>%
       tab_spanner_delim(
         delim = ".",
@@ -1249,8 +1240,7 @@ test_that("`tab_spanner_delim()` works with complex splits", {
         reverse = TRUE
       )
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     gt_tbl %>%
       tab_spanner_delim(
         delim = ".",

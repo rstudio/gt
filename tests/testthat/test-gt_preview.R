@@ -13,8 +13,7 @@ test_that("The `gt_preview()` function works correctly", {
   output_tbl <- dt_body_get(data = built_tbl)
 
   # Expect that the output table has had rows removed
-  (nrow(mtcars) > nrow(output_tbl)) %>%
-    expect_true()
+  nrow(mtcars) %>% expect_gt(nrow(output_tbl))
 
   # Expect certain row names in `data_df`
   output_tbl %>%
