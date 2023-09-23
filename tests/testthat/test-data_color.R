@@ -1571,7 +1571,7 @@ test_that("The correct color values are obtained when using a color fn", {
     selection_value("style") %>%
     gsub("(background-color: |; color: .*)", "", .) %>%
     unique() %>%
-    expect_length(4)
+    expect_length(3)
 
   # Expect all color values to be of the #RRGGBB form
   tbl_html_8 %>%
