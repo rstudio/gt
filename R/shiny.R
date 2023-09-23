@@ -271,5 +271,6 @@ gt_output <- function(outputId) {
   rlang::check_installed("shiny", "to use `gt_output()`.")
 
   shiny::htmlOutput(outputId)
+
 }
 #nocov end

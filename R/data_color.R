@@ -786,6 +786,7 @@ data_color <- function(
 
       # Determine if the paletteer package is installed and stop the
       # function if it is not present
+
       rlang::check_installed(
         "paletteer",
         reason = "to use palettes with the <package>::<palette> syntax."

@@ -3656,6 +3656,7 @@ escape_latex <- function(text) {
 #'
 #' @export
 gt_latex_dependencies <- function() {
+
   check_installed("knitr", "for getting the LaTeX dependency headers.")
 
   knitr::asis_output(
