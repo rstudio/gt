@@ -31,8 +31,8 @@ test_that("The `gt_group()` function can be used to contain gt tables", {
   expect_false(gt_tbls_5[["use_grp_opts"]])
 
   # Expect specific components inside of a 'gt_group' object
-  expect_equal(
-    names(gt_tbls_1),
+  expect_named(
+    gt_tbls_1,
     c("gt_tbls", "gt_tbl_options", "use_grp_opts")
   )
 

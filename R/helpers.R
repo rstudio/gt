@@ -3668,6 +3668,7 @@ gt_latex_dependencies <- function() {
       sep = "\n"
     )
   )
+
 }
 
 #' Helper function for specifying a font from the *Google Fonts* service

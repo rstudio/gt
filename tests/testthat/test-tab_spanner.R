@@ -56,6 +56,10 @@ test_that("A gt table contains the expected spanner column labels", {
     selection_text("[class='gt_center gt_columns_top_border gt_column_spanner_outer']") %>%
     expect_match("perimeter")
 
+  tbl_html %>%
+    selection_text("[class='gt_center gt_columns_top_border gt_column_spanner_outer']") %>%
+    expect_length(1)
+
   # Create a `tbl_html` object with `gt()`; this table
   # contains the spanner heading `perimeter` that is formatted
   # with Markdown via `md()`
@@ -69,6 +73,7 @@ test_that("A gt table contains the expected spanner column labels", {
   # Expect that the `perimeter` word is wrapped in `<em>` tags
   expect_match(tbl_html, "<em>perimeter</em>")
   expect_length(tbl_html, 1)
+
   # Create a `tbl_html` object with `gt()`; this table
   # contains the spanner heading `perimeter` that is formatted
   # with HTML via `html()`

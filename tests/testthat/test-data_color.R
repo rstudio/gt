@@ -1282,14 +1282,10 @@ test_that("The correct color values are obtained when using a color fn", {
 
   # Expect that the text colors vary between #000000 and #FFFFFF
   # since the `autocolor_text` option is TRUE (the default case)
-  (
-    (tbl_html_3 %>%
-       selection_value("style") %>%
-       gsub("(.*: |;$)", "", .)) %in%
-      c("#000000", "#FFFFFF")
-  ) %>%
-    all() %>%
-    expect_true()
+  tbl_html_3 %>%
+    selection_value("style") %>%
+    gsub("(.*: |;$)", "", .) %>%
+    expect_in(c("#000000", "#FFFFFF"))
 
   # Expect all color values to be identical to those from
   # `tbl_html_1`

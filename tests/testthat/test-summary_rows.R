@@ -1845,15 +1845,15 @@ test_that("Extracting a summary from a gt table is possible", {
   expect_length(gt_tbl_summary_grand, 1)
 
   # Expect a specific name for the one list component
-  expect_equal(names(gt_tbl_summary_grand), "summary_df_data_list")
+  expect_named(gt_tbl_summary_grand, "summary_df_data_list")
 
   # Expect that the single component of the list inherits
   # from `list`
   expect_type(gt_tbl_summary_grand[[1]], "list")
 
   # Expect specific column names for the tibble in `gt_tbl_summary_grand`
-  expect_equal(
-    names(gt_tbl_summary_grand$summary_df_data_list[[1]]),
+  expect_named(
+    gt_tbl_summary_grand$summary_df_data_list[[1]],
     c("group_id", "row_id", "rowname", "date", "open", "high", "low", "close", "week")
   )
 
