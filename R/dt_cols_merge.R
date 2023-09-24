@@ -43,6 +43,7 @@ dt_col_merge_add <- function(data, col_merge) {
 
 dt_col_merge_entry <- function(vars, rows, type, pattern = NULL, ...) {
 
+  # Assert type is one of the supported values
   arg_match0(type, values = c("merge", "merge_range", "merge_uncert", "merge_n_pct"))
 
   list(

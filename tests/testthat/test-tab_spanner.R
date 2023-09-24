@@ -71,8 +71,8 @@ test_that("A gt table contains the expected spanner column labels", {
     render_as_html()
 
   # Expect that the `perimeter` word is wrapped in `<em>` tags
-  expect_match(tbl_html, "<em>perimeter</em>")
   expect_length(tbl_html, 1)
+  expect_match(tbl_html, "<em>perimeter</em>")
 
   # Create a `tbl_html` object with `gt()`; this table
   # contains the spanner heading `perimeter` that is formatted
@@ -85,8 +85,8 @@ test_that("A gt table contains the expected spanner column labels", {
     render_as_html()
 
   # Expect that the `perimeter` word is wrapped in `<em>` tags
-  expect_match(tbl_html, "<em>perimeter</em>")
   expect_length(tbl_html, 1)
+  expect_match(tbl_html, "<em>perimeter</em>")
 
   # Expect an error when using column labels
   # that don't exist

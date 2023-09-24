@@ -88,6 +88,7 @@ test_that("The `tab_spanner_delim()` function works correctly", {
     xml2::read_html() %>%
     rvest::html_nodes("[colspan='2']") %>%
     rvest::html_text()
+
   expect_length(colspan2, 1)
   expect_match(colspan2, "Sepal")
 
@@ -126,8 +127,8 @@ test_that("The `tab_spanner_delim()` function works correctly", {
     rvest::html_nodes("[colspan='2']") %>%
     rvest::html_text()
 
-  colspan2 %>% expect_match("Sepal")
-  colspan2 %>% expect_length(1)
+   expect_length(colspan2, 1)
+   expect_match(colspan2, "Sepal")
 
 
   # Expect that the columns with a colspan of `1` have the same
