@@ -33,10 +33,9 @@ test_that("A gt table contains the expected spanner column labels", {
 
   # Expect that the content is the column heading spanning 2 columns
   # is `perimeter`
-  tbl_html %>%
-    selection_text("[colspan='2']") %>%
-    grepl("perimeter", .) %>%
-    expect_true()
+  obj_colspan <- tbl_html %>% selection_text("[colspan='2']")
+  expect_length(obj_colspan, 1)
+  expect_match(obj_colspan, "perimeter")
 
   # Create a `gt_tbl` object with `gt()`; this table
   # contains the spanner heading `perimeter` over the
@@ -52,13 +51,11 @@ test_that("A gt table contains the expected spanner column labels", {
 
   # Expect that the content is the column heading spanning 2 columns
   # is `perimeter`
-  tbl_html %>%
-    selection_text("[class='gt_center gt_columns_top_border gt_column_spanner_outer']") %>%
-    expect_match("perimeter")
+  obj_perimeter <- tbl_html %>%
+    selection_text("[class='gt_center gt_columns_top_border gt_column_spanner_outer']")
 
-  tbl_html %>%
-    selection_text("[class='gt_center gt_columns_top_border gt_column_spanner_outer']") %>%
-    expect_length(1)
+  expect_length(obj_perimeter, 1)
+  expect_match(obj_perimeter, "perimeter")
 
   # Create a `tbl_html` object with `gt()`; this table
   # contains the spanner heading `perimeter` that is formatted
