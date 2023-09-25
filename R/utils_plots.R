@@ -825,8 +825,8 @@ generate_ref_line_from_keyword <- function(vals, keyword) {
 
   rlang::arg_match0(keyword, c("mean", "median", "min", "max", "first", "last"))
 
-  if (length(keyword) != 1) {
-    stop("`keyword` must have length 1.")
+  if (!(keyword %in% c("mean", "median", "min", "max", "first", "last"))) {
+    stop("A keyword for a reference line needs to be one of six valid options.")
   }
 
   if (keyword == "mean") {
