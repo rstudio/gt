@@ -39,7 +39,7 @@
 #'
 #' We need to ensure that we have the **shiny** package installed first. This
 #' is easily by using `install.packages("shiny")`. More information on creating
-#' Shiny apps can be found at the \href{https://shiny.rstudio.com}{Shiny Site}.
+#' Shiny apps can be found on the \href{https://shiny.posit.co}{Shiny website}.
 #'
 #' @param expr *Expression*
 #'
@@ -212,7 +212,7 @@ render_gt <- function(
 #'
 #' We need to ensure that we have the **shiny** package installed first. This
 #' is easily by using `install.packages("shiny")`. More information on creating
-#' Shiny apps can be found at the \href{https://shiny.rstudio.com}{Shiny Site}.
+#' Shiny apps can be found on the \href{https://shiny.posit.co}{Shiny website}.
 #'
 #' @param outputId *Shiny output ID*
 #'
