@@ -823,7 +823,7 @@ out_indices_from_vec <- function(x, cutoff = 3) {
 
 generate_ref_line_from_keyword <- function(vals, keyword) {
 
-  arg_match0(keyword, c("mean", "median", "min", "max", "first", "last"))
+  rlang::arg_match0(keyword, c("mean", "median", "min", "max", "first", "last"))
 
   if (length(keyword) != 1) {
     stop("`keyword` must have length 1.")
