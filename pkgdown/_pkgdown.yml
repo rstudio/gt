@@ -12,6 +12,17 @@ authors:
   JooYoung Seo:
     href: "https://jooyoungseo.github.io/"
 
+news:
+  releases:
+  - text: "Version 0.9.0"
+    href: https://posit.co/blog/?search=gt%2520%25200.9.0
+  - text: "Version 0.8.0"
+    href: https://posit.co/blog/new-features-upgrades-in-gt-0-8-0/
+  - text: "Version 0.7.0"
+    href: https://posit.co/blog/all-new-things-in-gt-0-7-0/
+  - text: "Version 0.6.0"
+    href: https://posit.co/blog/changes-for-the-better-in-gt-0-6-0/
+
 development:
   mode: release
 
