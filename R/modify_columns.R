@@ -2517,7 +2517,7 @@ cols_nanoplot <- function(
         y_ref_area = reference_area,
         x_vals = data_vals_plot_x_i,
         missing_vals = missing_vals,
-        line_type = "curved",
+        line_type = options_plots$data_line_type,
         currency = currency,
         data_point_radius = options_plots$data_point_radius,
         data_point_stroke_color = options_plots$data_point_stroke_color,
