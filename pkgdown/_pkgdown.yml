@@ -358,10 +358,5 @@ reference:
     - rx_adsl
     - rx_addv
 
-navbar:
-  structure:
-    left: [intro, articles, reference, news]
-  components:
-    intro:
-      text: Intro
-      href: articles/intro-creating-gt-tables.html
+redirects:
+  - ["articles/intro-creating-gt-tables.html", "articles/gt.html"]
