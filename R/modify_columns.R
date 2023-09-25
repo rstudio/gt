@@ -2511,7 +2511,7 @@ cols_nanoplot <- function(
     }
 
     data_plot_i <-
-      generate_1d_line_plot(
+      generate_line_plot(
         y_vals = data_vals_plot_y_i,
         y_ref_line = reference_line,
         y_ref_area = reference_area,
