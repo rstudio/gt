@@ -3823,14 +3823,7 @@ determine_output_format <- function() {
 
   # Check whether knitr is in the package library and stop function
   # only if it is not present
-  if (!requireNamespace("knitr", quietly = TRUE)) {
-
-    cli::cli_abort(c(
-      "Automatically detecting the output context with `output = \"auto\"`
-      requires the `knitr` package.",
-      "*" = "It can be installed with `install.packages(\"knitr\")`."
-    ))
-  }
+  rlang::check_installed("knitr", "to automatically detect the output context with `output = \"auto\".")
 
   if (knitr_is_rtf_output()) {
     return("rtf")

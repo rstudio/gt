@@ -66,7 +66,7 @@ Suggests:
     rmarkdown (>= 2.20),
     rvest,
     shiny (>= 1.7.4),
-    testthat (>= 3.1.6),
+    testthat (>= 3.1.9),
     tidyr,
     webshot2 (>= 0.1.0)
 Roxygen: list(markdown = TRUE)

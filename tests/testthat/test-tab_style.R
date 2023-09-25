@@ -499,40 +499,35 @@ test_that("Using fonts in `cell_text()` works", {
   )
 
   # Don't expect any errors when styling with different fonts
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     gtcars_tbl %>%
       tab_style(
         style = list(cell_text(font = c("Helvetica", "serif")), "font-size: 14px;"),
         locations = cells_body(columns = hp)
       )
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     gtcars_tbl %>%
       tab_style(
         style = list("font-size: 14px;", cell_text(font = c("Helvetica", "serif"))),
         locations = cells_body(columns = hp)
       )
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     gtcars_tbl %>%
       tab_style(
         style = list(cell_text(font = c("Helvetica", "serif")), cell_borders()),
         locations = cells_body(columns = hp)
       )
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     gtcars_tbl %>%
       tab_style(
         style = list(cell_borders(), cell_text(font = c("Helvetica", "serif"))),
         locations = cells_body(columns = hp)
       )
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     gtcars_tbl %>%
       tab_style(
         style = list(
@@ -543,8 +538,7 @@ test_that("Using fonts in `cell_text()` works", {
         locations = cells_body(columns = hp)
       )
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     gtcars_tbl %>%
       tab_style(
         style = cell_text(font = c("Times New Roman", "serif")),
@@ -576,30 +570,26 @@ test_that("Setting white-space options in `cell_text()` works", {
 
 test_that("Hiding columns that have styles does not result in errors/warnings", {
 
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     exibble %>%
       gt() %>%
       tab_style(style = cell_fill(), locations = cells_body(columns = everything())) %>%
       cols_hide(columns = date)
   )
-  expect_warning(
-    regexp = NA,
+  expect_no_warning(
     exibble %>%
       gt() %>%
       tab_style(style = cell_fill(), locations = cells_body(columns = everything())) %>%
       cols_hide(columns = date)
   )
 
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     exibble %>%
       gt() %>%
       tab_style(style = cell_fill(), locations = cells_body(columns = date)) %>%
       cols_hide(columns = datetime)
   )
-  expect_warning(
-    regexp = NA,
+  expect_no_warning(
     exibble %>%
       gt() %>%
       tab_style(style = cell_fill(), locations = cells_body(columns = date)) %>%

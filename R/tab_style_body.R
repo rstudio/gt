@@ -335,14 +335,14 @@ tab_style_body <- function(
 
   if (is.null(values) && is.null(pattern) && is.null(fn)) {
     cli::cli_abort(
-      "One of `values`, `pattern`, or `fn` needs to be supplied to `sub_value()`."
+      "One of `values`, `pattern`, or `fn` must be supplied to {.fn sub_values}."
     )
   }
 
   # Validate that the `fn` object is a function
   if (!is.null(fn) && !rlang::is_function(fn)) {
     cli::cli_abort(
-      "A function must be provided to the `fn` argument."
+     "{.arg fn} must be a function."
     )
   }
 

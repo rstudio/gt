@@ -1150,7 +1150,7 @@ sub_values <- function(
 
   if (is.null(values) && is.null(pattern) && is.null(fn)) {
     cli::cli_abort(
-      "One of `values`, `pattern`, or `fn` needs to be supplied to `sub_value()`."
+      "One of `values`, `pattern`, or `fn` must be supplied to {.fn sub_value}."
     )
   }
 
@@ -1169,7 +1169,7 @@ sub_values <- function(
 
   if (!is.numeric(replacement) && !is.character(replacement)) {
     cli::cli_abort(
-      "The `replacement` must be a numeric, integer, or character vector."
+      "The `replacement` must be a number or a string."
     )
   }
 

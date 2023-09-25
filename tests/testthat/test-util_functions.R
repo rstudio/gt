@@ -371,8 +371,8 @@ test_that("the `as_locations()` function works correctly", {
     )
 
   # Expect certain structural features for a `locations` object
-  locations %>% length() %>% expect_equal(2)
-  locations[[1]] %>% length() %>% expect_equal(2)
+  locations %>% expect_length(2)
+  locations[[1]] %>% expect_length(2)
   locations[[1]] %>% expect_s3_class(c("quosure", "formula"))
   locations[[2]] %>% expect_s3_class(c("quosure", "formula"))
 
@@ -380,8 +380,8 @@ test_that("the `as_locations()` function works correctly", {
   locations_list <- as_locations(locations)
 
   # Expect certain structural features for this `locations_list` object
-  locations_list %>% length() %>% expect_equal(1)
-  locations_list[[1]] %>% length() %>% expect_equal(2)
+  locations_list %>% expect_length(1)
+  locations_list[[1]] %>% expect_length(2)
   locations_list[[1]] %>% expect_s3_class(c("cells_body", "location_cells"))
 
   # Define locations as a named vector
@@ -503,8 +503,7 @@ test_that("The `check_spanner_id_unique()` function works properly", {
 
   # Don't expect an error when checking for unique spanner IDs
   # in a gt table with no spanner column labels
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     check_spanner_id_unique(data = gt_tbl_1, spanner_id = "a")
   )
 

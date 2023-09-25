@@ -13,8 +13,7 @@ test_that("The `gt_preview()` function works correctly", {
   output_tbl <- dt_body_get(data = built_tbl)
 
   # Expect that the output table has had rows removed
-  (nrow(mtcars) > nrow(output_tbl)) %>%
-    expect_true()
+  nrow(mtcars) %>% expect_gt(nrow(output_tbl))
 
   # Expect certain row names in `data_df`
   output_tbl %>%
@@ -102,27 +101,27 @@ test_that("The `gt_preview()` function works correctly", {
 
   # Expect no errors when using all gt datasets (plus a few more
   # from the datasets package) with the `gt_preview()` function
-  expect_error(regexp = NA, gt_preview(countrypops))
-  expect_error(regexp = NA, gt_preview(sza))
-  expect_error(regexp = NA, gt_preview(gtcars))
-  expect_error(regexp = NA, gt_preview(sp500))
-  expect_error(regexp = NA, gt_preview(pizzaplace))
-  expect_error(regexp = NA, gt_preview(exibble))
+  expect_no_error(gt_preview(countrypops))
+  expect_no_error(gt_preview(sza))
+  expect_no_error(gt_preview(gtcars))
+  expect_no_error(gt_preview(sp500))
+  expect_no_error(gt_preview(pizzaplace))
+  expect_no_error(gt_preview(exibble))
 
-  expect_error(regexp = NA, gt_preview(datasets::airquality))
-  expect_error(regexp = NA, gt_preview(datasets::cars))
-  expect_error(regexp = NA, gt_preview(datasets::chickwts))
-  expect_error(regexp = NA, gt_preview(datasets::faithful))
-  expect_error(regexp = NA, gt_preview(datasets::iris))
-  expect_error(regexp = NA, gt_preview(datasets::LifeCycleSavings))
-  expect_error(regexp = NA, gt_preview(datasets::longley))
-  expect_error(regexp = NA, gt_preview(datasets::morley))
-  expect_error(regexp = NA, gt_preview(datasets::mtcars))
-  expect_error(regexp = NA, gt_preview(datasets::Orange))
-  expect_error(regexp = NA, gt_preview(datasets::pressure))
-  expect_error(regexp = NA, gt_preview(datasets::quakes))
-  expect_error(regexp = NA, gt_preview(datasets::rock))
-  expect_error(regexp = NA, gt_preview(datasets::sleep))
-  expect_error(regexp = NA, gt_preview(datasets::swiss))
-  expect_error(regexp = NA, gt_preview(datasets::USJudgeRatings))
+  expect_no_error(gt_preview(datasets::airquality))
+  expect_no_error(gt_preview(datasets::cars))
+  expect_no_error(gt_preview(datasets::chickwts))
+  expect_no_error(gt_preview(datasets::faithful))
+  expect_no_error(gt_preview(datasets::iris))
+  expect_no_error(gt_preview(datasets::LifeCycleSavings))
+  expect_no_error(gt_preview(datasets::longley))
+  expect_no_error(gt_preview(datasets::morley))
+  expect_no_error(gt_preview(datasets::mtcars))
+  expect_no_error(gt_preview(datasets::Orange))
+  expect_no_error(gt_preview(datasets::pressure))
+  expect_no_error(gt_preview(datasets::quakes))
+  expect_no_error(gt_preview(datasets::rock))
+  expect_no_error(gt_preview(datasets::sleep))
+  expect_no_error(gt_preview(datasets::swiss))
+  expect_no_error(gt_preview(datasets::USJudgeRatings))
 })

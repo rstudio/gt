@@ -534,9 +534,9 @@ test_that("The `currency()` helper function works correctly", {
 
   # Expect that the object produced by `currency()` is a
   # list with `gt_currency` class
-  expect_true(
-    currency(html = "&#8383;", latex = "BTC", default = "BTC") %>%
-      is.list()
+  expect_type(
+    currency(html = "&#8383;", latex = "BTC", default = "BTC"),
+    "list"
   )
 
   expect_s3_class(
@@ -545,26 +545,18 @@ test_that("The `currency()` helper function works correctly", {
   )
 
   # Expect as many components as there are named arguments
-  currency(html = "&#8383;", latex = "BTC", default = "BTC") %>%
-    length() %>%
-    expect_equal(3)
-
-  currency(html = "&#8383;", default = "BTC") %>%
-    length() %>%
-    expect_equal(2)
-
-  currency(default = "BTC") %>%
-    length() %>%
-    expect_equal(1)
+  expect_length(currency(html = "&#8383;", latex = "BTC", default = "BTC"), 3)
+  expect_length(currency(html = "&#8383;", default = "BTC"), 2)
+  expect_length(currency(default = "BTC"), 1)
 
   # Expect that a single, unnamed string will be upgraded
   # to the `default` context
   single_default_currency <- currency("BTC")
 
-  single_default_currency %>% is.list() %>% expect_true()
+  single_default_currency %>% expect_type("list")
   single_default_currency %>% expect_s3_class("gt_currency")
-  single_default_currency %>% length() %>% expect_equal(1)
-  single_default_currency %>% names() %>% expect_equal("default")
+  single_default_currency %>% expect_length(1)
+  single_default_currency %>% expect_named("default")
   single_default_currency[[1]] %>% expect_equal("BTC")
 
   # Expect an error if nothing is provided

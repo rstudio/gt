@@ -56,7 +56,7 @@ test_that("The `fmt_fraction()` function works correctly", {
   # Expect an error when using an invalid accuracy value
   expect_error(tab %>% fmt_fraction(columns = num, accuracy = "invalid"))
   expect_error(tab %>% fmt_fraction(columns = num, accuracy = 0))
-  expect_error(regexp = NA, tab %>% fmt_fraction(columns = num, accuracy = 1))
+  expect_no_error(tab %>% fmt_fraction(columns = num, accuracy = 1))
   expect_error(tab %>% fmt_fraction(columns = num, accuracy = FALSE))
 
   # Format the `num` column to fractions with the 'low' accuracy
@@ -409,17 +409,14 @@ test_that("The `fmt_fraction()` function works correctly", {
 
   # Expect a returned object of class `gt_tbl` with various
   # uses of `fmt_fraction()`
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>% fmt_fraction(columns = a) %>% as_raw_html()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>%
       fmt_fraction(columns = a, rows = 1:5) %>% as_raw_html()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>%
       fmt_fraction(columns = a, pattern = "a{x}b") %>% as_raw_html()
   )

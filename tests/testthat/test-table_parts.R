@@ -689,8 +689,7 @@ test_that("A gt table contains custom styles at the correct locations", {
   tbl_html %>%
     rvest::html_nodes("[class='gt_row gt_left gt_stub'][style='background-color: #D3D3D3;']") %>%
     rvest::html_text() %>%
-    length() %>%
-    expect_equal(31)
+    expect_length(31)
 
   # Expect that the `hp` column label's cell has a pink background
   tbl_html %>%
