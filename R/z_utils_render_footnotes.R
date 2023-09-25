@@ -38,7 +38,7 @@ resolve_footnotes_styles <- function(data, tbl_type) {
 
   if (tbl_type == "footnotes") {
     tbl <- dt_footnotes_get(data = data)
-  } else (tbl_type == "styles") {
+  } else {
     tbl <- dt_styles_get(data = data)
   }
 
