@@ -22,7 +22,7 @@
 #------------------------------------------------------------------------------#
 
 # This creates a nanoplot with equally-spaced y values
-generate_1d_line_plot <- function(
+generate_line_plot <- function(
     y_vals,
     y_ref_line = NULL,
     y_ref_area = NULL,
