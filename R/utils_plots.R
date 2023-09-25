@@ -425,6 +425,34 @@ generate_1d_line_plot <- function(
     data_path_tags <- paste(data_path_tags, collapse = "\n")
   }
 
+  if (show_data_line && line_type == "straight") {
+
+    data_path_tags <- c()
+
+    for (i in seq_len(n_segments)) {
+
+      line_x <- data_x_points[start_data_y_points[i]:end_data_y_points[i]]
+      line_y <- data_y_points[start_data_y_points[i]:end_data_y_points[i]]
+
+      data_path_tags_i <-
+        paste0(
+          "<polyline ",
+          "points=\"",
+          paste(paste0(line_x, ",", line_y), collapse = " "),
+          "\" ",
+          "stroke=\"", data_line_stroke_color, "\" ",
+          "stroke-width=\"", data_line_stroke_width, "\" ",
+          "fill=\"none\"",
+          ">",
+          "</polyline>"
+        )
+
+      data_path_tags <- c(data_path_tags, data_path_tags_i)
+    }
+
+    data_path_tags <- paste(data_path_tags, collapse = "\n")
+  }
+
   #
   # Generate data points
   #
