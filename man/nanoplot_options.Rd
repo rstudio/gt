@@ -9,6 +9,7 @@ nanoplot_options(
   data_point_stroke_color = NULL,
   data_point_stroke_width = NULL,
   data_point_fill_color = NULL,
+  data_line_type = NULL,
   data_line_stroke_color = NULL,
   data_line_stroke_width = NULL,
   vertical_guide_stroke_color = NULL,
@@ -55,6 +56,14 @@ This can be changed for all data points by providing a different color
 to \code{data_point_fill_color}. And, a vector of different colors can be
 supplied so long as the length is equal to the number of data points; the
 fill color values will be applied in order of left to right.}
+
+\item{data_line_type}{\emph{Type of data line: curved or straight}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+This can accept either \code{"curved"} or \code{"straight"}. Curved lines are
+recommended when the nanoplot has less than 30 points and data points are
+evenly spaced. In most other cases, straight lines might present better.}
 
 \item{data_line_stroke_color}{\emph{Color of the data line}
 
