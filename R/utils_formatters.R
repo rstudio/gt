@@ -117,8 +117,8 @@ validate_currency <- function(currency) {
   ) {
     cli::cli_abort(c(
       "The supplied `currency` is not available in the list of supported currencies.",
-      "*" = "Use the {.fun [info_currencies](gt::info_currencies)}` function to see which currencies can be used.",
-      "*" = "See {.help [fmt_currency](gt::fmt_currency)} to better understand which input types are valid."
+      "*" = "Use the {.help [{.fn info_currencies}](gt::info_currencies)} function to see which currencies can be used.",
+      "*" = "See {.help [{.fn fmt_currency}](gt::fmt_currency)} to better understand which input types are valid."
     ))
   }
 }
