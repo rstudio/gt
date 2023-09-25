@@ -2467,7 +2467,7 @@ cols_nanoplot <- function(
   # Get the internal data table
   data_tbl <- dt_data_get(data = data)
 
-  data_vals_plot <-
+  data_vals_plot_y <-
     generate_data_vals_list(
       data_tbl = data_tbl,
       resolved_columns = resolved_columns,
@@ -2500,15 +2500,22 @@ cols_nanoplot <- function(
   # Initialize vector that will contain the nanoplots
   nanoplots <- c()
 
-  for (i in seq_along(data_vals_plot)) {
+  for (i in seq_along(data_vals_plot_y)) {
 
-    data_vals_plot_i <- data_vals_plot[i][[1]]
+    data_vals_plot_y_i <- data_vals_plot_y[i][[1]]
+
+    if (!is.null(data_vals_plot_x)) {
+      data_vals_plot_x_i <- data_vals_plot_x[i][[1]]
+    } else {
+      data_vals_plot_x_i <- NULL
+    }
 
     data_plot_i <-
       generate_1d_line_plot(
-        y_vals = data_vals_plot_i,
+        y_vals = data_vals_plot_y_i,
         y_ref_line = reference_line,
         y_ref_area = reference_area,
+        x_vals = data_vals_plot_x_i,
         missing_vals = missing_vals,
         line_type = "curved",
         currency = currency,
