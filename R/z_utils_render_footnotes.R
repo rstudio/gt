@@ -35,9 +35,10 @@ resolve_footnotes_styles <- function(data, tbl_type) {
   footnote_marks <- dt_options_get_value(data = data, option = "footnotes_marks")
 
   rlang::arg_match0(tbl_type, c("footnotes", "styles"))
+
   if (tbl_type == "footnotes") {
     tbl <- dt_footnotes_get(data = data)
-  } else if (tbl_type == "styles") {
+  } else (tbl_type == "styles") {
     tbl <- dt_styles_get(data = data)
   }
 
