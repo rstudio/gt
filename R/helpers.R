@@ -656,6 +656,19 @@ currency <- function(
 #'   available. It will be shown in the default case but can be hidden by using
 #'   `show_reference_area = FALSE`.
 #'
+#' @param currency *Define values as currencies of a specific type*
+#'
+#'   `scalar<character>|obj:<gt_currency>` // *default:* `NULL` (`optional`)
+#'
+#'   If the values are to be displayed as currency values, supply either: (1) a
+#'   3-letter currency code (e.g., `"USD"` for U.S. Dollars, `"EUR"` for the
+#'   Euro currency), (2) a common currency name (e.g., `"dollar"`, `"pound"`,
+#'   `"yen"`, etc.), or (3) an invocation of the [currency()] helper function
+#'   for specifying a custom currency (where the string could vary across output
+#'   contexts). Use [info_currencies()] to get an information table with all of
+#'   the valid currency codes, and examples of each, for the first two cases.
+#'   Unless otherwise specified, the `"USD"` currency will be used.
+#'
 #' @return A list object of class `nanoplot_options`.
 #'
 #' @family helper functions
@@ -681,7 +694,8 @@ nanoplot_options <- function(
     show_data_area = NULL,
     show_vertical_guides = NULL,
     show_reference_line = NULL,
-    show_reference_area = NULL
+    show_reference_area = NULL,
+    currency = NULL
 ) {
 
   if (is.null(data_point_radius)) {
@@ -729,6 +743,9 @@ nanoplot_options <- function(
   if (is.null(show_reference_area)) {
     show_reference_area <- TRUE
   }
+  if (is.null(currency)) {
+    currency <- "USD"
+  }
 
   nanoplot_options_list <-
     list(
@@ -746,7 +763,8 @@ nanoplot_options <- function(
       show_data_area = show_data_area,
       show_vertical_guides = show_vertical_guides,
       show_reference_line = show_reference_line,
-      show_reference_area = show_reference_area
+      show_reference_area = show_reference_area,
+      currency = currency
     )
 
   class(nanoplot_options_list) <- "nanoplot_options"
