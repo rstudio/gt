@@ -54,6 +54,13 @@ select helper functions include \code{\link[=starts_with]{starts_with()}}, \code
 We can also use expressions to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
+\item{type}{\emph{The nanoplot type}
+
+\verb{singl-kw:[line|bar]} // \emph{default:} \code{"line"}
+
+Nanoplots can either take the form of a line plot (using \code{"line"}) or a bar
+plot (with \code{"bar"}).}
+
 \item{missing_vals}{\emph{Treatment of missing values}
 
 \verb{singl-kw:[gap|zero|remove]} // \emph{default:} \code{"gap"}
