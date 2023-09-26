@@ -98,6 +98,19 @@ generate_line_plot <- function(
       ))
     }
 
+    # Handle missing values in `x_vals` through removal (i.e., missing
+    # values in `x_vals` means removal of positional values from both
+    # `x_vals` and `y_vals`)
+    if (anyNA(x_vals)) {
+
+      # Determine which values from `x_vals` are non-missing values
+      x_vals_non_missing <- !is.na(x_vals)
+
+      # Retain only `x_vals_non_missing` from `x_vals` and `y_vals`
+      x_vals <- x_vals[x_vals_non_missing]
+      y_vals <- y_vals[x_vals_non_missing]
+    }
+
     # If `x` values are present, we cannot use a curved line so
     # we'll force the use of the 'straight' line type
     line_type <- "straight"
@@ -119,10 +132,12 @@ generate_line_plot <- function(
 
     if (!is.null(x_vals)) {
 
-      # Remove `x` values where `y` is missing
+      # Remove any values from `x_vals` wherever NAs found in `y_vals`
       x_vals <- x_vals[y_vals_non_missing]
     }
   }
+
+  num_y_vals <- length(y_vals)
 
   # Get a vector of data points that are missing and are to be treated as gaps
   if (missing_vals == "gap") {
@@ -139,7 +154,6 @@ generate_line_plot <- function(
       show_ref_area <- FALSE
     }
   }
-
 
   # Determine the width of the data plot area; for plots where `x_vals`
   # are available, we'll use a fixed width of `500` (px), and for plots
@@ -882,7 +896,6 @@ normalize_option_vector <- function(vec, num_y_vals) {
 }
 
 normalize_vals <- function(x) {
-
   x_missing <- which(is.na(x))
   mean_x <- mean(x, na.rm = TRUE)
   x[x_missing] <- mean_x
