@@ -13,7 +13,6 @@ cols_nanoplot(
   columns_x = NULL,
   reference_line = NULL,
   reference_area = NULL,
-  currency = NULL,
   new_col_name = NULL,
   new_col_label = NULL,
   before = NULL,
@@ -103,18 +102,6 @@ expected for \code{reference_line}, which is either a static numeric value or
 one of the following keywords for the generation of the value: (1)
 \code{"mean"}, (2) \code{"median"}, (3) \code{"min"}, (4) \code{"max"}, (5) \code{"first"}, or (6)
 \code{"last"}. Input can either be a vector or list with two elements.}
-
-\item{currency}{\emph{Define values as currencies of a specific type}
-
-\verb{scalar<character>|obj:<gt_currency>} // \emph{default:} \code{NULL} (\code{optional})
-
-If the values are to be displayed as currency values, supply either: (1) a
-3-letter currency code (e.g., \code{"USD"} for U.S. Dollars, \code{"EUR"} for the
-Euro currency), (2) a common currency name (e.g., \code{"dollar"}, \code{"pound"},
-\code{"yen"}, etc.), or (3) an invocation of the \code{\link[=currency]{currency()}} helper function
-for specifying a custom currency (where the string could vary across output
-contexts). Use \code{\link[=info_currencies]{info_currencies()}} to get an information table with all of
-the valid currency codes, and examples of each, for the first two cases.}
 
 \item{new_col_name}{\emph{Column name for the new column containing the plots}
 
