@@ -73,7 +73,18 @@ generate_line_plot <- function(
     y_vals[is.na(y_vals)] <- 0
   }
   if (missing_vals == "remove") {
-    y_vals <- y_vals[!is.na(y_vals)]
+
+    # Determine which values from `y` are missing
+    y_vals_non_missing <- !is.na(y_vals)
+
+    # Keep only the non-missing `y` values
+    y_vals <- y_vals[y_vals_non_missing]
+
+    if (!is.null(x_vals)) {
+
+      # Remove `x` values where `y` is missing
+      x_vals <- x_vals[y_vals_non_missing]
+    }
   }
 
   # Get a vector of data points that are missing and are to be treated as gaps
@@ -95,26 +106,38 @@ generate_line_plot <- function(
   # Get the number of data points
   num_y_vals <- length(y_vals)
 
-  # Obtain a sensible, fixed interval between data points in px
-  x_d <-
-    dplyr::case_when(
-      num_y_vals <= 20 ~ 50,
-      num_y_vals <= 30 ~ 40,
-      num_y_vals <= 40 ~ 30,
-      num_y_vals <= 50 ~ 25,
-      .default = 20
-    )
+  if (!is.null(x_vals)) {
+
+    num_x_vals <- length(x_vals)
+
+    data_x_width <- 500
+
+    line_type <- "straight"
+
+  } else {
+
+    # Obtain a sensible, fixed interval between data points in px
+    x_d <-
+      dplyr::case_when(
+        num_y_vals <= 20 ~ 50,
+        num_y_vals <= 30 ~ 40,
+        num_y_vals <= 40 ~ 30,
+        num_y_vals <= 50 ~ 25,
+        .default = 20
+      )
+
+    data_x_width <- num_y_vals * x_d
+  }
 
   # Define the top-left of the plot area
   left_x <- 0
   top_y <- 0
 
   # Define the safe zone distance from top/bottom and left/right edges
-  safe_y_d <- 10
+  safe_y_d <- 15
   safe_x_d <- 50
 
-  # Define the width and height of the plot area that bounds the data points
-  data_x_width <- num_y_vals * x_d
+  # Define the height of the plot area that bounds the data points
   data_y_height <- 100
 
   # Determine the bottom-right of the plot area based on the quantity of data
@@ -217,7 +240,7 @@ generate_line_plot <- function(
 
     # Scale to proportional values
     y_proportions_w_ref_line_area <-
-      normalize_y_vals(c(y_vals, y_ref_line[1], y_ref_area_l, y_ref_area_u))
+      normalize_vals(c(y_vals, y_ref_line[1], y_ref_area_l, y_ref_area_u))
     y_proportion_ref_line <- y_proportions_w_ref_line_area[-(1:num_y_vals)][1]
     y_proportions_ref_area_l <- y_proportions_w_ref_line_area[-(1:num_y_vals)][2]
     y_proportions_ref_area_u <- y_proportions_w_ref_line_area[-(1:num_y_vals)][3]
@@ -255,7 +278,7 @@ generate_line_plot <- function(
     }
 
     # Scale to proportional values
-    y_proportions_w_ref_line <- normalize_y_vals(c(y_vals, y_ref_line[1]))
+    y_proportions_w_ref_line <- normalize_vals(c(y_vals, y_ref_line[1]))
     y_proportion_ref_line <- y_proportions_w_ref_line[length(y_proportions_w_ref_line)]
     y_proportions <- y_proportions_w_ref_line[-length(y_proportions_w_ref_line)]
 
@@ -319,7 +342,7 @@ generate_line_plot <- function(
     }
 
     # Scale to proportional values
-    y_proportions_w_ref_area <- normalize_y_vals(c(y_vals, y_ref_area_l, y_ref_area_u))
+    y_proportions_w_ref_area <- normalize_vals(c(y_vals, y_ref_area_l, y_ref_area_u))
     y_proportions_ref_area_l <- y_proportions_w_ref_area[-(1:num_y_vals)][1]
     y_proportions_ref_area_u <- y_proportions_w_ref_area[-(1:num_y_vals)][2]
     y_proportions <- y_proportions_w_ref_area[(1:num_y_vals)]
@@ -332,10 +355,20 @@ generate_line_plot <- function(
 
     # Case where there is no reference line or reference area
 
-    y_proportions <- normalize_y_vals(y_vals)
+    y_proportions <- normalize_vals(y_vals)
   }
 
-  x_proportions <- seq(0, 1, length.out = num_y_vals)
+  # If x values are present then normalize them between [0, 1]; if
+  # there are no x values, generate equally-spaced x values according
+  # to the number of y values
+  if (!is.null(x_vals)) {
+
+    x_proportions <- normalize_vals(x_vals)
+
+  } else {
+
+    x_proportions <- seq(0, 1, length.out = num_y_vals)
+  }
 
   # Create normalized (and inverted for SVG) data `x` and `y` values
   data_y_points <- safe_y_d + ((1 - y_proportions) * data_y_height)
@@ -743,8 +776,8 @@ generate_line_plot <- function(
       area_path_i <-
         c(
           area_path_string,
-          paste0(area_x[length(area_x)], ",", bottom_y),
-          paste0(area_x[1], ",", bottom_y)
+          paste0(area_x[length(area_x)], ",", bottom_y - safe_y_d + data_point_radius),
+          paste0(area_x[1], ",", bottom_y - safe_y_d + data_point_radius)
         )
 
       area_path_i <- paste0("M", paste(area_path_i, collapse = ","), "Z")
@@ -812,7 +845,7 @@ normalize_option_vector <- function(vec, num_y_vals) {
   vec
 }
 
-normalize_y_vals <- function(x) {
+normalize_vals <- function(x) {
 
   x_missing <- which(is.na(x))
   mean_x <- mean(x, na.rm = TRUE)
