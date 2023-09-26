@@ -2233,18 +2233,6 @@ cols_add <- function(
 #'   `"mean"`, (2) `"median"`, (3) `"min"`, (4) `"max"`, (5) `"first"`, or (6)
 #'   `"last"`. Input can either be a vector or list with two elements.
 #'
-#' @param currency *Define values as currencies of a specific type*
-#'
-#'   `scalar<character>|obj:<gt_currency>` // *default:* `NULL` (`optional`)
-#'
-#'   If the values are to be displayed as currency values, supply either: (1) a
-#'   3-letter currency code (e.g., `"USD"` for U.S. Dollars, `"EUR"` for the
-#'   Euro currency), (2) a common currency name (e.g., `"dollar"`, `"pound"`,
-#'   `"yen"`, etc.), or (3) an invocation of the [currency()] helper function
-#'   for specifying a custom currency (where the string could vary across output
-#'   contexts). Use [info_currencies()] to get an information table with all of
-#'   the valid currency codes, and examples of each, for the first two cases.
-#'
 #' @param new_col_name *Column name for the new column containing the plots*
 #'
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
@@ -2430,7 +2418,6 @@ cols_nanoplot <- function(
     columns_x = NULL,
     reference_line = NULL,
     reference_area = NULL,
-    currency = NULL,
     new_col_name = NULL,
     new_col_label = NULL,
     before = NULL,
@@ -2525,7 +2512,7 @@ cols_nanoplot <- function(
         x_vals = data_vals_plot_x_i,
         missing_vals = missing_vals,
         line_type = options_plots$data_line_type,
-        currency = currency,
+        currency = options_plots$currency,
         data_point_radius = options_plots$data_point_radius,
         data_point_stroke_color = options_plots$data_point_stroke_color,
         data_point_stroke_width = options_plots$data_point_stroke_width,
