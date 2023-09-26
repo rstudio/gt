@@ -2183,6 +2183,13 @@ cols_add <- function(
 #'   We can also use expressions to filter down to the rows we need (e.g.,
 #'   `[colname_1] > 100 & [colname_2] < 50`).
 #'
+#' @param type *The nanoplot type*
+#'
+#'   `singl-kw:[line|bar]` // *default:* `"line"`
+#'
+#'   Nanoplots can either take the form of a line plot (using `"line"`) or a bar
+#'   plot (with `"bar"`).
+#'
 #' @param missing_vals *Treatment of missing values*
 #'
 #'   `singl-kw:[gap|zero|remove]` // *default:* `"gap"`
