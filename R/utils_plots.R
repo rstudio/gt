@@ -60,6 +60,8 @@ generate_line_plot <- function(
   ref_area_tags <- NULL
   g_guide_tags <- NULL
 
+  # If the number of `y` values is zero or an empty string,
+  # return an empty string
   if (length(y_vals) == 0) {
     return("")
   }
@@ -67,11 +69,46 @@ generate_line_plot <- function(
     return("")
   }
 
+  # Get the number of data points for `y`
+  num_y_vals <- length(y_vals)
+
+  # Handle case where `x_vals` exists (i.e., is not `NULL`)
+  if (!is.null(x_vals)) {
+
+    # If the number of `x` values is zero or an empty string,
+    # return an empty string
+    if (length(x_vals) == 0) {
+      return("")
+    }
+    if (all(is.na(x_vals))) {
+      return("")
+    }
+
+    # Get the number of data points for `x`
+    num_x_vals <- length(x_vals)
+
+    # Ensure that, if there are `x` values, the number of `x`
+    # and `y` values matches
+    if (num_x_vals != num_y_vals) {
+
+      cli::cli_abort(c(
+        "The number of `x` and `y` values must match.",
+        "*" = "The `x` value length is: {num_x_vals}",
+        "*" = "The `y` value length is: {num_y_vals}"
+      ))
+    }
+
+    # If `x` values are present, we cannot use a curved line so
+    # we'll force the use of the 'straight' line type
+    line_type <- "straight"
+  }
+
   # For the `missing_vals` options of 'zero' or 'remove', either replace NAs
   # with `0` or remove NAs entirely
   if (missing_vals == "zero") {
     y_vals[is.na(y_vals)] <- 0
   }
+
   if (missing_vals == "remove") {
 
     # Determine which values from `y` are missing
@@ -103,16 +140,15 @@ generate_line_plot <- function(
     }
   }
 
-  # Get the number of data points
-  num_y_vals <- length(y_vals)
 
+  # Determine the width of the data plot area; for plots where `x_vals`
+  # are available, we'll use a fixed width of `500` (px), and for plots
+  # where `x_vals` aren't present, we'll adjust the final width based
+  # on the fixed interval between data points (this is dependent on the
+  # number of data points)
   if (!is.null(x_vals)) {
 
-    num_x_vals <- length(x_vals)
-
     data_x_width <- 500
-
-    line_type <- "straight"
 
   } else {
 
