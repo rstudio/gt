@@ -19,7 +19,8 @@ nanoplot_options(
   show_data_area = NULL,
   show_vertical_guides = NULL,
   show_reference_line = NULL,
-  show_reference_area = NULL
+  show_reference_area = NULL,
+  currency = NULL
 )
 }
 \arguments{
@@ -143,6 +144,19 @@ by default but can be hidden by setting \code{show_reference_line} to \code{FALS
 The reference area appears at the very bottom of the layer stack, if it is
 available. It will be shown in the default case but can be hidden by using
 \code{show_reference_area = FALSE}.}
+
+\item{currency}{\emph{Define values as currencies of a specific type}
+
+\verb{scalar<character>|obj:<gt_currency>} // \emph{default:} \code{NULL} (\code{optional})
+
+If the values are to be displayed as currency values, supply either: (1) a
+3-letter currency code (e.g., \code{"USD"} for U.S. Dollars, \code{"EUR"} for the
+Euro currency), (2) a common currency name (e.g., \code{"dollar"}, \code{"pound"},
+\code{"yen"}, etc.), or (3) an invocation of the \code{\link[=currency]{currency()}} helper function
+for specifying a custom currency (where the string could vary across output
+contexts). Use \code{\link[=info_currencies]{info_currencies()}} to get an information table with all of
+the valid currency codes, and examples of each, for the first two cases.
+Unless otherwise specified, the \code{"USD"} currency will be used.}
 }
 \value{
 A list object of class \code{nanoplot_options}.
