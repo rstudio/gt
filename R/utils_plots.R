@@ -55,6 +55,7 @@ generate_nanoplot <- function(
 
   # Initialize several local `*_tags` variables with `NULL`
   circle_tags <- NULL
+  bar_tags <- NULL
   data_path_tags <- NULL
   area_path_tags <- NULL
   ref_line_tags <- NULL
@@ -465,10 +466,14 @@ generate_nanoplot <- function(
   n_segments <- length(start_data_y_points)
 
   #
-  # Generate curved data line
+  # Generate a curved data line
   #
 
-  if (show_data_line && line_type == "curved") {
+  if (
+    plot_type == "line" &&
+    show_data_line &&
+    line_type == "curved"
+  ) {
 
     data_path_tags <- c()
 
@@ -509,7 +514,11 @@ generate_nanoplot <- function(
     data_path_tags <- paste(data_path_tags, collapse = "\n")
   }
 
-  if (show_data_line && line_type == "straight") {
+  if (
+    plot_type == "line" &&
+    show_data_line &&
+    line_type == "straight"
+  ) {
 
     data_path_tags <- c()
 
@@ -541,7 +550,10 @@ generate_nanoplot <- function(
   # Generate data points
   #
 
-  if (show_data_points) {
+  if (
+    plot_type == "line" &&
+    show_data_points
+  ) {
 
     circle_strings <- c()
 
@@ -596,6 +608,68 @@ generate_nanoplot <- function(
     }
 
     circle_tags <- paste(circle_strings, collapse = "\n")
+  }
+
+  #
+  # Generate data bars
+  #
+
+  if (plot_type == "bar") {
+
+    bar_strings <- c()
+
+    for (i in seq_along(data_x_points)) {
+
+      data_point_radius_i <- data_point_radius[i]
+      data_bar_stroke_color_i <- data_point_stroke_color[i]
+      data_bar_stroke_width_i <- data_point_stroke_width[i]
+      data_bar_fill_color_i <- data_point_fill_color[i]
+
+      if (is.na(data_y_points[i])) {
+
+        if (missing_vals == "gap") {
+
+          # Create a symbol that should denote that a
+          # missing value is present
+          bar_strings_i <-
+            paste0(
+              "<circle ",
+              "cx=\"", data_x_points[i], "\" ",
+              "cy=\"", safe_y_d + (data_y_height / 2), "\" ",
+              "r=\"", data_point_radius_i + (data_point_radius_i / 2), "\" ",
+              "stroke=\"", "red", "\" ",
+              "stroke-width=\"", data_bar_stroke_width_i, "\" ",
+              "fill=\"", "white", "\" ",
+              ">",
+              "</circle>",
+              ""
+            )
+
+        } else {
+          next
+        }
+
+      } else {
+
+        bar_strings_i <-
+          paste0(
+            "<rect ",
+            "x=\"", data_x_points[i] - 20, "\" ",
+            "y=\"", data_y_points[i], "\" ",
+            "width=\"", 40, "\" ",
+            "height=\"", data_y_height - data_y_points[i] + safe_y_d, "\" ",
+            "stroke=\"", data_bar_stroke_color_i, "\" ",
+            "stroke-width=\"", data_bar_stroke_width_i, "\" ",
+            "fill=\"", data_bar_fill_color_i, "\" ",
+            ">",
+            "</rect>"
+          )
+      }
+
+      bar_strings <- c(bar_strings, bar_strings_i)
+    }
+
+    bar_tags <- paste(bar_strings, collapse = "\n")
   }
 
   #
@@ -751,6 +825,7 @@ generate_nanoplot <- function(
           "stroke-width: 0.15em; ",
           "paint-order: stroke; ",
           "stroke-linejoin: round; ",
+          "cursor: default; ",
           "} ",
           ".vert-line:hover rect { ",
           "fill: ", vertical_guide_stroke_color, "; ",
@@ -807,7 +882,10 @@ generate_nanoplot <- function(
   # Optionally create an area path adjacent to the data points and data line
   #
 
-  if (show_data_area) {
+  if (
+    plot_type == "line" &&
+    show_data_area
+  ) {
 
     area_path_tags <- c()
 
@@ -873,6 +951,7 @@ generate_nanoplot <- function(
         data_path_tags,
         ref_line_tags,
         circle_tags,
+        bar_tags,
         g_guide_tags,
         "</svg>"
       ),
