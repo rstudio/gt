@@ -2183,7 +2183,7 @@ cols_add <- function(
 #'   We can also use expressions to filter down to the rows we need (e.g.,
 #'   `[colname_1] > 100 & [colname_2] < 50`).
 #'
-#' @param type *The nanoplot type*
+#' @param plot_type *The type of nanoplot to display*
 #'
 #'   `singl-kw:[line|bar]` // *default:* `"line"`
 #'
@@ -2413,7 +2413,7 @@ cols_nanoplot <- function(
     data,
     columns,
     rows = everything(),
-    type = c("line", "bar"),
+    plot_type = c("line", "bar"),
     missing_vals = c("gap", "zero", "remove"),
     columns_x = NULL,
     reference_line = NULL,
@@ -2431,7 +2431,7 @@ cols_nanoplot <- function(
 
   # Ensure that arguments are matched
   missing_vals <- rlang::arg_match(missing_vals)
-  type <- rlang::arg_match(type)
+  plot_type <- rlang::arg_match(plot_type)
 
   #
   # Resolution of columns and rows as character vectors
@@ -2505,12 +2505,13 @@ cols_nanoplot <- function(
     }
 
     data_plot_i <-
-      generate_line_plot(
+      generate_nanoplot(
         y_vals = data_vals_plot_y_i,
         y_ref_line = reference_line,
         y_ref_area = reference_area,
         x_vals = data_vals_plot_x_i,
         missing_vals = missing_vals,
+        plot_type = plot_type,
         line_type = options_plots$data_line_type,
         currency = options_plots$currency,
         data_point_radius = options_plots$data_point_radius,
