@@ -21,13 +21,14 @@
 #
 #------------------------------------------------------------------------------#
 
-# This creates a nanoplot with equally-spaced y values
-generate_line_plot <- function(
+# This creates a nanoplot
+generate_nanoplot <- function(
     y_vals,
     y_ref_line = NULL,
     y_ref_area = NULL,
     x_vals = NULL,
     missing_vals = c("gap", "zero", "remove"),
+    plot_type = c("line", "bar"),
     line_type = c("curved", "straight"),
     currency = NULL,
     data_point_radius = 10,
