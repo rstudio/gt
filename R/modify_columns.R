@@ -2188,7 +2188,12 @@ cols_add <- function(
 #'   `singl-kw:[line|bar]` // *default:* `"line"`
 #'
 #'   Nanoplots can either take the form of a line plot (using `"line"`) or a bar
-#'   plot (with `"bar"`).
+#'   plot (with `"bar"`). A line plot, by default, contains layers for a data
+#'   line, data points, and a data area. Each of these can be deactivated by
+#'   using [nanoplot_options()]. With a bar plot, the always visible layer is
+#'   that of the data bars. Furthermore, a line plot can optionally take in *x*
+#'   values through the `columns_x` argument whereas a bar plot ignores any data
+#'   representing the independant variable.
 #'
 #' @param missing_vals *Treatment of missing values*
 #'
@@ -2205,12 +2210,13 @@ cols_add <- function(
 #'   `<column-targeting expression>` // *default:* `NULL` (`optional`)
 #'
 #'   We can optionally obtain data for the independent variable (i.e., the
-#'   *x*-axis data) if supplying columns in `columns_x`. Can either be a series
-#'   of column names provided in [c()], a vector of column indices, or a select
-#'   helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()]. Data collected from the columns will be
-#'   concatenated together in the order of resolution.
+#'   *x*-axis data) if specifying columns in `columns_x`. This is only for the
+#'   `"line"` type of plot (set via the `plot_type` argument). We can supply
+#'   either be a series of column names provided in [c()], a vector of column
+#'   indices, or a select helper function. Examples of select helper functions
+#'   include [starts_with()], [ends_with()], [contains()], [matches()],
+#'   [one_of()], [num_range()], and [everything()]. Data collected from the
+#'   columns will be concatenated together in the order of resolution.
 #'
 #' @param reference_line *Add a reference line*
 #'
