@@ -58,7 +58,12 @@ We can also use expressions to filter down to the rows we need (e.g.,
 \verb{singl-kw:[line|bar]} // \emph{default:} \code{"line"}
 
 Nanoplots can either take the form of a line plot (using \code{"line"}) or a bar
-plot (with \code{"bar"}).}
+plot (with \code{"bar"}). A line plot, by default, contains layers for a data
+line, data points, and a data area. Each of these can be deactivated by
+using \code{\link[=nanoplot_options]{nanoplot_options()}}. With a bar plot, the always visible layer is
+that of the data bars. Furthermore, a line plot can optionally take in \emph{x}
+values through the \code{columns_x} argument whereas a bar plot ignores any data
+representing the independant variable.}
 
 \item{missing_vals}{\emph{Treatment of missing values}
 
@@ -75,12 +80,13 @@ will remove any incoming \code{NA} values.}
 \verb{<column-targeting expression>} // \emph{default:} \code{NULL} (\code{optional})
 
 We can optionally obtain data for the independent variable (i.e., the
-\emph{x}-axis data) if supplying columns in \code{columns_x}. Can either be a series
-of column names provided in \code{\link[=c]{c()}}, a vector of column indices, or a select
-helper function. Examples of select helper functions include
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
-\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. Data collected from the columns will be
-concatenated together in the order of resolution.}
+\emph{x}-axis data) if specifying columns in \code{columns_x}. This is only for the
+\code{"line"} type of plot (set via the \code{plot_type} argument). We can supply
+either be a series of column names provided in \code{\link[=c]{c()}}, a vector of column
+indices, or a select helper function. Examples of select helper functions
+include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. Data collected from the
+columns will be concatenated together in the order of resolution.}
 
 \item{reference_line}{\emph{Add a reference line}
 
