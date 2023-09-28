@@ -35,11 +35,11 @@ generate_nanoplot <- function(
     data_point_stroke_color = "#FFFFFF",
     data_point_stroke_width = 4,
     data_point_fill_color = "#FF0000",
+    data_line_stroke_color = "#4682B4",
+    data_line_stroke_width = 8,
     data_bar_stroke_color = "#3290CC",
     data_bar_stroke_width = 4,
     data_bar_fill_color = "#3FB5FF",
-    data_line_stroke_color = "#4682B4",
-    data_line_stroke_width = 8,
     vertical_guide_stroke_color = "#911EB4",
     vertical_guide_stroke_width = 12,
     show_data_points = TRUE,
@@ -48,7 +48,7 @@ generate_nanoplot <- function(
     show_ref_line = FALSE,
     show_ref_area = FALSE,
     show_vertical_guides = TRUE,
-    show_y_axis_values = TRUE,
+    show_y_axis_guide = TRUE,
     svg_height = "1.5em",
     view = FALSE
 ) {
@@ -786,10 +786,10 @@ generate_nanoplot <- function(
   }
 
   #
-  # Generate y-axis min/max guide
+  # Generate y-axis guide
   #
 
-  if (show_y_axis_values) {
+  if (show_y_axis_guide) {
 
     g_y_axis_strings <- c()
 
