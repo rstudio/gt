@@ -45,6 +45,7 @@ generate_nanoplot <- function(
     show_ref_line = FALSE,
     show_ref_area = FALSE,
     show_vertical_guides = TRUE,
+    show_y_axis_values = TRUE,
     svg_height = "1.5em",
     view = FALSE
 ) {
@@ -292,7 +293,15 @@ generate_nanoplot <- function(
 
     # Scale to proportional values
     y_proportions_w_ref_line_area <-
-      normalize_vals(c(y_vals, y_ref_line[1], y_ref_area_l, y_ref_area_u))
+      normalize_vals(
+        c(
+          y_vals,
+          y_ref_line[1],
+          y_ref_area_l,
+          y_ref_area_u
+        )
+      )
+
     y_proportion_ref_line <- y_proportions_w_ref_line_area[-(1:num_y_vals)][1]
     y_proportions_ref_area_l <- y_proportions_w_ref_line_area[-(1:num_y_vals)][2]
     y_proportions_ref_area_u <- y_proportions_w_ref_line_area[-(1:num_y_vals)][3]
@@ -330,7 +339,14 @@ generate_nanoplot <- function(
     }
 
     # Scale to proportional values
-    y_proportions_w_ref_line <- normalize_vals(c(y_vals, y_ref_line[1]))
+    y_proportions_w_ref_line <-
+      normalize_vals(
+        c(
+          y_vals,
+          y_ref_line[1]
+        )
+      )
+
     y_proportion_ref_line <- y_proportions_w_ref_line[length(y_proportions_w_ref_line)]
     y_proportions <- y_proportions_w_ref_line[-length(y_proportions_w_ref_line)]
 
@@ -394,7 +410,15 @@ generate_nanoplot <- function(
     }
 
     # Scale to proportional values
-    y_proportions_w_ref_area <- normalize_vals(c(y_vals, y_ref_area_l, y_ref_area_u))
+    y_proportions_w_ref_area <-
+      normalize_vals(
+        c(
+          y_vals,
+          y_ref_area_l,
+          y_ref_area_u
+        )
+      )
+
     y_proportions_ref_area_l <- y_proportions_w_ref_area[-(1:num_y_vals)][1]
     y_proportions_ref_area_u <- y_proportions_w_ref_area[-(1:num_y_vals)][2]
     y_proportions <- y_proportions_w_ref_area[(1:num_y_vals)]
@@ -756,6 +780,79 @@ generate_nanoplot <- function(
   }
 
   #
+  # Generate y-axis min/max guide
+  #
+
+  if (show_y_axis_values) {
+
+    g_y_axis_strings <- c()
+
+    rect_tag <-
+      paste0(
+        "<rect ",
+        "x=\"", left_x, "\" ",
+        "y=\"", top_y, "\" ",
+        "width=\"", safe_x_d + 20, "\" ",
+        "height=\"", bottom_y, "\" ",
+        "stroke=\"transparent\" ",
+        "stroke-width=\"0\" ",
+        "fill=\"transparent\"",
+        ">",
+        "</rect>"
+      )
+
+    y_value_max <- max(data_y_points, na.rm = TRUE)
+    y_value_min <- min(data_y_points, na.rm = TRUE)
+
+    y_value_max_label <-
+      format_number_compactly(
+        max(y_vals, na.rm = TRUE),
+        currency = currency
+      )
+
+    y_value_min_label <-
+      format_number_compactly(
+        min(y_vals, na.rm = TRUE),
+        currency = currency
+      )
+
+    text_strings_max <-
+      paste0(
+        "<text ",
+        "x=\"", left_x, "\" ",
+        "y=\"", y_value_max + 7.5, "\" ",
+        "fill=\"transparent\" ",
+        "stroke=\"transparent\" ",
+        "font-size=\"25\"",
+        ">",
+        y_value_max_label,
+        "</text>"
+      )
+
+    text_strings_min <-
+      paste0(
+        "<text ",
+        "x=\"", left_x, "\" ",
+        "y=\"", y_value_min + 7.5, "\" ",
+        "fill=\"transparent\" ",
+        "stroke=\"transparent\" ",
+        "font-size=\"25\"",
+        ">",
+        y_value_min_label,
+        "</text>"
+      )
+
+    g_y_axis_tags <-
+      paste0(
+        "<g class=\"y-axis-line\">\n",
+        rect_tag, "\n",
+        text_strings_max, "\n",
+        text_strings_min,
+        "</g>"
+      )
+  }
+
+  #
   # Generate vertical data point guidelines
   #
 
@@ -814,7 +911,7 @@ generate_nanoplot <- function(
     g_guide_tags <- paste(g_guide_strings, collapse = "\n")
   }
 
-  # Generate style tag for vertical guidelines
+  # Generate style tag for vertical guidelines and y-axis
   svg_style <-
     paste(
       c(
@@ -834,6 +931,26 @@ generate_nanoplot <- function(
           "color: red; ",
           "} ",
           ".vert-line:hover text { ",
+          "stroke: white; ",
+          "fill: #212427; ",
+          "} ",
+          ".ref-line:hover rect { ",
+          "stroke: #FFFFFF60; ",
+          "} ",
+          ".ref-line:hover line { ",
+          "stroke: #FF0000; ",
+          "} ",
+          ".ref-line:hover text { ",
+          "stroke: white; ",
+          "fill: #212427; ",
+          "} ",
+          ".y-axis-line:hover rect { ",
+          "fill: #EDEDED; ",
+          "fill-opacity: 60%; ",
+          "stroke: #FFFFFF60; ",
+          "color: red; ",
+          "} ",
+          ".y-axis-line:hover text { ",
           "stroke: white; ",
           "fill: #212427; ",
           "} ",
@@ -952,6 +1069,7 @@ generate_nanoplot <- function(
         ref_line_tags,
         circle_tags,
         bar_tags,
+        g_y_axis_tags,
         g_guide_tags,
         "</svg>"
       ),
@@ -1168,6 +1286,7 @@ format_number_compactly <- function(val, currency) {
       val_formatted <-
         vec_fmt_scientific(
           val,
+          exp_style = "E",
           n_sigfig = n_sigfig,
           decimals = 1,
           output = "html"
