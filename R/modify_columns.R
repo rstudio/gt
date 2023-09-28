@@ -2524,11 +2524,11 @@ cols_nanoplot <- function(
         data_point_stroke_color = options_plots$data_point_stroke_color,
         data_point_stroke_width = options_plots$data_point_stroke_width,
         data_point_fill_color = options_plots$data_point_fill_color,
+        data_line_stroke_color = options_plots$data_line_stroke_color,
+        data_line_stroke_width = options_plots$data_line_stroke_width,
         data_bar_stroke_color = options_plots$data_bar_stroke_color,
         data_bar_stroke_width = options_plots$data_bar_stroke_width,
         data_bar_fill_color = options_plots$data_bar_fill_color,
-        data_line_stroke_color = options_plots$data_line_stroke_color,
-        data_line_stroke_width = options_plots$data_line_stroke_width,
         vertical_guide_stroke_color = options_plots$vertical_guide_stroke_color,
         vertical_guide_stroke_width = options_plots$vertical_guide_stroke_width,
         show_data_points = options_plots$show_data_points,
@@ -2537,6 +2537,7 @@ cols_nanoplot <- function(
         show_ref_line = options_plots$show_reference_line,
         show_ref_area = options_plots$show_reference_area,
         show_vertical_guides = options_plots$show_vertical_guides,
+        show_y_axis_guide = options_plots$show_y_axis_guide,
         svg_height = height
       )
 
