@@ -319,17 +319,14 @@ test_that("The `fmt_bytes()` function works correctly", {
 
   # Expect a returned object of class `gt_tbl` with various
   # uses of `fmt_bytes()`
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>% fmt_bytes(columns = a) %>% as_raw_html()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>%
       fmt_bytes(columns = a, rows = 1:5) %>% as_raw_html()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>%
       fmt_bytes(columns = a, pattern = "a{x}b", incl_space = FALSE) %>% as_raw_html()
   )
@@ -486,8 +483,8 @@ test_that("The `fmt_bytes()` function format to specified significant figures", 
   expect_error(tab %>% fmt_bytes(columns = num, n_sigfig = factor(3)))
 
   # Don't expect errors when using integers or doubles
-  expect_error(regexp = NA, tab %>% fmt_bytes(columns = num, n_sigfig = 2L))
-  expect_error(regexp = NA, tab %>% fmt_bytes(columns = num, n_sigfig = 2))
+  expect_no_error(tab %>% fmt_bytes(columns = num, n_sigfig = 2L))
+  expect_no_error(tab %>% fmt_bytes(columns = num, n_sigfig = 2))
 
   # Expect an error if `n_sigfig` is less than 1
   expect_error(tab %>% fmt_bytes(columns = num, n_sigfig = 0L))

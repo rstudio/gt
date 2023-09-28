@@ -1093,7 +1093,7 @@ generate_nanoplot <- function(
 normalize_option_vector <- function(vec, num_y_vals) {
 
   if (length(vec) != 1 && length(vec) != num_y_vals) {
-    stop("The length of every option must be `1` or the length of `y_vals`.")
+    cli::cli_abort("Every option must have either length 1 or `length(y_vals)`.")
   }
 
   if (length(vec) == 1) vec <- rep(vec, num_y_vals)
@@ -1148,9 +1148,7 @@ out_indices_from_vec <- function(x, cutoff = 3) {
 
 generate_ref_line_from_keyword <- function(vals, keyword) {
 
-  if (length(keyword) != 1) {
-    stop("The keyword length must be one.")
-  }
+  rlang::arg_match0(keyword, c("mean", "median", "min", "max", "first", "last"))
 
   if (!(keyword %in% c("mean", "median", "min", "max", "first", "last"))) {
     stop("A keyword for a reference line needs to be one of six valid options.")

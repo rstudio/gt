@@ -140,29 +140,17 @@ test_that("The `text_transform()` function works correctly", {
   transforms <- dt_transforms_get(data = tbl_html)
 
   # Expect two components to be held within `transforms`
-  transforms %>%
-    length() %>%
-    expect_equal(2)
+  transforms %>% expect_length(2)
 
   # Expect that each component of `transforms` has the names
   # `resolved` and `fn`
-  transforms[[1]] %>%
-    names() %>%
-    expect_equal(c("resolved", "fn"))
-
-  transforms[[2]] %>%
-    names() %>%
-    expect_equal(c("resolved", "fn"))
+  transforms[[1]] %>% expect_named(c("resolved", "fn"))
+  transforms[[2]] %>% expect_named(c("resolved", "fn"))
 
   # Expect that `resolved` subcomponent of `transforms` has the names
   # `columns` and `rows`
-  transforms[[1]]$resolved %>%
-    names() %>%
-    expect_equal(c("columns", "rows", "colnames"))
-
-  transforms[[2]]$resolved %>%
-    names() %>%
-    expect_equal(c("columns", "rows", "colnames"))
+  transforms[[1]]$resolved %>% expect_named(c("columns", "rows", "colnames"))
+  transforms[[2]]$resolved %>% expect_named(c("columns", "rows", "colnames"))
 
   # Expect that `resolved` subcomponent of `transforms` has the class
   # names and `resolved`, `cells_body`, `location_cells`
@@ -173,8 +161,8 @@ test_that("The `text_transform()` function works correctly", {
     expect_s3_class(c("resolved", "cells_body", "location_cells"))
 
   # Expect that `fn` subcomponent of `transforms` is a function
-  expect_equal(class(transforms[[1]]$fn), "function")
-  expect_equal(class(transforms[[2]]$fn), "function")
+  expect_true(is.function(transforms[[1]]$fn))
+  expect_true(is.function(transforms[[2]]$fn))
 
   # Define a function that converts vector of `x` to numeric
   # and rounds values to a specific multiple

@@ -69,14 +69,14 @@ test_that("Various `is_*()` utility functions work properly", {
   expect_true(is_nonempty_string(1))
 
   # Expect that `stop_if_not_gt_tbl()` yields an error for non-`gt_tbl` objects
-  expect_error(regexp = NA, stop_if_not_gt_tbl(gt(exibble)))
-  expect_error(regexp = NA, stop_if_not_gt_tbl(gt_preview(gtcars)))
+  expect_no_error(stop_if_not_gt_tbl(gt(exibble)))
+  expect_no_error(stop_if_not_gt_tbl(gt_preview(gtcars)))
   expect_error(stop_if_not_gt_tbl(exibble))
   expect_error(stop_if_not_gt_tbl(gt_group(gt(exibble), gt(exibble))))
   expect_error(stop_if_not_gt_tbl(gt(exibble) %>% as_raw_html()))
 
   # Expect that `stop_if_not_gt_group()` yields an error for non-`gt_group` objects
-  expect_error(regexp = NA, stop_if_not_gt_group(gt_group(gt(exibble), gt(exibble))))
+  expect_no_error(stop_if_not_gt_group(gt_group(gt(exibble), gt(exibble))))
   expect_error(stop_if_not_gt_group(gt(exibble)))
   expect_error(stop_if_not_gt_group(gt_preview(gtcars)))
   expect_error(stop_if_not_gt_group(exibble))
@@ -84,9 +84,9 @@ test_that("Various `is_*()` utility functions work properly", {
 
   # Expect that `stop_if_not_gt_tbl_or_group()` yields an error if a `gt_tbl` or
   # `gt_group` object isn't provided to it
-  expect_error(regexp = NA, stop_if_not_gt_tbl_or_group(gt(exibble)))
-  expect_error(regexp = NA, stop_if_not_gt_tbl_or_group(gt_preview(gtcars)))
-  expect_error(regexp = NA, stop_if_not_gt_tbl_or_group(gt_group(gt(exibble), gt(exibble))))
+  expect_no_error(stop_if_not_gt_tbl_or_group(gt(exibble)))
+  expect_no_error(stop_if_not_gt_tbl_or_group(gt_preview(gtcars)))
+  expect_no_error(stop_if_not_gt_tbl_or_group(gt_group(gt(exibble), gt(exibble))))
   expect_error(stop_if_not_gt_tbl_or_group(exibble))
   expect_error(stop_if_not_gt_tbl_or_group(gt(exibble) %>% as_raw_html()))
 
@@ -110,8 +110,8 @@ test_that("The `get_date_format()` function works properly", {
   # Expect that integers (even in character form) work with `get_date_format()`
   # so long as the values are within range
   for (i in 1:41) {
-    expect_error(regexp = NA, get_date_format(date_style = i))
-    expect_error(regexp = NA, get_date_format(date_style = as.character(i)))
+    expect_no_error(get_date_format(date_style = i))
+    expect_no_error(get_date_format(date_style = as.character(i)))
   }
 
   # Expect an error if going out of range or providing improper values
@@ -128,7 +128,7 @@ test_that("The `get_date_format()` function works properly", {
   # Expect that character-based keywords work with `get_date_format()` so long
   # as the values are from the defined set
   for (format_name in date_formats()[["format_name"]]) {
-    expect_error(regexp = NA, get_date_format(date_style = format_name))
+    expect_no_error(get_date_format(date_style = format_name))
   }
 
   # Expect an error if providing an improper value
@@ -154,8 +154,8 @@ test_that("The `get_time_format()` function works properly", {
   # Expect that integers (even in character form) work with `get_time_format()`
   # so long as the values are within range
   for (i in 1:25) {
-    expect_error(regexp = NA, get_time_format(time_style = i))
-    expect_error(regexp = NA, get_time_format(time_style = as.character(i)))
+    expect_no_error(get_time_format(time_style = i))
+    expect_no_error(get_time_format(time_style = as.character(i)))
   }
 
   # Expect an error if going out of range or providing improper values
@@ -172,7 +172,7 @@ test_that("The `get_time_format()` function works properly", {
   # Expect that character-based keywords work with `get_time_format()` so long
   # as the values are from the defined set
   for (format_name in time_formats()[["format_name"]]) {
-    expect_error(regexp = NA, get_time_format(time_style = format_name))
+    expect_no_error(get_time_format(time_style = format_name))
   }
 
   # Expect an error if providing an improper value
@@ -202,7 +202,7 @@ test_that("The `check_format_code()` function works for date and time formats", 
 
   # Ensure that all format codes work with `check_format_code()`
   for (format_name in c(date_formats()[["format_name"]], time_formats()[["format_name"]])) {
-    expect_error(regexp = NA, check_format_code(format_name))
+    expect_no_error(check_format_code(format_name))
   }
 
   # Expect an error if providing an improper inputs
@@ -302,9 +302,9 @@ test_that("The `resolve_border_side()` function works properly", {
 
 test_that("The `validate_length_one()` function works for vectors", {
 
-  expect_error(regexp = NA, validate_length_one("1", "vector"))
-  expect_error(regexp = NA, validate_length_one(1, "vector"))
-  expect_error(regexp = NA, validate_length_one(list(1), "vector"))
+  expect_no_error(validate_length_one("1", "vector"))
+  expect_no_error(validate_length_one(1, "vector"))
+  expect_no_error(validate_length_one(list(1), "vector"))
   expect_error(validate_length_one(c(), "vector"))
   expect_error(validate_length_one(c(1, 2), "vector"))
   expect_error(validate_length_one(list(), "vector"))

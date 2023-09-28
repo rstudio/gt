@@ -105,97 +105,97 @@ test_that("Certain `fmt_*()` functions stop if given incompatible column data", 
   gt_tbl %>% fmt_number(columns = num) %>% expect_s3_class("gt_tbl")
   gt_tbl %>% fmt_number(columns = c()) %>% expect_s3_class("gt_tbl")
   gt_tbl %>% fmt_number(columns = currency) %>% expect_s3_class("gt_tbl")
-  expect_error(regexp = NA, gt_tbl %>% fmt_number(columns = c(num, fctr)))
-  expect_error(regexp = NA, gt_tbl %>% fmt_number(columns = char))
+  expect_no_error(gt_tbl %>% fmt_number(columns = c(num, fctr)))
+  expect_no_error(gt_tbl %>% fmt_number(columns = char))
 
   # Tests with `fmt_integer()`
   gt_tbl %>% fmt_integer(columns = num) %>% expect_s3_class("gt_tbl")
   gt_tbl %>% fmt_integer(columns = c()) %>% expect_s3_class("gt_tbl")
   gt_tbl %>% fmt_integer(columns = currency) %>% expect_s3_class("gt_tbl")
-  expect_error(regexp = NA, gt_tbl %>% fmt_integer(columns = c(num, fctr)))
-  expect_error(regexp = NA, gt_tbl %>% fmt_integer(columns = char))
+  expect_no_error(gt_tbl %>% fmt_integer(columns = c(num, fctr)))
+  expect_no_error(gt_tbl %>% fmt_integer(columns = char))
 
   # Tests with `fmt_scientific()`
   gt_tbl %>% fmt_scientific(columns = num) %>% expect_s3_class("gt_tbl")
   gt_tbl %>% fmt_scientific(columns = c()) %>% expect_s3_class("gt_tbl")
-  expect_error(regexp = NA, gt_tbl %>% fmt_scientific(columns = c(num, fctr)))
-  expect_error(regexp = NA, gt_tbl %>% fmt_scientific(columns = char))
+  expect_no_error(gt_tbl %>% fmt_scientific(columns = c(num, fctr)))
+  expect_no_error(gt_tbl %>% fmt_scientific(columns = char))
 
   # Tests with `fmt_engineering()`
   gt_tbl %>% fmt_engineering(columns = num) %>% expect_s3_class("gt_tbl")
   gt_tbl %>% fmt_engineering(columns = c()) %>% expect_s3_class("gt_tbl")
-  expect_error(regexp = NA, gt_tbl %>% fmt_engineering(columns = c(num, fctr)))
-  expect_error(regexp = NA, gt_tbl %>% fmt_engineering(columns = char))
+  expect_no_error(gt_tbl %>% fmt_engineering(columns = c(num, fctr)))
+  expect_no_error(gt_tbl %>% fmt_engineering(columns = char))
 
   # Tests with `fmt_percent()`
   gt_tbl %>% fmt_percent(columns = num) %>% expect_s3_class("gt_tbl")
   gt_tbl %>% fmt_percent(columns = c()) %>% expect_s3_class("gt_tbl")
-  expect_error(regexp = NA, gt_tbl %>% fmt_percent(columns = c(num, fctr)))
-  expect_error(regexp = NA, gt_tbl %>% fmt_percent(columns = char))
+  expect_no_error(gt_tbl %>% fmt_percent(columns = c(num, fctr)))
+  expect_no_error(gt_tbl %>% fmt_percent(columns = char))
 
   # Tests with `fmt_partsper()`
   gt_tbl %>% fmt_partsper(columns = num) %>% expect_s3_class("gt_tbl")
   gt_tbl %>% fmt_partsper(columns = c()) %>% expect_s3_class("gt_tbl")
-  expect_error(regexp = NA, gt_tbl %>% fmt_partsper(columns = c(num, fctr)))
-  expect_error(regexp = NA, gt_tbl %>% fmt_partsper(columns = char))
+  expect_no_error(gt_tbl %>% fmt_partsper(columns = c(num, fctr)))
+  expect_no_error(gt_tbl %>% fmt_partsper(columns = char))
 
   # Tests with `fmt_fraction()`
   gt_tbl %>% fmt_fraction(columns = num) %>% expect_s3_class("gt_tbl")
   gt_tbl %>% fmt_fraction(columns = c()) %>% expect_s3_class("gt_tbl")
-  expect_error(regexp = NA, gt_tbl %>% fmt_fraction(columns = c(num, fctr)))
-  expect_error(regexp = NA, gt_tbl %>% fmt_fraction(columns = char))
+  expect_no_error(gt_tbl %>% fmt_fraction(columns = c(num, fctr)))
+  expect_no_error(gt_tbl %>% fmt_fraction(columns = char))
 
   # Tests with `fmt_currency()`
   gt_tbl %>% fmt_currency(columns = num) %>% expect_s3_class("gt_tbl")
   gt_tbl %>% fmt_currency(columns = c()) %>% expect_s3_class("gt_tbl")
-  expect_error(regexp = NA, gt_tbl %>% fmt_currency(columns = c(num, fctr)))
-  expect_error(regexp = NA, gt_tbl %>% fmt_currency(columns = char))
+  expect_no_error(gt_tbl %>% fmt_currency(columns = c(num, fctr)))
+  expect_no_error(gt_tbl %>% fmt_currency(columns = char))
 
   # Tests with `fmt_roman()`
   gt_tbl %>% fmt_roman(columns = num) %>% expect_s3_class("gt_tbl")
   gt_tbl %>% fmt_roman(columns = c()) %>% expect_s3_class("gt_tbl")
-  expect_error(regexp = NA, gt_tbl %>% fmt_roman(columns = c(num, fctr)))
-  expect_error(regexp = NA, gt_tbl %>% fmt_roman(columns = char))
+  expect_no_error(gt_tbl %>% fmt_roman(columns = c(num, fctr)))
+  expect_no_error(gt_tbl %>% fmt_roman(columns = char))
 
   # Tests with `fmt_index()`
   gt_tbl %>% fmt_index(columns = num) %>% expect_s3_class("gt_tbl")
   gt_tbl %>% fmt_index(columns = c()) %>% expect_s3_class("gt_tbl")
-  expect_error(regexp = NA, gt_tbl %>% fmt_index(columns = c(num, fctr)))
-  expect_error(regexp = NA, gt_tbl %>% fmt_index(columns = char))
+  expect_no_error(gt_tbl %>% fmt_index(columns = c(num, fctr)))
+  expect_no_error(gt_tbl %>% fmt_index(columns = char))
 
   # Tests with `fmt_spelled_num()`
   gt_tbl %>% fmt_spelled_num(columns = num) %>% expect_s3_class("gt_tbl")
   gt_tbl %>% fmt_spelled_num(columns = c()) %>% expect_s3_class("gt_tbl")
-  expect_error(regexp = NA, gt_tbl %>% fmt_spelled_num(columns = c(num, fctr)))
-  expect_error(regexp = NA, gt_tbl %>% fmt_spelled_num(columns = char))
+  expect_no_error(gt_tbl %>% fmt_spelled_num(columns = c(num, fctr)))
+  expect_no_error(gt_tbl %>% fmt_spelled_num(columns = char))
 
   # Tests with `fmt_bytes()`
   gt_tbl %>% fmt_bytes(columns = num) %>% expect_s3_class("gt_tbl")
   gt_tbl %>% fmt_bytes(columns = c()) %>% expect_s3_class("gt_tbl")
-  expect_error(regexp = NA, gt_tbl %>% fmt_bytes(columns = c(num, fctr)))
-  expect_error(regexp = NA, gt_tbl %>% fmt_bytes(columns = char))
+  expect_no_error(gt_tbl %>% fmt_bytes(columns = c(num, fctr)))
+  expect_no_error(gt_tbl %>% fmt_bytes(columns = char))
 
   # Tests with `fmt_date()`
   gt_tbl %>% fmt_date(columns = date) %>% expect_s3_class("gt_tbl")
   gt_tbl %>% fmt_date(columns = c()) %>% expect_s3_class("gt_tbl")
-  expect_error(regexp = NA, gt_tbl %>% fmt_date(columns = c(date, num)))
-  expect_error(regexp = NA, gt_tbl %>% fmt_date(columns = fctr))
+  expect_no_error(gt_tbl %>% fmt_date(columns = c(date, num)))
+  expect_no_error(gt_tbl %>% fmt_date(columns = fctr))
 
   # Tests with `fmt_time()`
   gt_tbl %>% fmt_time(columns = time) %>% expect_s3_class("gt_tbl")
   gt_tbl %>% fmt_time(columns = c()) %>% expect_s3_class("gt_tbl")
-  expect_error(regexp = NA, gt_tbl %>% fmt_time(columns = c(time, num)))
-  expect_error(regexp = NA, gt_tbl %>% fmt_time(columns = fctr))
+  expect_no_error(gt_tbl %>% fmt_time(columns = c(time, num)))
+  expect_no_error(gt_tbl %>% fmt_time(columns = fctr))
 
   # Tests with `fmt_datetime()`
   gt_tbl %>% fmt_datetime(columns = datetime) %>% expect_s3_class("gt_tbl")
   gt_tbl %>% fmt_datetime(columns = c()) %>% expect_s3_class("gt_tbl")
-  expect_error(regexp = NA, gt_tbl %>% fmt_datetime(columns = c(datetime, num)))
-  expect_error(regexp = NA, gt_tbl %>% fmt_datetime(columns = fctr))
+  expect_no_error(gt_tbl %>% fmt_datetime(columns = c(datetime, num)))
+  expect_no_error(gt_tbl %>% fmt_datetime(columns = fctr))
 
   # Tests with `fmt_duration()`
   gt_tbl %>% fmt_duration(columns = num, input_units = "seconds") %>% expect_s3_class("gt_tbl")
   gt_tbl %>% fmt_duration(columns = c(), input_units = "seconds") %>% expect_s3_class("gt_tbl")
-  expect_error(regexp = NA, gt_tbl %>% fmt_duration(columns = c(num, fctr), input_units = "seconds"))
-  expect_error(regexp = NA, gt_tbl %>% fmt_duration(columns = char, input_units = "seconds"))
+  expect_no_error(gt_tbl %>% fmt_duration(columns = c(num, fctr), input_units = "seconds"))
+  expect_no_error(gt_tbl %>% fmt_duration(columns = char, input_units = "seconds"))
 })

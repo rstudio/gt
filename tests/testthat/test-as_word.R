@@ -39,9 +39,7 @@ body_add_gt <- function(
 ) {
 
   ## check that officer is available
-  if (!rlang::is_installed("officer")) {
-    stop("{officer} package is necessary to add gt tables to word documents.")
-  }
+  rlang::check_installed("officer", "to add gt tables to word documents.")
 
   ## check that inputs are an officer rdocx and gt tbl
   stopifnot(inherits(x, "rdocx"))
@@ -1218,7 +1216,7 @@ test_that("long tables can be added to a word doc", {
   check_suggests_xml()
 
   ## simple table
-  gt_letters <- tibble::tibble(
+  gt_letters <- dplyr::tibble(
     upper_case = c(LETTERS,LETTERS),
     lower_case = c(letters,letters)
     ) %>%
@@ -1287,7 +1285,7 @@ test_that("long tables with spans can be added to a word doc", {
   check_suggests_xml()
 
   ## simple table
-  gt_letters <- tibble::tibble(
+  gt_letters <- dplyr::tibble(
     upper_case = c(LETTERS,LETTERS),
     lower_case = c(letters,letters)
     ) %>%
@@ -2302,8 +2300,8 @@ test_that("markdown with urls work",{
     xml2::xml_find_all(".//w:hyperlink")
 
   ## hyperlinks are preserved and updated to be rId
-  expect_equal(length(docx_table_hyperlinks), 2)
-  expect_true(all(grepl("^rId\\d+$",xml_attr(docx_table_hyperlinks, "id"))))
+  expect_length(docx_table_hyperlinks, 2)
+  expect_match(xml_attr(docx_table_hyperlinks, "id"), "^rId\\d+$")
 
   # first should be commonmark URL
   expect_equal(
@@ -2362,8 +2360,8 @@ test_that("markdown with img refs work",{
     xml2::xml_find_all(".//a:blip")
 
   ## hyperlinks are preserved and updated to be rId
-  expect_equal(length(docx_table_image),2)
-  expect_true(all(grepl("^rId\\d+$",xml_attr(docx_table_image, "embed"))))
+  expect_length(docx_table_image, 2)
+  expect_match(xml_attr(docx_table_image, "embed"), "^rId\\d+$")
 
   # first should be a png
   expect_equal(
@@ -2425,8 +2423,9 @@ test_that("table with image refs work - local only",{
     xml2::xml_find_all(".//a:blip")
 
   ## hyperlinks are preserved and updated to be rId
-  expect_equal(length(docx_table_image),4)
-  expect_true(all(grepl("^rId\\d+$",xml_attr(docx_table_image, "embed"))))
+  expect_length(docx_table_image, 4)
+  # Expect match has all = TRUE as a default
+  expect_match(xml_attr(docx_table_image, "embed"), "^rId\\d+$")
 
   # first should be a png
   expect_equal(
@@ -2496,15 +2495,15 @@ test_that("table with image refs work - https",{
     xml2::xml_find_all(".//a:blip")
 
   ## hyperlinks are preserved and updated to be rId
-  expect_equal(length(docx_table_image),1)
-  expect_true(all(grepl("^rId\\d+$",xml_attr(docx_table_image, "embed"))))
+  expect_length(docx_table_image, 1)
+  expect_match(xml_attr(docx_table_image, "embed"), "^rId\\d+$")
 
   # first should be the logo.svg with some random numbers ahead of it
-  expect_true(
-    grepl("^media/.+?logo[.]svg$",
-    docx$doc_obj$rel_df()$target[ docx$doc_obj$rel_df()$id == xml_attr(docx_table_image[1], "embed")]
-    )
+  expect_length(
+    obj <- docx$doc_obj$rel_df()$target[ docx$doc_obj$rel_df()$id == xml_attr(docx_table_image[1], "embed")],
+    1
   )
+  expect_match(obj, "^media/.+?logo[.]svg$")
 
 })
 

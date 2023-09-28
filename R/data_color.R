@@ -787,14 +787,10 @@ data_color <- function(
       # Determine if the paletteer package is installed and stop the
       # function if it is not present
 
-      if (!requireNamespace("paletteer", quietly = TRUE)) {
-
-        cli::cli_abort(c(
-          "The `paletteer` package is required for accessing palettes with
-          the `<package>::<palette>` syntax.",
-          "*" = "It can be installed with `install.packages(\"paletteer\")`."
-        ))
-      }
+      rlang::check_installed(
+        "paletteer",
+        reason = "to use palettes with the <package>::<palette> syntax."
+        )
 
       # Parse the `palette` string and extract the two different
       # components: the package that the palette comes from and the
@@ -869,10 +865,10 @@ data_color <- function(
     if (direction != "column") {
 
       cli::cli_abort(c(
-        "Specification of `target_columns` can only be done with the
-        `direction = \"column\"` option.",
+        "Specification of {.arg target_columns} can only be done with the
+        `direction = {.val column}` option.",
         "*" = "Please modify the `direction` option or remove any values in
-        `target_columns`."
+        {.arg target_columns}."
       ))
     }
 
@@ -885,8 +881,8 @@ data_color <- function(
     if (resolv_col_length > 1 && resolv_col_length != target_col_length) {
 
       cli::cli_abort(c(
-        "If the length of resolved `columns` is greater than one it must match
-        the length of the resolved `target_columns`.",
+        "If the length of resolved {.arg columns} is greater than one it must match
+        the length of the resolved {.arg target_columns}.",
         "*" = "Please ensure these greater-than-one lengths are the same."
       ))
     }
@@ -987,10 +983,10 @@ data_color <- function(
       if (!is.numeric(data_vals) && direction == "row") {
 
         cli::cli_abort(c(
-          "The \"numeric\" method with `direction == \"row\"` cannot be used
+          "The {.val numeric} method with {.code direction == {.val row}} cannot be used
           when non-numeric columns are included.",
           "*" = "Either specify a collection of numeric columns or use the
-          \"factor\" method."
+          {.val factor} method."
         ))
       }
 
@@ -1371,8 +1367,8 @@ rgba_to_hex <- function(colors) {
 html_color <- function(colors, alpha = NULL) {
 
   # Stop function if there are any NA values in `colors`
-  if (any(is.na(colors))) {
-    cli::cli_abort("No values supplied in `colors` should be `NA`.")
+  if (anyNA(colors)) {
+    cli::cli_abort("`colors` should not contain any `NA` values.")
   }
 
   is_rgba <- is_rgba_col(colors = colors)

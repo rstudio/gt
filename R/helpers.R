@@ -1326,7 +1326,7 @@ cells_title <- function(groups = c("title", "subtitle")) {
     any(duplicated(groups))
   ) {
     cli::cli_abort(
-      "The input to `groups` must be either \"title\", \"subtitle\", or both."
+      "`groups` must be either {.val title}, {.val subtitle}, or both."
     )
   }
 
@@ -1818,7 +1818,7 @@ cells_group <- function(groups = everything()) {
 
   cli::cli_warn(c(
     "Since gt v0.2.0.5, the `cells_group()` function has been deprecated.",
-    "*" = "Please use the `cells_row_groups()` function instead."
+    "*" = "Please use {.help [cells_row_groups()](gt::cells_row_groups)} instead."
   ),
   .frequency = "regularly",
   .frequency_id = "cells_group_fn_deprecation"
@@ -3745,24 +3745,18 @@ escape_latex <- function(text) {
 #' @export
 gt_latex_dependencies <- function() {
 
-  if (requireNamespace("knitr", quietly = TRUE)) {
+  check_installed("knitr", "for getting the LaTeX dependency headers.")
 
-    knitr::asis_output(
-      paste(
-        "",
-        "% gt packages",
-        paste0("\\usepackage{", latex_packages(), "}", collapse = "\n"),
-        "",
-        sep = "\n"
-      )
+  knitr::asis_output(
+    paste(
+      "",
+      "% gt packages",
+      paste0("\\usepackage{", latex_packages(), "}", collapse = "\n"),
+      "",
+      sep = "\n"
     )
+  )
 
-  } else {
-    cli::cli_abort(c(
-      "The `knitr` package is required for getting the LaTeX dependency headers.",
-      "*" = "It can be installed with `install.packages(\"knitr\")`."
-    ))
-  }
 }
 
 #' Helper function for specifying a font from the *Google Fonts* service

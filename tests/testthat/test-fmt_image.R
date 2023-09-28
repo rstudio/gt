@@ -158,12 +158,10 @@ test_that("The `fmt_image()` function works correctly", {
 
   # Expect a returned object of class `gt_tbl` with various
   # uses of `fmt_image()`
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>% fmt_image(columns = a) %>% as_raw_html()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>%
       fmt_image(columns = a, rows = 1:5) %>% as_raw_html()
   )
