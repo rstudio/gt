@@ -9,6 +9,7 @@ cols_nanoplot(
   columns,
   rows = everything(),
   plot_type = c("line", "bar"),
+  plot_height = "2em",
   missing_vals = c("gap", "zero", "remove"),
   columns_x = NULL,
   reference_line = NULL,
@@ -17,7 +18,6 @@ cols_nanoplot(
   new_col_label = NULL,
   before = NULL,
   after = NULL,
-  height = NULL,
   options = NULL
 )
 }
@@ -64,6 +64,15 @@ using \code{\link[=nanoplot_options]{nanoplot_options()}}. With a bar plot, the 
 that of the data bars. Furthermore, a line plot can optionally take in \emph{x}
 values through the \code{columns_x} argument whereas a bar plot ignores any data
 representing the independant variable.}
+
+\item{plot_height}{\emph{The height of the nanoplots}
+
+\verb{scalar<character>} // \emph{default:} \code{"2em"}
+
+The height of the nanoplots. The default here is a sensible value of
+\code{"2em"}. By way of comparison, this is a far greater height than the
+default for icons through \code{\link[=fmt_icon]{fmt_icon()}} (\code{"1em"}) and is the same height as
+images inserted via \code{\link[=fmt_image]{fmt_image()}} (also having a \code{"2em"} height default).}
 
 \item{missing_vals}{\emph{Treatment of missing values}
 
@@ -139,13 +148,6 @@ column is provided to either of these arguments (otherwise, the function
 will be stopped). If nothing is provided for either argument then the new
 column will be placed at the end of the column series.}
 
-\item{height}{\emph{The height of the nanoplots}
-
-\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
-
-The height of the nanoplots. If nothing is provided here then \strong{gt} will
-provide a sensible length value of \code{"1.5em"}.}
-
 \item{options}{\emph{Set options for the nanoplots}
 
 \verb{obj:<nanoplot_options} // \emph{default:} \code{NULL} (\code{optional})
@@ -166,12 +168,14 @@ for the nanoplots and generate a new column containing the plots.
 
 Each nanoplot contains data points with reasonably good visibility, having
 smooth connecting lines between them to allow for easier scanning of values.
-By default, a nanoplot will have basic interactivity. One can hover over the
-data points and vertical guides will display values ascribed to each. A
-horizontal \emph{reference line} is also present in the standard view (denoting
-the median of the data). This reference line can be customized by providing a
-static value or by choosing a keyword that computes a particular \emph{y} value
-using a nanoplot's data values. Aside from a reference line, there is also an
+By default, a nanoplot rendered in an HTML-based table will have basic
+interactivity. One can hover over the data points and vertical guides will
+display values ascribed to each. There is also a hoverable guide on the
+left-hand side that displays the minimal and maximal \emph{y} values. A horizontal
+\emph{reference line} is also present in the standard view (denoting the median of
+the data). This reference line can be customized by providing a static value
+or by choosing a keyword that computes a particular \emph{y} value using a
+nanoplot's data values. Aside from a reference line, there is also an
 associated \emph{reference area} which, by default, tries to make itself useful by
 bounding the area between the lower and upper quartiles of the data. These
 boundaries can also be customized in a similar fashion as the reference line.
