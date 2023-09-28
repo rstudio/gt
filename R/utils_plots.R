@@ -49,7 +49,7 @@ generate_nanoplot <- function(
     show_ref_area = FALSE,
     show_vertical_guides = TRUE,
     show_y_axis_guide = TRUE,
-    svg_height = "1.5em",
+    svg_height = "2em",
     view = FALSE
 ) {
 
@@ -1059,7 +1059,10 @@ generate_nanoplot <- function(
   svg <-
     paste(
       c(
-        paste0("<svg role=\"img\" viewBox=\"", viewbox, "\" "),
+        "<div>",
+        "<svg ",
+        "role=\"img\" ",
+        paste0("viewBox=\"", viewbox, "\" "),
         "style=\"",
         paste0("height:", svg_height, ";"),
         "margin-left:auto;",
@@ -1067,7 +1070,8 @@ generate_nanoplot <- function(
         "font-size:inherit;",
         "overflow:visible;",
         "vertical-align:middle;",
-        "position:relative;\">",
+        "position:relative;\"",
+        ">",
         svg_defs,
         svg_style,
         ref_area_tags,
@@ -1078,7 +1082,8 @@ generate_nanoplot <- function(
         circle_tags,
         g_y_axis_tags,
         g_guide_tags,
-        "</svg>"
+        "</svg>",
+        "</div>"
       ),
       collapse = "\n"
     )
