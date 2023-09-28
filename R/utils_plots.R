@@ -35,6 +35,9 @@ generate_nanoplot <- function(
     data_point_stroke_color = "#FFFFFF",
     data_point_stroke_width = 4,
     data_point_fill_color = "#FF0000",
+    data_bar_stroke_color = "#3290CC",
+    data_bar_stroke_width = 4,
+    data_bar_fill_color = "#3FB5FF",
     data_line_stroke_color = "#4682B4",
     data_line_stroke_width = 8,
     vertical_guide_stroke_color = "#911EB4",
@@ -464,6 +467,9 @@ generate_nanoplot <- function(
   data_point_stroke_color <- normalize_option_vector(data_point_stroke_color, num_y_vals)
   data_point_stroke_width <- normalize_option_vector(data_point_stroke_width, num_y_vals)
   data_point_fill_color <- normalize_option_vector(data_point_fill_color, num_y_vals)
+  data_bar_stroke_color <- normalize_option_vector(data_bar_stroke_color, num_y_vals)
+  data_bar_stroke_width <- normalize_option_vector(data_bar_stroke_width, num_y_vals)
+  data_bar_fill_color <- normalize_option_vector(data_bar_fill_color, num_y_vals)
 
   #
   # Generate data segments by defining `start` and `end` vectors (these
@@ -645,9 +651,9 @@ generate_nanoplot <- function(
     for (i in seq_along(data_x_points)) {
 
       data_point_radius_i <- data_point_radius[i]
-      data_bar_stroke_color_i <- data_point_stroke_color[i]
-      data_bar_stroke_width_i <- data_point_stroke_width[i]
-      data_bar_fill_color_i <- data_point_fill_color[i]
+      data_bar_stroke_color_i <- data_bar_stroke_color[i]
+      data_bar_stroke_width_i <- data_bar_stroke_width[i]
+      data_bar_fill_color_i <- data_bar_fill_color[i]
 
       if (is.na(data_y_points[i])) {
 
@@ -1067,9 +1073,9 @@ generate_nanoplot <- function(
         ref_area_tags,
         area_path_tags,
         data_path_tags,
+        bar_tags,
         ref_line_tags,
         circle_tags,
-        bar_tags,
         g_y_axis_tags,
         g_guide_tags,
         "</svg>"
