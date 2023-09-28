@@ -792,7 +792,7 @@ generate_nanoplot <- function(
         "<rect ",
         "x=\"", left_x, "\" ",
         "y=\"", top_y, "\" ",
-        "width=\"", safe_x_d + 20, "\" ",
+        "width=\"", safe_x_d + 15, "\" ",
         "height=\"", bottom_y, "\" ",
         "stroke=\"transparent\" ",
         "stroke-width=\"0\" ",
@@ -816,7 +816,7 @@ generate_nanoplot <- function(
         currency = currency
       )
 
-    text_strings_max <-
+    text_strings_min <-
       paste0(
         "<text ",
         "x=\"", left_x, "\" ",
@@ -825,11 +825,11 @@ generate_nanoplot <- function(
         "stroke=\"transparent\" ",
         "font-size=\"25\"",
         ">",
-        y_value_max_label,
+        y_value_min_label,
         "</text>"
       )
 
-    text_strings_min <-
+    text_strings_max <-
       paste0(
         "<text ",
         "x=\"", left_x, "\" ",
@@ -838,7 +838,7 @@ generate_nanoplot <- function(
         "stroke=\"transparent\" ",
         "font-size=\"25\"",
         ">",
-        y_value_min_label,
+        y_value_max_label,
         "</text>"
       )
 
@@ -952,7 +952,8 @@ generate_nanoplot <- function(
           "} ",
           ".y-axis-line:hover text { ",
           "stroke: white; ",
-          "fill: #212427; ",
+          "stroke-width: 0.20em; ",
+          "fill: #1A1C1F; ",
           "} ",
           ".ref-line:hover rect { ",
           "stroke: #FFFFFF60; ",
