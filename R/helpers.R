@@ -695,6 +695,7 @@ nanoplot_options <- function(
     show_vertical_guides = NULL,
     show_reference_line = NULL,
     show_reference_area = NULL,
+    show_y_axis_values = NULL,
     currency = NULL
 ) {
 
@@ -743,8 +744,11 @@ nanoplot_options <- function(
   if (is.null(show_reference_area)) {
     show_reference_area <- TRUE
   }
+  if (is.null(show_y_axis_values)) {
+    show_y_axis_values <- TRUE
+  }
   if (is.null(currency)) {
-    currency <- "USD"
+    currency <- NULL
   }
 
   nanoplot_options_list <-
@@ -764,6 +768,7 @@ nanoplot_options <- function(
       show_vertical_guides = show_vertical_guides,
       show_reference_line = show_reference_line,
       show_reference_area = show_reference_area,
+      show_y_axis_values = show_y_axis_values,
       currency = currency
     )
 
