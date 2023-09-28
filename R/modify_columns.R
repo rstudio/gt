@@ -2138,12 +2138,14 @@ cols_add <- function(
 #'
 #' Each nanoplot contains data points with reasonably good visibility, having
 #' smooth connecting lines between them to allow for easier scanning of values.
-#' By default, a nanoplot will have basic interactivity. One can hover over the
-#' data points and vertical guides will display values ascribed to each. A
-#' horizontal *reference line* is also present in the standard view (denoting
-#' the median of the data). This reference line can be customized by providing a
-#' static value or by choosing a keyword that computes a particular *y* value
-#' using a nanoplot's data values. Aside from a reference line, there is also an
+#' By default, a nanoplot rendered in an HTML-based table will have basic
+#' interactivity. One can hover over the data points and vertical guides will
+#' display values ascribed to each. There is also a hoverable guide on the
+#' left-hand side that displays the minimal and maximal *y* values. A horizontal
+#' *reference line* is also present in the standard view (denoting the median of
+#' the data). This reference line can be customized by providing a static value
+#' or by choosing a keyword that computes a particular *y* value using a
+#' nanoplot's data values. Aside from a reference line, there is also an
 #' associated *reference area* which, by default, tries to make itself useful by
 #' bounding the area between the lower and upper quartiles of the data. These
 #' boundaries can also be customized in a similar fashion as the reference line.
@@ -2194,6 +2196,15 @@ cols_add <- function(
 #'   that of the data bars. Furthermore, a line plot can optionally take in *x*
 #'   values through the `columns_x` argument whereas a bar plot ignores any data
 #'   representing the independant variable.
+#'
+#' @param plot_height *The height of the nanoplots*
+#'
+#'   `scalar<character>` // *default:* `"2em"`
+#'
+#'   The height of the nanoplots. The default here is a sensible value of
+#'   `"2em"`. By way of comparison, this is a far greater height than the
+#'   default for icons through [fmt_icon()] (`"1em"`) and is the same height as
+#'   images inserted via [fmt_image()] (also having a `"2em"` height default).
 #'
 #' @param missing_vals *Treatment of missing values*
 #'
@@ -2268,13 +2279,6 @@ cols_add <- function(
 #'   column is provided to either of these arguments (otherwise, the function
 #'   will be stopped). If nothing is provided for either argument then the new
 #'   column will be placed at the end of the column series.
-#'
-#' @param height *The height of the nanoplots*
-#'
-#'   `scalar<character>` // *default:* `NULL` (`optional`)
-#'
-#'   The height of the nanoplots. If nothing is provided here then **gt** will
-#'   provide a sensible length value of `"1.5em"`.
 #'
 #' @param options *Set options for the nanoplots*
 #'
@@ -2420,6 +2424,7 @@ cols_nanoplot <- function(
     columns,
     rows = everything(),
     plot_type = c("line", "bar"),
+    plot_height = "2em",
     missing_vals = c("gap", "zero", "remove"),
     columns_x = NULL,
     reference_line = NULL,
@@ -2428,7 +2433,6 @@ cols_nanoplot <- function(
     new_col_label = NULL,
     before = NULL,
     after = NULL,
-    height = NULL,
     options = NULL
 ) {
 
@@ -2487,8 +2491,8 @@ cols_nanoplot <- function(
     data_vals_plot_x <- NULL
   }
 
-  if (is.null(height)) {
-    height <- "1.5em"
+  if (is.null(plot_height)) {
+    plot_height <- "2em"
   }
 
   if (is.null(options)) {
@@ -2538,7 +2542,7 @@ cols_nanoplot <- function(
         show_ref_area = options_plots$show_reference_area,
         show_vertical_guides = options_plots$show_vertical_guides,
         show_y_axis_guide = options_plots$show_y_axis_guide,
-        svg_height = height
+        svg_height = plot_height
       )
 
     nanoplots <- c(nanoplots, data_plot_i)
