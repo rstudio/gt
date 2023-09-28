@@ -9,6 +9,9 @@ nanoplot_options(
   data_point_stroke_color = NULL,
   data_point_stroke_width = NULL,
   data_point_fill_color = NULL,
+  data_bar_stroke_color = NULL,
+  data_bar_stroke_width = NULL,
+  data_bar_fill_color = NULL,
   data_line_type = NULL,
   data_line_stroke_color = NULL,
   data_line_stroke_width = NULL,
@@ -20,6 +23,7 @@ nanoplot_options(
   show_vertical_guides = NULL,
   show_reference_line = NULL,
   show_reference_area = NULL,
+  show_y_axis_values = NULL,
   currency = NULL
 )
 }
