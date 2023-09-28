@@ -684,6 +684,9 @@ nanoplot_options <- function(
     data_point_stroke_color = NULL,
     data_point_stroke_width = NULL,
     data_point_fill_color = NULL,
+    data_bar_stroke_color = NULL,
+    data_bar_stroke_width = NULL,
+    data_bar_fill_color = NULL,
     data_line_type = NULL,
     data_line_stroke_color = NULL,
     data_line_stroke_width = NULL,
@@ -710,6 +713,15 @@ nanoplot_options <- function(
   }
   if (is.null(data_point_fill_color)) {
     data_point_fill_color <- "red"
+  }
+  if (is.null(data_bar_stroke_color)) {
+    data_bar_stroke_color <- "#3290CC"
+  }
+  if (is.null(data_bar_stroke_width)) {
+    data_bar_stroke_width <- 4
+  }
+  if (is.null(data_bar_fill_color)) {
+    data_bar_fill_color <- "#3FB5FF"
   }
   if (is.null(data_line_type)) {
     data_line_type <- "curved"
@@ -757,6 +769,9 @@ nanoplot_options <- function(
       data_point_stroke_color = data_point_stroke_color,
       data_point_stroke_width = data_point_stroke_width,
       data_point_fill_color = data_point_fill_color,
+      data_bar_stroke_color = data_bar_stroke_color,
+      data_bar_stroke_width = data_bar_stroke_width,
+      data_bar_fill_color = data_bar_fill_color,
       data_line_type = data_line_type,
       data_line_stroke_color = data_line_stroke_color,
       data_line_stroke_width = data_line_stroke_width,
