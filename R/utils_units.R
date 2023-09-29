@@ -316,6 +316,56 @@ units_symbol_replacements <- function(
     text <- replace_units_symbol(text, "degC", "degC", "&deg;C")
     text <- replace_units_symbol(text, "degF", "degF", "&deg;F")
     text <- replace_units_symbol(text, ":space:", ":space:", "&nbsp;")
+
+    text <- replace_units_symbol(text, ":Alpha:", ":Alpha:", "&Alpha;")   # Capital Alpha
+    text <- replace_units_symbol(text, ":alpha:", ":alpha:", "&alpha;")	  # Lowercase Alpha
+    text <- replace_units_symbol(text, ":Beta:", ":Beta:", "&Beta;")	  # Capital Beta
+    text <- replace_units_symbol(text, ":beta:", ":beta:", "&beta;")	  # Lowercase Beta
+    text <- replace_units_symbol(text, ":Gamma:", ":Gamma:", "&Gamma;")	  # Capital Gamma
+    text <- replace_units_symbol(text, ":gamma:", ":gamma:", "&gamma;")	  #	Lowercase Gamma
+    text <- replace_units_symbol(text, ":Delta:", ":Delta:", "&Delta;")	  #	Capital Delta
+    text <- replace_units_symbol(text, ":delta:", ":delta:", "&delta;")	  #	Lowercase Delta
+    text <- replace_units_symbol(text, ":Epsilon:", ":Epsilon:", "&Epsilon;")	#	Capital Epsilon
+    text <- replace_units_symbol(text, ":epsilon:", ":epsilon:", "&epsilon;")	#	Lowercase Epsilon
+    text <- replace_units_symbol(text, ":Zeta:", ":Zeta:", "&Zeta;")	  #	Capital Zeta
+    text <- replace_units_symbol(text, ":zeta:", ":zeta:", "&zeta;")	  #	Lowercase Zeta
+    text <- replace_units_symbol(text, ":Eta:", ":Eta:", "&Eta;")	    #	Capital Eta
+    text <- replace_units_symbol(text, ":eta:", ":eta:", "&eta;")	    #	Lowercase Eta
+    text <- replace_units_symbol(text, ":Theta:", ":Theta:", "&Theta;")	  #	Capital Theta
+    text <- replace_units_symbol(text, ":theta:", ":theta:", "&theta;")	  #	Lowercase Theta
+    text <- replace_units_symbol(text, ":Iota:", ":Iota:", "&Iota;")	  #	Capital Iota
+    text <- replace_units_symbol(text, ":iota:", ":iota:", "&iota;")	  #	Lowercase Iota
+    text <- replace_units_symbol(text, ":Kappa:", ":Kappa:", "&Kappa;")	  #	Capital Kappa
+    text <- replace_units_symbol(text, ":kappa:", ":kappa:", "&kappa;")	  #	Lowercase Kappa
+    text <- replace_units_symbol(text, ":Lambda:", ":Lambda:", "&Lambda;")	#	Capital Lambda
+    text <- replace_units_symbol(text, ":lambda:", ":lambda:", "&lambda;")	#	Lowercase Lambda
+    text <- replace_units_symbol(text, ":Mu:", ":Mu:", "&Mu;")	    #	Capital Mu
+    text <- replace_units_symbol(text, ":mu:", ":mu:", "&mu;")	    #	Lowercase Mu
+    text <- replace_units_symbol(text, ":Nu:", ":Nu:", "&Nu;")	    #	Capital Nu
+    text <- replace_units_symbol(text, ":nu:", ":nu:", "&nu;")	    #	Lowercase Nu
+    text <- replace_units_symbol(text, ":Xi:", ":Xi:", "&Xi;")	    #	Capital Xi
+    text <- replace_units_symbol(text, ":xi:", ":xi:", "&xi;")	    #	Lowercase Xi
+    text <- replace_units_symbol(text, ":Omicron:", ":Omicron:", "&Omicron;")	#	Capital Omicron
+    text <- replace_units_symbol(text, ":omicron:", ":omicron:", "&omicron;")	#	Lowercase Omicron
+    text <- replace_units_symbol(text, ":Pi:", ":Pi:", "&Pi;")	    #	Capital Pi
+    text <- replace_units_symbol(text, ":pi:", ":pi:", "&pi;")	    #	Lowercase Pi
+    text <- replace_units_symbol(text, ":Rho:", ":Rho:", "&Rho;")	    #	Capital Rho
+    text <- replace_units_symbol(text, ":rho:", ":rho:", "&rho;")	    #	Lowercase Rho
+    text <- replace_units_symbol(text, ":Sigma:", ":Sigma:", "&Sigma;")	  #	Capital Sigma
+    text <- replace_units_symbol(text, ":sigma:", ":sigma:", "&sigma;")	  #	Lowercase Sigma
+    text <- replace_units_symbol(text, ":sigmaf:", ":sigmaf:", "&sigmaf;")	#	Lowercase Final Sigma
+    text <- replace_units_symbol(text, ":Tau:", ":Tau:", "&Tau;")	    #	Capital Tau
+    text <- replace_units_symbol(text, ":tau:", ":tau:", "&tau;")	    #	Lowercase Tau
+    text <- replace_units_symbol(text, ":Upsilon:", ":Upsilon:", "&Upsilon;")	#	Capital Upsilon
+    text <- replace_units_symbol(text, ":upsilon:", ":upsilon:", "&upsilon;")	#	Lowercase Upsilon
+    text <- replace_units_symbol(text, ":Phi:", ":Phi:", "&Phi;")	    #	Capital Phi
+    text <- replace_units_symbol(text, ":phi:", ":phi:", "&phi;")	    #	Lowercase Phi
+    text <- replace_units_symbol(text, ":Chi:", ":Chi:", "&Chi;")	    #	Capital Chi
+    text <- replace_units_symbol(text, ":chi:", ":chi:", "&chi;")	    #	Lowercase Chi
+    text <- replace_units_symbol(text, ":Psi:", ":Psi:", "&Psi;")	    #	Capital Psi
+    text <- replace_units_symbol(text, ":psi:", ":psi:", "&psi;")	    #	Lowercase Psi
+    text <- replace_units_symbol(text, ":Omega:", ":Omega:", "&Omega;")	  #	Capital Omega
+    text <- replace_units_symbol(text, ":omega:", ":omega:", "&omega;")	  #	Lowercase Omega
   }
 
   if (context == "latex") {
