@@ -72,16 +72,22 @@ can be modified with <code>nanoplot_options()</code> within the <code>options</c
 <span>  data_point_stroke_color <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  data_point_stroke_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  data_point_fill_color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  data_line_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  data_line_stroke_color <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  data_line_stroke_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  data_bar_stroke_color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  data_bar_stroke_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  data_bar_fill_color <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  vertical_guide_stroke_color <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  vertical_guide_stroke_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  show_data_points <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  show_data_line <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  show_data_area <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  show_vertical_guides <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  show_reference_line <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  show_reference_area <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  show_reference_area <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  show_vertical_guides <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  show_y_axis_guide <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  currency <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -109,7 +115,10 @@ changed (ensure that the vector length matches the number of data points).</p></
 
 <dt>data_point_stroke_width</dt>
 <dd><p><em>Width of surrounding line on data points</em></p>
-<p><code>scalar&lt;numeric&gt;|vector&lt;numeric&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p></dd>
+<p><code>scalar&lt;numeric&gt;|vector&lt;numeric&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>The width of the outside stroke for the data points can be modified with
+the <code>data_point_stroke_width</code> option. By default, a value of <code>4</code> (as in
+'4px') is used.</p></dd>
 
 
 <dt>data_point_fill_color</dt>
@@ -120,6 +129,14 @@ This can be changed for all data points by providing a different color
 to <code>data_point_fill_color</code>. And, a vector of different colors can be
 supplied so long as the length is equal to the number of data points; the
 fill color values will be applied in order of left to right.</p></dd>
+
+
+<dt>data_line_type</dt>
+<dd><p><em>Type of data line: curved or straight</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>This can accept either <code>"curved"</code> or <code>"straight"</code>. Curved lines are
+recommended when the nanoplot has less than 30 points and data points are
+evenly spaced. In most other cases, straight lines might present better.</p></dd>
 
 
 <dt>data_line_stroke_color</dt>
@@ -134,8 +151,34 @@ option.</p></dd>
 <dd><p><em>Width of the data line</em></p>
 <p><code>scalar&lt;numeric&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>The width of the connecting data line can be modified with the
-<code>data_line_stroke_width</code> option. By default, a value of <code>4</code> (as in
-<code>"4px"</code>) is used.</p></dd>
+<code>data_line_stroke_width</code> option. By default, a value of <code>4</code> (as in '4px')
+is used.</p></dd>
+
+
+<dt>data_bar_stroke_color</dt>
+<dd><p><em>Color of a data bar's outside line</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>The color of the stroke used for the data bars can be modified from its
+default <code>"#3290CC"</code> color by supplying a color to the
+<code>data_bar_stroke_color</code> option.</p></dd>
+
+
+<dt>data_bar_stroke_width</dt>
+<dd><p><em>Width of a data bar's outside line</em></p>
+<p><code>scalar&lt;numeric&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>The width of the stroke used for the data bars can be modified with the
+<code>data_bar_stroke_width</code> option. By default, a value of <code>4</code> (as in '4px') is
+used.</p></dd>
+
+
+<dt>data_bar_fill_color</dt>
+<dd><p><em>Fill color for data bars</em></p>
+<p><code>scalar&lt;character&gt;|vector&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>By default, all data bars have a fill color of <code>"#3FB5FF"</code>. This can be
+changed for all data bars by providing a different color to
+<code>data_bar_fill_color</code>. And, a vector of different colors can be supplied so
+long as the length is equal to the number of data bars; the fill color
+values will be applied in order of left to right.</p></dd>
 
 
 <dt>vertical_guide_stroke_color</dt>
@@ -150,8 +193,8 @@ can be changed with the <code>vertical_guide_stroke_color</code> option.</p></dd
 <dt>vertical_guide_stroke_width</dt>
 <dd><p><em>Line widths for vertical guides</em></p>
 <p><code>scalar&lt;numeric&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
-<p>The vertical guide's stroke width, by default, is relatively large at <code>12</code>.
-This is fully modifiable by setting a different value with the
+<p>The vertical guide's stroke width, by default, is relatively large at <code>12</code>
+(this is '12px'). This is modifiable by setting a different value with the
 <code>vertical_guide_stroke_width</code> option.</p></dd>
 
 
@@ -176,14 +219,6 @@ This data line layer can be hidden by setting <code>show_data_line</code> to <co
 shown by default but can be hidden with <code>show_data_area = FALSE</code>.</p></dd>
 
 
-<dt>show_vertical_guides</dt>
-<dd><p><em>Should vertical guides be shown?</em></p>
-<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
-<p>Vertical guides appear when hovering over data points. This hidden layer is
-active by default but can be deactivated by using
-<code>show_vertical_guides = FALSE</code>.</p></dd>
-
-
 <dt>show_reference_line</dt>
 <dd><p><em>Should a reference line be shown?</em></p>
 <p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
@@ -199,6 +234,34 @@ by default but can be hidden by setting <code>show_reference_line</code> to <cod
 <p>The reference area appears at the very bottom of the layer stack, if it is
 available. It will be shown in the default case but can be hidden by using
 <code>show_reference_area = FALSE</code>.</p></dd>
+
+
+<dt>show_vertical_guides</dt>
+<dd><p><em>Should there be vertical guides?</em></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>Vertical guides appear when hovering over data points. This hidden layer is
+active by default but can be deactivated by using
+<code>show_vertical_guides = FALSE</code>.</p></dd>
+
+
+<dt>show_y_axis_guide</dt>
+<dd><p><em>Should there be a y-axis guide?</em></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>The <em>y</em>-axis guide will appear when hovering over the far left side of a
+nanoplot. This hidden layer is active by default but can be deactivated by
+using <code>show_y_axis_guide = FALSE</code>.</p></dd>
+
+
+<dt>currency</dt>
+<dd><p><em>Define values as currencies of a specific type</em></p>
+<p><code>scalar&lt;character&gt;|obj:&lt;gt_currency&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>If the values are to be displayed as currency values, supply either: (1) a
+3-letter currency code (e.g., <code>"USD"</code> for U.S. Dollars, <code>"EUR"</code> for the
+Euro currency), (2) a common currency name (e.g., <code>"dollar"</code>, <code>"pound"</code>,
+<code>"yen"</code>, etc.), or (3) an invocation of the <code><a href="currency.html">currency()</a></code> helper function
+for specifying a custom currency (where the string could vary across output
+contexts). Use <code><a href="info_currencies.html">info_currencies()</a></code> to get an information table with all of
+the valid currency codes, and examples of each, for the first two cases.</p></dd>
 
 </dl></div>
     <div class="section level2">

@@ -138,20 +138,14 @@ function. Examples of select helper functions include <code><a href="https://tid
 need (e.g., <code>[colname_1] &gt; 100 &amp; [colname_2] &lt; 50</code>).</p></dd>
 
 
-<dt>height</dt>
-<dd><p><em>Height of image</em></p>
+<dt>height, width</dt>
+<dd><p><em>Height and width of images</em></p>
 <p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
-<p>The absolute height of the image in the table cell. By default, this is set
-to <code>NULL</code>. If <code>width</code> is set and <code>height</code> is <code>NULL</code>, the ratio of width to
-height is preserved. If <code>width</code> and <code>height</code> are both <code>NULL</code>, <code>height</code>
-defaults to <code>"2em"</code>.</p></dd>
-
-
-<dt>width</dt>
-<dd><p><em>Width of image</em></p>
-<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
-<p>The absolute width of the image in the table cell. By default, this is set
-to <code>NULL</code>, meaning the ratio of width to height is respected.</p></dd>
+<p>The absolute height of the image in the table cell. If you set the <code>width</code>
+and <code>height</code> remains <code>NULL</code> (or vice versa), the width-to-height ratio will
+be preserved when <strong>gt</strong> calculates the length of the missing dimension. If
+<code>width</code> and <code>height</code> are both <code>NULL</code>, <code>height</code> is set as <code>"2em"</code> and
+<code>width</code> will be calculated.</p></dd>
 
 
 <dt>sep</dt>
