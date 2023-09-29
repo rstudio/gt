@@ -68,6 +68,8 @@ render_units <- function(units_object, context = "html") {
 
     if (!is.na(unit_subscript) && nchar(unit_subscript) > 2 && grepl("*", unit_subscript)) {
 
+      unit_subscript <- units_symbol_replacements(text = unit_subscript, context = context)
+
       if (context == "html") {
         unit_subscript <- commonmark::markdown_html(text = unit_subscript)
         unit_subscript <- gsub("^<p>|</p>\n$", "", unit_subscript)
@@ -80,6 +82,8 @@ render_units <- function(units_object, context = "html") {
     }
 
     if (!is.na(exponent) && nchar(exponent) > 2 && grepl("*", exponent)) {
+
+      exponent <- units_symbol_replacements(text = exponent, context = context)
 
       if (context == "html") {
         exponent <- commonmark::markdown_html(text = exponent)
