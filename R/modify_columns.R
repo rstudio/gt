@@ -2138,12 +2138,14 @@ cols_add <- function(
 #'
 #' Each nanoplot contains data points with reasonably good visibility, having
 #' smooth connecting lines between them to allow for easier scanning of values.
-#' By default, a nanoplot will have basic interactivity. One can hover over the
-#' data points and vertical guides will display values ascribed to each. A
-#' horizontal *reference line* is also present in the standard view (denoting
-#' the median of the data). This reference line can be customized by providing a
-#' static value or by choosing a keyword that computes a particular *y* value
-#' using a nanoplot's data values. Aside from a reference line, there is also an
+#' By default, a nanoplot rendered in an HTML-based table will have basic
+#' interactivity. One can hover over the data points and vertical guides will
+#' display values ascribed to each. There is also a hoverable guide on the
+#' left-hand side that displays the minimal and maximal *y* values. A horizontal
+#' *reference line* is also present in the standard view (denoting the median of
+#' the data). This reference line can be customized by providing a static value
+#' or by choosing a keyword that computes a particular *y* value using a
+#' nanoplot's data values. Aside from a reference line, there is also an
 #' associated *reference area* which, by default, tries to make itself useful by
 #' bounding the area between the lower and upper quartiles of the data. These
 #' boundaries can also be customized in a similar fashion as the reference line.
@@ -2159,7 +2161,7 @@ cols_add <- function(
 #'
 #' @inheritParams cols_align
 #'
-#' @param columns *Columns from which to obtain data*
+#' @param columns *Columns from which to get data for the dependent variable*
 #'
 #'   `<column-targeting expression>` // **required**
 #'
@@ -2183,6 +2185,27 @@ cols_add <- function(
 #'   We can also use expressions to filter down to the rows we need (e.g.,
 #'   `[colname_1] > 100 & [colname_2] < 50`).
 #'
+#' @param plot_type *The type of nanoplot to display*
+#'
+#'   `singl-kw:[line|bar]` // *default:* `"line"`
+#'
+#'   Nanoplots can either take the form of a line plot (using `"line"`) or a bar
+#'   plot (with `"bar"`). A line plot, by default, contains layers for a data
+#'   line, data points, and a data area. Each of these can be deactivated by
+#'   using [nanoplot_options()]. With a bar plot, the always visible layer is
+#'   that of the data bars. Furthermore, a line plot can optionally take in *x*
+#'   values through the `columns_x` argument whereas a bar plot ignores any data
+#'   representing the independant variable.
+#'
+#' @param plot_height *The height of the nanoplots*
+#'
+#'   `scalar<character>` // *default:* `"2em"`
+#'
+#'   The height of the nanoplots. The default here is a sensible value of
+#'   `"2em"`. By way of comparison, this is a far greater height than the
+#'   default for icons through [fmt_icon()] (`"1em"`) and is the same height as
+#'   images inserted via [fmt_image()] (also having a `"2em"` height default).
+#'
 #' @param missing_vals *Treatment of missing values*
 #'
 #'   `singl-kw:[gap|zero|remove]` // *default:* `"gap"`
@@ -2192,6 +2215,19 @@ cols_add <- function(
 #'   at the sites of missing data, where data lines will have discontinuities;
 #'   (2) `"zero"` will replace `NA` values with zero values; and (3) `"remove"`
 #'   will remove any incoming `NA` values.
+#'
+#' @param columns_x *Columns containing values for the optional x variable*
+#'
+#'   `<column-targeting expression>` // *default:* `NULL` (`optional`)
+#'
+#'   We can optionally obtain data for the independent variable (i.e., the
+#'   *x*-axis data) if specifying columns in `columns_x`. This is only for the
+#'   `"line"` type of plot (set via the `plot_type` argument). We can supply
+#'   either be a series of column names provided in [c()], a vector of column
+#'   indices, or a select helper function. Examples of select helper functions
+#'   include [starts_with()], [ends_with()], [contains()], [matches()],
+#'   [one_of()], [num_range()], and [everything()]. Data collected from the
+#'   columns will be concatenated together in the order of resolution.
 #'
 #' @param reference_line *Add a reference line*
 #'
@@ -2213,18 +2249,6 @@ cols_add <- function(
 #'   one of the following keywords for the generation of the value: (1)
 #'   `"mean"`, (2) `"median"`, (3) `"min"`, (4) `"max"`, (5) `"first"`, or (6)
 #'   `"last"`. Input can either be a vector or list with two elements.
-#'
-#' @param currency *Define values as currencies of a specific type*
-#'
-#'   `scalar<character>|obj:<gt_currency>` // *default:* `NULL` (`optional`)
-#'
-#'   If the values are to be displayed as currency values, supply either: (1) a
-#'   3-letter currency code (e.g., `"USD"` for U.S. Dollars, `"EUR"` for the
-#'   Euro currency), (2) a common currency name (e.g., `"dollar"`, `"pound"`,
-#'   `"yen"`, etc.), or (3) an invocation of the [currency()] helper function
-#'   for specifying a custom currency (where the string could vary across output
-#'   contexts). Use [info_currencies()] to get an information table with all of
-#'   the valid currency codes, and examples of each, for the first two cases.
 #'
 #' @param new_col_name *Column name for the new column containing the plots*
 #'
@@ -2255,13 +2279,6 @@ cols_add <- function(
 #'   column is provided to either of these arguments (otherwise, the function
 #'   will be stopped). If nothing is provided for either argument then the new
 #'   column will be placed at the end of the column series.
-#'
-#' @param height *The height of the nanoplots*
-#'
-#'   `scalar<character>` // *default:* `NULL` (`optional`)
-#'
-#'   The height of the nanoplots. If nothing is provided here then **gt** will
-#'   provide a sensible length value of `"1.5em"`.
 #'
 #' @param options *Set options for the nanoplots*
 #'
@@ -2406,15 +2423,16 @@ cols_nanoplot <- function(
     data,
     columns,
     rows = everything(),
+    plot_type = c("line", "bar"),
+    plot_height = "2em",
     missing_vals = c("gap", "zero", "remove"),
+    columns_x = NULL,
     reference_line = NULL,
     reference_area = NULL,
-    currency = NULL,
     new_col_name = NULL,
     new_col_label = NULL,
     before = NULL,
     after = NULL,
-    height = NULL,
     options = NULL
 ) {
 
@@ -2423,6 +2441,7 @@ cols_nanoplot <- function(
 
   # Ensure that arguments are matched
   missing_vals <- rlang::arg_match(missing_vals)
+  plot_type <- rlang::arg_match(plot_type)
 
   #
   # Resolution of columns and rows as character vectors
@@ -2435,6 +2454,14 @@ cols_nanoplot <- function(
       excl_stub = FALSE
     )
 
+  resolved_columns_x <-
+    resolve_cols_c(
+      expr = {{ columns_x }},
+      data = data,
+      excl_stub = FALSE,
+      null_means = "nothing"
+    )
+
   resolved_rows_idx <-
     resolve_rows_i(
       expr = {{ rows }},
@@ -2444,25 +2471,28 @@ cols_nanoplot <- function(
   # Get the internal data table
   data_tbl <- dt_data_get(data = data)
 
-  data_vals_plot <- list()
+  data_vals_plot_y <-
+    generate_data_vals_list(
+      data_tbl = data_tbl,
+      resolved_columns = resolved_columns,
+      resolved_rows_idx = resolved_rows_idx
+    )
 
-  for (i in seq_len(nrow(data_tbl))) {
+  if (length(resolved_columns_x) > 0) {
 
-    if (!(i %in% resolved_rows_idx)) {
+    data_vals_plot_x <-
+      generate_data_vals_list(
+        data_tbl = data_tbl,
+        resolved_columns = resolved_columns_x,
+        resolved_rows_idx = resolved_rows_idx
+      )
 
-      data_vals_plot <- c(data_vals_plot, list(NA_character_))
-
-    } else {
-
-      data_vals_i <- dplyr::select(data_tbl, dplyr::all_of(resolved_columns))
-      data_vals_i <- unname(unlist(as.vector(data_vals_i[i, ])))
-
-      data_vals_plot <- c(data_vals_plot, list(data_vals_i))
-    }
+  } else {
+    data_vals_plot_x <- NULL
   }
 
-  if (is.null(height)) {
-    height <- "1.5em"
+  if (is.null(plot_height)) {
+    plot_height <- "2em"
   }
 
   if (is.null(options)) {
@@ -2471,25 +2501,38 @@ cols_nanoplot <- function(
     options_plots <- options
   }
 
+  # Initialize vector that will contain the nanoplots
   nanoplots <- c()
 
-  for (i in seq_along(data_vals_plot)) {
+  for (i in seq_along(data_vals_plot_y)) {
 
-    data_vals_plot_i <- data_vals_plot[i][[1]]
+    data_vals_plot_y_i <- data_vals_plot_y[i][[1]]
+
+    if (!is.null(data_vals_plot_x)) {
+      data_vals_plot_x_i <- data_vals_plot_x[i][[1]]
+    } else {
+      data_vals_plot_x_i <- NULL
+    }
 
     data_plot_i <-
-      generate_equal_spaced_nanoplot(
-        y_vals = data_vals_plot_i,
+      generate_nanoplot(
+        y_vals = data_vals_plot_y_i,
         y_ref_line = reference_line,
         y_ref_area = reference_area,
+        x_vals = data_vals_plot_x_i,
         missing_vals = missing_vals,
-        currency = currency,
+        plot_type = plot_type,
+        line_type = options_plots$data_line_type,
+        currency = options_plots$currency,
         data_point_radius = options_plots$data_point_radius,
         data_point_stroke_color = options_plots$data_point_stroke_color,
         data_point_stroke_width = options_plots$data_point_stroke_width,
         data_point_fill_color = options_plots$data_point_fill_color,
         data_line_stroke_color = options_plots$data_line_stroke_color,
         data_line_stroke_width = options_plots$data_line_stroke_width,
+        data_bar_stroke_color = options_plots$data_bar_stroke_color,
+        data_bar_stroke_width = options_plots$data_bar_stroke_width,
+        data_bar_fill_color = options_plots$data_bar_fill_color,
         vertical_guide_stroke_color = options_plots$vertical_guide_stroke_color,
         vertical_guide_stroke_width = options_plots$vertical_guide_stroke_width,
         show_data_points = options_plots$show_data_points,
@@ -2498,7 +2541,8 @@ cols_nanoplot <- function(
         show_ref_line = options_plots$show_reference_line,
         show_ref_area = options_plots$show_reference_area,
         show_vertical_guides = options_plots$show_vertical_guides,
-        svg_height = height
+        show_y_axis_guide = options_plots$show_y_axis_guide,
+        svg_height = plot_height
       )
 
     nanoplots <- c(nanoplots, data_plot_i)
@@ -2592,6 +2636,52 @@ cols_nanoplot <- function(
     )
 
   data
+}
+
+generate_data_vals_list <- function(
+    data_tbl,
+    resolved_columns,
+    resolved_rows_idx
+) {
+
+  data_vals_plot <- list()
+
+  for (i in seq_len(nrow(data_tbl))) {
+
+    if (!(i %in% resolved_rows_idx)) {
+
+      data_vals_plot <- c(data_vals_plot, list(NA_character_))
+
+    } else {
+
+      data_vals_i <- dplyr::select(data_tbl, dplyr::all_of(resolved_columns))
+
+      data_vals_i <- as.vector(data_vals_i[i, ])
+
+      data_vals_j <- c()
+
+      for (j in seq_along(data_vals_i)) {
+
+        if (
+          !is.na(data_vals_i[j][[1]]) &&
+          is.character(data_vals_i[j][[1]])
+        ) {
+
+          data_vals_j <-
+            c(data_vals_j, process_number_stream(data_vals_i[j][[1]]))
+
+        } else {
+          data_vals_j <- c(data_vals_j, unname(unlist(data_vals_i[j][[1]])))
+        }
+      }
+
+      data_vals_i <- list(data_vals_j)
+
+      data_vals_plot <- c(data_vals_plot, data_vals_i)
+    }
+  }
+
+  data_vals_plot
 }
 
 #' Move one or more columns

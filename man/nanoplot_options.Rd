@@ -9,16 +9,22 @@ nanoplot_options(
   data_point_stroke_color = NULL,
   data_point_stroke_width = NULL,
   data_point_fill_color = NULL,
+  data_line_type = NULL,
   data_line_stroke_color = NULL,
   data_line_stroke_width = NULL,
+  data_bar_stroke_color = NULL,
+  data_bar_stroke_width = NULL,
+  data_bar_fill_color = NULL,
   vertical_guide_stroke_color = NULL,
   vertical_guide_stroke_width = NULL,
   show_data_points = NULL,
   show_data_line = NULL,
   show_data_area = NULL,
-  show_vertical_guides = NULL,
   show_reference_line = NULL,
-  show_reference_area = NULL
+  show_reference_area = NULL,
+  show_vertical_guides = NULL,
+  show_y_axis_guide = NULL,
+  currency = NULL
 )
 }
 \arguments{
@@ -44,7 +50,11 @@ changed (ensure that the vector length matches the number of data points).}
 
 \item{data_point_stroke_width}{\emph{Width of surrounding line on data points}
 
-\verb{scalar<numeric>|vector<numeric>} // \emph{default:} \code{NULL} (\code{optional})}
+\verb{scalar<numeric>|vector<numeric>} // \emph{default:} \code{NULL} (\code{optional})
+
+The width of the outside stroke for the data points can be modified with
+the \code{data_point_stroke_width} option. By default, a value of \code{4} (as in
+'4px') is used.}
 
 \item{data_point_fill_color}{\emph{Fill color for data points}
 
@@ -55,6 +65,14 @@ This can be changed for all data points by providing a different color
 to \code{data_point_fill_color}. And, a vector of different colors can be
 supplied so long as the length is equal to the number of data points; the
 fill color values will be applied in order of left to right.}
+
+\item{data_line_type}{\emph{Type of data line: curved or straight}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+This can accept either \code{"curved"} or \code{"straight"}. Curved lines are
+recommended when the nanoplot has less than 30 points and data points are
+evenly spaced. In most other cases, straight lines might present better.}
 
 \item{data_line_stroke_color}{\emph{Color of the data line}
 
@@ -69,8 +87,34 @@ option.}
 \verb{scalar<numeric>} // \emph{default:} \code{NULL} (\code{optional})
 
 The width of the connecting data line can be modified with the
-\code{data_line_stroke_width} option. By default, a value of \code{4} (as in
-\code{"4px"}) is used.}
+\code{data_line_stroke_width} option. By default, a value of \code{4} (as in '4px')
+is used.}
+
+\item{data_bar_stroke_color}{\emph{Color of a data bar's outside line}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+The color of the stroke used for the data bars can be modified from its
+default \code{"#3290CC"} color by supplying a color to the
+\code{data_bar_stroke_color} option.}
+
+\item{data_bar_stroke_width}{\emph{Width of a data bar's outside line}
+
+\verb{scalar<numeric>} // \emph{default:} \code{NULL} (\code{optional})
+
+The width of the stroke used for the data bars can be modified with the
+\code{data_bar_stroke_width} option. By default, a value of \code{4} (as in '4px') is
+used.}
+
+\item{data_bar_fill_color}{\emph{Fill color for data bars}
+
+\verb{scalar<character>|vector<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+By default, all data bars have a fill color of \code{"#3FB5FF"}. This can be
+changed for all data bars by providing a different color to
+\code{data_bar_fill_color}. And, a vector of different colors can be supplied so
+long as the length is equal to the number of data bars; the fill color
+values will be applied in order of left to right.}
 
 \item{vertical_guide_stroke_color}{\emph{Color of vertical guides}
 
@@ -85,8 +129,8 @@ can be changed with the \code{vertical_guide_stroke_color} option.}
 
 \verb{scalar<numeric>} // \emph{default:} \code{NULL} (\code{optional})
 
-The vertical guide's stroke width, by default, is relatively large at \code{12}.
-This is fully modifiable by setting a different value with the
+The vertical guide's stroke width, by default, is relatively large at \code{12}
+(this is '12px'). This is modifiable by setting a different value with the
 \code{vertical_guide_stroke_width} option.}
 
 \item{show_data_points}{\emph{Should the data points be shown?}
@@ -110,14 +154,6 @@ This data line layer can be hidden by setting \code{show_data_line} to \code{FAL
 The data area layer is adjacent to the data points and the data line. It is
 shown by default but can be hidden with \code{show_data_area = FALSE}.}
 
-\item{show_vertical_guides}{\emph{Should vertical guides be shown?}
-
-\verb{scalar<logical>} // \emph{default:} \code{NULL} (\code{optional})
-
-Vertical guides appear when hovering over data points. This hidden layer is
-active by default but can be deactivated by using
-\code{show_vertical_guides = FALSE}.}
-
 \item{show_reference_line}{\emph{Should a reference line be shown?}
 
 \verb{scalar<logical>} // \emph{default:} \code{NULL} (\code{optional})
@@ -134,6 +170,34 @@ by default but can be hidden by setting \code{show_reference_line} to \code{FALS
 The reference area appears at the very bottom of the layer stack, if it is
 available. It will be shown in the default case but can be hidden by using
 \code{show_reference_area = FALSE}.}
+
+\item{show_vertical_guides}{\emph{Should there be vertical guides?}
+
+\verb{scalar<logical>} // \emph{default:} \code{NULL} (\code{optional})
+
+Vertical guides appear when hovering over data points. This hidden layer is
+active by default but can be deactivated by using
+\code{show_vertical_guides = FALSE}.}
+
+\item{show_y_axis_guide}{\emph{Should there be a y-axis guide?}
+
+\verb{scalar<logical>} // \emph{default:} \code{NULL} (\code{optional})
+
+The \emph{y}-axis guide will appear when hovering over the far left side of a
+nanoplot. This hidden layer is active by default but can be deactivated by
+using \code{show_y_axis_guide = FALSE}.}
+
+\item{currency}{\emph{Define values as currencies of a specific type}
+
+\verb{scalar<character>|obj:<gt_currency>} // \emph{default:} \code{NULL} (\code{optional})
+
+If the values are to be displayed as currency values, supply either: (1) a
+3-letter currency code (e.g., \code{"USD"} for U.S. Dollars, \code{"EUR"} for the
+Euro currency), (2) a common currency name (e.g., \code{"dollar"}, \code{"pound"},
+\code{"yen"}, etc.), or (3) an invocation of the \code{\link[=currency]{currency()}} helper function
+for specifying a custom currency (where the string could vary across output
+contexts). Use \code{\link[=info_currencies]{info_currencies()}} to get an information table with all of
+the valid currency codes, and examples of each, for the first two cases.}
 }
 \value{
 A list object of class \code{nanoplot_options}.

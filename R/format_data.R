@@ -9216,21 +9216,15 @@ fmt_url <- function(
 #'
 #' @inheritParams fmt_number
 #'
-#' @param height *Height of image*
+#' @param height,width *Height and width of images*
 #'
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
-#'   The absolute height of the image in the table cell. By default, this is set
-#'   to `NULL`. If `width` is set and `height` is `NULL`, the ratio of width to
-#'   height is preserved. If `width` and `height` are both `NULL`, `height`
-#'   defaults to `"2em"`.
-#'
-#' @param width *Width of image*
-#'
-#'   `scalar<character>` // *default:* `NULL` (`optional`)
-#'
-#'   The absolute width of the image in the table cell. By default, this is set
-#'   to `NULL`, meaning the ratio of width to height is respected.
+#'   The absolute height of the image in the table cell. If you set the `width`
+#'   and `height` remains `NULL` (or vice versa), the width-to-height ratio will
+#'   be preserved when **gt** calculates the length of the missing dimension. If
+#'   `width` and `height` are both `NULL`, `height` is set as `"2em"` and
+#'   `width` will be calculated.
 #'
 #' @param sep *Separator between images*
 #'

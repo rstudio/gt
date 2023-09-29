@@ -559,6 +559,10 @@ currency <- function(
 #'
 #'   `scalar<numeric>|vector<numeric>` // *default:* `NULL` (`optional`)
 #'
+#'   The width of the outside stroke for the data points can be modified with
+#'   the `data_point_stroke_width` option. By default, a value of `4` (as in
+#'   '4px') is used.
+#'
 #' @param data_point_fill_color *Fill color for data points*
 #'
 #'   `scalar<character>|vector<character>` // *default:* `NULL` (`optional`)
@@ -568,6 +572,14 @@ currency <- function(
 #'   to `data_point_fill_color`. And, a vector of different colors can be
 #'   supplied so long as the length is equal to the number of data points; the
 #'   fill color values will be applied in order of left to right.
+#'
+#' @param data_line_type *Type of data line: curved or straight*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   This can accept either `"curved"` or `"straight"`. Curved lines are
+#'   recommended when the nanoplot has less than 30 points and data points are
+#'   evenly spaced. In most other cases, straight lines might present better.
 #'
 #' @param data_line_stroke_color *Color of the data line*
 #'
@@ -582,8 +594,34 @@ currency <- function(
 #'   `scalar<numeric>` // *default:* `NULL` (`optional`)
 #'
 #'   The width of the connecting data line can be modified with the
-#'   `data_line_stroke_width` option. By default, a value of `4` (as in
-#'   `"4px"`) is used.
+#'   `data_line_stroke_width` option. By default, a value of `4` (as in '4px')
+#'   is used.
+#'
+#' @param data_bar_stroke_color *Color of a data bar's outside line*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   The color of the stroke used for the data bars can be modified from its
+#'   default `"#3290CC"` color by supplying a color to the
+#'   `data_bar_stroke_color` option.
+#'
+#' @param data_bar_stroke_width *Width of a data bar's outside line*
+#'
+#'   `scalar<numeric>` // *default:* `NULL` (`optional`)
+#'
+#'   The width of the stroke used for the data bars can be modified with the
+#'   `data_bar_stroke_width` option. By default, a value of `4` (as in '4px') is
+#'   used.
+#'
+#' @param data_bar_fill_color *Fill color for data bars*
+#'
+#'   `scalar<character>|vector<character>` // *default:* `NULL` (`optional`)
+#'
+#'   By default, all data bars have a fill color of `"#3FB5FF"`. This can be
+#'   changed for all data bars by providing a different color to
+#'   `data_bar_fill_color`. And, a vector of different colors can be supplied so
+#'   long as the length is equal to the number of data bars; the fill color
+#'   values will be applied in order of left to right.
 #'
 #' @param vertical_guide_stroke_color *Color of vertical guides*
 #'
@@ -598,8 +636,8 @@ currency <- function(
 #'
 #'   `scalar<numeric>` // *default:* `NULL` (`optional`)
 #'
-#'   The vertical guide's stroke width, by default, is relatively large at `12`.
-#'   This is fully modifiable by setting a different value with the
+#'   The vertical guide's stroke width, by default, is relatively large at `12`
+#'   (this is '12px'). This is modifiable by setting a different value with the
 #'   `vertical_guide_stroke_width` option.
 #'
 #' @param show_data_points *Should the data points be shown?*
@@ -623,14 +661,6 @@ currency <- function(
 #'   The data area layer is adjacent to the data points and the data line. It is
 #'   shown by default but can be hidden with `show_data_area = FALSE`.
 #'
-#' @param show_vertical_guides *Should vertical guides be shown?*
-#'
-#'   `scalar<logical>` // *default:* `NULL` (`optional`)
-#'
-#'   Vertical guides appear when hovering over data points. This hidden layer is
-#'   active by default but can be deactivated by using
-#'   `show_vertical_guides = FALSE`.
-#'
 #' @param show_reference_line *Should a reference line be shown?*
 #'
 #'   `scalar<logical>` // *default:* `NULL` (`optional`)
@@ -648,6 +678,34 @@ currency <- function(
 #'   available. It will be shown in the default case but can be hidden by using
 #'   `show_reference_area = FALSE`.
 #'
+#' @param show_vertical_guides *Should there be vertical guides?*
+#'
+#'   `scalar<logical>` // *default:* `NULL` (`optional`)
+#'
+#'   Vertical guides appear when hovering over data points. This hidden layer is
+#'   active by default but can be deactivated by using
+#'   `show_vertical_guides = FALSE`.
+#'
+#' @param show_y_axis_guide *Should there be a y-axis guide?*
+#'
+#'   `scalar<logical>` // *default:* `NULL` (`optional`)
+#'
+#'   The *y*-axis guide will appear when hovering over the far left side of a
+#'   nanoplot. This hidden layer is active by default but can be deactivated by
+#'   using `show_y_axis_guide = FALSE`.
+#'
+#' @param currency *Define values as currencies of a specific type*
+#'
+#'   `scalar<character>|obj:<gt_currency>` // *default:* `NULL` (`optional`)
+#'
+#'   If the values are to be displayed as currency values, supply either: (1) a
+#'   3-letter currency code (e.g., `"USD"` for U.S. Dollars, `"EUR"` for the
+#'   Euro currency), (2) a common currency name (e.g., `"dollar"`, `"pound"`,
+#'   `"yen"`, etc.), or (3) an invocation of the [currency()] helper function
+#'   for specifying a custom currency (where the string could vary across output
+#'   contexts). Use [info_currencies()] to get an information table with all of
+#'   the valid currency codes, and examples of each, for the first two cases.
+#'
 #' @return A list object of class `nanoplot_options`.
 #'
 #' @family helper functions
@@ -663,16 +721,22 @@ nanoplot_options <- function(
     data_point_stroke_color = NULL,
     data_point_stroke_width = NULL,
     data_point_fill_color = NULL,
+    data_line_type = NULL,
     data_line_stroke_color = NULL,
     data_line_stroke_width = NULL,
+    data_bar_stroke_color = NULL,
+    data_bar_stroke_width = NULL,
+    data_bar_fill_color = NULL,
     vertical_guide_stroke_color = NULL,
     vertical_guide_stroke_width = NULL,
     show_data_points = NULL,
     show_data_line = NULL,
     show_data_area = NULL,
-    show_vertical_guides = NULL,
     show_reference_line = NULL,
-    show_reference_area = NULL
+    show_reference_area = NULL,
+    show_vertical_guides = NULL,
+    show_y_axis_guide = NULL,
+    currency = NULL
 ) {
 
   if (is.null(data_point_radius)) {
@@ -687,11 +751,23 @@ nanoplot_options <- function(
   if (is.null(data_point_fill_color)) {
     data_point_fill_color <- "red"
   }
+  if (is.null(data_line_type)) {
+    data_line_type <- "curved"
+  }
   if (is.null(data_line_stroke_color)) {
     data_line_stroke_color <- "steelblue"
   }
   if (is.null(data_line_stroke_width)) {
     data_line_stroke_width <- 8
+  }
+  if (is.null(data_bar_stroke_color)) {
+    data_bar_stroke_color <- "#3290CC"
+  }
+  if (is.null(data_bar_stroke_width)) {
+    data_bar_stroke_width <- 4
+  }
+  if (is.null(data_bar_fill_color)) {
+    data_bar_fill_color <- "#3FB5FF"
   }
   if (is.null(vertical_guide_stroke_color)) {
     vertical_guide_stroke_color <- "#911EB4"
@@ -708,14 +784,20 @@ nanoplot_options <- function(
   if (is.null(show_data_area)) {
     show_data_area <- TRUE
   }
-  if (is.null(show_vertical_guides)) {
-    show_vertical_guides <- TRUE
-  }
   if (is.null(show_reference_line)) {
     show_reference_line <- TRUE
   }
   if (is.null(show_reference_area)) {
     show_reference_area <- TRUE
+  }
+  if (is.null(show_vertical_guides)) {
+    show_vertical_guides <- TRUE
+  }
+  if (is.null(show_y_axis_guide)) {
+    show_y_axis_guide <- TRUE
+  }
+  if (is.null(currency)) {
+    currency <- NULL
   }
 
   nanoplot_options_list <-
@@ -724,16 +806,22 @@ nanoplot_options <- function(
       data_point_stroke_color = data_point_stroke_color,
       data_point_stroke_width = data_point_stroke_width,
       data_point_fill_color = data_point_fill_color,
+      data_line_type = data_line_type,
       data_line_stroke_color = data_line_stroke_color,
       data_line_stroke_width = data_line_stroke_width,
+      data_bar_stroke_color = data_bar_stroke_color,
+      data_bar_stroke_width = data_bar_stroke_width,
+      data_bar_fill_color = data_bar_fill_color,
       vertical_guide_stroke_color = vertical_guide_stroke_color,
       vertical_guide_stroke_width = vertical_guide_stroke_width,
       show_data_points = show_data_points,
       show_data_line = show_data_line,
       show_data_area = show_data_area,
-      show_vertical_guides = show_vertical_guides,
       show_reference_line = show_reference_line,
-      show_reference_area = show_reference_area
+      show_reference_area = show_reference_area,
+      show_vertical_guides = show_vertical_guides,
+      show_y_axis_guide = show_y_axis_guide,
+      currency = currency
     )
 
   class(nanoplot_options_list) <- "nanoplot_options"
