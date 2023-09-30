@@ -46,11 +46,12 @@ build_data <- function(data, context) {
   data <- render_substitutions(data = data, context = context)
   data <- migrate_unformatted_to_output(data = data, context = context)
   data <- perform_col_merge(data = data, context = context)
-
   data <- dt_body_reassemble(data = data)
+
   data <- reorder_stub_df(data = data)
   data <- reorder_footnotes(data = data)
   data <- reorder_styles(data = data)
+
   data <- perform_text_transforms(data = data)
 
   # Use `dt_*_build()` methods
