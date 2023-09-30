@@ -4,7 +4,11 @@
 \alias{extract_body}
 \title{Extract the table body from a \strong{gt} object}
 \usage{
-extract_body(data, stage = NULL, output = c("html", "latex", "rtf", "word"))
+extract_body(
+  data,
+  build_stage = NULL,
+  output = c("html", "latex", "rtf", "word")
+)
 }
 \arguments{
 \item{data}{\emph{The gt table data object}
@@ -13,6 +17,27 @@ extract_body(data, stage = NULL, output = c("html", "latex", "rtf", "word"))
 
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
+
+\item{build_stage}{\emph{The build stage of the formatted R data frame}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+When a \strong{gt} undergoes rendering, the body of the table proceeds through
+several build stages. Providing a single stage name will yield a data frame
+that has been extracted after completed that stage. Here are the build
+stages in order: (1) \code{"init"}, (2) \code{"fmt_applied"}, (3) \code{"sub_applied"},
+(4) \code{"unfmt_included"}, (5) \code{"cols_merged"}, (6) \code{"body_reassembled"}, (7)
+\code{"text_transformed"}, and (8) \code{"footnotes_attached"}. If not supplying a
+value for \code{build_stage} then the entire build for the table body (i.e., up
+to and including the \code{"footnotes_attached"} stage) will be performed before
+returning the data frame.}
+
+\item{output}{\emph{Output format}
+
+\verb{singl-kw:[html|latex|rtf|word]} // \emph{default:} \code{"html"}
+
+The output format of the resulting data frame. This can either be
+\code{"html"} (the default), \code{"latex"}, \code{"rtf"}, or \code{"word"}.}
 }
 \value{
 A data frame or tibble object containing the table body.
