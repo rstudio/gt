@@ -78,7 +78,7 @@ more readable and easier to read than other sans serif typefaces.
 
 \subsection{Geometric Humanist (\code{"geometric-humanist"})}{
 
-\if{html}{\out{<div class="sourceCode css">}}\preformatted{font-family: Avenir, 'Avenir Next LT Pro', Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
+\if{html}{\out{<div class="sourceCode css">}}\preformatted{font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
 }\if{html}{\out{</div>}}
 
 Clean, geometric forms and consistent stroke widths are characteristics of
@@ -112,7 +112,7 @@ well-known examples of a Neo-grotesque typeface.
 
 \subsection{Monospace Slab Serif (\code{"monospace-slab-serif"})}{
 
-\if{html}{\out{<div class="sourceCode css">}}\preformatted{font-family: 'Nimbus Mono PS', 'Courier New', 'Cutive Mono', monospace;
+\if{html}{\out{<div class="sourceCode css">}}\preformatted{font-family: 'Nimbus Mono PS', 'Courier New', monospace;
 }\if{html}{\out{</div>}}
 
 Monospace slab serif typefaces are distinguished by their fixed-width
@@ -146,7 +146,7 @@ straight lines.
 
 \subsection{Rounded Sans (\code{"rounded-sans"})}{
 
-\if{html}{\out{<div class="sourceCode css">}}\preformatted{font-family: ui-rounded, 'Hiragino Maru Gothic ProN', Quicksand, Comfortaa, Manjari, 'Arial Rounded MT Bold', Calibri, source-sans-pro, sans-serif;
+\if{html}{\out{<div class="sourceCode css">}}\preformatted{font-family: ui-rounded, 'Hiragino Maru Gothic ProN', Quicksand, Comfortaa, Manjari, 'Arial Rounded MT', 'Arial Rounded MT Bold', Calibri, source-sans-pro, sans-serif;
 }\if{html}{\out{</div>}}
 
 The rounded, curved letterforms that define rounded typefaces give them a

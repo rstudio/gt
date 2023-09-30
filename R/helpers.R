@@ -4004,7 +4004,7 @@ default_fonts <- function() {
 #' ## Geometric Humanist (`"geometric-humanist"`)
 #'
 #' ```css
-#' font-family: Avenir, 'Avenir Next LT Pro', Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
+#' font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
 #' ```
 #'
 #' Clean, geometric forms and consistent stroke widths are characteristics of
@@ -4038,7 +4038,7 @@ default_fonts <- function() {
 #' ## Monospace Slab Serif (`"monospace-slab-serif"`)
 #'
 #' ```css
-#' font-family: 'Nimbus Mono PS', 'Courier New', 'Cutive Mono', monospace;
+#' font-family: 'Nimbus Mono PS', 'Courier New', monospace;
 #' ```
 #'
 #' Monospace slab serif typefaces are distinguished by their fixed-width
@@ -4072,7 +4072,7 @@ default_fonts <- function() {
 #' ## Rounded Sans (`"rounded-sans"`)
 #'
 #' ```css
-#' font-family: ui-rounded, 'Hiragino Maru Gothic ProN', Quicksand, Comfortaa, Manjari, 'Arial Rounded MT Bold', Calibri, source-sans-pro, sans-serif;
+#' font-family: ui-rounded, 'Hiragino Maru Gothic ProN', Quicksand, Comfortaa, Manjari, 'Arial Rounded MT', 'Arial Rounded MT Bold', Calibri, source-sans-pro, sans-serif;
 #' ```
 #'
 #' The rounded, curved letterforms that define rounded typefaces give them a
