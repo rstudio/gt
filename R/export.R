@@ -918,7 +918,7 @@ as_rtf <- function(
 #'   either `"left"` (the default), `"center"`, or `"right"`. This option is
 #'   only used when `caption_location` is not set as `"embed"`.
 #'
-#' @param split *Allow splitting*
+#' @param split *Allow splitting of a table row across pages*
 #'
 #'   `scalar<logical>` // *default:* `FALSE`
 #'
@@ -930,7 +930,7 @@ as_rtf <- function(
 #'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   A logical value that indicates whether a table should use Word option
-#'   `keep rows together`.
+#'   `Keep rows together`.
 #'
 #' @section Examples:
 #'
@@ -1167,6 +1167,21 @@ as_word_tbl_body <- function(
 #'   This is the **gt** table object that is commonly created through use of the
 #'   [gt()] function.
 #'
+#' @param build_stage *The build stage of the formatted R data frame*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   When a **gt** undergoes rendering, the body of the table proceeds through
+#'   several build stages
+#'
+#'
+#' @param output *Output format*
+#'
+#'   `singl-kw:[html|latex|rtf|word]` // *default:* `"html"`
+#'
+#'   The output format of the resulting data frame. This can either be
+#'   `"html"` (the default), `"latex"`, `"rtf"`, or `"word"`.
+#'
 #' @return A data frame or tibble object containing the table body.
 #'
 #' @family table export functions
@@ -1179,7 +1194,7 @@ as_word_tbl_body <- function(
 #' @export
 extract_body <- function(
     data,
-    stage = NULL,
+    build_stage = NULL,
     output = c("html", "latex", "rtf", "word")
 ) {
 
@@ -1190,31 +1205,72 @@ extract_body <- function(
   output <- rlang::arg_match(output)
 
   data <- dt_body_build(data = data)
-  if (!is.null(stage) && stage == "init") return(data[["_body"]])
+
+  if (
+    !is.null(build_stage) &&
+    build_stage == "init"
+  ) {
+    return(data[["_body"]])
+  }
 
   data <- render_formats(data = data, context = output)
-  if (!is.null(stage) && stage == "fmt_applied") return(data[["_body"]])
+
+  if (
+    !is.null(build_stage) &&
+    build_stage == "fmt_applied"
+  ) {
+    return(data[["_body"]])
+  }
 
   data <- render_substitutions(data = data, context = output)
-  if (!is.null(stage) && stage == "sub_applied") return(data[["_body"]])
+
+  if (
+    !is.null(build_stage) &&
+    build_stage == "sub_applied"
+  ) {
+    return(data[["_body"]])
+  }
 
   data <- migrate_unformatted_to_output(data = data, context = output)
-  if (!is.null(stage) && stage == "unfmt_included") return(data[["_body"]])
+
+  if (
+    !is.null(build_stage) &&
+    build_stage == "unfmt_included"
+  ) {
+    return(data[["_body"]])
+  }
 
   data <- perform_col_merge(data = data, context = output)
-  if (!is.null(stage) && stage == "cols_merged") return(data[["_body"]])
+
+  if (
+    !is.null(build_stage) &&
+    build_stage == "cols_merged"
+  ) {
+    return(data[["_body"]])
+  }
 
   data <- dt_body_reassemble(data = data)
-  if (!is.null(stage) && stage == "body_reassembled") return(data[["_body"]])
+
+  if (
+    !is.null(build_stage) &&
+    build_stage == "body_reassembled"
+  ) {
+    return(data[["_body"]])
+  }
 
   data <- reorder_stub_df(data = data)
   data <- reorder_footnotes(data = data)
   data <- reorder_styles(data = data)
 
   data <- perform_text_transforms(data = data)
-  if (!is.null(stage) && stage == "text_transformed") return(data[["_body"]])
 
-  # Use `dt_*_build()` methods
+  if (
+    !is.null(build_stage) &&
+    build_stage == "text_transformed"
+  ) {
+    return(data[["_body"]])
+  }
+
   data <- dt_boxhead_build(data = data, context = output)
   data <- dt_spanners_build(data = data, context = output)
   data <- dt_heading_build(data = data, context = output)
@@ -1223,11 +1279,7 @@ extract_body <- function(
   data <- dt_source_notes_build(data = data, context = output)
   data <- dt_summary_build(data = data, context = output)
   data <- dt_groups_rows_build(data = data, context = output)
-
-  # Resolve footnotes and styles
   data <- resolve_footnotes_styles(data = data, tbl_type = "footnotes")
-
-  # Add footnote marks to the `data` rows
   data <- apply_footnotes_to_output(data = data, context = output)
 
   data[["_body"]]
@@ -1301,7 +1353,7 @@ extract_body <- function(
 #'
 #' @family table export functions
 #' @section Function ID:
-#' 13-6
+#' 13-7
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1395,7 +1447,7 @@ extract_summary <- function(data) {
 #'
 #'   `singl-kw:[auto|plain|html|latex|rtf|word]` // *default:* `"auto"`
 #'
-#'   The output style of the resulting character vector. This can either be
+#'   The output format of the resulting character vector. This can either be
 #'   `"auto"` (the default), `"plain"`, `"html"`, `"latex"`, `"rtf"`, or
 #'   `"word"`. In **knitr** rendering (i.e., Quarto or R Markdown), the `"auto"`
 #'   option will choose the correct `output` value
@@ -1445,7 +1497,7 @@ extract_summary <- function(data) {
 #'
 #' @family table export functions
 #' @section Function ID:
-#' 13-7
+#' 13-8
 #'
 #' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
