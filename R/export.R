@@ -1172,8 +1172,14 @@ as_word_tbl_body <- function(
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   When a **gt** undergoes rendering, the body of the table proceeds through
-#'   several build stages
-#'
+#'   several build stages. Providing a single stage name will yield a data frame
+#'   that has been extracted after completed that stage. Here are the build
+#'   stages in order: (1) `"init"`, (2) `"fmt_applied"`, (3) `"sub_applied"`,
+#'   (4) `"unfmt_included"`, (5) `"cols_merged"`, (6) `"body_reassembled"`, (7)
+#'   `"text_transformed"`, and (8) `"footnotes_attached"`. If not supplying a
+#'   value for `build_stage` then the entire build for the table body (i.e., up
+#'   to and including the `"footnotes_attached"` stage) will be performed before
+#'   returning the data frame.
 #'
 #' @param output *Output format*
 #'
@@ -1281,6 +1287,16 @@ extract_body <- function(
   data <- dt_groups_rows_build(data = data, context = output)
   data <- resolve_footnotes_styles(data = data, tbl_type = "footnotes")
   data <- apply_footnotes_to_output(data = data, context = output)
+
+  if (
+    (
+      !is.null(build_stage) &&
+      build_stage == "footnotes_attached"
+    ) ||
+    is.null(build_stage)
+  ) {
+    return(data[["_body"]])
+  }
 
   data[["_body"]]
 }
