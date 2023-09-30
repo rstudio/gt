@@ -70,6 +70,7 @@ Other table export functions:
 \code{\link{as_latex}()},
 \code{\link{as_rtf}()},
 \code{\link{as_word}()},
+\code{\link{extract_body}()},
 \code{\link{extract_cells}()},
 \code{\link{extract_summary}()},
 \code{\link{gtsave}()}
