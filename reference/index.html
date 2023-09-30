@@ -876,7 +876,7 @@
       </dl></div><div class="section level2">
       <h2 id="export-and-extraction-functions">Export and extraction functions<a class="anchor" aria-label="anchor" href="#export-and-extraction-functions"></a></h2>
       
-      <p class="section-desc"></p><p>There may come a day when you need to export a <strong>gt</strong> table to some specific format. A great function for that is <code><a href="../reference/gtsave.html">gtsave()</a></code>, which allows us to save as an HTML file or an image file. Some other functions give us table code as a character vector (e.g., <code><a href="../reference/as_raw_html.html">as_raw_html()</a></code>). Did you use the <code><a href="../reference/summary_rows.html">summary_rows()</a></code> function and wish you had that summary data in a tibble? You can get it out with <code><a href="../reference/extract_summary.html">extract_summary()</a></code>. Want to extract already-formatted cells from the table into a vector? Do it with <code><a href="../reference/extract_cells.html">extract_cells()</a></code>!</p>
+      <p class="section-desc"></p><p>There may come a day when you need to export a <strong>gt</strong> table to some specific format. A great function for that is <code><a href="../reference/gtsave.html">gtsave()</a></code>, which allows us to save the table as a standalone HTML, LaTeX, RTF, .docx, or even an image file. Some other functions give us table code as a character vector (e.g., <code><a href="../reference/as_raw_html.html">as_raw_html()</a></code> and more). Did you use the <code><a href="../reference/summary_rows.html">summary_rows()</a></code> function and wish you had that summary data in a tibble? You can get it out with <code><a href="../reference/extract_summary.html">extract_summary()</a></code>. Want to extract already-formatted cells from the table into a vector? Do it with <code><a href="../reference/extract_cells.html">extract_cells()</a></code>! It’s even possible to extract the body of a table as a data frame during various ‘build’ stages (do this with <code><a href="../reference/extract_body.html">extract_body()</a></code>).</p>
 
       
     </div><div id="" class="section level2">
@@ -909,6 +909,11 @@
           <code><a href="as_word.html">as_word()</a></code> 
         </dt>
         <dd>Output a <strong>gt</strong> object as Word</dd>
+      </dl><dl><dt>
+          
+          <code><a href="extract_body.html">extract_body()</a></code> 
+        </dt>
+        <dd>Extract the table body from a <strong>gt</strong> object</dd>
       </dl><dl><dt>
           
           <code><a href="extract_summary.html">extract_summary()</a></code> 
