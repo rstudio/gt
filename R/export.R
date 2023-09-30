@@ -1153,6 +1153,86 @@ as_word_tbl_body <- function(
   as.character(word_tbl)
 }
 
+#' Extract the table body from a **gt** object
+#'
+#' @description
+#'
+#' We can extract the body of a **gt** table, even at various stages of its
+#' rendering, from a `gt_tbl` object using the `extract_body()` function.
+#'
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` // **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
+#' @return A data frame or tibble object containing the table body.
+#'
+#' @family table export functions
+#' @section Function ID:
+#' 13-6
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @export
+extract_body <- function(
+    data,
+    stage = NULL,
+    output = c("html", "latex", "rtf", "word")
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  # Ensure that `output` is matched correctly to one option
+  output <- rlang::arg_match(output)
+
+  data <- dt_body_build(data = data)
+  if (!is.null(stage) && stage == "init") return(data[["_body"]])
+
+  data <- render_formats(data = data, context = output)
+  if (!is.null(stage) && stage == "fmt_applied") return(data[["_body"]])
+
+  data <- render_substitutions(data = data, context = output)
+  if (!is.null(stage) && stage == "sub_applied") return(data[["_body"]])
+
+  data <- migrate_unformatted_to_output(data = data, context = output)
+  if (!is.null(stage) && stage == "unfmt_included") return(data[["_body"]])
+
+  data <- perform_col_merge(data = data, context = output)
+  if (!is.null(stage) && stage == "cols_merged") return(data[["_body"]])
+
+  data <- dt_body_reassemble(data = data)
+  if (!is.null(stage) && stage == "body_reassembled") return(data[["_body"]])
+
+  data <- reorder_stub_df(data = data)
+  data <- reorder_footnotes(data = data)
+  data <- reorder_styles(data = data)
+
+  data <- perform_text_transforms(data = data)
+  if (!is.null(stage) && stage == "text_transformed") return(data[["_body"]])
+
+  # Use `dt_*_build()` methods
+  data <- dt_boxhead_build(data = data, context = output)
+  data <- dt_spanners_build(data = data, context = output)
+  data <- dt_heading_build(data = data, context = output)
+  data <- dt_stubhead_build(data = data, context = output)
+  data <- dt_stub_df_build(data = data, context = output)
+  data <- dt_source_notes_build(data = data, context = output)
+  data <- dt_summary_build(data = data, context = output)
+  data <- dt_groups_rows_build(data = data, context = output)
+
+  # Resolve footnotes and styles
+  data <- resolve_footnotes_styles(data = data, tbl_type = "footnotes")
+
+  # Add footnote marks to the `data` rows
+  data <- apply_footnotes_to_output(data = data, context = output)
+
+  data[["_body"]]
+}
+
 #' Extract a summary list from a **gt** object
 #'
 #' @description
