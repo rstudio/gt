@@ -1158,7 +1158,48 @@ as_word_tbl_body <- function(
 #' @description
 #'
 #' We can extract the body of a **gt** table, even at various stages of its
-#' rendering, from a `gt_tbl` object using the `extract_body()` function.
+#' rendering, from a `gt_tbl` object using the `extract_body()` function. By
+#' default, the data frame returned will have gone through all of the build
+#' stages but we can intercept the table body after a certain build stage.
+#' Here are the eight different build stages and some notes about each:
+#'
+#' 1. `"init"`: the body table is initialized here, entirely with `NA` values.
+#' It's important to note that all columns of the are of the `character` type in
+#' this first stage. And all columns remain in the same order as the input data
+#' table.
+#'
+#' 2. `"fmt_applied"`: Any cell values that have had formatting applied to them
+#' are migrated to the body table. All other cells remain as `NA` values.
+#' Depending on the `output` type, the formatting may also be different.
+#'
+#' 3. `"sub_applied"`: Any cell values that have had substitution functions
+#' applied to them (whether or not they were previously formatted) are migrated
+#' to the body table or modified in place (if formatted). All cells that had
+#' neither been formatted nor undergone substitution remain as `NA` values.
+#'
+#' 4. `"unfmt_included"`: All cells that either didn't have any formatting or
+#' any substitution operations applied are migrated to the body table. `NA`
+#' values now become the string `"NA"`, so, there aren't any true missing values
+#' in this body table.
+#'
+#' 5. `"cols_merged"`: The result of column-merging operations (though
+#' [cols_merge()] and related functions) is materialized here. Columns that were
+#' asked to be hidden will be present here (i.e., hiding columns doesn't remove
+#' them from the body table).
+#'
+#' 6. `"body_reassembled"`: Though columns do not move positions rows can move
+#' to different positions, and this is usually due to migration to different row
+#' groups. At this stage, rows will be in the finalized order that is seen in
+#' the associated display table.
+#'
+#' 7. `"text_transformed"`: Various `text_*()` functions in **gt** can operate
+#' on body cells (now fully formatted at this stage) and return transformed
+#' character values. After this stage, the effects of those functions are
+#' apparent.
+#'
+#' 8. `"footnotes_attached"`: Footnote marks are attached to body cell values
+#' (either on the left or right of the content). This stage performs said
+#' attachment.
 #'
 #' @param data *The gt table data object*
 #'
