@@ -21,12 +21,15 @@
 #
 #------------------------------------------------------------------------------#
 
-# This creates a nanoplot with equally-spaced y values
-generate_equal_spaced_nanoplot <- function(
+# This creates a nanoplot
+generate_nanoplot <- function(
     y_vals,
     y_ref_line = NULL,
     y_ref_area = NULL,
+    x_vals = NULL,
     missing_vals = c("gap", "zero", "remove"),
+    plot_type = c("line", "bar"),
+    line_type = c("curved", "straight"),
     currency = NULL,
     data_point_radius = 10,
     data_point_stroke_color = "#FFFFFF",
@@ -34,6 +37,9 @@ generate_equal_spaced_nanoplot <- function(
     data_point_fill_color = "#FF0000",
     data_line_stroke_color = "#4682B4",
     data_line_stroke_width = 8,
+    data_bar_stroke_color = "#3290CC",
+    data_bar_stroke_width = 4,
+    data_bar_fill_color = "#3FB5FF",
     vertical_guide_stroke_color = "#911EB4",
     vertical_guide_stroke_width = 12,
     show_data_points = TRUE,
@@ -42,21 +48,26 @@ generate_equal_spaced_nanoplot <- function(
     show_ref_line = FALSE,
     show_ref_area = FALSE,
     show_vertical_guides = TRUE,
-    svg_height = "1.5em",
+    show_y_axis_guide = TRUE,
+    svg_height = "2em",
     view = FALSE
 ) {
 
   # Ensure that arguments are matched
   missing_vals <- rlang::arg_match(missing_vals)
+  line_type <- rlang::arg_match(line_type)
 
   # Initialize several local `*_tags` variables with `NULL`
   circle_tags <- NULL
+  bar_tags <- NULL
   data_path_tags <- NULL
   area_path_tags <- NULL
   ref_line_tags <- NULL
   ref_area_tags <- NULL
   g_guide_tags <- NULL
 
+  # If the number of `y` values is zero or an empty string,
+  # return an empty string
   if (length(y_vals) == 0) {
     return("")
   }
@@ -64,14 +75,75 @@ generate_equal_spaced_nanoplot <- function(
     return("")
   }
 
+  # Get the number of data points for `y`
+  num_y_vals <- length(y_vals)
+
+  # Handle case where `x_vals` exists (i.e., is not `NULL`)
+  if (!is.null(x_vals)) {
+
+    # If the number of `x` values is zero or an empty string,
+    # return an empty string
+    if (length(x_vals) == 0) {
+      return("")
+    }
+    if (all(is.na(x_vals))) {
+      return("")
+    }
+
+    # Get the number of data points for `x`
+    num_x_vals <- length(x_vals)
+
+    # Ensure that, if there are `x` values, the number of `x`
+    # and `y` values matches
+    if (num_x_vals != num_y_vals) {
+
+      cli::cli_abort(c(
+        "The number of `x` and `y` values must match.",
+        "*" = "The `x` value length is: {num_x_vals}",
+        "*" = "The `y` value length is: {num_y_vals}"
+      ))
+    }
+
+    # Handle missing values in `x_vals` through removal (i.e., missing
+    # values in `x_vals` means removal of positional values from both
+    # `x_vals` and `y_vals`)
+    if (anyNA(x_vals)) {
+
+      # Determine which values from `x_vals` are non-missing values
+      x_vals_non_missing <- !is.na(x_vals)
+
+      # Retain only `x_vals_non_missing` from `x_vals` and `y_vals`
+      x_vals <- x_vals[x_vals_non_missing]
+      y_vals <- y_vals[x_vals_non_missing]
+    }
+
+    # If `x` values are present, we cannot use a curved line so
+    # we'll force the use of the 'straight' line type
+    line_type <- "straight"
+  }
+
   # For the `missing_vals` options of 'zero' or 'remove', either replace NAs
   # with `0` or remove NAs entirely
   if (missing_vals == "zero") {
     y_vals[is.na(y_vals)] <- 0
   }
+
   if (missing_vals == "remove") {
-    y_vals <- y_vals[!is.na(y_vals)]
+
+    # Determine which values from `y` are missing
+    y_vals_non_missing <- !is.na(y_vals)
+
+    # Keep only the non-missing `y` values
+    y_vals <- y_vals[y_vals_non_missing]
+
+    if (!is.null(x_vals)) {
+
+      # Remove any values from `x_vals` wherever NAs found in `y_vals`
+      x_vals <- x_vals[y_vals_non_missing]
+    }
   }
+
+  num_y_vals <- length(y_vals)
 
   # Get a vector of data points that are missing and are to be treated as gaps
   if (missing_vals == "gap") {
@@ -89,22 +161,39 @@ generate_equal_spaced_nanoplot <- function(
     }
   }
 
-  # Fixed interval between data points in px
-  x_d <- 50
+  # Determine the width of the data plot area; for plots where `x_vals`
+  # are available, we'll use a fixed width of `500` (px), and for plots
+  # where `x_vals` aren't present, we'll adjust the final width based
+  # on the fixed interval between data points (this is dependent on the
+  # number of data points)
+  if (!is.null(x_vals)) {
 
-  # Get the number of data points
-  num_y_vals <- length(y_vals)
+    data_x_width <- 500
+
+  } else {
+
+    # Obtain a sensible, fixed interval between data points in px
+    x_d <-
+      dplyr::case_when(
+        num_y_vals <= 20 ~ 50,
+        num_y_vals <= 30 ~ 40,
+        num_y_vals <= 40 ~ 30,
+        num_y_vals <= 50 ~ 25,
+        .default = 20
+      )
+
+    data_x_width <- num_y_vals * x_d
+  }
 
   # Define the top-left of the plot area
   left_x <- 0
   top_y <- 0
 
   # Define the safe zone distance from top/bottom and left/right edges
-  safe_y_d <- 10
+  safe_y_d <- 15
   safe_x_d <- 50
 
-  # Define the width and height of the plot area that bounds the data points
-  data_x_width <- num_y_vals * x_d
+  # Define the height of the plot area that bounds the data points
   data_y_height <- 100
 
   # Determine the bottom-right of the plot area based on the quantity of data
@@ -112,21 +201,6 @@ generate_equal_spaced_nanoplot <- function(
   right_x <- safe_x_d + data_x_width + safe_x_d
 
   viewbox <- paste(left_x, top_y, right_x, bottom_y, collapse = " ")
-
-  normalize_y_vals <- function(x) {
-
-    x_missing <- which(is.na(x))
-    mean_x <- mean(x, na.rm = TRUE)
-    x[x_missing] <- mean_x
-    x <- as.matrix(x)
-    min_attr <- apply(x, 2, min)
-    max_attr <- apply(x, 2, max)
-    x <- sweep(x, MARGIN = 2, STATS = min_attr, FUN = "-")
-    x <- sweep(x, MARGIN = 2, STATS = max_attr - min_attr, FUN = "/")
-    x <- as.numeric(x)
-    x[x_missing] <- NA_real_
-    x
-  }
 
   #
   # If there is a reference line and/or reference area, the values for these
@@ -222,7 +296,15 @@ generate_equal_spaced_nanoplot <- function(
 
     # Scale to proportional values
     y_proportions_w_ref_line_area <-
-      normalize_y_vals(c(y_vals, y_ref_line[1], y_ref_area_l, y_ref_area_u))
+      normalize_vals(
+        c(
+          y_vals,
+          y_ref_line[1],
+          y_ref_area_l,
+          y_ref_area_u
+        )
+      )
+
     y_proportion_ref_line <- y_proportions_w_ref_line_area[-(1:num_y_vals)][1]
     y_proportions_ref_area_l <- y_proportions_w_ref_line_area[-(1:num_y_vals)][2]
     y_proportions_ref_area_u <- y_proportions_w_ref_line_area[-(1:num_y_vals)][3]
@@ -260,7 +342,14 @@ generate_equal_spaced_nanoplot <- function(
     }
 
     # Scale to proportional values
-    y_proportions_w_ref_line <- normalize_y_vals(c(y_vals, y_ref_line[1]))
+    y_proportions_w_ref_line <-
+      normalize_vals(
+        c(
+          y_vals,
+          y_ref_line[1]
+        )
+      )
+
     y_proportion_ref_line <- y_proportions_w_ref_line[length(y_proportions_w_ref_line)]
     y_proportions <- y_proportions_w_ref_line[-length(y_proportions_w_ref_line)]
 
@@ -324,7 +413,15 @@ generate_equal_spaced_nanoplot <- function(
     }
 
     # Scale to proportional values
-    y_proportions_w_ref_area <- normalize_y_vals(c(y_vals, y_ref_area_l, y_ref_area_u))
+    y_proportions_w_ref_area <-
+      normalize_vals(
+        c(
+          y_vals,
+          y_ref_area_l,
+          y_ref_area_u
+        )
+      )
+
     y_proportions_ref_area_l <- y_proportions_w_ref_area[-(1:num_y_vals)][1]
     y_proportions_ref_area_u <- y_proportions_w_ref_area[-(1:num_y_vals)][2]
     y_proportions <- y_proportions_w_ref_area[(1:num_y_vals)]
@@ -337,10 +434,20 @@ generate_equal_spaced_nanoplot <- function(
 
     # Case where there is no reference line or reference area
 
-    y_proportions <- normalize_y_vals(y_vals)
+    y_proportions <- normalize_vals(y_vals)
   }
 
-  x_proportions <- seq(0, 1, length.out = num_y_vals)
+  # If x values are present then normalize them between [0, 1]; if
+  # there are no x values, generate equally-spaced x values according
+  # to the number of y values
+  if (!is.null(x_vals)) {
+
+    x_proportions <- normalize_vals(x_vals)
+
+  } else {
+
+    x_proportions <- seq(0, 1, length.out = num_y_vals)
+  }
 
   # Create normalized (and inverted for SVG) data `x` and `y` values
   data_y_points <- safe_y_d + ((1 - y_proportions) * data_y_height)
@@ -360,6 +467,9 @@ generate_equal_spaced_nanoplot <- function(
   data_point_stroke_color <- normalize_option_vector(data_point_stroke_color, num_y_vals)
   data_point_stroke_width <- normalize_option_vector(data_point_stroke_width, num_y_vals)
   data_point_fill_color <- normalize_option_vector(data_point_fill_color, num_y_vals)
+  data_bar_stroke_color <- normalize_option_vector(data_bar_stroke_color, num_y_vals)
+  data_bar_stroke_width <- normalize_option_vector(data_bar_stroke_width, num_y_vals)
+  data_bar_fill_color <- normalize_option_vector(data_bar_fill_color, num_y_vals)
 
   #
   # Generate data segments by defining `start` and `end` vectors (these
@@ -386,10 +496,14 @@ generate_equal_spaced_nanoplot <- function(
   n_segments <- length(start_data_y_points)
 
   #
-  # Generate curved data line
+  # Generate a curved data line
   #
 
-  if (show_data_line) {
+  if (
+    plot_type == "line" &&
+    show_data_line &&
+    line_type == "curved"
+  ) {
 
     data_path_tags <- c()
 
@@ -430,11 +544,46 @@ generate_equal_spaced_nanoplot <- function(
     data_path_tags <- paste(data_path_tags, collapse = "\n")
   }
 
+  if (
+    plot_type == "line" &&
+    show_data_line &&
+    line_type == "straight"
+  ) {
+
+    data_path_tags <- c()
+
+    for (i in seq_len(n_segments)) {
+
+      line_x <- data_x_points[start_data_y_points[i]:end_data_y_points[i]]
+      line_y <- data_y_points[start_data_y_points[i]:end_data_y_points[i]]
+
+      data_path_tags_i <-
+        paste0(
+          "<polyline ",
+          "points=\"",
+          paste(paste0(line_x, ",", line_y), collapse = " "),
+          "\" ",
+          "stroke=\"", data_line_stroke_color, "\" ",
+          "stroke-width=\"", data_line_stroke_width, "\" ",
+          "fill=\"none\"",
+          ">",
+          "</polyline>"
+        )
+
+      data_path_tags <- c(data_path_tags, data_path_tags_i)
+    }
+
+    data_path_tags <- paste(data_path_tags, collapse = "\n")
+  }
+
   #
   # Generate data points
   #
 
-  if (show_data_points) {
+  if (
+    plot_type == "line" &&
+    show_data_points
+  ) {
 
     circle_strings <- c()
 
@@ -489,6 +638,68 @@ generate_equal_spaced_nanoplot <- function(
     }
 
     circle_tags <- paste(circle_strings, collapse = "\n")
+  }
+
+  #
+  # Generate data bars
+  #
+
+  if (plot_type == "bar") {
+
+    bar_strings <- c()
+
+    for (i in seq_along(data_x_points)) {
+
+      data_point_radius_i <- data_point_radius[i]
+      data_bar_stroke_color_i <- data_bar_stroke_color[i]
+      data_bar_stroke_width_i <- data_bar_stroke_width[i]
+      data_bar_fill_color_i <- data_bar_fill_color[i]
+
+      if (is.na(data_y_points[i])) {
+
+        if (missing_vals == "gap") {
+
+          # Create a symbol that should denote that a
+          # missing value is present
+          bar_strings_i <-
+            paste0(
+              "<circle ",
+              "cx=\"", data_x_points[i], "\" ",
+              "cy=\"", safe_y_d + (data_y_height / 2), "\" ",
+              "r=\"", data_point_radius_i + (data_point_radius_i / 2), "\" ",
+              "stroke=\"", "red", "\" ",
+              "stroke-width=\"", data_bar_stroke_width_i, "\" ",
+              "fill=\"", "white", "\" ",
+              ">",
+              "</circle>",
+              ""
+            )
+
+        } else {
+          next
+        }
+
+      } else {
+
+        bar_strings_i <-
+          paste0(
+            "<rect ",
+            "x=\"", data_x_points[i] - 20, "\" ",
+            "y=\"", data_y_points[i], "\" ",
+            "width=\"", 40, "\" ",
+            "height=\"", data_y_height - data_y_points[i] + safe_y_d, "\" ",
+            "stroke=\"", data_bar_stroke_color_i, "\" ",
+            "stroke-width=\"", data_bar_stroke_width_i, "\" ",
+            "fill=\"", data_bar_fill_color_i, "\" ",
+            ">",
+            "</rect>"
+          )
+      }
+
+      bar_strings <- c(bar_strings, bar_strings_i)
+    }
+
+    bar_tags <- paste(bar_strings, collapse = "\n")
   }
 
   #
@@ -575,6 +786,79 @@ generate_equal_spaced_nanoplot <- function(
   }
 
   #
+  # Generate y-axis guide
+  #
+
+  if (show_y_axis_guide) {
+
+    g_y_axis_strings <- c()
+
+    rect_tag <-
+      paste0(
+        "<rect ",
+        "x=\"", left_x, "\" ",
+        "y=\"", top_y, "\" ",
+        "width=\"", safe_x_d + 15, "\" ",
+        "height=\"", bottom_y, "\" ",
+        "stroke=\"transparent\" ",
+        "stroke-width=\"0\" ",
+        "fill=\"transparent\"",
+        ">",
+        "</rect>"
+      )
+
+    y_value_max <- max(data_y_points, na.rm = TRUE)
+    y_value_min <- min(data_y_points, na.rm = TRUE)
+
+    y_value_max_label <-
+      format_number_compactly(
+        max(y_vals, na.rm = TRUE),
+        currency = currency
+      )
+
+    y_value_min_label <-
+      format_number_compactly(
+        min(y_vals, na.rm = TRUE),
+        currency = currency
+      )
+
+    text_strings_min <-
+      paste0(
+        "<text ",
+        "x=\"", left_x, "\" ",
+        "y=\"", y_value_max + 7.5, "\" ",
+        "fill=\"transparent\" ",
+        "stroke=\"transparent\" ",
+        "font-size=\"25\"",
+        ">",
+        y_value_min_label,
+        "</text>"
+      )
+
+    text_strings_max <-
+      paste0(
+        "<text ",
+        "x=\"", left_x, "\" ",
+        "y=\"", y_value_min + 7.5, "\" ",
+        "fill=\"transparent\" ",
+        "stroke=\"transparent\" ",
+        "font-size=\"25\"",
+        ">",
+        y_value_max_label,
+        "</text>"
+      )
+
+    g_y_axis_tags <-
+      paste0(
+        "<g class=\"y-axis-line\">\n",
+        rect_tag, "\n",
+        text_strings_max, "\n",
+        text_strings_min,
+        "</g>"
+      )
+  }
+
+  #
   # Generate vertical data point guidelines
   #
 
@@ -633,7 +917,7 @@ generate_equal_spaced_nanoplot <- function(
     g_guide_tags <- paste(g_guide_strings, collapse = "\n")
   }
 
-  # Generate style tag for vertical guidelines
+  # Generate style tag for vertical guidelines and y-axis
   svg_style <-
     paste(
       c(
@@ -644,6 +928,7 @@ generate_equal_spaced_nanoplot <- function(
           "stroke-width: 0.15em; ",
           "paint-order: stroke; ",
           "stroke-linejoin: round; ",
+          "cursor: default; ",
           "} ",
           ".vert-line:hover rect { ",
           "fill: ", vertical_guide_stroke_color, "; ",
@@ -654,6 +939,27 @@ generate_equal_spaced_nanoplot <- function(
           ".vert-line:hover text { ",
           "stroke: white; ",
           "fill: #212427; ",
+          "} ",
+          ".ref-line:hover rect { ",
+          "stroke: #FFFFFF60; ",
+          "} ",
+          ".ref-line:hover line { ",
+          "stroke: #FF0000; ",
+          "} ",
+          ".ref-line:hover text { ",
+          "stroke: white; ",
+          "fill: #212427; ",
+          "} ",
+          ".y-axis-line:hover rect { ",
+          "fill: #EDEDED; ",
+          "fill-opacity: 60%; ",
+          "stroke: #FFFFFF60; ",
+          "color: red; ",
+          "} ",
+          ".y-axis-line:hover text { ",
+          "stroke: white; ",
+          "stroke-width: 0.20em; ",
+          "fill: #1A1C1F; ",
           "} ",
           ".ref-line:hover rect { ",
           "stroke: #FFFFFF60; ",
@@ -700,7 +1006,10 @@ generate_equal_spaced_nanoplot <- function(
   # Optionally create an area path adjacent to the data points and data line
   #
 
-  if (show_data_area) {
+  if (
+    plot_type == "line" &&
+    show_data_area
+  ) {
 
     area_path_tags <- c()
 
@@ -720,8 +1029,8 @@ generate_equal_spaced_nanoplot <- function(
       area_path_i <-
         c(
           area_path_string,
-          paste0(area_x[length(area_x)], ",", bottom_y),
-          paste0(area_x[1], ",", bottom_y)
+          paste0(area_x[length(area_x)], ",", bottom_y - safe_y_d + data_point_radius),
+          paste0(area_x[1], ",", bottom_y - safe_y_d + data_point_radius)
         )
 
       area_path_i <- paste0("M", paste(area_path_i, collapse = ","), "Z")
@@ -750,7 +1059,10 @@ generate_equal_spaced_nanoplot <- function(
   svg <-
     paste(
       c(
-        paste0("<svg role=\"img\" viewBox=\"", viewbox, "\" "),
+        "<div>",
+        "<svg ",
+        "role=\"img\" ",
+        paste0("viewBox=\"", viewbox, "\" "),
         "style=\"",
         paste0("height:", svg_height, ";"),
         "margin-left:auto;",
@@ -758,16 +1070,20 @@ generate_equal_spaced_nanoplot <- function(
         "font-size:inherit;",
         "overflow:visible;",
         "vertical-align:middle;",
-        "position:relative;\">",
+        "position:relative;\"",
+        ">",
         svg_defs,
         svg_style,
         ref_area_tags,
         area_path_tags,
         data_path_tags,
+        bar_tags,
         ref_line_tags,
         circle_tags,
+        g_y_axis_tags,
         g_guide_tags,
-        "</svg>"
+        "</svg>",
+        "</div>"
       ),
       collapse = "\n"
     )
@@ -787,6 +1103,20 @@ normalize_option_vector <- function(vec, num_y_vals) {
 
   if (length(vec) == 1) vec <- rep(vec, num_y_vals)
   vec
+}
+
+normalize_vals <- function(x) {
+  x_missing <- which(is.na(x))
+  mean_x <- mean(x, na.rm = TRUE)
+  x[x_missing] <- mean_x
+  x <- as.matrix(x)
+  min_attr <- apply(x, 2, min)
+  max_attr <- apply(x, 2, max)
+  x <- sweep(x, MARGIN = 2, STATS = min_attr, FUN = "-")
+  x <- sweep(x, MARGIN = 2, STATS = max_attr - min_attr, FUN = "/")
+  x <- as.numeric(x)
+  x[x_missing] <- NA_real_
+  x
 }
 
 mad_double <- function(x) {
@@ -966,6 +1296,7 @@ format_number_compactly <- function(val, currency) {
       val_formatted <-
         vec_fmt_scientific(
           val,
+          exp_style = "E",
           n_sigfig = n_sigfig,
           decimals = 1,
           output = "html"
@@ -985,4 +1316,15 @@ format_number_compactly <- function(val, currency) {
   }
 
   val_formatted
+}
+
+process_number_stream <- function(number_stream) {
+
+  number_stream <- gsub("[;,]", " ", number_stream)
+  number_stream <- gsub("\\[|\\]", " ", number_stream)
+  number_stream <- gsub("^\\s+|\\s+$", "", number_stream)
+  number_stream <- unlist(strsplit(number_stream, split = "\\s+"))
+  number_stream <- gsub("[\\(\\)a-dA-Df-zF-Z]", "", number_stream)
+  number_stream <- as.numeric(number_stream)
+  number_stream
 }

@@ -8,15 +8,16 @@ cols_nanoplot(
   data,
   columns,
   rows = everything(),
+  plot_type = c("line", "bar"),
+  plot_height = "2em",
   missing_vals = c("gap", "zero", "remove"),
+  columns_x = NULL,
   reference_line = NULL,
   reference_area = NULL,
-  currency = NULL,
   new_col_name = NULL,
   new_col_label = NULL,
   before = NULL,
   after = NULL,
-  height = NULL,
   options = NULL
 )
 }
@@ -28,7 +29,7 @@ cols_nanoplot(
 This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
-\item{columns}{\emph{Columns from which to obtain data}
+\item{columns}{\emph{Columns from which to get data for the dependent variable}
 
 \verb{<column-targeting expression>} // \strong{required}
 
@@ -52,6 +53,27 @@ select helper functions include \code{\link[=starts_with]{starts_with()}}, \code
 We can also use expressions to filter down to the rows we need (e.g.,
 \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
+\item{plot_type}{\emph{The type of nanoplot to display}
+
+\verb{singl-kw:[line|bar]} // \emph{default:} \code{"line"}
+
+Nanoplots can either take the form of a line plot (using \code{"line"}) or a bar
+plot (with \code{"bar"}). A line plot, by default, contains layers for a data
+line, data points, and a data area. Each of these can be deactivated by
+using \code{\link[=nanoplot_options]{nanoplot_options()}}. With a bar plot, the always visible layer is
+that of the data bars. Furthermore, a line plot can optionally take in \emph{x}
+values through the \code{columns_x} argument whereas a bar plot ignores any data
+representing the independant variable.}
+
+\item{plot_height}{\emph{The height of the nanoplots}
+
+\verb{scalar<character>} // \emph{default:} \code{"2em"}
+
+The height of the nanoplots. The default here is a sensible value of
+\code{"2em"}. By way of comparison, this is a far greater height than the
+default for icons through \code{\link[=fmt_icon]{fmt_icon()}} (\code{"1em"}) and is the same height as
+images inserted via \code{\link[=fmt_image]{fmt_image()}} (also having a \code{"2em"} height default).}
+
 \item{missing_vals}{\emph{Treatment of missing values}
 
 \verb{singl-kw:[gap|zero|remove]} // \emph{default:} \code{"gap"}
@@ -61,6 +83,19 @@ strategies available for their handling: (1) \code{"gap"} will display data gaps
 at the sites of missing data, where data lines will have discontinuities;
 (2) \code{"zero"} will replace \code{NA} values with zero values; and (3) \code{"remove"}
 will remove any incoming \code{NA} values.}
+
+\item{columns_x}{\emph{Columns containing values for the optional x variable}
+
+\verb{<column-targeting expression>} // \emph{default:} \code{NULL} (\code{optional})
+
+We can optionally obtain data for the independent variable (i.e., the
+\emph{x}-axis data) if specifying columns in \code{columns_x}. This is only for the
+\code{"line"} type of plot (set via the \code{plot_type} argument). We can supply
+either be a series of column names provided in \code{\link[=c]{c()}}, a vector of column
+indices, or a select helper function. Examples of select helper functions
+include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. Data collected from the
+columns will be concatenated together in the order of resolution.}
 
 \item{reference_line}{\emph{Add a reference line}
 
@@ -82,18 +117,6 @@ expected for \code{reference_line}, which is either a static numeric value or
 one of the following keywords for the generation of the value: (1)
 \code{"mean"}, (2) \code{"median"}, (3) \code{"min"}, (4) \code{"max"}, (5) \code{"first"}, or (6)
 \code{"last"}. Input can either be a vector or list with two elements.}
-
-\item{currency}{\emph{Define values as currencies of a specific type}
-
-\verb{scalar<character>|obj:<gt_currency>} // \emph{default:} \code{NULL} (\code{optional})
-
-If the values are to be displayed as currency values, supply either: (1) a
-3-letter currency code (e.g., \code{"USD"} for U.S. Dollars, \code{"EUR"} for the
-Euro currency), (2) a common currency name (e.g., \code{"dollar"}, \code{"pound"},
-\code{"yen"}, etc.), or (3) an invocation of the \code{\link[=currency]{currency()}} helper function
-for specifying a custom currency (where the string could vary across output
-contexts). Use \code{\link[=info_currencies]{info_currencies()}} to get an information table with all of
-the valid currency codes, and examples of each, for the first two cases.}
 
 \item{new_col_name}{\emph{Column name for the new column containing the plots}
 
@@ -125,13 +148,6 @@ column is provided to either of these arguments (otherwise, the function
 will be stopped). If nothing is provided for either argument then the new
 column will be placed at the end of the column series.}
 
-\item{height}{\emph{The height of the nanoplots}
-
-\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
-
-The height of the nanoplots. If nothing is provided here then \strong{gt} will
-provide a sensible length value of \code{"1.5em"}.}
-
 \item{options}{\emph{Set options for the nanoplots}
 
 \verb{obj:<nanoplot_options} // \emph{default:} \code{NULL} (\code{optional})
@@ -152,12 +168,14 @@ for the nanoplots and generate a new column containing the plots.
 
 Each nanoplot contains data points with reasonably good visibility, having
 smooth connecting lines between them to allow for easier scanning of values.
-By default, a nanoplot will have basic interactivity. One can hover over the
-data points and vertical guides will display values ascribed to each. A
-horizontal \emph{reference line} is also present in the standard view (denoting
-the median of the data). This reference line can be customized by providing a
-static value or by choosing a keyword that computes a particular \emph{y} value
-using a nanoplot's data values. Aside from a reference line, there is also an
+By default, a nanoplot rendered in an HTML-based table will have basic
+interactivity. One can hover over the data points and vertical guides will
+display values ascribed to each. There is also a hoverable guide on the
+left-hand side that displays the minimal and maximal \emph{y} values. A horizontal
+\emph{reference line} is also present in the standard view (denoting the median of
+the data). This reference line can be customized by providing a static value
+or by choosing a keyword that computes a particular \emph{y} value using a
+nanoplot's data values. Aside from a reference line, there is also an
 associated \emph{reference area} which, by default, tries to make itself useful by
 bounding the area between the lower and upper quartiles of the data. These
 boundaries can also be customized in a similar fashion as the reference line.
