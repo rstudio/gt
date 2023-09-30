@@ -68,6 +68,8 @@ render_units <- function(units_object, context = "html") {
 
     if (!is.na(unit_subscript) && nchar(unit_subscript) > 2 && grepl("*", unit_subscript)) {
 
+      unit_subscript <- units_symbol_replacements(text = unit_subscript, context = context)
+
       if (context == "html") {
         unit_subscript <- commonmark::markdown_html(text = unit_subscript)
         unit_subscript <- gsub("^<p>|</p>\n$", "", unit_subscript)
@@ -80,6 +82,8 @@ render_units <- function(units_object, context = "html") {
     }
 
     if (!is.na(exponent) && nchar(exponent) > 2 && grepl("*", exponent)) {
+
+      exponent <- units_symbol_replacements(text = exponent, context = context)
 
       if (context == "html") {
         exponent <- commonmark::markdown_html(text = exponent)
@@ -296,7 +300,7 @@ units_symbol_replacements <- function(
     text <- replace_units_symbol(text, "^-", "^-", "--")
   }
 
-  if (context %in% c("html", "rtf")) {
+  if (context %in% c("html", "rtf", "latex")) {
 
     text <- replace_units_symbol(text, "^um$", "um", "&micro;m")
     text <- replace_units_symbol(text, "^uL$", "uL", "&micro;L")
@@ -316,27 +320,55 @@ units_symbol_replacements <- function(
     text <- replace_units_symbol(text, "degC", "degC", "&deg;C")
     text <- replace_units_symbol(text, "degF", "degF", "&deg;F")
     text <- replace_units_symbol(text, ":space:", ":space:", "&nbsp;")
-  }
-
-  if (context == "latex") {
-
-    text <- replace_units_symbol(text, "^um$", "um", "&micro;m")
-    text <- replace_units_symbol(text, "^uL$", "uL", "&micro;L")
-    text <- replace_units_symbol(text, "^umol", "^umol", "&micro;mol")
-    text <- replace_units_symbol(text, "^ug$", "ug", "&micro;g")
-    text <- replace_units_symbol(text, ":micro:", ":micro:", "&micro;")
-    text <- replace_units_symbol(text, ":mu:", ":mu:", "&micro;")
-    text <- replace_units_symbol(text, "^ohm$", "ohm", "&#8486;")
-    text <- replace_units_symbol(text, ":ohm:", ":ohm:", "&#8486;")
-    text <- replace_units_symbol(text, ":times:", ":times:", "&times;")
-    text <- replace_units_symbol(text, ":plusminus:", ":plusminus:", "&plusmn;")
-    text <- replace_units_symbol(text, ":permil:", ":permil:", "&permil;")
-    text <- replace_units_symbol(text, ":permille:", ":permille:", "&permil;")
-    text <- replace_units_symbol(text, ":degree:", ":degree:", "&deg;")
-    text <- replace_units_symbol(text, ":degrees:", ":degrees:", "&deg;")
-    text <- replace_units_symbol(text, "degC", "degC", "&deg;C")
-    text <- replace_units_symbol(text, "degF", "degF", "&deg;F")
-    text <- replace_units_symbol(text, ":space:", ":space:", "&nbsp;")
+    text <- replace_units_symbol(text, ":Alpha:", ":Alpha:", "&Alpha;")
+    text <- replace_units_symbol(text, ":alpha:", ":alpha:", "&alpha;")
+    text <- replace_units_symbol(text, ":Beta:", ":Beta:", "&Beta;")
+    text <- replace_units_symbol(text, ":beta:", ":beta:", "&beta;")
+    text <- replace_units_symbol(text, ":Gamma:", ":Gamma:", "&Gamma;")
+    text <- replace_units_symbol(text, ":gamma:", ":gamma:", "&gamma;")
+    text <- replace_units_symbol(text, ":Delta:", ":Delta:", "&Delta;")
+    text <- replace_units_symbol(text, ":delta:", ":delta:", "&delta;")
+    text <- replace_units_symbol(text, ":Epsilon:", ":Epsilon:", "&Epsilon;")
+    text <- replace_units_symbol(text, ":epsilon:", ":epsilon:", "&epsilon;")
+    text <- replace_units_symbol(text, ":Zeta:", ":Zeta:", "&Zeta;")
+    text <- replace_units_symbol(text, ":zeta:", ":zeta:", "&zeta;")
+    text <- replace_units_symbol(text, ":Eta:", ":Eta:", "&Eta;")
+    text <- replace_units_symbol(text, ":eta:", ":eta:", "&eta;")
+    text <- replace_units_symbol(text, ":Theta:", ":Theta:", "&Theta;")
+    text <- replace_units_symbol(text, ":theta:", ":theta:", "&theta;")
+    text <- replace_units_symbol(text, ":Iota:", ":Iota:", "&Iota;")
+    text <- replace_units_symbol(text, ":iota:", ":iota:", "&iota;")
+    text <- replace_units_symbol(text, ":Kappa:", ":Kappa:", "&Kappa;")
+    text <- replace_units_symbol(text, ":kappa:", ":kappa:", "&kappa;")
+    text <- replace_units_symbol(text, ":Lambda:", ":Lambda:", "&Lambda;")
+    text <- replace_units_symbol(text, ":lambda:", ":lambda:", "&lambda;")
+    text <- replace_units_symbol(text, ":Mu:", ":Mu:", "&Mu;")
+    text <- replace_units_symbol(text, ":mu:", ":mu:", "&mu;")
+    text <- replace_units_symbol(text, ":Nu:", ":Nu:", "&Nu;")
+    text <- replace_units_symbol(text, ":nu:", ":nu:", "&nu;")
+    text <- replace_units_symbol(text, ":Xi:", ":Xi:", "&Xi;")
+    text <- replace_units_symbol(text, ":xi:", ":xi:", "&xi;")
+    text <- replace_units_symbol(text, ":Omicron:", ":Omicron:", "&Omicron;")
+    text <- replace_units_symbol(text, ":omicron:", ":omicron:", "&omicron;")
+    text <- replace_units_symbol(text, ":Pi:", ":Pi:", "&Pi;")
+    text <- replace_units_symbol(text, ":pi:", ":pi:", "&pi;")
+    text <- replace_units_symbol(text, ":Rho:", ":Rho:", "&Rho;")
+    text <- replace_units_symbol(text, ":rho:", ":rho:", "&rho;")
+    text <- replace_units_symbol(text, ":Sigma:", ":Sigma:", "&Sigma;")
+    text <- replace_units_symbol(text, ":sigma:", ":sigma:", "&sigma;")
+    text <- replace_units_symbol(text, ":sigmaf:", ":sigmaf:", "&sigmaf;")
+    text <- replace_units_symbol(text, ":Tau:", ":Tau:", "&Tau;")
+    text <- replace_units_symbol(text, ":tau:", ":tau:", "&tau;")
+    text <- replace_units_symbol(text, ":Upsilon:", ":Upsilon:", "&Upsilon;")
+    text <- replace_units_symbol(text, ":upsilon:", ":upsilon:", "&upsilon;")
+    text <- replace_units_symbol(text, ":Phi:", ":Phi:", "&Phi;")
+    text <- replace_units_symbol(text, ":phi:", ":phi:", "&phi;")
+    text <- replace_units_symbol(text, ":Chi:", ":Chi:", "&Chi;")
+    text <- replace_units_symbol(text, ":chi:", ":chi:", "&chi;")
+    text <- replace_units_symbol(text, ":Psi:", ":Psi:", "&Psi;")
+    text <- replace_units_symbol(text, ":psi:", ":psi:", "&psi;")
+    text <- replace_units_symbol(text, ":Omega:", ":Omega:", "&Omega;")
+    text <- replace_units_symbol(text, ":omega:", ":omega:", "&omega;")
   }
 
   if (context == "word") {
@@ -358,6 +390,56 @@ units_symbol_replacements <- function(
     text <- replace_units_symbol(text, "degC", "degC", paste0("\U000B0", "C"))
     text <- replace_units_symbol(text, "degF", "degF", paste0("\U000B0", "F"))
     text <- replace_units_symbol(text, ":space:", ":space:", " ")
+
+    text <- replace_units_symbol(text, ":Alpha:", ":Alpha:", "\U0391")
+    text <- replace_units_symbol(text, ":alpha:", ":alpha:", "\U03B1")
+    text <- replace_units_symbol(text, ":Beta:", ":Beta:", "\U0392")
+    text <- replace_units_symbol(text, ":beta:", ":beta:", "\U03B2")
+    text <- replace_units_symbol(text, ":Gamma:", ":Gamma:", "\U0393")
+    text <- replace_units_symbol(text, ":gamma:", ":gamma:", "\U03B3")
+    text <- replace_units_symbol(text, ":Delta:", ":Delta:", "\U0394")
+    text <- replace_units_symbol(text, ":delta:", ":delta:", "\U03B4")
+    text <- replace_units_symbol(text, ":Epsilon:", ":Epsilon:", "\U0395")
+    text <- replace_units_symbol(text, ":epsilon:", ":epsilon:", "\U03B5")
+    text <- replace_units_symbol(text, ":Zeta:", ":Zeta:", "\U0396")
+    text <- replace_units_symbol(text, ":zeta:", ":zeta:", "\U03B6")
+    text <- replace_units_symbol(text, ":Eta:", ":Eta:", "\U0397")
+    text <- replace_units_symbol(text, ":eta:", ":eta:", "\U03B7")
+    text <- replace_units_symbol(text, ":Theta:", ":Theta:", "\U0398")
+    text <- replace_units_symbol(text, ":theta:", ":theta:", "\U03B8")
+    text <- replace_units_symbol(text, ":Iota:", ":Iota:", "\U0399")
+    text <- replace_units_symbol(text, ":iota:", ":iota:", "\U03B9")
+    text <- replace_units_symbol(text, ":Kappa:", ":Kappa:", "\U039A")
+    text <- replace_units_symbol(text, ":kappa:", ":kappa:", "\U03BA")
+    text <- replace_units_symbol(text, ":Lambda:", ":Lambda:", "\U039B")
+    text <- replace_units_symbol(text, ":lambda:", ":lambda:", "\U03BB")
+    text <- replace_units_symbol(text, ":Mu:", ":Mu:", "\U039C")
+    text <- replace_units_symbol(text, ":mu:", ":mu:", "\U03BC")
+    text <- replace_units_symbol(text, ":Nu:", ":Nu:", "\U039D")
+    text <- replace_units_symbol(text, ":nu:", ":nu:", "\U03BD")
+    text <- replace_units_symbol(text, ":Xi:", ":Xi:", "\U039E")
+    text <- replace_units_symbol(text, ":xi:", ":xi:", "\U03BE")
+    text <- replace_units_symbol(text, ":Omicron:", ":Omicron:", "\U039F")
+    text <- replace_units_symbol(text, ":omicron:", ":omicron:", "\U03BF")
+    text <- replace_units_symbol(text, ":Pi:", ":Pi:", "\U03A0")
+    text <- replace_units_symbol(text, ":pi:", ":pi:", "\U03C0")
+    text <- replace_units_symbol(text, ":Rho:", ":Rho:", "\U03A1")
+    text <- replace_units_symbol(text, ":rho:", ":rho:", "\U03C1")
+    text <- replace_units_symbol(text, ":Sigma:", ":Sigma:", "\U03A3")
+    text <- replace_units_symbol(text, ":sigma:", ":sigma:", "\U03C3")
+    text <- replace_units_symbol(text, ":sigmaf:", ":sigmaf:", "\U03C2")
+    text <- replace_units_symbol(text, ":Tau:", ":Tau:", "\U03A4")
+    text <- replace_units_symbol(text, ":tau:", ":tau:", "\U03C4")
+    text <- replace_units_symbol(text, ":Upsilon:", ":Upsilon:", "\U03A5")
+    text <- replace_units_symbol(text, ":upsilon:", ":upsilon:", "\U03C5")
+    text <- replace_units_symbol(text, ":Phi:", ":Phi:", "\U03A6")
+    text <- replace_units_symbol(text, ":phi:", ":phi:", "\U03C6")
+    text <- replace_units_symbol(text, ":Chi:", ":Chi:", "\U03A7")
+    text <- replace_units_symbol(text, ":chi:", ":chi:", "\U03C7")
+    text <- replace_units_symbol(text, ":Psi:", ":Psi:", "\U03A8")
+    text <- replace_units_symbol(text, ":psi:", ":psi:", "\U03C8")
+    text <- replace_units_symbol(text, ":Omega:", ":Omega:", "\U03A9")
+    text <- replace_units_symbol(text, ":omega:", ":omega:", "\U03C9")
   }
 
   text
