@@ -1082,29 +1082,59 @@ as_word_tbl_body <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
-  # Composition of table Word OOXML -----------------------------------------------
+  #
+  # Composition of table Word OOXML
+  #
 
   # Create the table properties component
-  table_props_component <- create_table_props_component_xml(data = data, align = align)
+  table_props_component <-
+    create_table_props_component_xml(data = data, align = align)
 
   # # Create the heading component
   if (embedded_heading) {
-    heading_component <- create_heading_component_xml(data = data, split = split, keep_with_next = keep_with_next)
+
+    heading_component <-
+      create_heading_component_xml(
+        data = data,
+        split = split,
+        keep_with_next = keep_with_next
+      )
+
   } else {
     heading_component <- NULL
   }
 
   # Create the columns component
-  columns_component <- create_columns_component_xml(data = data, split = split, keep_with_next = keep_with_next)
+  columns_component <-
+    create_columns_component_xml(
+      data = data,
+      split = split,
+      keep_with_next = keep_with_next
+    )
 
   # Create the body component
-  body_component <- create_body_component_xml(data = data, split = split, keep_with_next = keep_with_next)
+  body_component <-
+    create_body_component_xml(
+      data = data,
+      split = split,
+      keep_with_next = keep_with_next
+    )
 
   # Create the footnotes component
-  footnotes_component <- create_footnotes_component_xml(data = data, split = split, keep_with_next = keep_with_next)
+  footnotes_component <-
+    create_footnotes_component_xml(
+      data = data,
+      split = split,
+      keep_with_next = keep_with_next
+    )
 
   # Create the source notes component
-  source_notes_component <- create_source_notes_component_xml(data = data, split = split, keep_with_next = keep_with_next)
+  source_notes_component <-
+    create_source_notes_component_xml(
+      data = data,
+      split = split,
+      keep_with_next = keep_with_next
+    )
 
   # Compose the Word OOXML table
   word_tbl <-
