@@ -30,6 +30,7 @@ tests/testthat/test-cols_width.R
 tests/testthat/test-data_color.R
 tests/testthat/test-empty_tbl.R
 tests/testthat/test-escaping.R
+tests/testthat/test-extract_body.R
 tests/testthat/test-extract_cells.R
 tests/testthat/test-fmt_auto.R
 tests/testthat/test-fmt_bins.R
