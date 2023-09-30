@@ -104,7 +104,7 @@ Use the summary list to make a new \strong{gt} table. The key thing is to use
 
 \section{Function ID}{
 
-13-6
+13-7
 }
 
 \section{Function Introduced}{
