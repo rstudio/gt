@@ -41,7 +41,7 @@ Determines the alignment of the caption. This is
 either \code{"left"} (the default), \code{"center"}, or \code{"right"}. This option is
 only used when \code{caption_location} is not set as \code{"embed"}.}
 
-\item{split}{\emph{Allow splitting}
+\item{split}{\emph{Allow splitting of a table row across pages}
 
 \verb{scalar<logical>} // \emph{default:} \code{FALSE}
 
@@ -53,7 +53,7 @@ A logical value that indicates whether to activate the Word option
 \verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 A logical value that indicates whether a table should use Word option
-\verb{keep rows together}.}
+\verb{Keep rows together}.}
 }
 \description{
 Get the Open Office XML table tag content from a \code{gt_tbl} object as a
@@ -94,6 +94,7 @@ Other table export functions:
 \code{\link{as_latex}()},
 \code{\link{as_raw_html}()},
 \code{\link{as_rtf}()},
+\code{\link{extract_body}()},
 \code{\link{extract_cells}()},
 \code{\link{extract_summary}()},
 \code{\link{gtsave}()}

@@ -918,7 +918,7 @@ as_rtf <- function(
 #'   either `"left"` (the default), `"center"`, or `"right"`. This option is
 #'   only used when `caption_location` is not set as `"embed"`.
 #'
-#' @param split *Allow splitting*
+#' @param split *Allow splitting of a table row across pages*
 #'
 #'   `scalar<logical>` // *default:* `FALSE`
 #'
@@ -930,7 +930,7 @@ as_rtf <- function(
 #'   `scalar<logical>` // *default:* `TRUE`
 #'
 #'   A logical value that indicates whether a table should use Word option
-#'   `keep rows together`.
+#'   `Keep rows together`.
 #'
 #' @section Examples:
 #'
@@ -1082,29 +1082,59 @@ as_word_tbl_body <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
-  # Composition of table Word OOXML -----------------------------------------------
+  #
+  # Composition of table Word OOXML
+  #
 
   # Create the table properties component
-  table_props_component <- create_table_props_component_xml(data = data, align = align)
+  table_props_component <-
+    create_table_props_component_xml(data = data, align = align)
 
   # # Create the heading component
   if (embedded_heading) {
-    heading_component <- create_heading_component_xml(data = data, split = split, keep_with_next = keep_with_next)
+
+    heading_component <-
+      create_heading_component_xml(
+        data = data,
+        split = split,
+        keep_with_next = keep_with_next
+      )
+
   } else {
     heading_component <- NULL
   }
 
   # Create the columns component
-  columns_component <- create_columns_component_xml(data = data, split = split, keep_with_next = keep_with_next)
+  columns_component <-
+    create_columns_component_xml(
+      data = data,
+      split = split,
+      keep_with_next = keep_with_next
+    )
 
   # Create the body component
-  body_component <- create_body_component_xml(data = data, split = split, keep_with_next = keep_with_next)
+  body_component <-
+    create_body_component_xml(
+      data = data,
+      split = split,
+      keep_with_next = keep_with_next
+    )
 
   # Create the footnotes component
-  footnotes_component <- create_footnotes_component_xml(data = data, split = split, keep_with_next = keep_with_next)
+  footnotes_component <-
+    create_footnotes_component_xml(
+      data = data,
+      split = split,
+      keep_with_next = keep_with_next
+    )
 
   # Create the source notes component
-  source_notes_component <- create_source_notes_component_xml(data = data, split = split, keep_with_next = keep_with_next)
+  source_notes_component <-
+    create_source_notes_component_xml(
+      data = data,
+      split = split,
+      keep_with_next = keep_with_next
+    )
 
   # Compose the Word OOXML table
   word_tbl <-
@@ -1121,6 +1151,195 @@ as_word_tbl_body <- function(
     )
 
   as.character(word_tbl)
+}
+
+#' Extract the table body from a **gt** object
+#'
+#' @description
+#'
+#' We can extract the body of a **gt** table, even at various stages of its
+#' rendering, from a `gt_tbl` object using the `extract_body()` function. By
+#' default, the data frame returned will have gone through all of the build
+#' stages but we can intercept the table body after a certain build stage.
+#' Here are the eight different build stages and some notes about each:
+#'
+#' 1. `"init"`: the body table is initialized here, entirely with `NA` values.
+#' It's important to note that all columns of the are of the `character` type in
+#' this first stage. And all columns remain in the same order as the input data
+#' table.
+#'
+#' 2. `"fmt_applied"`: Any cell values that have had formatting applied to them
+#' are migrated to the body table. All other cells remain as `NA` values.
+#' Depending on the `output` type, the formatting may also be different.
+#'
+#' 3. `"sub_applied"`: Any cell values that have had substitution functions
+#' applied to them (whether or not they were previously formatted) are migrated
+#' to the body table or modified in place (if formatted). All cells that had
+#' neither been formatted nor undergone substitution remain as `NA` values.
+#'
+#' 4. `"unfmt_included"`: All cells that either didn't have any formatting or
+#' any substitution operations applied are migrated to the body table. `NA`
+#' values now become the string `"NA"`, so, there aren't any true missing values
+#' in this body table.
+#'
+#' 5. `"cols_merged"`: The result of column-merging operations (though
+#' [cols_merge()] and related functions) is materialized here. Columns that were
+#' asked to be hidden will be present here (i.e., hiding columns doesn't remove
+#' them from the body table).
+#'
+#' 6. `"body_reassembled"`: Though columns do not move positions rows can move
+#' to different positions, and this is usually due to migration to different row
+#' groups. At this stage, rows will be in the finalized order that is seen in
+#' the associated display table.
+#'
+#' 7. `"text_transformed"`: Various `text_*()` functions in **gt** can operate
+#' on body cells (now fully formatted at this stage) and return transformed
+#' character values. After this stage, the effects of those functions are
+#' apparent.
+#'
+#' 8. `"footnotes_attached"`: Footnote marks are attached to body cell values
+#' (either on the left or right of the content). This stage performs said
+#' attachment.
+#'
+#' @param data *The gt table data object*
+#'
+#'   `obj:<gt_tbl>` // **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
+#' @param build_stage *The build stage of the formatted R data frame*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   When a **gt** undergoes rendering, the body of the table proceeds through
+#'   several build stages. Providing a single stage name will yield a data frame
+#'   that has been extracted after completed that stage. Here are the build
+#'   stages in order: (1) `"init"`, (2) `"fmt_applied"`, (3) `"sub_applied"`,
+#'   (4) `"unfmt_included"`, (5) `"cols_merged"`, (6) `"body_reassembled"`, (7)
+#'   `"text_transformed"`, and (8) `"footnotes_attached"`. If not supplying a
+#'   value for `build_stage` then the entire build for the table body (i.e., up
+#'   to and including the `"footnotes_attached"` stage) will be performed before
+#'   returning the data frame.
+#'
+#' @param output *Output format*
+#'
+#'   `singl-kw:[html|latex|rtf|word]` // *default:* `"html"`
+#'
+#'   The output format of the resulting data frame. This can either be
+#'   `"html"` (the default), `"latex"`, `"rtf"`, or `"word"`.
+#'
+#' @return A data frame or tibble object containing the table body.
+#'
+#' @family table export functions
+#' @section Function ID:
+#' 13-6
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @export
+extract_body <- function(
+    data,
+    build_stage = NULL,
+    output = c("html", "latex", "rtf", "word")
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  # Ensure that `output` is matched correctly to one option
+  output <- rlang::arg_match(output)
+
+  data <- dt_body_build(data = data)
+
+  if (
+    !is.null(build_stage) &&
+    build_stage == "init"
+  ) {
+    return(data[["_body"]])
+  }
+
+  data <- render_formats(data = data, context = output)
+
+  if (
+    !is.null(build_stage) &&
+    build_stage == "fmt_applied"
+  ) {
+    return(data[["_body"]])
+  }
+
+  data <- render_substitutions(data = data, context = output)
+
+  if (
+    !is.null(build_stage) &&
+    build_stage == "sub_applied"
+  ) {
+    return(data[["_body"]])
+  }
+
+  data <- migrate_unformatted_to_output(data = data, context = output)
+
+  if (
+    !is.null(build_stage) &&
+    build_stage == "unfmt_included"
+  ) {
+    return(data[["_body"]])
+  }
+
+  data <- perform_col_merge(data = data, context = output)
+
+  if (
+    !is.null(build_stage) &&
+    build_stage == "cols_merged"
+  ) {
+    return(data[["_body"]])
+  }
+
+  data <- dt_body_reassemble(data = data)
+
+  if (
+    !is.null(build_stage) &&
+    build_stage == "body_reassembled"
+  ) {
+    return(data[["_body"]])
+  }
+
+  data <- reorder_stub_df(data = data)
+  data <- reorder_footnotes(data = data)
+  data <- reorder_styles(data = data)
+
+  data <- perform_text_transforms(data = data)
+
+  if (
+    !is.null(build_stage) &&
+    build_stage == "text_transformed"
+  ) {
+    return(data[["_body"]])
+  }
+
+  data <- dt_boxhead_build(data = data, context = output)
+  data <- dt_spanners_build(data = data, context = output)
+  data <- dt_heading_build(data = data, context = output)
+  data <- dt_stubhead_build(data = data, context = output)
+  data <- dt_stub_df_build(data = data, context = output)
+  data <- dt_source_notes_build(data = data, context = output)
+  data <- dt_summary_build(data = data, context = output)
+  data <- dt_groups_rows_build(data = data, context = output)
+  data <- resolve_footnotes_styles(data = data, tbl_type = "footnotes")
+  data <- apply_footnotes_to_output(data = data, context = output)
+
+  if (
+    (
+      !is.null(build_stage) &&
+      build_stage == "footnotes_attached"
+    ) ||
+    is.null(build_stage)
+  ) {
+    return(data[["_body"]])
+  }
+
+  data[["_body"]]
 }
 
 #' Extract a summary list from a **gt** object
@@ -1191,7 +1410,7 @@ as_word_tbl_body <- function(
 #'
 #' @family table export functions
 #' @section Function ID:
-#' 13-6
+#' 13-7
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1285,7 +1504,7 @@ extract_summary <- function(data) {
 #'
 #'   `singl-kw:[auto|plain|html|latex|rtf|word]` // *default:* `"auto"`
 #'
-#'   The output style of the resulting character vector. This can either be
+#'   The output format of the resulting character vector. This can either be
 #'   `"auto"` (the default), `"plain"`, `"html"`, `"latex"`, `"rtf"`, or
 #'   `"word"`. In **knitr** rendering (i.e., Quarto or R Markdown), the `"auto"`
 #'   option will choose the correct `output` value
@@ -1335,7 +1554,7 @@ extract_summary <- function(data) {
 #'
 #' @family table export functions
 #' @section Function ID:
-#' 13-7
+#' 13-8
 #'
 #' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
