@@ -217,13 +217,25 @@ in the table) and returns a logical vector.
 \section{Reference line and reference area}{
 
 
-A horizontal \emph{reference line} is present in the default view (denoting the
-median of the data). This reference line can be customized by providing a
-static numeric value or by choosing a keyword that computes a particular \emph{y}
-value using a nanoplot's data values. To complement the reference line, an
-associated \emph{reference area} is also visible by default, bounding the area
-between the lower and upper quartiles of the data. These boundaries can also
-be customized in a similar fashion as the reference line.
+Neither a horizontal \emph{reference line} nor a \emph{reference area} is present in
+the default view but these can be added by providing valid input values in
+the \code{reference_line} and \code{reference_area} arguments. A reference line can
+be either be a static numeric value (supply any number to \code{reference_line}),
+or it can be a keyword that computes the reference line \emph{y} value using the
+data values for each nanoplot. The following keywords can be used:
+\enumerate{
+\item \code{"mean"}: The mean of the data values
+\item \code{"median"}: Median of data values
+\item \code{"min"}: Minimum value in set of data values
+\item \code{"max"}: The maximum value
+\item \code{"q1"}: The first, or lower, quartile of the data values
+\item \code{"q3"}: The third quartile, otherwise known as the upper quartile
+\item \code{"first"}: The first data value
+\item \code{"last"}: The last data value
+}
+
+The \emph{reference area} accepts two inputs, and this can be two of the above
+keywords, a keyword and a static numeric value, or two numeric values.
 }
 
 \section{Examples}{
