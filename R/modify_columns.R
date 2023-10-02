@@ -2136,21 +2136,14 @@ cols_add <- function(
 #' `cols_nanoplot()` you take data from one or more columns as the basic inputs
 #' for the nanoplots and generate a new column containing the plots.
 #'
-#' Each nanoplot contains data points with reasonably good visibility, having
-#' smooth connecting lines between them to allow for easier scanning of values.
-#' By default, a nanoplot rendered in an HTML-based table will have basic
+#' Nanoplots try to show individual data with reasonably good visibility. And
+#' there are two plot types available: `"line"` and `"bar"`. A line plot shows
+#' individual data points and has smooth connecting lines between them to allow
+#' for easier scanning of values. A bar plot instead has evenly-spaced bars and
+#' no connecting line. By default, any type of nanoplot will have basic
 #' interactivity. One can hover over the data points and vertical guides will
-#' display values ascribed to each. There is also a hoverable guide on the
-#' left-hand side that displays the minimal and maximal *y* values. A horizontal
-#' *reference line* is also present in the standard view (denoting the median of
-#' the data). This reference line can be customized by providing a static value
-#' or by choosing a keyword that computes a particular *y* value using a
-#' nanoplot's data values. Aside from a reference line, there is also an
-#' associated *reference area* which, by default, tries to make itself useful by
-#' bounding the area between the lower and upper quartiles of the data. These
-#' boundaries can also be customized in a similar fashion as the reference line.
-#' The nanoplots are robust against missing values, and multiple strategies are
-#' available for handling missingness.
+#' display values ascribed to each. A guide on the left-hand side of the plot
+#' area will display the minimal and maximal *y* values on hover.
 #'
 #' While basic customization options are present in the `cols_nanoplot()`, many
 #' more opportunities for customizing nanoplots on a more granular level are
@@ -2158,6 +2151,10 @@ cols_add <- function(
 #' invoked at the `options` argument of `cols_nanoplot()`. Through that helper
 #' function, layers of the nanoplots can be selectively removed and aesthetics
 #' of the remaining plot components can modified.
+#'
+#'
+#' The nanoplots are robust against missing values, and multiple strategies are
+#' available for handling missingness.
 #'
 #' @inheritParams cols_align
 #'
@@ -2194,8 +2191,8 @@ cols_add <- function(
 #'   line, data points, and a data area. Each of these can be deactivated by
 #'   using [nanoplot_options()]. With a bar plot, the always visible layer is
 #'   that of the data bars. Furthermore, a line plot can optionally take in *x*
-#'   values through the `columns_x` argument whereas a bar plot ignores any data
-#'   representing the independant variable.
+#'   values through the `columns_x_vals` argument whereas a bar plot ignores any
+#'   data representing the independent variable.
 #'
 #' @param plot_height *The height of the nanoplots*
 #'
@@ -2216,13 +2213,13 @@ cols_add <- function(
 #'   (2) `"zero"` will replace `NA` values with zero values; and (3) `"remove"`
 #'   will remove any incoming `NA` values.
 #'
-#' @param columns_x *Columns containing values for the optional x variable*
+#' @param columns_x_vals *Columns containing values for the optional x variable*
 #'
 #'   `<column-targeting expression>` // *default:* `NULL` (`optional`)
 #'
 #'   We can optionally obtain data for the independent variable (i.e., the
-#'   *x*-axis data) if specifying columns in `columns_x`. This is only for the
-#'   `"line"` type of plot (set via the `plot_type` argument). We can supply
+#'   *x*-axis data) if specifying columns in `columns_x_vals`. This is only for
+#'   the `"line"` type of plot (set via the `plot_type` argument). We can supply
 #'   either be a series of column names provided in [c()], a vector of column
 #'   indices, or a select helper function. Examples of select helper functions
 #'   include [starts_with()], [ends_with()], [contains()], [matches()],
@@ -2233,11 +2230,11 @@ cols_add <- function(
 #'
 #'   `scalar<numeric|integer|character>` // *default:* `NULL` (`optional`)
 #'
-#'   Supplying a single value here will add a horizontal reference line. It
-#'   could be a static numeric value, applied to all nanoplots generated. Or,
-#'   the input can be one of the following for generating the line from the
-#'   underlying data: (1) `"mean"`, (2) `"median"`, (3) `"min"`, (4) `"max"`,
-#'   (5) `"first"`, or (6) `"last"`.
+#'   A reference line requires a single input to define the line. It could be a
+#'   static numeric value, applied to all nanoplots generated. Or, the input can
+#'   be one of the following for generating the line from the underlying data:
+#'   (1) `"mean"`, (2) `"median"`, (3) `"min"`, (4) `"max"`, (5) `"q1"`, (6)
+#'   `"q3"`, (7) `"first"`, or (8) `"last"`.
 #'
 #' @param reference_area *Add a reference area*
 #'
@@ -2247,8 +2244,9 @@ cols_add <- function(
 #'   for a rectangular area. The types of values supplied are the same as those
 #'   expected for `reference_line`, which is either a static numeric value or
 #'   one of the following keywords for the generation of the value: (1)
-#'   `"mean"`, (2) `"median"`, (3) `"min"`, (4) `"max"`, (5) `"first"`, or (6)
-#'   `"last"`. Input can either be a vector or list with two elements.
+#'   `"mean"`, (2) `"median"`, (3) `"min"`, (4) `"max"`, (5) `"q1"`, (6) `"q3"`,
+#'   (7) `"first"`, or (8) `"last"`. Input can either be a vector or list with
+#'   two elements.
 #'
 #' @param new_col_name *Column name for the new column containing the plots*
 #'
@@ -2315,6 +2313,16 @@ cols_add <- function(
 #' expression that takes column values (can involve any of the available columns
 #' in the table) and returns a logical vector.
 #'
+#' @section Reference line and reference area:
+#'
+#' A horizontal *reference line* is present in the default view (denoting the
+#' median of the data). This reference line can be customized by providing a
+#' static numeric value or by choosing a keyword that computes a particular *y*
+#' value using a nanoplot's data values. To complement the reference line, an
+#' associated *reference area* is also visible by default, bounding the area
+#' between the lower and upper quartiles of the data. These boundaries can also
+#' be customized in a similar fashion as the reference line.
+#'
 #' @section Examples:
 #'
 #' Let's make some nanoplots with the [`illness`] dataset. The columns beginning
@@ -2335,11 +2343,7 @@ cols_add <- function(
 #'   cols_nanoplot(
 #'     columns = starts_with("day"),
 #'     new_col_name = "nanoplots",
-#'     new_col_label = md("*Progression*"),
-#'     options = nanoplot_options(
-#'       show_reference_line = FALSE,
-#'       show_reference_area = FALSE
-#'     )
+#'     new_col_label = md("*Progression*")
 #'   ) |>
 #'   cols_align(align = "center", columns = nanoplots) |>
 #'   cols_merge(columns = c(test, units), pattern = "{1} ({2})") |>
@@ -2374,14 +2378,12 @@ cols_add <- function(
 #'   cols_nanoplot(
 #'     columns = starts_with("population"),
 #'     reference_line = "median",
-#'     reference_area = NA,
 #'     new_col_name = "population_plot",
 #'     new_col_label = md("*Change*")
 #'   ) |>
 #'   cols_nanoplot(
 #'     columns = starts_with("density"),
-#'     reference_line = "median",
-#'     reference_area = NA,
+#'     plot_type = "bar",
 #'     new_col_name = "density_plot",
 #'     new_col_label = md("*Change*")
 #'   ) |>
@@ -2426,7 +2428,7 @@ cols_nanoplot <- function(
     plot_type = c("line", "bar"),
     plot_height = "2em",
     missing_vals = c("gap", "zero", "remove"),
-    columns_x = NULL,
+    columns_x_vals = NULL,
     reference_line = NULL,
     reference_area = NULL,
     new_col_name = NULL,
@@ -2456,7 +2458,7 @@ cols_nanoplot <- function(
 
   resolved_columns_x <-
     resolve_cols_c(
-      expr = {{ columns_x }},
+      expr = {{ columns_x_vals }},
       data = data,
       excl_stub = FALSE,
       null_means = "nothing"
