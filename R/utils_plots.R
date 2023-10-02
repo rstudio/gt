@@ -150,15 +150,24 @@ generate_nanoplot <- function(
     y_vals_gaps <- which(is.na(y_vals))
   }
 
-  # Ensure that a reference line or reference area isn't shown if any
-  # of its directives is NA
-  if (!is.null(y_ref_line) && is.na(y_ref_line)) {
+  # Ensure that a reference line or reference area isn't shown if NULL or
+  # any of its directives is NA
+  if (
+    is.null(y_ref_line) ||
+    !is.null(y_ref_line) && is.na(y_ref_line)
+  ) {
     show_ref_line <- FALSE
   }
-  if (!is.null(y_ref_area)) {
-    if (is.na(y_ref_area[[1]]) || is.na(y_ref_area[[2]])) {
-      show_ref_area <- FALSE
-    }
+
+  if (is.null(y_ref_area)) {
+    show_ref_area <- FALSE
+  }
+
+  if (
+    !is.null(y_ref_area) &&
+    (is.na(y_ref_area[[1]]) || is.na(y_ref_area[[2]]))
+  ) {
+    show_ref_area <- FALSE
   }
 
   # Determine the width of the data plot area; for plots where `x_vals`
@@ -208,244 +217,432 @@ generate_nanoplot <- function(
   # so that there are normalized values in relation to the data points
   #
 
-  if (show_ref_line && show_ref_area) {
+  if (plot_type == "line") {
 
-    # Case where there is both a reference line and a reference area
+    if (show_ref_line && show_ref_area) {
 
-    #
-    # Resolve the reference line
-    #
+      # Case where there is both a reference line and a reference area
 
-    if (is.null(y_ref_line)) {
-
-      # When a reference line is requested but there are no directives for
-      # defining the line, we will default to having the line represent the
-      # median of the data
-
-      y_ref_line <- stats::median(y_vals, na.rm = TRUE)
-
-    } else if (
-      !is.null(y_ref_line) &&
-      is.character(y_ref_line) &&
-      length(y_ref_line) == 1 &&
-      y_ref_line %in% c("mean", "median", "min", "max", "first", "last")
-    ) {
-
-      y_ref_line <-
-        generate_ref_line_from_keyword(
-          vals = y_vals,
-          keyword = y_ref_line
-        )
-    }
-
-    #
-    # Resolve the reference area
-    #
-
-    if (is.null(y_ref_area)) {
-
-      # When a reference area is requested but there are no directives for
-      # defining the area, we will default to constraining the area to the
-      # Q1 and Q3 quartiles
-
-      y_ref_area_l <- as.numeric(stats::quantile(y_vals, 0.25, na.rm = TRUE))
-      y_ref_area_u <- as.numeric(stats::quantile(y_vals, 0.75, na.rm = TRUE))
-
-    } else if (!is.null(y_ref_area)) {
-
-      # TODO: Validate input for `y_ref_area`
-
-      y_ref_area_1 <- y_ref_area[[1]]
-      y_ref_area_2 <- y_ref_area[[2]]
-
-      if (is.numeric(y_ref_area_1)) {
-        y_ref_area_line_1 <- y_ref_area_1
-      }
-      if (is.numeric(y_ref_area_2)) {
-        y_ref_area_line_2 <- y_ref_area_2
-      }
+      #
+      # Resolve the reference line
+      #
 
       if (
-        is.character(y_ref_area_1) &&
-        y_ref_area_1 %in% c("mean", "median", "min", "max", "first", "last")
+        !is.null(y_ref_line) &&
+        is.character(y_ref_line) &&
+        length(y_ref_line) == 1 &&
+        y_ref_line %in% reference_line_keywords()
       ) {
 
-        y_ref_area_line_1 <-
+        y_ref_line <-
           generate_ref_line_from_keyword(
             vals = y_vals,
-            keyword = y_ref_area_1
+            keyword = y_ref_line
           )
       }
 
+      #
+      # Resolve the reference area
+      #
+
+      if (!is.null(y_ref_area)) {
+
+        # TODO: Validate input for `y_ref_area`
+
+        y_ref_area_1 <- y_ref_area[[1]]
+        y_ref_area_2 <- y_ref_area[[2]]
+
+        if (is.numeric(y_ref_area_1)) {
+          y_ref_area_line_1 <- y_ref_area_1
+        }
+        if (is.numeric(y_ref_area_2)) {
+          y_ref_area_line_2 <- y_ref_area_2
+        }
+
+        if (
+          is.character(y_ref_area_1) &&
+          y_ref_area_1 %in% reference_line_keywords()
+        ) {
+
+          y_ref_area_line_1 <-
+            generate_ref_line_from_keyword(
+              vals = y_vals,
+              keyword = y_ref_area_1
+            )
+        }
+
+        if (
+          is.character(y_ref_area_2) &&
+          y_ref_area_2 %in% reference_line_keywords()
+        ) {
+
+          y_ref_area_line_2 <-
+            generate_ref_line_from_keyword(
+              vals = y_vals,
+              keyword = y_ref_area_2
+            )
+        }
+
+        y_ref_area_lines_sorted <- sort(c(y_ref_area_line_1, y_ref_area_line_2))
+        y_ref_area_l <- y_ref_area_lines_sorted[1]
+        y_ref_area_u <- y_ref_area_lines_sorted[2]
+      }
+
+      # Scale to proportional values
+      y_proportions_w_ref_line_area <-
+        normalize_vals(
+          c(
+            y_vals,
+            y_ref_line[1],
+            y_ref_area_l,
+            y_ref_area_u
+          )
+        )
+
+      y_proportion_ref_line <- y_proportions_w_ref_line_area[-(1:num_y_vals)][1]
+      y_proportions_ref_area_l <- y_proportions_w_ref_line_area[-(1:num_y_vals)][2]
+      y_proportions_ref_area_u <- y_proportions_w_ref_line_area[-(1:num_y_vals)][3]
+      y_proportions <- y_proportions_w_ref_line_area[(1:num_y_vals)]
+
+      # Scale reference line and reference area boundaries
+      data_y_ref_line <- safe_y_d + ((1 - y_proportion_ref_line) * data_y_height)
+      data_y_ref_area_l <- safe_y_d + ((1 - y_proportions_ref_area_l) * data_y_height)
+      data_y_ref_area_u <- safe_y_d + ((1 - y_proportions_ref_area_u) * data_y_height)
+
+    } else if (show_ref_line) {
+
+      # Case where there is a reference line
+
       if (
-        is.character(y_ref_area_2) &&
-        y_ref_area_2 %in% c("mean", "median", "min", "max", "first", "last")
+        !is.null(y_ref_line) &&
+        is.character(y_ref_line) &&
+        length(y_ref_line) == 1 &&
+        y_ref_line %in% reference_line_keywords()
       ) {
 
-        y_ref_area_line_2 <-
+        y_ref_line <-
           generate_ref_line_from_keyword(
             vals = y_vals,
-            keyword = y_ref_area_2
+            keyword = y_ref_line
           )
       }
 
-      y_ref_area_lines_sorted <- sort(c(y_ref_area_line_1, y_ref_area_line_2))
-      y_ref_area_l <- y_ref_area_lines_sorted[1]
-      y_ref_area_u <- y_ref_area_lines_sorted[2]
-    }
-
-    # Scale to proportional values
-    y_proportions_w_ref_line_area <-
-      normalize_vals(
-        c(
-          y_vals,
-          y_ref_line[1],
-          y_ref_area_l,
-          y_ref_area_u
+      # Scale to proportional values
+      y_proportions_w_ref_line <-
+        normalize_vals(
+          c(
+            y_vals,
+            y_ref_line[1]
+          )
         )
-      )
 
-    y_proportion_ref_line <- y_proportions_w_ref_line_area[-(1:num_y_vals)][1]
-    y_proportions_ref_area_l <- y_proportions_w_ref_line_area[-(1:num_y_vals)][2]
-    y_proportions_ref_area_u <- y_proportions_w_ref_line_area[-(1:num_y_vals)][3]
-    y_proportions <- y_proportions_w_ref_line_area[(1:num_y_vals)]
+      y_proportion_ref_line <- y_proportions_w_ref_line[length(y_proportions_w_ref_line)]
+      y_proportions <- y_proportions_w_ref_line[-length(y_proportions_w_ref_line)]
 
-    # Scale reference line and reference area boundaries
-    data_y_ref_line <- safe_y_d + ((1 - y_proportion_ref_line) * data_y_height)
-    data_y_ref_area_l <- safe_y_d + ((1 - y_proportions_ref_area_l) * data_y_height)
-    data_y_ref_area_u <- safe_y_d + ((1 - y_proportions_ref_area_u) * data_y_height)
+      # Scale reference line
+      data_y_ref_line <- safe_y_d + ((1 - y_proportion_ref_line) * data_y_height)
 
-  } else if (show_ref_line) {
+    } else if (show_ref_area) {
 
-    # Case where there is a reference line
+      # Case where there is a reference area
 
-    if (is.null(y_ref_line)) {
+      if (!is.null(y_ref_area)) {
 
-      # When a reference line is requested but there are no directives for
-      # defining the line, we will default to having the line represent the
-      # median of the data
+        # TODO: Validate input for `y_ref_area`
 
-      y_ref_line <- stats::median(y_vals, na.rm = TRUE)
+        y_ref_area_1 <- y_ref_area[[1]]
+        y_ref_area_2 <- y_ref_area[[2]]
 
-    } else if (
-      !is.null(y_ref_line) &&
-      is.character(y_ref_line) &&
-      length(y_ref_line) == 1 &&
-      y_ref_line %in% c("mean", "median", "min", "max", "first", "last")
-    ) {
+        if (is.numeric(y_ref_area_1)) {
+          y_ref_area_line_1 <- y_ref_area_1
+        }
+        if (is.numeric(y_ref_area_2)) {
+          y_ref_area_line_2 <- y_ref_area_2
+        }
 
-      y_ref_line <-
-        generate_ref_line_from_keyword(
-          vals = y_vals,
-          keyword = y_ref_line
-        )
-    }
+        if (
+          is.character(y_ref_area_1) &&
+          y_ref_area_1 %in% reference_line_keywords()
+        ) {
 
-    # Scale to proportional values
-    y_proportions_w_ref_line <-
-      normalize_vals(
-        c(
-          y_vals,
-          y_ref_line[1]
-        )
-      )
+          y_ref_area_line_1 <-
+            generate_ref_line_from_keyword(
+              vals = y_vals,
+              keyword = y_ref_area_1
+            )
+        }
 
-    y_proportion_ref_line <- y_proportions_w_ref_line[length(y_proportions_w_ref_line)]
-    y_proportions <- y_proportions_w_ref_line[-length(y_proportions_w_ref_line)]
+        if (
+          is.character(y_ref_area_2) &&
+          y_ref_area_2 %in% reference_line_keywords()
+        ) {
 
-    # Scale reference line
-    data_y_ref_line <- safe_y_d + ((1 - y_proportion_ref_line) * data_y_height)
+          y_ref_area_line_2 <-
+            generate_ref_line_from_keyword(
+              vals = y_vals,
+              keyword = y_ref_area_2
+            )
+        }
 
-  } else if (show_ref_area) {
-
-    # Case where there is a reference area
-
-    if (is.null(y_ref_area)) {
-
-      # When a reference area is requested but there are no directives for
-      # defining the area, we will default to constraining the area to the
-      # Q1 and Q3 quartiles
-
-      y_ref_area_l <- as.numeric(stats::quantile(y_vals, 0.25, na.rm = TRUE))
-      y_ref_area_u <- as.numeric(stats::quantile(y_vals, 0.75, na.rm = TRUE))
-
-    } else if (!is.null(y_ref_area)) {
-
-      # TODO: Validate input for `y_ref_area`
-
-      y_ref_area_1 <- y_ref_area[[1]]
-      y_ref_area_2 <- y_ref_area[[2]]
-
-      if (is.numeric(y_ref_area_1)) {
-        y_ref_area_line_1 <- y_ref_area_1
+        y_ref_area_lines_sorted <- sort(c(y_ref_area_line_1, y_ref_area_line_2))
+        y_ref_area_l <- y_ref_area_lines_sorted[1]
+        y_ref_area_u <- y_ref_area_lines_sorted[2]
       }
-      if (is.numeric(y_ref_area_2)) {
-        y_ref_area_line_2 <- y_ref_area_2
-      }
+
+      # Scale to proportional values
+      y_proportions_w_ref_area <-
+        normalize_vals(
+          c(
+            y_vals,
+            y_ref_area_l,
+            y_ref_area_u
+          )
+        )
+
+      y_proportions_ref_area_l <- y_proportions_w_ref_area[-(1:num_y_vals)][1]
+      y_proportions_ref_area_u <- y_proportions_w_ref_area[-(1:num_y_vals)][2]
+      y_proportions <- y_proportions_w_ref_area[(1:num_y_vals)]
+
+      # Scale reference area boundaries
+      data_y_ref_area_l <- safe_y_d + ((1 - y_proportions_ref_area_l) * data_y_height)
+      data_y_ref_area_u <- safe_y_d + ((1 - y_proportions_ref_area_u) * data_y_height)
+
+    } else {
+
+      # Case where there is no reference line or reference area
+      y_proportions <- normalize_vals(y_vals)
+    }
+  }
+
+  if (plot_type == "bar") {
+
+    if (show_ref_line && show_ref_area) {
+
+      # Case where there is both a reference line and a reference area
+
+      #
+      # Resolve the reference line
+      #
 
       if (
-        is.character(y_ref_area_1) &&
-        y_ref_area_1 %in% c("mean", "median", "min", "max", "first", "last")
+        !is.null(y_ref_line) &&
+        is.character(y_ref_line) &&
+        length(y_ref_line) == 1 &&
+        y_ref_line %in% reference_line_keywords()
       ) {
 
-        y_ref_area_line_1 <-
+        y_ref_line <-
           generate_ref_line_from_keyword(
             vals = y_vals,
-            keyword = y_ref_area_1
+            keyword = y_ref_line
           )
       }
 
+      #
+      # Resolve the reference area
+      #
+
+      if (!is.null(y_ref_area)) {
+
+        # TODO: Validate input for `y_ref_area`
+
+        y_ref_area_1 <- y_ref_area[[1]]
+        y_ref_area_2 <- y_ref_area[[2]]
+
+        if (is.numeric(y_ref_area_1)) {
+          y_ref_area_line_1 <- y_ref_area_1
+        }
+        if (is.numeric(y_ref_area_2)) {
+          y_ref_area_line_2 <- y_ref_area_2
+        }
+
+        if (
+          is.character(y_ref_area_1) &&
+          y_ref_area_1 %in% reference_line_keywords()
+        ) {
+
+          y_ref_area_line_1 <-
+            generate_ref_line_from_keyword(
+              vals = y_vals,
+              keyword = y_ref_area_1
+            )
+        }
+
+        if (
+          is.character(y_ref_area_2) &&
+          y_ref_area_2 %in% reference_line_keywords()
+        ) {
+
+          y_ref_area_line_2 <-
+            generate_ref_line_from_keyword(
+              vals = y_vals,
+              keyword = y_ref_area_2
+            )
+        }
+
+        y_ref_area_lines_sorted <- sort(c(y_ref_area_line_1, y_ref_area_line_2))
+        y_ref_area_l <- y_ref_area_lines_sorted[1]
+        y_ref_area_u <- y_ref_area_lines_sorted[2]
+      }
+
+      # Scale to proportional values
+      y_proportions_w_ref_line_area_list <-
+        normalize_vals_with_zero(
+          c(
+            y_vals,
+            y_ref_line[1],
+            y_ref_area_l,
+            y_ref_area_u
+          )
+        )
+
+      y_proportions_zero <- y_proportions_w_ref_line_area_list[["zero"]]
+
+      y_proportion_ref_line <-
+        y_proportions_w_ref_line_area_list[["vals"]][-(1:num_y_vals)][1]
+
+      y_proportions_ref_area_l <-
+        y_proportions_w_ref_line_area_list[["vals"]][-(1:num_y_vals)][2]
+
+      y_proportions_ref_area_u <-
+        y_proportions_w_ref_line_area_list[["vals"]][-(1:num_y_vals)][3]
+
+      y_proportions <-
+        y_proportions_w_ref_line_area_list[["vals"]][(1:num_y_vals)]
+
+      # Scale reference line and reference area boundaries
+      data_y_ref_line <- safe_y_d + ((1 - y_proportion_ref_line) * data_y_height)
+      data_y_ref_area_l <- safe_y_d + ((1 - y_proportions_ref_area_l) * data_y_height)
+      data_y_ref_area_u <- safe_y_d + ((1 - y_proportions_ref_area_u) * data_y_height)
+
+    } else if (show_ref_line) {
+
+      # Case where there is a reference line
+
       if (
-        is.character(y_ref_area_2) &&
-        y_ref_area_2 %in% c("mean", "median", "min", "max", "first", "last")
+        !is.null(y_ref_line) &&
+        is.character(y_ref_line) &&
+        length(y_ref_line) == 1 &&
+        y_ref_line %in% reference_line_keywords()
       ) {
 
-        y_ref_area_line_2 <-
+        y_ref_line <-
           generate_ref_line_from_keyword(
             vals = y_vals,
-            keyword = y_ref_area_2
+            keyword = y_ref_line
           )
       }
 
-      y_ref_area_lines_sorted <- sort(c(y_ref_area_line_1, y_ref_area_line_2))
-      y_ref_area_l <- y_ref_area_lines_sorted[1]
-      y_ref_area_u <- y_ref_area_lines_sorted[2]
+      # Scale to proportional values
+      y_proportions_w_ref_line_list <-
+        normalize_vals_with_zero(
+          c(
+            y_vals,
+            y_ref_line[1]
+          )
+        )
+
+      y_proportions_zero <- y_proportions_w_ref_line_list[["zero"]]
+
+      y_proportion_ref_line <-
+        y_proportions_w_ref_line_list[["vals"]][num_y_vals + 1]
+
+      y_proportions <-
+        y_proportions_w_ref_line_list[["vals"]][-(num_y_vals + 1)]
+
+      # Scale reference line
+      data_y_ref_line <- safe_y_d + ((1 - y_proportion_ref_line) * data_y_height)
+
+    } else if (show_ref_area) {
+
+      # Case where there is a reference area
+
+      if (!is.null(y_ref_area)) {
+
+        # TODO: Validate input for `y_ref_area`
+
+        y_ref_area_1 <- y_ref_area[[1]]
+        y_ref_area_2 <- y_ref_area[[2]]
+
+        if (is.numeric(y_ref_area_1)) {
+          y_ref_area_line_1 <- y_ref_area_1
+        }
+        if (is.numeric(y_ref_area_2)) {
+          y_ref_area_line_2 <- y_ref_area_2
+        }
+
+        if (
+          is.character(y_ref_area_1) &&
+          y_ref_area_1 %in% reference_line_keywords()
+        ) {
+
+          y_ref_area_line_1 <-
+            generate_ref_line_from_keyword(
+              vals = y_vals,
+              keyword = y_ref_area_1
+            )
+        }
+
+        if (
+          is.character(y_ref_area_2) &&
+          y_ref_area_2 %in% reference_line_keywords()
+        ) {
+
+          y_ref_area_line_2 <-
+            generate_ref_line_from_keyword(
+              vals = y_vals,
+              keyword = y_ref_area_2
+            )
+        }
+
+        y_ref_area_lines_sorted <- sort(c(y_ref_area_line_1, y_ref_area_line_2))
+        y_ref_area_l <- y_ref_area_lines_sorted[1]
+        y_ref_area_u <- y_ref_area_lines_sorted[2]
+      }
+
+      # Scale to proportional values
+      y_proportions_w_ref_area_list <-
+        normalize_vals_with_zero(
+          c(
+            y_vals,
+            y_ref_area_l,
+            y_ref_area_u
+          )
+        )
+
+      y_proportions_zero <- y_proportions_w_ref_area_list[["zero"]]
+
+      y_proportions_ref_area_l <-
+        y_proportions_w_ref_area_list[["vals"]][-(1:num_y_vals)][1]
+
+      y_proportions_ref_area_u <-
+        y_proportions_w_ref_area_list[["vals"]][-(1:num_y_vals)][2]
+
+      y_proportions <-
+        y_proportions_w_ref_area_list[["vals"]][(1:num_y_vals)]
+
+      # Scale reference area boundaries
+      data_y_ref_area_l <- safe_y_d + ((1 - y_proportions_ref_area_l) * data_y_height)
+      data_y_ref_area_u <- safe_y_d + ((1 - y_proportions_ref_area_u) * data_y_height)
+
+    } else {
+
+      # Case where there is no reference line or reference area
+
+      y_proportions_list <- normalize_vals_with_zero(y_vals)
+      y_proportions_zero <- y_proportions_list[["zero"]]
+      y_proportions <- y_proportions_list[["vals"]]
     }
 
-    # Scale to proportional values
-    y_proportions_w_ref_area <-
-      normalize_vals(
-        c(
-          y_vals,
-          y_ref_area_l,
-          y_ref_area_u
-        )
-      )
-
-    y_proportions_ref_area_l <- y_proportions_w_ref_area[-(1:num_y_vals)][1]
-    y_proportions_ref_area_u <- y_proportions_w_ref_area[-(1:num_y_vals)][2]
-    y_proportions <- y_proportions_w_ref_area[(1:num_y_vals)]
-
-    # Scale reference area boundaries
-    data_y_ref_area_l <- safe_y_d + ((1 - y_proportions_ref_area_l) * data_y_height)
-    data_y_ref_area_u <- safe_y_d + ((1 - y_proportions_ref_area_u) * data_y_height)
-
-  } else {
-
-    # Case where there is no reference line or reference area
-
-    y_proportions <- normalize_vals(y_vals)
+    data_y0_point <- safe_y_d + ((1 - y_proportions_zero) * data_y_height)
   }
 
   # If x values are present then normalize them between [0, 1]; if
   # there are no x values, generate equally-spaced x values according
   # to the number of y values
-  if (!is.null(x_vals)) {
-
+  if (plot_type == "line" && !is.null(x_vals)) {
     x_proportions <- normalize_vals(x_vals)
-
   } else {
-
     x_proportions <- seq(0, 1, length.out = num_y_vals)
   }
 
@@ -681,13 +878,24 @@ generate_nanoplot <- function(
 
       } else {
 
+        if (y_vals[i] < 0) {
+          y_value_i <- data_y0_point
+          y_height <- data_y_points[i] - data_y0_point
+        } else if (y_vals[i] > 0) {
+          y_value_i <- data_y_points[i]
+          y_height <- data_y0_point - data_y_points[i]
+        } else if (y_vals[i] == 0) {
+          y_value_i <- data_y0_point - 1
+          y_height <- 2
+        }
+
         bar_strings_i <-
           paste0(
             "<rect ",
             "x=\"", data_x_points[i] - 20, "\" ",
-            "y=\"", data_y_points[i], "\" ",
+            "y=\"", y_value_i, "\" ",
             "width=\"", 40, "\" ",
-            "height=\"", data_y_height - data_y_points[i] + safe_y_d, "\" ",
+            "height=\"", y_height, "\" ",
             "stroke=\"", data_bar_stroke_color_i, "\" ",
             "stroke-width=\"", data_bar_stroke_width_i, "\" ",
             "fill=\"", data_bar_fill_color_i, "\" ",
@@ -1095,6 +1303,10 @@ generate_nanoplot <- function(
   svg
 }
 
+reference_line_keywords <- function() {
+  c("mean", "median", "min", "max", "q1", "q3", "first", "last")
+}
+
 normalize_option_vector <- function(vec, num_y_vals) {
 
   if (length(vec) != 1 && length(vec) != num_y_vals) {
@@ -1117,6 +1329,16 @@ normalize_vals <- function(x) {
   x <- as.numeric(x)
   x[x_missing] <- NA_real_
   x
+}
+
+normalize_vals_with_zero <- function(x) {
+
+  normalized <- normalize_vals(c(0, x))
+
+  list(
+    zero = normalized[1],
+    vals = normalized[-1]
+  )
 }
 
 mad_double <- function(x) {
@@ -1153,11 +1375,7 @@ out_indices_from_vec <- function(x, cutoff = 3) {
 
 generate_ref_line_from_keyword <- function(vals, keyword) {
 
-  rlang::arg_match0(keyword, c("mean", "median", "min", "max", "first", "last"))
-
-  if (!(keyword %in% c("mean", "median", "min", "max", "first", "last"))) {
-    stop("A keyword for a reference line needs to be one of six valid options.")
-  }
+  rlang::arg_match0(keyword, reference_line_keywords())
 
   if (keyword == "mean") {
     ref_line <- mean(vals, na.rm = TRUE)
@@ -1169,8 +1387,12 @@ generate_ref_line_from_keyword <- function(vals, keyword) {
     ref_line <- max(vals, na.rm = TRUE)
   } else if (keyword == "first") {
     ref_line <- vals[!is.na(vals)][1]
-  } else {
+  } else if (keyword == "last") {
     ref_line <- vals[!is.na(vals)][length(vals[!is.na(vals)])]
+  } else if (keyword == "q1") {
+    ref_line <- as.numeric(stats::quantile(vals, 0.25, na.rm = TRUE))
+  } else {
+    ref_line <- as.numeric(stats::quantile(vals, 0.75, na.rm = TRUE))
   }
 
   ref_line
