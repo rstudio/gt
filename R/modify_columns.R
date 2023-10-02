@@ -2134,13 +2134,35 @@ cols_add <- function(
 #' simplicity, however, you do get a set of very succinct data visualizations
 #' that adapt nicely to the amount of data you feed into them. With
 #' `cols_nanoplot()` you take data from one or more columns as the basic inputs
-#' for the nanoplots and generate a new column containing the plots.
+#' for the nanoplots and generate a new column containing the plots. The
+#' nanoplots are robust against missing values, and multiple strategies are
+#' available for handling missingness.
 #'
-#' Nanoplots try to show individual data with reasonably good visibility. And
-#' there are two plot types available: `"line"` and `"bar"`. A line plot shows
-#' individual data points and has smooth connecting lines between them to allow
-#' for easier scanning of values. A bar plot instead has evenly-spaced bars and
-#' no connecting line. By default, any type of nanoplot will have basic
+#' Nanoplots try to show individual data with reasonably good visibility.
+#' Interactivity is included as a basic feature so one can hover over the data
+#' points and vertical guides will display the value ascribed to each data
+#' point. Because **gt** knows all about numeric formatting, values will be
+#' compactly and not take up valuable real estate. If you need to create a
+#' nanoplot based on monetary values, that can be handled (simply provide the
+#' currency code to the [nanoplot_options()] helper and hook that up to the
+#' `options` argument).  A guide on the left-hand side of the plot area will
+#' appear on hover and display the minimal and maximal *y* values.
+#'
+#' There are two types of nanoplots available: `"line"` and `"bar"`. A line plot
+#' shows individual data points and has smooth connecting lines between them to
+#' allow for easier scanning of values. You can opt for straight-line
+#' connections between data points, or, no connections at all (it's up to you).
+#' You can even eschew the data points and just have a simple line. Regardless
+#' of how you mix and match difference plot layers, the plot area focuses on the
+#' domain of the data points with the goal of showing you the overall trend of
+#' the data. The data you feed into a line plot can consist of a single vector
+#' of values (resulting in equally-spaced *y* values), or, you can supply two
+#' vectors representative of *x* and *y*.
+#'
+#' A bar plot is built a little bit differently. The focus is on evenly-spaced
+#' bars (requiring a single vector of values) that project from zero line,
+#' clearly showing the difference between positive and negative values.
+#' By default, any type of nanoplot will have basic
 #' interactivity. One can hover over the data points and vertical guides will
 #' display values ascribed to each. A guide on the left-hand side of the plot
 #' area will display the minimal and maximal *y* values on hover.
@@ -2152,9 +2174,6 @@ cols_add <- function(
 #' function, layers of the nanoplots can be selectively removed and aesthetics
 #' of the remaining plot components can modified.
 #'
-#'
-#' The nanoplots are robust against missing values, and multiple strategies are
-#' available for handling missingness.
 #'
 #' @inheritParams cols_align
 #'
