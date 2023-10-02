@@ -2315,13 +2315,24 @@ cols_add <- function(
 #'
 #' @section Reference line and reference area:
 #'
-#' A horizontal *reference line* is present in the default view (denoting the
-#' median of the data). This reference line can be customized by providing a
-#' static numeric value or by choosing a keyword that computes a particular *y*
-#' value using a nanoplot's data values. To complement the reference line, an
-#' associated *reference area* is also visible by default, bounding the area
-#' between the lower and upper quartiles of the data. These boundaries can also
-#' be customized in a similar fashion as the reference line.
+#' Neither a horizontal *reference line* nor a *reference area* is present in
+#' the default view but these can be added by providing valid input values in
+#' the `reference_line` and `reference_area` arguments. A reference line can
+#' be either be a static numeric value (supply any number to `reference_line`),
+#' or it can be a keyword that computes the reference line *y* value using the
+#' data values for each nanoplot. The following keywords can be used:
+#'
+#' 1. `"mean"`: The mean of the data values
+#' 2. `"median"`: Median of data values
+#' 3. `"min"`: Minimum value in set of data values
+#' 4. `"max"`: The maximum value
+#' 5. `"q1"`: The first, or lower, quartile of the data values
+#' 6. `"q3"`: The third quartile, otherwise known as the upper quartile
+#' 7. `"first"`: The first data value
+#' 8. `"last"`: The last data value
+#'
+#' The *reference area* accepts two inputs, and this can be two of the above
+#' keywords, a keyword and a static numeric value, or two numeric values.
 #'
 #' @section Examples:
 #'
