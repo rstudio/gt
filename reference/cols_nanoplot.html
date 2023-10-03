@@ -545,6 +545,64 @@ bars.</p>
 <span><span class="st">    the solar zenith angle. TMYK."</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_3.png" alt="This image of a table was generated from the third code example in the `cols_nanoplot()` help file." style="width:100%;"></p>
+<p>You can use number streams as data for nanoplots. Let's demonstrate how we
+can make use of them with some creative transformation of the <code><a href="pizzaplace.html">pizzaplace</a></code>
+dataset. A number stream is really a string with delimited numeric values,
+like this: <code>"7.24 84.2 14"</code>. They can be more convenient to use since
+different rows/nanoplots can have varying amounts of data. There are <code>date</code>
+and <code>time</code> columns in this dataset and we'll use that to get <em>x</em> values
+denoting high-resolution time instants: the second of the day that a pizza
+was sold (this is true pizza data science). We also have the sell price for a
+pizza, and that'll serve as the <em>y</em> values. The pizzas belong to four
+different groups (in the <code>type</code> column) and we'll group by that and create
+number streams with <code>paste(..., collapse = ",")</code> in the <strong>dplyr</strong> summarize
+call. With two number streams in each row (having the same number of values)
+we can now make a <strong>gt</strong> table with nanoplots.</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">pizzaplace</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">date</span> <span class="op">==</span> <span class="st">"2015-01-01"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    s_day <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span></span>
+<span>      <span class="fu"><a href="../reference/vec_fmt_datetime.html">vec_fmt_datetime</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">time</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"A"</span><span class="op">)</span></span>
+<span>    <span class="op">)</span> <span class="op">/</span> <span class="fl">1000</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">type</span>, <span class="va">s_day</span>, <span class="va">price</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">type</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span></span>
+<span>    s_day <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">s_day</span>, collapse <span class="op">=</span> <span class="st">","</span><span class="op">)</span>,</span>
+<span>    sold <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">price</span>, collapse <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"type"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_header.html">tab_header</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span><span class="st">"Pizzas sold on **January 1, 2015**"</span><span class="op">)</span>,</span>
+<span>    subtitle <span class="op">=</span> <span class="st">"Between the opening hours of 09:00 to 00:00"</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_hide.html">cols_hide</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">s_day</span>, <span class="va">sold</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_nanoplot.html">cols_nanoplot</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="va">sold</span>,</span>
+<span>    columns_x_vals <span class="op">=</span> <span class="va">s_day</span>,</span>
+<span>    reference_line <span class="op">=</span> <span class="st">"median"</span>,</span>
+<span>    new_col_name <span class="op">=</span> <span class="st">"pizzas_sold"</span>,</span>
+<span>    new_col_label <span class="op">=</span> <span class="st">"Pizzas Sold"</span>,</span>
+<span>    options <span class="op">=</span> <span class="fu"><a href="../reference/nanoplot_options.html">nanoplot_options</a></span><span class="op">(</span></span>
+<span>      show_data_line <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>      show_data_area <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>      currency <span class="op">=</span> <span class="st">"USD"</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_width.html">cols_width</a></span><span class="op">(</span><span class="va">pizzas_sold</span> <span class="op">~</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">200</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_align.html">cols_align</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">pizzas_sold</span>, align <span class="op">=</span> <span class="st">"center"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/opt_all_caps.html">opt_all_caps</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_4.png" alt="This image of a table was generated from the fourth code example in the `cols_nanoplot()` help file." style="width:100%;"></p>
+<p>Notice that we hid the columns containing the number streams with
+<code><a href="cols_hide.html">cols_hide()</a></code> because, while useful, they don't need to be displayed to
+anybody viewing a table. We have a lot of data points and a connecting line
+is not as valuable here. It's more interesting to see the clusters of the
+differently priced pizzas over the entire day. Specifying a <code>currency</code> in
+<code><a href="nanoplot_options.html">nanoplot_options()</a></code> is a nice touch since the <em>y</em> values are sale prices in
+U.S. Dollars (hovering over data points gives correctly formatted values).
+Finally, having a reference line based on the median gives pretty useful
+information. Seems like customers preferred getting the <code>"chicken"</code>-type
+pizzas in large size!</p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
