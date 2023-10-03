@@ -48,8 +48,8 @@ generate_nanoplot <- function(
     show_data_points = TRUE,
     show_data_line = TRUE,
     show_data_area = TRUE,
-    show_ref_line = FALSE,
-    show_ref_area = FALSE,
+    show_ref_line = TRUE,
+    show_ref_area = TRUE,
     show_vertical_guides = TRUE,
     show_y_axis_guide = TRUE,
     svg_height = "2em",
@@ -1048,18 +1048,34 @@ generate_nanoplot <- function(
         "</rect>"
       )
 
-    y_value_max <- max(data_y_points, na.rm = TRUE)
-    y_value_min <- min(data_y_points, na.rm = TRUE)
+    data_y_max <- max(data_y_points, na.rm = TRUE)
+    data_y_min <- min(data_y_points, na.rm = TRUE)
+
+    y_val_max <- max(y_vals, na.rm = TRUE)
+    y_val_min <- min(y_vals, na.rm = TRUE)
+
+    if (plot_type == "bar") {
+
+      if (all(y_vals[!is.na(y_vals)] > 0)) {
+        y_val_min <- 0
+        data_y_max <- data_y0_point
+      }
+
+      if (all(y_vals[!is.na(y_vals)] < 0)) {
+        y_val_max <- 0
+        data_y_min <- data_y0_point
+      }
+    }
 
     y_value_max_label <-
       format_number_compactly(
-        max(y_vals, na.rm = TRUE),
+        y_val_max,
         currency = currency
       )
 
     y_value_min_label <-
       format_number_compactly(
-        min(y_vals, na.rm = TRUE),
+        y_val_min,
         currency = currency
       )
 
@@ -1067,7 +1083,7 @@ generate_nanoplot <- function(
       paste0(
         "<text ",
         "x=\"", left_x, "\" ",
-        "y=\"", y_value_max + 7.5, "\" ",
+        "y=\"", data_y_max + 7.5, "\" ",
         "fill=\"transparent\" ",
         "stroke=\"transparent\" ",
         "font-size=\"25\"",
@@ -1080,7 +1096,7 @@ generate_nanoplot <- function(
       paste0(
         "<text ",
         "x=\"", left_x, "\" ",
-        "y=\"", y_value_min + 7.5, "\" ",
+        "y=\"", data_y_min + 7.5, "\" ",
         "fill=\"transparent\" ",
         "stroke=\"transparent\" ",
         "font-size=\"25\"",
