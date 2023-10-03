@@ -233,6 +233,34 @@ expression that takes column values (can involve any of the available columns
 in the table) and returns a logical vector.
 }
 
+\section{How to supply data for nanoplots}{
+
+
+The input data for nanoplots naturally needs to be numeric and there are
+two major ways to formulate that data: (1) from single values across many
+columns, and (2) using text-based number streams. It's pretty to rationalize
+the first, and we may already have wide data in the input data frame anyway
+(take a look at the \code{\link{illness}} and \code{\link{towny}} datasets for examples of this).
+There's one data value per column so the key thing here is to reference the
+columns in the correct order. With a select helper, good column naming, and
+the columns being in the intended order, this is a snap.
+
+The second option is to use text-based number streams. Sometimes you simply
+don't want or don't need multiple columns and so a single column with all of
+the data might be more practical. To make this work, you'd need to have a set
+of numerical values separated by some sort of delimiter (could be a comma, a
+space, a semicolon, you get the idea). Here's an example with three numbers,
+written three ways: \code{"3.6 -2.44 1.98"}, \code{"3.6, -2.44, 1.98"}, and
+\code{"3.6;-2.44;1.98"}. You can include \code{NA} values, not a problem, and here's an
+example of that: \code{"6.232 NA 3.7 0.93"}. This number streams can be pretty big
+if you want them to be, and you don't have to deal with columns to the
+\emph{n}th degree as in \emph{Option 1}. For the case where you need to provide two
+sets of values (\emph{x} and \emph{y}, for line plots with \code{columns} and
+\code{columns_x_vals}), have two equivalently sized number streams in two columns.
+Number streams can also be concatenated together by referencing columns
+having their own separate number streams.
+}
+
 \section{Reference line and reference area}{
 
 
