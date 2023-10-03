@@ -196,8 +196,8 @@ by default but can be hidden by setting \code{show_reference_line} to \code{FALS
 \verb{scalar<logical>} // \emph{default:} \code{NULL} (\code{optional})
 
 The reference area appears at the very bottom of the layer stack, if it is
-available. It will be shown in the default case but can be hidden by using
-\code{show_reference_area = FALSE}.}
+available (i.e., defined in \code{\link[=cols_nanoplot]{cols_nanoplot()}}). It will be shown in the
+default case but can be hidden by using \code{show_reference_area = FALSE}.}
 
 \item{show_vertical_guides}{\emph{Should there be vertical guides?}
 
