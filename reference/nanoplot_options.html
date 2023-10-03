@@ -78,6 +78,9 @@ can be modified with <code>nanoplot_options()</code> within the <code>options</c
 <span>  data_bar_stroke_color <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  data_bar_stroke_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  data_bar_fill_color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  data_bar_negative_stroke_color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  data_bar_negative_stroke_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  data_bar_negative_fill_color <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  vertical_guide_stroke_color <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  vertical_guide_stroke_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  show_data_points <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -181,6 +184,31 @@ long as the length is equal to the number of data bars; the fill color
 values will be applied in order of left to right.</p></dd>
 
 
+<dt>data_bar_negative_stroke_color</dt>
+<dd><p><em>Stroke color for negative values</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>The color of the stroke used for the data bars that have negative values.
+The default color is <code>"#CC3243"</code> but this can be changed by supplying a
+color value to the <code>data_bar_negative_stroke_color</code> option.</p></dd>
+
+
+<dt>data_bar_negative_stroke_width</dt>
+<dd><p><em>Stroke width for negative values</em></p>
+<p><code>scalar&lt;numeric&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>The width of the stroke used for negative value data bars. This has the
+same default as <code>data_bar_stroke_width</code> with a value of <code>4</code> (as in '4px').
+This can be changed by giving a numeric value to the
+<code>data_bar_negative_stroke_width</code> option.</p></dd>
+
+
+<dt>data_bar_negative_fill_color</dt>
+<dd><p><em>Fill color for negative values</em></p>
+<p><code>scalar&lt;character&gt;|vector&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>By default, all negative data bars have a fill color of <code>"#D75A68"</code>. This
+can however be changed by providing a color value to the
+<code>data_bar_negative_fill_color</code> option.</p></dd>
+
+
 <dt>vertical_guide_stroke_color</dt>
 <dd><p><em>Color of vertical guides</em></p>
 <p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
@@ -232,8 +260,8 @@ by default but can be hidden by setting <code>show_reference_line</code> to <cod
 <dd><p><em>Should a reference area be shown?</em></p>
 <p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>The reference area appears at the very bottom of the layer stack, if it is
-available. It will be shown in the default case but can be hidden by using
-<code>show_reference_area = FALSE</code>.</p></dd>
+available (i.e., defined in <code><a href="cols_nanoplot.html">cols_nanoplot()</a></code>). It will be shown in the
+default case but can be hidden by using <code>show_reference_area = FALSE</code>.</p></dd>
 
 
 <dt>show_vertical_guides</dt>
