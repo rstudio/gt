@@ -2467,6 +2467,64 @@ cols_add <- function(
 #' `r man_get_image_tag(file = "man_cols_nanoplot_2.png")`
 #' }}
 #'
+#' The [`sza`] dataset can, with just some use of **dplyr** and **tidyr**, give
+#' us a wide table full of nanoplottable values. We'll transform the solar
+#' zenith angles to solar altitude angles and create a column of nanoplots using
+#' the newly calculated values. There are a few `NA` values during periods where
+#' the sun hasn't risen (usually before 06:30 in the winter months) and those
+#' values will be replaced with `0` using `missing_vals = "zero"`. We'll also
+#' elect to create bar plots using the `plot_type = "bar"` option. The height of
+#' the plots will be bumped up to `"2.5em"` from the default of `"2em"`.
+#' Finally, we will use [nanoplot_options()] to modify the coloring of the data
+#' bars.
+#'
+#' ```r
+#' sza |>
+#'   dplyr::filter(latitude == 20 & tst <= "1200") |>
+#'   dplyr::select(-latitude) |>
+#'   dplyr::filter(!is.na(sza)) |>
+#'   dplyr::mutate(saa = 90 - sza) |>
+#'   dplyr::select(-sza) |>
+#'   tidyr::pivot_wider(
+#'     names_from = tst,
+#'     values_from = saa,
+#'     names_sort = TRUE
+#'   ) |>
+#'   gt(rowname_col = "month") |>
+#'   tab_header(
+#'     title = "Solar Altitude Angles",
+#'     subtitle = "Average values every half hour from 05:30 to 12:00"
+#'   ) |>
+#'   cols_nanoplot(
+#'     columns = matches("0"),
+#'     plot_type = "bar",
+#'     missing_vals = "zero",
+#'     new_col_name = "saa",
+#'     plot_height = "2.5em",
+#'     options = nanoplot_options(
+#'       data_bar_stroke_color = "GoldenRod",
+#'       data_bar_fill_color = "DarkOrange"
+#'     )
+#'   ) |>
+#'   cols_hide(columns = matches("0")) |>
+#'   tab_options(
+#'     table.width = px(400),
+#'     column_labels.hidden = TRUE
+#'   ) |>
+#'   cols_align(
+#'     align = "center",
+#'     columns = everything()
+#'   ) |>
+#'   tab_source_note(
+#'     source_note = "The solar altitude angle is the complement to
+#'     the solar zenith angle. TMYK."
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_nanoplot_3.png")`
+#' }}
+#'
 #' @family column modification functions
 #' @section Function ID:
 #' 5-8
