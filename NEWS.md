@@ -1,6 +1,18 @@
 # gt (development version)
 
-## New features
+## Nanoplots
+
+* We can now add in little plots called *nanoplots* to a **gt** table (#299, #515). (#1431, #1439, #1445, #1453)
+
+* The function `cols_nanoplot()` adds a new column that contains the plots. The data can be obtained from one or more columns in the table. A helper function called `nanoplot_options()` allows for altering the composition and styling of the nanoplots in the new column.
+
+* There are two basic types of nanoplots available: `"line"` and `"bar"`. A line plot shows individual data points and has smooth connecting lines between them to allow for easier scanning of values. You can opt for straight-line connections between data points, or, no connections at all (it's up to you). The data you feed into a line plot can consist of a single vector of values (resulting in equally-spaced *y* values), or, you can supply two vectors representative of *x* and *y*.
+
+* A bar plot is built a little bit differently. The focus is on evenly-spaced bars (requiring a single vector of values) that project from a zero line, clearly showing the difference between positive and negative values. 
+
+* By default, any type of nanoplot will have basic interactivity. One can hover over the data points and vertical guides will display values ascribed to each. A guide on the left-hand side of the plot area will display the minimal and maximal *y* values on hover.
+
+## Other great new features
 
 * Brand new rows can be added to a **gt** table with the new `rows_add()` function. The user can supply the new row data through name value pairs. You have control over where they are placed by way of the `.before` and `.after` arguments (new rows are added to the bottom of the table by default). You can also add empty (i.e., all `NA`) rows with the `.n_empty` option. (#1323)
 
@@ -10,11 +22,17 @@
 
 * There is now a way to better express measurement units and we do this in **gt** with something called units notation. With an intuitive and easy-to-learn syntax, **gt** will ensure that any measurement units are formatted correctly no matter what the output type is. We can format units in the table body with `fmt_units()`, we can attach units to column labels with `cols_units()`, and we can integrate units notation in the already-available `cols_label()` and `tab_spanner()` functions (#417, #533). (#1357, #1426)
 
+* A very useful new helper function, `from_column()`, has been added so you can fetch values (for compatible arguments) from a column in the input table. For example, if you are using `fmt_scientific()` and the number of significant figures should vary across the values to be formatted, a column containing those values for the `n_sigfig` argument can be referenced by `from_column()`. (#1392, #1393, #1395, #1396, #1399, #1403)
+
 * With the new `fmt_icon()` function we are able to add icons from the Font Awesome icon library. It works in a way that's similar to `fmt_flag()`, in that identifiers in the formatted cells are transformed in-place to SVG-based icons. (#1413)
 
-* The `illness` and `constants` datasets were added. Both datasets have a `units` column and this is useful for making examples with the `fmt_units()` function. (#1357)
+* The `info_icons()` and `info_flags()` functions have been added to help people know about the valid codes for flags and for icons (when using `fmt_icon()` and `fmt_flag()`). (#1421)
 
-* A useful new helper function, `from_column()`, has been added so you can fetch values (for compatible arguments) from a column in the input table. For example, if you are using `fmt_scientific()` and the number of significant figures should vary across the values to be formatted, a column containing those values for the `n_sigfig` argument can be referenced by `from_column()`.
+* We added the `extract_body()` function, which lets you pull out a data frame associated with the body cells. Importantly, this extraction can happen at different stages of the table build (e.g., `"init"`, `"text_transformed"`, etc.), allowing a user to have access to a table of formatted body cells for different applications (such as verification of formatting, debugging new formatting functions, etc.) (#1441). (#1449)
+
+* Interactive HTML tables (usually generated through use of `opt_interactive()`) can now use localized labels/controls. So when using any of the 574 supported locales in **gt**, an interactive table will be fully translated to the language of the locale (#1308). (#1389)
+
+* The `illness` and `constants` datasets were added. Both datasets have a `units` column and this is useful for making examples with the `fmt_units()` function. (#1357)
 
 ## Improvements to the Word output format
 
@@ -42,9 +60,23 @@
 
 * Significant figures support has been added to the `fmt_scientific()` and `vec_fmt_scientific()` functions; there is a new `n_sigfig` argument in both. (#1411)
 
+* The `cols_merge_range()` function now has a `locale` argument. Range patterns across locales are different (can involve the use of a single hyphen, en dash, em dash, tilde, etc.) and so it does make sense to follow the convention of a locale if provided (#158). (#1423)
+
+* We now have rudimentary support for defining column widths for LaTeX output tables (with `cols_width()`). This accepts length values in 'px' which and automatic conversion to 'pt' values is performed to maximize compatibility with different LaTeX flavors (#634, #851, #1417). (#1371, #1450)
+
+* It's now possible to use background fill colors and perform text coloring and bolding for body cells in LaTeX tables. This is commonly performed through the use of `tab_style()` and `data_color()`. (#1352)
+
+* The `gtsave()` function now works with `gt_group` objects (usually generated through `gt_split()` or `gt_group()`) (#1354). (#1365)
+
+* All `gt_group` objects can now be printed using R Markdown or Quarto (#1286). (#1332)  
+
+* When using `fmt_currency()` with a locale value set, **gt** will now use that to automatically select the locale's default currency. While some countries can have multiple currencies, we opt for the most-widely used currency (users could alternatively specify the currency code and `info_currencies()` contains all supported currencies used in the package) (#1346). (#1347)
+
 * The `columns` argument in `cols_hide()` and `cols_unhide()` can now accept `NULL` (i.e., no columns resolved). These functions will no longer error in such a case (#1342). (#1343)
 
 * The `countrypops` dataset was updated with recent (as of August 2023) World Bank data that revises population estimates and brings the final year up to 2022. All examples, tests, and articles using the dataset were also updated. (#1410)
+
+* A few refinements were made to some of the system font stacks defined in `system_fonts()`. (#1447)
 
 * The Databricks notebook environment is now detected by **gt**, so tables will now be automatically displayed without having to call extra printing functions. (#1427)
 
@@ -52,9 +84,23 @@
 
 * Fixed an incorrect country code reference for the Netherlands that would cause an incorrect flag to appear when using `fmt_flag()`. (#1319)
 
-* Many flags were added to `fmt_flag()` (#1333, #1335). (#1336)
+* Many new flags were added to `fmt_flag()` (#1333, #1335). (#1336)
+
+* In some cases, there was incorrect rounding of duration values when using `fmt_duration()`. This is now fixed, thanks to @rcannood (#1374). (#1375)
 
 * Fixed an issue with `cols_label_with()` where column names wouldn't be relabeled if the resolved columns were only a subset of the total columns available. (#1326)
+
+* Fixed a LaTeX bug where some characters following a `\midrule` would corrupt the table (#145, #391). (#1390)
+
+* A issue associated with a lack of HTML formatting within interactive tables has been fixed (#1299, #1370, #1384). (#1388)
+
+* Many user-facing error messages have been enhanced using the latest features from the **cli** package. (#1337, thanks @olivroy!)
+
+* Unit tests can now be successfully run on Linux flavors that don't have the `locale` utility (#1214). (#1350, thanks @bastistician!)
+
+* Many unit tests were added for much increased test coverage and many more were modified to increase the speed of running the test suite. (#1291, #1294, #1298, #1350, #1412)
+
+* Added utility functions to extract all examples for regularly building a Quarto website (to do integration testing). (#1344)
 
 # gt 0.9.0
 

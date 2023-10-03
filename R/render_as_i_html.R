@@ -361,7 +361,6 @@ render_as_ihtml <- function(data, id) {
         borderBottomStyle = column_labels_border_bottom_style,
         borderBottomWidth = column_labels_border_bottom_width,
         borderBottomColor = column_labels_border_bottom_color
-
       ),
       groupHeaderStyle = NULL,
       tableBodyStyle = NULL,
