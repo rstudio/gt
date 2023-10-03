@@ -40,6 +40,9 @@ generate_nanoplot <- function(
     data_bar_stroke_color = "#3290CC",
     data_bar_stroke_width = 4,
     data_bar_fill_color = "#3FB5FF",
+    data_bar_negative_stroke_color = "#CC3243",
+    data_bar_negative_stroke_width = 4,
+    data_bar_negative_fill_color = "#D75A68",
     vertical_guide_stroke_color = "#911EB4",
     vertical_guide_stroke_width = 12,
     show_data_points = TRUE,
@@ -63,6 +66,7 @@ generate_nanoplot <- function(
   data_path_tags <- NULL
   area_path_tags <- NULL
   ref_line_tags <- NULL
+  zero_line_tags <- NULL
   ref_area_tags <- NULL
   g_guide_tags <- NULL
 
@@ -881,12 +885,18 @@ generate_nanoplot <- function(
         if (y_vals[i] < 0) {
           y_value_i <- data_y0_point
           y_height <- data_y_points[i] - data_y0_point
+          data_bar_stroke_color_i <- data_bar_negative_stroke_color[1]
+          data_bar_stroke_width_i <- data_bar_negative_stroke_width[1]
+          data_bar_fill_color_i <- data_bar_negative_fill_color[1]
         } else if (y_vals[i] > 0) {
           y_value_i <- data_y_points[i]
           y_height <- data_y0_point - data_y_points[i]
         } else if (y_vals[i] == 0) {
           y_value_i <- data_y0_point - 1
           y_height <- 2
+          data_bar_stroke_color_i <- "#808080"
+          data_bar_stroke_width_i <- 4
+          data_bar_fill_color_i <- "#808080"
         }
 
         bar_strings_i <-
@@ -908,6 +918,29 @@ generate_nanoplot <- function(
     }
 
     bar_tags <- paste(bar_strings, collapse = "\n")
+  }
+
+  #
+  # Generate zero line for bar plots
+  #
+
+  if (plot_type == "bar") {
+
+    stroke <- "#BFBFBF"
+    stroke_width <- 2
+
+    zero_line_tags <-
+      paste0(
+        "<line ",
+        "x1=\"", data_x_points[1] - 27.5, "\" ",
+        "y1=\"", data_y0_point, "\" ",
+        "x2=\"", data_x_points[length(data_x_points)] + 27.5, "\" ",
+        "y2=\"", data_y0_point, "\" ",
+        "stroke=\"", stroke, "\" ",
+        "stroke-width=\"", stroke_width, "\" ",
+        ">",
+        "</line>"
+      )
   }
 
   #
@@ -1285,6 +1318,7 @@ generate_nanoplot <- function(
         ref_area_tags,
         area_path_tags,
         data_path_tags,
+        zero_line_tags,
         bar_tags,
         ref_line_tags,
         circle_tags,
