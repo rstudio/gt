@@ -1,6 +1,18 @@
 # gt (development version)
 
-## New features
+## Nanoplots
+
+* We can now add in little plots called *nanoplots* to a **gt** table (#299, #515). (#1431, #1439, #1445, #1453)
+
+* The function `cols_nanoplot()` adds a new column that contains the plots. The data can be obtained from one or more columns in the table. A helper function called `nanoplot_options()` allows for altering the composition and styling of the nanoplots in the new column.
+
+* There are two basic types of nanoplots available: `"line"` and `"bar"`. A line plot shows individual data points and has smooth connecting lines between them to allow for easier scanning of values. You can opt for straight-line connections between data points, or, no connections at all (it's up to you). The data you feed into a line plot can consist of a single vector of values (resulting in equally-spaced *y* values), or, you can supply two vectors representative of *x* and *y*.
+
+* A bar plot is built a little bit differently. The focus is on evenly-spaced bars (requiring a single vector of values) that project from a zero line, clearly showing the difference between positive and negative values. 
+
+* By default, any type of nanoplot will have basic interactivity. One can hover over the data points and vertical guides will display values ascribed to each.
+
+## Other great new features
 
 * Brand new rows can be added to a **gt** table with the new `rows_add()` function. The user can supply the new row data through name value pairs. You have control over where they are placed by way of the `.before` and `.after` arguments (new rows are added to the bottom of the table by default). You can also add empty (i.e., all `NA`) rows with the `.n_empty` option. (#1323)
 
@@ -84,7 +96,7 @@
 
 * Many user-facing error messages have been enhanced using the latest features from the **cli** package. (#1337, thanks @olivroy!)
 
-* Unit tests can now be successfully run on Linux flavors that don't have the `locale` utility. (#1350, thanks @bastistician!)
+* Unit tests can now be successfully run on Linux flavors that don't have the `locale` utility (#1214). (#1350, thanks @bastistician!)
 
 * Many unit tests were added for much increased test coverage and many more were modified to increase the speed of running the test suite. (#1291, #1294, #1298, #1350, #1412)
 
