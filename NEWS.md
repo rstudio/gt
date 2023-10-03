@@ -10,7 +10,7 @@
 
 * A bar plot is built a little bit differently. The focus is on evenly-spaced bars (requiring a single vector of values) that project from a zero line, clearly showing the difference between positive and negative values. 
 
-* By default, any type of nanoplot will have basic interactivity. One can hover over the data points and vertical guides will display values ascribed to each.
+* By default, any type of nanoplot will have basic interactivity. One can hover over the data points and vertical guides will display values ascribed to each. A guide on the left-hand side of the plot area will display the minimal and maximal *y* values on hover.
 
 ## Other great new features
 
