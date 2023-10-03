@@ -11,7 +11,7 @@ cols_nanoplot(
   plot_type = c("line", "bar"),
   plot_height = "2em",
   missing_vals = c("gap", "zero", "remove"),
-  columns_x = NULL,
+  columns_x_vals = NULL,
   reference_line = NULL,
   reference_area = NULL,
   new_col_name = NULL,
@@ -62,8 +62,8 @@ plot (with \code{"bar"}). A line plot, by default, contains layers for a data
 line, data points, and a data area. Each of these can be deactivated by
 using \code{\link[=nanoplot_options]{nanoplot_options()}}. With a bar plot, the always visible layer is
 that of the data bars. Furthermore, a line plot can optionally take in \emph{x}
-values through the \code{columns_x} argument whereas a bar plot ignores any data
-representing the independant variable.}
+values through the \code{columns_x_vals} argument whereas a bar plot ignores any
+data representing the independent variable.}
 
 \item{plot_height}{\emph{The height of the nanoplots}
 
@@ -84,13 +84,13 @@ at the sites of missing data, where data lines will have discontinuities;
 (2) \code{"zero"} will replace \code{NA} values with zero values; and (3) \code{"remove"}
 will remove any incoming \code{NA} values.}
 
-\item{columns_x}{\emph{Columns containing values for the optional x variable}
+\item{columns_x_vals}{\emph{Columns containing values for the optional x variable}
 
 \verb{<column-targeting expression>} // \emph{default:} \code{NULL} (\code{optional})
 
 We can optionally obtain data for the independent variable (i.e., the
-\emph{x}-axis data) if specifying columns in \code{columns_x}. This is only for the
-\code{"line"} type of plot (set via the \code{plot_type} argument). We can supply
+\emph{x}-axis data) if specifying columns in \code{columns_x_vals}. This is only for
+the \code{"line"} type of plot (set via the \code{plot_type} argument). We can supply
 either be a series of column names provided in \code{\link[=c]{c()}}, a vector of column
 indices, or a select helper function. Examples of select helper functions
 include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
@@ -101,11 +101,11 @@ columns will be concatenated together in the order of resolution.}
 
 \verb{scalar<numeric|integer|character>} // \emph{default:} \code{NULL} (\code{optional})
 
-Supplying a single value here will add a horizontal reference line. It
-could be a static numeric value, applied to all nanoplots generated. Or,
-the input can be one of the following for generating the line from the
-underlying data: (1) \code{"mean"}, (2) \code{"median"}, (3) \code{"min"}, (4) \code{"max"},
-(5) \code{"first"}, or (6) \code{"last"}.}
+A reference line requires a single input to define the line. It could be a
+static numeric value, applied to all nanoplots generated. Or, the input can
+be one of the following for generating the line from the underlying data:
+(1) \code{"mean"}, (2) \code{"median"}, (3) \code{"min"}, (4) \code{"max"}, (5) \code{"q1"}, (6)
+\code{"q3"}, (7) \code{"first"}, or (8) \code{"last"}.}
 
 \item{reference_area}{\emph{Add a reference area}
 
@@ -115,8 +115,9 @@ A reference area requires two inputs to define bottom and top boundaries
 for a rectangular area. The types of values supplied are the same as those
 expected for \code{reference_line}, which is either a static numeric value or
 one of the following keywords for the generation of the value: (1)
-\code{"mean"}, (2) \code{"median"}, (3) \code{"min"}, (4) \code{"max"}, (5) \code{"first"}, or (6)
-\code{"last"}. Input can either be a vector or list with two elements.}
+\code{"mean"}, (2) \code{"median"}, (3) \code{"min"}, (4) \code{"max"}, (5) \code{"q1"}, (6) \code{"q3"},
+(7) \code{"first"}, or (8) \code{"last"}. Input can either be a vector or list with
+two elements.}
 
 \item{new_col_name}{\emph{Column name for the new column containing the plots}
 
@@ -164,23 +165,38 @@ design, mainly because there isn't a lot of space to work with. With that
 simplicity, however, you do get a set of very succinct data visualizations
 that adapt nicely to the amount of data you feed into them. With
 \code{cols_nanoplot()} you take data from one or more columns as the basic inputs
-for the nanoplots and generate a new column containing the plots.
-
-Each nanoplot contains data points with reasonably good visibility, having
-smooth connecting lines between them to allow for easier scanning of values.
-By default, a nanoplot rendered in an HTML-based table will have basic
-interactivity. One can hover over the data points and vertical guides will
-display values ascribed to each. There is also a hoverable guide on the
-left-hand side that displays the minimal and maximal \emph{y} values. A horizontal
-\emph{reference line} is also present in the standard view (denoting the median of
-the data). This reference line can be customized by providing a static value
-or by choosing a keyword that computes a particular \emph{y} value using a
-nanoplot's data values. Aside from a reference line, there is also an
-associated \emph{reference area} which, by default, tries to make itself useful by
-bounding the area between the lower and upper quartiles of the data. These
-boundaries can also be customized in a similar fashion as the reference line.
-The nanoplots are robust against missing values, and multiple strategies are
+for the nanoplots and generate a new column containing the plots. The
+nanoplots are robust against missing values, and multiple strategies are
 available for handling missingness.
+
+Nanoplots try to show individual data with reasonably good visibility.
+Interactivity is included as a basic feature so one can hover over the data
+points and vertical guides will display the value ascribed to each data
+point. Because \strong{gt} knows all about numeric formatting, values will be
+compactly and not take up valuable real estate. If you need to create a
+nanoplot based on monetary values, that can be handled (simply provide the
+currency code to the \code{\link[=nanoplot_options]{nanoplot_options()}} helper and hook that up to the
+\code{options} argument).  A guide on the left-hand side of the plot area will
+appear on hover and display the minimal and maximal \emph{y} values.
+
+There are two types of nanoplots available: \code{"line"} and \code{"bar"}. A line plot
+shows individual data points and has smooth connecting lines between them to
+allow for easier scanning of values. You can opt for straight-line
+connections between data points, or, no connections at all (it's up to you).
+You can even eschew the data points and just have a simple line. Regardless
+of how you mix and match difference plot layers, the plot area focuses on the
+domain of the data points with the goal of showing you the overall trend of
+the data. The data you feed into a line plot can consist of a single vector
+of values (resulting in equally-spaced \emph{y} values), or, you can supply two
+vectors representative of \emph{x} and \emph{y}.
+
+A bar plot is built a little bit differently. The focus is on evenly-spaced
+bars (requiring a single vector of values) that project from zero line,
+clearly showing the difference between positive and negative values.
+By default, any type of nanoplot will have basic
+interactivity. One can hover over the data points and vertical guides will
+display values ascribed to each. A guide on the left-hand side of the plot
+area will display the minimal and maximal \emph{y} values on hover.
 
 While basic customization options are present in the \code{cols_nanoplot()}, many
 more opportunities for customizing nanoplots on a more granular level are
@@ -217,6 +233,58 @@ expression that takes column values (can involve any of the available columns
 in the table) and returns a logical vector.
 }
 
+\section{How to supply data for nanoplots}{
+
+
+The input data for nanoplots naturally needs to be numeric and there are
+two major ways to formulate that data: (1) from single values across many
+columns, and (2) using text-based number streams. It's pretty to rationalize
+the first, and we may already have wide data in the input data frame anyway
+(take a look at the \code{\link{illness}} and \code{\link{towny}} datasets for examples of this).
+There's one data value per column so the key thing here is to reference the
+columns in the correct order. With a select helper, good column naming, and
+the columns being in the intended order, this is a snap.
+
+The second option is to use text-based number streams. Sometimes you simply
+don't want or don't need multiple columns and so a single column with all of
+the data might be more practical. To make this work, you'd need to have a set
+of numerical values separated by some sort of delimiter (could be a comma, a
+space, a semicolon, you get the idea). Here's an example with three numbers,
+written three ways: \code{"3.6 -2.44 1.98"}, \code{"3.6, -2.44, 1.98"}, and
+\code{"3.6;-2.44;1.98"}. You can include \code{NA} values, not a problem, and here's an
+example of that: \code{"6.232 NA 3.7 0.93"}. This number streams can be pretty big
+if you want them to be, and you don't have to deal with columns to the
+\emph{n}th degree as in \emph{Option 1}. For the case where you need to provide two
+sets of values (\emph{x} and \emph{y}, for line plots with \code{columns} and
+\code{columns_x_vals}), have two equivalently sized number streams in two columns.
+Number streams can also be concatenated together by referencing columns
+having their own separate number streams.
+}
+
+\section{Reference line and reference area}{
+
+
+Neither a horizontal \emph{reference line} nor a \emph{reference area} is present in
+the default view but these can be added by providing valid input values in
+the \code{reference_line} and \code{reference_area} arguments. A reference line can
+be either be a static numeric value (supply any number to \code{reference_line}),
+or it can be a keyword that computes the reference line \emph{y} value using the
+data values for each nanoplot. The following keywords can be used:
+\enumerate{
+\item \code{"mean"}: The mean of the data values
+\item \code{"median"}: Median of data values
+\item \code{"min"}: Minimum value in set of data values
+\item \code{"max"}: The maximum value
+\item \code{"q1"}: The first, or lower, quartile of the data values
+\item \code{"q3"}: The third quartile, otherwise known as the upper quartile
+\item \code{"first"}: The first data value
+\item \code{"last"}: The last data value
+}
+
+The \emph{reference area} accepts two inputs, and this can be two of the above
+keywords, a keyword and a static numeric value, or two numeric values.
+}
+
 \section{Examples}{
 
 
@@ -237,11 +305,7 @@ possible to define a column label here using the \code{new_col_label} argument.
   cols_nanoplot(
     columns = starts_with("day"),
     new_col_name = "nanoplots",
-    new_col_label = md("*Progression*"),
-    options = nanoplot_options(
-      show_reference_line = FALSE,
-      show_reference_area = FALSE
-    )
+    new_col_label = md("*Progression*")
   ) |>
   cols_align(align = "center", columns = nanoplots) |>
   cols_merge(columns = c(test, units), pattern = "\{1\} (\{2\})") |>
@@ -275,14 +339,12 @@ elect to hide most of those with \code{\link[=cols_hide]{cols_hide()}}.
   cols_nanoplot(
     columns = starts_with("population"),
     reference_line = "median",
-    reference_area = NA,
     new_col_name = "population_plot",
     new_col_label = md("*Change*")
   ) |>
   cols_nanoplot(
     columns = starts_with("density"),
-    reference_line = "median",
-    reference_area = NA,
+    plot_type = "bar",
     new_col_name = "density_plot",
     new_col_label = md("*Change*")
   ) |>
@@ -309,6 +371,63 @@ elect to hide most of those with \code{\link[=cols_hide]{cols_hide()}}.
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_2.png" alt="This image of a table was generated from the second code example in the `cols_nanoplot()` help file." style="width:100\%;">
+}}
+
+The \code{\link{sza}} dataset can, with just some use of \strong{dplyr} and \strong{tidyr}, give
+us a wide table full of nanoplottable values. We'll transform the solar
+zenith angles to solar altitude angles and create a column of nanoplots using
+the newly calculated values. There are a few \code{NA} values during periods where
+the sun hasn't risen (usually before 06:30 in the winter months) and those
+values will be replaced with \code{0} using \code{missing_vals = "zero"}. We'll also
+elect to create bar plots using the \code{plot_type = "bar"} option. The height of
+the plots will be bumped up to \code{"2.5em"} from the default of \code{"2em"}.
+Finally, we will use \code{\link[=nanoplot_options]{nanoplot_options()}} to modify the coloring of the data
+bars.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza |>
+  dplyr::filter(latitude == 20 & tst <= "1200") |>
+  dplyr::select(-latitude) |>
+  dplyr::filter(!is.na(sza)) |>
+  dplyr::mutate(saa = 90 - sza) |>
+  dplyr::select(-sza) |>
+  tidyr::pivot_wider(
+    names_from = tst,
+    values_from = saa,
+    names_sort = TRUE
+  ) |>
+  gt(rowname_col = "month") |>
+  tab_header(
+    title = "Solar Altitude Angles",
+    subtitle = "Average values every half hour from 05:30 to 12:00"
+  ) |>
+  cols_nanoplot(
+    columns = matches("0"),
+    plot_type = "bar",
+    missing_vals = "zero",
+    new_col_name = "saa",
+    plot_height = "2.5em",
+    options = nanoplot_options(
+      data_bar_stroke_color = "GoldenRod",
+      data_bar_fill_color = "DarkOrange"
+    )
+  ) |>
+  cols_hide(columns = matches("0")) |>
+  tab_options(
+    table.width = px(400),
+    column_labels.hidden = TRUE
+  ) |>
+  cols_align(
+    align = "center",
+    columns = everything()
+  ) |>
+  tab_source_note(
+    source_note = "The solar altitude angle is the complement to
+    the solar zenith angle. TMYK."
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_3.png" alt="This image of a table was generated from the third code example in the `cols_nanoplot()` help file." style="width:100\%;">
 }}
 }
 
