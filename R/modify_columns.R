@@ -2174,7 +2174,6 @@ cols_add <- function(
 #' function, layers of the nanoplots can be selectively removed and aesthetics
 #' of the remaining plot components can modified.
 #'
-#'
 #' @inheritParams cols_align
 #'
 #' @param columns *Columns from which to get data for the dependent variable*
@@ -2331,6 +2330,32 @@ cols_add <- function(
 #' if row groups are present). One more type of expression is possible, an
 #' expression that takes column values (can involve any of the available columns
 #' in the table) and returns a logical vector.
+#'
+#' @section How to supply data for nanoplots:
+#'
+#' The input data for nanoplots naturally needs to be numeric and there are
+#' two major ways to formulate that data: (1) from single values across many
+#' columns, and (2) using text-based number streams. It's pretty to rationalize
+#' the first, and we may already have wide data in the input data frame anyway
+#' (take a look at the [`illness`] and [`towny`] datasets for examples of this).
+#' There's one data value per column so the key thing here is to reference the
+#' columns in the correct order. With a select helper, good column naming, and
+#' the columns being in the intended order, this is a snap.
+#'
+#' The second option is to use text-based number streams. Sometimes you simply
+#' don't want or don't need multiple columns and so a single column with all of
+#' the data might be more practical. To make this work, you'd need to have a set
+#' of numerical values separated by some sort of delimiter (could be a comma, a
+#' space, a semicolon, you get the idea). Here's an example with three numbers,
+#' written three ways: `"3.6 -2.44 1.98"`, `"3.6, -2.44, 1.98"`, and
+#' `"3.6;-2.44;1.98"`. You can include `NA` values, not a problem, and here's an
+#' example of that: `"6.232 NA 3.7 0.93"`. This number streams can be pretty big
+#' if you want them to be, and you don't have to deal with columns to the
+#' *n*th degree as in *Option 1*. For the case where you need to provide two
+#' sets of values (*x* and *y*, for line plots with `columns` and
+#' `columns_x_vals`), have two equivalently sized number streams in two columns.
+#' Number streams can also be concatenated together by referencing columns
+#' having their own separate number streams.
 #'
 #' @section Reference line and reference area:
 #'
