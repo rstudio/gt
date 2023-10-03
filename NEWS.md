@@ -28,7 +28,7 @@
 
 * The `info_icons()` and `info_flags()` functions have been added to help people know about the valid codes for flags and for icons (when using `fmt_icon()` and `fmt_flag()`). (#1421)
 
-* We added the `extract_body()` function, which allows for pulling out the data frame associated with the body cells. This can be at different stages of the table build (e.g., `"init"`, `"text_transformed"`, etc.), allowing a user to have access to a table of formatted body cells for different applications (such as verification of formatting) (#1441). (#1449)
+* We added the `extract_body()` function, which lets you pull out a data frame associated with the body cells. Importantly, this extraction can happen at different stages of the table build (e.g., `"init"`, `"text_transformed"`, etc.), allowing a user to have access to a table of formatted body cells for different applications (such as verification of formatting, debugging new formatting functions, etc.) (#1441). (#1449)
 
 * Interactive HTML tables (usually generated through use of `opt_interactive()`) can now use localized labels/controls. So when using any of the 574 supported locales in **gt**, an interactive table will be fully translated to the language of the locale (#1308). (#1389)
 
