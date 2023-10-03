@@ -757,8 +757,24 @@ md_to_html <- function(x, md_engine) {
 
     non_na_x <- x[!is.na(x)]
 
+    non_na_x_processed <-
+      vapply(
+        as.character(x[!is.na(x)]),
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = function(x) {
+          md_engine_fn[[1]](text = x)
+        }
+      )
+
     non_na_x <- tidy_gsub(non_na_x, "^", "<span data-qmd=\"")
-    non_na_x <- tidy_gsub(non_na_x, "$", "\"></span>")
+    non_na_x <- tidy_gsub(non_na_x, "$", "\">")
+
+    non_na_x <-
+      paste0(
+        non_na_x, "<div class='gt_from_md'>",
+        non_na_x_processed, "</div></span>"
+      )
 
     #nocov end
   }
