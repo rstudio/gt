@@ -372,6 +372,63 @@ elect to hide most of those with \code{\link[=cols_hide]{cols_hide()}}.
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_2.png" alt="This image of a table was generated from the second code example in the `cols_nanoplot()` help file." style="width:100\%;">
 }}
+
+The \code{\link{sza}} dataset can, with just some use of \strong{dplyr} and \strong{tidyr}, give
+us a wide table full of nanoplottable values. We'll transform the solar
+zenith angles to solar altitude angles and create a column of nanoplots using
+the newly calculated values. There are a few \code{NA} values during periods where
+the sun hasn't risen (usually before 06:30 in the winter months) and those
+values will be replaced with \code{0} using \code{missing_vals = "zero"}. We'll also
+elect to create bar plots using the \code{plot_type = "bar"} option. The height of
+the plots will be bumped up to \code{"2.5em"} from the default of \code{"2em"}.
+Finally, we will use \code{\link[=nanoplot_options]{nanoplot_options()}} to modify the coloring of the data
+bars.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sza |>
+  dplyr::filter(latitude == 20 & tst <= "1200") |>
+  dplyr::select(-latitude) |>
+  dplyr::filter(!is.na(sza)) |>
+  dplyr::mutate(saa = 90 - sza) |>
+  dplyr::select(-sza) |>
+  tidyr::pivot_wider(
+    names_from = tst,
+    values_from = saa,
+    names_sort = TRUE
+  ) |>
+  gt(rowname_col = "month") |>
+  tab_header(
+    title = "Solar Altitude Angles",
+    subtitle = "Average values every half hour from 05:30 to 12:00"
+  ) |>
+  cols_nanoplot(
+    columns = matches("0"),
+    plot_type = "bar",
+    missing_vals = "zero",
+    new_col_name = "saa",
+    plot_height = "2.5em",
+    options = nanoplot_options(
+      data_bar_stroke_color = "GoldenRod",
+      data_bar_fill_color = "DarkOrange"
+    )
+  ) |>
+  cols_hide(columns = matches("0")) |>
+  tab_options(
+    table.width = px(400),
+    column_labels.hidden = TRUE
+  ) |>
+  cols_align(
+    align = "center",
+    columns = everything()
+  ) |>
+  tab_source_note(
+    source_note = "The solar altitude angle is the complement to
+    the solar zenith angle. TMYK."
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_3.png" alt="This image of a table was generated from the third code example in the `cols_nanoplot()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
