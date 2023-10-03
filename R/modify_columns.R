@@ -2525,6 +2525,72 @@ cols_add <- function(
 #' `r man_get_image_tag(file = "man_cols_nanoplot_3.png")`
 #' }}
 #'
+#' You can use number streams as data for nanoplots. Let's demonstrate how we
+#' can make use of them with some creative transformation of the [`pizzaplace`]
+#' dataset. A number stream is really a string with delimited numeric values,
+#' like this: `"7.24 84.2 14"`. They can be more convenient to use since
+#' different rows/nanoplots can have varying amounts of data. There are `date`
+#' and `time` columns in this dataset and we'll use that to get *x* values
+#' denoting high-resolution time instants: the second of the day that a pizza
+#' was sold (this is true pizza data science). We also have the sell price for a
+#' pizza, and that'll serve as the *y* values. The pizzas belong to four
+#' different groups (in the `type` column) and we'll group by that and create
+#' number streams with `paste(..., collapse = ",")` in the **dplyr** summarize
+#' call. With two number streams in each row (having the same number of values)
+#' we can now make a **gt** table with nanoplots.
+#'
+#' ```r
+#' pizzaplace |>
+#'   dplyr::filter(date == "2015-01-01") |>
+#'   dplyr::mutate(
+#'     s_day = as.numeric(
+#'       vec_fmt_datetime(paste(date, time), format = "A")
+#'     ) / 1000
+#'   ) |>
+#'   dplyr::select(type, s_day, price) |>
+#'   dplyr::group_by(type) |>
+#'   dplyr::summarize(
+#'     s_day = paste(s_day, collapse = ","),
+#'     sold = paste(price, collapse = ",")
+#'   ) |>
+#'   gt(rowname_col = "type") |>
+#'   tab_header(
+#'     title = md("Pizzas sold on **January 1, 2015**"),
+#'     subtitle = "Between the opening hours of 09:00 to 00:00"
+#'   ) |>
+#'   cols_hide(columns = c(s_day, sold)) |>
+#'   cols_nanoplot(
+#'     columns = sold,
+#'     columns_x_vals = s_day,
+#'     reference_line = "median",
+#'     new_col_name = "pizzas_sold",
+#'     new_col_label = "Pizzas Sold",
+#'     options = nanoplot_options(
+#'       show_data_line = FALSE,
+#'       show_data_area = FALSE,
+#'       currency = "USD"
+#'     )
+#'   ) |>
+#'   cols_width(pizzas_sold ~ px(200)) |>
+#'   cols_align(columns = pizzas_sold, align = "center") |>
+#'   opt_all_caps()
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_nanoplot_4.png")`
+#' }}
+#'
+#' Notice that we hid the columns containing the number streams with
+#' [cols_hide()] because, while useful, they don't need to be displayed to
+#' anybody viewing a table. We have a lot of data points and a connecting line
+#' is not as valuable here. It's more interesting to see the clusters of the
+#' differently priced pizzas over the entire day. Specifying a `currency` in
+#' [nanoplot_options()] is a nice touch since the *y* values are sale prices in
+#' U.S. Dollars (hovering over data points gives correctly formatted values).
+#' Finally, having a reference line based on the median gives pretty useful
+#' information. Seems like customers preferred getting the `"chicken"`-type
+#' pizzas in large size!
+#'
 #' @family column modification functions
 #' @section Function ID:
 #' 5-8
