@@ -465,6 +465,7 @@ create_body_component_l <- function(data) {
       )
 
     indent_length_px <- as.integer(gsub("px", "", stub_indent_length))
+    indent_length_pt <- indent_length_px * 0.75
 
     row_label_col <- which(stub_layout == "rowname")
 
@@ -477,7 +478,7 @@ create_body_component_l <- function(data) {
         if (!is.na(indent)) {
           row_splits_body[[x]][row_label_col] <<-
             paste0(
-              "\\hspace*{", indent_length_px * indent, "px} ",
+              "\\hspace*{", indent_length_pt * indent, "px} ",
               row_splits_body[[x]][row_label_col]
             )
         }

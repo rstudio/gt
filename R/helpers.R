@@ -527,6 +527,308 @@ currency <- function(
   currency_list
 }
 
+
+#' Supply nanoplot options to `cols_nanoplot()`
+#'
+#' @description
+#'
+#' When using [cols_nanoplot()], the defaults for the generated nanoplots
+#' can be modified with `nanoplot_options()` within the `options` argument.
+#'
+#' @param data_point_radius *Radius of data points*
+#'
+#'   `scalar<numeric>|vector<numeric>` // *default:* `NULL` (`optional`)
+#'
+#'   Th `data_point_radius` option lets you set the radius for each of the data
+#'   points. By default this is set to `10`. Individual radius values can be
+#'   set by using a vector of numeric values; however, the vector provided must
+#'   match the number of data points.
+#'
+#' @param data_point_stroke_color *Color of data points*
+#'
+#'   `scalar<character>|vector<character>` // *default:* `NULL` (`optional`)
+#'
+#'   The default stroke color of the data points is `"#FFFFFF"` (`"white"`).
+#'   This works well when there is a visible data line combined with data points
+#'   with a darker fill color. The stroke color can be modified with
+#'   `data_point_stroke_color` for all data points by supplying a single color
+#'   value. With a vector of colors, each data point's stroke color can be
+#'   changed (ensure that the vector length matches the number of data points).
+#'
+#' @param data_point_stroke_width *Width of surrounding line on data points*
+#'
+#'   `scalar<numeric>|vector<numeric>` // *default:* `NULL` (`optional`)
+#'
+#'   The width of the outside stroke for the data points can be modified with
+#'   the `data_point_stroke_width` option. By default, a value of `4` (as in
+#'   '4px') is used.
+#'
+#' @param data_point_fill_color *Fill color for data points*
+#'
+#'   `scalar<character>|vector<character>` // *default:* `NULL` (`optional`)
+#'
+#'   By default, all data points have a fill color of `"#FF0000"` (`"red"`).
+#'   This can be changed for all data points by providing a different color
+#'   to `data_point_fill_color`. And, a vector of different colors can be
+#'   supplied so long as the length is equal to the number of data points; the
+#'   fill color values will be applied in order of left to right.
+#'
+#' @param data_line_type *Type of data line: curved or straight*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   This can accept either `"curved"` or `"straight"`. Curved lines are
+#'   recommended when the nanoplot has less than 30 points and data points are
+#'   evenly spaced. In most other cases, straight lines might present better.
+#'
+#' @param data_line_stroke_color *Color of the data line*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   The color of the data line can be modified from its default `"#4682B4"`
+#'   (`"steelblue"`) color by supplying a color to the `data_line_stroke_color`
+#'   option.
+#'
+#' @param data_line_stroke_width *Width of the data line*
+#'
+#'   `scalar<numeric>` // *default:* `NULL` (`optional`)
+#'
+#'   The width of the connecting data line can be modified with the
+#'   `data_line_stroke_width` option. By default, a value of `4` (as in '4px')
+#'   is used.
+#'
+#' @param data_bar_stroke_color *Color of a data bar's outside line*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   The color of the stroke used for the data bars can be modified from its
+#'   default `"#3290CC"` color by supplying a color to the
+#'   `data_bar_stroke_color` option.
+#'
+#' @param data_bar_stroke_width *Width of a data bar's outside line*
+#'
+#'   `scalar<numeric>` // *default:* `NULL` (`optional`)
+#'
+#'   The width of the stroke used for the data bars can be modified with the
+#'   `data_bar_stroke_width` option. By default, a value of `4` (as in '4px') is
+#'   used.
+#'
+#' @param data_bar_fill_color *Fill color for data bars*
+#'
+#'   `scalar<character>|vector<character>` // *default:* `NULL` (`optional`)
+#'
+#'   By default, all data bars have a fill color of `"#3FB5FF"`. This can be
+#'   changed for all data bars by providing a different color to
+#'   `data_bar_fill_color`. And, a vector of different colors can be supplied so
+#'   long as the length is equal to the number of data bars; the fill color
+#'   values will be applied in order of left to right.
+#'
+#' @param vertical_guide_stroke_color *Color of vertical guides*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   Vertical guides appear when hovering in the vicinity of data points. Their
+#'   default color is `"#911EB4"` (a strong magenta color) and a fill opacity
+#'   value of `0.4` is automatically applied to this. However, the base color
+#'   can be changed with the `vertical_guide_stroke_color` option.
+#'
+#' @param vertical_guide_stroke_width *Line widths for vertical guides*
+#'
+#'   `scalar<numeric>` // *default:* `NULL` (`optional`)
+#'
+#'   The vertical guide's stroke width, by default, is relatively large at `12`
+#'   (this is '12px'). This is modifiable by setting a different value with the
+#'   `vertical_guide_stroke_width` option.
+#'
+#' @param show_data_points *Should the data points be shown?*
+#'
+#'   `scalar<logical>` // *default:* `NULL` (`optional`)
+#'
+#'   By default, all data points in a nanoplot are shown but this layer can be
+#'   hidden by setting `show_data_points` to `FALSE`.
+#'
+#' @param show_data_line *Should a data line be shown?*
+#'
+#'   `scalar<logical>` // *default:* `NULL` (`optional`)
+#'
+#'   The data line connects data points together and it is shown by default.
+#'   This data line layer can be hidden by setting `show_data_line` to `FALSE`.
+#'
+#' @param show_data_area *Should a data-point-bounded area be shown?*
+#'
+#'   `scalar<logical>` // *default:* `NULL` (`optional`)
+#'
+#'   The data area layer is adjacent to the data points and the data line. It is
+#'   shown by default but can be hidden with `show_data_area = FALSE`.
+#'
+#' @param show_reference_line *Should a reference line be shown?*
+#'
+#'   `scalar<logical>` // *default:* `NULL` (`optional`)
+#'
+#'   The layer with a horizontal reference line appears underneath that of the
+#'   data points and the data line. Like vertical guides, hovering over a
+#'   reference will show its value. The reference line (if available) is shown
+#'   by default but can be hidden by setting `show_reference_line` to `FALSE`.
+#'
+#' @param show_reference_area *Should a reference area be shown?*
+#'
+#'   `scalar<logical>` // *default:* `NULL` (`optional`)
+#'
+#'   The reference area appears at the very bottom of the layer stack, if it is
+#'   available. It will be shown in the default case but can be hidden by using
+#'   `show_reference_area = FALSE`.
+#'
+#' @param show_vertical_guides *Should there be vertical guides?*
+#'
+#'   `scalar<logical>` // *default:* `NULL` (`optional`)
+#'
+#'   Vertical guides appear when hovering over data points. This hidden layer is
+#'   active by default but can be deactivated by using
+#'   `show_vertical_guides = FALSE`.
+#'
+#' @param show_y_axis_guide *Should there be a y-axis guide?*
+#'
+#'   `scalar<logical>` // *default:* `NULL` (`optional`)
+#'
+#'   The *y*-axis guide will appear when hovering over the far left side of a
+#'   nanoplot. This hidden layer is active by default but can be deactivated by
+#'   using `show_y_axis_guide = FALSE`.
+#'
+#' @param currency *Define values as currencies of a specific type*
+#'
+#'   `scalar<character>|obj:<gt_currency>` // *default:* `NULL` (`optional`)
+#'
+#'   If the values are to be displayed as currency values, supply either: (1) a
+#'   3-letter currency code (e.g., `"USD"` for U.S. Dollars, `"EUR"` for the
+#'   Euro currency), (2) a common currency name (e.g., `"dollar"`, `"pound"`,
+#'   `"yen"`, etc.), or (3) an invocation of the [currency()] helper function
+#'   for specifying a custom currency (where the string could vary across output
+#'   contexts). Use [info_currencies()] to get an information table with all of
+#'   the valid currency codes, and examples of each, for the first two cases.
+#'
+#' @return A list object of class `nanoplot_options`.
+#'
+#' @family helper functions
+#' @section Function ID:
+#' 8-7
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @export
+nanoplot_options <- function(
+    data_point_radius = NULL,
+    data_point_stroke_color = NULL,
+    data_point_stroke_width = NULL,
+    data_point_fill_color = NULL,
+    data_line_type = NULL,
+    data_line_stroke_color = NULL,
+    data_line_stroke_width = NULL,
+    data_bar_stroke_color = NULL,
+    data_bar_stroke_width = NULL,
+    data_bar_fill_color = NULL,
+    vertical_guide_stroke_color = NULL,
+    vertical_guide_stroke_width = NULL,
+    show_data_points = NULL,
+    show_data_line = NULL,
+    show_data_area = NULL,
+    show_reference_line = NULL,
+    show_reference_area = NULL,
+    show_vertical_guides = NULL,
+    show_y_axis_guide = NULL,
+    currency = NULL
+) {
+
+  if (is.null(data_point_radius)) {
+    data_point_radius <- 10
+  }
+  if (is.null(data_point_stroke_color)) {
+    data_point_stroke_color <- "white"
+  }
+  if (is.null(data_point_stroke_width)) {
+    data_point_stroke_width <- 4
+  }
+  if (is.null(data_point_fill_color)) {
+    data_point_fill_color <- "red"
+  }
+  if (is.null(data_line_type)) {
+    data_line_type <- "curved"
+  }
+  if (is.null(data_line_stroke_color)) {
+    data_line_stroke_color <- "steelblue"
+  }
+  if (is.null(data_line_stroke_width)) {
+    data_line_stroke_width <- 8
+  }
+  if (is.null(data_bar_stroke_color)) {
+    data_bar_stroke_color <- "#3290CC"
+  }
+  if (is.null(data_bar_stroke_width)) {
+    data_bar_stroke_width <- 4
+  }
+  if (is.null(data_bar_fill_color)) {
+    data_bar_fill_color <- "#3FB5FF"
+  }
+  if (is.null(vertical_guide_stroke_color)) {
+    vertical_guide_stroke_color <- "#911EB4"
+  }
+  if (is.null(vertical_guide_stroke_width)) {
+    vertical_guide_stroke_width <- 12
+  }
+  if (is.null(show_data_points)) {
+    show_data_points <- TRUE
+  }
+  if (is.null(show_data_line)) {
+    show_data_line <- TRUE
+  }
+  if (is.null(show_data_area)) {
+    show_data_area <- TRUE
+  }
+  if (is.null(show_reference_line)) {
+    show_reference_line <- TRUE
+  }
+  if (is.null(show_reference_area)) {
+    show_reference_area <- TRUE
+  }
+  if (is.null(show_vertical_guides)) {
+    show_vertical_guides <- TRUE
+  }
+  if (is.null(show_y_axis_guide)) {
+    show_y_axis_guide <- TRUE
+  }
+  if (is.null(currency)) {
+    currency <- NULL
+  }
+
+  nanoplot_options_list <-
+    list(
+      data_point_radius = data_point_radius,
+      data_point_stroke_color = data_point_stroke_color,
+      data_point_stroke_width = data_point_stroke_width,
+      data_point_fill_color = data_point_fill_color,
+      data_line_type = data_line_type,
+      data_line_stroke_color = data_line_stroke_color,
+      data_line_stroke_width = data_line_stroke_width,
+      data_bar_stroke_color = data_bar_stroke_color,
+      data_bar_stroke_width = data_bar_stroke_width,
+      data_bar_fill_color = data_bar_fill_color,
+      vertical_guide_stroke_color = vertical_guide_stroke_color,
+      vertical_guide_stroke_width = vertical_guide_stroke_width,
+      show_data_points = show_data_points,
+      show_data_line = show_data_line,
+      show_data_area = show_data_area,
+      show_reference_line = show_reference_line,
+      show_reference_area = show_reference_area,
+      show_vertical_guides = show_vertical_guides,
+      show_y_axis_guide = show_y_axis_guide,
+      currency = currency
+    )
+
+  class(nanoplot_options_list) <- "nanoplot_options"
+
+  nanoplot_options_list
+}
+
 #' Adjust the luminance for a palette of colors
 #'
 #' @description
@@ -615,7 +917,7 @@ currency <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-7
+#' 8-8
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -706,7 +1008,7 @@ adjust_luminance <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-8
+#' 8-9
 #'
 #' @section Function Introduced:
 #' *In Development*
@@ -911,7 +1213,7 @@ units_list_item <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-9
+#' 8-10
 #'
 #' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
@@ -1006,7 +1308,7 @@ stub <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-10
+#' 8-11
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1024,7 +1326,7 @@ cells_title <- function(groups = c("title", "subtitle")) {
     any(duplicated(groups))
   ) {
     cli::cli_abort(
-      "The input to `groups` must be either \"title\", \"subtitle\", or both."
+      "`groups` must be either {.val title}, {.val subtitle}, or both."
     )
   }
 
@@ -1119,7 +1421,7 @@ cells_title <- function(groups = c("title", "subtitle")) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-11
+#' 8-12
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1228,7 +1530,7 @@ cells_stubhead <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-12
+#' 8-13
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1359,7 +1661,7 @@ cells_column_spanners <- function(spanners = everything()) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-13
+#' 8-14
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1482,7 +1784,7 @@ cells_column_labels <- function(columns = everything()) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-14
+#' 8-15
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1516,7 +1818,7 @@ cells_group <- function(groups = everything()) {
 
   cli::cli_warn(c(
     "Since gt v0.2.0.5, the `cells_group()` function has been deprecated.",
-    "*" = "Please use the `cells_row_groups()` function instead."
+    "*" = "Please use {.help [cells_row_groups()](gt::cells_row_groups)} instead."
   ),
   .frequency = "regularly",
   .frequency_id = "cells_group_fn_deprecation"
@@ -1623,7 +1925,7 @@ cells_group <- function(groups = everything()) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-15
+#' 8-16
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1775,7 +2077,7 @@ cells_stub <- function(rows = everything()) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-16
+#' 8-17
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -1973,7 +2275,7 @@ cells_body <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-17
+#' 8-18
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2143,7 +2445,7 @@ cells_summary <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-18
+#' 8-19
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2309,7 +2611,7 @@ cells_grand_summary <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-19
+#' 8-20
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
@@ -2446,7 +2748,7 @@ cells_stub_summary <- function(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-20
+#' 8-21
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
@@ -2565,7 +2867,7 @@ cells_stub_grand_summary <- function(rows = everything()) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-21
+#' 8-22
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
@@ -2666,7 +2968,7 @@ cells_footnotes <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-22
+#' 8-23
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
@@ -2827,7 +3129,7 @@ cells_source_notes <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-23
+#' 8-24
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3030,7 +3332,7 @@ cell_style_to_html.cell_text <- function(style) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-24
+#' 8-25
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3180,7 +3482,7 @@ cell_style_to_html.cell_fill <- function(style) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-25
+#' 8-26
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3319,7 +3621,7 @@ cell_style_structure <- function(name, obj, subclass = name) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-26
+#' 8-27
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3361,7 +3663,7 @@ latex_special_chars <- c(
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-27
+#' 8-28
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3435,7 +3737,7 @@ escape_latex <- function(text) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-28
+#' 8-29
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3443,24 +3745,18 @@ escape_latex <- function(text) {
 #' @export
 gt_latex_dependencies <- function() {
 
-  if (requireNamespace("knitr", quietly = TRUE)) {
+  check_installed("knitr", "for getting the LaTeX dependency headers.")
 
-    knitr::asis_output(
-      paste(
-        "",
-        "% gt packages",
-        paste0("\\usepackage{", latex_packages(), "}", collapse = "\n"),
-        "",
-        sep = "\n"
-      )
+  knitr::asis_output(
+    paste(
+      "",
+      "% gt packages",
+      paste0("\\usepackage{", latex_packages(), "}", collapse = "\n"),
+      "",
+      sep = "\n"
     )
+  )
 
-  } else {
-    cli::cli_abort(c(
-      "The `knitr` package is required for getting the LaTeX dependency headers.",
-      "*" = "It can be installed with `install.packages(\"knitr\")`."
-    ))
-  }
 }
 
 #' Helper function for specifying a font from the *Google Fonts* service
@@ -3546,7 +3842,7 @@ gt_latex_dependencies <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-29
+#' 8-30
 #'
 #' @section Function Introduced:
 #' `v0.2.2` (August 5, 2020)
@@ -3621,7 +3917,7 @@ google_font <- function(name) {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-30
+#' 8-31
 #'
 #' @section Function Introduced:
 #' `v0.2.2` (August 5, 2020)
@@ -3708,7 +4004,7 @@ default_fonts <- function() {
 #' ## Geometric Humanist (`"geometric-humanist"`)
 #'
 #' ```css
-#' font-family: Avenir, 'Avenir Next LT Pro', Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
+#' font-family: Avenir, Montserrat, Corbel, 'URW Gothic', source-sans-pro, sans-serif;
 #' ```
 #'
 #' Clean, geometric forms and consistent stroke widths are characteristics of
@@ -3742,7 +4038,7 @@ default_fonts <- function() {
 #' ## Monospace Slab Serif (`"monospace-slab-serif"`)
 #'
 #' ```css
-#' font-family: 'Nimbus Mono PS', 'Courier New', 'Cutive Mono', monospace;
+#' font-family: 'Nimbus Mono PS', 'Courier New', monospace;
 #' ```
 #'
 #' Monospace slab serif typefaces are distinguished by their fixed-width
@@ -3776,7 +4072,7 @@ default_fonts <- function() {
 #' ## Rounded Sans (`"rounded-sans"`)
 #'
 #' ```css
-#' font-family: ui-rounded, 'Hiragino Maru Gothic ProN', Quicksand, Comfortaa, Manjari, 'Arial Rounded MT Bold', Calibri, source-sans-pro, sans-serif;
+#' font-family: ui-rounded, 'Hiragino Maru Gothic ProN', Quicksand, Comfortaa, Manjari, 'Arial Rounded MT', 'Arial Rounded MT Bold', Calibri, source-sans-pro, sans-serif;
 #' ```
 #'
 #' The rounded, curved letterforms that define rounded typefaces give them a
@@ -3861,7 +4157,7 @@ default_fonts <- function() {
 #'
 #' @family helper functions
 #' @section Function ID:
-#' 8-31
+#' 8-32
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)

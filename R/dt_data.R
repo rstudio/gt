@@ -164,7 +164,7 @@ dt_data_add_rows <- function(
   #
 
   stub_df_group_lookup <-
-    dplyr::distinct(dplyr::select(stub_df, dplyr::all_of(c("group_id", "group_label"))))
+    dplyr::distinct(stub_df, dplyr::pick("group_id", "group_label"))
 
   for (i in seq_len(nrow(stub_df_add))) {
 

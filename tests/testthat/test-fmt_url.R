@@ -314,12 +314,10 @@ test_that("The `fmt_url()` function works correctly", {
 
   # Expect a returned object of class `gt_tbl` with various
   # uses of `fmt_url()`
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>% fmt_url(columns = a) %>% as_raw_html()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     na_col_tbl %>%
       fmt_url(columns = a, rows = 1:5) %>% as_raw_html()
   )

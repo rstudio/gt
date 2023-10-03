@@ -10,7 +10,7 @@
     Code
       .
     Output
-      [1] "\\begin{longtable}{l|rlcrrrrl}\n\\toprule\n\\multicolumn{1}{l}{} & num & char & fctr & date & time & datetime & currency & group \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\hspace*{5px} row\\_1 & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & grp\\_a \\\\ \n\\hspace*{5px} row\\_2 & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & grp\\_a \\\\ \n\\hspace*{5px} row\\_3 & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & grp\\_a \\\\ \nrow\\_4 & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & grp\\_a \\\\ \nrow\\_5 & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & grp\\_b \\\\ \nrow\\_6 & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & grp\\_b \\\\ \nrow\\_7 & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & grp\\_b \\\\ \nrow\\_8 & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & grp\\_b \\\\ \n\\bottomrule\n\\end{longtable}\n"
+      [1] "\\begin{longtable}{l|rlcrrrrl}\n\\toprule\n\\multicolumn{1}{l}{} & num & char & fctr & date & time & datetime & currency & group \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\hspace*{3.75px} row\\_1 & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & grp\\_a \\\\ \n\\hspace*{3.75px} row\\_2 & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & grp\\_a \\\\ \n\\hspace*{3.75px} row\\_3 & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & grp\\_a \\\\ \nrow\\_4 & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & grp\\_a \\\\ \nrow\\_5 & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & grp\\_b \\\\ \nrow\\_6 & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & grp\\_b \\\\ \nrow\\_7 & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & grp\\_b \\\\ \nrow\\_8 & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & grp\\_b \\\\ \n\\bottomrule\n\\end{longtable}\n"
 
 ---
 
@@ -24,7 +24,7 @@
     Code
       .
     Output
-      [1] "\\begin{longtable}{l|rlcrrrrl}\n\\toprule\n\\multicolumn{1}{l}{} & num & char & fctr & date & time & datetime & currency & group \\\\ \n\\midrule\\addlinespace[2.5pt]\nrow\\_1 & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & grp\\_a \\\\ \nrow\\_2 & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & grp\\_a \\\\ \n\\hspace*{10px} row\\_3 & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & grp\\_a \\\\ \n\\hspace*{10px} row\\_4 & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & grp\\_a \\\\ \n\\hspace*{10px} row\\_5 & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & grp\\_b \\\\ \nrow\\_6 & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & grp\\_b \\\\ \nrow\\_7 & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & grp\\_b \\\\ \nrow\\_8 & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & grp\\_b \\\\ \n\\bottomrule\n\\end{longtable}\n"
+      [1] "\\begin{longtable}{l|rlcrrrrl}\n\\toprule\n\\multicolumn{1}{l}{} & num & char & fctr & date & time & datetime & currency & group \\\\ \n\\midrule\\addlinespace[2.5pt]\nrow\\_1 & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & grp\\_a \\\\ \nrow\\_2 & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & grp\\_a \\\\ \n\\hspace*{7.5px} row\\_3 & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & grp\\_a \\\\ \n\\hspace*{7.5px} row\\_4 & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & grp\\_a \\\\ \n\\hspace*{7.5px} row\\_5 & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & grp\\_b \\\\ \nrow\\_6 & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & grp\\_b \\\\ \nrow\\_7 & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & grp\\_b \\\\ \nrow\\_8 & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & grp\\_b \\\\ \n\\bottomrule\n\\end{longtable}\n"
 
 # Indentation values can be obtained from a table column
 
@@ -38,7 +38,7 @@
     Code
       .
     Output
-      [1] "\\begin{longtable}{l|crr}\n\\toprule\n\\multicolumn{1}{l}{} & fctr & currency & rank \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\hspace*{5px} durian & four & 65100.000 & 1 \\\\ \n\\hspace*{10px} NA & five & 1325.810 & 2 \\\\ \n\\hspace*{15px} apricot & one & 49.950 & 3 \\\\ \n\\hspace*{20px} banana & two & 17.950 & 4 \\\\ \n\\hspace*{25px} fig & six & 13.255 & 5 \\\\ \n\\hspace*{25px} coconut & three & 1.390 & 6 \\\\ \n\\hspace*{25px} honeydew & eight & 0.440 & 7 \\\\ \ngrapefruit & seven & NA & NA \\\\ \n\\bottomrule\n\\end{longtable}\n"
+      [1] "\\begin{longtable}{l|crr}\n\\toprule\n\\multicolumn{1}{l}{} & fctr & currency & rank \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\hspace*{3.75px} durian & four & 65100.000 & 1 \\\\ \n\\hspace*{7.5px} NA & five & 1325.810 & 2 \\\\ \n\\hspace*{11.25px} apricot & one & 49.950 & 3 \\\\ \n\\hspace*{15px} banana & two & 17.950 & 4 \\\\ \n\\hspace*{18.75px} fig & six & 13.255 & 5 \\\\ \n\\hspace*{18.75px} coconut & three & 1.390 & 6 \\\\ \n\\hspace*{18.75px} honeydew & eight & 0.440 & 7 \\\\ \ngrapefruit & seven & NA & NA \\\\ \n\\bottomrule\n\\end{longtable}\n"
 
 ---
 
@@ -52,7 +52,7 @@
     Code
       .
     Output
-      [1] "\\begin{longtable}{l|crr}\n\\toprule\n\\multicolumn{1}{l}{} & fctr & currency & rank \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{4}{l}{grp\\_a} \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\hspace*{5px} durian & four & 65100.000 & 1 \\\\ \n\\hspace*{15px} apricot & one & 49.950 & 3 \\\\ \n\\hspace*{20px} banana & two & 17.950 & 4 \\\\ \n\\hspace*{25px} coconut & three & 1.390 & 6 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{4}{l}{grp\\_b} \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\hspace*{10px} NA & five & 1325.810 & 2 \\\\ \n\\hspace*{25px} fig & six & 13.255 & 5 \\\\ \n\\hspace*{25px} honeydew & eight & 0.440 & 7 \\\\ \ngrapefruit & seven & NA & NA \\\\ \n\\bottomrule\n\\end{longtable}\n"
+      [1] "\\begin{longtable}{l|crr}\n\\toprule\n\\multicolumn{1}{l}{} & fctr & currency & rank \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{4}{l}{grp\\_a} \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\hspace*{3.75px} durian & four & 65100.000 & 1 \\\\ \n\\hspace*{11.25px} apricot & one & 49.950 & 3 \\\\ \n\\hspace*{15px} banana & two & 17.950 & 4 \\\\ \n\\hspace*{18.75px} coconut & three & 1.390 & 6 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{4}{l}{grp\\_b} \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\hspace*{7.5px} NA & five & 1325.810 & 2 \\\\ \n\\hspace*{18.75px} fig & six & 13.255 & 5 \\\\ \n\\hspace*{18.75px} honeydew & eight & 0.440 & 7 \\\\ \ngrapefruit & seven & NA & NA \\\\ \n\\bottomrule\n\\end{longtable}\n"
 
 ---
 
@@ -66,7 +66,7 @@
     Code
       .
     Output
-      [1] "\\begin{longtable}{l|crr}\n\\toprule\n\\multicolumn{1}{l}{} & fctr & currency & rank \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{4}{l}{grp\\_a} \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\hspace*{5px} durian & four & 65100.000 & 1 \\\\ \n\\hspace*{15px} apricot & one & 49.950 & 3 \\\\ \n\\hspace*{20px} banana & two & 17.950 & 4 \\\\ \n\\hspace*{25px} coconut & three & 1.390 & 6 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{4}{l}{grp\\_b} \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\hspace*{10px} NA & five & 1325.810 & 2 \\\\ \n\\hspace*{25px} fig & six & 13.255 & 5 \\\\ \n\\hspace*{25px} honeydew & eight & 0.440 & 7 \\\\ \n\\hspace*{15px} grapefruit & seven & NA & NA \\\\ \n\\bottomrule\n\\end{longtable}\n"
+      [1] "\\begin{longtable}{l|crr}\n\\toprule\n\\multicolumn{1}{l}{} & fctr & currency & rank \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{4}{l}{grp\\_a} \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\hspace*{3.75px} durian & four & 65100.000 & 1 \\\\ \n\\hspace*{11.25px} apricot & one & 49.950 & 3 \\\\ \n\\hspace*{15px} banana & two & 17.950 & 4 \\\\ \n\\hspace*{18.75px} coconut & three & 1.390 & 6 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{4}{l}{grp\\_b} \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\hspace*{7.5px} NA & five & 1325.810 & 2 \\\\ \n\\hspace*{18.75px} fig & six & 13.255 & 5 \\\\ \n\\hspace*{18.75px} honeydew & eight & 0.440 & 7 \\\\ \n\\hspace*{11.25px} grapefruit & seven & NA & NA \\\\ \n\\bottomrule\n\\end{longtable}\n"
 
 ---
 
@@ -80,7 +80,7 @@
     Code
       .
     Output
-      [1] "\\begin{longtable}{l|crr}\n\\toprule\n\\multicolumn{1}{l}{} & fctr & currency & rank \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{4}{l}{grp\\_a} \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\hspace*{10px} durian & four & 65100.000 & 1 \\\\ \n\\hspace*{20px} apricot & one & 49.950 & 3 \\\\ \n\\hspace*{25px} banana & two & 17.950 & 4 \\\\ \n\\hspace*{25px} coconut & three & 1.390 & 6 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{4}{l}{grp\\_b} \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\hspace*{15px} NA & five & 1325.810 & 2 \\\\ \n\\hspace*{25px} fig & six & 13.255 & 5 \\\\ \n\\hspace*{25px} honeydew & eight & 0.440 & 7 \\\\ \n\\hspace*{15px} grapefruit & seven & NA & NA \\\\ \n\\bottomrule\n\\end{longtable}\n"
+      [1] "\\begin{longtable}{l|crr}\n\\toprule\n\\multicolumn{1}{l}{} & fctr & currency & rank \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{4}{l}{grp\\_a} \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\hspace*{7.5px} durian & four & 65100.000 & 1 \\\\ \n\\hspace*{15px} apricot & one & 49.950 & 3 \\\\ \n\\hspace*{18.75px} banana & two & 17.950 & 4 \\\\ \n\\hspace*{18.75px} coconut & three & 1.390 & 6 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{4}{l}{grp\\_b} \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\hspace*{11.25px} NA & five & 1325.810 & 2 \\\\ \n\\hspace*{18.75px} fig & six & 13.255 & 5 \\\\ \n\\hspace*{18.75px} honeydew & eight & 0.440 & 7 \\\\ \n\\hspace*{11.25px} grapefruit & seven & NA & NA \\\\ \n\\bottomrule\n\\end{longtable}\n"
 
 ---
 
@@ -94,7 +94,7 @@
     Code
       .
     Output
-      [1] "\\begin{longtable}{l|crr}\n\\toprule\n\\multicolumn{1}{l}{} & fctr & currency & rank \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{4}{l}{grp\\_a} \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\hspace*{5px} durian & four & 65100.000 & 1 \\\\ \n\\hspace*{15px} apricot & one & 49.950 & 3 \\\\ \n\\hspace*{20px} banana & two & 17.950 & 4 \\\\ \ncoconut & three & 1.390 & 6 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{4}{l}{grp\\_b} \\\\ \n\\midrule\\addlinespace[2.5pt]\nNA & five & 1325.810 & 2 \\\\ \nfig & six & 13.255 & 5 \\\\ \nhoneydew & eight & 0.440 & 7 \\\\ \n\\hspace*{15px} grapefruit & seven & NA & NA \\\\ \n\\bottomrule\n\\end{longtable}\n"
+      [1] "\\begin{longtable}{l|crr}\n\\toprule\n\\multicolumn{1}{l}{} & fctr & currency & rank \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{4}{l}{grp\\_a} \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\hspace*{3.75px} durian & four & 65100.000 & 1 \\\\ \n\\hspace*{11.25px} apricot & one & 49.950 & 3 \\\\ \n\\hspace*{15px} banana & two & 17.950 & 4 \\\\ \ncoconut & three & 1.390 & 6 \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\multicolumn{4}{l}{grp\\_b} \\\\ \n\\midrule\\addlinespace[2.5pt]\nNA & five & 1325.810 & 2 \\\\ \nfig & six & 13.255 & 5 \\\\ \nhoneydew & eight & 0.440 & 7 \\\\ \n\\hspace*{11.25px} grapefruit & seven & NA & NA \\\\ \n\\bottomrule\n\\end{longtable}\n"
 
 ---
 
@@ -108,5 +108,5 @@
     Code
       .
     Output
-      [1] "\\begin{longtable}{l|crr}\n\\toprule\n\\multicolumn{1}{l}{} & fctr & currency & rank \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\hspace*{5px} durian & four & 65100.000 & 1.7 \\\\ \n\\hspace*{10px} NA & five & 1325.810 & 2.7 \\\\ \n\\hspace*{15px} apricot & one & 49.950 & 3.7 \\\\ \n\\hspace*{20px} banana & two & 17.950 & 4.7 \\\\ \n\\hspace*{25px} fig & six & 13.255 & 5.7 \\\\ \n\\hspace*{25px} coconut & three & 1.390 & 6.7 \\\\ \n\\hspace*{25px} honeydew & eight & 0.440 & 7.7 \\\\ \ngrapefruit & seven & NA & NA \\\\ \n\\bottomrule\n\\end{longtable}\n"
+      [1] "\\begin{longtable}{l|crr}\n\\toprule\n\\multicolumn{1}{l}{} & fctr & currency & rank \\\\ \n\\midrule\\addlinespace[2.5pt]\n\\hspace*{3.75px} durian & four & 65100.000 & 1.7 \\\\ \n\\hspace*{7.5px} NA & five & 1325.810 & 2.7 \\\\ \n\\hspace*{11.25px} apricot & one & 49.950 & 3.7 \\\\ \n\\hspace*{15px} banana & two & 17.950 & 4.7 \\\\ \n\\hspace*{18.75px} fig & six & 13.255 & 5.7 \\\\ \n\\hspace*{18.75px} coconut & three & 1.390 & 6.7 \\\\ \n\\hspace*{18.75px} honeydew & eight & 0.440 & 7.7 \\\\ \ngrapefruit & seven & NA & NA \\\\ \n\\bottomrule\n\\end{longtable}\n"
 

@@ -185,7 +185,10 @@ test_that("A gt table can use UTF-8 chars in any system locale", {
 
   # Intersect the vector of available locales (on a given test system)
   # with the `system_locales` vector
-  available_locales <- system("locale -a", intern = TRUE)
+  available_locales <- tryCatch(
+      system("locale -a", intern = TRUE),
+      error = function(e) skip("could not determine available locales")
+  )
   system_locales <- intersect(system_locales, available_locales)
 
   names_df <-
@@ -519,10 +522,10 @@ test_that("The `gt()` groupname_col arg will override any grouped data", {
 test_that("The `gt()` `id` arg will only accept specific inputs", {
 
   # Expect no errors with valid inputs to `id`
-  expect_error(regexp = NA, exibble %>% gt())
-  expect_error(regexp = NA, exibble %>% gt(id = NULL))
-  expect_error(regexp = NA, exibble %>% gt(id = "sldfjlds"))
-  expect_error(regexp = NA, exibble %>% gt(id = "23947294"))
+  expect_no_error(exibble %>% gt())
+  expect_no_error(exibble %>% gt(id = NULL))
+  expect_no_error(exibble %>% gt(id = "sldfjlds"))
+  expect_no_error(exibble %>% gt(id = "23947294"))
 
   # Expect errors when `id` isn't a length 1 character vector or is NA
   expect_error(exibble %>% gt(id = 23))

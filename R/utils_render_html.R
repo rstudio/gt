@@ -108,7 +108,7 @@ get_font_stack <- function(
     switch(
       name,
       "system-ui" = c(
-        "system-ui", "Segoe UI", "Roboto", "Helvetica", "Arial", "sans-serif"
+        "system-ui", "sans-serif"
       ),
       "transitional" = c(
         "Charter", "Bitstream Charter", "Sitka Text", "Cambria", "serif"
@@ -121,8 +121,8 @@ get_font_stack <- function(
         "source-sans-pro", "sans-serif"
       ),
       "geometric-humanist" = c(
-        "Avenir", "Avenir Next LT Pro", "Montserrat", "Corbel", "URW Gothic",
-        "source-sans-pro", "sans-serif"
+        "Avenir", "Montserrat", "Corbel", "URW Gothic", "source-sans-pro",
+        "sans-serif"
       ),
       "classical-humanist" = c(
         "Optima", "Candara", "Noto Sans", "source-sans-pro", "sans-serif"
@@ -132,7 +132,7 @@ get_font_stack <- function(
         "Arial", "sans-serif"
       ),
       "monospace-slab-serif" = c(
-        "Nimbus Mono PS", "Courier New", "Cutive Mono", "monospace"
+        "Nimbus Mono PS", "Courier New", "monospace"
       ),
       "monospace-code" = c(
         "ui-monospace", "Cascadia Code", "Source Code Pro", "Menlo", "Consolas",
@@ -144,8 +144,8 @@ get_font_stack <- function(
       ),
       "rounded-sans" = c(
         "ui-rounded", "Hiragino Maru Gothic ProN", "Quicksand", "Comfortaa",
-        "Manjari", "Arial Rounded MT Bold", "Calibri", "source-sans-pro",
-        "sans-serif"
+        "Manjari", "Arial Rounded MT", "Arial Rounded MT Bold", "Calibri",
+        "source-sans-pro", "sans-serif"
       ),
       "slab-serif" = c(
         "Rockwell", "Rockwell Nova", "Roboto Slab", "DejaVu Serif",
@@ -160,8 +160,8 @@ get_font_stack <- function(
         "Sylfaen", "serif"
       ),
       "handwritten" = c(
-        "Segoe Print", "Bradley Hand", "Chilanka", "TSCu_Comic",
-        "casual", "cursive"
+        "Segoe Print", "Bradley Hand", "Chilanka", "TSCu_Comic", "casual",
+        "cursive"
       )
     )
 

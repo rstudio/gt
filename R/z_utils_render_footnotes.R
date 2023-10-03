@@ -34,12 +34,12 @@ resolve_footnotes_styles <- function(data, tbl_type) {
   # Get the `footnote_marks` option from the options table
   footnote_marks <- dt_options_get_value(data = data, option = "footnotes_marks")
 
+  rlang::arg_match0(tbl_type, c("footnotes", "styles"))
+
   if (tbl_type == "footnotes") {
     tbl <- dt_footnotes_get(data = data)
-  } else if (tbl_type == "styles") {
-    tbl <- dt_styles_get(data = data)
   } else {
-    cli::cli_abort("The `tbl_type` must be either \"footnotes\" or \"styles\".")
+    tbl <- dt_styles_get(data = data)
   }
 
   # Return `data` unchanged if there are no rows in `tbl`

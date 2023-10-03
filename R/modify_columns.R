@@ -1663,7 +1663,7 @@ cols_units <- function(
 #'
 #'   `<column-targeting expression>` // *default:* `NULL` (`optional`)
 #'
-#'   A single column-resolving expression or column index an be given to either
+#'   A single column-resolving expression or column index can be given to either
 #'   `.before` or `.after`. The column specifies where the new columns should be
 #'   positioned among the existing columns in the input data table. While select
 #'   helper functions such as [starts_with()] and [ends_with()] can be used for
@@ -2125,6 +2125,565 @@ cols_add <- function(
   .data
 }
 
+#' Add a new column of nanoplots, taking input data from selected columns
+#'
+#' @description
+#'
+#' Nanoplots are tiny plots you can use in your **gt** table. They are simple by
+#' design, mainly because there isn't a lot of space to work with. With that
+#' simplicity, however, you do get a set of very succinct data visualizations
+#' that adapt nicely to the amount of data you feed into them. With
+#' `cols_nanoplot()` you take data from one or more columns as the basic inputs
+#' for the nanoplots and generate a new column containing the plots.
+#'
+#' Each nanoplot contains data points with reasonably good visibility, having
+#' smooth connecting lines between them to allow for easier scanning of values.
+#' By default, a nanoplot rendered in an HTML-based table will have basic
+#' interactivity. One can hover over the data points and vertical guides will
+#' display values ascribed to each. There is also a hoverable guide on the
+#' left-hand side that displays the minimal and maximal *y* values. A horizontal
+#' *reference line* is also present in the standard view (denoting the median of
+#' the data). This reference line can be customized by providing a static value
+#' or by choosing a keyword that computes a particular *y* value using a
+#' nanoplot's data values. Aside from a reference line, there is also an
+#' associated *reference area* which, by default, tries to make itself useful by
+#' bounding the area between the lower and upper quartiles of the data. These
+#' boundaries can also be customized in a similar fashion as the reference line.
+#' The nanoplots are robust against missing values, and multiple strategies are
+#' available for handling missingness.
+#'
+#' While basic customization options are present in the `cols_nanoplot()`, many
+#' more opportunities for customizing nanoplots on a more granular level are
+#' possible with the [nanoplot_options()] helper function. That is to be
+#' invoked at the `options` argument of `cols_nanoplot()`. Through that helper
+#' function, layers of the nanoplots can be selectively removed and aesthetics
+#' of the remaining plot components can modified.
+#'
+#' @inheritParams cols_align
+#'
+#' @param columns *Columns from which to get data for the dependent variable*
+#'
+#'   `<column-targeting expression>` // **required**
+#'
+#'   The columns which contain the numeric data to be plotted as nanoplots. Can
+#'   either be a series of column names provided in [c()], a vector of column
+#'   indices, or a select helper function. Examples of select helper functions
+#'   include [starts_with()], [ends_with()], [contains()], [matches()],
+#'   [one_of()], [num_range()], and [everything()]. Data collected from the
+#'   columns will be concatenated together in the order of resolution.
+#'
+#' @param rows *Rows that should contain nanoplots*
+#'
+#'   `<row-targeting expression>` // *default:* `everything()`
+#'
+#'   With `rows` we can specify which rows should contain nanoplots in the new
+#'   column. The default [everything()] results in all rows in `columns` being
+#'   formatted. Alternatively, we can supply a vector of row captions within
+#'   [c()], a vector of row indices, or a select helper function. Examples of
+#'   select helper functions include [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
+#'   We can also use expressions to filter down to the rows we need (e.g.,
+#'   `[colname_1] > 100 & [colname_2] < 50`).
+#'
+#' @param plot_type *The type of nanoplot to display*
+#'
+#'   `singl-kw:[line|bar]` // *default:* `"line"`
+#'
+#'   Nanoplots can either take the form of a line plot (using `"line"`) or a bar
+#'   plot (with `"bar"`). A line plot, by default, contains layers for a data
+#'   line, data points, and a data area. Each of these can be deactivated by
+#'   using [nanoplot_options()]. With a bar plot, the always visible layer is
+#'   that of the data bars. Furthermore, a line plot can optionally take in *x*
+#'   values through the `columns_x` argument whereas a bar plot ignores any data
+#'   representing the independant variable.
+#'
+#' @param plot_height *The height of the nanoplots*
+#'
+#'   `scalar<character>` // *default:* `"2em"`
+#'
+#'   The height of the nanoplots. The default here is a sensible value of
+#'   `"2em"`. By way of comparison, this is a far greater height than the
+#'   default for icons through [fmt_icon()] (`"1em"`) and is the same height as
+#'   images inserted via [fmt_image()] (also having a `"2em"` height default).
+#'
+#' @param missing_vals *Treatment of missing values*
+#'
+#'   `singl-kw:[gap|zero|remove]` // *default:* `"gap"`
+#'
+#'   If missing values are encountered within the input data, there are three
+#'   strategies available for their handling: (1) `"gap"` will display data gaps
+#'   at the sites of missing data, where data lines will have discontinuities;
+#'   (2) `"zero"` will replace `NA` values with zero values; and (3) `"remove"`
+#'   will remove any incoming `NA` values.
+#'
+#' @param columns_x *Columns containing values for the optional x variable*
+#'
+#'   `<column-targeting expression>` // *default:* `NULL` (`optional`)
+#'
+#'   We can optionally obtain data for the independent variable (i.e., the
+#'   *x*-axis data) if specifying columns in `columns_x`. This is only for the
+#'   `"line"` type of plot (set via the `plot_type` argument). We can supply
+#'   either be a series of column names provided in [c()], a vector of column
+#'   indices, or a select helper function. Examples of select helper functions
+#'   include [starts_with()], [ends_with()], [contains()], [matches()],
+#'   [one_of()], [num_range()], and [everything()]. Data collected from the
+#'   columns will be concatenated together in the order of resolution.
+#'
+#' @param reference_line *Add a reference line*
+#'
+#'   `scalar<numeric|integer|character>` // *default:* `NULL` (`optional`)
+#'
+#'   Supplying a single value here will add a horizontal reference line. It
+#'   could be a static numeric value, applied to all nanoplots generated. Or,
+#'   the input can be one of the following for generating the line from the
+#'   underlying data: (1) `"mean"`, (2) `"median"`, (3) `"min"`, (4) `"max"`,
+#'   (5) `"first"`, or (6) `"last"`.
+#'
+#' @param reference_area *Add a reference area*
+#'
+#'   `vector<numeric|integer|character>|list` // *default:* `NULL` (`optional`)
+#'
+#'   A reference area requires two inputs to define bottom and top boundaries
+#'   for a rectangular area. The types of values supplied are the same as those
+#'   expected for `reference_line`, which is either a static numeric value or
+#'   one of the following keywords for the generation of the value: (1)
+#'   `"mean"`, (2) `"median"`, (3) `"min"`, (4) `"max"`, (5) `"first"`, or (6)
+#'   `"last"`. Input can either be a vector or list with two elements.
+#'
+#' @param new_col_name *Column name for the new column containing the plots*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   A single column name in quotation marks. Values will be extracted from this
+#'   column and provided to compatible arguments. If not provided the new column
+#'   name will be `"nanoplots"`.
+#'
+#' @param new_col_label *Column label for the new column containing the plots*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   A single column label. If not supplied then the column label will inherit
+#'   from `new_col_name` (if nothing provided to that argument, the label will
+#'   be `"nanoplots"`).
+#'
+#' @param before,after *Column used as anchor*
+#'
+#'   `<column-targeting expression>` // *default:* `NULL` (`optional`)
+#'
+#'   A single column-resolving expression or column index can be given to either
+#'   `before` or `after`. The column specifies where the new column containing
+#'   the nanoplots should be positioned among the existing columns in the input
+#'   data table. While select helper functions such as [starts_with()] and
+#'   [ends_with()] can be used for column targeting, it's recommended that a
+#'   single column name or index be used. This is to ensure that exactly one
+#'   column is provided to either of these arguments (otherwise, the function
+#'   will be stopped). If nothing is provided for either argument then the new
+#'   column will be placed at the end of the column series.
+#'
+#' @param options *Set options for the nanoplots*
+#'
+#'   `obj:<nanoplot_options` // *default:* `NULL` (`optional`)
+#'
+#'   By using the [nanoplot_options()] helper function here, you can alter the
+#'   layout and styling of the nanoplots in the new column.
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Targeting cells with `columns` and `rows`:
+#'
+#' Targeting of values to insert into the nanoplots is done through `columns`
+#' and additionally by `rows` (if nothing is provided for `rows` then entire
+#' columns are selected). Aside from declaring column names in `c()` (with bare
+#' column names or names in quotes) we can use also
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
+#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
+#' the input data (the indices won't necessarily match those of rearranged rows
+#' if row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector.
+#'
+#' @section Examples:
+#'
+#' Let's make some nanoplots with the [`illness`] dataset. The columns beginning
+#' with 'day' all contain ordered measurement values, comprising seven
+#' individual daily results. Using `cols_nanoplot()` we create a new column to
+#' hold the nanoplots (with `new_col_name = "nanoplots"`), referencing the
+#' columns containing the data (with `columns = starts_with("day")`). It's also
+#' possible to define a column label here using the `new_col_label` argument.
+#'
+#' ```r
+#' illness |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt(rowname_col = "test") |>
+#'   tab_header("Partial summary of daily tests performed on YF patient") |>
+#'   tab_stubhead(label = md("**Test**")) |>
+#'   cols_hide(columns = c(starts_with("norm"), starts_with("day"))) |>
+#'   fmt_units(columns = units) |>
+#'   cols_nanoplot(
+#'     columns = starts_with("day"),
+#'     new_col_name = "nanoplots",
+#'     new_col_label = md("*Progression*"),
+#'     options = nanoplot_options(
+#'       show_reference_line = FALSE,
+#'       show_reference_area = FALSE
+#'     )
+#'   ) |>
+#'   cols_align(align = "center", columns = nanoplots) |>
+#'   cols_merge(columns = c(test, units), pattern = "{1} ({2})") |>
+#'   tab_footnote(
+#'     footnote = "Measurements from Day 3 through to Day 8.",
+#'     locations = cells_column_labels(columns = nanoplots)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_nanoplot_1.png")`
+#' }}
+#'
+#' Now we'll make another table that contains two columns of nanoplots. Starting
+#' from the [`towny`] dataset, we first reduce it down to a subset of columns
+#' and rows. All of the columns related to either population or density will be
+#' used as input data for the two nanoplots. Both nanoplots will use a reference
+#' line that is generated from the median of the input data. And by naming the
+#' new nanoplot-laden columns in a similar manner as the input data columns, we
+#' can take advantage of select helpers (e.g., when using [tab_spanner()]). Many
+#' of the input data columns are now redundant because of the plots, so we'll
+#' elect to hide most of those with [cols_hide()].
+#'
+#' ```r
+#' towny |>
+#'   dplyr::select(name, starts_with("population"), starts_with("density")) |>
+#'   dplyr::filter(population_2021 > 200000) |>
+#'   dplyr::arrange(desc(population_2021)) |>
+#'   gt() |>
+#'   fmt_integer(columns = starts_with("population")) |>
+#'   fmt_number(columns = starts_with("density"), decimals = 1) |>
+#'   cols_nanoplot(
+#'     columns = starts_with("population"),
+#'     reference_line = "median",
+#'     reference_area = NA,
+#'     new_col_name = "population_plot",
+#'     new_col_label = md("*Change*")
+#'   ) |>
+#'   cols_nanoplot(
+#'     columns = starts_with("density"),
+#'     reference_line = "median",
+#'     reference_area = NA,
+#'     new_col_name = "density_plot",
+#'     new_col_label = md("*Change*")
+#'   ) |>
+#'   cols_hide(columns = matches("2001|2006|2011|2016")) |>
+#'   tab_spanner(
+#'     label = "Population",
+#'     columns = starts_with("population")
+#'   ) |>
+#'   tab_spanner(
+#'     label = "Density ({{*persons* km^-2}})",
+#'     columns = starts_with("density")
+#'   ) |>
+#'   cols_label_with(
+#'     columns = -matches("plot"),
+#'     fn = function(x) gsub("\\D+", "", x)
+#'   ) |>
+#'   cols_align(align = "center", columns = matches("plot")) |>
+#'   cols_width(
+#'     name ~ px(140),
+#'     everything() ~ px(100)
+#'   ) |>
+#'   opt_horizontal_padding(scale = 2)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_nanoplot_2.png")`
+#' }}
+#'
+#' @family column modification functions
+#' @section Function ID:
+#' 5-8
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @import rlang
+#' @export
+cols_nanoplot <- function(
+    data,
+    columns,
+    rows = everything(),
+    plot_type = c("line", "bar"),
+    plot_height = "2em",
+    missing_vals = c("gap", "zero", "remove"),
+    columns_x = NULL,
+    reference_line = NULL,
+    reference_area = NULL,
+    new_col_name = NULL,
+    new_col_label = NULL,
+    before = NULL,
+    after = NULL,
+    options = NULL
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  # Ensure that arguments are matched
+  missing_vals <- rlang::arg_match(missing_vals)
+  plot_type <- rlang::arg_match(plot_type)
+
+  #
+  # Resolution of columns and rows as character vectors
+  #
+
+  resolved_columns <-
+    resolve_cols_c(
+      expr = {{ columns }},
+      data = data,
+      excl_stub = FALSE
+    )
+
+  resolved_columns_x <-
+    resolve_cols_c(
+      expr = {{ columns_x }},
+      data = data,
+      excl_stub = FALSE,
+      null_means = "nothing"
+    )
+
+  resolved_rows_idx <-
+    resolve_rows_i(
+      expr = {{ rows }},
+      data = data
+    )
+
+  # Get the internal data table
+  data_tbl <- dt_data_get(data = data)
+
+  data_vals_plot_y <-
+    generate_data_vals_list(
+      data_tbl = data_tbl,
+      resolved_columns = resolved_columns,
+      resolved_rows_idx = resolved_rows_idx
+    )
+
+  if (length(resolved_columns_x) > 0) {
+
+    data_vals_plot_x <-
+      generate_data_vals_list(
+        data_tbl = data_tbl,
+        resolved_columns = resolved_columns_x,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+  } else {
+    data_vals_plot_x <- NULL
+  }
+
+  if (is.null(plot_height)) {
+    plot_height <- "2em"
+  }
+
+  if (is.null(options)) {
+    options_plots <- nanoplot_options()
+  } else {
+    options_plots <- options
+  }
+
+  # Initialize vector that will contain the nanoplots
+  nanoplots <- c()
+
+  for (i in seq_along(data_vals_plot_y)) {
+
+    data_vals_plot_y_i <- data_vals_plot_y[i][[1]]
+
+    if (!is.null(data_vals_plot_x)) {
+      data_vals_plot_x_i <- data_vals_plot_x[i][[1]]
+    } else {
+      data_vals_plot_x_i <- NULL
+    }
+
+    data_plot_i <-
+      generate_nanoplot(
+        y_vals = data_vals_plot_y_i,
+        y_ref_line = reference_line,
+        y_ref_area = reference_area,
+        x_vals = data_vals_plot_x_i,
+        missing_vals = missing_vals,
+        plot_type = plot_type,
+        line_type = options_plots$data_line_type,
+        currency = options_plots$currency,
+        data_point_radius = options_plots$data_point_radius,
+        data_point_stroke_color = options_plots$data_point_stroke_color,
+        data_point_stroke_width = options_plots$data_point_stroke_width,
+        data_point_fill_color = options_plots$data_point_fill_color,
+        data_line_stroke_color = options_plots$data_line_stroke_color,
+        data_line_stroke_width = options_plots$data_line_stroke_width,
+        data_bar_stroke_color = options_plots$data_bar_stroke_color,
+        data_bar_stroke_width = options_plots$data_bar_stroke_width,
+        data_bar_fill_color = options_plots$data_bar_fill_color,
+        vertical_guide_stroke_color = options_plots$vertical_guide_stroke_color,
+        vertical_guide_stroke_width = options_plots$vertical_guide_stroke_width,
+        show_data_points = options_plots$show_data_points,
+        show_data_line = options_plots$show_data_line,
+        show_data_area = options_plots$show_data_area,
+        show_ref_line = options_plots$show_reference_line,
+        show_ref_area = options_plots$show_reference_area,
+        show_vertical_guides = options_plots$show_vertical_guides,
+        show_y_axis_guide = options_plots$show_y_axis_guide,
+        svg_height = plot_height
+      )
+
+    nanoplots <- c(nanoplots, data_plot_i)
+  }
+
+  data <-
+    cols_add(
+      .data = data,
+      nanoplots,
+      .before = before,
+      .after = after
+    )
+
+  if (!is.null(new_col_name)) {
+
+    # TODO: Ensure that the new column name is validated for use
+
+    validated_new_col_name <- as.character(new_col_name)
+
+    colnames(data$`_data`) <-
+      sub(
+        "nanoplots",
+        validated_new_col_name,
+        colnames(data$`_data`),
+        fixed = TRUE
+      )
+
+    data$`_boxhead`[["var"]] <-
+      sub(
+        "nanoplots",
+        validated_new_col_name,
+        data$`_boxhead`[["var"]],
+        fixed = TRUE
+      )
+
+    data <-
+      fmt_passthrough(
+        data = data,
+        columns = validated_new_col_name,
+        escape = FALSE
+      )
+
+  } else {
+
+    validated_new_col_name <- "nanoplots"
+
+    data <-
+      fmt_passthrough(
+        data = data,
+        columns = "nanoplots",
+        escape = FALSE
+      )
+  }
+
+  # The label ascribed to the new column needs to be modified in two cases:
+  # (1) If `new_column_name` provided and `new_col_label = NULL`, the label
+  #     should be that provided in `new_column_name`
+  # (2) If `new_col_label` is provided, change the label of that new column
+  #     to the value stored in that argument
+
+  if (!is.null(new_col_name) && is.null(new_col_label)) {
+
+    data <-
+      dt_boxhead_edit_column_label(
+        data = data,
+        var = validated_new_col_name,
+        column_label = validated_new_col_name
+      )
+  }
+
+  if (!is.null(new_col_label)) {
+
+    data <-
+      dt_boxhead_edit_column_label(
+        data = data,
+        var = validated_new_col_name,
+        column_label = new_col_label
+      )
+  }
+
+  data <-
+    tab_style(
+      data,
+      style = paste0(
+        "padding-top:0; ",
+        "padding-bottom:0; ",
+        "vertical-align: middle; ",
+        "overflow-x: visible;"
+      ),
+      locations = cells_body(columns = validated_new_col_name)
+    )
+
+  data
+}
+
+generate_data_vals_list <- function(
+    data_tbl,
+    resolved_columns,
+    resolved_rows_idx
+) {
+
+  data_vals_plot <- list()
+
+  for (i in seq_len(nrow(data_tbl))) {
+
+    if (!(i %in% resolved_rows_idx)) {
+
+      data_vals_plot <- c(data_vals_plot, list(NA_character_))
+
+    } else {
+
+      data_vals_i <- dplyr::select(data_tbl, dplyr::all_of(resolved_columns))
+
+      data_vals_i <- as.vector(data_vals_i[i, ])
+
+      data_vals_j <- c()
+
+      for (j in seq_along(data_vals_i)) {
+
+        if (
+          !is.na(data_vals_i[j][[1]]) &&
+          is.character(data_vals_i[j][[1]])
+        ) {
+
+          data_vals_j <-
+            c(data_vals_j, process_number_stream(data_vals_i[j][[1]]))
+
+        } else {
+          data_vals_j <- c(data_vals_j, unname(unlist(data_vals_i[j][[1]])))
+        }
+      }
+
+      data_vals_i <- list(data_vals_j)
+
+      data_vals_plot <- c(data_vals_plot, data_vals_i)
+    }
+  }
+
+  data_vals_plot
+}
+
 #' Move one or more columns
 #'
 #' @description
@@ -2197,7 +2756,7 @@ cols_add <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-8
+#' 5-9
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2343,7 +2902,7 @@ cols_move <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-9
+#' 5-10
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2463,7 +3022,7 @@ cols_move_to_start <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-10
+#' 5-11
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2592,7 +3151,7 @@ cols_move_to_end <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-11
+#' 5-12
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -2704,7 +3263,7 @@ cols_hide <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-12
+#' 5-13
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)
@@ -2918,7 +3477,7 @@ cols_unhide <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-13
+#' 5-14
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3131,7 +3690,7 @@ cols_merge <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-14
+#' 5-15
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3325,7 +3884,7 @@ cols_merge_uncert <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-15
+#' 5-16
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -3572,7 +4131,7 @@ cols_merge_resolver <- function(
 #'
 #' @family column modification functions
 #' @section Function ID:
-#' 5-16
+#' 5-17
 #'
 #' @section Function Introduced:
 #' `v0.3.0` (May 12, 2021)

@@ -37,8 +37,7 @@ test_that("A table header can be removed using `rm_header()`", {
 
   # If there isn't a header in the input table the function should
   # return the data without any error
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     exibble %>% gt() %>% rm_header()
   )
 })
@@ -83,12 +82,10 @@ test_that("Stubhead labels can be removed using `rm_stubhead()`", {
 
   # If there isn't a stubhead label or even a stub in the input table
   # the function should return the data without any error
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     exibble %>% gt(rowname_col = "row") %>% rm_stubhead()
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     exibble %>% gt() %>% rm_stubhead()
   )
 })
@@ -377,8 +374,7 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
   # Expect that a select expression that matches nothing will:
   # (1) not error, and
   # (2) return the data untouched (i.e., spanners unaffected)
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     gtcars %>%
       dplyr::select(
         -mfr, -trim, bdy_style, drivetrain,
@@ -483,8 +479,7 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
 
   # Don't expect an error if targeting levels (in the `levels` arg of
   # `rm_spanners()`) that aren't present
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     gtcars %>%
       dplyr::select(
         -mfr, -trim, bdy_style, drivetrain,
@@ -630,8 +625,7 @@ test_that("Table footnotes can be removed using `rm_footnotes()`", {
       tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
       rm_footnotes(footnotes = 2)
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     exibble %>%
       gt() %>%
       tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
@@ -642,8 +636,7 @@ test_that("Table footnotes can be removed using `rm_footnotes()`", {
   # Expect that a select expression that matches nothing will:
   # (1) not error, and
   # (2) return the data untouched (i.e., footnotes unaffected)
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     exibble %>%
       gt() %>%
       tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
@@ -666,8 +659,7 @@ test_that("Table footnotes can be removed using `rm_footnotes()`", {
 
   # If there are no footnotes the function should return the
   # data no matter what the input value for `footnotes` is
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     exibble %>%
       gt() %>%
       rm_footnotes(footnotes = 1:100)
@@ -759,8 +751,7 @@ test_that("Table source notes can be removed using `rm_source_notes()`", {
       tab_source_note(source_note = "Source Note 1") %>%
       rm_source_notes(source_notes = 2)
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     exibble %>%
       gt() %>%
       tab_source_note(source_note = "Source Note 1") %>%
@@ -771,8 +762,7 @@ test_that("Table source notes can be removed using `rm_source_notes()`", {
   # Expect that a select expression that matches nothing will:
   # (1) not error, and
   # (2) return the data untouched (i.e., source notes unaffected)
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     exibble %>%
       gt() %>%
       tab_source_note(source_note = "Source Note 1") %>%
@@ -795,8 +785,7 @@ test_that("Table source notes can be removed using `rm_source_notes()`", {
 
   # If there are no source notes the function should return the
   # data no matter what the input value for `source_notes` is
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     exibble %>%
       gt() %>%
       rm_source_notes(source_notes = 1:100)

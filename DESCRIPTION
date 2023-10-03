@@ -66,7 +66,7 @@ Suggests:
     rmarkdown (>= 2.20),
     rvest,
     shiny (>= 1.7.4),
-    testthat (>= 3.1.6),
+    testthat (>= 3.1.9),
     tidyr,
     webshot2 (>= 0.1.0)
 Roxygen: list(markdown = TRUE)
@@ -129,11 +129,12 @@ Collate:
     'text_transform.R'
     'utils.R'
     'utils_color_contrast.R'
+    'utils_environments.R'
     'utils_examples.R'
     'utils_formatters.R'
     'utils_general_str_formatting.R'
     'utils_pipe.R'
-    'utils_quarto.R'
+    'utils_plots.R'
     'utils_render_common.R'
     'utils_render_html.R'
     'utils_render_latex.R'

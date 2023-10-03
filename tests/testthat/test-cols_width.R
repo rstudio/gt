@@ -206,16 +206,14 @@ test_that("The `cols_width()` function stores values correctly", {
 
   # Don't expect an error or a warning if a `group` column
   # is included in a `cols_width()` call
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     gt(tbl_2, rowname_col = "row", groupname_col = "group") %>%
       cols_width(
         group ~ px(50),
         everything() ~ px(100)
       )
   )
-  expect_warning(
-    regexp = NA,
+  expect_no_warning(
     gt(tbl_2, rowname_col = "row", groupname_col = "group") %>%
       cols_width(
         group ~ px(50),
@@ -553,8 +551,7 @@ test_that("The function `cols_width()` works correctly with a simple table", {
     expect_true()
 
   # Expect no partial matching issues with column names and arguments
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     dplyr::tribble(
       ~a , ~d,
       1, 4,
@@ -566,8 +563,7 @@ test_that("The function `cols_width()` works correctly with a simple table", {
         d ~ px(125)
       )
   )
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     dplyr::tribble(
       ~a , ~dat,
       1, 4,
@@ -583,8 +579,7 @@ test_that("The function `cols_width()` works correctly with a simple table", {
   # Don't expect an error even in the unlikely case that a column
   # name is close enough to `.data` (this is due to the use of the
   # formula syntax)
-  expect_error(
-    regexp = NA,
+  expect_no_error(
     dplyr::tribble(
       ~a , ~.dat,
       1, 4,

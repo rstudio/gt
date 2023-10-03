@@ -3227,13 +3227,7 @@ fmt_fraction <- function(
 
     if (is.character(accuracy)) {
 
-      if (!(accuracy %in% c("low", "med", "high"))) {
-
-        cli::cli_abort(c(
-          "The value supplied for `accuracy` is invalid.",
-          "*" = "Must be either \"low\", \"med\", or \"high\"."
-        ))
-      }
+      rlang::arg_match0(accuracy, c("low", "med", "high"))
 
     } else if (is.numeric(accuracy)) {
 
@@ -3267,8 +3261,7 @@ fmt_fraction <- function(
   ) {
     if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
       cli::cli_abort(
-        "The `fmt_fraction()` function can only be used on `columns`
-      with numeric data."
+        "{.fn fmt_fraction} must be used on `columns` with numeric data."
       )
     }
   }
@@ -9341,21 +9334,15 @@ fmt_url <- function(
 #'
 #' @inheritParams fmt_number
 #'
-#' @param height *Height of image*
+#' @param height,width *Height and width of images*
 #'
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
-#'   The absolute height of the image in the table cell. By default, this is set
-#'   to `NULL`. If `width` is set and `height` is `NULL`, the ratio of width to
-#'   height is preserved. If `width` and `height` are both `NULL`, `height`
-#'   defaults to `"2em"`.
-#'
-#' @param width *Width of image*
-#'
-#'   `scalar<character>` // *default:* `NULL` (`optional`)
-#'
-#'   The absolute width of the image in the table cell. By default, this is set
-#'   to `NULL`, meaning the ratio of width to height is respected.
+#'   The absolute height of the image in the table cell. If you set the `width`
+#'   and `height` remains `NULL` (or vice versa), the width-to-height ratio will
+#'   be preserved when **gt** calculates the length of the missing dimension. If
+#'   `width` and `height` are both `NULL`, `height` is set as `"2em"` and
+#'   `width` will be calculated.
 #'
 #' @param sep *Separator between images*
 #'
@@ -9893,7 +9880,7 @@ get_image_hw_ratio <- function(filepath) {
 
   } else {
 
-    warning("magick must be installed to derive image height/width ratio")
+    cli::cli_warn("{.pkg magick} must be installed to derive image height/width ratio.")
     ratio <- 1
   }
 
@@ -10205,8 +10192,7 @@ fmt_flag <- function(
   ) {
     if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
       cli::cli_abort(
-        "The `fmt_flag()` function can only be used on `columns`
-      with character or factor data."
+        "{.fn fmt_flag} must be used on `columns` with character or factor data."
       )
     }
   }
@@ -10685,14 +10671,7 @@ fmt_icon <- function(
 
   # Determine if the fontawesome package is installed and stop the
   # function if it is not present
-  if (!requireNamespace("fontawesome", quietly = TRUE)) {
-
-    cli::cli_abort(c(
-      "The `fontawesome` package is required for inserting icons with the
-      `fmt_icon()` function.",
-      "*" = "It can be installed with `install.packages(\"fontawesome\")`."
-    ))
-  }
+  rlang::check_installed("fontawesome", "to insert icons with `fmt_icons()`.")
 
   #
   # Begin support for `from_column()` objects passed to compatible arguments

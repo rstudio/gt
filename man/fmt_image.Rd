@@ -46,21 +46,15 @@ function. Examples of select helper functions include \code{\link[=starts_with]{
 \code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
 need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{height}{\emph{Height of image}
+\item{height, width}{\emph{Height and width of images}
 
 \verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
-The absolute height of the image in the table cell. By default, this is set
-to \code{NULL}. If \code{width} is set and \code{height} is \code{NULL}, the ratio of width to
-height is preserved. If \code{width} and \code{height} are both \code{NULL}, \code{height}
-defaults to \code{"2em"}.}
-
-\item{width}{\emph{Width of image}
-
-\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
-
-The absolute width of the image in the table cell. By default, this is set
-to \code{NULL}, meaning the ratio of width to height is respected.}
+The absolute height of the image in the table cell. If you set the \code{width}
+and \code{height} remains \code{NULL} (or vice versa), the width-to-height ratio will
+be preserved when \strong{gt} calculates the length of the missing dimension. If
+\code{width} and \code{height} are both \code{NULL}, \code{height} is set as \code{"2em"} and
+\code{width} will be calculated.}
 
 \item{sep}{\emph{Separator between images}
 

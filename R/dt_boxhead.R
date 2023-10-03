@@ -91,7 +91,7 @@ dt_boxhead_edit <- function(data, var, ...) {
   val_list <- list(...)
 
   if (length(val_list) != 1) {
-    cli::cli_abort("`dt_boxhead_edit()` expects a single value at `...`.")
+    cli::cli_abort("{.fn dt_boxhead_edit} expects a single value at `{cli::symbol$ellipsis}`.")
   }
 
   check_names_dt_boxhead_expr(expr = val_list)
@@ -133,13 +133,12 @@ dt_boxhead_add_var <- function(
       column_width = column_width,
       hidden_px = hidden_px
     )
+  add_where <- rlang::arg_match0(add_where, c("top", "bottom"))
 
   if (add_where == "top") {
     dt_boxhead <- dplyr::bind_rows(dt_boxhead_row, dt_boxhead)
   } else if (add_where == "bottom") {
     dt_boxhead <- dplyr::bind_rows(dt_boxhead, dt_boxhead_row)
-  } else {
-    cli::cli_abort("The `add_where` value must be either `top` or `bottom`.")
   }
 
   dt_boxhead_set(data = data, boxh = dt_boxhead)

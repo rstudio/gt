@@ -127,6 +127,7 @@ reference:
     - cols_label_with
     - cols_units
     - cols_add
+    - cols_nanoplot
     - cols_move
     - cols_move_to_start
     - cols_move_to_end
@@ -181,6 +182,7 @@ reference:
     - pct
     - from_column
     - currency
+    - nanoplot_options
     - adjust_luminance
     - define_units
     - stub
@@ -278,18 +280,21 @@ reference:
     desc: >
       There may come a day when you need to export a **gt** table to some
       specific format. A great function for that is `gtsave()`, which allows
-      us to save as an HTML file or an image file. Some other functions give us
-      table code as a character vector (e.g., `as_raw_html()`). Did you use the
-      `summary_rows()` function and wish you had that summary data in a tibble?
-      You can get it out with `extract_summary()`. Want to extract
-      already-formatted cells from the table into a vector? Do it with
-      `extract_cells()`!
+      us to save the table as a standalone HTML, LaTeX, RTF, .docx, or even an
+      image file. Some other functions give us table code as a character vector
+      (e.g., `as_raw_html()` and more). Did you use the `summary_rows()`
+      function and wish you had that summary data in a tibble? You can get it
+      out with `extract_summary()`. Want to extract already-formatted cells
+      from the table into a vector? Do it with `extract_cells()`! It's even
+      possible to extract the body of a table as a data frame during various
+      'build' stages (do this with `extract_body()`).
     contents:
     - gtsave
     - as_raw_html
     - as_latex
     - as_rtf
     - as_word
+    - extract_body
     - extract_summary
     - extract_cells
 

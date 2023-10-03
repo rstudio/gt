@@ -45,7 +45,7 @@ need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \verb{singl-kw:[auto|plain|html|latex|rtf|word]} // \emph{default:} \code{"auto"}
 
-The output style of the resulting character vector. This can either be
+The output format of the resulting character vector. This can either be
 \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"}, or
 \code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the \code{"auto"}
 option will choose the correct \code{output} value}
@@ -98,7 +98,7 @@ extraction.
 
 \section{Function ID}{
 
-13-7
+13-8
 }
 
 \section{Function Introduced}{
@@ -112,6 +112,7 @@ Other table export functions:
 \code{\link{as_raw_html}()},
 \code{\link{as_rtf}()},
 \code{\link{as_word}()},
+\code{\link{extract_body}()},
 \code{\link{extract_summary}()},
 \code{\link{gtsave}()}
 }

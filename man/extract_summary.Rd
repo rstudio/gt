@@ -104,7 +104,7 @@ Use the summary list to make a new \strong{gt} table. The key thing is to use
 
 \section{Function ID}{
 
-13-6
+13-7
 }
 
 \section{Function Introduced}{
@@ -118,6 +118,7 @@ Other table export functions:
 \code{\link{as_raw_html}()},
 \code{\link{as_rtf}()},
 \code{\link{as_word}()},
+\code{\link{extract_body}()},
 \code{\link{extract_cells}()},
 \code{\link{gtsave}()}
 }

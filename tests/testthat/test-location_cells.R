@@ -55,8 +55,7 @@ test_that("The `cells_title()` function works correctly", {
 
   # Expect the length of the object to be `1`
   helper_cells_title %>%
-    length() %>%
-    expect_equal(1)
+    expect_length(1)
 
   # Expect the list component to have the `quosure` and `formula` classes
   helper_cells_title[[1]] %>% expect_s3_class(c("quosure", "formula"))
@@ -75,8 +74,7 @@ test_that("The `cells_title()` function works correctly", {
 
   # Expect the length of the object to be `1`
   helper_cells_title %>%
-    length() %>%
-    expect_equal(1)
+    expect_length(1)
 
   # Expect the list component to have the `quosure` and `formula` classes
   helper_cells_title[[1]] %>% expect_s3_class(c("quosure", "formula"))
@@ -113,13 +111,11 @@ test_that("The `cells_column_labels()` function works correctly", {
 
   # Expect the length of the object to be `1`
   helper_cells_column_labels %>%
-    length() %>%
-    expect_equal(1)
+    expect_length(1)
 
   # Expect that the object has the name `columns`
   helper_cells_column_labels %>%
-    names() %>%
-    expect_equal("columns")
+    expect_named("columns")
 
   # Expect the first list component to have the `quosure` and `formula` classes
   helper_cells_column_labels[[1]] %>% expect_s3_class(c("quosure", "formula"))
@@ -139,13 +135,11 @@ test_that("The `cells_column_labels()` function works correctly", {
 
   # Expect the length of the object to be `1`
   helper_cells_column_spanners %>%
-    length() %>%
-    expect_equal(1)
+    expect_length(1)
 
   # Expect that the object has the name `spanners`
   helper_cells_column_spanners %>%
-    names() %>%
-    expect_equal("spanners")
+    expect_named("spanners")
 
   # Expect the first list component to have the `quosure` and `formula` classes
   helper_cells_column_spanners[[1]] %>% expect_s3_class(c("quosure", "formula"))
@@ -170,13 +164,11 @@ test_that("The `cells_row_groups()` function works correctly", {
 
   # Expect the length of the object to be `1`
   helper_cells_row_groups %>%
-    length() %>%
-    expect_equal(1)
+    expect_length(1)
 
   # Expect that the object has within it the name `groups`
   helper_cells_row_groups %>%
-    names() %>%
-    expect_equal("groups")
+    expect_named("groups")
 
   # Expect the first list component to have the `quosure` and `formula` classes
   helper_cells_row_groups[[1]] %>% expect_s3_class(c("quosure", "formula"))
@@ -198,13 +190,11 @@ test_that("The `cells_stub()` function works correctly", {
 
   # Expect the length of the object to be `1`
   helper_cells_stub %>%
-    length() %>%
-    expect_equal(1)
+    expect_length(1)
 
   # Expect that the object has within it the name `rows`
   helper_cells_stub %>%
-    names() %>%
-    expect_equal("rows")
+    expect_named("rows")
 
   # Expect the first list component to have the `quosure` and `formula` classes
   helper_cells_stub[[1]] %>% expect_s3_class(c("quosure", "formula"))
@@ -226,13 +216,11 @@ test_that("The `cells_body()` function works correctly", {
 
   # Expect the length of the object to be `2`
   helper_cells_body %>%
-    length() %>%
-    expect_equal(2)
+    expect_length(2)
 
   # Expect that the object has the names `columns` and `rows`
   helper_cells_body %>%
-    names() %>%
-    expect_equal(c("columns", "rows"))
+    expect_named(c("columns", "rows"))
 
   # Expect the first list component to have the `quosure` and `formula` classes
   helper_cells_body[[1]] %>% expect_s3_class(c("quosure", "formula"))
@@ -255,13 +243,11 @@ test_that("The `cells_body()` function works correctly", {
 
   # Expect the length of the object to be `2`
   helper_cells_body %>%
-    length() %>%
-    expect_equal(2)
+    expect_length(2)
 
   # Expect that the object has the names `columns` and `rows`
   helper_cells_body %>%
-    names() %>%
-    expect_equal(c("columns", "rows"))
+    expect_named(c("columns", "rows"))
 
   # Expect the first list component to have the `quosure` and `formula` classes
   helper_cells_body[[1]] %>% expect_s3_class(c("quosure", "formula"))
@@ -296,13 +282,11 @@ test_that("The `cells_summary()` function works correctly", {
 
   # Expect the length of the object to be `3`
   helper_cells_summary %>%
-    length() %>%
-    expect_equal(3)
+    expect_length(3)
 
   # Expect that the object has the names `groups`, `columns`, and `rows`
   helper_cells_summary %>%
-    names() %>%
-    expect_equal(c("groups", "columns", "rows"))
+    expect_named(c("groups", "columns", "rows"))
 
   # Expect the first list component to have the `quosure` and `formula` classes
   helper_cells_summary[[1]] %>% expect_s3_class(c("quosure", "formula"))
@@ -348,13 +332,11 @@ test_that("The `cells_grand_summary()` function works correctly", {
 
   # Expect the length of the object to be `2`
   helper_cells_grand_summary %>%
-    length() %>%
-    expect_equal(2)
+    expect_length(2)
 
   # Expect that the object has the names `columns` and `rows`
   helper_cells_grand_summary %>%
-    names() %>%
-    expect_equal(c("columns", "rows"))
+    expect_named(c("columns", "rows"))
 
   # Expect the first list component to have the `quosure` and `formula` classes
   helper_cells_grand_summary[[1]] %>% expect_s3_class(c("quosure", "formula"))
@@ -386,14 +368,10 @@ test_that("The `cells_stubhead()` function works correctly", {
     expect_s3_class(c("cells_stubhead", "location_cells"))
 
   # Expect the length of the object to be `1`
-  helper_cells_stubhead %>%
-    length() %>%
-    expect_equal(1)
+  helper_cells_stubhead %>% expect_length(1)
 
   # Expect that the object has the single name `groups`
-  helper_cells_stubhead %>%
-    names() %>%
-    expect_equal("groups")
+  helper_cells_stubhead %>% expect_named("groups")
 
   # Expect the first list component to have the `character` type
   helper_cells_stubhead[[1]] %>% expect_type("character")

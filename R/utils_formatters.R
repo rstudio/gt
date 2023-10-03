@@ -87,7 +87,7 @@ validate_locale <- function(locale) {
 
     cli::cli_abort(c(
       "The supplied `locale` is not available in the list of supported locales.",
-      "*" = "Use the `info_locales()` function to see which locales can be used."
+      "*" = "Use {.help [{.fn info_locales}](gt::info_locales)} to see which locales can be used."
     ))
   }
 }
@@ -117,8 +117,8 @@ validate_currency <- function(currency) {
   ) {
     cli::cli_abort(c(
       "The supplied `currency` is not available in the list of supported currencies.",
-      "*" = "Use the `info_currencies()` function to see which currencies can be used.",
-      "*" = "See `?fmt_currency` to better understand which input types are valid."
+      "*" = "Use the {.help [{.fn info_currencies}](gt::info_currencies)} function to see which currencies can be used.",
+      "*" = "See {.help [{.fn fmt_currency}](gt::fmt_currency)} to better understand which input types are valid."
     ))
   }
 }

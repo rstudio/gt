@@ -6,14 +6,14 @@ test_that("HTML tables have a specific class", {
     opt_interactive()
 
   capture_output(expect_s3_class(testthat::testthat_print(tbl_gt_i), "shiny.tag"))
-  capture_output(expect_error(tbl_gt_i, regexp = NA))
+  capture_output(expect_no_error(tbl_gt_i))
 
   tbl_gt <-
     exibble %>%
     gt()
 
   capture_output(expect_s3_class(testthat::testthat_print(tbl_gt), "shiny.tag"))
-  capture_output(expect_error(tbl_gt, regexp = NA))
+  capture_output(expect_no_error(tbl_gt))
 
   tbl_gt_not_interactive <-
     exibble %>%
@@ -21,7 +21,7 @@ test_that("HTML tables have a specific class", {
     opt_interactive(active = FALSE)
 
   capture_output(expect_s3_class(testthat::testthat_print(tbl_gt_not_interactive), "shiny.tag"))
-  capture_output(expect_error(tbl_gt_not_interactive, regexp = NA))
+  capture_output(expect_no_error(tbl_gt_not_interactive))
 
 })
 
@@ -69,26 +69,26 @@ test_that("Interactive tables won't fail when using different options", {
     tab_footnote(footnote = "Footnote.") %>%
     opt_interactive()
 
-  capture_output(expect_error(tbl_gt_i_01, regexp = NA))
-  capture_output(expect_error(tbl_gt_i_02, regexp = NA))
-  capture_output(expect_error(tbl_gt_i_03, regexp = NA))
-  capture_output(expect_error(tbl_gt_i_04, regexp = NA))
-  capture_output(expect_error(tbl_gt_i_05, regexp = NA))
-  capture_output(expect_error(tbl_gt_i_06, regexp = NA))
-  capture_output(expect_error(tbl_gt_i_07, regexp = NA))
-  capture_output(expect_error(tbl_gt_i_08, regexp = NA))
-  capture_output(expect_error(tbl_gt_i_09, regexp = NA))
-  capture_output(expect_error(tbl_gt_i_10, regexp = NA))
-  capture_output(expect_error(tbl_gt_i_11, regexp = NA))
-  capture_output(expect_error(tbl_gt_i_12, regexp = NA))
-  capture_output(expect_error(tbl_gt_i_13, regexp = NA))
-  capture_output(expect_error(tbl_gt_i_14, regexp = NA))
-  capture_output(expect_error(tbl_gt_i_15, regexp = NA))
-  capture_output(expect_error(tbl_gt_i_16, regexp = NA))
-  capture_output(expect_error(tbl_gt_i_17, regexp = NA))
-  capture_output(expect_error(tbl_gt_i_18, regexp = NA))
-  capture_output(expect_error(tbl_gt_i_19, regexp = NA))
-  capture_output(expect_error(tbl_gt_i_20, regexp = NA))
-  capture_output(expect_error(tbl_gt_i_21, regexp = NA))
-  capture_output(expect_error(tbl_gt_i_22, regexp = NA))
+  capture_output(expect_no_error(tbl_gt_i_01))
+  capture_output(expect_no_error(tbl_gt_i_02))
+  capture_output(expect_no_error(tbl_gt_i_03))
+  capture_output(expect_no_error(tbl_gt_i_04))
+  capture_output(expect_no_error(tbl_gt_i_05))
+  capture_output(expect_no_error(tbl_gt_i_06))
+  capture_output(expect_no_error(tbl_gt_i_07))
+  capture_output(expect_no_error(tbl_gt_i_08))
+  capture_output(expect_no_error(tbl_gt_i_09))
+  capture_output(expect_no_error(tbl_gt_i_10))
+  capture_output(expect_no_error(tbl_gt_i_11))
+  capture_output(expect_no_error(tbl_gt_i_12))
+  capture_output(expect_no_error(tbl_gt_i_13))
+  capture_output(expect_no_error(tbl_gt_i_14))
+  capture_output(expect_no_error(tbl_gt_i_15))
+  capture_output(expect_no_error(tbl_gt_i_16))
+  capture_output(expect_no_error(tbl_gt_i_17))
+  capture_output(expect_no_error(tbl_gt_i_18))
+  capture_output(expect_no_error(tbl_gt_i_19))
+  capture_output(expect_no_error(tbl_gt_i_20))
+  capture_output(expect_no_error(tbl_gt_i_21))
+  capture_output(expect_no_error(tbl_gt_i_22))
 })
