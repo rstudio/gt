@@ -15,6 +15,9 @@ nanoplot_options(
   data_bar_stroke_color = NULL,
   data_bar_stroke_width = NULL,
   data_bar_fill_color = NULL,
+  data_bar_negative_stroke_color = NULL,
+  data_bar_negative_stroke_width = NULL,
+  data_bar_negative_fill_color = NULL,
   vertical_guide_stroke_color = NULL,
   vertical_guide_stroke_width = NULL,
   show_data_points = NULL,
@@ -115,6 +118,31 @@ changed for all data bars by providing a different color to
 \code{data_bar_fill_color}. And, a vector of different colors can be supplied so
 long as the length is equal to the number of data bars; the fill color
 values will be applied in order of left to right.}
+
+\item{data_bar_negative_stroke_color}{\emph{Stroke color for negative values}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+The color of the stroke used for the data bars that have negative values.
+The default color is \code{"#CC3243"} but this can be changed by supplying a
+color value to the \code{data_bar_negative_stroke_color} option.}
+
+\item{data_bar_negative_stroke_width}{\emph{Stroke width for negative values}
+
+\verb{scalar<numeric>} // \emph{default:} \code{NULL} (\code{optional})
+
+The width of the stroke used for negative value data bars. This has the
+same default as \code{data_bar_stroke_width} with a value of \code{4} (as in '4px').
+This can be changed by giving a numeric value to the
+\code{data_bar_negative_stroke_width} option.}
+
+\item{data_bar_negative_fill_color}{\emph{Fill color for negative values}
+
+\verb{scalar<character>|vector<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+By default, all negative data bars have a fill color of \code{"#D75A68"}. This
+can however be changed by providing a color value to the
+\code{data_bar_negative_fill_color} option.}
 
 \item{vertical_guide_stroke_color}{\emph{Color of vertical guides}
 
