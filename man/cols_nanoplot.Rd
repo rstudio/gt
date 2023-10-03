@@ -173,10 +173,10 @@ Nanoplots try to show individual data with reasonably good visibility.
 Interactivity is included as a basic feature so one can hover over the data
 points and vertical guides will display the value ascribed to each data
 point. Because \strong{gt} knows all about numeric formatting, values will be
-compactly and not take up valuable real estate. If you need to create a
-nanoplot based on monetary values, that can be handled (simply provide the
-currency code to the \code{\link[=nanoplot_options]{nanoplot_options()}} helper and hook that up to the
-\code{options} argument).  A guide on the left-hand side of the plot area will
+compactly formatted so as to not take up valuable real estate. If you need to
+create a nanoplot based on monetary values, that can be handled by providing
+the currency code to the \code{\link[=nanoplot_options]{nanoplot_options()}} helper (then hook that up to
+the \code{options} argument).  A guide on the left-hand side of the plot area will
 appear on hover and display the minimal and maximal \emph{y} values.
 
 There are two types of nanoplots available: \code{"line"} and \code{"bar"}. A line plot
@@ -191,19 +191,19 @@ of values (resulting in equally-spaced \emph{y} values), or, you can supply two
 vectors representative of \emph{x} and \emph{y}.
 
 A bar plot is built a little bit differently. The focus is on evenly-spaced
-bars (requiring a single vector of values) that project from zero line,
-clearly showing the difference between positive and negative values.
-By default, any type of nanoplot will have basic
-interactivity. One can hover over the data points and vertical guides will
-display values ascribed to each. A guide on the left-hand side of the plot
-area will display the minimal and maximal \emph{y} values on hover.
+bars (requiring a single vector of values) that project from a zero line,
+clearly showing the difference between positive and negative values. By
+default, any type of nanoplot will have basic interactivity. One can hover
+over the data points and vertical guides will display values ascribed to
+each. A guide on the left-hand side of the plot area will display the minimal
+and maximal \emph{y} values on hover.
 
 While basic customization options are present in the \code{cols_nanoplot()}, many
 more opportunities for customizing nanoplots on a more granular level are
-possible with the \code{\link[=nanoplot_options]{nanoplot_options()}} helper function. That is to be
-invoked at the \code{options} argument of \code{cols_nanoplot()}. Through that helper
-function, layers of the nanoplots can be selectively removed and aesthetics
-of the remaining plot components can modified.
+possible with the \code{\link[=nanoplot_options]{nanoplot_options()}} helper function. That function should
+be invoked at the \code{options} argument of \code{cols_nanoplot()}. Through that
+helper, layers of the nanoplots can be selectively removed and the aesthetics
+of the remaining plot components can be modified.
 }
 \section{Targeting cells with \code{columns} and \code{rows}}{
 
