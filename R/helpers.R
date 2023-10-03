@@ -700,8 +700,8 @@ currency <- function(
 #'   `scalar<logical>` // *default:* `NULL` (`optional`)
 #'
 #'   The reference area appears at the very bottom of the layer stack, if it is
-#'   available. It will be shown in the default case but can be hidden by using
-#'   `show_reference_area = FALSE`.
+#'   available (i.e., defined in [cols_nanoplot()]). It will be shown in the
+#'   default case but can be hidden by using `show_reference_area = FALSE`.
 #'
 #' @param show_vertical_guides *Should there be vertical guides?*
 #'
@@ -822,10 +822,10 @@ nanoplot_options <- function(
     show_data_area <- TRUE
   }
   if (is.null(show_reference_line)) {
-    show_reference_line <- FALSE
+    show_reference_line <- TRUE
   }
   if (is.null(show_reference_area)) {
-    show_reference_area <- FALSE
+    show_reference_area <- TRUE
   }
   if (is.null(show_vertical_guides)) {
     show_vertical_guides <- TRUE
