@@ -2451,11 +2451,15 @@ cols_add <- function(
 #'       data_bar_fill_color = c("brown", "gold", "purple", "green")
 #'     )
 #'   ) |>
-#'   cols_width(pizzas_sold ~ px(200)) |>
+#'   cols_width(pizzas_sold ~ px(150)) |>
 #'   cols_align(columns = -date, align = "center") |>
 #'   fmt_date(columns = date, date_style = "yMMMEd") |>
 #'   opt_all_caps()
 #' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_nanoplot_2.png")`
+#' }}
 #'
 #' Now we'll make another table that contains two columns of nanoplots. Starting
 #' from the [`towny`] dataset, we first reduce it down to a subset of columns
@@ -2509,7 +2513,7 @@ cols_add <- function(
 #' ```
 #'
 #' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_cols_nanoplot_2.png")`
+#' `r man_get_image_tag(file = "man_cols_nanoplot_3.png")`
 #' }}
 #'
 #' The [`sza`] dataset can, with just some use of **dplyr** and **tidyr**, give
@@ -2567,14 +2571,14 @@ cols_add <- function(
 #' ```
 #'
 #' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_cols_nanoplot_3.png")`
+#' `r man_get_image_tag(file = "man_cols_nanoplot_4.png")`
 #' }}
 #'
 #' You can use number and time streams as data for nanoplots. Let's demonstrate
 #' how we can make use of them with some creative transformation of the
 #' [`pizzaplace`] dataset. A value stream is really a string with delimited
 #' numeric values, like this: `"7.24,84.2,14"`. A value stream can also contain
-#' datetimes, and here's an example of that:
+#' dates and/or datetimes, and here's an example of that:
 #' `"2020-06-02 13:05:13,2020-06-02 14:24:05,2020-06-02 18:51:37"`. Having data
 #' in this form can often be more convenient since different nanoplots might
 #' have varying amounts of data (and holding different amounts of data in a
@@ -2622,7 +2626,7 @@ cols_add <- function(
 #' ```
 #'
 #' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_cols_nanoplot_4.png")`
+#' `r man_get_image_tag(file = "man_cols_nanoplot_5.png")`
 #' }}
 #'
 #' Notice that we hid the columns containing the value streams with
