@@ -443,7 +443,7 @@ pizza was sold (this is true pizza data science). We also have the sell price
 for a pizza, and that'll serve as the \emph{y} values. The pizzas belong to four
 different groups (in the \code{type} column) and we'll group by that and create
 value streams with \code{paste(..., collapse = ",")} in the \strong{dplyr} summarize
-call. With two number streams in each row (having the same number of values)
+call. With two value streams in each row (having the same number of values)
 we can now make a \strong{gt} table with nanoplots.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
