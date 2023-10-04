@@ -18,6 +18,8 @@ nanoplot_options(
   data_bar_negative_stroke_color = NULL,
   data_bar_negative_stroke_width = NULL,
   data_bar_negative_fill_color = NULL,
+  reference_line_color = NULL,
+  reference_area_fill_color = NULL,
   vertical_guide_stroke_color = NULL,
   vertical_guide_stroke_width = NULL,
   show_data_points = NULL,
@@ -143,6 +145,22 @@ This can be changed by giving a numeric value to the
 By default, all negative data bars have a fill color of \code{"#D75A68"}. This
 can however be changed by providing a color value to the
 \code{data_bar_negative_fill_color} option.}
+
+\item{reference_line_color}{\emph{Color for the reference line}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+The reference line will have a color of \code{"#75A8B0"} if it is set to appear.
+This color can be changed by providing a single color value to
+\code{reference_line_color}.}
+
+\item{reference_area_fill_color}{\emph{Fill color for the reference area}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+If a reference area has been defined and is visible it has by default
+a fill color of \code{"#A6E6F2"}. This can be modified by declaring a color
+value in the \code{reference_area_fill_color} option.}
 
 \item{vertical_guide_stroke_color}{\emph{Color of vertical guides}
 
