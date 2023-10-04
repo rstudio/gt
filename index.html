@@ -56,7 +56,10 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item">
-  <a class="nav-link" href="articles/intro-creating-gt-tables.html">Intro</a>
+  <a class="nav-link" href="articles/gt.html">Get started</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="reference/index.html">Reference</a>
 </li>
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
@@ -65,14 +68,19 @@
     <a class="dropdown-item" href="articles/case-study-gtcars.html">Case Study: gtcars</a>
     <a class="dropdown-item" href="articles/creating-summary-lines.html">Creating Summary Lines</a>
     <a class="dropdown-item" href="articles/gt-datasets.html">gt Datasets</a>
-    <a class="dropdown-item" href="articles/intro-creating-gt-tables.html">Introduction to Creating gt Tables</a>
   </div>
 </li>
-<li class="nav-item">
-  <a class="nav-link" href="reference/index.html">Reference</a>
-</li>
-<li class="nav-item">
-  <a class="nav-link" href="news/index.html">Changelog</a>
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-news">News</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-news">
+    <h6 class="dropdown-header" data-toc-skip>Releases</h6>
+    <a class="external-link dropdown-item" href="https://posit.co/blog/?search=gt%2520%25200.9.0">Version 0.9.0</a>
+    <a class="external-link dropdown-item" href="https://posit.co/blog/new-features-upgrades-in-gt-0-8-0/">Version 0.8.0</a>
+    <a class="external-link dropdown-item" href="https://posit.co/blog/all-new-things-in-gt-0-7-0/">Version 0.7.0</a>
+    <a class="external-link dropdown-item" href="https://posit.co/blog/changes-for-the-better-in-gt-0-6-0/">Version 0.6.0</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="news/index.html">Changelog</a>
+  </div>
 </li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
@@ -115,7 +123,7 @@
 <hr>
 <p>The <strong>gt</strong> package is designed to be both straightforward yet powerful. The emphasis is on simple functions for the everyday display table needs. Here is a brief example of how to use <strong>gt</strong> to create a table from the included <code>sp500</code> dataset:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://gt.rstudio.com/">gt</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://gt.rstudio.com">gt</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Define the start and end dates for the data range</span></span>
 <span><span class="va">start_date</span> <span class="op">&lt;-</span> <span class="st">"2010-06-07"</span></span>
@@ -157,8 +165,8 @@
 <p>Let’s talk about making tables with <strong>gt</strong>! There are a few locations where there is much potential for discussion.</p>
 <p>One such place is in <a href="https://github.com/rstudio/gt/discussions" class="external-link"><em>GitHub Discussions</em></a>. This discussion board is especially great for Q&amp;A, and many people have had their problems solved in there.</p>
 <p><a href="https://github.com/rstudio/gt/discussions" class="external-link"><img src="https://img.shields.io/badge/GitHub%20Discussions-Ask%20about%20anything-blue?style=social&amp;logo=github&amp;logoColor=gray" alt="GitHub Discussions"></a></p>
-<p>Another fine venue for discussion is in the <a href="https://discord.gg/Ux7nrcXHVV" class="external-link"><code>gt_package</code> <em>Discord server</em></a>. This is a good option for asking about the development of <strong>gt</strong>, pitching ideas that may become features, and sharing your table creations!</p>
-<p><a href="https://discord.gg/Ux7nrcXHVV" class="external-link"><img src="https://img.shields.io/badge/Discord-Chat%20with%20us-blue?style=social&amp;logo=discord&amp;logoColor=purple" alt="Discord Server"></a></p>
+<p>Another fine venue for discussion is in the <a href="https://discord.com/invite/Ux7nrcXHVV" class="external-link"><code>gt_package</code> <em>Discord server</em></a>. This is a good option for asking about the development of <strong>gt</strong>, pitching ideas that may become features, and sharing your table creations!</p>
+<p><a href="https://discord.com/invite/Ux7nrcXHVV" class="external-link"><img src="https://img.shields.io/badge/Discord-Chat%20with%20us-blue?style=social&amp;logo=discord&amp;logoColor=purple" alt="Discord Server"></a></p>
 <p>Finally, there is the <a href="https://twitter.com/gt_package" class="external-link"><code>gt_package</code> <em>Twitter account</em></a>. There you’ll find tweets about <strong>gt</strong> (including sneak previews about in-development features) and other table-generation packages.</p>
 <p><a href="https://twitter.com/gt_package" class="external-link"><img src="https://img.shields.io/twitter/follow/gt_package?style=social" alt="Twitter Follow"></a></p>
 <p>These are all great places to ask questions about how to use the package, discuss some ideas, engage with others, and much more!</p>
@@ -185,7 +193,7 @@
 <li>
 <strong>gtExtras</strong> (<a href="https://github.com/jthomasmock/gtExtras" class="external-link">GITHUB</a>, <a href="https://jthomasmock.github.io/gtExtras/" class="external-link">WEBSITE</a>)</li>
 <li>
-<strong>pointblank</strong> (<a href="https://github.com/rich-iannone/pointblank" class="external-link">GITHUB</a>, <a href="https://rich-iannone.github.io/pointblank/" class="external-link">WEBSITE</a>)</li>
+<strong>pointblank</strong> (<a href="https://github.com/rstudio/pointblank" class="external-link">GITHUB</a>, <a href="https://rstudio.github.io/pointblank/" class="external-link">WEBSITE</a>)</li>
 <li>
 <strong>tfrmt</strong> (<a href="https://github.com/GSK-Biostatistics/tfrmt" class="external-link">GITHUB</a>, <a href="https://gsk-biostatistics.github.io/tfrmt/" class="external-link">WEBSITE</a>)</li>
 <li>
