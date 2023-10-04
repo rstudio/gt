@@ -380,28 +380,32 @@ in the table) and returns a logical vector.</p>
     
 
 
-<p>The input data for nanoplots naturally needs to be numeric and there are
-two major ways to formulate that data: (1) from single values across many
-columns, and (2) using text-based number streams. It's pretty to rationalize
-the first, and we may already have wide data in the input data frame anyway
-(take a look at the <code><a href="illness.html">illness</a></code> and <code><a href="towny.html">towny</a></code> datasets for examples of this).
-There's one data value per column so the key thing here is to reference the
-columns in the correct order. With a select helper, good column naming, and
-the columns being in the intended order, this is a snap.</p>
-<p>The second option is to use text-based number streams. Sometimes you simply
+<p>The input data for nanoplots naturally needs to be numeric and there are two
+major ways to formulate that data: (1) from single values across many
+columns, and (2) using text-based value streams. It's pretty easy to
+rationalize the first, and we may already have wide data in the input data
+frame anyway (take a look at the <code><a href="illness.html">illness</a></code> and <code><a href="towny.html">towny</a></code> datasets for
+examples of this). There's one data value per column so the key thing here is
+to reference the columns in the correct order. With a select helper, good
+column naming, and the columns being in the intended order, this is a snap.</p>
+<p>The second option is to use text-based value streams. Sometimes you simply
 don't want or don't need multiple columns and so a single column with all of
 the data might be more practical. To make this work, you'd need to have a set
 of numerical values separated by some sort of delimiter (could be a comma, a
 space, a semicolon, you get the idea). Here's an example with three numbers,
 written three ways: <code>"3.6 -2.44 1.98"</code>, <code>"3.6, -2.44, 1.98"</code>, and
 <code>"3.6;-2.44;1.98"</code>. You can include <code>NA</code> values, not a problem, and here's an
-example of that: <code>"6.232 NA 3.7 0.93"</code>. This number streams can be pretty big
-if you want them to be, and you don't have to deal with columns to the
-<em>n</em>th degree as in <em>Option 1</em>. For the case where you need to provide two
-sets of values (<em>x</em> and <em>y</em>, for line plots with <code>columns</code> and
-<code>columns_x_vals</code>), have two equivalently sized number streams in two columns.
-Number streams can also be concatenated together by referencing columns
-having their own separate number streams.</p>
+example of that: <code>"6.232 NA 3.7 0.93"</code>. Another form of value stream involves
+using datetimes in the ISO 8601 form of <code>YYYY-MM-DD HH:MM:SS</code>. These will
+be internally converted to numeric values (seconds elapsed since
+<code>"1970-01-01 00:00:00"</code>). An example of a datetime-based value stream is:
+<code>"2012-06-12 08:24:13, 2012-06-12 10:37:08, 2012-06-12 14:03:24"</code>.</p>
+<p>Value streams can be pretty big if you want them to be, and you don't have to
+deal with containing individual values across multiple columns. For the case
+where you need to provide two sets of values (<em>x</em> and <em>y</em>, for line plots
+with <code>columns</code> and <code>columns_x_vals</code>), have two equivalently sized value
+streams in two columns. Value streams can also be concatenated together by
+referencing columns having their own separate value streams.</p>
     </div>
     <div class="section level2">
     <h2 id="reference-line-and-reference-area">Reference line and reference area<a class="anchor" aria-label="anchor" href="#reference-line-and-reference-area"></a></h2>
@@ -454,6 +458,43 @@ possible to define a column label here using the <code>new_col_label</code> argu
 <span>    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_column_labels.html">cells_column_labels</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">nanoplots</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_1.png" alt="This image of a table was generated from the first code example in the `cols_nanoplot()` help file." style="width:100%;"></p>
+<p>The previous table showed us some line-based nanoplots. We can also make very
+small bar plots with <code>cols_nanoplot()</code>. Let's take the <code><a href="pizzaplace.html">pizzaplace</a></code> dataset
+and make a small summary table showing daily pizza sales by type (there are
+four types). This will be limited to the first ten days of pizza sales in
+2015, so, there will be ten rows in total. We can use <code>plot_type = "bar"</code> to
+make bar plots from the daily sales counts in the <code>chicken</code>, <code>classic</code>,
+<code>supreme</code>, and <code>veggie</code> columns. Because we know there will always be four
+bars (one for each type of pizza) we can be a little creative and apply
+colors to each of the bars through use of the <code>data_bar_fill_color</code> argument
+in <code><a href="nanoplot_options.html">nanoplot_options()</a></code>.</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">pizzaplace</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">type</span>, <span class="va">date</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">type</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span>sold <span class="op">=</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/context.html" class="external-link">n</a></span><span class="op">(</span><span class="op">)</span>, .groups <span class="op">=</span> <span class="st">"drop"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">tidyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">pivot_wider</a></span><span class="op">(</span>names_from <span class="op">=</span> <span class="va">type</span>, values_from <span class="op">=</span> <span class="va">sold</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"date"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_header.html">tab_header</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span><span class="st">"First Ten Days of Pizza Sales in 2015"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_nanoplot.html">cols_nanoplot</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">chicken</span>, <span class="va">classic</span>, <span class="va">supreme</span>, <span class="va">veggie</span><span class="op">)</span>,</span>
+<span>    plot_type <span class="op">=</span> <span class="st">"bar"</span>,</span>
+<span>    new_col_name <span class="op">=</span> <span class="st">"pizzas_sold"</span>,</span>
+<span>    new_col_label <span class="op">=</span> <span class="st">"Sales by Type"</span>,</span>
+<span>    options <span class="op">=</span> <span class="fu"><a href="../reference/nanoplot_options.html">nanoplot_options</a></span><span class="op">(</span></span>
+<span>      show_data_line <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>      show_data_area <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>      data_bar_stroke_color <span class="op">=</span> <span class="st">"transparent"</span>,</span>
+<span>      data_bar_fill_color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"brown"</span>, <span class="st">"gold"</span>, <span class="st">"purple"</span>, <span class="st">"green"</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_width.html">cols_width</a></span><span class="op">(</span><span class="va">pizzas_sold</span> <span class="op">~</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">150</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_align.html">cols_align</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="op">-</span><span class="va">date</span>, align <span class="op">=</span> <span class="st">"center"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_date.html">fmt_date</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">date</span>, date_style <span class="op">=</span> <span class="st">"yMMMEd"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/opt_all_caps.html">opt_all_caps</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_2.png" alt="This image of a table was generated from the second code example in the `cols_nanoplot()` help file." style="width:100%;"></p>
 <p>Now we'll make another table that contains two columns of nanoplots. Starting
 from the <code><a href="towny.html">towny</a></code> dataset, we first reduce it down to a subset of columns
 and rows. All of the columns related to either population or density will be
@@ -501,7 +542,7 @@ elect to hide most of those with <code><a href="cols_hide.html">cols_hide()</a><
 <span>    <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/opt_horizontal_padding.html">opt_horizontal_padding</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre><p></p></div>
-<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_2.png" alt="This image of a table was generated from the second code example in the `cols_nanoplot()` help file." style="width:100%;"></p>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_3.png" alt="This image of a table was generated from the third code example in the `cols_nanoplot()` help file." style="width:100%;"></p>
 <p>The <code><a href="sza.html">sza</a></code> dataset can, with just some use of <strong>dplyr</strong> and <strong>tidyr</strong>, give
 us a wide table full of nanoplottable values. We'll transform the solar
 zenith angles to solar altitude angles and create a column of nanoplots using
@@ -552,31 +593,31 @@ bars.</p>
 <span>    source_note <span class="op">=</span> <span class="st">"The solar altitude angle is the complement to</span></span>
 <span><span class="st">    the solar zenith angle. TMYK."</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
-<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_3.png" alt="This image of a table was generated from the third code example in the `cols_nanoplot()` help file." style="width:100%;"></p>
-<p>You can use number streams as data for nanoplots. Let's demonstrate how we
-can make use of them with some creative transformation of the <code><a href="pizzaplace.html">pizzaplace</a></code>
-dataset. A number stream is really a string with delimited numeric values,
-like this: <code>"7.24 84.2 14"</code>. They can be more convenient to use since
-different rows/nanoplots can have varying amounts of data. There are <code>date</code>
-and <code>time</code> columns in this dataset and we'll use that to get <em>x</em> values
-denoting high-resolution time instants: the second of the day that a pizza
-was sold (this is true pizza data science). We also have the sell price for a
-pizza, and that'll serve as the <em>y</em> values. The pizzas belong to four
-different groups (in the <code>type</code> column) and we'll group by that and create
-number streams with <code>paste(..., collapse = ",")</code> in the <strong>dplyr</strong> summarize
-call. With two number streams in each row (having the same number of values)
-we can now make a <strong>gt</strong> table with nanoplots.</p>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_4.png" alt="This image of a table was generated from the fourth code example in the `cols_nanoplot()` help file." style="width:100%;"></p>
+<p>You can use number and time streams as data for nanoplots. Let's demonstrate
+how we can make use of them with some creative transformation of the
+<code><a href="pizzaplace.html">pizzaplace</a></code> dataset. A value stream is really a string with delimited
+numeric values, like this: <code>"7.24,84.2,14"</code>. A value stream can also contain
+dates and/or datetimes, and here's an example of that:
+<code>"2020-06-02 13:05:13,2020-06-02 14:24:05,2020-06-02 18:51:37"</code>. Having data
+in this form can often be more convenient since different nanoplots might
+have varying amounts of data (and holding different amounts of data in a
+fixed number of columns is cumbersome). There are <code>date</code> and <code>time</code> columns
+in this dataset and we'll use that to get <em>x</em> values denoting high-resolution
+time instants: the second of the day that a pizza was sold (this is true
+pizza data science). We also have the sell price for a pizza, and that'll
+serve as the <em>y</em> values. The pizzas belong to four different groups (in the
+<code>type</code> column) and we'll group by that and create value streams with
+<code>paste(..., collapse = ",")</code> in the <strong>dplyr</strong> summarize call. With two value
+streams in each row (having the same number of values) we can now make a
+<strong>gt</strong> table with nanoplots.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">pizzaplace</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">date</span> <span class="op">==</span> <span class="st">"2015-01-01"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
-<span>    s_day <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span></span>
-<span>      <span class="fu"><a href="../reference/vec_fmt_datetime.html">vec_fmt_datetime</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">time</span><span class="op">)</span>, format <span class="op">=</span> <span class="st">"A"</span><span class="op">)</span></span>
-<span>    <span class="op">)</span> <span class="op">/</span> <span class="fl">1000</span></span>
-<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">type</span>, <span class="va">s_day</span>, <span class="va">price</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>date_time <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">time</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">type</span>, <span class="va">date_time</span>, <span class="va">price</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">type</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span></span>
-<span>    s_day <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">s_day</span>, collapse <span class="op">=</span> <span class="st">","</span><span class="op">)</span>,</span>
+<span>    date_time <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">date_time</span>, collapse <span class="op">=</span> <span class="st">","</span><span class="op">)</span>,</span>
 <span>    sold <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="va">price</span>, collapse <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"type"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -584,10 +625,10 @@ we can now make a <strong>gt</strong> table with nanoplots.</p>
 <span>    title <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span><span class="st">"Pizzas sold on **January 1, 2015**"</span><span class="op">)</span>,</span>
 <span>    subtitle <span class="op">=</span> <span class="st">"Between the opening hours of 09:00 to 00:00"</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/cols_hide.html">cols_hide</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">s_day</span>, <span class="va">sold</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_hide.html">cols_hide</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">date_time</span>, <span class="va">sold</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/cols_nanoplot.html">cols_nanoplot</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">sold</span>,</span>
-<span>    columns_x_vals <span class="op">=</span> <span class="va">s_day</span>,</span>
+<span>    columns_x_vals <span class="op">=</span> <span class="va">date_time</span>,</span>
 <span>    reference_line <span class="op">=</span> <span class="st">"median"</span>,</span>
 <span>    new_col_name <span class="op">=</span> <span class="st">"pizzas_sold"</span>,</span>
 <span>    new_col_label <span class="op">=</span> <span class="st">"Pizzas Sold"</span>,</span>
@@ -600,8 +641,8 @@ we can now make a <strong>gt</strong> table with nanoplots.</p>
 <span>  <span class="fu"><a href="../reference/cols_width.html">cols_width</a></span><span class="op">(</span><span class="va">pizzas_sold</span> <span class="op">~</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">200</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/cols_align.html">cols_align</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">pizzas_sold</span>, align <span class="op">=</span> <span class="st">"center"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/opt_all_caps.html">opt_all_caps</a></span><span class="op">(</span><span class="op">)</span></span></code></pre><p></p></div>
-<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_4.png" alt="This image of a table was generated from the fourth code example in the `cols_nanoplot()` help file." style="width:100%;"></p>
-<p>Notice that we hid the columns containing the number streams with
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_5.png" alt="This image of a table was generated from the fifth code example in the `cols_nanoplot()` help file." style="width:100%;"></p>
+<p>Notice that we hid the columns containing the value streams with
 <code><a href="cols_hide.html">cols_hide()</a></code> because, while useful, they don't need to be displayed to
 anybody viewing a table. We have a lot of data points and a connecting line
 is not as valuable here. It's more interesting to see the clusters of the
