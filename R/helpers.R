@@ -735,6 +735,15 @@ currency <- function(
 #'   nanoplot. This hidden layer is active by default but can be deactivated by
 #'   using `show_y_axis_guide = FALSE`.
 #'
+#' @param y_val_fmt_fn,y_axis_fmt_fn,y_ref_line_fmt_fn *Custom formatting for y values*
+#'
+#'   `function` // *default:* `NULL` (`optional`)
+#'
+#'   If providing a function to `y_val_fmt_fn`, `y_axis_fmt_fn`, or
+#'   `y_ref_line_fmt_fn` then customized formatting of the *y* values associated
+#'   with the data points/bars, the *y*-axis labels, and the reference line can
+#'   be performed.
+#'
 #' @param currency *Define values as currencies of a specific type*
 #'
 #'   `scalar<character>|obj:<gt_currency>` // *default:* `NULL` (`optional`)
@@ -782,6 +791,9 @@ nanoplot_options <- function(
     show_reference_area = NULL,
     show_vertical_guides = NULL,
     show_y_axis_guide = NULL,
+    y_val_fmt_fn = NULL,
+    y_axis_fmt_fn = NULL,
+    y_ref_line_fmt_fn = NULL,
     currency = NULL
 ) {
 
@@ -857,6 +869,15 @@ nanoplot_options <- function(
   if (is.null(show_y_axis_guide)) {
     show_y_axis_guide <- TRUE
   }
+  if (is.null(y_val_fmt_fn)) {
+    y_val_fmt_fn <- NULL
+  }
+  if (is.null(y_axis_fmt_fn)) {
+    y_axis_fmt_fn <- NULL
+  }
+  if (is.null(y_ref_line_fmt_fn)) {
+    y_ref_line_fmt_fn <- NULL
+  }
   if (is.null(currency)) {
     currency <- NULL
   }
@@ -887,6 +908,9 @@ nanoplot_options <- function(
       show_reference_area = show_reference_area,
       show_vertical_guides = show_vertical_guides,
       show_y_axis_guide = show_y_axis_guide,
+      y_val_fmt_fn = y_val_fmt_fn,
+      y_axis_fmt_fn = y_axis_fmt_fn,
+      y_ref_line_fmt_fn = y_ref_line_fmt_fn,
       currency = currency
     )
 
