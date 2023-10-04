@@ -1600,3 +1600,20 @@ process_number_stream <- function(number_stream) {
   number_stream <- as.numeric(number_stream)
   number_stream
 }
+
+process_time_stream <- function(time_stream) {
+
+  time_stream <- unlist(strsplit(time_stream, split = "[;,]\\s*"))
+
+  time_stream_vals <-
+    as.POSIXct(
+      time_stream,
+      format = "%Y-%m-%d %H:%M:%OS",
+      tz = "UTC"
+    )
+
+  time_stream_vals <- as.numeric(time_stream_vals)
+
+  names(time_stream_vals) <- time_stream
+  time_stream_vals
+}
