@@ -31,6 +31,9 @@ generate_nanoplot <- function(
     plot_type = c("line", "bar"),
     line_type = c("curved", "straight"),
     currency = NULL,
+    y_val_fmt_fn = NULL,
+    y_axis_fmt_fn = NULL,
+    y_ref_line_fmt_fn = NULL,
     data_point_radius = 10,
     data_point_stroke_color = "#FFFFFF",
     data_point_stroke_width = 4,
@@ -43,6 +46,8 @@ generate_nanoplot <- function(
     data_bar_negative_stroke_color = "#CC3243",
     data_bar_negative_stroke_width = 4,
     data_bar_negative_fill_color = "#D75A68",
+    reference_line_color = "#75A8B0",
+    reference_area_fill_color = "#A6E6F2",
     vertical_guide_stroke_color = "#911EB4",
     vertical_guide_stroke_width = 12,
     show_data_points = TRUE,
@@ -950,7 +955,7 @@ generate_nanoplot <- function(
 
   if (show_ref_line) {
 
-    stroke <- "#09647380"
+    stroke <- reference_line_color
     stroke_width <- 1
     stroke_dasharray <- "4 3"
     transform <- ""
@@ -961,7 +966,8 @@ generate_nanoplot <- function(
       format_number_compactly(
         val = y_ref_line,
         currency = currency,
-        as_integer = y_vals_integerlike
+        as_integer = y_vals_integerlike,
+        fn = y_ref_line_fmt_fn
       )
 
     ref_line_tags <-
@@ -1010,7 +1016,7 @@ generate_nanoplot <- function(
 
   if (show_ref_area) {
 
-    fill <- "#90E0EF80"
+    fill <- reference_area_fill_color
 
     p_ul <- paste0(data_x_points[1], ",", data_y_ref_area_u)
     p_ur <- paste0(data_x_points[length(data_x_points)], ",", data_y_ref_area_u)
@@ -1077,14 +1083,16 @@ generate_nanoplot <- function(
       format_number_compactly(
         y_val_max,
         currency = currency,
-        as_integer = y_vals_integerlike
+        as_integer = y_vals_integerlike,
+        fn = y_axis_fmt_fn
       )
 
     y_value_min_label <-
       format_number_compactly(
         y_val_min,
         currency = currency,
-        as_integer = y_vals_integerlike
+        as_integer = y_vals_integerlike,
+        fn = y_axis_fmt_fn
       )
 
     text_strings_min <-
@@ -1151,7 +1159,8 @@ generate_nanoplot <- function(
         format_number_compactly(
           val = y_vals[i],
           currency = currency,
-          as_integer = y_vals_integerlike
+          as_integer = y_vals_integerlike,
+          fn = y_val_fmt_fn
         )
 
       x_text <- data_x_points[i] + 10
@@ -1467,6 +1476,10 @@ format_number_compactly <- function(
     as_integer = FALSE,
     fn = NULL
 ) {
+
+  if (!is.null(fn)) {
+    return(fn(val))
+  }
 
   if (is.na(val)) {
     return("NA")
