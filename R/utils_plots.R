@@ -148,6 +148,7 @@ generate_nanoplot <- function(
   }
 
   num_y_vals <- length(y_vals)
+  y_vals_integerlike <- rlang::is_integerish(y_vals)
 
   # Get a vector of data points that are missing and are to be treated as gaps
   if (missing_vals == "gap") {
@@ -956,7 +957,12 @@ generate_nanoplot <- function(
     stroke_linecap <- "round"
     vector_effect <- "non-scaling-stroke"
 
-    y_ref_line <- format_number_compactly(val = y_ref_line, currency = currency)
+    y_ref_line <-
+      format_number_compactly(
+        val = y_ref_line,
+        currency = currency,
+        as_integer = y_vals_integerlike
+      )
 
     ref_line_tags <-
       paste0(
@@ -1070,13 +1076,15 @@ generate_nanoplot <- function(
     y_value_max_label <-
       format_number_compactly(
         y_val_max,
-        currency = currency
+        currency = currency,
+        as_integer = y_vals_integerlike
       )
 
     y_value_min_label <-
       format_number_compactly(
         y_val_min,
-        currency = currency
+        currency = currency,
+        as_integer = y_vals_integerlike
       )
 
     text_strings_min <-
@@ -1139,7 +1147,12 @@ generate_nanoplot <- function(
           "</rect>"
         )
 
-      y_value_i <- format_number_compactly(val = y_vals[i], currency = currency)
+      y_value_i <-
+        format_number_compactly(
+          val = y_vals[i],
+          currency = currency,
+          as_integer = y_vals_integerlike
+        )
 
       x_text <- data_x_points[i] + 10
 
@@ -1448,7 +1461,12 @@ generate_ref_line_from_keyword <- function(vals, keyword) {
   ref_line
 }
 
-format_number_compactly <- function(val, currency = NULL) {
+format_number_compactly <- function(
+    val,
+    currency = NULL,
+    as_integer = FALSE,
+    fn = NULL
+) {
 
   if (is.na(val)) {
     return("NA")
@@ -1576,14 +1594,25 @@ format_number_compactly <- function(val, currency = NULL) {
 
     } else {
 
-      val_formatted <-
-        vec_fmt_number(
-          val,
-          n_sigfig = n_sigfig,
-          decimals = 1,
-          suffixing = suffixing,
-          output = "html"
-        )
+      if (as_integer && val > -100 && val < 100) {
+
+        val_formatted <-
+          vec_fmt_integer(
+            val,
+            output = "html"
+          )
+
+      } else {
+
+        val_formatted <-
+          vec_fmt_number(
+            val,
+            n_sigfig = n_sigfig,
+            decimals = 1,
+            suffixing = suffixing,
+            output = "html"
+          )
+      }
     }
   }
 
