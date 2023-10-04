@@ -238,27 +238,27 @@ in the table) and returns a logical vector.
 
 The input data for nanoplots naturally needs to be numeric and there are
 two major ways to formulate that data: (1) from single values across many
-columns, and (2) using text-based number streams. It's pretty to rationalize
+columns, and (2) using text-based value streams. It's pretty to rationalize
 the first, and we may already have wide data in the input data frame anyway
 (take a look at the \code{\link{illness}} and \code{\link{towny}} datasets for examples of this).
 There's one data value per column so the key thing here is to reference the
 columns in the correct order. With a select helper, good column naming, and
 the columns being in the intended order, this is a snap.
 
-The second option is to use text-based number streams. Sometimes you simply
+The second option is to use text-based value streams. Sometimes you simply
 don't want or don't need multiple columns and so a single column with all of
 the data might be more practical. To make this work, you'd need to have a set
 of numerical values separated by some sort of delimiter (could be a comma, a
 space, a semicolon, you get the idea). Here's an example with three numbers,
 written three ways: \code{"3.6 -2.44 1.98"}, \code{"3.6, -2.44, 1.98"}, and
 \code{"3.6;-2.44;1.98"}. You can include \code{NA} values, not a problem, and here's an
-example of that: \code{"6.232 NA 3.7 0.93"}. This number streams can be pretty big
+example of that: \code{"6.232 NA 3.7 0.93"}. This value stream can be pretty big
 if you want them to be, and you don't have to deal with columns to the
 \emph{n}th degree as in \emph{Option 1}. For the case where you need to provide two
 sets of values (\emph{x} and \emph{y}, for line plots with \code{columns} and
-\code{columns_x_vals}), have two equivalently sized number streams in two columns.
-Number streams can also be concatenated together by referencing columns
-having their own separate number streams.
+\code{columns_x_vals}), have two equivalently sized value streams in two columns.
+Value streams can also be concatenated together by referencing columns
+having their own separate value streams.
 }
 
 \section{Reference line and reference area}{
@@ -432,7 +432,7 @@ bars.
 
 You can use number and datetime streams as data for nanoplots. Let's
 demonstrate how we can make use of them with some creative transformation of
-the \code{\link{pizzaplace}} dataset. A number stream is really a string with delimited
+the \code{\link{pizzaplace}} dataset. A value stream is really a string with delimited
 numeric values, like this: \code{"7.24,84.2,14"}. A datetime stream is similar and
 here's an example with two values:
 \code{"2020-06-02 13:05:13,2020-06-02 14:24:05"} They can be more convenient to
@@ -442,7 +442,7 @@ values denoting high-resolution time instants: the second of the day that a
 pizza was sold (this is true pizza data science). We also have the sell price
 for a pizza, and that'll serve as the \emph{y} values. The pizzas belong to four
 different groups (in the \code{type} column) and we'll group by that and create
-number streams with \code{paste(..., collapse = ",")} in the \strong{dplyr} summarize
+value streams with \code{paste(..., collapse = ",")} in the \strong{dplyr} summarize
 call. With two number streams in each row (having the same number of values)
 we can now make a \strong{gt} table with nanoplots.
 
@@ -482,7 +482,7 @@ we can now make a \strong{gt} table with nanoplots.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_4.png" alt="This image of a table was generated from the fourth code example in the `cols_nanoplot()` help file." style="width:100\%;">
 }}
 
-Notice that we hid the columns containing the number streams with
+Notice that we hid the columns containing the value streams with
 \code{\link[=cols_hide]{cols_hide()}} because, while useful, they don't need to be displayed to
 anybody viewing a table. We have a lot of data points and a connecting line
 is not as valuable here. It's more interesting to see the clusters of the
