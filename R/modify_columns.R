@@ -2333,14 +2333,14 @@ cols_add <- function(
 #'
 #' @section How to supply data for nanoplots:
 #'
-#' The input data for nanoplots naturally needs to be numeric and there are
-#' two major ways to formulate that data: (1) from single values across many
-#' columns, and (2) using text-based value streams. It's pretty to rationalize
-#' the first, and we may already have wide data in the input data frame anyway
-#' (take a look at the [`illness`] and [`towny`] datasets for examples of this).
-#' There's one data value per column so the key thing here is to reference the
-#' columns in the correct order. With a select helper, good column naming, and
-#' the columns being in the intended order, this is a snap.
+#' The input data for nanoplots naturally needs to be numeric and there are two
+#' major ways to formulate that data: (1) from single values across many
+#' columns, and (2) using text-based value streams. It's pretty easy to
+#' rationalize the first, and we may already have wide data in the input data
+#' frame anyway (take a look at the [`illness`] and [`towny`] datasets for
+#' examples of this). There's one data value per column so the key thing here is
+#' to reference the columns in the correct order. With a select helper, good
+#' column naming, and the columns being in the intended order, this is a snap.
 #'
 #' The second option is to use text-based value streams. Sometimes you simply
 #' don't want or don't need multiple columns and so a single column with all of
