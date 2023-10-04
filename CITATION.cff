@@ -36,7 +36,7 @@ authors:
   orcid: https://orcid.org/0000-0002-4064-6012
 repository: https://CRAN.R-project.org/package=gt
 repository-code: https://github.com/rstudio/gt
-url: https://gt.rstudio.com/
+url: https://gt.rstudio.com
 contact:
 - family-names: Iannone
   given-names: Richard

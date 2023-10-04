@@ -78,7 +78,7 @@ other fine-grained options for positioning are available in the
 
 We need to ensure that we have the \strong{shiny} package installed first. This
 is easily by using \code{install.packages("shiny")}. More information on creating
-Shiny apps can be found at the \href{https://shiny.rstudio.com}{Shiny Site}.
+Shiny apps can be found on the \href{https://shiny.posit.co}{Shiny website}.
 }
 \section{Examples}{
 
