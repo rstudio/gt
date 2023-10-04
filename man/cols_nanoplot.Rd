@@ -324,6 +324,45 @@ possible to define a column label here using the \code{new_col_label} argument.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_1.png" alt="This image of a table was generated from the first code example in the `cols_nanoplot()` help file." style="width:100\%;">
 }}
 
+The previous table showed us some line-based nanoplots. We can also make very
+small bar plots with \code{cols_nanoplot()}. Let's take the \code{\link{pizzaplace}} dataset
+and make a small summary table showing daily pizza sales by type (there are
+four types). This will be limited to the first ten days of pizza sales in
+2015, so, there will be ten rows in total. We can use \code{plot_type = "bar"} to
+make bar plots from the daily sales counts in the \code{chicken}, \code{classic},
+\code{supreme}, and \code{veggie} columns. Because we know there will always be four
+bars (one for each type of pizza) we can be a little creative and apply
+colors to each of the bars through use of the \code{data_bar_fill_color} argument
+in \code{\link[=nanoplot_options]{nanoplot_options()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
+  dplyr::select(type, date) |>
+  dplyr::group_by(date, type) |>
+  dplyr::summarize(sold = dplyr::n(), .groups = "drop") |>
+  tidyr::pivot_wider(names_from = type, values_from = sold) |>
+  dplyr::slice_head(n = 10) |>
+  gt(rowname_col = "date") |>
+  tab_header(
+    title = md("First Ten Days of Pizza Sales in 2015")
+  ) |>
+  cols_nanoplot(
+    columns = c(chicken, classic, supreme, veggie),
+    plot_type = "bar",
+    new_col_name = "pizzas_sold",
+    new_col_label = "Sales by Type",
+    options = nanoplot_options(
+      show_data_line = FALSE,
+      show_data_area = FALSE,
+      data_bar_stroke_color = "transparent",
+      data_bar_fill_color = c("brown", "gold", "purple", "green")
+    )
+  ) |>
+  cols_width(pizzas_sold ~ px(200)) |>
+  cols_align(columns = -date, align = "center") |>
+  fmt_date(columns = date, date_style = "yMMMEd") |>
+  opt_all_caps()
+}\if{html}{\out{</div>}}
+
 Now we'll make another table that contains two columns of nanoplots. Starting
 from the \code{\link{towny}} dataset, we first reduce it down to a subset of columns
 and rows. All of the columns related to either population or density will be
