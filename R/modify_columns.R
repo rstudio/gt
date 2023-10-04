@@ -2349,13 +2349,18 @@ cols_add <- function(
 #' space, a semicolon, you get the idea). Here's an example with three numbers,
 #' written three ways: `"3.6 -2.44 1.98"`, `"3.6, -2.44, 1.98"`, and
 #' `"3.6;-2.44;1.98"`. You can include `NA` values, not a problem, and here's an
-#' example of that: `"6.232 NA 3.7 0.93"`. This value stream can be pretty big
-#' if you want them to be, and you don't have to deal with columns to the
-#' *n*th degree as in *Option 1*. For the case where you need to provide two
-#' sets of values (*x* and *y*, for line plots with `columns` and
-#' `columns_x_vals`), have two equivalently sized value streams in two columns.
-#' Value streams can also be concatenated together by referencing columns
-#' having their own separate value streams.
+#' example of that: `"6.232 NA 3.7 0.93"`. Another form of value stream involves
+#' using datetimes in the ISO 8601 form of `YYYY-MM-DD HH:MM:SS`. These will
+#' be internally converted to numeric values (seconds elapsed since
+#' `"1970-01-01 00:00:00"`). An example of a datetime-based value stream is:
+#' `"2012-06-12 08:24:13, 2012-06-12 10:37:08, 2012-06-12 14:03:24"`.
+#'
+#' Value streams can be pretty big if you want them to be, and you don't have to
+#' deal with containing individual values across multiple columns. For the case
+#' where you need to provide two sets of values (*x* and *y*, for line plots
+#' with `columns` and `columns_x_vals`), have two equivalently sized value
+#' streams in two columns. Value streams can also be concatenated together by
+#' referencing columns having their own separate value streams.
 #'
 #' @section Reference line and reference area:
 #'
@@ -2525,21 +2530,23 @@ cols_add <- function(
 #' `r man_get_image_tag(file = "man_cols_nanoplot_3.png")`
 #' }}
 #'
-#' You can use number and datetime streams as data for nanoplots. Let's
-#' demonstrate how we can make use of them with some creative transformation of
-#' the [`pizzaplace`] dataset. A value stream is really a string with delimited
-#' numeric values, like this: `"7.24,84.2,14"`. A datetime stream is similar and
-#' here's an example with two values:
-#' `"2020-06-02 13:05:13,2020-06-02 14:24:05"` They can be more convenient to
-#' use since different rows/nanoplots can have varying amounts of data. There
-#' are `date` and `time` columns in this dataset and we'll use that to get *x*
-#' values denoting high-resolution time instants: the second of the day that a
-#' pizza was sold (this is true pizza data science). We also have the sell price
-#' for a pizza, and that'll serve as the *y* values. The pizzas belong to four
-#' different groups (in the `type` column) and we'll group by that and create
-#' value streams with `paste(..., collapse = ",")` in the **dplyr** summarize
-#' call. With two value streams in each row (having the same number of values)
-#' we can now make a **gt** table with nanoplots.
+#' You can use number and time streams as data for nanoplots. Let's demonstrate
+#' how we can make use of them with some creative transformation of the
+#' [`pizzaplace`] dataset. A value stream is really a string with delimited
+#' numeric values, like this: `"7.24,84.2,14"`. A value stream can also contain
+#' datetimes, and here's an example of that:
+#' `"2020-06-02 13:05:13,2020-06-02 14:24:05,2020-06-02 18:51:37"`. Having data
+#' in this form can often be more convenient since different nanoplots might
+#' have varying amounts of data (and holding different amounts of data in a
+#' fixed number of columns is cumbersome). There are `date` and `time` columns
+#' in this dataset and we'll use that to get *x* values denoting high-resolution
+#' time instants: the second of the day that a pizza was sold (this is true
+#' pizza data science). We also have the sell price for a pizza, and that'll
+#' serve as the *y* values. The pizzas belong to four different groups (in the
+#' `type` column) and we'll group by that and create value streams with
+#' `paste(..., collapse = ",")` in the **dplyr** summarize call. With two value
+#' streams in each row (having the same number of values) we can now make a
+#' **gt** table with nanoplots.
 #'
 #' ```r
 #' pizzaplace |>
