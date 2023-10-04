@@ -623,6 +623,31 @@ currency <- function(
 #'   long as the length is equal to the number of data bars; the fill color
 #'   values will be applied in order of left to right.
 #'
+#' @param data_bar_negative_stroke_color *Stroke color for negative values*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   The color of the stroke used for the data bars that have negative values.
+#'   The default color is `"#CC3243"` but this can be changed by supplying a
+#'   color value to the `data_bar_negative_stroke_color` option.
+#'
+#' @param data_bar_negative_stroke_width *Stroke width for negative values*
+#'
+#'   `scalar<numeric>` // *default:* `NULL` (`optional`)
+#'
+#'   The width of the stroke used for negative value data bars. This has the
+#'   same default as `data_bar_stroke_width` with a value of `4` (as in '4px').
+#'   This can be changed by giving a numeric value to the
+#'   `data_bar_negative_stroke_width` option.
+#'
+#' @param data_bar_negative_fill_color *Fill color for negative values*
+#'
+#'   `scalar<character>|vector<character>` // *default:* `NULL` (`optional`)
+#'
+#'   By default, all negative data bars have a fill color of `"#D75A68"`. This
+#'   can however be changed by providing a color value to the
+#'   `data_bar_negative_fill_color` option.
+#'
 #' @param vertical_guide_stroke_color *Color of vertical guides*
 #'
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
@@ -675,8 +700,8 @@ currency <- function(
 #'   `scalar<logical>` // *default:* `NULL` (`optional`)
 #'
 #'   The reference area appears at the very bottom of the layer stack, if it is
-#'   available. It will be shown in the default case but can be hidden by using
-#'   `show_reference_area = FALSE`.
+#'   available (i.e., defined in [cols_nanoplot()]). It will be shown in the
+#'   default case but can be hidden by using `show_reference_area = FALSE`.
 #'
 #' @param show_vertical_guides *Should there be vertical guides?*
 #'
@@ -727,6 +752,9 @@ nanoplot_options <- function(
     data_bar_stroke_color = NULL,
     data_bar_stroke_width = NULL,
     data_bar_fill_color = NULL,
+    data_bar_negative_stroke_color = NULL,
+    data_bar_negative_stroke_width = NULL,
+    data_bar_negative_fill_color = NULL,
     vertical_guide_stroke_color = NULL,
     vertical_guide_stroke_width = NULL,
     show_data_points = NULL,
@@ -743,19 +771,19 @@ nanoplot_options <- function(
     data_point_radius <- 10
   }
   if (is.null(data_point_stroke_color)) {
-    data_point_stroke_color <- "white"
+    data_point_stroke_color <- "#FFFFFF"
   }
   if (is.null(data_point_stroke_width)) {
     data_point_stroke_width <- 4
   }
   if (is.null(data_point_fill_color)) {
-    data_point_fill_color <- "red"
+    data_point_fill_color <- "#FF0000"
   }
   if (is.null(data_line_type)) {
     data_line_type <- "curved"
   }
   if (is.null(data_line_stroke_color)) {
-    data_line_stroke_color <- "steelblue"
+    data_line_stroke_color <- "#4682B4"
   }
   if (is.null(data_line_stroke_width)) {
     data_line_stroke_width <- 8
@@ -768,6 +796,15 @@ nanoplot_options <- function(
   }
   if (is.null(data_bar_fill_color)) {
     data_bar_fill_color <- "#3FB5FF"
+  }
+  if (is.null(data_bar_negative_stroke_color)) {
+    data_bar_negative_stroke_color <- "#CC3243"
+  }
+  if (is.null(data_bar_negative_stroke_width)) {
+    data_bar_negative_stroke_width <- 4
+  }
+  if (is.null(data_bar_negative_fill_color)) {
+    data_bar_negative_fill_color <- "#D75A68"
   }
   if (is.null(vertical_guide_stroke_color)) {
     vertical_guide_stroke_color <- "#911EB4"
@@ -812,6 +849,9 @@ nanoplot_options <- function(
       data_bar_stroke_color = data_bar_stroke_color,
       data_bar_stroke_width = data_bar_stroke_width,
       data_bar_fill_color = data_bar_fill_color,
+      data_bar_negative_stroke_color = data_bar_negative_stroke_color,
+      data_bar_negative_stroke_width = data_bar_negative_stroke_width,
+      data_bar_negative_fill_color = data_bar_negative_fill_color,
       vertical_guide_stroke_color = vertical_guide_stroke_color,
       vertical_guide_stroke_width = vertical_guide_stroke_width,
       show_data_points = show_data_points,
