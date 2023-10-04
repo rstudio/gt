@@ -430,15 +430,17 @@ bars.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_3.png" alt="This image of a table was generated from the third code example in the `cols_nanoplot()` help file." style="width:100\%;">
 }}
 
-You can use number streams as data for nanoplots. Let's demonstrate how we
-can make use of them with some creative transformation of the \code{\link{pizzaplace}}
-dataset. A number stream is really a string with delimited numeric values,
-like this: \code{"7.24 84.2 14"}. They can be more convenient to use since
-different rows/nanoplots can have varying amounts of data. There are \code{date}
-and \code{time} columns in this dataset and we'll use that to get \emph{x} values
-denoting high-resolution time instants: the second of the day that a pizza
-was sold (this is true pizza data science). We also have the sell price for a
-pizza, and that'll serve as the \emph{y} values. The pizzas belong to four
+You can use number and datetime streams as data for nanoplots. Let's
+demonstrate how we can make use of them with some creative transformation of
+the \code{\link{pizzaplace}} dataset. A number stream is really a string with delimited
+numeric values, like this: \code{"7.24,84.2,14"}. A datetime stream is similar and
+here's an example with two values:
+\code{"2020-06-02 13:05:13,2020-06-02 14:24:05"} They can be more convenient to
+use since different rows/nanoplots can have varying amounts of data. There
+are \code{date} and \code{time} columns in this dataset and we'll use that to get \emph{x}
+values denoting high-resolution time instants: the second of the day that a
+pizza was sold (this is true pizza data science). We also have the sell price
+for a pizza, and that'll serve as the \emph{y} values. The pizzas belong to four
 different groups (in the \code{type} column) and we'll group by that and create
 number streams with \code{paste(..., collapse = ",")} in the \strong{dplyr} summarize
 call. With two number streams in each row (having the same number of values)
@@ -446,15 +448,11 @@ we can now make a \strong{gt} table with nanoplots.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
   dplyr::filter(date == "2015-01-01") |>
-  dplyr::mutate(
-    s_day = as.numeric(
-      vec_fmt_datetime(paste(date, time), format = "A")
-    ) / 1000
-  ) |>
-  dplyr::select(type, s_day, price) |>
+  dplyr::mutate(date_time = paste(date, time)) |>
+  dplyr::select(type, date_time, price) |>
   dplyr::group_by(type) |>
   dplyr::summarize(
-    s_day = paste(s_day, collapse = ","),
+    date_time = paste(date_time, collapse = ","),
     sold = paste(price, collapse = ",")
   ) |>
   gt(rowname_col = "type") |>
@@ -462,10 +460,10 @@ we can now make a \strong{gt} table with nanoplots.
     title = md("Pizzas sold on **January 1, 2015**"),
     subtitle = "Between the opening hours of 09:00 to 00:00"
   ) |>
-  cols_hide(columns = c(s_day, sold)) |>
+  cols_hide(columns = c(date_time, sold)) |>
   cols_nanoplot(
     columns = sold,
-    columns_x_vals = s_day,
+    columns_x_vals = date_time,
     reference_line = "median",
     new_col_name = "pizzas_sold",
     new_col_label = "Pizzas Sold",
