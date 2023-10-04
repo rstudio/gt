@@ -11,7 +11,7 @@ Build display tables from tabular data with an easy-to-use set of functions. Wit
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://gt.rstudio.com/}
+  \item \url{https://gt.rstudio.com}
   \item \url{https://github.com/rstudio/gt}
   \item Report bugs at \url{https://github.com/rstudio/gt/issues}
 }

@@ -24,7 +24,7 @@ Authors@R: c(
     person("Posit Software, PBC", role = c("cph", "fnd"))
     )
 License: MIT + file LICENSE
-URL: https://gt.rstudio.com/, https://github.com/rstudio/gt
+URL: https://gt.rstudio.com, https://github.com/rstudio/gt
 BugReports: https://github.com/rstudio/gt/issues
 Encoding: UTF-8
 LazyData: true
