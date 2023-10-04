@@ -43,6 +43,8 @@ generate_nanoplot <- function(
     data_bar_negative_stroke_color = "#CC3243",
     data_bar_negative_stroke_width = 4,
     data_bar_negative_fill_color = "#D75A68",
+    reference_line_color = "#75A8B0",
+    reference_area_fill_color = "#A6E6F2",
     vertical_guide_stroke_color = "#911EB4",
     vertical_guide_stroke_width = 12,
     show_data_points = TRUE,
@@ -950,7 +952,7 @@ generate_nanoplot <- function(
 
   if (show_ref_line) {
 
-    stroke <- "#09647380"
+    stroke <- reference_line_color
     stroke_width <- 1
     stroke_dasharray <- "4 3"
     transform <- ""
@@ -1010,7 +1012,7 @@ generate_nanoplot <- function(
 
   if (show_ref_area) {
 
-    fill <- "#90E0EF80"
+    fill <- reference_area_fill_color
 
     p_ul <- paste0(data_x_points[1], ",", data_y_ref_area_u)
     p_ur <- paste0(data_x_points[length(data_x_points)], ",", data_y_ref_area_u)
