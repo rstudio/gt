@@ -2525,15 +2525,17 @@ cols_add <- function(
 #' `r man_get_image_tag(file = "man_cols_nanoplot_3.png")`
 #' }}
 #'
-#' You can use number streams as data for nanoplots. Let's demonstrate how we
-#' can make use of them with some creative transformation of the [`pizzaplace`]
-#' dataset. A number stream is really a string with delimited numeric values,
-#' like this: `"7.24 84.2 14"`. They can be more convenient to use since
-#' different rows/nanoplots can have varying amounts of data. There are `date`
-#' and `time` columns in this dataset and we'll use that to get *x* values
-#' denoting high-resolution time instants: the second of the day that a pizza
-#' was sold (this is true pizza data science). We also have the sell price for a
-#' pizza, and that'll serve as the *y* values. The pizzas belong to four
+#' You can use number and datetime streams as data for nanoplots. Let's
+#' demonstrate how we can make use of them with some creative transformation of
+#' the [`pizzaplace`] dataset. A number stream is really a string with delimited
+#' numeric values, like this: `"7.24,84.2,14"`. A datetime stream is similar and
+#' here's an example with two values:
+#' `"2020-06-02 13:05:13,2020-06-02 14:24:05"` They can be more convenient to
+#' use since different rows/nanoplots can have varying amounts of data. There
+#' are `date` and `time` columns in this dataset and we'll use that to get *x*
+#' values denoting high-resolution time instants: the second of the day that a
+#' pizza was sold (this is true pizza data science). We also have the sell price
+#' for a pizza, and that'll serve as the *y* values. The pizzas belong to four
 #' different groups (in the `type` column) and we'll group by that and create
 #' number streams with `paste(..., collapse = ",")` in the **dplyr** summarize
 #' call. With two number streams in each row (having the same number of values)
@@ -2542,15 +2544,11 @@ cols_add <- function(
 #' ```r
 #' pizzaplace |>
 #'   dplyr::filter(date == "2015-01-01") |>
-#'   dplyr::mutate(
-#'     s_day = as.numeric(
-#'       vec_fmt_datetime(paste(date, time), format = "A")
-#'     ) / 1000
-#'   ) |>
-#'   dplyr::select(type, s_day, price) |>
+#'   dplyr::mutate(date_time = paste(date, time)) |>
+#'   dplyr::select(type, date_time, price) |>
 #'   dplyr::group_by(type) |>
 #'   dplyr::summarize(
-#'     s_day = paste(s_day, collapse = ","),
+#'     date_time = paste(date_time, collapse = ","),
 #'     sold = paste(price, collapse = ",")
 #'   ) |>
 #'   gt(rowname_col = "type") |>
@@ -2558,10 +2556,10 @@ cols_add <- function(
 #'     title = md("Pizzas sold on **January 1, 2015**"),
 #'     subtitle = "Between the opening hours of 09:00 to 00:00"
 #'   ) |>
-#'   cols_hide(columns = c(s_day, sold)) |>
+#'   cols_hide(columns = c(date_time, sold)) |>
 #'   cols_nanoplot(
 #'     columns = sold,
-#'     columns_x_vals = s_day,
+#'     columns_x_vals = date_time,
 #'     reference_line = "median",
 #'     new_col_name = "pizzas_sold",
 #'     new_col_label = "Pizzas Sold",
@@ -2851,8 +2849,23 @@ generate_data_vals_list <- function(
           is.character(data_vals_i[j][[1]])
         ) {
 
-          data_vals_j <-
-            c(data_vals_j, process_number_stream(data_vals_i[j][[1]]))
+          #
+          # Detect value stream type and convert accordingly
+          #
+
+          if (
+            grepl("\\d{1,4}-\\d{2}-\\d{2}", data_vals_i[j][[1]])
+          ) {
+
+            data_vals_j <-
+              c(data_vals_j, process_time_stream(data_vals_i[j][[1]]))
+
+          } else {
+
+            data_vals_j <-
+              c(data_vals_j, process_number_stream(data_vals_i[j][[1]]))
+          }
+
 
         } else {
           data_vals_j <- c(data_vals_j, unname(unlist(data_vals_i[j][[1]])))
