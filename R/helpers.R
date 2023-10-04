@@ -648,6 +648,22 @@ currency <- function(
 #'   can however be changed by providing a color value to the
 #'   `data_bar_negative_fill_color` option.
 #'
+#' @param reference_line_color *Color for the reference line*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   The reference line will have a color of `"#75A8B0"` if it is set to appear.
+#'   This color can be changed by providing a single color value to
+#'   `reference_line_color`.
+#'
+#' @param reference_area_fill_color *Fill color for the reference area*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   If a reference area has been defined and is visible it has by default
+#'   a fill color of `"#A6E6F2"`. This can be modified by declaring a color
+#'   value in the `reference_area_fill_color` option.
+#'
 #' @param vertical_guide_stroke_color *Color of vertical guides*
 #'
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
@@ -755,6 +771,8 @@ nanoplot_options <- function(
     data_bar_negative_stroke_color = NULL,
     data_bar_negative_stroke_width = NULL,
     data_bar_negative_fill_color = NULL,
+    reference_line_color = NULL,
+    reference_area_fill_color = NULL,
     vertical_guide_stroke_color = NULL,
     vertical_guide_stroke_width = NULL,
     show_data_points = NULL,
@@ -806,6 +824,12 @@ nanoplot_options <- function(
   if (is.null(data_bar_negative_fill_color)) {
     data_bar_negative_fill_color <- "#D75A68"
   }
+  if (is.null(reference_line_color)) {
+    reference_line_color <- "#75A8B0"
+  }
+  if (is.null(reference_area_fill_color)) {
+    reference_area_fill_color <- "#A6E6F2"
+  }
   if (is.null(vertical_guide_stroke_color)) {
     vertical_guide_stroke_color <- "#911EB4"
   }
@@ -852,6 +876,8 @@ nanoplot_options <- function(
       data_bar_negative_stroke_color = data_bar_negative_stroke_color,
       data_bar_negative_stroke_width = data_bar_negative_stroke_width,
       data_bar_negative_fill_color = data_bar_negative_fill_color,
+      reference_line_color = reference_line_color,
+      reference_area_fill_color = reference_area_fill_color,
       vertical_guide_stroke_color = vertical_guide_stroke_color,
       vertical_guide_stroke_width = vertical_guide_stroke_width,
       show_data_points = show_data_points,
