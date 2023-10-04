@@ -1448,7 +1448,7 @@ generate_ref_line_from_keyword <- function(vals, keyword) {
   ref_line
 }
 
-format_number_compactly <- function(val, currency) {
+format_number_compactly <- function(val, currency = NULL) {
 
   if (is.na(val)) {
     return("NA")
@@ -1603,15 +1603,10 @@ process_number_stream <- function(number_stream) {
 
 process_time_stream <- function(time_stream) {
 
-  time_stream <- unlist(strsplit(time_stream, split = "[;,]\\s*"))
+  time_stream <- unlist(strsplit(time_stream, split = "\\s*[;,]\\s*"))
+  time_stream <- gsub("T", " ", time_stream)
 
-  time_stream_vals <-
-    as.POSIXct(
-      time_stream,
-      format = "%Y-%m-%d %H:%M:%OS",
-      tz = "UTC"
-    )
-
+  time_stream_vals <- as.POSIXct(time_stream, tz = "UTC")
   time_stream_vals <- as.numeric(time_stream_vals)
 
   names(time_stream_vals) <- time_stream
