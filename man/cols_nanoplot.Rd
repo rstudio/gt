@@ -357,11 +357,15 @@ in \code{\link[=nanoplot_options]{nanoplot_options()}}.
       data_bar_fill_color = c("brown", "gold", "purple", "green")
     )
   ) |>
-  cols_width(pizzas_sold ~ px(200)) |>
+  cols_width(pizzas_sold ~ px(150)) |>
   cols_align(columns = -date, align = "center") |>
   fmt_date(columns = date, date_style = "yMMMEd") |>
   opt_all_caps()
 }\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_2.png" alt="This image of a table was generated from the second code example in the `cols_nanoplot()` help file." style="width:100\%;">
+}}
 
 Now we'll make another table that contains two columns of nanoplots. Starting
 from the \code{\link{towny}} dataset, we first reduce it down to a subset of columns
@@ -414,7 +418,7 @@ elect to hide most of those with \code{\link[=cols_hide]{cols_hide()}}.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_2.png" alt="This image of a table was generated from the second code example in the `cols_nanoplot()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_3.png" alt="This image of a table was generated from the third code example in the `cols_nanoplot()` help file." style="width:100\%;">
 }}
 
 The \code{\link{sza}} dataset can, with just some use of \strong{dplyr} and \strong{tidyr}, give
@@ -471,14 +475,14 @@ bars.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_3.png" alt="This image of a table was generated from the third code example in the `cols_nanoplot()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_4.png" alt="This image of a table was generated from the fourth code example in the `cols_nanoplot()` help file." style="width:100\%;">
 }}
 
 You can use number and time streams as data for nanoplots. Let's demonstrate
 how we can make use of them with some creative transformation of the
 \code{\link{pizzaplace}} dataset. A value stream is really a string with delimited
 numeric values, like this: \code{"7.24,84.2,14"}. A value stream can also contain
-datetimes, and here's an example of that:
+dates and/or datetimes, and here's an example of that:
 \code{"2020-06-02 13:05:13,2020-06-02 14:24:05,2020-06-02 18:51:37"}. Having data
 in this form can often be more convenient since different nanoplots might
 have varying amounts of data (and holding different amounts of data in a
@@ -525,7 +529,7 @@ streams in each row (having the same number of values) we can now make a
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_4.png" alt="This image of a table was generated from the fourth code example in the `cols_nanoplot()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_5.png" alt="This image of a table was generated from the fifth code example in the `cols_nanoplot()` help file." style="width:100\%;">
 }}
 
 Notice that we hid the columns containing the value streams with
