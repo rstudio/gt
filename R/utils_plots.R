@@ -31,6 +31,9 @@ generate_nanoplot <- function(
     plot_type = c("line", "bar"),
     line_type = c("curved", "straight"),
     currency = NULL,
+    y_val_fmt_fn = NULL,
+    y_axis_fmt_fn = NULL,
+    y_ref_line_fmt_fn = NULL,
     data_point_radius = 10,
     data_point_stroke_color = "#FFFFFF",
     data_point_stroke_width = 4,
@@ -963,7 +966,8 @@ generate_nanoplot <- function(
       format_number_compactly(
         val = y_ref_line,
         currency = currency,
-        as_integer = y_vals_integerlike
+        as_integer = y_vals_integerlike,
+        fn = y_ref_line_fmt_fn
       )
 
     ref_line_tags <-
@@ -1079,14 +1083,16 @@ generate_nanoplot <- function(
       format_number_compactly(
         y_val_max,
         currency = currency,
-        as_integer = y_vals_integerlike
+        as_integer = y_vals_integerlike,
+        fn = y_axis_fmt_fn
       )
 
     y_value_min_label <-
       format_number_compactly(
         y_val_min,
         currency = currency,
-        as_integer = y_vals_integerlike
+        as_integer = y_vals_integerlike,
+        fn = y_axis_fmt_fn
       )
 
     text_strings_min <-
@@ -1153,7 +1159,8 @@ generate_nanoplot <- function(
         format_number_compactly(
           val = y_vals[i],
           currency = currency,
-          as_integer = y_vals_integerlike
+          as_integer = y_vals_integerlike,
+          fn = y_val_fmt_fn
         )
 
       x_text <- data_x_points[i] + 10
@@ -1469,6 +1476,10 @@ format_number_compactly <- function(
     as_integer = FALSE,
     fn = NULL
 ) {
+
+  if (!is.null(fn)) {
+    return(fn(val))
+  }
 
   if (is.na(val)) {
     return("NA")
