@@ -89,6 +89,8 @@ can be modified with <code>nanoplot_options()</code> within the <code>options</c
 <span>  data_bar_negative_stroke_color <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  data_bar_negative_stroke_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  data_bar_negative_fill_color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  reference_line_color <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  reference_area_fill_color <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  vertical_guide_stroke_color <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  vertical_guide_stroke_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  show_data_points <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -98,6 +100,9 @@ can be modified with <code>nanoplot_options()</code> within the <code>options</c
 <span>  show_reference_area <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  show_vertical_guides <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  show_y_axis_guide <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  y_val_fmt_fn <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  y_axis_fmt_fn <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  y_ref_line_fmt_fn <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  currency <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -217,6 +222,22 @@ can however be changed by providing a color value to the
 <code>data_bar_negative_fill_color</code> option.</p></dd>
 
 
+<dt>reference_line_color</dt>
+<dd><p><em>Color for the reference line</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>The reference line will have a color of <code>"#75A8B0"</code> if it is set to appear.
+This color can be changed by providing a single color value to
+<code>reference_line_color</code>.</p></dd>
+
+
+<dt>reference_area_fill_color</dt>
+<dd><p><em>Fill color for the reference area</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>If a reference area has been defined and is visible it has by default
+a fill color of <code>"#A6E6F2"</code>. This can be modified by declaring a color
+value in the <code>reference_area_fill_color</code> option.</p></dd>
+
+
 <dt>vertical_guide_stroke_color</dt>
 <dd><p><em>Color of vertical guides</em></p>
 <p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
@@ -286,6 +307,15 @@ active by default but can be deactivated by using
 <p>The <em>y</em>-axis guide will appear when hovering over the far left side of a
 nanoplot. This hidden layer is active by default but can be deactivated by
 using <code>show_y_axis_guide = FALSE</code>.</p></dd>
+
+
+<dt>y_val_fmt_fn, y_axis_fmt_fn, y_ref_line_fmt_fn</dt>
+<dd><p><em>Custom formatting for y values</em></p>
+<p><code>function</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>If providing a function to <code>y_val_fmt_fn</code>, <code>y_axis_fmt_fn</code>, or
+<code>y_ref_line_fmt_fn</code> then customized formatting of the <em>y</em> values associated
+with the data points/bars, the <em>y</em>-axis labels, and the reference line can
+be performed.</p></dd>
 
 
 <dt>currency</dt>
