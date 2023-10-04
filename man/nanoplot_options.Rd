@@ -29,6 +29,9 @@ nanoplot_options(
   show_reference_area = NULL,
   show_vertical_guides = NULL,
   show_y_axis_guide = NULL,
+  y_val_fmt_fn = NULL,
+  y_axis_fmt_fn = NULL,
+  y_ref_line_fmt_fn = NULL,
   currency = NULL
 )
 }
@@ -232,6 +235,15 @@ active by default but can be deactivated by using
 The \emph{y}-axis guide will appear when hovering over the far left side of a
 nanoplot. This hidden layer is active by default but can be deactivated by
 using \code{show_y_axis_guide = FALSE}.}
+
+\item{y_val_fmt_fn, y_axis_fmt_fn, y_ref_line_fmt_fn}{\emph{Custom formatting for y values}
+
+\code{function} // \emph{default:} \code{NULL} (\code{optional})
+
+If providing a function to \code{y_val_fmt_fn}, \code{y_axis_fmt_fn}, or
+\code{y_ref_line_fmt_fn} then customized formatting of the \emph{y} values associated
+with the data points/bars, the \emph{y}-axis labels, and the reference line can
+be performed.}
 
 \item{currency}{\emph{Define values as currencies of a specific type}
 
