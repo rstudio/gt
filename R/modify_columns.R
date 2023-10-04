@@ -2766,6 +2766,8 @@ cols_nanoplot <- function(
         data_bar_negative_stroke_color = options_plots$data_bar_negative_stroke_color,
         data_bar_negative_stroke_width = options_plots$data_bar_negative_stroke_width,
         data_bar_negative_fill_color = options_plots$data_bar_negative_fill_color,
+        reference_line_color = options_plots$reference_line_color,
+        reference_area_fill_color = options_plots$reference_area_fill_color,
         vertical_guide_stroke_color = options_plots$vertical_guide_stroke_color,
         vertical_guide_stroke_width = options_plots$vertical_guide_stroke_width,
         show_data_points = options_plots$show_data_points,
