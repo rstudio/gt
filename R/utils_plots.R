@@ -870,7 +870,7 @@ generate_nanoplot <- function(
               "r=\"", data_point_radius_i + (data_point_radius_i / 2), "\" ",
               "stroke=\"", "red", "\" ",
               "stroke-width=\"", data_bar_stroke_width_i, "\" ",
-              "fill=\"", "white", "\" ",
+              "fill=\"transparent\" ",
               ">",
               "</circle>",
               ""
@@ -902,9 +902,9 @@ generate_nanoplot <- function(
         bar_strings_i <-
           paste0(
             "<rect ",
-            "x=\"", data_x_points[i] - 20, "\" ",
+            "x=\"", data_x_points[i] - (x_d - 10) / 2, "\" ",
             "y=\"", y_value_i, "\" ",
-            "width=\"", 40, "\" ",
+            "width=\"", (x_d - 10), "\" ",
             "height=\"", y_height, "\" ",
             "stroke=\"", data_bar_stroke_color_i, "\" ",
             "stroke-width=\"", data_bar_stroke_width_i, "\" ",
