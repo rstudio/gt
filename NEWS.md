@@ -14,13 +14,13 @@
 
 ## Other great new features
 
-* Brand new rows can be added to a **gt** table with the new `rows_add()` function. The user can supply the new row data through name value pairs. You have control over where they are placed by way of the `.before` and `.after` arguments (new rows are added to the bottom of the table by default). You can also add empty (i.e., all `NA`) rows with the `.n_empty` option. (#1323)
+* Brand new rows can be added to a **gt** table with the new `rows_add()` function. The user can supply the new row data through name value pairs. You have control over where they are placed by way of the `.before` and `.after` arguments (new rows are added to the bottom of the table by default). You can also add empty (i.e., all `NA`) rows with the `.n_empty` option (#698). (#1323)
 
 * To complement `rows_add()`, the `cols_add()` function was added. New columns can indeed be added to a **gt** table with this function, which has an interface close to that of `dplyr::mutate()`. (#1367)
 
 * You can now use an empty table as the starting point for a **gt** table. This can be used in conjunction with `cols_add()` and `rows_add()` to build a table piece-by-piece in specific workflows/settings. What constitutes empty tables can be any of: `0 x 0` tables, `0 x n` tables (no rows, some columns), or `n x 0` tables (some rows, no columns; treated the same as `0 x 0` tables). (#1376)
 
-* There is now a way to better express measurement units and we do this in **gt** with something called units notation. With an intuitive and easy-to-learn syntax, **gt** will ensure that any measurement units are formatted correctly no matter what the output type is. We can format units in the table body with `fmt_units()`, we can attach units to column labels with `cols_units()`, and we can integrate units notation in the already-available `cols_label()` and `tab_spanner()` functions (#417, #533). (#1357, #1426)
+* There is now a way to better express measurement units and we do this in **gt** with something called units notation. With an intuitive and easy-to-learn syntax, **gt** will ensure that any measurement units are formatted correctly no matter what the output type is. We can format units in the table body with `fmt_units()`, we can attach units to column labels with `cols_units()`, and we can integrate units notation in the already-available `cols_label()` and `tab_spanner()` functions (#417, #533). (#1357, #1426, #1446)
 
 * A very useful new helper function, `from_column()`, has been added so you can fetch values (for compatible arguments) from a column in the input table. For example, if you are using `fmt_scientific()` and the number of significant figures should vary across the values to be formatted, a column containing those values for the `n_sigfig` argument can be referenced by `from_column()`. (#1392, #1393, #1395, #1396, #1399, #1403)
 
@@ -36,11 +36,13 @@
 
 ## Improvements to the Word output format
 
-* Processing to Word output now escapes HTML in more places. (#1303)
+* Processing to Word output now escapes HTML in more places (#1378). (#1303)
 
 * The Word output format now uses the `side` argument present in `summary_rows()` and `grand_summary_rows()` to place the new summary rows either the top or bottom of the row group (with `summary_rows()`) or table as a whole (with `grand_summary_rows()`). (#1325)
 
-* Tables rendered as Word output can now handle the specific case where a table with summary rows doesn't have rownames. (#1325)
+* Tables rendered as Word output can now handle the specific case where a table with summary rows doesn't have row names. (#1325)
+
+* Summary rows in Word output tables can now be placed at the top or bottom of a group (or at the top or bottom of the table). (#1402)
 
 * Word output tables can now contain images. This entails compatibility with the `fmt_image()` function, and, images (local and remote) can be inserted through Markdown (#1272). (#1273)
 
@@ -48,9 +50,9 @@
 
 * The **gt** website has been updated with a slightly different look; section names have been updated for consistency. (#1287, #1340, #1341)
 
-* We've improved the formatting of arguments in the documentation so that they all have short titles and descriptions regarding expected inputs and default values. This looks great both in the internal R help pages and in the **pkgdown**-generated website. (#1338)
+* We've improved the formatting of arguments in the documentation so that they all have short titles and descriptions regarding expected inputs and default values. This looks great both in the internal R help pages and in the **pkgdown**-generated website (#1290). (#1338)
 
-* Several small documentation updates were made, with an emphasis on improving examples. (#1293, #1316, #1324, #1329, #1330, #1331, #1334, #1381, #1383, #1395, #1404)
+* Several small documentation updates were made, with an emphasis on improving examples (#1304, #1349, #1369). (#1293, #1316, #1324, #1329, #1330, #1331, #1334, #1381, #1383, #1395, #1404, #1442, #1454)
 
 ## Minor improvements and bug fixes
 
@@ -64,7 +66,7 @@
 
 * We now have rudimentary support for defining column widths for LaTeX output tables (with `cols_width()`). This accepts length values in 'px' which and automatic conversion to 'pt' values is performed to maximize compatibility with different LaTeX flavors (#634, #851, #1417). (#1371, #1450)
 
-* It's now possible to use background fill colors and perform text coloring and bolding for body cells in LaTeX tables. This is commonly performed through the use of `tab_style()` and `data_color()`. (#1352)
+* It's now possible to use background fill colors and perform text coloring and emboldened/italicized text within the body cells of LaTeX tables. This is commonly performed through the use of `tab_style()` and `data_color()` (#84, #869). (#1352)
 
 * The `gtsave()` function now works with `gt_group` objects (usually generated through `gt_split()` or `gt_group()`) (#1354). (#1365)
 
@@ -90,13 +92,15 @@
 
 * Fixed an issue with `cols_label_with()` where column names wouldn't be relabeled if the resolved columns were only a subset of the total columns available. (#1326)
 
-* Fixed a LaTeX bug where some characters following a `\midrule` would corrupt the table (#145, #391). (#1390)
+* Fixed a LaTeX bug where some characters following a `\midrule` would corrupt the table (#145, #391, #1107, #1182). (#1390)
 
-* A issue associated with a lack of HTML formatting within interactive tables has been fixed (#1299, #1370, #1384). (#1388)
+* A issue associated with a lack of HTML formatting within interactive tables has been fixed (#1299, #1370, #1384, #1443). (#1388)
 
 * Many user-facing error messages have been enhanced using the latest features from the **cli** package. (#1337, thanks @olivroy!)
 
 * Unit tests can now be successfully run on Linux flavors that don't have the `locale` utility (#1214). (#1350, thanks @bastistician!)
+
+* If ever the 'undetermined' (`"und"`) locale is used, it is automatically mapped to the `"en"` locale. (#1394)
 
 * Many unit tests were added for much increased test coverage and many more were modified to increase the speed of running the test suite. (#1291, #1294, #1298, #1350, #1412)
 
