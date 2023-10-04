@@ -48,7 +48,7 @@
 
 ## Documentation enhancements
 
-* The **gt** website has been updated with a slightly different look; section names have been updated for consistency. (#1287, #1340, #1341)
+* The **gt** website has been updated with a slightly different look; section names have been updated for consistency (#1419). (#1287, #1340, #1341)
 
 * We've improved the formatting of arguments in the documentation so that they all have short titles and descriptions regarding expected inputs and default values. This looks great both in the internal R help pages and in the **pkgdown**-generated website (#1290). (#1338)
 
