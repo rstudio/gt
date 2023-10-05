@@ -160,6 +160,10 @@ generate_nanoplot <- function(
   # Find out whether the collection of non-NA `y` values are all integer-like
   y_vals_integerlike <- rlang::is_integerish(y_vals)
 
+  # Get the max and min of the `y` scale from the `y` data values
+  y_scale_max <- get_extreme_value(y_vals, stat = "max")
+  y_scale_min <- get_extreme_value(y_vals, stat = "min")
+
   # Ensure that a reference line or reference area isn't shown if NULL or
   # any of its directives is NA
   if (
@@ -298,6 +302,10 @@ generate_nanoplot <- function(
         y_ref_area_u <- y_ref_area_lines_sorted[2]
       }
 
+      # Recompute the `y` scale min and max values
+      y_scale_max <- get_extreme_value(y_vals, y_ref_line[1], y_ref_area_l, y_ref_area_u, expand_y, stat = "max")
+      y_scale_min <- get_extreme_value(y_vals, y_ref_line[1], y_ref_area_l, y_ref_area_u, expand_y, stat = "min")
+
       # Scale to proportional values
       y_proportions_list <-
         normalize_to_list(
@@ -335,6 +343,10 @@ generate_nanoplot <- function(
             keyword = y_ref_line
           )
       }
+
+      # Recompute the `y` scale min and max values
+      y_scale_max <- get_extreme_value(y_vals, y_ref_line[1], expand_y, stat = "max")
+      y_scale_min <- get_extreme_value(y_vals, y_ref_line[1], expand_y, stat = "min")
 
       # Scale to proportional values
       y_proportions_list <-
@@ -397,6 +409,10 @@ generate_nanoplot <- function(
         y_ref_area_u <- y_ref_area_lines_sorted[2]
       }
 
+      # Recompute the `y` scale min and max values
+      y_scale_max <- get_extreme_value(y_vals, y_ref_area_l, y_ref_area_u, expand_y, stat = "max")
+      y_scale_min <- get_extreme_value(y_vals, y_ref_area_l, y_ref_area_u, expand_y, stat = "min")
+
       # Scale to proportional values
       y_proportions_list <-
         normalize_to_list(
@@ -417,6 +433,10 @@ generate_nanoplot <- function(
     } else {
 
       # Case where there is no reference line or reference area
+
+      # Recompute the `y` scale min and max values
+      y_scale_max <- get_extreme_value(y_vals, expand_y, stat = "max")
+      y_scale_min <- get_extreme_value(y_vals, expand_y, stat = "min")
 
       # Scale to proportional values
       y_proportions_list <-
@@ -500,6 +520,10 @@ generate_nanoplot <- function(
         y_ref_area_u <- y_ref_area_lines_sorted[2]
       }
 
+      # Recompute the `y` scale min and max values
+      y_scale_max <- get_extreme_value(y_vals, y_ref_line[1], y_ref_area_l, y_ref_area_u, 0, expand_y, stat = "max")
+      y_scale_min <- get_extreme_value(y_vals, y_ref_line[1], y_ref_area_l, y_ref_area_u, 0, expand_y, stat = "min")
+
       # Scale to proportional values
       y_proportions_list <-
         normalize_to_list(
@@ -539,6 +563,10 @@ generate_nanoplot <- function(
             keyword = y_ref_line
           )
       }
+
+      # Recompute the `y` scale min and max values
+      y_scale_max <- get_extreme_value(y_vals, y_ref_line[1], 0, expand_y, stat = "max")
+      y_scale_min <- get_extreme_value(y_vals, y_ref_line[1], 0, expand_y, stat = "min")
 
       # Scale to proportional values
       y_proportions_list <-
@@ -603,6 +631,10 @@ generate_nanoplot <- function(
         y_ref_area_u <- y_ref_area_lines_sorted[2]
       }
 
+      # Recompute the `y` scale min and max values
+      y_scale_max <- get_extreme_value(y_vals, y_ref_area_l, y_ref_area_u, 0, expand_y, stat = "max")
+      y_scale_min <- get_extreme_value(y_vals, y_ref_area_l, y_ref_area_u, 0, expand_y, stat = "min")
+
       # Scale to proportional values
       y_proportions_list <-
         normalize_to_list(
@@ -625,6 +657,10 @@ generate_nanoplot <- function(
     } else {
 
       # Case where there is no reference line or reference area
+
+      # Recompute the `y` scale min and max values
+      y_scale_max <- get_extreme_value(y_vals, 0, expand_y, stat = "max")
+      y_scale_min <- get_extreme_value(y_vals, 0, expand_y, stat = "min")
 
       # Scale to proportional values
       y_proportions_list <-
@@ -995,7 +1031,7 @@ generate_nanoplot <- function(
         "class=\"ref-line\" ",
         "x1=\"", data_x_points[1], "\" ",
         "y1=\"", data_y_ref_line, "\" ",
-        "x2=\"", data_x_points[length(data_x_points)], "\" ",
+        "x2=\"", data_x_width + safe_x_d, "\" ",
         "y2=\"", data_y_ref_line, "\" ",
         "stroke=\"", stroke, "\" ",
         "stroke-width=\"", stroke_width, "\" ",
@@ -1006,7 +1042,7 @@ generate_nanoplot <- function(
         ">",
         "</line>",
         "<text ",
-        "x=\"", data_x_points[length(data_x_points)] + 10, "\" ",
+        "x=\"", data_x_width + safe_x_d + 10, "\" ",
         "y=\"", data_y_ref_line + 10, "\" ",
         "fill=\"transparent\" ",
         "stroke=\"transparent\" ",
@@ -1068,28 +1104,9 @@ generate_nanoplot <- function(
         "</rect>"
       )
 
-    data_y_max <- max(data_y_points, na.rm = TRUE)
-    data_y_min <- min(data_y_points, na.rm = TRUE)
-
-    y_val_max <- max(y_vals, na.rm = TRUE)
-    y_val_min <- min(y_vals, na.rm = TRUE)
-
-    if (plot_type == "bar") {
-
-      if (all(y_vals[!is.na(y_vals)] > 0)) {
-        y_val_min <- 0
-        data_y_max <- data_y0_point
-      }
-
-      if (all(y_vals[!is.na(y_vals)] < 0)) {
-        y_val_max <- 0
-        data_y_min <- data_y0_point
-      }
-    }
-
     y_value_max_label <-
       format_number_compactly(
-        y_val_max,
+        y_scale_max,
         currency = currency,
         as_integer = y_vals_integerlike,
         fn = y_axis_fmt_fn
@@ -1097,7 +1114,7 @@ generate_nanoplot <- function(
 
     y_value_min_label <-
       format_number_compactly(
-        y_val_min,
+        y_scale_min,
         currency = currency,
         as_integer = y_vals_integerlike,
         fn = y_axis_fmt_fn
@@ -1107,7 +1124,7 @@ generate_nanoplot <- function(
       paste0(
         "<text ",
         "x=\"", left_x, "\" ",
-        "y=\"", data_y_max + 7.5, "\" ",
+        "y=\"", safe_y_d + data_y_height + safe_y_d - data_y_height / 25, "\" ",
         "fill=\"transparent\" ",
         "stroke=\"transparent\" ",
         "font-size=\"25\"",
@@ -1120,7 +1137,7 @@ generate_nanoplot <- function(
       paste0(
         "<text ",
         "x=\"", left_x, "\" ",
-        "y=\"", data_y_min + 7.5, "\" ",
+        "y=\"", safe_y_d + data_y_height / 25, "\" ",
         "fill=\"transparent\" ",
         "stroke=\"transparent\" ",
         "font-size=\"25\"",
@@ -1436,6 +1453,27 @@ normalize_to_list <- function(...) {
   }
 
   value_list
+}
+
+get_extreme_value <- function(..., stat = c("max", "min")) {
+
+  value_list <- list(...)
+
+  stat <- rlang::arg_match(stat)
+
+  value_list_vec <- unlist(value_list)
+
+  if (length(unique(value_list_vec)) == 1) {
+    value_list_vec <- jitter(value_list_vec, amount = 1 / 100000)
+  }
+
+  if (stat == "max") {
+    extreme_val <- max(value_list_vec, na.rm = TRUE)
+  } else {
+    extreme_val <- min(value_list_vec, na.rm = TRUE)
+  }
+
+  extreme_val
 }
 
 mad_double <- function(x) {
