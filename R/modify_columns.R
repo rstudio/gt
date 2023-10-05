@@ -2266,6 +2266,15 @@ cols_add <- function(
 #'   (7) `"first"`, or (8) `"last"`. Input can either be a vector or list with
 #'   two elements.
 #'
+#' @param expand_x,expand_y *Expand plot scale in the x and y directions*
+#'
+#'   `vector<numeric|integer>` // *default:* `NULL` (`optional`)
+#'
+#'   Should you need to have plots expand in the *x* or *y* direction, provide
+#'   one or more values to `expand_x` or `expand_y`. Any values provided that
+#'   are outside of the range of data provided to the plot should result in a
+#'   scale expansion.
+#'
 #' @param new_col_name *Column name for the new column containing the plots*
 #'
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
@@ -2585,9 +2594,9 @@ cols_add <- function(
 #' fixed number of columns is cumbersome). There are `date` and `time` columns
 #' in this dataset and we'll use that to get *x* values denoting high-resolution
 #' time instants: the second of the day that a pizza was sold (this is true
-#' pizza data science). We also have the sell price for a pizza, and that'll
-#' serve as the *y* values. The pizzas belong to four different groups (in the
-#' `type` column) and we'll group by that and create value streams with
+#' pizza analytics). We also have the sell price for a pizza, and that'll serve
+#' as the *y* values. The pizzas belong to four different groups (in the `type`
+#' column) and we'll group by that and create value streams with
 #' `paste(..., collapse = ",")` in the **dplyr** summarize call. With two value
 #' streams in each row (having the same number of values) we can now make a
 #' **gt** table with nanoplots.
@@ -2605,12 +2614,13 @@ cols_add <- function(
 #'   gt(rowname_col = "type") |>
 #'   tab_header(
 #'     title = md("Pizzas sold on **January 1, 2015**"),
-#'     subtitle = "Between the opening hours of 09:00 to 00:00"
+#'     subtitle = "Between the opening hours of 11:30 to 22:30"
 #'   ) |>
 #'   cols_hide(columns = c(date_time, sold)) |>
 #'   cols_nanoplot(
 #'     columns = sold,
 #'     columns_x_vals = date_time,
+#'     expand_x = c("2015-01-01 11:30", "2015-01-01 22:30"),
 #'     reference_line = "median",
 #'     new_col_name = "pizzas_sold",
 #'     new_col_label = "Pizzas Sold",
@@ -2659,6 +2669,8 @@ cols_nanoplot <- function(
     columns_x_vals = NULL,
     reference_line = NULL,
     reference_area = NULL,
+    expand_x = NULL,
+    expand_y = NULL,
     new_col_name = NULL,
     new_col_label = NULL,
     before = NULL,
@@ -2750,6 +2762,8 @@ cols_nanoplot <- function(
         y_ref_line = reference_line,
         y_ref_area = reference_area,
         x_vals = data_vals_plot_x_i,
+        expand_x = expand_x,
+        expand_y = expand_y,
         missing_vals = missing_vals,
         plot_type = plot_type,
         line_type = options_plots$data_line_type,

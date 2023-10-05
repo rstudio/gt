@@ -14,6 +14,8 @@ cols_nanoplot(
   columns_x_vals = NULL,
   reference_line = NULL,
   reference_area = NULL,
+  expand_x = NULL,
+  expand_y = NULL,
   new_col_name = NULL,
   new_col_label = NULL,
   before = NULL,
@@ -118,6 +120,15 @@ one of the following keywords for the generation of the value: (1)
 \code{"mean"}, (2) \code{"median"}, (3) \code{"min"}, (4) \code{"max"}, (5) \code{"q1"}, (6) \code{"q3"},
 (7) \code{"first"}, or (8) \code{"last"}. Input can either be a vector or list with
 two elements.}
+
+\item{expand_x, expand_y}{\emph{Expand plot scale in the x and y directions}
+
+\verb{vector<numeric|integer>} // \emph{default:} \code{NULL} (\code{optional})
+
+Should you need to have plots expand in the \emph{x} or \emph{y} direction, provide
+one or more values to \code{expand_x} or \code{expand_y}. Any values provided that
+are outside of the range of data provided to the plot should result in a
+scale expansion.}
 
 \item{new_col_name}{\emph{Column name for the new column containing the plots}
 
@@ -489,9 +500,9 @@ have varying amounts of data (and holding different amounts of data in a
 fixed number of columns is cumbersome). There are \code{date} and \code{time} columns
 in this dataset and we'll use that to get \emph{x} values denoting high-resolution
 time instants: the second of the day that a pizza was sold (this is true
-pizza data science). We also have the sell price for a pizza, and that'll
-serve as the \emph{y} values. The pizzas belong to four different groups (in the
-\code{type} column) and we'll group by that and create value streams with
+pizza analytics). We also have the sell price for a pizza, and that'll serve
+as the \emph{y} values. The pizzas belong to four different groups (in the \code{type}
+column) and we'll group by that and create value streams with
 \code{paste(..., collapse = ",")} in the \strong{dplyr} summarize call. With two value
 streams in each row (having the same number of values) we can now make a
 \strong{gt} table with nanoplots.
@@ -508,12 +519,13 @@ streams in each row (having the same number of values) we can now make a
   gt(rowname_col = "type") |>
   tab_header(
     title = md("Pizzas sold on **January 1, 2015**"),
-    subtitle = "Between the opening hours of 09:00 to 00:00"
+    subtitle = "Between the opening hours of 11:30 to 22:30"
   ) |>
   cols_hide(columns = c(date_time, sold)) |>
   cols_nanoplot(
     columns = sold,
     columns_x_vals = date_time,
+    expand_x = c("2015-01-01 11:30", "2015-01-01 22:30"),
     reference_line = "median",
     new_col_name = "pizzas_sold",
     new_col_label = "Pizzas Sold",
