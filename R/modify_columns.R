@@ -2266,6 +2266,15 @@ cols_add <- function(
 #'   (7) `"first"`, or (8) `"last"`. Input can either be a vector or list with
 #'   two elements.
 #'
+#' @param expand_x,expand_y *Expand plot scale in the x and y directions*
+#'
+#'   `vector<numeric|integer>` // *default:* `NULL` (`optional`)
+#'
+#'   Should you need to have plots expand in the *x* or *y* direction, provide
+#'   one or more values to `expand_x` or `expand_y`. Any values provided that
+#'   are outside of the range of data provided to the plot should result in a
+#'   scale expansion.
+#'
 #' @param new_col_name *Column name for the new column containing the plots*
 #'
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
@@ -2659,6 +2668,8 @@ cols_nanoplot <- function(
     columns_x_vals = NULL,
     reference_line = NULL,
     reference_area = NULL,
+    expand_x = NULL,
+    expand_y = NULL,
     new_col_name = NULL,
     new_col_label = NULL,
     before = NULL,
@@ -2750,6 +2761,8 @@ cols_nanoplot <- function(
         y_ref_line = reference_line,
         y_ref_area = reference_area,
         x_vals = data_vals_plot_x_i,
+        expand_x = expand_x,
+        expand_y = expand_y,
         missing_vals = missing_vals,
         plot_type = plot_type,
         line_type = options_plots$data_line_type,
