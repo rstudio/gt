@@ -646,7 +646,7 @@ generate_nanoplot <- function(
   # to the number of y values
   if (plot_type == "line" && !is.null(x_vals)) {
 
-    if (!is.null(expand_x)) {
+    if (!is.null(expand_x) && is.character(expand_x)) {
       expand_x <- as.numeric(as.POSIXct(expand_x, tz = "UTC"))
     }
 
