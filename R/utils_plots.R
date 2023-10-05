@@ -299,20 +299,18 @@ generate_nanoplot <- function(
       }
 
       # Scale to proportional values
-      y_proportions_w_ref_line_area <-
-        normalize_vals(
-          c(
-            y_vals,
-            y_ref_line[1],
-            y_ref_area_l,
-            y_ref_area_u
-          )
+      y_proportions_list <-
+        normalize_to_list(
+          vals = y_vals,
+          ref_line = y_ref_line[1],
+          ref_area_l = y_ref_area_l,
+          ref_area_u = y_ref_area_u
         )
 
-      y_proportion_ref_line <- y_proportions_w_ref_line_area[-(1:num_y_vals)][1]
-      y_proportions_ref_area_l <- y_proportions_w_ref_line_area[-(1:num_y_vals)][2]
-      y_proportions_ref_area_u <- y_proportions_w_ref_line_area[-(1:num_y_vals)][3]
-      y_proportions <- y_proportions_w_ref_line_area[(1:num_y_vals)]
+      y_proportions <- y_proportions_list[["vals"]]
+      y_proportion_ref_line <- y_proportions_list[["ref_line"]]
+      y_proportions_ref_area_l <- y_proportions_list[["ref_area_l"]]
+      y_proportions_ref_area_u <- y_proportions_list[["ref_area_u"]]
 
       # Scale reference line and reference area boundaries
       data_y_ref_line <- safe_y_d + ((1 - y_proportion_ref_line) * data_y_height)
@@ -338,16 +336,14 @@ generate_nanoplot <- function(
       }
 
       # Scale to proportional values
-      y_proportions_w_ref_line <-
-        normalize_vals(
-          c(
-            y_vals,
-            y_ref_line[1]
-          )
+      y_proportions_list <-
+        normalize_to_list(
+          vals = y_vals,
+          ref_line = y_ref_line[1]
         )
 
-      y_proportion_ref_line <- y_proportions_w_ref_line[length(y_proportions_w_ref_line)]
-      y_proportions <- y_proportions_w_ref_line[-length(y_proportions_w_ref_line)]
+      y_proportions <- y_proportions_list[["vals"]]
+      y_proportion_ref_line <- y_proportions_list[["ref_line"]]
 
       # Scale reference line
       data_y_ref_line <- safe_y_d + ((1 - y_proportion_ref_line) * data_y_height)
@@ -400,18 +396,16 @@ generate_nanoplot <- function(
       }
 
       # Scale to proportional values
-      y_proportions_w_ref_area <-
-        normalize_vals(
-          c(
-            y_vals,
-            y_ref_area_l,
-            y_ref_area_u
-          )
+      y_proportions_list <-
+        normalize_to_list(
+          vals = y_vals,
+          ref_area_l = y_ref_area_l,
+          ref_area_u = y_ref_area_u,
         )
 
-      y_proportions_ref_area_l <- y_proportions_w_ref_area[-(1:num_y_vals)][1]
-      y_proportions_ref_area_u <- y_proportions_w_ref_area[-(1:num_y_vals)][2]
-      y_proportions <- y_proportions_w_ref_area[(1:num_y_vals)]
+      y_proportions <- y_proportions_list[["vals"]]
+      y_proportions_ref_area_l <- y_proportions_list[["ref_area_l"]]
+      y_proportions_ref_area_u <- y_proportions_list[["ref_area_u"]]
 
       # Scale reference area boundaries
       data_y_ref_area_l <- safe_y_d + ((1 - y_proportions_ref_area_l) * data_y_height)
@@ -496,29 +490,20 @@ generate_nanoplot <- function(
       }
 
       # Scale to proportional values
-      y_proportions_w_ref_line_area_list <-
-        normalize_vals_with_zero(
-          c(
-            y_vals,
-            y_ref_line[1],
-            y_ref_area_l,
-            y_ref_area_u
-          )
+      y_proportions_list <-
+        normalize_to_list(
+          vals = y_vals,
+          ref_line = y_ref_line[1],
+          ref_area_l = y_ref_area_l,
+          ref_area_u = y_ref_area_u,
+          zero = 0
         )
 
-      y_proportions_zero <- y_proportions_w_ref_line_area_list[["zero"]]
-
-      y_proportion_ref_line <-
-        y_proportions_w_ref_line_area_list[["vals"]][-(1:num_y_vals)][1]
-
-      y_proportions_ref_area_l <-
-        y_proportions_w_ref_line_area_list[["vals"]][-(1:num_y_vals)][2]
-
-      y_proportions_ref_area_u <-
-        y_proportions_w_ref_line_area_list[["vals"]][-(1:num_y_vals)][3]
-
-      y_proportions <-
-        y_proportions_w_ref_line_area_list[["vals"]][(1:num_y_vals)]
+      y_proportions <- y_proportions_list[["vals"]]
+      y_proportion_ref_line <- y_proportions_list[["ref_line"]]
+      y_proportions_ref_area_l <- y_proportions_list[["ref_area_l"]]
+      y_proportions_ref_area_u <- y_proportions_list[["ref_area_u"]]
+      y_proportions_zero <- y_proportions_list[["zero"]]
 
       # Scale reference line and reference area boundaries
       data_y_ref_line <- safe_y_d + ((1 - y_proportion_ref_line) * data_y_height)
@@ -544,21 +529,16 @@ generate_nanoplot <- function(
       }
 
       # Scale to proportional values
-      y_proportions_w_ref_line_list <-
-        normalize_vals_with_zero(
-          c(
-            y_vals,
-            y_ref_line[1]
-          )
+      y_proportions_list <-
+        normalize_to_list(
+          vals = y_vals,
+          ref_line = y_ref_line[1],
+          zero = 0
         )
 
-      y_proportions_zero <- y_proportions_w_ref_line_list[["zero"]]
-
-      y_proportion_ref_line <-
-        y_proportions_w_ref_line_list[["vals"]][num_y_vals + 1]
-
-      y_proportions <-
-        y_proportions_w_ref_line_list[["vals"]][-(num_y_vals + 1)]
+      y_proportions <- y_proportions_list[["vals"]]
+      y_proportion_ref_line <- y_proportions_list[["ref_line"]]
+      y_proportions_zero <- y_proportions_list[["zero"]]
 
       # Scale reference line
       data_y_ref_line <- safe_y_d + ((1 - y_proportion_ref_line) * data_y_height)
@@ -611,25 +591,18 @@ generate_nanoplot <- function(
       }
 
       # Scale to proportional values
-      y_proportions_w_ref_area_list <-
-        normalize_vals_with_zero(
-          c(
-            y_vals,
-            y_ref_area_l,
-            y_ref_area_u
-          )
+      y_proportions_list <-
+        normalize_to_list(
+          vals = y_vals,
+          ref_area_l = y_ref_area_l,
+          ref_area_u = y_ref_area_u,
+          zero = 0
         )
 
-      y_proportions_zero <- y_proportions_w_ref_area_list[["zero"]]
-
-      y_proportions_ref_area_l <-
-        y_proportions_w_ref_area_list[["vals"]][-(1:num_y_vals)][1]
-
-      y_proportions_ref_area_u <-
-        y_proportions_w_ref_area_list[["vals"]][-(1:num_y_vals)][2]
-
-      y_proportions <-
-        y_proportions_w_ref_area_list[["vals"]][(1:num_y_vals)]
+      y_proportions <- y_proportions_list[["vals"]]
+      y_proportions_ref_area_l <- y_proportions_list[["ref_area_l"]]
+      y_proportions_ref_area_u <- y_proportions_list[["ref_area_u"]]
+      y_proportions_zero <- y_proportions_list[["zero"]]
 
       # Scale reference area boundaries
       data_y_ref_area_l <- safe_y_d + ((1 - y_proportions_ref_area_l) * data_y_height)
@@ -1411,6 +1384,32 @@ normalize_vals_with_zero <- function(x) {
     zero = normalized[1],
     vals = normalized[-1]
   )
+}
+
+normalize_to_list <- function(...) {
+
+  value_list <- list(...)
+
+  if (!rlang::is_named(value_list)) {
+    cli::cli_abort("All vectors provided to `...` must be named.")
+  }
+
+  value_list_vec_nm <- gsub("\\d+", "", names(unlist(value_list)))
+  value_list_unique_nm <- names(value_list)
+  value_list_vec <- unlist(value_list)
+
+  if (length(unique(value_list_vec)) == 1) {
+    value_list_vec <- jitter(value_list_vec, amount = 1 / 100000)
+  }
+
+  values_normalized <- normalize_vals(value_list_vec)
+
+  for (i in seq_along(value_list_unique_nm)) {
+    value_list[[value_list_unique_nm[i]]] <-
+      values_normalized[value_list_vec_nm == value_list_unique_nm[i]]
+  }
+
+  value_list
 }
 
 mad_double <- function(x) {
