@@ -646,10 +646,14 @@ generate_nanoplot <- function(
   # to the number of y values
   if (plot_type == "line" && !is.null(x_vals)) {
 
+    if (!is.null(expand_x)) {
+      expand_x <- as.numeric(as.POSIXct(expand_x, tz = "UTC"))
+    }
+
     # Scale to proportional values
     x_proportions_list <-
       normalize_to_list(
-        vals = x_vals,
+        vals = unname(x_vals),
         expand_x = expand_x
       )
 
