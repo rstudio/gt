@@ -309,12 +309,12 @@ test_that("The `fmt_url()` function works correctly", {
   )
   expect_equal(
     (tab_alt %>%
-       fmt_url(columns = a, hreflang = "en-GB", target = "_blank", rel = "external", referrerpolicy = "no-referrer", type = "text/html") %>%
+       fmt_url(columns = a, hreflang = "en-GB", target = "_blank", rel = "external", referrerpolicy = "no-referrer") %>%
        render_formats_test(context = "html"))[["a"]],
     c(
-      "<a href=\"http://www.example.com\" target=\"_blank\" rel=\"external\" referrerpolicy=\"no-referrer\" hreflang=\"en-GB\" type=\"text/html\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">Example Site</a>",
-      "<a href=\"https://developer.mozilla.org/en-US/docs/Learn/\" target=\"_blank\" rel=\"external\" referrerpolicy=\"no-referrer\" hreflang=\"en-GB\" type=\"text/html\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">Learn at Mozilla</a>",
-      "<a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" rel=\"external\" referrerpolicy=\"no-referrer\" hreflang=\"en-GB\" type=\"text/html\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">Search Mozilla</a>"
+      "<a href=\"http://www.example.com\" target=\"_blank\" rel=\"external\" referrerpolicy=\"no-referrer\" hreflang=\"en-GB\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">Example Site</a>",
+      "<a href=\"https://developer.mozilla.org/en-US/docs/Learn/\" target=\"_blank\" rel=\"external\" referrerpolicy=\"no-referrer\" hreflang=\"en-GB\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">Learn at Mozilla</a>",
+      "<a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" rel=\"external\" referrerpolicy=\"no-referrer\" hreflang=\"en-GB\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">Search Mozilla</a>"
     )
   )
 
