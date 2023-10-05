@@ -1,4 +1,4 @@
-# gt (development version)
+# gt 0.10.0
 
 ## Nanoplots
 
