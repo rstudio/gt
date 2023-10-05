@@ -500,9 +500,9 @@ have varying amounts of data (and holding different amounts of data in a
 fixed number of columns is cumbersome). There are \code{date} and \code{time} columns
 in this dataset and we'll use that to get \emph{x} values denoting high-resolution
 time instants: the second of the day that a pizza was sold (this is true
-pizza data science). We also have the sell price for a pizza, and that'll
-serve as the \emph{y} values. The pizzas belong to four different groups (in the
-\code{type} column) and we'll group by that and create value streams with
+pizza analytics). We also have the sell price for a pizza, and that'll serve
+as the \emph{y} values. The pizzas belong to four different groups (in the \code{type}
+column) and we'll group by that and create value streams with
 \code{paste(..., collapse = ",")} in the \strong{dplyr} summarize call. With two value
 streams in each row (having the same number of values) we can now make a
 \strong{gt} table with nanoplots.
@@ -519,12 +519,13 @@ streams in each row (having the same number of values) we can now make a
   gt(rowname_col = "type") |>
   tab_header(
     title = md("Pizzas sold on **January 1, 2015**"),
-    subtitle = "Between the opening hours of 09:00 to 00:00"
+    subtitle = "Between the opening hours of 11:30 to 22:30"
   ) |>
   cols_hide(columns = c(date_time, sold)) |>
   cols_nanoplot(
     columns = sold,
     columns_x_vals = date_time,
+    expand_x = c("2015-01-01 11:30", "2015-01-01 22:30"),
     reference_line = "median",
     new_col_name = "pizzas_sold",
     new_col_label = "Pizzas Sold",
