@@ -14,6 +14,8 @@ cols_nanoplot(
   columns_x_vals = NULL,
   reference_line = NULL,
   reference_area = NULL,
+  expand_x = NULL,
+  expand_y = NULL,
   new_col_name = NULL,
   new_col_label = NULL,
   before = NULL,
@@ -118,6 +120,15 @@ one of the following keywords for the generation of the value: (1)
 \code{"mean"}, (2) \code{"median"}, (3) \code{"min"}, (4) \code{"max"}, (5) \code{"q1"}, (6) \code{"q3"},
 (7) \code{"first"}, or (8) \code{"last"}. Input can either be a vector or list with
 two elements.}
+
+\item{expand_x, expand_y}{\emph{Expand plot scale in the x and y directions}
+
+\verb{vector<numeric|integer>} // \emph{default:} \code{NULL} (\code{optional})
+
+Should you need to have plots expand in the \emph{x} or \emph{y} direction, provide
+one or more values to \code{expand_x} or \code{expand_y}. Any values provided that
+are outside of the range of data provided to the plot should result in a
+scale expansion.}
 
 \item{new_col_name}{\emph{Column name for the new column containing the plots}
 
