@@ -8410,7 +8410,7 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #'
 #' - `"m/s"` and `"m / s"` both render as `"m/s"`
 #' - `"m s^-1"` will appear with the `"-1"` exponent intact
-#' - `"m \s"` gives the the same result, as `"\<unit>"` is equivalent to
+#' - `"m /s"` gives the the same result, as `"/<unit>"` is equivalent to
 #'   `"<unit>^-1"`
 #' - `"E_h"` will render an `"E"` with the `"h"` subscript
 #' - `"t_i^2.5"` provides a `t` with an `"i"` subscript and a `"2.5"` exponent
@@ -8424,6 +8424,9 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #'   and `"degF"` will render a degree sign before the temperature unit)
 #' - We can transform shorthand symbol/unit names enclosed in `":"` (e.g.,
 #'   `":angstrom:"`, `":ohm:"`, etc.) into proper symbols
+#' - Greek letters can added by enclosing the letter name in `":"`; you can
+#'   use lowercase letters (e.g., `":beta:"`, `":sigma:"`, etc.) and uppercase
+#'   letters too (e.g., `":Alpha:"`, `":Zeta:"`, etc.)
 #' - The components of a unit (unit name, subscript, and exponent) can be
 #'   fully or partially italicized/emboldened by surrounding text with `"*"` or
 #'   `"**"`
