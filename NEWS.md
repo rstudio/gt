@@ -64,6 +64,8 @@
 
 * The `cols_merge_range()` function now has a `locale` argument. Range patterns across locales are different (can involve the use of a single hyphen, en dash, em dash, tilde, etc.) and so it does make sense to follow the convention of a locale if provided (#158). (#1423)
 
+* The `fmt_url()` function now has a few more options for adding anchor tag attributes (`"target"`, `"rel"`, `"referrerpolicy"`, and `"hreflang"`). Thanks @elipousson for the work on this! (#1428). (#1452)
+
 * We now have rudimentary support for defining column widths for LaTeX output tables (with `cols_width()`). This accepts length values in 'px' which and automatic conversion to 'pt' values is performed to maximize compatibility with different LaTeX flavors (#634, #851, #1417). (#1371, #1450)
 
 * It's now possible to use background fill colors and perform text coloring and emboldened/italicized text within the body cells of LaTeX tables. This is commonly performed through the use of `tab_style()` and `data_color()` (#84, #869). (#1352)

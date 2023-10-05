@@ -307,6 +307,16 @@ test_that("The `fmt_url()` function works correctly", {
       "<a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" style=\"color:#000000;text-decoration:none;display: inline-block;background-color: red;padding: 8px 12px;width: 80%; text-align: center;outline-style: solid; outline-color: auto; outline-width: 2px;\">Search Mozilla</a>"
     )
   )
+  expect_equal(
+    (tab_alt %>%
+       fmt_url(columns = a, hreflang = "en-GB", target = "_blank", rel = "external", referrerpolicy = "no-referrer") %>%
+       render_formats_test(context = "html"))[["a"]],
+    c(
+      "<a href=\"http://www.example.com\" target=\"_blank\" rel=\"external\" referrerpolicy=\"no-referrer\" hreflang=\"en-GB\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">Example Site</a>",
+      "<a href=\"https://developer.mozilla.org/en-US/docs/Learn/\" target=\"_blank\" rel=\"external\" referrerpolicy=\"no-referrer\" hreflang=\"en-GB\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">Learn at Mozilla</a>",
+      "<a href=\"https://developer.mozilla.org/en-US/search?q=URL\" target=\"_blank\" rel=\"external\" referrerpolicy=\"no-referrer\" hreflang=\"en-GB\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">Search Mozilla</a>"
+    )
+  )
 
   # Expect that a column with NAs will work fine with `fmt_url()`,
   # it'll just produce NA values
