@@ -18,6 +18,8 @@ nanoplot_options(
   data_bar_negative_stroke_color = NULL,
   data_bar_negative_stroke_width = NULL,
   data_bar_negative_fill_color = NULL,
+  reference_line_color = NULL,
+  reference_area_fill_color = NULL,
   vertical_guide_stroke_color = NULL,
   vertical_guide_stroke_width = NULL,
   show_data_points = NULL,
@@ -27,6 +29,9 @@ nanoplot_options(
   show_reference_area = NULL,
   show_vertical_guides = NULL,
   show_y_axis_guide = NULL,
+  y_val_fmt_fn = NULL,
+  y_axis_fmt_fn = NULL,
+  y_ref_line_fmt_fn = NULL,
   currency = NULL
 )
 }
@@ -144,6 +149,22 @@ By default, all negative data bars have a fill color of \code{"#D75A68"}. This
 can however be changed by providing a color value to the
 \code{data_bar_negative_fill_color} option.}
 
+\item{reference_line_color}{\emph{Color for the reference line}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+The reference line will have a color of \code{"#75A8B0"} if it is set to appear.
+This color can be changed by providing a single color value to
+\code{reference_line_color}.}
+
+\item{reference_area_fill_color}{\emph{Fill color for the reference area}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+If a reference area has been defined and is visible it has by default
+a fill color of \code{"#A6E6F2"}. This can be modified by declaring a color
+value in the \code{reference_area_fill_color} option.}
+
 \item{vertical_guide_stroke_color}{\emph{Color of vertical guides}
 
 \verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
@@ -214,6 +235,15 @@ active by default but can be deactivated by using
 The \emph{y}-axis guide will appear when hovering over the far left side of a
 nanoplot. This hidden layer is active by default but can be deactivated by
 using \code{show_y_axis_guide = FALSE}.}
+
+\item{y_val_fmt_fn, y_axis_fmt_fn, y_ref_line_fmt_fn}{\emph{Custom formatting for y values}
+
+\code{function} // \emph{default:} \code{NULL} (\code{optional})
+
+If providing a function to \code{y_val_fmt_fn}, \code{y_axis_fmt_fn}, or
+\code{y_ref_line_fmt_fn} then customized formatting of the \emph{y} values associated
+with the data points/bars, the \emph{y}-axis labels, and the reference line can
+be performed.}
 
 \item{currency}{\emph{Define values as currencies of a specific type}
 

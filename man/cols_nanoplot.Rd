@@ -14,6 +14,8 @@ cols_nanoplot(
   columns_x_vals = NULL,
   reference_line = NULL,
   reference_area = NULL,
+  expand_x = NULL,
+  expand_y = NULL,
   new_col_name = NULL,
   new_col_label = NULL,
   before = NULL,
@@ -118,6 +120,15 @@ one of the following keywords for the generation of the value: (1)
 \code{"mean"}, (2) \code{"median"}, (3) \code{"min"}, (4) \code{"max"}, (5) \code{"q1"}, (6) \code{"q3"},
 (7) \code{"first"}, or (8) \code{"last"}. Input can either be a vector or list with
 two elements.}
+
+\item{expand_x, expand_y}{\emph{Expand plot scale in the x and y directions}
+
+\verb{vector<numeric|integer>} // \emph{default:} \code{NULL} (\code{optional})
+
+Should you need to have plots expand in the \emph{x} or \emph{y} direction, provide
+one or more values to \code{expand_x} or \code{expand_y}. Any values provided that
+are outside of the range of data provided to the plot should result in a
+scale expansion.}
 
 \item{new_col_name}{\emph{Column name for the new column containing the plots}
 
@@ -236,29 +247,34 @@ in the table) and returns a logical vector.
 \section{How to supply data for nanoplots}{
 
 
-The input data for nanoplots naturally needs to be numeric and there are
-two major ways to formulate that data: (1) from single values across many
-columns, and (2) using text-based number streams. It's pretty to rationalize
-the first, and we may already have wide data in the input data frame anyway
-(take a look at the \code{\link{illness}} and \code{\link{towny}} datasets for examples of this).
-There's one data value per column so the key thing here is to reference the
-columns in the correct order. With a select helper, good column naming, and
-the columns being in the intended order, this is a snap.
+The input data for nanoplots naturally needs to be numeric and there are two
+major ways to formulate that data: (1) from single values across many
+columns, and (2) using text-based value streams. It's pretty easy to
+rationalize the first, and we may already have wide data in the input data
+frame anyway (take a look at the \code{\link{illness}} and \code{\link{towny}} datasets for
+examples of this). There's one data value per column so the key thing here is
+to reference the columns in the correct order. With a select helper, good
+column naming, and the columns being in the intended order, this is a snap.
 
-The second option is to use text-based number streams. Sometimes you simply
+The second option is to use text-based value streams. Sometimes you simply
 don't want or don't need multiple columns and so a single column with all of
 the data might be more practical. To make this work, you'd need to have a set
 of numerical values separated by some sort of delimiter (could be a comma, a
 space, a semicolon, you get the idea). Here's an example with three numbers,
 written three ways: \code{"3.6 -2.44 1.98"}, \code{"3.6, -2.44, 1.98"}, and
 \code{"3.6;-2.44;1.98"}. You can include \code{NA} values, not a problem, and here's an
-example of that: \code{"6.232 NA 3.7 0.93"}. This number streams can be pretty big
-if you want them to be, and you don't have to deal with columns to the
-\emph{n}th degree as in \emph{Option 1}. For the case where you need to provide two
-sets of values (\emph{x} and \emph{y}, for line plots with \code{columns} and
-\code{columns_x_vals}), have two equivalently sized number streams in two columns.
-Number streams can also be concatenated together by referencing columns
-having their own separate number streams.
+example of that: \code{"6.232 NA 3.7 0.93"}. Another form of value stream involves
+using datetimes in the ISO 8601 form of \verb{YYYY-MM-DD HH:MM:SS}. These will
+be internally converted to numeric values (seconds elapsed since
+\code{"1970-01-01 00:00:00"}). An example of a datetime-based value stream is:
+\code{"2012-06-12 08:24:13, 2012-06-12 10:37:08, 2012-06-12 14:03:24"}.
+
+Value streams can be pretty big if you want them to be, and you don't have to
+deal with containing individual values across multiple columns. For the case
+where you need to provide two sets of values (\emph{x} and \emph{y}, for line plots
+with \code{columns} and \code{columns_x_vals}), have two equivalently sized value
+streams in two columns. Value streams can also be concatenated together by
+referencing columns having their own separate value streams.
 }
 
 \section{Reference line and reference area}{
@@ -319,6 +335,49 @@ possible to define a column label here using the \code{new_col_label} argument.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_1.png" alt="This image of a table was generated from the first code example in the `cols_nanoplot()` help file." style="width:100\%;">
 }}
 
+The previous table showed us some line-based nanoplots. We can also make very
+small bar plots with \code{cols_nanoplot()}. Let's take the \code{\link{pizzaplace}} dataset
+and make a small summary table showing daily pizza sales by type (there are
+four types). This will be limited to the first ten days of pizza sales in
+2015, so, there will be ten rows in total. We can use \code{plot_type = "bar"} to
+make bar plots from the daily sales counts in the \code{chicken}, \code{classic},
+\code{supreme}, and \code{veggie} columns. Because we know there will always be four
+bars (one for each type of pizza) we can be a little creative and apply
+colors to each of the bars through use of the \code{data_bar_fill_color} argument
+in \code{\link[=nanoplot_options]{nanoplot_options()}}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
+  dplyr::select(type, date) |>
+  dplyr::group_by(date, type) |>
+  dplyr::summarize(sold = dplyr::n(), .groups = "drop") |>
+  tidyr::pivot_wider(names_from = type, values_from = sold) |>
+  dplyr::slice_head(n = 10) |>
+  gt(rowname_col = "date") |>
+  tab_header(
+    title = md("First Ten Days of Pizza Sales in 2015")
+  ) |>
+  cols_nanoplot(
+    columns = c(chicken, classic, supreme, veggie),
+    plot_type = "bar",
+    new_col_name = "pizzas_sold",
+    new_col_label = "Sales by Type",
+    options = nanoplot_options(
+      show_data_line = FALSE,
+      show_data_area = FALSE,
+      data_bar_stroke_color = "transparent",
+      data_bar_fill_color = c("brown", "gold", "purple", "green")
+    )
+  ) |>
+  cols_width(pizzas_sold ~ px(150)) |>
+  cols_align(columns = -date, align = "center") |>
+  fmt_date(columns = date, date_style = "yMMMEd") |>
+  opt_all_caps()
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_2.png" alt="This image of a table was generated from the second code example in the `cols_nanoplot()` help file." style="width:100\%;">
+}}
+
 Now we'll make another table that contains two columns of nanoplots. Starting
 from the \code{\link{towny}} dataset, we first reduce it down to a subset of columns
 and rows. All of the columns related to either population or density will be
@@ -370,7 +429,7 @@ elect to hide most of those with \code{\link[=cols_hide]{cols_hide()}}.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_2.png" alt="This image of a table was generated from the second code example in the `cols_nanoplot()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_3.png" alt="This image of a table was generated from the third code example in the `cols_nanoplot()` help file." style="width:100\%;">
 }}
 
 The \code{\link{sza}} dataset can, with just some use of \strong{dplyr} and \strong{tidyr}, give
@@ -427,45 +486,46 @@ bars.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_3.png" alt="This image of a table was generated from the third code example in the `cols_nanoplot()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_4.png" alt="This image of a table was generated from the fourth code example in the `cols_nanoplot()` help file." style="width:100\%;">
 }}
 
-You can use number streams as data for nanoplots. Let's demonstrate how we
-can make use of them with some creative transformation of the \code{\link{pizzaplace}}
-dataset. A number stream is really a string with delimited numeric values,
-like this: \code{"7.24 84.2 14"}. They can be more convenient to use since
-different rows/nanoplots can have varying amounts of data. There are \code{date}
-and \code{time} columns in this dataset and we'll use that to get \emph{x} values
-denoting high-resolution time instants: the second of the day that a pizza
-was sold (this is true pizza data science). We also have the sell price for a
-pizza, and that'll serve as the \emph{y} values. The pizzas belong to four
-different groups (in the \code{type} column) and we'll group by that and create
-number streams with \code{paste(..., collapse = ",")} in the \strong{dplyr} summarize
-call. With two number streams in each row (having the same number of values)
-we can now make a \strong{gt} table with nanoplots.
+You can use number and time streams as data for nanoplots. Let's demonstrate
+how we can make use of them with some creative transformation of the
+\code{\link{pizzaplace}} dataset. A value stream is really a string with delimited
+numeric values, like this: \code{"7.24,84.2,14"}. A value stream can also contain
+dates and/or datetimes, and here's an example of that:
+\code{"2020-06-02 13:05:13,2020-06-02 14:24:05,2020-06-02 18:51:37"}. Having data
+in this form can often be more convenient since different nanoplots might
+have varying amounts of data (and holding different amounts of data in a
+fixed number of columns is cumbersome). There are \code{date} and \code{time} columns
+in this dataset and we'll use that to get \emph{x} values denoting high-resolution
+time instants: the second of the day that a pizza was sold (this is true
+pizza analytics). We also have the sell price for a pizza, and that'll serve
+as the \emph{y} values. The pizzas belong to four different groups (in the \code{type}
+column) and we'll group by that and create value streams with
+\code{paste(..., collapse = ",")} in the \strong{dplyr} summarize call. With two value
+streams in each row (having the same number of values) we can now make a
+\strong{gt} table with nanoplots.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
   dplyr::filter(date == "2015-01-01") |>
-  dplyr::mutate(
-    s_day = as.numeric(
-      vec_fmt_datetime(paste(date, time), format = "A")
-    ) / 1000
-  ) |>
-  dplyr::select(type, s_day, price) |>
+  dplyr::mutate(date_time = paste(date, time)) |>
+  dplyr::select(type, date_time, price) |>
   dplyr::group_by(type) |>
   dplyr::summarize(
-    s_day = paste(s_day, collapse = ","),
+    date_time = paste(date_time, collapse = ","),
     sold = paste(price, collapse = ",")
   ) |>
   gt(rowname_col = "type") |>
   tab_header(
     title = md("Pizzas sold on **January 1, 2015**"),
-    subtitle = "Between the opening hours of 09:00 to 00:00"
+    subtitle = "Between the opening hours of 11:30 to 22:30"
   ) |>
-  cols_hide(columns = c(s_day, sold)) |>
+  cols_hide(columns = c(date_time, sold)) |>
   cols_nanoplot(
     columns = sold,
-    columns_x_vals = s_day,
+    columns_x_vals = date_time,
+    expand_x = c("2015-01-01 11:30", "2015-01-01 22:30"),
     reference_line = "median",
     new_col_name = "pizzas_sold",
     new_col_label = "Pizzas Sold",
@@ -481,10 +541,10 @@ we can now make a \strong{gt} table with nanoplots.
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_4.png" alt="This image of a table was generated from the fourth code example in the `cols_nanoplot()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_5.png" alt="This image of a table was generated from the fifth code example in the `cols_nanoplot()` help file." style="width:100\%;">
 }}
 
-Notice that we hid the columns containing the number streams with
+Notice that we hid the columns containing the value streams with
 \code{\link[=cols_hide]{cols_hide()}} because, while useful, they don't need to be displayed to
 anybody viewing a table. We have a lot of data points and a connecting line
 is not as valuable here. It's more interesting to see the clusters of the

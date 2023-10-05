@@ -90,6 +90,7 @@ tests/testthat/test-table_parts.R
 tests/testthat/test-text_transform.R
 tests/testthat/test-util_functions.R
 tests/testthat/test-utils_formatters.R
+tests/testthat/test-utils_plots.R
 tests/testthat/test-utils_render_html.R
 tests/testthat/test-utils_units.R
 tests/testthat/test-utils.R

@@ -27,10 +27,15 @@ generate_nanoplot <- function(
     y_ref_line = NULL,
     y_ref_area = NULL,
     x_vals = NULL,
+    expand_x = NULL,
+    expand_y = NULL,
     missing_vals = c("gap", "zero", "remove"),
     plot_type = c("line", "bar"),
     line_type = c("curved", "straight"),
     currency = NULL,
+    y_val_fmt_fn = NULL,
+    y_axis_fmt_fn = NULL,
+    y_ref_line_fmt_fn = NULL,
     data_point_radius = 10,
     data_point_stroke_color = "#FFFFFF",
     data_point_stroke_width = 4,
@@ -43,6 +48,8 @@ generate_nanoplot <- function(
     data_bar_negative_stroke_color = "#CC3243",
     data_bar_negative_stroke_width = 4,
     data_bar_negative_fill_color = "#D75A68",
+    reference_line_color = "#75A8B0",
+    reference_area_fill_color = "#A6E6F2",
     vertical_guide_stroke_color = "#911EB4",
     vertical_guide_stroke_width = 12,
     show_data_points = TRUE,
@@ -147,12 +154,11 @@ generate_nanoplot <- function(
     }
   }
 
+  # Determine the total number of `y` values available
   num_y_vals <- length(y_vals)
 
-  # Get a vector of data points that are missing and are to be treated as gaps
-  if (missing_vals == "gap") {
-    y_vals_gaps <- which(is.na(y_vals))
-  }
+  # Find out whether the collection of non-NA `y` values are all integer-like
+  y_vals_integerlike <- rlang::is_integerish(y_vals)
 
   # Ensure that a reference line or reference area isn't shown if NULL or
   # any of its directives is NA
@@ -293,20 +299,19 @@ generate_nanoplot <- function(
       }
 
       # Scale to proportional values
-      y_proportions_w_ref_line_area <-
-        normalize_vals(
-          c(
-            y_vals,
-            y_ref_line[1],
-            y_ref_area_l,
-            y_ref_area_u
-          )
+      y_proportions_list <-
+        normalize_to_list(
+          vals = y_vals,
+          ref_line = y_ref_line[1],
+          ref_area_l = y_ref_area_l,
+          ref_area_u = y_ref_area_u,
+          expand_y = expand_y
         )
 
-      y_proportion_ref_line <- y_proportions_w_ref_line_area[-(1:num_y_vals)][1]
-      y_proportions_ref_area_l <- y_proportions_w_ref_line_area[-(1:num_y_vals)][2]
-      y_proportions_ref_area_u <- y_proportions_w_ref_line_area[-(1:num_y_vals)][3]
-      y_proportions <- y_proportions_w_ref_line_area[(1:num_y_vals)]
+      y_proportions <- y_proportions_list[["vals"]]
+      y_proportion_ref_line <- y_proportions_list[["ref_line"]]
+      y_proportions_ref_area_l <- y_proportions_list[["ref_area_l"]]
+      y_proportions_ref_area_u <- y_proportions_list[["ref_area_u"]]
 
       # Scale reference line and reference area boundaries
       data_y_ref_line <- safe_y_d + ((1 - y_proportion_ref_line) * data_y_height)
@@ -332,16 +337,15 @@ generate_nanoplot <- function(
       }
 
       # Scale to proportional values
-      y_proportions_w_ref_line <-
-        normalize_vals(
-          c(
-            y_vals,
-            y_ref_line[1]
-          )
+      y_proportions_list <-
+        normalize_to_list(
+          vals = y_vals,
+          ref_line = y_ref_line[1],
+          expand_y = expand_y
         )
 
-      y_proportion_ref_line <- y_proportions_w_ref_line[length(y_proportions_w_ref_line)]
-      y_proportions <- y_proportions_w_ref_line[-length(y_proportions_w_ref_line)]
+      y_proportions <- y_proportions_list[["vals"]]
+      y_proportion_ref_line <- y_proportions_list[["ref_line"]]
 
       # Scale reference line
       data_y_ref_line <- safe_y_d + ((1 - y_proportion_ref_line) * data_y_height)
@@ -394,18 +398,17 @@ generate_nanoplot <- function(
       }
 
       # Scale to proportional values
-      y_proportions_w_ref_area <-
-        normalize_vals(
-          c(
-            y_vals,
-            y_ref_area_l,
-            y_ref_area_u
-          )
+      y_proportions_list <-
+        normalize_to_list(
+          vals = y_vals,
+          ref_area_l = y_ref_area_l,
+          ref_area_u = y_ref_area_u,
+          expand_y = expand_y
         )
 
-      y_proportions_ref_area_l <- y_proportions_w_ref_area[-(1:num_y_vals)][1]
-      y_proportions_ref_area_u <- y_proportions_w_ref_area[-(1:num_y_vals)][2]
-      y_proportions <- y_proportions_w_ref_area[(1:num_y_vals)]
+      y_proportions <- y_proportions_list[["vals"]]
+      y_proportions_ref_area_l <- y_proportions_list[["ref_area_l"]]
+      y_proportions_ref_area_u <- y_proportions_list[["ref_area_u"]]
 
       # Scale reference area boundaries
       data_y_ref_area_l <- safe_y_d + ((1 - y_proportions_ref_area_l) * data_y_height)
@@ -414,7 +417,15 @@ generate_nanoplot <- function(
     } else {
 
       # Case where there is no reference line or reference area
-      y_proportions <- normalize_vals(y_vals)
+
+      # Scale to proportional values
+      y_proportions_list <-
+        normalize_to_list(
+          vals = y_vals,
+          expand_y = expand_y
+        )
+
+      y_proportions <- y_proportions_list[["vals"]]
     }
   }
 
@@ -490,29 +501,21 @@ generate_nanoplot <- function(
       }
 
       # Scale to proportional values
-      y_proportions_w_ref_line_area_list <-
-        normalize_vals_with_zero(
-          c(
-            y_vals,
-            y_ref_line[1],
-            y_ref_area_l,
-            y_ref_area_u
-          )
+      y_proportions_list <-
+        normalize_to_list(
+          vals = y_vals,
+          ref_line = y_ref_line[1],
+          ref_area_l = y_ref_area_l,
+          ref_area_u = y_ref_area_u,
+          zero = 0,
+          expand_y = expand_y
         )
 
-      y_proportions_zero <- y_proportions_w_ref_line_area_list[["zero"]]
-
-      y_proportion_ref_line <-
-        y_proportions_w_ref_line_area_list[["vals"]][-(1:num_y_vals)][1]
-
-      y_proportions_ref_area_l <-
-        y_proportions_w_ref_line_area_list[["vals"]][-(1:num_y_vals)][2]
-
-      y_proportions_ref_area_u <-
-        y_proportions_w_ref_line_area_list[["vals"]][-(1:num_y_vals)][3]
-
-      y_proportions <-
-        y_proportions_w_ref_line_area_list[["vals"]][(1:num_y_vals)]
+      y_proportions <- y_proportions_list[["vals"]]
+      y_proportion_ref_line <- y_proportions_list[["ref_line"]]
+      y_proportions_ref_area_l <- y_proportions_list[["ref_area_l"]]
+      y_proportions_ref_area_u <- y_proportions_list[["ref_area_u"]]
+      y_proportions_zero <- y_proportions_list[["zero"]]
 
       # Scale reference line and reference area boundaries
       data_y_ref_line <- safe_y_d + ((1 - y_proportion_ref_line) * data_y_height)
@@ -538,21 +541,17 @@ generate_nanoplot <- function(
       }
 
       # Scale to proportional values
-      y_proportions_w_ref_line_list <-
-        normalize_vals_with_zero(
-          c(
-            y_vals,
-            y_ref_line[1]
-          )
+      y_proportions_list <-
+        normalize_to_list(
+          vals = y_vals,
+          ref_line = y_ref_line[1],
+          zero = 0,
+          expand_y = expand_y
         )
 
-      y_proportions_zero <- y_proportions_w_ref_line_list[["zero"]]
-
-      y_proportion_ref_line <-
-        y_proportions_w_ref_line_list[["vals"]][num_y_vals + 1]
-
-      y_proportions <-
-        y_proportions_w_ref_line_list[["vals"]][-(num_y_vals + 1)]
+      y_proportions <- y_proportions_list[["vals"]]
+      y_proportion_ref_line <- y_proportions_list[["ref_line"]]
+      y_proportions_zero <- y_proportions_list[["zero"]]
 
       # Scale reference line
       data_y_ref_line <- safe_y_d + ((1 - y_proportion_ref_line) * data_y_height)
@@ -605,25 +604,19 @@ generate_nanoplot <- function(
       }
 
       # Scale to proportional values
-      y_proportions_w_ref_area_list <-
-        normalize_vals_with_zero(
-          c(
-            y_vals,
-            y_ref_area_l,
-            y_ref_area_u
-          )
+      y_proportions_list <-
+        normalize_to_list(
+          vals = y_vals,
+          ref_area_l = y_ref_area_l,
+          ref_area_u = y_ref_area_u,
+          zero = 0,
+          expand_y = expand_y
         )
 
-      y_proportions_zero <- y_proportions_w_ref_area_list[["zero"]]
-
-      y_proportions_ref_area_l <-
-        y_proportions_w_ref_area_list[["vals"]][-(1:num_y_vals)][1]
-
-      y_proportions_ref_area_u <-
-        y_proportions_w_ref_area_list[["vals"]][-(1:num_y_vals)][2]
-
-      y_proportions <-
-        y_proportions_w_ref_area_list[["vals"]][(1:num_y_vals)]
+      y_proportions <- y_proportions_list[["vals"]]
+      y_proportions_ref_area_l <- y_proportions_list[["ref_area_l"]]
+      y_proportions_ref_area_u <- y_proportions_list[["ref_area_u"]]
+      y_proportions_zero <- y_proportions_list[["zero"]]
 
       # Scale reference area boundaries
       data_y_ref_area_l <- safe_y_d + ((1 - y_proportions_ref_area_l) * data_y_height)
@@ -633,9 +626,16 @@ generate_nanoplot <- function(
 
       # Case where there is no reference line or reference area
 
-      y_proportions_list <- normalize_vals_with_zero(y_vals)
-      y_proportions_zero <- y_proportions_list[["zero"]]
+      # Scale to proportional values
+      y_proportions_list <-
+        normalize_to_list(
+          vals = y_vals,
+          zero = 0,
+          expand_y = expand_y
+        )
+
       y_proportions <- y_proportions_list[["vals"]]
+      y_proportions_zero <- y_proportions_list[["zero"]]
     }
 
     data_y0_point <- safe_y_d + ((1 - y_proportions_zero) * data_y_height)
@@ -645,8 +645,22 @@ generate_nanoplot <- function(
   # there are no x values, generate equally-spaced x values according
   # to the number of y values
   if (plot_type == "line" && !is.null(x_vals)) {
-    x_proportions <- normalize_vals(x_vals)
+
+    if (!is.null(expand_x) && is.character(expand_x)) {
+      expand_x <- as.numeric(as.POSIXct(expand_x, tz = "UTC"))
+    }
+
+    # Scale to proportional values
+    x_proportions_list <-
+      normalize_to_list(
+        vals = unname(x_vals),
+        expand_x = expand_x
+      )
+
+    x_proportions <- x_proportions_list[["vals"]]
+
   } else {
+
     x_proportions <- seq(0, 1, length.out = num_y_vals)
   }
 
@@ -870,7 +884,7 @@ generate_nanoplot <- function(
               "r=\"", data_point_radius_i + (data_point_radius_i / 2), "\" ",
               "stroke=\"", "red", "\" ",
               "stroke-width=\"", data_bar_stroke_width_i, "\" ",
-              "fill=\"", "white", "\" ",
+              "fill=\"transparent\" ",
               ">",
               "</circle>",
               ""
@@ -902,9 +916,9 @@ generate_nanoplot <- function(
         bar_strings_i <-
           paste0(
             "<rect ",
-            "x=\"", data_x_points[i] - 20, "\" ",
+            "x=\"", data_x_points[i] - (x_d - 10) / 2, "\" ",
             "y=\"", y_value_i, "\" ",
-            "width=\"", 40, "\" ",
+            "width=\"", (x_d - 10), "\" ",
             "height=\"", y_height, "\" ",
             "stroke=\"", data_bar_stroke_color_i, "\" ",
             "stroke-width=\"", data_bar_stroke_width_i, "\" ",
@@ -949,14 +963,20 @@ generate_nanoplot <- function(
 
   if (show_ref_line) {
 
-    stroke <- "#09647380"
+    stroke <- reference_line_color
     stroke_width <- 1
     stroke_dasharray <- "4 3"
     transform <- ""
     stroke_linecap <- "round"
     vector_effect <- "non-scaling-stroke"
 
-    y_ref_line <- format_number_compactly(val = y_ref_line, currency = currency)
+    y_ref_line <-
+      format_number_compactly(
+        val = y_ref_line,
+        currency = currency,
+        as_integer = y_vals_integerlike,
+        fn = y_ref_line_fmt_fn
+      )
 
     ref_line_tags <-
       paste0(
@@ -1004,7 +1024,7 @@ generate_nanoplot <- function(
 
   if (show_ref_area) {
 
-    fill <- "#90E0EF80"
+    fill <- reference_area_fill_color
 
     p_ul <- paste0(data_x_points[1], ",", data_y_ref_area_u)
     p_ur <- paste0(data_x_points[length(data_x_points)], ",", data_y_ref_area_u)
@@ -1070,13 +1090,17 @@ generate_nanoplot <- function(
     y_value_max_label <-
       format_number_compactly(
         y_val_max,
-        currency = currency
+        currency = currency,
+        as_integer = y_vals_integerlike,
+        fn = y_axis_fmt_fn
       )
 
     y_value_min_label <-
       format_number_compactly(
         y_val_min,
-        currency = currency
+        currency = currency,
+        as_integer = y_vals_integerlike,
+        fn = y_axis_fmt_fn
       )
 
     text_strings_min <-
@@ -1139,7 +1163,13 @@ generate_nanoplot <- function(
           "</rect>"
         )
 
-      y_value_i <- format_number_compactly(val = y_vals[i], currency = currency)
+      y_value_i <-
+        format_number_compactly(
+          val = y_vals[i],
+          currency = currency,
+          as_integer = y_vals_integerlike,
+          fn = y_val_fmt_fn
+        )
 
       x_text <- data_x_points[i] + 10
 
@@ -1368,6 +1398,7 @@ normalize_option_vector <- function(vec, num_y_vals) {
 }
 
 normalize_vals <- function(x) {
+
   x_missing <- which(is.na(x))
   mean_x <- mean(x, na.rm = TRUE)
   x[x_missing] <- mean_x
@@ -1381,14 +1412,30 @@ normalize_vals <- function(x) {
   x
 }
 
-normalize_vals_with_zero <- function(x) {
+normalize_to_list <- function(...) {
 
-  normalized <- normalize_vals(c(0, x))
+  value_list <- list(...)
 
-  list(
-    zero = normalized[1],
-    vals = normalized[-1]
-  )
+  if (!rlang::is_named(value_list)) {
+    cli::cli_abort("All vectors provided to `...` must be named.")
+  }
+
+  value_list_vec_nm <- gsub("\\d+", "", names(unlist(value_list)))
+  value_list_unique_nm <- names(value_list)
+  value_list_vec <- unlist(value_list)
+
+  if (length(unique(value_list_vec)) == 1) {
+    value_list_vec <- jitter(value_list_vec, amount = 1 / 100000)
+  }
+
+  values_normalized <- normalize_vals(value_list_vec)
+
+  for (i in seq_along(value_list_unique_nm)) {
+    value_list[[value_list_unique_nm[i]]] <-
+      values_normalized[value_list_vec_nm == value_list_unique_nm[i]]
+  }
+
+  value_list
 }
 
 mad_double <- function(x) {
@@ -1448,7 +1495,16 @@ generate_ref_line_from_keyword <- function(vals, keyword) {
   ref_line
 }
 
-format_number_compactly <- function(val, currency) {
+format_number_compactly <- function(
+    val,
+    currency = NULL,
+    as_integer = FALSE,
+    fn = NULL
+) {
+
+  if (!is.null(fn)) {
+    return(fn(val))
+  }
 
   if (is.na(val)) {
     return("NA")
@@ -1576,14 +1632,25 @@ format_number_compactly <- function(val, currency) {
 
     } else {
 
-      val_formatted <-
-        vec_fmt_number(
-          val,
-          n_sigfig = n_sigfig,
-          decimals = 1,
-          suffixing = suffixing,
-          output = "html"
-        )
+      if (as_integer && val > -100 && val < 100) {
+
+        val_formatted <-
+          vec_fmt_integer(
+            val,
+            output = "html"
+          )
+
+      } else {
+
+        val_formatted <-
+          vec_fmt_number(
+            val,
+            n_sigfig = n_sigfig,
+            decimals = 1,
+            suffixing = suffixing,
+            output = "html"
+          )
+      }
     }
   }
 
@@ -1599,4 +1666,16 @@ process_number_stream <- function(number_stream) {
   number_stream <- gsub("[\\(\\)a-dA-Df-zF-Z]", "", number_stream)
   number_stream <- as.numeric(number_stream)
   number_stream
+}
+
+process_time_stream <- function(time_stream) {
+
+  time_stream <- unlist(strsplit(time_stream, split = "\\s*[;,]\\s*"))
+  time_stream <- gsub("T", " ", time_stream)
+
+  time_stream_vals <- as.POSIXct(time_stream, tz = "UTC")
+  time_stream_vals <- as.numeric(time_stream_vals)
+
+  names(time_stream_vals) <- time_stream
+  time_stream_vals
 }

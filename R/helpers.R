@@ -648,6 +648,22 @@ currency <- function(
 #'   can however be changed by providing a color value to the
 #'   `data_bar_negative_fill_color` option.
 #'
+#' @param reference_line_color *Color for the reference line*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   The reference line will have a color of `"#75A8B0"` if it is set to appear.
+#'   This color can be changed by providing a single color value to
+#'   `reference_line_color`.
+#'
+#' @param reference_area_fill_color *Fill color for the reference area*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   If a reference area has been defined and is visible it has by default
+#'   a fill color of `"#A6E6F2"`. This can be modified by declaring a color
+#'   value in the `reference_area_fill_color` option.
+#'
 #' @param vertical_guide_stroke_color *Color of vertical guides*
 #'
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
@@ -719,6 +735,15 @@ currency <- function(
 #'   nanoplot. This hidden layer is active by default but can be deactivated by
 #'   using `show_y_axis_guide = FALSE`.
 #'
+#' @param y_val_fmt_fn,y_axis_fmt_fn,y_ref_line_fmt_fn *Custom formatting for y values*
+#'
+#'   `function` // *default:* `NULL` (`optional`)
+#'
+#'   If providing a function to `y_val_fmt_fn`, `y_axis_fmt_fn`, or
+#'   `y_ref_line_fmt_fn` then customized formatting of the *y* values associated
+#'   with the data points/bars, the *y*-axis labels, and the reference line can
+#'   be performed.
+#'
 #' @param currency *Define values as currencies of a specific type*
 #'
 #'   `scalar<character>|obj:<gt_currency>` // *default:* `NULL` (`optional`)
@@ -755,6 +780,8 @@ nanoplot_options <- function(
     data_bar_negative_stroke_color = NULL,
     data_bar_negative_stroke_width = NULL,
     data_bar_negative_fill_color = NULL,
+    reference_line_color = NULL,
+    reference_area_fill_color = NULL,
     vertical_guide_stroke_color = NULL,
     vertical_guide_stroke_width = NULL,
     show_data_points = NULL,
@@ -764,6 +791,9 @@ nanoplot_options <- function(
     show_reference_area = NULL,
     show_vertical_guides = NULL,
     show_y_axis_guide = NULL,
+    y_val_fmt_fn = NULL,
+    y_axis_fmt_fn = NULL,
+    y_ref_line_fmt_fn = NULL,
     currency = NULL
 ) {
 
@@ -806,6 +836,12 @@ nanoplot_options <- function(
   if (is.null(data_bar_negative_fill_color)) {
     data_bar_negative_fill_color <- "#D75A68"
   }
+  if (is.null(reference_line_color)) {
+    reference_line_color <- "#75A8B0"
+  }
+  if (is.null(reference_area_fill_color)) {
+    reference_area_fill_color <- "#A6E6F2"
+  }
   if (is.null(vertical_guide_stroke_color)) {
     vertical_guide_stroke_color <- "#911EB4"
   }
@@ -833,6 +869,15 @@ nanoplot_options <- function(
   if (is.null(show_y_axis_guide)) {
     show_y_axis_guide <- TRUE
   }
+  if (is.null(y_val_fmt_fn)) {
+    y_val_fmt_fn <- NULL
+  }
+  if (is.null(y_axis_fmt_fn)) {
+    y_axis_fmt_fn <- NULL
+  }
+  if (is.null(y_ref_line_fmt_fn)) {
+    y_ref_line_fmt_fn <- NULL
+  }
   if (is.null(currency)) {
     currency <- NULL
   }
@@ -852,6 +897,8 @@ nanoplot_options <- function(
       data_bar_negative_stroke_color = data_bar_negative_stroke_color,
       data_bar_negative_stroke_width = data_bar_negative_stroke_width,
       data_bar_negative_fill_color = data_bar_negative_fill_color,
+      reference_line_color = reference_line_color,
+      reference_area_fill_color = reference_area_fill_color,
       vertical_guide_stroke_color = vertical_guide_stroke_color,
       vertical_guide_stroke_width = vertical_guide_stroke_width,
       show_data_points = show_data_points,
@@ -861,6 +908,9 @@ nanoplot_options <- function(
       show_reference_area = show_reference_area,
       show_vertical_guides = show_vertical_guides,
       show_y_axis_guide = show_y_axis_guide,
+      y_val_fmt_fn = y_val_fmt_fn,
+      y_axis_fmt_fn = y_axis_fmt_fn,
+      y_ref_line_fmt_fn = y_ref_line_fmt_fn,
       currency = currency
     )
 
