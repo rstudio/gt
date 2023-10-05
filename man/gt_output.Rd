@@ -28,7 +28,7 @@ ID given during the \code{\link[=render_gt]{render_gt()}} call is needed as the 
 
 We need to ensure that we have the \strong{shiny} package installed first. This
 is easily by using \code{install.packages("shiny")}. More information on creating
-Shiny apps can be found at the \href{https://shiny.rstudio.com}{Shiny Site}.
+Shiny apps can be found on the \href{https://shiny.posit.co}{Shiny website}.
 }
 \section{Examples}{
 

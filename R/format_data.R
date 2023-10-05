@@ -8652,6 +8652,15 @@ format_units_by_context <- function(x, context = "html") {
 #'   `as_button = TRUE`). All of these options are by default set to `"auto"`,
 #'   allowing **gt** to choose appropriate fill, width, and outline values.
 #'
+#' @param target,rel,referrerpolicy,hreflang *Anchor element attributes*
+#'
+#'   `scalar<character>` // *default:* `NULL`
+#'
+#'   Additional anchor element attributes. For descriptions of each attribute
+#'   and the allowed values, refer to the [MDN Web Docs reference on the anchor
+#'   HTML element](
+#'   https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attributes).
+#'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Compatibility of formatting function with data values:
@@ -8884,7 +8893,11 @@ fmt_url <- function(
     show_underline = "auto",
     button_fill = "auto",
     button_width = "auto",
-    button_outline = "auto"
+    button_outline = "auto",
+    target = NULL,
+    rel = NULL,
+    referrerpolicy = NULL,
+    hreflang = NULL
 ) {
 
   # Perform input object validation
@@ -9059,7 +9072,8 @@ fmt_url <- function(
         button_outline_color <- "#DFDFDF"
 
         if (button_fill %in% c(
-          "#FFFFFF", "#FFFFFF", "#FAF5EF", "#FAFAFA", "#FFFEFC", "#FBFCFA", "#FBFAF2"
+          "#FFFFFF", "#FFFFFF", "#FAF5EF", "#FAFAFA",
+          "#FFFEFC", "#FBFCFA", "#FBFAF2"
         )) {
           button_outline_style <- "solid"
         } else {
@@ -9112,7 +9126,6 @@ fmt_url <- function(
           }
         } else {
 
-
           if (any(grepl("\\[.*?\\]\\(.*?\\)", x_str_non_missing))) {
 
             # Generate labels
@@ -9152,28 +9165,125 @@ fmt_url <- function(
           }
         }
 
+        add_anchor_attr <- function(
+            init = NULL,
+            arg,
+            nm,
+            values = NULL,
+            error_arg = caller_arg(arg),
+            error_call = caller_env()
+        ) {
+
+          if (!is.null(values)) {
+
+            arg <-
+              rlang::arg_match(
+                arg,
+                values = values,
+                error_arg = error_arg,
+                error_call = error_call
+              )
+          }
+
+          if (!is_string(arg)) {
+            cli::cli_abort(
+              "{.arg {nm}} must be a string, not {.obj_type_friendly {arg}}",
+              call = error_call
+            )
+          }
+
+          paste0(init, " ", nm, "=\"", arg, "\"")
+        }
+
+        target <- target %||% "_blank"
+        target_values <- NULL
+
+        if (grepl("^_", target)) {
+          target_values <- c("_blank", "_self", "_parent", "_top")
+        }
+
+        anchor_attr <-
+          add_anchor_attr(
+            arg = target,
+            nm = "target",
+            values = target_values
+          )
+
+        if (!is.null(rel)) {
+
+          anchor_attr <-
+            add_anchor_attr(
+              anchor_attr,
+              rel,
+              nm = "rel",
+              values = c(
+                "alternate", "author", "bookmark", "external", "help",
+                "license", "next", "nofollow", "noreferrer", "noopener",
+                "prev", "search", "tag"
+              )
+            )
+        }
+
+        if (!is.null(referrerpolicy)) {
+
+          anchor_attr <-
+            add_anchor_attr(
+              anchor_attr,
+              referrerpolicy,
+              nm = "referrerpolicy",
+              values = c(
+                "no-referrer", "no-referrer-when-downgrade", "origin",
+                "origin-when-cross-origin", "same-origin", "strict-origin",
+                "strict-origin-when-cross-origin", "unsafe-url"
+              )
+            )
+        }
+
+        if (!is.null(hreflang)) {
+
+          anchor_attr <-
+            add_anchor_attr(
+            anchor_attr,
+            arg = hreflang,
+            nm = "hreflang"
+          )
+        }
+
+        anchor_attr <-
+          add_anchor_attr(
+            anchor_attr,
+            arg = paste0(
+              "color:", color[1], ";",
+              "text-decoration:",
+              if (show_underline) "underline" else "none", ";",
+              if (show_underline) "text-underline-position: under;" else NULL,
+              "display: inline-block;",
+              if (as_button) {
+                paste0(
+                  "background-color: ", button_fill, ";",
+                  "padding: 8px 12px;",
+                  if (!is.null(button_width)) {
+                    paste0("width: ", button_width, "; text-align: center;")
+                  } else {
+                    NULL
+                  },
+                  "outline-style: ", button_outline_style, "; ",
+                  "outline-color: ", button_outline_color, "; ",
+                  "outline-width: ", button_outline_width, ";"
+                )
+              } else {
+                NULL
+              }
+            ),
+            nm = "style"
+          )
+
         x_str_non_missing <-
           paste0(
-            "<a ",
-            "href=\"", x_str_non_missing, "\" ",
-            "target=\"_blank\" ",
-            "style=\"color:", color[1], ";",
-            "text-decoration:", if (show_underline) "underline" else "none", ";",
-            if (show_underline) "text-underline-position: under;" else NULL,
-            "display: inline-block;",
-            if (as_button) paste0("background-color: ", button_fill, ";") else NULL,
-            if (as_button) "padding: 8px 12px;" else NULL,
-            if (as_button && !is.null(button_width)) paste0("width: ", button_width, "; text-align: center;"),
-            if (as_button) {
-              paste0(
-                "outline-style: ", button_outline_style, "; ",
-                "outline-color: ", button_outline_color, "; ",
-                "outline-width: ", button_outline_width, ";"
-              )
-            } else {
-              NULL
-            },
-            "\">",
+            "<a",
+            " href=\"", x_str_non_missing, "\"",
+            anchor_attr,
+            ">",
             label_str,
             "</a>"
           )
