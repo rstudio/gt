@@ -199,6 +199,8 @@ of the remaining plot components can be modified.</p>
 <span>  columns_x_vals <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  reference_line <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  reference_area <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  expand_x <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  expand_y <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  new_col_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  new_col_label <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  before <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -304,6 +306,15 @@ one of the following keywords for the generation of the value: (1)
 <code>"mean"</code>, (2) <code>"median"</code>, (3) <code>"min"</code>, (4) <code>"max"</code>, (5) <code>"q1"</code>, (6) <code>"q3"</code>,
 (7) <code>"first"</code>, or (8) <code>"last"</code>. Input can either be a vector or list with
 two elements.</p></dd>
+
+
+<dt>expand_x, expand_y</dt>
+<dd><p><em>Expand plot scale in the x and y directions</em></p>
+<p><code>vector&lt;numeric|integer&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>Should you need to have plots expand in the <em>x</em> or <em>y</em> direction, provide
+one or more values to <code>expand_x</code> or <code>expand_y</code>. Any values provided that
+are outside of the range of data provided to the plot should result in a
+scale expansion.</p></dd>
 
 
 <dt>new_col_name</dt>
@@ -605,9 +616,9 @@ have varying amounts of data (and holding different amounts of data in a
 fixed number of columns is cumbersome). There are <code>date</code> and <code>time</code> columns
 in this dataset and we'll use that to get <em>x</em> values denoting high-resolution
 time instants: the second of the day that a pizza was sold (this is true
-pizza data science). We also have the sell price for a pizza, and that'll
-serve as the <em>y</em> values. The pizzas belong to four different groups (in the
-<code>type</code> column) and we'll group by that and create value streams with
+pizza analytics). We also have the sell price for a pizza, and that'll serve
+as the <em>y</em> values. The pizzas belong to four different groups (in the <code>type</code>
+column) and we'll group by that and create value streams with
 <code>paste(..., collapse = ",")</code> in the <strong>dplyr</strong> summarize call. With two value
 streams in each row (having the same number of values) we can now make a
 <strong>gt</strong> table with nanoplots.</p>
@@ -623,12 +634,13 @@ streams in each row (having the same number of values) we can now make a
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"type"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_header.html">tab_header</a></span><span class="op">(</span></span>
 <span>    title <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span><span class="st">"Pizzas sold on **January 1, 2015**"</span><span class="op">)</span>,</span>
-<span>    subtitle <span class="op">=</span> <span class="st">"Between the opening hours of 09:00 to 00:00"</span></span>
+<span>    subtitle <span class="op">=</span> <span class="st">"Between the opening hours of 11:30 to 22:30"</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/cols_hide.html">cols_hide</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">date_time</span>, <span class="va">sold</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/cols_nanoplot.html">cols_nanoplot</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">sold</span>,</span>
 <span>    columns_x_vals <span class="op">=</span> <span class="va">date_time</span>,</span>
+<span>    expand_x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"2015-01-01 11:30"</span>, <span class="st">"2015-01-01 22:30"</span><span class="op">)</span>,</span>
 <span>    reference_line <span class="op">=</span> <span class="st">"median"</span>,</span>
 <span>    new_col_name <span class="op">=</span> <span class="st">"pizzas_sold"</span>,</span>
 <span>    new_col_label <span class="op">=</span> <span class="st">"Pizzas Sold"</span>,</span>
