@@ -115,7 +115,11 @@ text.</p>
 <span>  show_underline <span class="op">=</span> <span class="st">"auto"</span>,</span>
 <span>  button_fill <span class="op">=</span> <span class="st">"auto"</span>,</span>
 <span>  button_width <span class="op">=</span> <span class="st">"auto"</span>,</span>
-<span>  button_outline <span class="op">=</span> <span class="st">"auto"</span></span>
+<span>  button_outline <span class="op">=</span> <span class="st">"auto"</span>,</span>
+<span>  target <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  rel <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  referrerpolicy <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  hreflang <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -191,6 +195,13 @@ be the same color as that set in the <code>color</code> option.</p></dd>
 <p>Options for styling a link-as-button (and only applies if
 <code>as_button = TRUE</code>). All of these options are by default set to <code>"auto"</code>,
 allowing <strong>gt</strong> to choose appropriate fill, width, and outline values.</p></dd>
+
+
+<dt>target, rel, referrerpolicy, hreflang</dt>
+<dd><p><em>Anchor element attributes</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code></p>
+<p>Additional anchor element attributes. For descriptions of each attribute
+and the allowed values, refer to the <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attributes" class="external-link">MDN Web Docs reference on the anchor HTML element</a>.</p></dd>
 
 </dl></div>
     <div class="section level2">
