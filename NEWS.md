@@ -96,6 +96,8 @@
 
 * Fixed a LaTeX bug where some characters following a `\midrule` would corrupt the table (#145, #391, #1107, #1182). (#1390)
 
+* Provided a rendering fallback for HTML tables rendered in Quarto where the combination of `fmt_markdown()` and `tab_options(quarto.disable_processing = TRUE)` would incorrectly result in empty cells. (#1455)
+
 * A issue associated with a lack of HTML formatting within interactive tables has been fixed (#1299, #1370, #1384, #1443). (#1388)
 
 * Many user-facing error messages have been enhanced using the latest features from the **cli** package. (#1337, thanks @olivroy!)
