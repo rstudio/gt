@@ -27,6 +27,8 @@ generate_nanoplot <- function(
     y_ref_line = NULL,
     y_ref_area = NULL,
     x_vals = NULL,
+    expand_x = NULL,
+    expand_y = NULL,
     missing_vals = c("gap", "zero", "remove"),
     plot_type = c("line", "bar"),
     line_type = c("curved", "straight"),
@@ -152,13 +154,11 @@ generate_nanoplot <- function(
     }
   }
 
+  # Determine the total number of `y` values available
   num_y_vals <- length(y_vals)
-  y_vals_integerlike <- rlang::is_integerish(y_vals)
 
-  # Get a vector of data points that are missing and are to be treated as gaps
-  if (missing_vals == "gap") {
-    y_vals_gaps <- which(is.na(y_vals))
-  }
+  # Find out whether the collection of non-NA `y` values are all integer-like
+  y_vals_integerlike <- rlang::is_integerish(y_vals)
 
   # Ensure that a reference line or reference area isn't shown if NULL or
   # any of its directives is NA
@@ -304,7 +304,8 @@ generate_nanoplot <- function(
           vals = y_vals,
           ref_line = y_ref_line[1],
           ref_area_l = y_ref_area_l,
-          ref_area_u = y_ref_area_u
+          ref_area_u = y_ref_area_u,
+          expand_y = expand_y
         )
 
       y_proportions <- y_proportions_list[["vals"]]
@@ -339,7 +340,8 @@ generate_nanoplot <- function(
       y_proportions_list <-
         normalize_to_list(
           vals = y_vals,
-          ref_line = y_ref_line[1]
+          ref_line = y_ref_line[1],
+          expand_y = expand_y
         )
 
       y_proportions <- y_proportions_list[["vals"]]
@@ -401,6 +403,7 @@ generate_nanoplot <- function(
           vals = y_vals,
           ref_area_l = y_ref_area_l,
           ref_area_u = y_ref_area_u,
+          expand_y = expand_y
         )
 
       y_proportions <- y_proportions_list[["vals"]]
@@ -414,7 +417,15 @@ generate_nanoplot <- function(
     } else {
 
       # Case where there is no reference line or reference area
-      y_proportions <- normalize_vals(y_vals)
+
+      # Scale to proportional values
+      y_proportions_list <-
+        normalize_to_list(
+          vals = y_vals,
+          expand_y = expand_y
+        )
+
+      y_proportions <- y_proportions_list[["vals"]]
     }
   }
 
@@ -496,7 +507,8 @@ generate_nanoplot <- function(
           ref_line = y_ref_line[1],
           ref_area_l = y_ref_area_l,
           ref_area_u = y_ref_area_u,
-          zero = 0
+          zero = 0,
+          expand_y = expand_y
         )
 
       y_proportions <- y_proportions_list[["vals"]]
@@ -533,7 +545,8 @@ generate_nanoplot <- function(
         normalize_to_list(
           vals = y_vals,
           ref_line = y_ref_line[1],
-          zero = 0
+          zero = 0,
+          expand_y = expand_y
         )
 
       y_proportions <- y_proportions_list[["vals"]]
@@ -596,7 +609,8 @@ generate_nanoplot <- function(
           vals = y_vals,
           ref_area_l = y_ref_area_l,
           ref_area_u = y_ref_area_u,
-          zero = 0
+          zero = 0,
+          expand_y = expand_y
         )
 
       y_proportions <- y_proportions_list[["vals"]]
@@ -612,9 +626,16 @@ generate_nanoplot <- function(
 
       # Case where there is no reference line or reference area
 
-      y_proportions_list <- normalize_vals_with_zero(y_vals)
-      y_proportions_zero <- y_proportions_list[["zero"]]
+      # Scale to proportional values
+      y_proportions_list <-
+        normalize_to_list(
+          vals = y_vals,
+          zero = 0,
+          expand_y = expand_y
+        )
+
       y_proportions <- y_proportions_list[["vals"]]
+      y_proportions_zero <- y_proportions_list[["zero"]]
     }
 
     data_y0_point <- safe_y_d + ((1 - y_proportions_zero) * data_y_height)
@@ -624,8 +645,18 @@ generate_nanoplot <- function(
   # there are no x values, generate equally-spaced x values according
   # to the number of y values
   if (plot_type == "line" && !is.null(x_vals)) {
-    x_proportions <- normalize_vals(x_vals)
+
+    # Scale to proportional values
+    x_proportions_list <-
+      normalize_to_list(
+        vals = x_vals,
+        expand_x = expand_x
+      )
+
+    x_proportions <- x_proportions_list[["vals"]]
+
   } else {
+
     x_proportions <- seq(0, 1, length.out = num_y_vals)
   }
 
@@ -1363,6 +1394,7 @@ normalize_option_vector <- function(vec, num_y_vals) {
 }
 
 normalize_vals <- function(x) {
+
   x_missing <- which(is.na(x))
   mean_x <- mean(x, na.rm = TRUE)
   x[x_missing] <- mean_x
@@ -1374,16 +1406,6 @@ normalize_vals <- function(x) {
   x <- as.numeric(x)
   x[x_missing] <- NA_real_
   x
-}
-
-normalize_vals_with_zero <- function(x) {
-
-  normalized <- normalize_vals(c(0, x))
-
-  list(
-    zero = normalized[1],
-    vals = normalized[-1]
-  )
 }
 
 normalize_to_list <- function(...) {
