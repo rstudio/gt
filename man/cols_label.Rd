@@ -101,7 +101,7 @@ shown with a few examples:
 \itemize{
 \item \code{"m/s"} and \code{"m / s"} both render as \code{"m/s"}
 \item \code{"m s^-1"} will appear with the \code{"-1"} exponent intact
-\item \code{"m \\s"} gives the the same result, as \code{"\\<unit>"} is equivalent to
+\item \code{"m /s"} gives the the same result, as \code{"/<unit>"} is equivalent to
 \code{"<unit>^-1"}
 \item \code{"E_h"} will render an \code{"E"} with the \code{"h"} subscript
 \item \code{"t_i^2.5"} provides a \code{t} with an \code{"i"} subscript and a \code{"2.5"} exponent
@@ -115,6 +115,9 @@ converted to the correct characters (e.g., the \code{"u"} in \code{"ug"}, \code{
 and \code{"degF"} will render a degree sign before the temperature unit)
 \item We can transform shorthand symbol/unit names enclosed in \code{":"} (e.g.,
 \code{":angstrom:"}, \code{":ohm:"}, etc.) into proper symbols
+\item Greek letters can added by enclosing the letter name in \code{":"}; you can
+use lowercase letters (e.g., \code{":beta:"}, \code{":sigma:"}, etc.) and uppercase
+letters too (e.g., \code{":Alpha:"}, \code{":Zeta:"}, etc.)
 \item The components of a unit (unit name, subscript, and exponent) can be
 fully or partially italicized/emboldened by surrounding text with \code{"*"} or
 \code{"**"}
