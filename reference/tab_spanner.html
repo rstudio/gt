@@ -32,7 +32,7 @@ replacement."><meta property="og:image" content="https://gt.rstudio.com/logo.svg
     
     <a class="navbar-brand me-2" href="../index.html">gt</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.9.0.9000</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.10.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -267,7 +267,7 @@ particular to the task at hand. Each unit is treated as a separate entity
 and exponents is flexible and relatively easy to formulate. This is all best
 shown with a few examples:</p><ul><li><p><code>"m/s"</code> and <code>"m / s"</code> both render as <code>"m/s"</code></p></li>
 <li><p><code>"m s^-1"</code> will appear with the <code>"-1"</code> exponent intact</p></li>
-<li><p><code>"m \s"</code> gives the the same result, as <code>"\&lt;unit&gt;"</code> is equivalent to
+<li><p><code>"m /s"</code> gives the the same result, as <code>"/&lt;unit&gt;"</code> is equivalent to
 <code>"&lt;unit&gt;^-1"</code></p></li>
 <li><p><code>"E_h"</code> will render an <code>"E"</code> with the <code>"h"</code> subscript</p></li>
 <li><p><code>"t_i^2.5"</code> provides a <code>t</code> with an <code>"i"</code> subscript and a <code>"2.5"</code> exponent</p></li>
@@ -281,6 +281,9 @@ converted to the correct characters (e.g., the <code>"u"</code> in <code>"ug"</c
 and <code>"degF"</code> will render a degree sign before the temperature unit)</p></li>
 <li><p>We can transform shorthand symbol/unit names enclosed in <code>":"</code> (e.g.,
 <code>":angstrom:"</code>, <code>":ohm:"</code>, etc.) into proper symbols</p></li>
+<li><p>Greek letters can added by enclosing the letter name in <code>":"</code>; you can
+use lowercase letters (e.g., <code>":beta:"</code>, <code>":sigma:"</code>, etc.) and uppercase
+letters too (e.g., <code>":Alpha:"</code>, <code>":Zeta:"</code>, etc.)</p></li>
 <li><p>The components of a unit (unit name, subscript, and exponent) can be
 fully or partially italicized/emboldened by surrounding text with <code>"*"</code> or
 <code>"**"</code></p></li>
