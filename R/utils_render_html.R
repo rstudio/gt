@@ -1067,12 +1067,134 @@ create_body_component_h <- function(data) {
 
   current_group_id <- character(0)
 
+  n_groups <- nrow(groups_rows_df)
+
+  group_headings <- lapply(
+    seq_len(n_groups),
+    function(i) {
+      group_id <- groups_rows_df[["group_id"]][[i]]
+      group_label <- groups_rows_df[["group_label"]][[i]]
+
+      if (is.null(group_id) || has_two_col_stub) {
+        return(NULL)
+      }
+
+      row_style_row_groups_tbl <-
+        dt_styles_pluck(
+          styles_tbl = styles_tbl,
+          locname = "row_groups",
+          grpname = group_id
+        )
+
+      row_style_group_heading_row <- row_style_row_groups_tbl[["html_style"]]
+
+      group_class <-
+        if (group_label == "") {
+          "gt_empty_group_heading"
+        } else {
+          "gt_group_heading"
+        }
+
+      htmltools::tags$tr(
+        class = "gt_group_heading_row",
+        htmltools::tags$th(
+          colspan = n_cols_total,
+          class = group_class,
+          style = row_style_group_heading_row,
+          scope = if (n_cols_total > 1) "colgroup" else "col",
+          id = group_label,
+          htmltools::HTML(group_label)
+        )
+      )
+    }
+  )
+
+  group_summaries <- lapply(
+    seq_len(n_groups),
+    function(i) {
+      group_id <- groups_rows_df[["group_id"]][[i]]
+      group_label <- groups_rows_df[["group_label"]][[i]]
+      group_has_summary_rows <- groups_rows_df[["has_summary_rows"]][[i]]
+      group_summary_row_side <- groups_rows_df[["summary_row_side"]][[i]]
+
+      needs_summary <-
+        summaries_present &&
+        !is.null(group_has_summary_rows) &&
+        group_has_summary_rows &&
+        !is.null(group_summary_row_side) &&
+        !is.na(group_summary_row_side) &&
+        group_summary_row_side %in% c("top", "bottom")
+
+      if (!needs_summary) {
+        return(NULL)
+      }
+
+      summary <- summary_rows_for_group_h(
+        data = data,
+        group_id = group_id
+      )
+
+      if (has_two_col_stub && identical(group_summary_row_side, "top")) {
+        summary_rows_group_df <-
+          list_of_summaries[["summary_df_display_list"]][[group_id]]
+
+        if (!is.null(summary_rows_group_df) && "rowname" %in% stub_layout) {
+          summary_row_count <- nrow(summary_rows_group_df)
+        } else {
+          summary_row_count <- 0L
+        }
+
+        rowspan_val <-
+          groups_rows_df$row_end[[i]] - groups_rows_df$row_start[[i]] + 1 + summary_row_count
+
+        row_style_row_groups_tbl <-
+          dt_styles_pluck(
+            styles_tbl = styles_tbl,
+            locname = "row_groups",
+            grpname = group_id
+          )
+
+        row_style_group_heading_row <- row_style_row_groups_tbl[["html_style"]]
+
+        group_col_td <-
+          htmltools::tags$td(
+            headers = group_id,
+            rowspan = rowspan_val,
+            class = "gt_row gt_left gt_stub_row_group",
+            style = row_style_group_heading_row,
+            id = group_id,
+            htmltools::HTML(group_label)
+          )
+
+        summary[[1]] <-
+          htmltools::HTML(gsub("^<tr>", paste0("<tr>", group_col_td), as.character(summary[[1]])))
+      }
+
+      summary
+    }
+  )
+
+  summary_locations <- lapply(
+    seq_len(n_groups),
+    function(i) {
+      if (is.null(group_summaries[[i]])) {
+        return(NULL)
+      }
+
+      group_summary_row_side <- groups_rows_df[["summary_row_side"]][[i]]
+      if (group_summary_row_side == "top") {
+        groups_rows_df[["row_start"]][[i]]
+      } else if (group_summary_row_side == "bottom") {
+        groups_rows_df[["row_end"]][[i]]
+      }
+    }
+  )
+  summary_locations <- unlist(summary_locations)
+
   body_rows <-
     lapply(
       seq_len(n_rows),
       function(i) {
-
-        body_section <- list()
 
         group_info <-
           groups_rows_df[i >= groups_rows_df$row_start & i <= groups_rows_df$row_end, ]
@@ -1090,94 +1212,12 @@ create_body_component_h <- function(data) {
 
         if (!is.null(group_id)) current_group_id <<- group_id
 
-        # Is there a group heading row (dedicated row w/ group label) at `i`?
-        group_heading_row_at_i <-
-          !is.null(group_id) &&
-          !has_two_col_stub &&
-          group_row_start == i
-
         # Is this the first row of a group?
         group_start <- !is.null(group_info) && group_row_start == i
 
         # Is this the first row of a group where there is a two-column stub?
         group_start_two_col_stub <-
           has_two_col_stub && !is.null(group_info) && group_row_start == i
-
-        #
-        # Create a group heading row
-        #
-
-        # A group heading row occurs before a formal row `i` in that it really
-        # doesn't have an index number but we do anchor it to an `i` index and
-        # place it just before row `i`
-
-        if (group_heading_row_at_i) {
-
-          row_style_row_groups_tbl <-
-            dt_styles_pluck(
-              styles_tbl = styles_tbl,
-              locname = "row_groups",
-              grpname = group_id
-            )
-
-          row_style_group_heading_row <- row_style_row_groups_tbl[["html_style"]]
-
-          group_class <-
-            if (group_label == "") {
-              "gt_empty_group_heading"
-            } else {
-              "gt_group_heading"
-            }
-
-          group_heading_row <-
-            htmltools::tags$tr(
-              class = "gt_group_heading_row",
-              htmltools::tags$th(
-                colspan = n_cols_total,
-                class = group_class,
-                style = row_style_group_heading_row,
-                scope = ifelse(n_cols_total > 1, "colgroup", "col"),
-                id = group_label,
-                htmltools::HTML(group_label)
-              )
-            )
-
-          body_section <- append(body_section, list(group_heading_row))
-        }
-
-        if (has_two_col_stub) {
-
-          summary_rows_group_df <-
-            list_of_summaries[["summary_df_display_list"]][[group_id]]
-
-          if (!is.null(summary_rows_group_df) && "rowname" %in% stub_layout) {
-            summary_row_count <- nrow(summary_rows_group_df)
-          } else {
-            summary_row_count <- 0L
-          }
-
-          rowspan_val <-
-            group_info$row_end - group_info$row_start + 1 + summary_row_count
-
-          row_style_row_groups_tbl <-
-            dt_styles_pluck(
-              styles_tbl = styles_tbl,
-              locname = "row_groups",
-              grpname = group_id
-            )
-
-          row_style_group_heading_row <- row_style_row_groups_tbl[["html_style"]]
-
-          group_col_td <-
-            htmltools::tags$td(
-              headers = group_id,
-              rowspan = rowspan_val,
-              class = "gt_row gt_left gt_stub_row_group",
-              style = row_style_group_heading_row,
-              id = group_id,
-              htmltools::HTML(group_label)
-            )
-        }
 
         #
         # Create a body row
@@ -1218,38 +1258,6 @@ create_body_component_h <- function(data) {
             n_cols = n_data_cols
           )
 
-        #
-        # Get groupwise summary rows (for either top or bottom of group)
-        #
-
-        if (
-          summaries_present &&
-          !is.null(group_has_summary_rows) &&
-          group_has_summary_rows &&
-          (
-            i %in% groups_rows_df$row_start &&
-            !is.null(group_summary_row_side) &&
-            !is.na(group_summary_row_side) &&
-            group_summary_row_side == "top"
-          ) ||
-          (
-            i %in% groups_rows_df$row_end &&
-            !is.null(group_summary_row_side) &&
-            !is.na(group_summary_row_side) &&
-            group_summary_row_side == "bottom"
-          )
-        ) {
-
-          summary_section <-
-            summary_rows_for_group_h(
-              data = data,
-              group_id = group_id
-            )
-
-        } else {
-          summary_section <- NULL
-        }
-
         # Handle the layout case where there is a 'two-column stub', which
         # is the row group label occupying a separate column to the LHS of
         # the row labels (this column needs to have a correct rowspan value
@@ -1287,7 +1295,7 @@ create_body_component_h <- function(data) {
           # contains the number of rows to span
           # TODO: replace with condition for summary rows at bottom
 
-          if (!(!is.null(summary_section) && group_summary_row_side == "top")) {
+          if (!(i %in% summary_locations && group_summary_row_side == "top")) {
             row_span_vals[[1]] <-
               row_limits$row_end - row_limits$row_start + 1 + summary_row_count
           }
@@ -1367,7 +1375,7 @@ create_body_component_h <- function(data) {
           row_styles <- row_styles[-1]
         }
 
-        body_row <-
+        out <-
           htmltools::tags$tr(
             class = if (group_start) "gt_row_group_first",
             htmltools::HTML(
@@ -1456,26 +1464,28 @@ create_body_component_h <- function(data) {
             )
           )
 
-
-        if (!is.null(summary_section) && group_summary_row_side == "top") {
-
-          if (has_two_col_stub) {
-
-            summary_section[[1]] <-
-              htmltools::HTML(gsub("^<tr>", paste0("<tr>", group_col_td), as.character(summary_section[[1]])))
-          }
-          body_section <- append(body_section, summary_section)
-        }
-
-        body_section <- append(body_section, list(body_row))
-
-        if (!is.null(summary_section) && group_summary_row_side == "bottom") {
-          body_section <- append(body_section, summary_section)
-        }
-
-        body_section
+        list(out)
       }
     )
+
+  for (i in seq_len(n_groups)) {
+    group_row_start <- groups_rows_df$row_start[[i]]
+    group_row_end <- groups_rows_df$row_end[[i]]
+    group_summary_row_side <- groups_rows_df$summary_row_side[[i]]
+
+    if (identical(group_summary_row_side, "top")) {
+      body_rows[[group_row_start]] <- append(group_summaries[i], body_rows[[group_row_start]])
+    }
+
+    # A group heading row occurs before a formal row `i` in that it really
+    # doesn't have an index number but we do anchor it to an `i` index and
+    # place it just before row `i`
+    body_rows[[group_row_start]] <- append(group_headings[i], body_rows[[group_row_start]])
+
+    if (identical(group_summary_row_side, "bottom")) {
+      body_rows[[group_row_end]] <- append(body_rows[[group_row_end]], group_summaries[i])
+    }
+  }
 
   body_rows <- flatten_list(body_rows)
 
