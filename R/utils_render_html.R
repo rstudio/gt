@@ -1429,15 +1429,15 @@ create_body_component_h <- function(data) {
                       } else {
                         paste0(
                           "rowspan=\"",
-                          htmltools::htmlEscape(row_span, attribute = TRUE),
+                          row_span,
                           "\" "
                         )
                       },
                       paste(
                         c(
                           "gt_row",
-                          htmltools::htmlEscape(alignment_class, attribute = TRUE),
-                          htmltools::htmlEscape(extra_class, attribute = TRUE)
+                          alignment_class,
+                          extra_class
                         ),
                         collapse = " "
                       ),
@@ -1446,7 +1446,7 @@ create_body_component_h <- function(data) {
                       } else {
                         paste0(
                           " style=\"",
-                          htmltools::htmlEscape(cell_style, attribute = FALSE),
+                          cell_style,
                           "\""
                         )
                       },
