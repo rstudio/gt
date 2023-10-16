@@ -1391,75 +1391,15 @@ create_body_component_h <- function(data) {
             class = if (group_start) "gt_row_group_first",
             htmltools::HTML(
               paste0(
-                mapply(
-                  SIMPLIFY = FALSE,
-                  USE.NAMES = FALSE,
+                render_row_data(
                   row_df,
+                  current_group_id,
                   col_id_i,
                   row_id_i,
                   row_span_vals,
                   alignment_classes,
                   extra_classes,
-                  row_styles,
-                  FUN = function(x, col_id, row_id, row_span, alignment_class, extra_class, cell_style) {
-
-                    sprintf(
-                      "<%s %sclass=\"%s\"%s>%s</%s>",
-                      if ("gt_stub" %in% extra_class) {
-                        paste0(
-                          "th ",
-                          "id=\"",
-                          row_id,
-                          "\" ",
-                          "scope=\"",
-                          ifelse(!is.null(row_span) && row_span > 1, "rowgroup", "row"),
-                          "\""
-                        )
-                      } else {
-                        paste0(
-                          "td ",
-                          "headers=\"",
-                          gsub(
-                            "(^[[:space:]]*)|([[:space:]]*$)", "",
-                            paste(current_group_id, row_id, col_id)
-                          ),
-                          "\""
-                        )
-                      },
-                      if (is.null(row_span)) {
-                        ""
-                      } else {
-                        paste0(
-                          "rowspan=\"",
-                          row_span,
-                          "\" "
-                        )
-                      },
-                      paste(
-                        c(
-                          "gt_row",
-                          alignment_class,
-                          extra_class
-                        ),
-                        collapse = " "
-                      ),
-                      if (!any(nzchar(cell_style))) {
-                        ""
-                      } else {
-                        paste0(
-                          " style=\"",
-                          cell_style,
-                          "\""
-                        )
-                      },
-                      as.character(x),
-                      if ("gt_stub" %in% extra_class) {
-                        "th"
-                      } else {
-                        "td"
-                      }
-                    )
-                  }
+                  row_styles
                 ),
                 collapse = "\n"
               )
@@ -1519,6 +1459,92 @@ create_body_component_h <- function(data) {
   htmltools::tags$tbody(
     class = "gt_table_body",
     body_rows
+  )
+}
+
+render_row_data <- function(
+    row_df,
+    current_group_id,
+    col_id_i,
+    row_id_i,
+    row_span_vals,
+    alignment_classes,
+    extra_classes,
+    row_styles
+) {
+  has_stub_class <- vapply(
+    extra_classes,
+    function(extra_class) "gt_stub" %in% extra_class,
+    logical(1)
+  )
+
+  elements <- ifelse(has_stub_class, "th", "td")
+
+  scope <- vapply(
+    row_span_vals,
+    function(row_span) {
+      if (!is.null(row_span) && row_span > 1) {
+        "rowgroup"
+      } else {
+        "row"
+      }
+    },
+    character(1)
+  )
+
+  header <- gsub(
+    "(^[[:space:]]*)|([[:space:]]*$)", "",
+    paste(current_group_id, row_id_i, col_id_i)
+  )
+
+  base_attributes <- ifelse(
+    has_stub_class,
+    paste0("id=\"", row_id_i, "\" ", "scope=\"", scope, "\" "),
+    paste0("headers=\"", header, "\" ")
+  )
+
+  needs_row_span_attribute <- vapply(
+    row_span_vals,
+    function(row_span) !is.null(row_span),
+    logical(1)
+  )
+  row_span_attributes <- ifelse(needs_row_span_attribute, paste0("rowspan=\"", row_span_vals, "\" "), "")
+
+  needs_styles <- vapply(
+    row_styles,
+    function(cell_style) {
+      any(nzchar(cell_style))
+    },
+    logical(1)
+  )
+  styles <- ifelse(needs_styles, paste0(" style=\"", row_styles, "\""), "")
+
+  classes <- mapply(
+    SIMPLIFY = FALSE,
+    USE.NAMES = FALSE,
+    alignment_classes,
+    extra_classes,
+    FUN = function(alignment_class, extra_class) {
+      paste(
+        c(
+          "gt_row",
+          alignment_class,
+          extra_class
+        ),
+        collapse = " "
+      )
+    }
+  )
+
+  sprintf(
+    "<%s %s%sclass=\"%s\"%s>%s</%s>",
+    elements,
+    base_attributes,
+    row_span_attributes,
+    classes,
+    styles,
+    as.character(row_df),
+    elements
   )
 }
 
