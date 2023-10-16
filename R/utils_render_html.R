@@ -2061,20 +2061,20 @@ build_row_styles <- function(
     )
   }
 
-  # This will hold the resulting styles
+  n_cols <- n_cols + include_stub
   result <- rep_len(NA_character_, n_cols)
 
   # The subset of styles_resolved_row that applies to data
-  data_styles <- styles_resolved_row[styles_resolved_row$colnum > 0, ]
-  result[data_styles$colnum] <- data_styles$html_style
+  idx <- styles_resolved_row$colnum > 0
+  result[styles_resolved_row$colnum[idx] + include_stub] <- styles_resolved_row$html_style[idx]
 
   # If a stub exists, we need to prepend a style (or NULL) to the result.
   if (include_stub) {
-    stub_style <- styles_resolved_row[styles_resolved_row$colnum == 0, ]$html_style
-    if (is_empty(stub_style)) {
-      stub_style <- NA_character_
+    idx_0 <- styles_resolved_row$colnum == 0
+    stub_style <- styles_resolved_row$html_style[idx_0]
+    if (!is_empty(stub_style)) {
+      result[1] <- stub_style
     }
-    result <- c(stub_style, result)
   }
 
   result

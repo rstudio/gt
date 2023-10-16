@@ -99,7 +99,11 @@ dt_styles_pluck <- function(
     )
   }
 
-  idx <- rep_len(TRUE, nrow(styles_tbl))
+  n <- nrow(styles_tbl)
+  if (n == 0) {
+    return(styles_tbl)
+  }
+  idx <- rep_len(TRUE, n)
 
   if (!is_missing(locname)) {
     idx <- idx & styles_tbl$locname %in% locname
@@ -120,5 +124,6 @@ dt_styles_pluck <- function(
     idx <- idx & round((styles_tbl$rownum %% 1) * 100) %in% grprow
   }
 
-  styles_tbl[idx, ]
+  # `vec_slice()` is much faster than `[`
+  vctrs::vec_slice(styles_tbl, idx)
 }
