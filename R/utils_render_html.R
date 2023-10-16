@@ -1063,7 +1063,7 @@ create_body_component_h <- function(data) {
   }
 
   # Create a default vector of row span values for group labels as a column
-  row_span_vals <- rep_len(list(NULL), n_cols_total)
+  row_span_vals <- rep_len(NA_integer_, n_cols_total)
 
   current_group_id <- character(0)
 
@@ -1196,6 +1196,8 @@ create_body_component_h <- function(data) {
   has_rtl <- matrix(grepl(rtl_modern_unicode_charset, cell_matrix), ncol = ncol(cell_matrix))
   cell_matrix[has_rtl] <- paste0("<p dir=\"rtl\">", cell_matrix[has_rtl], "</p>")
 
+  non_center_alignments <- alignment_classes != "gt_center"
+
   body_rows <-
     lapply(
       seq_len(n_rows),
@@ -1231,7 +1233,10 @@ create_body_component_h <- function(data) {
         has_rtl_i <- has_rtl[i, ]
         # If any characters come from a RTL script, ensure that a
         # left alignment is transformed to a right alignment
-        alignment_classes[alignment_classes != "gt_center" & has_rtl_i] <- "gt_right"
+        has_rtl_i <- has_rtl[i, ]
+        if (any(has_rtl_i)) {
+          alignment_classes[has_rtl_i & non_center_alignments] <- "gt_right"
+        }
 
         # This condition determines whether we are on an every 'second' body
         # row and, if so, we use `extra_classes_2` instead of `extra_classes_1`
@@ -1320,9 +1325,12 @@ create_body_component_h <- function(data) {
             )
 
           row_style_group_heading_row <- row_style_row_groups_tbl[["html_style"]]
+          if (is_empty(row_style_group_heading_row)) {
+            row_style_group_heading_row <- NA_character_
+          }
 
           # Add style of row group cell to vector
-          row_styles <- c(list(row_style_group_heading_row), row_styles)
+          row_styles <- c(row_style_group_heading_row, row_styles)
         }
 
         # The second subcase of this is where `i` is *not* the first row
@@ -1332,8 +1340,8 @@ create_body_component_h <- function(data) {
 
           # Remove first element of `alignment_classes` vector
           alignment_classes <- alignment_classes[-1]
-          row_span_vals[[1]] <- NULL
-          extra_classes[[1]] <- NULL
+          row_span_vals <- row_span_vals[-1]
+          extra_classes <- extra_classes[-1]
         }
 
         row_df <-
@@ -1480,17 +1488,7 @@ render_row_data <- function(
 
   elements <- ifelse(has_stub_class, "th", "td")
 
-  scope <- vapply(
-    row_span_vals,
-    function(row_span) {
-      if (!is.null(row_span) && row_span > 1) {
-        "rowgroup"
-      } else {
-        "row"
-      }
-    },
-    character(1)
-  )
+  scope <- ifelse(!is.na(row_span_vals) & row_span_vals > 1, "rowgroup", "row")
 
   header <- gsub(
     "(^[[:space:]]*)|([[:space:]]*$)", "",
@@ -1503,21 +1501,8 @@ render_row_data <- function(
     paste0("headers=\"", header, "\" ")
   )
 
-  needs_row_span_attribute <- vapply(
-    row_span_vals,
-    function(row_span) !is.null(row_span),
-    logical(1)
-  )
-  row_span_attributes <- ifelse(needs_row_span_attribute, paste0("rowspan=\"", row_span_vals, "\" "), "")
-
-  needs_styles <- vapply(
-    row_styles,
-    function(cell_style) {
-      any(nzchar(cell_style))
-    },
-    logical(1)
-  )
-  styles <- ifelse(needs_styles, paste0(" style=\"", row_styles, "\""), "")
+  row_span_attributes <- ifelse(!is.na(row_span_vals), paste0("rowspan=\"", row_span_vals, "\" "), "")
+  styles <- ifelse(!is.na(row_styles), paste0(" style=\"", row_styles, "\""), "")
 
   classes <- mapply(
     SIMPLIFY = FALSE,
@@ -1987,7 +1972,7 @@ summary_rows_for_group_h <- function(
                     ),
                     attribute = TRUE
                   ),
-                  if (!any(nzchar(cell_style))) {
+                  if (is.na(cell_style)) {
                     # 4. tag styles
                     ""
                   } else {
@@ -2043,7 +2028,7 @@ build_row_styles <- function(
   }
 
   # This will hold the resulting styles
-  result <- rep_len(list(NULL), n_cols)
+  result <- rep_len(NA_character_, n_cols)
 
   # The subset of styles_resolved_row that applies to data
   data_styles <- styles_resolved_row[styles_resolved_row$colnum > 0, ]
@@ -2051,8 +2036,11 @@ build_row_styles <- function(
 
   # If a stub exists, we need to prepend a style (or NULL) to the result.
   if (include_stub) {
-    stub_style <- styles_resolved_row[styles_resolved_row$colnum == 0, ]
-    result <- c(list(stub_style$html_style), result)
+    stub_style <- styles_resolved_row[styles_resolved_row$colnum == 0, ]$html_style
+    if (is_empty(stub_style)) {
+      stub_style <- NA_character_
+    }
+    result <- c(stub_style, result)
   }
 
   result
