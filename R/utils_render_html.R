@@ -1369,7 +1369,7 @@ create_body_component_h <- function(data) {
     stub_width <- length(stub_layout)
 
     if (stub_width == 0) {
-      row_id_i <- rep("", length(col_id_i))
+      row_id_i <- character(length(col_id_i))
     } else if (stub_width == 1) {
       row_id_i <- rep(paste0(col_id_i[1], "_", i), length(col_id_i))
     } else if (stub_width == 2) {
@@ -1501,15 +1501,21 @@ render_row_data <- function(
     extra_classes,
     row_styles
 ) {
+  n <- length(row_df)
+
   has_stub_class <- vapply(
     extra_classes,
     function(extra_class) "gt_stub" %in% extra_class,
     logical(1)
   )
 
-  elements <- ifelse(has_stub_class, "th", "td")
+  # below we use a fast version of `ifelse()` where `test` is a logical vector
+  # without NA
+  elements <- rep.int("td", n)
+  elements[has_stub_class] <- "th"
 
-  scope <- ifelse(!is.na(row_span_vals) & row_span_vals > 1, "rowgroup", "row")
+  scope <- rep.int("row", n)
+  scope[!is.na(row_span_vals) & row_span_vals > 1] <- "rowgroup"
 
   has_group <- !is.na(current_group_id)
   header <- paste0(
@@ -1524,32 +1530,28 @@ render_row_data <- function(
     paste0("headers=\"", header, "\" ")
   )
 
-  row_span_attributes <- ifelse(!is.na(row_span_vals), paste0("rowspan=\"", row_span_vals, "\" "), "")
-  styles <- ifelse(!is.na(row_styles), paste0(" style=\"", row_styles, "\""), "")
+  row_span_attributes <- character(n)
+  row_span_attributes[!is.na(row_span_vals)] <- paste0("rowspan=\"", row_span_vals[!is.na(row_span_vals)], "\" ")
+  styles <- character(n)
+  styles[!is.na(row_styles)] <- paste0(" style=\"", row_styles[!is.na(row_styles)], "\"")
 
-  classes <- mapply(
-    SIMPLIFY = FALSE,
-    USE.NAMES = FALSE,
-    alignment_classes,
-    extra_classes,
-    FUN = function(alignment_class, extra_class) {
-      paste(
-        c(
-          "gt_row",
-          alignment_class,
-          extra_class
-        ),
-        collapse = " "
-      )
-    }
+  extra_classes_chr <- rep("", n)
+  extra_classes_idx <- lengths(extra_classes) > 0
+  extra_classes_chr[extra_classes_idx] <- vapply(
+    extra_classes[extra_classes_idx],
+    function(extra_class) {
+      paste0(" ", extra_class, collapse = " ")
+    },
+    character(1)
   )
 
   sprintf(
-    "<%s %s%sclass=\"%s\"%s>%s</%s>",
+    "<%s %s%sclass=\"gt_row %s%s\"%s>%s</%s>",
     elements,
     base_attributes,
     row_span_attributes,
-    classes,
+    alignment_classes,
+    extra_classes_chr,
     styles,
     as.character(row_df),
     elements
