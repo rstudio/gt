@@ -1211,6 +1211,7 @@ create_body_component_h <- function(data) {
 
   # FIXME: workaround for incorrect behaviour of `rows_add()`
   # only added to make tests pass
+  # #1471
   idx <- is.na(groups_rows_df$group_id)
   groups_rows_df$group_id[idx] <- "NA"
   groups_rows_df$group_label[idx] <- "NA"
