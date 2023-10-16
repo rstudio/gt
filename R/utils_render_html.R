@@ -1191,6 +1191,11 @@ create_body_component_h <- function(data) {
   )
   summary_locations <- unlist(summary_locations)
 
+  # Store when rtl is detected so that later left alignment can be transformed to
+  # right alignment
+  has_rtl <- matrix(grepl(rtl_modern_unicode_charset, cell_matrix), ncol = ncol(cell_matrix))
+  cell_matrix[has_rtl] <- paste0("<p dir=\"rtl\">", cell_matrix[has_rtl], "</p>")
+
   body_rows <-
     lapply(
       seq_len(n_rows),
@@ -1222,6 +1227,11 @@ create_body_component_h <- function(data) {
         #
         # Create a body row
         #
+
+        has_rtl_i <- has_rtl[i, ]
+        # If any characters come from a RTL script, ensure that a
+        # left alignment is transformed to a right alignment
+        alignment_classes[alignment_classes != "gt_center" & has_rtl_i] <- "gt_right"
 
         # This condition determines whether we are on an every 'second' body
         # row and, if so, we use `extra_classes_2` instead of `extra_classes_1`
@@ -1371,6 +1381,7 @@ create_body_component_h <- function(data) {
           row_id_i <- row_id_i[-1]
           row_span_vals <- row_span_vals[-1]
           alignment_classes <- alignment_classes[-1]
+          has_rtl_i <- has_rtl_i[-1]
           extra_classes <- extra_classes[-1]
           row_styles <- row_styles[-1]
         }
@@ -1391,15 +1402,6 @@ create_body_component_h <- function(data) {
                   extra_classes,
                   row_styles,
                   FUN = function(x, col_id, row_id, row_span, alignment_class, extra_class, cell_style) {
-
-                    # If any characters come from a RTL script, ensure that a
-                    # left alignment is transformed to a right alignment
-                    if (grepl(rtl_modern_unicode_charset, x)) {
-                      if (alignment_class != "gt_center") {
-                        alignment_class <- "gt_right"
-                      }
-                      x <- paste0("<p dir=\"rtl\">", x, "</p>")
-                    }
 
                     sprintf(
                       "<%s %sclass=\"%s\"%s>%s</%s>",
