@@ -1216,32 +1216,31 @@ create_body_component_h <- function(data) {
   groups_rows_df$group_label[idx] <- "NA"
   # end fixme
 
+  group_idx <- rep(list(NULL), n_rows)
+  for (i in seq_len(n_groups)) {
+    start <- groups_rows_df$row_start[[i]]
+    end <- groups_rows_df$row_end[[i]]
+    group_idx[seq(start, end)] <- i
+    group_ids[seq(start, end)] <- groups_rows_df$group_id[[i]]
+  }
+  groups_list <- as.list(groups_rows_df)
+
   for (i in seq_len(n_rows)) {
     alignment_classes_i <- alignment_classes
     row_span_vals_i <- row_span_vals
 
-    group_info <-
-      groups_rows_df[i >= groups_rows_df$row_start & i <= groups_rows_df$row_end, ]
-
-    if (nrow(group_info) == 0) {
-      group_info <- NULL
-    }
-
-    group_id <- group_info[["group_id"]]
-    group_label <- group_info[["group_label"]]
-    group_row_start <- group_info[["row_start"]]
-    group_row_end <- group_info[["row_end"]]
-    group_has_summary_rows <- group_info[["has_summary_rows"]]
-    group_summary_row_side <- group_info[["summary_row_side"]]
-
-    if (!is.null(group_id)) group_ids[i] <- group_id
+    g <- group_idx[[i]]
+    group_id <- groups_list$group_id[g]
+    group_row_start <- groups_list$row_start[g]
+    group_row_end <- groups_list$row_end[g]
+    group_has_summary_rows <- groups_list$has_summary_rows[g]
+    group_summary_row_side <- groups_list$summary_row_side[g]
 
     # Is this the first row of a group?
-    group_start <- !is.null(group_info) && group_row_start == i
+    group_start <- !is.null(g) && group_row_start == i
 
     # Is this the first row of a group where there is a two-column stub?
-    group_start_two_col_stub <-
-      has_two_col_stub && !is.null(group_info) && group_row_start == i
+    group_start_two_col_stub <- has_two_col_stub && group_start
 
     #
     # Create a body row
@@ -1297,24 +1296,14 @@ create_body_component_h <- function(data) {
     #
     # The first subcase of this is where `i` is the first row of
     # this grouping of rows
-    if (has_two_col_stub && i %in% groups_rows_df$row_start) {
+    if (has_two_col_stub && group_start) {
 
       # Modify the `extra_classes` list to include a class for
       # the row group column
       extra_classes[[1]] <- "gt_stub_row_group"
 
-      # Obtain a one-row table that contains the beginning and
-      # ending row index for the row group
-      row_limits <-
-        dplyr::select(
-          dplyr::filter(
-            groups_rows_df, row_start == i
-          ),
-          group_id, row_start, row_end
-        )
-
       summary_rows_group_df <-
-        list_of_summaries[["summary_df_display_list"]][[row_limits$group_id]]
+        list_of_summaries[["summary_df_display_list"]][[group_id]]
 
       if (!is.null(summary_rows_group_df) && "rowname" %in% stub_layout) {
         summary_row_count <- nrow(summary_rows_group_df)
@@ -1329,7 +1318,7 @@ create_body_component_h <- function(data) {
 
       if (!(i %in% summary_locations && group_summary_row_side == "top")) {
         row_span_vals_i[[1]] <-
-          row_limits$row_end - row_limits$row_start + 1 + summary_row_count
+          group_row_end - group_row_start + 1 + summary_row_count
       }
 
       # Process row group styles if there is an indication that any
@@ -1353,7 +1342,7 @@ create_body_component_h <- function(data) {
     # The second subcase of this is where `i` is *not* the first row
     # of this grouping of rows and we'd want the leftmost column with
     # the group label to not have a rowspan attr or any special classes
-    if (has_two_col_stub && !(i %in% groups_rows_df$row_start)) {
+    if (has_two_col_stub && !group_start) {
 
       # Remove first element of `alignment_classes` vector
       alignment_classes_i <- alignment_classes_i[-1]
