@@ -1490,9 +1490,11 @@ render_row_data <- function(
 
   scope <- ifelse(!is.na(row_span_vals) & row_span_vals > 1, "rowgroup", "row")
 
-  header <- gsub(
-    "(^[[:space:]]*)|([[:space:]]*$)", "",
-    paste(current_group_id, row_id_i, col_id_i)
+  has_group <- !is_empty(current_group_id) && nzchar(current_group_id)
+  header <- paste0(
+    current_group_id, if (has_group) " " else "",
+    row_id_i, if (has_group | nzchar(row_id_i[[1]])) " " else "",
+    col_id_i
   )
 
   base_attributes <- ifelse(
