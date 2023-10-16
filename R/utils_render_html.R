@@ -1240,14 +1240,10 @@ create_body_component_h <- function(data) {
     # Is this the first row of a group?
     group_start <- !is.null(g) && group_row_start == i
 
-    # Is this the first row of a group where there is a two-column stub?
-    group_start_two_col_stub <- has_two_col_stub && group_start
-
     #
     # Create a body row
     #
 
-    has_rtl_i <- has_rtl[i, ]
     # If any characters come from a RTL script, ensure that a
     # left alignment is transformed to a right alignment
     has_rtl_i <- has_rtl[i, ]
@@ -1385,7 +1381,8 @@ create_body_component_h <- function(data) {
       summaries_present &&
       !is.null(group_has_summary_rows) &&
       group_has_summary_rows &&
-      group_start_two_col_stub &&
+      has_two_col_stub &&
+      group_start &&
       !is.null(group_summary_row_side) &&
       !is.na(group_summary_row_side) &&
       group_summary_row_side == "top"
