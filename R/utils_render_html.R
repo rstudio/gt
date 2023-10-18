@@ -1428,10 +1428,13 @@ create_body_component_h <- function(data) {
 
     body_rows <- lapply(
       seq_along(body_rows_vec),
-      \(i) {
-        list(htmltools::tags$tr(
-          class = if (!is.na(row_classes[[i]])) row_classes[[i]],
-          htmltools::HTML(body_rows_vec[[i]])
+      function(i) {
+        list(htmltools::tag(
+          "tr",
+          varArgs = list(
+            class = if (!is.na(row_classes[[i]])) row_classes[[i]],
+            htmltools::HTML(body_rows_vec[[i]])
+          )
         ))
       }
     )
