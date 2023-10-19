@@ -353,8 +353,10 @@ resolve_footnotes_styles <- function(data, tbl_type) {
     lookup_tbl <-
       dplyr::filter(tbl, locname != "none") %>%
       dplyr::select(footnotes) %>%
-      dplyr::distinct() %>%
-      tibble::rownames_to_column(var = "fs_id")
+      dplyr::distinct()
+
+    lookup_tbl <- dplyr::mutate(lookup_tbl, fs_id = rownames(lookup_tbl), .before = 1)
+    rownames(lookup_tbl) <- NULL
 
     # Join the lookup table to `tbl`
     tbl <- dplyr::left_join(tbl, lookup_tbl, by = "footnotes")

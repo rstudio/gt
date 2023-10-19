@@ -45,6 +45,11 @@ twip_factors <-
     `cm` = 566.9291, `mm` = 56.69291, `tw` = 1
   )
 
+twip_factors_df <- data.frame(
+  unit = names(twip_factors),
+  conv = unname(twip_factors)
+)
+
 rtf_key <- function(word, val = NULL, space = FALSE) {
   rtf_raw(paste0("\\", word, val %||% "", if (space) " "))
 }
@@ -412,7 +417,7 @@ abs_len_to_twips <- function(lengths_df) {
 
   lengths_df %>%
     dplyr::left_join(
-      tibble::enframe(twip_factors, name = "unit", value = "conv"),
+      twip_factors_df,
       by = c("unit" = "unit")
     ) %>%
     dplyr::mutate(
