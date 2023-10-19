@@ -1063,419 +1063,401 @@ create_body_component_h <- function(data) {
   }
 
   # Create a default vector of row span values for group labels as a column
-  row_span_vals <- rep_len(list(NULL), n_cols_total)
+  row_span_vals <- rep_len(NA_integer_, n_cols_total)
 
   current_group_id <- character(0)
 
-  body_rows <-
-    lapply(
-      seq_len(n_rows),
-      function(i) {
+  n_groups <- nrow(groups_rows_df)
 
-        body_section <- list()
+  group_headings <- lapply(
+    seq_len(n_groups),
+    function(i) {
+      group_id <- groups_rows_df[["group_id"]][[i]]
+      group_label <- groups_rows_df[["group_label"]][[i]]
 
-        group_info <-
-          groups_rows_df[i >= groups_rows_df$row_start & i <= groups_rows_df$row_end, ]
+      if (is.null(group_id) || has_two_col_stub) {
+        return(NULL)
+      }
 
-        if (nrow(group_info) == 0) {
-          group_info <- NULL
+      row_style_row_groups_tbl <-
+        dt_styles_pluck(
+          styles_tbl = styles_tbl,
+          locname = "row_groups",
+          grpname = group_id
+        )
+
+      row_style_group_heading_row <- row_style_row_groups_tbl[["html_style"]]
+
+      group_class <-
+        if (group_label == "") {
+          "gt_empty_group_heading"
+        } else {
+          "gt_group_heading"
         }
 
-        group_id <- group_info[["group_id"]]
-        group_label <- group_info[["group_label"]]
-        group_row_start <- group_info[["row_start"]]
-        group_row_end <- group_info[["row_end"]]
-        group_has_summary_rows <- group_info[["has_summary_rows"]]
-        group_summary_row_side <- group_info[["summary_row_side"]]
+      htmltools::tags$tr(
+        class = "gt_group_heading_row",
+        htmltools::tags$th(
+          colspan = n_cols_total,
+          class = group_class,
+          style = row_style_group_heading_row,
+          scope = if (n_cols_total > 1) "colgroup" else "col",
+          id = group_label,
+          htmltools::HTML(group_label)
+        )
+      )
+    }
+  )
 
-        if (!is.null(group_id)) current_group_id <<- group_id
+  group_summaries <- lapply(
+    seq_len(n_groups),
+    function(i) {
+      group_id <- groups_rows_df[["group_id"]][[i]]
+      group_label <- groups_rows_df[["group_label"]][[i]]
+      group_has_summary_rows <- groups_rows_df[["has_summary_rows"]][[i]]
+      group_summary_row_side <- groups_rows_df[["summary_row_side"]][[i]]
 
-        # Is there a group heading row (dedicated row w/ group label) at `i`?
-        group_heading_row_at_i <-
-          !is.null(group_id) &&
-          !has_two_col_stub &&
-          group_row_start == i
+      needs_summary <-
+        summaries_present &&
+        !is.null(group_has_summary_rows) &&
+        group_has_summary_rows &&
+        !is.null(group_summary_row_side) &&
+        !is.na(group_summary_row_side) &&
+        group_summary_row_side %in% c("top", "bottom")
 
-        # Is this the first row of a group?
-        group_start <- !is.null(group_info) && group_row_start == i
+      if (!needs_summary) {
+        return(NULL)
+      }
 
-        # Is this the first row of a group where there is a two-column stub?
-        group_start_two_col_stub <-
-          has_two_col_stub && !is.null(group_info) && group_row_start == i
+      summary <- summary_rows_for_group_h(
+        data = data,
+        group_id = group_id
+      )
 
-        #
-        # Create a group heading row
-        #
+      if (has_two_col_stub && identical(group_summary_row_side, "top")) {
+        summary_rows_group_df <-
+          list_of_summaries[["summary_df_display_list"]][[group_id]]
 
-        # A group heading row occurs before a formal row `i` in that it really
-        # doesn't have an index number but we do anchor it to an `i` index and
-        # place it just before row `i`
-
-        if (group_heading_row_at_i) {
-
-          row_style_row_groups_tbl <-
-            dt_styles_pluck(
-              styles_tbl = styles_tbl,
-              locname = "row_groups",
-              grpname = group_id
-            )
-
-          row_style_group_heading_row <- row_style_row_groups_tbl[["html_style"]]
-
-          group_class <-
-            if (group_label == "") {
-              "gt_empty_group_heading"
-            } else {
-              "gt_group_heading"
-            }
-
-          group_heading_row <-
-            htmltools::tags$tr(
-              class = "gt_group_heading_row",
-              htmltools::tags$th(
-                colspan = n_cols_total,
-                class = group_class,
-                style = row_style_group_heading_row,
-                scope = ifelse(n_cols_total > 1, "colgroup", "col"),
-                id = group_label,
-                htmltools::HTML(group_label)
-              )
-            )
-
-          body_section <- append(body_section, list(group_heading_row))
+        if (!is.null(summary_rows_group_df) && "rowname" %in% stub_layout) {
+          summary_row_count <- nrow(summary_rows_group_df)
+        } else {
+          summary_row_count <- 0L
         }
 
-        if (has_two_col_stub) {
+        rowspan_val <-
+          groups_rows_df$row_end[[i]] - groups_rows_df$row_start[[i]] + 1 + summary_row_count
 
-          summary_rows_group_df <-
-            list_of_summaries[["summary_df_display_list"]][[group_id]]
-
-          if (!is.null(summary_rows_group_df) && "rowname" %in% stub_layout) {
-            summary_row_count <- nrow(summary_rows_group_df)
-          } else {
-            summary_row_count <- 0L
-          }
-
-          rowspan_val <-
-            group_info$row_end - group_info$row_start + 1 + summary_row_count
-
-          row_style_row_groups_tbl <-
-            dt_styles_pluck(
-              styles_tbl = styles_tbl,
-              locname = "row_groups",
-              grpname = group_id
-            )
-
-          row_style_group_heading_row <- row_style_row_groups_tbl[["html_style"]]
-
-          group_col_td <-
-            htmltools::tags$td(
-              headers = group_id,
-              rowspan = rowspan_val,
-              class = "gt_row gt_left gt_stub_row_group",
-              style = row_style_group_heading_row,
-              id = group_id,
-              htmltools::HTML(group_label)
-            )
-        }
-
-        #
-        # Create a body row
-        #
-
-        # This condition determines whether we are on an every 'second' body
-        # row and, if so, we use `extra_classes_2` instead of `extra_classes_1`
-        # (the former may have the `"gt_striped"` CSS class, depending on
-        # whether the option for row striping was taken)
-        extra_classes <- if (i %% 2 == 0) extra_classes_2 else extra_classes_1
-
-        indentation_stub <-
-          dt_stub_indentation_at_position(
-            data = data,
-            i = i
-          )
-
-        if (!is.null(indentation_stub) && indentation_stub != 0) {
-
-          extra_classes[[row_label_col]] <-
-            paste(
-              extra_classes[[row_label_col]],
-              paste0("gt_indent_", indentation_stub)
-            )
-        }
-
-        styles_row <-
+        row_style_row_groups_tbl <-
           dt_styles_pluck(
             styles_tbl = styles_tbl,
-            locname = c("data", "stub"),
-            rownum = i
+            locname = "row_groups",
+            grpname = group_id
           )
 
-        row_styles <-
-          build_row_styles(
-            styles_resolved_row = styles_row,
-            include_stub = has_stub_column,
-            n_cols = n_data_cols
+        row_style_group_heading_row <- row_style_row_groups_tbl[["html_style"]]
+
+        group_col_td <-
+          htmltools::tags$td(
+            headers = group_id,
+            rowspan = rowspan_val,
+            class = "gt_row gt_left gt_stub_row_group",
+            style = row_style_group_heading_row,
+            id = group_id,
+            htmltools::HTML(group_label)
           )
 
-        #
-        # Get groupwise summary rows (for either top or bottom of group)
-        #
+        summary[[1]] <-
+          htmltools::HTML(gsub("^<tr>", paste0("<tr>", group_col_td), as.character(summary[[1]])))
+      }
 
-        if (
-          summaries_present &&
-          !is.null(group_has_summary_rows) &&
-          group_has_summary_rows &&
-          (
-            i %in% groups_rows_df$row_start &&
-            !is.null(group_summary_row_side) &&
-            !is.na(group_summary_row_side) &&
-            group_summary_row_side == "top"
-          ) ||
-          (
-            i %in% groups_rows_df$row_end &&
-            !is.null(group_summary_row_side) &&
-            !is.na(group_summary_row_side) &&
-            group_summary_row_side == "bottom"
+      summary
+    }
+  )
+
+  summary_locations <- lapply(
+    seq_len(n_groups),
+    function(i) {
+      if (is.null(group_summaries[[i]])) {
+        return(NULL)
+      }
+
+      group_summary_row_side <- groups_rows_df[["summary_row_side"]][[i]]
+      if (group_summary_row_side == "top") {
+        groups_rows_df[["row_start"]][[i]]
+      } else if (group_summary_row_side == "bottom") {
+        groups_rows_df[["row_end"]][[i]]
+      }
+    }
+  )
+  summary_locations <- unlist(summary_locations)
+
+  # Store when rtl is detected so that later left alignment can be transformed to
+  # right alignment
+  has_rtl <- matrix(grepl(rtl_modern_unicode_charset, cell_matrix), ncol = ncol(cell_matrix))
+  cell_matrix[has_rtl] <- paste0("<p dir=\"rtl\">", cell_matrix[has_rtl], "</p>")
+
+  non_center_alignments <- alignment_classes != "gt_center"
+
+  body_rows_data <- list()
+  body_rows_data$row_df <- vector("list", n_rows)
+  body_rows_data$col_id_i <- vector("list", n_rows)
+  body_rows_data$row_id_i <- vector("list", n_rows)
+  body_rows_data$row_span_vals <- vector("list", n_rows)
+  body_rows_data$alignment_classes <- vector("list", n_rows)
+  body_rows_data$extra_classes <- vector("list", n_rows)
+  body_rows_data$row_styles <- vector("list", n_rows)
+  group_ids <- rep_len(NA_character_, n_rows)
+  row_classes <- rep_len(NA_character_, n_rows)
+
+  # FIXME: workaround for incorrect behaviour of `rows_add()`
+  # only added to make tests pass
+  # #1471
+  idx <- is.na(groups_rows_df$group_id)
+  groups_rows_df$group_id[idx] <- "NA"
+  groups_rows_df$group_label[idx] <- "NA"
+  # end fixme
+
+  group_idx <- rep(list(NULL), n_rows)
+  for (i in seq_len(n_groups)) {
+    start <- groups_rows_df$row_start[[i]]
+    end <- groups_rows_df$row_end[[i]]
+    group_idx[seq(start, end)] <- i
+    group_ids[seq(start, end)] <- groups_rows_df$group_id[[i]]
+  }
+  groups_list <- as.list(groups_rows_df)
+
+  for (i in seq_len(n_rows)) {
+    alignment_classes_i <- alignment_classes
+    row_span_vals_i <- row_span_vals
+
+    g <- group_idx[[i]]
+    group_id <- groups_list$group_id[g]
+    group_row_start <- groups_list$row_start[g]
+    group_row_end <- groups_list$row_end[g]
+    group_has_summary_rows <- groups_list$has_summary_rows[g]
+    group_summary_row_side <- groups_list$summary_row_side[g]
+
+    # Is this the first row of a group?
+    group_start <- !is.null(g) && group_row_start == i
+
+    #
+    # Create a body row
+    #
+
+    # If any characters come from a RTL script, ensure that a
+    # left alignment is transformed to a right alignment
+    has_rtl_i <- has_rtl[i, ]
+    if (any(has_rtl_i)) {
+      alignment_classes_i[has_rtl_i & non_center_alignments] <- "gt_right"
+    }
+
+    # This condition determines whether we are on an every 'second' body
+    # row and, if so, we use `extra_classes_2` instead of `extra_classes_1`
+    # (the former may have the `"gt_striped"` CSS class, depending on
+    # whether the option for row striping was taken)
+    extra_classes <- if (i %% 2 == 0) extra_classes_2 else extra_classes_1
+
+    indentation_stub <-
+      dt_stub_indentation_at_position(
+        data = data,
+        i = i
+      )
+
+    if (!is.null(indentation_stub) && indentation_stub != 0) {
+
+      extra_classes[[row_label_col]] <-
+        paste(
+          extra_classes[[row_label_col]],
+          paste0("gt_indent_", indentation_stub)
+        )
+    }
+
+    styles_row <-
+      dt_styles_pluck(
+        styles_tbl = styles_tbl,
+        locname = c("data", "stub"),
+        rownum = i
+      )
+
+    row_styles <-
+      build_row_styles(
+        styles_resolved_row = styles_row,
+        include_stub = has_stub_column,
+        n_cols = n_data_cols
+      )
+
+    # Handle the layout case where there is a 'two-column stub', which
+    # is the row group label occupying a separate column to the LHS of
+    # the row labels (this column needs to have a correct rowspan value
+    # on the group)
+    #
+    # The first subcase of this is where `i` is the first row of
+    # this grouping of rows
+    if (has_two_col_stub && group_start) {
+
+      # Modify the `extra_classes` list to include a class for
+      # the row group column
+      extra_classes[[1]] <- "gt_stub_row_group"
+
+      summary_rows_group_df <-
+        list_of_summaries[["summary_df_display_list"]][[group_id]]
+
+      if (!is.null(summary_rows_group_df) && "rowname" %in% stub_layout) {
+        summary_row_count <- nrow(summary_rows_group_df)
+      } else {
+        summary_row_count <- 0L
+      }
+
+      # If the summary rows are to be located at the bottom of the group
+      # modify the `row_span_vals` list such that the first element
+      # contains the number of rows to span
+      # TODO: replace with condition for summary rows at bottom
+
+      if (!(i %in% summary_locations && group_summary_row_side == "top")) {
+        row_span_vals_i[[1]] <-
+          group_row_end - group_row_start + 1 + summary_row_count
+      }
+
+      # Process row group styles if there is an indication that any
+      # are present
+      row_style_row_groups_tbl <-
+        dt_styles_pluck(
+          styles_tbl = styles_tbl,
+          locname = "row_groups",
+          grpname = group_id
+        )
+
+      row_style_group_heading_row <- row_style_row_groups_tbl[["html_style"]]
+      if (is_empty(row_style_group_heading_row)) {
+        row_style_group_heading_row <- NA_character_
+      }
+
+      # Add style of row group cell to vector
+      row_styles <- c(row_style_group_heading_row, row_styles)
+    }
+
+    # The second subcase of this is where `i` is *not* the first row
+    # of this grouping of rows and we'd want the leftmost column with
+    # the group label to not have a rowspan attr or any special classes
+    if (has_two_col_stub && !group_start) {
+
+      # Remove first element of `alignment_classes` vector
+      alignment_classes_i <- alignment_classes_i[-1]
+      row_span_vals_i <- row_span_vals_i[-1]
+      extra_classes <- extra_classes[-1]
+    }
+
+    row_df <-
+      output_df_row_as_vec(
+        i = i,
+        cell_matrix = cell_matrix,
+        groups_rows_df = groups_rows_df,
+        has_two_col_stub = has_two_col_stub
+      )
+
+    # Situation where we have two columns in the stub and the row label
+    # isn't the first (the `row_df` vector will have one less element)
+    if (length(col_names_id) > length(row_df)) {
+      col_id_i <- col_names_id[-(length(col_names_id) - length(row_df))]
+    } else {
+      col_id_i <- col_names_id
+    }
+
+    stub_width <- length(stub_layout)
+
+    if (stub_width == 0) {
+      row_id_i <- character(length(col_id_i))
+    } else if (stub_width == 1) {
+      row_id_i <- rep(paste0(col_id_i[1], "_", i), length(col_id_i))
+    } else if (stub_width == 2) {
+      row_id_i <- rep(paste0(col_id_i[2], "_", i), length(col_id_i))
+    }
+
+    # In the situation where there is:
+    # (1) a group summary to be situated at the top of the group, and,
+    # (2) a two-column stub
+    # we have to excise the redundant group label
+    if (
+      summaries_present &&
+      !is.null(group_has_summary_rows) &&
+      group_has_summary_rows &&
+      has_two_col_stub &&
+      group_start &&
+      !is.null(group_summary_row_side) &&
+      !is.na(group_summary_row_side) &&
+      group_summary_row_side == "top"
+    ) {
+
+      row_df <- row_df[-1]
+      col_id_i <- col_id_i[-1]
+      row_id_i <- row_id_i[-1]
+      row_span_vals_i <- row_span_vals_i[-1]
+      alignment_classes_i <- alignment_classes_i[-1]
+      has_rtl_i <- has_rtl_i[-1]
+      extra_classes <- extra_classes[-1]
+      row_styles <- row_styles[-1]
+    }
+
+    body_rows_data$row_df[[i]] <- row_df
+    body_rows_data$col_id_i[[i]] <- col_id_i
+    body_rows_data$row_id_i[[i]] <- row_id_i
+    body_rows_data$row_span_vals[[i]] <- row_span_vals_i
+    body_rows_data$alignment_classes[[i]] <- alignment_classes_i
+    body_rows_data$extra_classes[[i]] <- extra_classes
+    body_rows_data$row_styles[[i]] <- row_styles
+    if (group_start) {
+      row_classes[i] <- "gt_row_group_first"
+    }
+  }
+
+  if (n_rows == 0) {
+    body_rows <- list()
+  } else {
+    ns <- lengths(body_rows_data$row_df)
+    body_rows_data_flat <- lapply(body_rows_data, function(x) unlist(x, recursive = FALSE))
+    # Unlike the other fields `group_ids` is of size 1 per row. So it
+    # needs to be repeated to match the size of the other fields
+    group_ids <- vctrs::vec_rep_each(group_ids, times = ns)
+    body_rows_data_flat$current_group_id <- group_ids
+
+    body_rows_uncollapsed <- vctrs::vec_chop(
+      do.call(render_row_data, body_rows_data_flat),
+      sizes = ns
+    )
+    body_rows_vec <- lapply(body_rows_uncollapsed, function(x) paste0(x, collapse = "\n"))
+
+    body_rows <- lapply(
+      seq_along(body_rows_vec),
+      function(i) {
+        list(htmltools::tag(
+          "tr",
+          varArgs = list(
+            class = if (!is.na(row_classes[[i]])) row_classes[[i]],
+            htmltools::HTML(body_rows_vec[[i]])
           )
-        ) {
-
-          summary_section <-
-            summary_rows_for_group_h(
-              data = data,
-              group_id = group_id
-            )
-
-        } else {
-          summary_section <- NULL
-        }
-
-        # Handle the layout case where there is a 'two-column stub', which
-        # is the row group label occupying a separate column to the LHS of
-        # the row labels (this column needs to have a correct rowspan value
-        # on the group)
-        #
-        # The first subcase of this is where `i` is the first row of
-        # this grouping of rows
-        if (has_two_col_stub && i %in% groups_rows_df$row_start) {
-
-          # Modify the `extra_classes` list to include a class for
-          # the row group column
-          extra_classes[[1]] <- "gt_stub_row_group"
-
-          # Obtain a one-row table that contains the beginning and
-          # ending row index for the row group
-          row_limits <-
-            dplyr::select(
-              dplyr::filter(
-                groups_rows_df, row_start == i
-              ),
-              group_id, row_start, row_end
-            )
-
-          summary_rows_group_df <-
-            list_of_summaries[["summary_df_display_list"]][[row_limits$group_id]]
-
-          if (!is.null(summary_rows_group_df) && "rowname" %in% stub_layout) {
-            summary_row_count <- nrow(summary_rows_group_df)
-          } else {
-            summary_row_count <- 0L
-          }
-
-          # If the summary rows are to be located at the bottom of the group
-          # modify the `row_span_vals` list such that the first element
-          # contains the number of rows to span
-          # TODO: replace with condition for summary rows at bottom
-
-          if (!(!is.null(summary_section) && group_summary_row_side == "top")) {
-            row_span_vals[[1]] <-
-              row_limits$row_end - row_limits$row_start + 1 + summary_row_count
-          }
-
-          # Process row group styles if there is an indication that any
-          # are present
-          row_style_row_groups_tbl <-
-            dt_styles_pluck(
-              styles_tbl = styles_tbl,
-              locname = "row_groups",
-              grpname = group_id
-            )
-
-          row_style_group_heading_row <- row_style_row_groups_tbl[["html_style"]]
-
-          # Add style of row group cell to vector
-          row_styles <- c(list(row_style_group_heading_row), row_styles)
-        }
-
-        # The second subcase of this is where `i` is *not* the first row
-        # of this grouping of rows and we'd want the leftmost column with
-        # the group label to not have a rowspan attr or any special classes
-        if (has_two_col_stub && !(i %in% groups_rows_df$row_start)) {
-
-          # Remove first element of `alignment_classes` vector
-          alignment_classes <- alignment_classes[-1]
-          row_span_vals[[1]] <- NULL
-          extra_classes[[1]] <- NULL
-        }
-
-        row_df <-
-          output_df_row_as_vec(
-            i = i,
-            cell_matrix = cell_matrix,
-            groups_rows_df = groups_rows_df,
-            has_two_col_stub = has_two_col_stub
-          )
-
-        # Situation where we have two columns in the stub and the row label
-        # isn't the first (the `row_df` vector will have one less element)
-        if (length(col_names_id) > length(row_df)) {
-          col_id_i <- col_names_id[-(length(col_names_id) - length(row_df))]
-        } else {
-          col_id_i <- col_names_id
-        }
-
-        stub_width <- length(stub_layout)
-
-        if (stub_width == 0) {
-          row_id_i <- rep("", length(col_id_i))
-        } else if (stub_width == 1) {
-          row_id_i <- rep(paste0(col_id_i[1], "_", i), length(col_id_i))
-        } else if (stub_width == 2) {
-          row_id_i <- rep(paste0(col_id_i[2], "_", i), length(col_id_i))
-        }
-
-        # In the situation where there is:
-        # (1) a group summary to be situated at the top of the group, and,
-        # (2) a two-column stub
-        # we have to excise the redundant group label
-        if (
-          summaries_present &&
-          !is.null(group_has_summary_rows) &&
-          group_has_summary_rows &&
-          group_start_two_col_stub &&
-          !is.null(group_summary_row_side) &&
-          !is.na(group_summary_row_side) &&
-          group_summary_row_side == "top"
-        ) {
-
-          row_df <- row_df[-1]
-          col_id_i <- col_id_i[-1]
-          row_id_i <- row_id_i[-1]
-          row_span_vals <- row_span_vals[-1]
-          alignment_classes <- alignment_classes[-1]
-          extra_classes <- extra_classes[-1]
-          row_styles <- row_styles[-1]
-        }
-
-        body_row <-
-          htmltools::tags$tr(
-            class = if (group_start) "gt_row_group_first",
-            htmltools::HTML(
-              paste0(
-                mapply(
-                  SIMPLIFY = FALSE,
-                  USE.NAMES = FALSE,
-                  row_df,
-                  col_id_i,
-                  row_id_i,
-                  row_span_vals,
-                  alignment_classes,
-                  extra_classes,
-                  row_styles,
-                  FUN = function(x, col_id, row_id, row_span, alignment_class, extra_class, cell_style) {
-
-                    # If any characters come from a RTL script, ensure that a
-                    # left alignment is transformed to a right alignment
-                    if (grepl(rtl_modern_unicode_charset, x)) {
-                      if (alignment_class != "gt_center") {
-                        alignment_class <- "gt_right"
-                      }
-                      x <- paste0("<p dir=\"rtl\">", x, "</p>")
-                    }
-
-                    sprintf(
-                      "<%s %sclass=\"%s\"%s>%s</%s>",
-                      if ("gt_stub" %in% extra_class) {
-                        paste0(
-                          "th ",
-                          "id=\"",
-                          row_id,
-                          "\" ",
-                          "scope=\"",
-                          ifelse(!is.null(row_span) && row_span > 1, "rowgroup", "row"),
-                          "\""
-                        )
-                      } else {
-                        paste0(
-                          "td ",
-                          "headers=\"",
-                          gsub(
-                            "(^[[:space:]]*)|([[:space:]]*$)", "",
-                            paste(current_group_id, row_id, col_id)
-                          ),
-                          "\""
-                        )
-                      },
-                      if (is.null(row_span)) {
-                        ""
-                      } else {
-                        paste0(
-                          "rowspan=\"",
-                          htmltools::htmlEscape(row_span, attribute = TRUE),
-                          "\" "
-                        )
-                      },
-                      paste(
-                        c(
-                          "gt_row",
-                          htmltools::htmlEscape(alignment_class, attribute = TRUE),
-                          htmltools::htmlEscape(extra_class, attribute = TRUE)
-                        ),
-                        collapse = " "
-                      ),
-                      if (!any(nzchar(cell_style))) {
-                        ""
-                      } else {
-                        paste0(
-                          " style=\"",
-                          htmltools::htmlEscape(cell_style, attribute = FALSE),
-                          "\""
-                        )
-                      },
-                      as.character(x),
-                      if ("gt_stub" %in% extra_class) {
-                        "th"
-                      } else {
-                        "td"
-                      }
-                    )
-                  }
-                ),
-                collapse = "\n"
-              )
-            )
-          )
-
-
-        if (!is.null(summary_section) && group_summary_row_side == "top") {
-
-          if (has_two_col_stub) {
-
-            summary_section[[1]] <-
-              htmltools::HTML(gsub("^<tr>", paste0("<tr>", group_col_td), as.character(summary_section[[1]])))
-          }
-          body_section <- append(body_section, summary_section)
-        }
-
-        body_section <- append(body_section, list(body_row))
-
-        if (!is.null(summary_section) && group_summary_row_side == "bottom") {
-          body_section <- append(body_section, summary_section)
-        }
-
-        body_section
+        ))
       }
     )
+  }
+
+  for (i in seq_len(n_groups)) {
+    group_row_start <- groups_rows_df$row_start[[i]]
+    group_row_end <- groups_rows_df$row_end[[i]]
+    group_summary_row_side <- groups_rows_df$summary_row_side[[i]]
+
+    if (identical(group_summary_row_side, "top")) {
+      body_rows[[group_row_start]] <- append(group_summaries[i], body_rows[[group_row_start]])
+    }
+
+    # A group heading row occurs before a formal row `i` in that it really
+    # doesn't have an index number but we do anchor it to an `i` index and
+    # place it just before row `i`
+    body_rows[[group_row_start]] <- append(group_headings[i], body_rows[[group_row_start]])
+
+    if (identical(group_summary_row_side, "bottom")) {
+      body_rows[[group_row_end]] <- append(body_rows[[group_row_end]], group_summaries[i])
+    }
+  }
 
   body_rows <- flatten_list(body_rows)
 
@@ -1507,6 +1489,73 @@ create_body_component_h <- function(data) {
   htmltools::tags$tbody(
     class = "gt_table_body",
     body_rows
+  )
+}
+
+render_row_data <- function(
+    row_df,
+    current_group_id,
+    col_id_i,
+    row_id_i,
+    row_span_vals,
+    alignment_classes,
+    extra_classes,
+    row_styles
+) {
+  n <- length(row_df)
+
+  has_stub_class <- vapply(
+    extra_classes,
+    function(extra_class) "gt_stub" %in% extra_class,
+    logical(1)
+  )
+
+  # below we use a fast version of `ifelse()` where `test` is a logical vector
+  # without NA
+  elements <- rep.int("td", n)
+  elements[has_stub_class] <- "th"
+
+  scope <- rep.int("row", n)
+  scope[!is.na(row_span_vals) & row_span_vals > 1] <- "rowgroup"
+
+  has_group <- !is.na(current_group_id)
+  header <- paste0(
+    ifelse(has_group, current_group_id, ""), ifelse(has_group, " ", ""),
+    row_id_i, ifelse(has_group | nzchar(row_id_i), " ", ""),
+    col_id_i
+  )
+
+  base_attributes <- ifelse(
+    has_stub_class,
+    paste0("id=\"", row_id_i, "\" ", "scope=\"", scope, "\" "),
+    paste0("headers=\"", header, "\" ")
+  )
+
+  row_span_attributes <- character(n)
+  row_span_attributes[!is.na(row_span_vals)] <- paste0("rowspan=\"", row_span_vals[!is.na(row_span_vals)], "\" ")
+  styles <- character(n)
+  styles[!is.na(row_styles)] <- paste0(" style=\"", row_styles[!is.na(row_styles)], "\"")
+
+  extra_classes_chr <- rep("", n)
+  extra_classes_idx <- lengths(extra_classes) > 0
+  extra_classes_chr[extra_classes_idx] <- vapply(
+    extra_classes[extra_classes_idx],
+    function(extra_class) {
+      paste0(" ", extra_class, collapse = " ")
+    },
+    character(1)
+  )
+
+  sprintf(
+    "<%s %s%sclass=\"gt_row %s%s\"%s>%s</%s>",
+    elements,
+    base_attributes,
+    row_span_attributes,
+    alignment_classes,
+    extra_classes_chr,
+    styles,
+    as.character(row_df),
+    elements
   )
 }
 
@@ -1949,7 +1998,7 @@ summary_rows_for_group_h <- function(
                     ),
                     attribute = TRUE
                   ),
-                  if (!any(nzchar(cell_style))) {
+                  if (is.na(cell_style)) {
                     # 4. tag styles
                     ""
                   } else {
@@ -2004,17 +2053,20 @@ build_row_styles <- function(
     )
   }
 
-  # This will hold the resulting styles
-  result <- rep_len(list(NULL), n_cols)
+  n_cols <- n_cols + include_stub
+  result <- rep_len(NA_character_, n_cols)
 
   # The subset of styles_resolved_row that applies to data
-  data_styles <- styles_resolved_row[styles_resolved_row$colnum > 0, ]
-  result[data_styles$colnum] <- data_styles$html_style
+  idx <- styles_resolved_row$colnum > 0
+  result[styles_resolved_row$colnum[idx] + include_stub] <- styles_resolved_row$html_style[idx]
 
   # If a stub exists, we need to prepend a style (or NULL) to the result.
   if (include_stub) {
-    stub_style <- styles_resolved_row[styles_resolved_row$colnum == 0, ]
-    result <- c(list(stub_style$html_style), result)
+    idx_0 <- styles_resolved_row$colnum == 0
+    stub_style <- styles_resolved_row$html_style[idx_0]
+    if (!is_empty(stub_style)) {
+      result[1] <- stub_style
+    }
   }
 
   result

@@ -50,8 +50,8 @@ Imports:
     rlang (>= 1.0.2),
     sass (>= 0.4.5),
     scales (>= 1.2.1),
-    tibble (>= 3.1.8),
     tidyselect (>= 1.2.0),
+    vctrs,
     xml2 (>= 1.3.3)
 Suggests:
     covr,

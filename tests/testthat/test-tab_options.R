@@ -1540,7 +1540,7 @@ test_that("The row striping options work correctly", {
         ) %>%
         render_as_html() %>%
         xml2::read_html() %>%
-        selection_text("[class='gt_row gt_right gt_stub gt_striped']"),
+        selection_text("[class='gt_row gt_right gt_stub  gt_striped']"),
       tbl %>%
         gt() %>%
         tab_options(
