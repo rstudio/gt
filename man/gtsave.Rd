@@ -36,7 +36,7 @@ An optional path to which the file should be saved (combined with
 All other options passed to the appropriate internal saving function.}
 }
 \value{
-Invisibly returns \code{TRUE} if the export process is successful.
+The file name (invisibly) if the export process is successful.
 }
 \description{
 The \code{gtsave()} function makes it easy to save a \strong{gt} table to a file. The

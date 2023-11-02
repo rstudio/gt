@@ -2,6 +2,8 @@
 
 * The performance of rendering bigger tables as HTML has been improved and is now up to 3 times faster than before (@mgirlich, #1470).
 
+* `gtsave()` now returns the file path invisibly instead of `TRUE` (@olivroy, #1478).
+
 # gt 0.10.0
 
 ## Nanoplots
