@@ -97,7 +97,7 @@
 #'
 #'   All other options passed to the appropriate internal saving function.
 #'
-#' @return Invisibly returns `TRUE` if the export process is successful.
+#' @return The file name (invisibly) if the export process is successful.
 #'
 #' @section Examples:
 #'
@@ -217,8 +217,11 @@ gtsave <- function(
       ))
     }
   )
+  if (!is.null(path)) {
+    filename <- file.path(path, filename)
+  }
 
-  invisible(TRUE)
+  invisible(filename)
 }
 
 #' Saving function for an HTML file
