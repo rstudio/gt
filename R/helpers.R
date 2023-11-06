@@ -797,90 +797,42 @@ nanoplot_options <- function(
     currency = NULL
 ) {
 
-  if (is.null(data_point_radius)) {
-    data_point_radius <- 10
-  }
-  if (is.null(data_point_stroke_color)) {
-    data_point_stroke_color <- "#FFFFFF"
-  }
-  if (is.null(data_point_stroke_width)) {
-    data_point_stroke_width <- 4
-  }
-  if (is.null(data_point_fill_color)) {
-    data_point_fill_color <- "#FF0000"
-  }
-  if (is.null(data_line_type)) {
-    data_line_type <- "curved"
-  }
-  if (is.null(data_line_stroke_color)) {
-    data_line_stroke_color <- "#4682B4"
-  }
-  if (is.null(data_line_stroke_width)) {
-    data_line_stroke_width <- 8
-  }
-  if (is.null(data_bar_stroke_color)) {
-    data_bar_stroke_color <- "#3290CC"
-  }
-  if (is.null(data_bar_stroke_width)) {
-    data_bar_stroke_width <- 4
-  }
-  if (is.null(data_bar_fill_color)) {
-    data_bar_fill_color <- "#3FB5FF"
-  }
-  if (is.null(data_bar_negative_stroke_color)) {
-    data_bar_negative_stroke_color <- "#CC3243"
-  }
-  if (is.null(data_bar_negative_stroke_width)) {
-    data_bar_negative_stroke_width <- 4
-  }
-  if (is.null(data_bar_negative_fill_color)) {
-    data_bar_negative_fill_color <- "#D75A68"
-  }
-  if (is.null(reference_line_color)) {
-    reference_line_color <- "#75A8B0"
-  }
-  if (is.null(reference_area_fill_color)) {
-    reference_area_fill_color <- "#A6E6F2"
-  }
-  if (is.null(vertical_guide_stroke_color)) {
-    vertical_guide_stroke_color <- "#911EB4"
-  }
-  if (is.null(vertical_guide_stroke_width)) {
-    vertical_guide_stroke_width <- 12
-  }
-  if (is.null(show_data_points)) {
-    show_data_points <- TRUE
-  }
-  if (is.null(show_data_line)) {
-    show_data_line <- TRUE
-  }
-  if (is.null(show_data_area)) {
-    show_data_area <- TRUE
-  }
-  if (is.null(show_reference_line)) {
-    show_reference_line <- TRUE
-  }
-  if (is.null(show_reference_area)) {
-    show_reference_area <- TRUE
-  }
-  if (is.null(show_vertical_guides)) {
-    show_vertical_guides <- TRUE
-  }
-  if (is.null(show_y_axis_guide)) {
-    show_y_axis_guide <- TRUE
-  }
-  if (is.null(y_val_fmt_fn)) {
-    y_val_fmt_fn <- NULL
-  }
-  if (is.null(y_axis_fmt_fn)) {
-    y_axis_fmt_fn <- NULL
-  }
-  if (is.null(y_ref_line_fmt_fn)) {
-    y_ref_line_fmt_fn <- NULL
-  }
-  if (is.null(currency)) {
-    currency <- NULL
-  }
+  data_point_radius       <- data_point_radius %||% 10
+  data_point_stroke_color <- data_point_stroke_color %||% "#FFFFFF"
+  data_point_stroke_width <- data_point_stroke_width %||% 4
+  data_point_fill_color   <- data_point_fill_color %||% "#FF0000"
+
+  data_line_type         <- data_line_type %||% "curved"
+  data_line_stroke_color <- data_line_stroke_color %||% "#4682B4"
+  data_line_stroke_width <- data_line_stroke_width %||% 8
+
+  data_bar_stroke_color <- data_bar_stroke_color %||% "#3290CC"
+  data_bar_stroke_width <- data_bar_stroke_width %||% 4
+  data_bar_fill_color   <- data_bar_fill_color %||% "#3FB5FF"
+
+  data_bar_negative_stroke_color <- data_bar_negative_stroke_color %||% "#CC3243"
+  data_bar_negative_stroke_width <- data_bar_negative_stroke_width %||% 4
+  data_bar_negative_fill_color   <- data_bar_negative_fill_color %||% "#D75A68"
+
+  reference_line_color      <- reference_line_color %||% "#75A8B0"
+  reference_area_fill_color <- reference_area_fill_color%||% "#A6E6F2"
+
+  vertical_guide_stroke_color <- vertical_guide_stroke_color %||% "#911EB4"
+  vertical_guide_stroke_width <- vertical_guide_stroke_width %||% 12
+
+  show_data_points <- show_data_points %||% TRUE
+  show_data_line   <- show_data_line %||% TRUE
+  show_data_area   <- show_data_area %||% TRUE
+
+  show_reference_line  <- show_reference_line %||% TRUE
+  show_reference_area  <- show_reference_area %||% TRUE
+  show_vertical_guides <- show_vertical_guides %||% TRUE
+  show_y_axis_guide    <- show_y_axis_guide %||% TRUE
+
+  # y_val_fmt_fn, y_axis_fmt_fn, and y_ref_line_fmt_fn
+  # are not assigned to a default value
+
+  # currency is also not assigned a default value.
 
   nanoplot_options_list <-
     list(
@@ -3588,17 +3540,9 @@ cell_borders <- function(
     weight = px(1)
 ) {
 
-  if (is.null(weight)) {
-    weight <- "0"
-  }
-
-  if (is.null(style)) {
-    style <- "hidden"
-  }
-
-  if (is.null(color)) {
-    color <- "transparent"
-  }
+  weight <- weight %||% "0"
+  style <- style %||% "hidden"
+  color <- color %||% "transparent"
 
   validate_length_one(weight, "weight")
   validate_length_one(style, "style")

@@ -1256,55 +1256,37 @@ extract_body <- function(
 
   data <- dt_body_build(data = data)
 
-  if (
-    !is.null(build_stage) &&
-    build_stage == "init"
-  ) {
+  if (identical(build_stage, "init")) {
     return(data[["_body"]])
   }
 
   data <- render_formats(data = data, context = output)
 
-  if (
-    !is.null(build_stage) &&
-    build_stage == "fmt_applied"
-  ) {
+  if (identical(build_stage, "fmt_applied")) {
     return(data[["_body"]])
   }
 
   data <- render_substitutions(data = data, context = output)
 
-  if (
-    !is.null(build_stage) &&
-    build_stage == "sub_applied"
-  ) {
+  if (identical(build_stage, "sub_applied")) {
     return(data[["_body"]])
   }
 
   data <- migrate_unformatted_to_output(data = data, context = output)
 
-  if (
-    !is.null(build_stage) &&
-    build_stage == "unfmt_included"
-  ) {
+  if (identical(build_stage, "unfmt_included")) {
     return(data[["_body"]])
   }
 
   data <- perform_col_merge(data = data, context = output)
 
-  if (
-    !is.null(build_stage) &&
-    build_stage == "cols_merged"
-  ) {
+  if (identical(build_stage, "cols_merged")) {
     return(data[["_body"]])
   }
 
   data <- dt_body_reassemble(data = data)
 
-  if (
-    !is.null(build_stage) &&
-    build_stage == "body_reassembled"
-  ) {
+  if (identical(build_stage, "body_reassembled")) {
     return(data[["_body"]])
   }
 
@@ -1314,10 +1296,7 @@ extract_body <- function(
 
   data <- perform_text_transforms(data = data)
 
-  if (
-    !is.null(build_stage) &&
-    build_stage == "text_transformed"
-  ) {
+  if (identical(build_stage, "text_transformed")) {
     return(data[["_body"]])
   }
 
@@ -1332,13 +1311,7 @@ extract_body <- function(
   data <- resolve_footnotes_styles(data = data, tbl_type = "footnotes")
   data <- apply_footnotes_to_output(data = data, context = output)
 
-  if (
-    (
-      !is.null(build_stage) &&
-      build_stage == "footnotes_attached"
-    ) ||
-    is.null(build_stage)
-  ) {
+  if (is.null(build_stage) || identical(build_stage, "footnotes_attached")) {
     return(data[["_body"]])
   }
 

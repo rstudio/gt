@@ -681,7 +681,7 @@ process_text <- function(text, context = "html") {
     if (inherits(text, "from_markdown")) {
 
       text <- markdown_to_xml(text)
-    }else{
+    } else {
       text <- as.character(text)
     }
 
@@ -925,7 +925,7 @@ cmark_rules_xml <- list(
     ) %>% as.character()
   },
 
-  image = function(x, process, ...){
+  image = function(x, process, ...) {
     xml_r(
       xml_rPr(),
       xml_image(
@@ -1054,7 +1054,7 @@ cmark_rules_xml <- list(
   code_block = function(x, process, ...) {
     ##split text up by new line
     text <- strsplit(xml2::xml_text(x),split = "\n")[[1]]
-    code_text <- lapply(text, function(line){
+    code_text <- lapply(text, function(line) {
       xml_t(line, xml_space = "preserve")
     })
     xml_p(xml_pPr(xml_pStyle(val = "Macro Text")),
@@ -1128,7 +1128,7 @@ cmark_rules_xml <- list(
     return(rtf_raw(""))
   },
 
-  html_block = function(x, process, ...){
+  html_block = function(x, process, ...) {
     xml_p(
       xml_pPr(),
       xml_r(xml_rPr(),
@@ -1719,7 +1719,7 @@ normalize_suffixing_inputs <- function(
     system
 ) {
 
-  if (is_false(suffixing)) {
+  if (isFALSE(suffixing)) {
 
     # If `suffixing` is FALSE, then return `NULL`;
     # this will be used to signal there is nothing

@@ -3219,34 +3219,30 @@ fmt_fraction <- function(
   locale <- normalize_locale(locale = locale)
   locale <- resolve_locale(data = data, locale = locale)
 
-  if (is.null(accuracy)) {
+  # Use "low" as default for accuracy
+  accuracy <- accuracy %||% "low"
 
-    accuracy <- "low"
+  if (is.character(accuracy)) {
 
-  } else {
+    rlang::arg_match0(accuracy, c("low", "med", "high"))
 
-    if (is.character(accuracy)) {
+  } else if (is.numeric(accuracy)) {
 
-      rlang::arg_match0(accuracy, c("low", "med", "high"))
-
-    } else if (is.numeric(accuracy)) {
-
-      if (accuracy < 1) {
-
-        cli::cli_abort(c(
-          "The numeric value supplied for `accuracy` is invalid.",
-          "*" = "Must be an integer value greater than zero."
-        ))
-      }
-
-    } else {
+    if (accuracy < 1) {
 
       cli::cli_abort(c(
-        "The input for `accuracy` is invalid.",
-        "*" = "Must be a keyword \"low\", \"med\", or \"high\", or",
+        "The numeric value supplied for `accuracy` is invalid.",
         "*" = "Must be an integer value greater than zero."
       ))
     }
+
+  } else {
+
+    cli::cli_abort(c(
+      "The input for `accuracy` is invalid.",
+      "*" = "Must be a keyword \"low\", \"med\", or \"high\", or",
+      "*" = "Must be an integer value greater than zero."
+    ))
   }
 
   # In this case where strict mode is being used (with the option
@@ -7136,9 +7132,7 @@ fmt_datetime <- function(
 
             if (is.character(x)) {
 
-              if (is.null(tz)) {
-                tz <- "GMT"
-              }
+              tz <- tz %||% "GMT"
 
               datetime <-
                 tryCatch(
@@ -7162,9 +7156,7 @@ fmt_datetime <- function(
 
           } else {
 
-            if (is.null(tz)) {
-              tz <- "UTC"
-            }
+            tz <- tz %||% "UTC"
 
             dt_str <- strftime(x, format = "%Y-%m-%dT%H:%M:%S%z", tz = tz)
 
@@ -8339,7 +8331,7 @@ format_bins_by_context <- function(x, sep, fmt, context) {
     paste0(x_val_lhs_fmt, sep, x_val_rhs_fmt)
 
   x_str[!is.na(x)] <- x_str_non_missing
-  x_str[is.na(x)] <- as.character(NA_character_)
+  x_str[is.na(x)] <- NA_character_
   x_str
 }
 
@@ -8588,7 +8580,7 @@ format_units_by_context <- function(x, context = "html") {
     )
 
   x_str[!is.na(x)] <- x_str_non_missing
-  x_str[is.na(x)] <- as.character(NA_character_)
+  x_str[is.na(x)] <- NA_character_
   x_str
 }
 
@@ -9292,7 +9284,7 @@ fmt_url <- function(
           )
 
         x_str[!is.na(x)] <- x_str_non_missing
-        x_str[is.na(x)] <- as.character(NA_character_)
+        x_str[is.na(x)] <- NA_character_
         x_str
       },
       latex = function(x) {
@@ -9688,7 +9680,7 @@ fmt_image <- function(
           )
 
         x_str[!is.na(x)] <- x_str_non_missing
-        x_str[is.na(x)] <- as.character(NA_character_)
+        x_str[is.na(x)] <- NA_character_
         x_str
       },
       latex = function(x) {
@@ -9775,7 +9767,7 @@ fmt_image <- function(
                   filename <- path_expand(filename)
                 }
 
-                if (is.null(height) | is.null(width)) {
+                if (is.null(height) || is.null(width)) {
 
                   hw_ratio <- get_image_hw_ratio(filename)
 
@@ -9804,7 +9796,7 @@ fmt_image <- function(
           )
 
         x_str[!is.na(x)] <- x_str_non_missing
-        x_str[is.na(x)] <- as.character(NA_character_)
+        x_str[is.na(x)] <- NA_character_
 
         x_str
       },
@@ -10280,7 +10272,7 @@ fmt_flag <- function(
           )
 
         x_str[!is.na(x)] <- x_str_non_missing
-        x_str[is.na(x)] <- as.character(NA_character_)
+        x_str[is.na(x)] <- NA_character_
         x_str
       },
       latex = function(x) {
@@ -10844,7 +10836,7 @@ fmt_icon <- function(
           )
 
         x_str[!is.na(x)] <- x_str_non_missing
-        x_str[is.na(x)] <- as.character(NA_character_)
+        x_str[is.na(x)] <- NA_character_
         x_str
       },
       latex = function(x) {

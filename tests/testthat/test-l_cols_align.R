@@ -17,8 +17,8 @@ test_that("The `cols_align()` function works correctly", {
     as_latex() %>% as.character()
 
   # Expect a characteristic pattern
-  grepl(".*begin\\{longtable\\}\\{llrrlrrrrrr\\}.*", tbl_latex) %>%
-    expect_true()
+  expect_length(tbl_latex, 1)
+  expect_match(tbl_latex, ".*begin\\{longtable\\}\\{llrrlrrrrrr\\}.*")
 
   # Create a `tbl_latex` object with `gt()`; columns `1` (`mpg`),
   # `2` (`cyl`), and `3` (`disp`) are aligned right
@@ -28,8 +28,8 @@ test_that("The `cols_align()` function works correctly", {
     as_latex() %>% as.character()
 
   # Expect a characteristic pattern
-  grepl(".*begin\\{longtable\\}\\{lllrrrrrrrr\\}.*", tbl_latex) %>%
-    expect_true()
+  expect_length(tbl_latex, 1)
+  expect_match(tbl_latex, ".*begin\\{longtable\\}\\{lllrrrrrrrr\\}.*")
 
   # Create a `tbl_latex` object with `gt()`; align all
   # columns to the left
@@ -39,8 +39,8 @@ test_that("The `cols_align()` function works correctly", {
     as_latex() %>% as.character()
 
   # Expect a characteristic pattern
-  grepl(".*begin\\{longtable\\}\\{lllllllllll\\}.*", tbl_latex) %>%
-    expect_true()
+  expect_length(tbl_latex, 1)
+  expect_match(tbl_latex, ".*begin\\{longtable\\}\\{lllllllllll\\}.*")
 
   # Create a `tbl_latex` object with `gt()`; align all
   # columns (using `columns = everything()`) to the left
@@ -50,8 +50,8 @@ test_that("The `cols_align()` function works correctly", {
     as_latex() %>% as.character()
 
   # Expect a characteristic pattern
-  grepl(".*begin\\{longtable\\}\\{lllllllllll\\}.*", tbl_latex) %>%
-    expect_true()
+  expect_length(tbl_latex, 1)
+  expect_match(tbl_latex, ".*begin\\{longtable\\}\\{lllllllllll\\}.*")
 
   # Create a `tbl_latex` object with the `sp500` data
   # frame and `auto`-align all columns
@@ -61,6 +61,6 @@ test_that("The `cols_align()` function works correctly", {
     as_latex() %>% as.character()
 
   # Expect a characteristic pattern
-  grepl(".*begin\\{longtable\\}\\{rrrrrr\\}.*", tbl_latex) %>%
-    expect_true()
+  expect_length(tbl_latex, 1)
+  expect_match(tbl_latex, ".*begin\\{longtable\\}\\{rrrrrr\\}.*")
 })

@@ -24,11 +24,11 @@ test_that("The `row_group_order()` function works correctly", {
     row_group_order(groups = c("2018-02-11", "2018-02-10"))
 
   # Expect a characteristic pattern
-  grepl(
+  expect_match(
+    as_latex(tbl_latex) %>% as.character(),
     paste0(
       ".*multicolumn\\{5\\}\\{l\\}\\{2018-02-11\\}",
-      ".*multicolumn\\{5\\}\\{l\\}\\{2018-02-10\\}.*"),
-    tbl_latex %>% as_latex() %>% as.character()
-  ) %>%
-    expect_true()
+      ".*multicolumn\\{5\\}\\{l\\}\\{2018-02-10\\}.*"
+    )
+  )
 })

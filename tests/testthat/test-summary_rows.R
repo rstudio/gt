@@ -1978,10 +1978,10 @@ test_that("Creating summary rows works for hidden columns", {
   )
 
   # Expect non-NA values in all columns that had summaries computed
-  expect_true(!any(is.na(summary_w02$open)))
-  expect_true(!any(is.na(summary_w02$high)))
-  expect_true(!any(is.na(summary_w02$low)))
-  expect_true(!any(is.na(summary_w02$close)))
+  expect_true(!anyNA(summary_w02$open))
+  expect_true(!anyNA(summary_w02$high))
+  expect_true(!anyNA(summary_w02$low))
+  expect_true(!anyNA(summary_w02$close))
 
   # TODO: test gt table for values and expect that
   # when `cols_unhide()`ing 'open' and 'low' their summary

@@ -73,20 +73,18 @@ get_example_text <- function(topic) {
     }
 
     examples_start_idx <-
-      which(grepl("\\section{Examples}{", help_file_lines, fixed = TRUE)) + 1
+      grep("\\section{Examples}{", help_file_lines, fixed = TRUE) + 1
 
     examples_end_idx <-
-      which(
-        grepl(
-          paste0(
-            "\\section{",
-            ifelse(topic_type == "function", "Function ID", "Dataset ID and Badge"),
-            "}{"
+      grep(
+        paste0(
+          "\\section{",
+          ifelse(topic_type == "function", "Function ID", "Dataset ID and Badge"),
+          "}{"
           ),
-          help_file_lines,
-          fixed = TRUE
-        )
-      ) - 1
+        help_file_lines,
+        fixed = TRUE
+        ) - 1L
 
     example_lines <-
       help_file_lines[examples_start_idx[1]:examples_end_idx[1]]
@@ -229,9 +227,9 @@ write_gt_examples_qmd_files <- function(
       if (any(grepl("Function ID", help_file_lines))) {
 
         type <- "function"
-        id_idx <- which(grepl("\\section{Function ID}{", help_file_lines, fixed = TRUE)) + 2
+        id_idx <- grep("\\section{Function ID}{", help_file_lines, fixed = TRUE) + 2
         id_val <- help_file_lines[id_idx]
-        title_idx <- which(grepl("\\title{", help_file_lines, fixed = TRUE))
+        title_idx <- grep("\\title{", help_file_lines, fixed = TRUE)
         title <- gsub("\\title{", "", help_file_lines[title_idx], fixed = TRUE)
         title <- gsub("\\}$", "", title)
         family <- as.integer(unlist(strsplit(id_val, split = "-"))[[1]])
@@ -240,9 +238,9 @@ write_gt_examples_qmd_files <- function(
       } else if (any(grepl("Dataset ID ", help_file_lines))) {
 
         type <- "dataset"
-        id_idx <- which(grepl("\\section{Dataset ID and Badge}{", help_file_lines, fixed = TRUE)) + 2
+        id_idx <- grep("\\section{Dataset ID and Badge}{", help_file_lines, fixed = TRUE) + 2
         id_val <- help_file_lines[id_idx]
-        title_idx <- which(grepl("\\title{", help_file_lines, fixed = TRUE))
+        title_idx <- grep("\\title{", help_file_lines, fixed = TRUE)
         title <- gsub("\\title{", "", help_file_lines[title_idx], fixed = TRUE)
         title <- gsub("\\}$", "", title)
         family <- 99L

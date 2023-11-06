@@ -13,7 +13,8 @@ test_that("A gt table contains the expected column spanner labels", {
     )
 
   # Expect a characteristic pattern
-  grepl(
+  expect_match(
+    as_rtf(tbl_rtf) %>% as.character(),
     paste0(
       ".*.trowd.trrh0.trhdr.*",
       ".intbl \\{.f0 \\{.f0.fs20 \\}\\}.cell.*",
@@ -22,10 +23,8 @@ test_that("A gt table contains the expected column spanner labels", {
       ".intbl \\{.f0 \\{.f0.fs20 \\}\\}.cell.*",
       ".*area.*peri.*shape.*perm",
       ".*"
-    ),
-    tbl_rtf %>% as_rtf() %>% as.character()
-  ) %>%
-    expect_true()
+    )
+  )
 
   # Create a `tbl_rtf` object where the first column doesn't have a
   # spanner but the two pairs of columns after that have a spanner each
@@ -48,7 +47,8 @@ test_that("A gt table contains the expected column spanner labels", {
     cols_move_to_start(columns = "v_3")
 
   # Expect a characteristic pattern
-  grepl(
+  expect_match(
+    as_rtf(tbl_rtf) %>% as.character(),
     paste0(
       ".*.trowd.trrh0.trhdr.*",
       ".intbl \\{.f0 \\{.f0.fs20 \\}\\}.cell.*",
@@ -59,10 +59,8 @@ test_that("A gt table contains the expected column spanner labels", {
       ".row.*",
       ".*v_3.*v_1.*v_2.*v_4.*v_5",
       ".*"
-    ),
-    tbl_rtf %>% as_rtf() %>% as.character()
-  ) %>%
-    expect_true()
+    )
+  )
 
   # Create a `tbl_rtf` object that doesn't gather columns under their
   # respective spanner column labels; also, while the labels are all the same
@@ -75,7 +73,8 @@ test_that("A gt table contains the expected column spanner labels", {
     tab_footnote(footnote = "note", locations = cells_column_spanners("y"))
 
   # Expect a characteristic pattern
-  grepl(
+  expect_match(
+     as_rtf(tbl_rtf) %>% as.character(),
     paste0(
       ".*.trowd.trrh0.trhdr.*",
       ".intbl \\{.f0 \\{.f0.fs20 A\\{.super .i 1\\}\\}\\}.cell.*",
@@ -85,10 +84,8 @@ test_that("A gt table contains the expected column spanner labels", {
       ".row.*",
       ".*A_X.*B_X.*A_Y.*B_Y",
       ".*"
-    ),
-    tbl_rtf %>% as_rtf() %>% as.character()
-  ) %>%
-    expect_true()
+    )
+  )
 
   # Create a `tbl_rtf` object with spanners with different IDs
   # but the same label; the spanner with ID `y` gathers columns beginning
@@ -100,7 +97,8 @@ test_that("A gt table contains the expected column spanner labels", {
     tab_footnote(footnote = "note", locations = cells_column_spanners("y"))
 
   # Expect a characteristic pattern
-  grepl(
+  expect_match(
+    as_rtf(tbl_rtf) %>% as.character(),
     paste0(
       ".*.trowd.trrh0.trhdr.*",
       ".intbl \\{.f0 \\{.f0.fs20 A\\{.super .i 1\\}\\}\\}.cell.*",
@@ -110,10 +108,8 @@ test_that("A gt table contains the expected column spanner labels", {
       ".row.*",
       ".*A_X.*A_Y.*B_X.*B_Y",
       ".*"
-    ),
-    tbl_rtf %>% as_rtf() %>% as.character()
-  ) %>%
-    expect_true()
+    )
+  )
 
   # Create a `tbl_rtf` object that uses `tab_spanner_delim()`
   # on a subset of columns; the single spanner column label is
@@ -126,7 +122,8 @@ test_that("A gt table contains the expected column spanner labels", {
     )
 
   # Expect a characteristic pattern
-  grepl(
+  expect_match(
+    as_rtf(tbl_rtf) %>% as.character(),
     paste0(
       ".*.trowd.trrh0.trhdr.*",
       ".intbl \\{.f0 \\{.f0.fs20 Sepal\\}\\}.cell.*",
@@ -137,8 +134,6 @@ test_that("A gt table contains the expected column spanner labels", {
       ".row.*",
       ".*Length.*Width.*Petal.*Length.*Petal.*Width.*Species",
       ".*"
-    ),
-    tbl_rtf %>% as_rtf() %>% as.character()
-  ) %>%
-    expect_true()
+    )
+  )
 })
