@@ -112,11 +112,9 @@ test_that("Units are rendered properly in HTML", {
     generate_html_units("ng m^−3 Na^+"),
     "ng m<span style=\"white-space:nowrap;\"><sup>−3</sup></span> Na<span style=\"white-space:nowrap;\"><sup>+</sup></span>"
   )
-  expect_true(
-    grepl(
-      "ng m<span style=\"white-space:nowrap;\"><sup>.3</sup></span>.*?<em>total.*?salt</em>",
-      generate_html_units("ng m^−3 *total:space:salt*")
-    )
+  expect_match(
+    generate_html_units("ng m^−3 *total:space:salt*"),
+    "ng m<span style=\"white-space:nowrap;\"><sup>.3</sup></span>.*?<em>total.*?salt</em>"
   )
   expect_equal(
     generate_html_units("5.5 :plusminus: 7.2 ng m^−3"),

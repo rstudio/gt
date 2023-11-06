@@ -280,7 +280,7 @@ test_that("tables can be added to a word doc", {
   print(word_doc,target = temp_word_file)
 
   ## Manual Review
-  if (!testthat::is_testing() & interactive()) {
+  if (!testthat::is_testing() && interactive()) {
     shell.exec(temp_word_file)
   }
 
@@ -376,7 +376,7 @@ test_that("tables with special characters can be added to a word doc", {
   print(word_doc,target = temp_word_file)
 
   ## Manual Review
-  if (!testthat::is_testing() & interactive()) {
+  if (!testthat::is_testing() && interactive()) {
     shell.exec(temp_word_file)
   }
 
@@ -462,7 +462,7 @@ test_that("tables with embedded titles can be added to a word doc", {
   print(word_doc,target = temp_word_file)
 
   ## Manual Review
-  if (!testthat::is_testing() & interactive()) {
+  if (!testthat::is_testing() && interactive()) {
     shell.exec(temp_word_file)
   }
 
@@ -551,7 +551,7 @@ test_that("tables with spans can be added to a word doc", {
   print(word_doc,target = temp_word_file)
 
   ## Manual Review
-  if (!testthat::is_testing() & interactive()) {
+  if (!testthat::is_testing() && interactive()) {
     shell.exec(temp_word_file)
   }
 
@@ -655,7 +655,7 @@ test_that("tables with multi-level spans can be added to a word doc", {
   print(word_doc,target = temp_word_file)
 
   ## Manual Review
-  if (!testthat::is_testing() & interactive()) {
+  if (!testthat::is_testing() && interactive()) {
     shell.exec(temp_word_file)
   }
 
@@ -754,7 +754,7 @@ test_that("tables with summaries can be added to a word doc", {
   print(word_doc,target = temp_word_file)
 
   ## Manual Review
-  if (!testthat::is_testing() & interactive()) {
+  if (!testthat::is_testing() && interactive()) {
     shell.exec(temp_word_file)
   }
 
@@ -836,7 +836,7 @@ test_that("tables with summaries can be added to a word doc", {
   print(word_doc_top,target = temp_word_file_top)
 
   ## Manual Review
-  if (!testthat::is_testing() & interactive()) {
+  if (!testthat::is_testing() && interactive()) {
     shell.exec(temp_word_file_top)
   }
 
@@ -915,7 +915,7 @@ test_that("tables with grand summaries but no rownames can be added to a word do
   print(word_doc,target = temp_word_file)
 
   ## Manual Review
-  if (!testthat::is_testing() & interactive()) {
+  if (!testthat::is_testing() && interactive()) {
     shell.exec(temp_word_file)
   }
 
@@ -977,7 +977,7 @@ test_that("tables with grand summaries but no rownames can be added to a word do
   print(word_doc_top,target = temp_word_file_top)
 
   ## Manual Review
-  if (!testthat::is_testing() & interactive()) {
+  if (!testthat::is_testing() && interactive()) {
     shell.exec(temp_word_file_top)
   }
 
@@ -1051,7 +1051,7 @@ test_that("tables with footnotes can be added to a word doc", {
   print(word_doc, target = temp_word_file)
 
   ## Manual Review
-  if (!testthat::is_testing() & interactive()) {
+  if (!testthat::is_testing() && interactive()) {
     shell.exec(temp_word_file)
   }
 
@@ -1143,7 +1143,7 @@ test_that("tables with source notes can be added to a word doc", {
   print(word_doc, target = temp_word_file)
 
   ## Manual Review
-  if (!testthat::is_testing() & interactive()) {
+  if (!testthat::is_testing() && interactive()) {
     shell.exec(temp_word_file)
   }
 
@@ -1237,7 +1237,7 @@ test_that("long tables can be added to a word doc", {
   print(word_doc,target = temp_word_file)
 
   ## Manual Review
-  if (!testthat::is_testing() & interactive()) {
+  if (!testthat::is_testing() && interactive()) {
     shell.exec(temp_word_file)
   }
 
@@ -1310,7 +1310,7 @@ test_that("long tables with spans can be added to a word doc", {
   print(word_doc,target = temp_word_file)
 
   ## Manual Review
-  if (!testthat::is_testing() & interactive()) {
+  if (!testthat::is_testing() && interactive()) {
     shell.exec(temp_word_file)
   }
 
@@ -1401,7 +1401,7 @@ test_that("tables with cell & text coloring can be added to a word doc - no span
       locations = cells_stubhead()
     )
 
-  if (!testthat::is_testing() & interactive()) {
+  if (!testthat::is_testing() && interactive()) {
     print(gt_exibble_min)
   }
 
@@ -1417,7 +1417,7 @@ test_that("tables with cell & text coloring can be added to a word doc - no span
   print(word_doc,target = temp_word_file)
 
   ## Manual Review
-  if (!testthat::is_testing() & interactive()) {
+  if (!testthat::is_testing() && interactive()) {
     shell.exec(temp_word_file)
   }
 
@@ -1569,7 +1569,7 @@ test_that("tables with cell & text coloring can be added to a word doc - with sp
       locations = cells_stubhead()
     )
 
-  if (!testthat::is_testing() & interactive()) {
+  if (!testthat::is_testing() && interactive()) {
     print(gt_exibble_min)
   }
 
@@ -1585,7 +1585,7 @@ test_that("tables with cell & text coloring can be added to a word doc - with sp
   print(word_doc,target = temp_word_file)
 
   ## Manual Review
-  if (!testthat::is_testing() & interactive()) {
+  if (!testthat::is_testing() && interactive()) {
     shell.exec(temp_word_file)
   }
 
@@ -1651,7 +1651,7 @@ test_that("tables with cell & text coloring can be added to a word doc - with so
       locations = cells_footnotes()
     )
 
-  if (!testthat::is_testing() & interactive()) {
+  if (!testthat::is_testing() && interactive()) {
     print(gt_exibble_min)
   }
 
@@ -1667,7 +1667,7 @@ test_that("tables with cell & text coloring can be added to a word doc - with so
   print(word_doc,target = temp_word_file)
 
   ## Manual Review
-  if (!testthat::is_testing() & interactive()) {
+  if (!testthat::is_testing() && interactive()) {
     shell.exec(temp_word_file)
   }
 
@@ -1723,7 +1723,7 @@ test_that("footnotes styling gets applied to footer marks", {
     tab_footnote("My Footnote 2", locations = cells_column_labels(1)) %>%
     opt_footnote_spec(spec_ftr = "(b)")
 
-  if (!testthat::is_testing() & interactive()) {
+  if (!testthat::is_testing() && interactive()) {
     print(gt_exibble_min)
   }
 
@@ -1739,7 +1739,7 @@ test_that("footnotes styling gets applied to footer marks", {
   print(word_doc,target = temp_word_file)
 
   ## Manual Review
-  if (!testthat::is_testing() & interactive()) {
+  if (!testthat::is_testing() && interactive()) {
     shell.exec(temp_word_file)
   }
 
@@ -1826,7 +1826,7 @@ test_that("tables with cell & text coloring can be added to a word doc - with su
       locations = cells_stub_grand_summary()
     )
 
-  if (!testthat::is_testing() & interactive()) {
+  if (!testthat::is_testing() && interactive()) {
     print(gt_exibble_min)
   }
 
@@ -1842,7 +1842,7 @@ test_that("tables with cell & text coloring can be added to a word doc - with su
   print(word_doc,target = temp_word_file)
 
   ## Manual Review
-  if (!testthat::is_testing() & interactive()) {
+  if (!testthat::is_testing() && interactive()) {
     shell.exec(temp_word_file)
   }
 
@@ -1896,7 +1896,7 @@ test_that("tables with cell & text coloring can be added to a word doc - with su
         val <- y %>% xml2::xml_find_all(".//w:color") %>% xml2::xml_attr(attr = "val")
         if (identical(val, character())) {
           ""
-        }else{
+        } else {
           val
         }
       })}),
@@ -1929,7 +1929,7 @@ test_that("tables with cell & text coloring can be added to a word doc - with su
         val <- y %>% xml2::xml_find_all(".//w:shd") %>% xml2::xml_attr(attr = "fill")
         if (identical(val, character())) {
           ""
-        }else{
+        } else {
           val
         }
       })}),
@@ -1988,7 +1988,7 @@ test_that("tables preserves spaces in text & can be added to a word doc", {
   print(word_doc_normal,target = temp_word_file)
 
   ## Manual Review
-  if (!testthat::is_testing() & interactive()) {
+  if (!testthat::is_testing() && interactive()) {
     shell.exec(temp_word_file)
   }
 
@@ -2076,7 +2076,7 @@ test_that("tables respects column and cell alignment and can be added to a word 
   print(word_doc,target = temp_word_file)
 
   ## Manual Review
-  if (!testthat::is_testing() & interactive()) {
+  if (!testthat::is_testing() && interactive()) {
     shell.exec(temp_word_file)
   }
 
@@ -2199,7 +2199,7 @@ There's a quick reference [here](https://commonmark.org/help/).
     lapply(
       docx_table_body_contents,
       FUN = function(x) {xml2::xml_find_all(x, ".//w:tc") %>%
-        lapply(function(x){ xml2::xml_text(xml2::xml_find_all(x,".//w:p"))})
+        lapply(function(x) {xml2::xml_text(xml2::xml_find_all(x,".//w:p"))})
       }
     ),
     list(
@@ -2344,7 +2344,7 @@ test_that("markdown with img refs work",{
 
   gtsave(markdown_gt, filename = temp_docx)
 
-  if(interactive() & !testthat::is_testing()){
+  if (!testthat::is_testing() && interactive()) {
     shell.exec(temp_docx)
   }
 
@@ -2407,7 +2407,7 @@ test_that("table with image refs work - local only",{
 
   gtsave(image_gt, filename = temp_docx)
 
-  if(interactive() & !testthat::is_testing()){
+  if (!testthat::is_testing() && interactive()) {
     shell.exec(temp_docx)
   }
 
@@ -2455,7 +2455,7 @@ test_that("table with image refs work - local only",{
   docx$doc_obj$get() %>%
     xml2::xml_find_all(".//wp:extent") %>%
     xml2::xml_attrs() %>%
-    sapply(function(x){as.numeric(x[["cy"]])/as.numeric(x[["cx"]])}) %>%
+    sapply(function(x) {as.numeric(x[["cy"]])/as.numeric(x[["cx"]])}) %>%
     expect_equal(
       c(1,1,1,0.627451),
       tolerance = .0000001 ## check out to 6 decimals for the ratio
@@ -2479,7 +2479,7 @@ test_that("table with image refs work - https",{
 
   gtsave(https_image_gt, filename = temp_docx)
 
-  if(interactive() & !testthat::is_testing()){
+  if (!testthat::is_testing() && interactive()) {
     shell.exec(temp_docx)
   }
 
@@ -2560,7 +2560,7 @@ test_that("table with image refs work - local only - setting image widths and he
   gtsave(image_gt_height, filename = temp_docx_2)
   gtsave(image_gt_width, filename = temp_docx_3)
 
-  if(interactive() & !testthat::is_testing()){
+  if (!testthat::is_testing() && interactive()) {
     shell.exec(temp_docx_1)
     shell.exec(temp_docx_2)
     shell.exec(temp_docx_3)
@@ -2572,7 +2572,7 @@ test_that("table with image refs work - local only - setting image widths and he
   docx1$doc_obj$get() %>%
     xml2::xml_find_all(".//wp:extent") %>%
     xml2::xml_attrs() %>%
-    lapply(function(x){list(height = x[["cy"]], width = x[["cx"]], ratio = as.numeric(x[["cy"]])/as.numeric(x[["cx"]]))}) %>%
+    lapply(function(x) {list(height = x[["cy"]], width = x[["cx"]], ratio = as.numeric(x[["cy"]])/as.numeric(x[["cx"]]))}) %>%
     expect_equal(
       list(list(height = "914400", width = "1828800", ratio = 0.5),
            list(height = "914400", width = "1828800", ratio = 0.5),
@@ -2586,7 +2586,7 @@ test_that("table with image refs work - local only - setting image widths and he
   docx2$doc_obj$get() %>%
     xml2::xml_find_all(".//wp:extent") %>%
     xml2::xml_attrs() %>%
-    lapply(function(x){list(height = x[["cy"]], width = x[["cx"]], ratio = as.numeric(x[["cy"]])/as.numeric(x[["cx"]]))}) %>%
+    lapply(function(x) {list(height = x[["cy"]], width = x[["cx"]], ratio = as.numeric(x[["cy"]])/as.numeric(x[["cx"]]))}) %>%
     expect_equal(
       list(list(height = "1828800", width = "1828800", ratio = 1),
            list(height = "1828800", width = "1828800", ratio = 1),
@@ -2600,7 +2600,7 @@ test_that("table with image refs work - local only - setting image widths and he
   docx3$doc_obj$get() %>%
     xml2::xml_find_all(".//wp:extent") %>%
     xml2::xml_attrs() %>%
-    lapply(function(x){list(height = x[["cy"]], width = x[["cx"]], ratio = as.numeric(x[["cy"]])/as.numeric(x[["cx"]]))}) %>%
+    lapply(function(x) {list(height = x[["cy"]], width = x[["cx"]], ratio = as.numeric(x[["cy"]])/as.numeric(x[["cx"]]))}) %>%
     expect_equal(
       list(list(height = "914400", width = "914400", ratio = 1),
            list(height = "914400", width = "914400", ratio = 1),

@@ -1193,14 +1193,12 @@ test_that("The correct color values are obtained when using a color fn", {
 
   # Expect that the text colors vary between #000000 and #FFFFFF
   # since the `autocolor_text` option is TRUE (the default case)
-  (
-    (tbl_html_1 %>%
-       selection_value("style") %>%
-       gsub("(.*: |;$)", "", .)) %in%
-      c("#000000", "#FFFFFF")
-  ) %>%
-    all() %>%
-    expect_true()
+  expect_in(
+    tbl_html_1 %>%
+      selection_value("style") %>%
+       gsub("(.*: |;$)", "", .),
+    c("#000000", "#FFFFFF")
+  )
 
   # Create a `tbl_html` object by using `data_color` with the
   # `scales::col_factor()` fn on the month column

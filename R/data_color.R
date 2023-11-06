@@ -723,9 +723,7 @@ data_color <- function(
   contrast_algo <- rlang::arg_match(contrast_algo)
 
   # If no color is provided to `na_color`, use gray as a default
-  if (is.null(na_color)) {
-    na_color <- "#808080"
-  }
+  na_color <- na_color %||% "#808080"
 
   # Defuse any function supplied to `fn`; if a function is supplied to `colors`
   # (previous argument for this purpose) then let that take precedent and
@@ -946,7 +944,7 @@ data_color <- function(
         color_fn <-
           scales::col_numeric(
             palette = palette,
-            domain = if (is.null(domain)) data_vals else domain,
+            domain = domain %||% data_vals,
             na.color = na_color,
             alpha = TRUE,
             reverse = reverse
@@ -969,7 +967,7 @@ data_color <- function(
         color_fn <-
           scales::col_factor(
             palette = palette,
-            domain = if (is.null(domain)) data_vals else domain,
+            domain = domain %||% data_vals,
             levels = levels,
             ordered = ordered,
             na.color = na_color,
@@ -996,7 +994,7 @@ data_color <- function(
       color_fn <-
         scales::col_numeric(
           palette = palette,
-          domain = if (is.null(domain)) data_vals else domain,
+          domain = domain %||% data_vals,
           na.color = na_color,
           alpha = TRUE,
           reverse = reverse
@@ -1010,7 +1008,7 @@ data_color <- function(
       color_fn <-
         scales::col_bin(
           palette = palette,
-          domain = if (is.null(domain)) data_vals else domain,
+          domain = domain %||% data_vals,
           bins = bins,
           pretty = FALSE,
           na.color = na_color,
@@ -1027,7 +1025,7 @@ data_color <- function(
       color_fn <-
         scales::col_quantile(
           palette = palette,
-          domain = if (is.null(domain)) data_vals else domain,
+          domain = domain %||% data_vals,
           n = quantiles,
           na.color = na_color,
           alpha = TRUE,
@@ -1047,7 +1045,7 @@ data_color <- function(
       color_fn <-
         scales::col_factor(
           palette = palette,
-          domain = if (is.null(domain)) data_vals else domain,
+          domain = domain %||% data_vals,
           levels = levels,
           ordered = ordered,
           na.color = na_color,

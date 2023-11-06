@@ -715,8 +715,7 @@ test_that("A gt table contains custom styles at the correct locations", {
   tbl_html %>%
     rvest::html_nodes("[style='background-color: #90EE90;']") %>%
     rvest::html_text() %>%
-    grepl("gear_carb_cyl", .) %>%
-    expect_true()
+    expect_match("gear_carb_cyl")
 
   # Expect that the `Mazdas` row group label
   # cell has a red background and white text

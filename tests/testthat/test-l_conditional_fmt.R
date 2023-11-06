@@ -251,7 +251,7 @@ test_that("The `fmt()` function works with conditional `rows`", {
        fmt(
          columns = num_1,
          rows = num_1 > 1000,
-         fns = function(x){
+         fns = function(x) {
            x * 1000
          }) %>%
        render_formats_test(context = "latex"))[["num_1"]],

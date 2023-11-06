@@ -108,21 +108,22 @@ expect_tab <- function(tab, df) {
     expect_length(0)
 
   # Expect that extracted df has the same column
-  # names as the original dataset
-  ((tab %>% dt_data_get() %>% colnames() %>% length()) -
-      (colnames(df) %>% length())) %in% c(0, 1) %>%
-    expect_true()
+  # names as the original dataset (or a difference of 1)
+  expect_in(
+    ncol(dt_data_get(tab)) - ncol(df),
+    c(0, 1)
+  )
 
   # Expect that extracted df has the same number of
   # rows as the original dataset
   expect_equal(
-    tab %>% dt_data_get() %>% nrow(),
+    nrow(dt_data_get(tab)),
     nrow(df)
   )
 
   # Expect specific column names within the `stub_df` object
-  expect_equal(
-    colnames(dt_stub_df_get(data = tab)),
+  expect_named(
+    dt_stub_df_get(data = tab),
     c(
       "rownum_i", "row_id", "group_id", "group_label",
       "indent", "built_group_label"
@@ -155,8 +156,8 @@ expect_gt_attr_names <- function(object) {
 
   # The `groups` attribute appears when we call dplyr::group_by()
   # on the input table
-  expect_equal(
-    sort(names(object)),
-    sort(gt_attr_names())
+  expect_setequal(
+    names(object),
+    gt_attr_names()
   )
 }

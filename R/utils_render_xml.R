@@ -153,7 +153,7 @@ xml_tblGrid <- function(..., app = "word") {
 }
 
 # Table grid
-xml_gridcol <- function(width = NULL, app = "word"){
+xml_gridcol <- function(width = NULL, app = "word") {
 
   htmltools::tag(
     `_tag_name` = xml_tag_type("gridCol", app),
@@ -362,7 +362,7 @@ xml_pStyle <- function(
 }
 
 # paragraph border
-xml_pBdr <- function(..., app = "word"){
+xml_pBdr <- function(..., app = "word") {
 
   htmltools::tag(
     `_tag_name` = xml_tag_type("pBdr", app),
@@ -372,7 +372,7 @@ xml_pBdr <- function(..., app = "word"){
   )
 }
 
-xml_numPr <- function(..., app = "word"){
+xml_numPr <- function(..., app = "word") {
 
   htmltools::tag(
     `_tag_name` = xml_tag_type("numPr", app),
@@ -382,7 +382,7 @@ xml_numPr <- function(..., app = "word"){
   )
 }
 
-xml_ilvl <- function(..., val, app = "word"){
+xml_ilvl <- function(..., val, app = "word") {
 
   stopifnot(is.numeric(val))
 
@@ -395,7 +395,7 @@ xml_ilvl <- function(..., val, app = "word"){
   )
 }
 
-xml_numId <- function(..., val, app = "word"){
+xml_numId <- function(..., val, app = "word") {
 
   stopifnot(is.numeric(val))
   stopifnot(val > 0)
@@ -450,7 +450,7 @@ xml_spacing <- function(
 }
 
 # hyperlink
-xml_hyperlink <- function(..., url, app = "word"){
+xml_hyperlink <- function(..., url, app = "word") {
 
   htmltools::tag(
     `_tag_name` = xml_tag_type("hyperlink", app),
@@ -673,7 +673,7 @@ xml_instrText <- function(
 }
 
 # Declares the noProof property
-xml_noProof <- function(app = "word"){
+xml_noProof <- function(app = "word") {
   htmltools::tag(
     `_tag_name` = xml_tag_type("noProof", app),
     varArgs = list()
@@ -776,7 +776,7 @@ footnote_mark_to_xml <- function(
 #' To be inserted as part of a run
 #'
 #' @noRd
-xml_image <- function(src, height = 1, width = 1, units = "in", alt_text = ""){
+xml_image <- function(src, height = 1, width = 1, units = "in", alt_text = "") {
 
   xml_drawing(
     xml_wp_inline(
@@ -825,7 +825,7 @@ xml_image <- function(src, height = 1, width = 1, units = "in", alt_text = ""){
 
 }
 
-xml_drawing <- function(..., app = "word"){
+xml_drawing <- function(..., app = "word") {
 
   htmltools::tag(
     `_tag_name` = xml_tag_type("drawing", app),
@@ -838,22 +838,22 @@ xml_drawing <- function(..., app = "word"){
 }
 
 ## Defines the image as being "inline" with text (in run)
-xml_wp_inline <- function(..., distT=0, distB=0, distL=0, distR=0){
+xml_wp_inline <- function(..., distT = 0, distB = 0, distL = 0, distR = 0) {
 
   htmltools::tag(
     `_tag_name` = "wp:inline",
     varArgs = list(
       ...,
-      distT=distT,
-      distB=distB,
-      distL=distL,
-      distR=distR
+      distT = distT,
+      distB = distB,
+      distL = distL,
+      distR = distR
     )
   )
 }
 
 ## Define height and width of graphic object
-xml_wp_extent <- function(cx, cy, units = "in"){
+xml_wp_extent <- function(cx, cy, units = "in") {
 
   htmltools::tag(
     `_tag_name` = "wp:extent",
@@ -864,7 +864,7 @@ xml_wp_extent <- function(cx, cy, units = "in"){
   )
 }
 
-convert_to_emu <- function(x, units = "in"){
+convert_to_emu <- function(x, units = "in") {
 
   ## a px is
   emu_conversion <- c(
@@ -876,7 +876,7 @@ convert_to_emu <- function(x, units = "in"){
   x * emu_conversion
 }
 
-xml_wp_effectExtent <- function(l = 0, r = 0, t = 0, b = 0){
+xml_wp_effectExtent <- function(l = 0, r = 0, t = 0, b = 0) {
 
   htmltools::tag(
     `_tag_name` = "wp:effectExtent",
@@ -891,21 +891,21 @@ xml_wp_effectExtent <- function(l = 0, r = 0, t = 0, b = 0){
 }
 
 # Place ot define DrawingML properties
-xml_wp_docPr <- function(id = "", name = "", description = ""){
+xml_wp_docPr <- function(id = "", name = "", description = "") {
 
   htmltools::tag(
     `_tag_name` = "wp:docPr",
     varArgs = list(
-      id= id,
-      name=name,
-      descr=description
+      id = id,
+      name = name,
+      descr = description
     )
   )
 }
 
 ## describe locking properties. Not usually used except to define that the
-## aspect ratio shouldnt change
-xml_wp_cNvGraphicFramePr <- function(...){
+## aspect ratio shouldn't change
+xml_wp_cNvGraphicFramePr <- function(...) {
   htmltools::tag(
     `_tag_name` = "wp:cNvGraphicFramePr",
     varArgs = list(
@@ -914,7 +914,7 @@ xml_wp_cNvGraphicFramePr <- function(...){
   )
 }
 
-xml_a_graphic_frame_locks <- function(noChangeAspect = TRUE, noCrop = FALSE, noRot = FALSE, noSelect = FALSE){
+xml_a_graphic_frame_locks <- function(noChangeAspect = TRUE, noCrop = FALSE, noRot = FALSE, noSelect = FALSE) {
 
   locks <- c(noChangeAspect = noChangeAspect, noCrop = noCrop, noRot = noRot, noSelect = noSelect)
   locks <- locks[locks == TRUE]
@@ -932,7 +932,7 @@ xml_a_graphic_frame_locks <- function(noChangeAspect = TRUE, noCrop = FALSE, noR
 }
 
 ## graphic object
-xml_a_graphic <- function(...){
+xml_a_graphic <- function(...) {
   htmltools::tag(
     `_tag_name` = "a:graphic",
     varArgs = list(
@@ -943,7 +943,7 @@ xml_a_graphic <- function(...){
 }
 
 ## graphic object data
-xml_a_graphicData <- function(...){
+xml_a_graphicData <- function(...) {
   htmltools::tag(
     `_tag_name` = "a:graphicData",
     varArgs = list(
@@ -954,7 +954,7 @@ xml_a_graphicData <- function(...){
 }
 
 ## picture object
-xml_pic_pic <- function(...){
+xml_pic_pic <- function(...) {
   htmltools::tag(
     `_tag_name` = "pic:pic",
     varArgs = list(
@@ -966,7 +966,7 @@ xml_pic_pic <- function(...){
 }
 
 ## Picture non-visual properties (locking, name, id, title, hidden/not)
-xml_pic_nvPicPr <- function(...){
+xml_pic_nvPicPr <- function(...) {
   htmltools::tag(
     `_tag_name` = "pic:nvPicPr",
     varArgs = list(
@@ -976,7 +976,7 @@ xml_pic_nvPicPr <- function(...){
 
 }
 
-xml_pic_cNvPr <- function(id = "", name = ""){
+xml_pic_cNvPr <- function(id = "", name = "") {
   htmltools::tag(
     `_tag_name` = "pic:cNvPr",
     varArgs = list(
@@ -986,7 +986,7 @@ xml_pic_cNvPr <- function(id = "", name = ""){
   )
 }
 
-xml_pic_cNvPicPr <- function(...){
+xml_pic_cNvPicPr <- function(...) {
   htmltools::tag(
     `_tag_name` = "pic:cNvPicPr",
     varArgs = list(
@@ -995,7 +995,7 @@ xml_pic_cNvPicPr <- function(...){
   )
 }
 
-xml_a_pic_locks <- function(noChangeAspect = TRUE, noChangeArrowheads = TRUE, noCrop = FALSE, noMove = FALSE, noResize = FALSE, noRot = FALSE, noSelect = FALSE){
+xml_a_pic_locks <- function(noChangeAspect = TRUE, noChangeArrowheads = TRUE, noCrop = FALSE, noMove = FALSE, noResize = FALSE, noRot = FALSE, noSelect = FALSE) {
 
   locks <-
     c(
@@ -1021,7 +1021,7 @@ xml_a_pic_locks <- function(noChangeAspect = TRUE, noChangeArrowheads = TRUE, no
 }
 
 ## Define the picture fill that the picture has and contains element of blip
-xml_pic_blipFill <- function(...){
+xml_pic_blipFill <- function(...) {
   htmltools::tag(
     `_tag_name` = "pic:blipFill",
     varArgs = list(
@@ -1031,7 +1031,7 @@ xml_pic_blipFill <- function(...){
 }
 
 ### reference the actual picture in relationship
-xml_a_blip <- function(src, cstate = "print"){
+xml_a_blip <- function(src, cstate = "print") {
 
   htmltools::tag(
     `_tag_name` = "a:blip",
@@ -1043,7 +1043,7 @@ xml_a_blip <- function(src, cstate = "print"){
 }
 
 ### reference how to display image - stretch to fit
-xml_a_stretch_rect <- function(){
+xml_a_stretch_rect <- function() {
   htmltools::tag(
     `_tag_name` = "a:stretch",
     varArgs = list(
@@ -1056,7 +1056,7 @@ xml_a_stretch_rect <- function(){
 
 ## cropping
 
-xml_a_srcRect <- function(left = NA, right = NA, top = NA, bottom = NA){
+xml_a_srcRect <- function(left = NA, right = NA, top = NA, bottom = NA) {
 
   crop <-
     c(
@@ -1074,7 +1074,7 @@ xml_a_srcRect <- function(left = NA, right = NA, top = NA, bottom = NA){
 }
 
 ## Contains Visual shape properties of picture
-xml_pic_spPr <- function(..., bwMode = "auto"){
+xml_pic_spPr <- function(..., bwMode = "auto") {
   htmltools::tag(
     `_tag_name` = "pic:spPr",
     varArgs = list(
@@ -1084,7 +1084,7 @@ xml_pic_spPr <- function(..., bwMode = "auto"){
   )
 }
 
-xml_a_xfrm <- function(height, width, offx, offy){
+xml_a_xfrm <- function(height, width, offx, offy) {
 
   htmltools::tag(
     `_tag_name` = "a:xfrm",
@@ -1107,7 +1107,7 @@ xml_a_xfrm <- function(height, width, offx, offy){
   )
 }
 
-xml_a_prstGeom_rect <- function(){
+xml_a_prstGeom_rect <- function() {
 
   htmltools::tag(
     `_tag_name` = "a:prstGeom",
@@ -1122,14 +1122,14 @@ xml_a_prstGeom_rect <- function(){
 
 }
 
-xml_a_noFill <- function(){
+xml_a_noFill <- function() {
   htmltools::tag(
     `_tag_name` = "a:noFill",
     varArgs = list()
   )
 }
 
-xml_a_ln <- function(...){
+xml_a_ln <- function(...) {
   htmltools::tag(
     `_tag_name` = "a:ln",
     varArgs = list(...)
@@ -1142,7 +1142,7 @@ xml_a_ln <- function(...){
 
 # TODO: make table widths work for XML
 # Get the attributes for the table tag
-create_table_props_component_xml <- function(data, align = c("center","start","end","right","left")) {
+create_table_props_component_xml <- function(data, align = c("center", "start", "end", "right", "left")) {
 
   align <- match.arg(align)
 
@@ -1759,7 +1759,7 @@ create_columns_component_xml <- function(
               keep_with_next = TRUE
             )
 
-        }else{
+        } else {
 
           spanner_cell_vals[[length(spanner_cell_vals) + 1]] <-
             xml_table_cell(
@@ -2084,7 +2084,7 @@ create_body_component_xml <- function(
         # Add groupwise summary rows.
         #
 
-        if (summaries_present && nrow(groups_rows_df) > 0){
+        if (summaries_present && nrow(groups_rows_df) > 0) {
 
           group_info <- groups_rows_df[
             i >= groups_rows_df$row_start & i <= groups_rows_df$row_end, ]
@@ -2093,7 +2093,7 @@ create_body_component_xml <- function(
 
           group_row_add_row_loc <- group_info[,ifelse(group_summary_row_side == "top", "row_start","row_end")][[1]]
 
-          if(i == group_row_add_row_loc) {
+          if (i == group_row_add_row_loc) {
 
             summary_styles <-
               styles_tbl %>%
@@ -2117,17 +2117,17 @@ create_body_component_xml <- function(
                 keep_with_next = keep_with_next
               )
 
-            if(group_summary_row_side == "top"){
+            if (group_summary_row_side == "top") {
               body_section <- append(body_section, summary_section)
               body_section <- append(body_section, list(body_row))
-            }else{
+            } else {
               body_section <- append(body_section, list(body_row))
               body_section <- append(body_section, summary_section)
             }
-          }else{
+          } else {
             body_section <- append(body_section, list(body_row))
           }
-        }else{
+        } else {
             body_section <- append(body_section, list(body_row))
         }
 
@@ -2166,9 +2166,9 @@ create_body_component_xml <- function(
 
     grand_summary_loc <- unique(list_of_summaries$summary_df_display_list[[grand_summary_col]][["::side::"]])
 
-    if(grand_summary_loc == "top"){
+    if (grand_summary_loc == "top") {
       body_rows <- c(grand_summary_section, body_rows)
-    }else{
+    } else {
       body_rows <- c(body_rows, grand_summary_section)
     }
   }
@@ -2543,7 +2543,7 @@ white_space_to_t_xml_space <- function(x = NULL) {
   spacing
 }
 
-white_space_in_text <- function(x, whitespace = NULL){
+white_space_in_text <- function(x, whitespace = NULL) {
 
   ##options for white space: normal, nowrap, pre, pre-wrap, pre-line, break-spaces
   ## normal drops all newlines and collapse spaces
@@ -2551,7 +2551,7 @@ white_space_in_text <- function(x, whitespace = NULL){
 
   ## collapse white spaces unless preserving it
   if (!isTRUE(whitespace %in% c( "pre", "pre-wrap", "break-spaces"))) {
-    x <- gsub("\\s+|\\t+"," ",x)
+    x <- gsub("\\s+|\\t+", " ", x)
   }
 
   x

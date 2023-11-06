@@ -20,20 +20,16 @@ test_that("The `get_image_uri()` function works correctly", {
 
   # Expect that the beginning of the PNG-based image URI has the
   # correct MIME and encoding types
-  expect_true(
-    grepl(
-      "^data:image/png;base64,",
-      get_image_uri(file = system_file("./graphics/test_image.png"))
-    )
+  expect_match(
+    get_image_uri(file = system_file("./graphics/test_image.png")),
+    "^data:image/png;base64,"
   )
 
   # Expect that the beginning of the SVG-based image URI has the
   # correct MIME and encoding types
-  expect_true(
-    grepl(
-      "data:image/svg\\+xml;base64",
-      get_image_uri(file = system_file("./graphics/test_image.svg"))
-    )
+  expect_match(
+    get_image_uri(file = system_file("./graphics/test_image.svg")),
+    "data:image/svg\\+xml;base64"
   )
 
   # Expect that the image URI for the included test image (in PNG form)
