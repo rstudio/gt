@@ -11099,7 +11099,7 @@ fmt_markdown <- function(
 #' We can format values with the `fmt_passthrough()` function, which does little
 #' more than: (1) coercing to `character` (as all the `fmt_*()` functions do),
 #' and (2) applying decorator text via the `pattern` argument (the default is to
-#' apply nothing). This foramtting function is useful when don't want to modify
+#' apply nothing). This formatting function is useful when don't want to modify
 #' the input data other than to decorate it within a pattern.
 #'
 #' @inheritParams fmt_number
