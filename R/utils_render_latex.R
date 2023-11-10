@@ -183,6 +183,45 @@ create_table_start_l <- function(data) {
             ">{\\raggedright\\arraybackslash}"
           )
 
+        # Check if column width was set using gt::pct and
+        # convert to Latex friendly terminology (i.e.,
+        # '14.7%' becomes '0.147\\linewidth')
+        if (grepl('^[[:digit:].]+%$', col_widths[i])) {
+
+          table_width <- dt_options_get_value(data = data, option = 'table_width')
+
+          col_pct <- as.numeric(gsub('%$', '', col_widths[i])) / 100
+
+          if (table_width == 'auto') {
+
+            # Table width not specified, use all available space
+            col_scalar <- col_pct
+            tab_unit <- '\\linewidth'
+
+          } else if (endsWith(table_width, suffix = '%')) {
+
+            # If table width is expressed as a percentage, adjust the scaler
+            col_scalar <- col_pct * as.numeric(gsub('%', '', table_width)) / 100
+            tab_unit <- '\\linewidth'
+
+          } else {
+
+            # When table width is expressed in units, convert to points
+            col_scalar <- col_pct * convert_to_px(table_width) * 0.75 # 0.75 converts pixels to points
+            tab_unit <- 'pt'
+
+          }
+
+          col_widths[i] <-
+            paste0(
+              "\\dimexpr ",
+              col_scalar,
+              tab_unit,
+              "-2\\tabcolsep-1.5\\arrayrulewidth"
+            )
+
+        }
+
         col_defs_i <- paste0(align, "p{", col_widths[i], "}")
 
       } else {
