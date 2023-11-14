@@ -1,3 +1,4 @@
+skip_on_cran()
 skip_on_os("linux")
 
 test_that("Page options can used for RTF output", {

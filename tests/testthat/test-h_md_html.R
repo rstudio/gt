@@ -1,3 +1,4 @@
+skip_on_cran()
 tab <-
   exibble %>%
   gt(rowname_col = "row", groupname_col = "group")

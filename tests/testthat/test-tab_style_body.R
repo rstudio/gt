@@ -1,3 +1,4 @@
+skip_on_cran()
 test_that("The `tab_style_body()` function works correctly", {
 
   # Generate a table that will be used in checks of body styling

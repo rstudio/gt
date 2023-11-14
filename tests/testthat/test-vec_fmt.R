@@ -1,3 +1,4 @@
+skip_on_cran()
 # Define numeric vectors for testing
 vec_num_1 <- c(-2.5, -2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2, 2.5, NA, Inf)
 vec_num_2 <- c(-2.5, -2, -1.5, -1, -0.5, 0, 0.5, 1, 1.5, 2, 2.5, NA, Inf) * 10

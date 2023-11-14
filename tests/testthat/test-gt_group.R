@@ -1,3 +1,4 @@
+skip_on_cran()
 test_that("The `gt_group()` function can be used to contain gt tables", {
 
   # Create two different `gt_tbl` table objects

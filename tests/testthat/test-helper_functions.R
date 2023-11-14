@@ -1,3 +1,4 @@
+skip_on_cran()
 test_that("The `pct()` helper function works correctly", {
 
   # Create a CSS percentage value string

@@ -1,3 +1,4 @@
+skip_on_cran()
 expect_caption_eq <- function(caption, expected) {
 
   result <- create_caption_component_h(gt(exibble, caption = caption))

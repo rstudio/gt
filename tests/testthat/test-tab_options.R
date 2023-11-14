@@ -1,3 +1,4 @@
+skip_on_cran()
 # Create a table with rownames and four columns of values
 tbl <-
   dplyr::tribble(

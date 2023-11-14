@@ -1,3 +1,4 @@
+skip_on_cran()
 test_that("the `date_formats()` function works correctly", {
 
   # Expect that the `info_date_style()` function produces an

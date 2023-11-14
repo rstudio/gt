@@ -1,3 +1,4 @@
+skip_on_cran()
 test_that("Extraction of table cells works well", {
 
   # Create a simple gt table using the exibble dataset

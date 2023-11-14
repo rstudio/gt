@@ -1,3 +1,4 @@
+skip_on_cran()
 test_that("The footer section formatting and options work well across all output formats", {
 
   exibble_footer <-

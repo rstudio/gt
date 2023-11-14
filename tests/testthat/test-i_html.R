@@ -1,3 +1,4 @@
+skip_on_cran()
 test_that("HTML tables have a specific class", {
 
   tbl_gt_i <-

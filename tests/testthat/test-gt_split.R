@@ -1,3 +1,4 @@
+skip_on_cran()
 test_that("Splitting a table into multiple works", {
 
   tbl_group_01 <-

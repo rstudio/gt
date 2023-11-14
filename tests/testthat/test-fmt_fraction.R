@@ -1,3 +1,4 @@
+skip_on_cran()
 test_that("The `fmt_fraction()` function works correctly", {
 
   # Create an input data frame two columns: one

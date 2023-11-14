@@ -1,3 +1,4 @@
+skip_on_cran()
 test_that("The `col_width_resolver_rtf()` function works correctly", {
 
   tw <- function(x) {

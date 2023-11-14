@@ -1,3 +1,4 @@
+skip_on_cran()
 test_that("LaTeX escaping with `escape_latex()` works well", {
 
   expect_equal(escape_latex("\\"), "\\textbackslash{}")

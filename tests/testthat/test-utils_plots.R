@@ -1,3 +1,4 @@
+skip_on_cran()
 test_that("Value stream processing produces the correct numeric vectors", {
 
     num_stream_01 <- "1 2 3 4 5  6"

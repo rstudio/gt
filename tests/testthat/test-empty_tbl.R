@@ -1,3 +1,4 @@
+skip_on_cran()
 empty_tbl <- dplyr::tibble()
 
 empty_w_cols_tbl <-

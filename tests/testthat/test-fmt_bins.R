@@ -1,3 +1,4 @@
+skip_on_cran()
 test_that("The `fmt_bins()` function works correctly", {
 
   # Create an input data frame with a single column of

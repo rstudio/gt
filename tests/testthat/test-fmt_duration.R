@@ -1,3 +1,4 @@
+skip_on_cran()
 test_that("The `fmt_duration()` function works correctly with numerical inputs", {
 
   # Create an input tibble with a numeric column

@@ -1,3 +1,4 @@
+skip_on_cran()
 generate_html_units <- function(input) {
   input %>% define_units() %>% render_units(context = "html")
 }

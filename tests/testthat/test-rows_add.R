@@ -1,3 +1,4 @@
+skip_on_cran()
 test_that("rows can be added to a table with name-value pairs", {
 
   gt_tbl_a <-

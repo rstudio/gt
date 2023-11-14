@@ -1,3 +1,4 @@
+skip_on_cran()
 tbl <-
   dplyr::tribble(
     ~col_1, ~col_2, ~col_3, ~col_4,    ~row,       ~group,

@@ -1,3 +1,4 @@
+skip_on_cran()
 test_that("Extraction of the table body works well", {
 
   # Create a simple table

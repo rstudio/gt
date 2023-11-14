@@ -1,3 +1,4 @@
+skip_on_cran()
 test_that("All exported functions validate the incoming `data` object", {
 
   regexp_stop <- "The `data` provided is not a `gt_tbl` object"

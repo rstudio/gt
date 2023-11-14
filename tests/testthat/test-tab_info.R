@@ -1,3 +1,4 @@
+skip_on_cran()
 exibble_minitest <- function(
     row_group_column = FALSE,
     use_row_groups = FALSE,

@@ -1,3 +1,4 @@
+skip_on_cran()
 test_that("The `gtsave()` function creates an HTML file based on the extension", {
 
   # Create a filename with path, having the

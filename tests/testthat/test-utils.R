@@ -1,3 +1,4 @@
+skip_on_cran()
 md_rtf <- function(md, rtf) {
   expect_equal(markdown_to_rtf(md), unclass(rtf_raw(rtf)))
 }

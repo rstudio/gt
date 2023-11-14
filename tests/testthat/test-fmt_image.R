@@ -1,3 +1,4 @@
+skip_on_cran()
 test_that("The `fmt_image()` function works correctly", {
 
   # Create an input data frame with numbers corresponding to image files

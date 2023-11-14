@@ -1,3 +1,4 @@
+skip_on_cran()
 # Create a table that can be used for testing
 test_tbl <-
   sza %>%

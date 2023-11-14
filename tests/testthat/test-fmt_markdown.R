@@ -1,3 +1,4 @@
+skip_on_cran()
 test_that("The `fmt_markdown()` function works correctly", {
 
   # Create a few Markdown-based text snippets

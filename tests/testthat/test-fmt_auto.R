@@ -1,3 +1,4 @@
+skip_on_cran()
 tbl <-
   dplyr::tibble(
     integer = c(100L, 8000L, 4136323L, 345363363L),

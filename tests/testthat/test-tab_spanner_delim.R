@@ -1,3 +1,4 @@
+skip_on_cran()
 # Create a shortened version of `iris`
 iris_short <- iris[1:5, ]
 

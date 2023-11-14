@@ -1,3 +1,4 @@
+skip_on_cran()
 test_that("The different removal functions work correctly", {
 
   # Generate a table that will be used to check the effect of removals

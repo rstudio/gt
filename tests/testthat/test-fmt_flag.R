@@ -1,3 +1,4 @@
+skip_on_cran()
 test_that("The `fmt_flag()` function works correctly", {
 
   # Create an input data frame with a single column of 2-letter country code

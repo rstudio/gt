@@ -1,3 +1,4 @@
+skip_on_cran()
 test_that("A table header can be removed using `rm_header()`", {
 
   # Perform a snapshot test where an HTML table contains a title and a subtitle

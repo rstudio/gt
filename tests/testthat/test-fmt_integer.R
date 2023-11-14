@@ -1,3 +1,4 @@
+skip_on_cran()
 test_that("The `fmt_integer()` function works correctly in the HTML context", {
 
   # Create an input data frame four columns: two

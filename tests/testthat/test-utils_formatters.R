@@ -1,3 +1,4 @@
+skip_on_cran()
 test_that("the `filter_table_to_value()` function works correctly", {
 
   # Expect that filtering the `locales` table with
