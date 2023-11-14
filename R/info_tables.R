@@ -772,7 +772,7 @@ info_google_fonts <- function() {
 #' 11-7
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.10.0` (October 7, 2023)
 #'
 #' @export
 info_flags <- function() {
@@ -811,7 +811,7 @@ info_flags <- function() {
 #' 11-8
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.10.0` (October 7, 2023)
 #'
 #' @export
 info_icons <- function() {
