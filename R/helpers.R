@@ -393,7 +393,7 @@ pct <- function(x) {
 #' 8-5
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.10.0` (October 7, 2023)
 #'
 #' @export
 from_column <- function(
@@ -763,7 +763,7 @@ currency <- function(
 #' 8-7
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.10.0` (October 7, 2023)
 #'
 #' @export
 nanoplot_options <- function(
@@ -1056,7 +1056,7 @@ adjust_luminance <- function(
 #' 8-9
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.10.0` (October 7, 2023)
 #'
 #' @export
 define_units <- function(units_notation) {
