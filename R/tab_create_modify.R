@@ -2093,7 +2093,7 @@ tab_stub_indent <- function(
 #'   the footnote text to different types of locations (e.g., body cells, row
 #'   group labels, the table title, etc.).
 #'
-#' @param placement *Placement of footnote mark*
+#' @param placement *Placement of the footnote mark*
 #'
 #'   `singl-kw:[auto|right|left]` // *default:* `"auto"`
 #'
@@ -2108,7 +2108,7 @@ tab_stub_indent <- function(
 #' @section Formatting of footnote text and marks:
 #'
 #' There are several options for controlling the formatting of the footnotes,
-#' their marks, and typesetting in the footer. All of these options are
+#' their marks, and related typesetting in the footer. All of these options are
 #' available within the [tab_options()] function and a subset of these are
 #' exposed in their own `opt_*()` functions.
 #'
@@ -2136,7 +2136,7 @@ tab_stub_indent <- function(
 #' (4) Section Sign, (5) Double Vertical Line, and (6) Paragraph Sign; the
 #' `"standard"` set has the first four, `"extended"` contains all.
 #'
-#' ## Defining footnote specs
+#' ## Defining footnote typesetting specifications
 #'
 #' A footnote spec consists of a string containing control characters for
 #' formatting. They are separately defined for footnote marks beside footnote
@@ -2163,9 +2163,9 @@ tab_stub_indent <- function(
 #'
 #' These options can be set either in a [tab_options()] call (with the
 #' `footnotes.spec_ref` and `footnotes.spec_ftr` arguments) or with
-#' [opt_footnote_spec()] (using `spec_ref` or `spec_ftr`).
+#' [opt_footnote_spec()] (using the `spec_ref` or `spec_ftr` arguments).
 #'
-#' ## Typesetting of footnotes in the footer
+#' ## Additional typesetting options for footnote text residing in the footer
 #'
 #' Within [tab_options()] there are two arguments that control the typesetting
 #' of footnotes. With `footnotes.multiline`, we have a setting that determines
@@ -2210,11 +2210,11 @@ tab_stub_indent <- function(
 #' Of course, we can add more than one footnote to the table, but, we have to
 #' use several calls of `tab_footnote()`. This variation of the [`sza`] table
 #' has three footnotes: one on the `"TST"` column label and two on the `"SZA"`
-#' column label (these were capitalized with [opt_all_caps()]). We have three
-#' calls of `tab_footnote()` and while the order of calls usually doesn't
-#' matter, it does have a subtle effect here since two footnotes are associated
-#' with the same text content (try reversing the second and third calls and
-#' observe the effect in the footer).
+#' column label (these were capitalized with [opt_all_caps()]). We will
+#' ultimately have three calls of `tab_footnote()` and while the order of calls
+#' usually doesn't matter, it does have a subtle effect here since two footnotes
+#' are associated with the same text content (try reversing the second and third
+#' calls and observe the effect in the footer).
 #'
 #' ```r
 #' sza |>
@@ -2356,13 +2356,13 @@ tab_stub_indent <- function(
 #' `r man_get_image_tag(file = "man_tab_footnote_4.png")`
 #' }}
 #'
-#' Aside from changing the footnote marks to be `"LETTERS"`, we've also changed
-#' the way the marks are formatted. In [opt_footnote_spec()], the `spec_ref`
-#' option governs the footnote marks across the table. Here, we describe marks
-#' that are italicized and set between square brackets (with `"i[x]"`). The
-#' `spec_ftr` argument is used for the footer representation of the footnote
-#' marks. As described in the example with `"x."`, it will be rendered as the
-#' footnote mark followed by a period.
+#' Aside from changing the footnote marks to consist of `"LETTERS"`, we've also
+#' changed the way the marks are formatted. In our use of [opt_footnote_spec()],
+#' the `spec_ref` option governs the footnote marks across the table. Here, we
+#' describe marks that are italicized and set between square brackets (with
+#' `"i[x]"`). The `spec_ftr` argument is used for the footer representation of
+#' the footnote marks. As described in the example with `"x."`, it is rendered
+#' as a footnote mark followed by a period.
 #'
 #' @family part creation/modification functions
 #' @section Function ID:
