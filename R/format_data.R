@@ -3629,6 +3629,16 @@ round_gt <- function(x, digits = 0) {
 #'   `"USD"` it would result in `"$2"`. With `4` decimal places, the formatted
 #'   value becomes `"$2.3400"`.
 #'
+#' @param drop_trailing_dec_mark *Drop the trailing decimal mark*
+#'
+#'   `scalar<logical>` // *default:* `TRUE`
+#'
+#'   A logical value that determines whether decimal marks should always appear
+#'   even if there are no decimal digits to display after formatting. For
+#'   example, when `use_subunits = FALSE` or `decimals = 0` a formatted value
+#'   such as `"$23"` can be fashioned as `"$23."` by setting
+#'   `drop_trailing_dec_mark = FALSE`.
+#'
 #' @param placement *Currency symbol placement*
 #'
 #'   `singl-kw:[left|right]` // *default:* `"left"`
