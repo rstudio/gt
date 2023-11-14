@@ -1824,10 +1824,9 @@ tab_stubhead <- function(
 #'
 #'   `<row-targeting expression>` // **required**
 #'
-#'   The rows to consider for the indentation change. The default [everything()]
-#'   results in all rows being targeted. Alternatively, we can supply a vector
-#'   of row captions within [c()], a vector of row indices, or a select helper
-#'   function. Examples of select helper functions include [starts_with()],
+#'   The rows to consider for the indentation change. We can supply a vector of
+#'   row ID values within [c()], a vector of row indices, or use select helpers
+#'   here. Examples of select helper functions include [starts_with()],
 #'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
 #'   [everything()]. We can also use expressions to filter down to the rows we
 #'   need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
