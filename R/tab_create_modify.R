@@ -799,15 +799,15 @@ resolve_spanned_column_names <- function(
 #' @description
 #'
 #' The `cols_spanner_delim()` function can take specially-crafted column names
-#' and generate one or more spanners (along with relabeling the
-#' column labels). This is done by splitting the column name by a specified
-#' delimiter character (this is the `delim`) and placing the fragments from top
-#' to bottom (i.e., higher-level spanners to the column labels). Furthermore,
-#' the neighboring text fragments on different spanner levels will be coalesced
-#' together to put the span back into spanner. For instance, having the three
-#' side-by-side column names `rating_1`, `rating_2`, and `rating_3` will (in the
-#' default case at least) result in a spanner with the label `"rating"` above
-#' columns with the labels `"1"`, `"2"`, and `"3"`. There are many options in
+#' and generate one or more spanners (and revise column labels at the same
+#' time). This is done by splitting the column name by a specified delimiter
+#' (this is the `delim`) and placing the fragments from top to bottom (i.e.,
+#' higher-level spanners to the column labels) or vice versa. Furthermore,
+#' neighboring text fragments on different spanner levels that have the same
+#' text will be coalesced together. For instance, having the three side-by-side
+#' column names `rating_1`, `rating_2`, and `rating_3` will (in the default case
+#' at least) result in a spanner with the label `"rating"` above columns with
+#' the labels `"1"`, `"2"`, and `"3"`. There are many options in
 #' `cols_spanner_delim()` to slice and dice delimited column names in different
 #' ways:
 #'
@@ -839,8 +839,7 @@ resolve_spanned_column_names <- function(
 #'   operations. Can either be a series of column names provided in [c()], a
 #'   vector of column indices, or a select helper function. Examples of select
 #'   helper functions include [starts_with()], [ends_with()], [contains()],
-#'   [matches()], [one_of()], [num_range()], and [everything()]. This argument
-#'   works in tandem with the `spanners` argument.
+#'   [matches()], [one_of()], [num_range()], and [everything()].
 #'
 #' @param split *Splitting side*
 #'
