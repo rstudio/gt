@@ -1427,9 +1427,7 @@ str_split_across <- function(
 #' group, we can use a separate call to `tab_options(row_group.default_label =
 #' <label>)`. If this is not done and there are rows that haven't been placed
 #' into a row group (where one or more row groups already exist), those rows
-#' will be automatically placed into a row group without a label. To restore
-#' labels for row groups not explicitly assigned a group,
-#' `tab_options(row_group.default_label = "")` can be used.
+#' will be automatically placed into a row group without a label.
 #'
 #' @inheritParams fmt_number
 #'
