@@ -1443,13 +1443,12 @@ str_split_across <- function(
 #'
 #'   `<row-targeting expression>` // **required**
 #'
-#'   The rows to be made components of the row group. The default [everything()]
-#'   results in all rows in `columns` being formatted. Alternatively, we can
-#'   supply a vector of row captions within [c()], a vector of row indices, or a
-#'   select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()]. We can also use expressions to filter
-#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'   The rows to be made components of the row group. We can supply a vector of
+#'   row ID values within [c()], a vector of row indices, or use select helpers
+#'   here. Examples of select helper functions include [starts_with()],
+#'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
+#'   [everything()]. We can also use expressions to filter down to the rows we
+#'   need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @param id *Row group ID*
 #'
