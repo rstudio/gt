@@ -3618,6 +3618,17 @@ round_gt <- function(x, digits = 0) {
 #'   formatting will produce `"$273.81"`. Removing the subunits (with
 #'   `use_subunits = FALSE`) will give us `"$273"`.
 #'
+#' @param decimals *Number of decimal places*
+#'
+#'   `scalar<numeric|integer>(val>=0)` // *default:* `NULL` (`optional`)
+#'
+#'   The `decimals` values corresponds to the exact number of decimal places to
+#'   use. This value is optional as a currency has an intrinsic number of
+#'   decimal places (i.e., the subunits). A value such as `2.34` can, for
+#'   example, be formatted with `0` decimal places and if the currency used is
+#'   `"USD"` it would result in `"$2"`. With `4` decimal places, the formatted
+#'   value becomes `"$2.3400"`.
+#'
 #' @param placement *Currency symbol placement*
 #'
 #'   `scalar<character>` // *default:* `"left"`
