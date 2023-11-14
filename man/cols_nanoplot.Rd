@@ -563,7 +563,7 @@ pizzas in large size!
 
 \section{Function Introduced}{
 
-\emph{In Development}
+\code{v0.10.0} (October 7, 2023)
 }
 
 \seealso{

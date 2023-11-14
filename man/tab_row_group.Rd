@@ -26,13 +26,12 @@ elements in the text.}
 
 \verb{<row-targeting expression>} // \strong{required}
 
-The rows to be made components of the row group. The default \code{\link[=everything]{everything()}}
-results in all rows in \code{columns} being formatted. Alternatively, we can
-supply a vector of row captions within \code{\link[=c]{c()}}, a vector of row indices, or a
-select helper function. Examples of select helper functions include
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
-\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions to filter
-down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+The rows to be made components of the row group. We can supply a vector of
+row ID values within \code{\link[=c]{c()}}, a vector of row indices, or use select helpers
+here. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
+\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
+\code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
+need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{id}{\emph{Row group ID}
 
@@ -69,14 +68,12 @@ We can create a row group from a collection of rows with the
 \code{tab_row_group()} function. This requires specification of the rows to be
 included, either by supplying row labels, row indices, or through use of a
 select helper function like \code{\link[=starts_with]{starts_with()}}. To modify the order of row
-groups, use the \code{\link[=row_group_order]{row_group_order()}} function.
+groups, we can use the \code{\link[=row_group_order]{row_group_order()}} function.
 
 To set a default row group label for any rows not formally placed in a row
 group, we can use a separate call to \verb{tab_options(row_group.default_label = <label>)}. If this is not done and there are rows that haven't been placed
 into a row group (where one or more row groups already exist), those rows
-will be automatically placed into a row group without a label. To restore
-labels for row groups not explicitly assigned a group,
-\code{tab_options(row_group.default_label = "")} can be used.
+will be automatically placed into a row group without a label.
 }
 \section{Examples}{
 

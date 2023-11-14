@@ -18,10 +18,9 @@ This is the \strong{gt} table object that is commonly created through use of the
 
 \verb{<row-targeting expression>} // \strong{required}
 
-The rows to consider for the indentation change. The default \code{\link[=everything]{everything()}}
-results in all rows being targeted. Alternatively, we can supply a vector
-of row captions within \code{\link[=c]{c()}}, a vector of row indices, or a select helper
-function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
+The rows to consider for the indentation change. We can supply a vector of
+row ID values within \code{\link[=c]{c()}}, a vector of row indices, or use select helpers
+here. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
 \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
 \code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
 need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
@@ -44,7 +43,8 @@ An object of class \code{gt_tbl}.
 Indentation of row labels is an effective way for establishing structure in a
 table stub. The \code{tab_stub_indent()} function allows for fine control over
 row label indentation in the stub. We can use an explicit definition of an
-indentation level, or, employ an indentation directive using keywords.
+indentation level (with a number between \code{0} and \code{5}), or, employ an
+indentation directive using keywords (\code{"increase"}/\code{"decrease"}).
 }
 \section{Compatibility of arguments with the \code{from_column()} helper function}{
 
