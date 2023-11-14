@@ -2056,13 +2056,17 @@ tab_stub_indent <- function(
 #' 3. footnote marks are ordered across the table in a consistent manner (left
 #' to right, top to bottom)
 #'
-#' Each call of `tab_footnote()` will either add a different footnote or reuse
-#' existing footnote text. One or more cells are targeted using the `cells_*()`
-#' helper functions (e.g., [cells_body()], [cells_column_labels()], etc.). You
-#' can choose to not attach a footnote mark not specifying a location at all. By
-#' default, **gt** will choose which side of the text to place the footnote mark
-#' (with the `placement = "auto"` option) but you can always choose the
-#' placement of the footnote mark.
+#' Each call of `tab_footnote()` will either add a different footnote to the
+#' footer or reuse existing footnote text therein. One or more cells outside of
+#' the footer are targeted using the `cells_*()` helper functions (e.g.,
+#' [cells_body()], [cells_column_labels()], etc.). You can choose to *not*
+#' attach a footnote mark by simply not specifying anything in the `locations`
+#' argument.
+#'
+#' By default, **gt** will choose which side of the text to place the footnote
+#' mark via the `placement = "auto"` option. You are, however, always free to
+#' choose the placement of the footnote mark (either to the `"left` or `"right"`
+#' of the targeted cell content).
 #'
 #' @inheritParams fmt_number
 #'
