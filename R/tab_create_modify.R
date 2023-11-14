@@ -1421,7 +1421,7 @@ str_split_across <- function(
 #' `tab_row_group()` function. This requires specification of the rows to be
 #' included, either by supplying row labels, row indices, or through use of a
 #' select helper function like [starts_with()]. To modify the order of row
-#' groups, use the [row_group_order()] function.
+#' groups, we can use the [row_group_order()] function.
 #'
 #' To set a default row group label for any rows not formally placed in a row
 #' group, we can use a separate call to `tab_options(row_group.default_label =
