@@ -96,14 +96,14 @@ formatting will produce \code{"$273.81"}. Removing the subunits (with
 
 \item{decimals}{\emph{Number of decimal places}
 
-\code{scalar<numeric|integer>(val>=0)} // \emph{default:} \code{2}
+\code{scalar<numeric|integer>(val>=0)} // \emph{default:} \code{NULL} (\code{optional})
 
-This corresponds to the exact number of decimal places to use. A value
-such as \code{2.34} can, for example, be formatted with \code{0} decimal places and
-it would result in \code{"2"}. With \code{4} decimal places, the formatted value
-becomes \code{"2.3400"}. The trailing zeros can be removed with
-\code{drop_trailing_zeros = TRUE}. If you always need \code{decimals = 0}, the
-\code{\link[=fmt_integer]{fmt_integer()}} function should be considered.}
+The \code{decimals} values corresponds to the exact number of decimal places to
+use. This value is optional as a currency has an intrinsic number of
+decimal places (i.e., the subunits). A value such as \code{2.34} can, for
+example, be formatted with \code{0} decimal places and if the currency used is
+\code{"USD"} it would result in \code{"$2"}. With \code{4} decimal places, the formatted
+value becomes \code{"$2.3400"}.}
 
 \item{drop_trailing_dec_mark}{\emph{Drop the trailing decimal mark}
 
@@ -209,10 +209,10 @@ This option is disregarded when using accounting notation with
 
 \item{placement}{\emph{Currency symbol placement}
 
-\verb{scalar<character>} // \emph{default:} \code{"left"}
+\verb{singl-kw:[left|right]} // \emph{default:} \code{"left"}
 
-The placement of the currency symbol. This can be either be \code{left} (as
-in \code{"$450"}) or \code{right} (which yields \code{"450$"}).}
+The placement of the currency symbol. This can be either be \code{"left"} (as
+in \code{"$450"}) or \code{"right"} (which yields \code{"450$"}).}
 
 \item{incl_space}{\emph{Include a space between the value and the currency symbol}
 
