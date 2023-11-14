@@ -1815,7 +1815,8 @@ tab_stubhead <- function(
 #' Indentation of row labels is an effective way for establishing structure in a
 #' table stub. The `tab_stub_indent()` function allows for fine control over
 #' row label indentation in the stub. We can use an explicit definition of an
-#' indentation level, or, employ an indentation directive using keywords.
+#' indentation level (with a number between `0` and `5`), or, employ an
+#' indentation directive using keywords (`"increase"`/`"decrease"`).
 #'
 #' @inheritParams fmt_number
 #'
