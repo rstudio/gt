@@ -1239,7 +1239,7 @@ as_word_tbl_body <- function(
 #' 13-6
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.10.0` (October 7, 2023)
 #'
 #' @export
 extract_body <- function(
