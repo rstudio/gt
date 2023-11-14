@@ -2189,19 +2189,19 @@ fmt_symbol <- function(
 #'   usually proportional. Setting to `FALSE` signifies that the values are
 #'   already scaled and require only the percent sign when formatted.
 #'
+#' @param placement *Percent sign placement*
+#'
+#'   `singl-kw:[right|left]` // *default:* `"right"`
+#'
+#'   This option governs the placement of the percent sign. This can be either
+#'   be `"right"` (the default) or `"left"`.
+#'
 #' @param incl_space *Include a space between the value and the % sign*
 #'
 #'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   An option for whether to include a space between the value and the percent
 #'   sign. The default is to not introduce a space character.
-#'
-#' @param placement *Percent sign placement*
-#'
-#'   `scalar<character>` // *default:* `"right"`
-#'
-#'   This option governs the placement of the percent sign. This can be either
-#'   be `right` (the default) or `left`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -2346,8 +2346,8 @@ fmt_percent <- function(
     sep_mark = ",",
     dec_mark = ".",
     force_sign = FALSE,
-    incl_space = FALSE,
     placement = "right",
+    incl_space = FALSE,
     system = c("intl", "ind"),
     locale = NULL
 ) {
