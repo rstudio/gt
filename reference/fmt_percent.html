@@ -146,8 +146,8 @@ formatting specific to the chosen locale</p></li>
 <span>  sep_mark <span class="op">=</span> <span class="st">","</span>,</span>
 <span>  dec_mark <span class="op">=</span> <span class="st">"."</span>,</span>
 <span>  force_sign <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  incl_space <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  placement <span class="op">=</span> <span class="st">"right"</span>,</span>
+<span>  incl_space <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  system <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"intl"</span>, <span class="st">"ind"</span><span class="op">)</span>,</span>
 <span>  locale <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -272,18 +272,18 @@ This option is disregarded when using accounting notation with
 <code>accounting = TRUE</code>.</p></dd>
 
 
+<dt>placement</dt>
+<dd><p><em>Percent sign placement</em></p>
+<p><code>singl-kw:[right|left]</code> // <em>default:</em> <code>"right"</code></p>
+<p>This option governs the placement of the percent sign. This can be either
+be <code>"right"</code> (the default) or <code>"left"</code>.</p></dd>
+
+
 <dt>incl_space</dt>
 <dd><p><em>Include a space between the value and the % sign</em></p>
 <p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
 <p>An option for whether to include a space between the value and the percent
 sign. The default is to not introduce a space character.</p></dd>
-
-
-<dt>placement</dt>
-<dd><p><em>Percent sign placement</em></p>
-<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>"right"</code></p>
-<p>This option governs the placement of the percent sign. This can be either
-be <code>right</code> (the default) or <code>left</code>.</p></dd>
 
 
 <dt>system</dt>

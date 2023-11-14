@@ -251,21 +251,23 @@ formatting will produce <code>"$273.81"</code>. Removing the subunits (with
 
 <dt>decimals</dt>
 <dd><p><em>Number of decimal places</em></p>
-<p><code>scalar&lt;numeric|integer&gt;(val&gt;=0)</code> // <em>default:</em> <code>2</code></p>
-<p>This corresponds to the exact number of decimal places to use. A value
-such as <code>2.34</code> can, for example, be formatted with <code>0</code> decimal places and
-it would result in <code>"2"</code>. With <code>4</code> decimal places, the formatted value
-becomes <code>"2.3400"</code>. The trailing zeros can be removed with
-<code>drop_trailing_zeros = TRUE</code>. If you always need <code>decimals = 0</code>, the
-<code><a href="fmt_integer.html">fmt_integer()</a></code> function should be considered.</p></dd>
+<p><code>scalar&lt;numeric|integer&gt;(val&gt;=0)</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>The <code>decimals</code> values corresponds to the exact number of decimal places to
+use. This value is optional as a currency has an intrinsic number of
+decimal places (i.e., the subunits). A value such as <code>2.34</code> can, for
+example, be formatted with <code>0</code> decimal places and if the currency used is
+<code>"USD"</code> it would result in <code>"$2"</code>. With <code>4</code> decimal places, the formatted
+value becomes <code>"$2.3400"</code>.</p></dd>
 
 
 <dt>drop_trailing_dec_mark</dt>
 <dd><p><em>Drop the trailing decimal mark</em></p>
 <p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
 <p>A logical value that determines whether decimal marks should always appear
-even if there are no decimal digits to display after formatting (e.g., <code>23</code>
-becomes <code>23.</code> if <code>FALSE</code>). By default trailing decimal marks are not shown.</p></dd>
+even if there are no decimal digits to display after formatting. For
+example, when <code>use_subunits = FALSE</code> or <code>decimals = 0</code> a formatted value
+such as <code>"$23"</code> can be fashioned as <code>"$23."</code> by setting
+<code>drop_trailing_dec_mark = FALSE</code>.</p></dd>
 
 
 <dt>use_seps</dt>
@@ -360,9 +362,9 @@ This option is disregarded when using accounting notation with
 
 <dt>placement</dt>
 <dd><p><em>Currency symbol placement</em></p>
-<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>"left"</code></p>
-<p>The placement of the currency symbol. This can be either be <code>left</code> (as
-in <code>"$450"</code>) or <code>right</code> (which yields <code>"450$"</code>).</p></dd>
+<p><code>singl-kw:[left|right]</code> // <em>default:</em> <code>"left"</code></p>
+<p>The placement of the currency symbol. This can be either be <code>"left"</code> (as
+in <code>"$450"</code>) or <code>"right"</code> (which yields <code>"450$"</code>).</p></dd>
 
 
 <dt>incl_space</dt>
