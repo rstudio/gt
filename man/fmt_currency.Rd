@@ -110,8 +110,10 @@ value becomes \code{"$2.3400"}.}
 \verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 A logical value that determines whether decimal marks should always appear
-even if there are no decimal digits to display after formatting (e.g., \code{23}
-becomes \code{23.} if \code{FALSE}). By default trailing decimal marks are not shown.}
+even if there are no decimal digits to display after formatting. For
+example, when \code{use_subunits = FALSE} or \code{decimals = 0} a formatted value
+such as \code{"$23"} can be fashioned as \code{"$23."} by setting
+\code{drop_trailing_dec_mark = FALSE}.}
 
 \item{use_seps}{\emph{Use digit group separators}
 
