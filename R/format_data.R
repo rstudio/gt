@@ -3633,8 +3633,8 @@ round_gt <- function(x, digits = 0) {
 #'
 #'   `singl-kw:[left|right]` // *default:* `"left"`
 #'
-#'   The placement of the currency symbol. This can be either be `left` (as
-#'   in `"$450"`) or `right` (which yields `"450$"`).
+#'   The placement of the currency symbol. This can be either be `"left"` (as
+#'   in `"$450"`) or `"right"` (which yields `"450$"`).
 #'
 #' @param incl_space *Include a space between the value and the currency symbol*
 #'
