@@ -8499,7 +8499,7 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #' 3-18
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.10.0` (October 7, 2023)
 #'
 #' @import rlang
 #' @export
@@ -10632,7 +10632,7 @@ fmt_flag <- function(
 #' 3-22
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.10.0` (October 7, 2023)
 #'
 #' @import rlang
 #' @export
