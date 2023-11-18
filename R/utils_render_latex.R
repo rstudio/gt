@@ -244,11 +244,18 @@ create_table_start_l <- function(data) {
       paste0(col_defs[seq_along(stub_layout)], "|")
   }
 
+  # If a table width is specified, add an extra column
+  # space to fill in enough space to match the width
+  extra_sep <- ''
+  if (dt_options_get_value(data = data, option = 'table_width') != 'auto')
+    extra_sep <- '@{\\extracolsep{\\fill}}'
+
   # Generate setup statements for table including default left
   # alignments and vertical lines for any stub columns
   paste0(
     longtable_post_length,
     "\\begin{longtable}{",
+    extra_sep,
     paste(col_defs, collapse = ""),
     "}\n",
     collapse = ""
@@ -1141,4 +1148,64 @@ split_row_content <- function(x) {
   row_content <- as.vector(t(x))
 
   split(row_content, ceiling(seq_along(row_content) / ncol(x)))
+}
+
+derive_table_width_bookends <- function(data) {
+
+  table_width <- dt_options_get_value(data = data, 'table_width')
+
+  # Bookends are not required if a table width is not specified
+  if (table_width == 'auto') {
+
+    bookends <- c('', '')
+
+  } else if (endsWith(table_width, "%")) {
+
+    tw <- as.numeric(gsub('%', '', table_width))
+
+    side_width <-
+      ((100 - tw) / 200) %>%
+      format(scientific = FALSE, trim = TRUE)
+
+    bookends <-
+      c(
+        sprintf(
+          '\\setlength\\LTleft{%s\\linewidth}\n\\setlength\\LTright{%s\\linewidth}\n',
+          side_width,
+          side_width
+        ),
+        ""
+      )
+
+  } else {
+
+    width_in_pt <- 0.75 * convert_to_px(table_width)
+
+    halfwidth_in_pt <- format(width_in_pt / 2, scientific = FALSE, trim = TRUE)
+
+    bookends <-
+      c(
+        paste0(
+          "\\newlength\\holdLTleft",
+          "\\newlength\\holdLTright",
+          "\\setlength\\holdLTleft{\\LTleft}\\relax",
+          "\\setlength\\holdLTright{\\LTright}\\relax",
+          sprintf(
+            "\\setlength\\LTleft{\\dimexpr(0.5\\linewidth - %spt)}\n\\setlength\\LTright{\\dimexpr(0.5\\linewidth - %spt)}",
+            halfwidth_in_pt,
+            halfwidth_in_pt
+          ),
+          collapse = '\n'
+        ),
+        paste0(
+          "\\setlength\\LTleft{\\holdLTleft}",
+          "\\setlength\\LTright{\\holdLTright}",
+          collapse = "\n"
+        )
+      )
+
+  }
+
+  bookends
+
 }
