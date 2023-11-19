@@ -916,7 +916,7 @@ test_that("The function `cols_width()` correctly specifies LaTeX table when colu
 
   pct_string <- function(x, unit = '\\\\linewidth') {
 
-    prefix <- '>\\{\\\\ragged[[:alpha:]]+\\\\arraybackslash\\}'
+    prefix <- '>\\{\\\\(raggedright|raggedleft|centering)\\\\arraybackslash\\}'
 
     sprintf(
       '%sp\\{\\\\dimexpr %s%s-2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}',
@@ -931,7 +931,8 @@ test_that("The function `cols_width()` correctly specifies LaTeX table when colu
 
     paste0(
       c(
-        "^\\\\begin\\{longtable\\}\\{",
+        "\\\\begin\\{longtable\\}\\{",
+        "(@\\{\\\\extracolsep\\{\\\\fill\\}\\})*",
         c(...),
         "\\}\\n"
       ),
@@ -943,11 +944,12 @@ test_that("The function `cols_width()` correctly specifies LaTeX table when colu
   latex_col_regex <-
     paste0(
       c(
-        '^\\\\begin\\{longtable\\}\\{',
+        "\\\\begin\\{longtable\\}\\{",
+        "(@\\{\\\\extracolsep\\{\\\\fill\\}\\})*",
         # '>\\{\\\\ragged[[:alpha:]]+\\\\arraybackslash'
-       sprintf('>\\{\\\\ragged[[:alpha:]]+\\\\arraybackslash\\}p\\{\\\\dimexpr 0\\.%d\\\\linewidth-2\\\\tabcolsep-1.5\\\\arrayrulewidth}',
+       sprintf(">\\{\\\\(raggedright|raggedleft|centering)\\\\arraybackslash\\}p\\{\\\\dimexpr 0\\.%d\\\\linewidth-2\\\\tabcolsep-1.5\\\\arrayrulewidth}",
                c(5L, 3L, 2L, 1L)),
-        '\\}\\n'
+        "\\}\\n"
       ),
       collapse = ''
     )
