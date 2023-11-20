@@ -205,7 +205,7 @@ each cell of \code{ext} was by necessity filled with an \code{NA} value.
 
 \section{Function Introduced}{
 
-\emph{In Development}
+\code{v0.10.0} (October 7, 2023)
 }
 
 \seealso{

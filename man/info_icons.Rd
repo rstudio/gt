@@ -39,7 +39,7 @@ Get a table of info on all the available \emph{Font Awesome} icons.
 
 \section{Function Introduced}{
 
-\emph{In Development}
+\code{v0.10.0} (October 7, 2023)
 }
 
 \seealso{

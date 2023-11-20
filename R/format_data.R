@@ -2189,19 +2189,19 @@ fmt_symbol <- function(
 #'   usually proportional. Setting to `FALSE` signifies that the values are
 #'   already scaled and require only the percent sign when formatted.
 #'
+#' @param placement *Percent sign placement*
+#'
+#'   `singl-kw:[right|left]` // *default:* `"right"`
+#'
+#'   This option governs the placement of the percent sign. This can be either
+#'   be `"right"` (the default) or `"left"`.
+#'
 #' @param incl_space *Include a space between the value and the % sign*
 #'
 #'   `scalar<logical>` // *default:* `FALSE`
 #'
 #'   An option for whether to include a space between the value and the percent
 #'   sign. The default is to not introduce a space character.
-#'
-#' @param placement *Percent sign placement*
-#'
-#'   `scalar<character>` // *default:* `"right"`
-#'
-#'   This option governs the placement of the percent sign. This can be either
-#'   be `right` (the default) or `left`.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -2346,8 +2346,8 @@ fmt_percent <- function(
     sep_mark = ",",
     dec_mark = ".",
     force_sign = FALSE,
-    incl_space = FALSE,
     placement = "right",
+    incl_space = FALSE,
     system = c("intl", "ind"),
     locale = NULL
 ) {
@@ -3618,12 +3618,33 @@ round_gt <- function(x, digits = 0) {
 #'   formatting will produce `"$273.81"`. Removing the subunits (with
 #'   `use_subunits = FALSE`) will give us `"$273"`.
 #'
+#' @param decimals *Number of decimal places*
+#'
+#'   `scalar<numeric|integer>(val>=0)` // *default:* `NULL` (`optional`)
+#'
+#'   The `decimals` values corresponds to the exact number of decimal places to
+#'   use. This value is optional as a currency has an intrinsic number of
+#'   decimal places (i.e., the subunits). A value such as `2.34` can, for
+#'   example, be formatted with `0` decimal places and if the currency used is
+#'   `"USD"` it would result in `"$2"`. With `4` decimal places, the formatted
+#'   value becomes `"$2.3400"`.
+#'
+#' @param drop_trailing_dec_mark *Drop the trailing decimal mark*
+#'
+#'   `scalar<logical>` // *default:* `TRUE`
+#'
+#'   A logical value that determines whether decimal marks should always appear
+#'   even if there are no decimal digits to display after formatting. For
+#'   example, when `use_subunits = FALSE` or `decimals = 0` a formatted value
+#'   such as `"$23"` can be fashioned as `"$23."` by setting
+#'   `drop_trailing_dec_mark = FALSE`.
+#'
 #' @param placement *Currency symbol placement*
 #'
-#'   `scalar<character>` // *default:* `"left"`
+#'   `singl-kw:[left|right]` // *default:* `"left"`
 #'
-#'   The placement of the currency symbol. This can be either be `left` (as
-#'   in `"$450"`) or `right` (which yields `"450$"`).
+#'   The placement of the currency symbol. This can be either be `"left"` (as
+#'   in `"$450"`) or `"right"` (which yields `"450$"`).
 #'
 #' @param incl_space *Include a space between the value and the currency symbol*
 #'
@@ -8499,7 +8520,7 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #' 3-18
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.10.0` (October 7, 2023)
 #'
 #' @import rlang
 #' @export
@@ -10632,7 +10653,7 @@ fmt_flag <- function(
 #' 3-22
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.10.0` (October 7, 2023)
 #'
 #' @import rlang
 #' @export
