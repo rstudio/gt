@@ -4,7 +4,7 @@
 
 <!-- badges: start -->
 <a href="https://cran.r-project.org/package=gt"><img src="https://www.r-pkg.org/badges/version/gt" alt="CRAN status" /></a>
-<a href="https://img.shields.io/github/license/rstudio/gt"><img src="https://img.shields.io/github/license/rstudio/gt" alt="License" /></a>
+<a href="https://opensource.org/license/mit/"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" /></a>
 <a href="https://github.com/rstudio/gt/actions/workflows/R-CMD-check.yaml"><img src="https://github.com/rstudio/gt/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R build status" /></a>
 <a href="https://app.codecov.io/gh/rstudio/gt?branch=master"><img src="https://codecov.io/gh/rstudio/gt/branch/master/graph/badge.svg" alt="Coverage status" /></a>
 
