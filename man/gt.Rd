@@ -38,9 +38,9 @@ column name provided to \code{rowname_col} will be ignored.}
 \verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 The column name in the input \code{data} table to use as group labels for
-generation of stub row groups. If the input \code{data} table has the
-\code{grouped_df} class (through use of the \code{\link[dplyr:group_by]{dplyr::group_by()}} function or
-associated \verb{group_by*()} functions) then any input here is ignored.}
+generation of row groups. If the input \code{data} table has the \code{grouped_df}
+class (through use of the \code{\link[dplyr:group_by]{dplyr::group_by()}} function or associated
+\verb{group_by*()} functions) then any input here is ignored.}
 
 \item{process_md}{\emph{Process Markdown in \code{rowname_col} and \code{groupname_col}}
 
@@ -117,17 +117,18 @@ before rendering to a display table of various formats.
 }
 \details{
 There are a few data ingest options we can consider at this stage. We can
-choose to create a table stub with rowname captions using the \code{rowname_col}
-argument. Further to this, stub row groups can be created with the
-\code{groupname_col}. Both arguments take the name of a column in the input table
-data. Typically, the data in the \code{groupname_col} will consist of categories
-of data in a table and the data in the \code{rowname_col} are unique labels
-(perhaps unique across the entire table or unique within groups).
+choose to create a table stub containing row labels through the use of the
+\code{rowname_col} argument. Further to this, stub row groups can be created with
+the \code{groupname_col} argument. Both arguments take the name of a column in the
+input table data. Typically, the data in the \code{groupname_col} column will
+consist of categorical text whereas the data in the \code{rowname_col} column will
+contain unique labels (could be unique across the entire table or unique
+within the different row groups).
 
 Row groups can also be created by passing a \code{grouped_df} to \code{gt()} by using
 the \code{\link[dplyr:group_by]{dplyr::group_by()}} function on the table data. In this way, two or more
 columns of categorical data can be used to make row groups. The
-\code{row_group.sep} argument allows for control in how the row group label will
+\code{row_group.sep} argument allows for control in how the row group labels will
 appear in the display table.
 }
 \section{Examples}{
