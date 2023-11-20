@@ -1169,12 +1169,19 @@ derive_table_width_bookends <- function(data) {
 
     bookends <-
       c(
-        sprintf(
-          '\\setlength\\LTleft{%s\\linewidth}\n\\setlength\\LTright{%s\\linewidth}\n',
-          side_width,
-          side_width
+        paste0(
+          "\\newlength\\holdLTleft",
+          "\\newlength\\holdLTright",
+          "\\setlength\\holdLTleft{\\LTleft}\\relax",
+          "\\setlength\\holdLTright{\\LTright}\\relax",
+          sprintf(
+            '\\setlength\\LTleft{%s\\linewidth}\n\\setlength\\LTright{%s\\linewidth}',
+            side_width,
+            side_width
+          ),
+          collapse = "\n"
         ),
-        ""
+        "\\setlength\\LTleft{\\holdLTleft}\n\\setlength\\LTright{\\holdLTright}"
       )
 
   } else {
