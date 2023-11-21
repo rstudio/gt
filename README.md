@@ -78,21 +78,23 @@ sp500 |>
 <img src="man/figures/gt_sp500_table.svg" width="800px">
 </div>
 
-There are ten datasets provided by **gt**: `countrypops`, `sza`, `gtcars`, `sp500`, `pizzaplace`, `exibble`, `towny`, `metro`, `rx_adsl`, and `rx_addv`.
+There are twelve datasets provided by **gt**: `countrypops`, `sza`, `gtcars`, `sp500`, `pizzaplace`, `exibble`, `towny`, `metro`, `constants`, `illness`, `rx_adsl`, and `rx_addv`.
 
 <div align="center" style="padding-top:20px">
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_countrypops.svg" style="width:18%;">
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_sza.svg" style="width:18%;">
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_gtcars.svg" style="width:18%;">
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_sp500.svg" style="width:18%;">
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_pizzaplace.svg" style="width:18%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_countrypops.svg" style="width:15%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_sza.svg" style="width:15%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_gtcars.svg" style="width:15%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_sp500.svg" style="width:15%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_pizzaplace.svg" style="width:15%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_exibble.svg" style="width:15%;">
 </div>
 <div align="center" style="padding-bottom:20px">
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_exibble.svg" style="width:18%;">
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_towny.svg" style="width:18%;">
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_metro.svg" style="width:18%;">
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_rx_adsl.svg" style="width:18%;">
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_rx_addv.svg" style="width:18%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_towny.svg" style="width:15%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_metro.svg" style="width:15%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_constants.svg" style="width:15%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_illness.svg" style="width:15%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_rx_adsl.svg" style="width:15%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_rx_addv.svg" style="width:15%;">
 </div>
 
 All of this tabular data is great for experimenting with **gt**’s functions and we make extensive use of these datasets in our documentation.
