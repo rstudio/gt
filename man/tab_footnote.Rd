@@ -42,7 +42,7 @@ can enclose several \verb{cells_*()} calls within a \code{list()} if we wish to 
 the footnote text to different types of locations (e.g., body cells, row
 group labels, the table title, etc.).}
 
-\item{placement}{\emph{Placement of footnote mark}
+\item{placement}{\emph{Placement of the footnote mark}
 
 \verb{singl-kw:[auto|right|left]} // \emph{default:} \code{"auto"}
 
@@ -74,19 +74,23 @@ footnote marks where needed throughout the table
 to right, top to bottom)
 }
 
-Each call of \code{tab_footnote()} will either add a different footnote or reuse
-existing footnote text. One or more cells are targeted using the \verb{cells_*()}
-helper functions (e.g., \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_column_labels]{cells_column_labels()}}, etc.). You
-can choose to not attach a footnote mark not specifying a location at all. By
-default, \strong{gt} will choose which side of the text to place the footnote mark
-(with the \code{placement = "auto"} option) but you can always choose the
-placement of the footnote mark.
+Each call of \code{tab_footnote()} will either add a different footnote to the
+footer or reuse existing footnote text therein. One or more cells outside of
+the footer are targeted using the \verb{cells_*()} helper functions (e.g.,
+\code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_column_labels]{cells_column_labels()}}, etc.). You can choose to \emph{not}
+attach a footnote mark by simply not specifying anything in the \code{locations}
+argument.
+
+By default, \strong{gt} will choose which side of the text to place the footnote
+mark via the \code{placement = "auto"} option. You are, however, always free to
+choose the placement of the footnote mark (either to the \verb{"left} or \code{"right"}
+of the targeted cell content).
 }
 \section{Formatting of footnote text and marks}{
 
 
 There are several options for controlling the formatting of the footnotes,
-their marks, and typesetting in the footer. All of these options are
+their marks, and related typesetting in the footer. All of these options are
 available within the \code{\link[=tab_options]{tab_options()}} function and a subset of these are
 exposed in their own \verb{opt_*()} functions.
 \subsection{Choosing the footnote marks}{
@@ -115,7 +119,7 @@ The symbolic marks are the: (1) Asterisk, (2) Dagger, (3) Double Dagger,
 \code{"standard"} set has the first four, \code{"extended"} contains all.
 }
 
-\subsection{Defining footnote specs}{
+\subsection{Defining footnote typesetting specifications}{
 
 A footnote spec consists of a string containing control characters for
 formatting. They are separately defined for footnote marks beside footnote
@@ -143,10 +147,10 @@ helpful placeholder for the marks).
 
 These options can be set either in a \code{\link[=tab_options]{tab_options()}} call (with the
 \code{footnotes.spec_ref} and \code{footnotes.spec_ftr} arguments) or with
-\code{\link[=opt_footnote_spec]{opt_footnote_spec()}} (using \code{spec_ref} or \code{spec_ftr}).
+\code{\link[=opt_footnote_spec]{opt_footnote_spec()}} (using the \code{spec_ref} or \code{spec_ftr} arguments).
 }
 
-\subsection{Typesetting of footnotes in the footer}{
+\subsection{Additional typesetting options for footnote text residing in the footer}{
 
 Within \code{\link[=tab_options]{tab_options()}} there are two arguments that control the typesetting
 of footnotes. With \code{footnotes.multiline}, we have a setting that determines
@@ -193,11 +197,11 @@ of \code{tab_footnote()} lets us add a footnote to the \code{sza} column label
 Of course, we can add more than one footnote to the table, but, we have to
 use several calls of \code{tab_footnote()}. This variation of the \code{\link{sza}} table
 has three footnotes: one on the \code{"TST"} column label and two on the \code{"SZA"}
-column label (these were capitalized with \code{\link[=opt_all_caps]{opt_all_caps()}}). We have three
-calls of \code{tab_footnote()} and while the order of calls usually doesn't
-matter, it does have a subtle effect here since two footnotes are associated
-with the same text content (try reversing the second and third calls and
-observe the effect in the footer).
+column label (these were capitalized with \code{\link[=opt_all_caps]{opt_all_caps()}}). We will
+ultimately have three calls of \code{tab_footnote()} and while the order of calls
+usually doesn't matter, it does have a subtle effect here since two footnotes
+are associated with the same text content (try reversing the second and third
+calls and observe the effect in the footer).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sza |>
   dplyr::filter(
@@ -336,13 +340,13 @@ whatsoever. This is done by not providing anything to \code{locations}. These
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_footnote_4.png" alt="This image of a table was generated from the fourth code example in the `tab_footnote()` help file." style="width:100\%;">
 }}
 
-Aside from changing the footnote marks to be \code{"LETTERS"}, we've also changed
-the way the marks are formatted. In \code{\link[=opt_footnote_spec]{opt_footnote_spec()}}, the \code{spec_ref}
-option governs the footnote marks across the table. Here, we describe marks
-that are italicized and set between square brackets (with \code{"i[x]"}). The
-\code{spec_ftr} argument is used for the footer representation of the footnote
-marks. As described in the example with \code{"x."}, it will be rendered as the
-footnote mark followed by a period.
+Aside from changing the footnote marks to consist of \code{"LETTERS"}, we've also
+changed the way the marks are formatted. In our use of \code{\link[=opt_footnote_spec]{opt_footnote_spec()}},
+the \code{spec_ref} option governs the footnote marks across the table. Here, we
+describe marks that are italicized and set between square brackets (with
+\code{"i[x]"}). The \code{spec_ftr} argument is used for the footer representation of
+the footnote marks. As described in the example with \code{"x."}, it is rendered
+as a footnote mark followed by a period.
 }
 
 \section{Function ID}{

@@ -18,8 +18,8 @@ fmt_percent(
   sep_mark = ",",
   dec_mark = ".",
   force_sign = FALSE,
-  incl_space = FALSE,
   placement = "right",
+  incl_space = FALSE,
   system = c("intl", "ind"),
   locale = NULL
 )
@@ -142,19 +142,19 @@ default is \code{FALSE}, where only negative numbers will display a minus sign.
 This option is disregarded when using accounting notation with
 \code{accounting = TRUE}.}
 
+\item{placement}{\emph{Percent sign placement}
+
+\verb{singl-kw:[right|left]} // \emph{default:} \code{"right"}
+
+This option governs the placement of the percent sign. This can be either
+be \code{"right"} (the default) or \code{"left"}.}
+
 \item{incl_space}{\emph{Include a space between the value and the \% sign}
 
 \verb{scalar<logical>} // \emph{default:} \code{FALSE}
 
 An option for whether to include a space between the value and the percent
 sign. The default is to not introduce a space character.}
-
-\item{placement}{\emph{Percent sign placement}
-
-\verb{scalar<character>} // \emph{default:} \code{"right"}
-
-This option governs the placement of the percent sign. This can be either
-be \code{right} (the default) or \code{left}.}
 
 \item{system}{\emph{Numbering system for grouping separators}
 

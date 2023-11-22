@@ -271,7 +271,7 @@ can be modified with \code{nanoplot_options()} within the \code{options} argumen
 
 \section{Function Introduced}{
 
-\emph{In Development}
+\code{v0.10.0} (October 7, 2023)
 }
 
 \seealso{

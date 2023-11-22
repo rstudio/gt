@@ -327,7 +327,7 @@ a subset of the columns when generating new rows through \code{rows_add()}.
 
 \section{Function Introduced}{
 
-\verb{0.9.1} (in development)
+\code{v0.10.0} (October 7, 2023)
 }
 
 \seealso{

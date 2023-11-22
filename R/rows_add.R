@@ -339,7 +339,7 @@
 #' 6-4
 #'
 #' @section Function Introduced:
-#' `0.9.1` (in development)
+#' `v0.10.0` (October 7, 2023)
 #'
 #' @import rlang
 #' @export

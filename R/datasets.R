@@ -610,7 +610,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' *In Development*
+#' `v0.10.0` (October 7, 2023)
 #'
 "constants"
 
@@ -703,7 +703,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' *In Development*
+#' `v0.10.0` (October 7, 2023)
 #'
 "illness"
 

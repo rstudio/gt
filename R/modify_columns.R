@@ -1524,7 +1524,7 @@ cols_label_with <- function(
 #' 5-6
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.10.0` (October 7, 2023)
 #'
 #' @import rlang
 #' @export
@@ -1828,7 +1828,7 @@ cols_units <- function(
 #' 5-7
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.10.0` (October 7, 2023)
 #'
 #' @import rlang
 #' @export
@@ -2661,7 +2661,7 @@ cols_add <- function(
 #' 5-8
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.10.0` (October 7, 2023)
 #'
 #' @import rlang
 #' @export

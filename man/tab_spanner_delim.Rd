@@ -36,8 +36,7 @@ The columns to consider for the splitting, relabeling, and spanner setting
 operations. Can either be a series of column names provided in \code{\link[=c]{c()}}, a
 vector of column indices, or a select helper function. Examples of select
 helper functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
-\code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. This argument
-works in tandem with the \code{spanners} argument.}
+\code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
 
 \item{split}{\emph{Splitting side}
 
@@ -74,15 +73,15 @@ An object of class \code{gt_tbl}.
 }
 \description{
 The \code{cols_spanner_delim()} function can take specially-crafted column names
-and generate one or more spanners (along with relabeling the
-column labels). This is done by splitting the column name by a specified
-delimiter character (this is the \code{delim}) and placing the fragments from top
-to bottom (i.e., higher-level spanners to the column labels). Furthermore,
-the neighboring text fragments on different spanner levels will be coalesced
-together to put the span back into spanner. For instance, having the three
-side-by-side column names \code{rating_1}, \code{rating_2}, and \code{rating_3} will (in the
-default case at least) result in a spanner with the label \code{"rating"} above
-columns with the labels \code{"1"}, \code{"2"}, and \code{"3"}. There are many options in
+and generate one or more spanners (and revise column labels at the same
+time). This is done by splitting the column name by a specified delimiter
+(this is the \code{delim}) and placing the fragments from top to bottom (i.e.,
+higher-level spanners to the column labels) or vice versa. Furthermore,
+neighboring text fragments on different spanner levels that have the same
+text will be coalesced together. For instance, having the three side-by-side
+column names \code{rating_1}, \code{rating_2}, and \code{rating_3} will (in the default case
+at least) result in a spanner with the label \code{"rating"} above columns with
+the labels \code{"1"}, \code{"2"}, and \code{"3"}. There are many options in
 \code{cols_spanner_delim()} to slice and dice delimited column names in different
 ways:
 \itemize{

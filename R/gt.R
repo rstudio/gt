@@ -34,17 +34,18 @@
 #' @details
 #'
 #' There are a few data ingest options we can consider at this stage. We can
-#' choose to create a table stub with rowname captions using the `rowname_col`
-#' argument. Further to this, stub row groups can be created with the
-#' `groupname_col`. Both arguments take the name of a column in the input table
-#' data. Typically, the data in the `groupname_col` will consist of categories
-#' of data in a table and the data in the `rowname_col` are unique labels
-#' (perhaps unique across the entire table or unique within groups).
+#' choose to create a table stub containing row labels through the use of the
+#' `rowname_col` argument. Further to this, stub row groups can be created with
+#' the `groupname_col` argument. Both arguments take the name of a column in the
+#' input table data. Typically, the data in the `groupname_col` column will
+#' consist of categorical text whereas the data in the `rowname_col` column will
+#' contain unique labels (could be unique across the entire table or unique
+#' within the different row groups).
 #'
 #' Row groups can also be created by passing a `grouped_df` to `gt()` by using
 #' the [dplyr::group_by()] function on the table data. In this way, two or more
 #' columns of categorical data can be used to make row groups. The
-#' `row_group.sep` argument allows for control in how the row group label will
+#' `row_group.sep` argument allows for control in how the row group labels will
 #' appear in the display table.
 #'
 #' @param data *Input data table*
@@ -66,9 +67,9 @@
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   The column name in the input `data` table to use as group labels for
-#'   generation of stub row groups. If the input `data` table has the
-#'   `grouped_df` class (through use of the [dplyr::group_by()] function or
-#'   associated `group_by*()` functions) then any input here is ignored.
+#'   generation of row groups. If the input `data` table has the `grouped_df`
+#'   class (through use of the [dplyr::group_by()] function or associated
+#'   `group_by*()` functions) then any input here is ignored.
 #'
 #' @param process_md *Process Markdown in `rowname_col` and `groupname_col`*
 #'
