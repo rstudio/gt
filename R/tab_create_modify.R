@@ -798,7 +798,7 @@ resolve_spanned_column_names <- function(
 #'
 #' @description
 #'
-#' The `cols_spanner_delim()` function can take specially-crafted column names
+#' The `tab_spanner_delim()` function can take specially-crafted column names
 #' and generate one or more spanners (and revise column labels at the same
 #' time). This is done by splitting the column name by a specified delimiter
 #' (this is the `delim`) and placing the fragments from top to bottom (i.e.,
