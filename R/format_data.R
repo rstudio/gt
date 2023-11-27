@@ -788,10 +788,9 @@ fmt_number <- function(
 #'
 #' This formatting function can adapt outputs according to a provided `locale`
 #' value. Examples include `"en"` for English (United States) and `"fr"` for
-#' French (France). The use of a valid locale ID here means separator and
-#' decimal marks will be correct for the given locale. Should any value be
-#' provided in `sep_mark`, it will be overridden by the locale's preferred
-#' values.
+#' French (France). The use of a valid locale ID here means separator marks will
+#' be correct for the given locale. Should any value be provided in `sep_mark`,
+#' it will be overridden by the locale's preferred value.
 #'
 #' Note that a `locale` value provided here will override any global locale
 #' setting performed in [gt()]'s own `locale` argument (it is settable there as
