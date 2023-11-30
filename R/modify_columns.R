@@ -2999,10 +2999,10 @@ generate_data_vals_list <- function(
 #'
 #' The columns supplied in `columns` must all exist in the table and none of
 #' them can be in the `after` argument. The `after` column must also exist and
-#' only one column should be provided here. If you need to place one or columns
-#' at the beginning of the column series, the [cols_move_to_start()] function
-#' should be used. Similarly, if those columns to move should be placed at the
-#' end of the column series then use [cols_move_to_end()].
+#' only one column should be provided here. If you need to place one or more
+#' columns at the beginning of the column series, the [cols_move_to_start()]
+#' function should be used. Similarly, if those columns to move should be placed
+#' at the end of the column series then use [cols_move_to_end()].
 #'
 #' @section Examples:
 #'
@@ -3277,7 +3277,7 @@ cols_move_to_start <- function(
 #' }}
 #'
 #' We can also move multiple columns at a time. With the same
-#' [`countrypops`]-based table, let's move both the `year` and `population`
+#' [`countrypops`]-based table, let's move both the `year` and `country_name`
 #' columns to the end of the column series.
 #'
 #' ```r

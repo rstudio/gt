@@ -321,10 +321,10 @@
 #'
 #' @section Examples:
 #'
-#' Use the [`exibble`] dataset to create a **gt** table. With the `fmt_number()`
-#' function, we'll format the `num` column to have three decimal places (with
-#' `decimals = 3`) and omit the use of digit separators (with `use_seps =
-#' FALSE`).
+#' Let's use the [`exibble`] dataset to create a **gt** table. With the
+#' `fmt_number()` function, we'll format the `num` column to have three decimal
+#' places (with `decimals = 3`) and omit the use of digit separators (with
+#' `use_seps = FALSE`).
 #'
 #' ```r
 #' exibble |>
