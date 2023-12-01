@@ -1463,10 +1463,6 @@ get_extreme_value <- function(..., stat = c("max", "min")) {
 
   value_list_vec <- unlist(value_list)
 
-  if (length(unique(value_list_vec)) == 1) {
-    value_list_vec <- jitter(value_list_vec, amount = 1 / 100000)
-  }
-
   if (stat == "max") {
     extreme_val <- max(value_list_vec, na.rm = TRUE)
   } else {
