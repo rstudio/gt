@@ -1104,11 +1104,17 @@ generate_nanoplot <- function(
         "</rect>"
       )
 
+    if (rlang::is_integerish(y_scale_max) && rlang::is_integerish(y_scale_min)) {
+      y_axis_guide_vals_integerlike <- TRUE
+    } else {
+      y_axis_guide_vals_integerlike <- FALSE
+    }
+
     y_value_max_label <-
       format_number_compactly(
         y_scale_max,
         currency = currency,
-        as_integer = y_vals_integerlike,
+        as_integer = y_axis_guide_vals_integerlike,
         fn = y_axis_fmt_fn
       )
 
@@ -1116,7 +1122,7 @@ generate_nanoplot <- function(
       format_number_compactly(
         y_scale_min,
         currency = currency,
-        as_integer = y_vals_integerlike,
+        as_integer = y_axis_guide_vals_integerlike,
         fn = y_axis_fmt_fn
       )
 
