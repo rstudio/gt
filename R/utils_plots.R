@@ -164,6 +164,13 @@ generate_nanoplot <- function(
   y_scale_max <- get_extreme_value(y_vals, stat = "max")
   y_scale_min <- get_extreme_value(y_vals, stat = "min")
 
+  if (y_scale_min == y_scale_max && is.null(expand_y)) {
+
+    # Expand the `y` scale, centering around the `y_scale_min` value
+    expand_y_dist <- (y_scale_min / 10) * 2
+    expand_y <- c(y_scale_min - expand_y_dist, y_scale_min + expand_y_dist)
+  }
+
   # Ensure that a reference line or reference area isn't shown if NULL or
   # any of its directives is NA
   if (
