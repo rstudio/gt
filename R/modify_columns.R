@@ -2199,11 +2199,11 @@ cols_add <- function(
 #'
 #'   With `rows` we can specify which rows should contain nanoplots in the new
 #'   column. The default [everything()] results in all rows in `columns` being
-#'   formatted. Alternatively, we can supply a vector of row captions within
-#'   [c()], a vector of row indices, or a select helper function. Examples of
-#'   select helper functions include [starts_with()], [ends_with()],
-#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
-#'   We can also use expressions to filter down to the rows we need (e.g.,
+#'   formatted. Alternatively, we can supply a vector of row IDs within [c()], a
+#'   vector of row indices, or a select helper function. Examples of select
+#'   helper functions include [starts_with()], [ends_with()], [contains()],
+#'   [matches()], [one_of()], [num_range()], and [everything()]. We can also use
+#'   expressions to filter down to the rows we need (e.g.,
 #'   `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @param plot_type *The type of nanoplot to display*
@@ -3626,7 +3626,7 @@ cols_unhide <- function(
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   participate in the merging process. The default [everything()] results in
 #'   all rows in `columns` being formatted. Alternatively, we can supply a
-#'   vector of row captions within [c()], a vector of row indices, or a select
+#'   vector of row IDs within [c()], a vector of row indices, or a select
 #'   helper function. Examples of select helper functions include
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()]. We can also use expressions to filter
@@ -3881,7 +3881,7 @@ cols_merge <- function(
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   participate in the merging process. The default [everything()] results in
 #'   all rows in `columns` being formatted. Alternatively, we can supply a
-#'   vector of row captions within [c()], a vector of row indices, or a select
+#'   vector of row IDs within [c()], a vector of row indices, or a select
 #'   helper function. Examples of select helper functions include
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()]. We can also use expressions to filter
@@ -4065,7 +4065,7 @@ cols_merge_uncert <- function(
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   participate in the merging process. The default [everything()] results in
 #'   all rows in `columns` being formatted. Alternatively, we can supply a
-#'   vector of row captions within [c()], a vector of row indices, or a select
+#'   vector of row IDs within [c()], a vector of row indices, or a select
 #'   helper function. Examples of select helper functions include
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()]. We can also use expressions to filter
@@ -4310,7 +4310,7 @@ cols_merge_resolver <- function(
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   participate in the merging process. The default [everything()] results in
 #'   all rows in `columns` being formatted. Alternatively, we can supply a
-#'   vector of row captions within [c()], a vector of row indices, or a select
+#'   vector of row IDs within [c()], a vector of row indices, or a select
 #'   helper function. Examples of select helper functions include
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()]. We can also use expressions to filter
