@@ -109,7 +109,7 @@ stop_if_not_gt_group <- function(data, call = caller_env()) {
   }
 }
 
-#' Stop any function if object is neither `gt_tbl` nor `gt_ group`
+#' Stop any function if object is neither `gt_tbl` nor `gt_group`
 #'
 #' @param data The input `data` object that is to be validated.
 #'
@@ -246,7 +246,7 @@ get_date_format <- function(date_style) {
       cli::cli_abort(c(
         "If using a numeric value for a `date_style`, it must be ",
         "between `1` and `{nrow(date_format_tbl)}`.",
-        "*" = "Use {.run [info_date_style](gt::info_date_style(opt_interactive = TRUE))} for a useful visual reference."
+        "*" = "Use `info_date_style()` for a useful visual reference."
       ))
     }
   }
@@ -257,7 +257,7 @@ get_date_format <- function(date_style) {
     if (!(date_style %in% date_format_tbl$format_name)) {
       cli::cli_abort(c(
         "If using a `date_style` name, it must be in the valid set.",
-        "*" = "Use {.run [info_date_style](gt::info_date_style(opt_interactive = TRUE))} for a useful visual reference."
+        "*" = "Use `info_date_style()` for a useful visual reference."
       ))
     }
 
@@ -299,7 +299,7 @@ get_time_format <- function(time_style) {
       cli::cli_abort(c(
         "If using a numeric value for a `time_style`, it must be
         between `1` and `{nrow((time_format_tbl))}`.",
-        "*" = "Use {.run [info_time_style](gt::info_time_style(interactive = TRUE))} for a useful visual reference."
+        "*" = "Use `info_time_style()` for a useful visual reference."
       ))
     }
   }
@@ -310,7 +310,7 @@ get_time_format <- function(time_style) {
     if (!(time_style %in% time_format_tbl$format_name)) {
       cli::cli_abort(c(
         "If using a `time_style` name, it must be in the valid set.",
-        "*" = "Use {.run [info_time_style](gt::info_time_style(interactive = TRUE))} for a useful visual reference."
+        "*" = "Use `info_time_style()` for a useful visual reference."
       ))
     }
 
