@@ -86,10 +86,12 @@ is_nonempty_string <- function(x) {
 #' @param data The input `data` object that is to be validated.
 #'
 #' @noRd
-stop_if_not_gt_tbl <- function(data) {
+# Use rlang::caller_env() to inform user of the precise location of failure.
+stop_if_not_gt_tbl <- function(data, call = caller_env()) {
   if (!is_gt_tbl(data = data)) {
     cli::cli_abort(
-      "The `data` provided is not a `gt_tbl` object."
+      "`data` must be a `gt_tbl` object, not {.obj_type_friendly {data}}.",
+      call = call
     )
   }
 }
@@ -99,10 +101,11 @@ stop_if_not_gt_tbl <- function(data) {
 #' @param data The input `data` object that is to be validated.
 #'
 #' @noRd
-stop_if_not_gt_group <- function(data) {
+stop_if_not_gt_group <- function(data, call = caller_env()) {
   if (!is_gt_group(data = data)) {
     cli::cli_abort(
-      "The `data` provided is not a `gt_group` object."
+      "`data` must be a `gt_group` object, not {.obj_type_friendly {data}}.",
+      call = call
     )
   }
 }
@@ -112,10 +115,11 @@ stop_if_not_gt_group <- function(data) {
 #' @param data The input `data` object that is to be validated.
 #'
 #' @noRd
-stop_if_not_gt_tbl_or_group <- function(data) {
+stop_if_not_gt_tbl_or_group <- function(data, call = caller_env()) {
   if (!is_gt_tbl(data = data) && !is_gt_group(data = data)) {
     cli::cli_abort(
-      "The `data` provided is neither a `gt_tbl` nor a `gt_group` object."
+      "`data` must either be a `gt_tbl` or a `gt_group`, not {.obj_type_friendly {data}}.",
+      call = error_call
     )
   }
 }

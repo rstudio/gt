@@ -333,9 +333,10 @@ useful reference on which locales are supported, we can use the
 \section{Examples}{
 
 
-Use the \code{\link{exibble}} dataset to create a \strong{gt} table. With the \code{fmt_number()}
-function, we'll format the \code{num} column to have three decimal places (with
-\code{decimals = 3}) and omit the use of digit separators (with \code{use_seps = FALSE}).
+Let's use the \code{\link{exibble}} dataset to create a \strong{gt} table. With the
+\code{fmt_number()} function, we'll format the \code{num} column to have three decimal
+places (with \code{decimals = 3}) and omit the use of digit separators (with
+\code{use_seps = FALSE}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   gt() |>

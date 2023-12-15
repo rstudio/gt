@@ -72,7 +72,7 @@ Should the order of split names be reversed? By default, this is \code{FALSE}.}
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{cols_spanner_delim()} function can take specially-crafted column names
+The \code{tab_spanner_delim()} function can take specially-crafted column names
 and generate one or more spanners (and revise column labels at the same
 time). This is done by splitting the column name by a specified delimiter
 (this is the \code{delim}) and placing the fragments from top to bottom (i.e.,
