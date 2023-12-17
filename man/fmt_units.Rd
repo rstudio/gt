@@ -203,7 +203,7 @@ but rather \code{"<unit_1> <unit_2>^-1"}).
 
 \section{Function Introduced}{
 
-\emph{In Development}
+\code{v0.10.0} (October 7, 2023)
 }
 
 \seealso{

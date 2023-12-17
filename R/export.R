@@ -1239,7 +1239,7 @@ as_word_tbl_body <- function(
 #' 13-6
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.10.0` (October 7, 2023)
 #'
 #' @export
 extract_body <- function(
@@ -1470,11 +1470,11 @@ extract_summary <- function(data) {
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   form a constraint for extraction. The default [everything()] results in all
 #'   rows in `columns` being formatted. Alternatively, we can supply a vector of
-#'   row captions within [c()], a vector of row indices, or a select helper
-#'   function. Examples of select helper functions include [starts_with()],
-#'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
-#'   [everything()]. We can also use expressions to filter down to the rows we
-#'   need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'   row IDs within [c()], a vector of row indices, or a select helper function.
+#'   Examples of select helper functions include [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
+#'   We can also use expressions to filter down to the rows we need (e.g.,
+#'   `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @param output *Output format*
 #'

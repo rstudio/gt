@@ -390,7 +390,7 @@
 #' \item{currency}{A numeric column that is useful for testing currency-based
 #' formatting.}
 #' \item{row}{A character column in the format `row_X` which can be useful for
-#' testing with row captions in a table stub.}
+#' testing with row labels in a table stub.}
 #' \item{group}{A character column with four `grp_a` values and four `grp_b`
 #' values which can be useful for testing tables that contain row groups.}
 #' }
@@ -610,7 +610,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' *In Development*
+#' `v0.10.0` (October 7, 2023)
 #'
 "constants"
 
@@ -703,7 +703,7 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' *In Development*
+#' `v0.10.0` (October 7, 2023)
 #'
 "illness"
 

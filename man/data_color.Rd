@@ -52,9 +52,9 @@ or a select helper function. Examples of select helper functions include
 In conjunction with \code{columns}, we can specify which of their rows should
 form a constraint for cell data color operations. The default
 \code{\link[=everything]{everything()}} results in all rows in \code{columns} being formatted.
-Alternatively, we can supply a vector of row captions within \code{\link[=c]{c()}}, a
-vector of row indices, or a select helper function. Examples of select
-helper functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+Alternatively, we can supply a vector of row IDs within \code{\link[=c]{c()}}, a vector of
+row indices, or a select helper function. Examples of select helper
+functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
 \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use
 expressions to filter down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 

@@ -164,6 +164,13 @@ generate_nanoplot <- function(
   y_scale_max <- get_extreme_value(y_vals, stat = "max")
   y_scale_min <- get_extreme_value(y_vals, stat = "min")
 
+  if (y_scale_min == y_scale_max && is.null(expand_y)) {
+
+    # Expand the `y` scale, centering around the `y_scale_min` value
+    expand_y_dist <- (y_scale_min / 10) * 2
+    expand_y <- c(y_scale_min - expand_y_dist, y_scale_min + expand_y_dist)
+  }
+
   # Ensure that a reference line or reference area isn't shown if NULL or
   # any of its directives is NA
   if (
@@ -1104,11 +1111,17 @@ generate_nanoplot <- function(
         "</rect>"
       )
 
+    if (rlang::is_integerish(y_scale_max) && rlang::is_integerish(y_scale_min)) {
+      y_axis_guide_vals_integerlike <- TRUE
+    } else {
+      y_axis_guide_vals_integerlike <- FALSE
+    }
+
     y_value_max_label <-
       format_number_compactly(
         y_scale_max,
         currency = currency,
-        as_integer = y_vals_integerlike,
+        as_integer = y_axis_guide_vals_integerlike,
         fn = y_axis_fmt_fn
       )
 
@@ -1116,7 +1129,7 @@ generate_nanoplot <- function(
       format_number_compactly(
         y_scale_min,
         currency = currency,
-        as_integer = y_vals_integerlike,
+        as_integer = y_axis_guide_vals_integerlike,
         fn = y_axis_fmt_fn
       )
 
@@ -1462,10 +1475,6 @@ get_extreme_value <- function(..., stat = c("max", "min")) {
   stat <- rlang::arg_match(stat)
 
   value_list_vec <- unlist(value_list)
-
-  if (length(unique(value_list_vec)) == 1) {
-    value_list_vec <- jitter(value_list_vec, amount = 1 / 100000)
-  }
 
   if (stat == "max") {
     extreme_val <- max(value_list_vec, na.rm = TRUE)

@@ -798,16 +798,16 @@ resolve_spanned_column_names <- function(
 #'
 #' @description
 #'
-#' The `cols_spanner_delim()` function can take specially-crafted column names
-#' and generate one or more spanners (along with relabeling the
-#' column labels). This is done by splitting the column name by a specified
-#' delimiter character (this is the `delim`) and placing the fragments from top
-#' to bottom (i.e., higher-level spanners to the column labels). Furthermore,
-#' the neighboring text fragments on different spanner levels will be coalesced
-#' together to put the span back into spanner. For instance, having the three
-#' side-by-side column names `rating_1`, `rating_2`, and `rating_3` will (in the
-#' default case at least) result in a spanner with the label `"rating"` above
-#' columns with the labels `"1"`, `"2"`, and `"3"`. There are many options in
+#' The `tab_spanner_delim()` function can take specially-crafted column names
+#' and generate one or more spanners (and revise column labels at the same
+#' time). This is done by splitting the column name by a specified delimiter
+#' (this is the `delim`) and placing the fragments from top to bottom (i.e.,
+#' higher-level spanners to the column labels) or vice versa. Furthermore,
+#' neighboring text fragments on different spanner levels that have the same
+#' text will be coalesced together. For instance, having the three side-by-side
+#' column names `rating_1`, `rating_2`, and `rating_3` will (in the default case
+#' at least) result in a spanner with the label `"rating"` above columns with
+#' the labels `"1"`, `"2"`, and `"3"`. There are many options in
 #' `cols_spanner_delim()` to slice and dice delimited column names in different
 #' ways:
 #'
@@ -839,8 +839,7 @@ resolve_spanned_column_names <- function(
 #'   operations. Can either be a series of column names provided in [c()], a
 #'   vector of column indices, or a select helper function. Examples of select
 #'   helper functions include [starts_with()], [ends_with()], [contains()],
-#'   [matches()], [one_of()], [num_range()], and [everything()]. This argument
-#'   works in tandem with the `spanners` argument.
+#'   [matches()], [one_of()], [num_range()], and [everything()].
 #'
 #' @param split *Splitting side*
 #'
@@ -1422,15 +1421,13 @@ str_split_across <- function(
 #' `tab_row_group()` function. This requires specification of the rows to be
 #' included, either by supplying row labels, row indices, or through use of a
 #' select helper function like [starts_with()]. To modify the order of row
-#' groups, use the [row_group_order()] function.
+#' groups, we can use the [row_group_order()] function.
 #'
 #' To set a default row group label for any rows not formally placed in a row
 #' group, we can use a separate call to `tab_options(row_group.default_label =
 #' <label>)`. If this is not done and there are rows that haven't been placed
 #' into a row group (where one or more row groups already exist), those rows
-#' will be automatically placed into a row group without a label. To restore
-#' labels for row groups not explicitly assigned a group,
-#' `tab_options(row_group.default_label = "")` can be used.
+#' will be automatically placed into a row group without a label.
 #'
 #' @inheritParams fmt_number
 #'
@@ -1446,13 +1443,12 @@ str_split_across <- function(
 #'
 #'   `<row-targeting expression>` // **required**
 #'
-#'   The rows to be made components of the row group. The default [everything()]
-#'   results in all rows in `columns` being formatted. Alternatively, we can
-#'   supply a vector of row captions within [c()], a vector of row indices, or a
-#'   select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()]. We can also use expressions to filter
-#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'   The rows to be made components of the row group. We can supply a vector of
+#'   row ID values within [c()], a vector of row indices, or use select helpers
+#'   here. Examples of select helper functions include [starts_with()],
+#'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
+#'   [everything()]. We can also use expressions to filter down to the rows we
+#'   need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @param id *Row group ID*
 #'
@@ -1819,7 +1815,8 @@ tab_stubhead <- function(
 #' Indentation of row labels is an effective way for establishing structure in a
 #' table stub. The `tab_stub_indent()` function allows for fine control over
 #' row label indentation in the stub. We can use an explicit definition of an
-#' indentation level, or, employ an indentation directive using keywords.
+#' indentation level (with a number between `0` and `5`), or, employ an
+#' indentation directive using keywords (`"increase"`/`"decrease"`).
 #'
 #' @inheritParams fmt_number
 #'
@@ -1827,10 +1824,9 @@ tab_stubhead <- function(
 #'
 #'   `<row-targeting expression>` // **required**
 #'
-#'   The rows to consider for the indentation change. The default [everything()]
-#'   results in all rows being targeted. Alternatively, we can supply a vector
-#'   of row captions within [c()], a vector of row indices, or a select helper
-#'   function. Examples of select helper functions include [starts_with()],
+#'   The rows to consider for the indentation change. We can supply a vector of
+#'   row ID values within [c()], a vector of row indices, or use select helpers
+#'   here. Examples of select helper functions include [starts_with()],
 #'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
 #'   [everything()]. We can also use expressions to filter down to the rows we
 #'   need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
@@ -2060,13 +2056,17 @@ tab_stub_indent <- function(
 #' 3. footnote marks are ordered across the table in a consistent manner (left
 #' to right, top to bottom)
 #'
-#' Each call of `tab_footnote()` will either add a different footnote or reuse
-#' existing footnote text. One or more cells are targeted using the `cells_*()`
-#' helper functions (e.g., [cells_body()], [cells_column_labels()], etc.). You
-#' can choose to not attach a footnote mark not specifying a location at all. By
-#' default, **gt** will choose which side of the text to place the footnote mark
-#' (with the `placement = "auto"` option) but you can always choose the
-#' placement of the footnote mark.
+#' Each call of `tab_footnote()` will either add a different footnote to the
+#' footer or reuse existing footnote text therein. One or more cells outside of
+#' the footer are targeted using the `cells_*()` helper functions (e.g.,
+#' [cells_body()], [cells_column_labels()], etc.). You can choose to *not*
+#' attach a footnote mark by simply not specifying anything in the `locations`
+#' argument.
+#'
+#' By default, **gt** will choose which side of the text to place the footnote
+#' mark via the `placement = "auto"` option. You are, however, always free to
+#' choose the placement of the footnote mark (either to the `"left` or `"right"`
+#' of the targeted cell content).
 #'
 #' @inheritParams fmt_number
 #'
@@ -2093,7 +2093,7 @@ tab_stub_indent <- function(
 #'   the footnote text to different types of locations (e.g., body cells, row
 #'   group labels, the table title, etc.).
 #'
-#' @param placement *Placement of footnote mark*
+#' @param placement *Placement of the footnote mark*
 #'
 #'   `singl-kw:[auto|right|left]` // *default:* `"auto"`
 #'
@@ -2108,7 +2108,7 @@ tab_stub_indent <- function(
 #' @section Formatting of footnote text and marks:
 #'
 #' There are several options for controlling the formatting of the footnotes,
-#' their marks, and typesetting in the footer. All of these options are
+#' their marks, and related typesetting in the footer. All of these options are
 #' available within the [tab_options()] function and a subset of these are
 #' exposed in their own `opt_*()` functions.
 #'
@@ -2136,7 +2136,7 @@ tab_stub_indent <- function(
 #' (4) Section Sign, (5) Double Vertical Line, and (6) Paragraph Sign; the
 #' `"standard"` set has the first four, `"extended"` contains all.
 #'
-#' ## Defining footnote specs
+#' ## Defining footnote typesetting specifications
 #'
 #' A footnote spec consists of a string containing control characters for
 #' formatting. They are separately defined for footnote marks beside footnote
@@ -2163,9 +2163,9 @@ tab_stub_indent <- function(
 #'
 #' These options can be set either in a [tab_options()] call (with the
 #' `footnotes.spec_ref` and `footnotes.spec_ftr` arguments) or with
-#' [opt_footnote_spec()] (using `spec_ref` or `spec_ftr`).
+#' [opt_footnote_spec()] (using the `spec_ref` or `spec_ftr` arguments).
 #'
-#' ## Typesetting of footnotes in the footer
+#' ## Additional typesetting options for footnote text residing in the footer
 #'
 #' Within [tab_options()] there are two arguments that control the typesetting
 #' of footnotes. With `footnotes.multiline`, we have a setting that determines
@@ -2210,11 +2210,11 @@ tab_stub_indent <- function(
 #' Of course, we can add more than one footnote to the table, but, we have to
 #' use several calls of `tab_footnote()`. This variation of the [`sza`] table
 #' has three footnotes: one on the `"TST"` column label and two on the `"SZA"`
-#' column label (these were capitalized with [opt_all_caps()]). We have three
-#' calls of `tab_footnote()` and while the order of calls usually doesn't
-#' matter, it does have a subtle effect here since two footnotes are associated
-#' with the same text content (try reversing the second and third calls and
-#' observe the effect in the footer).
+#' column label (these were capitalized with [opt_all_caps()]). We will
+#' ultimately have three calls of `tab_footnote()` and while the order of calls
+#' usually doesn't matter, it does have a subtle effect here since two footnotes
+#' are associated with the same text content (try reversing the second and third
+#' calls and observe the effect in the footer).
 #'
 #' ```r
 #' sza |>
@@ -2356,13 +2356,13 @@ tab_stub_indent <- function(
 #' `r man_get_image_tag(file = "man_tab_footnote_4.png")`
 #' }}
 #'
-#' Aside from changing the footnote marks to be `"LETTERS"`, we've also changed
-#' the way the marks are formatted. In [opt_footnote_spec()], the `spec_ref`
-#' option governs the footnote marks across the table. Here, we describe marks
-#' that are italicized and set between square brackets (with `"i[x]"`). The
-#' `spec_ftr` argument is used for the footer representation of the footnote
-#' marks. As described in the example with `"x."`, it will be rendered as the
-#' footnote mark followed by a period.
+#' Aside from changing the footnote marks to consist of `"LETTERS"`, we've also
+#' changed the way the marks are formatted. In our use of [opt_footnote_spec()],
+#' the `spec_ref` option governs the footnote marks across the table. Here, we
+#' describe marks that are italicized and set between square brackets (with
+#' `"i[x]"`). The `spec_ftr` argument is used for the footer representation of
+#' the footnote marks. As described in the example with `"x."`, it is rendered
+#' as a footnote mark followed by a period.
 #'
 #' @family part creation/modification functions
 #' @section Function ID:

@@ -4,6 +4,8 @@
 
 * `gtsave()` now returns the file path invisibly instead of `TRUE` (@olivroy, #1478).
 
+* Most functions in gt receive a better error message if they don't provide a `gt_tbl` as an input (@olivroy, #1504).
+
 # gt 0.10.0
 
 ## Nanoplots

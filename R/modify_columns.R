@@ -1524,7 +1524,7 @@ cols_label_with <- function(
 #' 5-6
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.10.0` (October 7, 2023)
 #'
 #' @import rlang
 #' @export
@@ -1828,7 +1828,7 @@ cols_units <- function(
 #' 5-7
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.10.0` (October 7, 2023)
 #'
 #' @import rlang
 #' @export
@@ -2199,11 +2199,11 @@ cols_add <- function(
 #'
 #'   With `rows` we can specify which rows should contain nanoplots in the new
 #'   column. The default [everything()] results in all rows in `columns` being
-#'   formatted. Alternatively, we can supply a vector of row captions within
-#'   [c()], a vector of row indices, or a select helper function. Examples of
-#'   select helper functions include [starts_with()], [ends_with()],
-#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
-#'   We can also use expressions to filter down to the rows we need (e.g.,
+#'   formatted. Alternatively, we can supply a vector of row IDs within [c()], a
+#'   vector of row indices, or a select helper function. Examples of select
+#'   helper functions include [starts_with()], [ends_with()], [contains()],
+#'   [matches()], [one_of()], [num_range()], and [everything()]. We can also use
+#'   expressions to filter down to the rows we need (e.g.,
 #'   `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @param plot_type *The type of nanoplot to display*
@@ -2661,7 +2661,7 @@ cols_add <- function(
 #' 5-8
 #'
 #' @section Function Introduced:
-#' *In Development*
+#' `v0.10.0` (October 7, 2023)
 #'
 #' @import rlang
 #' @export
@@ -2999,10 +2999,10 @@ generate_data_vals_list <- function(
 #'
 #' The columns supplied in `columns` must all exist in the table and none of
 #' them can be in the `after` argument. The `after` column must also exist and
-#' only one column should be provided here. If you need to place one or columns
-#' at the beginning of the column series, the [cols_move_to_start()] function
-#' should be used. Similarly, if those columns to move should be placed at the
-#' end of the column series then use [cols_move_to_end()].
+#' only one column should be provided here. If you need to place one or more
+#' columns at the beginning of the column series, the [cols_move_to_start()]
+#' function should be used. Similarly, if those columns to move should be placed
+#' at the end of the column series then use [cols_move_to_end()].
 #'
 #' @section Examples:
 #'
@@ -3277,7 +3277,7 @@ cols_move_to_start <- function(
 #' }}
 #'
 #' We can also move multiple columns at a time. With the same
-#' [`countrypops`]-based table, let's move both the `year` and `population`
+#' [`countrypops`]-based table, let's move both the `year` and `country_name`
 #' columns to the end of the column series.
 #'
 #' ```r
@@ -3626,7 +3626,7 @@ cols_unhide <- function(
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   participate in the merging process. The default [everything()] results in
 #'   all rows in `columns` being formatted. Alternatively, we can supply a
-#'   vector of row captions within [c()], a vector of row indices, or a select
+#'   vector of row IDs within [c()], a vector of row indices, or a select
 #'   helper function. Examples of select helper functions include
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()]. We can also use expressions to filter
@@ -3881,7 +3881,7 @@ cols_merge <- function(
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   participate in the merging process. The default [everything()] results in
 #'   all rows in `columns` being formatted. Alternatively, we can supply a
-#'   vector of row captions within [c()], a vector of row indices, or a select
+#'   vector of row IDs within [c()], a vector of row indices, or a select
 #'   helper function. Examples of select helper functions include
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()]. We can also use expressions to filter
@@ -4065,7 +4065,7 @@ cols_merge_uncert <- function(
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   participate in the merging process. The default [everything()] results in
 #'   all rows in `columns` being formatted. Alternatively, we can supply a
-#'   vector of row captions within [c()], a vector of row indices, or a select
+#'   vector of row IDs within [c()], a vector of row indices, or a select
 #'   helper function. Examples of select helper functions include
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()]. We can also use expressions to filter
@@ -4310,7 +4310,7 @@ cols_merge_resolver <- function(
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   participate in the merging process. The default [everything()] results in
 #'   all rows in `columns` being formatted. Alternatively, we can supply a
-#'   vector of row captions within [c()], a vector of row indices, or a select
+#'   vector of row IDs within [c()], a vector of row indices, or a select
 #'   helper function. Examples of select helper functions include
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()]. We can also use expressions to filter

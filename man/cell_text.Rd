@@ -38,7 +38,7 @@ fallbacks.}
 \verb{scalar<numeric|integer|character>} // \emph{default:} \code{NULL} (\code{optional})
 
 The size of the font. Can be provided as a number that is assumed to
-represent \code{px} values (or could be wrapped in the \code{\link[=px]{px()}}) helper function.
+represent \code{px} values (or could be wrapped in the \code{\link[=px]{px()}} helper function).
 We can also use one of the following absolute size keywords: \code{"xx-small"},
 \code{"x-small"}, \code{"small"}, \code{"medium"}, \code{"large"}, \code{"x-large"}, or
 \code{"xx-large"}.}
@@ -47,8 +47,8 @@ We can also use one of the following absolute size keywords: \code{"xx-small"},
 
 \verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
-The text in a cell can be aligned though one of the following options:
-\code{"center"}, \code{"left"}, \code{"right"}, or \code{"justify"}.}
+The text in a cell can be horizontally aligned though one of the following
+options: \code{"center"}, \code{"left"}, \code{"right"}, or \code{"justify"}.}
 
 \item{v_align}{\emph{Vertical alignment}
 
@@ -113,7 +113,7 @@ opportunities. The options are \code{"normal"}, \code{"nowrap"}, \code{"pre"},
 \verb{scalar<numeric|integer|character>} // \emph{default:} \code{NULL} (\code{optional})
 
 The indentation of the text. Can be provided as a number that is assumed to
-represent \code{px} values (or could be wrapped in the \code{\link[=px]{px()}}) helper function.
+represent \code{px} values (or could be wrapped in the \code{\link[=px]{px()}} helper function).
 Alternatively, this can be given as a percentage (easily constructed with
 \code{\link[=pct]{pct()}}).}
 }
