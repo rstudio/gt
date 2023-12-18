@@ -183,6 +183,45 @@ create_table_start_l <- function(data) {
             ">{\\raggedright\\arraybackslash}"
           )
 
+        # Check if column width was set using gt::pct and
+        # convert to Latex friendly terminology (i.e.,
+        # '14.7%' becomes '0.147\\linewidth')
+        if (grepl('^[[:digit:].]+%$', col_widths[i])) {
+
+          table_width <- dt_options_get_value(data = data, option = 'table_width')
+
+          col_pct <- as.numeric(gsub('%$', '', col_widths[i])) / 100
+
+          if (table_width == 'auto') {
+
+            # Table width not specified, use all available space
+            col_scalar <- col_pct
+            tab_unit <- '\\linewidth'
+
+          } else if (endsWith(table_width, suffix = '%')) {
+
+            # If table width is expressed as a percentage, adjust the scaler
+            col_scalar <- col_pct * as.numeric(gsub('%', '', table_width)) / 100
+            tab_unit <- '\\linewidth'
+
+          } else {
+
+            # When table width is expressed in units, convert to points
+            col_scalar <- col_pct * convert_to_px(table_width) * 0.75 # 0.75 converts pixels to points
+            tab_unit <- 'pt'
+
+          }
+
+          col_widths[i] <-
+            paste0(
+              "\\dimexpr ",
+              col_scalar,
+              tab_unit,
+              "-2\\tabcolsep-1.5\\arrayrulewidth"
+            )
+
+        }
+
         col_defs_i <- paste0(align, "p{", col_widths[i], "}")
 
       } else {
@@ -205,11 +244,18 @@ create_table_start_l <- function(data) {
       paste0(col_defs[seq_along(stub_layout)], "|")
   }
 
+  # If a table width is specified, add an extra column
+  # space to fill in enough space to match the width
+  extra_sep <- ''
+  if (dt_options_get_value(data = data, option = 'table_width') != 'auto')
+    extra_sep <- '@{\\extracolsep{\\fill}}'
+
   # Generate setup statements for table including default left
   # alignments and vertical lines for any stub columns
   paste0(
     longtable_post_length,
     "\\begin{longtable}{",
+    extra_sep,
     paste(col_defs, collapse = ""),
     "}\n",
     collapse = ""
@@ -1102,4 +1148,71 @@ split_row_content <- function(x) {
   row_content <- as.vector(t(x))
 
   split(row_content, ceiling(seq_along(row_content) / ncol(x)))
+}
+
+derive_table_width_bookends <- function(data) {
+
+  table_width <- dt_options_get_value(data = data, 'table_width')
+
+  # Bookends are not required if a table width is not specified
+  if (table_width == 'auto') {
+
+    bookends <- c('', '')
+
+  } else if (endsWith(table_width, "%")) {
+
+    tw <- as.numeric(gsub('%', '', table_width))
+
+    side_width <-
+      ((100 - tw) / 200) %>%
+      format(scientific = FALSE, trim = TRUE)
+
+    bookends <-
+      c(
+        paste0(
+          "\\newlength\\holdLTleft",
+          "\\newlength\\holdLTright",
+          "\\setlength\\holdLTleft{\\LTleft}\\relax",
+          "\\setlength\\holdLTright{\\LTright}\\relax",
+          sprintf(
+            '\\setlength\\LTleft{%s\\linewidth}\n\\setlength\\LTright{%s\\linewidth}',
+            side_width,
+            side_width
+          ),
+          collapse = "\n"
+        ),
+        "\\setlength\\LTleft{\\holdLTleft}\n\\setlength\\LTright{\\holdLTright}"
+      )
+
+  } else {
+
+    width_in_pt <- 0.75 * convert_to_px(table_width)
+
+    halfwidth_in_pt <- format(width_in_pt / 2, scientific = FALSE, trim = TRUE)
+
+    bookends <-
+      c(
+        paste0(
+          "\\newlength\\holdLTleft",
+          "\\newlength\\holdLTright",
+          "\\setlength\\holdLTleft{\\LTleft}\\relax",
+          "\\setlength\\holdLTright{\\LTright}\\relax",
+          sprintf(
+            "\\setlength\\LTleft{\\dimexpr(0.5\\linewidth - %spt)}\n\\setlength\\LTright{\\dimexpr(0.5\\linewidth - %spt)}",
+            halfwidth_in_pt,
+            halfwidth_in_pt
+          ),
+          collapse = '\n'
+        ),
+        paste0(
+          "\\setlength\\LTleft{\\holdLTleft}",
+          "\\setlength\\LTright{\\holdLTright}",
+          collapse = "\n"
+        )
+      )
+
+  }
+
+  bookends
+
 }

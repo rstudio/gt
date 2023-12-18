@@ -897,3 +897,113 @@ test_that("The function `cols_width()` works correctly with a complex table", {
     ) %>%
     expect_true()
 })
+
+test_that("The function `cols_width()` correctly specifies LaTeX table when column widths are specified by user as percentages", {
+
+  # Check that specific suggested packages are available
+  check_suggests()
+
+  # Create a `tbl_latex` object with `gt()` and size
+  # all columns in percentages
+  tbl_latex <-
+    gt(tbl) %>%
+    cols_width(
+      col_1 ~ pct(50),
+      col_2 ~ pct(30),
+      col_3 ~ pct(20),
+      col_4 ~ pct(10)
+    )
+
+  pct_string <- function(x, unit = '\\\\linewidth') {
+
+    prefix <- '>\\{\\\\(raggedright|raggedleft|centering)\\\\arraybackslash\\}'
+
+    sprintf(
+      '%sp\\{\\\\dimexpr %s%s-2\\\\tabcolsep-1.5\\\\arrayrulewidth\\}',
+      prefix,
+      format(x, scientific = FALSE, trim = TRUE),
+      unit
+    )
+
+  }
+
+  build_longtable_regex <- function(...) {
+
+    paste0(
+      c(
+        "\\\\begin\\{longtable\\}\\{",
+        "(@\\{\\\\extracolsep\\{\\\\fill\\}\\})*",
+        c(...),
+        "\\}\\n"
+      ),
+      collapse = ''
+    )
+
+  }
+
+  latex_col_regex <-
+    paste0(
+      c(
+        "\\\\begin\\{longtable\\}\\{",
+        "(@\\{\\\\extracolsep\\{\\\\fill\\}\\})*",
+        # '>\\{\\\\ragged[[:alpha:]]+\\\\arraybackslash'
+       sprintf(">\\{\\\\(raggedright|raggedleft|centering)\\\\arraybackslash\\}p\\{\\\\dimexpr 0\\.%d\\\\linewidth-2\\\\tabcolsep-1.5\\\\arrayrulewidth}",
+               c(5L, 3L, 2L, 1L)),
+        "\\}\\n"
+      ),
+      collapse = ''
+    )
+
+  # Expect that all column widths are expressed as percentage of \linewidth
+  c(0.5, 0.3, 0.2, 0.1) %>%
+    pct_string() %>%
+    build_longtable_regex() %>%
+    grepl(as_latex(tbl_latex)) %>%
+    expect_true()
+
+
+  # Check that LaTeX is correctly generated when only some
+  # column widths are specified as percentages
+  tbl_latex_partial <-
+    gt(tbl) %>%
+    cols_width(
+      col_1 ~ pct(30),
+      col_3 ~ pct(20)
+    )
+
+  c(
+    pct_string(0.3),
+    'r',
+    pct_string(0.2),
+    'r'
+  ) %>%
+    build_longtable_regex() %>%
+    grepl(as_latex(tbl_latex_partial)) %>%
+    expect_true()
+
+  # Check that LaTeX longtable command is correctly generated
+  # when table_width is specified by the user as a percentage
+  tbl_latex_tw_pct <-
+    tbl_latex %>%
+    tab_options(table.width = pct(70))
+
+  (0.7 * c(0.5, 0.3, 0.2, 0.1)) %>%
+    pct_string() %>%
+    build_longtable_regex() %>%
+    grepl(as_latex(tbl_latex_tw_pct)) %>%
+    expect_true()
+
+  # Check that LaTeX longtable command is correctly generated
+  # when table width is specified by user in pixels
+  tbl_latex_tw_px <-
+    tbl_latex %>%
+    tab_options(table.width = '400px')
+
+  (400 * 0.75 * c(0.5, 0.3, 0.2, 0.1)) %>%
+    pct_string(unit = 'pt') %>%
+    build_longtable_regex() %>%
+    grepl(as_latex(tbl_latex_tw_px))
+
+
+})
+
