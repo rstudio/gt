@@ -164,10 +164,16 @@ generate_nanoplot <- function(
   y_scale_max <- get_extreme_value(y_vals, stat = "max")
   y_scale_min <- get_extreme_value(y_vals, stat = "min")
 
+  # Handle cases where collection of `y_vals` is invariant
   if (y_scale_min == y_scale_max && is.null(expand_y)) {
 
+    if (y_scale_min == 0) {
+      expand_y_dist <- 5
+    } else {
+      expand_y_dist <- (y_scale_min / 10) * 2
+    }
+
     # Expand the `y` scale, centering around the `y_scale_min` value
-    expand_y_dist <- (y_scale_min / 10) * 2
     expand_y <- c(y_scale_min - expand_y_dist, y_scale_min + expand_y_dist)
   }
 
