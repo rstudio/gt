@@ -51,17 +51,30 @@ footnote_mark_to_latex <- function(
     spec <- "^i"
   }
 
-  if (grepl("\\.", spec)) mark <- paste0(mark, ".")
-  if (grepl("b", spec)) mark <- paste0("\\textbf{", mark, "}")
-  if (grepl("i", spec)) mark <- paste0("\\textit{", mark, "}")
-  if (grepl("\\(|\\[", spec)) mark <- paste0("(", mark)
-  if (grepl("\\)|\\]", spec)) mark <- paste0(mark, ")")
+  if (grepl("\\.", spec)) mark <- sprintf_unless_na("%s.", mark)
+  if (grepl("b", spec)) mark <- sprintf_unless_na("\\textbf{%s}", mark)
+  if (grepl("i", spec)) mark <- sprintf_unless_na("\\textit{%s}", mark)
+  if (grepl("\\(|\\[", spec)) mark <- sprintf_unless_na("(%s", mark)
+  if (grepl("\\)|\\]", spec)) mark <- sprintf_unless_na("%s)", mark)
 
   if (grepl("\\^", spec)) {
-    mark <- paste0("\\textsuperscript{", mark, "}")
+    mark <- sprintf_unless_na("\\textsuperscript{%s}", mark)
   }
 
+  mark[is.na(mark)] <- ""
+
   mark
+}
+
+#' @noRd
+sprintf_unless_na <- function(fmt, x) {
+
+  ifelse(
+    is.na(x),
+    NA_character_,
+    sprintf(fmt, as.character(x))
+  )
+
 }
 
 #' @noRd
