@@ -2237,6 +2237,16 @@ cols_add <- function(
 #'   (2) `"zero"` will replace `NA` values with zero values; and (3) `"remove"`
 #'   will remove any incoming `NA` values.
 #'
+#' @param autoscale *Automatically set x- and y-axis scale limits based on data*
+#'
+#'   `scalar<logical>` // *default:* `FALSE`
+#'
+#'   Using `autoscale = TRUE` will ensure that the bounds of all nanoplots
+#'   produced are based on the limits of data combined from all input rows. This
+#'   will result in a shared scale across all of the nanoplots (for *y*- and
+#'   *x*-axis data), which is useful in those cases where the nanoplot data
+#'   should be compared across rows.
+#'
 #' @param columns_x_vals *Columns containing values for the optional x variable*
 #'
 #'   `<column-targeting expression>` // *default:* `NULL` (`optional`)
