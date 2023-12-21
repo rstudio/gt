@@ -2750,6 +2750,24 @@ cols_nanoplot <- function(
     options_plots <- options
   }
 
+  # Automatically apply `expand_x` and `expand_y` values as necessary if
+  # `autoscale` has been set to TRUE
+  if (autoscale) {
+
+    all_y_vals <- unlist(data_vals_plot_y)
+    min_y_vals <- min(all_y_vals, na.rm = TRUE)
+    max_y_vals <- max(all_y_vals, na.rm = TRUE)
+    expand_y <- c(min_y_vals, max_y_vals)
+
+    if (!is.null(data_vals_plot_x)) {
+
+      all_x_vals <- unlist(data_vals_plot_x)
+      min_x_vals <- min(all_x_vals, na.rm = TRUE)
+      max_x_vals <- max(all_x_vals, na.rm = TRUE)
+      expand_x <- c(min_x_vals, max_x_vals)
+    }
+  }
+
   # Initialize vector that will contain the nanoplots
   nanoplots <- c()
 
