@@ -1323,6 +1323,8 @@ str_split_across <- function(
     reverse = FALSE
 ) {
 
+  delim_width <- nchar(delim)
+
   if (is.null(n)) {
 
     x_split <- unlist(strsplit(x, split = delim, fixed = TRUE))
