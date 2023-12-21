@@ -1355,7 +1355,6 @@ str_split_across <- function(
   x_split <- x
 
   for (i in seq_len(n)) {
-
     if (split == "last") {
 
       x_split_i <- x_split[1]
@@ -1372,7 +1371,7 @@ str_split_across <- function(
 
       x_split_n <- nchar(x_split_i)
       x_split_1 <- substr(x_split_i, start = 1, stop = split_delim - 1)
-      x_split_2 <- substr(x_split_i, start = split_delim + 1, x_split_n)
+      x_split_2 <- substr(x_split_i, start = split_delim + delim_width, x_split_n)
 
       x_split <- c(x_split_1, x_split_2, x_split)
 
@@ -1392,7 +1391,7 @@ str_split_across <- function(
 
       x_split_n <- nchar(x_split_i)
       x_split_1 <- substr(x_split_i, start = 1, stop = split_delim - 1)
-      x_split_2 <- substr(x_split_i, start = split_delim + 1, x_split_n)
+      x_split_2 <- substr(x_split_i, start = split_delim + delim_width, x_split_n)
 
       x_split <- c(x_split, x_split_1, x_split_2)
     }
