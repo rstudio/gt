@@ -828,8 +828,8 @@ resolve_spanned_column_names <- function(
 #'
 #'   `scalar<character>` // **required**
 #'
-#'   The delimiter to use to split an input column name. This should be a single
-#'   character (e.g., `"_"`, `"."`, etc.).
+#'   The delimiter text to use to split one of more column names (i.e., those
+#'   that are targeted via the `columns` argument).
 #'
 #' @param columns *Columns to target*
 #'
