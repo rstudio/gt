@@ -2672,6 +2672,7 @@ cols_nanoplot <- function(
     plot_type = c("line", "bar"),
     plot_height = "2em",
     missing_vals = c("gap", "zero", "remove"),
+    autoscale = FALSE,
     columns_x_vals = NULL,
     reference_line = NULL,
     reference_area = NULL,
