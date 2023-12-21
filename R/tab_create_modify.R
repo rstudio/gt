@@ -1118,8 +1118,8 @@ tab_spanner_delim <- function(
     cli::cli_abort("`delim` must be a single value.")
   }
 
-  if (nchar(delim) != 1) {
-    cli::cli_abort("The value supplied for `delim` must be a single character.")
+  if (nchar(delim) < 1) {
+    cli::cli_abort("The value supplied for `delim` must be at least a single character.")
   }
 
   # Get all of the columns in the dataset
