@@ -20,16 +20,16 @@ can use the \code{"all"} option.}
 \verb{scalar<character>|NULL} // \emph{default:} \code{"#000000"}
 
 The border \code{color} can be defined with a color name or with a hexadecimal
-color code. The default \code{color} value is \code{"#000000"} (black). Borders for any
-defined \code{sides} can be removed by supplying \code{NULL} here.}
+color code. The default \code{color} value is \code{"#000000"} (black). Borders for
+any defined \code{sides} can be removed by supplying \code{NULL} here.}
 
 \item{style}{\emph{Border line style}
 
 \verb{scalar<character>|NULL} // \emph{default:} \code{"solid"}
 
 The border \code{style} can be one of either \code{"solid"} (the default),
-\code{"dashed"}, \code{"dotted"}, \code{"hidden"}, or \code{"double"}. Borders for any
-defined \code{sides} can be removed by supplying \code{NULL} here.}
+\code{"dashed"}, \code{"dotted"}, \code{"hidden"}, or \code{"double"}. Borders for any defined
+\code{sides} can be removed by supplying \code{NULL} here.}
 
 \item{weight}{\emph{Border weight}
 
