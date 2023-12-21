@@ -811,16 +811,16 @@ resolve_spanned_column_names <- function(
 #' `cols_spanner_delim()` to slice and dice delimited column names in different
 #' ways:
 #'
-#' - the delimiter: choose which delimiter to use for the fragmentation of
+#' - delimiter text: choose the delimiter text to use for the fragmentation of
 #' column names into spanners with the `delim` argument
 #' - direction and amount of splitting: we can choose to split *n* times
 #' according to a `limit` argument, and, we get to specify from which side of
-#' the column name the splitting should occur
+#' the column name the splitting should commence
 #' - reversal of fragments: we can reverse the order the fragments we get from
-#' the splitting procedure
-#' - column constraints: define which columns in a **gt** table that should
-#' participate in spanner creation using vectors or **tidyselect**-style
-#' expressions
+#' the splitting procedure with the `reverse` argument
+#' - column constraints: it's possible to constrain which columns in a **gt**
+#' table should participate in spanner creation using vectors or
+#' **tidyselect**-style expressions
 #'
 #' @inheritParams tab_spanner
 #'
