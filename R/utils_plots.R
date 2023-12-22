@@ -70,16 +70,20 @@ generate_nanoplot <- function(
   line_type <- rlang::arg_match(line_type)
 
   # Initialize several local `*_tags` variables with `NULL`
-  circle_tags <- NULL
-  bar_tags <- NULL
-  data_path_tags <- NULL
-  area_path_tags <- NULL
-  ref_line_tags <- NULL
-  zero_line_tags <- NULL
   ref_area_tags <- NULL
+  area_path_tags <- NULL
+  data_path_tags <- NULL
+  zero_line_tags <- NULL
+  bar_tags <- NULL
+  ref_line_tags <- NULL
+  circle_tags <- NULL
+  g_y_axis_tags <- NULL
   g_guide_tags <- NULL
 
-  # If the number of `y` values is zero or an empty string,
+  # Initialize the `single_horizontal_bar` variable with `FALSE`
+  single_horizontal_bar <- FALSE
+
+  # If the number of `y` values is zero or if all consist of NA values,
   # return an empty string
   if (length(y_vals) == 0) {
     return("")
@@ -159,6 +163,19 @@ generate_nanoplot <- function(
   # Determine the total number of `y` values available
   num_y_vals <- length(y_vals)
 
+  # If the number of y_vals is `1` and we requested a 'bar' plot, then
+  # generate bars using separate function
+  if (num_y_vals == 1 && grepl("bar", plot_type)) {
+    single_horizontal_bar <- TRUE
+    show_data_points <- FALSE
+    show_data_line <- FALSE
+    show_data_area <- FALSE
+    show_ref_line <- FALSE
+    show_ref_area <- FALSE
+    show_vertical_guides <- FALSE
+    show_y_axis_guide <- FALSE
+  }
+
   # Find out whether the collection of non-NA `y` values are all integer-like
   y_vals_integerlike <- rlang::is_integerish(y_vals)
 
@@ -204,7 +221,7 @@ generate_nanoplot <- function(
   # where `x_vals` aren't present, we'll adjust the final width based
   # on the fixed interval between data points (this is dependent on the
   # number of data points)
-  if (!is.null(x_vals)) {
+  if (!is.null(x_vals) || single_horizontal_bar) {
 
     data_x_width <- 500
 
@@ -910,7 +927,7 @@ generate_nanoplot <- function(
   # Generate data bars
   #
 
-  if (plot_type == "bar") {
+  if (plot_type == "bar" && !single_horizontal_bar) {
 
     bar_strings <- c()
 
@@ -985,11 +1002,62 @@ generate_nanoplot <- function(
     bar_tags <- paste(bar_strings, collapse = "\n")
   }
 
+  if (plot_type == "bar" && single_horizontal_bar) {
+
+    # TODO: This type of display assumes there is only a single `y` value
+
+    bar_thickness <- data_point_radius[1] * 2
+
+    # Scale to proportional values
+    y_proportions_list <-
+      normalize_to_list(
+        val = y_vals,
+        all_vals = all_single_y_vals,
+        zero = 0
+      )
+
+    y_proportion <- y_proportions_list[["val"]]
+    y_proportion_zero <- y_proportions_list[["zero"]]
+
+    y0_width <- y_proportion_zero * data_x_width
+
+    y_width <- y_proportion * data_x_width
+
+    if (y_vals[1] < 0) {
+      data_bar_stroke_color <- data_bar_negative_stroke_color[1]
+      data_bar_stroke_width <- data_bar_negative_stroke_width[1]
+      data_bar_fill_color <- data_bar_negative_fill_color[1]
+    } else if (y_vals[1] > 0) {
+      data_bar_stroke_color <- data_bar_stroke_color[1]
+      data_bar_stroke_width <- data_bar_stroke_width[1]
+      data_bar_fill_color <- data_bar_fill_color[1]
+    } else if (y_vals[1] == 0) {
+      y_width <- 5
+      data_bar_stroke_color <- "#808080"
+      data_bar_stroke_width <- 4
+      data_bar_fill_color <- "#808080"
+    }
+
+    bar_tags <-
+      paste0(
+        "<rect ",
+        "x=\"", 5, "\" ",
+        "y=\"", (bottom_y / 2) - (bar_thickness / 2), "\" ",
+        "width=\"", y_width, "\" ",
+        "height=\"", bar_thickness, "\" ",
+        "stroke=\"", data_bar_stroke_color, "\" ",
+        "stroke-width=\"", data_bar_stroke_width, "\" ",
+        "fill=\"", data_bar_fill_color, "\" ",
+        ">",
+        "</rect>"
+      )
+  }
+
   #
   # Generate zero line for bar plots
   #
 
-  if (plot_type == "bar") {
+  if (plot_type == "bar" && !single_horizontal_bar) {
 
     stroke <- "#BFBFBF"
     stroke_width <- 2
@@ -1006,6 +1074,10 @@ generate_nanoplot <- function(
         ">",
         "</line>"
       )
+  }
+
+  if (plot_type == "bar" && single_horizontal_bar) {
+    zero_line_tags <- ""
   }
 
   #
