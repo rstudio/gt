@@ -2811,6 +2811,8 @@ cols_nanoplot <- function(
         expand_x = expand_x,
         expand_y = expand_y,
         missing_vals = missing_vals,
+        all_y_vals = all_y_vals,
+        all_single_y_vals = all_single_y_vals,
         plot_type = plot_type,
         line_type = options_plots$data_line_type,
         currency = options_plots$currency,
