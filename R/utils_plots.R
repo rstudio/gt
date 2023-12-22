@@ -30,6 +30,8 @@ generate_nanoplot <- function(
     expand_x = NULL,
     expand_y = NULL,
     missing_vals = c("gap", "zero", "remove"),
+    all_y_vals = NULL,
+    all_single_y_vals = NULL,
     plot_type = c("line", "bar"),
     line_type = c("curved", "straight"),
     currency = NULL,
