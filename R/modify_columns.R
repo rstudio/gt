@@ -2760,6 +2760,18 @@ cols_nanoplot <- function(
     options_plots <- options
   }
 
+  # Get all `y` vals into a vector
+  all_y_vals <- unlist(data_vals_plot_y)
+
+  # Get all `y` vals from single-valued components of `data_vals_plot_y`
+  # into a vector
+  all_single_y_vals <- c()
+  for (i in seq_along(data_vals_plot_y)) {
+    if (length(data_vals_plot_y[[i]]) == 1 && !is.na(data_vals_plot_y[[i]])) {
+      all_single_y_vals <- c(all_single_y_vals, data_vals_plot_y[[i]])
+    }
+  }
+
   # Automatically apply `expand_x` and `expand_y` values as necessary if
   # `autoscale` has been set to TRUE
   if (autoscale) {
