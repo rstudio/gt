@@ -2776,7 +2776,6 @@ cols_nanoplot <- function(
   # `autoscale` has been set to TRUE
   if (autoscale) {
 
-    all_y_vals <- unlist(data_vals_plot_y)
     min_y_vals <- min(all_y_vals, na.rm = TRUE)
     max_y_vals <- max(all_y_vals, na.rm = TRUE)
     expand_y <- c(min_y_vals, max_y_vals)
