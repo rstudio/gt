@@ -223,7 +223,7 @@ generate_nanoplot <- function(
   # number of data points)
   if (!is.null(x_vals) || single_horizontal_bar) {
 
-    data_x_width <- 500
+    data_x_width <- 600
 
   } else {
 
