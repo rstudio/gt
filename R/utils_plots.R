@@ -1125,10 +1125,6 @@ generate_nanoplot <- function(
       )
   }
 
-  if (plot_type == "bar" && single_horizontal_bar) {
-    zero_line_tags <- ""
-  }
-
   #
   # Generate reference line
   #
