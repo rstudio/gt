@@ -1096,6 +1096,10 @@ generate_nanoplot <- function(
         ">",
         "</line>"
       )
+
+    # Redefine the `viewbox` in terms of the `data_x_width` value; this ensures
+    # that the horizontal bars are centered about their extreme values
+    viewbox <- paste(left_x, top_y, data_x_width, bottom_y, collapse = " ")
   }
 
   #
