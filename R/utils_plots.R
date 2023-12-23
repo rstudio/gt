@@ -1080,6 +1080,22 @@ generate_nanoplot <- function(
         ">",
         "</rect>"
       )
+
+    stroke <- "#BFBFBF"
+    stroke_width <- 5
+
+    zero_line_tags <-
+      paste0(
+        "<line ",
+        "x1=\"", y0_width, "\" ",
+        "y1=\"", (bottom_y / 2) - (bar_thickness * 1.5), "\" ",
+        "x2=\"", y0_width, "\" ",
+        "y2=\"", (bottom_y / 2) + (bar_thickness * 1.5), "\" ",
+        "stroke=\"", stroke, "\" ",
+        "stroke-width=\"", stroke_width, "\" ",
+        ">",
+        "</line>"
+      )
   }
 
   #
