@@ -196,6 +196,7 @@ of the remaining plot components can be modified.</p>
 <span>  plot_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"line"</span>, <span class="st">"bar"</span><span class="op">)</span>,</span>
 <span>  plot_height <span class="op">=</span> <span class="st">"2em"</span>,</span>
 <span>  missing_vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gap"</span>, <span class="st">"zero"</span>, <span class="st">"remove"</span><span class="op">)</span>,</span>
+<span>  autoscale <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  columns_x_vals <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  reference_line <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  reference_area <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -271,6 +272,16 @@ strategies available for their handling: (1) <code>"gap"</code> will display dat
 at the sites of missing data, where data lines will have discontinuities;
 (2) <code>"zero"</code> will replace <code>NA</code> values with zero values; and (3) <code>"remove"</code>
 will remove any incoming <code>NA</code> values.</p></dd>
+
+
+<dt>autoscale</dt>
+<dd><p><em>Automatically set x- and y-axis scale limits based on data</em></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>FALSE</code></p>
+<p>Using <code>autoscale = TRUE</code> will ensure that the bounds of all nanoplots
+produced are based on the limits of data combined from all input rows. This
+will result in a shared scale across all of the nanoplots (for <em>y</em>- and
+<em>x</em>-axis data), which is useful in those cases where the nanoplot data
+should be compared across rows.</p></dd>
 
 
 <dt>columns_x_vals</dt>
