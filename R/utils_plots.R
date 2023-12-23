@@ -1009,7 +1009,9 @@ generate_nanoplot <- function(
 
   if (plot_type == "bar" && single_horizontal_bar) {
 
-    # TODO: This type of display assumes there is only a single `y` value
+    # This type of display assumes there is only a single `y` value and there
+    # are possibly several such horizontal bars across different rows that
+    # need to be on a common scale
 
     bar_thickness <- data_point_radius[1] * 2
 
