@@ -1040,26 +1040,39 @@ generate_nanoplot <- function(
     y_width <- y_proportion * data_x_width
 
     if (y_vals[1] < 0) {
+
       data_bar_stroke_color <- data_bar_negative_stroke_color[1]
       data_bar_stroke_width <- data_bar_negative_stroke_width[1]
       data_bar_fill_color <- data_bar_negative_fill_color[1]
+
+      rect_x <- y_width
+      rect_width <- y0_width - y_width
+
     } else if (y_vals[1] > 0) {
+
       data_bar_stroke_color <- data_bar_stroke_color[1]
       data_bar_stroke_width <- data_bar_stroke_width[1]
       data_bar_fill_color <- data_bar_fill_color[1]
+
+      rect_x <- y0_width
+      rect_width <- y_width - y0_width
+
     } else if (y_vals[1] == 0) {
-      y_width <- 5
+
       data_bar_stroke_color <- "#808080"
       data_bar_stroke_width <- 4
       data_bar_fill_color <- "#808080"
+
+      rect_x <- y0_width - 2.5
+      rect_width <- 5
     }
 
     bar_tags <-
       paste0(
         "<rect ",
-        "x=\"", 5, "\" ",
+        "x=\"", rect_x, "\" ",
         "y=\"", (bottom_y / 2) - (bar_thickness / 2), "\" ",
-        "width=\"", y_width, "\" ",
+        "width=\"", rect_width, "\" ",
         "height=\"", bar_thickness, "\" ",
         "stroke=\"", data_bar_stroke_color, "\" ",
         "stroke-width=\"", data_bar_stroke_width, "\" ",
