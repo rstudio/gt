@@ -1013,7 +1013,7 @@ generate_nanoplot <- function(
     # are possibly several such horizontal bars across different rows that
     # need to be on a common scale
 
-    bar_thickness <- data_point_radius[1] * 2
+    bar_thickness <- data_point_radius[1] * 4
 
     # Scale to proportional values
     y_proportions_list <-
