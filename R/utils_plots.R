@@ -1015,19 +1015,28 @@ generate_nanoplot <- function(
 
     bar_thickness <- data_point_radius[1] * 4
 
-    # Scale to proportional values
-    y_proportions_list <-
-      normalize_to_list(
-        val = y_vals,
-        all_vals = all_single_y_vals,
-        zero = 0
-      )
+    if (all(all_single_y_vals == 0)) {
 
-    y_proportion <- y_proportions_list[["val"]]
-    y_proportion_zero <- y_proportions_list[["zero"]]
+      # Handle case where all values across rows are `0`
+
+      y_proportion <- 0.5
+      y_proportion_zero <- 0.5
+
+    } else {
+
+      # Scale to proportional values
+      y_proportions_list <-
+        normalize_to_list(
+          val = y_vals,
+          all_vals = all_single_y_vals,
+          zero = 0
+        )
+
+      y_proportion <- y_proportions_list[["val"]]
+      y_proportion_zero <- y_proportions_list[["zero"]]
+    }
 
     y0_width <- y_proportion_zero * data_x_width
-
     y_width <- y_proportion * data_x_width
 
     if (y_vals[1] < 0) {
