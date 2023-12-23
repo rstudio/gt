@@ -11,6 +11,7 @@ cols_nanoplot(
   plot_type = c("line", "bar"),
   plot_height = "2em",
   missing_vals = c("gap", "zero", "remove"),
+  autoscale = FALSE,
   columns_x_vals = NULL,
   reference_line = NULL,
   reference_area = NULL,
@@ -85,6 +86,16 @@ strategies available for their handling: (1) \code{"gap"} will display data gaps
 at the sites of missing data, where data lines will have discontinuities;
 (2) \code{"zero"} will replace \code{NA} values with zero values; and (3) \code{"remove"}
 will remove any incoming \code{NA} values.}
+
+\item{autoscale}{\emph{Automatically set x- and y-axis scale limits based on data}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+Using \code{autoscale = TRUE} will ensure that the bounds of all nanoplots
+produced are based on the limits of data combined from all input rows. This
+will result in a shared scale across all of the nanoplots (for \emph{y}- and
+\emph{x}-axis data), which is useful in those cases where the nanoplot data
+should be compared across rows.}
 
 \item{columns_x_vals}{\emph{Columns containing values for the optional x variable}
 

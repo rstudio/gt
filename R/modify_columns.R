@@ -2237,6 +2237,16 @@ cols_add <- function(
 #'   (2) `"zero"` will replace `NA` values with zero values; and (3) `"remove"`
 #'   will remove any incoming `NA` values.
 #'
+#' @param autoscale *Automatically set x- and y-axis scale limits based on data*
+#'
+#'   `scalar<logical>` // *default:* `FALSE`
+#'
+#'   Using `autoscale = TRUE` will ensure that the bounds of all nanoplots
+#'   produced are based on the limits of data combined from all input rows. This
+#'   will result in a shared scale across all of the nanoplots (for *y*- and
+#'   *x*-axis data), which is useful in those cases where the nanoplot data
+#'   should be compared across rows.
+#'
 #' @param columns_x_vals *Columns containing values for the optional x variable*
 #'
 #'   `<column-targeting expression>` // *default:* `NULL` (`optional`)
@@ -2672,6 +2682,7 @@ cols_nanoplot <- function(
     plot_type = c("line", "bar"),
     plot_height = "2em",
     missing_vals = c("gap", "zero", "remove"),
+    autoscale = FALSE,
     columns_x_vals = NULL,
     reference_line = NULL,
     reference_area = NULL,
@@ -2749,6 +2760,35 @@ cols_nanoplot <- function(
     options_plots <- options
   }
 
+  # Get all `y` vals into a vector
+  all_y_vals <- unlist(data_vals_plot_y)
+
+  # Get all `y` vals from single-valued components of `data_vals_plot_y`
+  # into a vector
+  all_single_y_vals <- c()
+  for (i in seq_along(data_vals_plot_y)) {
+    if (length(data_vals_plot_y[[i]]) == 1 && !is.na(data_vals_plot_y[[i]])) {
+      all_single_y_vals <- c(all_single_y_vals, data_vals_plot_y[[i]])
+    }
+  }
+
+  # Automatically apply `expand_x` and `expand_y` values as necessary if
+  # `autoscale` has been set to TRUE
+  if (autoscale) {
+
+    min_y_vals <- min(all_y_vals, na.rm = TRUE)
+    max_y_vals <- max(all_y_vals, na.rm = TRUE)
+    expand_y <- c(min_y_vals, max_y_vals)
+
+    if (!is.null(data_vals_plot_x)) {
+
+      all_x_vals <- unlist(data_vals_plot_x)
+      min_x_vals <- min(all_x_vals, na.rm = TRUE)
+      max_x_vals <- max(all_x_vals, na.rm = TRUE)
+      expand_x <- c(min_x_vals, max_x_vals)
+    }
+  }
+
   # Initialize vector that will contain the nanoplots
   nanoplots <- c()
 
@@ -2771,6 +2811,8 @@ cols_nanoplot <- function(
         expand_x = expand_x,
         expand_y = expand_y,
         missing_vals = missing_vals,
+        all_y_vals = all_y_vals,
+        all_single_y_vals = all_single_y_vals,
         plot_type = plot_type,
         line_type = options_plots$data_line_type,
         currency = options_plots$currency,
