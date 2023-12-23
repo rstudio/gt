@@ -223,7 +223,7 @@ generate_nanoplot <- function(
   # number of data points)
   if (!is.null(x_vals) || single_horizontal_bar) {
 
-    data_x_width <- 500
+    data_x_width <- 600
 
   } else {
 
@@ -965,15 +965,20 @@ generate_nanoplot <- function(
       } else {
 
         if (y_vals[i] < 0) {
+
           y_value_i <- data_y0_point
           y_height <- data_y_points[i] - data_y0_point
           data_bar_stroke_color_i <- data_bar_negative_stroke_color[1]
           data_bar_stroke_width_i <- data_bar_negative_stroke_width[1]
           data_bar_fill_color_i <- data_bar_negative_fill_color[1]
+
         } else if (y_vals[i] > 0) {
+
           y_value_i <- data_y_points[i]
           y_height <- data_y0_point - data_y_points[i]
+
         } else if (y_vals[i] == 0) {
+
           y_value_i <- data_y0_point - 1
           y_height <- 2
           data_bar_stroke_color_i <- "#808080"
@@ -1004,46 +1009,70 @@ generate_nanoplot <- function(
 
   if (plot_type == "bar" && single_horizontal_bar) {
 
-    # TODO: This type of display assumes there is only a single `y` value
+    # This type of display assumes there is only a single `y` value and there
+    # are possibly several such horizontal bars across different rows that
+    # need to be on a common scale
 
-    bar_thickness <- data_point_radius[1] * 2
+    bar_thickness <- data_point_radius[1] * 4
 
-    # Scale to proportional values
-    y_proportions_list <-
-      normalize_to_list(
-        val = y_vals,
-        all_vals = all_single_y_vals,
-        zero = 0
-      )
+    if (all(all_single_y_vals == 0)) {
 
-    y_proportion <- y_proportions_list[["val"]]
-    y_proportion_zero <- y_proportions_list[["zero"]]
+      # Handle case where all values across rows are `0`
+
+      y_proportion <- 0.5
+      y_proportion_zero <- 0.5
+
+    } else {
+
+      # Scale to proportional values
+      y_proportions_list <-
+        normalize_to_list(
+          val = y_vals,
+          all_vals = all_single_y_vals,
+          zero = 0
+        )
+
+      y_proportion <- y_proportions_list[["val"]]
+      y_proportion_zero <- y_proportions_list[["zero"]]
+    }
 
     y0_width <- y_proportion_zero * data_x_width
-
     y_width <- y_proportion * data_x_width
 
     if (y_vals[1] < 0) {
+
       data_bar_stroke_color <- data_bar_negative_stroke_color[1]
       data_bar_stroke_width <- data_bar_negative_stroke_width[1]
       data_bar_fill_color <- data_bar_negative_fill_color[1]
+
+      rect_x <- y_width
+      rect_width <- y0_width - y_width
+
     } else if (y_vals[1] > 0) {
+
       data_bar_stroke_color <- data_bar_stroke_color[1]
       data_bar_stroke_width <- data_bar_stroke_width[1]
       data_bar_fill_color <- data_bar_fill_color[1]
+
+      rect_x <- y0_width
+      rect_width <- y_width - y0_width
+
     } else if (y_vals[1] == 0) {
-      y_width <- 5
+
       data_bar_stroke_color <- "#808080"
       data_bar_stroke_width <- 4
       data_bar_fill_color <- "#808080"
+
+      rect_x <- y0_width - 2.5
+      rect_width <- 5
     }
 
     bar_tags <-
       paste0(
         "<rect ",
-        "x=\"", 5, "\" ",
+        "x=\"", rect_x, "\" ",
         "y=\"", (bottom_y / 2) - (bar_thickness / 2), "\" ",
-        "width=\"", y_width, "\" ",
+        "width=\"", rect_width, "\" ",
         "height=\"", bar_thickness, "\" ",
         "stroke=\"", data_bar_stroke_color, "\" ",
         "stroke-width=\"", data_bar_stroke_width, "\" ",
@@ -1051,6 +1080,26 @@ generate_nanoplot <- function(
         ">",
         "</rect>"
       )
+
+    stroke <- "#BFBFBF"
+    stroke_width <- 5
+
+    zero_line_tags <-
+      paste0(
+        "<line ",
+        "x1=\"", y0_width, "\" ",
+        "y1=\"", (bottom_y / 2) - (bar_thickness * 1.5), "\" ",
+        "x2=\"", y0_width, "\" ",
+        "y2=\"", (bottom_y / 2) + (bar_thickness * 1.5), "\" ",
+        "stroke=\"", stroke, "\" ",
+        "stroke-width=\"", stroke_width, "\" ",
+        ">",
+        "</line>"
+      )
+
+    # Redefine the `viewbox` in terms of the `data_x_width` value; this ensures
+    # that the horizontal bars are centered about their extreme values
+    viewbox <- paste(left_x, top_y, data_x_width, bottom_y, collapse = " ")
   }
 
   #
@@ -1074,10 +1123,6 @@ generate_nanoplot <- function(
         ">",
         "</line>"
       )
-  }
-
-  if (plot_type == "bar" && single_horizontal_bar) {
-    zero_line_tags <- ""
   }
 
   #
