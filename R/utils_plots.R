@@ -965,15 +965,20 @@ generate_nanoplot <- function(
       } else {
 
         if (y_vals[i] < 0) {
+
           y_value_i <- data_y0_point
           y_height <- data_y_points[i] - data_y0_point
           data_bar_stroke_color_i <- data_bar_negative_stroke_color[1]
           data_bar_stroke_width_i <- data_bar_negative_stroke_width[1]
           data_bar_fill_color_i <- data_bar_negative_fill_color[1]
+
         } else if (y_vals[i] > 0) {
+
           y_value_i <- data_y_points[i]
           y_height <- data_y0_point - data_y_points[i]
+
         } else if (y_vals[i] == 0) {
+
           y_value_i <- data_y0_point - 1
           y_height <- 2
           data_bar_stroke_color_i <- "#808080"
