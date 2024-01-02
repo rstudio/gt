@@ -1067,6 +1067,96 @@ generate_nanoplot <- function(
       rect_width <- 5
     }
 
+    # Format number compactly
+    y_value <-
+      format_number_compactly(
+        val = y_vals,
+        currency = currency,
+        as_integer = y_vals_integerlike,
+        fn = y_val_fmt_fn
+      )
+
+    rect_strings <-
+      paste0(
+        "<rect ",
+        "x=\"", 0, "\" ",
+        "y=\"", (bottom_y / 2) - (bar_thickness / 2), "\" ",
+        "width=\"600\" ",
+        "height=\"", bar_thickness, "\" ",
+        "stroke=\"transparent\" ",
+        "stroke-width=\"", vertical_guide_stroke_width, "\" ",
+        "fill=\"transparent\"",
+        ">",
+        "</rect>"
+      )
+
+    if (y_vals[1] > 0) {
+
+      text_strings <-
+        paste0(
+          "<text ",
+          "x=\"", y0_width + 10, "\" ",
+          "y=\"", safe_y_d + 10, "\" ",
+          "fill=\"transparent\" ",
+          "stroke=\"transparent\" ",
+          "font-size=\"", "30px", "\"",
+          ">",
+          y_value,
+          "</text>"
+        )
+
+    } else if (y_vals[1] < 0) {
+
+      text_strings <-
+        paste0(
+          "<text ",
+          "x=\"", y0_width - 10, "\" ",
+          "y=\"", safe_y_d + 10, "\" ",
+          "fill=\"transparent\" ",
+          "stroke=\"transparent\" ",
+          "font-size=\"30px\" ",
+          "text-anchor=\"end\"",
+          ">",
+          y_value,
+          "</text>"
+        )
+
+    } else if (y_vals[1] == 0) {
+
+      if (all(all_single_y_vals == 0)) {
+        text_anchor <- "start"
+        x_position_text <- y0_width + 10
+      } else if (all(all_single_y_vals <= 0)) {
+        text_anchor <- "end"
+        x_position_text <- y0_width - 10
+      } else {
+        text_anchor <- "start"
+        x_position_text <- y0_width + 10
+      }
+
+      text_strings <-
+        paste0(
+          "<text ",
+          "x=\"", x_position_text, "\" ",
+          "y=\"", (bottom_y / 2) + 10, "\" ",
+          "fill=\"transparent\" ",
+          "stroke=\"transparent\" ",
+          "font-size=\"", "30px", "\" ",
+          "text-anchor=\"", text_anchor, "\"",
+          ">",
+          y_value,
+          "</text>"
+        )
+    }
+
+    g_guide_tags <-
+      paste0(
+        "<g class=\"horizontal-line\">\n",
+        rect_strings, "\n",
+        text_strings,
+        "</g>"
+      )
+
     bar_tags <-
       paste0(
         "<rect ",
@@ -1379,6 +1469,15 @@ generate_nanoplot <- function(
           "color: red; ",
           "} ",
           ".vert-line:hover text { ",
+          "stroke: white; ",
+          "fill: #212427; ",
+          "} ",
+          ".horizontal-line:hover rect { ",
+          "fill: transparent; ",
+          "stroke: transparent; ",
+          "color: blue; ",
+          "} ",
+          ".horizontal-line:hover text { ",
           "stroke: white; ",
           "fill: #212427; ",
           "} ",
