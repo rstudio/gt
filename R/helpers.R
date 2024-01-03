@@ -735,6 +735,19 @@ currency <- function(
 #'   nanoplot. This hidden layer is active by default but can be deactivated by
 #'   using `show_y_axis_guide = FALSE`.
 #'
+#' @param interactive_data_values *Should data values be interactively shown?*
+#'
+#'   `scalar<logical>` // *default:* `NULL` (`optional`)
+#'
+#'   By default, numeric data values will be shown only when the user interacts
+#'   with certain regions of a nanoplot. This is because the values may be
+#'   numerous (i.e., clutter the display when all are visible) and it can be
+#'   argued that the values themselves are secondary to the presentation.
+#'   However, for some types of plots (like horizontal bar plots), a persistent
+#'   display of values alongside the plot marks may be desirable. By setting
+#'   `interactive_data_values = FALSE` we can opt for always displaying the data
+#'   values alongside the plot components.
+#'
 #' @param y_val_fmt_fn,y_axis_fmt_fn,y_ref_line_fmt_fn *Custom formatting for y values*
 #'
 #'   `function` // *default:* `NULL` (`optional`)
@@ -791,6 +804,7 @@ nanoplot_options <- function(
     show_reference_area = NULL,
     show_vertical_guides = NULL,
     show_y_axis_guide = NULL,
+    interactive_data_values = NULL,
     y_val_fmt_fn = NULL,
     y_axis_fmt_fn = NULL,
     y_ref_line_fmt_fn = NULL,
@@ -815,19 +829,20 @@ nanoplot_options <- function(
   data_bar_negative_fill_color   <- data_bar_negative_fill_color %||% "#D75A68"
 
   reference_line_color      <- reference_line_color %||% "#75A8B0"
-  reference_area_fill_color <- reference_area_fill_color%||% "#A6E6F2"
+  reference_area_fill_color <- reference_area_fill_color %||% "#A6E6F2"
 
   vertical_guide_stroke_color <- vertical_guide_stroke_color %||% "#911EB4"
   vertical_guide_stroke_width <- vertical_guide_stroke_width %||% 12
 
   show_data_points <- show_data_points %||% TRUE
-  show_data_line   <- show_data_line %||% TRUE
-  show_data_area   <- show_data_area %||% TRUE
-
-  show_reference_line  <- show_reference_line %||% TRUE
-  show_reference_area  <- show_reference_area %||% TRUE
+  show_data_line <- show_data_line %||% TRUE
+  show_data_area <- show_data_area %||% TRUE
+  show_reference_line <- show_reference_line %||% TRUE
+  show_reference_area <- show_reference_area %||% TRUE
   show_vertical_guides <- show_vertical_guides %||% TRUE
-  show_y_axis_guide    <- show_y_axis_guide %||% TRUE
+  show_y_axis_guide <- show_y_axis_guide %||% TRUE
+
+  interactive_data_values <- interactive_data_values %||% TRUE
 
   # y_val_fmt_fn, y_axis_fmt_fn, and y_ref_line_fmt_fn
   # are not assigned to a default value
@@ -860,6 +875,7 @@ nanoplot_options <- function(
       show_reference_area = show_reference_area,
       show_vertical_guides = show_vertical_guides,
       show_y_axis_guide = show_y_axis_guide,
+      interactive_data_values = interactive_data_values,
       y_val_fmt_fn = y_val_fmt_fn,
       y_axis_fmt_fn = y_axis_fmt_fn,
       y_ref_line_fmt_fn = y_ref_line_fmt_fn,

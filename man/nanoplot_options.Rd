@@ -29,6 +29,7 @@ nanoplot_options(
   show_reference_area = NULL,
   show_vertical_guides = NULL,
   show_y_axis_guide = NULL,
+  interactive_data_values = NULL,
   y_val_fmt_fn = NULL,
   y_axis_fmt_fn = NULL,
   y_ref_line_fmt_fn = NULL,
@@ -235,6 +236,19 @@ active by default but can be deactivated by using
 The \emph{y}-axis guide will appear when hovering over the far left side of a
 nanoplot. This hidden layer is active by default but can be deactivated by
 using \code{show_y_axis_guide = FALSE}.}
+
+\item{interactive_data_values}{\emph{Should data values be interactively shown?}
+
+\verb{scalar<logical>} // \emph{default:} \code{NULL} (\code{optional})
+
+By default, numeric data values will be shown only when the user interacts
+with certain regions of a nanoplot. This is because the values may be
+numerous (i.e., clutter the display when all are visible) and it can be
+argued that the values themselves are secondary to the presentation.
+However, for some types of plots (like horizontal bar plots), a persistent
+display of values alongside the plot marks may be desirable. By setting
+\code{interactive_data_values = FALSE} we can opt for always displaying the data
+values alongside the plot components.}
 
 \item{y_val_fmt_fn, y_axis_fmt_fn, y_ref_line_fmt_fn}{\emph{Custom formatting for y values}
 
