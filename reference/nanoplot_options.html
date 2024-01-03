@@ -100,6 +100,7 @@ can be modified with <code>nanoplot_options()</code> within the <code>options</c
 <span>  show_reference_area <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  show_vertical_guides <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  show_y_axis_guide <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  interactive_data_values <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  y_val_fmt_fn <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  y_axis_fmt_fn <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  y_ref_line_fmt_fn <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -307,6 +308,19 @@ active by default but can be deactivated by using
 <p>The <em>y</em>-axis guide will appear when hovering over the far left side of a
 nanoplot. This hidden layer is active by default but can be deactivated by
 using <code>show_y_axis_guide = FALSE</code>.</p></dd>
+
+
+<dt>interactive_data_values</dt>
+<dd><p><em>Should data values be interactively shown?</em></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>By default, numeric data values will be shown only when the user interacts
+with certain regions of a nanoplot. This is because the values may be
+numerous (i.e., clutter the display when all are visible) and it can be
+argued that the values themselves are secondary to the presentation.
+However, for some types of plots (like horizontal bar plots), a persistent
+display of values alongside the plot marks may be desirable. By setting
+<code>interactive_data_values = FALSE</code> we can opt for always displaying the data
+values alongside the plot components.</p></dd>
 
 
 <dt>y_val_fmt_fn, y_axis_fmt_fn, y_ref_line_fmt_fn</dt>
