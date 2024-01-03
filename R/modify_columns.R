@@ -2842,6 +2842,7 @@ cols_nanoplot <- function(
         show_ref_area = options_plots$show_reference_area,
         show_vertical_guides = options_plots$show_vertical_guides,
         show_y_axis_guide = options_plots$show_y_axis_guide,
+        interactive_data_values = options_plots$interactive_data_values,
         svg_height = plot_height
       )
 
