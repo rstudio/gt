@@ -61,6 +61,7 @@ generate_nanoplot <- function(
     show_ref_area = TRUE,
     show_vertical_guides = TRUE,
     show_y_axis_guide = TRUE,
+    interactive_data_values = TRUE,
     svg_height = "2em",
     view = FALSE
 ) {
@@ -1468,7 +1469,7 @@ generate_nanoplot <- function(
           "stroke: #FFFFFF60; ",
           "color: red; ",
           "} ",
-          ".vert-line:hover text { ",
+          ".horizontal-line:hover text { ",
           "stroke: white; ",
           "fill: #212427; ",
           "} ",
@@ -1477,7 +1478,7 @@ generate_nanoplot <- function(
           "stroke: transparent; ",
           "color: blue; ",
           "} ",
-          ".horizontal-line:hover text { ",
+          ".horizontal-line", ifelse(interactive_data_values, ":hover", ""), " text { ",
           "stroke: white; ",
           "fill: #212427; ",
           "} ",
