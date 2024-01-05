@@ -571,14 +571,7 @@ get_markdown_engine_fn <- function(
 #' @noRd
 process_text <- function(text, context = "html") {
 
-  # When processing text globally (outside of the `fmt_markdown()`
-  # function) we will use the 'markdown' package if it is available,
-  # otherwise the 'commonmark' package
-  if (utils::packageVersion("markdown") >= "1.5") {
-    md_engine <- "markdown"
-  } else {
-    md_engine <- "commonmark"
-  }
+  md_engine <- gt_package_environment$md_engine
 
   # If text is marked `AsIs` (by using `I()`) then just
   # return the text unchanged
@@ -598,6 +591,7 @@ process_text <- function(text, context = "html") {
 
     if (inherits(text, "from_markdown")) {
 
+      # could this be cached too?
       md_engine_fn <-
         get_markdown_engine_fn(
           md_engine_pref = md_engine,
