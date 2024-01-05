@@ -593,7 +593,6 @@ process_text <- function(text, context = "html") {
 
     if (inherits(text, "from_markdown")) {
 
-      # could this be cached too?
       md_engine_fn <-
         get_markdown_engine_fn(
           md_engine_pref = md_engine,
