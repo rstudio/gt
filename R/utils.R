@@ -571,7 +571,9 @@ get_markdown_engine_fn <- function(
 #' @noRd
 process_text <- function(text, context = "html") {
 
-  md_engine <- gt_package_environment$md_engine
+  # markdown is used to process text globally outside of `fmt_markdown()`
+  # Previously, commonmark was used.
+  md_engine <- "markdown"
 
   # If text is marked `AsIs` (by using `I()`) then just
   # return the text unchanged
