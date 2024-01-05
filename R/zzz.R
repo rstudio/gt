@@ -196,8 +196,6 @@ gt_default_options <-
 # Example: gsub("a", "\u00B1", "a", fixed = TRUE)
 utf8_aware_sub <- NULL
 
-gt_package_environment <- new.env()
-
 .onLoad <- function(libname, pkgname, ...) {
 
   register_s3_method("knitr", "knit_print", "gt_tbl")
