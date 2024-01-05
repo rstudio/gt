@@ -208,7 +208,7 @@ gt_package_environment <- new.env()
   toset <- !(names(gt_default_options) %in% names(op))
   if (any(toset)) options(gt_default_options[toset])
 
-  When processing text globally (outside of the `fmt_markdown()`
+  # When processing text globally (outside of the `fmt_markdown()`
   # function) we will use the 'markdown' package if it is available,
   # otherwise the 'commonmark' package
   gt_package_environment$md_engine <- "commonmark"
