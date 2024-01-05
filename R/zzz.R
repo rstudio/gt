@@ -196,6 +196,8 @@ gt_default_options <-
 # Example: gsub("a", "\u00B1", "a", fixed = TRUE)
 utf8_aware_sub <- NULL
 
+gt_package_environment <- new.env()
+
 .onLoad <- function(libname, pkgname, ...) {
 
   register_s3_method("knitr", "knit_print", "gt_tbl")
@@ -206,6 +208,14 @@ utf8_aware_sub <- NULL
   toset <- !(names(gt_default_options) %in% names(op))
   if (any(toset)) options(gt_default_options[toset])
 
+  When processing text globally (outside of the `fmt_markdown()`
+  # function) we will use the 'markdown' package if it is available,
+  # otherwise the 'commonmark' package
+  gt_package_environment$md_engine <- "commonmark"
+  if (utils::packageVersion("markdown") >= "1.5") {
+    md_engine <- "markdown"
+  }
+       
   utf8_aware_sub <<-
     identical(
       "UTF-8",
