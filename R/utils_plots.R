@@ -168,7 +168,20 @@ generate_nanoplot <- function(
   # If the number of y_vals is `1` and we requested a 'bar' plot, then
   # reset several parameters
   if (num_y_vals == 1 && grepl("bar", plot_type)) {
+
     single_horizontal_bar <- TRUE
+    show_data_points <- FALSE
+    show_data_line <- FALSE
+    show_data_area <- FALSE
+    show_ref_line <- FALSE
+    show_ref_area <- FALSE
+    show_vertical_guides <- FALSE
+    show_y_axis_guide <- FALSE
+  }
+
+  # If this is a boxplot, set several parameters
+  if (plot_type == "boxplot") {
+
     show_data_points <- FALSE
     show_data_line <- FALSE
     show_data_area <- FALSE
