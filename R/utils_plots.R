@@ -1207,6 +1207,265 @@ generate_nanoplot <- function(
     viewbox <- paste(left_x, top_y, data_x_width, bottom_y, collapse = " ")
   }
 
+  if (plot_type == "boxplot") {
+
+    # This display is that of a boxplot and it automatically consider all
+    # values across all rows
+    box_thickness <- data_point_radius[1] * 6
+
+    # Calculate statistics for boxplot
+    stat_p05 = unname(stats::quantile(y_vals, probs = 0.05, na.rm = TRUE))
+    stat_q_1 = unname(stats::quantile(y_vals, probs = 0.25, na.rm = TRUE))
+    stat_med = unname(stats::quantile(y_vals, probs = 0.50, na.rm = TRUE))
+    stat_q_3 = unname(stats::quantile(y_vals, probs = 0.75, na.rm = TRUE))
+    stat_p95 = unname(stats::quantile(y_vals, probs = 0.95, na.rm = TRUE))
+
+    if (length(y_vals) > 25) {
+      y_vals_out <- y_vals[y_vals < stat_p05 | y_vals > stat_p95]
+    } else {
+      y_vals_out <- numeric(0)
+    }
+
+    # Scale to proportional values
+    y_proportions_list <-
+      normalize_to_list(
+        vals = y_vals,
+        all_vals = all_y_vals,
+        y_vals_out = y_vals_out,
+        stat_low = stat_p05,
+        stat_qlow = stat_q_1,
+        stat_med = stat_med,
+        stat_qup = stat_q_3,
+        stat_high = stat_p95
+      )
+
+    y_proportions <- y_proportions_list[["vals"]]
+    y_proportions_out <- y_proportions_list[["y_vals_out"]]
+    y_stat_p05 <- y_proportions_list[["stat_low"]]
+    y_stat_q_1 <- y_proportions_list[["stat_qlow"]]
+    y_stat_med <- y_proportions_list[["stat_med"]]
+    y_stat_q_3 <- y_proportions_list[["stat_qup"]]
+    y_stat_p95 <- y_proportions_list[["stat_high"]]
+
+    # Calculate boxplot x values
+    fence_start <- y_stat_p05 * data_x_width
+    box_start <- y_stat_q_1 * data_x_width
+    median_x <- y_stat_med * data_x_width
+    box_end <- y_stat_q_3 * data_x_width
+    fence_end <- y_stat_p95 * data_x_width
+    box_width <- (y_stat_q_3 - y_stat_q_1) * data_x_width
+
+    # Calculate outlier x and y values
+    outlier_x_vals <- jitter(y_proportions_out * data_x_width, factor = 5)
+    outlier_y_vals <- jitter(rep(bottom_y / 2, length(outlier_x_vals)), factor = 10)
+
+    # Format numbers compactly
+    stat_p05_value <-
+      format_number_compactly(
+        val = stat_p05,
+        currency = currency,
+        fn = y_val_fmt_fn
+      )
+    stat_q_1_value <-
+      format_number_compactly(
+        val = stat_q_1,
+        currency = currency,
+        fn = y_val_fmt_fn
+      )
+    stat_med_value <-
+      format_number_compactly(
+        val = stat_med,
+        currency = currency,
+        fn = y_val_fmt_fn
+      )
+    stat_q_3_value <-
+      format_number_compactly(
+        val = stat_q_3,
+        currency = currency,
+        fn = y_val_fmt_fn
+      )
+    stat_p95_value <-
+      format_number_compactly(
+        val = stat_p95,
+        currency = currency,
+        fn = y_val_fmt_fn
+      )
+
+    rect_strings <-
+      paste0(
+        "<rect ",
+        "x=\"0\" ",
+        "y=\"", (bottom_y / 2) - (box_thickness / 2), "\" ",
+        "width=\"", data_x_width, "\" ",
+        "height=\"", box_thickness, "\" ",
+        "stroke=\"transparent\" ",
+        "stroke-width=\"", vertical_guide_stroke_width, "\" ",
+        "fill=\"transparent\"",
+        ">",
+        "</rect>"
+      )
+
+    text_strings <-
+      paste0(
+        "<text ",
+        "x=\"", fence_start - 10, "\" ",
+        "y=\"", (bottom_y / 2) + 10, "\" ",
+        "fill=\"transparent\" ",
+        "stroke=\"transparent\" ",
+        "font-size=\"30px\" ",
+        "text-anchor=\"end\"",
+        ">",
+        stat_p05_value,
+        "</text>",
+        "<text ",
+        "x=\"", box_start - 10, "\" ",
+        "y=\"", bottom_y - 10, "\" ",
+        "fill=\"transparent\" ",
+        "stroke=\"transparent\" ",
+        "font-size=\"30px\" ",
+        "text-anchor=\"end\"",
+        ">",
+        stat_q_1_value,
+        "</text>",
+        "<text ",
+        "x=\"", median_x, "\" ",
+        "y=\"", safe_y_d + 10, "\" ",
+        "fill=\"transparent\" ",
+        "stroke=\"transparent\" ",
+        "font-size=\"30px\" ",
+        "text-anchor=\"middle\"",
+        ">",
+        stat_med_value,
+        "</text>",
+        "<text ",
+        "x=\"", box_end + 10, "\" ",
+        "y=\"", bottom_y - 10, "\" ",
+        "fill=\"transparent\" ",
+        "font-size=\"30px\" ",
+        "text-anchor=\"start\"",
+        ">",
+        stat_q_3_value,
+        "</text>",
+        "<text ",
+        "x=\"", fence_end + 10, "\" ",
+        "y=\"", (bottom_y / 2) + 10, "\" ",
+        "fill=\"transparent\" ",
+        "stroke=\"transparent\" ",
+        "font-size=\"30px\"",
+        ">",
+        stat_p95_value,
+        "</text>"
+      )
+
+    g_guide_tags <-
+      paste0(
+        "<g class=\"boxplot-line\">\n",
+        rect_strings, "\n",
+        text_strings,
+        "</g>"
+      )
+
+    if (length(outlier_x_vals) > 0) {
+
+      outlier_strings <- c()
+
+      data_point_radius <- 4
+      data_point_stroke_width <- 2
+      data_point_stroke_color <- adjust_luminance(data_bar_stroke_color[1], steps = 0.75)
+      data_point_fill_color <- adjust_luminance(data_point_stroke_color, steps = 1.75)
+
+      for (i in seq_along(y_proportions_out)) {
+
+        outlier_strings_i <-
+          paste0(
+            "<circle ",
+            "cx=\"", outlier_x_vals[i], "\" ",
+            "cy=\"", outlier_y_vals[i], "\" ",
+            "r=\"", data_point_radius, "\" ",
+            "stroke=\"", data_point_stroke_color, "\" ",
+            "stroke-width=\"", data_point_stroke_width, "\" ",
+            "fill=\"", data_point_fill_color, "\" ",
+            ">",
+            "</circle>"
+          )
+
+        outlier_strings <- c(outlier_strings, outlier_strings_i)
+      }
+
+      outlier_tags <- paste(outlier_strings, collapse = "\n")
+
+    } else {
+      outlier_tags <- NULL
+    }
+
+    boxplot_tags <-
+      paste0(
+        "<line ",
+        "x1=\"", fence_start, "\" ",
+        "y1=\"", (bottom_y / 2), "\" ",
+        "x2=\"", fence_end, "\" ",
+        "y2=\"", (bottom_y / 2), "\" ",
+        "width=\"", box_width, "\" ",
+        "height=\"", box_thickness, "\" ",
+        "stroke=\"", data_bar_stroke_color[1], "\" ",
+        "stroke-width=\"", data_bar_stroke_width[1], "\" ",
+        "fill=\"none\"",
+        ">",
+        "</line>",
+        "<rect ",
+        "x=\"", box_start, "\" ",
+        "y=\"", (bottom_y / 2) - (box_thickness / 2), "\" ",
+        "width=\"", box_width, "\" ",
+        "height=\"", box_thickness, "\" ",
+        "stroke=\"", data_bar_stroke_color[1], "\" ",
+        "stroke-width=\"", data_bar_stroke_width[1], "\" ",
+        "fill=\"white\" ",
+        ">",
+        "</rect>",
+        "<line ",
+        "x1=\"", fence_start, "\" ",
+        "y1=\"", (bottom_y / 2) - box_thickness / 4, "\" ",
+        "x2=\"", fence_start, "\" ",
+        "y2=\"", (bottom_y / 2) + box_thickness / 4, "\" ",
+        "width=\"", box_width, "\" ",
+        "height=\"", box_thickness, "\" ",
+        "stroke=\"", data_bar_stroke_color[1], "\" ",
+        "stroke-width=\"", data_bar_stroke_width[1], "\" ",
+        "fill=\"", "none", "\" ",
+        ">",
+        "</line>",
+        "<line ",
+        "x1=\"", fence_end, "\" ",
+        "y1=\"", (bottom_y / 2) - box_thickness / 4, "\" ",
+        "x2=\"", fence_end, "\" ",
+        "y2=\"", (bottom_y / 2) + box_thickness / 4, "\" ",
+        "width=\"", box_width, "\" ",
+        "height=\"", box_thickness, "\" ",
+        "stroke=\"", data_bar_stroke_color[1], "\" ",
+        "stroke-width=\"", data_bar_stroke_width[1], "\" ",
+        "fill=\"", "none", "\" ",
+        ">",
+        "</line>",
+        "<line ",
+        "x1=\"", median_x, "\" ",
+        "y1=\"", (bottom_y / 2) - box_thickness / 2, "\" ",
+        "x2=\"", median_x, "\" ",
+        "y2=\"", (bottom_y / 2) + box_thickness / 2, "\" ",
+        "width=\"", box_width, "\" ",
+        "height=\"", box_thickness, "\" ",
+        "stroke=\"", data_bar_stroke_color[1], "\" ",
+        "stroke-width=\"", data_bar_stroke_width[1], "\" ",
+        "fill=\"", "none", "\" ",
+        ">",
+        "</line>",
+        outlier_tags
+      )
+
+    # Redefine the `viewbox` in terms of the `data_x_width` value; this ensures
+    # that the horizontal bars are centered about their extreme values
+    viewbox <- paste(left_x, top_y, data_x_width, bottom_y, collapse = " ")
+  }
+
   #
   # Generate zero line for bar plots
   #
