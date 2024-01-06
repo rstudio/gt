@@ -571,6 +571,10 @@ get_markdown_engine_fn <- function(
 #' @noRd
 process_text <- function(text, context = "html") {
 
+  # `markdown` is used to process text globally outside of `fmt_markdown()`
+  # Previously, `commonmark` was used.
+  md_engine <- "markdown"
+
   # If text is marked `AsIs` (by using `I()`) then just
   # return the text unchanged
   if (inherits(text, "AsIs")) {
@@ -589,11 +593,9 @@ process_text <- function(text, context = "html") {
 
     if (inherits(text, "from_markdown")) {
 
-      # `markdown` is used to process text globally outside of `fmt_markdown()`
-      # Previously, `commonmark` was used.
       md_engine_fn <-
         get_markdown_engine_fn(
-          md_engine_pref = "markdown",
+          md_engine_pref = md_engine,
           context = "html"
         )
 
