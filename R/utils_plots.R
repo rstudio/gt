@@ -236,7 +236,7 @@ generate_nanoplot <- function(
   # where `x_vals` aren't present, we'll adjust the final width based
   # on the fixed interval between data points (this is dependent on the
   # number of data points)
-  if (!is.null(x_vals) || single_horizontal_bar) {
+  if (!is.null(x_vals) || single_horizontal_bar || plot_type == "boxplot") {
 
     data_x_width <- 600
 
