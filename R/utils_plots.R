@@ -496,7 +496,7 @@ generate_nanoplot <- function(
     }
   }
 
-  if (plot_type == "bar") {
+  if (plot_type == "bar" || plot_type == "boxplot") {
 
     if (show_ref_line && show_ref_area) {
 
