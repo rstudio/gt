@@ -2214,13 +2214,14 @@ cols_add <- function(
 #'
 #'   `singl-kw:[line|bar|boxplot]` // *default:* `"line"`
 #'
-#'   Nanoplots can either take the form of a line plot (using `"line"`) or a bar
-#'   plot (with `"bar"`). A line plot, by default, contains layers for a data
-#'   line, data points, and a data area. Each of these can be deactivated by
-#'   using [nanoplot_options()]. With a bar plot, the always visible layer is
-#'   that of the data bars. Furthermore, a line plot can optionally take in *x*
-#'   values through the `columns_x_vals` argument whereas a bar plot ignores any
-#'   data representing the independent variable.
+#'   Nanoplots can either take the form of a line plot (using `"line"`), a bar
+#'   plot (with `"bar"`), or a box plot (`"boxplot"`). A line plot, by default,
+#'   contains layers for a data line, data points, and a data area. Each of
+#'   these can be deactivated by using [nanoplot_options()]. With a bar plot,
+#'   the always visible layer is that of the data bars. Furthermore, a line plot
+#'   can optionally take in *x* values through the `columns_x_vals` argument
+#'   whereas bar plots and box plots both ignore any data representing the
+#'   independent variable.
 #'
 #' @param plot_height *The height of the nanoplots*
 #'
