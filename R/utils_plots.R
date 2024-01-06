@@ -904,9 +904,9 @@ generate_nanoplot <- function(
               "cx=\"", data_x_points[i], "\" ",
               "cy=\"", safe_y_d + (data_y_height / 2), "\" ",
               "r=\"", data_point_radius_i + (data_point_radius_i / 2), "\" ",
-              "stroke=\"", "red", "\" ",
+              "stroke=\"red\" ",
               "stroke-width=\"", data_point_stroke_width_i, "\" ",
-              "fill=\"", "white", "\" ",
+              "fill=\"white\" ",
               ">",
               "</circle>",
               ""
