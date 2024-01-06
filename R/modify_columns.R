@@ -2173,6 +2173,10 @@ cols_add <- function(
 #' each. A guide on the left-hand side of the plot area will display the minimal
 #' and maximal *y* values on hover.
 #'
+#' Every box plot will take the collection of values for a row and construct the
+#' plot horizontally. This is essentially a standard box-and-whisker diagram
+#' where outliers are automatically displayed outside the left and right fences.
+#'
 #' While basic customization options are present in the `cols_nanoplot()`, many
 #' more opportunities for customizing nanoplots on a more granular level are
 #' possible with the [nanoplot_options()] helper function. That function should
