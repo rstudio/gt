@@ -1156,7 +1156,7 @@ generate_nanoplot <- function(
           "y=\"", (bottom_y / 2) + 10, "\" ",
           "fill=\"transparent\" ",
           "stroke=\"transparent\" ",
-          "font-size=\"", "30px", "\" ",
+          "font-size=\"30px\" ",
           "text-anchor=\"", text_anchor, "\"",
           ">",
           y_value,
