@@ -1641,6 +1641,7 @@ generate_nanoplot <- function(
         data_path_tags,
         zero_line_tags,
         bar_tags,
+        boxplot_tags,
         ref_line_tags,
         circle_tags,
         g_y_axis_tags,
