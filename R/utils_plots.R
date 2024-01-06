@@ -1221,9 +1221,31 @@ generate_nanoplot <- function(
     stat_p95 = unname(stats::quantile(y_vals, probs = 0.95, na.rm = TRUE))
 
     if (length(y_vals) > 25) {
-      y_vals_out <- y_vals[y_vals < stat_p05 | y_vals > stat_p95]
+
+      # Plot only outliers since the number of data values is sufficiently high
+      y_vals_plot <- y_vals[y_vals < stat_p05 | y_vals > stat_p95]
+
+      data_point_radius <- 4
+      data_point_stroke_width <- 2
+      data_point_stroke_color <- adjust_luminance(data_bar_stroke_color[1], steps = 0.75)
+      data_point_fill_color <- adjust_luminance(data_point_stroke_color[1], steps = 1.75)
+
     } else {
-      y_vals_out <- numeric(0)
+
+      # Plot all data values but diminish the visibility of the data points
+      # as the number approaches 25
+      y_vals_plot <- y_vals
+
+      if (length(y_vals) < 10) {
+        data_point_radius <- 6
+        data_point_stroke_width <- 2
+      } else {
+        data_point_radius <- 4
+        data_point_stroke_width <- 2
+      }
+
+      data_point_stroke_color <- adjust_luminance("black", steps = length(y_vals) / 25)
+      data_point_fill_color <- "transparent"
     }
 
     # Scale to proportional values
@@ -1231,7 +1253,7 @@ generate_nanoplot <- function(
       normalize_to_list(
         vals = y_vals,
         all_vals = all_y_vals,
-        y_vals_out = y_vals_out,
+        y_vals_plot = y_vals_plot,
         stat_low = stat_p05,
         stat_qlow = stat_q_1,
         stat_med = stat_med,
@@ -1240,7 +1262,7 @@ generate_nanoplot <- function(
       )
 
     y_proportions <- y_proportions_list[["vals"]]
-    y_proportions_out <- y_proportions_list[["y_vals_out"]]
+    y_proportions_plot <- y_proportions_list[["y_vals_plot"]]
     y_stat_p05 <- y_proportions_list[["stat_low"]]
     y_stat_q_1 <- y_proportions_list[["stat_qlow"]]
     y_stat_med <- y_proportions_list[["stat_med"]]
@@ -1255,9 +1277,14 @@ generate_nanoplot <- function(
     fence_end <- y_stat_p95 * data_x_width
     box_width <- (y_stat_q_3 - y_stat_q_1) * data_x_width
 
-    # Calculate outlier x and y values
-    outlier_x_vals <- jitter(y_proportions_out * data_x_width, factor = 5)
-    outlier_y_vals <- jitter(rep(bottom_y / 2, length(outlier_x_vals)), factor = 10)
+    # Establish positions for plottable x and y values
+    plotted_x_vals <- y_proportions_plot * data_x_width
+
+    if (length(y_vals) == 1) {
+      plotted_y_vals <- bottom_y / 2
+    } else {
+      plotted_y_vals <- jitter(rep(bottom_y / 2, length(plotted_x_vals)), factor = 10)
+    }
 
     # Format numbers compactly
     stat_p05_value <-
@@ -1305,57 +1332,77 @@ generate_nanoplot <- function(
         "</rect>"
       )
 
-    text_strings <-
-      paste0(
-        "<text ",
-        "x=\"", fence_start - 10, "\" ",
-        "y=\"", (bottom_y / 2) + 10, "\" ",
-        "fill=\"transparent\" ",
-        "stroke=\"transparent\" ",
-        "font-size=\"30px\" ",
-        "text-anchor=\"end\"",
-        ">",
-        stat_p05_value,
-        "</text>",
-        "<text ",
-        "x=\"", box_start - 6, "\" ",
-        "y=\"", bottom_y - 10, "\" ",
-        "fill=\"transparent\" ",
-        "stroke=\"transparent\" ",
-        "font-size=\"30px\" ",
-        "text-anchor=\"end\"",
-        ">",
-        stat_q_1_value,
-        "</text>",
-        "<text ",
-        "x=\"", median_x, "\" ",
-        "y=\"", safe_y_d + 10, "\" ",
-        "fill=\"transparent\" ",
-        "stroke=\"transparent\" ",
-        "font-size=\"30px\" ",
-        "text-anchor=\"middle\"",
-        ">",
-        stat_med_value,
-        "</text>",
-        "<text ",
-        "x=\"", box_end + 6, "\" ",
-        "y=\"", bottom_y - 10, "\" ",
-        "fill=\"transparent\" ",
-        "font-size=\"30px\" ",
-        "text-anchor=\"start\"",
-        ">",
-        stat_q_3_value,
-        "</text>",
-        "<text ",
-        "x=\"", fence_end + 10, "\" ",
-        "y=\"", (bottom_y / 2) + 10, "\" ",
-        "fill=\"transparent\" ",
-        "stroke=\"transparent\" ",
-        "font-size=\"30px\"",
-        ">",
-        stat_p95_value,
-        "</text>"
-      )
+    if (length(y_vals) == 1) {
+
+      text_strings <-
+        paste0(
+          "</text>",
+          "<text ",
+          "x=\"", median_x, "\" ",
+          "y=\"", safe_y_d + 15, "\" ",
+          "fill=\"transparent\" ",
+          "stroke=\"transparent\" ",
+          "font-size=\"30px\" ",
+          "text-anchor=\"middle\"",
+          ">",
+          stat_med_value,
+          "</text>"
+        )
+
+    } else {
+
+      text_strings <-
+        paste0(
+          "<text ",
+          "x=\"", fence_start - 10, "\" ",
+          "y=\"", (bottom_y / 2) + 10, "\" ",
+          "fill=\"transparent\" ",
+          "stroke=\"transparent\" ",
+          "font-size=\"30px\" ",
+          "text-anchor=\"end\"",
+          ">",
+          stat_p05_value,
+          "</text>",
+          "<text ",
+          "x=\"", box_start - 6, "\" ",
+          "y=\"", bottom_y - 10, "\" ",
+          "fill=\"transparent\" ",
+          "stroke=\"transparent\" ",
+          "font-size=\"30px\" ",
+          "text-anchor=\"end\"",
+          ">",
+          stat_q_1_value,
+          "</text>",
+          "<text ",
+          "x=\"", median_x, "\" ",
+          "y=\"", safe_y_d + 12.5, "\" ",
+          "fill=\"transparent\" ",
+          "stroke=\"transparent\" ",
+          "font-size=\"30px\" ",
+          "text-anchor=\"middle\"",
+          ">",
+          stat_med_value,
+          "</text>",
+          "<text ",
+          "x=\"", box_end + 6, "\" ",
+          "y=\"", bottom_y - 10, "\" ",
+          "fill=\"transparent\" ",
+          "font-size=\"30px\" ",
+          "text-anchor=\"start\"",
+          ">",
+          stat_q_3_value,
+          "</text>",
+          "<text ",
+          "x=\"", fence_end + 10, "\" ",
+          "y=\"", (bottom_y / 2) + 10, "\" ",
+          "fill=\"transparent\" ",
+          "stroke=\"transparent\" ",
+          "font-size=\"30px\"",
+          ">",
+          stat_p95_value,
+          "</text>"
+        )
+    }
 
     g_guide_tags <-
       paste0(
@@ -1365,22 +1412,17 @@ generate_nanoplot <- function(
         "</g>"
       )
 
-    if (length(outlier_x_vals) > 0) {
+    if (length(plotted_x_vals) > 0) {
 
-      outlier_strings <- c()
+      circle_strings <- c()
 
-      data_point_radius <- 4
-      data_point_stroke_width <- 2
-      data_point_stroke_color <- adjust_luminance(data_bar_stroke_color[1], steps = 0.75)
-      data_point_fill_color <- adjust_luminance(data_point_stroke_color, steps = 1.75)
+      for (i in seq_along(plotted_x_vals)) {
 
-      for (i in seq_along(y_proportions_out)) {
-
-        outlier_strings_i <-
+        circle_strings_i <-
           paste0(
             "<circle ",
-            "cx=\"", outlier_x_vals[i], "\" ",
-            "cy=\"", outlier_y_vals[i], "\" ",
+            "cx=\"", plotted_x_vals[i], "\" ",
+            "cy=\"", plotted_y_vals[i], "\" ",
             "r=\"", data_point_radius, "\" ",
             "stroke=\"", data_point_stroke_color, "\" ",
             "stroke-width=\"", data_point_stroke_width, "\" ",
@@ -1389,13 +1431,13 @@ generate_nanoplot <- function(
             "</circle>"
           )
 
-        outlier_strings <- c(outlier_strings, outlier_strings_i)
+        circle_strings <- c(circle_strings, circle_strings_i)
       }
 
-      outlier_tags <- paste(outlier_strings, collapse = "\n")
+      circle_tags <- paste(circle_strings, collapse = "\n")
 
     } else {
-      outlier_tags <- NULL
+      circle_tags <- NULL
     }
 
     boxplot_tags <-
@@ -1458,7 +1500,7 @@ generate_nanoplot <- function(
         "fill=\"", "none", "\" ",
         ">",
         "</line>",
-        outlier_tags
+        circle_tags
       )
 
     # Redefine the `viewbox` in terms of the `data_x_width` value; this ensures
@@ -1739,6 +1781,10 @@ generate_nanoplot <- function(
           "fill-opacity: 40%; ",
           "stroke: #FFFFFF60; ",
           "color: red; ",
+          "} ",
+          ".vert-line:hover text { ",
+          "stroke: white; ",
+          "fill: #212427; ",
           "} ",
           ".horizontal-line:hover text { ",
           "stroke: white; ",
