@@ -2212,7 +2212,7 @@ cols_add <- function(
 #'
 #' @param plot_type *The type of nanoplot to display*
 #'
-#'   `singl-kw:[line|bar]` // *default:* `"line"`
+#'   `singl-kw:[line|bar|boxplot]` // *default:* `"line"`
 #'
 #'   Nanoplots can either take the form of a line plot (using `"line"`) or a bar
 #'   plot (with `"bar"`). A line plot, by default, contains layers for a data
