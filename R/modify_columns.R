@@ -2684,7 +2684,7 @@ cols_nanoplot <- function(
     data,
     columns,
     rows = everything(),
-    plot_type = c("line", "bar"),
+    plot_type = c("line", "bar", "boxplot"),
     plot_height = "2em",
     missing_vals = c("gap", "zero", "remove"),
     autoscale = FALSE,
