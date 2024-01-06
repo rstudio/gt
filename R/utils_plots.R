@@ -76,6 +76,7 @@ generate_nanoplot <- function(
   data_path_tags <- NULL
   zero_line_tags <- NULL
   bar_tags <- NULL
+  boxplot_tags <- NULL
   ref_line_tags <- NULL
   circle_tags <- NULL
   g_y_axis_tags <- NULL
