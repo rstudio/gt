@@ -1325,8 +1325,6 @@ generate_nanoplot <- function(
 
   if (show_y_axis_guide) {
 
-    g_y_axis_strings <- c()
-
     rect_tag <-
       paste0(
         "<rect ",
