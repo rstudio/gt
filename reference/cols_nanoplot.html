@@ -16,16 +16,16 @@ create a nanoplot based on monetary values, that can be handled by providing
 the currency code to the nanoplot_options() helper (then hook that up to
 the options argument).  A guide on the left-hand side of the plot area will
 appear on hover and display the minimal and maximal y values.
-There are two types of nanoplots available: &quot;line&quot; and &quot;bar&quot;. A line plot
-shows individual data points and has smooth connecting lines between them to
-allow for easier scanning of values. You can opt for straight-line
-connections between data points, or, no connections at all (it's up to you).
-You can even eschew the data points and just have a simple line. Regardless
-of how you mix and match difference plot layers, the plot area focuses on the
-domain of the data points with the goal of showing you the overall trend of
-the data. The data you feed into a line plot can consist of a single vector
-of values (resulting in equally-spaced y values), or, you can supply two
-vectors representative of x and y.
+There are three types of nanoplots available: &quot;line&quot;, &quot;bar&quot;, &quot;boxplot&quot;.
+A line plot shows individual data points and has smooth connecting lines
+between them to allow for easier scanning of values. You can opt for
+straight-line connections between data points, or, no connections at all
+(it's up to you). You can even eschew the data points and just have a simple
+line. Regardless of how you mix and match difference plot layers, the plot
+area focuses on the domain of the data points with the goal of showing you
+the overall trend of the data. The data you feed into a line plot can consist
+of a single vector of values (resulting in equally-spaced y values), or,
+you can supply two vectors representative of x and y.
 A bar plot is built a little bit differently. The focus is on evenly-spaced
 bars (requiring a single vector of values) that project from a zero line,
 clearly showing the difference between positive and negative values. By
@@ -33,6 +33,9 @@ default, any type of nanoplot will have basic interactivity. One can hover
 over the data points and vertical guides will display values ascribed to
 each. A guide on the left-hand side of the plot area will display the minimal
 and maximal y values on hover.
+Every box plot will take the collection of values for a row and construct the
+plot horizontally. This is essentially a standard box-and-whisker diagram
+where outliers are automatically displayed outside the left and right fences.
 While basic customization options are present in the cols_nanoplot(), many
 more opportunities for customizing nanoplots on a more granular level are
 possible with the nanoplot_options() helper function. That function should
@@ -55,16 +58,16 @@ create a nanoplot based on monetary values, that can be handled by providing
 the currency code to the nanoplot_options() helper (then hook that up to
 the options argument).  A guide on the left-hand side of the plot area will
 appear on hover and display the minimal and maximal y values.
-There are two types of nanoplots available: &quot;line&quot; and &quot;bar&quot;. A line plot
-shows individual data points and has smooth connecting lines between them to
-allow for easier scanning of values. You can opt for straight-line
-connections between data points, or, no connections at all (it's up to you).
-You can even eschew the data points and just have a simple line. Regardless
-of how you mix and match difference plot layers, the plot area focuses on the
-domain of the data points with the goal of showing you the overall trend of
-the data. The data you feed into a line plot can consist of a single vector
-of values (resulting in equally-spaced y values), or, you can supply two
-vectors representative of x and y.
+There are three types of nanoplots available: &quot;line&quot;, &quot;bar&quot;, &quot;boxplot&quot;.
+A line plot shows individual data points and has smooth connecting lines
+between them to allow for easier scanning of values. You can opt for
+straight-line connections between data points, or, no connections at all
+(it's up to you). You can even eschew the data points and just have a simple
+line. Regardless of how you mix and match difference plot layers, the plot
+area focuses on the domain of the data points with the goal of showing you
+the overall trend of the data. The data you feed into a line plot can consist
+of a single vector of values (resulting in equally-spaced y values), or,
+you can supply two vectors representative of x and y.
 A bar plot is built a little bit differently. The focus is on evenly-spaced
 bars (requiring a single vector of values) that project from a zero line,
 clearly showing the difference between positive and negative values. By
@@ -72,6 +75,9 @@ default, any type of nanoplot will have basic interactivity. One can hover
 over the data points and vertical guides will display values ascribed to
 each. A guide on the left-hand side of the plot area will display the minimal
 and maximal y values on hover.
+Every box plot will take the collection of values for a row and construct the
+plot horizontally. This is essentially a standard box-and-whisker diagram
+where outliers are automatically displayed outside the left and right fences.
 While basic customization options are present in the cols_nanoplot(), many
 more opportunities for customizing nanoplots on a more granular level are
 possible with the nanoplot_options() helper function. That function should
@@ -162,16 +168,16 @@ create a nanoplot based on monetary values, that can be handled by providing
 the currency code to the <code><a href="nanoplot_options.html">nanoplot_options()</a></code> helper (then hook that up to
 the <code>options</code> argument).  A guide on the left-hand side of the plot area will
 appear on hover and display the minimal and maximal <em>y</em> values.</p>
-<p>There are two types of nanoplots available: <code>"line"</code> and <code>"bar"</code>. A line plot
-shows individual data points and has smooth connecting lines between them to
-allow for easier scanning of values. You can opt for straight-line
-connections between data points, or, no connections at all (it's up to you).
-You can even eschew the data points and just have a simple line. Regardless
-of how you mix and match difference plot layers, the plot area focuses on the
-domain of the data points with the goal of showing you the overall trend of
-the data. The data you feed into a line plot can consist of a single vector
-of values (resulting in equally-spaced <em>y</em> values), or, you can supply two
-vectors representative of <em>x</em> and <em>y</em>.</p>
+<p>There are three types of nanoplots available: <code>"line"</code>, <code>"bar"</code>, <code>"boxplot"</code>.
+A line plot shows individual data points and has smooth connecting lines
+between them to allow for easier scanning of values. You can opt for
+straight-line connections between data points, or, no connections at all
+(it's up to you). You can even eschew the data points and just have a simple
+line. Regardless of how you mix and match difference plot layers, the plot
+area focuses on the domain of the data points with the goal of showing you
+the overall trend of the data. The data you feed into a line plot can consist
+of a single vector of values (resulting in equally-spaced <em>y</em> values), or,
+you can supply two vectors representative of <em>x</em> and <em>y</em>.</p>
 <p>A bar plot is built a little bit differently. The focus is on evenly-spaced
 bars (requiring a single vector of values) that project from a zero line,
 clearly showing the difference between positive and negative values. By
@@ -179,6 +185,9 @@ default, any type of nanoplot will have basic interactivity. One can hover
 over the data points and vertical guides will display values ascribed to
 each. A guide on the left-hand side of the plot area will display the minimal
 and maximal <em>y</em> values on hover.</p>
+<p>Every box plot will take the collection of values for a row and construct the
+plot horizontally. This is essentially a standard box-and-whisker diagram
+where outliers are automatically displayed outside the left and right fences.</p>
 <p>While basic customization options are present in the <code>cols_nanoplot()</code>, many
 more opportunities for customizing nanoplots on a more granular level are
 possible with the <code><a href="nanoplot_options.html">nanoplot_options()</a></code> helper function. That function should
@@ -193,7 +202,7 @@ of the remaining plot components can be modified.</p>
 <span>  <span class="va">data</span>,</span>
 <span>  <span class="va">columns</span>,</span>
 <span>  rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  plot_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"line"</span>, <span class="st">"bar"</span><span class="op">)</span>,</span>
+<span>  plot_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"line"</span>, <span class="st">"bar"</span>, <span class="st">"boxplot"</span><span class="op">)</span>,</span>
 <span>  plot_height <span class="op">=</span> <span class="st">"2em"</span>,</span>
 <span>  missing_vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gap"</span>, <span class="st">"zero"</span>, <span class="st">"remove"</span><span class="op">)</span>,</span>
 <span>  autoscale <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -245,14 +254,15 @@ expressions to filter down to the rows we need (e.g.,
 
 <dt>plot_type</dt>
 <dd><p><em>The type of nanoplot to display</em></p>
-<p><code>singl-kw:[line|bar]</code> // <em>default:</em> <code>"line"</code></p>
-<p>Nanoplots can either take the form of a line plot (using <code>"line"</code>) or a bar
-plot (with <code>"bar"</code>). A line plot, by default, contains layers for a data
-line, data points, and a data area. Each of these can be deactivated by
-using <code><a href="nanoplot_options.html">nanoplot_options()</a></code>. With a bar plot, the always visible layer is
-that of the data bars. Furthermore, a line plot can optionally take in <em>x</em>
-values through the <code>columns_x_vals</code> argument whereas a bar plot ignores any
-data representing the independent variable.</p></dd>
+<p><code>singl-kw:[line|bar|boxplot]</code> // <em>default:</em> <code>"line"</code></p>
+<p>Nanoplots can either take the form of a line plot (using <code>"line"</code>), a bar
+plot (with <code>"bar"</code>), or a box plot (<code>"boxplot"</code>). A line plot, by default,
+contains layers for a data line, data points, and a data area. Each of
+these can be deactivated by using <code><a href="nanoplot_options.html">nanoplot_options()</a></code>. With a bar plot,
+the always visible layer is that of the data bars. Furthermore, a line plot
+can optionally take in <em>x</em> values through the <code>columns_x_vals</code> argument
+whereas bar plots and box plots both ignore any data representing the
+independent variable.</p></dd>
 
 
 <dt>plot_height</dt>
