@@ -687,12 +687,13 @@ information. Seems like customers preferred getting the <code>"chicken"</code>-t
 pizzas in large size!</p>
 <p>Box plots can be generated, and we just need to use <code>plot_type = "boxplot"</code>
 to make that type of nanoplot. Using a small portion of the <code><a href="pizzaplace.html">pizzaplace</a></code>
-dataset, we will create a simple table that displays a box plot of pizza for
-a selection of days. By converting the string-time 24-hour-clock time values
-to the number of seconds elapsed in a day, we get continuous values that can
-be incorporated into each box plot. And, by supplying a function to the
-<code>y_val_fmt_fn</code> argument within <code><a href="nanoplot_options.html">nanoplot_options()</a></code>, we can transform the
-integer seconds values back to clock times for display on hover.</p>
+dataset, we will create a simple table that displays a box plot of pizza
+sales for a selection of days. By converting the string-time 24-hour-clock
+time values to the number of seconds elapsed in a day, we get continuous
+values that can be incorporated into each box plot. And, by supplying a
+function to the <code>y_val_fmt_fn</code> argument within <code><a href="nanoplot_options.html">nanoplot_options()</a></code>, we can
+transform the integer seconds values back to clock times for display on
+hover.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">pizzaplace</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">date</span> <span class="op">&lt;=</span> <span class="st">"2015-01-14"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>time <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu">hms</span><span class="fu">::</span><span class="fu">as_hms</span><span class="op">(</span><span class="va">time</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
