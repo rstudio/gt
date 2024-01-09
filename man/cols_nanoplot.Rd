@@ -573,12 +573,13 @@ pizzas in large size!
 
 Box plots can be generated, and we just need to use \code{plot_type = "boxplot"}
 to make that type of nanoplot. Using a small portion of the \code{\link{pizzaplace}}
-dataset, we will create a simple table that displays a box plot of pizza for
-a selection of days. By converting the string-time 24-hour-clock time values
-to the number of seconds elapsed in a day, we get continuous values that can
-be incorporated into each box plot. And, by supplying a function to the
-\code{y_val_fmt_fn} argument within \code{nanoplot_options()}, we can transform the
-integer seconds values back to clock times for display on hover.
+dataset, we will create a simple table that displays a box plot of pizza
+sales for a selection of days. By converting the string-time 24-hour-clock
+time values to the number of seconds elapsed in a day, we get continuous
+values that can be incorporated into each box plot. And, by supplying a
+function to the \code{y_val_fmt_fn} argument within \code{nanoplot_options()}, we can
+transform the integer seconds values back to clock times for display on
+hover.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
   dplyr::filter(date <= "2015-01-14") |>
