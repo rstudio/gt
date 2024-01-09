@@ -2671,6 +2671,50 @@ cols_add <- function(
 #' information. Seems like customers preferred getting the `"chicken"`-type
 #' pizzas in large size!
 #'
+#' Box plots can be generated, and we just need to use `plot_type = "boxplot"`
+#' to make that type of nanoplot. Using a small portion of the [`pizzaplace`]
+#' dataset, we will create a simple table that displays a box plot of pizza for
+#' a selection of days. By converting the string-time 24-hour-clock time values
+#' to the number of seconds elapsed in a day, we get continuous values that can
+#' be incorporated into each box plot. And, by supplying a function to the
+#' `y_val_fmt_fn` argument within `nanoplot_options()`, we can transform the
+#' integer seconds values back to clock times for display on hover.
+#'
+#' ```r
+#' pizzaplace |>
+#'   dplyr::filter(date <= "2015-01-14") |>
+#'   dplyr::mutate(time = as.numeric(hms::as_hms(time))) |>
+#'   dplyr::summarize(time = paste(time, collapse = ","), .by = date) |>
+#'   dplyr::mutate(is_weekend = lubridate::wday(date) %in% 6:7) |>
+#'   gt() |>
+#'   tab_header(title = "Pizza Sales in Early January 2015") |>
+#'   fmt_date(columns = date, date_style = 2) |>
+#'   cols_nanoplot(
+#'     columns = time,
+#'     plot_type = "boxplot",
+#'     options = nanoplot_options(y_val_fmt_fn = function(x) hms::as_hms(x))
+#'   ) |>
+#'   cols_hide(columns = c(time, is_weekend)) |>
+#'   cols_width(everything() ~ px(250)) |>
+#'   cols_align(align = "center", columns = nanoplots) |>
+#'   cols_align(align = "left", columns = date) |>
+#'   tab_style(
+#'     style = cell_borders(
+#'       sides = "left", color = "gray"),
+#'     locations = cells_body(columns = nanoplots)
+#'   ) |>
+#'   tab_style_body(
+#'     style = cell_fill(color = "#E5FEFE"),
+#'     values = TRUE,
+#'     targets = "row"
+#'   ) |>
+#'   tab_options(column_labels.hidden = TRUE)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_nanoplot_6.png")`
+#' }}
+#'
 #' @family column modification functions
 #' @section Function ID:
 #' 5-8

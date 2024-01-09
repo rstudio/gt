@@ -570,6 +570,49 @@ U.S. Dollars (hovering over data points gives correctly formatted values).
 Finally, having a reference line based on the median gives pretty useful
 information. Seems like customers preferred getting the \code{"chicken"}-type
 pizzas in large size!
+
+Box plots can be generated, and we just need to use \code{plot_type = "boxplot"}
+to make that type of nanoplot. Using a small portion of the \code{\link{pizzaplace}}
+dataset, we will create a simple table that displays a box plot of pizza for
+a selection of days. By converting the string-time 24-hour-clock time values
+to the number of seconds elapsed in a day, we get continuous values that can
+be incorporated into each box plot. And, by supplying a function to the
+\code{y_val_fmt_fn} argument within \code{nanoplot_options()}, we can transform the
+integer seconds values back to clock times for display on hover.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
+  dplyr::filter(date <= "2015-01-14") |>
+  dplyr::mutate(time = as.numeric(hms::as_hms(time))) |>
+  dplyr::summarize(time = paste(time, collapse = ","), .by = date) |>
+  dplyr::mutate(is_weekend = lubridate::wday(date) \%in\% 6:7) |>
+  gt() |>
+  tab_header(title = "Pizza Sales in Early January 2015") |>
+  fmt_date(columns = date, date_style = 2) |>
+  cols_nanoplot(
+    columns = time,
+    plot_type = "boxplot",
+    options = nanoplot_options(y_val_fmt_fn = function(x) hms::as_hms(x))
+  ) |>
+  cols_hide(columns = c(time, is_weekend)) |>
+  cols_width(everything() ~ px(250)) |>
+  cols_align(align = "center", columns = nanoplots) |>
+  cols_align(align = "left", columns = date) |>
+  tab_style(
+    style = cell_borders(
+      sides = "left", color = "gray"),
+    locations = cells_body(columns = nanoplots)
+  ) |>
+  tab_style_body(
+    style = cell_fill(color = "#E5FEFE"),
+    values = TRUE,
+    targets = "row"
+  ) |>
+  tab_options(column_labels.hidden = TRUE)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_6.png" alt="This image of a table was generated from the sixth code example in the `cols_nanoplot()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
