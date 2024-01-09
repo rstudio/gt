@@ -188,9 +188,10 @@
 #'
 #'   `scalar<numeric|integer>(0>=val>=1)` // *default:* `NULL` (`optional`)
 #'
-#'   An optional, fixed alpha transparency value that will be applied to all of
-#'   the `colors` provided (regardless of whether a color palette was directly
-#'   supplied or generated through a color mapping function).
+#'   An optional, fixed alpha transparency value that will be applied to all
+#'   color palette values (regardless of whether a color palette was directly
+#'   supplied in `palette` or generated through a color mapping function via
+#'   `fn`).
 #'
 #' @param reverse *Reverse order of computed colors*
 #'
