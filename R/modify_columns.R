@@ -2252,6 +2252,15 @@ cols_add <- function(
 #'   *x*-axis data), which is useful in those cases where the nanoplot data
 #'   should be compared across rows.
 #'
+#' @param autohide *Automatically hide the `columns`/`columns_x_vals` column(s)*
+#'
+#'   `scalar<logical>` // *default:* `TRUE`
+#'
+#'   An option to automatically hide any columns specified in `columns` and also
+#'   `columns_x_vals` (if used). Any columns with their state changed to
+#'   'hidden' will behave the same as before, they just won't be displayed in
+#'   the finalized table.
+#'
 #' @param columns_x_vals *Columns containing values for the optional x variable*
 #'
 #'   `<column-targeting expression>` // *default:* `NULL` (`optional`)
