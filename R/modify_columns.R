@@ -2437,7 +2437,7 @@ cols_add <- function(
 #'   gt(rowname_col = "test") |>
 #'   tab_header("Partial summary of daily tests performed on YF patient") |>
 #'   tab_stubhead(label = md("**Test**")) |>
-#'   cols_hide(columns = c(starts_with("norm"), starts_with("day"))) |>
+#'   cols_hide(columns = starts_with("norm")) |>
 #'   fmt_units(columns = units) |>
 #'   cols_nanoplot(
 #'     columns = starts_with("day"),
@@ -2481,6 +2481,7 @@ cols_add <- function(
 #'   cols_nanoplot(
 #'     columns = c(chicken, classic, supreme, veggie),
 #'     plot_type = "bar",
+#'     autohide = FALSE,
 #'     new_col_name = "pizzas_sold",
 #'     new_col_label = "Sales by Type",
 #'     options = nanoplot_options(
@@ -2521,12 +2522,14 @@ cols_add <- function(
 #'   cols_nanoplot(
 #'     columns = starts_with("population"),
 #'     reference_line = "median",
+#'     autohide = FALSE,
 #'     new_col_name = "population_plot",
 #'     new_col_label = md("*Change*")
 #'   ) |>
 #'   cols_nanoplot(
 #'     columns = starts_with("density"),
 #'     plot_type = "bar",
+#'     autohide = FALSE,
 #'     new_col_name = "density_plot",
 #'     new_col_label = md("*Change*")
 #'   ) |>
@@ -2594,7 +2597,6 @@ cols_add <- function(
 #'       data_bar_fill_color = "DarkOrange"
 #'     )
 #'   ) |>
-#'   cols_hide(columns = matches("0")) |>
 #'   tab_options(
 #'     table.width = px(400),
 #'     column_labels.hidden = TRUE
@@ -2646,7 +2648,6 @@ cols_add <- function(
 #'     title = md("Pizzas sold on **January 1, 2015**"),
 #'     subtitle = "Between the opening hours of 11:30 to 22:30"
 #'   ) |>
-#'   cols_hide(columns = c(date_time, sold)) |>
 #'   cols_nanoplot(
 #'     columns = sold,
 #'     columns_x_vals = date_time,
@@ -2704,7 +2705,7 @@ cols_add <- function(
 #'     plot_type = "boxplot",
 #'     options = nanoplot_options(y_val_fmt_fn = function(x) hms::as_hms(x))
 #'   ) |>
-#'   cols_hide(columns = c(time, is_weekend)) |>
+#'   cols_hide(columns = is_weekend) |>
 #'   cols_width(everything() ~ px(250)) |>
 #'   cols_align(align = "center", columns = nanoplots) |>
 #'   cols_align(align = "left", columns = date) |>
