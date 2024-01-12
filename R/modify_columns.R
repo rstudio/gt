@@ -2987,6 +2987,24 @@ cols_nanoplot <- function(
       locations = cells_body(columns = validated_new_col_name)
     )
 
+  if (isTRUE(autohide)) {
+
+    data <-
+      cols_hide(
+        data = data,
+        columns = resolved_columns
+      )
+
+    if (length(resolved_columns_x) > 0) {
+
+      data <-
+        cols_hide(
+          data = data,
+          columns = resolved_columns_x
+        )
+    }
+  }
+
   data
 }
 
