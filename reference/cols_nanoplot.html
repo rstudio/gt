@@ -206,6 +206,7 @@ of the remaining plot components can be modified.</p>
 <span>  plot_height <span class="op">=</span> <span class="st">"2em"</span>,</span>
 <span>  missing_vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gap"</span>, <span class="st">"zero"</span>, <span class="st">"remove"</span><span class="op">)</span>,</span>
 <span>  autoscale <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  autohide <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  columns_x_vals <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  reference_line <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  reference_area <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -292,6 +293,16 @@ produced are based on the limits of data combined from all input rows. This
 will result in a shared scale across all of the nanoplots (for <em>y</em>- and
 <em>x</em>-axis data), which is useful in those cases where the nanoplot data
 should be compared across rows.</p></dd>
+
+
+<dt>autohide</dt>
+<dd><p><em>Automatically hide the <code>columns</code>/<code>columns_x_vals</code> column(s)</em></p>
+<p><code>scalar&lt;logical&gt;</code> // <em>default:</em> <code>TRUE</code></p>
+<p>An option to automatically hide any columns specified in <code>columns</code> and also
+<code>columns_x_vals</code> (if used). Any columns with their state changed to
+'hidden' will behave the same as before, they just won't be displayed in
+the finalized table. Should you want to have these 'input' columns be
+viewable, set <code>autohide = FALSE</code>.</p></dd>
 
 
 <dt>columns_x_vals</dt>
@@ -476,7 +487,7 @@ possible to define a column label here using the <code>new_col_label</code> argu
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"test"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_header.html">tab_header</a></span><span class="op">(</span><span class="st">"Partial summary of daily tests performed on YF patient"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_stubhead.html">tab_stubhead</a></span><span class="op">(</span>label <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span><span class="st">"**Test**"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/cols_hide.html">cols_hide</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"norm"</span><span class="op">)</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"day"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_hide.html">cols_hide</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"norm"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_units.html">fmt_units</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">units</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/cols_nanoplot.html">cols_nanoplot</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"day"</span><span class="op">)</span>,</span>
@@ -513,6 +524,7 @@ in <code><a href="nanoplot_options.html">nanoplot_options()</a></code>.</p>
 <span>  <span class="fu"><a href="../reference/cols_nanoplot.html">cols_nanoplot</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">chicken</span>, <span class="va">classic</span>, <span class="va">supreme</span>, <span class="va">veggie</span><span class="op">)</span>,</span>
 <span>    plot_type <span class="op">=</span> <span class="st">"bar"</span>,</span>
+<span>    autohide <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    new_col_name <span class="op">=</span> <span class="st">"pizzas_sold"</span>,</span>
 <span>    new_col_label <span class="op">=</span> <span class="st">"Sales by Type"</span>,</span>
 <span>    options <span class="op">=</span> <span class="fu"><a href="../reference/nanoplot_options.html">nanoplot_options</a></span><span class="op">(</span></span>
@@ -546,12 +558,14 @@ elect to hide most of those with <code><a href="cols_hide.html">cols_hide()</a><
 <span>  <span class="fu"><a href="../reference/cols_nanoplot.html">cols_nanoplot</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"population"</span><span class="op">)</span>,</span>
 <span>    reference_line <span class="op">=</span> <span class="st">"median"</span>,</span>
+<span>    autohide <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    new_col_name <span class="op">=</span> <span class="st">"population_plot"</span>,</span>
 <span>    new_col_label <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span><span class="st">"*Change*"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/cols_nanoplot.html">cols_nanoplot</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"density"</span><span class="op">)</span>,</span>
 <span>    plot_type <span class="op">=</span> <span class="st">"bar"</span>,</span>
+<span>    autohide <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    new_col_name <span class="op">=</span> <span class="st">"density_plot"</span>,</span>
 <span>    new_col_label <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span><span class="st">"*Change*"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -612,7 +626,6 @@ bars.</p>
 <span>      data_bar_fill_color <span class="op">=</span> <span class="st">"DarkOrange"</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/cols_hide.html">cols_hide</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">matches</a></span><span class="op">(</span><span class="st">"0"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span></span>
 <span>    table.width <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">400</span><span class="op">)</span>,</span>
 <span>    column_labels.hidden <span class="op">=</span> <span class="cn">TRUE</span></span>
@@ -657,7 +670,6 @@ streams in each row (having the same number of values) we can now make a
 <span>    title <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span><span class="st">"Pizzas sold on **January 1, 2015**"</span><span class="op">)</span>,</span>
 <span>    subtitle <span class="op">=</span> <span class="st">"Between the opening hours of 11:30 to 22:30"</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/cols_hide.html">cols_hide</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">date_time</span>, <span class="va">sold</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/cols_nanoplot.html">cols_nanoplot</a></span><span class="op">(</span></span>
 <span>    columns <span class="op">=</span> <span class="va">sold</span>,</span>
 <span>    columns_x_vals <span class="op">=</span> <span class="va">date_time</span>,</span>
@@ -707,7 +719,7 @@ hover.</p>
 <span>    plot_type <span class="op">=</span> <span class="st">"boxplot"</span>,</span>
 <span>    options <span class="op">=</span> <span class="fu"><a href="../reference/nanoplot_options.html">nanoplot_options</a></span><span class="op">(</span>y_val_fmt_fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu">hms</span><span class="fu">::</span><span class="fu">as_hms</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/cols_hide.html">cols_hide</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">time</span>, <span class="va">is_weekend</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_hide.html">cols_hide</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">is_weekend</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/cols_width.html">cols_width</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">250</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/cols_align.html">cols_align</a></span><span class="op">(</span>align <span class="op">=</span> <span class="st">"center"</span>, columns <span class="op">=</span> <span class="va">nanoplots</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/cols_align.html">cols_align</a></span><span class="op">(</span>align <span class="op">=</span> <span class="st">"left"</span>, columns <span class="op">=</span> <span class="va">date</span><span class="op">)</span> <span class="op">|&gt;</span></span>
