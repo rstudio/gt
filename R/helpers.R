@@ -787,6 +787,7 @@ nanoplot_options <- function(
     data_line_type = NULL,
     data_line_stroke_color = NULL,
     data_line_stroke_width = NULL,
+    data_area_fill_color = NULL,
     data_bar_stroke_color = NULL,
     data_bar_stroke_width = NULL,
     data_bar_fill_color = NULL,
