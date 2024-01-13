@@ -2887,6 +2887,7 @@ cols_nanoplot <- function(
         data_point_fill_color = options_plots$data_point_fill_color,
         data_line_stroke_color = options_plots$data_line_stroke_color,
         data_line_stroke_width = options_plots$data_line_stroke_width,
+        data_area_fill_color = options_plots$data_area_fill_color,
         data_bar_stroke_color = options_plots$data_bar_stroke_color,
         data_bar_stroke_width = options_plots$data_bar_stroke_width,
         data_bar_fill_color = options_plots$data_bar_fill_color,
