@@ -597,6 +597,14 @@ currency <- function(
 #'   `data_line_stroke_width` option. By default, a value of `4` (as in '4px')
 #'   is used.
 #'
+#' @param data_area_fill_color *Fill color for the data-point-bounded area*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   The fill color for the area that bounds the data points in line plot. The
+#'   default is `"#FF0000"` (`"red"`) but can be changed by providing a color
+#'   value to `data_area_fill_color`.
+#'
 #' @param data_bar_stroke_color *Color of a data bar's outside line*
 #'
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
@@ -787,6 +795,7 @@ nanoplot_options <- function(
     data_line_type = NULL,
     data_line_stroke_color = NULL,
     data_line_stroke_width = NULL,
+    data_area_fill_color = NULL,
     data_bar_stroke_color = NULL,
     data_bar_stroke_width = NULL,
     data_bar_fill_color = NULL,
@@ -811,24 +820,26 @@ nanoplot_options <- function(
     currency = NULL
 ) {
 
-  data_point_radius       <- data_point_radius %||% 10
+  data_point_radius <- data_point_radius %||% 10
   data_point_stroke_color <- data_point_stroke_color %||% "#FFFFFF"
   data_point_stroke_width <- data_point_stroke_width %||% 4
-  data_point_fill_color   <- data_point_fill_color %||% "#FF0000"
+  data_point_fill_color <- data_point_fill_color %||% "#FF0000"
 
-  data_line_type         <- data_line_type %||% "curved"
+  data_line_type <- data_line_type %||% "curved"
   data_line_stroke_color <- data_line_stroke_color %||% "#4682B4"
   data_line_stroke_width <- data_line_stroke_width %||% 8
 
+  data_area_fill_color <- data_area_fill_color %||% "#FF0000"
+
   data_bar_stroke_color <- data_bar_stroke_color %||% "#3290CC"
   data_bar_stroke_width <- data_bar_stroke_width %||% 4
-  data_bar_fill_color   <- data_bar_fill_color %||% "#3FB5FF"
+  data_bar_fill_color <- data_bar_fill_color %||% "#3FB5FF"
 
   data_bar_negative_stroke_color <- data_bar_negative_stroke_color %||% "#CC3243"
   data_bar_negative_stroke_width <- data_bar_negative_stroke_width %||% 4
-  data_bar_negative_fill_color   <- data_bar_negative_fill_color %||% "#D75A68"
+  data_bar_negative_fill_color <- data_bar_negative_fill_color %||% "#D75A68"
 
-  reference_line_color      <- reference_line_color %||% "#75A8B0"
+  reference_line_color <- reference_line_color %||% "#75A8B0"
   reference_area_fill_color <- reference_area_fill_color %||% "#A6E6F2"
 
   vertical_guide_stroke_color <- vertical_guide_stroke_color %||% "#911EB4"
@@ -858,6 +869,7 @@ nanoplot_options <- function(
       data_line_type = data_line_type,
       data_line_stroke_color = data_line_stroke_color,
       data_line_stroke_width = data_line_stroke_width,
+      data_area_fill_color = data_area_fill_color,
       data_bar_stroke_color = data_bar_stroke_color,
       data_bar_stroke_width = data_bar_stroke_width,
       data_bar_fill_color = data_bar_fill_color,
