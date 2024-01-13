@@ -597,6 +597,14 @@ currency <- function(
 #'   `data_line_stroke_width` option. By default, a value of `4` (as in '4px')
 #'   is used.
 #'
+#' @param data_area_fill_color *Fill color for the data-point-bounded area*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   The fill color for the area that bounds the data points in line plot. The
+#'   default is `"#FF0000"` (`"red"`) but can be changed by providing a color
+#'   value to `data_area_fill_color`.
+#'
 #' @param data_bar_stroke_color *Color of a data bar's outside line*
 #'
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
