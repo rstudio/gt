@@ -83,6 +83,7 @@ can be modified with <code>nanoplot_options()</code> within the <code>options</c
 <span>  data_line_type <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  data_line_stroke_color <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  data_line_stroke_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  data_area_fill_color <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  data_bar_stroke_color <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  data_bar_stroke_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  data_bar_fill_color <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -170,6 +171,14 @@ option.</p></dd>
 <p>The width of the connecting data line can be modified with the
 <code>data_line_stroke_width</code> option. By default, a value of <code>4</code> (as in '4px')
 is used.</p></dd>
+
+
+<dt>data_area_fill_color</dt>
+<dd><p><em>Fill color for the data-point-bounded area</em></p>
+<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p>The fill color for the area that bounds the data points in line plot. The
+default is <code>"#FF0000"</code> (<code>"red"</code>) but can be changed by providing a color
+value to <code>data_area_fill_color</code>.</p></dd>
 
 
 <dt>data_bar_stroke_color</dt>
