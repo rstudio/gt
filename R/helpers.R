@@ -820,24 +820,26 @@ nanoplot_options <- function(
     currency = NULL
 ) {
 
-  data_point_radius       <- data_point_radius %||% 10
+  data_point_radius <- data_point_radius %||% 10
   data_point_stroke_color <- data_point_stroke_color %||% "#FFFFFF"
   data_point_stroke_width <- data_point_stroke_width %||% 4
-  data_point_fill_color   <- data_point_fill_color %||% "#FF0000"
+  data_point_fill_color <- data_point_fill_color %||% "#FF0000"
 
-  data_line_type         <- data_line_type %||% "curved"
+  data_line_type <- data_line_type %||% "curved"
   data_line_stroke_color <- data_line_stroke_color %||% "#4682B4"
   data_line_stroke_width <- data_line_stroke_width %||% 8
 
+  data_area_fill_color <- data_area_fill_color %||% "#FF0000"
+
   data_bar_stroke_color <- data_bar_stroke_color %||% "#3290CC"
   data_bar_stroke_width <- data_bar_stroke_width %||% 4
-  data_bar_fill_color   <- data_bar_fill_color %||% "#3FB5FF"
+  data_bar_fill_color <- data_bar_fill_color %||% "#3FB5FF"
 
   data_bar_negative_stroke_color <- data_bar_negative_stroke_color %||% "#CC3243"
   data_bar_negative_stroke_width <- data_bar_negative_stroke_width %||% 4
-  data_bar_negative_fill_color   <- data_bar_negative_fill_color %||% "#D75A68"
+  data_bar_negative_fill_color <- data_bar_negative_fill_color %||% "#D75A68"
 
-  reference_line_color      <- reference_line_color %||% "#75A8B0"
+  reference_line_color <- reference_line_color %||% "#75A8B0"
   reference_area_fill_color <- reference_area_fill_color %||% "#A6E6F2"
 
   vertical_guide_stroke_color <- vertical_guide_stroke_color %||% "#911EB4"
@@ -867,6 +869,7 @@ nanoplot_options <- function(
       data_line_type = data_line_type,
       data_line_stroke_color = data_line_stroke_color,
       data_line_stroke_width = data_line_stroke_width,
+      data_area_fill_color = data_area_fill_color,
       data_bar_stroke_color = data_bar_stroke_color,
       data_bar_stroke_width = data_bar_stroke_width,
       data_bar_fill_color = data_bar_fill_color,
