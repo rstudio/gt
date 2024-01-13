@@ -106,7 +106,8 @@ should be compared across rows.}
 An option to automatically hide any columns specified in \code{columns} and also
 \code{columns_x_vals} (if used). Any columns with their state changed to
 'hidden' will behave the same as before, they just won't be displayed in
-the finalized table.}
+the finalized table. Should you want to have these 'input' columns be
+viewable, set \code{autohide = FALSE}.}
 
 \item{columns_x_vals}{\emph{Columns containing values for the optional x variable}
 

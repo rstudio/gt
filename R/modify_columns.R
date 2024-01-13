@@ -2259,7 +2259,8 @@ cols_add <- function(
 #'   An option to automatically hide any columns specified in `columns` and also
 #'   `columns_x_vals` (if used). Any columns with their state changed to
 #'   'hidden' will behave the same as before, they just won't be displayed in
-#'   the finalized table.
+#'   the finalized table. Should you want to have these 'input' columns be
+#'   viewable, set `autohide = FALSE`.
 #'
 #' @param columns_x_vals *Columns containing values for the optional x variable*
 #'
