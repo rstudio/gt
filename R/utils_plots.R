@@ -44,6 +44,7 @@ generate_nanoplot <- function(
     data_point_fill_color = "#FF0000",
     data_line_stroke_color = "#4682B4",
     data_line_stroke_width = 8,
+    data_area_fill_color = "#FF0000",
     data_bar_stroke_color = "#3290CC",
     data_bar_stroke_width = 4,
     data_bar_fill_color = "#3FB5FF",
@@ -1856,7 +1857,7 @@ generate_nanoplot <- function(
         paste0(
           "<path class=\"pattern-line\" ",
           "d=\"M 0,8 l 8,-8 M -1,1 l 4,-4 M 6,10 l 4,-4\" ",
-          "stroke=\"red\" ",
+          "stroke=\"", data_area_fill_color, "\" ",
           "stroke-width=\"1.5\" ",
           "stroke-linecap=\"round\" ",
           "shape-rendering=\"geometricPrecision\"",
