@@ -1,4 +1,4 @@
-# gt (development version)
+# gt 0.10.1
 
 * The performance of rendering bigger tables as HTML has been improved and is now up to 3 times faster than before (@mgirlich, #1470).
 
