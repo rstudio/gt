@@ -3,7 +3,7 @@ message: 'If you wish to cite the "gt" package use:'
 type: software
 license: MIT
 title: 'gt: Easily Create Presentation-Ready Display Tables'
-version: 0.10.0
+version: 0.10.1
 abstract: Build display tables from tabular data with an easy-to-use set of functions.
   With its progressive approach, we can construct display tables with a cohesive set
   of table parts. Table values can be formatted using any of the included formatting
