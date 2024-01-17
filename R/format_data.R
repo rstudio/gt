@@ -9295,12 +9295,14 @@ fmt_url <- function(
 
         x_str_non_missing <-
           paste0(
+            "<span style=\"white-space: pre;\">",
             "<a",
             " href=\"", x_str_non_missing, "\"",
             anchor_attr,
             ">",
             label_str,
-            "</a>"
+            "</a>",
+            "</span>"
           )
 
         x_str[!is.na(x)] <- x_str_non_missing
