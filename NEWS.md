@@ -1,10 +1,38 @@
-# gt (development version)
+# gt 0.10.1
 
-* The performance of rendering bigger tables as HTML has been improved and is now up to 3 times faster than before (@mgirlich, #1470).
+## Improvements to nanoplots
 
-* `gtsave()` now returns the file path invisibly instead of `TRUE` (@olivroy, #1478).
+* Box plots can now be generated via `cols_nanoplot()` by using `plot_type = "boxplot"`. These plots are laid out horizontally and will, by default, share the same plot axis across rows. (#1527)
 
-* Most functions in gt receive a better error message if they don't provide a `gt_tbl` as an input (@olivroy, #1504).
+* We can now have single line bar plots generated through `cols_nanoplot()`. If the plot_type is set to `"bar"` and single values are found, then horizontal bars will be generated and will be comparable across rows. (#1514, #1515, #1519)
+
+* The `autohide` argument was added to the `cols_nanoplot()` function so that columns containing input data for nanoplots could be conveniently hidden from final presentation. (#1533)
+
+* Added option (the `data_area_fill_color` arg in `nanoplot_options()`) to change fill color of nanoplot data area for line-type plots (#1521). (#1534)
+
+## Minor improvements and bug fixes
+
+* The performance of rendering bigger tables as HTML has been improved and is now up to three times faster than before. (#1470, thanks @mgirlich)
+
+* Introduced a small performance improvement by no longer calling `utils::packageVersion()` internally (#1524). (#1525, thank you @slodge)
+
+* Code and test refactoring was performed to generally improve performance and code readability. (#1480, thanks @olivroy) 
+* The `gtsave()` function now returns the file path invisibly instead of `TRUE`. (#1478, thank you @olivroy)
+
+* Most functions now produce better error messages if not provided with a `gt_tbl` object. (#1504, c/o @olivroy)
+
+* The URL formatting through `fmt_url()` has been improved by preventing link text breaking across lines (#1509). (#1537) 
+* We now remove some unnecessary newlines in the HTML text produced by `as_raw_html()`, which caused an issue when integrating **gt** tables into **blastula** email messages (#1506). (#1520)
+
+* The `tab_spanner_delim()` now lets you use `delim` strings longer than a single character (#1469). (#1513)
+
+* Fix for footnotes in LaTeX tables where no footnote marks are to be added; this previously showed `"NA"` as the mark in the footer area but this is no longer displayed (#1416). (#1512, thanks @kbrevoort)
+
+* LaTeX tables can now have their overall width specified (#119, #329). (#1495, thank you @kbrevoort)
+
+* Fix issue where a `cols_width()` specification involving percentage values fails for LaTeX tables (#1465). (#1495, thanks again @kbrevoort!)
+
+* Several documentation fixes were made to address inconsistencies and improve clarity. (#1491)
 
 # gt 0.10.0
 
