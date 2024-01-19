@@ -49,7 +49,7 @@ jobs:
       - name: Install package
         run: R CMD INSTALL .
 
-      - name: Generate Quarto files for website
+      - name: Generate Quarto files for the website
         run: |
           Rscript -e 'gt:::write_gt_examples_qmd_files()'
 
@@ -57,11 +57,16 @@ jobs:
         run: |
           quarto render gt_qmd_examples
 
-      - name: Publish to Connect
-        uses: quarto-dev/quarto-actions/publish@v2
+      - name: Create manifest.json
+        shell: Rscript {0}
+        run: |
+          rsconnect::writeManifest()
+
+      - name: Publish Connect content
+        uses: rstudio/actions/connect-publish@main
         with:
-          target: connect
-          render: false
-          path: gt_qmd_examples
-          CONNECT_SERVER: ${{ secrets.CONNECT_SERVER }}
-          CONNECT_API_KEY: ${{ secrets.CONNECT_API_KEY }}
+          url: ${{ secrets.CONNECT_SERVER }}
+          api-key: ${{ secrets.CONNECT_API_KEY }}
+          access-type: all
+          show-logs: true
+          dir: .:/gt_qmd_examples/_site
