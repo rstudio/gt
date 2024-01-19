@@ -42,6 +42,7 @@ jobs:
             lubridate
             paletteer
             janitor
+            rsconnect
             any::sessioninfo
           dependencies: '"hard"'
 
