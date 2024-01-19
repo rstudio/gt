@@ -69,4 +69,4 @@ jobs:
           api-key: ${{ secrets.CONNECT_API_KEY }}
           access-type: all
           show-logs: true
-          dir: .:/gt_qmd_examples/_site
+          dir: ./gt_qmd_examples:/gt_qmd_examples
