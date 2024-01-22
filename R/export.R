@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -725,15 +725,19 @@ as_latex <- function(data) {
     latex_packages <- NULL
   }
 
+  table_width_bookends <- derive_table_width_bookends(data = data)
+
   # Compose the LaTeX table
   knitr::asis_output(
     paste0(
+      table_width_bookends[1L],
       table_start,
       heading_component,
       columns_component,
       body_component,
       table_end,
       footer_component,
+      table_width_bookends[2L],
       collapse = ""
     ),
     meta = latex_packages

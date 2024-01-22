@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -597,6 +597,14 @@ currency <- function(
 #'   `data_line_stroke_width` option. By default, a value of `4` (as in '4px')
 #'   is used.
 #'
+#' @param data_area_fill_color *Fill color for the data-point-bounded area*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   The fill color for the area that bounds the data points in line plot. The
+#'   default is `"#FF0000"` (`"red"`) but can be changed by providing a color
+#'   value to `data_area_fill_color`.
+#'
 #' @param data_bar_stroke_color *Color of a data bar's outside line*
 #'
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
@@ -735,6 +743,19 @@ currency <- function(
 #'   nanoplot. This hidden layer is active by default but can be deactivated by
 #'   using `show_y_axis_guide = FALSE`.
 #'
+#' @param interactive_data_values *Should data values be interactively shown?*
+#'
+#'   `scalar<logical>` // *default:* `NULL` (`optional`)
+#'
+#'   By default, numeric data values will be shown only when the user interacts
+#'   with certain regions of a nanoplot. This is because the values may be
+#'   numerous (i.e., clutter the display when all are visible) and it can be
+#'   argued that the values themselves are secondary to the presentation.
+#'   However, for some types of plots (like horizontal bar plots), a persistent
+#'   display of values alongside the plot marks may be desirable. By setting
+#'   `interactive_data_values = FALSE` we can opt for always displaying the data
+#'   values alongside the plot components.
+#'
 #' @param y_val_fmt_fn,y_axis_fmt_fn,y_ref_line_fmt_fn *Custom formatting for y values*
 #'
 #'   `function` // *default:* `NULL` (`optional`)
@@ -774,6 +795,7 @@ nanoplot_options <- function(
     data_line_type = NULL,
     data_line_stroke_color = NULL,
     data_line_stroke_width = NULL,
+    data_area_fill_color = NULL,
     data_bar_stroke_color = NULL,
     data_bar_stroke_width = NULL,
     data_bar_fill_color = NULL,
@@ -791,43 +813,47 @@ nanoplot_options <- function(
     show_reference_area = NULL,
     show_vertical_guides = NULL,
     show_y_axis_guide = NULL,
+    interactive_data_values = NULL,
     y_val_fmt_fn = NULL,
     y_axis_fmt_fn = NULL,
     y_ref_line_fmt_fn = NULL,
     currency = NULL
 ) {
 
-  data_point_radius       <- data_point_radius %||% 10
+  data_point_radius <- data_point_radius %||% 10
   data_point_stroke_color <- data_point_stroke_color %||% "#FFFFFF"
   data_point_stroke_width <- data_point_stroke_width %||% 4
-  data_point_fill_color   <- data_point_fill_color %||% "#FF0000"
+  data_point_fill_color <- data_point_fill_color %||% "#FF0000"
 
-  data_line_type         <- data_line_type %||% "curved"
+  data_line_type <- data_line_type %||% "curved"
   data_line_stroke_color <- data_line_stroke_color %||% "#4682B4"
   data_line_stroke_width <- data_line_stroke_width %||% 8
 
+  data_area_fill_color <- data_area_fill_color %||% "#FF0000"
+
   data_bar_stroke_color <- data_bar_stroke_color %||% "#3290CC"
   data_bar_stroke_width <- data_bar_stroke_width %||% 4
-  data_bar_fill_color   <- data_bar_fill_color %||% "#3FB5FF"
+  data_bar_fill_color <- data_bar_fill_color %||% "#3FB5FF"
 
   data_bar_negative_stroke_color <- data_bar_negative_stroke_color %||% "#CC3243"
   data_bar_negative_stroke_width <- data_bar_negative_stroke_width %||% 4
-  data_bar_negative_fill_color   <- data_bar_negative_fill_color %||% "#D75A68"
+  data_bar_negative_fill_color <- data_bar_negative_fill_color %||% "#D75A68"
 
-  reference_line_color      <- reference_line_color %||% "#75A8B0"
-  reference_area_fill_color <- reference_area_fill_color%||% "#A6E6F2"
+  reference_line_color <- reference_line_color %||% "#75A8B0"
+  reference_area_fill_color <- reference_area_fill_color %||% "#A6E6F2"
 
   vertical_guide_stroke_color <- vertical_guide_stroke_color %||% "#911EB4"
   vertical_guide_stroke_width <- vertical_guide_stroke_width %||% 12
 
   show_data_points <- show_data_points %||% TRUE
-  show_data_line   <- show_data_line %||% TRUE
-  show_data_area   <- show_data_area %||% TRUE
-
-  show_reference_line  <- show_reference_line %||% TRUE
-  show_reference_area  <- show_reference_area %||% TRUE
+  show_data_line <- show_data_line %||% TRUE
+  show_data_area <- show_data_area %||% TRUE
+  show_reference_line <- show_reference_line %||% TRUE
+  show_reference_area <- show_reference_area %||% TRUE
   show_vertical_guides <- show_vertical_guides %||% TRUE
-  show_y_axis_guide    <- show_y_axis_guide %||% TRUE
+  show_y_axis_guide <- show_y_axis_guide %||% TRUE
+
+  interactive_data_values <- interactive_data_values %||% TRUE
 
   # y_val_fmt_fn, y_axis_fmt_fn, and y_ref_line_fmt_fn
   # are not assigned to a default value
@@ -843,6 +869,7 @@ nanoplot_options <- function(
       data_line_type = data_line_type,
       data_line_stroke_color = data_line_stroke_color,
       data_line_stroke_width = data_line_stroke_width,
+      data_area_fill_color = data_area_fill_color,
       data_bar_stroke_color = data_bar_stroke_color,
       data_bar_stroke_width = data_bar_stroke_width,
       data_bar_fill_color = data_bar_fill_color,
@@ -860,6 +887,7 @@ nanoplot_options <- function(
       show_reference_area = show_reference_area,
       show_vertical_guides = show_vertical_guides,
       show_y_axis_guide = show_y_axis_guide,
+      interactive_data_values = interactive_data_values,
       y_val_fmt_fn = y_val_fmt_fn,
       y_axis_fmt_fn = y_axis_fmt_fn,
       y_ref_line_fmt_fn = y_ref_line_fmt_fn,

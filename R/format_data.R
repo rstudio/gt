@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -9295,12 +9295,14 @@ fmt_url <- function(
 
         x_str_non_missing <-
           paste0(
+            "<span style=\"white-space: pre;\">",
             "<a",
             " href=\"", x_str_non_missing, "\"",
             anchor_attr,
             ">",
             label_str,
-            "</a>"
+            "</a>",
+            "</span>"
           )
 
         x_str[!is.na(x)] <- x_str_non_missing

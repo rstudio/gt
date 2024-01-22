@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -30,6 +30,8 @@ generate_nanoplot <- function(
     expand_x = NULL,
     expand_y = NULL,
     missing_vals = c("gap", "zero", "remove"),
+    all_y_vals = NULL,
+    all_single_y_vals = NULL,
     plot_type = c("line", "bar"),
     line_type = c("curved", "straight"),
     currency = NULL,
@@ -42,6 +44,7 @@ generate_nanoplot <- function(
     data_point_fill_color = "#FF0000",
     data_line_stroke_color = "#4682B4",
     data_line_stroke_width = 8,
+    data_area_fill_color = "#FF0000",
     data_bar_stroke_color = "#3290CC",
     data_bar_stroke_width = 4,
     data_bar_fill_color = "#3FB5FF",
@@ -59,6 +62,7 @@ generate_nanoplot <- function(
     show_ref_area = TRUE,
     show_vertical_guides = TRUE,
     show_y_axis_guide = TRUE,
+    interactive_data_values = TRUE,
     svg_height = "2em",
     view = FALSE
 ) {
@@ -68,16 +72,21 @@ generate_nanoplot <- function(
   line_type <- rlang::arg_match(line_type)
 
   # Initialize several local `*_tags` variables with `NULL`
-  circle_tags <- NULL
-  bar_tags <- NULL
-  data_path_tags <- NULL
-  area_path_tags <- NULL
-  ref_line_tags <- NULL
-  zero_line_tags <- NULL
   ref_area_tags <- NULL
+  area_path_tags <- NULL
+  data_path_tags <- NULL
+  zero_line_tags <- NULL
+  bar_tags <- NULL
+  boxplot_tags <- NULL
+  ref_line_tags <- NULL
+  circle_tags <- NULL
+  g_y_axis_tags <- NULL
   g_guide_tags <- NULL
 
-  # If the number of `y` values is zero or an empty string,
+  # Initialize the `single_horizontal_bar` variable with `FALSE`
+  single_horizontal_bar <- FALSE
+
+  # If the number of `y` values is zero or if all consist of NA values,
   # return an empty string
   if (length(y_vals) == 0) {
     return("")
@@ -157,6 +166,32 @@ generate_nanoplot <- function(
   # Determine the total number of `y` values available
   num_y_vals <- length(y_vals)
 
+  # If the number of y_vals is `1` and we requested a 'bar' plot, then
+  # reset several parameters
+  if (num_y_vals == 1 && grepl("bar", plot_type)) {
+
+    single_horizontal_bar <- TRUE
+    show_data_points <- FALSE
+    show_data_line <- FALSE
+    show_data_area <- FALSE
+    show_ref_line <- FALSE
+    show_ref_area <- FALSE
+    show_vertical_guides <- FALSE
+    show_y_axis_guide <- FALSE
+  }
+
+  # If this is a boxplot, set several parameters
+  if (plot_type == "boxplot") {
+
+    show_data_points <- FALSE
+    show_data_line <- FALSE
+    show_data_area <- FALSE
+    show_ref_line <- FALSE
+    show_ref_area <- FALSE
+    show_vertical_guides <- FALSE
+    show_y_axis_guide <- FALSE
+  }
+
   # Find out whether the collection of non-NA `y` values are all integer-like
   y_vals_integerlike <- rlang::is_integerish(y_vals)
 
@@ -164,10 +199,16 @@ generate_nanoplot <- function(
   y_scale_max <- get_extreme_value(y_vals, stat = "max")
   y_scale_min <- get_extreme_value(y_vals, stat = "min")
 
+  # Handle cases where collection of `y_vals` is invariant
   if (y_scale_min == y_scale_max && is.null(expand_y)) {
 
+    if (y_scale_min == 0) {
+      expand_y_dist <- 5
+    } else {
+      expand_y_dist <- (y_scale_min / 10) * 2
+    }
+
     # Expand the `y` scale, centering around the `y_scale_min` value
-    expand_y_dist <- (y_scale_min / 10) * 2
     expand_y <- c(y_scale_min - expand_y_dist, y_scale_min + expand_y_dist)
   }
 
@@ -196,9 +237,9 @@ generate_nanoplot <- function(
   # where `x_vals` aren't present, we'll adjust the final width based
   # on the fixed interval between data points (this is dependent on the
   # number of data points)
-  if (!is.null(x_vals)) {
+  if (!is.null(x_vals) || single_horizontal_bar || plot_type == "boxplot") {
 
-    data_x_width <- 500
+    data_x_width <- 600
 
   } else {
 
@@ -456,7 +497,7 @@ generate_nanoplot <- function(
     }
   }
 
-  if (plot_type == "bar") {
+  if (plot_type == "bar" || plot_type == "boxplot") {
 
     if (show_ref_line && show_ref_area) {
 
@@ -864,9 +905,9 @@ generate_nanoplot <- function(
               "cx=\"", data_x_points[i], "\" ",
               "cy=\"", safe_y_d + (data_y_height / 2), "\" ",
               "r=\"", data_point_radius_i + (data_point_radius_i / 2), "\" ",
-              "stroke=\"", "red", "\" ",
+              "stroke=\"red\" ",
               "stroke-width=\"", data_point_stroke_width_i, "\" ",
-              "fill=\"", "white", "\" ",
+              "fill=\"white\" ",
               ">",
               "</circle>",
               ""
@@ -902,7 +943,7 @@ generate_nanoplot <- function(
   # Generate data bars
   #
 
-  if (plot_type == "bar") {
+  if (plot_type == "bar" && !single_horizontal_bar) {
 
     bar_strings <- c()
 
@@ -940,15 +981,20 @@ generate_nanoplot <- function(
       } else {
 
         if (y_vals[i] < 0) {
+
           y_value_i <- data_y0_point
           y_height <- data_y_points[i] - data_y0_point
           data_bar_stroke_color_i <- data_bar_negative_stroke_color[1]
           data_bar_stroke_width_i <- data_bar_negative_stroke_width[1]
           data_bar_fill_color_i <- data_bar_negative_fill_color[1]
+
         } else if (y_vals[i] > 0) {
+
           y_value_i <- data_y_points[i]
           y_height <- data_y0_point - data_y_points[i]
+
         } else if (y_vals[i] == 0) {
+
           y_value_i <- data_y0_point - 1
           y_height <- 2
           data_bar_stroke_color_i <- "#808080"
@@ -977,11 +1023,497 @@ generate_nanoplot <- function(
     bar_tags <- paste(bar_strings, collapse = "\n")
   }
 
+  if (plot_type == "bar" && single_horizontal_bar) {
+
+    # This type of display assumes there is only a single `y` value and there
+    # are possibly several such horizontal bars across different rows that
+    # need to be on a common scale
+
+    bar_thickness <- data_point_radius[1] * 4
+
+    if (all(all_single_y_vals == 0)) {
+
+      # Handle case where all values across rows are `0`
+
+      y_proportion <- 0.5
+      y_proportion_zero <- 0.5
+
+    } else {
+
+      # Scale to proportional values
+      y_proportions_list <-
+        normalize_to_list(
+          val = y_vals,
+          all_vals = all_single_y_vals,
+          zero = 0
+        )
+
+      y_proportion <- y_proportions_list[["val"]]
+      y_proportion_zero <- y_proportions_list[["zero"]]
+    }
+
+    y0_width <- y_proportion_zero * data_x_width
+    y_width <- y_proportion * data_x_width
+
+    if (y_vals[1] < 0) {
+
+      data_bar_stroke_color <- data_bar_negative_stroke_color[1]
+      data_bar_stroke_width <- data_bar_negative_stroke_width[1]
+      data_bar_fill_color <- data_bar_negative_fill_color[1]
+
+      rect_x <- y_width
+      rect_width <- y0_width - y_width
+
+    } else if (y_vals[1] > 0) {
+
+      data_bar_stroke_color <- data_bar_stroke_color[1]
+      data_bar_stroke_width <- data_bar_stroke_width[1]
+      data_bar_fill_color <- data_bar_fill_color[1]
+
+      rect_x <- y0_width
+      rect_width <- y_width - y0_width
+
+    } else if (y_vals[1] == 0) {
+
+      data_bar_stroke_color <- "#808080"
+      data_bar_stroke_width <- 4
+      data_bar_fill_color <- "#808080"
+
+      rect_x <- y0_width - 2.5
+      rect_width <- 5
+    }
+
+    # Format number compactly
+    y_value <-
+      format_number_compactly(
+        val = y_vals,
+        currency = currency,
+        as_integer = y_vals_integerlike,
+        fn = y_val_fmt_fn
+      )
+
+    rect_strings <-
+      paste0(
+        "<rect ",
+        "x=\"", 0, "\" ",
+        "y=\"", (bottom_y / 2) - (bar_thickness / 2), "\" ",
+        "width=\"600\" ",
+        "height=\"", bar_thickness, "\" ",
+        "stroke=\"transparent\" ",
+        "stroke-width=\"", vertical_guide_stroke_width, "\" ",
+        "fill=\"transparent\"",
+        ">",
+        "</rect>"
+      )
+
+    if (y_vals[1] > 0) {
+
+      text_strings <-
+        paste0(
+          "<text ",
+          "x=\"", y0_width + 10, "\" ",
+          "y=\"", safe_y_d + 10, "\" ",
+          "fill=\"transparent\" ",
+          "stroke=\"transparent\" ",
+          "font-size=\"30px\"",
+          ">",
+          y_value,
+          "</text>"
+        )
+
+    } else if (y_vals[1] < 0) {
+
+      text_strings <-
+        paste0(
+          "<text ",
+          "x=\"", y0_width - 10, "\" ",
+          "y=\"", safe_y_d + 10, "\" ",
+          "fill=\"transparent\" ",
+          "stroke=\"transparent\" ",
+          "font-size=\"30px\" ",
+          "text-anchor=\"end\"",
+          ">",
+          y_value,
+          "</text>"
+        )
+
+    } else if (y_vals[1] == 0) {
+
+      if (all(all_single_y_vals == 0)) {
+        text_anchor <- "start"
+        x_position_text <- y0_width + 10
+      } else if (all(all_single_y_vals <= 0)) {
+        text_anchor <- "end"
+        x_position_text <- y0_width - 10
+      } else {
+        text_anchor <- "start"
+        x_position_text <- y0_width + 10
+      }
+
+      text_strings <-
+        paste0(
+          "<text ",
+          "x=\"", x_position_text, "\" ",
+          "y=\"", (bottom_y / 2) + 10, "\" ",
+          "fill=\"transparent\" ",
+          "stroke=\"transparent\" ",
+          "font-size=\"30px\" ",
+          "text-anchor=\"", text_anchor, "\"",
+          ">",
+          y_value,
+          "</text>"
+        )
+    }
+
+    g_guide_tags <-
+      paste0(
+        "<g class=\"horizontal-line\">\n",
+        rect_strings, "\n",
+        text_strings,
+        "</g>"
+      )
+
+    bar_tags <-
+      paste0(
+        "<rect ",
+        "x=\"", rect_x, "\" ",
+        "y=\"", (bottom_y / 2) - (bar_thickness / 2), "\" ",
+        "width=\"", rect_width, "\" ",
+        "height=\"", bar_thickness, "\" ",
+        "stroke=\"", data_bar_stroke_color, "\" ",
+        "stroke-width=\"", data_bar_stroke_width, "\" ",
+        "fill=\"", data_bar_fill_color, "\" ",
+        ">",
+        "</rect>"
+      )
+
+    stroke <- "#BFBFBF"
+    stroke_width <- 5
+
+    zero_line_tags <-
+      paste0(
+        "<line ",
+        "x1=\"", y0_width, "\" ",
+        "y1=\"", (bottom_y / 2) - (bar_thickness * 1.5), "\" ",
+        "x2=\"", y0_width, "\" ",
+        "y2=\"", (bottom_y / 2) + (bar_thickness * 1.5), "\" ",
+        "stroke=\"", stroke, "\" ",
+        "stroke-width=\"", stroke_width, "\" ",
+        ">",
+        "</line>"
+      )
+
+    # Redefine the `viewbox` in terms of the `data_x_width` value; this ensures
+    # that the horizontal bars are centered about their extreme values
+    viewbox <- paste(left_x, top_y, data_x_width, bottom_y, collapse = " ")
+  }
+
+  if (plot_type == "boxplot") {
+
+    # This display is that of a boxplot and it automatically consider all
+    # values across all rows
+    box_thickness <- data_point_radius[1] * 6
+
+    # Calculate statistics for boxplot
+    stat_p05 = unname(stats::quantile(y_vals, probs = 0.05, na.rm = TRUE))
+    stat_q_1 = unname(stats::quantile(y_vals, probs = 0.25, na.rm = TRUE))
+    stat_med = unname(stats::quantile(y_vals, probs = 0.50, na.rm = TRUE))
+    stat_q_3 = unname(stats::quantile(y_vals, probs = 0.75, na.rm = TRUE))
+    stat_p95 = unname(stats::quantile(y_vals, probs = 0.95, na.rm = TRUE))
+
+    if (length(y_vals) > 25) {
+
+      # Plot only outliers since the number of data values is sufficiently high
+      y_vals_plot <- y_vals[y_vals < stat_p05 | y_vals > stat_p95]
+
+      data_point_radius <- 4
+      data_point_stroke_width <- 2
+      data_point_stroke_color <- adjust_luminance(data_bar_stroke_color[1], steps = 0.75)
+      data_point_fill_color <- adjust_luminance(data_point_stroke_color[1], steps = 1.75)
+
+    } else {
+
+      # Plot all data values but diminish the visibility of the data points
+      # as the number approaches 25
+      y_vals_plot <- y_vals
+
+      if (length(y_vals) < 10) {
+        data_point_radius <- 6
+        data_point_stroke_width <- 2
+      } else {
+        data_point_radius <- 4
+        data_point_stroke_width <- 2
+      }
+
+      data_point_stroke_color <- adjust_luminance("black", steps = length(y_vals) / 25)
+      data_point_fill_color <- "transparent"
+    }
+
+    # Scale to proportional values
+    y_proportions_list <-
+      normalize_to_list(
+        vals = y_vals,
+        all_vals = all_y_vals,
+        y_vals_plot = y_vals_plot,
+        stat_low = stat_p05,
+        stat_qlow = stat_q_1,
+        stat_med = stat_med,
+        stat_qup = stat_q_3,
+        stat_high = stat_p95
+      )
+
+    y_proportions <- y_proportions_list[["vals"]]
+    y_proportions_plot <- y_proportions_list[["y_vals_plot"]]
+    y_stat_p05 <- y_proportions_list[["stat_low"]]
+    y_stat_q_1 <- y_proportions_list[["stat_qlow"]]
+    y_stat_med <- y_proportions_list[["stat_med"]]
+    y_stat_q_3 <- y_proportions_list[["stat_qup"]]
+    y_stat_p95 <- y_proportions_list[["stat_high"]]
+
+    # Calculate boxplot x values
+    fence_start <- y_stat_p05 * data_x_width
+    box_start <- y_stat_q_1 * data_x_width
+    median_x <- y_stat_med * data_x_width
+    box_end <- y_stat_q_3 * data_x_width
+    fence_end <- y_stat_p95 * data_x_width
+    box_width <- (y_stat_q_3 - y_stat_q_1) * data_x_width
+
+    # Establish positions for plottable x and y values
+    plotted_x_vals <- y_proportions_plot * data_x_width
+
+    if (length(y_vals) == 1) {
+      plotted_y_vals <- bottom_y / 2
+    } else {
+      plotted_y_vals <- jitter(rep(bottom_y / 2, length(plotted_x_vals)), factor = 10)
+    }
+
+    # Format numbers compactly
+    stat_p05_value <-
+      format_number_compactly(
+        val = stat_p05,
+        currency = currency,
+        fn = y_val_fmt_fn
+      )
+    stat_q_1_value <-
+      format_number_compactly(
+        val = stat_q_1,
+        currency = currency,
+        fn = y_val_fmt_fn
+      )
+    stat_med_value <-
+      format_number_compactly(
+        val = stat_med,
+        currency = currency,
+        fn = y_val_fmt_fn
+      )
+    stat_q_3_value <-
+      format_number_compactly(
+        val = stat_q_3,
+        currency = currency,
+        fn = y_val_fmt_fn
+      )
+    stat_p95_value <-
+      format_number_compactly(
+        val = stat_p95,
+        currency = currency,
+        fn = y_val_fmt_fn
+      )
+
+    rect_strings <-
+      paste0(
+        "<rect ",
+        "x=\"0\" ",
+        "y=\"", (bottom_y / 2) - (box_thickness / 2), "\" ",
+        "width=\"", data_x_width, "\" ",
+        "height=\"", box_thickness, "\" ",
+        "stroke=\"transparent\" ",
+        "stroke-width=\"", vertical_guide_stroke_width, "\" ",
+        "fill=\"transparent\"",
+        ">",
+        "</rect>"
+      )
+
+    if (length(y_vals) == 1) {
+
+      text_strings <-
+        paste0(
+          "</text>",
+          "<text ",
+          "x=\"", median_x, "\" ",
+          "y=\"", safe_y_d + 15, "\" ",
+          "fill=\"transparent\" ",
+          "stroke=\"transparent\" ",
+          "font-size=\"30px\" ",
+          "text-anchor=\"middle\"",
+          ">",
+          stat_med_value,
+          "</text>"
+        )
+
+    } else {
+
+      text_strings <-
+        paste0(
+          "<text ",
+          "x=\"", fence_start - 10, "\" ",
+          "y=\"", (bottom_y / 2) + 10, "\" ",
+          "fill=\"transparent\" ",
+          "stroke=\"transparent\" ",
+          "font-size=\"30px\" ",
+          "text-anchor=\"end\"",
+          ">",
+          stat_p05_value,
+          "</text>",
+          "<text ",
+          "x=\"", box_start - 6, "\" ",
+          "y=\"", bottom_y - 10, "\" ",
+          "fill=\"transparent\" ",
+          "stroke=\"transparent\" ",
+          "font-size=\"30px\" ",
+          "text-anchor=\"end\"",
+          ">",
+          stat_q_1_value,
+          "</text>",
+          "<text ",
+          "x=\"", median_x, "\" ",
+          "y=\"", safe_y_d + 12.5, "\" ",
+          "fill=\"transparent\" ",
+          "stroke=\"transparent\" ",
+          "font-size=\"30px\" ",
+          "text-anchor=\"middle\"",
+          ">",
+          stat_med_value,
+          "</text>",
+          "<text ",
+          "x=\"", box_end + 6, "\" ",
+          "y=\"", bottom_y - 10, "\" ",
+          "fill=\"transparent\" ",
+          "font-size=\"30px\" ",
+          "text-anchor=\"start\"",
+          ">",
+          stat_q_3_value,
+          "</text>",
+          "<text ",
+          "x=\"", fence_end + 10, "\" ",
+          "y=\"", (bottom_y / 2) + 10, "\" ",
+          "fill=\"transparent\" ",
+          "stroke=\"transparent\" ",
+          "font-size=\"30px\"",
+          ">",
+          stat_p95_value,
+          "</text>"
+        )
+    }
+
+    g_guide_tags <-
+      paste0(
+        "<g class=\"boxplot-line\">\n",
+        rect_strings, "\n",
+        text_strings,
+        "</g>"
+      )
+
+    if (length(plotted_x_vals) > 0) {
+
+      circle_strings <- c()
+
+      for (i in seq_along(plotted_x_vals)) {
+
+        circle_strings_i <-
+          paste0(
+            "<circle ",
+            "cx=\"", plotted_x_vals[i], "\" ",
+            "cy=\"", plotted_y_vals[i], "\" ",
+            "r=\"", data_point_radius, "\" ",
+            "stroke=\"", data_point_stroke_color, "\" ",
+            "stroke-width=\"", data_point_stroke_width, "\" ",
+            "fill=\"", data_point_fill_color, "\" ",
+            ">",
+            "</circle>"
+          )
+
+        circle_strings <- c(circle_strings, circle_strings_i)
+      }
+
+      circle_tags <- paste(circle_strings, collapse = "\n")
+
+    } else {
+      circle_tags <- NULL
+    }
+
+    boxplot_tags <-
+      paste0(
+        "<line ",
+        "x1=\"", fence_start, "\" ",
+        "y1=\"", (bottom_y / 2), "\" ",
+        "x2=\"", fence_end, "\" ",
+        "y2=\"", (bottom_y / 2), "\" ",
+        "width=\"", box_width, "\" ",
+        "height=\"", box_thickness, "\" ",
+        "stroke=\"", data_bar_stroke_color[1], "\" ",
+        "stroke-width=\"", data_bar_stroke_width[1], "\" ",
+        "fill=\"none\"",
+        ">",
+        "</line>",
+        "<rect ",
+        "x=\"", box_start, "\" ",
+        "y=\"", (bottom_y / 2) - (box_thickness / 2), "\" ",
+        "width=\"", box_width, "\" ",
+        "height=\"", box_thickness, "\" ",
+        "stroke=\"", data_bar_stroke_color[1], "\" ",
+        "stroke-width=\"", data_bar_stroke_width[1], "\" ",
+        "fill=\"white\" ",
+        ">",
+        "</rect>",
+        "<line ",
+        "x1=\"", fence_start, "\" ",
+        "y1=\"", (bottom_y / 2) - box_thickness / 4, "\" ",
+        "x2=\"", fence_start, "\" ",
+        "y2=\"", (bottom_y / 2) + box_thickness / 4, "\" ",
+        "width=\"", box_width, "\" ",
+        "height=\"", box_thickness, "\" ",
+        "stroke=\"", data_bar_stroke_color[1], "\" ",
+        "stroke-width=\"", data_bar_stroke_width[1], "\" ",
+        "fill=\"", "none", "\" ",
+        ">",
+        "</line>",
+        "<line ",
+        "x1=\"", fence_end, "\" ",
+        "y1=\"", (bottom_y / 2) - box_thickness / 4, "\" ",
+        "x2=\"", fence_end, "\" ",
+        "y2=\"", (bottom_y / 2) + box_thickness / 4, "\" ",
+        "width=\"", box_width, "\" ",
+        "height=\"", box_thickness, "\" ",
+        "stroke=\"", data_bar_stroke_color[1], "\" ",
+        "stroke-width=\"", data_bar_stroke_width[1], "\" ",
+        "fill=\"", "none", "\" ",
+        ">",
+        "</line>",
+        "<line ",
+        "x1=\"", median_x, "\" ",
+        "y1=\"", (bottom_y / 2) - box_thickness / 2, "\" ",
+        "x2=\"", median_x, "\" ",
+        "y2=\"", (bottom_y / 2) + box_thickness / 2, "\" ",
+        "width=\"", box_width, "\" ",
+        "height=\"", box_thickness, "\" ",
+        "stroke=\"", data_bar_stroke_color[1], "\" ",
+        "stroke-width=\"", data_bar_stroke_width[1], "\" ",
+        "fill=\"", "none", "\" ",
+        ">",
+        "</line>",
+        circle_tags
+      )
+
+    # Redefine the `viewbox` in terms of the `data_x_width` value; this ensures
+    # that the horizontal bars are centered about their extreme values
+    viewbox <- paste(left_x, top_y, data_x_width, bottom_y, collapse = " ")
+  }
+
   #
   # Generate zero line for bar plots
   #
 
-  if (plot_type == "bar") {
+  if (plot_type == "bar" && !single_horizontal_bar) {
 
     stroke <- "#BFBFBF"
     stroke_width <- 2
@@ -1094,8 +1626,6 @@ generate_nanoplot <- function(
   #
 
   if (show_y_axis_guide) {
-
-    g_y_axis_strings <- c()
 
     rect_tag <-
       paste0(
@@ -1257,6 +1787,27 @@ generate_nanoplot <- function(
           "stroke: white; ",
           "fill: #212427; ",
           "} ",
+          ".horizontal-line:hover text { ",
+          "stroke: white; ",
+          "fill: #212427; ",
+          "} ",
+          ".horizontal-line:hover rect { ",
+          "fill: transparent; ",
+          "stroke: transparent; ",
+          "color: blue; ",
+          "} ",
+          ".boxplot-line:hover text { ",
+          "stroke: white; ",
+          "fill: #212427; ",
+          "} ",
+          ".boxplot-line:hover rect { ",
+          "fill: transparent; ",
+          "stroke: transparent; ",
+          "} ",
+          ".horizontal-line", ifelse(interactive_data_values, ":hover", ""), " text { ",
+          "stroke: white; ",
+          "fill: #212427; ",
+          "} ",
           ".ref-line:hover rect { ",
           "stroke: #FFFFFF60; ",
           "} ",
@@ -1306,7 +1857,7 @@ generate_nanoplot <- function(
         paste0(
           "<path class=\"pattern-line\" ",
           "d=\"M 0,8 l 8,-8 M -1,1 l 4,-4 M 6,10 l 4,-4\" ",
-          "stroke=\"red\" ",
+          "stroke=\"", data_area_fill_color, "\" ",
           "stroke-width=\"1.5\" ",
           "stroke-linecap=\"round\" ",
           "shape-rendering=\"geometricPrecision\"",
@@ -1396,6 +1947,7 @@ generate_nanoplot <- function(
         data_path_tags,
         zero_line_tags,
         bar_tags,
+        boxplot_tags,
         ref_line_tags,
         circle_tags,
         g_y_axis_tags,

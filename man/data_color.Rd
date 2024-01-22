@@ -155,9 +155,10 @@ providing a color-mapping function to \code{fn}.}
 
 \verb{scalar<numeric|integer>(0>=val>=1)} // \emph{default:} \code{NULL} (\code{optional})
 
-An optional, fixed alpha transparency value that will be applied to all of
-the \code{colors} provided (regardless of whether a color palette was directly
-supplied or generated through a color mapping function).}
+An optional, fixed alpha transparency value that will be applied to all
+color palette values (regardless of whether a color palette was directly
+supplied in \code{palette} or generated through a color mapping function via
+\code{fn}).}
 
 \item{reverse}{\emph{Reverse order of computed colors}
 

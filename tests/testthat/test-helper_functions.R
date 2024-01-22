@@ -541,14 +541,14 @@ test_that("The `from_column()` helper works correctly", {
        render_formats_test("html")
     )[["url"]],
     c(
-      "<a href=\"https://addingtonhighlands.ca\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">apricot</a>",
-      "<a href=\"https://adelaidemetcalfe.on.ca\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">banana</a>",
-      "<a href=\"https://www.adjtos.ca\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">coconut</a>",
-      "<a href=\"https://admastonbromley.com\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">durian</a>",
-      "<a href=\"https://www.ajax.ca\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">missing</a>",
-      "<a href=\"https://alberton.ca\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">fig</a>",
-      "<a href=\"https://www.alfred-plantagenet.com\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">grapefruit</a>",
-      "<a href=\"https://www.algonquinhighlands.ca\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">honeydew</a>"
+      "<span style=\"white-space: pre;\"><a href=\"https://addingtonhighlands.ca\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">apricot</a></span>",
+      "<span style=\"white-space: pre;\"><a href=\"https://adelaidemetcalfe.on.ca\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">banana</a></span>",
+      "<span style=\"white-space: pre;\"><a href=\"https://www.adjtos.ca\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">coconut</a></span>",
+      "<span style=\"white-space: pre;\"><a href=\"https://admastonbromley.com\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">durian</a></span>",
+      "<span style=\"white-space: pre;\"><a href=\"https://www.ajax.ca\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">missing</a></span>",
+      "<span style=\"white-space: pre;\"><a href=\"https://alberton.ca\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">fig</a></span>",
+      "<span style=\"white-space: pre;\"><a href=\"https://www.alfred-plantagenet.com\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">grapefruit</a></span>",
+      "<span style=\"white-space: pre;\"><a href=\"https://www.algonquinhighlands.ca\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">honeydew</a></span>"
     )
   )
 })

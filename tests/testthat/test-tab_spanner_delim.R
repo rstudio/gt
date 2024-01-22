@@ -243,19 +243,11 @@ test_that("The `tab_spanner_delim()` function works correctly", {
   )
 
   # Expect an error if an invalid delimiter specification is used; here
-  # we use strings that aren't a single character (and some cases, vectors
-  # with lengths not equal to one)
-  expect_error(
-    gt(iris_short) %>%
-      tab_spanner_delim(delim = "__")
-  )
+  # we use strings that aren't at least a single character (and, in some cases,
+  # vectors with lengths not equal to one)
   expect_error(
     gt(iris_short) %>%
       tab_spanner_delim(delim = "")
-  )
-  expect_error(
-    gt(iris_short) %>%
-      tab_spanner_delim(delim = "  ")
   )
   expect_error(
     gt(iris_short) %>%
@@ -767,7 +759,7 @@ test_that("`tab_spanner_delim()` works on higher-order spanning", {
     gt(tbl_5) %>%
     tab_spanner_delim(delim = ".")
 
-  # Take snapshots of `gt_tbl_5a`
+  # Take snapshot of `gt_tbl_5a`
   gt_tbl_5a %>% render_as_html() %>% expect_snapshot()
 
   gt_tbl_5b <-
@@ -777,7 +769,7 @@ test_that("`tab_spanner_delim()` works on higher-order spanning", {
       columns = c(all.W.A, all.X.B)
     )
 
-  # Take snapshots of `gt_tbl_5b`
+  # Take snapshot of `gt_tbl_5b`
   gt_tbl_5b %>% render_as_html() %>% expect_snapshot()
 
   gt_tbl_5c <-
@@ -787,8 +779,89 @@ test_that("`tab_spanner_delim()` works on higher-order spanning", {
       columns = c(all.W.A, all.Z.B)
     )
 
-  # Take snapshots of `gt_tbl_5c`
+  # Take snapshot of `gt_tbl_5c`
   gt_tbl_5c %>% render_as_html() %>% expect_snapshot()
+
+  # Generate a table with delimiters that are composed of several characters
+  # and are asymmetric with regard to the ordering of characters
+  tbl_5m <-
+    dplyr::tibble(
+      all__1W__1A = 1,
+      all__1X__1B = 2,
+      all__1Y__1A = 3,
+      all__1Z__1B = 4
+    )
+
+  gt_tbl_5m_a <-
+    gt(tbl_5m) %>%
+    tab_spanner_delim(delim = "__1", split = "last")
+
+  # Take snapshot of `gt_tbl_5m_a`
+  gt_tbl_5m_a %>% render_as_html() %>% expect_snapshot()
+
+  gt_tbl_5m_b <-
+    gt(tbl_5m) %>%
+    tab_spanner_delim(delim = "__1", split = "first")
+
+  # Take snapshot of `gt_tbl_5m_b`
+  gt_tbl_5m_b %>% render_as_html() %>% expect_snapshot()
+
+  gt_tbl_5m_c <-
+    gt(tbl_5m) %>%
+    tab_spanner_delim(delim = "__1", split = "first", limit = 1)
+
+  # Take snapshot of `gt_tbl_5m_c`
+  gt_tbl_5m_c %>% render_as_html() %>% expect_snapshot()
+
+  gt_tbl_5m_d <-
+    gt(tbl_5m) %>%
+    tab_spanner_delim(delim = "__1", split = "first", limit = 2)
+
+  # Take snapshot of `gt_tbl_5m_d`
+  gt_tbl_5m_d %>% render_as_html() %>% expect_snapshot()
+
+  gt_tbl_5m_e <-
+    gt(tbl_5m) %>%
+    tab_spanner_delim(delim = "__1", split = "last", limit = 1)
+
+  # Take snapshot of `gt_tbl_5m_e`
+  gt_tbl_5m_e %>% render_as_html() %>% expect_snapshot()
+
+  gt_tbl_5m_f <-
+    gt(tbl_5m) %>%
+    tab_spanner_delim(delim = "__1", split = "last", limit = 2)
+
+  # Take snapshot of `gt_tbl_5m_f`
+  gt_tbl_5m_f %>% render_as_html() %>% expect_snapshot()
+
+  gt_tbl_5m_g <-
+    gt(tbl_5m) %>%
+    tab_spanner_delim(delim = "__1", split = "last", limit = 2, reverse = TRUE)
+
+  # Take snapshot of `gt_tbl_5m_g`
+  gt_tbl_5m_g %>% render_as_html() %>% expect_snapshot()
+
+  gt_tbl_5m_h <-
+    gt(tbl_5m) %>%
+    tab_spanner_delim(delim = "__1", split = "first", limit = 2, reverse = TRUE)
+
+  # Take snapshot of `gt_tbl_5m_h`
+  gt_tbl_5m_h %>% render_as_html() %>% expect_snapshot()
+
+  gt_tbl_5m_i <-
+    gt(tbl_5m) %>%
+    tab_spanner_delim(delim = "__1", split = "last", limit = 1, reverse = TRUE)
+
+  # Take snapshot of `gt_tbl_5m_i`
+  gt_tbl_5m_i %>% render_as_html() %>% expect_snapshot()
+
+  gt_tbl_5m_j <-
+    gt(tbl_5m) %>%
+    tab_spanner_delim(delim = "__1", split = "first", limit = 1, reverse = TRUE)
+
+  # Take snapshot of `gt_tbl_5m_j`
+  gt_tbl_5m_j %>% render_as_html() %>% expect_snapshot()
+
 
   #
   # Combinations of `tab_spanner_delim()` and `tab_spanner()` to

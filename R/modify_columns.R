@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -2154,16 +2154,16 @@ cols_add <- function(
 #' the `options` argument).  A guide on the left-hand side of the plot area will
 #' appear on hover and display the minimal and maximal *y* values.
 #'
-#' There are two types of nanoplots available: `"line"` and `"bar"`. A line plot
-#' shows individual data points and has smooth connecting lines between them to
-#' allow for easier scanning of values. You can opt for straight-line
-#' connections between data points, or, no connections at all (it's up to you).
-#' You can even eschew the data points and just have a simple line. Regardless
-#' of how you mix and match difference plot layers, the plot area focuses on the
-#' domain of the data points with the goal of showing you the overall trend of
-#' the data. The data you feed into a line plot can consist of a single vector
-#' of values (resulting in equally-spaced *y* values), or, you can supply two
-#' vectors representative of *x* and *y*.
+#' There are three types of nanoplots available: `"line"`, `"bar"`, `"boxplot"`.
+#' A line plot shows individual data points and has smooth connecting lines
+#' between them to allow for easier scanning of values. You can opt for
+#' straight-line connections between data points, or, no connections at all
+#' (it's up to you). You can even eschew the data points and just have a simple
+#' line. Regardless of how you mix and match difference plot layers, the plot
+#' area focuses on the domain of the data points with the goal of showing you
+#' the overall trend of the data. The data you feed into a line plot can consist
+#' of a single vector of values (resulting in equally-spaced *y* values), or,
+#' you can supply two vectors representative of *x* and *y*.
 #'
 #' A bar plot is built a little bit differently. The focus is on evenly-spaced
 #' bars (requiring a single vector of values) that project from a zero line,
@@ -2172,6 +2172,10 @@ cols_add <- function(
 #' over the data points and vertical guides will display values ascribed to
 #' each. A guide on the left-hand side of the plot area will display the minimal
 #' and maximal *y* values on hover.
+#'
+#' Every box plot will take the collection of values for a row and construct the
+#' plot horizontally. This is essentially a standard box-and-whisker diagram
+#' where outliers are automatically displayed outside the left and right fences.
 #'
 #' While basic customization options are present in the `cols_nanoplot()`, many
 #' more opportunities for customizing nanoplots on a more granular level are
@@ -2208,15 +2212,16 @@ cols_add <- function(
 #'
 #' @param plot_type *The type of nanoplot to display*
 #'
-#'   `singl-kw:[line|bar]` // *default:* `"line"`
+#'   `singl-kw:[line|bar|boxplot]` // *default:* `"line"`
 #'
-#'   Nanoplots can either take the form of a line plot (using `"line"`) or a bar
-#'   plot (with `"bar"`). A line plot, by default, contains layers for a data
-#'   line, data points, and a data area. Each of these can be deactivated by
-#'   using [nanoplot_options()]. With a bar plot, the always visible layer is
-#'   that of the data bars. Furthermore, a line plot can optionally take in *x*
-#'   values through the `columns_x_vals` argument whereas a bar plot ignores any
-#'   data representing the independent variable.
+#'   Nanoplots can either take the form of a line plot (using `"line"`), a bar
+#'   plot (with `"bar"`), or a box plot (`"boxplot"`). A line plot, by default,
+#'   contains layers for a data line, data points, and a data area. Each of
+#'   these can be deactivated by using [nanoplot_options()]. With a bar plot,
+#'   the always visible layer is that of the data bars. Furthermore, a line plot
+#'   can optionally take in *x* values through the `columns_x_vals` argument
+#'   whereas bar plots and box plots both ignore any data representing the
+#'   independent variable.
 #'
 #' @param plot_height *The height of the nanoplots*
 #'
@@ -2236,6 +2241,26 @@ cols_add <- function(
 #'   at the sites of missing data, where data lines will have discontinuities;
 #'   (2) `"zero"` will replace `NA` values with zero values; and (3) `"remove"`
 #'   will remove any incoming `NA` values.
+#'
+#' @param autoscale *Automatically set x- and y-axis scale limits based on data*
+#'
+#'   `scalar<logical>` // *default:* `FALSE`
+#'
+#'   Using `autoscale = TRUE` will ensure that the bounds of all nanoplots
+#'   produced are based on the limits of data combined from all input rows. This
+#'   will result in a shared scale across all of the nanoplots (for *y*- and
+#'   *x*-axis data), which is useful in those cases where the nanoplot data
+#'   should be compared across rows.
+#'
+#' @param autohide *Automatically hide the `columns`/`columns_x_vals` column(s)*
+#'
+#'   `scalar<logical>` // *default:* `TRUE`
+#'
+#'   An option to automatically hide any columns specified in `columns` and also
+#'   `columns_x_vals` (if used). Any columns with their state changed to
+#'   'hidden' will behave the same as before, they just won't be displayed in
+#'   the finalized table. Should you want to have these 'input' columns be
+#'   viewable, set `autohide = FALSE`.
 #'
 #' @param columns_x_vals *Columns containing values for the optional x variable*
 #'
@@ -2413,7 +2438,7 @@ cols_add <- function(
 #'   gt(rowname_col = "test") |>
 #'   tab_header("Partial summary of daily tests performed on YF patient") |>
 #'   tab_stubhead(label = md("**Test**")) |>
-#'   cols_hide(columns = c(starts_with("norm"), starts_with("day"))) |>
+#'   cols_hide(columns = starts_with("norm")) |>
 #'   fmt_units(columns = units) |>
 #'   cols_nanoplot(
 #'     columns = starts_with("day"),
@@ -2457,6 +2482,7 @@ cols_add <- function(
 #'   cols_nanoplot(
 #'     columns = c(chicken, classic, supreme, veggie),
 #'     plot_type = "bar",
+#'     autohide = FALSE,
 #'     new_col_name = "pizzas_sold",
 #'     new_col_label = "Sales by Type",
 #'     options = nanoplot_options(
@@ -2497,12 +2523,14 @@ cols_add <- function(
 #'   cols_nanoplot(
 #'     columns = starts_with("population"),
 #'     reference_line = "median",
+#'     autohide = FALSE,
 #'     new_col_name = "population_plot",
 #'     new_col_label = md("*Change*")
 #'   ) |>
 #'   cols_nanoplot(
 #'     columns = starts_with("density"),
 #'     plot_type = "bar",
+#'     autohide = FALSE,
 #'     new_col_name = "density_plot",
 #'     new_col_label = md("*Change*")
 #'   ) |>
@@ -2570,7 +2598,6 @@ cols_add <- function(
 #'       data_bar_fill_color = "DarkOrange"
 #'     )
 #'   ) |>
-#'   cols_hide(columns = matches("0")) |>
 #'   tab_options(
 #'     table.width = px(400),
 #'     column_labels.hidden = TRUE
@@ -2622,7 +2649,6 @@ cols_add <- function(
 #'     title = md("Pizzas sold on **January 1, 2015**"),
 #'     subtitle = "Between the opening hours of 11:30 to 22:30"
 #'   ) |>
-#'   cols_hide(columns = c(date_time, sold)) |>
 #'   cols_nanoplot(
 #'     columns = sold,
 #'     columns_x_vals = date_time,
@@ -2656,6 +2682,51 @@ cols_add <- function(
 #' information. Seems like customers preferred getting the `"chicken"`-type
 #' pizzas in large size!
 #'
+#' Box plots can be generated, and we just need to use `plot_type = "boxplot"`
+#' to make that type of nanoplot. Using a small portion of the [`pizzaplace`]
+#' dataset, we will create a simple table that displays a box plot of pizza
+#' sales for a selection of days. By converting the string-time 24-hour-clock
+#' time values to the number of seconds elapsed in a day, we get continuous
+#' values that can be incorporated into each box plot. And, by supplying a
+#' function to the `y_val_fmt_fn` argument within `nanoplot_options()`, we can
+#' transform the integer seconds values back to clock times for display on
+#' hover.
+#'
+#' ```r
+#' pizzaplace |>
+#'   dplyr::filter(date <= "2015-01-14") |>
+#'   dplyr::mutate(time = as.numeric(hms::as_hms(time))) |>
+#'   dplyr::summarize(time = paste(time, collapse = ","), .by = date) |>
+#'   dplyr::mutate(is_weekend = lubridate::wday(date) %in% 6:7) |>
+#'   gt() |>
+#'   tab_header(title = "Pizza Sales in Early January 2015") |>
+#'   fmt_date(columns = date, date_style = 2) |>
+#'   cols_nanoplot(
+#'     columns = time,
+#'     plot_type = "boxplot",
+#'     options = nanoplot_options(y_val_fmt_fn = function(x) hms::as_hms(x))
+#'   ) |>
+#'   cols_hide(columns = is_weekend) |>
+#'   cols_width(everything() ~ px(250)) |>
+#'   cols_align(align = "center", columns = nanoplots) |>
+#'   cols_align(align = "left", columns = date) |>
+#'   tab_style(
+#'     style = cell_borders(
+#'       sides = "left", color = "gray"),
+#'     locations = cells_body(columns = nanoplots)
+#'   ) |>
+#'   tab_style_body(
+#'     style = cell_fill(color = "#E5FEFE"),
+#'     values = TRUE,
+#'     targets = "row"
+#'   ) |>
+#'   tab_options(column_labels.hidden = TRUE)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_cols_nanoplot_6.png")`
+#' }}
+#'
 #' @family column modification functions
 #' @section Function ID:
 #' 5-8
@@ -2669,9 +2740,11 @@ cols_nanoplot <- function(
     data,
     columns,
     rows = everything(),
-    plot_type = c("line", "bar"),
+    plot_type = c("line", "bar", "boxplot"),
     plot_height = "2em",
     missing_vals = c("gap", "zero", "remove"),
+    autoscale = FALSE,
+    autohide = TRUE,
     columns_x_vals = NULL,
     reference_line = NULL,
     reference_area = NULL,
@@ -2749,6 +2822,35 @@ cols_nanoplot <- function(
     options_plots <- options
   }
 
+  # Get all `y` vals into a vector
+  all_y_vals <- unlist(data_vals_plot_y)
+
+  # Get all `y` vals from single-valued components of `data_vals_plot_y`
+  # into a vector
+  all_single_y_vals <- c()
+  for (i in seq_along(data_vals_plot_y)) {
+    if (length(data_vals_plot_y[[i]]) == 1 && !is.na(data_vals_plot_y[[i]])) {
+      all_single_y_vals <- c(all_single_y_vals, data_vals_plot_y[[i]])
+    }
+  }
+
+  # Automatically apply `expand_x` and `expand_y` values as necessary if
+  # `autoscale` has been set to TRUE
+  if (autoscale) {
+
+    min_y_vals <- min(all_y_vals, na.rm = TRUE)
+    max_y_vals <- max(all_y_vals, na.rm = TRUE)
+    expand_y <- c(min_y_vals, max_y_vals)
+
+    if (!is.null(data_vals_plot_x)) {
+
+      all_x_vals <- unlist(data_vals_plot_x)
+      min_x_vals <- min(all_x_vals, na.rm = TRUE)
+      max_x_vals <- max(all_x_vals, na.rm = TRUE)
+      expand_x <- c(min_x_vals, max_x_vals)
+    }
+  }
+
   # Initialize vector that will contain the nanoplots
   nanoplots <- c()
 
@@ -2771,6 +2873,8 @@ cols_nanoplot <- function(
         expand_x = expand_x,
         expand_y = expand_y,
         missing_vals = missing_vals,
+        all_y_vals = all_y_vals,
+        all_single_y_vals = all_single_y_vals,
         plot_type = plot_type,
         line_type = options_plots$data_line_type,
         currency = options_plots$currency,
@@ -2783,6 +2887,7 @@ cols_nanoplot <- function(
         data_point_fill_color = options_plots$data_point_fill_color,
         data_line_stroke_color = options_plots$data_line_stroke_color,
         data_line_stroke_width = options_plots$data_line_stroke_width,
+        data_area_fill_color = options_plots$data_area_fill_color,
         data_bar_stroke_color = options_plots$data_bar_stroke_color,
         data_bar_stroke_width = options_plots$data_bar_stroke_width,
         data_bar_fill_color = options_plots$data_bar_fill_color,
@@ -2800,6 +2905,7 @@ cols_nanoplot <- function(
         show_ref_area = options_plots$show_reference_area,
         show_vertical_guides = options_plots$show_vertical_guides,
         show_y_axis_guide = options_plots$show_y_axis_guide,
+        interactive_data_values = options_plots$interactive_data_values,
         svg_height = plot_height
       )
 
@@ -2892,6 +2998,24 @@ cols_nanoplot <- function(
       ),
       locations = cells_body(columns = validated_new_col_name)
     )
+
+  if (isTRUE(autohide)) {
+
+    data <-
+      cols_hide(
+        data = data,
+        columns = resolved_columns
+      )
+
+    if (length(resolved_columns_x) > 0) {
+
+      data <-
+        cols_hide(
+          data = data,
+          columns = resolved_columns_x
+        )
+    }
+  }
 
   data
 }

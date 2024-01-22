@@ -8,9 +8,11 @@ cols_nanoplot(
   data,
   columns,
   rows = everything(),
-  plot_type = c("line", "bar"),
+  plot_type = c("line", "bar", "boxplot"),
   plot_height = "2em",
   missing_vals = c("gap", "zero", "remove"),
+  autoscale = FALSE,
+  autohide = TRUE,
   columns_x_vals = NULL,
   reference_line = NULL,
   reference_area = NULL,
@@ -57,15 +59,16 @@ expressions to filter down to the rows we need (e.g.,
 
 \item{plot_type}{\emph{The type of nanoplot to display}
 
-\verb{singl-kw:[line|bar]} // \emph{default:} \code{"line"}
+\verb{singl-kw:[line|bar|boxplot]} // \emph{default:} \code{"line"}
 
-Nanoplots can either take the form of a line plot (using \code{"line"}) or a bar
-plot (with \code{"bar"}). A line plot, by default, contains layers for a data
-line, data points, and a data area. Each of these can be deactivated by
-using \code{\link[=nanoplot_options]{nanoplot_options()}}. With a bar plot, the always visible layer is
-that of the data bars. Furthermore, a line plot can optionally take in \emph{x}
-values through the \code{columns_x_vals} argument whereas a bar plot ignores any
-data representing the independent variable.}
+Nanoplots can either take the form of a line plot (using \code{"line"}), a bar
+plot (with \code{"bar"}), or a box plot (\code{"boxplot"}). A line plot, by default,
+contains layers for a data line, data points, and a data area. Each of
+these can be deactivated by using \code{\link[=nanoplot_options]{nanoplot_options()}}. With a bar plot,
+the always visible layer is that of the data bars. Furthermore, a line plot
+can optionally take in \emph{x} values through the \code{columns_x_vals} argument
+whereas bar plots and box plots both ignore any data representing the
+independent variable.}
 
 \item{plot_height}{\emph{The height of the nanoplots}
 
@@ -85,6 +88,26 @@ strategies available for their handling: (1) \code{"gap"} will display data gaps
 at the sites of missing data, where data lines will have discontinuities;
 (2) \code{"zero"} will replace \code{NA} values with zero values; and (3) \code{"remove"}
 will remove any incoming \code{NA} values.}
+
+\item{autoscale}{\emph{Automatically set x- and y-axis scale limits based on data}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+Using \code{autoscale = TRUE} will ensure that the bounds of all nanoplots
+produced are based on the limits of data combined from all input rows. This
+will result in a shared scale across all of the nanoplots (for \emph{y}- and
+\emph{x}-axis data), which is useful in those cases where the nanoplot data
+should be compared across rows.}
+
+\item{autohide}{\emph{Automatically hide the \code{columns}/\code{columns_x_vals} column(s)}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+An option to automatically hide any columns specified in \code{columns} and also
+\code{columns_x_vals} (if used). Any columns with their state changed to
+'hidden' will behave the same as before, they just won't be displayed in
+the finalized table. Should you want to have these 'input' columns be
+viewable, set \code{autohide = FALSE}.}
 
 \item{columns_x_vals}{\emph{Columns containing values for the optional x variable}
 
@@ -190,16 +213,16 @@ the currency code to the \code{\link[=nanoplot_options]{nanoplot_options()}} hel
 the \code{options} argument).  A guide on the left-hand side of the plot area will
 appear on hover and display the minimal and maximal \emph{y} values.
 
-There are two types of nanoplots available: \code{"line"} and \code{"bar"}. A line plot
-shows individual data points and has smooth connecting lines between them to
-allow for easier scanning of values. You can opt for straight-line
-connections between data points, or, no connections at all (it's up to you).
-You can even eschew the data points and just have a simple line. Regardless
-of how you mix and match difference plot layers, the plot area focuses on the
-domain of the data points with the goal of showing you the overall trend of
-the data. The data you feed into a line plot can consist of a single vector
-of values (resulting in equally-spaced \emph{y} values), or, you can supply two
-vectors representative of \emph{x} and \emph{y}.
+There are three types of nanoplots available: \code{"line"}, \code{"bar"}, \code{"boxplot"}.
+A line plot shows individual data points and has smooth connecting lines
+between them to allow for easier scanning of values. You can opt for
+straight-line connections between data points, or, no connections at all
+(it's up to you). You can even eschew the data points and just have a simple
+line. Regardless of how you mix and match difference plot layers, the plot
+area focuses on the domain of the data points with the goal of showing you
+the overall trend of the data. The data you feed into a line plot can consist
+of a single vector of values (resulting in equally-spaced \emph{y} values), or,
+you can supply two vectors representative of \emph{x} and \emph{y}.
 
 A bar plot is built a little bit differently. The focus is on evenly-spaced
 bars (requiring a single vector of values) that project from a zero line,
@@ -208,6 +231,10 @@ default, any type of nanoplot will have basic interactivity. One can hover
 over the data points and vertical guides will display values ascribed to
 each. A guide on the left-hand side of the plot area will display the minimal
 and maximal \emph{y} values on hover.
+
+Every box plot will take the collection of values for a row and construct the
+plot horizontally. This is essentially a standard box-and-whisker diagram
+where outliers are automatically displayed outside the left and right fences.
 
 While basic customization options are present in the \code{cols_nanoplot()}, many
 more opportunities for customizing nanoplots on a more granular level are
@@ -316,7 +343,7 @@ possible to define a column label here using the \code{new_col_label} argument.
   gt(rowname_col = "test") |>
   tab_header("Partial summary of daily tests performed on YF patient") |>
   tab_stubhead(label = md("**Test**")) |>
-  cols_hide(columns = c(starts_with("norm"), starts_with("day"))) |>
+  cols_hide(columns = starts_with("norm")) |>
   fmt_units(columns = units) |>
   cols_nanoplot(
     columns = starts_with("day"),
@@ -359,6 +386,7 @@ in \code{\link[=nanoplot_options]{nanoplot_options()}}.
   cols_nanoplot(
     columns = c(chicken, classic, supreme, veggie),
     plot_type = "bar",
+    autohide = FALSE,
     new_col_name = "pizzas_sold",
     new_col_label = "Sales by Type",
     options = nanoplot_options(
@@ -398,12 +426,14 @@ elect to hide most of those with \code{\link[=cols_hide]{cols_hide()}}.
   cols_nanoplot(
     columns = starts_with("population"),
     reference_line = "median",
+    autohide = FALSE,
     new_col_name = "population_plot",
     new_col_label = md("*Change*")
   ) |>
   cols_nanoplot(
     columns = starts_with("density"),
     plot_type = "bar",
+    autohide = FALSE,
     new_col_name = "density_plot",
     new_col_label = md("*Change*")
   ) |>
@@ -470,7 +500,6 @@ bars.
       data_bar_fill_color = "DarkOrange"
     )
   ) |>
-  cols_hide(columns = matches("0")) |>
   tab_options(
     table.width = px(400),
     column_labels.hidden = TRUE
@@ -521,7 +550,6 @@ streams in each row (having the same number of values) we can now make a
     title = md("Pizzas sold on **January 1, 2015**"),
     subtitle = "Between the opening hours of 11:30 to 22:30"
   ) |>
-  cols_hide(columns = c(date_time, sold)) |>
   cols_nanoplot(
     columns = sold,
     columns_x_vals = date_time,
@@ -554,6 +582,50 @@ U.S. Dollars (hovering over data points gives correctly formatted values).
 Finally, having a reference line based on the median gives pretty useful
 information. Seems like customers preferred getting the \code{"chicken"}-type
 pizzas in large size!
+
+Box plots can be generated, and we just need to use \code{plot_type = "boxplot"}
+to make that type of nanoplot. Using a small portion of the \code{\link{pizzaplace}}
+dataset, we will create a simple table that displays a box plot of pizza
+sales for a selection of days. By converting the string-time 24-hour-clock
+time values to the number of seconds elapsed in a day, we get continuous
+values that can be incorporated into each box plot. And, by supplying a
+function to the \code{y_val_fmt_fn} argument within \code{nanoplot_options()}, we can
+transform the integer seconds values back to clock times for display on
+hover.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
+  dplyr::filter(date <= "2015-01-14") |>
+  dplyr::mutate(time = as.numeric(hms::as_hms(time))) |>
+  dplyr::summarize(time = paste(time, collapse = ","), .by = date) |>
+  dplyr::mutate(is_weekend = lubridate::wday(date) \%in\% 6:7) |>
+  gt() |>
+  tab_header(title = "Pizza Sales in Early January 2015") |>
+  fmt_date(columns = date, date_style = 2) |>
+  cols_nanoplot(
+    columns = time,
+    plot_type = "boxplot",
+    options = nanoplot_options(y_val_fmt_fn = function(x) hms::as_hms(x))
+  ) |>
+  cols_hide(columns = is_weekend) |>
+  cols_width(everything() ~ px(250)) |>
+  cols_align(align = "center", columns = nanoplots) |>
+  cols_align(align = "left", columns = date) |>
+  tab_style(
+    style = cell_borders(
+      sides = "left", color = "gray"),
+    locations = cells_body(columns = nanoplots)
+  ) |>
+  tab_style_body(
+    style = cell_fill(color = "#E5FEFE"),
+    values = TRUE,
+    targets = "row"
+  ) |>
+  tab_options(column_labels.hidden = TRUE)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_nanoplot_6.png" alt="This image of a table was generated from the sixth code example in the `cols_nanoplot()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{

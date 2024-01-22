@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -800,8 +800,8 @@ resolve_spanned_column_names <- function(
 #'
 #' The `tab_spanner_delim()` function can take specially-crafted column names
 #' and generate one or more spanners (and revise column labels at the same
-#' time). This is done by splitting the column name by a specified delimiter
-#' (this is the `delim`) and placing the fragments from top to bottom (i.e.,
+#' time). This is done by splitting the column name by the specified delimiter
+#' text (`delim`) and placing the fragments from top to bottom (i.e.,
 #' higher-level spanners to the column labels) or vice versa. Furthermore,
 #' neighboring text fragments on different spanner levels that have the same
 #' text will be coalesced together. For instance, having the three side-by-side
@@ -811,16 +811,16 @@ resolve_spanned_column_names <- function(
 #' `cols_spanner_delim()` to slice and dice delimited column names in different
 #' ways:
 #'
-#' - the delimiter: choose which delimiter to use for the fragmentation of
+#' - delimiter text: choose the delimiter text to use for the fragmentation of
 #' column names into spanners with the `delim` argument
 #' - direction and amount of splitting: we can choose to split *n* times
 #' according to a `limit` argument, and, we get to specify from which side of
-#' the column name the splitting should occur
+#' the column name the splitting should commence
 #' - reversal of fragments: we can reverse the order the fragments we get from
-#' the splitting procedure
-#' - column constraints: define which columns in a **gt** table that should
-#' participate in spanner creation using vectors or **tidyselect**-style
-#' expressions
+#' the splitting procedure with the `reverse` argument
+#' - column constraints: it's possible to constrain which columns in a **gt**
+#' table should participate in spanner creation using vectors or
+#' **tidyselect**-style expressions
 #'
 #' @inheritParams tab_spanner
 #'
@@ -828,8 +828,8 @@ resolve_spanned_column_names <- function(
 #'
 #'   `scalar<character>` // **required**
 #'
-#'   The delimiter to use to split an input column name. This should be a single
-#'   character (e.g., `"_"`, `"."`, etc.).
+#'   The delimiter text to use to split one of more column names (i.e., those
+#'   that are targeted via the `columns` argument).
 #'
 #' @param columns *Columns to target*
 #'
@@ -1118,8 +1118,8 @@ tab_spanner_delim <- function(
     cli::cli_abort("`delim` must be a single value.")
   }
 
-  if (nchar(delim) != 1) {
-    cli::cli_abort("The value supplied for `delim` must be a single character.")
+  if (nchar(delim) < 1) {
+    cli::cli_abort("The value supplied for `delim` must be at least a single character.")
   }
 
   # Get all of the columns in the dataset
@@ -1323,6 +1323,8 @@ str_split_across <- function(
     reverse = FALSE
 ) {
 
+  delim_width <- nchar(delim)
+
   if (is.null(n)) {
 
     x_split <- unlist(strsplit(x, split = delim, fixed = TRUE))
@@ -1353,7 +1355,6 @@ str_split_across <- function(
   x_split <- x
 
   for (i in seq_len(n)) {
-
     if (split == "last") {
 
       x_split_i <- x_split[1]
@@ -1370,7 +1371,7 @@ str_split_across <- function(
 
       x_split_n <- nchar(x_split_i)
       x_split_1 <- substr(x_split_i, start = 1, stop = split_delim - 1)
-      x_split_2 <- substr(x_split_i, start = split_delim + 1, x_split_n)
+      x_split_2 <- substr(x_split_i, start = split_delim + delim_width, x_split_n)
 
       x_split <- c(x_split_1, x_split_2, x_split)
 
@@ -1390,7 +1391,7 @@ str_split_across <- function(
 
       x_split_n <- nchar(x_split_i)
       x_split_1 <- substr(x_split_i, start = 1, stop = split_delim - 1)
-      x_split_2 <- substr(x_split_i, start = split_delim + 1, x_split_n)
+      x_split_2 <- substr(x_split_i, start = split_delim + delim_width, x_split_n)
 
       x_split <- c(x_split, x_split_1, x_split_2)
     }
