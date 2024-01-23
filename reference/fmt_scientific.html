@@ -407,14 +407,14 @@ cells.</p>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_scientific_1.png" alt="This image of a table was generated from the first code example in the `fmt_scientific()` help file." style="width:100%;"></p>
 <p>The <code><a href="constants.html">constants</a></code> table contains a plethora of data on the fundamental
-physical constant and most values (in the units used) are either very small
-or very large, so scientific formatting is suitable. The values differ in the
-degree of measurement precision and separate columns (<code>sf_value</code> and
-<code>sf_uncert</code>) contain the exact number of significant figures for each
-measurement value and the associated uncertainty value. We can use the
+physical constants and values range from very small to very large, warranting
+the use of figures in scientific notation. Because the values differ in the
+degree of measurement precision, the dataset has columns (<code>sf_value</code> and
+<code>sf_uncert</code>) that include the number of significant figures for each
+measurement value and for the associated uncertainty. We can use the
 <code>n_sigfig</code> argument of <code>fmt_scientific()</code> in conjunction with the
-<code><a href="from_column.html">from_column()</a></code> helper to get the correct number of significant digits for
-each value.</p>
+<code><a href="from_column.html">from_column()</a></code> helper to format each value and its uncertainty to the proper
+number of significant digits.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">constants</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"Planck"</span>, <span class="va">name</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
