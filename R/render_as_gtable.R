@@ -1,25 +1,34 @@
 
-render_as_gtable <- function(data) {
+render_as_gtable <- function(data, text_grob = grid::textGrob) {
 
   data <- build_data(data = data, context = "html")
   data <- add_css_styles(data = data)
-  # data <- add_grid_styles(data = data)
 
-  caption_component <- create_caption_component_g(data = data)
-  heading_component <- create_heading_component_g(data = data)
-  columns_component <- create_columns_component_g(data = data)
-  body_component    <- create_body_component_g(data = data)
-  source_notes_component <- create_source_notes_component_g(data = data)
-  footnotes_component <- create_footnotes_component_g(data = data)
+  caption_component <-
+    create_caption_component_g(data = data)
+  heading_component <-
+    create_heading_component_g(data = data)
+  columns_component <-
+    create_columns_component_g(data = data)
+  body_component <-
+    create_body_component_g(data = data)
+  source_notes_component <-
+    create_source_notes_component_g(data = data)
+  footnotes_component <-
+    create_footnotes_component_g(data = data)
 
-  layout <- combine_components(
-    caption = caption_component,
-    heading = heading_component,
-    columns = columns_component,
-    body    = body_component,
-    source  = source_notes_component,
-    footnotes = footnotes_component
-  )
+  layout <-
+    combine_components(
+      caption   = caption_component,
+      heading   = heading_component,
+      columns   = columns_component,
+      body      = body_component,
+      source    = source_notes_component,
+      footnotes = footnotes_component
+    )
+
+  layout$grobs <-
+    render_grobs(layout = layout, data = data, text_grob = text_grob)
 
   gtable <- finalize_gtable(layout, data)
   grid::grid.newpage(); grid::grid.draw(gtable)
@@ -28,7 +37,7 @@ render_as_gtable <- function(data) {
 combine_components <- function(caption = NULL, heading = NULL, columns = NULL,
                                body = NULL, source = NULL, footnotes = NULL) {
   vertical <- c("top", "bottom")
-  n <- max(caption$bottom %||% 0)
+  n <- n_caption <- max(caption$bottom %||% 0)
 
   if (!is.null(heading)) {
     heading[vertical] <- heading[vertical] + n
@@ -40,10 +49,12 @@ combine_components <- function(caption = NULL, heading = NULL, columns = NULL,
     n <- max(columns$bottom %||% n)
   }
 
+  body_start <- n
   if (!is.null(body)) {
     body[vertical] <- body[vertical] + n
     n <- max(body$bottom %||% n)
   }
+  body_end <- n
 
   if (!is.null(footnotes)) {
     footnotes[vertical] <- footnotes[vertical] + n
@@ -52,36 +63,69 @@ combine_components <- function(caption = NULL, heading = NULL, columns = NULL,
 
   if (!is.null(source)) {
     source[vertical] <- source[vertical] + n
-
   }
 
-  vctrs::vec_c(caption, heading, columns, body, source, footnotes)
+  n_cols <- max(body$right)
+  # A table body typically renders top and bottom borders for the
+  # body part. We implement this a large cell without label
+  table_body <- grid_layout(
+    left = 1, right = n_cols,
+    label   = "",
+    classes = list("gt_table_body"),
+    style   = list("background-color: transparent"),
+    top = body_start + 1, bottom = body_end
+  )
+
+  # The table itself renders top and bottom borders for everything excluding
+  # the caption
+  table <- grid_layout(
+    left = 1, right = n_cols,
+    label = "",
+    classes = list("gt_table"),
+    style   = list("background-color: transparent"),
+    top = n_caption + 1, bottom = max(source$bottom %||% n)
+  )
+
+  vctrs::vec_c(
+    caption, heading, columns, body, source, footnotes,
+    table_body, table
+  )
+}
+
+render_grobs <- function(
+  layout, data,
+  text_grob = grid::textGrob,
+  cell_grob = grid::segmentsGrob
+) {
+  style <- grid_resolve_style(layout = layout, data = data)
+  Map(
+    label = layout$label,
+    style = style,
+    f     = render_grid_cell,
+    MoreArgs = list(
+      text_grob = text_grob,
+      cell_grob = cell_grob
+    )
+  )
 }
 
 finalize_gtable <- function(layout, data) {
 
-  classes <- set_classes(layout, data)
-
-  grobs <- Map(
-    label = layout$label,
-    class = classes,
-    f = render_grid_cell
-  )
-
-  widths  <- grid_layout_widths(layout, grobs)
-  heights <- grid_layout_heights(layout, grobs)
+  widths  <- grid_layout_widths(layout, data)
+  heights <- grid_layout_heights(layout)
 
   gtable <- gtable::gtable(widths = widths, heights = heights)
   gtable <- gtable::gtable_add_grob(
-    gtable, grobs, name = "cells", clip = "off",
+    gtable, layout$grobs, name = "cells", clip = "off",
     t = layout$top, l = layout$left, b = layout$bottom, r = layout$right
   )
+  gtable <- grid_align_gtable(gtable, data)
   gtable
 }
 
-grid_layout_heights <- function(layout, grobs) {
+grid_layout_heights <- function(layout) {
 
-  heights <- vapply(grobs, `[[`, numeric(1), "height")
+  heights <- vapply(layout$grobs, `[[`, numeric(1), "height")
 
   rows <- vctrs::vec_group_loc(layout[, c("top", "bottom")])
   rows$height <- vapply(rows$loc, function(i) max(heights[i]), numeric(1))
@@ -90,26 +134,55 @@ grid_layout_heights <- function(layout, grobs) {
   singles <- rows[is_single, ]
   spanner <- rows[!is_single, ]
 
-  singles <- singles$height[order(singles$key$top)]
+  heights <- rep(0, max(layout$bottom))
+  heights[singles$key$top] <- singles$height
   spanner <- spanner[order(spanner$key$top, spanner$key$bottom), ]
 
   for (i in seq_len(nrow(spanner))) {
     top <- spanner$key$top[i]
     bottom <- spanner$key$bottom[i]
-    single_size <- sum(singles[top:bottom])
+    single_size <- sum(heights[top:bottom])
     extra_height <- spanner$height[i] - single_size
     if (extra_height < 0) {
       next
     }
     extra_height <- extra_height / (bottom - top + 1)
-    singles[top:bottom] <- singles[top:bottom] + extra_height
+    heights[top:bottom] <- heights[top:bottom] + extra_height
   }
-  grid::unit(singles, .grid_unit)
+  grid::unit(heights, .grid_unit)
 }
 
-grid_layout_widths <- function(layout, grobs) {
+grid_align_gtable <- function(gtable, data) {
 
-  widths <- vapply(grobs, `[[`, numeric(1), "width")
+  left  <- dt_options_get_value(data, "table_margin_left")
+  right <- dt_options_get_value(data, "table_margin_right")
+
+  if (left == "auto") {
+    left <- grid::unit(0.5, "null")
+  } else if (grepl("\\%$", left)) {
+    left <- as.numeric(gsub("\\%$", "", left)) / 100
+    left <- grid::unit(left * 0.5, "null")
+  } else {
+    left <- grid::unit(parse_px_to_pt(left), "pt")
+  }
+
+  if (right == "auto") {
+    right <- grid::unit(0.5, "null")
+  } else if (grepl("\\%$", right)) {
+    right <- as.numeric(gsub("\\%$", "", right)) / 100
+    right <- grid::unit(right * 0.5, "null")
+  } else {
+    right <- grid::unit(grid::unit(parse_px_to_pt(left), "pt"))
+  }
+
+  gtable <- gtable::gtable_add_cols(gtable, left,  pos = 0)
+  gtable <- gtable::gtable_add_cols(gtable, right, pos = -1)
+  gtable
+}
+
+grid_layout_widths <- function(layout, data) {
+
+  widths <- vapply(layout$grobs, `[[`, numeric(1), "width")
 
   columns <- vctrs::vec_group_loc(layout[, c("left", "right")])
   columns$width <- vapply(columns$loc, function(i) max(widths[i]), numeric(1))
@@ -118,19 +191,57 @@ grid_layout_widths <- function(layout, grobs) {
   singles <- columns[is_single, ]
   spanner <- columns[!is_single, ]
 
-  singles <- singles$width[order(singles$key$left)]
+  widths <- rep(0, max(layout$right))
+  widths[singles$key$left] <- singles$width
+
+  # Enlarge columns if fixed column widths have been set
+  column_width <- unlist(dt_boxhead_get(data)$column_width)
+  fixed <- integer(0)
+  if (any(nzchar(column_width)) && length(column_width) == length(widths)) {
+    fixed <- which(nzchar(column_width))
+    widths[fixed] <- pmax(parse_px_to_pt(column_width[fixed]), widths[fixed])
+  }
+
   spanner <- spanner[order(spanner$key$left, spanner$key$right), ]
 
   for (i in seq_len(nrow(spanner))) {
     left  <- spanner$key$left[i]
     right <- spanner$key$right[i]
-    single_size <- sum(singles[left:right])
+    single_size <- sum(widths[left:right])
     extra_width <- spanner$width[i] - single_size
     if (extra_width < 0) {
       next
     }
     extra_width <- extra_width / (right - left + 1)
-    singles[left:right] <- singles[left:right] + extra_width
+    widths[left:right] <- widths[left:right] + extra_width
   }
-  grid::unit(singles, .grid_unit)
+
+  total_width <- dt_options_get_value(data, "table_width")
+  if (grepl("px$", total_width)) {
+    total_width <- parse_px_to_pt(total_width)
+    extra_width <- total_width - sum(widths)
+    if (extra_width <= 0 || length(fixed) == length(widths)) {
+      return(grid::unit(widths, .grid_unit))
+    }
+    change <- setdiff(seq_along(widths), fixed)
+    widths[change] <- widths[change] + extra_width / (length(widths[change]))
+    return(grid::unit(widths, .grid_unit))
+  }
+  if (grepl("\\%$", total_width)) {
+    # Set the total width in npc units
+    total_width <- as.numeric(gsub("\\%$", "", total_width)) / 100
+    change <- setdiff(seq_along(widths), fixed)
+    extra_width <- rep(0, length(widths))
+    extra_width[change] <- total_width / length(change)
+    extra_width <- grid::unit(extra_width, "npc")
+
+    # Subtract the size of fixed columns from the npc units
+    extra_width[change] <- extra_width[change] -
+      grid::unit(sum(widths[fixed]) / length(change), .grid_unit)
+
+    # Take pairwise max between minimal size and relative size
+    widths <- grid::unit.pmax(grid::unit(widths, .grid_unit), extra_width)
+    return(widths)
+  }
+  return(grid::unit(widths, .grid_unit))
 }
