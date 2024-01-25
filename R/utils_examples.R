@@ -299,7 +299,7 @@ write_gt_examples_qmd_files <- function(
       ) %>%
       gt(groupname_col = "group", process_md = TRUE) %>%
       fmt_markdown() %>%
-      fmt_url(columns = name, color = "#045AA2") %>%
+      fmt_url(columns = name, color = "#045AA2", target = "_self") %>%
       cols_hide(columns = c(type, family, number)) %>%
       tab_style(
         style = cell_text(
