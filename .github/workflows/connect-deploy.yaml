@@ -57,16 +57,11 @@ jobs:
         run: |
           quarto render gt_qmd_examples
 
-      - name: Create manifest.json
-        shell: Rscript {0}
-        run: |
-          rsconnect::writeManifest()
-
-      - name: Publish Connect content
-        uses: rstudio/actions/connect-publish@main
+      - name: Publish to Connect
+        uses: quarto-dev/quarto-actions/publish@v2
         with:
-          url: ${{ secrets.CONNECT_SERVER }}
-          api-key: ${{ secrets.CONNECT_API_KEY }}
-          access-type: all
-          show-logs: true
-          dir: ./gt_qmd_examples/_site:/gt_qmd_examples
+          target: connect
+          path: gt_qmd_examples
+          render: false
+          CONNECT_SERVER: ${{ secrets.CONNECT_SERVER }}
+          CONNECT_API_KEY: ${{ secrets.CONNECT_API_KEY }}
