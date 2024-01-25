@@ -375,6 +375,16 @@ write_gt_examples_qmd_files <- function(
       con = paste0(output_dir, "/gt-", topic, ".qmd")
     )
   }
+
+  writeLines(
+    text = c(
+      "- source: project",
+      "  connect:",
+      "    - id: b5709bdb-5712-42db-b265-2bfa02b5ffb6",
+      "    - url: https://colorado.posit.co/rsc/content/b5709bdb-5712-42db-b265-2bfa02b5ffb6/"
+    ),
+    con = paste0(output_dir, "/_publish.yml")
+  )
 }
 
 #nocov end
