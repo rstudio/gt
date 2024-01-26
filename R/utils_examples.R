@@ -193,7 +193,9 @@ write_gt_examples_qmd_files <- function(
           "constants",
           "illness",
           "rx_adsl",
-          "rx_addv"
+          "rx_addv",
+          "render_gt",
+          "gt_output"
         )
       )
   }
