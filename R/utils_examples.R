@@ -380,8 +380,8 @@ write_gt_examples_qmd_files <- function(
     text = c(
       "- source: project",
       "  connect:",
-      "    - id: b5709bdb-5712-42db-b265-2bfa02b5ffb6",
-      "    - url: https://colorado.posit.co/rsc/content/b5709bdb-5712-42db-b265-2bfa02b5ffb6/"
+      "    - id: b5709bdb-5712-42db-b265-2bfa02b5ffb6"#,
+      #"    - url: https://colorado.posit.co/rsc/content/b5709bdb-5712-42db-b265-2bfa02b5ffb6/"
     ),
     con = paste0(output_dir, "/_publish.yml")
   )
