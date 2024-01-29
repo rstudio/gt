@@ -1,20 +1,15 @@
 on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+  schedule:
+    - cron: '15 23 * * *'
 
-name: quarto-connect-gt-examples-site
+name: connect-quarto-gt-examples-site
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: r-lib/actions/setup-pandoc@v2
+      - name: Check out repository
+        uses: actions/checkout@v4
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
