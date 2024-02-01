@@ -1,4 +1,18 @@
 
+#' Transform a **gt** table object to a gtable
+#'
+#' Take a `gt_tbl` table object and transform it to a gtable.
+#'
+#' @param data A table object that is created using the `gt()` function.
+#' @param plot A `logical(1)` whether the gtable should be rendered on the
+#'   graphics device.
+#' @param text_grob A `function` used to draw text. Defaults to
+#'   `grid::textGrob()`, but can be swapped to `gridtext::richtext_grob()` to
+#'   better render html content.
+#'
+#' @return A `gtable` object
+#'
+#' @noRd
 render_as_gtable <- function(data, plot = FALSE, text_grob = grid::textGrob) {
 
   data <- build_data(data = data, context = "html")

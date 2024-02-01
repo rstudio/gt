@@ -40,6 +40,10 @@
 # style <character>:
 # A style string as computed by `add_css_styles()` or `NA` when a cell has
 # no set styling options
+#
+# name <character>:
+# A base name to assign in the gtable. This makes it easier to use
+# `gtable::gtable_filter()` to select some types of cells.
 
 create_caption_component_g <- function(data) {
 
