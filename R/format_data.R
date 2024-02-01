@@ -1164,14 +1164,14 @@ fmt_integer <- function(
 #' }}
 #'
 #' The [`constants`] table contains a plethora of data on the fundamental
-#' physical constant and most values (in the units used) are either very small
-#' or very large, so scientific formatting is suitable. The values differ in the
-#' degree of measurement precision and separate columns (`sf_value` and
-#' `sf_uncert`) contain the exact number of significant figures for each
-#' measurement value and the associated uncertainty value. We can use the
+#' physical constants and values range from very small to very large, warranting
+#' the use of figures in scientific notation. Because the values differ in the
+#' degree of measurement precision, the dataset has columns (`sf_value` and
+#' `sf_uncert`) that include the number of significant figures for each
+#' measurement value and for the associated uncertainty. We can use the
 #' `n_sigfig` argument of `fmt_scientific()` in conjunction with the
-#' [from_column()] helper to get the correct number of significant digits for
-#' each value.
+#' [from_column()] helper to format each value and its uncertainty to the proper
+#' number of significant digits.
 #'
 #' ```r
 #' constants |>
@@ -11121,7 +11121,7 @@ fmt_markdown <- function(
 #' We can format values with the `fmt_passthrough()` function, which does little
 #' more than: (1) coercing to `character` (as all the `fmt_*()` functions do),
 #' and (2) applying decorator text via the `pattern` argument (the default is to
-#' apply nothing). This foramtting function is useful when don't want to modify
+#' apply nothing). This formatting function is useful when don't want to modify
 #' the input data other than to decorate it within a pattern.
 #'
 #' @inheritParams fmt_number

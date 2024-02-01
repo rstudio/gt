@@ -2139,7 +2139,8 @@ cells_stub <- function(rows = everything()) {
 #'     locations = cells_body(
 #'       columns = hp,
 #'       rows = hp == max(hp)
-#'     )
+#'     ),
+#'     placement = "right"
 #'   ) |>
 #'   opt_footnote_marks(marks = c("*", "+"))
 #' ```
