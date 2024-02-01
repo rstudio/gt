@@ -40,13 +40,13 @@ test_that("create_heading_component_g creates headings", {
   expect_equal(dim(test), c(1, 8))
   expect_equal(test$right, 2)
   expect_equal(test$label, "Foo")
-  expect_in("gt_title", test$classes[[1]])
+  expect_contains(test$classes[[1]], "gt_title")
 
   test <- create_heading_component_g(prep_data(tab_header(gt, "Foo", "Bar")))
   expect_equal(dim(test), c(2, 8))
   expect_equal(test$top, c(1, 2))
   expect_equal(test$label, c("Foo", "Bar"))
-  expect_in("gt_subtitle", test$classes[[2]])
+  expect_contains(test$classes[[2]], "gt_subtitle")
 
   gt <- gt %>% tab_header("Foo", "Bar") %>%
     tab_footnote("x", cells_title("title")) %>%
@@ -54,10 +54,7 @@ test_that("create_heading_component_g creates headings", {
 
   test <- create_heading_component_g(prep_data(gt))
   expect_equal(dim(test), c(2, 8))
-  expect_equal(
-    grepl("gt_footnote_marks", test$label),
-    c(TRUE, TRUE)
-  )
+  expect_match(test$label, "gt_footnote_marks")
 })
 
 test_that("create_columns_component_g creates columns and spanners", {
@@ -221,7 +218,7 @@ test_that("summary_rows_g creates appropriate cells for group summaries", {
     prep_data() %>%
     summary_rows_g(group_id = c("X", "Y"))
 
-  expect_equal(length(test), 2)
+  expect_length(test, 2)
   test <- unlist(test, recursive = FALSE)
   expect_equal(vctrs::list_sizes(test), c(3, 3, 3, 3))
   test <- vctrs::vec_c(!!!test)
