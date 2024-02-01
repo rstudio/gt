@@ -1,0 +1,139 @@
+test_that("gt_tbls can be rendered as a gtable", {
+
+  table <- pizzaplace |>
+    dplyr::filter(type %in% c("classic", "veggie")) |>
+    dplyr::group_by(type, size) |>
+    dplyr::summarize(
+      sold = dplyr::n(),
+      income = sum(price),
+      .groups = "drop"
+    ) |>
+    gt(rowname_col = "size", groupname_col = "type") |>
+    tab_header(title = "Pizzas Sold in 2015") |>
+    fmt_integer(columns = sold) |>
+    fmt_currency(columns = income) |>
+    summary_rows(
+      fns = list(label = "All Sizes", fn = "sum"),
+      side = c("top"),
+      fmt = list(
+        ~ fmt_integer(., columns = sold),
+        ~ fmt_currency(., columns = income)
+      )
+    ) |>
+    tab_options(
+      summary_row.background.color = "gray95",
+      row_group.as_column = TRUE
+    ) |>
+    tab_stub_indent(
+      rows = everything(),
+      indent = 2
+    ) |>
+    grand_summary_rows(
+      columns = c("sold", "income"),
+      fns = list(Sum ~ sum(.)),
+      fmt = ~ fmt_number(.)
+    ) |>
+    tab_caption("Here be caption text") |>
+    tab_spanner(
+      label = "Spanner",
+      columns = c("sold", "income")
+    ) |>
+    tab_stubhead("Stubhead label") |>
+    tab_source_note("Source: the pizzaria") |>
+    tab_footnote("Pineapples not included")
+
+  gtable <- render_as_gtable(table)
+
+  expect_snapshot(gtable$layout)
+
+  names <- unique(gsub("_[0-9]+$", "", gtable$layout$name))
+  expect_in(
+    names,
+    c("caption", "title", "stubhead", "spanner", "column_label",
+      "group_summary", "body_cell", "grand_summary", "source_notes",
+      "footnotes", "table_body", "table")
+  )
+})
+
+test_that("gtable widths are set appropriately", {
+
+  # We want an easy to understand width/height for cells
+  dummy_text <- function(...) {
+    grid::rectGrob(width = grid::unit(100, "pt"), height = grid::unit(100, "pt"))
+  }
+
+  tbl <- data.frame(x = 1, y = 1) %>%
+    gt() %>%
+    tab_options(
+      data_row.padding = "0px",
+      data_row.padding.horizontal = "0px",
+      column_labels.padding = "0px",
+      column_labels.padding.horizontal = "0px"
+    )
+
+  # Automatic width is width of the text + margins
+  test <- render_as_gtable(tbl, text_grob = dummy_text)
+
+  expect_equal(
+    test$widths,
+    grid::unit(c(0.5, 100, 100, 0.5), c("null", "pt", "pt", "null"))
+  )
+  # The gt_col_heading class has a fixed +1px to bottom padding
+  expect_equal(
+    test$heights,
+    grid::unit(c(100 + parse_px_to_pt("1px"), 100), "pt")
+  )
+
+  # Percentage width divides cells into npc units
+  test <- tbl %>%
+    tab_options(
+      table.width = "80%"
+    ) %>%
+    render_as_gtable(tbl, text_grob = dummy_text)
+
+  cell_width <- grid::unit.pmax(
+    grid::unit(100, "pt"),
+    grid::unit(0.4, "npc") + grid::unit(0, "pt")
+  )
+
+  expect_equal(
+    test$widths,
+    grid::unit.c(
+      grid::unit(0.5, "null"),
+      cell_width,
+      cell_width,
+      grid::unit(0.5, "null")
+    )
+  )
+
+  # Left alignment should have 0 on left, and a null unit on right
+  test <- tbl %>%
+    tab_options(
+      table.width = "80%",
+      table.align = "left"
+    ) %>%
+    render_as_gtable(tbl, text_grob = dummy_text)
+
+  expect_equal(
+    test$widths,
+    grid::unit.c(
+      grid::unit(0, "pt"),
+      cell_width,
+      cell_width,
+      grid::unit(0.5, "null")
+    )
+  )
+
+  # Relative margins on both sides
+  test <- tbl %>%
+    tab_options(
+      table.margin.left = "5%",
+      table.margin.right = "15%"
+    ) %>%
+    render_as_gtable(tbl, text_grob = dummy_text)
+
+  expect_equal(
+    as.numeric(test$widths)[1] * 3,
+    as.numeric(test$widths)[4]
+  )
+})
