@@ -1,5 +1,46 @@
 # Layout ------------------------------------------------------------------
 
+# For grid, the `create_*_component_g` functions are used to get a long-format
+# description of every cell in the table.
+# The goal of these layout functions is to get a position layout of cells as a
+# data.frame, along with their class and style information. The layout should
+# contain the following columns:
+#
+# left <integer>:
+# Left position of a cell counting such that left = 1 is the first column in the
+# table.
+#
+# right <integer>:
+# Right position of cell equal to or larger than the 'left' column. When
+# 'right' > 'left', this corresponds to having an html 'colspan' attribute
+# larger than 1.
+#
+# top <integer>:
+# Top position of a cell counting such that top = 1 is the first row in the
+# component. Note that that this applies to 'within-component' rows, and not
+# the final table row. Final 'top' and 'bottom' values are assigned in the
+# `combine_components()` function.
+#
+# bottom <integer>:
+# Bottom position of a cell equal to or larger than the 'top' column. When
+# 'bottom' > 'top', this corresponds to having an html 'rowspan' attribute
+# larger than 1.
+#
+# label <character>:
+# A text label to display in the cell. Note that while the label can contain
+# html, it will not be rendered with markup unless the text grob function
+# supports it, for example when using gridtext as follows:
+# `render_as_gtable(..., text_grob = gridtext::richtext_grob)`
+#
+# classes <list of <character>>:
+# One or multiple class names equivalent to the html class attributes that will
+# determine which css classes are used to populate graphical parameters for
+# the cell (font color, borders, padding etc.).
+#
+# style <character>:
+# A style string as computed by `add_css_styles()` or `NA` when a cell has
+# no set styling options
+
 create_caption_component_g <- function(data) {
 
   table_caption <- dt_options_get_value(data = data, option = "table_caption")
@@ -13,7 +54,8 @@ create_caption_component_g <- function(data) {
     top     = 1,
     label   = table_caption,
     classes = list(c("gt_caption", "gt_center")),
-    style   = list(NA),
+    style   = NA_character_,
+    name    = "caption"
   )
 }
 
@@ -48,22 +90,36 @@ create_heading_component_g <- function(data) {
     }
   }
 
+  # The footnote marks are not great, but might look OK with {gridtext}
+  footnote_title_marks <- ""
   if ("title" %in% footnotes_tbl$locname) {
     footnote_title_marks <-
       coalesce_marks(
         fn_tbl = footnotes_tbl,
         locname = "title"
       )
-    browser()
+    footnote_title_marks <-
+      footnote_mark_to_html(
+        data = data,
+        mark = footnote_title_marks$fs_id_c
+      )
   }
+  footnote_subtitle_marks <- ""
   if (subtitle_defined && "subtitle" %in% footnotes_tbl$locname) {
     footnote_subtitle_marks <-
       coalesce_marks(
         fn_tbl = footnotes_tbl,
         locname = "subtitle"
       )
-    browser()
+    footnote_subtitle_marks <-
+      footnote_mark_to_html(
+        data = data,
+        mark = footnote_subtitle_marks$fs_id_c
+      )
   }
+
+  title_text    <- paste0(heading$title, footnote_title_marks)
+  subtitle_text <- paste0(heading$subtitle, footnote_subtitle_marks)
 
   title_classes <- c("gt_heading", "gt_title", "gt_font_normal")
   subtitle_classes <- tidy_sub(title_classes, "title", "subtitle")
@@ -80,9 +136,10 @@ create_heading_component_g <- function(data) {
     left    = 1,
     right   = n_cols_total,
     top     = c(1, 2),
-    label   = c(heading$title,    heading$subtitle),
+    label   = c(title_text,    subtitle_text),
     classes = list(title_classes, subtitle_classes),
-    style   = list(title_styles,  subtitle_styles),
+    style   = c(title_styles,  subtitle_styles),
+    name    = c("title", "subtitle")
   )
   vctrs::vec_slice(out, nzchar(out$label))
 }
@@ -135,9 +192,9 @@ create_columns_component_g <- function(data) {
   # Layout stubhead
   stubhead_cell <- NULL
   if (length(stub_layout) > 0) {
-    stub_style <- NA
+    stub_style <- NA_character_
     if (nrow(stubhead_style_attrs) > 0) {
-      stub_style <- stubhead_style_attrs$html_style %||% NA
+      stub_style <- stubhead_style_attrs$html_style %||% NA_character_
     }
 
     stubhead_cell <- grid_layout(
@@ -145,7 +202,8 @@ create_columns_component_g <- function(data) {
       bottom  = spanner_row_count + 1, top = 1,
       label   = stubh$label,
       classes = list(c("gt_col_heading", "gt_columns_bottom_border", "gt_left")),
-      style   = as.list(stub_style)
+      style   = stub_style,
+      name    = "stubhead"
     )
   }
 
@@ -186,7 +244,7 @@ create_columns_component_g <- function(data) {
     rle <- vctrs::vec_slice(rle, !is.na(rle$id))
     rle <- vctrs::vec_slice(rle, rle$key$row != spanner_row_count + 1)
 
-    spanner_style <- rep(list(NA), nrow(rle))
+    spanner_style <- rep(NA_character_, nrow(rle))
     if (nrow(spanner_style_attrs) > 0) {
       i <- match(rle$id, spanner_style_attrs$grpname)
       spanner_style[i] <- spanner_style_attrs$html_style
@@ -203,26 +261,29 @@ create_columns_component_g <- function(data) {
       left    = rle$start + length(stub_layout),
       right   = rle$end   + length(stub_layout),
       top     = rle$key$row,
-      label   = t(spanners)[rle$key$spanner],
+      label   = spanners[rle$key$spanner],
       classes = classes,
       style   = spanner_style,
+      name    = "spanner"
     )
   }
 
-  column_style <- rep(list(NA), length(headings_vars))
+  column_style <- rep(NA_character_, length(headings_vars))
   column_style[column_style_attrs[["colnum"]]] <-
     column_style_attrs[["html_style"]]
 
-  classes <- c("gt_col_heading", "gt_columns_bottom_border",
-               paste0("gt_", cols_alignment))
-  classes <- rep(list(classes), length(headings_vars))
+  cols_alignment <- paste0("gt_", cols_alignment)
+  classes <- lapply(cols_alignment, function(x) {
+    c("gt_col_heading", "gt_columns_bottom_border", x)
+  })
 
   column_cells <- grid_layout(
     left    = seq_along(headings_vars) + length(stub_layout),
     top     = spanner_row_count + 1,
     label   = headings_labels,
     classes = classes,
-    style   = as.list(column_style)
+    style   = column_style,
+    name    = "column_label"
   )
 
   vctrs::vec_c(stubhead_cell, spanner_cells, column_cells)
@@ -230,48 +291,7 @@ create_columns_component_g <- function(data) {
 
 create_body_component_g <- function(data) {
 
-  summaries_present <- dt_summary_exists(data = data)
-  list_of_summaries <- dt_summary_df_get(data = data)
   groups_rows_df    <- dt_groups_rows_get(data = data)
-  styles_tbl <- dt_styles_get(data = data)
-
-  cell_matrix <- get_body_component_cell_matrix(data = data)
-
-  n_rows       <- nrow(cell_matrix)
-  n_cols_total <- get_effective_number_of_columns(data = data)
-  n_data_cols  <- get_number_of_visible_data_columns(data = data)
-
-  stub_layout <- get_stub_layout(data = data)
-  has_stub_column  <- "rowname"     %in% stub_layout
-  has_two_col_stub <- "group_label" %in% stub_layout
-
-  col_alignment <-
-    c(dt_boxhead_get_alignments_in_stub(data = data),
-      dt_boxhead_get_vars_align_default(data = data))
-  alignment_classes <- paste0("gt_", col_alignment)
-
-  if (anyNA(groups_rows_df$group_label)) {
-    groups_rows_df <-
-      dplyr::mutate(
-        groups_rows_df,
-        group_label = ifelse(is.na(group_label), "", group_label)
-      )
-  }
-
-  table_stub_striped <-
-    dt_options_get_value(data = data, option = "row_striping_include_stub")
-  table_body_striped <-
-    dt_options_get_value(data = data, option = "row_striping_include_table_body")
-  extra_classes_1 <- rep_len(list(NULL), n_cols_total)
-  extra_classes_2 <-
-    rep_len(list(if (table_body_striped) "gt_striped" else NULL), n_cols_total)
-
-  if ("rowname" %in% stub_layout) {
-    row_label_col <- which(stub_layout == "rowname")
-    extra_classes_1[[row_label_col]] <- "gt_stub"
-    extra_classes_2[[row_label_col]] <-
-      c("gt_stub", if (table_stub_striped) "gt_striped" else NULL)
-  }
 
   # Create group headings
   group_headings <- group_headings_g(data = data)
@@ -288,149 +308,11 @@ create_body_component_g <- function(data) {
   group_summaries <-
     summary_rows_g(data = data, group_id = groups_rows_df$group_id)
 
-  # Compute body rows
-  has_rtl <- grepl(rtl_modern_unicode_charset, cell_matrix)
-  non_center_alignments <- alignment_classes != "gt_center"
-
-  cell_rows <- as.vector(row(cell_matrix))
-  cell_cols <- as.vector(col(cell_matrix))
-  cell_df <- grid_layout(
-    left    = cell_cols,
-    top     = 0,
-    label   = as.vector(cell_matrix),
-    classes = as.list(ifelse(
-      has_rtl & rep(non_center_alignments, nrow(cell_matrix)),
-      "gt_right", alignment_classes[cell_cols]
-    )),
-    style   = list(NULL)
-  )
-
-  body_rows <- vctrs::vec_split(cell_df, cell_rows)$val
-
-  group_ids   <- rep_len(NA_character_, n_rows)
-  row_classes <- rep_len(NA_character_, n_rows)
-
-  idx <- is.na(groups_rows_df$group_id)
-  groups_rows_df$group_id[idx] <- "NA"
-  groups_rows_df$group_label[idx] <- "NA"
-
-  group_idx <- rep(list(NULL), n_rows)
-  group_ids <- rep_len(NA_character_, n_rows)
-  n_groups <- nrow(groups_rows_df)
-
-  for(i in seq_len(n_groups)) {
-    start <- groups_rows_df$row_start[[i]]
-    end <- groups_rows_df$row_end[[i]]
-    group_idx[seq(start, end)] <- i
-    group_ids[seq(start, end)] <- groups_rows_df$group_id[[i]]
-  }
-  groups_list <- as.list(groups_rows_df)
-
-  for (i in seq_len(n_rows)) {
-    this_row <- body_rows[[i]]
-    g <- group_idx[[i]]
-    group_id <- groups_list$group_id[g]
-    group_row_start <- groups_list$row_start[g]
-    group_row_end   <- groups_list$row_end[g]
-    group_has_summary_rows <- groups_list$has_summary_rows[g]
-    group_summary_row_side <- groups_list$summary_row_side[g]
-
-    group_start <- !is.null(g) && group_row_start == i
-
-    extra_classes <- if (i %% 2 == 0) extra_classes_2 else extra_classes_1
-
-    indentation_stub <-
-      dt_stub_indentation_at_position(
-        data = data,
-        i = i
-      )
-
-    if (!is.null(indentation_stub) && indentation_stub != 0) {
-      extra_classes[[row_label_col]] <- c(
-        extra_classes[[row_label_col]],
-        paste0("gt_indent_", indentation_stub)
-      )
-    }
-
-    styles_row <-
-      dt_styles_pluck(
-        styles_tbl = styles_tbl,
-        locname = c("data", "stub"),
-        rownum = i
-      )
-
-    row_styles <-
-      build_row_styles(
-        styles_resolved_row = styles_row,
-        include_stub = has_stub_column,
-        n_cols = n_data_cols
-      )
-
-    remove_first <- FALSE
-    if (has_two_col_stub) {
-      if (group_start) {
-        this_row$bottom[1] <- group_row_end - group_row_start + 1
-        extra_classes[[1]] <- c(extra_classes[[1]], "gt_stub_row_group")
-
-        row_style_row_groups_tbl <-
-          dt_styles_pluck(
-            styles_tbl = styles_tbl,
-            locname = "row_groups",
-            grpname = group_id
-          )
-
-        row_style_group_heading_row <- row_style_row_groups_tbl[["grid_style"]]
-      } else {
-        row_style_group_heading_row <- NULL
-        remove_first <- TRUE
-      }
-      if (is_empty(row_style_group_heading_row)) {
-        row_style_group_heading_row <- NA_character_
-      }
-      row_styles <- c(row_style_group_heading_row, row_styles)
-    }
-
-    this_row$classes <- Map(c, this_row$classes, extra_classes)
-    this_row$style <- as.list(row_styles)
-
-    if (
-      summaries_present &&
-      !is.null(group_has_summary_rows) &&
-      group_has_summary_rows &&
-      has_two_col_stub &&
-      !is.null(group_summary_row_side) &&
-      !is.na(group_summary_row_side) &&
-      group_summary_row_side == "top"
-    ) {
-      if (group_start) {
-        # We have a group label that should be placed next to the summaries
-        # instead of next to regular rows.
-        group_summaries[[g]][[1]]  <-
-          vctrs::vec_c(
-            vctrs::vec_slice(this_row, 1),
-            group_summaries[[g]][[1]]
-          )
-      }
-      remove_first <- TRUE
-    }
-    if (remove_first) {
-      this_row <- vctrs::vec_slice(this_row, -1)
-    }
-    body_rows[[i]] <- this_row
-    if (group_start) {
-      row_classes[i] <- "gt_row_group_first"
-    }
-  }
-
-  if (n_rows == 0) {
-    body_rows <- list()
-  }
+  rows <- body_cells_g(data = data)
 
   # Weave summaries, headings and body
   row_start <- groups_rows_df$row_start
   row_end   <- groups_rows_df$row_end
-
-  rows <- body_rows
 
   if (!is.null(group_headings)) {
     rows <- insert_before(rows, row_start, group_headings)
@@ -502,7 +384,8 @@ group_headings_g <- function(data = data) {
       }
 
       group_class <-
-        if (group_label == "") {
+        if (is.na(group_label) || group_label == "") {
+          group_label <- ""
           "gt_empty_group_heading"
         } else {
           "gt_group_heading"
@@ -513,13 +396,156 @@ group_headings_g <- function(data = data) {
         top = 0,
         label = group_label,
         classes = list(c(group_class, "gt_group_heading_row")),
-        style = list(row_style_group_heading_row)
+        style = row_style_group_heading_row,
+        name = "group_heading"
       ))
     }
   )
 }
 
+body_cells_g <- function(data) {
+
+  summaries_present <- dt_summary_exists(data = data)
+  groups <- dt_groups_rows_get(data = data)
+  styles_tbl <- dt_styles_get(data = data)
+
+  cell_matrix <- get_body_component_cell_matrix(data = data)
+  cell_rows   <- as.vector(row(cell_matrix))
+  cell_cols   <- as.vector(col(cell_matrix))
+  row_seq     <- seq_len(nrow(cell_matrix))
+
+  n_rows <- nrow(cell_matrix)
+  n_cols_total <- get_effective_number_of_columns(data = data)
+
+  stub_layout <- get_stub_layout(data = data)
+  has_two_col_stub <- "group_label" %in% stub_layout
+
+  odd_class <- even_class <- rep_len(list(NULL), n_cols_total)
+
+  # Set striping
+  striped_stub <-
+    dt_options_get_value(data = data, option = "row_striping_include_stub")
+  striped_body <-
+    dt_options_get_value(data = data, option = "row_striping_include_table_body")
+  if (striped_body) {
+    even_class <- rep(list("gt_striped"), n_cols_total)
+  }
+
+  # Set stub class
+  row_label_col <- which(stub_layout == "rowname")
+  if (length(row_label_col) > 0) {
+    odd_class[[row_label_col]] <- "gt_stub"
+    if (striped_stub) {
+      even_class[[row_label_col]] <- c("gt_stub", "gt_striped")
+    } else {
+      even_class[[row_label_col]] <- "gt_stub"
+    }
+  }
+
+  # Weave even/odd classes into matrix
+  cell_classes <- rep(list(odd_class, even_class), length.out = n_rows)
+  cell_classes <- inject(rbind(!!!cell_classes))
+
+  # Set column alignment
+  align_class <- c(dt_boxhead_get_alignments_in_stub(data = data),
+                   dt_boxhead_get_vars_align_default(data = data))
+  align_class <- paste0("gt_", align_class)[cell_cols]
+
+  # Adjust alignment for RtL script
+  has_rtl <- grepl(rtl_modern_unicode_charset, cell_matrix)
+  align_class[has_rtl & align_class != "gt_center"] <- "gt_right"
+
+  # Set stub indentation
+  indent_class <- first_class <-  matrix(list(NULL), n_rows, n_cols_total)
+  if (length(row_label_col) > 0) {
+    stub_indent <- dt_stub_df_get(data = data)
+    stub_indent <-
+      vctrs::vec_slice(stub_indent %||% list(), stub_indent$indent > 0)
+    if (NROW(stub_indent) > 0) {
+      i <- match(row_seq, stub_indent$rownum_i)
+      i <- i[!is.na(i)]
+      indent_class[i, row_label_col] <- paste0("gt_indent_", stub_indent$indent)
+    }
+  }
+
+  # Set first in group
+  first_group <- which(row_seq %in% groups$row_start)
+  first_class[first_group, ] <- "gt_row_group_first"
+
+  # Combine classes
+  classes <- Map(c, first_class, indent_class, cell_classes, align_class)
+
+  # Set style for data/stub cells
+  style <- matrix(NA_character_, n_rows, n_cols_total)
+  cell_style <-
+    dt_styles_pluck(
+      styles_tbl = styles_tbl,
+      locname = c("data", "stub")
+    )
+  style_col <- cell_style$colnum + length(stub_layout)
+  style[cbind(cell_style$rownum, style_col)] <- cell_style$html_style
+
+  # Set style for row group labels
+  if (has_two_col_stub) {
+    cell_style <-
+      dt_styles_pluck(
+        styles_tbl = styles_tbl,
+        locname = "row_groups"
+      )
+    style_row <- with(groups, row_start[match(cell_style$grpname, group_id)])
+    style[style_row, 1] <- cell_style$html_style
+
+    # Override group label
+    cell_matrix[first_group, 1] <- groups$group_label
+  }
+
+  # Set layout
+  layout <- grid_layout(
+    left  = cell_cols,
+    top   = 0, # will be completed later
+    label = undim(cell_matrix),
+    classes = undim(classes),
+    style = undim(style),
+    name  = "body_cell"
+  )
+
+  if (has_two_col_stub) {
+    # Set stub row group
+    group_cell <- which(cell_rows %in% groups$row_start & cell_cols == 1)
+    group <- match(cell_rows[group_cell], groups$row_start)
+    extra_rows <- (groups$row_end - groups$row_start + 1)[group]
+    layout$bottom[group_cell] <- extra_rows
+    layout$classes[group_cell] <-
+      lapply(layout$classes[group_cell], c, "gt_stub_row_group")
+
+    # Shift upward if summaries on top
+    i <- summaries_present &
+      (groups$has_summary_rows %||% FALSE) &
+      (groups$summary_row_side %||% "bottom" == "top") &
+      rep(TRUE, nrow(groups)) # ensures correct length if columns are missing
+    i[is.na(i)] <- FALSE
+    group_cell <- group_cell[i]
+    layout[group_cell, c("top", "bottom")] <-
+      layout[group_cell, c("top", "bottom")] - 1
+
+    # Delete empty cells
+    delete <- which(!(cell_rows %in% groups$row_start) & cell_cols == 1)
+    layout <- vctrs::vec_slice(layout, -delete)
+    cell_rows <- vctrs::vec_slice(cell_rows, -delete)
+  }
+
+  # Split by row
+  rows <- vector("list", n_rows)
+  layout <- vctrs::vec_split(layout, cell_rows)
+  rows[layout$key] <- layout$val
+  rows
+}
+
 summary_rows_g <- function(data, group_id, side_grand_summary = "bottom") {
+  if (is.null(group_id)) {
+    return(NULL)
+  }
+
   groups_rows_df    <- dt_groups_rows_get(data = data)
 
   list_of_summaries <- dt_summary_df_get(data = data)
@@ -528,9 +554,11 @@ summary_rows_g <- function(data, group_id, side_grand_summary = "bottom") {
 
   needs_summary <-
     summaries_present &
-    (groups_rows_df$has_summary_rows %||% FALSE) &
+    (((groups_rows_df$has_summary_rows %||% FALSE) &
     !is.na(groups_rows_df$summary_row_side %||% FALSE) &
-    ((groups_rows_df$summary_row_side %||% "left") %in% c("top", "bottom"))
+    ((groups_rows_df$summary_row_side %||% "left") %in% c("top", "bottom"))) |
+    (group_id == grand_summary_col))
+
 
   if (!any(needs_summary)) {
     return(NULL)
@@ -575,8 +603,13 @@ summary_rows_g <- function(data, group_id, side_grand_summary = "bottom") {
   ncol <- ncol(summary_df)
   left <- right <- col(summary_df) + as.integer(length(stub_layout) > 1)
 
-  if (all(summary_row_type == "grand") && length(stub_layout) > 1) {
-    left[, 1] <- left[, 1] - 1
+  if (all(summary_row_type == "grand")) {
+    if (length(stub_layout) > 1) {
+      left[, 1] <- left[, 1] - 1
+    }
+    if (length(group_id) < length(summary_row_type)) {
+      group_id <- rep(group_id, length(summary_row_type))
+    }
   }
 
   extra_classes <- matrix(list(NULL), nrow = nrow(summary_df), ncol)
@@ -591,11 +624,13 @@ summary_rows_g <- function(data, group_id, side_grand_summary = "bottom") {
     f = c
   )
 
-  styles <- matrix(list(NULL), nrow = nrow(summary_df), ncol)
+  styles <- matrix(NA, nrow = nrow(summary_df), ncol)
 
   is_first <- is_last <- rep(FALSE, sum(n_rows))
   is_first[c(1, cumsum(n_rows)[-length(n_rows)] + 1)] <- TRUE
   is_last[cumsum(n_rows)] <- TRUE
+
+  inner_row <- unlist(lapply(n_rows, seq_len), use.names = FALSE)
 
   for (i in seq_len(nrow(summary_df))) {
 
@@ -626,7 +661,7 @@ summary_rows_g <- function(data, group_id, side_grand_summary = "bottom") {
           styles_tbl = styles_tbl,
           locname = "summary_cells",
           grpname = group_id[i],
-          rownum = i
+          grprow = inner_row[i]
         )
 
       summary_row_class <- "gt_summary_row"
@@ -658,13 +693,20 @@ summary_rows_g <- function(data, group_id, side_grand_summary = "bottom") {
     styles[i, ] <- row_styles
   }
 
+  if (all(summary_row_type == "grand")) {
+    name <- "grand_summary"
+  } else {
+    name <- "group_summary"
+  }
+
   out <- grid_layout(
     left    = undim(left),
     right   = undim(right),
     top     = 0,
     label   = unlist(summary_df, use.names = FALSE),
     classes = undim(extra_classes),
-    style   = undim(styles)
+    style   = undim(styles),
+    name    = name
   )
 
   out <- vctrs::vec_split(out, as.vector(row(summary_df)))$val
@@ -707,7 +749,8 @@ create_source_notes_component_g <- function(data) {
     top     = 1,
     label   = source_notes,
     classes = list(c("gt_sourcenotes", "gt_sourcenote")),
-    style   = as.list(style)
+    style   = style,
+    name    = "source_notes"
   )
 }
 
@@ -769,26 +812,17 @@ create_footnotes_component_g <- function(data) {
     top     = 1,
     label   = text,
     classes = list(c("gt_footnotes", "gt_footnote")),
-    style   = as.list(style)
+    style   = style,
+    name    = "footnotes"
   )
 }
 
 # Cells -------------------------------------------------------------------
 
-grid_layout <- function(left, right = left, top, bottom = top, label,
-                        classes, style) {
-  vctrs::data_frame(
-    left    = left,
-    right   = right,
-    top     = top,
-    bottom  = bottom,
-    label   = label,
-    classes = classes,
-    style   = style,
-    .name_repair = "minimal"
-  )
-}
-
+# This is the main function that takes a label and a style and returns
+# a graphical object for display in a gtable.
+# Note that 'style' is not an html style attribute but a combination of class
+# and style attributes parsed by `grid_resolve_style()`,
 render_grid_cell <- function(
   label,
   style,
@@ -838,6 +872,8 @@ render_grid_cell <- function(
   }
   grobs <- inject(grid::gList(!!!grobs))
 
+  # For efficiency reasons, we do not convert width and height to a proper
+  # grid unit yet.
   grid::gTree(
     children = grobs,
     width  = width,
@@ -846,8 +882,28 @@ render_grid_cell <- function(
   )
 }
 
+# This is just a data.frame wrapper to set standard columns for the layout.
+grid_layout <- function(left, right = left, top, bottom = top, label,
+                        classes, style, name) {
+  vctrs::data_frame(
+    left    = left,
+    right   = right,
+    top     = top,
+    bottom  = bottom,
+    label   = label,
+    classes = classes,
+    style   = style,
+    name    = name,
+    .name_repair = "minimal"
+  )
+}
+
+# This is a parameter setting in which units to measure graphical objects.
+# This can be any absolute unit, but is set to "pt" so that grid can easily
+# combine it with parsed pixels (also in "pt" units).
 .grid_unit <- "pt"
 
+# Function for converting a width or unit to plain numeric.
 grid_width <- function(x) {
   if (grid::is.grob(x)) {
     x <- grid::grobWidth(x)
@@ -855,6 +911,7 @@ grid_width <- function(x) {
   grid::convertWidth(x, .grid_unit, valueOnly = TRUE)
 }
 
+# Function for converting a height or unit to plain numeric.
 grid_height <- function(x) {
   if (grid::is.grob(x)) {
     x <- grid::grobHeight(x)
@@ -864,21 +921,28 @@ grid_height <- function(x) {
 
 # Parsers -----------------------------------------------------------------
 
+# Parser for line width
 parse_lwd <- function(x) {
   parse_px_to_pt(x) / 96 * 72.27
 }
 
+# Parser for line type
 parse_lty <- function(x) {
   unname(.border_style[x])
 }
 
-.border_style <- c("solid" = 1, "dashed" = 2, "dotted" = 3, hidden = NA, double = 1)
+# Line type translation lookup-table
+.border_style <-
+  c("solid" = 1, "dashed" = 2, "dotted" = 3, hidden = NA, double = 1)
 
+# Translating pixels to points, roughly: pt = 0.75 * pt
 parse_px_to_pt <- function(px, ppi = 96) {
   mult <- 72.27 / ppi
   as.numeric(gsub("px$", "", px)) * mult
 }
 
+# Grid shouldn't have a vector of font families for a label, so we pick the
+# first from the families.
 parse_fontfamily <- function(family) {
   if (is.null(family)) {
     return(NULL)
@@ -888,23 +952,28 @@ parse_fontfamily <- function(family) {
   }
 
   family[family == "system-ui"] <- ""
+  family <- gsub("^\\'|\\'$", "", family) # unquote
   family[1]
 }
 
+# Convenience function to parse a single border
 parse_border <- function(style, width, color, side) {
   if (is.null(style) || is.null(width) || is.null(color)) {
     return(NULL)
   }
-  list(
+  vctrs::data_frame(
     lwd = parse_lwd(width),
     lty = parse_lty(style),
     col = rgba_to_hex(color),
-    side = side
+    side = side,
+    .name_repair = "minimal"
   )
 }
 
+# Grid has fewer options for weight/style and these are collapsed in the
+# fontface parameter.
 parse_fontface <- function(weight = "plain", style = "plain") {
-  is_italic <- style  %in% c("italic", "oblique")
+  is_italic <- style %in% c("italic", "oblique")
   if (is.numeric(weight)) {
     is_bold <- weight >= 600
   } else {
@@ -917,6 +986,7 @@ parse_fontface <- function(weight = "plain", style = "plain") {
   face
 }
 
+# Functions for text alignment
 parse_hjust <- function(hjust) {
   new <- match(hjust, c("left", "right")) - 1
   new[is.na(new)] <- 0.5
@@ -929,6 +999,9 @@ parse_vjust <- function(vjust) {
   new
 }
 
+# While grid has the 'cex' parameter for relative fontsize, it is tricky
+# to assign this correctly. Instead we just resolve relative fontsizes by
+# setting the font relative to the 'gt_table' font size.
 parse_fontsize <- function(size, base) {
 
   new_size <- rep(base[1], length(size))
@@ -962,26 +1035,16 @@ parse_fontsize <- function(size, base) {
                     "medium" = 1, "large" = 6 / 5, "x-large" = 6 / 5,
                     "xx-large" = 2, "xxx-large" = 3)
 
+# Position keywords
 .trbl <- c("top", "right", "bottom", "left")
 
-.border_join <- vctrs::data_frame(
-  # Order is top right bottom left
-  x0 = c(0, 1, 1, 0),
-  x1 = c(1, 1, 0, 0),
-  y0 = c(1, 1, 0, 0),
-  y1 = c(1, 0, 0, 1)
-)
-
+# Function for resolving individual borders into cell-wise borders
 combine_borders <- function(top, right, bottom, left) {
-  borders <- lapply(list(top, right, bottom, left), as.data.frame)
-  borders <- vctrs::vec_c(!!!borders)
-  if (nrow(borders) < 1) {
+  borders <- vctrs::vec_c(top, right, bottom, left)
+  if (vctrs::vec_size(borders) < 1) {
     return(NULL)
   }
-  missing <- vapply(borders, is.na, logical(nrow(borders)))
-  dim(missing) <- c(nrow(borders), ncol(borders))
-  missing <- rowSums(missing) > 0
-  borders <- vctrs::vec_slice(borders, !missing)
+  borders <- vctrs::vec_slice(borders, vctrs::vec_detect_complete(borders))
   if (nrow(borders) < 1) {
     return(NULL)
   }
@@ -991,11 +1054,20 @@ combine_borders <- function(top, right, bottom, left) {
   list(gp = gp, coords = coords)
 }
 
+# Cached border positions
+.border_join <- vctrs::data_frame(
+  # Order is top right bottom left
+  x0 = c(0, 1, 1, 0),
+  x1 = c(1, 1, 0, 0),
+  y0 = c(1, 1, 0, 0),
+  y1 = c(1, 0, 0, 1)
+)
+
+# Function for changing a style string to key-value pairs.
 parse_style <- function(style) {
   if (!is.character(style)) {
     print(style)
   }
-
   style <- trimws(strsplit(style, ";")[[1]])
   style <- strsplit(style, ":", fixed = TRUE)
   valid <- lengths(style) == 2
@@ -1060,7 +1132,7 @@ grid_resolve_style <- function(layout, data) {
   content <- lapply(content, Reduce, f = defaults, right = TRUE)
 
   # Merge in style field
-  has_style <- which(!vapply(layout$style, anyNA, logical(1)))
+  has_style <- which(!is.na(layout$style))
   style <- lapply(layout$style[has_style], parse_style)
   content[has_style] <- Map(defaults, x = style, y = content[has_style])
 

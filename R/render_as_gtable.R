@@ -1,5 +1,5 @@
 
-render_as_gtable <- function(data, text_grob = grid::textGrob) {
+render_as_gtable <- function(data, plot = FALSE, text_grob = grid::textGrob) {
 
   data <- build_data(data = data, context = "html")
   data <- add_css_styles(data = data)
@@ -31,7 +31,10 @@ render_as_gtable <- function(data, text_grob = grid::textGrob) {
     render_grobs(layout = layout, data = data, text_grob = text_grob)
 
   gtable <- finalize_gtable(layout, data)
-  grid::grid.newpage(); grid::grid.draw(gtable)
+  if (isTRUE(plot)) {
+    plot(gtable)
+  }
+  gtable
 }
 
 combine_components <- function(caption = NULL, heading = NULL, columns = NULL,
@@ -72,8 +75,9 @@ combine_components <- function(caption = NULL, heading = NULL, columns = NULL,
     left = 1, right = n_cols,
     label   = "",
     classes = list("gt_table_body"),
-    style   = list("background-color: transparent"),
-    top = body_start + 1, bottom = body_end
+    style   = "background-color: transparent",
+    top = body_start + 1, bottom = body_end,
+    name = "table_body"
   )
 
   # The table itself renders top and bottom borders for everything excluding
@@ -82,8 +86,9 @@ combine_components <- function(caption = NULL, heading = NULL, columns = NULL,
     left = 1, right = n_cols,
     label = "",
     classes = list("gt_table"),
-    style   = list("background-color: transparent"),
-    top = n_caption + 1, bottom = max(source$bottom %||% n)
+    style   = "background-color: transparent",
+    top = n_caption + 1, bottom = max(source$bottom %||% n),
+    name = "table"
   )
 
   vctrs::vec_c(
@@ -105,22 +110,39 @@ render_grobs <- function(
     MoreArgs = list(
       text_grob = text_grob,
       cell_grob = cell_grob
-    )
+    ),
+    USE.NAMES = FALSE
   )
 }
 
 finalize_gtable <- function(layout, data) {
+  check_installed("gtable", "to render as a gtable.")
 
   widths  <- grid_layout_widths(layout, data)
   heights <- grid_layout_heights(layout)
 
+  name <- layout$name
+  name <- stats::ave(name, name, FUN = function(nm) {
+    if (length(nm) == 1) {
+      return(nm)
+    }
+    paste0(nm, "_", seq_along(nm))
+  })
+
   gtable <- gtable::gtable(widths = widths, heights = heights)
   gtable <- gtable::gtable_add_grob(
-    gtable, layout$grobs, name = "cells", clip = "off",
+    gtable, layout$grobs, name = name, clip = "off",
     t = layout$top, l = layout$left, b = layout$bottom, r = layout$right
   )
   gtable <- grid_align_gtable(gtable, data)
+  class(gtable) <- union("gt_gtable", class(gtable))
   gtable
+}
+
+#' @export
+plot.gt_gtable <- function(x) {
+  grid::grid.newpage()
+  grid::grid.draw(x)
 }
 
 grid_layout_heights <- function(layout) {
