@@ -17,13 +17,13 @@
       4                            gt_col_heading, gt_columns_bottom_border, gt_right
       5                            gt_col_heading, gt_columns_bottom_border, gt_right
       6                            gt_col_heading, gt_columns_bottom_border, gt_right
-        style
-      1  <NA>
-      2  <NA>
-      3  <NA>
-      4  <NA>
-      5  <NA>
-      6  <NA>
+        style         name
+      1  <NA>     stubhead
+      2  <NA>      spanner
+      3  <NA>      spanner
+      4  <NA> column_label
+      5  <NA> column_label
+      6  <NA> column_label
 
 # Styles end up in the correct cells
 
@@ -64,21 +64,21 @@
       14                                                                       gt_footnotes, gt_footnote
       15                                                                                   gt_table_body
       16                                                                                        gt_table
-                                 style
-      1     background-color: #FF69B4;
-      2     background-color: #FFD700;
-      3     background-color: #1E90FF;
-      4     background-color: #32CD32;
-      5     background-color: #0000FF;
-      6     background-color: #FF0000;
-      7     background-color: #FF00FF;
-      8     background-color: #00FF00;
-      9     background-color: #FFFF00;
-      10    background-color: #00FFFF;
-      11    background-color: #FFA500;
-      12    background-color: #A020F0;
-      13    background-color: #B03060;
-      14    background-color: #BEBEBE;
-      15 background-color: transparent
-      16 background-color: transparent
+                                 style          name
+      1     background-color: #FF69B4;         title
+      2     background-color: #FFD700;      subtitle
+      3     background-color: #1E90FF;      stubhead
+      4     background-color: #32CD32;       spanner
+      5     background-color: #0000FF;  column_label
+      6     background-color: #FF0000;     body_cell
+      7     background-color: #FF00FF;     body_cell
+      8     background-color: #00FF00; group_summary
+      9     background-color: #FFFF00; group_heading
+      10    background-color: #00FFFF; group_summary
+      11    background-color: #FFA500; grand_summary
+      12    background-color: #A020F0; grand_summary
+      13    background-color: #B03060;  source_notes
+      14    background-color: #BEBEBE;     footnotes
+      15 background-color: transparent    table_body
+      16 background-color: transparent         table
 
