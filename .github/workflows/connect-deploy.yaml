@@ -1,8 +1,8 @@
 on:
   schedule:
-    - cron: '0 23 * * *'
+    - cron: '15 23 * * *'
 
-name: netlify-quarto-gt-examples-site
+name: connect-quarto-gt-examples-site
 
 jobs:
   build:
@@ -37,13 +37,14 @@ jobs:
             lubridate
             paletteer
             janitor
+            rsconnect
             any::sessioninfo
           dependencies: '"hard"'
 
       - name: Install package
         run: R CMD INSTALL .
 
-      - name: Generate Quarto files for website
+      - name: Generate Quarto files for the website
         run: |
           Rscript -e 'gt:::write_gt_examples_qmd_files()'
 
@@ -51,17 +52,11 @@ jobs:
         run: |
           quarto render gt_qmd_examples
 
-      - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@v2.0
+      - name: Publish to Connect
+        uses: quarto-dev/quarto-actions/publish@v2
         with:
-          publish-dir: 'gt_qmd_examples/_site'
-          production-branch: master
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          deploy-message: "Deploy from GitHub Actions"
-          enable-pull-request-comment: false
-          enable-commit-comment: true
-          enable-commit-status: true
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        timeout-minutes: 1
+          target: connect
+          path: gt_qmd_examples
+          render: false
+          CONNECT_SERVER: ${{ secrets.CONNECT_SERVER }}
+          CONNECT_API_KEY: ${{ secrets.CONNECT_API_KEY }}

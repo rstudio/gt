@@ -193,7 +193,9 @@ write_gt_examples_qmd_files <- function(
           "constants",
           "illness",
           "rx_adsl",
-          "rx_addv"
+          "rx_addv",
+          "render_gt",
+          "gt_output"
         )
       )
   }
@@ -266,13 +268,13 @@ write_gt_examples_qmd_files <- function(
       index_tbl <- dplyr::bind_rows(index_tbl, index_tbl_i)
     }
 
-    index_tbl <-
+    index_tbl_gt <-
       index_tbl %>%
       dplyr::arrange(family, number) %>%
       dplyr::mutate(
         name = dplyr::case_when(
           type == "function" ~ paste0(
-            "[`", name, "()`](gt-", name , ".qmd)"
+            "[", name, "()](gt-", name , ".qmd)"
           ),
           .default = name
         )
@@ -299,17 +301,31 @@ write_gt_examples_qmd_files <- function(
       ) %>%
       gt(groupname_col = "group", process_md = TRUE) %>%
       fmt_markdown() %>%
+      fmt_url(columns = name, color = "#045AA2", target = "_self") %>%
       cols_hide(columns = c(type, family, number)) %>%
+      tab_style(
+        style = cell_text(
+          font = system_fonts("monospace-code"),
+          weight = 500
+        ),
+        locations = cells_body(columns = name)
+      ) %>%
       tab_options(column_labels.hidden = TRUE)
 
     writeLines(
       text = c(
         "---",
         "format: html",
+        "html-table-processing: none",
         "---",
         "",
+        paste("The **gt** package has", nrow(index_tbl), "functions."),
+        "Each of these functions has documentation filled with examples.",
+        "The table below organizes all of the functions into families and ",
+        "links to separate pages of **gt** table examples by function.",
+        "",
         "```{=html}",
-        as_raw_html(index_tbl),
+        as_raw_html(index_tbl_gt),
         "```",
         ""
       ),
@@ -320,14 +336,16 @@ write_gt_examples_qmd_files <- function(
       text = c(
         "project:",
         "  type: website",
+        "",
         "render:",
         "  - \"*.qmd\"",
         "",
         "website:",
         "  title: \"The gt package\"",
-        "navbar:",
-        "  left:",
-        "  - href: index.qmd",
+        "  navbar:",
+        "    left:",
+        "    - text: \"home\"",
+        "      file: index.qmd",
         "",
         "format:",
         "  html:",
@@ -344,6 +362,7 @@ write_gt_examples_qmd_files <- function(
       text = c(
         "---",
         "format: html",
+        "html-table-processing: none",
         "toc: false",
         "---",
         "",
@@ -358,6 +377,16 @@ write_gt_examples_qmd_files <- function(
       con = paste0(output_dir, "/gt-", topic, ".qmd")
     )
   }
+
+  writeLines(
+    text = c(
+      "- source: project",
+      "  connect:",
+      "    - id: b5709bdb-5712-42db-b265-2bfa02b5ffb6"#,
+      #"    - url: https://colorado.posit.co/rsc/content/b5709bdb-5712-42db-b265-2bfa02b5ffb6/"
+    ),
+    con = paste0(output_dir, "/_publish.yml")
+  )
 }
 
 #nocov end

@@ -130,7 +130,8 @@ row in the \code{hp} column).
     locations = cells_body(
       columns = hp,
       rows = hp == max(hp)
-    )
+    ),
+    placement = "right"
   ) |>
   opt_footnote_marks(marks = c("*", "+"))
 }\if{html}{\out{</div>}}
