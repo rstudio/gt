@@ -154,7 +154,7 @@ finalize_gtable <- function(layout, data) {
 }
 
 #' @export
-plot.gt_gtable <- function(x) {
+plot.gt_gtable <- function(x, ...) {
   grid::grid.newpage()
   grid::grid.draw(x)
 }
