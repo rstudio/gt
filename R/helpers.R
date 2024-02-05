@@ -4000,13 +4000,13 @@ default_fonts <- function() {
 #'
 #' @description
 #'
-#' A font stack can be obtained from `system_fonts()` using one or various
+#' A font stack can be obtained from `system_fonts()` using one of various
 #' keywords such as `"system-ui"`, `"old-style"`, and `"humanist"` (there are 15
-#' in total). These sets comprise a themed font family that has been tested to
-#' work across a wide range of computer systems. This is useful when specifying
-#' `font` values in the [cell_text()] function (itself used in the [tab_style()]
-#' function). If using [opt_table_font()] we can invoke this function in its
-#' `stack` argument.
+#' in total) representing a themed set of fonts. These sets comprise a font
+#' family that has been tested to work across a wide range of computer systems.
+#' This is useful when specifying `font` values in the [cell_text()] function
+#' (itself used in the [tab_style()] function). If using [opt_table_font()] we
+#' can invoke this function in its `stack` argument.
 #'
 #' @param name *Name of font stack*
 #'

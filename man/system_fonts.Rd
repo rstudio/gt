@@ -21,13 +21,13 @@ The name of a font stack. Must be drawn from the set of \code{"system-ui"},
 A character vector of font names.
 }
 \description{
-A font stack can be obtained from \code{system_fonts()} using one or various
+A font stack can be obtained from \code{system_fonts()} using one of various
 keywords such as \code{"system-ui"}, \code{"old-style"}, and \code{"humanist"} (there are 15
-in total). These sets comprise a themed font family that has been tested to
-work across a wide range of computer systems. This is useful when specifying
-\code{font} values in the \code{\link[=cell_text]{cell_text()}} function (itself used in the \code{\link[=tab_style]{tab_style()}}
-function). If using \code{\link[=opt_table_font]{opt_table_font()}} we can invoke this function in its
-\code{stack} argument.
+in total) representing a themed set of fonts. These sets comprise a font
+family that has been tested to work across a wide range of computer systems.
+This is useful when specifying \code{font} values in the \code{\link[=cell_text]{cell_text()}} function
+(itself used in the \code{\link[=tab_style]{tab_style()}} function). If using \code{\link[=opt_table_font]{opt_table_font()}} we
+can invoke this function in its \code{stack} argument.
 }
 \section{The font stacks and the individual fonts used by platform}{
 
