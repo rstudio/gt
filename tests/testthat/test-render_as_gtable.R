@@ -57,6 +57,8 @@ test_that("gt_tbls can be rendered as a gtable", {
 
 test_that("gtable widths are set appropriately", {
 
+  skip_if(packageVersion("grid") < "4.0.0")
+
   # We want an easy to understand width/height for cells
   dummy_text <- function(...) {
     grid::rectGrob(width = grid::unit(100, "pt"), height = grid::unit(100, "pt"))
