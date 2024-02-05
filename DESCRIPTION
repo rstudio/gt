@@ -58,6 +58,8 @@ Suggests:
     digest (>= 0.6.31),
     fontawesome (>= 0.5.2),
     ggplot2,
+    grid,
+    gtable,
     knitr,
     lubridate,
     magick,
@@ -116,6 +118,7 @@ Collate:
     'opts.R'
     'print.R'
     'reexports.R'
+    'render_as_gtable.R'
     'render_as_html.R'
     'render_as_i_html.R'
     'resolver.R'
@@ -136,6 +139,7 @@ Collate:
     'utils_pipe.R'
     'utils_plots.R'
     'utils_render_common.R'
+    'utils_render_grid.R'
     'utils_render_html.R'
     'utils_render_latex.R'
     'utils_render_rtf.R'
