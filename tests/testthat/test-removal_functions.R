@@ -7,11 +7,13 @@ test_that("The different removal functions work correctly", {
     summary_rows(
       groups = "grp_a",
       columns = c(num, currency),
-      fns = c("min", "max")
+      fns = c("min", "max"),
+      fmt = ~ fmt_number(., decimals = 2)
     ) %>%
     grand_summary_rows(
       columns = currency,
-      fns = total ~ sum(., na.rm = TRUE)
+      fns = total ~ sum(., na.rm = TRUE),
+      fmt = ~ fmt_integer(.)
     ) %>%
     tab_footnote(
       footnote = "This is a footnote.",
