@@ -611,6 +611,72 @@ process_text <- function(text, context = "html") {
 
       text <- gsub("^<p>|</p>\n$", "", text)
 
+      if (any(grepl("\\$\\$.*?\\$\\$", text)) && !check_quarto()) {
+
+        for (i in seq_along(text)) {
+
+          has_formula <- grepl("\\$\\$.*?\\$\\$", text[i])
+
+          if (has_formula) {
+
+            text_replaced_i <- gsub("\\$\\$.*?\\$\\$", "|||formula_text|||", text[i])
+            formula_text_i <- gsub("(.*\\$\\$)(.*?)(\\$\\$.*)", "\\2", text[i])
+
+            formula_rendered_i <-
+              katex::katex_html(
+                formula_text_i,
+                displayMode = FALSE,
+                include_css = TRUE,
+                preview = FALSE
+              )
+
+            text_i <-
+              gsub(
+                "\\|\\|\\|formula_text\\|\\|\\|",
+                formula_rendered_i,
+                text_replaced_i
+              )
+
+            text[i] <- text_i
+          }
+        }
+      }
+
+      if (!check_quarto()) {
+
+        non_na_text <- text[!is.na(text)]
+
+        non_na_text <- tidy_gsub(non_na_text, "^", "<span class='gt_from_md'>")
+        non_na_text <- tidy_gsub(non_na_text, "$", "</span>")
+
+        text[!is.na(text)] <- non_na_text
+
+      } else {
+
+        non_na_text <- text[!is.na(text)]
+
+        non_na_text_processed <-
+          vapply(
+            as.character(text[!is.na(text)]),
+            FUN.VALUE = character(1),
+            USE.NAMES = FALSE,
+            FUN = function(text) {
+              md_engine_fn[[1]](text = text)
+            }
+          )
+
+        non_na_text <- tidy_gsub(non_na_text, "^", "<div data-qmd=\"")
+        non_na_text <- tidy_gsub(non_na_text, "$", "\">")
+
+        non_na_text <-
+          paste0(
+            non_na_text, "<div class='gt_from_md'>",
+            non_na_text_processed, "</div></div>"
+          )
+      }
+
+      text[!is.na(text)] <- non_na_text
+
       return(text)
 
     } else if (
