@@ -11088,7 +11088,7 @@ fmt_markdown <- function(
     rows = {{ rows }},
     fns = list(
       html = function(x) {
-        md_to_html(x, md_engine = md_engine)
+        process_text(md(x), context = "html")
       },
       latex = function(x) {
         markdown_to_latex(x, md_engine = md_engine)
