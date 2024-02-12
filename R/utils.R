@@ -593,65 +593,18 @@ process_text <- function(text, context = "html") {
 
     if (inherits(text, "from_markdown")) {
 
+      in_quarto <- check_quarto()
+
       md_engine_fn <-
         get_markdown_engine_fn(
           md_engine_pref = md_engine,
           context = "html"
         )
 
-      text <-
-        vapply(
-          as.character(text),
-          FUN.VALUE = character(1),
-          USE.NAMES = FALSE,
-          FUN = function(x) {
-            md_engine_fn[[1]](text = x)
-          }
-        )
-
-      text <- gsub("^<p>|</p>\n$", "", text)
-
-      if (any(grepl("\\$\\$.*?\\$\\$", text)) && !check_quarto()) {
-
-        for (i in seq_along(text)) {
-
-          has_formula <- grepl("\\$\\$.*?\\$\\$", text[i])
-
-          if (has_formula) {
-
-            text_replaced_i <- gsub("\\$\\$.*?\\$\\$", "|||formula_text|||", text[i])
-            formula_text_i <- gsub("(.*\\$\\$)(.*?)(\\$\\$.*)", "\\2", text[i])
-
-            formula_rendered_i <-
-              katex::katex_html(
-                formula_text_i,
-                displayMode = FALSE,
-                include_css = TRUE,
-                preview = FALSE
-              )
-
-            text_i <-
-              gsub(
-                "\\|\\|\\|formula_text\\|\\|\\|",
-                formula_rendered_i,
-                text_replaced_i
-              )
-
-            text[i] <- text_i
-          }
-        }
-      }
-
-      if (!check_quarto()) {
-
-        non_na_text <- text[!is.na(text)]
-
-        non_na_text <- tidy_gsub(non_na_text, "^", "<span class='gt_from_md'>")
-        non_na_text <- tidy_gsub(non_na_text, "$", "</span>")
-
-        text[!is.na(text)] <- non_na_text
-
-      } else {
+      #
+      # Markdown text handling for Quarto
+      #
+      if (in_quarto) {
 
         non_na_text <- text[!is.na(text)]
 
@@ -673,9 +626,94 @@ process_text <- function(text, context = "html") {
             non_na_text, "<div class='gt_from_md'>",
             non_na_text_processed, "</div></div>"
           )
+
+        text[!is.na(text)] <- non_na_text
+
+        return(text)
       }
 
+      #
+      # Markdown text handling outside of Quarto
+      #
+
+      non_na_text <- text[!is.na(text)]
+
+      equation_present <- any(grepl("\\$\\$.*?\\$\\$", non_na_text))
+
+      # If an equation is present, extract it and add place marker before
+      # Markdown rendering
+      if (equation_present) {
+
+        for (i in seq_along(non_na_text)) {
+
+          has_formula <- grepl("\\$\\$.*?\\$\\$", non_na_text[i])
+
+          if (has_formula) {
+
+            # Replace text containing a formula with a marker for the formula
+            text_replaced_i <-
+              gsub(
+                "\\$\\$.*?\\$\\$",
+                "|||formula_text|||",
+                non_na_text[i]
+              )
+
+            # Use Markdown renderer to process the surrounding text independent
+            # of the formula (the marker is unaffected by Markdown rendering);
+            # also strip away the surrounding '<p>' tag and trailing '\n'
+            text_md_rendered_i <- md_engine_fn[[1]](text = text_replaced_i)
+            text_md_rendered_i <- gsub("^<p>|</p>\n$", "", text_md_rendered_i)
+
+            # Extract the formula text cleanly from the input text (the text
+            # that hasn't been processed at all)
+            formula_text_i <-
+              gsub(
+                "(.*\\$\\$)(.*?)(\\$\\$.*)",
+                "\\2",
+                non_na_text[i]
+              )
+
+            # Render the formula text with `katex::katex_html()`
+            formula_rendered_i <-
+              katex::katex_html(
+                formula_text_i,
+                displayMode = FALSE,
+                include_css = TRUE,
+                preview = FALSE
+              )
+
+            # Integrate the rendered formula text (`formula_rendered_i`) into
+            # the surrounding text (`text_md_rendered_i`) that's already been
+            # processed with Markdown renderer; the insertion should happen
+            # at the '|||formula_text|||' marker
+            text_i <-
+              gsub(
+                "\\|\\|\\|formula_text\\|\\|\\|",
+                formula_rendered_i,
+                text_md_rendered_i
+              )
+
+            non_na_text[i] <- text_i
+          }
+        }
+
+      } else {
+
+        for (i in seq_along(non_na_text)) {
+
+          text_i <- non_na_text[i]
+          text_i <- md_engine_fn[[1]](text = text_i)
+          text_i <- gsub("^<p>|</p>\n$", "", text_i)
+
+          non_na_text[i] <- text_i
+        }
+      }
+
+      non_na_text <- tidy_gsub(non_na_text, "^", "<span class='gt_from_md'>")
+      non_na_text <- tidy_gsub(non_na_text, "$", "</span>")
+
       text[!is.na(text)] <- non_na_text
+      text <- as.character(text)
 
       return(text)
 
