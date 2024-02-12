@@ -644,6 +644,13 @@ process_text <- function(text, context = "html") {
       # Markdown rendering
       if (equation_present) {
 
+        # Rendering equations to HTML (outside of Quarto) requires the katex
+        # package; if it's not present, stop with a message
+        rlang::check_installed(
+          pkg = "katex (>= 1.4.1)",
+          reason = "to render equations in HTML tables."
+        )
+
         for (i in seq_along(non_na_text)) {
 
           has_formula <- grepl("\\$\\$.*?\\$\\$", non_na_text[i])
