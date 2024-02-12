@@ -180,8 +180,8 @@ test_that("Extraction of table cells works well", {
       fmt_markdown(columns = a) %>%
       extract_cells(columns = a, output = "html"),
     c(
-      "<div class='gt_from_md'><p><em>hey</em></p>\n</div>",
-      "<div class='gt_from_md'><p><strong>there</strong></p>\n</div>"
+      "<span class='gt_from_md'><em>hey</em></span>",
+      "<span class='gt_from_md'><strong>there</strong></span>"
     )
   )
   expect_equal(

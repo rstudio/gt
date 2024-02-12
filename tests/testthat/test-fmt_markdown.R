@@ -57,11 +57,11 @@ There's a quick reference [here](https://commonmark.org/help/).
     (tab %>%
        render_formats_test(context = "html"))[["column_1"]][[1]],
     paste0(
-      "<div class='gt_from_md'><p>This is Markdown <em>text</em>",
+      "<span class='gt_from_md'>This is Markdown <em>text</em>",
       ".</p>\n<p>Markdown’s syntax is comprised entirely of\npunctuation ",
       "characters, which punctuation\ncharacters have been carefully chosen ",
       "so as\nto look like what they mean…  assuming\nyou’ve ever ",
-      "used email.</p>\n</div>"
+      "used email.</span>"
     )
   )
 
@@ -69,9 +69,9 @@ There's a quick reference [here](https://commonmark.org/help/).
     (tab %>%
        render_formats_test(context = "html"))[["column_1"]][[2]],
     paste0(
-      "<div class='gt_from_md'><p>Info on Markdown syntax can be ",
+      "<span class='gt_from_md'>Info on Markdown syntax can be ",
       "found\n<a href=\"https://daringfireball.net/projects/markdown/\">",
-      "here</a>.</p>\n</div>"
+      "here</a>.</span>"
     )
   )
 
@@ -79,17 +79,17 @@ There's a quick reference [here](https://commonmark.org/help/).
     (tab %>%
        render_formats_test(context = "html"))[["column_2"]][[1]],
     paste0(
-      "<div class='gt_from_md'><p>The <strong>gt</strong> package has ",
+      "<span class='gt_from_md'>The <strong>gt</strong> package has ",
       "these datasets:</p>\n<ul>\n<li><code>countrypops</code></li>\n<li>",
       "<code>sza</code></li>\n<li><code>gtcars</code></li>\n<li><code>sp500",
       "</code></li>\n<li><code>pizzaplace</code></li>\n<li><code>exibble",
-      "</code></li>\n</ul>\n</div>"
+      "</code></li>\n</ul>\n</span>"
     )
   )
 
   expect_equal(
     (tab %>%
        render_formats_test(context = "html"))[["column_2"]][[2]],
-      "<div class='gt_from_md'><p>There’s a quick reference <a href=\"https://commonmark.org/help/\">here</a>.</p>\n</div>"
+      "<span class='gt_from_md'>There’s a quick reference <a href=\"https://commonmark.org/help/\">here</a>.</span>"
   )
 })
