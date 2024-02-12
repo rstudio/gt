@@ -60,6 +60,7 @@ Suggests:
     ggplot2,
     grid,
     gtable,
+    katex (>= 1.4.1),
     knitr,
     lubridate,
     magick,
