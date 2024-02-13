@@ -131,8 +131,13 @@ test_that("The `sub_missing()` function works correctly", {
        sub_missing(columns = "num_1", missing_text = md("**a** *b*")) %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "<strong>a</strong> <em>b</em>", "74", "<strong>a</strong> <em>b</em>",
-      "93", "<strong>a</strong> <em>b</em>", "76", "<strong>a</strong> <em>b</em>"
+      "<span class='gt_from_md'><strong>a</strong> <em>b</em></span>",
+      "74",
+      "<span class='gt_from_md'><strong>a</strong> <em>b</em></span>",
+      "93",
+      "<span class='gt_from_md'><strong>a</strong> <em>b</em></span>",
+      "76",
+      "<span class='gt_from_md'><strong>a</strong> <em>b</em></span>"
     )
   )
 
@@ -318,7 +323,11 @@ test_that("The `sub_zero()` function works correctly", {
     (tab %>%
        sub_zero(columns = "num_1", zero_text = md("*nil*")) %>%
        render_formats_test(context = "html"))[["num_1"]],
-    c("NA", "74.0000", "NA", "<em>nil</em>", "NA", "0.0001", "NA")
+    c(
+      "NA", "74.0000", "NA",
+      "<span class='gt_from_md'><em>nil</em></span>",
+      "NA", "0.0001", "NA"
+    )
   )
 
   expect_equal(
@@ -461,8 +470,8 @@ test_that("The `sub_small_vals()` function works correctly", {
        sub_small_vals(columns = "num_1", sign = "-") %>%
        render_formats_test(context = "html"))[["num_1"]],
     c(
-      "&lt;<em>abs</em>(-0.01)", "74.00", "NA", "0.00",
-      "5,000,000,000,000.00", "0.00", "84.34"
+      "<span class='gt_from_md'>&lt;<em>abs</em>(-0.01)</span>",
+      "74.00", "NA", "0.00", "5,000,000,000,000.00", "0.00", "84.34"
     )
   )
 

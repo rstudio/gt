@@ -39,7 +39,7 @@ test_that("The stub can be formatted with `fmt_*()` functions", {
   # Expect certain stub text elements
   tbl_html_1 %>%
     selection_text(selection = "[class='gt_row gt_left gt_stub']") %>%
-    expect_equal(paste0(c("one", "two", "three", "4", "5ive", "six"), "\n"))
+    expect_equal(c("one", "two", "three", "4", "5ive", "six"))
 
   # Create a gt table with a stub that has row labels, and, row groups
   # that run wide
@@ -56,7 +56,7 @@ test_that("The stub can be formatted with `fmt_*()` functions", {
   # Expect certain stub text elements (same as in `gt_tbl_1`)
   tbl_html_2 %>%
     selection_text(selection = "[class='gt_row gt_left gt_stub']") %>%
-    expect_equal(paste0(c("one", "two", "three", "4", "5ive", "six"), "\n"))
+    expect_equal(c("one", "two", "three", "4", "5ive", "six"))
 
   # Create a gt table with a stub that has row labels, row groups that
   # run wide, and one footnote
@@ -75,7 +75,7 @@ test_that("The stub can be formatted with `fmt_*()` functions", {
   # be present
   tbl_html_3 %>%
     selection_text(selection = "[class='gt_row gt_left gt_stub']") %>%
-    expect_equal(c("one\n", "two1", "three\n", "4\n", "5ive\n", "six\n"))
+    expect_equal(c("one", "two1", "three", "4", "5ive", "six"))
 
   # Expect the footnote text to be present
   tbl_html_3 %>%
@@ -108,7 +108,7 @@ test_that("The stub can be formatted with `fmt_*()` functions", {
   # Expect certain stub text elements and the footnote glyphs to be present
   tbl_html_4 %>%
     selection_text(selection = "[class='gt_row gt_left gt_stub']") %>%
-    expect_equal(c("one\n", "three1", "5ive\n", "two\n", "42", "six\n"))
+    expect_equal(c("one", "three1", "5ive", "two", "42", "six"))
 
   # Expect values in the `vals` column to be in the correct order
   tbl_html_4 %>%
@@ -143,7 +143,7 @@ test_that("The stub can be formatted with `fmt_*()` functions", {
   # Expect certain stub text elements and the footnote glyphs to be present
   tbl_html_5 %>%
     selection_text(selection = "[class='gt_row gt_left gt_stub']") %>%
-    expect_equal(c("one\n", "three1", "5ive\n", "two\n", "42", "six\n"))
+    expect_equal(c("one", "three1", "5ive", "two", "42", "six"))
 
   # Expect values in the `vals` column to be in the correct order
   tbl_html_5 %>%
@@ -231,7 +231,7 @@ test_that("The stub can be formatted with `fmt_*()` functions and `stub()", {
   # Expect certain stub text elements
   tbl_html_1 %>%
     selection_text(selection = "[class='gt_row gt_left gt_stub']") %>%
-    expect_equal(paste0(c("one", "two", "three", "4", "5ive", "six"), "\n"))
+    expect_equal(c("one", "two", "three", "4", "5ive", "six"))
 
   # Create a gt table with a stub that has row labels, and, row groups
   # that run wide
@@ -248,7 +248,7 @@ test_that("The stub can be formatted with `fmt_*()` functions and `stub()", {
   # Expect certain stub text elements (same as in `gt_tbl_1`)
   tbl_html_2 %>%
     selection_text(selection = "[class='gt_row gt_left gt_stub']") %>%
-    expect_equal(paste0(c("one", "two", "three", "4", "5ive", "six"), "\n"))
+    expect_equal(c("one", "two", "three", "4", "5ive", "six"))
 
   # Create a gt table with a stub that has row labels, row groups that
   # run wide, and one footnote
@@ -267,7 +267,7 @@ test_that("The stub can be formatted with `fmt_*()` functions and `stub()", {
   # be present
   tbl_html_3 %>%
     selection_text(selection = "[class='gt_row gt_left gt_stub']") %>%
-    expect_equal(c("one\n", "two1", "three\n", "4\n", "5ive\n", "six\n"))
+    expect_equal(c("one", "two1", "three", "4", "5ive", "six"))
 
   # Expect the footnote text to be present
   tbl_html_3 %>%
@@ -300,7 +300,7 @@ test_that("The stub can be formatted with `fmt_*()` functions and `stub()", {
   # Expect certain stub text elements and the footnote glyphs to be present
   tbl_html_4 %>%
     selection_text(selection = "[class='gt_row gt_left gt_stub']") %>%
-    expect_equal(c("one\n", "three1", "5ive\n", "two\n", "42", "six\n"))
+    expect_equal(c("one", "three1", "5ive", "two", "42", "six"))
 
   # Expect values in the `vals` column to be in the correct order
   tbl_html_4 %>%
@@ -335,7 +335,7 @@ test_that("The stub can be formatted with `fmt_*()` functions and `stub()", {
   # Expect certain stub text elements and the footnote glyphs to be present
   tbl_html_5 %>%
     selection_text(selection = "[class='gt_row gt_left gt_stub']") %>%
-    expect_equal(c("one\n", "three1", "5ive\n", "two\n", "42", "six\n"))
+    expect_equal(c("one", "three1", "5ive", "two", "42", "six"))
 
   # Expect values in the `vals` column to be in the correct order
   tbl_html_5 %>%

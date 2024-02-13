@@ -3788,8 +3788,8 @@ vec_fmt_markdown <- function(
     )
 
   if (output == "html") {
-    vec_fmt_out <- gsub("^<div class='gt_from_md'>(.*)", "\\1", vec_fmt_out)
-    vec_fmt_out <- gsub("(.*)\n</div>", "\\1", vec_fmt_out)
+    vec_fmt_out <- gsub("^<span class='gt_from_md'>(.*)", "\\1", vec_fmt_out)
+    vec_fmt_out <- gsub("(.*)\n</span>", "\\1", vec_fmt_out)
   }
 
   vec_fmt_out

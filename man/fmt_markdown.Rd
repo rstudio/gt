@@ -165,6 +165,83 @@ then, create a \strong{gt} table and format all columns with \code{fmt_markdown(
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_markdown_1.png" alt="This image of a table was generated from the first code example in the `fmt_markdown()` help file." style="width:100\%;">
 }}
+
+The \code{fmt_markdown()} function can also handle LaTeX math formulas enclosed
+in \code{"$..$"} (inline math) and also \code{"$$..$$"} (display math). The following
+table has body cells that contain mathematical formulas in display mode
+(i.e., the formulas are surrounded by \code{"$$"}). Further to this, math can be
+used within \code{\link[=md]{md()}} wherever there is the possibility to insert text into the
+table (e.g., with \code{\link[=cols_label]{cols_label()}}, \code{\link[=tab_header]{tab_header()}}, etc.).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
+  idx = 1:5,
+  l_time_domain =
+    c(
+      "$$1$$",
+      "$$\{\{\\\\bf\{e\}\}^\{a\\\\,t\}\}$$",
+      "$$\{t^n\},\\\\,\\\\,\\\\,\\\\,\\\\,n = 1,2,3, \\\\ldots$$",
+      "$$\{t^p\}, p > -1$$",
+      "$$\\\\sqrt t$$"
+    ),
+  l_laplace_s_domain =
+    c(
+      "$$\\\\frac\{1\}\{s\}$$",
+      "$$\\\\frac\{1\}\{\{s - a\}\}$$",
+      "$$\\\\frac\{\{n!\}\}\{\{\{s^\{n + 1\}\}\}\}$$",
+      "$$\\\\frac\{\{\\\\Gamma \\\\left( \{p + 1\} \\\\right)\}\}\{\{\{s^\{p + 1\}\}\}\}$$",
+      "$$\\\\frac\{\{\\\\sqrt \\\\pi \}\}\{\{2\{s^\{\\\\frac\{3\}\{2\}\}\}\}\}$$"
+    )
+) |>
+  gt(rowname_col = "idx") |>
+  fmt_markdown() |>
+  cols_label(
+    l_time_domain = md(
+      "Time Domain<br/>$\\\\small\{f\\\\left( t \\\\right) =
+      \{\\\\mathcal\{L\}^\{\\\\,\\\\, - 1\}\}\\\\left\\\\\{ \{F\\\\left( s \\\\right)\} \\\\right\\\\\}\}$"
+    ),
+    l_laplace_s_domain = md(
+      "$s$ Domain<br/>$\\\\small\{F\\\\left( s \\\\right) =
+      \\\\mathcal\{L\}\\\\left\\\\\{ \{f\\\\left( t \\\\right)\} \\\\right\\\\\}\}$"
+    )
+  ) |>
+  tab_header(
+    title = md(
+      "A (Small) Table of Laplace Transforms &mdash; $\\\\small\{\{\\\\mathcal\{L\}\}\}$"
+    ),
+    subtitle = md(
+      "Five commonly used Laplace transforms and formulas.<br/><br/>"
+    )
+  ) |>
+  cols_align(align = "center") |>
+  opt_align_table_header(align = "left") |>
+  cols_width(
+    idx ~ px(50),
+    l_time_domain ~ px(300),
+    l_laplace_s_domain ~ px(600)
+  ) |>
+  opt_stylize(
+    style = 2,
+    color = "gray",
+    add_row_striping = FALSE
+  ) |>
+  opt_table_outline(style = "invisible") \%>\%
+  tab_style(
+    style = cell_fill(color = "gray95"),
+    locations = cells_body(columns = l_time_domain)
+  ) |>
+  tab_options(
+    heading.title.font.size = px(32),
+    heading.subtitle.font.size = px(18),
+    heading.padding = px(0),
+    footnotes.multiline = FALSE,
+    column_labels.border.lr.style = "solid",
+    column_labels.border.lr.width = px(1)
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_markdown_2.png" alt="This image of a table was generated from the second code example in the `fmt_markdown()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
