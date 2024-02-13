@@ -638,7 +638,9 @@ process_text <- function(text, context = "html") {
 
       non_na_text <- text[!is.na(text)]
 
-      equation_present <- any(grepl("\\$\\$.*?\\$\\$", non_na_text))
+      equation_present <-
+        any(grepl("\\$\\$.*?\\$\\$", non_na_text)) ||
+        any(grepl("\\$.*?\\$", non_na_text))
 
       # If an equation is present, extract it and add place marker before
       # Markdown rendering
@@ -653,55 +655,137 @@ process_text <- function(text, context = "html") {
 
         for (i in seq_along(non_na_text)) {
 
-          has_formula <- grepl("\\$\\$.*?\\$\\$", non_na_text[i])
+          has_display_formula <- grepl("\\$\\$.*?\\$\\$", non_na_text[i])
 
-          if (has_formula) {
+          if (has_display_formula) {
 
-            # Replace text containing a formula with a marker for the formula
-            text_replaced_i <-
-              gsub(
-                "\\$\\$.*?\\$\\$",
-                "|||formula_text|||",
-                non_na_text[i]
-              )
+            display_j <- 1
+            formula_text_display_i <- c()
 
-            # Use Markdown renderer to process the surrounding text independent
-            # of the formula (the marker is unaffected by Markdown rendering);
-            # also strip away the surrounding '<p>' tag and trailing '\n'
-            text_md_rendered_i <- md_engine_fn[[1]](text = text_replaced_i)
-            text_md_rendered_i <- gsub("^<p>|</p>\n$", "", text_md_rendered_i)
+            repeat {
 
-            # Extract the formula text cleanly from the input text (the text
-            # that hasn't been processed at all)
-            formula_text_i <-
-              gsub(
-                "(.*\\$\\$)(.*?)(\\$\\$.*)",
-                "\\2",
-                non_na_text[i]
-              )
+              # Extract the display formula text cleanly from the input text
+              # (the text that hasn't yet been processed)
+              formula_text_display_ij <-
+                sub(
+                  "(.*\\$\\$)(.*?)(\\$\\$.*)",
+                  "\\2",
+                  non_na_text[i]
+                )
 
-            # Render the formula text with `katex::katex_html()`
-            formula_rendered_i <-
-              katex::katex_html(
-                formula_text_i,
-                displayMode = FALSE,
-                include_css = TRUE,
-                preview = FALSE
-              )
+              formula_text_display_i <-
+                c(formula_text_display_i, formula_text_display_ij)
 
-            # Integrate the rendered formula text (`formula_rendered_i`) into
-            # the surrounding text (`text_md_rendered_i`) that's already been
-            # processed with Markdown renderer; the insertion should happen
-            # at the '|||formula_text|||' marker
-            text_i <-
-              gsub(
-                "\\|\\|\\|formula_text\\|\\|\\|",
-                formula_rendered_i,
-                text_md_rendered_i
-              )
+              # Replace text containing a formula with a marker for the formula
+              non_na_text[i] <-
+                sub(
+                  "\\$\\$.*?\\$\\$",
+                  paste0("|||display_formula ", display_j, "|||"),
+                  non_na_text[i]
+                )
 
-            non_na_text[i] <- text_i
+              if (!grepl("\\$\\$.*?\\$\\$", non_na_text[i])) break
+
+              display_j <- display_j + 1
+            }
           }
+
+          has_inline_formula <- grepl("\\$.*?\\$", non_na_text[i])
+
+          if (has_inline_formula) {
+
+            inline_j <- 1
+            formula_text_inline_i <- c()
+
+            repeat {
+
+              # Extract the inline formula text cleanly from the input text
+              # (the text that hasn't yet been processed)
+              formula_text_inline_ij <-
+                sub(
+                  "(.*\\$)(.*?)(\\$.*)",
+                  "\\2",
+                  non_na_text[i]
+                )
+
+              formula_text_inline_i <-
+                c(formula_text_inline_i, formula_text_inline_ij)
+
+              # Replace text containing a formula with a marker for the formula
+              non_na_text[i] <-
+                sub(
+                  "\\$.*?\\$",
+                  paste0("|||inline_formula ", inline_j, "|||"),
+                  non_na_text[i]
+                )
+
+              if (!grepl("\\$.*?\\$", non_na_text[i])) break
+
+              inline_j <- inline_j + 1
+            }
+          }
+
+          # Use Markdown renderer to process the surrounding text independent
+          # of the formula (the marker is unaffected by Markdown rendering);
+          # also strip away the surrounding '<p>' tag and trailing '\n'
+          text_md_rendered_i <- md_engine_fn[[1]](text = non_na_text[i])
+          text_md_rendered_i <- gsub("^<p>|</p>\n$", "", text_md_rendered_i)
+
+          if (has_display_formula) {
+
+            for (j in seq_along(formula_text_display_i)) {
+
+              # Render the display formula text with `katex::katex_html()`
+              formula_rendered_display_i <-
+                katex::katex_html(
+                  formula_text_display_i[j],
+                  displayMode = TRUE,
+                  include_css = TRUE,
+                  preview = FALSE
+                )
+
+              # Integrate the rendered formula text (`formula_rendered_inline_i`)
+              # into the surrounding text (`text_md_rendered_i`) that's already
+              # been processed with a Markdown renderer; the insertion should
+              # happen at the '|||display_formula #|||' marker
+              text_md_rendered_i <-
+                gsub(
+                  paste0("|||display_formula ", j, "|||"),
+                  formula_rendered_display_i,
+                  text_md_rendered_i,
+                  fixed = TRUE
+                )
+            }
+          }
+
+          if (has_inline_formula) {
+
+            for (j in seq_along(formula_text_inline_i)) {
+
+              # Render the inline formula text with `katex::katex_html()`
+              formula_rendered_inline_i <-
+                katex::katex_html(
+                  formula_text_inline_i[j],
+                  displayMode = FALSE,
+                  include_css = TRUE,
+                  preview = FALSE
+                )
+
+              # Integrate the rendered formula text (`formula_rendered_inline_i`)
+              # into the surrounding text (`text_md_rendered_i`) that's already
+              # been processed with a Markdown renderer; the insertion should
+              # happen at the '|||inline_formula #|||' marker
+              text_md_rendered_i <-
+                gsub(
+                  paste0("|||inline_formula ", j, "|||"),
+                  formula_rendered_inline_i,
+                  text_md_rendered_i,
+                  fixed = TRUE
+                )
+            }
+          }
+
+          non_na_text[i] <- text_md_rendered_i
         }
 
       } else {
