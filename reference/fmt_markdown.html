@@ -228,6 +228,77 @@ then, create a <strong>gt</strong> table and format all columns with <code>fmt_m
 <span>  <span class="fu"><a href="../reference/fmt_markdown.html">fmt_markdown</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>table.width <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">400</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_markdown_1.png" alt="This image of a table was generated from the first code example in the `fmt_markdown()` help file." style="width:100%;"></p>
+<p>The <code>fmt_markdown()</code> function can also handle LaTeX math formulas enclosed
+in <code>"$..$"</code> (inline math) and also <code>"$$..$$"</code> (display math). The following
+table has body cells that contain mathematical formulas in display mode
+(i.e., the formulas are surrounded by <code>"$$"</code>). Further to this, math can be
+used within <code><a href="md.html">md()</a></code> wherever there is the possibility to insert text into the
+table (e.g., with <code><a href="cols_label.html">cols_label()</a></code>, <code><a href="tab_header.html">tab_header()</a></code>, etc.).</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span>  idx <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,</span>
+<span>  l_time_domain <span class="op">=</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>      <span class="st">"$$1$$"</span>,</span>
+<span>      <span class="st">"$${{\\bf{e}}^{a\\,t}}$$"</span>,</span>
+<span>      <span class="st">"$${t^n},\\,\\,\\,\\,\\,n = 1,2,3, \\ldots$$"</span>,</span>
+<span>      <span class="st">"$${t^p}, p &gt; -1$$"</span>,</span>
+<span>      <span class="st">"$$\\sqrt t$$"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>  l_laplace_s_domain <span class="op">=</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>      <span class="st">"$$\\frac{1}{s}$$"</span>,</span>
+<span>      <span class="st">"$$\\frac{1}{{s - a}}$$"</span>,</span>
+<span>      <span class="st">"$$\\frac{{n!}}{{{s^{n + 1}}}}$$"</span>,</span>
+<span>      <span class="st">"$$\\frac{{\\Gamma \\left( {p + 1} \\right)}}{{{s^{p + 1}}}}$$"</span>,</span>
+<span>      <span class="st">"$$\\frac{{\\sqrt \\pi }}{{2{s^{\\frac{3}{2}}}}}$$"</span></span>
+<span>    <span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"idx"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_markdown.html">fmt_markdown</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_label.html">cols_label</a></span><span class="op">(</span></span>
+<span>    l_time_domain <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span></span>
+<span>      <span class="st">"Time Domain&lt;br/&gt;$\\small{f\\left( t \\right) =</span></span>
+<span><span class="st">      {\\mathcal{L}^{\\,\\, - 1}}\\left\\{ {F\\left( s \\right)} \\right\\}}$"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    l_laplace_s_domain <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span></span>
+<span>      <span class="st">"$s$ Domain&lt;br/&gt;$\\small{F\\left( s \\right) =</span></span>
+<span><span class="st">      \\mathcal{L}\\left\\{ {f\\left( t \\right)} \\right\\}}$"</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_header.html">tab_header</a></span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span></span>
+<span>      <span class="st">"A (Small) Table of Laplace Transforms &amp;mdash; $\\small{{\\mathcal{L}}}$"</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    subtitle <span class="op">=</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span></span>
+<span>      <span class="st">"Five commonly used Laplace transforms and formulas.&lt;br/&gt;&lt;br/&gt;"</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_align.html">cols_align</a></span><span class="op">(</span>align <span class="op">=</span> <span class="st">"center"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/opt_align_table_header.html">opt_align_table_header</a></span><span class="op">(</span>align <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_width.html">cols_width</a></span><span class="op">(</span></span>
+<span>    <span class="va">idx</span> <span class="op">~</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span>,</span>
+<span>    <span class="va">l_time_domain</span> <span class="op">~</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">300</span><span class="op">)</span>,</span>
+<span>    <span class="va">l_laplace_s_domain</span> <span class="op">~</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">600</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/opt_stylize.html">opt_stylize</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>    color <span class="op">=</span> <span class="st">"gray"</span>,</span>
+<span>    add_row_striping <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/opt_table_outline.html">opt_table_outline</a></span><span class="op">(</span>style <span class="op">=</span> <span class="st">"invisible"</span><span class="op">)</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_fill.html">cell_fill</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"gray95"</span><span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">l_time_domain</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span></span>
+<span>    heading.title.font.size <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">32</span><span class="op">)</span>,</span>
+<span>    heading.subtitle.font.size <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">18</span><span class="op">)</span>,</span>
+<span>    heading.padding <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>,</span>
+<span>    footnotes.multiline <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    column_labels.border.lr.style <span class="op">=</span> <span class="st">"solid"</span>,</span>
+<span>    column_labels.border.lr.width <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_markdown_2.png" alt="This image of a table was generated from the second code example in the `fmt_markdown()` help file." style="width:100%;"></p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
