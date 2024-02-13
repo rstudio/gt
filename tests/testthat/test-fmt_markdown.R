@@ -97,7 +97,7 @@ There's a quick reference [here](https://commonmark.org/help/).
 test_that("LaTeX formulas render correctly in HTML", {
 
   gt_tbl <-
-    data.frame(
+    dplyr::tibble(
       idx = 1:37,
       l_time_domain =
         c(
@@ -180,18 +180,57 @@ test_that("LaTeX formulas render correctly in HTML", {
           "${s^n}F\\left( s \\right) - {s^{n - 1}}f\\left( 0 \\right) - {s^{n - 2}}f'\\left( 0 \\right) \\cdots - s{f^{\\left( {n - 2} \\right)}}\\left( 0 \\right) - {f^{\\left( {n - 1} \\right)}}\\left( 0 \\right)$"
         )
     ) %>%
-    gt() %>%
+    gt(rowname_col = "idx") %>%
     fmt_markdown() %>%
     cols_label(
-      idx = "",
-      l_time_domain = md("$f\\left( t \\right) = {\\mathcal{L}^{\\,\\, - 1}}\\left\\{ {F\\left( s \\right)} \\right\\}$"),
-      l_laplace_s_domain = md("$F\\left( s \\right) = \\mathcal{L}\\left\\{ {f\\left( t \\right)} \\right\\}$")
+      l_time_domain = md("Time Domain<br/>$\\small{f\\left( t \\right) = {\\mathcal{L}^{\\,\\, - 1}}\\left\\{ {F\\left( s \\right)} \\right\\}}$"),
+      l_laplace_s_domain = md("$s$ Domain<br/>$\\small{F\\left( s \\right) = \\mathcal{L}\\left\\{ {f\\left( t \\right)} \\right\\}}$")
     ) %>%
-    tab_header(title = "A Table of Laplace Transforms") %>%
+    tab_header(
+      title = md("A Table of Laplace Transforms &mdash; $\\small{{\\mathcal{L}}}$"),
+      subtitle = md("The most commonly used Laplace transforms and formulas.<br/><br/>")
+    ) %>%
     tab_source_note(
       source_note = md("The hyperbolic functions: $\\cosh \\left( t \\right) = \\frac{{{{\\bf{e}}^t} + {{\\bf{e}}^{ - t}}}}{2}$ , $\\sinh \\left( t \\right) = \\frac{{{{\\bf{e}}^t} - {{\\bf{e}}^{ - t}}}}{2}$")
     ) %>%
-    cols_align(align = "center")
+    cols_align(align = "center") %>%
+    opt_align_table_header(align = "left") %>%
+    tab_footnote(
+      footnote = "The Heaviside Function.",
+      locations = cells_body(
+        columns = l_time_domain, rows = 25
+      )
+    ) %>%
+    tab_footnote(
+      footnote = "The Dirac Delta Function.",
+      locations = cells_body(
+        columns = l_time_domain, rows = 26
+      )
+    ) %>%
+    opt_footnote_spec(spec_ref = "b[x]") %>%
+    cols_width(
+      idx ~ px(50),
+      l_time_domain ~ px(300),
+      l_laplace_s_domain ~ px(600)
+    ) %>%
+    opt_stylize(
+      style = 2,
+      color = "gray",
+      add_row_striping = FALSE
+    ) %>%
+    opt_table_outline(style = "invisible") %>%
+    tab_style(
+      style = cell_fill(color = "gray95"),
+      locations = cells_body(columns = l_time_domain)
+    ) %>%
+    tab_options(
+      heading.title.font.size = px(32),
+      heading.subtitle.font.size = px(18),
+      heading.padding = px(0),
+      footnotes.multiline = FALSE,
+      column_labels.border.lr.style = "solid",
+      column_labels.border.lr.width = px(1)
+    )
 
   # Take a snapshot of `gt_tbl`
   gt_tbl %>% render_as_html() %>% expect_snapshot()
