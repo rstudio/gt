@@ -1013,6 +1013,15 @@ create_body_rows_l <- function(
                   content[i] <- paste0("\\textbf{", content[i], "}")
                 }
 
+                if (!is.null(styles_i_col[[1]][["cell_text"]][["size"]])) {
+
+                  use_size <- convert_font_size_l(styles_i_col[[1]][["cell_text"]][["size"]])
+                  if (!is.null(use_size))
+                    content[i] <- paste0("{", use_size, " ", content[i], "}")
+
+                }
+
+
                 if (!is.null(styles_i_col_text_color)) {
                   content[i] <-
                     paste0(
@@ -1040,6 +1049,26 @@ create_body_rows_l <- function(
     )
 
   body_rows
+}
+
+# Function that converts gt font sizes to LaTeX equivalents
+convert_font_size_l <- function(x) {
+
+  size_map <- c(
+    `xx-small` = '\\tiny',
+    `x-small` = '\\scriptsize',
+    small = '\\small',
+    medium = '\\normalsize',
+    large = '\\large',
+    `x-large` = '\\Large',
+    `xx-large` = '\\LARGE',
+    `xxx-large` = '\\huge'
+  )
+
+  if (as.character(x) %in% names(size_map))
+    return(size_map[[x]])
+
+  NULL
 }
 
 # Function to build a vector of `summary` rows in the table body
