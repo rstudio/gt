@@ -1039,7 +1039,24 @@ create_body_rows_l <- function(
                       "}{", content[i], "}"
                     )
                 }
+
+                if (!is.null(styles_i_col[[1]][["cell_text"]][["indent"]])) {
+
+                  use_indent <- styles_i_col[[1]][["cell_text"]][["indent"]]
+                  if (is.numeric(use_indent))
+                    use_indent <- paste0(use_indent, "px")
+
+                  content[i] <-
+                    paste0(
+                      "\\hspace{",
+                      convert_to_px(use_indent) * 0.75,
+                      "pt}",
+                      content[i]
+                    )
+
+                }
               }
+
             }
 
             paste(paste(content, collapse = " & "), "\\\\ \n")
