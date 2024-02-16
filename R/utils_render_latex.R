@@ -1037,6 +1037,18 @@ create_body_rows_l <- function(
                     )
                 }
 
+                if (!is.null(styles_i_col[[1]][["cell_text"]][["decorate"]])) {
+
+                  content[i] <-
+                    switch(
+                      styles_i_col[[1]][["cell_text"]][["decorate"]],
+                      underline = paste0("\\underline{", content[i], "}"),
+                      overline = paste0("$\\overline{\\mbox{", content[i], "}}$"),
+                      strikeout = content[i] # Not implemented
+                    )
+
+                }
+
                 if (!is.null(styles_i_col[[1]][["cell_text"]][["size"]])) {
 
                   use_size <- convert_font_size_l(styles_i_col[[1]][["cell_text"]][["size"]])
