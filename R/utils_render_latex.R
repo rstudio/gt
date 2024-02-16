@@ -1026,6 +1026,17 @@ create_body_rows_l <- function(
                   content[i] <- paste0("\\textbf{", content[i], "}")
                 }
 
+                if (!is.null(styles_i_col[[1]][["cell_text"]][["style"]])) {
+
+                  content[i] <-
+                    switch(
+                      styles_i_col[[1]][["cell_text"]][["style"]],
+                      italic = paste0("\\textit{", content[i], "}"),
+                      oblique = paste0("\\textsl{", content[i], "}"),
+                      normal = content[i]
+                    )
+                }
+
                 if (!is.null(styles_i_col[[1]][["cell_text"]][["size"]])) {
 
                   use_size <- convert_font_size_l(styles_i_col[[1]][["cell_text"]][["size"]])
