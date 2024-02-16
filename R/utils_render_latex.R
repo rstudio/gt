@@ -1007,6 +1007,19 @@ create_body_rows_l <- function(
                 styles_i_col_cell_color <- styles_i_col[[1]][["cell_fill"]][["color"]]
 
                 if (
+                  !is.null(styles_i_col[[1]][["cell_text"]][["transform"]])
+                ) {
+                  content[i] <-
+                    switch(
+                      styles_i_col[[1]][["cell_text"]][["transform"]],
+                      uppercase = toupper(as.character(content[i])),
+                      lowercase = tolower(as.character(content[i])),
+                      capitalize = str_title_case(as.character(content[i])),
+                      content[i]
+                    )
+                }
+
+                if (
                   !is.null(styles_i_col[[1]][["cell_text"]][["weight"]]) &&
                   styles_i_col[[1]][["cell_text"]][["weight"]] == "bold"
                 ) {
