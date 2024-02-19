@@ -119,7 +119,7 @@ opt_stylize <- function(
 
   if (!(length(color) == 1 && color %in% unique(styles_colors_params$color))) {
     cli::cli_abort(c(
-      "The `color` value must be one of seven specific colors:",
+      "The `color` value must be one of six specific colors:",
       "*" = "\"blue\", \"cyan\", \"pink\", \"green\", \"red\", or \"gray\""
     ))
   }
