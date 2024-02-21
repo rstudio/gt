@@ -93,6 +93,8 @@ latex_body_row <- function(content, type) {
 #' @noRd
 latex_heading_row <- function(content) {
 
+
+
   paste0(
     paste(paste(content, collapse = " & "), "\\\\ \n"),
     "\\midrule\\addlinespace[2.5pt]\n",
@@ -359,6 +361,8 @@ create_columns_component_l <- function(data) {
   # Get vector representation of stub layout
   stub_layout <- get_stub_layout(data = data)
 
+  styles_tbl <- dt_styles_get(data = data)
+
   # Determine the finalized number of spanner rows
   spanner_row_count <-
     dt_spanners_matrix_height(
@@ -370,14 +374,25 @@ create_columns_component_l <- function(data) {
   headings_vars <- dt_boxhead_get_vars_default(data = data)
   headings_labels <- dt_boxhead_get_vars_labels_default(data = data)
 
+  styles_heading_i <- dplyr::filter(styles_tbl, locname == "columns_columns")
+  styles_heading <- consolidate_cell_styles(styles_heading_i[['styles']])
+  headings_labels <- apply_cell_styles(headings_labels, styles_heading)
+
   # If there is a stub then modify the `headings_vars` and `headings_labels`
   if (length(stub_layout) > 0) {
 
     stubh <- dt_stubhead_get(data = data)
 
+    styles_stubhead <- dplyr::filter(styles_tbl, locname == "stubhead")
+    styles_obj <- consolidate_cell_styles(styles_stubhead[['styles']])
+
     headings_vars <- prepend_vec(headings_vars, "::stub")
 
-    stub_label <- ifelse(length(stubh$label) > 0, stubh$label, "")
+    stub_label <- ifelse(
+      length(stubh$label) > 0,
+      apply_cell_styles(stubh$label, styles_obj),
+      ""
+    )
 
     if (length(stub_layout) > 0) {
 
@@ -1239,11 +1254,12 @@ consolidate_cell_styles <- function(styles_i_col) {
     for (j in names(styles_i_col[[i]])) {
 
       if (!j %in% names(col_style))
-        col_style[j] <- list()
+        col_style[[j]] <- list()
 
       for (k in names(styles_i_col[[i]][[j]])) {
 
-        col_style[j][k] <- styles_i_col[[i]][[j]][[k]]
+        #col_style[j][k] <- styles_i_col[[i]][[j]][[k]]
+        col_style[[j]] <- append(col_style[[j]], styles_i_col[[i]][[j]][k])
 
       }
     }
