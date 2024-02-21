@@ -443,6 +443,7 @@ create_columns_component_l <- function(data) {
       # We need a parallel vector of spanner labels and this could
       # be part of the `spanners_rle` list
       spanners_rle$labels <- spanners_i[cumsum(spanners_rle$lengths)]
+      spanners_rle <- apply_spanner_styles(spanners_rle, styles_tbl)
 
       begins <- (cumsum(utils::head(c(0, spanners_rle$lengths), -1)) + 1)[!is.na(spanners_rle$values)]
       ends <- cumsum(spanners_rle$lengths)[!is.na(spanners_rle$values)]
@@ -1410,3 +1411,21 @@ apply_cell_styles <- function(content, style_obj) {
 
 }
 
+apply_spanner_styles <- function(spanners_rle, styles_tbl) {
+
+  for (i in seq_along(spanners_rle$labels)) {
+
+    if (!is.na(spanners_rle$labels[i])) {
+      var_name <- names(spanners_rle$labels)[i]
+      grp_name <- spanners_rle$values[var_name]
+
+      styles_spanner <- dplyr::filter(styles_tbl, locname == 'columns_groups', grpname == grp_name)
+      styles_spanner <- consolidate_cell_styles(styles_spanner[['styles']])
+
+      spanners_rle$labels[i] <- apply_cell_styles(spanners_rle$labels[i], styles_spanner)
+    }
+
+  }
+
+  spanners_rle
+}
