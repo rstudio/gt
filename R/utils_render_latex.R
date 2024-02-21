@@ -999,98 +999,10 @@ create_body_rows_l <- function(
 
               if (!is.null(styles_i_col)) {
 
-                # TODO: this only considers the first entry; we need to iterate
-                # through them since there may be multiple styles set for each
-                # body cell and that might result in several rows in `styles_tbl_i_col`
-                # (i.e., length greater than 1 in `styles_i_col`)
-                styles_i_col_text_color <- styles_i_col[[1]][["cell_text"]][["color"]]
-                styles_i_col_cell_color <- styles_i_col[[1]][["cell_fill"]][["color"]]
+                cell_styles_i <- consolidate_cell_styles(styles_i_col)
 
-                if (
-                  !is.null(styles_i_col[[1]][["cell_text"]][["transform"]])
-                ) {
-                  content[i] <-
-                    switch(
-                      styles_i_col[[1]][["cell_text"]][["transform"]],
-                      uppercase = toupper(as.character(content[i])),
-                      lowercase = tolower(as.character(content[i])),
-                      capitalize = str_title_case(as.character(content[i])),
-                      content[i]
-                    )
-                }
+                content[i] <- apply_cell_styles(content[i], cell_styles_i)
 
-                if (
-                  !is.null(styles_i_col[[1]][["cell_text"]][["weight"]]) &&
-                  styles_i_col[[1]][["cell_text"]][["weight"]] == "bold"
-                ) {
-                  content[i] <- paste0("\\textbf{", content[i], "}")
-                }
-
-                if (!is.null(styles_i_col[[1]][["cell_text"]][["style"]])) {
-
-                  content[i] <-
-                    switch(
-                      styles_i_col[[1]][["cell_text"]][["style"]],
-                      italic = paste0("\\textit{", content[i], "}"),
-                      oblique = paste0("\\textsl{", content[i], "}"),
-                      normal = content[i]
-                    )
-                }
-
-                if (!is.null(styles_i_col[[1]][["cell_text"]][["decorate"]])) {
-
-                  content[i] <-
-                    switch(
-                      styles_i_col[[1]][["cell_text"]][["decorate"]],
-                      underline = paste0("\\underline{", content[i], "}"),
-                      overline = paste0("$\\overline{\\mbox{", content[i], "}}$"),
-                      strikeout = content[i] # Not implemented
-                    )
-
-                }
-
-                if (!is.null(styles_i_col[[1]][["cell_text"]][["size"]])) {
-
-                  use_size <- convert_font_size_l(styles_i_col[[1]][["cell_text"]][["size"]])
-                  if (!is.null(use_size))
-                    content[i] <- paste0("{", use_size, " ", content[i], "}")
-
-                }
-
-
-                if (!is.null(styles_i_col_text_color)) {
-                  content[i] <-
-                    paste0(
-                      "\\textcolor[HTML]{",
-                      gsub("#", "", styles_i_col_text_color, fixed = TRUE),
-                      "}{", content[i], "}"
-                    )
-                }
-
-                if (!is.null(styles_i_col_cell_color)) {
-                  content[i] <-
-                    paste0(
-                      "\\cellcolor[HTML]{",
-                      gsub("#", "", styles_i_col_cell_color, fixed = TRUE),
-                      "}{", content[i], "}"
-                    )
-                }
-
-                if (!is.null(styles_i_col[[1]][["cell_text"]][["indent"]])) {
-
-                  use_indent <- styles_i_col[[1]][["cell_text"]][["indent"]]
-                  if (is.numeric(use_indent))
-                    use_indent <- paste0(use_indent, "px")
-
-                  content[i] <-
-                    paste0(
-                      "\\hspace{",
-                      convert_to_px(use_indent) * 0.75,
-                      "pt}",
-                      content[i]
-                    )
-
-                }
               }
 
             }
@@ -1311,3 +1223,174 @@ derive_table_width_bookends <- function(data) {
   bookends
 
 }
+
+#' Consolidate Cell Styles
+#'
+#' Function addresses a TODO item in the previous code and handles situations
+#' where `styles_i_col` has multiple
+consolidate_cell_styles <- function(styles_i_col) {
+
+  # If only one set of styles is supplied the function isn't necessary
+  if (length(styles_i_col) == 1L) return(styles_i_col[[1L]])
+
+  col_style <- list()
+  for (i in seq_along(styles_i_col)) {
+
+    for (j in names(styles_i_col[[i]])) {
+
+      if (!j %in% names(col_style))
+        col_style[j] <- list()
+
+      for (k in names(styles_i_col[[i]][[j]])) {
+
+        col_style[j][k] <- styles_i_col[[i]][[j]][[k]]
+
+      }
+    }
+  }
+
+  col_style
+}
+
+apply_cell_styles <- function(content, style_obj) {
+
+  # Apply changes that have to be made to the content
+  x <- content %>%
+    .apply_cell_color(style_obj) %>%
+    .apply_cell_fill(style_obj) %>%
+    .apply_content_transform(style_obj) %>%
+    .apply_content_decorate(style_obj)
+
+  # Apply changes that can be made to the bracketed environment
+  paste0(
+    "{",
+    .apply_cell_style(style_obj),
+    .apply_cell_weight(style_obj),
+    .apply_cell_fontsize(style_obj),
+    .apply_cell_indentation(style_obj),
+    x,
+    "}"
+  )
+
+}
+
+.apply_cell_style <- function(style_obj) {
+
+  if (is.null(style_obj[['cell_text']][['style']])) return(NULL)
+
+  switch(
+    style_obj[['cell_text']][['style']],
+    italic = '\\itshape ',
+    oblique = '\\slshape ',
+    normal = '\\upshape ',
+  )
+
+}
+
+.apply_content_transform <- function(x, style_obj) {
+
+  if (is.null(style_obj[['cell_text']][['transform']])) return(x)
+
+  switch(
+    style_obj[['cell_text']][['transform']],
+    uppercase = toupper(as.character(x)),
+    lowercase = tolower(as.character(x)),
+    capitalize = str_title_case(as.character(x)),
+    x
+  )
+}
+
+
+.apply_cell_weight <- function(style_obj) {
+
+  if (is.null(style_obj[['cell_text']][['weight']])) return('')
+
+  # TODO:  Figure out how to implement weights expressed as numbers.
+  if (is.numeric(style_obj[['cell_text']][['weight']])) return('')
+
+  switch(
+    style_obj[['cell_text']][['weight']],
+    normal = '\\mdseries ',
+    bold = '\\bfseries ',
+    bolder = '\\bfseries ',  # Not implemented
+    lighter = '\\lfseries '
+  )
+
+}
+
+.apply_content_decorate <- function(x, style_obj) {
+
+  if (is.null(style_obj[['cell_text']][['decorate']])) return(x)
+
+  switch(
+    style_obj[['cell_text']][['decorate']],
+    underline = paste0('\\underline{', x, '}'),
+    overline = paste0("$\\overline{\\mbox{", x, "}}$"),
+    strikeout = x,  # Not implemented
+    x
+  )
+
+}
+
+.apply_cell_fontsize <- function(style_obj) {
+
+  if (is.null(style_obj[['cell_text']][['size']])) return('')
+
+  if (is.numeric(style_obj[['cell_text']][['size']])) {
+
+    return(
+      paste0(
+        "\\fontsize{",
+        style_obj[['cell_text']][['size']],
+        "}{",
+        style_obj[['cell_text']][['size']],
+        "}\\selectfont "
+      )
+    )
+
+  }
+
+  convert_font_size_l(style_obj[['cell_text']][['size']])
+
+}
+
+.apply_cell_color <- function(x, style_obj) {
+
+  if (is.null(style_obj[['cell_text']][['color']])) return(x)
+
+  paste0(
+    "\\textcolor[HTML]{",
+    gsub("#", "", style_obj[['cell_text']][['color']], fixed = TRUE),
+    "}{", x, "}"
+  )
+}
+
+.apply_cell_fill <- function(x, style_obj) {
+
+  if (is.null(style_obj[['cell_fill']][['color']])) return(x)
+
+  paste0(
+    "\\cellcolor[HTML]{",
+    gsub("#", "", style_obj[['cell_fill']][['color']], fixed = TRUE),
+    "}{", x, "}"
+  )
+
+}
+
+.apply_cell_indentation <- function(style_obj) {
+
+  use_indent <- style_obj[['cell_text']][['indent']]
+
+  if (is.null(use_indent)) return(NULL)
+
+  # Documentation says numbers without units default to px
+  if (is.numeric(use_indent)) use_indent <- paste0(use_indent, 'px')
+
+  paste0(
+    "\\hspace{",
+    convert_to_px(use_indent) * 0.75,  # converts to points for Latex
+    "pt}"
+  )
+
+}
+
