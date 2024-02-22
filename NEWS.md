@@ -1,5 +1,7 @@
 # gt (development version)
 
+* `data_color()` throws a more informative error if a calculation failed (@olivroy, #1373).
+
 # gt 0.10.1
 
 ## Improvements to nanoplots
