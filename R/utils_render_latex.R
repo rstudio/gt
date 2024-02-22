@@ -567,6 +567,26 @@ create_body_component_l <- function(data) {
       row_splits_body = row_splits_body
     )
 
+  # Apply formatting to group labels
+  if (dim(groups_rows_df)[1L] > 0 && any(!is.na(groups_rows_df$group_label))) {
+
+    styles_tbl <- dt_styles_get(data)
+
+    for (i in seq_along(groups_rows_df$group_label)) {
+      if (!is.na(groups_rows_df$group_label[i])) {
+        styles_groups <- dplyr::filter(
+          styles_tbl,
+          locname == 'row_groups',
+          grpname == groups_rows_df$group_id[i]
+        )
+        styles_groups <- consolidate_cell_styles(styles_groups[['styles']])
+
+        groups_rows_df$group_label[i] <- apply_cell_styles(groups_rows_df$group_label[i], styles_groups)
+      }
+    }
+
+  }
+
   # Replace an NA group with a small amount of vertical space
   if (any(is.na(groups_rows_df$group_label))) {
 
