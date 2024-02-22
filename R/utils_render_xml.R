@@ -3052,6 +3052,24 @@ paste_footnote_xml <- function(
     paste0("<md_container>",.,"</md_container>")
 }
 
+paste_footnote_latex <- function(
+    text,
+    footmark_latex,
+    position = "right"
+) {
+
+  # This delineates the footnote mark from the rest of the content
+  # so that only the content will be reformatted by calls to tab_style
+  mark <- paste0("^~_", position, ":", footmark_latex, "_~^")
+
+  if (position == "right") {
+    paste0(text, mark)
+  } else {
+    paste0(mark, text)
+  }
+
+}
+
 # Post-Processing word documents as needed -----
 
 ## if hyperlinks are in gt, postprocessing will be necessary

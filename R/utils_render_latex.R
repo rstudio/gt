@@ -909,6 +909,12 @@ create_footer_component_l <- function(data) {
   source_notes_multiline <- dt_options_get_value(data = data, option = "source_notes_multiline")
   source_notes_sep <- dt_options_get_value(data = data, option = "source_notes_sep")
 
+  styles_footnote <-
+    consolidate_cell_styles_l(
+      dplyr::filter(dt_styles_get(data), locname == 'footnotes')
+    )
+
+
   # Create a formatted footnotes string
   if (nrow(footnotes_tbl) > 0) {
 
@@ -926,10 +932,14 @@ create_footer_component_l <- function(data) {
         vapply(
           footnotes_tbl[["footnotes"]],
           FUN.VALUE = character(1),
-          FUN = process_text,
-          context = "latex"
+          #FUN = process_text,
+          FUN = function(x, context, styles_obj) apply_cell_styles_l(process_text(x, context = context), styles_obj),
+          context = "latex",
+          styles_obj = styles_footnote
         )
       )
+
+
 
     if (footnotes_multiline) {
       footnotes <- paste_right(paste(footnotes, collapse = "\\\\\n"), "\\\\\n")
@@ -1312,15 +1322,34 @@ consolidate_cell_styles_l <- function(styles_df) {
 #' a cell of text to be output in LaTeX.
 apply_cell_styles_l <- function(content, style_obj) {
 
+  # Set default values
+  just_content <- content
+  mark_side <- rep("right", times = length(just_content))
+  mark <- rep("", times = length(just_content))
+
+  # Check to see if the content includes a footnote
+  if (any(ind <- grepl("\\^~_.*_~\\^", content))) {
+
+    mark_side[ind] <- gsub(".*\\^~_(right|left):.*_~\\^.*", "\\1", content[ind])
+
+    just_content[ind] <- ifelse(mark_side[ind] == 'right',
+                                gsub("^(.*)\\^~_right.*$", "\\1", content[ind]),
+                                gsub(".*_~\\^(.*)", "\\1", content[ind]))
+
+    mark[ind] <- ifelse(mark_side[ind] == "right",
+                        gsub(".*\\^~_right:(.*)_~\\^.*", "\\1", content[ind]),
+                        gsub("\\^~_left:(.*)_~\\^.*", "\\1", content[ind]))
+  }
+
   # Apply changes that have to be made to the content
-  x <- content %>%
+  x <- just_content %>%
     .apply_style_color_l(style_obj) %>%
     .apply_style_fill_l(style_obj) %>%
     .apply_style_transform_l(style_obj) %>%
     .apply_style_decorate_l(style_obj)
 
   # Apply changes that can be made to the bracketed environment
-  paste0(
+  out_text <- paste0(
     "{",
     .apply_style_style_l(style_obj),
     .apply_style_weight_l(style_obj),
@@ -1329,6 +1358,10 @@ apply_cell_styles_l <- function(content, style_obj) {
     x,
     "}"
   )
+
+  ifelse(mark_side == "right",
+         paste0(out_text, mark),
+         paste0(mark, out_text))
 
 }
 
