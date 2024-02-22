@@ -374,23 +374,28 @@ create_columns_component_l <- function(data) {
   headings_vars <- dt_boxhead_get_vars_default(data = data)
   headings_labels <- dt_boxhead_get_vars_labels_default(data = data)
 
-  styles_heading_i <- dplyr::filter(styles_tbl, locname == "columns_columns")
-  styles_heading <- consolidate_cell_styles(styles_heading_i[['styles']])
-  headings_labels <- apply_cell_styles(headings_labels, styles_heading)
+  styles_heading_i <-
+    consolidate_cell_styles_l(
+      dplyr::filter(styles_tbl, locname == "columns_columns")
+    )
+
+  headings_labels <- apply_cell_styles_l(headings_labels, styles_heading_i)
 
   # If there is a stub then modify the `headings_vars` and `headings_labels`
   if (length(stub_layout) > 0) {
 
     stubh <- dt_stubhead_get(data = data)
 
-    styles_stubhead <- dplyr::filter(styles_tbl, locname == "stubhead")
-    styles_obj <- consolidate_cell_styles(styles_stubhead[['styles']])
+    styles_stubhead <-
+      consolidate_cell_styles_l(
+        dplyr::filter(styles_tbl, locname == "stubhead")
+      )
 
     headings_vars <- prepend_vec(headings_vars, "::stub")
 
     stub_label <- ifelse(
       length(stubh$label) > 0,
-      apply_cell_styles(stubh$label, styles_obj),
+      apply_cell_styles_l(stubh$label, styles_stubhead),
       ""
     )
 
@@ -443,7 +448,7 @@ create_columns_component_l <- function(data) {
       # We need a parallel vector of spanner labels and this could
       # be part of the `spanners_rle` list
       spanners_rle$labels <- spanners_i[cumsum(spanners_rle$lengths)]
-      spanners_rle <- apply_spanner_styles(spanners_rle, styles_tbl)
+      spanners_rle <- apply_spanner_styles_l(spanners_rle, styles_tbl)
 
       begins <- (cumsum(utils::head(c(0, spanners_rle$lengths), -1)) + 1)[!is.na(spanners_rle$values)]
       ends <- cumsum(spanners_rle$lengths)[!is.na(spanners_rle$values)]
@@ -573,15 +578,19 @@ create_body_component_l <- function(data) {
     styles_tbl <- dt_styles_get(data)
 
     for (i in seq_along(groups_rows_df$group_label)) {
-      if (!is.na(groups_rows_df$group_label[i])) {
-        styles_groups <- dplyr::filter(
-          styles_tbl,
-          locname == 'row_groups',
-          grpname == groups_rows_df$group_id[i]
-        )
-        styles_groups <- consolidate_cell_styles(styles_groups[['styles']])
 
-        groups_rows_df$group_label[i] <- apply_cell_styles(groups_rows_df$group_label[i], styles_groups)
+      if (!is.na(groups_rows_df$group_label[i])) {
+
+        styles_groups <-
+          consolidate_cell_styles_l(
+            dplyr::filter(
+              styles_tbl,
+              locname == 'row_groups',
+              grpname == groups_rows_df$group_id[i]
+            )
+          )
+
+        groups_rows_df$group_label[i] <- apply_cell_styles_l(groups_rows_df$group_label[i], styles_groups)
       }
     }
 
@@ -1011,7 +1020,7 @@ create_body_rows_l <- function(
               ) {
 
                 styles_tbl_i_col <- dplyr::filter(styles_tbl_i, locname == "row_groups")
-                styles_i_col <- styles_tbl_i_col[["styles"]]
+                #styles_i_col <- styles_tbl_i_col[["styles"]]
 
               } else if (
                 colname_i == "::stub::" &&
@@ -1019,7 +1028,7 @@ create_body_rows_l <- function(
               ) {
 
                 styles_tbl_i_col <- dplyr::filter(styles_tbl_i, locname == "stub")
-                styles_i_col <- styles_tbl_i_col[["styles"]]
+                #styles_i_col <- styles_tbl_i_col[["styles"]]
 
               } else if (
                 "data" %in% styles_tbl_i[["locname"]] &&
@@ -1027,17 +1036,17 @@ create_body_rows_l <- function(
               ) {
 
                 styles_tbl_i_col <- dplyr::filter(styles_tbl_i, colname == colname_i)
-                styles_i_col <- styles_tbl_i_col[["styles"]]
+                #styles_i_col <- styles_tbl_i_col[["styles"]]
 
               } else {
-                styles_i_col <- NULL
+                styles_tbl_i_col <- NULL
               }
 
-              if (!is.null(styles_i_col)) {
+              if (!is.null(styles_tbl_i_col)) {
 
-                cell_styles_i <- consolidate_cell_styles(styles_i_col)
+                styles_body <- consolidate_cell_styles_l(styles_tbl_i_col)
 
-                content[i] <- apply_cell_styles(content[i], cell_styles_i)
+                content[i] <- apply_cell_styles_l(content[i], styles_body)
 
               }
 
@@ -1263,55 +1272,60 @@ derive_table_width_bookends <- function(data) {
 #' Consolidate Cell Styles
 #'
 #' Function addresses a TODO item in the previous code and handles situations
-#' where `styles_i_col` has multiple
-consolidate_cell_styles <- function(styles_i_col) {
+#' where a filtered data.frame of styles has multiple rows that apply to the
+#' cell. The function places all of these into a single list of lists.
+consolidate_cell_styles_l <- function(styles_df) {
+
+  styles_col <- styles_df[['styles']]
 
   # If only one set of styles is supplied the function isn't necessary
-  if (length(styles_i_col) == 1L) return(styles_i_col[[1L]])
+  if (length(styles_col) == 1L) return(styles_col[[1L]])
 
-  col_style <- list()
-  for (i in seq_along(styles_i_col)) {
+  out_style <- list()
+  for (i in seq_along(styles_col)) {
 
-    for (j in names(styles_i_col[[i]])) {
+    for (j in names(styles_col[[i]])) {
 
-      if (!j %in% names(col_style))
-        col_style[[j]] <- list()
+      if (!j %in% names(out_style)) out_style[[j]] <- list()
 
-      for (k in names(styles_i_col[[i]][[j]])) {
+      for (k in names(styles_col[[i]][[j]])) {
 
-        #col_style[j][k] <- styles_i_col[[i]][[j]][[k]]
-        col_style[[j]] <- append(col_style[[j]], styles_i_col[[i]][[j]][k])
+        out_style[[j]] <- append(out_style[[j]], styles_col[[i]][[j]][k])
 
       }
     }
   }
 
-  col_style
+  out_style
 }
 
-apply_cell_styles <- function(content, style_obj) {
+#' Apply Cell Styles in LaTeX
+#'
+#' Applies the formats specified in applicable tab_style commands to
+#' a cell of text to be output in LaTeX.
+apply_cell_styles_l <- function(content, style_obj) {
 
   # Apply changes that have to be made to the content
   x <- content %>%
-    .apply_cell_color(style_obj) %>%
-    .apply_cell_fill(style_obj) %>%
-    .apply_content_transform(style_obj) %>%
-    .apply_content_decorate(style_obj)
+    .apply_style_color_l(style_obj) %>%
+    .apply_style_fill_l(style_obj) %>%
+    .apply_style_transform_l(style_obj) %>%
+    .apply_style_decorate_l(style_obj)
 
   # Apply changes that can be made to the bracketed environment
   paste0(
     "{",
-    .apply_cell_style(style_obj),
-    .apply_cell_weight(style_obj),
-    .apply_cell_fontsize(style_obj),
-    .apply_cell_indentation(style_obj),
+    .apply_style_style_l(style_obj),
+    .apply_style_weight_l(style_obj),
+    .apply_style_fontsize_l(style_obj),
+    .apply_style_indentation_l(style_obj),
     x,
     "}"
   )
 
 }
 
-.apply_cell_style <- function(style_obj) {
+.apply_style_style_l <- function(style_obj) {
 
   if (is.null(style_obj[['cell_text']][['style']])) return(NULL)
 
@@ -1324,7 +1338,7 @@ apply_cell_styles <- function(content, style_obj) {
 
 }
 
-.apply_content_transform <- function(x, style_obj) {
+.apply_style_transform_l <- function(x, style_obj) {
 
   if (is.null(style_obj[['cell_text']][['transform']])) return(x)
 
@@ -1337,8 +1351,7 @@ apply_cell_styles <- function(content, style_obj) {
   )
 }
 
-
-.apply_cell_weight <- function(style_obj) {
+.apply_style_weight_l <- function(style_obj) {
 
   if (is.null(style_obj[['cell_text']][['weight']])) return('')
 
@@ -1355,7 +1368,7 @@ apply_cell_styles <- function(content, style_obj) {
 
 }
 
-.apply_content_decorate <- function(x, style_obj) {
+.apply_style_decorate_l <- function(x, style_obj) {
 
   if (is.null(style_obj[['cell_text']][['decorate']])) return(x)
 
@@ -1369,7 +1382,7 @@ apply_cell_styles <- function(content, style_obj) {
 
 }
 
-.apply_cell_fontsize <- function(style_obj) {
+.apply_style_fontsize_l <- function(style_obj) {
 
   if (is.null(style_obj[['cell_text']][['size']])) return('')
 
@@ -1391,7 +1404,7 @@ apply_cell_styles <- function(content, style_obj) {
 
 }
 
-.apply_cell_color <- function(x, style_obj) {
+.apply_style_color_l <- function(x, style_obj) {
 
   if (is.null(style_obj[['cell_text']][['color']])) return(x)
 
@@ -1402,7 +1415,7 @@ apply_cell_styles <- function(content, style_obj) {
   )
 }
 
-.apply_cell_fill <- function(x, style_obj) {
+.apply_style_fill_l <- function(x, style_obj) {
 
   if (is.null(style_obj[['cell_fill']][['color']])) return(x)
 
@@ -1414,7 +1427,7 @@ apply_cell_styles <- function(content, style_obj) {
 
 }
 
-.apply_cell_indentation <- function(style_obj) {
+.apply_style_indentation_l <- function(style_obj) {
 
   use_indent <- style_obj[['cell_text']][['indent']]
 
@@ -1431,7 +1444,12 @@ apply_cell_styles <- function(content, style_obj) {
 
 }
 
-apply_spanner_styles <- function(spanners_rle, styles_tbl) {
+#' Apply Spanner Styles
+#'
+#' Applying the formats specified in tab_style requires slighly different
+#' handling for the spanners than the other table elements.  Spanners are
+#' formatted using this function while everything else uses `apply_cell_styles_l`.
+apply_spanner_styles_l <- function(spanners_rle, styles_tbl) {
 
   for (i in seq_along(spanners_rle$labels)) {
 
@@ -1439,10 +1457,12 @@ apply_spanner_styles <- function(spanners_rle, styles_tbl) {
       var_name <- names(spanners_rle$labels)[i]
       grp_name <- spanners_rle$values[var_name]
 
-      styles_spanner <- dplyr::filter(styles_tbl, locname == 'columns_groups', grpname == grp_name)
-      styles_spanner <- consolidate_cell_styles(styles_spanner[['styles']])
+      styles_spanner <-
+        consolidate_cell_styles_l(
+          dplyr::filter(styles_tbl, locname == 'columns_groups', grpname == grp_name)
+        )
 
-      spanners_rle$labels[i] <- apply_cell_styles(spanners_rle$labels[i], styles_spanner)
+      spanners_rle$labels[i] <- apply_cell_styles_l(spanners_rle$labels[i], styles_spanner)
     }
 
   }
