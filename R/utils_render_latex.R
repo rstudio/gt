@@ -950,6 +950,13 @@ create_footer_component_l <- function(data) {
       source_notes <- paste_right(paste(source_notes_vec, collapse = source_notes_sep), "\\\\\n")
     }
 
+    styles_source <-
+      consolidate_cell_styles_l(
+        dplyr::filter(dt_styles_get(data), locname == 'source_notes')
+      )
+
+    source_notes <- apply_cell_styles_l(source_notes, styles_source)
+
   } else {
     source_notes <- ""
   }
