@@ -837,8 +837,10 @@ summary_rows_for_group_l <- function(
 
   for (col_name in names(summary_df)) {
 
+    loc_type <- if(summary_row_type == 'grand') 'grand_summary_cells' else 'summary_cells'
+
     styles_summary <- dt_styles_get(data) %>%
-      dplyr::filter(locname == 'summary_cells',
+      dplyr::filter(locname == loc_type,
                     grpname == group_id) %>%
       dplyr::mutate(colname = ifelse(is.na(colname) & colnum == 0,
                               "::rowname::", colname)) %>%
@@ -847,7 +849,13 @@ summary_rows_for_group_l <- function(
     if (dim(styles_summary)[1L] > 0) {
 
       for (row_num in sort(unique(styles_summary$rownum))) {
-        row_pos <- (row_num - floor(row_num)) * 100L
+        # The value of colnum in styles_summary differs for
+        # group and grand summaries
+        if (summary_row_type == 'group') {
+          row_pos <- (row_num - floor(row_num)) * 100L
+        } else {
+          row_pos <- row_num
+        }
 
         row_style <- dplyr::filter(styles_summary, rownum == row_num) %>%
           consolidate_cell_styles_l()
