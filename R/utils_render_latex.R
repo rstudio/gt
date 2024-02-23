@@ -374,12 +374,19 @@ create_columns_component_l <- function(data) {
   headings_vars <- dt_boxhead_get_vars_default(data = data)
   headings_labels <- dt_boxhead_get_vars_labels_default(data = data)
 
-  styles_heading_i <-
-    consolidate_cell_styles_l(
-      dplyr::filter(styles_tbl, locname == "columns_columns")
-    )
+  for (i in seq_along(headings_labels)) {
+    styles_heading_i <-
+      consolidate_cell_styles_l(
+        dplyr::filter(
+          styles_tbl,
+          locname == "columns_columns",
+          colname == headings_labels[i]
+        )
+      )
 
-  headings_labels <- apply_cell_styles_l(headings_labels, styles_heading_i)
+    headings_labels[i] <- apply_cell_styles_l(headings_labels[i], styles_heading_i)
+
+  }
 
   # If there is a stub then modify the `headings_vars` and `headings_labels`
   if (length(stub_layout) > 0) {
@@ -828,6 +835,30 @@ summary_rows_for_group_l <- function(
       dplyr::all_of(default_vars)
     )
 
+  for (col_name in names(summary_df)) {
+
+    styles_summary <- dt_styles_get(data) %>%
+      dplyr::filter(locname == 'summary_cells',
+                    grpname == group_id) %>%
+      dplyr::mutate(colname = ifelse(is.na(colname) & colnum == 0,
+                              "::rowname::", colname)) %>%
+      dplyr::filter(colname == col_name)
+
+    if (dim(styles_summary)[1L] > 0) {
+
+      for (row_num in sort(unique(styles_summary$rownum))) {
+        row_pos <- (row_num - floor(row_num)) * 100L
+
+        row_style <- dplyr::filter(styles_summary, rownum == row_num) %>%
+          consolidate_cell_styles_l()
+
+        summary_df[[col_name]][row_pos] <- apply_cell_styles_l(summary_df[[col_name]][row_pos], row_style)
+      }
+
+    }
+
+  }
+
   row_splits_summary <- split_row_content(summary_df)
 
   if (stub_is_2) {
@@ -1024,6 +1055,8 @@ create_body_rows_l <- function(
             styles_tbl_i <- dplyr::filter(styles_tbl, rownum == x)
 
             if (nrow(styles_tbl_i) < 1) {
+              # Remove any latex footnote encoding
+              content <- remove_footnote_encoding(content)
               return(paste(paste(content, collapse = " & "), "\\\\ \n"))
             }
 
@@ -1065,6 +1098,10 @@ create_body_rows_l <- function(
 
                 content[i] <- apply_cell_styles_l(content[i], styles_body)
 
+              } else {
+
+                content[i] <- remove_footnote_encoding(content[i])
+
               }
 
             }
@@ -1076,6 +1113,17 @@ create_body_rows_l <- function(
     )
 
   body_rows
+}
+
+remove_footnote_encoding <- function(x) {
+
+  if (!any(grepl("\\^~_.*_~\\^", x))) return(x)
+
+  x <- gsub("\\^~_(right|left):", "", x)
+  x <- gsub("_~\\^", "", x)
+
+  x
+
 }
 
 # Function that converts gt font sizes to LaTeX equivalents
