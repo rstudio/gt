@@ -1123,14 +1123,11 @@ create_body_rows_l <- function(
   body_rows
 }
 
+# Function removes footnote encoding introduced by paste_footnote_latex for
+# cells not modified by tab_style calls.
 remove_footnote_encoding <- function(x) {
 
-  if (!any(grepl("\\^~_.*_~\\^", x))) return(x)
-
-  x <- gsub("\\^~_(right|left):", "", x)
-  x <- gsub("_~\\^", "", x)
-
-  x
+  gsub("%%%(right|left):", "", x)
 
 }
 
@@ -1384,17 +1381,10 @@ apply_cell_styles_l <- function(content, style_obj) {
   mark <- rep("", times = length(just_content))
 
   # Check to see if the content includes a footnote
-  if (any(ind <- grepl("\\^~_.*_~\\^", content))) {
-
-    mark_side[ind] <- gsub(".*\\^~_(right|left):.*_~\\^.*", "\\1", content[ind])
-
-    just_content[ind] <- ifelse(mark_side[ind] == 'right',
-                                gsub("^(.*)\\^~_right.*$", "\\1", content[ind]),
-                                gsub(".*_~\\^(.*)", "\\1", content[ind]))
-
-    mark[ind] <- ifelse(mark_side[ind] == "right",
-                        gsub(".*\\^~_right:(.*)_~\\^.*", "\\1", content[ind]),
-                        gsub("\\^~_left:(.*)_~\\^.*", "\\1", content[ind]))
+  if (any(ind <- grepl("%%%(right|left):", content))) {
+    mark_side[ind] <- gsub(".*%%%(right|left):.*", "\\1", content[ind])
+    just_content[ind] <- gsub("%%%(right|left):.*$", "", content[ind])
+    mark[ind] <- gsub(".*%%%(right|left):(.*)$", "\\2", content[ind])
   }
 
   # Apply changes that have to be made to the content

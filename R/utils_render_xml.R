@@ -3058,15 +3058,9 @@ paste_footnote_latex <- function(
     position = "right"
 ) {
 
-  # This delineates the footnote mark from the rest of the content
-  # so that only the content will be reformatted by calls to tab_style
-  mark <- paste0("^~_", position, ":", footmark_latex, "_~^")
-
-  if (position == "right") {
-    paste0(text, mark)
-  } else {
-    paste0(mark, text)
-  }
+  # This encodes the footnote marke and position into the text which
+  # will allow it to be separated when formatting by calls to tab_style
+  paste0(text, "%%%", position, ":", footmark_latex)
 
 }
 
