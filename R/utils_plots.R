@@ -895,7 +895,7 @@ generate_nanoplot <- function(
 
       if (is.na(data_y_points[i])) {
 
-        if (missing_vals == "gap") {
+        if (missing_vals == "marker") {
 
           # Create a symbol that should denote that a
           # missing value is present
@@ -956,7 +956,7 @@ generate_nanoplot <- function(
 
       if (is.na(data_y_points[i])) {
 
-        if (missing_vals == "gap") {
+        if (missing_vals == "marker") {
 
           # Create a symbol that should denote that a
           # missing value is present
