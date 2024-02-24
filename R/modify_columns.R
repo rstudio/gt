@@ -2234,13 +2234,15 @@ cols_add <- function(
 #'
 #' @param missing_vals *Treatment of missing values*
 #'
-#'   `singl-kw:[gap|zero|remove]` // *default:* `"gap"`
+#'   `singl-kw:[gap|marker|zero|remove]` // *default:* `"gap"`
 #'
 #'   If missing values are encountered within the input data, there are three
-#'   strategies available for their handling: (1) `"gap"` will display data gaps
-#'   at the sites of missing data, where data lines will have discontinuities;
-#'   (2) `"zero"` will replace `NA` values with zero values; and (3) `"remove"`
-#'   will remove any incoming `NA` values.
+#'   strategies available for their handling: (1) `"gap"` will show data gaps
+#'   at the sites of missing data, where data lines will have discontinuities
+#'   and bar plots will have missing bars; (2) `"marker"` will behave like
+#'   `"gap"` but show prominent visual marks at the missing data locations; (3)
+#'   `"zero"` will replace `NA` values with zero values; and (4) `"remove"` will
+#'   remove any incoming `NA` values.
 #'
 #' @param autoscale *Automatically set x- and y-axis scale limits based on data*
 #'
@@ -2742,7 +2744,7 @@ cols_nanoplot <- function(
     rows = everything(),
     plot_type = c("line", "bar", "boxplot"),
     plot_height = "2em",
-    missing_vals = c("gap", "zero", "remove"),
+    missing_vals = c("gap", "marker", "zero", "remove"),
     autoscale = FALSE,
     autohide = TRUE,
     columns_x_vals = NULL,
