@@ -848,7 +848,7 @@ create_table_end_l <- function(data) {
     "\\bottomrule\n",
     ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
            "\\end{longtable}\n",
-           "\\end{tabular}\n"),
+           "\\end{tabular}"),
     collapse = ""
   )
 }
@@ -861,7 +861,10 @@ create_footer_component_l <- function(data) {
 
   # If there are no footnotes or source notes, return an empty string
   if (nrow(footnotes_tbl) == 0 && length(source_notes_vec) == 0) {
-    return("")
+    return(ifelse(dt_options_get_value(data = data,
+                                       option = "latex_use_longtable"),
+                  "",
+                  "\\end{table}\n"))
   }
 
   # Get the multiline and separator options for footnotes and source notes
