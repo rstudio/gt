@@ -35,7 +35,7 @@ gt(
   data = tbl,
   groupname_col = "date"
 ) %>%
-  tab_header(title = "The Table Title", subtitle = "The subtitle.") %>%
+  #tab_header(title = "The Table Title", subtitle = "The subtitle.") %>%
   tab_spanner(
     label = "values",
     columns = starts_with("value")
@@ -75,5 +75,6 @@ gt(
   tab_footnote(
     footnote = md("The `subtitle` can likewise get a footnote."),
     locations = cells_title(groups = "subtitle")
-  )
+  ) %>%
+  tab_options(latex.use.longtable = TRUE)
 ```
