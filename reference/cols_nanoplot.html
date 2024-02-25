@@ -205,7 +205,7 @@ of the remaining plot components can be modified.</p>
 <span>  rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  plot_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"line"</span>, <span class="st">"bar"</span>, <span class="st">"boxplot"</span><span class="op">)</span>,</span>
 <span>  plot_height <span class="op">=</span> <span class="st">"2em"</span>,</span>
-<span>  missing_vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gap"</span>, <span class="st">"zero"</span>, <span class="st">"remove"</span><span class="op">)</span>,</span>
+<span>  missing_vals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gap"</span>, <span class="st">"marker"</span>, <span class="st">"zero"</span>, <span class="st">"remove"</span><span class="op">)</span>,</span>
 <span>  autoscale <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  autohide <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  columns_x_vals <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -278,12 +278,14 @@ images inserted via <code><a href="fmt_image.html">fmt_image()</a></code> (also 
 
 <dt>missing_vals</dt>
 <dd><p><em>Treatment of missing values</em></p>
-<p><code>singl-kw:[gap|zero|remove]</code> // <em>default:</em> <code>"gap"</code></p>
+<p><code>singl-kw:[gap|marker|zero|remove]</code> // <em>default:</em> <code>"gap"</code></p>
 <p>If missing values are encountered within the input data, there are three
-strategies available for their handling: (1) <code>"gap"</code> will display data gaps
-at the sites of missing data, where data lines will have discontinuities;
-(2) <code>"zero"</code> will replace <code>NA</code> values with zero values; and (3) <code>"remove"</code>
-will remove any incoming <code>NA</code> values.</p></dd>
+strategies available for their handling: (1) <code>"gap"</code> will show data gaps
+at the sites of missing data, where data lines will have discontinuities
+and bar plots will have missing bars; (2) <code>"marker"</code> will behave like
+<code>"gap"</code> but show prominent visual marks at the missing data locations; (3)
+<code>"zero"</code> will replace <code>NA</code> values with zero values; and (4) <code>"remove"</code> will
+remove any incoming <code>NA</code> values.</p></dd>
 
 
 <dt>autoscale</dt>
