@@ -265,13 +265,13 @@ create_table_start_l <- function(data) {
 
   # Generate setup statements for table including default left
   # alignments and vertical lines for any stub columns
-
-  # FIXME: just putting in temporary boolean, need to pull this from data
-  longtable <- FALSE
-
   paste0(
-    ifelse(longtable, longtable_post_length, "\\begin{table}\n"),
-    ifelse(longtable, "\\begin{longtable}{", "\\begin{tabular}{"),
+    ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
+           longtable_post_length,
+           "\\begin{table}\n"),
+    ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
+           "\\begin{longtable}{",
+           "\\begin{tabular}{"),
     extra_sep,
     paste(col_defs, collapse = ""),
     "}\n",
@@ -842,14 +842,13 @@ summary_rows_for_group_l <- function(
 }
 
 #' @noRd
-create_table_end_l <- function() {
-
-  # FIXME: just putting in temporary boolean, need to pull this from data
-  longtable <- FALSE
+create_table_end_l <- function(data) {
 
   paste0(
     "\\bottomrule\n",
-    ifelse(longtable, "\\end{longtable}\n", "\\end{tabular}\n"),
+    ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
+           "\\end{longtable}\n",
+           "\\end{tabular}\n"),
     collapse = ""
   )
 }
@@ -916,15 +915,14 @@ create_footer_component_l <- function(data) {
     source_notes <- ""
   }
 
-  # FIXME: just putting in temporary boolean, need to pull this from data
-  longtable <- FALSE
-
   # Create the footer block
   paste0(
     "\\begin{minipage}{\\linewidth}\n",
     paste0(footnotes, source_notes),
     "\\end{minipage}\n",
-    ifelse(longtable, "", "\\end{table}\n"),
+    ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
+           "",
+           "\\end{table}\n"),
     collapse = ""
   )
 }

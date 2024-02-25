@@ -4218,6 +4218,15 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   deactivated with `quarto.disable_processing = TRUE` (this option is `FALSE`
 #'   by default).
 #'
+#'   @param latex.use.longtable
+#'
+#'   ** Use longtable latex environment **
+#'
+#'   By default, tables produced using latex code will be embedded in the
+#'   `table` floating environment. Setting this parameter to `TRUE` will instead
+#'   use the `longtable` environment which will not float and may span multiple
+#'   pages.
+#'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
@@ -4535,7 +4544,8 @@ tab_options <- function(
     page.header.height = NULL,
     page.footer.height = NULL,
     quarto.use_bootstrap = NULL,
-    quarto.disable_processing = NULL
+    quarto.disable_processing = NULL,
+    latex.use.longtable = NULL
 ) {
 
   # Perform input object validation

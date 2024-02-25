@@ -714,7 +714,7 @@ as_latex <- function(data) {
   footer_component <- create_footer_component_l(data = data)
 
   # Create a LaTeX fragment for the ending tabular statement
-  table_end <- create_table_end_l()
+  table_end <- create_table_end_l(data = data)
 
   # If the `rmarkdown` package is available, use the
   # `latex_dependency()` function to load latex packages
