@@ -265,9 +265,13 @@ create_table_start_l <- function(data) {
 
   # Generate setup statements for table including default left
   # alignments and vertical lines for any stub columns
+
+  # FIXME: just putting in temporary boolean, need to pull this from data
+  longtable <- FALSE
+
   paste0(
-    longtable_post_length,
-    "\\begin{longtable}{",
+    ifelse(longtable, longtable_post_length, "\\begin{table}\n"),
+    ifelse(longtable, "\\begin{longtable}{", "\\begin{tabular}{"),
     extra_sep,
     paste(col_defs, collapse = ""),
     "}\n",
@@ -840,9 +844,12 @@ summary_rows_for_group_l <- function(
 #' @noRd
 create_table_end_l <- function() {
 
+  # FIXME: just putting in temporary boolean, need to pull this from data
+  longtable <- FALSE
+
   paste0(
     "\\bottomrule\n",
-    "\\end{longtable}\n",
+    ifelse(longtable, "\\end{longtable}\n", "\\end{tabular}\n"),
     collapse = ""
   )
 }
@@ -909,11 +916,15 @@ create_footer_component_l <- function(data) {
     source_notes <- ""
   }
 
+  # FIXME: just putting in temporary boolean, need to pull this from data
+  longtable <- FALSE
+
   # Create the footer block
   paste0(
     "\\begin{minipage}{\\linewidth}\n",
     paste0(footnotes, source_notes),
     "\\end{minipage}\n",
+    ifelse(longtable, "", "\\end{table}\n"),
     collapse = ""
   )
 }
