@@ -267,10 +267,8 @@ create_table_start_l <- function(data) {
   hdr_tabular <- ""
   if(!dt_options_get_value(data = data, option = "latex_use_longtable")) {
 
-    # we need to use the extracolsep here for tabular* regardless of
-    # width
+    # we need to use the extracolsep here for tabular* regardless of width
     extra_sep <- '@{\\extracolsep{\\fill}}'
-
     table_width <- dt_options_get_value(data = data, 'table_width')
 
     if (endsWith(table_width, "%")) {
@@ -278,9 +276,13 @@ create_table_start_l <- function(data) {
       tw <- as.numeric(gsub('%', '', table_width))
       hdr_tabular <- paste0("\\begin{tabular*}{", tw/100, "\\linewidth}{")
 
-    } else{
+    } else if (endsWith(table_width, "px")) {
 
-      # TODO: deal with pixel argument
+      width_in_pt <- 0.75 * convert_to_px(table_width)
+      hdr_tabular <- paste0("\\begin{tabular*}{", width_in_pt, "pt}{")
+
+    } else {
+
       hdr_tabular <- "\\begin{tabular*}{\\linewidth}{"
 
     }
