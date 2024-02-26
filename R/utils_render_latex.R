@@ -1422,6 +1422,7 @@ apply_cell_styles_l <- function(content, style_obj) {
     italic = '\\itshape ',
     oblique = '\\slshape ',
     normal = '\\upshape ',
+    ''
   )
 
 }
@@ -1451,7 +1452,8 @@ apply_cell_styles_l <- function(content, style_obj) {
     normal = '\\mdseries ',
     bold = '\\bfseries ',
     bolder = '\\bfseries ',  # Not implemented
-    lighter = '\\lfseries '
+    lighter = '\\mdseries ', # lfseries is not fully supported in Latex - caused errors with some fonts
+    ''
   )
 
 }
