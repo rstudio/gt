@@ -1375,7 +1375,7 @@ consolidate_cell_styles_l <- function(styles_df) {
 #' a cell of text to be output in LaTeX.
 apply_cell_styles_l <- function(content, style_obj) {
 
-  # Set default values
+  # Set default values for no footnote present
   just_content <- content
   mark_side <- rep("right", times = length(just_content))
   mark <- rep("", times = length(just_content))
@@ -1387,23 +1387,25 @@ apply_cell_styles_l <- function(content, style_obj) {
     mark[ind] <- gsub(".*%%%(right|left):(.*)$", "\\2", content[ind])
   }
 
-  # Apply changes that have to be made to the content
-  x <- just_content %>%
-    .apply_style_color_l(style_obj) %>%
-    .apply_style_fill_l(style_obj) %>%
-    .apply_style_transform_l(style_obj) %>%
-    .apply_style_decorate_l(style_obj)
+  if (length(style_obj) > 0) {
+    # Apply changes that have to be made to the content
+    x <- just_content %>%
+      .apply_style_color_l(style_obj) %>%
+      .apply_style_fill_l(style_obj) %>%
+      .apply_style_transform_l(style_obj) %>%
+      .apply_style_decorate_l(style_obj)
 
-  # Apply changes that can be made to the bracketed environment
-  out_text <- paste0(
-    "{",
-    .apply_style_style_l(style_obj),
-    .apply_style_weight_l(style_obj),
-    .apply_style_fontsize_l(style_obj),
-    .apply_style_indentation_l(style_obj),
-    x,
-    "}"
-  )
+    # Apply changes that can be made to the bracketed environment
+    out_text <- paste0(
+      "{",
+      .apply_style_style_l(style_obj),
+      .apply_style_weight_l(style_obj),
+      .apply_style_fontsize_l(style_obj),
+      .apply_style_indentation_l(style_obj),
+      x,
+      "}"
+    )
+  } else out_text <- just_content
 
   ifelse(mark_side == "right",
          paste0(out_text, mark),

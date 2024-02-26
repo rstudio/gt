@@ -825,7 +825,7 @@ context_exp_marks <- function(context) {
   switch(
     context,
     html = c(" \U000D7 10<sup style='font-size: 65%;'>", "</sup>"),
-    latex = c(" \\times 10^{", "}"),
+    latex = c(" $\\times$ 10\\textsuperscript{", "}"),
     rtf = c(" \\'d7 10{\\super ", "}"),
     word = c(" \U000D7 10^", ""),
     c(" \U000D7 10^", "")
@@ -905,13 +905,13 @@ context_symbol_str <- function(context, symbol) {
       html = get_currency_str(currency = symbol),
       latex = {
         if (!inherits(symbol, "AsIs")) {
-          paste_between(
+          #paste_between(
             markdown_to_latex(
               get_currency_str(currency = symbol, fallback_to_code = TRUE),
               md_engine = "commonmark"
-            ),
-            c("\\text{", "}")
-          )
+            )#,
+          #  c("\\text{", "}")
+          #)
         } else {
           symbol
         }
