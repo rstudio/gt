@@ -263,6 +263,30 @@ create_table_start_l <- function(data) {
   if (dt_options_get_value(data = data, option = 'table_width') != 'auto')
     extra_sep <- '@{\\extracolsep{\\fill}}'
 
+  # determine string for table width if using tabular* environment
+  hdr_tabular <- ""
+  if(!dt_options_get_value(data = data, option = "latex_use_longtable")) {
+
+    # we need to use the extracolsep here for tabular* regardless of
+    # width
+    extra_sep <- '@{\\extracolsep{\\fill}}'
+
+    table_width <- dt_options_get_value(data = data, 'table_width')
+
+    if (endsWith(table_width, "%")) {
+
+      tw <- as.numeric(gsub('%', '', table_width))
+      hdr_tabular <- paste0("\\begin{tabular*}{", tw/100, "\\linewidth}{")
+
+    } else{
+
+      # TODO: deal with pixel argument
+      hdr_tabular <- "\\begin{tabular*}{\\linewidth}{"
+
+    }
+
+  }
+
   # Generate setup statements for table including default left
   # alignments and vertical lines for any stub columns
   paste0(
@@ -271,7 +295,7 @@ create_table_start_l <- function(data) {
            "\\begin{table}\n"),
     ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
            "\\begin{longtable}{",
-           "\\begin{tabular}{"),
+           hdr_tabular),
     extra_sep,
     paste(col_defs, collapse = ""),
     "}\n",
@@ -848,7 +872,7 @@ create_table_end_l <- function(data) {
     "\\bottomrule\n",
     ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
            "\\end{longtable}\n",
-           "\\end{tabular}\n"),
+           "\\end{tabular*}\n"),
     collapse = ""
   )
 }
