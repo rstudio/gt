@@ -1,8 +1,8 @@
-test_that("Table width correctly output in LaTeX", {
+test_that("Table width correctly output in LaTeX using longtable", {
 
   gt_latex_width_1 <-
     gt(exibble) %>%
-    tab_options(table.width = pct(90)) %>%
+    tab_options(table.width = pct(90), latex.use.longtable = TRUE) %>%
     as_latex()
 
   start_pt <- regexpr("begin\\{longtable", gt_latex_width_1)
@@ -40,7 +40,7 @@ test_that("Table width correctly output in LaTeX", {
   # Test specification of a table width in pixels
   gt_latex_width_2 <-
     gt(exibble) %>%
-    tab_options(table.width = '600px') %>%
+    tab_options(table.width = '600px', latex.use.longtable = FALSE) %>%
     as_latex()
 
   expect_match(gt_latex_width_2, "\\\\setlength\\\\LTleft\\{\\\\dimexpr\\(0.5\\\\linewidth - 225pt\\)\\}")
@@ -48,3 +48,23 @@ test_that("Table width correctly output in LaTeX", {
   expect_match(gt_latex_width_2, "\\\\setlength\\\\LTright\\{\\\\dimexpr\\(0.5\\\\linewidth - 225pt\\)\\}")
 
 })
+
+test_that("Table width correctly output in LaTeX using tabular*", {
+
+  gt_latex_width_1 <-
+    gt(exibble) %>%
+    tab_options(table.width = pct(90), latex.use.longtable = FALSE) %>%
+    as_latex()
+
+  expect_match(gt_latex_width_1, "\\\\begin\\{tabular\\*\\}\\{0.9\\\\linewidth\\}\\{@\\{\\\\extracolsep\\{\\\\fill\\}\\}")
+
+  # Test specification of a table width in pixels
+  gt_latex_width_2 <-
+    gt(exibble) %>%
+    tab_options(table.width = '600px', latex.use.longtable = FALSE) %>%
+    as_latex()
+
+  expect_match(gt_latex_width_2, "\\\\begin\\{tabular\\*\\}\\{450pt\\}\\{@\\{\\\\extracolsep\\{\\\\fill\\}\\}")
+
+})
+
