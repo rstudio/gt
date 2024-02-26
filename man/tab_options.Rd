@@ -190,7 +190,8 @@ tab_options(
   page.header.height = NULL,
   page.footer.height = NULL,
   quarto.use_bootstrap = NULL,
-  quarto.disable_processing = NULL
+  quarto.disable_processing = NULL,
+  latex.use.longtable = NULL
 )
 }
 \arguments{
@@ -635,7 +636,16 @@ transformations to support advanced Quarto features. Setting
 add Bootstrap classes to the table, allowing those styles to permeate the
 table. Quarto performs other alterations as well but they can all be
 deactivated with \code{quarto.disable_processing = TRUE} (this option is \code{FALSE}
-by default).}
+by default).
+
+@param latex.use.longtable
+
+** Use longtable latex environment **
+
+By default, tables produced using latex code will be embedded in the
+\code{table} floating environment. Setting this parameter to \code{TRUE} will instead
+use the \code{longtable} environment which will not float and may span multiple
+pages.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -780,11 +790,11 @@ Other part creation/modification functions:
 \code{\link{tab_info}()},
 \code{\link{tab_row_group}()},
 \code{\link{tab_source_note}()},
-\code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
+\code{\link{tab_spanner_delim}()},
 \code{\link{tab_stub_indent}()},
 \code{\link{tab_stubhead}()},
-\code{\link{tab_style_body}()},
-\code{\link{tab_style}()}
+\code{\link{tab_style}()},
+\code{\link{tab_style_body}()}
 }
 \concept{part creation/modification functions}
