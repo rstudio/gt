@@ -848,7 +848,7 @@ create_table_end_l <- function(data) {
     "\\bottomrule\n",
     ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
            "\\end{longtable}\n",
-           "\\end{tabular}"),
+           "\\end{tabular}\n"),
     collapse = ""
   )
 }
