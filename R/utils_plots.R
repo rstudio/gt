@@ -29,7 +29,7 @@ generate_nanoplot <- function(
     x_vals = NULL,
     expand_x = NULL,
     expand_y = NULL,
-    missing_vals = c("gap", "zero", "remove"),
+    missing_vals = c("gap", "marker", "zero", "remove"),
     all_y_vals = NULL,
     all_single_y_vals = NULL,
     plot_type = c("line", "bar"),
@@ -895,7 +895,7 @@ generate_nanoplot <- function(
 
       if (is.na(data_y_points[i])) {
 
-        if (missing_vals == "gap") {
+        if (missing_vals == "marker") {
 
           # Create a symbol that should denote that a
           # missing value is present
@@ -905,7 +905,7 @@ generate_nanoplot <- function(
               "cx=\"", data_x_points[i], "\" ",
               "cy=\"", safe_y_d + (data_y_height / 2), "\" ",
               "r=\"", data_point_radius_i + (data_point_radius_i / 2), "\" ",
-              "stroke=\"red\" ",
+              "stroke=\"", "red", "\" ",
               "stroke-width=\"", data_point_stroke_width_i, "\" ",
               "fill=\"white\" ",
               ">",
@@ -956,7 +956,7 @@ generate_nanoplot <- function(
 
       if (is.na(data_y_points[i])) {
 
-        if (missing_vals == "gap") {
+        if (missing_vals == "marker") {
 
           # Create a symbol that should denote that a
           # missing value is present
