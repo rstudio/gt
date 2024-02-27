@@ -10,7 +10,7 @@ cols_nanoplot(
   rows = everything(),
   plot_type = c("line", "bar", "boxplot"),
   plot_height = "2em",
-  missing_vals = c("gap", "zero", "remove"),
+  missing_vals = c("gap", "marker", "zero", "remove"),
   autoscale = FALSE,
   autohide = TRUE,
   columns_x_vals = NULL,
@@ -81,13 +81,15 @@ images inserted via \code{\link[=fmt_image]{fmt_image()}} (also having a \code{"
 
 \item{missing_vals}{\emph{Treatment of missing values}
 
-\verb{singl-kw:[gap|zero|remove]} // \emph{default:} \code{"gap"}
+\verb{singl-kw:[gap|marker|zero|remove]} // \emph{default:} \code{"gap"}
 
 If missing values are encountered within the input data, there are three
-strategies available for their handling: (1) \code{"gap"} will display data gaps
-at the sites of missing data, where data lines will have discontinuities;
-(2) \code{"zero"} will replace \code{NA} values with zero values; and (3) \code{"remove"}
-will remove any incoming \code{NA} values.}
+strategies available for their handling: (1) \code{"gap"} will show data gaps
+at the sites of missing data, where data lines will have discontinuities
+and bar plots will have missing bars; (2) \code{"marker"} will behave like
+\code{"gap"} but show prominent visual marks at the missing data locations; (3)
+\code{"zero"} will replace \code{NA} values with zero values; and (4) \code{"remove"} will
+remove any incoming \code{NA} values.}
 
 \item{autoscale}{\emph{Automatically set x- and y-axis scale limits based on data}
 
