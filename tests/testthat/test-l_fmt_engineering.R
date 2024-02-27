@@ -64,17 +64,17 @@ test_that("The `fmt_engineering()` function works correctly in the LaTeX context
        fmt_engineering(columns = "num", decimals = 2) %>%
        render_formats_test("latex"))[["num"]],
     c(
-      "$82.03 \\times 10^{30}$", "$829.30 \\times 10^{18}$",
-      "$492.03 \\times 10^{9}$", "$84.93 \\times 10^{9}$",
-      "$5.04 \\times 10^{9}$", "$203.82 \\times 10^{6}$",
-      "$84.73 \\times 10^{6}$", "$2.32 \\times 10^{6}$",
-      "$230.32 \\times 10^{3}$", "$50.00 \\times 10^{3}$",
-      "$1.00 \\times 10^{3}$", "$10.00$", "$12.35 \\times 10^{3}$",
-      "$1.23 \\times 10^{3}$", "$123.45$", "$1.23$",
-      "$123.45 \\times 10^{-3}$", "$12.35 \\times 10^{-6}$",
-      "$-50.00 \\times 10^{3}$", "$-1.00 \\times 10^{3}$", "$-10.00$",
-      "$-12.35 \\times 10^{3}$", "$-1.23 \\times 10^{3}$", "$-123.45$",
-      "$-1.23$", "$-123.45 \\times 10^{-3}$", "$-12.35 \\times 10^{-6}$"
+      "82.03 $\\times$ 10\\textsuperscript{30}", "829.30 $\\times$ 10\\textsuperscript{18}",
+      "492.03 $\\times$ 10\\textsuperscript{9}", "84.93 $\\times$ 10\\textsuperscript{9}",
+      "5.04 $\\times$ 10\\textsuperscript{9}", "203.82 $\\times$ 10\\textsuperscript{6}",
+      "84.73 $\\times$ 10\\textsuperscript{6}", "2.32 $\\times$ 10\\textsuperscript{6}",
+      "230.32 $\\times$ 10\\textsuperscript{3}", "50.00 $\\times$ 10\\textsuperscript{3}",
+      "1.00 $\\times$ 10\\textsuperscript{3}", "10.00", "12.35 $\\times$ 10\\textsuperscript{3}",
+      "1.23 $\\times$ 10\\textsuperscript{3}", "123.45", "1.23",
+      "123.45 $\\times$ 10\\textsuperscript{-3}", "12.35 $\\times$ 10\\textsuperscript{-6}",
+      "-50.00 $\\times$ 10\\textsuperscript{3}", "-1.00 $\\times$ 10\\textsuperscript{3}", "-10.00",
+      "-12.35 $\\times$ 10\\textsuperscript{3}", "-1.23 $\\times$ 10\\textsuperscript{3}", "-123.45",
+      "-1.23", "-123.45 $\\times$ 10\\textsuperscript{-3}", "-12.35 $\\times$ 10\\textsuperscript{-6}"
     )
   )
 
@@ -84,17 +84,17 @@ test_that("The `fmt_engineering()` function works correctly in the LaTeX context
        fmt_engineering(columns = "num", decimals = 5) %>%
        render_formats_test("latex"))[["num"]],
     c(
-      "$82.03048 \\times 10^{30}$", "$829.30023 \\times 10^{18}$",
-      "$492.03218 \\times 10^{9}$", "$84.93028 \\times 10^{9}$",
-      "$5.04320 \\times 10^{9}$", "$203.82093 \\times 10^{6}$",
-      "$84.72920 \\times 10^{6}$", "$2.32344 \\times 10^{6}$",
-      "$230.32340 \\times 10^{3}$", "$50.00001 \\times 10^{3}$",
-      "$1.00000 \\times 10^{3}$", "$10.00001$", "$12.34500 \\times 10^{3}$",
-      "$1.23450 \\times 10^{3}$", "$123.45000$", "$1.23450$",
-      "$123.45000 \\times 10^{-3}$", "$12.34560 \\times 10^{-6}$",
-      "$-50.00001 \\times 10^{3}$", "$-1.00000 \\times 10^{3}$", "$-10.00001$",
-      "$-12.34500 \\times 10^{3}$", "$-1.23450 \\times 10^{3}$", "$-123.45000$",
-      "$-1.23450$", "$-123.45000 \\times 10^{-3}$", "$-12.34560 \\times 10^{-6}$"
+      "82.03048 $\\times$ 10\\textsuperscript{30}", "829.30023 $\\times$ 10\\textsuperscript{18}",
+      "492.03218 $\\times$ 10\\textsuperscript{9}", "84.93028 $\\times$ 10\\textsuperscript{9}",
+      "5.04320 $\\times$ 10\\textsuperscript{9}", "203.82093 $\\times$ 10\\textsuperscript{6}",
+      "84.72920 $\\times$ 10\\textsuperscript{6}", "2.32344 $\\times$ 10\\textsuperscript{6}",
+      "230.32340 $\\times$ 10\\textsuperscript{3}", "50.00001 $\\times$ 10\\textsuperscript{3}",
+      "1.00000 $\\times$ 10\\textsuperscript{3}", "10.00001", "12.34500 $\\times$ 10\\textsuperscript{3}",
+      "1.23450 $\\times$ 10\\textsuperscript{3}", "123.45000", "1.23450",
+      "123.45000 $\\times$ 10\\textsuperscript{-3}", "12.34560 $\\times$ 10\\textsuperscript{-6}",
+      "-50.00001 $\\times$ 10\\textsuperscript{3}", "-1.00000 $\\times$ 10\\textsuperscript{3}", "-10.00001",
+      "-12.34500 $\\times$ 10\\textsuperscript{3}", "-1.23450 $\\times$ 10\\textsuperscript{3}", "-123.45000",
+      "-1.23450", "-123.45000 $\\times$ 10\\textsuperscript{-3}", "-12.34560 $\\times$ 10\\textsuperscript{-6}"
     )
   )
 
@@ -108,17 +108,17 @@ test_that("The `fmt_engineering()` function works correctly in the LaTeX context
        ) %>%
        render_formats_test("latex"))[["num"]],
     c(
-      "$82,03 \\times 10^{30}$", "$829,30 \\times 10^{18}$",
-      "$492,03 \\times 10^{9}$", "$84,93 \\times 10^{9}$",
-      "$5,04 \\times 10^{9}$", "$203,82 \\times 10^{6}$",
-      "$84,73 \\times 10^{6}$", "$2,32 \\times 10^{6}$",
-      "$230,32 \\times 10^{3}$", "$50,00 \\times 10^{3}$",
-      "$1,00 \\times 10^{3}$", "$10,00$", "$12,35 \\times 10^{3}$",
-      "$1,23 \\times 10^{3}$", "$123,45$", "$1,23$", "$123,45 \\times 10^{-3}$",
-      "$12,35 \\times 10^{-6}$", "$-50,00 \\times 10^{3}$",
-      "$-1,00 \\times 10^{3}$", "$-10,00$", "$-12,35 \\times 10^{3}$",
-      "$-1,23 \\times 10^{3}$", "$-123,45$", "$-1,23$",
-      "$-123,45 \\times 10^{-3}$", "$-12,35 \\times 10^{-6}$"
+      "82,03 $\\times$ 10\\textsuperscript{30}", "829,30 $\\times$ 10\\textsuperscript{18}",
+      "492,03 $\\times$ 10\\textsuperscript{9}", "84,93 $\\times$ 10\\textsuperscript{9}",
+      "5,04 $\\times$ 10\\textsuperscript{9}", "203,82 $\\times$ 10\\textsuperscript{6}",
+      "84,73 $\\times$ 10\\textsuperscript{6}", "2,32 $\\times$ 10\\textsuperscript{6}",
+      "230,32 $\\times$ 10\\textsuperscript{3}", "50,00 $\\times$ 10\\textsuperscript{3}",
+      "1,00 $\\times$ 10\\textsuperscript{3}", "10,00", "12,35 $\\times$ 10\\textsuperscript{3}",
+      "1,23 $\\times$ 10\\textsuperscript{3}", "123,45", "1,23", "123,45 $\\times$ 10\\textsuperscript{-3}",
+      "12,35 $\\times$ 10\\textsuperscript{-6}", "-50,00 $\\times$ 10\\textsuperscript{3}",
+      "-1,00 $\\times$ 10\\textsuperscript{3}", "-10,00", "-12,35 $\\times$ 10\\textsuperscript{3}",
+      "-1,23 $\\times$ 10\\textsuperscript{3}", "-123,45", "-1,23",
+      "-123,45 $\\times$ 10\\textsuperscript{-3}", "-12,35 $\\times$ 10\\textsuperscript{-6}"
     )
   )
 
@@ -129,17 +129,17 @@ test_that("The `fmt_engineering()` function works correctly in the LaTeX context
        fmt_engineering(columns = "num", decimals = 4, scale_by = 1/1000) %>%
        render_formats_test("latex"))[["num"]],
     c(
-      "$82.0305 \\times 10^{27}$", "$829.3002 \\times 10^{15}$",
-      "$492.0322 \\times 10^{6}$", "$84.9303 \\times 10^{6}$",
-      "$5.0432 \\times 10^{6}$", "$203.8209 \\times 10^{3}$",
-      "$84.7292 \\times 10^{3}$", "$2.3234 \\times 10^{3}$",
-      "$230.3234$", "$50.0000$", "$1.0000$", "$10.0000 \\times 10^{-3}$",
-      "$12.3450$", "$1.2345$", "$123.4500 \\times 10^{-3}$",
-      "$1.2345 \\times 10^{-3}$", "$123.4500 \\times 10^{-6}$",
-      "$12.3456 \\times 10^{-9}$", "$-50.0000$", "$-1.0000$",
-      "$-10.0000 \\times 10^{-3}$", "$-12.3450$", "$-1.2345$",
-      "$-123.4500 \\times 10^{-3}$", "$-1.2345 \\times 10^{-3}$",
-      "$-123.4500 \\times 10^{-6}$", "$-12.3456 \\times 10^{-9}$"
+      "82.0305 $\\times$ 10\\textsuperscript{27}", "829.3002 $\\times$ 10\\textsuperscript{15}",
+      "492.0322 $\\times$ 10\\textsuperscript{6}", "84.9303 $\\times$ 10\\textsuperscript{6}",
+      "5.0432 $\\times$ 10\\textsuperscript{6}", "203.8209 $\\times$ 10\\textsuperscript{3}",
+      "84.7292 $\\times$ 10\\textsuperscript{3}", "2.3234 $\\times$ 10\\textsuperscript{3}",
+      "230.3234", "50.0000", "1.0000", "10.0000 $\\times$ 10\\textsuperscript{-3}",
+      "12.3450", "1.2345", "123.4500 $\\times$ 10\\textsuperscript{-3}",
+      "1.2345 $\\times$ 10\\textsuperscript{-3}", "123.4500 $\\times$ 10\\textsuperscript{-6}",
+      "12.3456 $\\times$ 10\\textsuperscript{-9}", "-50.0000", "-1.0000",
+      "-10.0000 $\\times$ 10\\textsuperscript{-3}", "-12.3450", "-1.2345",
+      "-123.4500 $\\times$ 10\\textsuperscript{-3}", "-1.2345 $\\times$ 10\\textsuperscript{-3}",
+      "-123.4500 $\\times$ 10\\textsuperscript{-6}", "-12.3456 $\\times$ 10\\textsuperscript{-9}"
     )
   )
 
@@ -150,18 +150,18 @@ test_that("The `fmt_engineering()` function works correctly in the LaTeX context
        fmt_engineering(columns = "num", decimals = 2, pattern = "a {x} b") %>%
        render_formats_test("latex"))[["num"]],
     c(
-      "a $82.03 \\times 10^{30}$ b", "a $829.30 \\times 10^{18}$ b",
-      "a $492.03 \\times 10^{9}$ b", "a $84.93 \\times 10^{9}$ b",
-      "a $5.04 \\times 10^{9}$ b", "a $203.82 \\times 10^{6}$ b",
-      "a $84.73 \\times 10^{6}$ b", "a $2.32 \\times 10^{6}$ b",
-      "a $230.32 \\times 10^{3}$ b", "a $50.00 \\times 10^{3}$ b",
-      "a $1.00 \\times 10^{3}$ b", "a $10.00$ b", "a $12.35 \\times 10^{3}$ b",
-      "a $1.23 \\times 10^{3}$ b", "a $123.45$ b", "a $1.23$ b",
-      "a $123.45 \\times 10^{-3}$ b", "a $12.35 \\times 10^{-6}$ b",
-      "a $-50.00 \\times 10^{3}$ b", "a $-1.00 \\times 10^{3}$ b",
-      "a $-10.00$ b", "a $-12.35 \\times 10^{3}$ b",
-      "a $-1.23 \\times 10^{3}$ b", "a $-123.45$ b", "a $-1.23$ b",
-      "a $-123.45 \\times 10^{-3}$ b", "a $-12.35 \\times 10^{-6}$ b"
+      "a 82.03 $\\times$ 10\\textsuperscript{30} b", "a 829.30 $\\times$ 10\\textsuperscript{18} b",
+      "a 492.03 $\\times$ 10\\textsuperscript{9} b", "a 84.93 $\\times$ 10\\textsuperscript{9} b",
+      "a 5.04 $\\times$ 10\\textsuperscript{9} b", "a 203.82 $\\times$ 10\\textsuperscript{6} b",
+      "a 84.73 $\\times$ 10\\textsuperscript{6} b", "a 2.32 $\\times$ 10\\textsuperscript{6} b",
+      "a 230.32 $\\times$ 10\\textsuperscript{3} b", "a 50.00 $\\times$ 10\\textsuperscript{3} b",
+      "a 1.00 $\\times$ 10\\textsuperscript{3} b", "a 10.00 b", "a 12.35 $\\times$ 10\\textsuperscript{3} b",
+      "a 1.23 $\\times$ 10\\textsuperscript{3} b", "a 123.45 b", "a 1.23 b",
+      "a 123.45 $\\times$ 10\\textsuperscript{-3} b", "a 12.35 $\\times$ 10\\textsuperscript{-6} b",
+      "a -50.00 $\\times$ 10\\textsuperscript{3} b", "a -1.00 $\\times$ 10\\textsuperscript{3} b",
+      "a -10.00 b", "a -12.35 $\\times$ 10\\textsuperscript{3} b",
+      "a -1.23 $\\times$ 10\\textsuperscript{3} b", "a -123.45 b", "a -1.23 b",
+      "a -123.45 $\\times$ 10\\textsuperscript{-3} b", "a -12.35 $\\times$ 10\\textsuperscript{-6} b"
     )
   )
 
@@ -172,17 +172,17 @@ test_that("The `fmt_engineering()` function works correctly in the LaTeX context
          columns = "num", decimals = 3, force_sign_m = TRUE) %>%
        render_formats_test("latex"))[["num"]],
     c(
-      "$+82.030 \\times 10^{30}$", "$+829.300 \\times 10^{18}$",
-      "$+492.032 \\times 10^{9}$", "$+84.930 \\times 10^{9}$",
-      "$+5.043 \\times 10^{9}$", "$+203.821 \\times 10^{6}$",
-      "$+84.729 \\times 10^{6}$", "$+2.323 \\times 10^{6}$",
-      "$+230.323 \\times 10^{3}$", "$+50.000 \\times 10^{3}$",
-      "$+1.000 \\times 10^{3}$", "$+10.000$", "$+12.345 \\times 10^{3}$",
-      "$+1.234 \\times 10^{3}$", "$+123.450$", "$+1.234$",
-      "$+123.450 \\times 10^{-3}$", "$+12.346 \\times 10^{-6}$",
-      "$-50.000 \\times 10^{3}$", "$-1.000 \\times 10^{3}$", "$-10.000$",
-      "$-12.345 \\times 10^{3}$", "$-1.234 \\times 10^{3}$", "$-123.450$",
-      "$-1.234$", "$-123.450 \\times 10^{-3}$", "$-12.346 \\times 10^{-6}$"
+      "+82.030 $\\times$ 10\\textsuperscript{30}", "+829.300 $\\times$ 10\\textsuperscript{18}",
+      "+492.032 $\\times$ 10\\textsuperscript{9}", "+84.930 $\\times$ 10\\textsuperscript{9}",
+      "+5.043 $\\times$ 10\\textsuperscript{9}", "+203.821 $\\times$ 10\\textsuperscript{6}",
+      "+84.729 $\\times$ 10\\textsuperscript{6}", "+2.323 $\\times$ 10\\textsuperscript{6}",
+      "+230.323 $\\times$ 10\\textsuperscript{3}", "+50.000 $\\times$ 10\\textsuperscript{3}",
+      "+1.000 $\\times$ 10\\textsuperscript{3}", "+10.000", "+12.345 $\\times$ 10\\textsuperscript{3}",
+      "+1.234 $\\times$ 10\\textsuperscript{3}", "+123.450", "+1.234",
+      "+123.450 $\\times$ 10\\textsuperscript{-3}", "+12.346 $\\times$ 10\\textsuperscript{-6}",
+      "-50.000 $\\times$ 10\\textsuperscript{3}", "-1.000 $\\times$ 10\\textsuperscript{3}", "-10.000",
+      "-12.345 $\\times$ 10\\textsuperscript{3}", "-1.234 $\\times$ 10\\textsuperscript{3}", "-123.450",
+      "-1.234", "-123.450 $\\times$ 10\\textsuperscript{-3}", "-12.346 $\\times$ 10\\textsuperscript{-6}"
     )
   )
 
@@ -194,17 +194,17 @@ test_that("The `fmt_engineering()` function works correctly in the LaTeX context
          columns = "num", pattern = "*{x}*", force_sign_m = TRUE) %>%
        render_formats_test("latex"))[["num"]],
     c(
-      "*$+82.03 \\times 10^{30}$*", "*$+829.30 \\times 10^{18}$*",
-      "*$+492.03 \\times 10^{9}$*", "*$+84.93 \\times 10^{9}$*",
-      "*$+5.04 \\times 10^{9}$*", "*$+203.82 \\times 10^{6}$*",
-      "*$+84.73 \\times 10^{6}$*", "*$+2.32 \\times 10^{6}$*",
-      "*$+230.32 \\times 10^{3}$*", "*$+50.00 \\times 10^{3}$*",
-      "*$+1.00 \\times 10^{3}$*", "*$+10.00$*", "*$+12.35 \\times 10^{3}$*",
-      "*$+1.23 \\times 10^{3}$*", "*$+123.45$*", "*$+1.23$*",
-      "*$+123.45 \\times 10^{-3}$*", "*$+12.35 \\times 10^{-6}$*",
-      "*$-50.00 \\times 10^{3}$*", "*$-1.00 \\times 10^{3}$*", "*$-10.00$*",
-      "*$-12.35 \\times 10^{3}$*", "*$-1.23 \\times 10^{3}$*", "*$-123.45$*",
-      "*$-1.23$*", "*$-123.45 \\times 10^{-3}$*", "*$-12.35 \\times 10^{-6}$*"
+      "*+82.03 $\\times$ 10\\textsuperscript{30}*", "*+829.30 $\\times$ 10\\textsuperscript{18}*",
+      "*+492.03 $\\times$ 10\\textsuperscript{9}*", "*+84.93 $\\times$ 10\\textsuperscript{9}*",
+      "*+5.04 $\\times$ 10\\textsuperscript{9}*", "*+203.82 $\\times$ 10\\textsuperscript{6}*",
+      "*+84.73 $\\times$ 10\\textsuperscript{6}*", "*+2.32 $\\times$ 10\\textsuperscript{6}*",
+      "*+230.32 $\\times$ 10\\textsuperscript{3}*", "*+50.00 $\\times$ 10\\textsuperscript{3}*",
+      "*+1.00 $\\times$ 10\\textsuperscript{3}*", "*+10.00*", "*+12.35 $\\times$ 10\\textsuperscript{3}*",
+      "*+1.23 $\\times$ 10\\textsuperscript{3}*", "*+123.45*", "*+1.23*",
+      "*+123.45 $\\times$ 10\\textsuperscript{-3}*", "*+12.35 $\\times$ 10\\textsuperscript{-6}*",
+      "*-50.00 $\\times$ 10\\textsuperscript{3}*", "*-1.00 $\\times$ 10\\textsuperscript{3}*", "*-10.00*",
+      "*-12.35 $\\times$ 10\\textsuperscript{3}*", "*-1.23 $\\times$ 10\\textsuperscript{3}*", "*-123.45*",
+      "*-1.23*", "*-123.45 $\\times$ 10\\textsuperscript{-3}*", "*-12.35 $\\times$ 10\\textsuperscript{-6}*"
     )
   )
 
@@ -215,17 +215,17 @@ test_that("The `fmt_engineering()` function works correctly in the LaTeX context
        fmt_engineering(columns = "num", decimals = 2, locale = "en_US") %>%
        render_formats_test("latex"))[["num"]],
     c(
-      "$82.03 \\times 10^{30}$", "$829.30 \\times 10^{18}$",
-      "$492.03 \\times 10^{9}$", "$84.93 \\times 10^{9}$",
-      "$5.04 \\times 10^{9}$", "$203.82 \\times 10^{6}$",
-      "$84.73 \\times 10^{6}$", "$2.32 \\times 10^{6}$",
-      "$230.32 \\times 10^{3}$", "$50.00 \\times 10^{3}$",
-      "$1.00 \\times 10^{3}$", "$10.00$", "$12.35 \\times 10^{3}$",
-      "$1.23 \\times 10^{3}$", "$123.45$", "$1.23$",
-      "$123.45 \\times 10^{-3}$", "$12.35 \\times 10^{-6}$",
-      "$-50.00 \\times 10^{3}$", "$-1.00 \\times 10^{3}$", "$-10.00$",
-      "$-12.35 \\times 10^{3}$", "$-1.23 \\times 10^{3}$", "$-123.45$",
-      "$-1.23$", "$-123.45 \\times 10^{-3}$", "$-12.35 \\times 10^{-6}$"
+      "82.03 $\\times$ 10\\textsuperscript{30}", "829.30 $\\times$ 10\\textsuperscript{18}",
+      "492.03 $\\times$ 10\\textsuperscript{9}", "84.93 $\\times$ 10\\textsuperscript{9}",
+      "5.04 $\\times$ 10\\textsuperscript{9}", "203.82 $\\times$ 10\\textsuperscript{6}",
+      "84.73 $\\times$ 10\\textsuperscript{6}", "2.32 $\\times$ 10\\textsuperscript{6}",
+      "230.32 $\\times$ 10\\textsuperscript{3}", "50.00 $\\times$ 10\\textsuperscript{3}",
+      "1.00 $\\times$ 10\\textsuperscript{3}", "10.00", "12.35 $\\times$ 10\\textsuperscript{3}",
+      "1.23 $\\times$ 10\\textsuperscript{3}", "123.45", "1.23",
+      "123.45 $\\times$ 10\\textsuperscript{-3}", "12.35 $\\times$ 10\\textsuperscript{-6}",
+      "-50.00 $\\times$ 10\\textsuperscript{3}", "-1.00 $\\times$ 10\\textsuperscript{3}", "-10.00",
+      "-12.35 $\\times$ 10\\textsuperscript{3}", "-1.23 $\\times$ 10\\textsuperscript{3}", "-123.45",
+      "-1.23", "-123.45 $\\times$ 10\\textsuperscript{-3}", "-12.35 $\\times$ 10\\textsuperscript{-6}"
     )
   )
 
@@ -236,17 +236,17 @@ test_that("The `fmt_engineering()` function works correctly in the LaTeX context
        fmt_engineering(columns = "num", decimals = 2, locale = "da_DK") %>%
        render_formats_test("latex"))[["num"]],
     c(
-      "$82,03 \\times 10^{30}$", "$829,30 \\times 10^{18}$",
-      "$492,03 \\times 10^{9}$", "$84,93 \\times 10^{9}$",
-      "$5,04 \\times 10^{9}$", "$203,82 \\times 10^{6}$",
-      "$84,73 \\times 10^{6}$", "$2,32 \\times 10^{6}$",
-      "$230,32 \\times 10^{3}$", "$50,00 \\times 10^{3}$",
-      "$1,00 \\times 10^{3}$", "$10,00$", "$12,35 \\times 10^{3}$",
-      "$1,23 \\times 10^{3}$", "$123,45$", "$1,23$",
-      "$123,45 \\times 10^{-3}$", "$12,35 \\times 10^{-6}$",
-      "$-50,00 \\times 10^{3}$", "$-1,00 \\times 10^{3}$", "$-10,00$",
-      "$-12,35 \\times 10^{3}$", "$-1,23 \\times 10^{3}$", "$-123,45$",
-      "$-1,23$", "$-123,45 \\times 10^{-3}$", "$-12,35 \\times 10^{-6}$"
+      "82,03 $\\times$ 10\\textsuperscript{30}", "829,30 $\\times$ 10\\textsuperscript{18}",
+      "492,03 $\\times$ 10\\textsuperscript{9}", "84,93 $\\times$ 10\\textsuperscript{9}",
+      "5,04 $\\times$ 10\\textsuperscript{9}", "203,82 $\\times$ 10\\textsuperscript{6}",
+      "84,73 $\\times$ 10\\textsuperscript{6}", "2,32 $\\times$ 10\\textsuperscript{6}",
+      "230,32 $\\times$ 10\\textsuperscript{3}", "50,00 $\\times$ 10\\textsuperscript{3}",
+      "1,00 $\\times$ 10\\textsuperscript{3}", "10,00", "12,35 $\\times$ 10\\textsuperscript{3}",
+      "1,23 $\\times$ 10\\textsuperscript{3}", "123,45", "1,23",
+      "123,45 $\\times$ 10\\textsuperscript{-3}", "12,35 $\\times$ 10\\textsuperscript{-6}",
+      "-50,00 $\\times$ 10\\textsuperscript{3}", "-1,00 $\\times$ 10\\textsuperscript{3}", "-10,00",
+      "-12,35 $\\times$ 10\\textsuperscript{3}", "-1,23 $\\times$ 10\\textsuperscript{3}", "-123,45",
+      "-1,23", "-123,45 $\\times$ 10\\textsuperscript{-3}", "-12,35 $\\times$ 10\\textsuperscript{-6}"
     )
   )
 })
@@ -272,11 +272,11 @@ test_that("The `fmt_engineering() fn can handle extremely large and small values
        fmt_engineering(columns = "num", decimals = 5) %>%
        render_formats_test("latex"))[["num"]],
     c(
-      "$-150.00000 \\times 10^{198}$", "$-15.00000 \\times 10^{99}$",
-      "$-2.50000$", "$-350.00000 \\times 10^{-102}$",
-      "$-35.00000 \\times 10^{-201}$", "$15.00000 \\times 10^{-201}$",
-      "$150.00000 \\times 10^{-102}$", "$2.50000$",
-      "$35.00000 \\times 10^{99}$", "$350.00000 \\times 10^{198}$"
+      "-150.00000 $\\times$ 10\\textsuperscript{198}", "-15.00000 $\\times$ 10\\textsuperscript{99}",
+      "-2.50000", "-350.00000 $\\times$ 10\\textsuperscript{-102}",
+      "-35.00000 $\\times$ 10\\textsuperscript{-201}", "15.00000 $\\times$ 10\\textsuperscript{-201}",
+      "150.00000 $\\times$ 10\\textsuperscript{-102}", "2.50000",
+      "35.00000 $\\times$ 10\\textsuperscript{99}", "350.00000 $\\times$ 10\\textsuperscript{198}"
     )
   )
 })
