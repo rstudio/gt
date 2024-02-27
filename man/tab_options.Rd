@@ -636,11 +636,9 @@ transformations to support advanced Quarto features. Setting
 add Bootstrap classes to the table, allowing those styles to permeate the
 table. Quarto performs other alterations as well but they can all be
 deactivated with \code{quarto.disable_processing = TRUE} (this option is \code{FALSE}
-by default).
+by default).}
 
-@param latex.use.longtable
-
-** Use longtable latex environment **
+\item{latex.use.longtable}{** Use longtable latex environment **
 
 By default, tables produced using latex code will be embedded in the
 \code{table} floating environment. Setting this parameter to \code{TRUE} will instead
