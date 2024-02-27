@@ -261,14 +261,15 @@ closed set.</p>
 <p>Using a small portion of <code><a href="metro.html">metro</a></code> dataset, let's create a <strong>gt</strong> table. We
 will only include a few columns and rows from that table. The <code>lines</code> and
 <code>connect_rer</code> columns have comma-separated listings of numbers/letters
-(corresponding to lines served at each station). We have a directory SVG
-graphics for all of these lines in the package (the path for the image
-directory can be accessed via <code>system.file("metro_svg", package = "gt")</code>),
-and the filenames roughly correspond to the data in those two columns. The
-<code>fmt_image()</code> function can be used with these inputs since the <code>path</code> and
-<code>file_pattern</code> arguments allow us to compose complete and valid file
-locations. What you get from this are sequences of images in the table cells,
-taken from the referenced graphics files on disk.</p>
+(corresponding to lines served at each station). We have a directory of SVG
+graphics for all of these lines within the package (the path for the
+directory containing the images can be accessed via
+<code>system.file("metro_svg", package = "gt")</code>), and the filenames roughly
+correspond to the data in those two columns. The <code>fmt_image()</code> function can
+be used with these inputs since the <code>path</code> and <code>file_pattern</code> arguments allow
+us to compose complete and valid file locations. What you get from all of
+this are sequences of images in the table cells, taken from the referenced
+graphics files on disk.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">metro</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">caption</span>, <span class="va">lines</span>, <span class="va">connect_rer</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span></span>
