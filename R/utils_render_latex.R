@@ -72,7 +72,7 @@ sprintf_unless_na <- function(fmt, x) {
   ifelse(
     is.na(x),
     NA_character_,
-    sprintf(fmt, as.character(x))
+    sprintf(fmt, x)
   )
 
 }
@@ -1477,13 +1477,16 @@ apply_cell_styles_l <- function(content, style_obj) {
   if (is.null(style_obj[['cell_text']][['size']])) return('')
 
   if (is.numeric(style_obj[['cell_text']][['size']])) {
+    # According to the documentation for the cell_text function,
+    # numeric values are assumed to be in pixels.  Latex requires
+    # points
 
     return(
       paste0(
         "\\fontsize{",
-        style_obj[['cell_text']][['size']],
+        style_obj[['cell_text']][['size']] * 0.75,
         "}{",
-        style_obj[['cell_text']][['size']],
+        style_obj[['cell_text']][['size']] * 0.75 * 1.25,
         "}\\selectfont "
       )
     )
@@ -1559,3 +1562,35 @@ apply_spanner_styles_l <- function(spanners_rle, styles_tbl) {
 
   spanners_rle
 }
+
+create_font_size_bookends_l <- function(data) {
+
+  size_options <- dplyr::filter(dt_options_get(data), parameter == 'table_font_size')
+  size <- unlist(size_options$value)[1L]
+
+  fs_fmt <- "\\begingroup\n\\fontsize{%3.1fpt}{%3.1fpt}\\selectfont\n"
+  if (grepl(pattern = "^[[:digit:]]+(\\%|in|cm|emu|em|pt|px)$", size)) {
+
+    if (endsWith("%", x = size)) {
+
+      multiple <- as.numeric(gsub("%", "", size)) / 100
+      fs_statement <- sprintf(fs_fmt, multiple * 12, multiple * 12 * 1.2)
+
+    } else if (endsWith("pt", x = size)) {
+
+      pt_size <- as.numeric(gsub("pt$", "", size))
+      fs_statement <- sprintf(fs_fmt, pt_size, pt_size * 1.2)
+
+    } else {
+
+      pt_size <- convert_to_px(size) * 0.75
+      fs_statement <- sprintf(fs_fmt, pt_size, pt_size * 1.2)
+
+    }
+
+  } else return(c("", ""))
+
+  c(fs_statement, "\\endgroup\n")
+
+}
+
