@@ -1,5 +1,7 @@
 # gt (development version)
 
+* gt saves correctly to .rtf if using `cols_label()` (@olivroy, #1233)
+
 # gt 0.10.1
 
 ## Improvements to nanoplots

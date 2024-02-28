@@ -1445,6 +1445,10 @@ create_body_component_rtf <- function(data) {
   # column names for the table
   default_vars <- dt_boxhead_get_vars_labels_default(data = data)
 
+  # Create a named vector  https://github.com/rstudio/gt/issues/1233
+  default_vars_names <-  dt_boxhead_get_vars_default(data = data)
+  names(default_vars_names) <- default_vars
+
   # Get a matrix of all cell content for the body
   cell_matrix <- get_body_component_cell_matrix(data = data)
 
@@ -1641,7 +1645,7 @@ create_body_component_rtf <- function(data) {
           dplyr::select(
             list_of_summaries$summary_df_display_list[[group_id]],
             dplyr::all_of(rowname_col_private),
-            dplyr::all_of(default_vars)
+            dplyr::all_of(default_vars_names)
           )
 
         n_summary_rows <- seq_len(nrow(summary_df))
