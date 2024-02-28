@@ -71,7 +71,8 @@ Suggests:
     shiny (>= 1.7.4),
     testthat (>= 3.1.9),
     tidyr,
-    webshot2 (>= 0.1.0)
+    webshot2 (>= 0.1.0),
+    withr
 Roxygen: list(markdown = TRUE)
 Collate: 
     'as_data_frame.R'

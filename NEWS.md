@@ -2,6 +2,8 @@
 
 * `data_color()` throws a more informative error if a calculation failed (@olivroy, #1373).
 
+* `gtsave()` saves correctly to .rtf if using `cols_label()` and `summary_rows()` or `grand_summary_rows()` (@olivroy, #1233)
+
 # gt 0.10.1
 
 ## Improvements to nanoplots

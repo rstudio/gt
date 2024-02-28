@@ -537,7 +537,7 @@ create_body_component_l <- function(data) {
         if (!is.na(indent)) {
           row_splits_body[[x]][row_label_col] <<-
             paste0(
-              "\\hspace*{", indent_length_pt * indent, "px} ",
+              "\\hspace*{", indent_length_pt * indent, "pt} ",
               row_splits_body[[x]][row_label_col]
             )
         }

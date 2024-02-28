@@ -114,8 +114,8 @@
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   By default (with `NULL`) this will be a random, ten-letter ID as generated
-#'   by using the [random_id()] function. A custom table ID can be used be
-#'   providing a single-length character vector.
+#'   by using the [random_id()] function. A custom table ID can be used here by
+#'   providing a character value.
 #'
 #' @param locale *Locale identifier*
 #'

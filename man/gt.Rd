@@ -85,8 +85,8 @@ in each column of the input \code{data}. Internally, this calls
 \verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 By default (with \code{NULL}) this will be a random, ten-letter ID as generated
-by using the \code{\link[=random_id]{random_id()}} function. A custom table ID can be used be
-providing a single-length character vector.}
+by using the \code{\link[=random_id]{random_id()}} function. A custom table ID can be used here by
+providing a character value.}
 
 \item{locale}{\emph{Locale identifier}
 

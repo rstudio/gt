@@ -9451,14 +9451,15 @@ fmt_url <- function(
 #' Using a small portion of [`metro`] dataset, let's create a **gt** table. We
 #' will only include a few columns and rows from that table. The `lines` and
 #' `connect_rer` columns have comma-separated listings of numbers/letters
-#' (corresponding to lines served at each station). We have a directory SVG
-#' graphics for all of these lines in the package (the path for the image
-#' directory can be accessed via `system.file("metro_svg", package = "gt")`),
-#' and the filenames roughly correspond to the data in those two columns. The
-#' `fmt_image()` function can be used with these inputs since the `path` and
-#' `file_pattern` arguments allow us to compose complete and valid file
-#' locations. What you get from this are sequences of images in the table cells,
-#' taken from the referenced graphics files on disk.
+#' (corresponding to lines served at each station). We have a directory of SVG
+#' graphics for all of these lines within the package (the path for the
+#' directory containing the images can be accessed via
+#' `system.file("metro_svg", package = "gt")`), and the filenames roughly
+#' correspond to the data in those two columns. The `fmt_image()` function can
+#' be used with these inputs since the `path` and `file_pattern` arguments allow
+#' us to compose complete and valid file locations. What you get from all of
+#' this are sequences of images in the table cells, taken from the referenced
+#' graphics files on disk.
 #'
 #' ```r
 #' metro |>
