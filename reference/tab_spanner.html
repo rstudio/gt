@@ -226,10 +226,10 @@ order from left to right: <code>year</code>, <code>len.pop</code>, <code>m.pop</
 over the <code>year</code> column (so we'll avoid using that column when defining
 spanners). Let's start by creating a schematic representation of what is
 wanted in terms of spanners:</p>
-<p></p><div class="sourceCode default"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>       | ------- `"Two Provinces of Ireland"` ------ &lt;- level 2 spanner</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>       | ---- `"Leinster"` ---- | --- `"Munster"` -- &lt;- level 1 spanners</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>`year` | `len.pop` | `len.dens` | `m.pop` | `m.dens` &lt;- column names</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>----------------------------------------------------</span></code></pre><p></p></div>
+<p></p><div class="sourceCode default"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>       | ------- `"Two Provinces of Ireland"` ------ &lt;- level 2 spanner</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>       | ---- `"Leinster"` ---- | --- `"Munster"` -- &lt;- level 1 spanners</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>`year` | `len.pop` | `len.dens` | `m.pop` | `m.dens` &lt;- column names</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>----------------------------------------------------</span></code></pre><p></p></div>
 <p>To make this arrangement happen, we need three separate calls of
 <code>tab_spanner()</code>:</p><ul><li><p><code>tab_spanner(., label = "Leinster", columns = starts_with("len"))</code></p></li>
 <li><p><code>tab_spanner(., label = "Munster", columns = starts_with("m"))</code></p></li>

@@ -238,16 +238,16 @@ option will choose the correct <code>output</code> value</p></dd>
 unless specified in the <code>output</code> argument (here, it is of the <code>"plain"</code>
 output type).</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/vec_fmt_fraction.html">vec_fmt_fraction</a></span><span class="op">(</span><span class="va">num_vals</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "0" "1/9" "0" "-5/9" "NA"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; [1] "0" "1/9" "0" "-5/9" "NA"</span></span></code></pre><p></p></div>
 <p>There are many options for formatting as fractions. If you'd like a higher
 degree of accuracy in the computation of fractions we can supply the <code>"med"</code>
 or <code>"high"</code> keywords to the <code>accuracy</code> argument:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/vec_fmt_fraction.html">vec_fmt_fraction</a></span><span class="op">(</span><span class="va">num_vals</span>, accuracy <span class="op">=</span> <span class="st">"high"</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "1/200" "2/25" "0" "-107/200" "NA"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; [1] "1/200" "2/25" "0" "-107/200" "NA"</span></span></code></pre><p></p></div>
 <p>As a last example, one can wrap the values in a pattern with the <code>pattern</code>
 argument. Note here that <code>NA</code> values won't have the pattern applied.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/vec_fmt_fraction.html">vec_fmt_fraction</a></span><span class="op">(</span><span class="va">num_vals</span>, accuracy <span class="op">=</span> <span class="fl">8</span>, pattern <span class="op">=</span> <span class="st">"[{x}]"</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "[0]" "[1/8]" "[0]" "[-1/2]" "NA"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; [1] "[0]" "[1/8]" "[0]" "[-1/2]" "NA"</span></span></code></pre><p></p></div>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>

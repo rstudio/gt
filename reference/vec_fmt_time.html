@@ -174,16 +174,16 @@ in a character vector of formatted times. Any <code>NA</code> values remain as <
 values. The rendering context will be autodetected unless specified in the
 <code>output</code> argument (here, it is of the <code>"plain"</code> output type).</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/vec_fmt_time.html">vec_fmt_time</a></span><span class="op">(</span><span class="va">str_vals</span>, time_style <span class="op">=</span> <span class="st">"iso-short"</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "18:36" "01:08" NA</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; [1] "18:36" "01:08" NA</span></span></code></pre><p></p></div>
 <p>We can choose from any of 25 different time formatting styles. Many of these
 styles are flexible, meaning that the structure of the format will adapt
 to different locales. Let's use the <code>"Bhms"</code> time style to demonstrate this
 (first in the default locale of <code>"en"</code>):</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/vec_fmt_time.html">vec_fmt_time</a></span><span class="op">(</span><span class="va">str_vals</span>, time_style <span class="op">=</span> <span class="st">"Bhms"</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "6:36:00 in the evening" "1:08:00 at night" NA</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; [1] "6:36:00 in the evening" "1:08:00 at night" NA</span></span></code></pre><p></p></div>
 <p>Let's perform the same type of formatting in the German (<code>"de"</code>) locale:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/vec_fmt_time.html">vec_fmt_time</a></span><span class="op">(</span><span class="va">str_vals</span>, time_style <span class="op">=</span> <span class="st">"Bhms"</span>, locale <span class="op">=</span> <span class="st">"de"</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "6:36:00 abends" "1:08:00 nachts" NA</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; [1] "6:36:00 abends" "1:08:00 nachts" NA</span></span></code></pre><p></p></div>
 <p>We can always use <code><a href="info_time_style.html">info_time_style()</a></code> to call up an info table that serves as
 a handy reference to all of the <code>time_style</code> options.</p>
 <p>As a last example, one can wrap the time values in a pattern with the
@@ -195,7 +195,7 @@ applied.</p>
 <span>  pattern <span class="op">=</span> <span class="st">"temps: {x}"</span>,</span>
 <span>  locale <span class="op">=</span> <span class="st">"fr-CA"</span></span>
 <span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "temps: 6:36 PM" "temps: 1:08 AM" NA</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; [1] "temps: 6:36 PM" "temps: 1:08 AM" NA</span></span></code></pre><p></p></div>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>

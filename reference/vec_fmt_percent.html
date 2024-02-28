@@ -294,28 +294,28 @@ values will render as <code>"NA"</code>. The rendering context will be autodetec
 unless specified in the <code>output</code> argument (here, it is of the <code>"plain"</code>
 output type).</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/vec_fmt_percent.html">vec_fmt_percent</a></span><span class="op">(</span><span class="va">num_vals</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "0.52%" "8.00%" "0.00%" "-53.50%" "NA"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; [1] "0.52%" "8.00%" "0.00%" "-53.50%" "NA"</span></span></code></pre><p></p></div>
 <p>We can change the decimal mark to a comma, and we have to be sure to change
 the digit separator mark from the default comma to something else (a period
 works here):</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/vec_fmt_percent.html">vec_fmt_percent</a></span><span class="op">(</span><span class="va">num_vals</span>, sep_mark <span class="op">=</span> <span class="st">"."</span>, dec_mark <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "0,52%" "8,00%" "0,00%" "-53,50%" "NA"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; [1] "0,52%" "8,00%" "0,00%" "-53,50%" "NA"</span></span></code></pre><p></p></div>
 <p>If we are formatting for a different locale, we could supply the locale ID
 and let <strong>gt</strong> handle these locale-specific formatting options:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/vec_fmt_percent.html">vec_fmt_percent</a></span><span class="op">(</span><span class="va">num_vals</span>, locale <span class="op">=</span> <span class="st">"pt"</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "0,52%" "8,00%" "0,00%" "-53,50%" "NA"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; [1] "0,52%" "8,00%" "0,00%" "-53,50%" "NA"</span></span></code></pre><p></p></div>
 <p>There are many options for formatting values. Perhaps you need to have
 explicit positive and negative signs? Use <code>force_sign = TRUE</code> for that.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/vec_fmt_percent.html">vec_fmt_percent</a></span><span class="op">(</span><span class="va">num_vals</span>, force_sign <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "+0.52%" "+8.00%" "0.00%" "-53.50%" "NA"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; [1] "+0.52%" "+8.00%" "0.00%" "-53.50%" "NA"</span></span></code></pre><p></p></div>
 <p>Those trailing zeros past the decimal mark can be stripped out by using the
 <code>drop_trailing_zeros</code> option.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/vec_fmt_percent.html">vec_fmt_percent</a></span><span class="op">(</span><span class="va">num_vals</span>, drop_trailing_zeros <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "0.52%" "8%" "0%" "-53.5%" "NA"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; [1] "0.52%" "8%" "0%" "-53.5%" "NA"</span></span></code></pre><p></p></div>
 <p>As a last example, one can wrap the values in a pattern with the <code>pattern</code>
 argument. Note here that <code>NA</code> values won't have the pattern applied.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/vec_fmt_percent.html">vec_fmt_percent</a></span><span class="op">(</span><span class="va">num_vals</span>, pattern <span class="op">=</span> <span class="st">"{x}wt"</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "0.52%wt" "8.00%wt" "0.00%wt" "-53.50%wt" "NA"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; [1] "0.52%wt" "8.00%wt" "0.00%wt" "-53.50%wt" "NA"</span></span></code></pre><p></p></div>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>

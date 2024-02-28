@@ -229,10 +229,10 @@ following text fragments:</p><ul><li><p><code>province.NL_ZH.pop</code> -&gt; <c
 <li><p><code>province.NL_NH.pop</code> -&gt; <code>"province"</code>, <code>"NL_NH"</code>, <code>"pop"</code></p></li>
 <li><p><code>province.NL_NH.gdp</code> -&gt; <code>"province"</code>, <code>"NL_NH"</code>, <code>"gdp"</code></p></li>
 </ul><p>This gives us the following arrangement of column labels and spanner labels:</p>
-<p></p><div class="sourceCode default"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>--------- `"province"` ---------- &lt;- level 2 spanner</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>---`"NL_ZH"`--- | ---`"NL_NH"`--- &lt;- level 1 spanners</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>`"pop"`|`"gdp"` | `"pop"`|`"gdp"` &lt;- column labels</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>---------------------------------</span></code></pre><p></p></div>
+<p></p><div class="sourceCode default"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>--------- `"province"` ---------- &lt;- level 2 spanner</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>---`"NL_ZH"`--- | ---`"NL_NH"`--- &lt;- level 1 spanners</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>`"pop"`|`"gdp"` | `"pop"`|`"gdp"` &lt;- column labels</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>---------------------------------</span></code></pre><p></p></div>
 <p>There might be situations where the same delimiter is used throughout but
 only the last instance requires a splitting. With a pair of column names like
 <code>north_holland_pop</code> and <code>north_holland_area</code> you would only want <code>"pop"</code> and
@@ -240,9 +240,9 @@ only the last instance requires a splitting. With a pair of column names like
 To achieve this, the <code>split</code> and <code>limit</code> arguments are used and the values
 for each need to be <code>split = "last"</code> and <code>limit = 1</code>. This will give us
 the following arrangement:</p>
-<p></p><div class="sourceCode default"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>--`"north_holland"`-- &lt;- level 1 spanner</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a> `"pop"`  |  `"area"` &lt;- column labels</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>---------------------</span></code></pre><p></p></div>
+<p></p><div class="sourceCode default"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a>--`"north_holland"`-- &lt;- level 1 spanner</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a> `"pop"`  |  `"area"` &lt;- column labels</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>---------------------</span></code></pre><p></p></div>
     </div>
     <div class="section level2">
     <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>

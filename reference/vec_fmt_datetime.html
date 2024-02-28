@@ -667,7 +667,7 @@ the <code>output</code> argument (here, it is of the <code>"plain"</code> output
 <span>  date_style <span class="op">=</span> <span class="st">"yMMMEd"</span>,</span>
 <span>  time_style <span class="op">=</span> <span class="st">"Hm"</span></span>
 <span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "Mon, Jun 13, 2022 18:36" "Fri, Jan 25, 2019 01:08" NA</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; [1] "Mon, Jun 13, 2022 18:36" "Fri, Jan 25, 2019 01:08" NA</span></span></code></pre><p></p></div>
 <p>We can choose from any of 41 different date styles and 25 time formatting
 styles. Many of these styles are flexible, meaning that the structure of the
 format will adapt to different locales. Let's use a combination of the the
@@ -678,7 +678,7 @@ default locale of <code>"en"</code>):</p>
 <span>  date_style <span class="op">=</span> <span class="st">"yMMMd"</span>,</span>
 <span>  time_style <span class="op">=</span> <span class="st">"hms"</span></span>
 <span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "Jun 13, 2022 6:36:00 PM" "Jan 25, 2019 1:08:00 AM" NA</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; [1] "Jun 13, 2022 6:36:00 PM" "Jan 25, 2019 1:08:00 AM" NA</span></span></code></pre><p></p></div>
 <p>Let's perform the same type of formatting in the Italian (<code>"it"</code>) locale:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/vec_fmt_datetime.html">vec_fmt_datetime</a></span><span class="op">(</span></span>
 <span>  <span class="va">str_vals</span>,</span>
@@ -686,16 +686,16 @@ default locale of <code>"en"</code>):</p>
 <span>  time_style <span class="op">=</span> <span class="st">"hms"</span>,</span>
 <span>  locale <span class="op">=</span> <span class="st">"it"</span></span>
 <span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "13 giu 2022 6:36:00 PM" "25 gen 2019 1:08:00 AM" NA</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; [1] "13 giu 2022 6:36:00 PM" "25 gen 2019 1:08:00 AM" NA</span></span></code></pre><p></p></div>
 <p>We can always use <code><a href="info_date_style.html">info_date_style()</a></code> or <code><a href="info_time_style.html">info_time_style()</a></code> to call up info
 tables that serve as handy references to all of the <code>date_style</code> and
 <code>time_style</code> options.</p>
 <p>It's possible to supply our own time formatting pattern within the <code>format</code>
 argument. One way is with a CLDR pattern, which is locale-aware:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/vec_fmt_datetime.html">vec_fmt_datetime</a></span><span class="op">(</span><span class="va">str_vals</span>, format <span class="op">=</span> <span class="st">"EEEE, MMMM d, y, h:mm a"</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "Monday, June 13, 2022, 06:36 PM"</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2] "Friday, January 25, 2019, 01:08 AM"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3] NA</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; [1] "Monday, June 13, 2022, 06:36 PM"</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co">#&gt; [2] "Friday, January 25, 2019, 01:08 AM"</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co">#&gt; [3] NA</span></span></code></pre><p></p></div>
 <p>By using the <code>locale</code> argument, this can be formatted as Dutch datetime
 values:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/vec_fmt_datetime.html">vec_fmt_datetime</a></span><span class="op">(</span></span>
@@ -703,15 +703,15 @@ values:</p>
 <span>  format <span class="op">=</span> <span class="st">"EEEE, MMMM d, y, h:mm a"</span>,</span>
 <span>  locale <span class="op">=</span> <span class="st">"nl"</span></span>
 <span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "maandag, juni 13, 2022, 6:36 p.m."</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2] "vrijdag, januari 25, 2019, 1:08 a.m."</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3] NA</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; [1] "maandag, juni 13, 2022, 6:36 p.m."</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co">#&gt; [2] "vrijdag, januari 25, 2019, 1:08 a.m."</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co">#&gt; [3] NA</span></span></code></pre><p></p></div>
 <p>It's also possible to use a <code>strptime</code> format code with <code>format</code> (however,
 any value provided to <code>locale</code> will be ignored).</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/vec_fmt_datetime.html">vec_fmt_datetime</a></span><span class="op">(</span><span class="va">str_vals</span>, format <span class="op">=</span> <span class="st">"%A, %B %e, %Y at %I:%M %p"</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "Monday, June 13, 2022 at 06:36 pm"</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2] "Friday, January 25, 2019 at 01:08 am"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3] NA</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; [1] "Monday, June 13, 2022 at 06:36 pm"</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co">#&gt; [2] "Friday, January 25, 2019 at 01:08 am"</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co">#&gt; [3] NA</span></span></code></pre><p></p></div>
 <p>As a last example, one can wrap the datetime values in a pattern with the
 <code>pattern</code> argument. Note here that <code>NA</code> values won't have the pattern
 applied.</p>
@@ -720,9 +720,9 @@ applied.</p>
 <span>  sep <span class="op">=</span> <span class="st">" at "</span>,</span>
 <span>  pattern <span class="op">=</span> <span class="st">"Date and Time: {x}"</span></span>
 <span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "Date and Time: 2022-06-13 at 18:36:00"</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [2] "Date and Time: 2019-01-25 at 01:08:00"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [3] NA</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; [1] "Date and Time: 2022-06-13 at 18:36:00"</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="co">#&gt; [2] "Date and Time: 2019-01-25 at 01:08:00"</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co">#&gt; [3] NA</span></span></code></pre><p></p></div>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>

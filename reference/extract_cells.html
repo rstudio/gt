@@ -141,17 +141,17 @@ few examples:</p>
 <p>We can extract a cell from the table with the <code>extract_cells()</code> function.
 This is done by providing a column and a row intersection:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/extract_cells.html">extract_cells</a></span><span class="op">(</span><span class="va">gt_tbl</span>, columns <span class="op">=</span> <span class="va">num</span>, row <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "1.111e-01"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; [1] "1.111e-01"</span></span></code></pre><p></p></div>
 <p>Multiple cells can be extracted. Let's get the first four cells from the
 <code>char</code> column.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/extract_cells.html">extract_cells</a></span><span class="op">(</span><span class="va">gt_tbl</span>, columns <span class="op">=</span> <span class="va">char</span>, rows <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "apricot" "banana" "coconut" "durian"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; [1] "apricot" "banana" "coconut" "durian"</span></span></code></pre><p></p></div>
 <p>We can format cells and expect that the formatting is fully retained after
 extraction.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_number.html">fmt_number</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">num</span>, decimals <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/extract_cells.html">extract_cells</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">num</span>, rows <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "0.11"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; [1] "0.11"</span></span></code></pre><p></p></div>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>

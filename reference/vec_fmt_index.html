@@ -168,19 +168,19 @@ negative values will be automatically made positive. The rendering context
 will be autodetected unless specified in the <code>output</code> argument (here, it is
 of the <code>"plain"</code> output type).</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/vec_fmt_index.html">vec_fmt_index</a></span><span class="op">(</span><span class="va">num_vals</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "A" "D" "E" "H" "L" "T" "Z" "HH" "" "E" "A" "NA"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; [1] "A" "D" "E" "H" "L" "T" "Z" "HH" "" "E" "A" "NA"</span></span></code></pre><p></p></div>
 <p>We can also use <code>vec_fmt_index()</code> with the <code>case = "lower"</code> option to create
 a character vector with values rendered as lowercase Roman numerals.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/vec_fmt_index.html">vec_fmt_index</a></span><span class="op">(</span><span class="va">num_vals</span>, case <span class="op">=</span> <span class="st">"lower"</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "a" "d" "e" "h" "l" "t" "z" "hh" "" "e" "a" "NA"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; [1] "a" "d" "e" "h" "l" "t" "z" "hh" "" "e" "a" "NA"</span></span></code></pre><p></p></div>
 <p>If we are formatting for a different locale, we could supply the locale ID
 and let <strong>gt</strong> obtain a locale-specific set of index values:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/vec_fmt_index.html">vec_fmt_index</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, locale <span class="op">=</span> <span class="st">"so"</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "B" "C" "D" "F" "G" "H" "J" "K" "L" "M"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; [1] "B" "C" "D" "F" "G" "H" "J" "K" "L" "M"</span></span></code></pre><p></p></div>
 <p>As a last example, one can wrap the values in a pattern with the <code>pattern</code>
 argument. Note here that <code>NA</code> values won't have the pattern applied.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/vec_fmt_index.html">vec_fmt_index</a></span><span class="op">(</span><span class="va">num_vals</span>, case <span class="op">=</span> <span class="st">"lower"</span>, pattern <span class="op">=</span> <span class="st">"{x}."</span><span class="op">)</span></span></code></pre><p></p></div>
-<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1] "a." "d." "e." "h." "l." "t." "z." "hh." "." "e." "a." "NA"</span></span></code></pre><p></p></div>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co">#&gt; [1] "a." "d." "e." "h." "l." "t." "z." "hh." "." "e." "a." "NA"</span></span></code></pre><p></p></div>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
