@@ -1724,7 +1724,7 @@ create_body_component_rtf <- function(data) {
       dplyr::select(
         list_of_summaries$summary_df_display_list[[grand_summary_col]],
         dplyr::all_of(rowname_col_private),
-        dplyr::all_of(default_vars)
+        dplyr::all_of(default_vars_names)
       )
 
     for (j in seq_len(nrow(grand_summary_df))) {
