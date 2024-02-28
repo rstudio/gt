@@ -14,7 +14,7 @@ test_that("No error is created with gtsave() to rtf (#1233)", {
     summary_rows(
       columns = val,
       fns = "mean"
-    ) |>
+    ) %>%
     grand_summary_rows(
       columns = val,
       fns = "mean"

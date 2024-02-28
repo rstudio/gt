@@ -1,6 +1,6 @@
 # gt (development version)
 
-* gt saves correctly to .rtf if using `cols_label()` (@olivroy, #1233)
+* `gtsave()` saves correctly to .rtf if using `cols_label()` and `summary_rows()` or `grand_summary_rows()` (@olivroy, #1233)
 
 # gt 0.10.1
 
