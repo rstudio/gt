@@ -942,14 +942,25 @@ data_color <- function(
       if (is.numeric(data_vals)) {
 
         # Create a color function based on `scales::col_numeric()`
+        # Rethrow the error if something occurs. #1373
         color_fn <-
-          scales::col_numeric(
-            palette = palette,
-            domain = domain %||% data_vals,
-            na.color = na_color,
-            alpha = TRUE,
-            reverse = reverse
+          withCallingHandlers(
+            scales::col_numeric(
+              palette = palette,
+              domain = domain %||% data_vals,
+              na.color = na_color,
+              alpha = TRUE,
+              reverse = reverse
+            ),
+            error = function(e) {
+              cli::cli_abort(c(
+                "Failed to compute colors for column {.code {resolved_columns[i]}}.",
+                i = "Did the column include infinite values?"),
+                parent = e
+              )
+            }
           )
+
 
       } else if (is.character(data_vals) || is.factor(data_vals)) {
 
