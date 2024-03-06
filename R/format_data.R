@@ -3446,8 +3446,8 @@ fmt_fraction <- function(
 
             x_str[has_a_fraction] <-
               paste0(
-                gsub(" ", "\\\\, ", non_fraction_part),
-                paste0("{{}^{", num_vec, "}\\!/_{", denom_vec, "}}")
+                gsub(" ", "", non_fraction_part),
+                paste0("\\textsuperscript{", num_vec, "}\\!/\\textsubscript{", denom_vec, "}")
               )
 
           } else if (context == "rtf") {

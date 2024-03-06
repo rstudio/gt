@@ -224,7 +224,7 @@ test_that("The `sub_missing()` function works correctly", {
        ) %>%
        sub_missing(columns = everything()) %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c("—", "$74.000$", "—", "$93.000$", "—", "$76.000$", "—")
+    c("—", "74.000", "—", "93.000", "—", "76.000", "—")
   )
 
   expect_equal(
@@ -259,7 +259,7 @@ test_that("The `sub_missing()` function works correctly", {
          decimals = 3
        ) %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c("—", "$74.000$", "—", "$93.000$", "—", "$76.000$", "—")
+    c("—", "74.000", "—", "93.000", "—", "76.000", "—")
   )
 
   expect_equal(
@@ -429,7 +429,7 @@ test_that("The `sub_small_vals()` function works correctly", {
        fmt_number(columns = num_1) %>%
        sub_small_vals(columns = "num_1") %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c("$0.00$", "$74.00$", "NA", "$0.00$", "$5,000,000,000,000.00$", "<0.01", "$84.34$")
+    c("0.00", "74.00", "NA", "0.00", "5,000,000,000,000.00", "<0.01", "84.34")
   )
 
   expect_equal(
@@ -453,7 +453,7 @@ test_that("The `sub_small_vals()` function works correctly", {
        fmt_number(columns = num_1) %>%
        sub_small_vals(columns = "num_1", threshold = 100) %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c("$0.00$", "<100", "NA", "$0.00$", "$5,000,000,000,000.00$", "<100", "<100")
+    c("0.00", "<100", "NA", "0.00", "5,000,000,000,000.00", "<100", "<100")
   )
 
   expect_equal(
@@ -481,8 +481,8 @@ test_that("The `sub_small_vals()` function works correctly", {
        sub_small_vals(columns = "num_1", sign = "-") %>%
        render_formats_test(context = "latex"))[["num_1"]],
     c(
-      "\\textless{}\\emph{abs}(-0.01)", "$74.00$", "NA", "$0.00$",
-      "$5,000,000,000,000.00$", "$0.00$", "$84.34$"
+      "\\textless{}\\emph{abs}(-0.01)", "74.00", "NA", "0.00",
+      "5,000,000,000,000.00", "0.00", "84.34"
     )
   )
 
@@ -510,7 +510,7 @@ test_that("The `sub_small_vals()` function works correctly", {
        fmt_number(columns = num_1) %>%
        sub_small_vals(columns = "num_1", small_pattern = "smol", sign = "-") %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c("smol", "$74.00$", "NA", "$0.00$", "$5,000,000,000,000.00$", "$0.00$", "$84.34$")
+    c("smol", "74.00", "NA", "0.00", "5,000,000,000,000.00", "0.00", "84.34")
   )
 
   expect_equal(
@@ -538,8 +538,8 @@ test_that("The `sub_small_vals()` function works correctly", {
        sub_small_vals(columns = "num_1", small_pattern = "{{{x}}}", sign = "-") %>%
        render_formats_test(context = "latex"))[["num_1"]],
     c(
-      "\\{\\{0.01\\}\\}", "$74.00$", "NA", "$0.00$", "$5,000,000,000,000.00$",
-      "$0.00$", "$84.34$"
+      "\\{\\{0.01\\}\\}", "74.00", "NA", "0.00", "5,000,000,000,000.00",
+      "0.00", "84.34"
     )
   )
 
@@ -621,7 +621,7 @@ test_that("The `sub_large_vals()` function works correctly", {
        fmt_number(columns = num_1) %>%
        sub_large_vals(columns = "num_1") %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c("$0.00$", "$74.00$", "NA", "$0.00$", "$\\geq$1e+12", "$0.00$", "$84.34$")
+    c("0.00", "74.00", "NA", "0.00", "$\\geq$1e+12", "0.00", "84.34")
   )
 
   expect_equal(
@@ -645,7 +645,7 @@ test_that("The `sub_large_vals()` function works correctly", {
        fmt_number(columns = num_1) %>%
        sub_large_vals(columns = "num_1", threshold = 100) %>%
        render_formats_test(context = "latex"))[["num_1"]],
-    c("$0.00$", "$74.00$", "NA", "$0.00$", "$\\geq$100", "$0.00$", "$84.34$")
+    c("0.00", "74.00", "NA", "0.00", "$\\geq$100", "0.00", "84.34")
   )
 
   expect_equal(
