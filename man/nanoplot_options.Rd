@@ -42,7 +42,7 @@ nanoplot_options(
 
 \verb{scalar<numeric>|vector<numeric>} // \emph{default:} \code{NULL} (\code{optional})
 
-Th \code{data_point_radius} option lets you set the radius for each of the data
+The \code{data_point_radius} option lets you set the radius for each of the data
 points. By default this is set to \code{10}. Individual radius values can be
 set by using a vector of numeric values; however, the vector provided must
 match the number of data points.}

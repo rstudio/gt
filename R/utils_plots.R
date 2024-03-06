@@ -754,13 +754,9 @@ generate_nanoplot <- function(
 
   #
   # Ensure that certain options have their lengths checked and
-  # expanded to length `num_y_vals`
+  # expanded to length `num_y_vals`; these are: (1) all `data_point_*`
+  # options, and (2) three `data_bar_*` options
   #
-
-  # - `data_point_radius`
-  # - `data_point_stroke_color`
-  # - `data_point_stroke_width `
-  # - `data_point_fill_color`
 
   data_point_radius <- normalize_option_vector(data_point_radius, num_y_vals)
   data_point_stroke_color <- normalize_option_vector(data_point_stroke_color, num_y_vals)

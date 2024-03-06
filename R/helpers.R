@@ -539,7 +539,7 @@ currency <- function(
 #'
 #'   `scalar<numeric>|vector<numeric>` // *default:* `NULL` (`optional`)
 #'
-#'   Th `data_point_radius` option lets you set the radius for each of the data
+#'   The `data_point_radius` option lets you set the radius for each of the data
 #'   points. By default this is set to `10`. Individual radius values can be
 #'   set by using a vector of numeric values; however, the vector provided must
 #'   match the number of data points.

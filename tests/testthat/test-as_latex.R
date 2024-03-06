@@ -48,3 +48,90 @@ test_that("Table width correctly output in LaTeX", {
   expect_match(gt_latex_width_2, "\\\\setlength\\\\LTright\\{\\\\dimexpr\\(0.5\\\\linewidth - 225pt\\)\\}")
 
 })
+
+test_that("Table styles correctly applied", {
+
+  gt_latex_styled <-
+    gt(exibble[1:5, c(1:3, 5:9)],
+     rowname_col = 'row',
+     groupname_col = 'group') %>%
+    tab_stubhead(label = 'stubhead') %>%
+    tab_stub_indent(rows = everything(),
+                    indent = 'increase') %>%
+    tab_spanner(label = 'heading',
+                id = 'a1',
+                columns = 1:3) %>%
+    tab_spanner(label = 'heading',
+                id = 'b2',
+                columns = 5:6) %>%
+    summary_rows(fns = list(list(label = 'Total', fn = 'sum'),
+                            list(label = 'Avg', fn = 'mean')),
+                 columns = c('num', 'currency'),
+                 groups = 'grp_a',
+                 fmt = ~ fmt_number(., use_seps = TRUE)) %>%
+    grand_summary_rows(fns =list(list(label = 'grand total', fn = 'sum')),
+                       columns = c('num', 'currency'),
+                       fmt = ~ fmt_number(., use_seps = TRUE)) %>%
+    tab_footnote(footnote = "This is a footnote. With a second line.",
+                 locations = cells_body(columns = 'time', rows = 3L)) %>%
+    tab_footnote(footnote = "This is a footnote in the column labels.",
+                 locations = cells_column_labels(columns = 'fctr')) %>%
+    tab_source_note(source_note = 'NOTES:  A mtcars example.') %>%
+    # Table formatting with tab_style
+    tab_style(style = cell_text(decorate = 'overline'),
+              locations = cells_stubhead()) %>%
+    tab_style(style = cell_text(transform = 'uppercase'),
+              locations = cells_column_labels(columns = c('num', 'fctr', 'datetime'))) %>%
+    tab_style(style = gt::cell_text(style = 'italic'),
+              locations = cells_column_spanners(spanner = 'a1')) %>%
+
+    # Body styles
+    tab_style(style = cell_text(size = 20,
+                                decorate = 'underline',
+                                color = 'red'),
+              locations = cells_body(columns = 'time',
+                                     rows = c(3:4))) %>%
+    tab_style(style = cell_text(indent = px(20),
+                                weight = 'bold'),
+              locations = cells_body(columns = 'char',
+                                     rows = c(2L, 4L, 5L))) %>%
+    tab_style(style = cell_text(indent = px(15),
+                                style = 'oblique'),
+              locations = cells_stub(rows = c(2L, 4L, 5L))) %>%
+    tab_style(style = cell_text(size = 20L,
+                                color = '#0000FF'),
+              locations = cells_body(columns = 'fctr')) %>%
+    tab_style(style = list(cell_text(weight = 'bold'),
+                           cell_fill(color = '#CCCCFF')),
+              locations = cells_row_groups(groups = 'grp_b')) %>%
+    tab_style(style = cell_text(size = 'x-small'),
+              locations = cells_body(columns = 'datetime')) %>%
+    tab_style(style = list(cell_text(color = '#FFFFFF'),
+                           cell_fill(color = '#AA0000')),
+              locations = cells_stub()) %>%
+    # Footnoe and source note styles
+    tab_style(style = cell_text(size = 8,
+                                style = 'italic'),
+              locations = cells_source_notes()) %>%
+    tab_style(style = cell_text(weight = 'bold'),
+              locations = cells_footnotes()) %>%
+
+    # Summary styles
+    tab_style(style = cell_fill(color = '#00FF00'),
+              locations = cells_summary(groups = 'grp_a',
+                                        columns = c('num', 'currency'),
+                                        rows = 2L)) %>%
+    tab_style(style = cell_text(color = '#00FF00'),
+              locations = cells_stub_summary(groups = 'grp_a',
+                                             rows = 1L)) %>%
+
+    # Grand summary styles
+    tab_style(style = cell_text(transform = 'capitalize',
+                                weight = 'bold'),
+              locations = cells_stub_grand_summary()) %>%
+    tab_style(style = cell_fill(color = '#AAAAAA'),
+              locations = cells_grand_summary()) %>%
+    as_latex() %>%
+    expect_snapshot()
+
+})

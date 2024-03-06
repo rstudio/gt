@@ -2055,3 +2055,17 @@ test_that("The `cell_fill()` function accepts colors of various types", {
     unique() %>%
     expect_equal("80")
 })
+
+test_that("data_color errors gracefully when infinite values (#1373)", {
+
+  d <- data.frame(
+    x = c(4, 1, 2, 3),
+    y = c(1, 2, 3, Inf)
+  )
+  gt_inf <- gt(d)
+
+  expect_snapshot(
+    error = TRUE,
+    data_color(gt_inf)
+  )
+})

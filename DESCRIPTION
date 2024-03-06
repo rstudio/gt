@@ -21,6 +21,8 @@ Authors@R: c(
            comment = c(ORCID = "0000-0002-4191-6301")),    
     person("JooYoung", "Seo", , "jseo1005@illinois.edu", "aut",
            comment = c(ORCID = "0000-0002-4064-6012")),
+    person("Ken", "Brevoort", , "ken@brevoort.com", "aut",
+           comment = c(ORCID = "0000-0002-4001-8358")),
     person("Posit Software, PBC", role = c("cph", "fnd"))
     )
 License: MIT + file LICENSE
@@ -71,7 +73,8 @@ Suggests:
     shiny (>= 1.7.4),
     testthat (>= 3.1.9),
     tidyr,
-    webshot2 (>= 0.1.0)
+    webshot2 (>= 0.1.0),
+    withr
 Roxygen: list(markdown = TRUE)
 Collate: 
     'as_data_frame.R'

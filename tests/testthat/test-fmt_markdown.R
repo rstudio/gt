@@ -231,7 +231,7 @@ test_that("LaTeX formulas render correctly in HTML", {
       column_labels.border.lr.style = "solid",
       column_labels.border.lr.width = px(1)
     )
-
+  skip_if_not_installed("katex", "1.4.1")
   # Take a snapshot of `gt_tbl`
   gt_tbl %>% render_as_html() %>% expect_snapshot()
 })

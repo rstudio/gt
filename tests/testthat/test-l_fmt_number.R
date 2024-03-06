@@ -23,8 +23,8 @@ test_that("The `fmt_number()` function works correctly in the LaTeX context", {
        fmt_number(columns = num_1, decimals = 2) %>%
        render_formats_test(context = "latex"))[["num_1"]],
     c(
-      "$1,836.23$", "$2,763.39$", "$937.29$", "$643.00$",
-      "$212.23$", "$0.00$", "$-23.24$"
+      "1,836.23", "2,763.39", "937.29", "643.00",
+      "212.23", "0.00", "-23.24"
     )
   )
 
@@ -34,8 +34,8 @@ test_that("The `fmt_number()` function works correctly in the LaTeX context", {
        fmt_number(columns = num_1, decimals = 5) %>%
        render_formats_test("latex"))[["num_1"]],
     c(
-      "$1,836.23000$", "$2,763.39000$", "$937.29000$",
-      "$643.00000$", "$212.23200$", "$0.00000$", "$-23.24000$"
+      "1,836.23000", "2,763.39000", "937.29000",
+      "643.00000", "212.23200", "0.00000", "-23.24000"
     )
   )
 
@@ -49,8 +49,8 @@ test_that("The `fmt_number()` function works correctly in the LaTeX context", {
        ) %>%
        render_formats_test("latex"))[["num_1"]],
     c(
-      "$1,836.23$", "$2,763.39$", "$937.29$", "$643$",
-      "$212.23$", "$0$", "$-23.24$"
+      "1,836.23", "2,763.39", "937.29", "643",
+      "212.23", "0", "-23.24"
     )
   )
 
@@ -61,8 +61,8 @@ test_that("The `fmt_number()` function works correctly in the LaTeX context", {
        fmt_number(columns = num_1, decimals = 2, use_seps = FALSE) %>%
        render_formats_test("latex"))[["num_1"]],
     c(
-      "$1836.23$", "$2763.39$", "$937.29$", "$643.00$",
-      "$212.23$", "$0.00$", "$-23.24$"
+      "1836.23", "2763.39", "937.29", "643.00",
+      "212.23", "0.00", "-23.24"
     )
   )
 
@@ -73,8 +73,8 @@ test_that("The `fmt_number()` function works correctly in the LaTeX context", {
        fmt_number(columns = num_1, decimals = 2, sep_mark = " ") %>%
        render_formats_test("latex"))[["num_1"]],
     c(
-      "$1 836.23$", "$2 763.39$", "$937.29$", "$643.00$",
-      "$212.23$", "$0.00$", "$-23.24$"
+      "1 836.23", "2 763.39", "937.29", "643.00",
+      "212.23", "0.00", "-23.24"
     )
   )
 
@@ -89,8 +89,8 @@ test_that("The `fmt_number()` function works correctly in the LaTeX context", {
        ) %>%
        render_formats_test("latex"))[["num_1"]],
     c(
-      "$1.836,23$", "$2.763,39$", "$937,29$", "$643,00$",
-      "$212,23$", "$0,00$", "$-23,24$"
+      "1.836,23", "2.763,39", "937,29", "643,00",
+      "212,23", "0,00", "-23,24"
     )
   )
 
@@ -101,8 +101,8 @@ test_that("The `fmt_number()` function works correctly in the LaTeX context", {
        fmt_number(columns = num_1, decimals = 4, scale_by = 1/1000) %>%
        render_formats_test("latex"))[["num_1"]],
     c(
-      "$1.8362$", "$2.7634$", "$0.9373$", "$0.6430$", "$0.2122$",
-      "$0.0000$", "$-0.0232$"
+      "1.8362", "2.7634", "0.9373", "0.6430", "0.2122",
+      "0.0000", "-0.0232"
     )
   )
 
@@ -113,8 +113,8 @@ test_that("The `fmt_number()` function works correctly in the LaTeX context", {
        fmt_number(columns = num_1, decimals = 2, pattern = "a {x} b") %>%
        render_formats_test("latex"))[["num_1"]],
     c(
-      "a $1,836.23$ b", "a $2,763.39$ b", "a $937.29$ b", "a $643.00$ b",
-      "a $212.23$ b", "a $0.00$ b", "a $-23.24$ b"
+      "a 1,836.23 b", "a 2,763.39 b", "a 937.29 b", "a 643.00 b",
+      "a 212.23 b", "a 0.00 b", "a -23.24 b"
     )
   )
 
@@ -127,8 +127,8 @@ test_that("The `fmt_number()` function works correctly in the LaTeX context", {
                   scale_by = 1/1000, pattern = "{x}K") %>%
        render_formats_test("latex"))[["num_1"]],
     c(
-      "$1.8362$K", "$2.7634$K", "$0.9373$K", "$0.6430$K",
-      "$0.2122$K", "$0.0000$K", "$-0.0232$K"
+      "1.8362K", "2.7634K", "0.9373K", "0.6430K",
+      "0.2122K", "0.0000K", "-0.0232K"
     )
   )
 
@@ -138,8 +138,8 @@ test_that("The `fmt_number()` function works correctly in the LaTeX context", {
        fmt_number(columns = num_1, accounting = TRUE) %>%
        render_formats_test("latex"))[["num_1"]],
     c(
-      "$1,836.23$", "$2,763.39$", "$937.29$", "$643.00$", "$212.23$",
-      "$0.00$", "$(23.24)$"
+      "1,836.23", "2,763.39", "937.29", "643.00", "212.23",
+      "0.00", "(23.24)"
     )
   )
 
@@ -149,8 +149,8 @@ test_that("The `fmt_number()` function works correctly in the LaTeX context", {
        fmt_number(columns = num_1, decimals = 3, accounting = TRUE) %>%
        render_formats_test("latex"))[["num_1"]],
     c(
-      "$1,836.230$", "$2,763.390$", "$937.290$", "$643.000$", "$212.232$",
-      "$0.000$", "$(23.240)$"
+      "1,836.230", "2,763.390", "937.290", "643.000", "212.232",
+      "0.000", "(23.240)"
     )
   )
 
@@ -163,8 +163,8 @@ test_that("The `fmt_number()` function works correctly in the LaTeX context", {
          accounting = TRUE, pattern = "a{x}b") %>%
        render_formats_test("latex"))[["num_1"]],
     c(
-      "a$1,836.230$b", "a$2,763.390$b", "a$937.290$b", "a$643.000$b",
-      "a$212.232$b", "a$0.000$b", "a$(23.240)$b"
+      "a1,836.230b", "a2,763.390b", "a937.290b", "a643.000b",
+      "a212.232b", "a0.000b", "a(23.240)b"
     )
   )
 
@@ -177,8 +177,8 @@ test_that("The `fmt_number()` function works correctly in the LaTeX context", {
          accounting = TRUE, drop_trailing_zeros = TRUE) %>%
        render_formats_test("latex"))[["num_1"]],
     c(
-      "$1,836.23$", "$2,763.39$", "$937.29$", "$643$", "$212.232$",
-      "$0$", "$(23.24)$"
+      "1,836.23", "2,763.39", "937.29", "643", "212.232",
+      "0", "(23.24)"
     )
   )
 
@@ -189,8 +189,8 @@ test_that("The `fmt_number()` function works correctly in the LaTeX context", {
          columns = num_1, decimals = 3, force_sign = TRUE) %>%
        render_formats_test("latex"))[["num_1"]],
     c(
-      "$+1,836.230$", "$+2,763.390$", "$+937.290$", "$+643.000$",
-      "$+212.232$", "$0.000$", "$-23.240$"
+      "+1,836.230", "+2,763.390", "+937.290", "+643.000",
+      "+212.232", "0.000", "-23.240"
     )
   )
 
@@ -215,8 +215,8 @@ test_that("The `fmt_number()` function works correctly in the LaTeX context", {
          columns = num_1, pattern = "*{x}*", force_sign = TRUE) %>%
        render_formats_test("latex"))[["num_1"]],
     c(
-      "*$+1,836.23$*", "*$+2,763.39$*", "*$+937.29$*", "*$+643.00$*",
-      "*$+212.23$*", "*$0.00$*", "*$-23.24$*"
+      "*+1,836.23*", "*+2,763.39*", "*+937.29*", "*+643.00*",
+      "*+212.23*", "*0.00*", "*-23.24*"
     )
   )
 
@@ -227,8 +227,8 @@ test_that("The `fmt_number()` function works correctly in the LaTeX context", {
        fmt_number(columns = num_1, decimals = 2, locale = "en_US") %>%
        render_formats_test("latex"))[["num_1"]],
     c(
-      "$1,836.23$", "$2,763.39$", "$937.29$", "$643.00$",
-      "$212.23$", "$0.00$", "$-23.24$"
+      "1,836.23", "2,763.39", "937.29", "643.00",
+      "212.23", "0.00", "-23.24"
     )
   )
 
@@ -239,8 +239,8 @@ test_that("The `fmt_number()` function works correctly in the LaTeX context", {
        fmt_number(columns = num_1, decimals = 2, locale = "da_DK") %>%
        render_formats_test("latex"))[["num_1"]],
     c(
-      "$1.836,23$", "$2.763,39$", "$937,29$", "$643,00$",
-      "$212,23$", "$0,00$", "$-23,24$"
+      "1.836,23", "2.763,39", "937,29", "643,00",
+      "212,23", "0,00", "-23,24"
     )
   )
 
@@ -251,8 +251,8 @@ test_that("The `fmt_number()` function works correctly in the LaTeX context", {
        fmt_number(columns = num_1, decimals = 2, locale = "de_AT") %>%
        render_formats_test("latex"))[["num_1"]],
     c(
-      "$1 836,23$", "$2 763,39$", "$937,29$", "$643,00$",
-      "$212,23$", "$0,00$", "$-23,24$"
+      "1 836,23", "2 763,39", "937,29", "643,00",
+      "212,23", "0,00", "-23,24"
     )
   )
 
@@ -263,8 +263,8 @@ test_that("The `fmt_number()` function works correctly in the LaTeX context", {
        fmt_number(columns = num_1, decimals = 2, locale = "et_EE") %>%
        render_formats_test("latex"))[["num_1"]],
     c(
-      "$1 836,23$", "$2 763,39$", "$937,29$", "$643,00$",
-      "$212,23$", "$0,00$", "$-23,24$"
+      "1 836,23", "2 763,39", "937,29", "643,00",
+      "212,23", "0,00", "-23,24"
     )
   )
 
@@ -275,8 +275,8 @@ test_that("The `fmt_number()` function works correctly in the LaTeX context", {
        fmt_number(columns = num_1, decimals = 2, locale = "gl_ES") %>%
        render_formats_test("latex"))[["num_1"]],
     c(
-      "$1.836,23$", "$2.763,39$", "$937,29$", "$643,00$",
-      "$212,23$", "$0,00$", "$-23,24$"
+      "1.836,23", "2.763,39", "937,29", "643,00",
+      "212,23", "0,00", "-23,24"
     )
   )
 })
