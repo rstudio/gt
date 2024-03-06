@@ -1344,6 +1344,8 @@ derive_table_width_bookends <- function(data) {
 #' Function addresses a TODO item in the previous code and handles situations
 #' where a filtered data.frame of styles has multiple rows that apply to the
 #' cell. The function places all of these into a single list of lists.
+#'
+#' @noRd
 consolidate_cell_styles_l <- function(styles_df) {
 
   styles_col <- styles_df[['styles']]
@@ -1373,6 +1375,8 @@ consolidate_cell_styles_l <- function(styles_df) {
 #'
 #' Applies the formats specified in applicable tab_style commands to
 #' a cell of text to be output in LaTeX.
+#'
+#' @noRd
 apply_cell_styles_l <- function(content, style_obj) {
 
   # Set default values for no footnote present
@@ -1540,8 +1544,11 @@ apply_cell_styles_l <- function(content, style_obj) {
 #' Apply Spanner Styles
 #'
 #' Applying the formats specified in tab_style requires slighly different
-#' handling for the spanners than the other table elements.  Spanners are
-#' formatted using this function while everything else uses `apply_cell_styles_l`.
+#' handling for the spanners than the other table elements. Spanners are
+#' formatted using this function while everything else uses
+#' `apply_cell_styles_l()`.
+#'
+#' @noRd
 apply_spanner_styles_l <- function(spanners_rle, styles_tbl) {
 
   for (i in seq_along(spanners_rle$labels)) {
