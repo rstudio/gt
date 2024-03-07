@@ -235,9 +235,19 @@ create_table_start_l <- function(data) {
               "-2\\tabcolsep-1.5\\arrayrulewidth"
             )
 
+        } else {
+
+          col_widths[i] <- paste0(convert_to_px(col_widths[i]) * 0.75, "pt")
+
         }
 
-        col_defs_i <- paste0(align, "p{", col_widths[i], "}")
+        col_defs_i <-
+          paste0(
+            align,
+            "p{",
+            col_widths[i],
+            "}"
+          )
 
       } else {
 
