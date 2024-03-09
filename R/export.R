@@ -725,25 +725,25 @@ as_latex <- function(data) {
     latex_packages <- NULL
   }
 
-  table_width_bookends <- derive_table_width_bookends(data = data)
+  table_width_statement <- derive_table_width_statement_l(data = data)
 
   # Allow user to set a font-size
-  font_size_bookends <- create_font_size_bookends_l(data = data)
+  fontsize_statement <- create_fontsize_statement_l(data = data)
 
 
   # Compose the LaTeX table
   knitr::asis_output(
     paste0(
-      table_width_bookends[1L],
-      font_size_bookends[1L],
+      "\\begingroup\n",
+      table_width_statement,
+      fontsize_statement,
       table_start,
       heading_component,
       columns_component,
       body_component,
       table_end,
       footer_component,
-      font_size_bookends[2L],
-      table_width_bookends[2L],
+      "\\endgroup\n",
       collapse = ""
     ),
     meta = latex_packages
