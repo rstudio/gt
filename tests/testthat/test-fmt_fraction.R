@@ -578,13 +578,13 @@ test_that("The `fmt_fraction()` fn can render values in the Indian numbering sys
        fmt_fraction(columns = num, layout = "diagonal", system = "ind") %>%
        render_formats_test(context = "latex"))[["num"]],
     c(
-      "$50,00,000$", "$1,000$", "$10$", "$12,345$", "$1,234\\, {{}^{1}\\!/_{2}}$",
-      "$123\\, {{}^{4}\\!/_{9}}$", "$1\\, {{}^{2}\\!/_{9}}$", "${{}^{1}\\!/_{8}}$",
-      "$25,83,063\\, {{}^{2}\\!/_{9}}$", "$1,53,56,74,223\\, {{}^{1}\\!/_{3}}$",
-      "$6,42,56,48,25,73,36,228$", "$-50,00,00,000$", "$-1,000$", "$-10$",
-      "$-12,345$", "$-1,234\\, {{}^{1}\\!/_{2}}$", "$-123\\, {{}^{4}\\!/_{9}}$",
-      "$-1\\, {{}^{2}\\!/_{9}}$", "$-{{}^{1}\\!/_{8}}$", "$0$", "$0$",
-      "NA", "$Inf$", "$-Inf$"
+      "50,00,000", "1,000", "10", "12,345", "1,234\\textsuperscript{1}\\!/\\textsubscript{2}",
+      "123\\textsuperscript{4}\\!/\\textsubscript{9}", "1\\textsuperscript{2}\\!/\\textsubscript{9}", "\\textsuperscript{1}\\!/\\textsubscript{8}",
+      "25,83,063\\textsuperscript{2}\\!/\\textsubscript{9}", "1,53,56,74,223\\textsuperscript{1}\\!/\\textsubscript{3}",
+      "6,42,56,48,25,73,36,228", "-50,00,00,000", "-1,000", "-10",
+      "-12,345", "-1,234\\textsuperscript{1}\\!/\\textsubscript{2}", "-123\\textsuperscript{4}\\!/\\textsubscript{9}",
+      "-1\\textsuperscript{2}\\!/\\textsubscript{9}", "-\\textsuperscript{1}\\!/\\textsubscript{8}", "0", "0",
+      "NA", "Inf", "-Inf"
     )
   )
 })

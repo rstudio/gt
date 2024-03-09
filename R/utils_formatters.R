@@ -825,7 +825,7 @@ context_exp_marks <- function(context) {
   switch(
     context,
     html = c(" \U000D7 10<sup style='font-size: 65%;'>", "</sup>"),
-    latex = c(" \\times 10^{", "}"),
+    latex = c(" $\\times$ 10\\textsuperscript{", "}"),
     rtf = c(" \\'d7 10{\\super ", "}"),
     word = c(" \U000D7 10^", ""),
     c(" \U000D7 10^", "")
@@ -905,13 +905,13 @@ context_symbol_str <- function(context, symbol) {
       html = get_currency_str(currency = symbol),
       latex = {
         if (!inherits(symbol, "AsIs")) {
-          paste_between(
+          #paste_between(
             markdown_to_latex(
               get_currency_str(currency = symbol, fallback_to_code = TRUE),
               md_engine = "commonmark"
-            ),
-            c("\\text{", "}")
-          )
+            )#,
+          #  c("\\text{", "}")
+          #)
         } else {
           symbol
         }
@@ -1197,11 +1197,6 @@ num_fmt_factory <- function(
 
       # Format all non-NA `x` values with a formatting function
       x_str_vals <- format_fn(x_vals, context = context)
-
-      # If in a LaTeX context, wrap values in math mode
-      if (use_latex_math_mode) {
-        x_str_vals <- to_latex_math_mode(x_str_vals, context = context)
-      }
 
       # Handle formatting of pattern
       x_str_vals <- apply_pattern_fmt_x(x_str_vals, pattern = pattern)

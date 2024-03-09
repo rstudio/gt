@@ -38,8 +38,8 @@ test_that("The `fmt_number()` function works with conditional `rows`", {
          rows = num_1 < 1000) %>%
        render_formats_test(context = "latex"))[["num_1"]],
     c(
-      "1836.23", "2763.39", "$937.2900$", "$643.0000$",
-      "$212.2320$", "$0.0000$", "$-23.2400$"
+      "1836.23", "2763.39", "937.2900", "643.0000",
+      "212.2320", "0.0000", "-23.2400"
     )
   )
 
@@ -50,7 +50,7 @@ test_that("The `fmt_number()` function works with conditional `rows`", {
          decimals = 4,
          rows = char_2 %in% c("june", "july") & grepl("sa.*", char_1)) %>%
        render_formats_test(context = "latex"))[["num_2"]],
-    c("$34.0000$", "74", "23", "NA", "35", "NA", "NA")
+    c("34.0000", "74", "23", "NA", "35", "NA", "NA")
   )
 })
 
@@ -64,9 +64,9 @@ test_that("The `fmt_scientific()` function works with conditional `rows`", {
          rows = num_1 < 1000) %>%
        render_formats_test(context = "latex"))[["num_1"]],
     c(
-      "1836.23", "2763.39", "$9.3729 \\times 10^{2}$",
-      "$6.4300 \\times 10^{2}$", "$2.1223 \\times 10^{2}$", "$0.0000$",
-      "$-2.3240 \\times 10^{1}$"
+      "1836.23", "2763.39", "9.3729 $\\times$ 10\\textsuperscript{2}",
+      "6.4300 $\\times$ 10\\textsuperscript{2}", "2.1223 $\\times$ 10\\textsuperscript{2}", "0.0000",
+      "-2.3240 $\\times$ 10\\textsuperscript{1}"
     )
   )
 
@@ -77,7 +77,7 @@ test_that("The `fmt_scientific()` function works with conditional `rows`", {
          decimals = 4,
          rows = char_2 %in% c("june", "july") & grepl("sa.*", char_1)) %>%
        render_formats_test(context = "latex"))[["num_2"]],
-    c("$3.4000 \\times 10^{1}$", "74", "23", "NA", "35", "NA", "NA")
+    c("3.4000 $\\times$ 10\\textsuperscript{1}", "74", "23", "NA", "35", "NA", "NA")
   )
 })
 
@@ -91,8 +91,8 @@ test_that("The `fmt_percent()` function works with conditional `rows`", {
          rows = num_1 < 1000) %>%
        render_formats_test(context = "latex"))[["num_1"]],
     c(
-      "1836.23", "2763.39", "$93,729.00\\%$", "$64,300.00\\%$",
-      "$21,223.20\\%$", "$0.00\\%$", "$-2,324.00\\%$"
+      "1836.23", "2763.39", "93,729.00\\%", "64,300.00\\%",
+      "21,223.20\\%", "0.00\\%", "-2,324.00\\%"
     )
   )
 
@@ -103,7 +103,7 @@ test_that("The `fmt_percent()` function works with conditional `rows`", {
          decimals = 2,
          rows = char_2 %in% c("june", "july") & grepl("sa.*", char_1)) %>%
        render_formats_test(context = "latex"))[["num_2"]],
-    c("$3,400.00\\%$", "74", "23", "NA", "35", "NA", "NA")
+    c("3,400.00\\%", "74", "23", "NA", "35", "NA", "NA")
   )
 })
 
@@ -117,8 +117,8 @@ test_that("The `fmt_currency()` function works with conditional `rows`", {
          rows = num_1 < 1000) %>%
        render_formats_test(context = "latex"))[["num_1"]],
     c(
-      "1836.23", "2763.39", "$\\text{\\$}937.29$", "$\\text{\\$}643.00$",
-      "$\\text{\\$}212.23$", "$\\text{\\$}0.00$", "$-\\text{\\$}23.24$"
+      "1836.23", "2763.39", "\\$937.29", "\\$643.00",
+      "\\$212.23", "\\$0.00", "-\\$23.24"
     )
   )
 
@@ -129,7 +129,7 @@ test_that("The `fmt_currency()` function works with conditional `rows`", {
          currency = "USD",
          rows = char_2 %in% c("june", "july") & grepl("sa.*", char_1)) %>%
        render_formats_test(context = "latex"))[["num_2"]],
-    c("$\\text{\\$}34.00$", "74", "23", "NA", "35", "NA", "NA")
+    c("\\$34.00", "74", "23", "NA", "35", "NA", "NA")
   )
 })
 
