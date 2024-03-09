@@ -1282,14 +1282,14 @@ split_row_content <- function(x) {
   split(row_content, ceiling(seq_along(row_content) / ncol(x)))
 }
 
-derive_table_width_bookends <- function(data) {
+derive_table_width_statement_l <- function(data) {
 
   table_width <- dt_options_get_value(data = data, 'table_width')
 
   # Bookends are not required if a table width is not specified
   if (table_width == 'auto') {
 
-    bookends <- c('', '')
+    statement <- ''
 
   } else if (endsWith(table_width, "%")) {
 
@@ -1299,22 +1299,14 @@ derive_table_width_bookends <- function(data) {
       ((100 - tw) / 200) %>%
       format(scientific = FALSE, trim = TRUE)
 
-    bookends <-
-      c(
-        paste0(
-          "\\newlength\\holdLTleft",
-          "\\newlength\\holdLTright",
-          "\\setlength\\holdLTleft{\\LTleft}\\relax",
-          "\\setlength\\holdLTright{\\LTright}\\relax",
-          sprintf(
-            '\\setlength\\LTleft{%s\\linewidth}\n\\setlength\\LTright{%s\\linewidth}',
-            side_width,
-            side_width
-          ),
-          collapse = "\n"
-        ),
-        "\\setlength\\LTleft{\\holdLTleft}\n\\setlength\\LTright{\\holdLTright}"
-      )
+    statement <- paste0(
+      "\\setlength\\",
+      c("LTleft", "LTright"),
+      "{",
+      side_width,
+      "\\linewidth}",
+      collapse = "\n"
+    )
 
   } else {
 
@@ -1322,30 +1314,18 @@ derive_table_width_bookends <- function(data) {
 
     halfwidth_in_pt <- format(width_in_pt / 2, scientific = FALSE, trim = TRUE)
 
-    bookends <-
-      c(
-        paste0(
-          "\\newlength\\holdLTleft",
-          "\\newlength\\holdLTright",
-          "\\setlength\\holdLTleft{\\LTleft}\\relax",
-          "\\setlength\\holdLTright{\\LTright}\\relax",
-          sprintf(
-            "\\setlength\\LTleft{\\dimexpr(0.5\\linewidth - %spt)}\n\\setlength\\LTright{\\dimexpr(0.5\\linewidth - %spt)}",
-            halfwidth_in_pt,
-            halfwidth_in_pt
-          ),
-          collapse = '\n'
-        ),
-        paste0(
-          "\\setlength\\LTleft{\\holdLTleft}",
-          "\\setlength\\LTright{\\holdLTright}",
-          collapse = "\n"
-        )
-      )
+    statement <- paste0(
+      "\\setlength\\",
+      c("LTleft", "LTright"),
+      "{\\dimexpr(0.5\\linewidth - ",
+      halfwidth_in_pt,
+      "pt)}",
+      collapse = "\n"
+    )
 
   }
 
-  bookends
+  statement
 
 }
 
@@ -1580,12 +1560,12 @@ apply_spanner_styles_l <- function(spanners_rle, styles_tbl) {
   spanners_rle
 }
 
-create_font_size_bookends_l <- function(data) {
+create_fontsize_statement_l <- function(data) {
 
   size_options <- dplyr::filter(dt_options_get(data), parameter == 'table_font_size')
   size <- unlist(size_options$value)[1L]
 
-  fs_fmt <- "\\begingroup\n\\fontsize{%3.1fpt}{%3.1fpt}\\selectfont\n"
+  fs_fmt <- "\\fontsize{%3.1fpt}{%3.1fpt}\\selectfont\n"
   if (grepl(pattern = "^[[:digit:]]+(\\%|in|cm|emu|em|pt|px)$", size)) {
 
     if (endsWith("%", x = size)) {
@@ -1605,9 +1585,9 @@ create_font_size_bookends_l <- function(data) {
 
     }
 
-  } else return(c("", ""))
+  } else return("")
 
-  c(fs_statement, "\\endgroup\n")
+  fs_statement
 
 }
 
