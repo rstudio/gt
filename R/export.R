@@ -1580,26 +1580,30 @@ extract_cells <- function(
       data = data
     )
 
-  #
-  # Partially build the gt table using the resolved `output` as the
-  # rendering context; this formats the body cells and applies merging
-  # routines and text transforms (but doesn't attach footnote marks)
-  #
+  if (!dt_has_built_get(data)) {
+    #
+    # Partially build the gt table using the resolved `output` as the
+    # rendering context; this formats the body cells and applies merging
+    # routines and text transforms (but doesn't attach footnote marks)
+    #
 
-  data <- dt_body_build(data = data)
-  data <- render_formats(data = data, context = output)
-  data <- render_substitutions(data = data, context = output)
-  data <- migrate_unformatted_to_output(data = data, context = output)
-  data <- perform_col_merge(data = data, context = output)
-  data <- dt_body_reassemble(data = data)
-  data <- reorder_stub_df(data = data)
-  data <- reorder_footnotes(data = data)
-  data <- reorder_styles(data = data)
-  data <- perform_text_transforms(data = data)
-  built_data <- data
+    data <- dt_body_build(data = data)
+    data <- render_formats(data = data, context = output)
+    data <- render_substitutions(data = data, context = output)
+    data <- migrate_unformatted_to_output(data = data, context = output)
+    data <- perform_col_merge(data = data, context = output)
+    data <- dt_body_reassemble(data = data)
+    data <- reorder_stub_df(data = data)
+    data <- reorder_footnotes(data = data)
+    data <- reorder_styles(data = data)
+    data <- perform_text_transforms(data = data)
+    built_data <- data
 
-  # Extract the `_body` component of the built data
-  data_body <- built_data[["_body"]]
+    # Extract the `_body` component of the built data
+    data_body <- built_data[["_body"]]
+  } else {
+    data_body <- data[["_body"]]
+  }
 
   #
   # Collect a vector of body cells in a specific order
