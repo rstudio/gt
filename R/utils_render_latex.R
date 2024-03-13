@@ -120,6 +120,13 @@ latex_group_row <- function(
 }
 
 #' @noRd
+create_wrap_start_l <- function(data) {
+  ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
+         "\\begingroup\n",
+         "\\begin{table}\n")
+}
+
+#' @noRd
 create_table_start_l <- function(data) {
 
   # Get vector representation of stub layout
@@ -306,7 +313,7 @@ create_table_start_l <- function(data) {
   paste0(
     ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
            longtable_post_length,
-           "\\begin{table}\n"),
+           ""),
     ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
            "\\begin{longtable}{",
            hdr_tabular),
@@ -974,6 +981,13 @@ create_table_end_l <- function(data) {
 }
 
 #' @noRd
+create_wrap_end_l <- function(data) {
+  ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
+         "\\endgroup\n",
+         "\\end{table}\n")
+}
+
+#' @noRd
 create_footer_component_l <- function(data) {
 
   footnotes_tbl <- dt_footnotes_get(data = data)
@@ -981,10 +995,7 @@ create_footer_component_l <- function(data) {
 
   # If there are no footnotes or source notes, return an empty string
   if (nrow(footnotes_tbl) == 0 && length(source_notes_vec) == 0) {
-    return(ifelse(dt_options_get_value(data = data,
-                                       option = "latex_use_longtable"),
-                  "",
-                  "\\end{table}\n"))
+    return("")
   }
 
   # Get the multiline and separator options for footnotes and source notes
@@ -1060,9 +1071,6 @@ create_footer_component_l <- function(data) {
     "\\begin{minipage}{\\linewidth}\n",
     paste0(footnotes, source_notes),
     "\\end{minipage}\n",
-    ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
-           "",
-           "\\end{table}\n"),
     collapse = ""
   )
 }
@@ -1325,7 +1333,9 @@ derive_table_width_statement_l <- function(data) {
   table_width <- dt_options_get_value(data = data, 'table_width')
 
   # Bookends are not required if a table width is not specified
-  if (table_width == 'auto') {
+  # of if using floating table
+  if (table_width == 'auto' |
+      !dt_options_get_value(data = data, option = "latex_use_longtable")) {
 
     statement <- ''
 
