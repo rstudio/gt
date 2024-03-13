@@ -912,7 +912,8 @@ test_that("The function `cols_width()` correctly specifies LaTeX table when colu
       col_2 ~ pct(30),
       col_3 ~ pct(20),
       col_4 ~ pct(10)
-    )
+    ) %>%
+    tab_options(latex.use.longtable = TRUE)
 
   pct_string <- function(x, unit = '\\\\linewidth') {
 
@@ -969,7 +970,8 @@ test_that("The function `cols_width()` correctly specifies LaTeX table when colu
     cols_width(
       col_1 ~ pct(30),
       col_3 ~ pct(20)
-    )
+    ) %>%
+    tab_options(latex.use.longtable = TRUE)
 
   c(
     pct_string(0.3),

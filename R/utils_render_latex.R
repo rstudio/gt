@@ -120,6 +120,13 @@ latex_group_row <- function(
 }
 
 #' @noRd
+create_wrap_start_l <- function(data) {
+  ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
+         "\\begingroup\n",
+         "\\begin{table}\n")
+}
+
+#' @noRd
 create_table_start_l <- function(data) {
 
   # Get vector representation of stub layout
@@ -275,11 +282,41 @@ create_table_start_l <- function(data) {
   if (dt_options_get_value(data = data, option = 'table_width') != 'auto')
     extra_sep <- '@{\\extracolsep{\\fill}}'
 
+  # determine string for table width if using tabular* environment
+  hdr_tabular <- ""
+  if(!dt_options_get_value(data = data, option = "latex_use_longtable")) {
+
+    # we need to use the extracolsep here for tabular* regardless of width
+    extra_sep <- '@{\\extracolsep{\\fill}}'
+    table_width <- dt_options_get_value(data = data, 'table_width')
+
+    if (endsWith(table_width, "%")) {
+
+      tw <- as.numeric(gsub('%', '', table_width))
+      hdr_tabular <- paste0("\\begin{tabular*}{", tw/100, "\\linewidth}{")
+
+    } else if (endsWith(table_width, "px")) {
+
+      width_in_pt <- 0.75 * convert_to_px(table_width)
+      hdr_tabular <- paste0("\\begin{tabular*}{", width_in_pt, "pt}{")
+
+    } else {
+
+      hdr_tabular <- "\\begin{tabular*}{\\linewidth}{"
+
+    }
+
+  }
+
   # Generate setup statements for table including default left
   # alignments and vertical lines for any stub columns
   paste0(
-    longtable_post_length,
-    "\\begin{longtable}{",
+    ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
+           longtable_post_length,
+           ""),
+    ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
+           "\\begin{longtable}{",
+           hdr_tabular),
     extra_sep,
     paste(col_defs, collapse = ""),
     "}\n",
@@ -932,13 +969,22 @@ summary_rows_for_group_l <- function(
 }
 
 #' @noRd
-create_table_end_l <- function() {
+create_table_end_l <- function(data) {
 
   paste0(
     "\\bottomrule\n",
-    "\\end{longtable}\n",
+    ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
+           "\\end{longtable}\n",
+           "\\end{tabular*}\n"),
     collapse = ""
   )
+}
+
+#' @noRd
+create_wrap_end_l <- function(data) {
+  ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
+         "\\endgroup\n",
+         "\\end{table}\n")
 }
 
 #' @noRd
@@ -1287,7 +1333,9 @@ derive_table_width_statement_l <- function(data) {
   table_width <- dt_options_get_value(data = data, 'table_width')
 
   # Bookends are not required if a table width is not specified
-  if (table_width == 'auto') {
+  # of if using floating table
+  if (table_width == 'auto' |
+      !dt_options_get_value(data = data, option = "latex_use_longtable")) {
 
     statement <- ''
 

@@ -14,6 +14,7 @@ test_that("The `cols_align()` function works correctly", {
   tbl_latex <-
     gt(mtcars_short) %>%
     cols_align(align = "left", columns = c(mpg, cyl, drat)) %>%
+    tab_options(latex.use.longtable = TRUE) %>%
     as_latex() %>% as.character()
 
   # Expect a characteristic pattern
@@ -25,6 +26,7 @@ test_that("The `cols_align()` function works correctly", {
   tbl_latex <-
     gt(mtcars_short) %>%
     cols_align(align = "left", columns = 1:3) %>%
+    tab_options(latex.use.longtable = TRUE) %>%
     as_latex() %>% as.character()
 
   # Expect a characteristic pattern
@@ -36,6 +38,7 @@ test_that("The `cols_align()` function works correctly", {
   tbl_latex <-
     gt(mtcars_short) %>%
     cols_align(align = "left") %>%
+    tab_options(latex.use.longtable = TRUE) %>%
     as_latex() %>% as.character()
 
   # Expect a characteristic pattern
@@ -47,6 +50,7 @@ test_that("The `cols_align()` function works correctly", {
   tbl_latex <-
     gt(mtcars_short) %>%
     cols_align(align = "left", columns = everything()) %>%
+    tab_options(latex.use.longtable = TRUE) %>%
     as_latex() %>% as.character()
 
   # Expect a characteristic pattern
@@ -58,6 +62,7 @@ test_that("The `cols_align()` function works correctly", {
   tbl_latex <-
     gt(sp500) %>%
     cols_align(align = "auto") %>%
+    tab_options(latex.use.longtable = TRUE) %>%
     as_latex() %>% as.character()
 
   # Expect a characteristic pattern
