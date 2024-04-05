@@ -1,6 +1,6 @@
 # gt (development version)
 
-* PDF output now defaults to a full-width floating environment using `tabular*` (@AronGullickson, #1588). Float position can be controlled from within Quarto by the `tbl-pos` argument. To use a `longtable` environment instead, use `tab_option(latex.use.longtable = TRUE)`.
+* PDF output now defaults to a full-width floating environment using `tabular*` (@AronGullickson, #1588). Float position can be controlled by the `latex.tbl.pos` argument in `tab_options`. Quarto users can alternatively use the `tbl-pos` argument to control positioning. To use a `longtable` environment instead, use `tab_option(latex.use.longtable = TRUE)`.
 
 * PDF output now allows the font size of a table to be set using the table.font.size parameter in the tab_options function (#1472).  The font sizes of individual table cells (including those in the body, stubs, column headings, etc.) can be set using tab_style function. Several other options specified in tab_style are now reflected in PDF output.
 
