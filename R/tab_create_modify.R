@@ -4220,7 +4220,7 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'
 #' @param latex.use.longtable
 #'
-#'   ** Use longtable latex environment **
+#'   *Use longtable latex environment*
 #'
 #'   By default, tables produced using latex code will be embedded in the
 #'   `table` floating environment. Setting this parameter to `TRUE` will instead
@@ -4229,7 +4229,7 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'
 #' @param latex.tbl.pos
 #'
-#'   ** Specify latex floating position **
+#'   *Specify latex floating position*
 #'
 #'   The latex position indicator for a floating environment (e.g. "!t", "H"). It
 #'   should be specified without square brackets. Quarto users should instead

@@ -639,20 +639,19 @@ table. Quarto performs other alterations as well but they can all be
 deactivated with \code{quarto.disable_processing = TRUE} (this option is \code{FALSE}
 by default).}
 
-\item{latex.use.longtable}{** Use longtable latex environment **
+\item{latex.use.longtable}{\emph{Use longtable latex environment}
 
 By default, tables produced using latex code will be embedded in the
 \code{table} floating environment. Setting this parameter to \code{TRUE} will instead
 use the \code{longtable} environment which will not float and may span multiple
-pages.
+pages.}
 
-@param latex.tbl.pos
+\item{latex.tbl.pos}{\emph{Specify latex floating position}
 
-** Specify latex floating position **
-
-The latex position indicator for a floating environment (e.g. "t", "H").
-For quarto documents, users should instead set the floating position with
-the code chunk argument \code{tbl-pos}.}
+The latex position indicator for a floating environment (e.g. "!t", "H"). It
+should be specified without square brackets. Quarto users should instead
+set the floating position within the code chunk argument \code{tbl-pos}. Table
+will only float if longtable environment is set to \code{FALSE}.}
 }
 \value{
 An object of class \code{gt_tbl}.
