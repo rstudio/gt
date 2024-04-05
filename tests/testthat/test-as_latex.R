@@ -51,6 +51,17 @@ test_that("Table width correctly output in LaTeX using tabular*", {
 
 })
 
+test_that("Table position is correctly applied in LaTeX if used*", {
+
+  gt_latex_width_1 <-
+    gt(exibble) %>%
+    tab_options(table.width = pct(90), latex.use.longtable = FALSE,
+                latex.tbl.pos = "!tb") %>%
+    as_latex()
+
+  expect_match(gt_latex_width_1, "\\\\begin\\{table\\}\\[!tb\\]")
+})
+
 test_that("Table styles correctly applied for longtable", {
 
   gt_latex_styled <-

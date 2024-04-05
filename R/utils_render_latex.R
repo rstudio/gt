@@ -121,9 +121,16 @@ latex_group_row <- function(
 
 #' @noRd
 create_wrap_start_l <- function(data) {
+  tbl_pos = ifelse(check_quarto(),
+                   "",
+                   paste0("[",
+                          dt_options_get_value(data = data,
+                                               option = "latex_tbl_pos"),
+                          "]"))
+
   ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
          "\\begingroup\n",
-         "\\begin{table}\n")
+         paste0("\\begin{table}", tbl_pos, "\n"))
 }
 
 #' @noRd

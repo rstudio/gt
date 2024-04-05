@@ -191,7 +191,8 @@ tab_options(
   page.footer.height = NULL,
   quarto.use_bootstrap = NULL,
   quarto.disable_processing = NULL,
-  latex.use.longtable = NULL
+  latex.use.longtable = NULL,
+  latex.tbl.pos = NULL
 )
 }
 \arguments{
@@ -643,7 +644,15 @@ by default).}
 By default, tables produced using latex code will be embedded in the
 \code{table} floating environment. Setting this parameter to \code{TRUE} will instead
 use the \code{longtable} environment which will not float and may span multiple
-pages.}
+pages.
+
+@param latex.tbl.pos
+
+** Specify latex floating position **
+
+The latex position indicator for a floating environment (e.g. "t", "H").
+For quarto documents, users should instead set the floating position with
+the code chunk argument \code{tbl-pos}.}
 }
 \value{
 An object of class \code{gt_tbl}.
