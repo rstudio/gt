@@ -4227,7 +4227,7 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   use the `longtable` environment which will not float and may span multiple
 #'   pages.
 #'
-#'   @param latex.tbl.pos
+#' @param latex.tbl.pos
 #'
 #'   ** Specify latex floating position **
 #'
