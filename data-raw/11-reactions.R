@@ -198,4 +198,8 @@ reactions <-
   reactions %>%
   inner_join(compound_types) %>%
   relocate(cmpd_desc, .after = cmpd_struct_fml) %>%
+  relocate(oh_uncert, .before = oh_u_fac) %>%
+  relocate(o3_uncert, .before = o3_u_fac) %>%
+  relocate(no3_uncert, .before = no3_u_fac) %>%
+  relocate(cl_uncert, .before = cl_u_fac) %>%
   select(-cmpd_type, -cmpd_no)
