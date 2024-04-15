@@ -800,9 +800,15 @@
 #' ```
 #'
 #' @family datasets
+#' @section Dataset ID and Badge:
+#' DATA-11
+#'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_reactions.png")`
+#' }}
 #'
 #' @section Dataset Introduced:
-#' *In development*
+#' *in development*
 #'
 "reactions"
 
@@ -865,7 +871,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-11
+#' DATA-12
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_rx_adsl.png")`
@@ -938,7 +944,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-12
+#' DATA-13
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_rx_addv.png")`
