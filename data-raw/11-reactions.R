@@ -117,7 +117,7 @@ compound_types <-
   10, "alkyne",
   11, "allene",
   12, "non-aromatic hydrocarbon with varying double bond types",
-  13, "alkylbenzenes",
+  13, "alkylbenzene",
   14, "polycyclic aromatic hydrocarbon",
   15, "aromatic hydrocarbon with extra double or triple bonds",
   16, "alcohol or glycol",
@@ -164,11 +164,11 @@ compound_types <-
   57, "unsaturated or aromatic hydroxy nitrate",
   58, "unsaturated or aromatic mixed oxygenate or nitrate",
   59, "mixed nitro, nitroso, or nitrite",
-  60, "haloalkanes (separated)",
-  61, "haloalkanes (multiple)",
-  62, "unsaturated halogen-containing hydrocarbon (halogens separted)",
+  60, "haloalkane (separated)",
+  61, "haloalkane (multiple)",
+  62, "unsaturated halogen-containing hydrocarbon (halogens separated)",
   63, "unsaturated halogen-containing hydrocarbon (multiple halogens)",
-  64, "aromatic halogen-containing hydrocarbon (halogens separted)",
+  64, "aromatic halogen-containing hydrocarbon (halogens separated)",
   65, "aromatic halogen-containing hydrocarbon (multiple halogens)",
   66, "saturated halogen-containing oxygenate (halogens separated)",
   67, "saturated halogen-containing oxygenate (multiple halogens)",
@@ -201,5 +201,6 @@ reactions <-
   dplyr::relocate(o3_uncert, .before = o3_u_fac) %>%
   dplyr::relocate(no3_uncert, .before = no3_u_fac) %>%
   dplyr::relocate(cl_uncert, .before = cl_u_fac) %>%
-  dplyr::select(-cmpd_type, -cmpd_no, -starts_with("feat")) %>%
-  dplyr::rename(cmpd_name = cmpd_primary_name)
+  dplyr::select(-cmpd_type, -cmpd_no, -cmpd_struct_fml, -starts_with("feat")) %>%
+  dplyr::rename(cmpd_name = cmpd_primary_name) %>%
+  dplyr::relocate(cmpd_mwt, cmpd_atomic_fml, cmpd_desc, .after = cmpd_name)
