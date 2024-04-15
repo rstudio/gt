@@ -81,7 +81,7 @@ Here is a glimpse at the data available in \code{rx_adsl}.
 
 \section{Dataset ID and Badge}{
 
-DATA-11
+DATA-12
 
 \if{html}{\out{
 <div style="text-align:center;"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_rx_adsl.png" alt="This image of that of a dataset badge." style="width:50\%;padding-bottom:20px;"></div>
