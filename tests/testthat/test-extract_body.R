@@ -82,22 +82,22 @@ test_that("Extraction of the table body works well", {
   expect_equal(
     tbl_body_1_2[["sci_1"]],
     c(
-      "1.62 × 10<sup style='font-size: 65%;'>−9</sup>",
-      "2.32 × 10<sup style='font-size: 65%;'>−6</sup>",
-      "9.20 × 10<sup style='font-size: 65%;'>−12</sup>",
-      "7.25 × 10<sup style='font-size: 65%;'>−10</sup>",
-      "2.50 × 10<sup style='font-size: 65%;'>−13</sup>",
+      "1.62&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−9</sup>",
+      "2.32&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−6</sup>",
+      "9.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−12</sup>",
+      "7.25&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−10</sup>",
+      "2.50&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−13</sup>",
       NA, NA
     )
   )
   expect_equal(
     tbl_body_1_2[["sci_2"]],
     c(
-      "5.20 × 10<sup style='font-size: 65%;'>13</sup>",
-      "1.40 × 10<sup style='font-size: 65%;'>7</sup>",
+      "5.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>13</sup>",
+      "1.40&nbsp;×&nbsp;10<sup style='font-size: 65%;'>7</sup>",
       NA, NA,
-      "3.20 × 10<sup style='font-size: 65%;'>3</sup>",
-      "6.26 × 10<sup style='font-size: 65%;'>9</sup>",
+      "3.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>3</sup>",
+      "6.26&nbsp;×&nbsp;10<sup style='font-size: 65%;'>9</sup>",
       NA
     )
   )
@@ -129,11 +129,11 @@ test_that("Extraction of the table body works well", {
   expect_equal(
     tbl_body_1_3[["sci_1"]],
     c(
-      "1.62 × 10<sup style='font-size: 65%;'>−9</sup>",
-      "2.32 × 10<sup style='font-size: 65%;'>−6</sup>",
-      "9.20 × 10<sup style='font-size: 65%;'>−12</sup>",
-      "7.25 × 10<sup style='font-size: 65%;'>−10</sup>",
-      "2.50 × 10<sup style='font-size: 65%;'>−13</sup>",
+      "1.62&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−9</sup>",
+      "2.32&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−6</sup>",
+      "9.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−12</sup>",
+      "7.25&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−10</sup>",
+      "2.50&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−13</sup>",
       "missing",
       "missing"
     )
@@ -141,11 +141,11 @@ test_that("Extraction of the table body works well", {
   expect_equal(
     tbl_body_1_3[["sci_2"]],
     c(
-      "5.20 × 10<sup style='font-size: 65%;'>13</sup>",
-      "1.40 × 10<sup style='font-size: 65%;'>7</sup>",
+      "5.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>13</sup>",
+      "1.40&nbsp;×&nbsp;10<sup style='font-size: 65%;'>7</sup>",
       NA, NA,
-      "3.20 × 10<sup style='font-size: 65%;'>3</sup>",
-      "6.26 × 10<sup style='font-size: 65%;'>9</sup>",
+      "3.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>3</sup>",
+      "6.26&nbsp;×&nbsp;10<sup style='font-size: 65%;'>9</sup>",
       NA
     )
   )
@@ -179,11 +179,11 @@ test_that("Extraction of the table body works well", {
   expect_equal(
     tbl_body_1_4[["sci_1"]],
     c(
-      "1.62 × 10<sup style='font-size: 65%;'>−9</sup>",
-      "2.32 × 10<sup style='font-size: 65%;'>−6</sup>",
-      "9.20 × 10<sup style='font-size: 65%;'>−12</sup>",
-      "7.25 × 10<sup style='font-size: 65%;'>−10</sup>",
-      "2.50 × 10<sup style='font-size: 65%;'>−13</sup>",
+      "1.62&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−9</sup>",
+      "2.32&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−6</sup>",
+      "9.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−12</sup>",
+      "7.25&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−10</sup>",
+      "2.50&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−13</sup>",
       "missing",
       "missing"
     )
@@ -191,11 +191,11 @@ test_that("Extraction of the table body works well", {
   expect_equal(
     tbl_body_1_4[["sci_2"]],
     c(
-      "5.20 × 10<sup style='font-size: 65%;'>13</sup>",
-      "1.40 × 10<sup style='font-size: 65%;'>7</sup>",
+      "5.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>13</sup>",
+      "1.40&nbsp;×&nbsp;10<sup style='font-size: 65%;'>7</sup>",
       "NA", "NA",
-      "3.20 × 10<sup style='font-size: 65%;'>3</sup>",
-      "6.26 × 10<sup style='font-size: 65%;'>9</sup>",
+      "3.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>3</sup>",
+      "6.26&nbsp;×&nbsp;10<sup style='font-size: 65%;'>9</sup>",
       "NA"
     )
   )
@@ -228,11 +228,11 @@ test_that("Extraction of the table body works well", {
   expect_equal(
     tbl_body_1_5[["sci_1"]],
     c(
-      "1.62 × 10<sup style='font-size: 65%;'>−9</sup>",
-      "2.32 × 10<sup style='font-size: 65%;'>−6</sup>",
-      "9.20 × 10<sup style='font-size: 65%;'>−12</sup>",
-      "7.25 × 10<sup style='font-size: 65%;'>−10</sup>",
-      "2.50 × 10<sup style='font-size: 65%;'>−13</sup>",
+      "1.62&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−9</sup>",
+      "2.32&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−6</sup>",
+      "9.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−12</sup>",
+      "7.25&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−10</sup>",
+      "2.50&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−13</sup>",
       "missing",
       "missing"
     )
@@ -240,11 +240,11 @@ test_that("Extraction of the table body works well", {
   expect_equal(
     tbl_body_1_5[["sci_2"]],
     c(
-      "5.20 × 10<sup style='font-size: 65%;'>13</sup>",
-      "1.40 × 10<sup style='font-size: 65%;'>7</sup>",
+      "5.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>13</sup>",
+      "1.40&nbsp;×&nbsp;10<sup style='font-size: 65%;'>7</sup>",
       "NA", "NA",
-      "3.20 × 10<sup style='font-size: 65%;'>3</sup>",
-      "6.26 × 10<sup style='font-size: 65%;'>9</sup>",
+      "3.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>3</sup>",
+      "6.26&nbsp;×&nbsp;10<sup style='font-size: 65%;'>9</sup>",
       "NA"
     )
   )
@@ -281,11 +281,11 @@ test_that("Extraction of the table body works well", {
   expect_equal(
     tbl_body_1_6[["sci_1"]],
     c(
-      "1.62 × 10<sup style='font-size: 65%;'>−9</sup>",
-      "2.32 × 10<sup style='font-size: 65%;'>−6</sup>",
-      "9.20 × 10<sup style='font-size: 65%;'>−12</sup>",
-      "7.25 × 10<sup style='font-size: 65%;'>−10</sup>",
-      "2.50 × 10<sup style='font-size: 65%;'>−13</sup>",
+      "1.62&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−9</sup>",
+      "2.32&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−6</sup>",
+      "9.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−12</sup>",
+      "7.25&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−10</sup>",
+      "2.50&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−13</sup>",
       "missing",
       "missing"
     )
@@ -293,11 +293,11 @@ test_that("Extraction of the table body works well", {
   expect_equal(
     tbl_body_1_6[["sci_2"]],
     c(
-      "5.20 × 10<sup style='font-size: 65%;'>13</sup>",
-      "1.40 × 10<sup style='font-size: 65%;'>7</sup>",
+      "5.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>13</sup>",
+      "1.40&nbsp;×&nbsp;10<sup style='font-size: 65%;'>7</sup>",
       "NA", "NA",
-      "3.20 × 10<sup style='font-size: 65%;'>3</sup>",
-      "6.26 × 10<sup style='font-size: 65%;'>9</sup>",
+      "3.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>3</sup>",
+      "6.26&nbsp;×&nbsp;10<sup style='font-size: 65%;'>9</sup>",
       "NA"
     )
   )
@@ -334,11 +334,11 @@ test_that("Extraction of the table body works well", {
   expect_equal(
     tbl_body_1_7[["sci_1"]],
     c(
-      "1.62 × 10<sup style='font-size: 65%;'>−9</sup>",
-      "2.32 × 10<sup style='font-size: 65%;'>−6</sup>",
-      "9.20 × 10<sup style='font-size: 65%;'>−12</sup>",
-      "7.25 × 10<sup style='font-size: 65%;'>−10</sup>",
-      "2.50 × 10<sup style='font-size: 65%;'>−13</sup>",
+      "1.62&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−9</sup>",
+      "2.32&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−6</sup>",
+      "9.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−12</sup>",
+      "7.25&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−10</sup>",
+      "2.50&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−13</sup>",
       "missing",
       "missing"
     )
@@ -346,11 +346,11 @@ test_that("Extraction of the table body works well", {
   expect_equal(
     tbl_body_1_7[["sci_2"]],
     c(
-      "5.20 × 10<sup style='font-size: 65%;'>13</sup>",
-      "1.40 × 10<sup style='font-size: 65%;'>7</sup>",
+      "5.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>13</sup>",
+      "1.40&nbsp;×&nbsp;10<sup style='font-size: 65%;'>7</sup>",
       "NA", "NA",
-      "3.20 × 10<sup style='font-size: 65%;'>3</sup>",
-      "6.26 × 10<sup style='font-size: 65%;'>9</sup>",
+      "3.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>3</sup>",
+      "6.26&nbsp;×&nbsp;10<sup style='font-size: 65%;'>9</sup>",
       "NA"
     )
   )
@@ -401,11 +401,11 @@ test_that("Extraction of the table body works well", {
   expect_equal(
     tbl_body_1_8[["sci_1"]],
     c(
-      "1.62 × 10<sup style='font-size: 65%;'>−9</sup>",
-      "2.32 × 10<sup style='font-size: 65%;'>−6</sup>",
-      "9.20 × 10<sup style='font-size: 65%;'>−12</sup>",
-      "7.25 × 10<sup style='font-size: 65%;'>−10</sup>",
-      "2.50 × 10<sup style='font-size: 65%;'>−13</sup>",
+      "1.62&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−9</sup>",
+      "2.32&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−6</sup>",
+      "9.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−12</sup>",
+      "7.25&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−10</sup>",
+      "2.50&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−13</sup>",
       "missing",
       "missing"
     )
@@ -413,11 +413,11 @@ test_that("Extraction of the table body works well", {
   expect_equal(
     tbl_body_1_8[["sci_2"]],
     c(
-      "5.20 × 10<sup style='font-size: 65%;'>13</sup>",
-      "1.40 × 10<sup style='font-size: 65%;'>7</sup>",
+      "5.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>13</sup>",
+      "1.40&nbsp;×&nbsp;10<sup style='font-size: 65%;'>7</sup>",
       "NA", "NA",
-      "3.20 × 10<sup style='font-size: 65%;'>3</sup>",
-      "6.26 × 10<sup style='font-size: 65%;'>9</sup>",
+      "3.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>3</sup>",
+      "6.26&nbsp;×&nbsp;10<sup style='font-size: 65%;'>9</sup>",
       "NA"
     )
   )
@@ -468,11 +468,11 @@ test_that("Extraction of the table body works well", {
   expect_equal(
     tbl_body_1_8_b[["sci_1"]],
     c(
-      "1.62 × 10<sup style='font-size: 65%;'>−9</sup>",
-      "2.32 × 10<sup style='font-size: 65%;'>−6</sup>",
-      "9.20 × 10<sup style='font-size: 65%;'>−12</sup>",
-      "7.25 × 10<sup style='font-size: 65%;'>−10</sup>",
-      "2.50 × 10<sup style='font-size: 65%;'>−13</sup>",
+      "1.62&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−9</sup>",
+      "2.32&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−6</sup>",
+      "9.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−12</sup>",
+      "7.25&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−10</sup>",
+      "2.50&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−13</sup>",
       "missing",
       "missing"
     )
@@ -480,11 +480,11 @@ test_that("Extraction of the table body works well", {
   expect_equal(
     tbl_body_1_8_b[["sci_2"]],
     c(
-      "5.20 × 10<sup style='font-size: 65%;'>13</sup>",
-      "1.40 × 10<sup style='font-size: 65%;'>7</sup>",
+      "5.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>13</sup>",
+      "1.40&nbsp;×&nbsp;10<sup style='font-size: 65%;'>7</sup>",
       "NA", "NA",
-      "3.20 × 10<sup style='font-size: 65%;'>3</sup>",
-      "6.26 × 10<sup style='font-size: 65%;'>9</sup>",
+      "3.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>3</sup>",
+      "6.26&nbsp;×&nbsp;10<sup style='font-size: 65%;'>9</sup>",
       "NA"
     )
   )
@@ -565,22 +565,22 @@ test_that("Extraction of the table body works well", {
   expect_equal(
     tbl_body_2_2[["sci_1"]],
     c(
-      "1.62 × 10<sup style='font-size: 65%;'>−9</sup>",
-      "2.32 × 10<sup style='font-size: 65%;'>−6</sup>",
-      "9.20 × 10<sup style='font-size: 65%;'>−12</sup>",
-      "7.25 × 10<sup style='font-size: 65%;'>−10</sup>",
-      "2.50 × 10<sup style='font-size: 65%;'>−13</sup>",
+      "1.62&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−9</sup>",
+      "2.32&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−6</sup>",
+      "9.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−12</sup>",
+      "7.25&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−10</sup>",
+      "2.50&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−13</sup>",
       NA, NA
     )
   )
   expect_equal(
     tbl_body_2_2[["sci_2"]],
     c(
-      "5.20 × 10<sup style='font-size: 65%;'>13</sup>",
-      "1.40 × 10<sup style='font-size: 65%;'>7</sup>",
+      "5.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>13</sup>",
+      "1.40&nbsp;×&nbsp;10<sup style='font-size: 65%;'>7</sup>",
       NA, NA,
-      "3.20 × 10<sup style='font-size: 65%;'>3</sup>",
-      "6.26 × 10<sup style='font-size: 65%;'>9</sup>",
+      "3.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>3</sup>",
+      "6.26&nbsp;×&nbsp;10<sup style='font-size: 65%;'>9</sup>",
       NA
     )
   )
@@ -612,11 +612,11 @@ test_that("Extraction of the table body works well", {
   expect_equal(
     tbl_body_2_3[["sci_1"]],
     c(
-      "1.62 × 10<sup style='font-size: 65%;'>−9</sup>",
-      "2.32 × 10<sup style='font-size: 65%;'>−6</sup>",
-      "9.20 × 10<sup style='font-size: 65%;'>−12</sup>",
-      "7.25 × 10<sup style='font-size: 65%;'>−10</sup>",
-      "2.50 × 10<sup style='font-size: 65%;'>−13</sup>",
+      "1.62&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−9</sup>",
+      "2.32&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−6</sup>",
+      "9.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−12</sup>",
+      "7.25&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−10</sup>",
+      "2.50&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−13</sup>",
       "missing",
       "missing"
     )
@@ -624,11 +624,11 @@ test_that("Extraction of the table body works well", {
   expect_equal(
     tbl_body_2_3[["sci_2"]],
     c(
-      "5.20 × 10<sup style='font-size: 65%;'>13</sup>",
-      "1.40 × 10<sup style='font-size: 65%;'>7</sup>",
+      "5.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>13</sup>",
+      "1.40&nbsp;×&nbsp;10<sup style='font-size: 65%;'>7</sup>",
       NA, NA,
-      "3.20 × 10<sup style='font-size: 65%;'>3</sup>",
-      "6.26 × 10<sup style='font-size: 65%;'>9</sup>",
+      "3.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>3</sup>",
+      "6.26&nbsp;×&nbsp;10<sup style='font-size: 65%;'>9</sup>",
       NA
     )
   )
@@ -662,11 +662,11 @@ test_that("Extraction of the table body works well", {
   expect_equal(
     tbl_body_2_4[["sci_1"]],
     c(
-      "1.62 × 10<sup style='font-size: 65%;'>−9</sup>",
-      "2.32 × 10<sup style='font-size: 65%;'>−6</sup>",
-      "9.20 × 10<sup style='font-size: 65%;'>−12</sup>",
-      "7.25 × 10<sup style='font-size: 65%;'>−10</sup>",
-      "2.50 × 10<sup style='font-size: 65%;'>−13</sup>",
+      "1.62&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−9</sup>",
+      "2.32&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−6</sup>",
+      "9.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−12</sup>",
+      "7.25&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−10</sup>",
+      "2.50&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−13</sup>",
       "missing",
       "missing"
     )
@@ -674,11 +674,11 @@ test_that("Extraction of the table body works well", {
   expect_equal(
     tbl_body_2_4[["sci_2"]],
     c(
-      "5.20 × 10<sup style='font-size: 65%;'>13</sup>",
-      "1.40 × 10<sup style='font-size: 65%;'>7</sup>",
+      "5.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>13</sup>",
+      "1.40&nbsp;×&nbsp;10<sup style='font-size: 65%;'>7</sup>",
       "NA", "NA",
-      "3.20 × 10<sup style='font-size: 65%;'>3</sup>",
-      "6.26 × 10<sup style='font-size: 65%;'>9</sup>",
+      "3.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>3</sup>",
+      "6.26&nbsp;×&nbsp;10<sup style='font-size: 65%;'>9</sup>",
       "NA"
     )
   )
@@ -711,11 +711,11 @@ test_that("Extraction of the table body works well", {
   expect_equal(
     tbl_body_2_5[["sci_1"]],
     c(
-      "1.62 × 10<sup style='font-size: 65%;'>−9</sup>",
-      "2.32 × 10<sup style='font-size: 65%;'>−6</sup>",
-      "9.20 × 10<sup style='font-size: 65%;'>−12</sup>",
-      "7.25 × 10<sup style='font-size: 65%;'>−10</sup>",
-      "2.50 × 10<sup style='font-size: 65%;'>−13</sup>",
+      "1.62&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−9</sup>",
+      "2.32&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−6</sup>",
+      "9.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−12</sup>",
+      "7.25&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−10</sup>",
+      "2.50&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−13</sup>",
       "missing",
       "missing"
     )
@@ -723,11 +723,11 @@ test_that("Extraction of the table body works well", {
   expect_equal(
     tbl_body_2_5[["sci_2"]],
     c(
-      "5.20 × 10<sup style='font-size: 65%;'>13</sup>",
-      "1.40 × 10<sup style='font-size: 65%;'>7</sup>",
+      "5.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>13</sup>",
+      "1.40&nbsp;×&nbsp;10<sup style='font-size: 65%;'>7</sup>",
       "NA", "NA",
-      "3.20 × 10<sup style='font-size: 65%;'>3</sup>",
-      "6.26 × 10<sup style='font-size: 65%;'>9</sup>",
+      "3.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>3</sup>",
+      "6.26&nbsp;×&nbsp;10<sup style='font-size: 65%;'>9</sup>",
       "NA"
     )
   )
@@ -773,23 +773,23 @@ test_that("Extraction of the table body works well", {
   expect_equal(
     tbl_body_2_6[["sci_1"]],
     c(
-      "1.62 × 10<sup style='font-size: 65%;'>−9</sup>",
-      "2.32 × 10<sup style='font-size: 65%;'>−6</sup>",
-      "2.50 × 10<sup style='font-size: 65%;'>−13</sup>",
+      "1.62&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−9</sup>",
+      "2.32&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−6</sup>",
+      "2.50&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−13</sup>",
       "missing",
-      "9.20 × 10<sup style='font-size: 65%;'>−12</sup>",
-      "7.25 × 10<sup style='font-size: 65%;'>−10</sup>",
+      "9.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−12</sup>",
+      "7.25&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−10</sup>",
       "missing"
     )
   )
   expect_equal(
     tbl_body_2_6[["sci_2"]],
     c(
-      "5.20 × 10<sup style='font-size: 65%;'>13</sup>",
-      "1.40 × 10<sup style='font-size: 65%;'>7</sup>",
-      "3.20 × 10<sup style='font-size: 65%;'>3</sup>",
+      "5.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>13</sup>",
+      "1.40&nbsp;×&nbsp;10<sup style='font-size: 65%;'>7</sup>",
+      "3.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>3</sup>",
       "NA", "NA",
-      "NA", "6.26 × 10<sup style='font-size: 65%;'>9</sup>"
+      "NA", "6.26&nbsp;×&nbsp;10<sup style='font-size: 65%;'>9</sup>"
     )
   )
   expect_equal(
@@ -834,23 +834,23 @@ test_that("Extraction of the table body works well", {
   expect_equal(
     tbl_body_2_7[["sci_1"]],
     c(
-      "1.62 × 10<sup style='font-size: 65%;'>−9</sup>",
-      "2.32 × 10<sup style='font-size: 65%;'>−6</sup>",
-      "2.50 × 10<sup style='font-size: 65%;'>−13</sup>",
+      "1.62&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−9</sup>",
+      "2.32&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−6</sup>",
+      "2.50&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−13</sup>",
       "missing",
-      "9.20 × 10<sup style='font-size: 65%;'>−12</sup>",
-      "7.25 × 10<sup style='font-size: 65%;'>−10</sup>",
+      "9.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−12</sup>",
+      "7.25&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−10</sup>",
       "missing"
     )
   )
   expect_equal(
     tbl_body_2_7[["sci_2"]],
     c(
-      "5.20 × 10<sup style='font-size: 65%;'>13</sup>",
-      "1.40 × 10<sup style='font-size: 65%;'>7</sup>",
-      "3.20 × 10<sup style='font-size: 65%;'>3</sup>",
+      "5.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>13</sup>",
+      "1.40&nbsp;×&nbsp;10<sup style='font-size: 65%;'>7</sup>",
+      "3.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>3</sup>",
       "NA", "NA",
-      "NA", "6.26 × 10<sup style='font-size: 65%;'>9</sup>"
+      "NA", "6.26&nbsp;×&nbsp;10<sup style='font-size: 65%;'>9</sup>"
     )
   )
   expect_equal(
@@ -902,23 +902,23 @@ test_that("Extraction of the table body works well", {
   expect_equal(
     tbl_body_2_8[["sci_1"]],
     c(
-      "1.62 × 10<sup style='font-size: 65%;'>−9</sup>",
-      "2.32 × 10<sup style='font-size: 65%;'>−6</sup>",
-      "2.50 × 10<sup style='font-size: 65%;'>−13</sup>",
+      "1.62&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−9</sup>",
+      "2.32&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−6</sup>",
+      "2.50&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−13</sup>",
       "missing",
-      "9.20 × 10<sup style='font-size: 65%;'>−12</sup>",
-      "7.25 × 10<sup style='font-size: 65%;'>−10</sup>",
+      "9.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−12</sup>",
+      "7.25&nbsp;×&nbsp;10<sup style='font-size: 65%;'>−10</sup>",
       "missing"
     )
   )
   expect_equal(
     tbl_body_2_8[["sci_2"]],
     c(
-      "5.20 × 10<sup style='font-size: 65%;'>13</sup>",
-      "1.40 × 10<sup style='font-size: 65%;'>7</sup>",
-      "3.20 × 10<sup style='font-size: 65%;'>3</sup>",
+      "5.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>13</sup>",
+      "1.40&nbsp;×&nbsp;10<sup style='font-size: 65%;'>7</sup>",
+      "3.20&nbsp;×&nbsp;10<sup style='font-size: 65%;'>3</sup>",
       "NA", "NA",
-      "NA", "6.26 × 10<sup style='font-size: 65%;'>9</sup>"
+      "NA", "6.26&nbsp;×&nbsp;10<sup style='font-size: 65%;'>9</sup>"
     )
   )
   expect_equal(
