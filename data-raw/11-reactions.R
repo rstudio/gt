@@ -203,4 +203,6 @@ reactions <-
   dplyr::relocate(cl_uncert, .before = cl_u_fac) %>%
   dplyr::select(-cmpd_type, -cmpd_no, -cmpd_struct_fml, -starts_with("feat")) %>%
   dplyr::rename(cmpd_name = cmpd_primary_name) %>%
-  dplyr::relocate(cmpd_mwt, cmpd_atomic_fml, cmpd_desc, .after = cmpd_name)
+  dplyr::rename(cmpd_formula = cmpd_atomic_fml) %>%
+  dplyr::rename(cmpd_type = cmpd_desc) %>%
+  dplyr::relocate(cmpd_mwt, cmpd_formula, cmpd_type, .after = cmpd_name)
