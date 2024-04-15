@@ -824,7 +824,7 @@ context_exp_marks <- function(context) {
 
   switch(
     context,
-    html = c(" \U000D7 10<sup style='font-size: 65%;'>", "</sup>"),
+    html = c("&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>", "</sup>"),
     latex = c(" $\\times$ 10\\textsuperscript{", "}"),
     rtf = c(" \\'d7 10{\\super ", "}"),
     word = c(" \U000D7 10^", ""),
