@@ -1,5 +1,5 @@
 pandoc: 3.1.11
-pkgdown: 2.0.7
+pkgdown: 2.0.8
 pkgdown_sha: ~
 articles:
   case-study-clinical-tables: case-study-clinical-tables.html
@@ -7,7 +7,7 @@ articles:
   creating-summary-lines: creating-summary-lines.html
   gt-datasets: gt-datasets.html
   gt: gt.html
-last_built: 2024-03-09T18:17Z
+last_built: 2024-04-15T20:19Z
 urls:
   reference: https://gt.rstudio.com/reference
   article: https://gt.rstudio.com/articles
