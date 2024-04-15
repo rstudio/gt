@@ -67,9 +67,9 @@ With \code{vec_fmt_markdown()} we can easily convert these to different output t
 like HTML
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vec_fmt_markdown(text_vec, output = "html")
-#> [1] "<p>This <strong>is</strong> <em>Markdown</em>.</p>"                                                                                                                                                                                                               
-#> [2] "<p>Info on Markdown syntax can be found\\n<a href=\\"https://daringfireball.net/projects/markdown/\\">here</a>.</p>"                                                                                                                                                 
-#> [3] "<p>The <strong>gt</strong> package has these datasets:</p>\\n<ul>\\n<li><code>countrypops</code></li>\\n<li><code>sza</code></li>\\n<li><code>gtcars</code></li>\\n<li><code>sp500</code></li>\\n<li><code>pizzaplace</code></li>\\n<li><code>exibble</code></li>\\n</ul>"
+#> [1] "This <strong>is</strong> <em>Markdown</em>.</span>"                                                                                                                                                                                                            
+#> [2] "Info on Markdown syntax can be found\\n<a href=\\"https://daringfireball.net/projects/markdown/\\">here</a>.</span>"                                                                                                                                              
+#> [3] "The <strong>gt</strong> package has these datasets:</p>\\n<ul>\\n<li><code>countrypops</code></li>\\n<li><code>sza</code></li>\\n<li><code>gtcars</code></li>\\n<li><code>sp500</code></li>\\n<li><code>pizzaplace</code></li>\\n<li><code>exibble</code></li>\\n</ul>"
 }\if{html}{\out{</div>}}
 
 or LaTeX

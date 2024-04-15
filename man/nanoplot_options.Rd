@@ -12,6 +12,7 @@ nanoplot_options(
   data_line_type = NULL,
   data_line_stroke_color = NULL,
   data_line_stroke_width = NULL,
+  data_area_fill_color = NULL,
   data_bar_stroke_color = NULL,
   data_bar_stroke_width = NULL,
   data_bar_fill_color = NULL,
@@ -41,7 +42,7 @@ nanoplot_options(
 
 \verb{scalar<numeric>|vector<numeric>} // \emph{default:} \code{NULL} (\code{optional})
 
-Th \code{data_point_radius} option lets you set the radius for each of the data
+The \code{data_point_radius} option lets you set the radius for each of the data
 points. By default this is set to \code{10}. Individual radius values can be
 set by using a vector of numeric values; however, the vector provided must
 match the number of data points.}
@@ -98,6 +99,14 @@ option.}
 The width of the connecting data line can be modified with the
 \code{data_line_stroke_width} option. By default, a value of \code{4} (as in '4px')
 is used.}
+
+\item{data_area_fill_color}{\emph{Fill color for the data-point-bounded area}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+The fill color for the area that bounds the data points in line plot. The
+default is \code{"#FF0000"} (\code{"red"}) but can be changed by providing a color
+value to \code{data_area_fill_color}.}
 
 \item{data_bar_stroke_color}{\emph{Color of a data bar's outside line}
 

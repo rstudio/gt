@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -29,7 +29,7 @@ generate_nanoplot <- function(
     x_vals = NULL,
     expand_x = NULL,
     expand_y = NULL,
-    missing_vals = c("gap", "zero", "remove"),
+    missing_vals = c("gap", "marker", "zero", "remove"),
     all_y_vals = NULL,
     all_single_y_vals = NULL,
     plot_type = c("line", "bar"),
@@ -44,6 +44,7 @@ generate_nanoplot <- function(
     data_point_fill_color = "#FF0000",
     data_line_stroke_color = "#4682B4",
     data_line_stroke_width = 8,
+    data_area_fill_color = "#FF0000",
     data_bar_stroke_color = "#3290CC",
     data_bar_stroke_width = 4,
     data_bar_fill_color = "#3FB5FF",
@@ -753,13 +754,9 @@ generate_nanoplot <- function(
 
   #
   # Ensure that certain options have their lengths checked and
-  # expanded to length `num_y_vals`
+  # expanded to length `num_y_vals`; these are: (1) all `data_point_*`
+  # options, and (2) three `data_bar_*` options
   #
-
-  # - `data_point_radius`
-  # - `data_point_stroke_color`
-  # - `data_point_stroke_width `
-  # - `data_point_fill_color`
 
   data_point_radius <- normalize_option_vector(data_point_radius, num_y_vals)
   data_point_stroke_color <- normalize_option_vector(data_point_stroke_color, num_y_vals)
@@ -894,7 +891,7 @@ generate_nanoplot <- function(
 
       if (is.na(data_y_points[i])) {
 
-        if (missing_vals == "gap") {
+        if (missing_vals == "marker") {
 
           # Create a symbol that should denote that a
           # missing value is present
@@ -904,7 +901,7 @@ generate_nanoplot <- function(
               "cx=\"", data_x_points[i], "\" ",
               "cy=\"", safe_y_d + (data_y_height / 2), "\" ",
               "r=\"", data_point_radius_i + (data_point_radius_i / 2), "\" ",
-              "stroke=\"red\" ",
+              "stroke=\"", "red", "\" ",
               "stroke-width=\"", data_point_stroke_width_i, "\" ",
               "fill=\"white\" ",
               ">",
@@ -955,7 +952,7 @@ generate_nanoplot <- function(
 
       if (is.na(data_y_points[i])) {
 
-        if (missing_vals == "gap") {
+        if (missing_vals == "marker") {
 
           # Create a symbol that should denote that a
           # missing value is present
@@ -1856,7 +1853,7 @@ generate_nanoplot <- function(
         paste0(
           "<path class=\"pattern-line\" ",
           "d=\"M 0,8 l 8,-8 M -1,1 l 4,-4 M 6,10 l 4,-4\" ",
-          "stroke=\"red\" ",
+          "stroke=\"", data_area_fill_color, "\" ",
           "stroke-width=\"1.5\" ",
           "stroke-linecap=\"round\" ",
           "shape-rendering=\"geometricPrecision\"",

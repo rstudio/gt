@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -29,9 +29,9 @@
 #' It's possible to add new rows to your table with `rows_add()` by supplying
 #' the new row data through name-value pairs or two-sided formula expressions.
 #' The new rows are added to the bottom of the table by default but can be added
-#' internally though by using either the `.before` or `.after` arguments. If
-#' entirely empty rows need to be added, the `.n_empty` option provides a means
-#' to specify the number of blank (i.e., all `NA`) rows to be inserted into the
+#' internally by using either the `.before` or `.after` arguments. If entirely
+#' empty rows need to be added, the `.n_empty` option provides a means to
+#' specify the number of blank (i.e., all `NA`) rows to be inserted into the
 #' table.
 #'
 #' @param .data *The gt table data object*

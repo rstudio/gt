@@ -121,8 +121,9 @@ test_that("Extraction of table cells works well", {
       fmt_fraction(columns = a, layout = "diagonal") %>%
       extract_cells(columns = a, output = "latex"),
     c(
-      "${{}^{1}\\!/_{9}}$", "${{}^{2}\\!/_{7}}$", "${{}^{8}\\!/_{9}}$",
-      "$-1\\, {{}^{2}\\!/_{7}}$", "$-2\\, {{}^{2}\\!/_{9}}$"
+      "\\textsuperscript{1}\\!/\\textsubscript{9}", "\\textsuperscript{2}\\!/\\textsubscript{7}",
+      "\\textsuperscript{8}\\!/\\textsubscript{9}", "-1\\textsuperscript{2}\\!/\\textsubscript{7}",
+      "-2\\textsuperscript{2}\\!/\\textsubscript{9}"
     )
   )
   expect_equal(
@@ -180,8 +181,8 @@ test_that("Extraction of table cells works well", {
       fmt_markdown(columns = a) %>%
       extract_cells(columns = a, output = "html"),
     c(
-      "<div class='gt_from_md'><p><em>hey</em></p>\n</div>",
-      "<div class='gt_from_md'><p><strong>there</strong></p>\n</div>"
+      "<span class='gt_from_md'><em>hey</em></span>",
+      "<span class='gt_from_md'><strong>there</strong></span>"
     )
   )
   expect_equal(

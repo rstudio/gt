@@ -320,10 +320,10 @@ test_that("The `from_column()` helper works correctly", {
        render_formats_test("latex")
     )[["num"]],
     c(
-      "$+1.11 \\times 10^{+4}$", "$+4.44 \\times 10^{+5}$",
-      "$+1.00 \\times 10^{+7}$", "$+1.78 \\times 10^{+8}$",
-      "$2.78 \\times 10^{9}$", "NA", "$5.44 \\times 10^{11}$",
-      "$7.10 \\times 10^{12}$"
+      "+1.11 $\\times$ 10\\textsuperscript{+4}", "+4.44 $\\times$ 10\\textsuperscript{+5}",
+      "+1.00 $\\times$ 10\\textsuperscript{+7}", "+1.78 $\\times$ 10\\textsuperscript{+8}",
+      "2.78 $\\times$ 10\\textsuperscript{9}", "NA", "5.44 $\\times$ 10\\textsuperscript{11}",
+      "7.10 $\\times$ 10\\textsuperscript{12}"
     )
   )
 
@@ -339,10 +339,10 @@ test_that("The `from_column()` helper works correctly", {
        render_formats_test("latex")
     )[["num"]],
     c(
-      "$+11.11 \\times 10^{+3}$", "$+444.40 \\times 10^{+3}$",
-      "$+10.00 \\times 10^{+6}$", "$+177.76 \\times 10^{+6}$",
-      "$2.77 \\times 10^{9}$", "NA", "$543.90 \\times 10^{9}$",
-      "$7.10 \\times 10^{12}$"
+      "+11.11 $\\times$ 10\\textsuperscript{+3}", "+444.40 $\\times$ 10\\textsuperscript{+3}",
+      "+10.00 $\\times$ 10\\textsuperscript{+6}", "+177.76 $\\times$ 10\\textsuperscript{+6}",
+      "2.77 $\\times$ 10\\textsuperscript{9}", "NA", "543.90 $\\times$ 10\\textsuperscript{9}",
+      "7.10 $\\times$ 10\\textsuperscript{12}"
     )
   )
 
@@ -541,14 +541,14 @@ test_that("The `from_column()` helper works correctly", {
        render_formats_test("html")
     )[["url"]],
     c(
-      "<a href=\"https://addingtonhighlands.ca\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">apricot</a>",
-      "<a href=\"https://adelaidemetcalfe.on.ca\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">banana</a>",
-      "<a href=\"https://www.adjtos.ca\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">coconut</a>",
-      "<a href=\"https://admastonbromley.com\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">durian</a>",
-      "<a href=\"https://www.ajax.ca\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">missing</a>",
-      "<a href=\"https://alberton.ca\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">fig</a>",
-      "<a href=\"https://www.alfred-plantagenet.com\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">grapefruit</a>",
-      "<a href=\"https://www.algonquinhighlands.ca\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">honeydew</a>"
+      "<span style=\"white-space: pre;\"><a href=\"https://addingtonhighlands.ca\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">apricot</a></span>",
+      "<span style=\"white-space: pre;\"><a href=\"https://adelaidemetcalfe.on.ca\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">banana</a></span>",
+      "<span style=\"white-space: pre;\"><a href=\"https://www.adjtos.ca\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">coconut</a></span>",
+      "<span style=\"white-space: pre;\"><a href=\"https://admastonbromley.com\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">durian</a></span>",
+      "<span style=\"white-space: pre;\"><a href=\"https://www.ajax.ca\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">missing</a></span>",
+      "<span style=\"white-space: pre;\"><a href=\"https://alberton.ca\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">fig</a></span>",
+      "<span style=\"white-space: pre;\"><a href=\"https://www.alfred-plantagenet.com\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">grapefruit</a></span>",
+      "<span style=\"white-space: pre;\"><a href=\"https://www.algonquinhighlands.ca\" target=\"_blank\" style=\"color:#008B8B;text-decoration:underline;text-underline-position: under;display: inline-block;\">honeydew</a></span>"
     )
   )
 })

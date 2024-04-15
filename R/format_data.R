@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -1164,14 +1164,14 @@ fmt_integer <- function(
 #' }}
 #'
 #' The [`constants`] table contains a plethora of data on the fundamental
-#' physical constant and most values (in the units used) are either very small
-#' or very large, so scientific formatting is suitable. The values differ in the
-#' degree of measurement precision and separate columns (`sf_value` and
-#' `sf_uncert`) contain the exact number of significant figures for each
-#' measurement value and the associated uncertainty value. We can use the
+#' physical constants and values range from very small to very large, warranting
+#' the use of figures in scientific notation. Because the values differ in the
+#' degree of measurement precision, the dataset has columns (`sf_value` and
+#' `sf_uncert`) that include the number of significant figures for each
+#' measurement value and for the associated uncertainty. We can use the
 #' `n_sigfig` argument of `fmt_scientific()` in conjunction with the
-#' [from_column()] helper to get the correct number of significant digits for
-#' each value.
+#' [from_column()] helper to format each value and its uncertainty to the proper
+#' number of significant digits.
 #'
 #' ```r
 #' constants |>
@@ -3446,8 +3446,8 @@ fmt_fraction <- function(
 
             x_str[has_a_fraction] <-
               paste0(
-                gsub(" ", "\\\\, ", non_fraction_part),
-                paste0("{{}^{", num_vec, "}\\!/_{", denom_vec, "}}")
+                gsub(" ", "", non_fraction_part),
+                paste0("\\textsuperscript{", num_vec, "}\\!/\\textsubscript{", denom_vec, "}")
               )
 
           } else if (context == "rtf") {
@@ -9295,12 +9295,14 @@ fmt_url <- function(
 
         x_str_non_missing <-
           paste0(
+            "<span style=\"white-space: pre;\">",
             "<a",
             " href=\"", x_str_non_missing, "\"",
             anchor_attr,
             ">",
             label_str,
-            "</a>"
+            "</a>",
+            "</span>"
           )
 
         x_str[!is.na(x)] <- x_str_non_missing
@@ -9449,14 +9451,15 @@ fmt_url <- function(
 #' Using a small portion of [`metro`] dataset, let's create a **gt** table. We
 #' will only include a few columns and rows from that table. The `lines` and
 #' `connect_rer` columns have comma-separated listings of numbers/letters
-#' (corresponding to lines served at each station). We have a directory SVG
-#' graphics for all of these lines in the package (the path for the image
-#' directory can be accessed via `system.file("metro_svg", package = "gt")`),
-#' and the filenames roughly correspond to the data in those two columns. The
-#' `fmt_image()` function can be used with these inputs since the `path` and
-#' `file_pattern` arguments allow us to compose complete and valid file
-#' locations. What you get from this are sequences of images in the table cells,
-#' taken from the referenced graphics files on disk.
+#' (corresponding to lines served at each station). We have a directory of SVG
+#' graphics for all of these lines within the package (the path for the
+#' directory containing the images can be accessed via
+#' `system.file("metro_svg", package = "gt")`), and the filenames roughly
+#' correspond to the data in those two columns. The `fmt_image()` function can
+#' be used with these inputs since the `path` and `file_pattern` arguments allow
+#' us to compose complete and valid file locations. What you get from all of
+#' this are sequences of images in the table cells, taken from the referenced
+#' graphics files on disk.
 #'
 #' ```r
 #' metro |>
@@ -11001,6 +11004,84 @@ fmt_icon <- function(
 #' `r man_get_image_tag(file = "man_fmt_markdown_1.png")`
 #' }}
 #'
+#' The `fmt_markdown()` function can also handle LaTeX math formulas enclosed
+#' in `"$..$"` (inline math) and also `"$$..$$"` (display math). The following
+#' table has body cells that contain mathematical formulas in display mode
+#' (i.e., the formulas are surrounded by `"$$"`). Further to this, math can be
+#' used within [md()] wherever there is the possibility to insert text into the
+#' table (e.g., with [cols_label()], [tab_header()], etc.).
+#'
+#' ```r
+#' dplyr::tibble(
+#'   idx = 1:5,
+#'   l_time_domain =
+#'     c(
+#'       "$$1$$",
+#'       "$${{\\bf{e}}^{a\\,t}}$$",
+#'       "$${t^n},\\,\\,\\,\\,\\,n = 1,2,3, \\ldots$$",
+#'       "$${t^p}, p > -1$$",
+#'       "$$\\sqrt t$$"
+#'     ),
+#'   l_laplace_s_domain =
+#'     c(
+#'       "$$\\frac{1}{s}$$",
+#'       "$$\\frac{1}{{s - a}}$$",
+#'       "$$\\frac{{n!}}{{{s^{n + 1}}}}$$",
+#'       "$$\\frac{{\\Gamma \\left( {p + 1} \\right)}}{{{s^{p + 1}}}}$$",
+#'       "$$\\frac{{\\sqrt \\pi }}{{2{s^{\\frac{3}{2}}}}}$$"
+#'     )
+#' ) |>
+#'   gt(rowname_col = "idx") |>
+#'   fmt_markdown() |>
+#'   cols_label(
+#'     l_time_domain = md(
+#'       "Time Domain<br/>$\\small{f\\left( t \\right) =
+#'       {\\mathcal{L}^{\\,\\, - 1}}\\left\\{ {F\\left( s \\right)} \\right\\}}$"
+#'     ),
+#'     l_laplace_s_domain = md(
+#'       "$s$ Domain<br/>$\\small{F\\left( s \\right) =
+#'       \\mathcal{L}\\left\\{ {f\\left( t \\right)} \\right\\}}$"
+#'     )
+#'   ) |>
+#'   tab_header(
+#'     title = md(
+#'       "A (Small) Table of Laplace Transforms &mdash; $\\small{{\\mathcal{L}}}$"
+#'     ),
+#'     subtitle = md(
+#'       "Five commonly used Laplace transforms and formulas.<br/><br/>"
+#'     )
+#'   ) |>
+#'   cols_align(align = "center") |>
+#'   opt_align_table_header(align = "left") |>
+#'   cols_width(
+#'     idx ~ px(50),
+#'     l_time_domain ~ px(300),
+#'     l_laplace_s_domain ~ px(600)
+#'   ) |>
+#'   opt_stylize(
+#'     style = 2,
+#'     color = "gray",
+#'     add_row_striping = FALSE
+#'   ) |>
+#'   opt_table_outline(style = "invisible") %>%
+#'   tab_style(
+#'     style = cell_fill(color = "gray95"),
+#'     locations = cells_body(columns = l_time_domain)
+#'   ) |>
+#'   tab_options(
+#'     heading.title.font.size = px(32),
+#'     heading.subtitle.font.size = px(18),
+#'     heading.padding = px(0),
+#'     footnotes.multiline = FALSE,
+#'     column_labels.border.lr.style = "solid",
+#'     column_labels.border.lr.width = px(1)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_markdown_2.png")`
+#' }}
+#'
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-23
@@ -11086,7 +11167,7 @@ fmt_markdown <- function(
     rows = {{ rows }},
     fns = list(
       html = function(x) {
-        md_to_html(x, md_engine = md_engine)
+        process_text(md(x), context = "html")
       },
       latex = function(x) {
         markdown_to_latex(x, md_engine = md_engine)
@@ -11119,7 +11200,7 @@ fmt_markdown <- function(
 #' We can format values with the `fmt_passthrough()` function, which does little
 #' more than: (1) coercing to `character` (as all the `fmt_*()` functions do),
 #' and (2) applying decorator text via the `pattern` argument (the default is to
-#' apply nothing). This foramtting function is useful when don't want to modify
+#' apply nothing). This formatting function is useful when don't want to modify
 #' the input data other than to decorate it within a pattern.
 #'
 #' @inheritParams fmt_number

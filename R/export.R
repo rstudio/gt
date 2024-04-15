@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -725,19 +725,25 @@ as_latex <- function(data) {
     latex_packages <- NULL
   }
 
-  table_width_bookends <- derive_table_width_bookends(data = data)
+  table_width_statement <- derive_table_width_statement_l(data = data)
+
+  # Allow user to set a font-size
+  fontsize_statement <- create_fontsize_statement_l(data = data)
+
 
   # Compose the LaTeX table
   knitr::asis_output(
     paste0(
-      table_width_bookends[1L],
+      "\\begingroup\n",
+      table_width_statement,
+      fontsize_statement,
       table_start,
       heading_component,
       columns_component,
       body_component,
       table_end,
       footer_component,
-      table_width_bookends[2L],
+      "\\endgroup\n",
       collapse = ""
     ),
     meta = latex_packages
@@ -1612,3 +1618,4 @@ extract_cells <- function(
 
   out_vec
 }
+

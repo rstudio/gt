@@ -45,3 +45,4 @@ docs
 *.html
 *.qmd
 /*.docx
+tests/testthat/Rplots.pdf

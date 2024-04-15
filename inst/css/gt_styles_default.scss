@@ -430,4 +430,9 @@
   .gt_indent_5 {
     text-indent: $stub_indent_length * 5;
   }
+
+  .katex-display {
+    display: inline-flex !important;
+    margin-bottom: 0.75em !important;
+  }
 }

@@ -1102,7 +1102,7 @@ test_that("Footnotes are correctly placed with text produced by `fmt_markdown()`
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("[class='gt_row gt_left']") %>%
-    expect_equal(paste0("1", "\U000A0", "apricot\n"))
+    expect_equal(paste0("1", "\U000A0", "apricot"))
 
   exibble[1, 2] %>%
     gt() %>%

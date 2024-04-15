@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -3788,8 +3788,8 @@ vec_fmt_markdown <- function(
     )
 
   if (output == "html") {
-    vec_fmt_out <- gsub("^<div class='gt_from_md'>(.*)", "\\1", vec_fmt_out)
-    vec_fmt_out <- gsub("(.*)\n</div>", "\\1", vec_fmt_out)
+    vec_fmt_out <- gsub("^<span class='gt_from_md'>(.*)", "\\1", vec_fmt_out)
+    vec_fmt_out <- gsub("(.*)\n</span>", "\\1", vec_fmt_out)
   }
 
   vec_fmt_out

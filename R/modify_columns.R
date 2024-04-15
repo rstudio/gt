@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -2234,13 +2234,15 @@ cols_add <- function(
 #'
 #' @param missing_vals *Treatment of missing values*
 #'
-#'   `singl-kw:[gap|zero|remove]` // *default:* `"gap"`
+#'   `singl-kw:[gap|marker|zero|remove]` // *default:* `"gap"`
 #'
 #'   If missing values are encountered within the input data, there are three
-#'   strategies available for their handling: (1) `"gap"` will display data gaps
-#'   at the sites of missing data, where data lines will have discontinuities;
-#'   (2) `"zero"` will replace `NA` values with zero values; and (3) `"remove"`
-#'   will remove any incoming `NA` values.
+#'   strategies available for their handling: (1) `"gap"` will show data gaps
+#'   at the sites of missing data, where data lines will have discontinuities
+#'   and bar plots will have missing bars; (2) `"marker"` will behave like
+#'   `"gap"` but show prominent visual marks at the missing data locations; (3)
+#'   `"zero"` will replace `NA` values with zero values; and (4) `"remove"` will
+#'   remove any incoming `NA` values.
 #'
 #' @param autoscale *Automatically set x- and y-axis scale limits based on data*
 #'
@@ -2251,6 +2253,16 @@ cols_add <- function(
 #'   will result in a shared scale across all of the nanoplots (for *y*- and
 #'   *x*-axis data), which is useful in those cases where the nanoplot data
 #'   should be compared across rows.
+#'
+#' @param autohide *Automatically hide the `columns`/`columns_x_vals` column(s)*
+#'
+#'   `scalar<logical>` // *default:* `TRUE`
+#'
+#'   An option to automatically hide any columns specified in `columns` and also
+#'   `columns_x_vals` (if used). Any columns with their state changed to
+#'   'hidden' will behave the same as before, they just won't be displayed in
+#'   the finalized table. Should you want to have these 'input' columns be
+#'   viewable, set `autohide = FALSE`.
 #'
 #' @param columns_x_vals *Columns containing values for the optional x variable*
 #'
@@ -2428,7 +2440,7 @@ cols_add <- function(
 #'   gt(rowname_col = "test") |>
 #'   tab_header("Partial summary of daily tests performed on YF patient") |>
 #'   tab_stubhead(label = md("**Test**")) |>
-#'   cols_hide(columns = c(starts_with("norm"), starts_with("day"))) |>
+#'   cols_hide(columns = starts_with("norm")) |>
 #'   fmt_units(columns = units) |>
 #'   cols_nanoplot(
 #'     columns = starts_with("day"),
@@ -2472,6 +2484,7 @@ cols_add <- function(
 #'   cols_nanoplot(
 #'     columns = c(chicken, classic, supreme, veggie),
 #'     plot_type = "bar",
+#'     autohide = FALSE,
 #'     new_col_name = "pizzas_sold",
 #'     new_col_label = "Sales by Type",
 #'     options = nanoplot_options(
@@ -2512,12 +2525,14 @@ cols_add <- function(
 #'   cols_nanoplot(
 #'     columns = starts_with("population"),
 #'     reference_line = "median",
+#'     autohide = FALSE,
 #'     new_col_name = "population_plot",
 #'     new_col_label = md("*Change*")
 #'   ) |>
 #'   cols_nanoplot(
 #'     columns = starts_with("density"),
 #'     plot_type = "bar",
+#'     autohide = FALSE,
 #'     new_col_name = "density_plot",
 #'     new_col_label = md("*Change*")
 #'   ) |>
@@ -2585,7 +2600,6 @@ cols_add <- function(
 #'       data_bar_fill_color = "DarkOrange"
 #'     )
 #'   ) |>
-#'   cols_hide(columns = matches("0")) |>
 #'   tab_options(
 #'     table.width = px(400),
 #'     column_labels.hidden = TRUE
@@ -2637,7 +2651,6 @@ cols_add <- function(
 #'     title = md("Pizzas sold on **January 1, 2015**"),
 #'     subtitle = "Between the opening hours of 11:30 to 22:30"
 #'   ) |>
-#'   cols_hide(columns = c(date_time, sold)) |>
 #'   cols_nanoplot(
 #'     columns = sold,
 #'     columns_x_vals = date_time,
@@ -2673,12 +2686,13 @@ cols_add <- function(
 #'
 #' Box plots can be generated, and we just need to use `plot_type = "boxplot"`
 #' to make that type of nanoplot. Using a small portion of the [`pizzaplace`]
-#' dataset, we will create a simple table that displays a box plot of pizza for
-#' a selection of days. By converting the string-time 24-hour-clock time values
-#' to the number of seconds elapsed in a day, we get continuous values that can
-#' be incorporated into each box plot. And, by supplying a function to the
-#' `y_val_fmt_fn` argument within `nanoplot_options()`, we can transform the
-#' integer seconds values back to clock times for display on hover.
+#' dataset, we will create a simple table that displays a box plot of pizza
+#' sales for a selection of days. By converting the string-time 24-hour-clock
+#' time values to the number of seconds elapsed in a day, we get continuous
+#' values that can be incorporated into each box plot. And, by supplying a
+#' function to the `y_val_fmt_fn` argument within `nanoplot_options()`, we can
+#' transform the integer seconds values back to clock times for display on
+#' hover.
 #'
 #' ```r
 #' pizzaplace |>
@@ -2694,7 +2708,7 @@ cols_add <- function(
 #'     plot_type = "boxplot",
 #'     options = nanoplot_options(y_val_fmt_fn = function(x) hms::as_hms(x))
 #'   ) |>
-#'   cols_hide(columns = c(time, is_weekend)) |>
+#'   cols_hide(columns = is_weekend) |>
 #'   cols_width(everything() ~ px(250)) |>
 #'   cols_align(align = "center", columns = nanoplots) |>
 #'   cols_align(align = "left", columns = date) |>
@@ -2730,8 +2744,9 @@ cols_nanoplot <- function(
     rows = everything(),
     plot_type = c("line", "bar", "boxplot"),
     plot_height = "2em",
-    missing_vals = c("gap", "zero", "remove"),
+    missing_vals = c("gap", "marker", "zero", "remove"),
     autoscale = FALSE,
+    autohide = TRUE,
     columns_x_vals = NULL,
     reference_line = NULL,
     reference_area = NULL,
@@ -2874,6 +2889,7 @@ cols_nanoplot <- function(
         data_point_fill_color = options_plots$data_point_fill_color,
         data_line_stroke_color = options_plots$data_line_stroke_color,
         data_line_stroke_width = options_plots$data_line_stroke_width,
+        data_area_fill_color = options_plots$data_area_fill_color,
         data_bar_stroke_color = options_plots$data_bar_stroke_color,
         data_bar_stroke_width = options_plots$data_bar_stroke_width,
         data_bar_fill_color = options_plots$data_bar_fill_color,
@@ -2984,6 +3000,24 @@ cols_nanoplot <- function(
       ),
       locations = cells_body(columns = validated_new_col_name)
     )
+
+  if (isTRUE(autohide)) {
+
+    data <-
+      cols_hide(
+        data = data,
+        columns = resolved_columns
+      )
+
+    if (length(resolved_columns_x) > 0) {
+
+      data <-
+        cols_hide(
+          data = data,
+          columns = resolved_columns_x
+        )
+    }
+  }
 
   data
 }

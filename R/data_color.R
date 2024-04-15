@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -188,9 +188,10 @@
 #'
 #'   `scalar<numeric|integer>(0>=val>=1)` // *default:* `NULL` (`optional`)
 #'
-#'   An optional, fixed alpha transparency value that will be applied to all of
-#'   the `colors` provided (regardless of whether a color palette was directly
-#'   supplied or generated through a color mapping function).
+#'   An optional, fixed alpha transparency value that will be applied to all
+#'   color palette values (regardless of whether a color palette was directly
+#'   supplied in `palette` or generated through a color mapping function via
+#'   `fn`).
 #'
 #' @param reverse *Reverse order of computed colors*
 #'
@@ -941,14 +942,25 @@ data_color <- function(
       if (is.numeric(data_vals)) {
 
         # Create a color function based on `scales::col_numeric()`
+        # Rethrow the error if something occurs. #1373
         color_fn <-
-          scales::col_numeric(
-            palette = palette,
-            domain = domain %||% data_vals,
-            na.color = na_color,
-            alpha = TRUE,
-            reverse = reverse
+          withCallingHandlers(
+            scales::col_numeric(
+              palette = palette,
+              domain = domain %||% data_vals,
+              na.color = na_color,
+              alpha = TRUE,
+              reverse = reverse
+            ),
+            error = function(e) {
+              cli::cli_abort(c(
+                "Failed to compute colors for column {.code {resolved_columns[i]}}.",
+                i = "Did the column include infinite values?"),
+                parent = e
+              )
+            }
           )
+
 
       } else if (is.character(data_vals) || is.factor(data_vals)) {
 

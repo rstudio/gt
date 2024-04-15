@@ -10,8 +10,9 @@ cols_nanoplot(
   rows = everything(),
   plot_type = c("line", "bar", "boxplot"),
   plot_height = "2em",
-  missing_vals = c("gap", "zero", "remove"),
+  missing_vals = c("gap", "marker", "zero", "remove"),
   autoscale = FALSE,
+  autohide = TRUE,
   columns_x_vals = NULL,
   reference_line = NULL,
   reference_area = NULL,
@@ -80,13 +81,15 @@ images inserted via \code{\link[=fmt_image]{fmt_image()}} (also having a \code{"
 
 \item{missing_vals}{\emph{Treatment of missing values}
 
-\verb{singl-kw:[gap|zero|remove]} // \emph{default:} \code{"gap"}
+\verb{singl-kw:[gap|marker|zero|remove]} // \emph{default:} \code{"gap"}
 
 If missing values are encountered within the input data, there are three
-strategies available for their handling: (1) \code{"gap"} will display data gaps
-at the sites of missing data, where data lines will have discontinuities;
-(2) \code{"zero"} will replace \code{NA} values with zero values; and (3) \code{"remove"}
-will remove any incoming \code{NA} values.}
+strategies available for their handling: (1) \code{"gap"} will show data gaps
+at the sites of missing data, where data lines will have discontinuities
+and bar plots will have missing bars; (2) \code{"marker"} will behave like
+\code{"gap"} but show prominent visual marks at the missing data locations; (3)
+\code{"zero"} will replace \code{NA} values with zero values; and (4) \code{"remove"} will
+remove any incoming \code{NA} values.}
 
 \item{autoscale}{\emph{Automatically set x- and y-axis scale limits based on data}
 
@@ -97,6 +100,16 @@ produced are based on the limits of data combined from all input rows. This
 will result in a shared scale across all of the nanoplots (for \emph{y}- and
 \emph{x}-axis data), which is useful in those cases where the nanoplot data
 should be compared across rows.}
+
+\item{autohide}{\emph{Automatically hide the \code{columns}/\code{columns_x_vals} column(s)}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+An option to automatically hide any columns specified in \code{columns} and also
+\code{columns_x_vals} (if used). Any columns with their state changed to
+'hidden' will behave the same as before, they just won't be displayed in
+the finalized table. Should you want to have these 'input' columns be
+viewable, set \code{autohide = FALSE}.}
 
 \item{columns_x_vals}{\emph{Columns containing values for the optional x variable}
 
@@ -332,7 +345,7 @@ possible to define a column label here using the \code{new_col_label} argument.
   gt(rowname_col = "test") |>
   tab_header("Partial summary of daily tests performed on YF patient") |>
   tab_stubhead(label = md("**Test**")) |>
-  cols_hide(columns = c(starts_with("norm"), starts_with("day"))) |>
+  cols_hide(columns = starts_with("norm")) |>
   fmt_units(columns = units) |>
   cols_nanoplot(
     columns = starts_with("day"),
@@ -375,6 +388,7 @@ in \code{\link[=nanoplot_options]{nanoplot_options()}}.
   cols_nanoplot(
     columns = c(chicken, classic, supreme, veggie),
     plot_type = "bar",
+    autohide = FALSE,
     new_col_name = "pizzas_sold",
     new_col_label = "Sales by Type",
     options = nanoplot_options(
@@ -414,12 +428,14 @@ elect to hide most of those with \code{\link[=cols_hide]{cols_hide()}}.
   cols_nanoplot(
     columns = starts_with("population"),
     reference_line = "median",
+    autohide = FALSE,
     new_col_name = "population_plot",
     new_col_label = md("*Change*")
   ) |>
   cols_nanoplot(
     columns = starts_with("density"),
     plot_type = "bar",
+    autohide = FALSE,
     new_col_name = "density_plot",
     new_col_label = md("*Change*")
   ) |>
@@ -486,7 +502,6 @@ bars.
       data_bar_fill_color = "DarkOrange"
     )
   ) |>
-  cols_hide(columns = matches("0")) |>
   tab_options(
     table.width = px(400),
     column_labels.hidden = TRUE
@@ -537,7 +552,6 @@ streams in each row (having the same number of values) we can now make a
     title = md("Pizzas sold on **January 1, 2015**"),
     subtitle = "Between the opening hours of 11:30 to 22:30"
   ) |>
-  cols_hide(columns = c(date_time, sold)) |>
   cols_nanoplot(
     columns = sold,
     columns_x_vals = date_time,
@@ -573,12 +587,13 @@ pizzas in large size!
 
 Box plots can be generated, and we just need to use \code{plot_type = "boxplot"}
 to make that type of nanoplot. Using a small portion of the \code{\link{pizzaplace}}
-dataset, we will create a simple table that displays a box plot of pizza for
-a selection of days. By converting the string-time 24-hour-clock time values
-to the number of seconds elapsed in a day, we get continuous values that can
-be incorporated into each box plot. And, by supplying a function to the
-\code{y_val_fmt_fn} argument within \code{nanoplot_options()}, we can transform the
-integer seconds values back to clock times for display on hover.
+dataset, we will create a simple table that displays a box plot of pizza
+sales for a selection of days. By converting the string-time 24-hour-clock
+time values to the number of seconds elapsed in a day, we get continuous
+values that can be incorporated into each box plot. And, by supplying a
+function to the \code{y_val_fmt_fn} argument within \code{nanoplot_options()}, we can
+transform the integer seconds values back to clock times for display on
+hover.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
   dplyr::filter(date <= "2015-01-14") |>
@@ -593,7 +608,7 @@ integer seconds values back to clock times for display on hover.
     plot_type = "boxplot",
     options = nanoplot_options(y_val_fmt_fn = function(x) hms::as_hms(x))
   ) |>
-  cols_hide(columns = c(time, is_weekend)) |>
+  cols_hide(columns = is_weekend) |>
   cols_width(everything() ~ px(250)) |>
   cols_align(align = "center", columns = nanoplots) |>
   cols_align(align = "left", columns = date) |>
