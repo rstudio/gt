@@ -111,6 +111,7 @@ Other datasets:
 \code{\link{illness}},
 \code{\link{metro}},
 \code{\link{pizzaplace}},
+\code{\link{reactions}},
 \code{\link{rx_adsl}},
 \code{\link{sp500}},
 \code{\link{sza}},

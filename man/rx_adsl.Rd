@@ -102,6 +102,7 @@ Other datasets:
 \code{\link{illness}},
 \code{\link{metro}},
 \code{\link{pizzaplace}},
+\code{\link{reactions}},
 \code{\link{rx_addv}},
 \code{\link{sp500}},
 \code{\link{sza}},
