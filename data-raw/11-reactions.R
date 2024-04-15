@@ -1,5 +1,4 @@
 library(tidyverse)
-library(tidyr)
 
 reactions <-
   readr::read_csv(
@@ -79,29 +78,29 @@ reactions <-
         Cl_t_high = col_double()
       )
   ) %>%
-  mutate(across(starts_with("feat"), ~ replace_na(.x, 0)))
+  dplyr::mutate(across(starts_with("feat"), ~ tidyr::replace_na(.x, 0)))
 
 colnames(reactions) <- tolower(colnames(reactions))
 
 reactions <-
   reactions %>%
-  mutate(oh_uncert = case_when(
+  dplyr::mutate(oh_uncert = case_when(
     !is.na(oh_unc) ~ as.numeric(sub("%", "", oh_unc)) / 100,
     TRUE ~ NA_real_
   )) %>%
-  mutate(o3_uncert = case_when(
+  dplyr::mutate(o3_uncert = case_when(
     !is.na(o3_unc) ~ as.numeric(sub("%", "", o3_unc)) / 100,
     TRUE ~ NA_real_
   )) %>%
-  mutate(no3_uncert = case_when(
+  dplyr::mutate(no3_uncert = case_when(
     !is.na(no3_unc) ~ as.numeric(sub("%", "", no3_unc)) / 100,
     TRUE ~ NA_real_
   )) %>%
-  mutate(cl_uncert = case_when(
+  dplyr::mutate(cl_uncert = case_when(
     !is.na(cl_unc) ~ as.numeric(sub("%", "", cl_unc)) / 100,
     TRUE ~ NA_real_
   )) %>%
-  select(-ends_with("unc"))
+  dplyr::select(-ends_with("unc"))
 
 compound_types <-
   dplyr::tribble(
@@ -196,10 +195,11 @@ compound_types <-
 
 reactions <-
   reactions %>%
-  inner_join(compound_types) %>%
-  relocate(cmpd_desc, .after = cmpd_struct_fml) %>%
-  relocate(oh_uncert, .before = oh_u_fac) %>%
-  relocate(o3_uncert, .before = o3_u_fac) %>%
-  relocate(no3_uncert, .before = no3_u_fac) %>%
-  relocate(cl_uncert, .before = cl_u_fac) %>%
-  select(-cmpd_type, -cmpd_no)
+  dplyr::inner_join(compound_types) %>%
+  dplyr::relocate(cmpd_desc, .after = cmpd_struct_fml) %>%
+  dplyr::relocate(oh_uncert, .before = oh_u_fac) %>%
+  dplyr::relocate(o3_uncert, .before = o3_u_fac) %>%
+  dplyr::relocate(no3_uncert, .before = no3_u_fac) %>%
+  dplyr::relocate(cl_uncert, .before = cl_u_fac) %>%
+  dplyr::select(-cmpd_type, -cmpd_no, -starts_with("feat")) %>%
+  dplyr::rename(cmpd_name = cmpd_primary_name)
