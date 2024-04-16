@@ -12,6 +12,7 @@ nanoplot_options(
   data_line_type = NULL,
   data_line_stroke_color = NULL,
   data_line_stroke_width = NULL,
+  data_area_fill_color = NULL,
   data_bar_stroke_color = NULL,
   data_bar_stroke_width = NULL,
   data_bar_fill_color = NULL,
@@ -29,6 +30,7 @@ nanoplot_options(
   show_reference_area = NULL,
   show_vertical_guides = NULL,
   show_y_axis_guide = NULL,
+  interactive_data_values = NULL,
   y_val_fmt_fn = NULL,
   y_axis_fmt_fn = NULL,
   y_ref_line_fmt_fn = NULL,
@@ -40,7 +42,7 @@ nanoplot_options(
 
 \verb{scalar<numeric>|vector<numeric>} // \emph{default:} \code{NULL} (\code{optional})
 
-Th \code{data_point_radius} option lets you set the radius for each of the data
+The \code{data_point_radius} option lets you set the radius for each of the data
 points. By default this is set to \code{10}. Individual radius values can be
 set by using a vector of numeric values; however, the vector provided must
 match the number of data points.}
@@ -97,6 +99,14 @@ option.}
 The width of the connecting data line can be modified with the
 \code{data_line_stroke_width} option. By default, a value of \code{4} (as in '4px')
 is used.}
+
+\item{data_area_fill_color}{\emph{Fill color for the data-point-bounded area}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+The fill color for the area that bounds the data points in line plot. The
+default is \code{"#FF0000"} (\code{"red"}) but can be changed by providing a color
+value to \code{data_area_fill_color}.}
 
 \item{data_bar_stroke_color}{\emph{Color of a data bar's outside line}
 
@@ -235,6 +245,19 @@ active by default but can be deactivated by using
 The \emph{y}-axis guide will appear when hovering over the far left side of a
 nanoplot. This hidden layer is active by default but can be deactivated by
 using \code{show_y_axis_guide = FALSE}.}
+
+\item{interactive_data_values}{\emph{Should data values be interactively shown?}
+
+\verb{scalar<logical>} // \emph{default:} \code{NULL} (\code{optional})
+
+By default, numeric data values will be shown only when the user interacts
+with certain regions of a nanoplot. This is because the values may be
+numerous (i.e., clutter the display when all are visible) and it can be
+argued that the values themselves are secondary to the presentation.
+However, for some types of plots (like horizontal bar plots), a persistent
+display of values alongside the plot marks may be desirable. By setting
+\code{interactive_data_values = FALSE} we can opt for always displaying the data
+values alongside the plot components.}
 
 \item{y_val_fmt_fn, y_axis_fmt_fn, y_ref_line_fmt_fn}{\emph{Custom formatting for y values}
 

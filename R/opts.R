@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -119,7 +119,7 @@ opt_stylize <- function(
 
   if (!(length(color) == 1 && color %in% unique(styles_colors_params$color))) {
     cli::cli_abort(c(
-      "The `color` value must be one of seven specific colors:",
+      "The `color` value must be one of six specific colors:",
       "*" = "\"blue\", \"cyan\", \"pink\", \"green\", \"red\", or \"gray\""
     ))
   }

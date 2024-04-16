@@ -285,7 +285,7 @@ test_that("the `process_text()` function works correctly", {
   # be returned from `process_text` as character-based
   # text that's been transformed to HTML
   process_text(text = md_text) %>%
-    expect_equal("this is <em>text</em> interpreted as <strong>markdown</strong>")
+    expect_equal("<span class='gt_from_md'>this is <em>text</em> interpreted as <strong>markdown</strong></span>")
 
   md_text %>% expect_s3_class("from_markdown")
   process_text(text = md_text) %>% expect_type("character")

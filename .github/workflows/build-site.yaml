@@ -2,15 +2,14 @@ on:
   schedule:
     - cron: '0 23 * * *'
 
-name: build-quarto-gt-examples-site
+name: netlify-quarto-gt-examples-site
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-
-      - uses: r-lib/actions/setup-pandoc@v2
+      - name: Check out repository
+        uses: actions/checkout@v4
 
       - name: Set up Quarto
         uses: quarto-dev/quarto-actions/setup@v2
@@ -59,7 +58,6 @@ jobs:
           production-branch: master
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: "Deploy from GitHub Actions"
-          # these all default to 'true'
           enable-pull-request-comment: false
           enable-commit-comment: true
           enable-commit-status: true

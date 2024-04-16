@@ -9,7 +9,6 @@
 ^gt\.Rproj$
 ^_pkgdown\.yml$
 ^codecov\.yml$
-^README\.Rmd$
 ^README\.md$
 ^LICENSE\.md$
 ^CITATION\.cff$

@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -725,15 +725,25 @@ as_latex <- function(data) {
     latex_packages <- NULL
   }
 
+  table_width_statement <- derive_table_width_statement_l(data = data)
+
+  # Allow user to set a font-size
+  fontsize_statement <- create_fontsize_statement_l(data = data)
+
+
   # Compose the LaTeX table
   knitr::asis_output(
     paste0(
+      "\\begingroup\n",
+      table_width_statement,
+      fontsize_statement,
       table_start,
       heading_component,
       columns_component,
       body_component,
       table_end,
       footer_component,
+      "\\endgroup\n",
       collapse = ""
     ),
     meta = latex_packages
@@ -1470,11 +1480,11 @@ extract_summary <- function(data) {
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   form a constraint for extraction. The default [everything()] results in all
 #'   rows in `columns` being formatted. Alternatively, we can supply a vector of
-#'   row captions within [c()], a vector of row indices, or a select helper
-#'   function. Examples of select helper functions include [starts_with()],
-#'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
-#'   [everything()]. We can also use expressions to filter down to the rows we
-#'   need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'   row IDs within [c()], a vector of row indices, or a select helper function.
+#'   Examples of select helper functions include [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
+#'   We can also use expressions to filter down to the rows we need (e.g.,
+#'   `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @param output *Output format*
 #'
@@ -1570,26 +1580,30 @@ extract_cells <- function(
       data = data
     )
 
-  #
-  # Partially build the gt table using the resolved `output` as the
-  # rendering context; this formats the body cells and applies merging
-  # routines and text transforms (but doesn't attach footnote marks)
-  #
+  if (!dt_has_built_get(data)) {
+    #
+    # Partially build the gt table using the resolved `output` as the
+    # rendering context; this formats the body cells and applies merging
+    # routines and text transforms (but doesn't attach footnote marks)
+    #
 
-  data <- dt_body_build(data = data)
-  data <- render_formats(data = data, context = output)
-  data <- render_substitutions(data = data, context = output)
-  data <- migrate_unformatted_to_output(data = data, context = output)
-  data <- perform_col_merge(data = data, context = output)
-  data <- dt_body_reassemble(data = data)
-  data <- reorder_stub_df(data = data)
-  data <- reorder_footnotes(data = data)
-  data <- reorder_styles(data = data)
-  data <- perform_text_transforms(data = data)
-  built_data <- data
+    data <- dt_body_build(data = data)
+    data <- render_formats(data = data, context = output)
+    data <- render_substitutions(data = data, context = output)
+    data <- migrate_unformatted_to_output(data = data, context = output)
+    data <- perform_col_merge(data = data, context = output)
+    data <- dt_body_reassemble(data = data)
+    data <- reorder_stub_df(data = data)
+    data <- reorder_footnotes(data = data)
+    data <- reorder_styles(data = data)
+    data <- perform_text_transforms(data = data)
+    built_data <- data
 
-  # Extract the `_body` component of the built data
-  data_body <- built_data[["_body"]]
+    # Extract the `_body` component of the built data
+    data_body <- built_data[["_body"]]
+  } else {
+    data_body <- data[["_body"]]
+  }
 
   #
   # Collect a vector of body cells in a specific order
@@ -1604,3 +1618,4 @@ extract_cells <- function(
 
   out_vec
 }
+

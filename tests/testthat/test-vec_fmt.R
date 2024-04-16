@@ -61,8 +61,8 @@ test_that("The `vec_fmt_number()` function works", {
   vec_fmt_number(vec_num_1, output = "latex") %>%
     expect_equal(
       c(
-        "$-2.50$", "$-2.00$", "$-1.50$", "$-1.00$", "$-0.50$", "$0.00$",
-        "$0.50$", "$1.00$", "$1.50$", "$2.00$", "$2.50$", "NA", "$Inf$"
+        "-2.50", "-2.00", "-1.50", "-1.00", "-0.50", "0.00",
+        "0.50", "1.00", "1.50", "2.00", "2.50", "NA", "Inf"
       )
     )
 
@@ -95,10 +95,10 @@ test_that("The `vec_fmt_number()` function works", {
   vec_fmt_number(vec_num_6, decimals = 4, output = "latex") %>%
     expect_equal(
       c(
-        "$0.0000$", "$0.1000$", "$0.2000$", "$0.3000$", "$0.4000$", "$0.5000$",
-        "$0.6000$", "$0.7000$", "$0.8000$", "$0.9000$", "$1.0000$", "$1.1000$",
-        "$1.2000$", "$1.3000$", "$1.4000$", "$1.5000$", "$1.6000$", "$1.7000$",
-        "$1.8000$", "$1.9000$", "$2.0000$"
+        "0.0000", "0.1000", "0.2000", "0.3000", "0.4000", "0.5000",
+        "0.6000", "0.7000", "0.8000", "0.9000", "1.0000", "1.1000",
+        "1.2000", "1.3000", "1.4000", "1.5000", "1.6000", "1.7000",
+        "1.8000", "1.9000", "2.0000"
       )
     )
 
@@ -132,8 +132,8 @@ test_that("The `vec_fmt_number()` function works", {
   vec_fmt_number(vec_num_1, drop_trailing_zeros = TRUE, output = "latex") %>%
     expect_equal(
       c(
-        "$-2.5$", "$-2$", "$-1.5$", "$-1$", "$-0.5$", "$0$", "$0.5$",
-        "$1$", "$1.5$", "$2$", "$2.5$", "NA", "$Inf$"
+        "-2.5", "-2", "-1.5", "-1", "-0.5", "0", "0.5",
+        "1", "1.5", "2", "2.5", "NA", "Inf"
       )
     )
 
@@ -167,8 +167,8 @@ test_that("The `vec_fmt_number()` function works", {
   vec_fmt_number(vec_num_1, n_sigfig = 3, output = "latex") %>%
     expect_equal(
       c(
-        "$-2.50$", "$-2.00$", "$-1.50$", "$-1.00$", "$-0.500$", "$0$",
-        "$0.500$", "$1.00$", "$1.50$", "$2.00$", "$2.50$", "NA", "$ Inf$"
+        "-2.50", "-2.00", "-1.50", "-1.00", "-0.500", "0",
+        "0.500", "1.00", "1.50", "2.00", "2.50", "NA", " Inf"
       )
     )
 
@@ -202,9 +202,9 @@ test_that("The `vec_fmt_number()` function works", {
   vec_fmt_number(vec_num_4, use_seps = FALSE, output = "latex") %>%
     expect_equal(
       c(
-        "$-2500000.00$", "$-2000000.00$", "$-1500000.00$", "$-1000000.00$",
-        "$-500000.00$", "$0.00$", "$500000.00$", "$1000000.00$", "$1500000.00$",
-        "$2000000.00$", "$2500000.00$", "NA", "$Inf$"
+        "-2500000.00", "-2000000.00", "-1500000.00", "-1000000.00",
+        "-500000.00", "0.00", "500000.00", "1000000.00", "1500000.00",
+        "2000000.00", "2500000.00", "NA", "Inf"
       )
     )
 
@@ -237,9 +237,9 @@ test_that("The `vec_fmt_number()` function works", {
   vec_fmt_number(vec_num_1, accounting = TRUE, output = "latex") %>%
     expect_equal(
       c(
-        "$(2.50)$", "$(2.00)$", "$(1.50)$", "$(1.00)$", "$(0.50)$",
-        "$0.00$", "$0.50$", "$1.00$", "$1.50$", "$2.00$", "$2.50$", "NA",
-        "$Inf$"
+        "(2.50)", "(2.00)", "(1.50)", "(1.00)", "(0.50)",
+        "0.00", "0.50", "1.00", "1.50", "2.00", "2.50", "NA",
+        "Inf"
       )
     )
 
@@ -273,8 +273,8 @@ test_that("The `vec_fmt_number()` function works", {
   vec_fmt_number(vec_num_1, scale_by = 2.5, output = "latex") %>%
     expect_equal(
       c(
-        "$-6.25$", "$-5.00$", "$-3.75$", "$-2.50$", "$-1.25$", "$0.00$",
-        "$1.25$", "$2.50$", "$3.75$", "$5.00$", "$6.25$", "NA", "$Inf$"
+        "-6.25", "-5.00", "-3.75", "-2.50", "-1.25", "0.00",
+        "1.25", "2.50", "3.75", "5.00", "6.25", "NA", "Inf"
       )
     )
 
@@ -309,9 +309,9 @@ test_that("The `vec_fmt_number()` function works", {
   vec_fmt_number(vec_num_4, locale = "de", output = "latex") %>%
     expect_equal(
       c(
-        "$-2.500.000,00$", "$-2.000.000,00$", "$-1.500.000,00$", "$-1.000.000,00$",
-        "$-500.000,00$", "$0,00$", "$500.000,00$", "$1.000.000,00$",
-        "$1.500.000,00$", "$2.000.000,00$", "$2.500.000,00$", "NA", "$Inf$"
+        "-2.500.000,00", "-2.000.000,00", "-1.500.000,00", "-1.000.000,00",
+        "-500.000,00", "0,00", "500.000,00", "1.000.000,00",
+        "1.500.000,00", "2.000.000,00", "2.500.000,00", "NA", "Inf"
       )
     )
 
@@ -345,9 +345,9 @@ test_that("The `vec_fmt_number()` function works", {
   vec_fmt_number(vec_num_4, suffixing = TRUE, output = "latex") %>%
     expect_equal(
       c(
-        "$-2.50M$", "$-2.00M$", "$-1.50M$", "$-1.00M$", "$-500.00K$",
-        "$0.00$", "$500.00K$", "$1.00M$", "$1.50M$", "$2.00M$", "$2.50M$",
-        "NA", "$InfT$"
+        "-2.50M", "-2.00M", "-1.50M", "-1.00M", "-500.00K",
+        "0.00", "500.00K", "1.00M", "1.50M", "2.00M", "2.50M",
+        "NA", "InfT"
       )
     )
 
@@ -380,9 +380,9 @@ test_that("The `vec_fmt_number()` function works", {
   vec_fmt_number(vec_num_1, pattern = "a{x}b", output = "latex") %>%
     expect_equal(
       c(
-        "a$-2.50$b", "a$-2.00$b", "a$-1.50$b", "a$-1.00$b", "a$-0.50$b",
-        "a$0.00$b", "a$0.50$b", "a$1.00$b", "a$1.50$b", "a$2.00$b", "a$2.50$b",
-        "NA", "a$Inf$b"
+        "a-2.50b", "a-2.00b", "a-1.50b", "a-1.00b", "a-0.50b",
+        "a0.00b", "a0.50b", "a1.00b", "a1.50b", "a2.00b", "a2.50b",
+        "NA", "aInfb"
       )
     )
 
@@ -415,8 +415,8 @@ test_that("The `vec_fmt_number()` function works", {
   vec_fmt_number(vec_num_1, force_sign = TRUE, output = "latex") %>%
     expect_equal(
       c(
-        "$-2.50$", "$-2.00$", "$-1.50$", "$-1.00$", "$-0.50$", "$0.00$",
-        "$+0.50$", "$+1.00$", "$+1.50$", "$+2.00$", "$+2.50$", "NA", "$+Inf$"
+        "-2.50", "-2.00", "-1.50", "-1.00", "-0.50", "0.00",
+        "+0.50", "+1.00", "+1.50", "+2.00", "+2.50", "NA", "+Inf"
       )
     )
 
@@ -456,8 +456,8 @@ test_that("The `vec_fmt_integer()` function works", {
   vec_fmt_integer(vec_num_1, output = "latex") %>%
     expect_equal(
       c(
-        "$-2$", "$-2$", "$-2$", "$-1$", "$0$", "$0$", "$0$", "$1$",
-        "$2$", "$2$", "$2$", "NA", "$Inf$"
+        "-2", "-2", "-2", "-1", "0", "0", "0", "1",
+        "2", "2", "2", "NA", "Inf"
       )
     )
 
@@ -491,9 +491,9 @@ test_that("The `vec_fmt_integer()` function works", {
   vec_fmt_integer(vec_num_4, locale = "de", output = "latex") %>%
     expect_equal(
       c(
-        "$-2.500.000$", "$-2.000.000$", "$-1.500.000$", "$-1.000.000$",
-        "$-500.000$", "$0$", "$500.000$", "$1.000.000$", "$1.500.000$",
-        "$2.000.000$", "$2.500.000$", "NA", "$Inf$"
+        "-2.500.000", "-2.000.000", "-1.500.000", "-1.000.000",
+        "-500.000", "0", "500.000", "1.000.000", "1.500.000",
+        "2.000.000", "2.500.000", "NA", "Inf"
       )
     )
 
@@ -527,8 +527,8 @@ test_that("The `vec_fmt_integer()` function works", {
   vec_fmt_integer(vec_num_4, suffixing = TRUE, output = "latex") %>%
     expect_equal(
       c(
-        "$-2M$", "$-2M$", "$-2M$", "$-1M$", "$-500K$", "$0$", "$500K$",
-        "$1M$", "$2M$", "$2M$", "$2M$", "NA", "$InfT$"
+        "-2M", "-2M", "-2M", "-1M", "-500K", "0", "500K",
+        "1M", "2M", "2M", "2M", "NA", "InfT"
       )
     )
 
@@ -560,8 +560,8 @@ test_that("The `vec_fmt_integer()` function works", {
   vec_fmt_integer(vec_num_1, pattern = "a{x}b", output = "latex") %>%
     expect_equal(
       c(
-        "a$-2$b", "a$-2$b", "a$-2$b", "a$-1$b", "a$0$b", "a$0$b", "a$0$b",
-        "a$1$b", "a$2$b", "a$2$b", "a$2$b", "NA", "a$Inf$b"
+        "a-2b", "a-2b", "a-2b", "a-1b", "a0b", "a0b", "a0b",
+        "a1b", "a2b", "a2b", "a2b", "NA", "aInfb"
       )
     )
 
@@ -593,8 +593,8 @@ test_that("The `vec_fmt_integer()` function works", {
   vec_fmt_integer(vec_num_1, force_sign = TRUE, output = "latex") %>%
     expect_equal(
       c(
-        "$-2$", "$-2$", "$-2$", "$-1$", "$0$", "$0$", "$+0$", "$+1$",
-        "$+2$", "$+2$", "$+2$", "NA", "$+Inf$"
+        "-2", "-2", "-2", "-1", "0", "0", "+0", "+1",
+        "+2", "+2", "+2", "NA", "+Inf"
       )
     )
 
@@ -635,9 +635,9 @@ test_that("The `vec_fmt_scientific()` function works", {
       c(
         paste0("\U02212", "2.50"), paste0("\U02212", "2.00"),
         paste0("\U02212", "1.50"), paste0("\U02212", "1.00"),
-        paste0("\U02212", "5.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>", "\U02212", "1</sup>"),
+        paste0("\U02212", "5.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "1</sup>"),
         "0.00",
-        paste0("5.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>", "\U02212", "1</sup>"),
+        paste0("5.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "1</sup>"),
         "1.00", "1.50", "2.00", "2.50", "NA"
       )
     )
@@ -645,9 +645,9 @@ test_that("The `vec_fmt_scientific()` function works", {
   vec_fmt_scientific(vec_num_1_m, output = "latex") %>%
     expect_equal(
       c(
-        "$-2.50$", "$-2.00$", "$-1.50$", "$-1.00$", "$-5.00 \\times 10^{-1}$",
-        "$0.00$", "$5.00 \\times 10^{-1}$", "$1.00$", "$1.50$", "$2.00$",
-        "$2.50$", "NA"
+        "-2.50", "-2.00", "-1.50", "-1.00", "-5.00 $\\times$ 10\\textsuperscript{-1}",
+        "0.00", "5.00 $\\times$ 10\\textsuperscript{-1}", "1.00", "1.50", "2.00",
+        "2.50", "NA"
       )
     )
 
@@ -674,17 +674,17 @@ test_that("The `vec_fmt_scientific()` function works", {
   vec_fmt_scientific(vec_num_4_m, output = "html") %>%
     expect_equal(
       c(
-        paste0("\U02212", "2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "5.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>"),
+        paste0("\U02212", "2.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "2.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "5.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>5</sup>"),
         "0.00",
-        paste0("5.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>"),
-        paste0("1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("5.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>5</sup>"),
+        paste0("1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("1.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
         "NA"
       )
     )
@@ -692,10 +692,10 @@ test_that("The `vec_fmt_scientific()` function works", {
   vec_fmt_scientific(vec_num_4_m, output = "latex") %>%
     expect_equal(
       c(
-        "$-2.50 \\times 10^{6}$", "$-2.00 \\times 10^{6}$", "$-1.50 \\times 10^{6}$",
-        "$-1.00 \\times 10^{6}$", "$-5.00 \\times 10^{5}$", "$0.00$",
-        "$5.00 \\times 10^{5}$", "$1.00 \\times 10^{6}$", "$1.50 \\times 10^{6}$",
-        "$2.00 \\times 10^{6}$", "$2.50 \\times 10^{6}$", "NA"
+        "-2.50 $\\times$ 10\\textsuperscript{6}", "-2.00 $\\times$ 10\\textsuperscript{6}", "-1.50 $\\times$ 10\\textsuperscript{6}",
+        "-1.00 $\\times$ 10\\textsuperscript{6}", "-5.00 $\\times$ 10\\textsuperscript{5}", "0.00",
+        "5.00 $\\times$ 10\\textsuperscript{5}", "1.00 $\\times$ 10\\textsuperscript{6}", "1.50 $\\times$ 10\\textsuperscript{6}",
+        "2.00 $\\times$ 10\\textsuperscript{6}", "2.50 $\\times$ 10\\textsuperscript{6}", "NA"
       )
     )
 
@@ -723,17 +723,17 @@ test_that("The `vec_fmt_scientific()` function works", {
   vec_fmt_scientific(vec_num_4_m, drop_trailing_zeros = TRUE, output = "html") %>%
     expect_equal(
       c(
-        paste0("\U02212", "2.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "2 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "5 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>"),
+        paste0("\U02212", "2.5&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "2&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.5&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "5&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>5</sup>"),
         "0",
-        paste0("5 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>"),
-        paste0("1 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("1.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("2 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("2.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("5&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>5</sup>"),
+        paste0("1&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("1.5&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2.5&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
         "NA"
       )
     )
@@ -741,10 +741,10 @@ test_that("The `vec_fmt_scientific()` function works", {
   vec_fmt_scientific(vec_num_4_m, drop_trailing_zeros = TRUE, output = "latex") %>%
     expect_equal(
       c(
-        "$-2.5 \\times 10^{6}$", "$-2 \\times 10^{6}$", "$-1.5 \\times 10^{6}$",
-        "$-1 \\times 10^{6}$", "$-5 \\times 10^{5}$", "$0$",
-        "$5 \\times 10^{5}$", "$1 \\times 10^{6}$", "$1.5 \\times 10^{6}$",
-        "$2 \\times 10^{6}$", "$2.5 \\times 10^{6}$", "NA"
+        "-2.5 $\\times$ 10\\textsuperscript{6}", "-2 $\\times$ 10\\textsuperscript{6}", "-1.5 $\\times$ 10\\textsuperscript{6}",
+        "-1 $\\times$ 10\\textsuperscript{6}", "-5 $\\times$ 10\\textsuperscript{5}", "0",
+        "5 $\\times$ 10\\textsuperscript{5}", "1 $\\times$ 10\\textsuperscript{6}", "1.5 $\\times$ 10\\textsuperscript{6}",
+        "2 $\\times$ 10\\textsuperscript{6}", "2.5 $\\times$ 10\\textsuperscript{6}", "NA"
       )
     )
 
@@ -773,17 +773,17 @@ test_that("The `vec_fmt_scientific()` function works", {
   vec_fmt_scientific(vec_num_4_m, locale = "de", output = "html") %>%
     expect_equal(
       c(
-        paste0("\U02212", "2,50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "2,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1,50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "5,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>"),
+        paste0("\U02212", "2,50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "2,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1,50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "5,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>5</sup>"),
         "0,00",
-        paste0("5,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>"),
-        paste0("1,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("1,50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("2,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("2,50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("5,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>5</sup>"),
+        paste0("1,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("1,50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2,50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
         "NA"
       )
     )
@@ -791,10 +791,10 @@ test_that("The `vec_fmt_scientific()` function works", {
   vec_fmt_scientific(vec_num_4_m, locale = "de", output = "latex") %>%
     expect_equal(
       c(
-        "$-2,50 \\times 10^{6}$", "$-2,00 \\times 10^{6}$", "$-1,50 \\times 10^{6}$",
-        "$-1,00 \\times 10^{6}$", "$-5,00 \\times 10^{5}$", "$0,00$",
-        "$5,00 \\times 10^{5}$", "$1,00 \\times 10^{6}$", "$1,50 \\times 10^{6}$",
-        "$2,00 \\times 10^{6}$", "$2,50 \\times 10^{6}$", "NA"
+        "-2,50 $\\times$ 10\\textsuperscript{6}", "-2,00 $\\times$ 10\\textsuperscript{6}", "-1,50 $\\times$ 10\\textsuperscript{6}",
+        "-1,00 $\\times$ 10\\textsuperscript{6}", "-5,00 $\\times$ 10\\textsuperscript{5}", "0,00",
+        "5,00 $\\times$ 10\\textsuperscript{5}", "1,00 $\\times$ 10\\textsuperscript{6}", "1,50 $\\times$ 10\\textsuperscript{6}",
+        "2,00 $\\times$ 10\\textsuperscript{6}", "2,50 $\\times$ 10\\textsuperscript{6}", "NA"
       )
     )
 
@@ -823,17 +823,17 @@ test_that("The `vec_fmt_scientific()` function works", {
   vec_fmt_scientific(vec_num_4_m, pattern = "a{x}b", output = "html") %>%
     expect_equal(
       c(
-        paste0("a\U02212", "2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
-        paste0("a\U02212", "2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
-        paste0("a\U02212", "1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
-        paste0("a\U02212", "1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
-        paste0("a\U02212", "5.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>b"),
+        paste0("a\U02212", "2.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a\U02212", "2.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a\U02212", "1.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a\U02212", "1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a\U02212", "5.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>5</sup>b"),
         "a0.00b",
-        paste0("a5.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>b"),
-        paste0("a1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
-        paste0("a1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
-        paste0("a2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
-        paste0("a2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a5.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>5</sup>b"),
+        paste0("a1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a1.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a2.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a2.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
         "NA"
       )
     )
@@ -841,12 +841,12 @@ test_that("The `vec_fmt_scientific()` function works", {
   vec_fmt_scientific(vec_num_4_m, pattern = "a{x}b", output = "latex") %>%
     expect_equal(
       c(
-        "a$-2.50 \\times 10^{6}$b", "a$-2.00 \\times 10^{6}$b",
-        "a$-1.50 \\times 10^{6}$b", "a$-1.00 \\times 10^{6}$b",
-        "a$-5.00 \\times 10^{5}$b", "a$0.00$b",
-        "a$5.00 \\times 10^{5}$b", "a$1.00 \\times 10^{6}$b",
-        "a$1.50 \\times 10^{6}$b", "a$2.00 \\times 10^{6}$b",
-        "a$2.50 \\times 10^{6}$b", "NA"
+        "a-2.50 $\\times$ 10\\textsuperscript{6}b", "a-2.00 $\\times$ 10\\textsuperscript{6}b",
+        "a-1.50 $\\times$ 10\\textsuperscript{6}b", "a-1.00 $\\times$ 10\\textsuperscript{6}b",
+        "a-5.00 $\\times$ 10\\textsuperscript{5}b", "a0.00b",
+        "a5.00 $\\times$ 10\\textsuperscript{5}b", "a1.00 $\\times$ 10\\textsuperscript{6}b",
+        "a1.50 $\\times$ 10\\textsuperscript{6}b", "a2.00 $\\times$ 10\\textsuperscript{6}b",
+        "a2.50 $\\times$ 10\\textsuperscript{6}b", "NA"
       )
     )
 
@@ -877,17 +877,17 @@ test_that("The `vec_fmt_scientific()` function works", {
   vec_fmt_scientific(vec_num_4_m, force_sign_m = TRUE, output = "html") %>%
     expect_equal(
       c(
-        paste0("\U02212", "2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "5.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>"),
+        paste0("\U02212", "2.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "2.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "5.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>5</sup>"),
         "0.00",
-        paste0("+5.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>"),
-        paste0("+1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("+1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("+2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("+2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("+5.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>5</sup>"),
+        paste0("+1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("+1.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("+2.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("+2.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
         "NA"
       )
     )
@@ -895,10 +895,10 @@ test_that("The `vec_fmt_scientific()` function works", {
   vec_fmt_scientific(vec_num_4_m, force_sign_m = TRUE, output = "latex") %>%
     expect_equal(
       c(
-        "$-2.50 \\times 10^{6}$", "$-2.00 \\times 10^{6}$", "$-1.50 \\times 10^{6}$",
-        "$-1.00 \\times 10^{6}$", "$-5.00 \\times 10^{5}$", "$0.00$",
-        "$+5.00 \\times 10^{5}$", "$+1.00 \\times 10^{6}$", "$+1.50 \\times 10^{6}$",
-        "$+2.00 \\times 10^{6}$", "$+2.50 \\times 10^{6}$", "NA"
+        "-2.50 $\\times$ 10\\textsuperscript{6}", "-2.00 $\\times$ 10\\textsuperscript{6}", "-1.50 $\\times$ 10\\textsuperscript{6}",
+        "-1.00 $\\times$ 10\\textsuperscript{6}", "-5.00 $\\times$ 10\\textsuperscript{5}", "0.00",
+        "+5.00 $\\times$ 10\\textsuperscript{5}", "+1.00 $\\times$ 10\\textsuperscript{6}", "+1.50 $\\times$ 10\\textsuperscript{6}",
+        "+2.00 $\\times$ 10\\textsuperscript{6}", "+2.50 $\\times$ 10\\textsuperscript{6}", "NA"
       )
     )
 
@@ -934,9 +934,9 @@ test_that("The `vec_fmt_engineering()` function works", {
       c(
         paste0("\U02212", "2.50"), paste0("\U02212", "2.00"),
         paste0("\U02212", "1.50"), paste0("\U02212", "1.00"),
-        paste0("\U02212", "500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
+        paste0("\U02212", "500.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
         "0.00",
-        paste0("500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
+        paste0("500.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
         "1.00", "1.50", "2.00", "2.50", "NA", "Inf"
       )
     )
@@ -944,9 +944,9 @@ test_that("The `vec_fmt_engineering()` function works", {
   vec_fmt_engineering(vec_num_1, output = "latex") %>%
     expect_equal(
       c(
-        "$-2.50$", "$-2.00$", "$-1.50$", "$-1.00$", "$-500.00 \\times 10^{-3}$",
-        "$0.00$", "$500.00 \\times 10^{-3}$", "$1.00$", "$1.50$", "$2.00$",
-        "$2.50$", "NA", "$Inf$"
+        "-2.50", "-2.00", "-1.50", "-1.00", "-500.00 $\\times$ 10\\textsuperscript{-3}",
+        "0.00", "500.00 $\\times$ 10\\textsuperscript{-3}", "1.00", "1.50", "2.00",
+        "2.50", "NA", "Inf"
       )
     )
 
@@ -974,17 +974,17 @@ test_that("The `vec_fmt_engineering()` function works", {
   vec_fmt_engineering(vec_num_4, output = "html") %>%
     expect_equal(
       c(
-        paste0("\U02212", "2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
+        paste0("\U02212", "2.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "2.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "500.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
         "0.00",
-        paste0("500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
-        paste0("1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("500.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+        paste0("1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("1.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
         "NA", "Inf"
       )
     )
@@ -992,10 +992,10 @@ test_that("The `vec_fmt_engineering()` function works", {
   vec_fmt_engineering(vec_num_4, output = "latex") %>%
     expect_equal(
       c(
-        "$-2.50 \\times 10^{6}$", "$-2.00 \\times 10^{6}$", "$-1.50 \\times 10^{6}$",
-        "$-1.00 \\times 10^{6}$", "$-500.00 \\times 10^{3}$", "$0.00$",
-        "$500.00 \\times 10^{3}$", "$1.00 \\times 10^{6}$", "$1.50 \\times 10^{6}$",
-        "$2.00 \\times 10^{6}$", "$2.50 \\times 10^{6}$", "NA", "$Inf$"
+        "-2.50 $\\times$ 10\\textsuperscript{6}", "-2.00 $\\times$ 10\\textsuperscript{6}", "-1.50 $\\times$ 10\\textsuperscript{6}",
+        "-1.00 $\\times$ 10\\textsuperscript{6}", "-500.00 $\\times$ 10\\textsuperscript{3}", "0.00",
+        "500.00 $\\times$ 10\\textsuperscript{3}", "1.00 $\\times$ 10\\textsuperscript{6}", "1.50 $\\times$ 10\\textsuperscript{6}",
+        "2.00 $\\times$ 10\\textsuperscript{6}", "2.50 $\\times$ 10\\textsuperscript{6}", "NA", "Inf"
       )
     )
 
@@ -1025,17 +1025,17 @@ test_that("The `vec_fmt_engineering()` function works", {
   vec_fmt_engineering(vec_num_5, output = "html") %>%
     expect_equal(
       c(
-        paste0("\U02212", "2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>12</sup>"),
-        paste0("\U02212", "2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>12</sup>"),
-        paste0("\U02212", "1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>12</sup>"),
-        paste0("\U02212", "1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>12</sup>"),
-        paste0("\U02212", "500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>9</sup>"),
+        paste0("\U02212", "2.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>12</sup>"),
+        paste0("\U02212", "2.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>12</sup>"),
+        paste0("\U02212", "1.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>12</sup>"),
+        paste0("\U02212", "1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>12</sup>"),
+        paste0("\U02212", "500.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>9</sup>"),
         "0.00",
-        paste0("500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>9</sup>"),
-        paste0("1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>12</sup>"),
-        paste0("1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>12</sup>"),
-        paste0("2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>12</sup>"),
-        paste0("2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>12</sup>"),
+        paste0("500.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>9</sup>"),
+        paste0("1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>12</sup>"),
+        paste0("1.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>12</sup>"),
+        paste0("2.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>12</sup>"),
+        paste0("2.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>12</sup>"),
         "NA", "Inf"
       )
     )
@@ -1043,12 +1043,12 @@ test_that("The `vec_fmt_engineering()` function works", {
   vec_fmt_engineering(vec_num_5, output = "latex") %>%
     expect_equal(
       c(
-        "$-2.50 \\times 10^{12}$", "$-2.00 \\times 10^{12}$",
-        "$-1.50 \\times 10^{12}$", "$-1.00 \\times 10^{12}$",
-        "$-500.00 \\times 10^{9}$", "$0.00$",
-        "$500.00 \\times 10^{9}$", "$1.00 \\times 10^{12}$",
-        "$1.50 \\times 10^{12}$", "$2.00 \\times 10^{12}$",
-        "$2.50 \\times 10^{12}$", "NA", "$Inf$"
+        "-2.50 $\\times$ 10\\textsuperscript{12}", "-2.00 $\\times$ 10\\textsuperscript{12}",
+        "-1.50 $\\times$ 10\\textsuperscript{12}", "-1.00 $\\times$ 10\\textsuperscript{12}",
+        "-500.00 $\\times$ 10\\textsuperscript{9}", "0.00",
+        "500.00 $\\times$ 10\\textsuperscript{9}", "1.00 $\\times$ 10\\textsuperscript{12}",
+        "1.50 $\\times$ 10\\textsuperscript{12}", "2.00 $\\times$ 10\\textsuperscript{12}",
+        "2.50 $\\times$ 10\\textsuperscript{12}", "NA", "Inf"
       )
     )
 
@@ -1078,17 +1078,17 @@ test_that("The `vec_fmt_engineering()` function works", {
   vec_fmt_engineering(vec_num_4, drop_trailing_zeros = TRUE, output = "html") %>%
     expect_equal(
       c(
-        paste0("\U02212", "2.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "2 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "500 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
+        paste0("\U02212", "2.5&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "2&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.5&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "500&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
         "0",
-        paste0("500 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
-        paste0("1 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("1.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("2 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("2.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("500&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+        paste0("1&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("1.5&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2.5&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
         "NA", "Inf"
       )
     )
@@ -1096,10 +1096,10 @@ test_that("The `vec_fmt_engineering()` function works", {
   vec_fmt_engineering(vec_num_4, drop_trailing_zeros = TRUE, output = "latex") %>%
     expect_equal(
       c(
-        "$-2.5 \\times 10^{6}$", "$-2 \\times 10^{6}$", "$-1.5 \\times 10^{6}$",
-        "$-1 \\times 10^{6}$", "$-500 \\times 10^{3}$", "$0$", "$500 \\times 10^{3}$",
-        "$1 \\times 10^{6}$", "$1.5 \\times 10^{6}$", "$2 \\times 10^{6}$",
-        "$2.5 \\times 10^{6}$", "NA", "$Inf$"
+        "-2.5 $\\times$ 10\\textsuperscript{6}", "-2 $\\times$ 10\\textsuperscript{6}", "-1.5 $\\times$ 10\\textsuperscript{6}",
+        "-1 $\\times$ 10\\textsuperscript{6}", "-500 $\\times$ 10\\textsuperscript{3}", "0", "500 $\\times$ 10\\textsuperscript{3}",
+        "1 $\\times$ 10\\textsuperscript{6}", "1.5 $\\times$ 10\\textsuperscript{6}", "2 $\\times$ 10\\textsuperscript{6}",
+        "2.5 $\\times$ 10\\textsuperscript{6}", "NA", "Inf"
       )
     )
 
@@ -1137,17 +1137,17 @@ test_that("The `vec_fmt_engineering()` function works", {
   ) %>%
     expect_equal(
       c(
-        paste0("\U02212", "2.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "2. ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1. ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "500. ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
+        paste0("\U02212", "2.5&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "2.&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.5&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "500.&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
         "0.",
-        paste0("500. ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
-        paste0("1. ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("1.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("2. ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("2.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("500.&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+        paste0("1.&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("1.5&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2.&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2.5&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
         "NA", "Inf."
       )
     )
@@ -1160,10 +1160,10 @@ test_that("The `vec_fmt_engineering()` function works", {
   ) %>%
     expect_equal(
       c(
-        "$-2.5 \\times 10^{6}$", "$-2. \\times 10^{6}$", "$-1.5 \\times 10^{6}$",
-        "$-1. \\times 10^{6}$", "$-500. \\times 10^{3}$", "$0.$", "$500. \\times 10^{3}$",
-        "$1. \\times 10^{6}$", "$1.5 \\times 10^{6}$", "$2. \\times 10^{6}$",
-        "$2.5 \\times 10^{6}$", "NA", "$Inf.$"
+        "-2.5 $\\times$ 10\\textsuperscript{6}", "-2. $\\times$ 10\\textsuperscript{6}", "-1.5 $\\times$ 10\\textsuperscript{6}",
+        "-1. $\\times$ 10\\textsuperscript{6}", "-500. $\\times$ 10\\textsuperscript{3}", "0.", "500. $\\times$ 10\\textsuperscript{3}",
+        "1. $\\times$ 10\\textsuperscript{6}", "1.5 $\\times$ 10\\textsuperscript{6}", "2. $\\times$ 10\\textsuperscript{6}",
+        "2.5 $\\times$ 10\\textsuperscript{6}", "NA", "Inf."
       )
     )
 
@@ -1197,17 +1197,17 @@ test_that("The `vec_fmt_engineering()` function works", {
   vec_fmt_engineering(vec_num_4, locale = "de", output = "html") %>%
     expect_equal(
       c(
-        paste0("\U02212", "2,50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "2,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1,50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "500,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
+        paste0("\U02212", "2,50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "2,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1,50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "500,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
         "0,00",
-        paste0("500,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
-        paste0("1,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("1,50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("2,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("2,50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("500,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+        paste0("1,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("1,50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2,50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
         "NA", "Inf"
       )
     )
@@ -1215,12 +1215,12 @@ test_that("The `vec_fmt_engineering()` function works", {
   vec_fmt_engineering(vec_num_4, locale = "de", output = "latex") %>%
     expect_equal(
       c(
-        "$-2,50 \\times 10^{6}$", "$-2,00 \\times 10^{6}$",
-        "$-1,50 \\times 10^{6}$", "$-1,00 \\times 10^{6}$",
-        "$-500,00 \\times 10^{3}$", "$0,00$", "$500,00 \\times 10^{3}$",
-        "$1,00 \\times 10^{6}$", "$1,50 \\times 10^{6}$",
-        "$2,00 \\times 10^{6}$", "$2,50 \\times 10^{6}$",
-        "NA", "$Inf$"
+        "-2,50 $\\times$ 10\\textsuperscript{6}", "-2,00 $\\times$ 10\\textsuperscript{6}",
+        "-1,50 $\\times$ 10\\textsuperscript{6}", "-1,00 $\\times$ 10\\textsuperscript{6}",
+        "-500,00 $\\times$ 10\\textsuperscript{3}", "0,00", "500,00 $\\times$ 10\\textsuperscript{3}",
+        "1,00 $\\times$ 10\\textsuperscript{6}", "1,50 $\\times$ 10\\textsuperscript{6}",
+        "2,00 $\\times$ 10\\textsuperscript{6}", "2,50 $\\times$ 10\\textsuperscript{6}",
+        "NA", "Inf"
       )
     )
 
@@ -1251,17 +1251,17 @@ test_that("The `vec_fmt_engineering()` function works", {
   vec_fmt_engineering(vec_num_4, pattern = "a{x}b", output = "html") %>%
     expect_equal(
       c(
-        paste0("a\U02212", "2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
-        paste0("a\U02212", "2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
-        paste0("a\U02212", "1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
-        paste0("a\U02212", "1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
-        paste0("a\U02212", "500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>b"),
+        paste0("a\U02212", "2.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a\U02212", "2.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a\U02212", "1.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a\U02212", "1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a\U02212", "500.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>b"),
         "a0.00b",
-        paste0("a500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>b"),
-        paste0("a1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
-        paste0("a1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
-        paste0("a2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
-        paste0("a2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a500.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>b"),
+        paste0("a1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a1.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a2.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a2.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
         "NA", "aInfb"
       )
     )
@@ -1269,12 +1269,12 @@ test_that("The `vec_fmt_engineering()` function works", {
   vec_fmt_engineering(vec_num_4, pattern = "a{x}b", output = "latex") %>%
     expect_equal(
       c(
-        "a$-2.50 \\times 10^{6}$b", "a$-2.00 \\times 10^{6}$b",
-        "a$-1.50 \\times 10^{6}$b", "a$-1.00 \\times 10^{6}$b",
-        "a$-500.00 \\times 10^{3}$b", "a$0.00$b",
-        "a$500.00 \\times 10^{3}$b", "a$1.00 \\times 10^{6}$b",
-        "a$1.50 \\times 10^{6}$b", "a$2.00 \\times 10^{6}$b",
-        "a$2.50 \\times 10^{6}$b", "NA", "a$Inf$b"
+        "a-2.50 $\\times$ 10\\textsuperscript{6}b", "a-2.00 $\\times$ 10\\textsuperscript{6}b",
+        "a-1.50 $\\times$ 10\\textsuperscript{6}b", "a-1.00 $\\times$ 10\\textsuperscript{6}b",
+        "a-500.00 $\\times$ 10\\textsuperscript{3}b", "a0.00b",
+        "a500.00 $\\times$ 10\\textsuperscript{3}b", "a1.00 $\\times$ 10\\textsuperscript{6}b",
+        "a1.50 $\\times$ 10\\textsuperscript{6}b", "a2.00 $\\times$ 10\\textsuperscript{6}b",
+        "a2.50 $\\times$ 10\\textsuperscript{6}b", "NA", "aInfb"
       )
     )
 
@@ -1305,17 +1305,17 @@ test_that("The `vec_fmt_engineering()` function works", {
   vec_fmt_engineering(vec_num_4, force_sign_m = TRUE, output = "html") %>%
     expect_equal(
       c(
-        paste0("\U02212", "2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
+        paste0("\U02212", "2.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "2.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "500.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
         "0.00",
-        paste0("+500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
-        paste0("+1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("+1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("+2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("+2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("+500.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+        paste0("+1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("+1.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("+2.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("+2.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
         "NA", "+Inf"
       )
     )
@@ -1323,11 +1323,11 @@ test_that("The `vec_fmt_engineering()` function works", {
   vec_fmt_engineering(vec_num_4, force_sign_m = TRUE, output = "latex") %>%
     expect_equal(
       c(
-        "$-2.50 \\times 10^{6}$", "$-2.00 \\times 10^{6}$",
-        "$-1.50 \\times 10^{6}$", "$-1.00 \\times 10^{6}$",
-        "$-500.00 \\times 10^{3}$", "$0.00$", "$+500.00 \\times 10^{3}$",
-        "$+1.00 \\times 10^{6}$", "$+1.50 \\times 10^{6}$",
-        "$+2.00 \\times 10^{6}$", "$+2.50 \\times 10^{6}$", "NA", "$+Inf$"
+        "-2.50 $\\times$ 10\\textsuperscript{6}", "-2.00 $\\times$ 10\\textsuperscript{6}",
+        "-1.50 $\\times$ 10\\textsuperscript{6}", "-1.00 $\\times$ 10\\textsuperscript{6}",
+        "-500.00 $\\times$ 10\\textsuperscript{3}", "0.00", "+500.00 $\\times$ 10\\textsuperscript{3}",
+        "+1.00 $\\times$ 10\\textsuperscript{6}", "+1.50 $\\times$ 10\\textsuperscript{6}",
+        "+2.00 $\\times$ 10\\textsuperscript{6}", "+2.50 $\\times$ 10\\textsuperscript{6}", "NA", "+Inf"
       )
     )
 
@@ -1373,9 +1373,9 @@ test_that("The `vec_fmt_percent()` function works", {
   vec_fmt_percent(vec_num_1, output = "latex") %>%
     expect_equal(
       c(
-        "$-250.00\\%$", "$-200.00\\%$", "$-150.00\\%$", "$-100.00\\%$",
-        "$-50.00\\%$", "$0.00\\%$", "$50.00\\%$", "$100.00\\%$", "$150.00\\%$",
-        "$200.00\\%$", "$250.00\\%$", "NA", "$Inf\\%$"
+        "-250.00\\%", "-200.00\\%", "-150.00\\%", "-100.00\\%",
+        "-50.00\\%", "0.00\\%", "50.00\\%", "100.00\\%", "150.00\\%",
+        "200.00\\%", "250.00\\%", "NA", "Inf\\%"
       )
     )
 
@@ -1410,9 +1410,9 @@ test_that("The `vec_fmt_percent()` function works", {
   vec_fmt_percent(vec_num_1, decimals = 4, output = "latex") %>%
     expect_equal(
       c(
-        "$-250.0000\\%$", "$-200.0000\\%$", "$-150.0000\\%$", "$-100.0000\\%$",
-        "$-50.0000\\%$", "$0.0000\\%$", "$50.0000\\%$", "$100.0000\\%$",
-        "$150.0000\\%$", "$200.0000\\%$", "$250.0000\\%$", "NA", "$  Inf\\%$"
+        "-250.0000\\%", "-200.0000\\%", "-150.0000\\%", "-100.0000\\%",
+        "-50.0000\\%", "0.0000\\%", "50.0000\\%", "100.0000\\%",
+        "150.0000\\%", "200.0000\\%", "250.0000\\%", "NA", "  Inf\\%"
       )
     )
 
@@ -1446,9 +1446,9 @@ test_that("The `vec_fmt_percent()` function works", {
   vec_fmt_percent(vec_num_1, scale_values = FALSE, output = "latex") %>%
     expect_equal(
       c(
-        "$-2.50\\%$", "$-2.00\\%$", "$-1.50\\%$", "$-1.00\\%$", "$-0.50\\%$",
-        "$0.00\\%$", "$0.50\\%$", "$1.00\\%$", "$1.50\\%$", "$2.00\\%$",
-        "$2.50\\%$", "NA", "$Inf\\%$"
+        "-2.50\\%", "-2.00\\%", "-1.50\\%", "-1.00\\%", "-0.50\\%",
+        "0.00\\%", "0.50\\%", "1.00\\%", "1.50\\%", "2.00\\%",
+        "2.50\\%", "NA", "Inf\\%"
       )
     )
 
@@ -1490,9 +1490,9 @@ test_that("The `vec_fmt_percent()` function works", {
   ) %>%
     expect_equal(
       c(
-        "$-2.5\\%$", "$-2\\%$", "$-1.5\\%$", "$-1\\%$", "$-0.5\\%$",
-        "$0\\%$", "$0.5\\%$", "$1\\%$", "$1.5\\%$", "$2\\%$", "$2.5\\%$",
-        "NA", "$Inf\\%$"
+        "-2.5\\%", "-2\\%", "-1.5\\%", "-1\\%", "-0.5\\%",
+        "0\\%", "0.5\\%", "1\\%", "1.5\\%", "2\\%", "2.5\\%",
+        "NA", "Inf\\%"
       )
     )
 
@@ -1530,10 +1530,10 @@ test_that("The `vec_fmt_percent()` function works", {
   vec_fmt_percent(vec_num_4, use_seps = FALSE, output = "latex") %>%
     expect_equal(
       c(
-        "$-250000000.00\\%$", "$-200000000.00\\%$", "$-150000000.00\\%$",
-        "$-100000000.00\\%$", "$-50000000.00\\%$", "$0.00\\%$", "$50000000.00\\%$",
-        "$100000000.00\\%$", "$150000000.00\\%$", "$200000000.00\\%$",
-        "$250000000.00\\%$", "NA", "$Inf\\%$"
+        "-250000000.00\\%", "-200000000.00\\%", "-150000000.00\\%",
+        "-100000000.00\\%", "-50000000.00\\%", "0.00\\%", "50000000.00\\%",
+        "100000000.00\\%", "150000000.00\\%", "200000000.00\\%",
+        "250000000.00\\%", "NA", "Inf\\%"
       )
     )
 
@@ -1568,9 +1568,9 @@ test_that("The `vec_fmt_percent()` function works", {
   vec_fmt_percent(vec_num_1, accounting = TRUE, output = "latex") %>%
     expect_equal(
       c(
-        "$(250.00\\%)$", "$(200.00\\%)$", "$(150.00\\%)$", "$(100.00\\%)$",
-        "$(50.00\\%)$", "$0.00\\%$", "$50.00\\%$", "$100.00\\%$", "$150.00\\%$",
-        "$200.00\\%$", "$250.00\\%$", "NA", "$Inf\\%$"
+        "(250.00\\%)", "(200.00\\%)", "(150.00\\%)", "(100.00\\%)",
+        "(50.00\\%)", "0.00\\%", "50.00\\%", "100.00\\%", "150.00\\%",
+        "200.00\\%", "250.00\\%", "NA", "Inf\\%"
       )
     )
 
@@ -1608,10 +1608,10 @@ test_that("The `vec_fmt_percent()` function works", {
   vec_fmt_percent(vec_num_4, locale = "de", output = "latex") %>%
     expect_equal(
       c(
-        "$-250.000.000,00\\%$", "$-200.000.000,00\\%$", "$-150.000.000,00\\%$",
-        "$-100.000.000,00\\%$", "$-50.000.000,00\\%$", "$0,00\\%$", "$50.000.000,00\\%$",
-        "$100.000.000,00\\%$", "$150.000.000,00\\%$", "$200.000.000,00\\%$",
-        "$250.000.000,00\\%$", "NA", "$Inf\\%$"
+        "-250.000.000,00\\%", "-200.000.000,00\\%", "-150.000.000,00\\%",
+        "-100.000.000,00\\%", "-50.000.000,00\\%", "0,00\\%", "50.000.000,00\\%",
+        "100.000.000,00\\%", "150.000.000,00\\%", "200.000.000,00\\%",
+        "250.000.000,00\\%", "NA", "Inf\\%"
       )
     )
 
@@ -1647,9 +1647,9 @@ test_that("The `vec_fmt_percent()` function works", {
   vec_fmt_percent(vec_num_1, pattern = "a{x}b", output = "latex") %>%
     expect_equal(
       c(
-        "a$-250.00\\%$b", "a$-200.00\\%$b", "a$-150.00\\%$b", "a$-100.00\\%$b",
-        "a$-50.00\\%$b", "a$0.00\\%$b", "a$50.00\\%$b", "a$100.00\\%$b",
-        "a$150.00\\%$b", "a$200.00\\%$b", "a$250.00\\%$b", "NA", "a$Inf\\%$b"
+        "a-250.00\\%b", "a-200.00\\%b", "a-150.00\\%b", "a-100.00\\%b",
+        "a-50.00\\%b", "a0.00\\%b", "a50.00\\%b", "a100.00\\%b",
+        "a150.00\\%b", "a200.00\\%b", "a250.00\\%b", "NA", "aInf\\%b"
       )
     )
 
@@ -1684,9 +1684,9 @@ test_that("The `vec_fmt_percent()` function works", {
   vec_fmt_percent(vec_num_1, force_sign = TRUE, output = "latex") %>%
     expect_equal(
       c(
-        "$-250.00\\%$", "$-200.00\\%$", "$-150.00\\%$", "$-100.00\\%$",
-        "$-50.00\\%$", "$0.00\\%$", "$+50.00\\%$", "$+100.00\\%$", "$+150.00\\%$",
-        "$+200.00\\%$", "$+250.00\\%$", "NA", "$+Inf\\%$"
+        "-250.00\\%", "-200.00\\%", "-150.00\\%", "-100.00\\%",
+        "-50.00\\%", "0.00\\%", "+50.00\\%", "+100.00\\%", "+150.00\\%",
+        "+200.00\\%", "+250.00\\%", "NA", "+Inf\\%"
       )
     )
 
@@ -1721,9 +1721,9 @@ test_that("The `vec_fmt_percent()` function works", {
   vec_fmt_percent(vec_num_1, placement = "left", output = "latex") %>%
     expect_equal(
       c(
-        "$-\\%250.00$", "$-\\%200.00$", "$-\\%150.00$", "$-\\%100.00$",
-        "$-\\%50.00$", "$\\%0.00$", "$\\%50.00$", "$\\%100.00$", "$\\%150.00$",
-        "$\\%200.00$", "$\\%250.00$", "NA", "$\\%Inf$"
+        "-\\%250.00", "-\\%200.00", "-\\%150.00", "-\\%100.00",
+        "-\\%50.00", "\\%0.00", "\\%50.00", "\\%100.00", "\\%150.00",
+        "\\%200.00", "\\%250.00", "NA", "\\%Inf"
       )
     )
 
@@ -1758,9 +1758,9 @@ test_that("The `vec_fmt_percent()` function works", {
   vec_fmt_percent(vec_num_1, incl_space = TRUE, output = "latex") %>%
     expect_equal(
       c(
-        "$-250.00 \\%$", "$-200.00 \\%$", "$-150.00 \\%$", "$-100.00 \\%$",
-        "$-50.00 \\%$", "$0.00 \\%$", "$50.00 \\%$", "$100.00 \\%$",
-        "$150.00 \\%$", "$200.00 \\%$", "$250.00 \\%$", "NA", "$Inf \\%$"
+        "-250.00 \\%", "-200.00 \\%", "-150.00 \\%", "-100.00 \\%",
+        "-50.00 \\%", "0.00 \\%", "50.00 \\%", "100.00 \\%",
+        "150.00 \\%", "200.00 \\%", "250.00 \\%", "NA", "Inf \\%"
       )
     )
 
@@ -1804,9 +1804,9 @@ test_that("The `vec_fmt_percent()` function works", {
   ) %>%
     expect_equal(
       c(
-        "$-\\% 250.00$", "$-\\% 200.00$", "$-\\% 150.00$", "$-\\% 100.00$",
-        "$-\\% 50.00$", "$\\% 0.00$", "$\\% 50.00$", "$\\% 100.00$",
-        "$\\% 150.00$", "$\\% 200.00$", "$\\% 250.00$", "NA", "$\\% Inf$"
+        "-\\% 250.00", "-\\% 200.00", "-\\% 150.00", "-\\% 100.00",
+        "-\\% 50.00", "\\% 0.00", "\\% 50.00", "\\% 100.00",
+        "\\% 150.00", "\\% 200.00", "\\% 250.00", "NA", "\\% Inf"
       )
     )
 
@@ -1863,12 +1863,12 @@ test_that("The `vec_fmt_partsper()` function works", {
   ) %>%
     expect_equal(
       c(
-        "$-2,500,000.000 \\text{ppm}$", "$-2,000,000.000 \\text{ppm}$",
-        "$-1,500,000.000 \\text{ppm}$", "$-1,000,000.000 \\text{ppm}$",
-        "$-500,000.000 \\text{ppm}$", "$0.000 \\text{ppm}$",
-        "$500,000.000 \\text{ppm}$", "$1,000,000.000 \\text{ppm}$",
-        "$1,500,000.000 \\text{ppm}$", "$2,000,000.000 \\text{ppm}$",
-        "$2,500,000.000 \\text{ppm}$", "NA", "$ Inf \\text{ppm}$"
+        "-2,500,000.000 ppm", "-2,000,000.000 ppm",
+        "-1,500,000.000 ppm", "-1,000,000.000 ppm",
+        "-500,000.000 ppm", "0.000 ppm",
+        "500,000.000 ppm", "1,000,000.000 ppm",
+        "1,500,000.000 ppm", "2,000,000.000 ppm",
+        "2,500,000.000 ppm", "NA", " Inf ppm"
       )
     )
 
@@ -1915,10 +1915,10 @@ test_that("The `vec_fmt_partsper()` function works", {
   ) %>%
     expect_equal(
       c(
-        "$-2.50 \\text{ppm}$", "$-2.00 \\text{ppm}$", "$-1.50 \\text{ppm}$",
-        "$-1.00 \\text{ppm}$", "$-0.50 \\text{ppm}$", "$0.00 \\text{ppm}$",
-        "$0.50 \\text{ppm}$", "$1.00 \\text{ppm}$", "$1.50 \\text{ppm}$",
-        "$2.00 \\text{ppm}$", "$2.50 \\text{ppm}$", "NA", "$Inf \\text{ppm}$"
+        "-2.50 ppm", "-2.00 ppm", "-1.50 ppm",
+        "-1.00 ppm", "-0.50 ppm", "0.00 ppm",
+        "0.50 ppm", "1.00 ppm", "1.50 ppm",
+        "2.00 ppm", "2.50 ppm", "NA", "Inf ppm"
       )
     )
 
@@ -1965,12 +1965,12 @@ test_that("The `vec_fmt_partsper()` function works", {
   ) %>%
     expect_equal(
       c(
-        "$-2.500.000,00 \\text{ppm}$", "$-2.000.000,00 \\text{ppm}$",
-        "$-1.500.000,00 \\text{ppm}$", "$-1.000.000,00 \\text{ppm}$",
-        "$-500.000,00 \\text{ppm}$", "$0,00 \\text{ppm}$",
-        "$500.000,00 \\text{ppm}$", "$1.000.000,00 \\text{ppm}$",
-        "$1.500.000,00 \\text{ppm}$", "$2.000.000,00 \\text{ppm}$",
-        "$2.500.000,00 \\text{ppm}$", "NA", "$Inf \\text{ppm}$"
+        "-2.500.000,00 ppm", "-2.000.000,00 ppm",
+        "-1.500.000,00 ppm", "-1.000.000,00 ppm",
+        "-500.000,00 ppm", "0,00 ppm",
+        "500.000,00 ppm", "1.000.000,00 ppm",
+        "1.500.000,00 ppm", "2.000.000,00 ppm",
+        "2.500.000,00 ppm", "NA", "Inf ppm"
       )
     )
 
@@ -2012,11 +2012,11 @@ test_that("The `vec_fmt_partsper()` function works", {
   vec_fmt_partsper(vec_num_1, to_units = "ppm", incl_space = FALSE, output = "latex") %>%
     expect_equal(
       c(
-        "$-2,500,000.00\\text{ppm}$", "$-2,000,000.00\\text{ppm}$",
-        "$-1,500,000.00\\text{ppm}$", "$-1,000,000.00\\text{ppm}$", "$-500,000.00\\text{ppm}$",
-        "$0.00\\text{ppm}$", "$500,000.00\\text{ppm}$", "$1,000,000.00\\text{ppm}$",
-        "$1,500,000.00\\text{ppm}$", "$2,000,000.00\\text{ppm}$", "$2,500,000.00\\text{ppm}$",
-        "NA", "$Inf\\text{ppm}$"
+        "-2,500,000.00ppm", "-2,000,000.00ppm",
+        "-1,500,000.00ppm", "-1,000,000.00ppm", "-500,000.00ppm",
+        "0.00ppm", "500,000.00ppm", "1,000,000.00ppm",
+        "1,500,000.00ppm", "2,000,000.00ppm", "2,500,000.00ppm",
+        "NA", "Infppm"
       )
     )
 
@@ -2064,9 +2064,9 @@ test_that("The `vec_fmt_fraction()` function works", {
   vec_fmt_fraction(range_0_1, layout = "diagonal", output = "latex") %>%
     expect_equal(
       c(
-        "$0$", "$0$", "$0$", "${{}^{1}\\!/_{9}}$", "${{}^{1}\\!/_{4}}$",
-        "${{}^{2}\\!/_{5}}$", "${{}^{1}\\!/_{2}}$", "${{}^{3}\\!/_{5}}$",
-        "${{}^{3}\\!/_{4}}$", "${{}^{8}\\!/_{9}}$", "$1$", "$1$", "$1$"
+        "0", "0", "0", "\\textsuperscript{1}\\!/\\textsubscript{9}", "\\textsuperscript{1}\\!/\\textsubscript{4}",
+        "\\textsuperscript{2}\\!/\\textsubscript{5}", "\\textsuperscript{1}\\!/\\textsubscript{2}", "\\textsuperscript{3}\\!/\\textsubscript{5}",
+        "\\textsuperscript{3}\\!/\\textsubscript{4}", "\\textsuperscript{8}\\!/\\textsubscript{9}", "1", "1", "1"
       )
     )
 
@@ -2107,10 +2107,10 @@ test_that("The `vec_fmt_fraction()` function works", {
   vec_fmt_fraction(range_0_1_minus, layout = "diagonal", output = "latex") %>%
     expect_equal(
       c(
-        "$0$", "$0$", "$0$", "$-{{}^{1}\\!/_{9}}$", "$-{{}^{1}\\!/_{4}}$",
-        "$-{{}^{2}\\!/_{5}}$", "$-{{}^{1}\\!/_{2}}$", "$-{{}^{3}\\!/_{5}}$",
-        "$-{{}^{3}\\!/_{4}}$", "$-{{}^{8}\\!/_{9}}$", "$-1$", "$-1$",
-        "$-1$"
+        "0", "0", "0", "-\\textsuperscript{1}\\!/\\textsubscript{9}", "-\\textsuperscript{1}\\!/\\textsubscript{4}",
+        "-\\textsuperscript{2}\\!/\\textsubscript{5}", "-\\textsuperscript{1}\\!/\\textsubscript{2}", "-\\textsuperscript{3}\\!/\\textsubscript{5}",
+        "-\\textsuperscript{3}\\!/\\textsubscript{4}", "-\\textsuperscript{8}\\!/\\textsubscript{9}", "-1", "-1",
+        "-1"
       )
     )
 
@@ -2150,10 +2150,10 @@ test_that("The `vec_fmt_fraction()` function works", {
   vec_fmt_fraction(range_1_2, layout = "diagonal", output = "latex") %>%
     expect_equal(
       c(
-        "$1$", "$1$", "$1$", "$1\\, {{}^{1}\\!/_{9}}$", "$1\\, {{}^{1}\\!/_{4}}$",
-        "$1\\, {{}^{2}\\!/_{5}}$", "$1\\, {{}^{1}\\!/_{2}}$", "$1\\, {{}^{3}\\!/_{5}}$",
-        "$1\\, {{}^{3}\\!/_{4}}$", "$1\\, {{}^{8}\\!/_{9}}$", "$2$",
-        "$2$", "$2$"
+        "1", "1", "1", "1\\textsuperscript{1}\\!/\\textsubscript{9}", "1\\textsuperscript{1}\\!/\\textsubscript{4}",
+        "1\\textsuperscript{2}\\!/\\textsubscript{5}", "1\\textsuperscript{1}\\!/\\textsubscript{2}", "1\\textsuperscript{3}\\!/\\textsubscript{5}",
+        "1\\textsuperscript{3}\\!/\\textsubscript{4}", "1\\textsuperscript{8}\\!/\\textsubscript{9}", "2",
+        "2", "2"
       )
     )
 
@@ -2197,10 +2197,10 @@ test_that("The `vec_fmt_fraction()` function works", {
   vec_fmt_fraction(range_1_2_minus, layout = "diagonal", output = "latex") %>%
     expect_equal(
       c(
-        "$-1$", "$-1$", "$-1$", "$-1\\, {{}^{1}\\!/_{9}}$", "$-1\\, {{}^{1}\\!/_{4}}$",
-        "$-1\\, {{}^{2}\\!/_{5}}$", "$-1\\, {{}^{1}\\!/_{2}}$", "$-1\\, {{}^{3}\\!/_{5}}$",
-        "$-1\\, {{}^{3}\\!/_{4}}$", "$-1\\, {{}^{8}\\!/_{9}}$", "$-2$",
-        "$-2$", "$-2$"
+        "-1", "-1", "-1", "-1\\textsuperscript{1}\\!/\\textsubscript{9}", "-1\\textsuperscript{1}\\!/\\textsubscript{4}",
+        "-1\\textsuperscript{2}\\!/\\textsubscript{5}", "-1\\textsuperscript{1}\\!/\\textsubscript{2}", "-1\\textsuperscript{3}\\!/\\textsubscript{5}",
+        "-1\\textsuperscript{3}\\!/\\textsubscript{4}", "-1\\textsuperscript{8}\\!/\\textsubscript{9}", "-2",
+        "-2", "-2"
       )
     )
 
@@ -2233,8 +2233,8 @@ test_that("The `vec_fmt_fraction()` function works", {
   vec_fmt_fraction(range_0_1, layout = "inline", output = "latex") %>%
     expect_equal(
       c(
-        "$0$", "$0$", "$0$", "$1/9$", "$1/4$", "$2/5$", "$1/2$", "$3/5$",
-        "$3/4$", "$8/9$", "$1$", "$1$", "$1$"
+        "0", "0", "0", "1/9", "1/4", "2/5", "1/2", "3/5",
+        "3/4", "8/9", "1", "1", "1"
       )
     )
 
@@ -2269,8 +2269,8 @@ test_that("The `vec_fmt_fraction()` function works", {
   vec_fmt_fraction(range_0_1_minus, layout = "inline", output = "latex") %>%
     expect_equal(
       c(
-        "$0$", "$0$", "$0$", "$-1/9$", "$-1/4$", "$-2/5$", "$-1/2$",
-        "$-3/5$", "$-3/4$", "$-8/9$", "$-1$", "$-1$", "$-1$"
+        "0", "0", "0", "-1/9", "-1/4", "-2/5", "-1/2",
+        "-3/5", "-3/4", "-8/9", "-1", "-1", "-1"
       )
     )
 
@@ -2301,9 +2301,9 @@ test_that("The `vec_fmt_fraction()` function works", {
   vec_fmt_fraction(range_1_2, layout = "inline", output = "latex") %>%
     expect_equal(
       c(
-        "$1$", "$1$", "$1$", "$1\\ 1/9$", "$1\\ 1/4$", "$1\\ 2/5$",
-        "$1\\ 1/2$", "$1\\ 3/5$", "$1\\ 3/4$", "$1\\ 8/9$", "$2$", "$2$",
-        "$2$"
+        "1", "1", "1", "1\\ 1/9", "1\\ 1/4", "1\\ 2/5",
+        "1\\ 1/2", "1\\ 3/5", "1\\ 3/4", "1\\ 8/9", "2", "2",
+        "2"
       )
     )
 
@@ -2338,9 +2338,9 @@ test_that("The `vec_fmt_fraction()` function works", {
   vec_fmt_fraction(range_1_2_minus, layout = "inline", output = "latex") %>%
     expect_equal(
       c(
-        "$-1$", "$-1$", "$-1$", "$-1\\ 1/9$", "$-1\\ 1/4$", "$-1\\ 2/5$",
-        "$-1\\ 1/2$", "$-1\\ 3/5$", "$-1\\ 3/4$", "$-1\\ 8/9$", "$-2$",
-        "$-2$", "$-2$"
+        "-1", "-1", "-1", "-1\\ 1/9", "-1\\ 1/4", "-1\\ 2/5",
+        "-1\\ 1/2", "-1\\ 3/5", "-1\\ 3/4", "-1\\ 8/9", "-2",
+        "-2", "-2"
       )
     )
 
@@ -2588,7 +2588,7 @@ test_that("The `vec_fmt_fraction()` function works", {
     )
 
   vec_fmt_fraction(c(5000.3, 10000.8), layout = "diagonal", output = "latex") %>%
-    expect_equal(c("$5,000\\, {{}^{2}\\!/_{7}}$", "$10,000\\, {{}^{4}\\!/_{5}}$"))
+    expect_equal(c("5,000\\textsuperscript{2}\\!/\\textsubscript{7}", "10,000\\textsuperscript{4}\\!/\\textsubscript{5}"))
 
   vec_fmt_fraction(c(5000.3, 10000.8), layout = "diagonal", output = "rtf") %>%
     expect_equal(c("5,000{\\super 2}/{\\sub 7}", "10,000{\\super 4}/{\\sub 5}"))
@@ -2630,7 +2630,7 @@ test_that("The `vec_fmt_fraction()` function works", {
     c(5000.3, 10000.8), layout = "diagonal",
     sep_mark = ".", output = "latex"
   ) %>%
-    expect_equal(c("$5.000\\, {{}^{2}\\!/_{7}}$", "$10.000\\, {{}^{4}\\!/_{5}}$"))
+    expect_equal(c("5.000\\textsuperscript{2}\\!/\\textsubscript{7}", "10.000\\textsuperscript{4}\\!/\\textsubscript{5}"))
 
   vec_fmt_fraction(
     c(5000.3, 10000.8), layout = "diagonal",
@@ -2659,7 +2659,7 @@ test_that("The `vec_fmt_fraction()` function works", {
     c(0.5, 1.5), layout = "diagonal",
     pattern = "a{x}b", output = "latex"
   ) %>%
-    expect_equal(c("a${{}^{1}\\!/_{2}}$b", "a$1\\, {{}^{1}\\!/_{2}}$b"))
+    expect_equal(c("a\\textsuperscript{1}\\!/\\textsubscript{2}b", "a1\\textsuperscript{1}\\!/\\textsubscript{2}b"))
 
   vec_fmt_fraction(
     c(0.5, 1.5), layout = "diagonal",
@@ -2683,7 +2683,7 @@ test_that("The `vec_fmt_fraction()` function works", {
     c(0.5, 1.5), layout = "inline",
     pattern = "a{x}b", output = "latex"
   ) %>%
-    expect_equal(c("a$1/2$b", "a$1\\ 1/2$b"))
+    expect_equal(c("a1/2b", "a1\\ 1/2b"))
 
   vec_fmt_fraction(
     c(0.5, 1.5), layout = "inline",
@@ -2698,7 +2698,7 @@ test_that("The `vec_fmt_fraction()` function works", {
     expect_equal(c(paste0("\U02212", "1"), "0", "1"))
 
   vec_fmt_fraction(exact_numbers, layout = "diagonal", output = "latex") %>%
-    expect_equal(c("$-1$", "$0$", "$1$"))
+    expect_equal(c("-1", "0", "1"))
 
   vec_fmt_fraction(exact_numbers, layout = "diagonal", output = "rtf") %>%
     expect_equal(c("-1", "0", "1"))
@@ -2710,7 +2710,7 @@ test_that("The `vec_fmt_fraction()` function works", {
     expect_equal(c(paste0("\U02212", "1"), "0", "1"))
 
   vec_fmt_fraction(exact_numbers, layout = "inline", output = "latex") %>%
-    expect_equal(c("$-1$", "$0$", "$1$"))
+    expect_equal(c("-1", "0", "1"))
 
   vec_fmt_fraction(exact_numbers, layout = "inline", output = "rtf") %>%
     expect_equal(c("-1", "0", "1"))
@@ -2722,7 +2722,7 @@ test_that("The `vec_fmt_fraction()` function works", {
     expect_equal(c("NA", "NaN", "Inf", "-Inf"))
 
   vec_fmt_fraction(not_numbers, layout = "diagonal", output = "latex") %>%
-    expect_equal(c("NA", "NaN", "$Inf$", "$-Inf$"))
+    expect_equal(c("NA", "NaN", "Inf", "-Inf"))
 
   vec_fmt_fraction(not_numbers, layout = "diagonal", output = "rtf") %>%
     expect_equal(c("NA", "NaN", "Inf", "-Inf"))
@@ -2734,7 +2734,7 @@ test_that("The `vec_fmt_fraction()` function works", {
     expect_equal(c("NA", "NaN", "Inf", "-Inf"))
 
   vec_fmt_fraction(not_numbers, layout = "inline", output = "latex") %>%
-    expect_equal(c("NA", "NaN", "$Inf$", "$-Inf$"))
+    expect_equal(c("NA", "NaN", "Inf", "-Inf"))
 
   vec_fmt_fraction(not_numbers, layout = "inline", output = "rtf") %>%
     expect_equal(c("NA", "NaN", "Inf", "-Inf"))
@@ -2770,10 +2770,10 @@ test_that("The `vec_fmt_currency()` function works", {
   vec_fmt_currency(vec_num_1, output = "latex") %>%
     expect_equal(
       c(
-        "$-\\text{\\$}2.50$", "$-\\text{\\$}2.00$", "$-\\text{\\$}1.50$",
-        "$-\\text{\\$}1.00$", "$-\\text{\\$}0.50$", "$\\text{\\$}0.00$",
-        "$\\text{\\$}0.50$", "$\\text{\\$}1.00$", "$\\text{\\$}1.50$",
-        "$\\text{\\$}2.00$", "$\\text{\\$}2.50$", "NA", "$\\text{\\$}Inf$"
+        "-\\$2.50", "-\\$2.00", "-\\$1.50",
+        "-\\$1.00", "-\\$0.50", "\\$0.00",
+        "\\$0.50", "\\$1.00", "\\$1.50",
+        "\\$2.00", "\\$2.50", "NA", "\\$Inf"
       )
     )
 
@@ -2806,9 +2806,9 @@ test_that("The `vec_fmt_currency()` function works", {
   vec_fmt_currency(vec_num_1, use_subunits = FALSE, output = "latex") %>%
     expect_equal(
       c(
-        "$-\\text{\\$}2$", "$-\\text{\\$}2$", "$-\\text{\\$}2$", "$-\\text{\\$}1$",
-        "$-\\text{\\$}0$", "$\\text{\\$}0$", "$\\text{\\$}0$", "$\\text{\\$}1$",
-        "$\\text{\\$}2$", "$\\text{\\$}2$", "$\\text{\\$}2$", "NA", "$\\text{\\$}Inf$"
+        "-\\$2", "-\\$2", "-\\$2", "-\\$1",
+        "-\\$0", "\\$0", "\\$0", "\\$1",
+        "\\$2", "\\$2", "\\$2", "NA", "\\$Inf"
       )
     )
 
@@ -2843,13 +2843,13 @@ test_that("The `vec_fmt_currency()` function works", {
   vec_fmt_currency(vec_num_6, decimals = 4, output = "latex") %>%
     expect_equal(
       c(
-        "$\\text{\\$}0.0000$", "$\\text{\\$}0.1000$", "$\\text{\\$}0.2000$",
-        "$\\text{\\$}0.3000$", "$\\text{\\$}0.4000$", "$\\text{\\$}0.5000$",
-        "$\\text{\\$}0.6000$", "$\\text{\\$}0.7000$", "$\\text{\\$}0.8000$",
-        "$\\text{\\$}0.9000$", "$\\text{\\$}1.0000$", "$\\text{\\$}1.1000$",
-        "$\\text{\\$}1.2000$", "$\\text{\\$}1.3000$", "$\\text{\\$}1.4000$",
-        "$\\text{\\$}1.5000$", "$\\text{\\$}1.6000$", "$\\text{\\$}1.7000$",
-        "$\\text{\\$}1.8000$", "$\\text{\\$}1.9000$", "$\\text{\\$}2.0000$"
+        "\\$0.0000", "\\$0.1000", "\\$0.2000",
+        "\\$0.3000", "\\$0.4000", "\\$0.5000",
+        "\\$0.6000", "\\$0.7000", "\\$0.8000",
+        "\\$0.9000", "\\$1.0000", "\\$1.1000",
+        "\\$1.2000", "\\$1.3000", "\\$1.4000",
+        "\\$1.5000", "\\$1.6000", "\\$1.7000",
+        "\\$1.8000", "\\$1.9000", "\\$2.0000"
       )
     )
 
@@ -2896,12 +2896,12 @@ test_that("The `vec_fmt_currency()` function works", {
   ) %>%
     expect_equal(
       c(
-        "$\\text{\\$}0.$", "$\\text{\\$}0.$", "$\\text{\\$}0.$", "$\\text{\\$}0.$",
-        "$\\text{\\$}0.$", "$\\text{\\$}0.$", "$\\text{\\$}1.$", "$\\text{\\$}1.$",
-        "$\\text{\\$}1.$", "$\\text{\\$}1.$", "$\\text{\\$}1.$", "$\\text{\\$}1.$",
-        "$\\text{\\$}1.$", "$\\text{\\$}1.$", "$\\text{\\$}1.$", "$\\text{\\$}2.$",
-        "$\\text{\\$}2.$", "$\\text{\\$}2.$", "$\\text{\\$}2.$", "$\\text{\\$}2.$",
-        "$\\text{\\$}2.$"
+        "\\$0.", "\\$0.", "\\$0.", "\\$0.",
+        "\\$0.", "\\$0.", "\\$1.", "\\$1.",
+        "\\$1.", "\\$1.", "\\$1.", "\\$1.",
+        "\\$1.", "\\$1.", "\\$1.", "\\$2.",
+        "\\$2.", "\\$2.", "\\$2.", "\\$2.",
+        "\\$2."
       )
     )
 
@@ -2938,10 +2938,10 @@ test_that("The `vec_fmt_currency()` function works", {
   vec_fmt_currency(vec_num_4, use_seps = FALSE, output = "latex") %>%
     expect_equal(
       c(
-        "$-\\text{\\$}2500000.00$", "$-\\text{\\$}2000000.00$", "$-\\text{\\$}1500000.00$",
-        "$-\\text{\\$}1000000.00$", "$-\\text{\\$}500000.00$", "$\\text{\\$}0.00$",
-        "$\\text{\\$}500000.00$", "$\\text{\\$}1000000.00$", "$\\text{\\$}1500000.00$",
-        "$\\text{\\$}2000000.00$", "$\\text{\\$}2500000.00$", "NA", "$\\text{\\$}Inf$"
+        "-\\$2500000.00", "-\\$2000000.00", "-\\$1500000.00",
+        "-\\$1000000.00", "-\\$500000.00", "\\$0.00",
+        "\\$500000.00", "\\$1000000.00", "\\$1500000.00",
+        "\\$2000000.00", "\\$2500000.00", "NA", "\\$Inf"
       )
     )
 
@@ -2973,10 +2973,10 @@ test_that("The `vec_fmt_currency()` function works", {
   vec_fmt_currency(vec_num_1, accounting = TRUE, output = "latex") %>%
     expect_equal(
       c(
-        "$(\\text{\\$}2.50)$", "$(\\text{\\$}2.00)$", "$(\\text{\\$}1.50)$",
-        "$(\\text{\\$}1.00)$", "$(\\text{\\$}0.50)$", "$\\text{\\$}0.00$",
-        "$\\text{\\$}0.50$", "$\\text{\\$}1.00$", "$\\text{\\$}1.50$",
-        "$\\text{\\$}2.00$", "$\\text{\\$}2.50$", "NA", "$\\text{\\$}Inf$"
+        "(\\$2.50)", "(\\$2.00)", "(\\$1.50)",
+        "(\\$1.00)", "(\\$0.50)", "\\$0.00",
+        "\\$0.50", "\\$1.00", "\\$1.50",
+        "\\$2.00", "\\$2.50", "NA", "\\$Inf"
       )
     )
 
@@ -3010,10 +3010,10 @@ test_that("The `vec_fmt_currency()` function works", {
   vec_fmt_currency(vec_num_1, scale_by = 2.5, output = "latex") %>%
     expect_equal(
       c(
-        "$-\\text{\\$}6.25$", "$-\\text{\\$}5.00$", "$-\\text{\\$}3.75$",
-        "$-\\text{\\$}2.50$", "$-\\text{\\$}1.25$", "$\\text{\\$}0.00$",
-        "$\\text{\\$}1.25$", "$\\text{\\$}2.50$", "$\\text{\\$}3.75$",
-        "$\\text{\\$}5.00$", "$\\text{\\$}6.25$", "NA", "$\\text{\\$}Inf$"
+        "-\\$6.25", "-\\$5.00", "-\\$3.75",
+        "-\\$2.50", "-\\$1.25", "\\$0.00",
+        "\\$1.25", "\\$2.50", "\\$3.75",
+        "\\$5.00", "\\$6.25", "NA", "\\$Inf"
       )
     )
 
@@ -3048,11 +3048,11 @@ test_that("The `vec_fmt_currency()` function works", {
   vec_fmt_currency(vec_num_4, locale = "de", output = "latex") %>%
     expect_equal(
       c(
-        "$-\\text{EUR}2.500.000,00$", "$-\\text{EUR}2.000.000,00$",
-        "$-\\text{EUR}1.500.000,00$", "$-\\text{EUR}1.000.000,00$", "$-\\text{EUR}500.000,00$",
-        "$\\text{EUR}0,00$", "$\\text{EUR}500.000,00$", "$\\text{EUR}1.000.000,00$",
-        "$\\text{EUR}1.500.000,00$", "$\\text{EUR}2.000.000,00$", "$\\text{EUR}2.500.000,00$",
-        "NA", "$\\text{EUR}Inf$"
+        "-EUR2.500.000,00", "-EUR2.000.000,00",
+        "-EUR1.500.000,00", "-EUR1.000.000,00", "-EUR500.000,00",
+        "EUR0,00", "EUR500.000,00", "EUR1.000.000,00",
+        "EUR1.500.000,00", "EUR2.000.000,00", "EUR2.500.000,00",
+        "NA", "EURInf"
       )
     )
 
@@ -3087,10 +3087,10 @@ test_that("The `vec_fmt_currency()` function works", {
   vec_fmt_currency(vec_num_4, suffixing = TRUE, output = "latex") %>%
     expect_equal(
       c(
-        "$-\\text{\\$}2.50M$", "$-\\text{\\$}2.00M$", "$-\\text{\\$}1.50M$",
-        "$-\\text{\\$}1.00M$", "$-\\text{\\$}500.00K$", "$\\text{\\$}0.00$",
-        "$\\text{\\$}500.00K$", "$\\text{\\$}1.00M$", "$\\text{\\$}1.50M$",
-        "$\\text{\\$}2.00M$", "$\\text{\\$}2.50M$", "NA", "$\\text{\\$}InfT$"
+        "-\\$2.50M", "-\\$2.00M", "-\\$1.50M",
+        "-\\$1.00M", "-\\$500.00K", "\\$0.00",
+        "\\$500.00K", "\\$1.00M", "\\$1.50M",
+        "\\$2.00M", "\\$2.50M", "NA", "\\$InfT"
       )
     )
 
@@ -3124,10 +3124,10 @@ test_that("The `vec_fmt_currency()` function works", {
   vec_fmt_currency(vec_num_1, pattern = "a{x}b", output = "latex") %>%
     expect_equal(
       c(
-        "a$-\\text{\\$}2.50$b", "a$-\\text{\\$}2.00$b", "a$-\\text{\\$}1.50$b",
-        "a$-\\text{\\$}1.00$b", "a$-\\text{\\$}0.50$b", "a$\\text{\\$}0.00$b",
-        "a$\\text{\\$}0.50$b", "a$\\text{\\$}1.00$b", "a$\\text{\\$}1.50$b",
-        "a$\\text{\\$}2.00$b", "a$\\text{\\$}2.50$b", "NA", "a$\\text{\\$}Inf$b"
+        "a-\\$2.50b", "a-\\$2.00b", "a-\\$1.50b",
+        "a-\\$1.00b", "a-\\$0.50b", "a\\$0.00b",
+        "a\\$0.50b", "a\\$1.00b", "a\\$1.50b",
+        "a\\$2.00b", "a\\$2.50b", "NA", "a\\$Infb"
       )
     )
 
@@ -3163,11 +3163,11 @@ test_that("The `vec_fmt_currency()` function works", {
   vec_fmt_currency(vec_num_4, sep_mark = " ", dec_mark = ",", output = "latex") %>%
     expect_equal(
       c(
-        "$-\\text{\\$}2 500 000,00$", "$-\\text{\\$}2 000 000,00$",
-        "$-\\text{\\$}1 500 000,00$", "$-\\text{\\$}1 000 000,00$", "$-\\text{\\$}500 000,00$",
-        "$\\text{\\$}0,00$", "$\\text{\\$}500 000,00$", "$\\text{\\$}1 000 000,00$",
-        "$\\text{\\$}1 500 000,00$", "$\\text{\\$}2 000 000,00$", "$\\text{\\$}2 500 000,00$",
-        "NA", "$\\text{\\$}Inf$"
+        "-\\$2 500 000,00", "-\\$2 000 000,00",
+        "-\\$1 500 000,00", "-\\$1 000 000,00", "-\\$500 000,00",
+        "\\$0,00", "\\$500 000,00", "\\$1 000 000,00",
+        "\\$1 500 000,00", "\\$2 000 000,00", "\\$2 500 000,00",
+        "NA", "\\$Inf"
       )
     )
 
@@ -3201,10 +3201,10 @@ test_that("The `vec_fmt_currency()` function works", {
   vec_fmt_currency(vec_num_1, force_sign = TRUE, output = "latex") %>%
     expect_equal(
       c(
-        "$-\\text{\\$}2.50$", "$-\\text{\\$}2.00$", "$-\\text{\\$}1.50$",
-        "$-\\text{\\$}1.00$", "$-\\text{\\$}0.50$", "$\\text{\\$}0.00$",
-        "$+\\text{\\$}0.50$", "$+\\text{\\$}1.00$", "$+\\text{\\$}1.50$",
-        "$+\\text{\\$}2.00$", "$+\\text{\\$}2.50$", "NA", "$+\\text{\\$}Inf$"
+        "-\\$2.50", "-\\$2.00", "-\\$1.50",
+        "-\\$1.00", "-\\$0.50", "\\$0.00",
+        "+\\$0.50", "+\\$1.00", "+\\$1.50",
+        "+\\$2.00", "+\\$2.50", "NA", "+\\$Inf"
       )
     )
 
@@ -3237,10 +3237,10 @@ test_that("The `vec_fmt_currency()` function works", {
   vec_fmt_currency(vec_num_1, incl_space = TRUE, output = "latex") %>%
     expect_equal(
       c(
-        "$-\\text{\\$} 2.50$", "$-\\text{\\$} 2.00$", "$-\\text{\\$} 1.50$",
-        "$-\\text{\\$} 1.00$", "$-\\text{\\$} 0.50$", "$\\text{\\$} 0.00$",
-        "$\\text{\\$} 0.50$", "$\\text{\\$} 1.00$", "$\\text{\\$} 1.50$",
-        "$\\text{\\$} 2.00$", "$\\text{\\$} 2.50$", "NA", "$\\text{\\$} Inf$"
+        "-\\$ 2.50", "-\\$ 2.00", "-\\$ 1.50",
+        "-\\$ 1.00", "-\\$ 0.50", "\\$ 0.00",
+        "\\$ 0.50", "\\$ 1.00", "\\$ 1.50",
+        "\\$ 2.00", "\\$ 2.50", "NA", "\\$ Inf"
       )
     )
 
@@ -3273,10 +3273,10 @@ test_that("The `vec_fmt_currency()` function works", {
   vec_fmt_currency(vec_num_1, placement = "right", output = "latex") %>%
     expect_equal(
       c(
-        "$-2.50\\text{\\$}$", "$-2.00\\text{\\$}$", "$-1.50\\text{\\$}$",
-        "$-1.00\\text{\\$}$", "$-0.50\\text{\\$}$", "$0.00\\text{\\$}$",
-        "$0.50\\text{\\$}$", "$1.00\\text{\\$}$", "$1.50\\text{\\$}$",
-        "$2.00\\text{\\$}$", "$2.50\\text{\\$}$", "NA", "$Inf\\text{\\$}$"
+        "-2.50\\$", "-2.00\\$", "-1.50\\$",
+        "-1.00\\$", "-0.50\\$", "0.00\\$",
+        "0.50\\$", "1.00\\$", "1.50\\$",
+        "2.00\\$", "2.50\\$", "NA", "Inf\\$"
       )
     )
 
@@ -3315,10 +3315,10 @@ test_that("The `vec_fmt_currency()` function works", {
   ) %>%
     expect_equal(
       c(
-        "$-2.50 \\text{\\$}$", "$-2.00 \\text{\\$}$", "$-1.50 \\text{\\$}$",
-        "$-1.00 \\text{\\$}$", "$-0.50 \\text{\\$}$", "$0.00 \\text{\\$}$",
-        "$0.50 \\text{\\$}$", "$1.00 \\text{\\$}$", "$1.50 \\text{\\$}$",
-        "$2.00 \\text{\\$}$", "$2.50 \\text{\\$}$", "NA", "$Inf \\text{\\$}$"
+        "-2.50 \\$", "-2.00 \\$", "-1.50 \\$",
+        "-1.00 \\$", "-0.50 \\$", "0.00 \\$",
+        "0.50 \\$", "1.00 \\$", "1.50 \\$",
+        "2.00 \\$", "2.50 \\$", "NA", "Inf \\$"
       )
     )
 
@@ -3355,10 +3355,10 @@ test_that("The `vec_fmt_currency()` function works", {
   vec_fmt_currency(vec_num_1, currency = "EUR", output = "latex") %>%
     expect_equal(
       c(
-        "$-\\text{EUR}2.50$", "$-\\text{EUR}2.00$", "$-\\text{EUR}1.50$",
-        "$-\\text{EUR}1.00$", "$-\\text{EUR}0.50$", "$\\text{EUR}0.00$",
-        "$\\text{EUR}0.50$", "$\\text{EUR}1.00$", "$\\text{EUR}1.50$",
-        "$\\text{EUR}2.00$", "$\\text{EUR}2.50$", "NA", "$\\text{EUR}Inf$"
+        "-EUR2.50", "-EUR2.00", "-EUR1.50",
+        "-EUR1.00", "-EUR0.50", "EUR0.00",
+        "EUR0.50", "EUR1.00", "EUR1.50",
+        "EUR2.00", "EUR2.50", "NA", "EURInf"
       )
     )
 
@@ -3580,8 +3580,8 @@ test_that("The `vec_fmt_bytes()` function works", {
   vec_fmt_bytes(vec_num_1, standard = "decimal", output = "latex") %>%
     expect_equal(
       c(
-        "$-2 B$", "$-2 B$", "$-1 B$", "$-1 B$", "$0 B$", "$0 B$", "$0 B$",
-        "$1 B$", "$1 B$", "$2 B$", "$2 B$", "NA", "$Inf YB$"
+        "-2 B", "-2 B", "-1 B", "-1 B", "0 B", "0 B", "0 B",
+        "1 B", "1 B", "2 B", "2 B", "NA", "Inf YB"
       )
     )
 
@@ -3614,8 +3614,8 @@ test_that("The `vec_fmt_bytes()` function works", {
   vec_fmt_bytes(vec_num_2, standard = "decimal", output = "latex") %>%
     expect_equal(
       c(
-        "$-25 B$", "$-20 B$", "$-15 B$", "$-10 B$", "$-5 B$", "$0 B$",
-        "$5 B$", "$10 B$", "$15 B$", "$20 B$", "$25 B$", "NA", "$Inf YB$"
+        "-25 B", "-20 B", "-15 B", "-10 B", "-5 B", "0 B",
+        "5 B", "10 B", "15 B", "20 B", "25 B", "NA", "Inf YB"
       )
     )
 
@@ -3648,9 +3648,9 @@ test_that("The `vec_fmt_bytes()` function works", {
   vec_fmt_bytes(vec_num_3, standard = "decimal", output = "latex") %>%
     expect_equal(
       c(
-        "$-250 B$", "$-200 B$", "$-150 B$", "$-100 B$", "$-50 B$",
-        "$0 B$", "$50 B$", "$100 B$", "$150 B$", "$200 B$", "$250 B$",
-        "NA", "$Inf YB$"
+        "-250 B", "-200 B", "-150 B", "-100 B", "-50 B",
+        "0 B", "50 B", "100 B", "150 B", "200 B", "250 B",
+        "NA", "Inf YB"
       )
     )
 
@@ -3683,9 +3683,9 @@ test_that("The `vec_fmt_bytes()` function works", {
   vec_fmt_bytes(vec_num_4, standard = "decimal", output = "latex") %>%
     expect_equal(
       c(
-        "$-2.5 MB$", "$-2 MB$", "$-1.5 MB$", "$-1 MB$", "$-500 kB$",
-        "$0 B$", "$500 kB$", "$1 MB$", "$1.5 MB$", "$2 MB$", "$2.5 MB$",
-        "NA", "$Inf YB$"
+        "-2.5 MB", "-2 MB", "-1.5 MB", "-1 MB", "-500 kB",
+        "0 B", "500 kB", "1 MB", "1.5 MB", "2 MB", "2.5 MB",
+        "NA", "Inf YB"
       )
     )
 
@@ -3718,9 +3718,9 @@ test_that("The `vec_fmt_bytes()` function works", {
   vec_fmt_bytes(vec_num_5, standard = "decimal", output = "latex") %>%
     expect_equal(
       c(
-        "$-2.5 TB$", "$-2 TB$", "$-1.5 TB$", "$-1 TB$", "$-500 GB$",
-        "$0 B$", "$500 GB$", "$1 TB$", "$1.5 TB$", "$2 TB$", "$2.5 TB$",
-        "NA", "$Inf YB$"
+        "-2.5 TB", "-2 TB", "-1.5 TB", "-1 TB", "-500 GB",
+        "0 B", "500 GB", "1 TB", "1.5 TB", "2 TB", "2.5 TB",
+        "NA", "Inf YB"
       )
     )
 
@@ -3753,9 +3753,9 @@ test_that("The `vec_fmt_bytes()` function works", {
   vec_fmt_bytes(vec_num_6, standard = "decimal", output = "latex") %>%
     expect_equal(
       c(
-        "$0 B$", "$0 B$", "$0 B$", "$0 B$", "$0 B$", "$0 B$", "$0 B$",
-        "$0 B$", "$0 B$", "$0 B$", "$1 B$", "$1 B$", "$1 B$", "$1 B$",
-        "$1 B$", "$1 B$", "$1 B$", "$1 B$", "$1 B$", "$1 B$", "$2 B$"
+        "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B",
+        "0 B", "0 B", "0 B", "1 B", "1 B", "1 B", "1 B",
+        "1 B", "1 B", "1 B", "1 B", "1 B", "1 B", "2 B"
       )
     )
 
@@ -3788,8 +3788,8 @@ test_that("The `vec_fmt_bytes()` function works", {
   vec_fmt_bytes(vec_num_1, standard = "binary", output = "latex") %>%
     expect_equal(
       c(
-        "$-2 B$", "$-2 B$", "$-1 B$", "$-1 B$", "$0 B$", "$0 B$", "$0 B$",
-        "$1 B$", "$1 B$", "$2 B$", "$2 B$", "NA", "$Inf YiB$"
+        "-2 B", "-2 B", "-1 B", "-1 B", "0 B", "0 B", "0 B",
+        "1 B", "1 B", "2 B", "2 B", "NA", "Inf YiB"
       )
     )
 
@@ -3822,8 +3822,8 @@ test_that("The `vec_fmt_bytes()` function works", {
   vec_fmt_bytes(vec_num_2, standard = "binary", output = "latex") %>%
     expect_equal(
       c(
-        "$-25 B$", "$-20 B$", "$-15 B$", "$-10 B$", "$-5 B$", "$0 B$",
-        "$5 B$", "$10 B$", "$15 B$", "$20 B$", "$25 B$", "NA", "$Inf YiB$"
+        "-25 B", "-20 B", "-15 B", "-10 B", "-5 B", "0 B",
+        "5 B", "10 B", "15 B", "20 B", "25 B", "NA", "Inf YiB"
       )
     )
 
@@ -3856,9 +3856,9 @@ test_that("The `vec_fmt_bytes()` function works", {
   vec_fmt_bytes(vec_num_3, standard = "binary", output = "latex") %>%
     expect_equal(
       c(
-        "$-250 B$", "$-200 B$", "$-150 B$", "$-100 B$", "$-50 B$",
-        "$0 B$", "$50 B$", "$100 B$", "$150 B$", "$200 B$", "$250 B$",
-        "NA", "$Inf YiB$"
+        "-250 B", "-200 B", "-150 B", "-100 B", "-50 B",
+        "0 B", "50 B", "100 B", "150 B", "200 B", "250 B",
+        "NA", "Inf YiB"
       )
     )
 
@@ -3892,9 +3892,9 @@ test_that("The `vec_fmt_bytes()` function works", {
   vec_fmt_bytes(vec_num_4, standard = "binary", output = "latex") %>%
     expect_equal(
       c(
-        "$-2.4 MiB$", "$-1.9 MiB$", "$-1.4 MiB$", "$-976.6 KiB$", "$-488.3 KiB$",
-        "$0 B$", "$488.3 KiB$", "$976.6 KiB$", "$1.4 MiB$", "$1.9 MiB$",
-        "$2.4 MiB$", "NA", "$Inf YiB$"
+        "-2.4 MiB", "-1.9 MiB", "-1.4 MiB", "-976.6 KiB", "-488.3 KiB",
+        "0 B", "488.3 KiB", "976.6 KiB", "1.4 MiB", "1.9 MiB",
+        "2.4 MiB", "NA", "Inf YiB"
       )
     )
 
@@ -3929,9 +3929,9 @@ test_that("The `vec_fmt_bytes()` function works", {
   vec_fmt_bytes(vec_num_5, standard = "binary", output = "latex") %>%
     expect_equal(
       c(
-        "$-2.3 TiB$", "$-1.8 TiB$", "$-1.4 TiB$", "$-931.3 GiB$", "$-465.7 GiB$",
-        "$0 B$", "$465.7 GiB$", "$931.3 GiB$", "$1.4 TiB$", "$1.8 TiB$",
-        "$2.3 TiB$", "NA", "$Inf YiB$"
+        "-2.3 TiB", "-1.8 TiB", "-1.4 TiB", "-931.3 GiB", "-465.7 GiB",
+        "0 B", "465.7 GiB", "931.3 GiB", "1.4 TiB", "1.8 TiB",
+        "2.3 TiB", "NA", "Inf YiB"
       )
     )
 
@@ -3965,9 +3965,9 @@ test_that("The `vec_fmt_bytes()` function works", {
   vec_fmt_bytes(vec_num_6, standard = "binary", output = "latex") %>%
     expect_equal(
       c(
-        "$0 B$", "$0 B$", "$0 B$", "$0 B$", "$0 B$", "$0 B$", "$0 B$",
-        "$0 B$", "$0 B$", "$0 B$", "$1 B$", "$1 B$", "$1 B$", "$1 B$",
-        "$1 B$", "$1 B$", "$1 B$", "$1 B$", "$1 B$", "$1 B$", "$2 B$"
+        "0 B", "0 B", "0 B", "0 B", "0 B", "0 B", "0 B",
+        "0 B", "0 B", "0 B", "1 B", "1 B", "1 B", "1 B",
+        "1 B", "1 B", "1 B", "1 B", "1 B", "1 B", "2 B"
       )
     )
 
@@ -4007,9 +4007,9 @@ test_that("The `vec_fmt_bytes()` function works", {
   ) %>%
     expect_equal(
       c(
-        "$-2.5 TB$", "$-2 TB$", "$-1.5 TB$", "$-1 TB$", "$-500 GB$",
-        "$0 B$", "$500 GB$", "$1 TB$", "$1.5 TB$", "$2 TB$", "$2.5 TB$",
-        "NA", "$  Inf YB$"
+        "-2.5 TB", "-2 TB", "-1.5 TB", "-1 TB", "-500 GB",
+        "0 B", "500 GB", "1 TB", "1.5 TB", "2 TB", "2.5 TB",
+        "NA", "  Inf YB"
       )
     )
 
@@ -4051,9 +4051,9 @@ test_that("The `vec_fmt_bytes()` function works", {
   ) %>%
     expect_equal(
       c(
-        "$-2.5000 TB$", "$-2.0000 TB$", "$-1.5000 TB$", "$-1.0000 TB$",
-        "$-500.0000 GB$", "$0.0000 B$", "$500.0000 GB$", "$1.0000 TB$",
-        "$1.5000 TB$", "$2.0000 TB$", "$2.5000 TB$", "NA", "$  Inf YB$"
+        "-2.5000 TB", "-2.0000 TB", "-1.5000 TB", "-1.0000 TB",
+        "-500.0000 GB", "0.0000 B", "500.0000 GB", "1.0000 TB",
+        "1.5000 TB", "2.0000 TB", "2.5000 TB", "NA", "  Inf YB"
       )
     )
 
@@ -4095,9 +4095,9 @@ test_that("The `vec_fmt_bytes()` function works", {
   ) %>%
     expect_equal(
       c(
-        "$-2. TB$", "$-2. TB$", "$-2. TB$", "$-1. TB$", "$-500. GB$",
-        "$0. B$", "$500. GB$", "$1. TB$", "$2. TB$", "$2. TB$", "$2. TB$",
-        "NA", "$Inf. YB$"
+        "-2. TB", "-2. TB", "-2. TB", "-1. TB", "-500. GB",
+        "0. B", "500. GB", "1. TB", "2. TB", "2. TB", "2. TB",
+        "NA", "Inf. YB"
       )
     )
 
@@ -4132,9 +4132,9 @@ test_that("The `vec_fmt_bytes()` function works", {
   vec_fmt_bytes(vec_num_1, n_sigfig = 3, output = "latex") %>%
     expect_equal(
       c(
-        "$-2.00 B$", "$-2.00 B$", "$-1.00 B$", "$-1.00 B$", "$0 B$",
-        "$0 B$", "$0 B$", "$1.00 B$", "$1.00 B$", "$2.00 B$", "$2.00 B$",
-        "NA", "$ Inf YB$"
+        "-2.00 B", "-2.00 B", "-1.00 B", "-1.00 B", "0 B",
+        "0 B", "0 B", "1.00 B", "1.00 B", "2.00 B", "2.00 B",
+        "NA", " Inf YB"
       )
     )
 
@@ -4162,7 +4162,7 @@ test_that("The `vec_fmt_bytes()` function works", {
     c(1e6, 1e9, 1e12, 1e15, 1e18, 1e21, 1e24, 1e27),
     use_seps = FALSE, output = "latex"
   ) %>%
-    expect_equal(c("$1 MB$", "$1 GB$", "$1 TB$", "$1 PB$", "$1 EB$", "$1 ZB$", "$1 YB$", "$1000 YB$"))
+    expect_equal(c("1 MB", "1 GB", "1 TB", "1 PB", "1 EB", "1 ZB", "1 YB", "1000 YB"))
 
   vec_fmt_bytes(
     c(1e6, 1e9, 1e12, 1e15, 1e18, 1e21, 1e24, 1e27),
@@ -4191,9 +4191,9 @@ test_that("The `vec_fmt_bytes()` function works", {
   vec_fmt_bytes(vec_num_1, pattern = "a{x}b", output = "latex") %>%
     expect_equal(
       c(
-        "a$-2 B$b", "a$-2 B$b", "a$-1 B$b", "a$-1 B$b", "a$0 B$b",
-        "a$0 B$b", "a$0 B$b", "a$1 B$b", "a$1 B$b", "a$2 B$b", "a$2 B$b",
-        "NA", "a$Inf YB$b"
+        "a-2 Bb", "a-2 Bb", "a-1 Bb", "a-1 Bb", "a0 Bb",
+        "a0 Bb", "a0 Bb", "a1 Bb", "a1 Bb", "a2 Bb", "a2 Bb",
+        "NA", "aInf YBb"
       )
     )
 
@@ -4226,9 +4226,9 @@ test_that("The `vec_fmt_bytes()` function works", {
   vec_fmt_bytes(vec_num_5, locale = "de", output = "latex") %>%
     expect_equal(
       c(
-        "$-2,5 TB$", "$-2 TB$", "$-1,5 TB$", "$-1 TB$", "$-500 GB$",
-        "$0 B$", "$500 GB$", "$1 TB$", "$1,5 TB$", "$2 TB$", "$2,5 TB$",
-        "NA", "$Inf YB$"
+        "-2,5 TB", "-2 TB", "-1,5 TB", "-1 TB", "-500 GB",
+        "0 B", "500 GB", "1 TB", "1,5 TB", "2 TB", "2,5 TB",
+        "NA", "Inf YB"
       )
     )
 
@@ -4271,9 +4271,9 @@ test_that("The `vec_fmt_bytes()` function works", {
   ) %>%
     expect_equal(
       c(
-        "$-2 500,0 YB$", "$-2 000,0 YB$", "$-1 500,0 YB$", "$-1 000,0 YB$",
-        "$-500,0 YB$", "$0,0 B$", "$500,0 YB$", "$1 000,0 YB$", "$1 500,0 YB$",
-        "$2 000,0 YB$", "$2 500,0 YB$", "NA", "$Inf YB$"
+        "-2 500,0 YB", "-2 000,0 YB", "-1 500,0 YB", "-1 000,0 YB",
+        "-500,0 YB", "0,0 B", "500,0 YB", "1 000,0 YB", "1 500,0 YB",
+        "2 000,0 YB", "2 500,0 YB", "NA", "Inf YB"
       )
     )
 
@@ -4309,8 +4309,8 @@ test_that("The `vec_fmt_bytes()` function works", {
   vec_fmt_bytes(vec_num_1, force_sign = TRUE, output = "latex") %>%
     expect_equal(
       c(
-        "$-2 B$", "$-2 B$", "$-1 B$", "$-1 B$", "$0 B$", "$0 B$", "$0 B$",
-        "$+1 B$", "$+1 B$", "$+2 B$", "$+2 B$", "NA", "$+Inf YB$"
+        "-2 B", "-2 B", "-1 B", "-1 B", "0 B", "0 B", "0 B",
+        "+1 B", "+1 B", "+2 B", "+2 B", "NA", "+Inf YB"
       )
     )
 
@@ -4342,8 +4342,8 @@ test_that("The `vec_fmt_bytes()` function works", {
   vec_fmt_bytes(vec_num_1, incl_space = FALSE, output = "latex") %>%
     expect_equal(
       c(
-        "$-2B$", "$-2B$", "$-1B$", "$-1B$", "$0B$", "$0B$", "$0B$",
-        "$1B$", "$1B$", "$2B$", "$2B$", "NA", "$InfYB$"
+        "-2B", "-2B", "-1B", "-1B", "0B", "0B", "0B",
+        "1B", "1B", "2B", "2B", "NA", "InfYB"
       )
     )
 

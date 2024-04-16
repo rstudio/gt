@@ -64,7 +64,7 @@ middle column, to the end of the column series with the
 }}
 
 We can also move multiple columns at a time. With the same
-\code{\link{countrypops}}-based table, let's move both the \code{year} and \code{population}
+\code{\link{countrypops}}-based table, let's move both the \code{year} and \code{country_name}
 columns to the end of the column series.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>

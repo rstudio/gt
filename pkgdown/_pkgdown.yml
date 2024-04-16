@@ -14,6 +14,8 @@ authors:
 
 news:
   releases:
+  - text: "Version 0.10.0"
+    href: https://posit.co/blog/new-features-in-gt-0-10-0/
   - text: "Version 0.9.0"
     href: https://posit.co/blog/?search=gt%2520%25200.9.0
   - text: "Version 0.8.0"
@@ -369,6 +371,7 @@ reference:
     - metro
     - constants
     - illness
+    - reactions
     - rx_adsl
     - rx_addv
 

@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -45,7 +45,7 @@ render_as_ihtml <- function(data, id) {
   footnotes <- dt_footnotes_get(data = data)
 
   # Determine if the rendered table should have a footer section
-  has_footer_section <- !is.null(source_notes) || nrow(footnotes) > 1
+  has_footer_section <- !is.null(source_notes) || nrow(footnotes) >= 1
 
   # Determine if the rendered table should have a header section
   has_header_section <- dt_heading_has_title(data = data)

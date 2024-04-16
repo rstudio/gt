@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -50,7 +50,7 @@
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   form a constraint for targeting operations. The default [everything()]
 #'   results in all rows in `columns` being formatted. Alternatively, we can
-#'   supply a vector of row captions within [c()], a vector of row indices, or a
+#'   supply a vector of row IDs within [c()], a vector of row indices, or a
 #'   select helper function. Examples of select helper functions include
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()]. We can also use expressions to filter
@@ -255,7 +255,7 @@ fmt_missing <- function(
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   form a constraint for targeting operations. The default [everything()]
 #'   results in all rows in `columns` being formatted. Alternatively, we can
-#'   supply a vector of row captions within [c()], a vector of row indices, or a
+#'   supply a vector of row IDs within [c()], a vector of row indices, or a
 #'   select helper function. Examples of select helper functions include
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()]. We can also use expressions to filter
@@ -415,7 +415,7 @@ sub_zero <- function(
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   form a constraint for targeting operations. The default [everything()]
 #'   results in all rows in `columns` being formatted. Alternatively, we can
-#'   supply a vector of row captions within [c()], a vector of row indices, or a
+#'   supply a vector of row IDs within [c()], a vector of row indices, or a
 #'   select helper function. Examples of select helper functions include
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()]. We can also use expressions to filter
@@ -690,7 +690,7 @@ sub_small_vals <- function(
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   form a constraint for targeting operations. The default [everything()]
 #'   results in all rows in `columns` being formatted. Alternatively, we can
-#'   supply a vector of row captions within [c()], a vector of row indices, or a
+#'   supply a vector of row IDs within [c()], a vector of row indices, or a
 #'   select helper function. Examples of select helper functions include
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()]. We can also use expressions to filter
@@ -973,7 +973,7 @@ check_sub_fn_sign <- function(sign) {
 #'   In conjunction with `columns`, we can specify which of their rows should
 #'   form a constraint for targeting operations. The default [everything()]
 #'   results in all rows in `columns` being formatted. Alternatively, we can
-#'   supply a vector of row captions within [c()], a vector of row indices, or a
+#'   supply a vector of row IDs within [c()], a vector of row indices, or a
 #'   select helper function. Examples of select helper functions include
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()]. We can also use expressions to filter

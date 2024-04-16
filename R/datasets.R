@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -390,7 +390,7 @@
 #' \item{currency}{A numeric column that is useful for testing currency-based
 #' formatting.}
 #' \item{row}{A character column in the format `row_X` which can be useful for
-#' testing with row captions in a table stub.}
+#' testing with row labels in a table stub.}
 #' \item{group}{A character column with four `grp_a` values and four `grp_b`
 #' values which can be useful for testing tables that contain row groups.}
 #' }
@@ -707,6 +707,111 @@
 #'
 "illness"
 
+
+#' Reaction rates for gas-phase atmospheric reactions of organic compounds
+#'
+#' @description
+#'
+#' The `reactions` dataset contains kinetic data for second-order (two body)
+#' gas-phase chemical reactions for 1,683 organic compounds. The reaction-rate
+#' values and parameters within this dataset are useful for studies of the
+#' atmospheric environment. Organic pollutants, which are present in trace
+#' amounts in the atmosphere, have been extensively studied by research groups
+#' since their persistence in the atmosphere requires specific attention. Many
+#' researchers have reported kinetic data on specific gas-phase reactions and
+#' these mainly involve oxidation reactions with OH, NO3 radicals, ozone, and
+#' chlorine (Cl) atoms.
+#'
+#' This compilation of rate constant (*k*) data as contains the values for rate
+#' constants at 298 K (in units of cm^3 molecules^–1 s^–1) as well as parameters
+#' that allow for the calculation of rate constants at different temperatures
+#' (the temperature dependence parameters: `A`, `B`, and `n`). Uncertainty
+#' values/factors and temperature limits are also provided here where
+#' information is available.
+#'
+#' @format A tibble with 1,683 rows and 39 variables:
+#' \describe{
+#' \item{compd_name}{The name of the primary compound undergoing
+#' reaction with OH, ozone, NO3, or Cl.}
+#' \item{cmpd_mwt}{The molecular weight of the compound in units of g/mol.}
+#' \item{cmpd_formula}{The atomic formula of the compound.}
+#' \item{cmpd_type}{The category of compounds that the `compd_name` falls
+#' under.}
+#' \item{cmpd_smiles}{The SMILES (simplified molecular-input line-entry system)
+#' representation for the compound.}
+#' \item{cmpd_inchi}{The InChI (International Chemical Identifier)
+#' representation for the compound.}
+#' \item{cmpd_inchikey}{The InChIKey, which is a hashed InChI value, has a fixed
+#' length of 27 characters. These values can be used to more easily perform
+#' database searches of chemical compounds.}
+#' \item{oh_k298}{Rate constant at 298 K for OH reactions.}
+#' \item{oh_uncert}{Uncertainty as a percentage for certain OH reactions.}
+#' \item{oh_u_fac}{Uncertainty as a plus/minus difference for certain OH
+#' reactions.}
+#' \item{oh_a, oh_b, oh_n}{Extended temperature dependence parameters for
+#' bimolecular OH reactions, to be used in the Arrhenius expression:
+#' `k(T)=A exp(-B/T) (T/300)^n`. In that, `A` is expressed as
+#' cm^3 molecules^-1 s^-1, `B` is in units of K, and `n` is dimensionless. Any
+#' `NA` values indicate that data is not available.}
+#' \item{oh_t_low, oh_t_high}{The low and high temperature boundaries (in units
+#' of K) for which the `oh_a`, `oh_b`, and `oh_n` parameters are valid.}
+#' \item{o3_k298}{Rate constant at 298 K for ozone reactions.}
+#' \item{o3_uncert}{Uncertainty as a percentage for certain ozone reactions.}
+#' \item{o3_u_fac}{Uncertainty as a plus/minus difference for certain ozone
+#' reactions.}
+#' \item{o3_a, o3_b, o3_n}{Extended temperature dependence parameters for
+#' bimolecular ozone reactions, to be used in the Arrhenius expression:
+#' `k(T)=A exp(-B/T) (T/300)^n`. In that, `A` is expressed as
+#' cm^3 molecules^-1 s^-1, `B` is in units of K, and `n` is dimensionless. Any
+#' `NA` values indicate that data is not available.}
+#' \item{o3_t_low, o3_t_high}{The low and high temperature boundaries (in units
+#' of K) for which the `o3_a`, `o3_b`, and `o3_n` parameters are valid.}
+#' \item{no3_k298}{Rate constant at 298 K for NO3 reactions.}
+#' \item{no3_uncert}{Uncertainty as a percentage for certain NO3 reactions.}
+#' \item{no3_u_fac}{Uncertainty as a plus/minus difference for certain NO3
+#' reactions.}
+#' \item{no3_a, no3_b, no3_n}{Extended temperature dependence parameters for
+#' bimolecular NO3 reactions, to be used in the Arrhenius expression:
+#' `k(T)=A exp(-B/T) (T/300)^n`. In that, `A` is expressed as
+#' cm^3 molecules^-1 s^-1, `B` is in units of K, and `n` is dimensionless. Any
+#' `NA` values indicate that data is not available.}
+#' \item{no3_t_low, no3_t_high}{The low and high temperature boundaries (in
+#' units of K) for which the `no3_a`, `no3_b`, and `no3_n` parameters are
+#' valid.}
+#' \item{cl_k298}{Rate constant at 298 K for Cl reactions.}
+#' \item{cl_uncert}{Uncertainty as a percentage for certain Cl reactions.}
+#' \item{cl_u_fac}{Uncertainty as a plus/minus difference for certain Cl
+#' reactions.}
+#' \item{cl_a, cl_b, cl_n}{Extended temperature dependence parameters for
+#' bimolecular Cl reactions, to be used in the Arrhenius expression:
+#' `k(T)=A exp(-B/T) (T/300)^n`. In that, `A` is expressed as
+#' cm^3 molecules^-1 s^-1, `B` is in units of K, and `n` is dimensionless. Any
+#' `NA` values indicate that data is not available.}
+#' \item{cl_t_low, cl_t_high}{The low and high temperature boundaries (in units
+#' of K) for which the `cl_a`, `cl_b`, and `cl_n` parameters are valid.}
+#' }
+#'
+#' @section Examples:
+#'
+#' Here is a glimpse at the data available in `reactions`.
+#'
+#' ```{r}
+#' dplyr::glimpse(reactions)
+#' ```
+#'
+#' @family datasets
+#' @section Dataset ID and Badge:
+#' DATA-11
+#'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_reactions.png")`
+#' }}
+#'
+#' @section Dataset Introduced:
+#' *in development*
+#'
+"reactions"
+
 #' An ADSL-flavored clinical trial toy dataset
 #'
 #' @description
@@ -766,7 +871,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-11
+#' DATA-12
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_rx_adsl.png")`
@@ -839,7 +944,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-12
+#' DATA-13
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_rx_addv.png")`

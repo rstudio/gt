@@ -11,25 +11,25 @@ cell_borders(sides = "all", color = "#000000", style = "solid", weight = px(1))
 
 \verb{vector<character>} // \emph{default:} \code{"all"}
 
-The border sides to be modified. Options include \code{"left"},
-\code{"right"}, \code{"top"}, and \code{"bottom"}. For all borders surrounding the
-selected cells, we can use the \code{"all"} option.}
+The border sides to be modified. Options include \code{"left"}, \code{"right"},
+\code{"top"}, and \code{"bottom"}. For all borders surrounding the selected cells, we
+can use the \code{"all"} option.}
 
 \item{color}{\emph{Border color}
 
 \verb{scalar<character>|NULL} // \emph{default:} \code{"#000000"}
 
 The border \code{color} can be defined with a color name or with a hexadecimal
-color code. The default \code{color} value is \code{"#000000"} (black). Borders for any
-defined \code{sides} can be removed by supplying \code{NULL} here.}
+color code. The default \code{color} value is \code{"#000000"} (black). Borders for
+any defined \code{sides} can be removed by supplying \code{NULL} here.}
 
 \item{style}{\emph{Border line style}
 
 \verb{scalar<character>|NULL} // \emph{default:} \code{"solid"}
 
 The border \code{style} can be one of either \code{"solid"} (the default),
-\code{"dashed"}, \code{"dotted"}, \code{"hidden"}, or \code{"double"}. Borders for any
-defined \code{sides} can be removed by supplying \code{NULL} here.}
+\code{"dashed"}, \code{"dotted"}, \code{"hidden"}, or \code{"double"}. Borders for any defined
+\code{sides} can be removed by supplying \code{NULL} here.}
 
 \item{weight}{\emph{Border weight}
 
@@ -46,10 +46,10 @@ A list object of class \code{cell_styles}.
 The \code{cell_borders()} helper function is to be used with the \code{\link[=tab_style]{tab_style()}}
 function, which itself allows for the setting of custom styles to one or more
 cells. Specifically, the call to \code{cell_borders()} should be bound to the
-\code{styles} argument of \code{\link[=tab_style]{tab_style()}}. The \code{selection} argument is where we
-define which borders should be modified (e.g., \code{"left"}, \code{"right"}, etc.).
-With that selection, the \code{color}, \code{style}, and \code{weight} of the selected
-borders can then be modified.
+\code{styles} argument of \code{\link[=tab_style]{tab_style()}}. The \code{sides} argument is where we define
+which borders should be modified (e.g., \code{"left"}, \code{"right"}, etc.). With that
+selection, the \code{color}, \code{style}, and \code{weight} of the selected borders can
+then be modified.
 }
 \section{Examples}{
 

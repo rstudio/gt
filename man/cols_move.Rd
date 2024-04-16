@@ -51,10 +51,10 @@ in the table.
 \details{
 The columns supplied in \code{columns} must all exist in the table and none of
 them can be in the \code{after} argument. The \code{after} column must also exist and
-only one column should be provided here. If you need to place one or columns
-at the beginning of the column series, the \code{\link[=cols_move_to_start]{cols_move_to_start()}} function
-should be used. Similarly, if those columns to move should be placed at the
-end of the column series then use \code{\link[=cols_move_to_end]{cols_move_to_end()}}.
+only one column should be provided here. If you need to place one or more
+columns at the beginning of the column series, the \code{\link[=cols_move_to_start]{cols_move_to_start()}}
+function should be used. Similarly, if those columns to move should be placed
+at the end of the column series then use \code{\link[=cols_move_to_end]{cols_move_to_end()}}.
 }
 \section{Examples}{
 

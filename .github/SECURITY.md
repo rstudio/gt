@@ -2,12 +2,12 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
+The following provides information on the versions of gt that are
 currently being supported with security updates.
 
 | Version    | Supported          |
 | ---------- | ------------------ |
-| >= 0.9.0   | :white_check_mark: |
+| >= 0.10.1  | :white_check_mark: |
 
 ## Reporting a Vulnerability
 

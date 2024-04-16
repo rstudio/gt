@@ -68,7 +68,7 @@ An object of class \code{gt_tbl}.
 We can format values with the \code{fmt_passthrough()} function, which does little
 more than: (1) coercing to \code{character} (as all the \verb{fmt_*()} functions do),
 and (2) applying decorator text via the \code{pattern} argument (the default is to
-apply nothing). This foramtting function is useful when don't want to modify
+apply nothing). This formatting function is useful when don't want to modify
 the input data other than to decorate it within a pattern.
 }
 \section{Targeting cells with \code{columns} and \code{rows}}{

@@ -14,7 +14,7 @@
 #
 #  This file is part of the 'rstudio/gt' project.
 #
-#  Copyright (c) 2018-2023 gt authors
+#  Copyright (c) 2018-2024 gt authors
 #
 #  For full copyright and license information, please look at
 #  https://gt.rstudio.com/LICENSE.html
@@ -86,10 +86,12 @@ is_nonempty_string <- function(x) {
 #' @param data The input `data` object that is to be validated.
 #'
 #' @noRd
-stop_if_not_gt_tbl <- function(data) {
+# Use rlang::caller_env() to inform user of the precise location of failure.
+stop_if_not_gt_tbl <- function(data, call = caller_env()) {
   if (!is_gt_tbl(data = data)) {
     cli::cli_abort(
-      "The `data` provided is not a `gt_tbl` object."
+      "`data` must be a `gt_tbl` object, not {.obj_type_friendly {data}}.",
+      call = call
     )
   }
 }
@@ -99,10 +101,11 @@ stop_if_not_gt_tbl <- function(data) {
 #' @param data The input `data` object that is to be validated.
 #'
 #' @noRd
-stop_if_not_gt_group <- function(data) {
+stop_if_not_gt_group <- function(data, call = caller_env()) {
   if (!is_gt_group(data = data)) {
     cli::cli_abort(
-      "The `data` provided is not a `gt_group` object."
+      "`data` must be a `gt_group` object, not {.obj_type_friendly {data}}.",
+      call = call
     )
   }
 }
@@ -112,10 +115,11 @@ stop_if_not_gt_group <- function(data) {
 #' @param data The input `data` object that is to be validated.
 #'
 #' @noRd
-stop_if_not_gt_tbl_or_group <- function(data) {
+stop_if_not_gt_tbl_or_group <- function(data, call = caller_env()) {
   if (!is_gt_tbl(data = data) && !is_gt_group(data = data)) {
     cli::cli_abort(
-      "The `data` provided is neither a `gt_tbl` nor a `gt_group` object."
+      "`data` must either be a `gt_tbl` or a `gt_group`, not {.obj_type_friendly {data}}.",
+      call = error_call
     )
   }
 }
@@ -567,14 +571,9 @@ get_markdown_engine_fn <- function(
 #' @noRd
 process_text <- function(text, context = "html") {
 
-  # When processing text globally (outside of the `fmt_markdown()`
-  # function) we will use the 'markdown' package if it is available,
-  # otherwise the 'commonmark' package
-  if (utils::packageVersion("markdown") >= "1.5") {
-    md_engine <- "markdown"
-  } else {
-    md_engine <- "commonmark"
-  }
+  # `markdown` is used to process text globally outside of `fmt_markdown()`
+  # Previously, `commonmark` was used.
+  md_engine <- "markdown"
 
   # If text is marked `AsIs` (by using `I()`) then just
   # return the text unchanged
@@ -594,23 +593,218 @@ process_text <- function(text, context = "html") {
 
     if (inherits(text, "from_markdown")) {
 
+      in_quarto <- check_quarto()
+
       md_engine_fn <-
         get_markdown_engine_fn(
           md_engine_pref = md_engine,
           context = "html"
         )
 
-      text <-
-        vapply(
-          as.character(text),
-          FUN.VALUE = character(1),
-          USE.NAMES = FALSE,
-          FUN = function(x) {
-            md_engine_fn[[1]](text = x)
-          }
+      #
+      # Markdown text handling for Quarto
+      #
+      if (in_quarto) {
+
+        non_na_text <- text[!is.na(text)]
+
+        non_na_text_processed <-
+          vapply(
+            as.character(text[!is.na(text)]),
+            FUN.VALUE = character(1),
+            USE.NAMES = FALSE,
+            FUN = function(text) {
+              md_engine_fn[[1]](text = text)
+            }
+          )
+
+        non_na_text <- tidy_gsub(non_na_text, "^", "<div data-qmd=\"")
+        non_na_text <- tidy_gsub(non_na_text, "$", "\">")
+
+        non_na_text <-
+          paste0(
+            non_na_text, "<div class='gt_from_md'>",
+            non_na_text_processed, "</div></div>"
+          )
+
+        text[!is.na(text)] <- non_na_text
+
+        return(text)
+      }
+
+      #
+      # Markdown text handling outside of Quarto
+      #
+
+      non_na_text <- text[!is.na(text)]
+
+      equation_present <-
+        any(grepl("\\$\\$.*?\\$\\$", non_na_text)) ||
+        any(grepl("\\$.*?\\$", non_na_text))
+
+      # If an equation is present, extract it and add place marker before
+      # Markdown rendering
+      if (equation_present) {
+
+        # Rendering equations to HTML (outside of Quarto) requires the katex
+        # package; if it's not present, stop with a message
+        rlang::check_installed(
+          pkg = "katex (>= 1.4.1)",
+          reason = "to render equations in HTML tables."
         )
 
-      text <- gsub("^<p>|</p>\n$", "", text)
+        for (i in seq_along(non_na_text)) {
+
+          has_display_formula <- grepl("\\$\\$.*?\\$\\$", non_na_text[i])
+
+          if (has_display_formula) {
+
+            display_j <- 1
+            formula_text_display_i <- c()
+
+            repeat {
+
+              # Extract the display formula text cleanly from the input text
+              # (the text that hasn't yet been processed)
+              formula_text_display_ij <-
+                sub(
+                  "(.*\\$\\$)(.*?)(\\$\\$.*)",
+                  "\\2",
+                  non_na_text[i]
+                )
+
+              formula_text_display_i <-
+                c(formula_text_display_i, formula_text_display_ij)
+
+              # Replace text containing a formula with a marker for the formula
+              non_na_text[i] <-
+                sub(
+                  "\\$\\$.*?\\$\\$",
+                  paste0("|||display_formula ", display_j, "|||"),
+                  non_na_text[i]
+                )
+
+              if (!grepl("\\$\\$.*?\\$\\$", non_na_text[i])) break
+
+              display_j <- display_j + 1
+            }
+          }
+
+          has_inline_formula <- grepl("\\$.*?\\$", non_na_text[i])
+
+          if (has_inline_formula) {
+
+            inline_j <- 1
+            formula_text_inline_i <- c()
+
+            repeat {
+
+              # Extract the inline formula text cleanly from the input text
+              # (the text that hasn't yet been processed)
+              formula_text_inline_ij <-
+                sub(
+                  "(.*\\$)(.*?)(\\$.*)",
+                  "\\2",
+                  non_na_text[i]
+                )
+
+              formula_text_inline_i <-
+                c(formula_text_inline_i, formula_text_inline_ij)
+
+              # Replace text containing a formula with a marker for the formula
+              non_na_text[i] <-
+                sub(
+                  "\\$.*?\\$",
+                  paste0("|||inline_formula ", inline_j, "|||"),
+                  non_na_text[i]
+                )
+
+              if (!grepl("\\$.*?\\$", non_na_text[i])) break
+
+              inline_j <- inline_j + 1
+            }
+          }
+
+          # Use Markdown renderer to process the surrounding text independent
+          # of the formula (the marker is unaffected by Markdown rendering);
+          # also strip away the surrounding '<p>' tag and trailing '\n'
+          text_md_rendered_i <- md_engine_fn[[1]](text = non_na_text[i])
+          text_md_rendered_i <- gsub("^<p>|</p>\n$", "", text_md_rendered_i)
+
+          if (has_display_formula) {
+
+            for (j in seq_along(formula_text_display_i)) {
+
+              # Render the display formula text with `katex::katex_html()`
+              formula_rendered_display_i <-
+                katex::katex_html(
+                  formula_text_display_i[j],
+                  displayMode = TRUE,
+                  include_css = TRUE,
+                  preview = FALSE
+                )
+
+              # Integrate the rendered formula text (`formula_rendered_inline_i`)
+              # into the surrounding text (`text_md_rendered_i`) that's already
+              # been processed with a Markdown renderer; the insertion should
+              # happen at the '|||display_formula #|||' marker
+              text_md_rendered_i <-
+                gsub(
+                  paste0("|||display_formula ", j, "|||"),
+                  formula_rendered_display_i,
+                  text_md_rendered_i,
+                  fixed = TRUE
+                )
+            }
+          }
+
+          if (has_inline_formula) {
+
+            for (j in seq_along(formula_text_inline_i)) {
+
+              # Render the inline formula text with `katex::katex_html()`
+              formula_rendered_inline_i <-
+                katex::katex_html(
+                  formula_text_inline_i[j],
+                  displayMode = FALSE,
+                  include_css = TRUE,
+                  preview = FALSE
+                )
+
+              # Integrate the rendered formula text (`formula_rendered_inline_i`)
+              # into the surrounding text (`text_md_rendered_i`) that's already
+              # been processed with a Markdown renderer; the insertion should
+              # happen at the '|||inline_formula #|||' marker
+              text_md_rendered_i <-
+                gsub(
+                  paste0("|||inline_formula ", j, "|||"),
+                  formula_rendered_inline_i,
+                  text_md_rendered_i,
+                  fixed = TRUE
+                )
+            }
+          }
+
+          non_na_text[i] <- text_md_rendered_i
+        }
+
+      } else {
+
+        for (i in seq_along(non_na_text)) {
+
+          text_i <- non_na_text[i]
+          text_i <- md_engine_fn[[1]](text = text_i)
+          text_i <- gsub("^<p>|</p>\n$", "", text_i)
+
+          non_na_text[i] <- text_i
+        }
+      }
+
+      non_na_text <- tidy_gsub(non_na_text, "^", "<span class='gt_from_md'>")
+      non_na_text <- tidy_gsub(non_na_text, "$", "</span>")
+
+      text[!is.na(text)] <- non_na_text
+      text <- as.character(text)
 
       return(text)
 
