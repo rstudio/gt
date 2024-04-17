@@ -214,6 +214,10 @@ tab_header <- function(
 #'   and `spanners`, placing the spanner label where it will fit. The first
 #'   spanner level (right above the column labels) is `1`.
 #'
+#'   In combination with [opt_interactive()] or `ihtml.active = TRUE` in
+#'   [tab_options()] only level `1` is supported, additional levels would be
+#'   discarded.
+#'
 #' @param id *Spanner ID*
 #'
 #'   `scalar<character>` // *default:* `label`

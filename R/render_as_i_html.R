@@ -50,6 +50,9 @@ render_as_ihtml <- function(data, id) {
   # Determine if the rendered table should have a header section
   has_header_section <- dt_heading_has_title(data = data)
 
+  # Determine if there are tab spanners
+  has_tab_spanners <- dt_spanners_exists(data = data)
+
   # Obtain the language from the `locale`, if provided
   locale <- dt_locale_get_value(data = data)
 
@@ -340,6 +343,48 @@ render_as_ihtml <- function(data, id) {
     footer_component <- NULL
   }
 
+  # Generate the column groups, if there are any tab_spanners
+  colgroups_def <- NULL
+
+  if (has_tab_spanners) {
+    col_groups <- (dt_spanners_get(data = data) %>% dplyr::filter(spanner_level == 1))
+
+    if (max(dt_spanners_get(data = data)$spanner_level) > 1) {
+      first_colgroups <- base::paste0(col_groups$built, collapse = "|")
+
+      cli::cli_warn(c(
+        "When displaying an interactive gt table, there must not be more than 1 level of column groups (tab_spanners)",
+        "*" = "Currently there are {max(dt_spanners_get(data = data)$spanner_level)} levels of tab spanners.",
+        "i" = "Only the first level will be used for the interactive table, that is: [{first_colgroups}]"
+      ))
+    }
+
+    colgroups_def <-
+      apply(
+        col_groups, 1,
+        FUN = function(x) {
+          reactable::colGroup(
+            name = x$spanner_label,
+            columns = x$vars,
+            header = x$built,
+            html = TRUE,
+            align = NULL,
+            headerVAlign = NULL,
+            sticky = NULL,
+            headerClass = NULL,
+            headerStyle = list(
+              fontWeight = "normal",
+              borderBottomStyle = column_labels_border_bottom_style,
+              borderBottomWidth = column_labels_border_bottom_width,
+              borderBottomColor = column_labels_border_bottom_color,
+              marginLeft = "4px",
+              marginRight = "4px"
+            )
+          )
+        }
+      )
+  }
+
   # Generate the default theme for the table
   tbl_theme <-
     reactable::reactableTheme(
@@ -353,15 +398,17 @@ render_as_ihtml <- function(data, id) {
       style = list(
         fontFamily = font_family_str
       ),
-      tableStyle = NULL,
-      headerStyle = list(
+      tableStyle = list(
         borderTopStyle = column_labels_border_top_style,
         borderTopWidth = column_labels_border_top_width,
-        borderTopColor = column_labels_border_top_color,
+        borderTopColor = column_labels_border_top_color
+      ),
+      headerStyle = list(
         borderBottomStyle = column_labels_border_bottom_style,
         borderBottomWidth = column_labels_border_bottom_width,
         borderBottomColor = column_labels_border_bottom_color
       ),
+      # individually defined for the margins left+right
       groupHeaderStyle = NULL,
       tableBodyStyle = NULL,
       rowGroupStyle = NULL,
@@ -387,7 +434,7 @@ render_as_ihtml <- function(data, id) {
     reactable::reactable(
       data = data_tbl,
       columns = col_defs,
-      columnGroups = NULL,
+      columnGroups = colgroups_def,
       rownames = NULL,
       groupBy = NULL,
       sortable = use_sorting,
