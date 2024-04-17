@@ -160,7 +160,10 @@ argument works in tandem with the <code>columns</code> argument.</p></dd>
 <p>An explicit level to which the spanner should be placed. If not provided,
 <strong>gt</strong> will choose the level based on the inputs provided within <code>columns</code>
 and <code>spanners</code>, placing the spanner label where it will fit. The first
-spanner level (right above the column labels) is <code>1</code>.</p></dd>
+spanner level (right above the column labels) is <code>1</code>.</p>
+<p>In combination with <code><a href="opt_interactive.html">opt_interactive()</a></code> or <code>ihtml.active = TRUE</code> in
+<code><a href="tab_options.html">tab_options()</a></code> only level <code>1</code> is supported, additional levels would be
+discarded.</p></dd>
 
 
 <dt>id</dt>
