@@ -6,6 +6,8 @@
 
 * `gtsave()` saves correctly to .rtf if using `cols_label()` and `summary_rows()` or `grand_summary_rows()` (@olivroy, #1233)
 
+* interactive tables are now rendering the first level of column groups, added by `tab_spanner()` (@obsaditelnost, #1618)
+
 # gt 0.10.1
 
 ## Improvements to nanoplots

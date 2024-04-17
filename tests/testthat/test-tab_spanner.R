@@ -1022,7 +1022,7 @@ test_that("`tab_spanner()` is compatible with interactive tables", {
     exibble[, 1:4] %>%
     gt() %>%
     tab_spanner(label = md("*md spanner*"), columns = c(num)) %>%
-    tab_spanner(label = HTML("<u>html spanner</u>"), columns = c(date)) %>%
+    tab_spanner(label = html("<u>html spanner</u>"), columns = c(date)) %>%
     tab_spanner(label = "normal spanner with <u>tags</u> and *more*", columns = c(char)) %>%
     opt_interactive() %>%
     reactive_table_to_json()
