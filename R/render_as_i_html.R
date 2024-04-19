@@ -347,7 +347,18 @@ render_as_ihtml <- function(data, id) {
   colgroups_def <- NULL
 
   if (has_tab_spanners) {
-    col_groups <- (dt_spanners_get(data = data) %>% dplyr::filter(spanner_level == 1))
+
+    hidden_columns <- dt_boxhead_get_var_by_type(data = data, type = "hidden")
+    col_groups <- dplyr::filter(dt_spanners_get(data = data), spanner_level == 1)
+
+    for (i in seq_len(nrow(col_groups))) {
+
+      columns_group_i <- unlist(col_groups[i, ][["vars"]])
+
+      columns_group_i_diff <- base::setdiff(columns_group_i, hidden_columns)
+
+      col_groups[i, ][["vars"]][[1]] <- columns_group_i_diff
+    }
 
     if (max(dt_spanners_get(data = data)$spanner_level) > 1) {
       first_colgroups <- base::paste0(col_groups$built, collapse = "|")
