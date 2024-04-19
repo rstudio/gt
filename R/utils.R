@@ -119,7 +119,7 @@ stop_if_not_gt_tbl_or_group <- function(data, call = caller_env()) {
   if (!is_gt_tbl(data = data) && !is_gt_group(data = data)) {
     cli::cli_abort(
       "`data` must either be a `gt_tbl` or a `gt_group`, not {.obj_type_friendly {data}}.",
-      call = error_call
+      call = call
     )
   }
 }
