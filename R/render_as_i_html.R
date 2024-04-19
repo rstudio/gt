@@ -389,12 +389,12 @@ render_as_ihtml <- function(data, id) {
               borderBottomStyle = column_labels_border_bottom_style,
               borderBottomWidth = column_labels_border_bottom_width,
               borderBottomColor = column_labels_border_bottom_color,
-              borderLeftStyle = column_labels_border_bottom_style,
-              borderLeftWidth = column_labels_border_bottom_width,
-              borderLeftColor = column_labels_border_bottom_color,
+              borderLeftStyle =  column_labels_border_bottom_style,
+              borderLeftWidth =  "4px",
+              borderLeftColor =  "transparent",
               borderRightStyle = column_labels_border_bottom_style,
-              borderRightWidth = column_labels_border_bottom_width,
-              borderRightColor = column_labels_border_bottom_color
+              borderRightWidth = "4px",
+              borderRightColor = "transparent"
             )
           )
         }
