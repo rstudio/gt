@@ -381,7 +381,9 @@ resolve_rows_l <- function(
 ) {
 
   if (is_gt_tbl(data = data)) {
-    row_names <- dt_stub_df_get(data = data)$row_id
+    # unlist because dt_stub_df_get might return a list instead of a vector
+    # (when helper functions such as md/html were used)
+    row_names <- unlist(dt_stub_df_get(data = data)$row_id)
     data <- dt_data_get(data = data)
   } else {
     row_names <- row.names(data)
