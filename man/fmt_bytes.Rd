@@ -331,6 +331,7 @@ Other data formatting functions:
 \code{\link{data_color}()},
 \code{\link{fmt_auto}()},
 \code{\link{fmt_bins}()},
+\code{\link{fmt_chem}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},

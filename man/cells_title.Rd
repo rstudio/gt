@@ -120,7 +120,6 @@ Other helper functions:
 \code{\link{cells_summary}()},
 \code{\link{currency}()},
 \code{\link{default_fonts}()},
-\code{\link{define_units}()},
 \code{\link{escape_latex}()},
 \code{\link{from_column}()},
 \code{\link{google_font}()},
