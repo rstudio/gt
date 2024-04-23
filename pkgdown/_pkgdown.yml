@@ -96,6 +96,7 @@ reference:
     - fmt_bins
     - fmt_markdown
     - fmt_units
+    - fmt_chem
     - fmt_url
     - fmt_image
     - fmt_flag
