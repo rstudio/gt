@@ -23,7 +23,7 @@
 
 
 # Create a `units_definition` object
-define_units <- function(units_notation) {
+define_units <- function(units_notation, is_chemical_formula = FALSE) {
 
   # Trim any incoming `{{`/`}}`
   input <- gsub("^\\{\\{\\s*|\\s*\\}\\}$", "", units_notation)
@@ -61,9 +61,12 @@ define_units <- function(units_notation) {
     exponent <- NULL
 
     if (
-      grepl("^%", tokens_vec_i) &&
-      grepl("%$", tokens_vec_i) &&
-      nchar(tokens_vec_i) > 2
+      is_chemical_formula ||
+      (
+        grepl("^%", tokens_vec_i) &&
+        grepl("%$", tokens_vec_i) &&
+        nchar(tokens_vec_i) > 2
+      )
     ) {
       # Case where the unit is marked as a chemical formula
 
