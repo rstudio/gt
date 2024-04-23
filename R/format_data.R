@@ -8579,7 +8579,108 @@ fmt_units <- function(
   )
 }
 
-format_units_by_context <- function(x, context = "html") {
+
+#' Format chemical formulas
+#'
+#' @description
+#'
+#' The `fmt_chem()` function lets you format chemical formulas in the table
+#' body. Usually this will be in the common form of `C2H4O` (for acetaldehyde).
+#'
+#' @inheritParams fmt_number
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @family data formatting functions
+#' @section Function ID:
+#' 3-19
+#'
+#' @section Function Introduced:
+#' **In Development**
+#'
+#' @import rlang
+#' @export
+fmt_chem <- function(
+    data,
+    columns = everything(),
+    rows = everything()
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  # Declare formatting function compatibility
+  compat <- c("character", "factor")
+
+  # In this case where strict mode is being used (with the option
+  # called "gt.strict_column_fmt"), stop the function if any of the
+  # resolved columns have data that is incompatible with this formatter
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = compat
+    )
+  ) {
+    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
+      cli::cli_abort(
+        "The `fmt_units()` function can only be used on `columns`
+      with character or factor data."
+      )
+    }
+  }
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    fns = list(
+      html = function(x) {
+        format_units_by_context(
+          x,
+          is_chemical_formula = TRUE,
+          context = "html"
+        )
+      },
+      latex = function(x) {
+        format_units_by_context(
+          x,
+          is_chemical_formula = TRUE,
+          context = "latex"
+        )
+      },
+      rtf = function(x) {
+        format_units_by_context(
+          x,
+          is_chemical_formula = TRUE,
+          context = "rtf"
+        )
+      },
+      word = function(x) {
+        format_units_by_context(
+          x,
+          is_chemical_formula = TRUE,
+          context = "word"
+        )
+      },
+      default = function(x) {
+        format_units_by_context(
+          x,
+          is_chemical_formula = TRUE,
+          context = "plain"
+        )
+      }
+    )
+  )
+}
+
+format_units_by_context <- function(
+    x,
+    is_chemical_formula = FALSE,
+    context = "html"
+) {
 
   # Generate an vector of empty strings that will eventually
   # contain all of the ranged value text
@@ -8595,7 +8696,13 @@ format_units_by_context <- function(x, context = "html") {
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
       FUN = function(x) {
-        render_units(define_units(x_str_non_missing[x]), context = context)
+        render_units(
+          define_units(
+            x_str_non_missing[x],
+            is_chemical_formula = is_chemical_formula
+          ),
+        context = context
+        )
       }
     )
 
@@ -8891,7 +8998,7 @@ format_units_by_context <- function(x, context = "html") {
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-19
+#' 3-20
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
@@ -9511,7 +9618,7 @@ fmt_url <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-20
+#' 3-21
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
@@ -10112,7 +10219,7 @@ get_image_hw_ratio <- function(filepath) {
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-21
+#' 3-22
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
@@ -10652,7 +10759,7 @@ fmt_flag <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-22
+#' 3-23
 #'
 #' @section Function Introduced:
 #' `v0.10.0` (October 7, 2023)
@@ -11084,7 +11191,7 @@ fmt_icon <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-23
+#' 3-24
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -11301,7 +11408,7 @@ fmt_markdown <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-24
+#' 3-25
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -11563,7 +11670,7 @@ fmt_passthrough <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-25
+#' 3-26
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
@@ -11882,7 +11989,7 @@ fmt_auto <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-26
+#' 3-27
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
