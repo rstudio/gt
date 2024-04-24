@@ -104,6 +104,10 @@ define_units <- function(units_notation, is_chemical_formula = FALSE) {
             x <- "{nsp}:darr:" # down arrow for precipitate
           }
 
+          if (x %in% c("*", ".")) {
+            x <- "{nsp}:dot:{nsp}" # center dot for addition compounds
+          }
+
           if (grepl("^(.*)\\^n\\+$", x)) {
             x <- sub("^(.*)\\^n\\+$", "\\1^*n*+", x) # 'n' in superscript is italicized by convention
           }
