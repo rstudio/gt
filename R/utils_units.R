@@ -481,6 +481,7 @@ units_symbol_replacements <- function(
     text <- replace_units_symbol(text, "degC", "degC", "&deg;C")
     text <- replace_units_symbol(text, "degF", "degF", "&deg;F")
     text <- replace_units_symbol(text, ":space:", ":space:", "&nbsp;")
+    text <- replace_units_symbol(text, ":thinspace:", ":thinspace:", "&#8201;")
     text <- replace_units_symbol(text, ":Alpha:", ":Alpha:", "&Alpha;")
     text <- replace_units_symbol(text, ":alpha:", ":alpha:", "&alpha;")
     text <- replace_units_symbol(text, ":Beta:", ":Beta:", "&Beta;")
