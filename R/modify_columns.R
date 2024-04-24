@@ -3483,7 +3483,7 @@ cols_move_to_end <- function(
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` // *default:* `everything()`
+#'   `<column-targeting expression>` // *default:* `No column`
 #'
 #'   The columns to hide in the output display table. Can either be a series of
 #'   column names provided in [c()], a vector of column indices, or a select
@@ -3491,7 +3491,8 @@ cols_move_to_end <- function(
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()].
 #'
-#' @return An object of class `gt_tbl`.
+#' @return An object of class `gt_tbl`. `data` will be unaltered if `columns` is
+#'   not supplied.
 #'
 #' @details
 #'
@@ -3507,9 +3508,9 @@ cols_move_to_end <- function(
 #'
 #' @section Examples:
 #'
-#' Let's use a small portion of the [`countrypops`] dataset to create a **gt**
-#' table. We can hide the `country_code_2` and `country_code_3` columns with the
-#' `cols_hide()` function.
+#'   Let's use a small portion of the [`countrypops`] dataset to create a **gt**
+#'   table. We can hide the `country_code_2` and `country_code_3` columns with
+#'   the `cols_hide()` function.
 #'
 #' ```r
 #' countrypops |>
@@ -3523,11 +3524,11 @@ cols_move_to_end <- function(
 #' `r man_get_image_tag(file = "man_cols_hide_1.png")`
 #' }}
 #'
-#' Using another [`countrypops`]-based **gt** table, we can use the `population`
-#' column to provide the conditional placement of footnotes. Then, we'll hide
-#' that column along with the `country_code_3` column. Note that the order of
-#' the `cols_hide()` and [tab_footnote()] statements has no effect on the final
-#' display of the table.
+#'   Using another [`countrypops`]-based **gt** table, we can use the
+#'   `population` column to provide the conditional placement of footnotes.
+#'   Then, we'll hide that column along with the `country_code_3` column. Note
+#'   that the order of the `cols_hide()` and [tab_footnote()] statements has no
+#'   effect on the final display of the table.
 #'
 #' ```r
 #' countrypops |>
@@ -3549,11 +3550,9 @@ cols_move_to_end <- function(
 #' }}
 #'
 #' @family column modification functions
-#' @section Function ID:
-#' 5-12
+#' @section Function ID: 5-12
 #'
-#' @section Function Introduced:
-#' `v0.2.0.5` (March 31, 2020)
+#' @section Function Introduced: `v0.2.0.5` (March 31, 2020)
 #'
 #' @seealso [cols_unhide()] to perform the inverse operation.
 #'
@@ -3567,6 +3566,11 @@ cols_hide <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
+  # if no `columns` are provided, return data unaltered
+  if (rlang::quo_is_missing(rlang::enquo(columns))) {
+    return(data)
+  }
+
   # Get the columns supplied in `columns` as a character vector
   columns <-
     resolve_cols_c(
@@ -3576,11 +3580,6 @@ cols_hide <- function(
     )
 
   vars <- dt_boxhead_get_vars(data = data)
-
-  # if no `columns` are provided, return data unaltered
-  if (length(columns) == 0) {
-    return(data)
-  }
 
   # Stop function if any of the `columns` don't exist in `vars`
   if (!all(columns %in% vars)) {
