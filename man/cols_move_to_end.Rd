@@ -16,7 +16,7 @@ This is the \strong{gt} table object that is commonly created through use of the
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
+\verb{<column-targeting expression>} // \strong{required}
 
 The columns for which the moving operations should be applied. Can either
 be a series of column names provided in \code{\link[=c]{c()}}, a vector of column indices,

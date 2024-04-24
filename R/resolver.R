@@ -207,7 +207,8 @@ resolve_cols_c <- function(
     strict = TRUE,
     excl_stub = TRUE,
     excl_group = TRUE,
-    null_means = c("everything", "nothing")
+    null_means = c("everything", "nothing"),
+    call = rlang::caller_env()
 ) {
 
   null_means <- rlang::arg_match(null_means)
@@ -219,7 +220,8 @@ resolve_cols_c <- function(
       strict = strict,
       excl_stub = excl_stub,
       excl_group = excl_group,
-      null_means = null_means
+      null_means = null_means,
+      call = call
     )
   )
 }
@@ -239,7 +241,8 @@ resolve_cols_i <- function(
     strict = TRUE,
     excl_stub = TRUE,
     excl_group = TRUE,
-    null_means = c("everything", "nothing")
+    null_means = c("everything", "nothing"),
+    call = rlang::caller_env()
 ) {
   quo <- rlang::enquo(expr)
   cols_excl <- c()
@@ -309,7 +312,8 @@ resolve_cols_i <- function(
       tidyselect::eval_select(
         expr = quo,
         data = data,
-        strict = strict
+        strict = strict,
+        error_call = call # user-facing error message
       )
     )
 
