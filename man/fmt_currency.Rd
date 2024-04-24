@@ -543,7 +543,6 @@ Other data formatting functions:
 \code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_chem}()},
-\code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_duration}()},
