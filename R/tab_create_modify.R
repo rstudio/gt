@@ -2433,6 +2433,7 @@ set_footnote <- function(loc, data, footnote, placement) {
   UseMethod("set_footnote")
 }
 
+#' @export
 set_footnote.cells_title <- function(
     loc,
     data,
@@ -2475,6 +2476,7 @@ set_footnote.cells_title <- function(
   data
 }
 
+#' @export
 set_footnote.cells_stubhead <- function(
     loc,
     data,
@@ -2497,6 +2499,7 @@ set_footnote.cells_stubhead <- function(
   data
 }
 
+#' @export
 set_footnote.cells_column_labels <- function(
     loc,
     data,
@@ -2525,6 +2528,7 @@ set_footnote.cells_column_labels <- function(
   data
 }
 
+#' @export
 set_footnote.cells_column_spanners <- function(
     loc,
     data,
@@ -2551,6 +2555,7 @@ set_footnote.cells_column_spanners <- function(
   data
 }
 
+#' @export
 set_footnote.cells_row_groups <- function(
     loc,
     data,
@@ -2585,6 +2590,7 @@ set_footnote.cells_row_groups <- function(
   data
 }
 
+#' @export
 set_footnote.cells_body <- function(
     loc,
     data,
@@ -2613,6 +2619,7 @@ set_footnote.cells_body <- function(
   data
 }
 
+#' @export
 set_footnote.cells_stub <- function(
     loc,
     data,
@@ -2639,6 +2646,7 @@ set_footnote.cells_stub <- function(
   data
 }
 
+#' @export
 set_footnote.cells_summary <- function(
     loc,
     data,
@@ -2655,6 +2663,7 @@ set_footnote.cells_summary <- function(
   )
 }
 
+#' @export
 set_footnote.cells_grand_summary <- function(
     loc,
     data,
@@ -2671,6 +2680,7 @@ set_footnote.cells_grand_summary <- function(
   )
 }
 
+#' @export
 set_footnote.cells_stub_summary <- function(
     loc,
     data,
@@ -2703,6 +2713,7 @@ set_footnote.cells_stub_grand_summary <- function(
   )
 }
 
+#' @export
 set_footnote.cells_source_notes <- function(
     loc,
     data,
@@ -2712,6 +2723,7 @@ set_footnote.cells_source_notes <- function(
   cli::cli_abort("Footnotes cannot be applied to source notes.")
 }
 
+#' @export
 set_footnote.cells_footnotes <- function(
     loc,
     data,
@@ -3502,6 +3514,7 @@ set_style <- function(loc, data, style) {
   UseMethod("set_style")
 }
 
+#' @export
 set_style.cells_title <- function(loc, data, style) {
 
   title_components <- rlang::eval_tidy(loc$groups)
@@ -3537,6 +3550,7 @@ set_style.cells_title <- function(loc, data, style) {
   data
 }
 
+#' @export
 set_style.cells_stubhead <- function(loc, data, style) {
 
   data <-
@@ -3553,6 +3567,7 @@ set_style.cells_stubhead <- function(loc, data, style) {
   data
 }
 
+#' @export
 set_style.cells_column_labels <- function(loc, data, style) {
 
   resolved <- resolve_cells_column_labels(data = data, object = loc)
@@ -3575,6 +3590,7 @@ set_style.cells_column_labels <- function(loc, data, style) {
   data
 }
 
+#' @export
 set_style.cells_column_spanners <- function(loc, data, style) {
 
   resolved <- resolve_cells_column_spanners(data = data, object = loc)
@@ -3595,6 +3611,7 @@ set_style.cells_column_spanners <- function(loc, data, style) {
   data
 }
 
+#' @export
 set_style.cells_row_groups <- function(loc, data, style) {
 
   row_groups <- dt_row_groups_get(data = data)
@@ -3623,6 +3640,7 @@ set_style.cells_row_groups <- function(loc, data, style) {
   data
 }
 
+#' @export
 set_style.cells_body <- function(loc, data, style) {
 
   resolved <- resolve_cells_body(data = data, object = loc)
@@ -3645,6 +3663,7 @@ set_style.cells_body <- function(loc, data, style) {
   data
 }
 
+#' @export
 set_style.cells_stub <- function(loc, data, style) {
 
   resolved <- resolve_cells_stub(data = data, object = loc)
@@ -3665,6 +3684,7 @@ set_style.cells_stub <- function(loc, data, style) {
   data
 }
 
+#' @export
 set_style.cells_summary <- function(loc, data, style) {
 
   add_summary_location_row(
@@ -3675,6 +3695,7 @@ set_style.cells_summary <- function(loc, data, style) {
   )
 }
 
+#' @export
 set_style.cells_grand_summary <- function(loc, data, style) {
 
   add_grand_summary_location_row(
@@ -3685,6 +3706,7 @@ set_style.cells_grand_summary <- function(loc, data, style) {
   )
 }
 
+#' @export
 set_style.cells_stub_summary <- function(loc, data, style) {
 
   add_summary_location_row(
@@ -3695,6 +3717,7 @@ set_style.cells_stub_summary <- function(loc, data, style) {
   )
 }
 
+#' @export
 set_style.cells_stub_grand_summary <- function(loc, data, style) {
 
   add_grand_summary_location_row(
@@ -3705,6 +3728,7 @@ set_style.cells_stub_grand_summary <- function(loc, data, style) {
   )
 }
 
+#' @export
 set_style.cells_footnotes <- function(loc, data, style) {
 
   data <-
@@ -3719,6 +3743,7 @@ set_style.cells_footnotes <- function(loc, data, style) {
     )
 }
 
+#' @export
 set_style.cells_source_notes <- function(loc, data, style) {
 
   data <-
