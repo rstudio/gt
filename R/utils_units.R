@@ -42,10 +42,10 @@ define_units <- function(units_notation, is_chemical_formula = FALSE) {
     chem_input <- gsub("^([^_\\{\\<]+)-([^\\}\\>]+)$", "\\1 {nsp} - {nsp} \\2", chem_input)
 
     # Replace double bonds
-    chem_input <- gsub("^(.+)=(.+)$", "\\1 {nsp}={nsp} \\2", chem_input)
+    chem_input <- gsub("^([^\\<]+)=([^\\>]+)$", "\\1 {nsp}={nsp} \\2", chem_input)
 
     # Get a vector of chem tokens
-    chem_tokens_vec <- unlist(strsplit(chem_input, split = " "))
+    chem_tokens_vec <- unlist(strsplit(chem_input, split = "\\s+"))
 
     #
     # Process all chem tokens
@@ -138,6 +138,10 @@ define_units <- function(units_notation, is_chemical_formula = FALSE) {
             x <- sub("<->", ":lrarr:", x, fixed = TRUE)
             x <- sub("->", ":rarr:", x, fixed = TRUE)
             x <- sub("<-", ":larr:", x, fixed = TRUE)
+            x <- sub("<=>>", ":eqmrarr:", x, fixed = TRUE)
+            x <- sub("<<=>", ":eqmlarr:", x, fixed = TRUE)
+            x <- sub("<=>", ":eqmarr:", x, fixed = TRUE)
+
           }
           x
         }
@@ -475,6 +479,9 @@ render_units <- function(units_object, context = "html") {
   units_str <- gsub(":larr:", left_arrow_svg, units_str)
   units_str <- gsub(":lrarr:", lr_arrow_svg, units_str)
   units_str <- gsub(":lrseparr:", lr_sep_arrow_svg, units_str)
+  units_str <- gsub(":eqmarr:", eqm_arrows_svg, units_str)
+  units_str <- gsub(":eqmrarr:", eqm_arrows_right_svg, units_str)
+  units_str <- gsub(":eqmlarr:", eqm_arrows_left_svg, units_str)
 
   units_str
 }
