@@ -551,7 +551,7 @@ units_symbol_replacements <- function(
     text <- replace_units_symbol(text, "degC", "degC", paste0("\U000B0", "C"))
     text <- replace_units_symbol(text, "degF", "degF", paste0("\U000B0", "F"))
     text <- replace_units_symbol(text, ":space:", ":space:", " ")
-
+    text <- replace_units_symbol(text, ":thinspace:", ":thinspace:", "\U2009")
     text <- replace_units_symbol(text, ":Alpha:", ":Alpha:", "\U0391")
     text <- replace_units_symbol(text, ":alpha:", ":alpha:", "\U03B1")
     text <- replace_units_symbol(text, ":Beta:", ":Beta:", "\U0392")
