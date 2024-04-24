@@ -440,7 +440,7 @@ units_html_sub_super <- function(
     "<span style=\"",
     "display:inline-block;",
     "line-height:1em;",
-    "text-align:left;",
+    "text-align:", text_align, ";",
     "font-size:60%;",
     "vertical-align:-0.25em;",
     "margin-left:0.1em;",
