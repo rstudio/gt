@@ -350,6 +350,7 @@ render_units <- function(units_object, context = "html") {
   }
 
   units_str <- gsub("^\\s+|\\s+$", "", units_str)
+  units_str <- gsub("\\s*\\{nsp\\}\\s*", "", units_str)
   units_str <- gsub(":rarr:", right_arrow_svg, units_str)
   units_str <- gsub(":larr:", left_arrow_svg, units_str)
   units_str <- gsub(":lrarr:", lr_arrow_svg, units_str)
