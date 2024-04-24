@@ -102,7 +102,7 @@ of those columns is not necessary.</p>
 
 <dt>columns</dt>
 <dd><p><em>Columns to target</em></p>
-<p><code>&lt;column-targeting expression&gt;</code> // <em>default:</em> <code><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything()</a></code></p>
+<p><code>&lt;column-targeting expression&gt;</code> // <strong>required</strong></p>
 <p>The columns to hide in the output display table. Can either be a series of
 column names provided in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, a vector of column indices, or a select
 helper function. Examples of select helper functions include
@@ -114,7 +114,8 @@ helper function. Examples of select helper functions include
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>An object of class <code>gt_tbl</code>.</p>
+<p>An object of class <code>gt_tbl</code>. <code>data</code> will be unaltered if <code>columns</code> is
+not supplied.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
