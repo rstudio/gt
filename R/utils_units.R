@@ -28,6 +28,117 @@ define_units <- function(units_notation, is_chemical_formula = FALSE) {
   # Trim any incoming `{{`/`}}`
   input <- gsub("^\\{\\{\\s*|\\s*\\}\\}$", "", units_notation)
 
+  #
+  # Extract chemical notation text if present and process that
+  # as redefined chem tokens
+  #
+
+  if (grepl("\\%.*\\%", input) || is_chemical_formula) {
+
+    chem_text <- gsub(".*(\\%.*\\%).*", "\\1", input)
+    chem_input <- gsub("^%|%$", "", chem_text)
+
+    # Replace single bonds
+    chem_input <- gsub("^([^_\\{\\<]+)-([^\\}\\>]+)$", "\\1 {nsp} - {nsp} \\2", chem_input)
+
+    # Replace double bonds
+    chem_input <- gsub("^(.+)=(.+)$", "\\1 {nsp}={nsp} \\2", chem_input)
+
+    # Get a vector of chem tokens
+    chem_tokens_vec <- unlist(strsplit(chem_input, split = " "))
+
+    #
+    # Process all chem tokens
+    #
+
+    # Resolve any subscripts and superscripts
+    chem_tokens_vec <-
+      vapply(
+        chem_tokens_vec,
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = function(x) {
+
+          if (grepl("[0-9]", x) && nchar(x) > 1) {
+            x <- gsub("^([0-9]+)([a-zA-Z])(.*)$", "\\1:thinspace:\\2\\3", x) # preceding stoichiometric number
+            x <- gsub("^(.*)([a-zA-Z])([0-9]+)([a-zA-Z])(.*)$", "\\1\\2_\\3 {nsp}\\4\\5", x) # internal subscript
+            x <- gsub("^(.*)([a-zA-Z])([0-9]+)$", "\\1\\2_\\3", x) # EOL subscript
+          }
+
+          if (grepl("\\)|\\(|\\]", x)) {
+
+            for (i in seq(1, 5)) {
+              x <- gsub("^(.+)(\\)|\\])([0-9]+)(.*)$", "\\1\\2_\\3 {nsp}\\4", x) # subscript following ')' or ']'
+            }
+
+            for (i in seq(1, 5)) {
+              x <- gsub("^(.+)([0-9]+)(\\)|\\(|\\])(.*)$", "\\1_\\2 {nsp}\\3\\4", x) # subscript preceding ')', '(', or ']'
+            }
+          }
+
+          if (grepl("^.+([+-])$", x) && !grepl("\\^[n+-]+$", x)) {
+            x <- gsub("^(.*)([a-zA-Z])([+-])$", "\\1\\2^\\3", x) # terminating '+' or '-' denoting charge
+          }
+
+          if (grepl("\\]", x) && grepl("[0-9+-]", x) && nchar(x) > 1) {
+            x <- gsub("^(.*)(\\])([0-9+-]*)$", "\\1\\2^\\3", x) # superscript following closing ']'
+          }
+
+          if (grepl("[a-zA-Z]\\^\\{.+?\\}$", x)) {
+            x <- gsub("^(.*)([a-zA-Z])\\^\\{(.+?)\\}$", "\\1\\2^\\3", x) # removal of curly braces around charge value
+          }
+
+          if (grepl("^(.*)[a-zA-Z]_x$", x)) {
+            x <- gsub("^(.*)_x$", "\\1_*x*", x) # conversion to subscripted, italicized 'x'
+          }
+
+          if (x == "x") {
+            x <- "*x*" # standalone 'x' becomes italicized, convention for stoichiometric 'x'
+          }
+
+          if (grepl("^(.*)\\^n\\+$", x)) {
+            x <- sub("^(.*)\\^n\\+$", "\\1^*n*+", x) # 'n' in superscript is italicized by convention
+          }
+
+          # Isotope and nuclide handling on LHS (w/ curly braces) -- '^{227}_{90}Th+'
+          if (grepl("^\\^\\{([0-9+-]+)\\}_\\{([0-9+-]+)\\}.*$", x)) {
+            x <- sub("^\\^\\{([0-9+-]+)\\}_\\{([0-9+-]+)\\}(.*)$", "{nsp}[_\\2^\\1] {nsp}\\3", x)
+          }
+
+          # Isotope and nuclide handling on LHS (w/o curly braces) -- '^227_90Th+'
+          if (grepl("^\\^([0-9+-]+)_([0-9+-]+).*$", x)) {
+            x <- sub("^\\^([0-9+-]+)_([0-9+-]+)(.*)$", "{nsp}[_\\2^\\1] {nsp}\\3", x)
+          }
+
+          x
+        }
+      )
+
+    # Resolve any arrows
+    chem_tokens_vec <-
+      vapply(
+        chem_tokens_vec,
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = function(x) {
+          if (grepl("<|>", x) && nchar(x) > 1) {
+            x <- sub("<-->", ":lrseparr:", x, fixed = TRUE)
+            x <- sub("<->", ":lrarr:", x, fixed = TRUE)
+            x <- sub("->", ":rarr:", x, fixed = TRUE)
+            x <- sub("<-", ":larr:", x, fixed = TRUE)
+          }
+          x
+        }
+      )
+
+    # Insert chem tokens back into input
+    chem_tokens_str <- paste(chem_tokens_vec, collapse = " ")
+
+    input <- sub(chem_text, chem_tokens_str, input, fixed = TRUE)
+
+    return(define_units(units_notation = input))
+  }
+
   # Get a vector of raw tokens
   tokens_vec <- unlist(strsplit(input, split = " "))
 
@@ -157,6 +268,7 @@ left_arrow_svg  <- "<svg viewBox=\"0 0 86 11\" style=\"overflow:visible;height:0
 lr_arrow_svg <- "<svg viewBox=\"0 0 86 11\" style=\"overflow:visible;height:0.35em;margin-bottom:0.15em;\"><g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\"><rect fill=\"#010101\" x=\"16.2427961\" y=\"5.28407392\" width=\"53\" height=\"1.37\"></rect><path d=\"M82.397,5.96907392 L65.625,1.90307392 C66.825,2.91207392 67.521,4.39907392 67.521,5.96907392 C67.521,7.53707392 66.826,9.02807392 65.625,10.0350739 L82.397,5.96907392 Z\" id=\"right_arrow\" fill=\"#010101\" fill-rule=\"nonzero\"></path><path d=\"M19.772,5.96907392 L3,1.90307392 C4.2,2.91207392 4.896,4.39907392 4.896,5.96907392 C4.896,7.53707392 4.201,9.02807392 3,10.0350739 L19.772,5.96907392 Z\" fill=\"#010101\" fill-rule=\"nonzero\" transform=\"translate(11.386000, 5.969074) scale(-1, 1) translate(-11.386000, -5.969074)\"></path></g></svg>"
 
 lr_sep_arrow_svg <- "<svg viewBox=\"0 0 86 20\" style=\"overflow:visible;height:0.62em;margin-bottom:0.08em;\"><g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\"><g transform=\"translate(3.000000, 2.487191)\" fill=\"#010101\"><rect id=\"line\" x=\"13.2427961\" y=\"10.381\" width=\"63\" height=\"1.37\"></rect><path d=\"M16.772,11.066 L0,7 C1.2,8.009 1.896,9.496 1.896,11.066 C1.896,12.634 1.201,14.125 0,15.132 L16.772,11.066 Z\" fill-rule=\"nonzero\" transform=\"translate(8.386000, 11.066000) scale(-1, 1) translate(-8.386000, -11.066000)\"></path><rect x=\"3.24279614\" y=\"3.381\" width=\"63\" height=\"1.37\"></rect><path d=\"M79.397,4.066 L62.625,0 C63.825,1.009 64.521,2.496 64.521,4.066 C64.521,5.634 63.826,7.125 62.625,8.132 L79.397,4.066 Z\" fill-rule=\"nonzero\"></path></g></g></svg>"
+
 units_list_item <- function(
     token,
     unit,
@@ -189,6 +301,7 @@ units_list_item <- function(
 
   list_item
 }
+
 
 # Render a `units_definition` object to string
 render_units <- function(units_object, context = "html") {
@@ -284,29 +397,17 @@ render_units <- function(units_object, context = "html") {
         exponent <- gsub("-", "--", exponent)
       }
 
+      text_align <- if (units_str_i == "{nsp}") "right" else "left"
+
       units_str_i <-
         paste0(
           units_str_i,
           units_html_sub_super(
             content_sub = unit_subscript,
-            content_sup = exponent
+            content_sup = exponent,
+            text_align = text_align
           )
         )
-
-    } else if (chemical_formula) {
-
-      if (context == "html") {
-
-        units_str_i <-
-          gsub(
-            "(\\d+)",
-            "<span style=\"white-space:nowrap;\"><sub>\\1</sub></span>",
-            units_str_i
-          )
-
-      } else if (context == "latex") {
-        units_str_i <- gsub("(\\d+)", "\\\\textsubscript\\{\\1\\}", units_str_i)
-      }
 
     } else {
 
