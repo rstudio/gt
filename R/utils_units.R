@@ -430,7 +430,11 @@ units_to_subscript <- function(content, context = "html") {
   out
 }
 
-units_html_sub_super <- function(content_sub, content_sup) {
+units_html_sub_super <- function(
+    content_sub,
+    content_sup,
+    text_align = "left"
+) {
 
   paste0(
     "<span style=\"",
