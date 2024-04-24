@@ -16,7 +16,7 @@ This is the \strong{gt} table object that is commonly created through use of the
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} // \emph{default:} \verb{No column}
+\verb{<column-targeting expression>} // \strong{required}
 
 The columns to hide in the output display table. Can either be a series of
 column names provided in \code{\link[=c]{c()}}, a vector of column indices, or a select
