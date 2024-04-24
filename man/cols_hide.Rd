@@ -51,8 +51,8 @@ warnings or messages when changing the state of already-invisible columns.
 
 
 Let's use a small portion of the \code{\link{countrypops}} dataset to create a \strong{gt}
-table. We can hide the \code{country_code_2} and \code{country_code_3} columns with
-the \code{cols_hide()} function.
+table. We can hide the \code{country_code_2} and \code{country_code_3} columns with the
+\code{cols_hide()} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::filter(country_name == "Egypt") |>
@@ -65,11 +65,11 @@ the \code{cols_hide()} function.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_cols_hide_1.png" alt="This image of a table was generated from the first code example in the `cols_hide()` help file." style="width:100\%;">
 }}
 
-Using another \code{\link{countrypops}}-based \strong{gt} table, we can use the
-\code{population} column to provide the conditional placement of footnotes.
-Then, we'll hide that column along with the \code{country_code_3} column. Note
-that the order of the \code{cols_hide()} and \code{\link[=tab_footnote]{tab_footnote()}} statements has no
-effect on the final display of the table.
+Using another \code{\link{countrypops}}-based \strong{gt} table, we can use the \code{population}
+column to provide the conditional placement of footnotes. Then, we'll hide
+that column along with the \code{country_code_3} column. Note that the order of
+the \code{cols_hide()} and \code{\link[=tab_footnote]{tab_footnote()}} statements has no effect on the final
+display of the table.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::filter(country_name == "Pakistan") |>
@@ -91,11 +91,13 @@ effect on the final display of the table.
 }
 
 \section{Function ID}{
- 5-12
+
+5-12
 }
 
 \section{Function Introduced}{
- \code{v0.2.0.5} (March 31, 2020)
+
+\code{v0.2.0.5} (March 31, 2020)
 }
 
 \seealso{
