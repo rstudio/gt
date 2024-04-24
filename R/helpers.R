@@ -3110,6 +3110,7 @@ cell_text <- function(
   cell_style_structure(name = "cell_text", obj = style_vals)
 }
 
+#' @export
 cell_style_to_html.cell_text <- function(style) {
 
   css <- unclass(style)
@@ -3229,6 +3230,7 @@ cell_fill <- function(
   cell_style_structure("cell_fill", style_vals)
 }
 
+#' @export
 cell_style_to_html.cell_fill <- function(style) {
 
   css <- list()
@@ -3434,6 +3436,7 @@ cell_borders <- function(
   as_style(style = style_list)
 }
 
+#' @export
 cell_style_to_html.cell_border <- function(style) {
 
   css <- unclass(style)
