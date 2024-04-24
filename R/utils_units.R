@@ -96,6 +96,14 @@ define_units <- function(units_notation, is_chemical_formula = FALSE) {
             x <- "*x*" # standalone 'x' becomes italicized, convention for stoichiometric 'x'
           }
 
+          if (x %in% c("^", "(^)")) {
+            x <- "{nsp}:uarr:" # up arrow for gas
+          }
+
+          if (x %in% c("v", "(v)")) {
+            x <- "{nsp}:darr:" # down arrow for precipitate
+          }
+
           if (grepl("^(.*)\\^n\\+$", x)) {
             x <- sub("^(.*)\\^n\\+$", "\\1^*n*+", x) # 'n' in superscript is italicized by convention
           }
