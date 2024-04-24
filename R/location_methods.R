@@ -263,11 +263,13 @@ resolve_location <- function(loc, data) {
   UseMethod("resolve_location")
 }
 
+#' @export
 resolve_location.resolved <- function(loc, data) {
   # The object is already resolved
   loc
 }
 
+#' @export
 resolve_location.cells_body <- function(loc, data) {
 
   loc$colnames <-
@@ -286,6 +288,7 @@ resolve_location.cells_body <- function(loc, data) {
   loc
 }
 
+#' @export
 resolve_location.cells_column_labels <- function(loc, data) {
 
   if (!is.null(loc$columns)) {
@@ -306,6 +309,7 @@ resolve_location.cells_column_labels <- function(loc, data) {
   loc
 }
 
+#' @export
 resolve_location.cells_column_spanners <- function(loc, data) {
 
   resolved <- resolve_cells_column_spanners(data = data, object = loc)
@@ -317,6 +321,7 @@ resolve_location.cells_column_spanners <- function(loc, data) {
   loc
 }
 
+#' @export
 resolve_location.cells_stub <- function(loc, data) {
 
   resolved <- resolve_cells_stub(data = data, object = loc)
@@ -328,6 +333,7 @@ resolve_location.cells_stub <- function(loc, data) {
   loc
 }
 
+#' @export
 resolve_location.cells_row_groups <- function(loc, data) {
 
   resolved <- resolve_cells_row_groups(data = data, object = loc)
@@ -345,6 +351,7 @@ to_output_location <- function(loc, data) {
   UseMethod("to_output_location")
 }
 
+#' @export
 to_output_location.default <- function(loc, data) {
 
   loc <- resolve_location(loc = loc, data = data)
@@ -353,11 +360,13 @@ to_output_location.default <- function(loc, data) {
   loc
 }
 
+#' @export
 to_output_location.output_relative <- function(loc, data) {
   # The object is already output-relative
   loc
 }
 
+#' @export
 to_output_location.cells_body <- function(loc, data) {
 
   stub_df <- dt_stub_df_get(data = data)
@@ -376,6 +385,7 @@ to_output_location.cells_body <- function(loc, data) {
   loc
 }
 
+#' @export
 to_output_location.cells_stub <- function(loc, data) {
 
   stub_df <- dt_stub_df_get(data = data)

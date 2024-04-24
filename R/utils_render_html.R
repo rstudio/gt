@@ -206,6 +206,7 @@ cell_style_to_html <- function(style) {
   UseMethod("cell_style_to_html")
 }
 
+#' @export
 cell_style_to_html.default <- function(style) {
   utils::str(style)
 
