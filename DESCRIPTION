@@ -23,6 +23,7 @@ Authors@R: c(
            comment = c(ORCID = "0000-0002-4064-6012")),
     person("Ken", "Brevoort", , "ken@brevoort.com", "aut",
            comment = c(ORCID = "0000-0002-4001-8358")),
+    person("Olivier", "Roy", , , "aut"),
     person("Posit Software, PBC", role = c("cph", "fnd"))
     )
 License: MIT + file LICENSE
