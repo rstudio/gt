@@ -167,6 +167,16 @@ define_units <- function(units_notation, is_chemical_formula = FALSE) {
             x <- sub("^\\^([0-9+-]+)_([0-9+-]+)(.*)$", "{nsp}[_\\2^\\1] {nsp}\\3", x)
           }
 
+          # Isotope handling on LHS (w/ curly braces) -- '^{227}Th+'
+          if (grepl("^\\^\\{([0-9+-]+)\\}.*$", x)) {
+            x <- sub("^\\^\\{([0-9+-]+)\\}(.*)$", "{nsp}[_:space:^\\1] {nsp}\\2", x)
+          }
+
+          # Isotope handling on LHS (w/0 curly braces) -- '^{227}Th+'
+          if (grepl("^\\^([0-9+-]+).*$", x)) {
+            x <- sub("^\\^([0-9+-]+)(.*)$", "{nsp}[_:space:^\\1] {nsp}\\2", x)
+          }
+
           x
         }
       )
