@@ -8630,6 +8630,44 @@ fmt_units <- function(
 #' formatting on values in the column or another column, or, you'd like to use a
 #' more complex predicate expression.
 #'
+#' @section Examples:
+#'
+#' Let's use the [`reactions`] dataset and create a new **gt** table. The table
+#' will be filtered down to only a few rows and columns. The column
+#' `cmpd_formula` contains chemical formulas and the formatting of those will be
+#' performed by `fmt_chem()`. Certain column labels with chemical names
+#' (`o3_k298` and `no3_k298`) can be handled within [cols_label()] by using
+#' surrounding the text with `"{{%"`/`"%}}"`.
+#'
+#' ```r
+#' reactions |>
+#'   dplyr::filter(cmpd_type == "terminal monoalkene") |>
+#'   dplyr::filter(grepl("^1-", cmpd_name)) |>
+#'   dplyr::select(cmpd_name, cmpd_formula, ends_with("k298")) |>
+#'   gt() |>
+#'   sub_missing() |>
+#'   fmt_chem(columns = cmpd_formula) |>
+#'   fmt_scientific() |>
+#'   cols_label(
+#'     cmpd_name = "Alkene",
+#'     cmpd_formula = "Formula",
+#'     oh_k298 = "OH",
+#'     o3_k298 = "{{%O3%}}",
+#'     no3_k298 = "{{%NO3%}}",
+#'     cl_k298 = "Cl"
+#'   ) |>
+#'   tab_spanner(
+#'     label = "Reaction Rate Constant at 298 K",
+#'     columns = ends_with("k298")
+#'   ) |>
+#'   tab_header(title = "Gas-phase reactions of selected terminal alkenes") |>
+#'   opt_align_table_header(align = "left")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_chem_1.png")`
+#' }}
+#'
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-19
