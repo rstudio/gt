@@ -209,7 +209,7 @@ that vector must match the length of \code{x}).
 
 \section{Function ID}{
 
-3-31
+3-32
 }
 
 \section{Function Introduced}{
@@ -224,6 +224,7 @@ Other data formatting functions:
 \code{\link{fmt_auto}()},
 \code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
+\code{\link{fmt_chem}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_date}()},
 \code{\link{fmt_datetime}()},
