@@ -2418,12 +2418,19 @@ tab_footnote <- function(
   for (loc in locations) {
 
     data <-
-      set_footnote(
-        loc = loc,
-        data = data,
-        footnote = footnote,
-        placement = placement
-      )
+      withCallingHandlers(
+        set_footnote(
+          loc = loc,
+          data = data,
+          footnote = footnote,
+          placement = placement
+      ),
+      error = function(e) {
+        cli::cli_abort(
+          "Can't add footnote {.val {footnote}}",
+          parent = e
+        )
+      })
   }
 
   data
@@ -2507,7 +2514,7 @@ set_footnote.cells_column_labels <- function(
     placement
 ) {
 
-  resolved <- resolve_cells_column_labels(data = data, object = loc)
+  resolved <- resolve_cells_column_labels(data = data, object = loc, call = call("cells_column_labels"))
 
   cols <- resolved$columns
 
@@ -2536,7 +2543,7 @@ set_footnote.cells_column_spanners <- function(
     placement
 ) {
 
-  resolved <- resolve_cells_column_spanners(data = data, object = loc)
+  resolved <- resolve_cells_column_spanners(data = data, object = loc, call = call("cells_column_spanners"))
 
   groups <- resolved$spanners
 
@@ -2598,7 +2605,7 @@ set_footnote.cells_body <- function(
     placement
 ) {
 
-  resolved <- resolve_cells_body(data = data, object = loc)
+  resolved <- resolve_cells_body(data = data, object = loc, call = call("cell_body"))
 
   rows <- resolved$rows
 
