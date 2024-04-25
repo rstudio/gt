@@ -3480,7 +3480,7 @@ tab_style <- function(
         # to sentence case
         # cell_grand_summary_row -> grand summary row
         readable_table_part <- attr(loc, "class")[[1]]
-        readable_table_part <- sub("cell_", "", readable_table_part)
+        readable_table_part <- sub("cells_", "", readable_table_part)
         readable_table_part <- gsub("_", " ", readable_table_part)
 
         cli::cli_abort(
