@@ -10,6 +10,8 @@
 
 * `cols_hide()` no longer errors if no column was supplied. Error messages are also clearer when supplying a column that doesn't exist (@olivroy, #1631).
 
+`tab_footnote()` now gives a better error message when `locations` is not correctly specified (@olivroy, #475)
+
 # gt 0.10.1
 
 ## Improvements to nanoplots
