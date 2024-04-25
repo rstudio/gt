@@ -59,57 +59,94 @@ define_units <- function(units_notation, is_chemical_formula = FALSE) {
         USE.NAMES = FALSE,
         FUN = function(x) {
 
+          # Processing for simple chemical formulas (e.g., 'C7H7NO4')
+          if (grepl("^[a-zA-Z0-9]+$", x) && grepl("^[A-Z]", x)) {
+
+            # Internal subscripts
+            for (i in seq(1, 10)) {
+              x_str_int <- x
+              x <- gsub("^(.*)([a-zA-Z])([0-9]+)([a-zA-Z])(.*)$", "\\1\\2_\\3 {nsp}\\4\\5", x)
+              if (x_str_int == x) break
+            }
+
+            # Final subscript
+            x <- gsub("^(.*)([a-zA-Z])([0-9]+)$", "\\1\\2_\\3", x)
+
+            return(x)
+          }
+
           if (grepl("[0-9]", x) && nchar(x) > 1) {
-            x <- gsub("^([0-9]+)([a-zA-Z])(.*)$", "\\1:thinspace:\\2\\3", x) # preceding stoichiometric number
-            x <- gsub("^(.*)([a-zA-Z])([0-9]+)([a-zA-Z])(.*)$", "\\1\\2_\\3 {nsp}\\4\\5", x) # internal subscript
-            x <- gsub("^(.*)([a-zA-Z])([0-9]+)$", "\\1\\2_\\3", x) # EOL subscript
+
+            # Preceding stoichiometric number
+            x <- gsub("^([0-9]+)([a-zA-Z])(.*)$", "\\1:thinspace:\\2\\3", x)
+
+            # Internal subscripts
+            for (i in seq(1, 10)) {
+              x_str_int <- x
+              x <- gsub("^(.*)([a-zA-Z])([0-9]+)([a-zA-Z])(.*)$", "\\1\\2_\\3 {nsp}\\4\\5", x)
+              if (x_str_int == x) break
+            }
+
+            # Final subscript
+            x <- gsub("^(.*)([a-zA-Z])([0-9]+)$", "\\1\\2_\\3", x)
           }
 
           if (grepl("\\)|\\(|\\]", x)) {
 
+            # Subscript following ')' or ']'
             for (i in seq(1, 5)) {
-              x <- gsub("^(.+)(\\)|\\])([0-9]+)(.*)$", "\\1\\2_\\3 {nsp}\\4", x) # subscript following ')' or ']'
+              x <- gsub("^(.+)(\\)|\\])([0-9]+)(.*)$", "\\1\\2_\\3 {nsp}\\4", x)
             }
 
+            # Subscript preceding ')', '(', or ']'
             for (i in seq(1, 5)) {
-              x <- gsub("^(.+)([0-9]+)(\\)|\\(|\\])(.*)$", "\\1_\\2 {nsp}\\3\\4", x) # subscript preceding ')', '(', or ']'
+              x <- gsub("^(.+)([0-9]+)(\\)|\\(|\\])(.*)$", "\\1_\\2 {nsp}\\3\\4", x)
             }
           }
 
+          # Terminating '+' or '-' denoting charge
           if (grepl("^.+([+-])$", x) && !grepl("\\^[n+-]+$", x)) {
-            x <- gsub("^(.*)([a-zA-Z])([+-])$", "\\1\\2^\\3", x) # terminating '+' or '-' denoting charge
+            x <- gsub("^(.*)([a-zA-Z])([+-])$", "\\1\\2^\\3", x)
           }
 
+          # Superscript following closing ']'
           if (grepl("\\]", x) && grepl("[0-9+-]", x) && nchar(x) > 1) {
-            x <- gsub("^(.*)(\\])([0-9+-]*)$", "\\1\\2^\\3", x) # superscript following closing ']'
+            x <- gsub("^(.*)(\\])([0-9+-]*)$", "\\1\\2^\\3", x)
           }
 
+          # Removal of curly braces around charge value
           if (grepl("[a-zA-Z]\\^\\{.+?\\}$", x)) {
-            x <- gsub("^(.*)([a-zA-Z])\\^\\{(.+?)\\}$", "\\1\\2^\\3", x) # removal of curly braces around charge value
+            x <- gsub("^(.*)([a-zA-Z])\\^\\{(.+?)\\}$", "\\1\\2^\\3", x)
           }
 
-          if (grepl("^(.*)[a-zA-Z]_x$", x)) {
-            x <- gsub("^(.*)_x$", "\\1_*x*", x) # conversion to subscripted, italicized 'x'
+          # Conversion to subscripted, italicized 'x'
+          if (grepl("_x$", x)) {
+            x <- gsub("^(.*)([a-zA-Z])_x$", "\\1\\2_*x*", x)
           }
 
+          # Standalone 'x' becomes italicized, convention for stoichiometry
           if (x == "x") {
-            x <- "*x*" # standalone 'x' becomes italicized, convention for stoichiometric 'x'
+            x <- "*x*"
           }
 
+          # Up arrow for gas
           if (x %in% c("^", "(^)")) {
-            x <- "{nsp}:uarr:" # up arrow for gas
+            x <- "{nsp}:uarr:"
           }
 
+          # Down arrow for precipitate
           if (x %in% c("v", "(v)")) {
-            x <- "{nsp}:darr:" # down arrow for precipitate
+            x <- "{nsp}:darr:"
           }
 
+          # Center dot for addition compounds (from standalone '*' or '.')
           if (x %in% c("*", ".")) {
-            x <- "{nsp}:dot:{nsp}" # center dot for addition compounds
+            x <- "{nsp}:dot:{nsp}"
           }
 
+          # The 'n' in a superscript is italicized by convention
           if (grepl("^(.*)\\^n\\+$", x)) {
-            x <- sub("^(.*)\\^n\\+$", "\\1^*n*+", x) # 'n' in superscript is italicized by convention
+            x <- sub("^(.*)\\^n\\+$", "\\1^*n*+", x)
           }
 
           # Isotope and nuclide handling on LHS (w/ curly braces) -- '^{227}_{90}Th+'
@@ -126,7 +163,7 @@ define_units <- function(units_notation, is_chemical_formula = FALSE) {
         }
       )
 
-    # Resolve any arrows
+    # Resolve any reaction arrows
     chem_tokens_vec <-
       vapply(
         chem_tokens_vec,
@@ -141,8 +178,8 @@ define_units <- function(units_notation, is_chemical_formula = FALSE) {
             x <- sub("<=>>", ":eqmrarr:", x, fixed = TRUE)
             x <- sub("<<=>", ":eqmlarr:", x, fixed = TRUE)
             x <- sub("<=>", ":eqmarr:", x, fixed = TRUE)
-
           }
+
           x
         }
       )
