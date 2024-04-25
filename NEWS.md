@@ -10,7 +10,7 @@
 
 * `cols_hide()` no longer errors if no column was supplied. Error messages are also clearer when supplying a column that doesn't exist (@olivroy, #1631).
 
-`tab_footnote()` now gives a better error message when `locations` is not correctly specified (@olivroy, #475)
+`tab_footnote()` and `tab_style()` now give better error messages when `locations` is not correctly specified (@olivroy, #475, #1638 , #1640).
 
 # gt 0.10.1
 
