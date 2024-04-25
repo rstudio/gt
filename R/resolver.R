@@ -448,7 +448,7 @@ resolve_rows_i <- function(
     expr,
     data,
     null_means = c("everything", "nothing"),
-    call = caller_env()
+    call = rlang::caller_env()
 ) {
 
   null_means <- rlang::arg_match(null_means)

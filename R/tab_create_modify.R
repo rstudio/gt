@@ -2605,7 +2605,7 @@ set_footnote.cells_body <- function(
     placement
 ) {
 
-  resolved <- resolve_cells_body(data = data, object = loc, call = call("cell_body"))
+  resolved <- resolve_cells_body(data = data, object = loc, call = call("cells_body"))
 
   rows <- resolved$rows
 
@@ -3476,13 +3476,17 @@ tab_style <- function(
           style = style
       ),
       error = function(e) {
-        readable_class <- attr(loc, "class")[[1]]
-        readable_class <- sub("[^_]+_", "", readable_class)
-        readable_class <- sub("_", " ", readable_class)
+        # remove the cell_ prefix and convert snake case
+        # to sentence case
+        # cell_grand_summary_row -> grand summary row
+        readable_table_part <- attr(loc, "class")[[1]]
+        readable_table_part <- sub("cell_", "", readable_table_part)
+        readable_table_part <- gsub("_", " ", readable_table_part)
 
         cli::cli_abort(
-          "Failed to style the {readable_class} of the table.",
-          parent = e)
+          "Failed to style the {readable_table_part} of the table.",
+          parent = e
+        )
       })
   }
 
@@ -3663,7 +3667,8 @@ set_style.cells_row_groups <- function(loc, data, style) {
 #' @export
 set_style.cells_body <- function(loc, data, style) {
 
-  resolved <- resolve_cells_body(data = data, object = loc, call = call("cells_body"))
+  call <-  call("cells_body")
+  resolved <- resolve_cells_body(data = data, object = loc, call = call)
 
   rows <- resolved$rows
 

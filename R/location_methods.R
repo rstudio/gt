@@ -116,7 +116,9 @@ add_summary_location_row <- function(
         cli::cli_abort(c(
           "The location requested could not be resolved.",
           "*" = "Review the expression provided as `columns`."
-        ), call = call)
+          ),
+          call = call
+      )
       }
     } else {
       columns <- NA_character_
@@ -134,7 +136,9 @@ add_summary_location_row <- function(
       cli::cli_abort(c(
         "The location requested could not be resolved.",
         "*" = "Review the expression provided as `rows`."
-      ), call = call)
+        ),
+        call = call
+      )
     }
 
     if (df_type == "footnotes_df") {
