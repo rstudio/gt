@@ -40,8 +40,14 @@ need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{fmt_chem()} function lets you format chemical formulas in the table
-body. Usually this will be in the common form of \code{C2H4O} (for acetaldehyde).
+The \code{fmt_chem()} function lets you format chemical formulas or even chemical
+reactions in the table body. Often the input text will be in a common form
+representing single compounds (like \code{"C2H4O"}, for acetaldehyde) but chemical
+reactions can be used (e.g., \verb{2CH3OH -> CH3OCH3 + H2O"}). So long as the
+text within the targeted cells conforms to \strong{gt}'s specialized chemistry
+notation, the appropriate conversions will occur. Details pertaining to
+chemistry notation can be found in the section entitled
+\emph{How to use \strong{gt}'s chemistry notation}.
 }
 \section{Targeting cells with \code{columns} and \code{rows}}{
 
@@ -82,6 +88,45 @@ expression that takes column values (can involve any of the available columns
 in the table) and returns a logical vector. This is nice if you want to base
 formatting on values in the column or another column, or, you'd like to use a
 more complex predicate expression.
+}
+
+\section{How to use \strong{gt}'s chemistry notation}{
+
+
+The chemistry notation involves a shorthand of writing chemical formulas and
+chemical reactions, if needed. It should feel familiar in its basic usage and
+the more advanced typesetting tries to limit the amount of syntax needed.
+It's always best to show examples on usage:
+\itemize{
+\item \code{"CH3O2"} and \code{"(NH4)2S"} will render with subscripted numerals
+\item Charges can be expressed terminating \code{"+"} or \code{"-"} as in \code{"H+"} and
+\code{"[AgCl2]-"}; if any charges involve the use of a number, the following
+incantations could be used: \code{"CrO4^2-"}, \code{"Fe^n+"}, \code{"Y^99+"}, \code{"Y^{99+}"}
+(the final two forms produce equivalent output)
+\item Stoichiometric values can be included with whole values prepending formulas
+(e.g.,  \code{"2H2O2"}) or by setting them off with a space, like this:
+\code{"2 H2O2"}, \code{"0.5 H2O"}, \code{"1/2 H2O"}, \code{"(1/2) H2O"}
+\item Certain standalone, lowercase letters or combinations thereof will be
+automatically stylized to fit conventions; \code{"NO_x"} and \code{"x Na(NH4)HPO4"}
+will have italicized 'x' characters and you can always italicize letters
+by surrounding with \code{"*"} (as in \code{"*n* H2O"} or \code{"*n*-C5H12"})
+\item Chemical isotopes can be rendered using either of these two construction
+preceding an element: \code{"^{227}_{90}Th"} or \code{"^227_90Th"}; nuclides can
+be represented in a similar manner, here are two examples:
+\code{"^{0}_{-1}n^{-}"}, \code{"^0_-1n-"}
+\item Chemical reactions can use \code{"+"} signs and a variety of reaction arrows:
+(1) "A -> B", (2) "A <- B", (3) "A <-> B", (4) "A <--> B", (5) "A <=> B",
+(6) "A <=>> B", or (7) "A <<=> B"
+\item Center dots (useful in addition compounds) can be added by using a single
+\code{"."} or \code{"*"} character, surrounded by spaces; here are two equivalent
+examples \code{"KCr(SO4)2 . 12 H2O"} and \code{"KCr(SO4)2 * 12 H2O"}
+\item Single and double bonds can be shown by inserting a \code{"-"} or \code{"="} between
+adjacent characters (i.e., these shouldn't be at the beginning or end of
+the markup); two examples: \code{"C6H5-CHO"}, \code{"CH3CH=CH2"}
+\item as with units notation, Greek letters can be inserted by surrounding the
+letter name with \code{":"}; here's an example that denotes the delta value
+of carbon-13: \code{":delta: ^13C"}
+}
 }
 
 \section{Examples}{
