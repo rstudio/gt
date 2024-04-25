@@ -2427,7 +2427,7 @@ tab_footnote <- function(
       ),
       error = function(e) {
         cli::cli_abort(
-          "Can't add footnote {.val {footnote}}",
+          "Can't add footnote {.val {footnote}}.",
           parent = e
         )
       })

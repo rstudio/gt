@@ -15,7 +15,7 @@ test_that("tab_footnote produces helpful error messages (#475).", {
       "2018-02-11", "10",      55.3,      284.6
     )
 
-  start_gt <- gt(data = tbl, groupname_col = "date") |>
+  start_gt <- gt(data = tbl, groupname_col = "date") %>%
     tab_spanner(
       label = "values",
       columns = starts_with("value")
@@ -23,22 +23,22 @@ test_that("tab_footnote produces helpful error messages (#475).", {
 
   expect_snapshot(
     error = TRUE, {
-     start_gt |>
+     start_gt %>%
         tab_footnote(
           footnote = "First data cell.",
           locations = cells_body(columns = "valuer", rows = 1)
         )
-      start_gt |>
+      start_gt %>%
         tab_footnote(
           footnote = "First data cell.",
           locations = cells_column_labels(columns = "valuer")
         )
-      start_gt |>
+      start_gt %>%
         tab_footnote(
           footnote = "First data cell.",
           locations = cells_column_spanners("valuer")
         )
-      start_gt |>
+      start_gt %>%
         tab_footnote(
           footnote = "First data cell.",
           locations = cells_column_spanners(3)
