@@ -184,9 +184,6 @@
     <loc>https://gt.rstudio.com/reference/default_fonts.html</loc>
   </url>
   <url>
-    <loc>https://gt.rstudio.com/reference/define_units.html</loc>
-  </url>
-  <url>
     <loc>https://gt.rstudio.com/reference/escape_latex.html</loc>
   </url>
   <url>
@@ -212,6 +209,9 @@
   </url>
   <url>
     <loc>https://gt.rstudio.com/reference/fmt_bytes.html</loc>
+  </url>
+  <url>
+    <loc>https://gt.rstudio.com/reference/fmt_chem.html</loc>
   </url>
   <url>
     <loc>https://gt.rstudio.com/reference/fmt_currency.html</loc>
