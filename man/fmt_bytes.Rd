@@ -332,6 +332,7 @@ Other data formatting functions:
 \code{\link{fmt}()},
 \code{\link{fmt_auto}()},
 \code{\link{fmt_bins}()},
+\code{\link{fmt_chem}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_date}()},
 \code{\link{fmt_datetime}()},
