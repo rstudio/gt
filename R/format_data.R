@@ -8584,8 +8584,14 @@ fmt_units <- function(
 #'
 #' @description
 #'
-#' The `fmt_chem()` function lets you format chemical formulas in the table
-#' body. Usually this will be in the common form of `C2H4O` (for acetaldehyde).
+#' The `fmt_chem()` function lets you format chemical formulas or even chemical
+#' reactions in the table body. Often the input text will be in a common form
+#' representing single compounds (like `"C2H4O"`, for acetaldehyde) but chemical
+#' reactions can be used (e.g., `2CH3OH -> CH3OCH3 + H2O"`). So long as the
+#' text within the targeted cells conforms to **gt**'s specialized chemistry
+#' notation, the appropriate conversions will occur. Details pertaining to
+#' chemistry notation can be found in the section entitled
+#' *How to use **gt**'s chemistry notation*.
 #'
 #' @inheritParams fmt_number
 #'
@@ -8629,6 +8635,42 @@ fmt_units <- function(
 #' in the table) and returns a logical vector. This is nice if you want to base
 #' formatting on values in the column or another column, or, you'd like to use a
 #' more complex predicate expression.
+#'
+#' @section How to use **gt**'s chemistry notation:
+#'
+#' The chemistry notation involves a shorthand of writing chemical formulas and
+#' chemical reactions, if needed. It should feel familiar in its basic usage and
+#' the more advanced typesetting tries to limit the amount of syntax needed.
+#' It's always best to show examples on usage:
+#'
+#' - `"CH3O2"` and `"(NH4)2S"` will render with subscripted numerals
+#' - Charges can be expressed terminating `"+"` or `"-"` as in `"H+"` and
+#'   `"[AgCl2]-"`; if any charges involve the use of a number, the following
+#'   incantations could be used: `"CrO4^2-"`, `"Fe^n+"`, `"Y^99+"`, `"Y^{99+}"`
+#'   (the final two forms produce equivalent output)
+#' - Stoichiometric values can be included with whole values prepending formulas
+#'   (e.g.,  `"2H2O2"`) or by setting them off with a space, like this:
+#'   `"2 H2O2"`, `"0.5 H2O"`, `"1/2 H2O"`, `"(1/2) H2O"`
+#' - Certain standalone, lowercase letters or combinations thereof will be
+#'   automatically stylized to fit conventions; `"NO_x"` and `"x Na(NH4)HPO4"`
+#'   will have italicized 'x' characters and you can always italicize letters
+#'   by surrounding with `"*"` (as in `"*n* H2O"` or `"*n*-C5H12"`)
+#' - Chemical isotopes can be rendered using either of these two construction
+#'   preceding an element: `"^{227}_{90}Th"` or `"^227_90Th"`; nuclides can
+#'   be represented in a similar manner, here are two examples:
+#'   `"^{0}_{-1}n^{-}"`, `"^0_-1n-"`
+#' - Chemical reactions can use `"+"` signs and a variety of reaction arrows:
+#'   (1) "A -> B", (2) "A <- B", (3) "A <-> B", (4) "A <--> B", (5) "A <=> B",
+#'   (6) "A <=>> B", or (7) "A <<=> B"
+#' - Center dots (useful in addition compounds) can be added by using a single
+#'   `"."` or `"*"` character, surrounded by spaces; here are two equivalent
+#'   examples `"KCr(SO4)2 . 12 H2O"` and `"KCr(SO4)2 * 12 H2O"`
+#' - Single and double bonds can be shown by inserting a `"-"` or `"="` between
+#'   adjacent characters (i.e., these shouldn't be at the beginning or end of
+#'   the markup); two examples: `"C6H5-CHO"`, `"CH3CH=CH2"`
+#' - as with units notation, Greek letters can be inserted by surrounding the
+#'   letter name with `":"`; here's an example that denotes the delta value
+#'   of carbon-13: `":delta: ^13C"`
 #'
 #' @section Examples:
 #'
