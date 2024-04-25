@@ -352,7 +352,7 @@ is_string_time <- function(x) {
 
 check_format_code <- function(format) {
 
-  if (!is.character(format) || length(format) != 1) {
+  if (!is_string(format)) {
     cli::cli_abort(
       "The `format` code must be a character string of length 1."
     )
