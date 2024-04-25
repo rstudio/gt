@@ -99,12 +99,16 @@ define_units <- function(units_notation, is_chemical_formula = FALSE) {
 
             # Subscript following ')' or ']'
             for (i in seq(1, 5)) {
+              x_str_int <- x
               x <- gsub("^(.+)(\\)|\\])([0-9]+)(.*)$", "\\1\\2_\\3 {nsp}\\4", x)
+              if (x_str_int == x) break
             }
 
             # Subscript preceding ')', '(', or ']'
             for (i in seq(1, 5)) {
+              x_str_int <- x
               x <- gsub("^(.+)([0-9]+)(\\)|\\(|\\])(.*)$", "\\1_\\2 {nsp}\\3\\4", x)
+              if (x_str_int == x) break
             }
           }
 
