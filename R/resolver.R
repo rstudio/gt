@@ -48,7 +48,8 @@ resolve_cells_body <- function(data, object, call = rlang::caller_env()) {
   resolved_rows_idx <-
     resolve_rows_i(
       expr = !!object$rows,
-      data = data
+      data = data,
+      call = call
     )
 
   # Get all possible combinations with `expand.grid()`
@@ -446,7 +447,8 @@ resolve_rows_l <- function(
 resolve_rows_i <- function(
     expr,
     data,
-    null_means = c("everything", "nothing")
+    null_means = c("everything", "nothing"),
+    call = caller_env()
 ) {
 
   null_means <- rlang::arg_match(null_means)
@@ -455,7 +457,8 @@ resolve_rows_i <- function(
     resolve_rows_l(
       expr = {{ expr }},
       data = data,
-      null_means = null_means
+      null_means = null_means,
+      call = call
     )
 
   if (!is.null(resolved_rows)) {

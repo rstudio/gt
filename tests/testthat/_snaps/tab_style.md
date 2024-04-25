@@ -4,7 +4,9 @@
       data %>% tab_style(style = list(cell_fill(color = "green"), cell_text(color = "white")),
       locations = cells_summary(groups = "Mercs", columns = starts_with("x"), rows = 2))
     Condition
-      Error in `add_summary_location_row()`:
+      Error in `tab_style()`:
+      ! Failed to style the summary of the table.
+      Caused by error in `cells_summary()`:
       ! The location requested could not be resolved.
       * Review the expression provided as `columns`.
 
@@ -15,9 +17,34 @@
       locations = cells_summary(groups = "Mercs", columns = starts_with("m"), rows = starts_with(
         "x")))
     Condition
-      Error in `add_summary_location_row()`:
+      Error in `tab_style()`:
+      ! Failed to style the summary of the table.
+      Caused by error in `cells_summary()`:
       ! The location requested could not be resolved.
       * Review the expression provided as `rows`.
+
+---
+
+    Code
+      data %>% tab_style(style = list(cell_fill(color = "green"), cell_text(color = "white")),
+      locations = cells_column_labels(`non existent`))
+    Condition
+      Error in `tab_style()`:
+      ! Failed to style the column labels of the table.
+      Caused by error in `cells_column_labels()`:
+      ! Can't select columns that don't exist.
+      x Column `non existent` doesn't exist.
+
+---
+
+    Code
+      data %>% tab_style(style = list(cell_fill(color = "green"), cell_text(color = "white")),
+      locations = cells_column_spanners(2))
+    Condition
+      Error in `tab_style()`:
+      ! Failed to style the column spanners of the table.
+      Caused by error in `cells_column_spanners()`:
+      ! The following spanner indices do not exist in the data: 2.
 
 # tab style works with grand_summary
 
@@ -25,7 +52,9 @@
       data %>% tab_style(style = list(cell_fill(color = "red"), cell_text(color = "white")),
       locations = cells_grand_summary(columns = starts_with("x"), rows = 2))
     Condition
-      Error in `add_grand_summary_location_row()`:
+      Error in `tab_style()`:
+      ! Failed to style the grand summary of the table.
+      Caused by error in `cells_grand_summary()`:
       ! The location requested could not be resolved.
       * Review the expression provided as `columns`.
 
@@ -36,7 +65,9 @@
       locations = cells_grand_summary(columns = starts_with("m"), rows = starts_with(
         "x")))
     Condition
-      Error in `add_grand_summary_location_row()`:
+      Error in `tab_style()`:
+      ! Failed to style the grand summary of the table.
+      Caused by error in `cells_grand_summary()`:
       ! The location requested could not be resolved.
       * Review the expression provided as `rows`.
 
@@ -46,7 +77,9 @@
       data %>% tab_style(style = cell_fill(color = "yellow"), locations = cells_body(
         columns = "disp", rows = "Mazda RX7"))
     Condition
-      Error in `resolve_rows_i()`:
+      Error in `tab_style()`:
+      ! Failed to style the body of the table.
+      Caused by error in `cells_body()`:
       ! Can't find row `Mazda RX7` in the data.
 
 # tab_row_group warns when others_label is not empty

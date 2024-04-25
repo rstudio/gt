@@ -55,6 +55,7 @@ add_summary_location_row <- function(
     df_type = "styles_df"
 ) {
 
+  call <- call(class(loc)[[1]])
   stub_df <- dt_stub_df_get(data = data)
   row_groups <- unique(stub_df$group_id)
 
@@ -73,7 +74,8 @@ add_summary_location_row <- function(
     resolve_vector_i(
       expr = !!loc$groups,
       vector = row_groups,
-      item_label = "row group"
+      item_label = "row group",
+      call = call
     )
 
   groups <- row_groups[resolved_row_groups_idx]
@@ -106,14 +108,15 @@ add_summary_location_row <- function(
       columns <-
         resolve_cols_c(
           expr = !!loc$columns,
-          data = data
+          data = data,
+          call = call
         )
 
       if (length(columns) == 0) {
         cli::cli_abort(c(
           "The location requested could not be resolved.",
           "*" = "Review the expression provided as `columns`."
-        ))
+        ), call = call)
       }
     } else {
       columns <- NA_character_
@@ -123,14 +126,15 @@ add_summary_location_row <- function(
       resolve_vector_i(
         expr = !!loc$rows,
         vector = id_vals,
-        item_label = "summary row"
+        item_label = "summary row",
+        call = call
       )
 
     if (length(rows) == 0) {
       cli::cli_abort(c(
         "The location requested could not be resolved.",
         "*" = "Review the expression provided as `rows`."
-      ))
+      ), call = call)
     }
 
     if (df_type == "footnotes_df") {
@@ -172,7 +176,7 @@ add_grand_summary_location_row <- function(
     placement = NULL,
     df_type = "styles_df"
 ) {
-
+  call <- call(class(loc)[[1]])
   summary_data <- dt_summary_get(data = data)
 
   id_vals <-
@@ -205,7 +209,9 @@ add_grand_summary_location_row <- function(
       cli::cli_abort(c(
         "The location requested could not be resolved.",
         "*" = "Review the expression provided as `columns`."
-      ))
+        ),
+        call = call
+      )
     }
   } else {
     columns <- NA_character_
@@ -222,7 +228,9 @@ add_grand_summary_location_row <- function(
     cli::cli_abort(c(
       "The location requested could not be resolved.",
       "*" = "Review the expression provided as `rows`."
-    ))
+       ),
+      call = call
+     )
   }
 
   if (df_type == "footnotes_df") {

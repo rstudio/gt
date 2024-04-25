@@ -214,6 +214,35 @@ test_that("tab_style errors if problems occur", {
         )
       )
   )
+
+  # Expect an error if column spanner couldn't be resolved
+  expect_snapshot(
+    error = TRUE,
+    data %>%
+      tab_style(
+        style = list(
+          cell_fill(color = "green"),
+          cell_text(color = "white")
+        ),
+        locations = cells_column_labels(
+          `non existent`
+        )
+      )
+  )
+  # Expect an error if column spanner couldn't be resolved
+  expect_snapshot(
+    error = TRUE,
+    data %>%
+      tab_style(
+        style = list(
+          cell_fill(color = "green"),
+          cell_text(color = "white")
+        ),
+        locations = cells_column_spanners(
+          2
+        )
+      )
+  )
 })
 
 test_that("tab style works with grand_summary", {

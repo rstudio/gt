@@ -2605,7 +2605,7 @@ set_footnote.cells_body <- function(
     placement
 ) {
 
-  resolved <- resolve_cells_body(data = data, object = loc, call = call("cells_body"))
+  resolved <- resolve_cells_body(data = data, object = loc, call = call("cell_body"))
 
   rows <- resolved$rows
 
@@ -3469,11 +3469,21 @@ tab_style <- function(
   for (loc in locations) {
 
     data <-
-      set_style(
-        loc = loc,
-        data = data,
-        style = style
-      )
+      withCallingHandlers(
+        set_style(
+          loc = loc,
+          data = data,
+          style = style
+      ),
+      error = function(e) {
+        readable_class <- attr(loc, "class")[[1]]
+        readable_class <- sub("[^_]+_", "", readable_class)
+        readable_class <- sub("_", " ", readable_class)
+
+        cli::cli_abort(
+          "Failed to style the {readable_class} of the table.",
+          parent = e)
+      })
   }
 
   data
@@ -3576,8 +3586,8 @@ set_style.cells_stubhead <- function(loc, data, style) {
 
 #' @export
 set_style.cells_column_labels <- function(loc, data, style) {
-
-  resolved <- resolve_cells_column_labels(data = data, object = loc)
+  call <- call("cells_column_labels")
+  resolved <- resolve_cells_column_labels(data = data, object = loc, call = call)
 
   cols <- resolved$columns
 
@@ -3600,7 +3610,8 @@ set_style.cells_column_labels <- function(loc, data, style) {
 #' @export
 set_style.cells_column_spanners <- function(loc, data, style) {
 
-  resolved <- resolve_cells_column_spanners(data = data, object = loc)
+  call <- call("cells_column_spanners")
+  resolved <- resolve_cells_column_spanners(data = data, object = loc, call = call)
 
   groups <- resolved$spanners
 
@@ -3623,12 +3634,14 @@ set_style.cells_row_groups <- function(loc, data, style) {
 
   row_groups <- dt_row_groups_get(data = data)
 
+  call <- call("cells_row_group")
   # Resolve row groups
   resolved_row_groups_idx <-
     resolve_vector_i(
       expr = !!loc$groups,
       vector = row_groups,
-      item_label = "row group"
+      item_label = "row group",
+      call = call
     )
 
   groups <- row_groups[resolved_row_groups_idx]
@@ -3650,7 +3663,7 @@ set_style.cells_row_groups <- function(loc, data, style) {
 #' @export
 set_style.cells_body <- function(loc, data, style) {
 
-  resolved <- resolve_cells_body(data = data, object = loc)
+  resolved <- resolve_cells_body(data = data, object = loc, call = call("cells_body"))
 
   rows <- resolved$rows
 
