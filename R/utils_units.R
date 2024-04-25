@@ -493,7 +493,7 @@ units_to_superscript <- function(content, context = "html") {
     out <-
       paste0(
         "<span style=\"white-space:nowrap;\">",
-        "<sup>", content, "</sup>",
+        "<sup style=\"line-height:0;\">", content, "</sup>",
         "</span>"
       )
   }
@@ -531,7 +531,7 @@ units_to_subscript <- function(content, context = "html") {
     out <-
       paste0(
         "<span style=\"white-space:nowrap;\">",
-        "<sub>", content, "</sub>",
+        "<sub style=\"line-height:0;\">", content, "</sub>",
         "</span>"
       )
   }
