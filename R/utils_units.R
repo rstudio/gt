@@ -147,6 +147,11 @@ define_units <- function(units_notation, is_chemical_formula = FALSE) {
         }
       )
 
+    # TODO: add text above and/or below reaction arrows through addition
+    # of suitable <text> element(s)
+    # <-->
+    # <text x="39.5" y="-15%" style="font-size: 10; text-anchor: middle;">[TEXT_ABOVE]</text>
+
     # Insert chem tokens back into input
     chem_tokens_str <- paste(chem_tokens_vec, collapse = " ")
 
