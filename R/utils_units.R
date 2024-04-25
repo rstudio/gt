@@ -39,7 +39,11 @@ define_units <- function(units_notation, is_chemical_formula = FALSE) {
     chem_input <- gsub("^%|%$", "", chem_text)
 
     # Replace single bonds
-    chem_input <- gsub("^([^_\\{\\<]+)-([^\\}\\>]+)$", "\\1 {nsp} - {nsp} \\2", chem_input)
+    for (i in seq(1, 10)) {
+      chem_input_int <- chem_input
+      chem_input <- gsub("^(.*)([^ _\\{\\<]+)-([^ \\}\\>]+)(.*)$", "\\1\\2 {nsp} - {nsp} \\3\\4", chem_input)
+      if (chem_input_int == chem_input) break
+    }
 
     # Replace double bonds
     chem_input <- gsub("^([^\\<]+)=([^\\>]+)$", "\\1 {nsp}={nsp} \\2", chem_input)
