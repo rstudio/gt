@@ -3100,7 +3100,7 @@ generate_data_vals_list <- function(
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` // *default:* `everything()`
+#'   `<column-targeting expression>` // **required**
 #'
 #'   The columns for which the moving operations should be applied. Can either
 #'   be a series of column names provided in [c()], a vector of column indices,
@@ -3170,6 +3170,11 @@ cols_move <- function(
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
+
+  # if no `columns` are provided, return data unaltered
+  if (rlang::quo_is_missing(rlang::enquo(columns))) {
+    return(data)
+  }
 
   # Get the columns supplied in `columns` as a character vector
   columns <-
@@ -3242,7 +3247,7 @@ cols_move <- function(
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` // *default:* `everything()`
+#'   `<column-targeting expression>` // **required**
 #'
 #'   The columns for which the moving operations should be applied. Can either
 #'   be a series of column names provided in [c()], a vector of column indices,
@@ -3316,6 +3321,11 @@ cols_move_to_start <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
+  # if no `columns` are provided, return data unaltered
+  if (rlang::quo_is_missing(rlang::enquo(columns))) {
+    return(data)
+  }
+
   vars <- dt_boxhead_get_vars(data = data)
 
   # Get the columns supplied in `columns` as a character vector
@@ -3362,7 +3372,7 @@ cols_move_to_start <- function(
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` // *default:* `everything()`
+#'   `<column-targeting expression>` // **required**
 #'
 #'   The columns for which the moving operations should be applied. Can either
 #'   be a series of column names provided in [c()], a vector of column indices,
@@ -3436,6 +3446,11 @@ cols_move_to_end <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
+  # if no `columns` are provided, return data unaltered
+  if (rlang::quo_is_missing(rlang::enquo(columns))) {
+    return(data)
+  }
+
   vars <- dt_boxhead_get_vars(data = data)
 
   # Get the columns supplied in `columns` as a character vector
@@ -3483,7 +3498,7 @@ cols_move_to_end <- function(
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` // *default:* `everything()`
+#'   `<column-targeting expression>` // **required**
 #'
 #'   The columns to hide in the output display table. Can either be a series of
 #'   column names provided in [c()], a vector of column indices, or a select
@@ -3491,7 +3506,8 @@ cols_move_to_end <- function(
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()].
 #'
-#' @return An object of class `gt_tbl`.
+#' @return An object of class `gt_tbl`. `data` will be unaltered if `columns` is
+#'   not supplied.
 #'
 #' @details
 #'
@@ -3567,6 +3583,11 @@ cols_hide <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
+  # if no `columns` are provided, return data unaltered
+  if (rlang::quo_is_missing(rlang::enquo(columns))) {
+    return(data)
+  }
+
   # Get the columns supplied in `columns` as a character vector
   columns <-
     resolve_cols_c(
@@ -3576,11 +3597,6 @@ cols_hide <- function(
     )
 
   vars <- dt_boxhead_get_vars(data = data)
-
-  # if no `columns` are provided, return data unaltered
-  if (length(columns) == 0) {
-    return(data)
-  }
 
   # Stop function if any of the `columns` don't exist in `vars`
   if (!all(columns %in% vars)) {

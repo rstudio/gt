@@ -2897,6 +2897,7 @@ add_text_style <- function(x, style) {
   UseMethod("add_text_style", x)
 }
 
+#' @export
 add_text_style.character <- function(x, style) {
 
   x <- x %>% as_xml_node(create_ns = TRUE)
@@ -2911,6 +2912,7 @@ add_text_style.character <- function(x, style) {
   as.character(x)
 }
 
+#' @export
 add_text_style.shiny.tag <- function(x, style) {
 
   x <- x %>% as.character()

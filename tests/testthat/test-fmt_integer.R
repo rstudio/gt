@@ -488,14 +488,17 @@ test_that("The `fmt_integer()` fn can render in the Indian numbering system", {
       "0", "NA", " Inf Cr", "(Inf Cr)"
     )
   )
-  expect_warning(
-    expect_equal(
-      (tab %>%
-         fmt_integer(columns = num, suffixing = TRUE, system = "ind") %>%
-         render_formats_test(context = "html"))[["num"]],
-      (tab %>%
-         fmt_integer(columns = num, suffixing = TRUE, scale_by = 200, system = "ind") %>%
-         render_formats_test(context = "html"))[["num"]]
-    )
+  expect_no_warning(
+    compared_tab <- tab %>%
+      fmt_integer(columns = num, suffixing = TRUE, system = "ind")
+  )
+  # scale_by warning
+  expect_snapshot(
+    expected_tab <- tab %>%
+      fmt_integer(columns = num, suffixing = TRUE, scale_by = 200, system = "ind")
+  )
+  expect_equal(
+    render_formats_test(compared_tab, context = "html")[["num"]],
+    render_formats_test(expected_tab, context = "html")[["num"]]
   )
 })
