@@ -8743,7 +8743,7 @@ fmt_chem <- function(
   ) {
     if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
       cli::cli_abort(
-        "The `fmt_units()` function can only be used on `columns`
+        "The `fmt_chem()` function can only be used on `columns`
       with character or factor data."
       )
     }
