@@ -87,7 +87,7 @@ define_units <- function(units_notation, is_chemical_formula = FALSE) {
             # Internal subscripts
             for (i in seq(1, 10)) {
               x_str_int <- x
-              x <- gsub("^(.*)([a-zA-Z])([0-9]+)([a-zA-Z])(.*)$", "\\1\\2_\\3 {nsp}\\4\\5", x)
+              x <- gsub("^(.*)([a-zA-Z])([0-9]+)([a-zA-Z\\^])(.*)$", "\\1\\2_\\3 {nsp}\\4\\5", x)
               if (x_str_int == x) break
             }
 
@@ -157,12 +157,12 @@ define_units <- function(units_notation, is_chemical_formula = FALSE) {
             x <- sub("^(.*)\\^n\\+$", "\\1^*n*+", x)
           }
 
-          # Isotope and nuclide handling on LHS (w/ curly braces) -- '^{227}_{90}Th+'
+          # Isotope handling on LHS (w/ curly braces) -- '^{227}_{90}Th+'
           if (grepl("^\\^\\{([0-9+-]+)\\}_\\{([0-9+-]+)\\}.*$", x)) {
             x <- sub("^\\^\\{([0-9+-]+)\\}_\\{([0-9+-]+)\\}(.*)$", "{nsp}[_\\2^\\1] {nsp}\\3", x)
           }
 
-          # Isotope and nuclide handling on LHS (w/o curly braces) -- '^227_90Th+'
+          # Isotope handling on LHS (w/o curly braces) -- '^227_90Th+'
           if (grepl("^\\^([0-9+-]+)_([0-9+-]+).*$", x)) {
             x <- sub("^\\^([0-9+-]+)_([0-9+-]+)(.*)$", "{nsp}[_\\2^\\1] {nsp}\\3", x)
           }
