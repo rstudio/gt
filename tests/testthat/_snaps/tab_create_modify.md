@@ -6,7 +6,7 @@
     Condition
       Error in `tab_footnote()`:
       ! Can't add footnote "First data cell.".
-      Caused by error in `cell_body()`:
+      Caused by error in `cells_body()`:
       ! Can't select columns that don't exist.
       x Column `valuer` doesn't exist.
     Code

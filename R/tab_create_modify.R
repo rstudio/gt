@@ -2605,7 +2605,7 @@ set_footnote.cells_body <- function(
     placement
 ) {
 
-  resolved <- resolve_cells_body(data = data, object = loc, call = call("cell_body"))
+  resolved <- resolve_cells_body(data = data, object = loc, call = call("cells_body"))
 
   rows <- resolved$rows
 
