@@ -29,7 +29,7 @@
 #'
 #' @import rlang
 #' @noRd
-resolve_cells_body <- function(data, object, call = caller_env()) {
+resolve_cells_body <- function(data, object, call = rlang::caller_env()) {
 
   #
   # Resolution of columns and rows as integer vectors
@@ -109,9 +109,11 @@ resolve_cells_stub <- function(data,
 #' @param object The list object created by the `cells_column_labels()`
 #'   function.
 #' @noRd
-resolve_cells_column_labels <- function(data,
-                                        object,
-                                        call = caller_env()) {
+resolve_cells_column_labels <- function(
+    data,
+    object,
+    call = rlang::caller_env()
+) {
 
   #
   # Resolution of columns as integer vectors
@@ -140,7 +142,11 @@ resolve_cells_column_labels <- function(data,
 #' @param object The list object created by the `cells_column_labels()`
 #'   function.
 #' @noRd
-resolve_cells_column_spanners <- function(data, object, call = caller_env()) {
+resolve_cells_column_spanners <- function(
+    data,
+    object,
+    call = rlang::caller_env()
+) {
 
   spanners <- dt_spanners_get(data = data)
 
@@ -386,7 +392,7 @@ resolve_rows_l <- function(
     expr,
     data,
     null_means,
-    call = caller_env()
+    call = rlang::caller_env()
 ) {
 
   if (is_gt_tbl(data = data)) {
@@ -463,7 +469,7 @@ resolve_vector_l <- function(
     expr,
     vector,
     item_label = "item",
-    call = caller_env()
+    call = rlang::caller_env()
   ) {
 
   quo <- rlang::enquo(expr)
@@ -485,8 +491,21 @@ resolve_vector_l <- function(
   resolved
 }
 
-resolve_vector_i <- function(expr, vector, item_label = "item", call = caller_env()) {
-  which(resolve_vector_l(expr = {{ expr }}, vector = vector, item_label = item_label, call = call))
+resolve_vector_i <- function(
+    expr,
+    vector,
+    item_label = "item",
+    call = rlang::caller_env()
+) {
+
+  which(
+    resolve_vector_l(
+      expr = {{ expr }},
+      vector = vector,
+      item_label = item_label,
+      call = call
+    )
+  )
 }
 
 resolve_groups <- function(expr, vector) {
@@ -541,7 +560,7 @@ normalize_resolved <- function(
     resolved,
     item_names,
     item_label,
-    call = caller_env()
+    call = rlang::caller_env()
 ) {
 
   item_count <- length(item_names)
@@ -593,7 +612,10 @@ normalize_resolved <- function(
   resolved
 }
 
-resolver_stop_on_logical <- function(item_label, call = caller_env()) {
+resolver_stop_on_logical <- function(
+    item_label,
+    call = rlang::caller_env()
+) {
 
   cli::cli_abort(
     "The number of logical values must either be `1` or the number
@@ -602,7 +624,11 @@ resolver_stop_on_logical <- function(item_label, call = caller_env()) {
   )
 }
 
-resolver_stop_on_numeric <- function(item_label, unknown_resolved, call = caller_env()) {
+resolver_stop_on_numeric <- function(
+    item_label,
+    unknown_resolved,
+    call = rlang::caller_env()
+) {
 
   cli::cli_abort(
     "The following {item_label} indices do not exist in the data:
@@ -611,7 +637,12 @@ resolver_stop_on_numeric <- function(item_label, unknown_resolved, call = caller
   )
 }
 
-resolver_stop_on_character <- function(item_label, unknown_resolved, call = caller_env()) {
+resolver_stop_on_character <- function(
+    item_label,
+    unknown_resolved,
+    call = rlang::caller_env()
+) {
+
   l <- length(unknown_resolved)
   cli::cli_abort(
     "Can't find {item_label}{cli::qty(l)}{?s}
@@ -620,7 +651,11 @@ resolver_stop_on_character <- function(item_label, unknown_resolved, call = call
   )
 }
 
-resolver_stop_unknown <- function(item_label, resolved, call = caller_env()) {
+resolver_stop_unknown <- function(
+    item_label,
+    resolved,
+    call = rlang::caller_env()
+) {
 
   cli::cli_abort(
     "Don't know how to select {item_label}s using {.obj_type_friendly {resolved}}.",

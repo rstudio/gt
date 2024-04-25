@@ -3799,7 +3799,7 @@ gt_one_col <- function(x) {
   gt(dplyr::tibble(x = x), auto_align = FALSE, process_md = FALSE)
 }
 
-stop_if_not_vector <- function(x, call = caller_env()) {
+stop_if_not_vector <- function(x, call = rlang::caller_env()) {
   if (!rlang::is_vector(x)) {
     cli::cli_abort(
       "`x` must be a vector, not {.obj_type_friendly {x}}.",
