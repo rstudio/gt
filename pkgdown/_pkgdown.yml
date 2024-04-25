@@ -198,7 +198,6 @@ reference:
     - currency
     - nanoplot_options
     - adjust_luminance
-    - define_units
     - stub
     - cells_title
     - cells_stubhead
