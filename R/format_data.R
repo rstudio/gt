@@ -8579,7 +8579,227 @@ fmt_units <- function(
   )
 }
 
-format_units_by_context <- function(x, context = "html") {
+
+#' Format chemical formulas
+#'
+#' @description
+#'
+#' The `fmt_chem()` function lets you format chemical formulas or even chemical
+#' reactions in the table body. Often the input text will be in a common form
+#' representing single compounds (like `"C2H4O"`, for acetaldehyde) but chemical
+#' reactions can be used (e.g., `2CH3OH -> CH3OCH3 + H2O"`). So long as the
+#' text within the targeted cells conforms to **gt**'s specialized chemistry
+#' notation, the appropriate conversions will occur. Details pertaining to
+#' chemistry notation can be found in the section entitled
+#' *How to use **gt**'s chemistry notation*.
+#'
+#' @inheritParams fmt_number
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Targeting cells with `columns` and `rows`:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to target a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given formatting function
+#' will be skipped over, like `character` values and numeric `fmt_*()`
+#' functions. So it's safe to select all columns with a particular formatting
+#' function (only those values that can be formatted will be formatted), but,
+#' you may not want that. One strategy is to format the bulk of cell values with
+#' one formatting function and then constrain the columns for later passes with
+#' other types of formatting (the last formatting done to a cell is what you get
+#' in the final output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
+#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
+#' the input data (the indices won't necessarily match those of rearranged rows
+#' if row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector. This is nice if you want to base
+#' formatting on values in the column or another column, or, you'd like to use a
+#' more complex predicate expression.
+#'
+#' @section How to use **gt**'s chemistry notation:
+#'
+#' The chemistry notation involves a shorthand of writing chemical formulas and
+#' chemical reactions, if needed. It should feel familiar in its basic usage and
+#' the more advanced typesetting tries to limit the amount of syntax needed.
+#' It's always best to show examples on usage:
+#'
+#' - `"CH3O2"` and `"(NH4)2S"` will render with subscripted numerals
+#' - Charges can be expressed terminating `"+"` or `"-"` as in `"H+"` and
+#'   `"[AgCl2]-"`; if any charges involve the use of a number, the following
+#'   incantations could be used: `"CrO4^2-"`, `"Fe^n+"`, `"Y^99+"`, `"Y^{99+}"`
+#'   (the final two forms produce equivalent output)
+#' - Stoichiometric values can be included with whole values prepending formulas
+#'   (e.g.,  `"2H2O2"`) or by setting them off with a space, like this:
+#'   `"2 H2O2"`, `"0.5 H2O"`, `"1/2 H2O"`, `"(1/2) H2O"`
+#' - Certain standalone, lowercase letters or combinations thereof will be
+#'   automatically stylized to fit conventions; `"NO_x"` and `"x Na(NH4)HPO4"`
+#'   will have italicized 'x' characters and you can always italicize letters
+#'   by surrounding with `"*"` (as in `"*n* H2O"` or `"*n*-C5H12"`)
+#' - Chemical isotopes can be rendered using either of these two construction
+#'   preceding an element: `"^{227}_{90}Th"` or `"^227_90Th"`; nuclides can
+#'   be represented in a similar manner, here are two examples:
+#'   `"^{0}_{-1}n^{-}"`, `"^0_-1n-"`
+#' - Chemical reactions can use `"+"` signs and a variety of reaction arrows:
+#'   (1) "A -> B", (2) "A <- B", (3) "A <-> B", (4) "A <--> B", (5) "A <=> B",
+#'   (6) "A <=>> B", or (7) "A <<=> B"
+#' - Center dots (useful in addition compounds) can be added by using a single
+#'   `"."` or `"*"` character, surrounded by spaces; here are two equivalent
+#'   examples `"KCr(SO4)2 . 12 H2O"` and `"KCr(SO4)2 * 12 H2O"`
+#' - Single and double bonds can be shown by inserting a `"-"` or `"="` between
+#'   adjacent characters (i.e., these shouldn't be at the beginning or end of
+#'   the markup); two examples: `"C6H5-CHO"`, `"CH3CH=CH2"`
+#' - as with units notation, Greek letters can be inserted by surrounding the
+#'   letter name with `":"`; here's an example that denotes the delta value
+#'   of carbon-13: `":delta: ^13C"`
+#'
+#' @section Examples:
+#'
+#' Let's use the [`reactions`] dataset and create a new **gt** table. The table
+#' will be filtered down to only a few rows and columns. The column
+#' `cmpd_formula` contains chemical formulas and the formatting of those will be
+#' performed by `fmt_chem()`. Certain column labels with chemical names
+#' (`o3_k298` and `no3_k298`) can be handled within [cols_label()] by using
+#' surrounding the text with `"{{%"`/`"%}}"`.
+#'
+#' ```r
+#' reactions |>
+#'   dplyr::filter(cmpd_type == "terminal monoalkene") |>
+#'   dplyr::filter(grepl("^1-", cmpd_name)) |>
+#'   dplyr::select(cmpd_name, cmpd_formula, ends_with("k298")) |>
+#'   gt() |>
+#'   sub_missing() |>
+#'   fmt_chem(columns = cmpd_formula) |>
+#'   fmt_scientific() |>
+#'   cols_label(
+#'     cmpd_name = "Alkene",
+#'     cmpd_formula = "Formula",
+#'     oh_k298 = "OH",
+#'     o3_k298 = "{{%O3%}}",
+#'     no3_k298 = "{{%NO3%}}",
+#'     cl_k298 = "Cl"
+#'   ) |>
+#'   tab_spanner(
+#'     label = "Reaction Rate Constant at 298 K",
+#'     columns = ends_with("k298")
+#'   ) |>
+#'   tab_header(title = "Gas-phase reactions of selected terminal alkenes") |>
+#'   opt_align_table_header(align = "left")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_chem_1.png")`
+#' }}
+#'
+#' @family data formatting functions
+#' @section Function ID:
+#' 3-19
+#'
+#' @section Function Introduced:
+#' **In Development**
+#'
+#' @import rlang
+#' @export
+fmt_chem <- function(
+    data,
+    columns = everything(),
+    rows = everything()
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  # Declare formatting function compatibility
+  compat <- c("character", "factor")
+
+  # In this case where strict mode is being used (with the option
+  # called "gt.strict_column_fmt"), stop the function if any of the
+  # resolved columns have data that is incompatible with this formatter
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = compat
+    )
+  ) {
+    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
+      cli::cli_abort(
+        "The `fmt_chem()` function can only be used on `columns`
+      with character or factor data."
+      )
+    }
+  }
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    fns = list(
+      html = function(x) {
+        format_units_by_context(
+          x,
+          is_chemical_formula = TRUE,
+          context = "html"
+        )
+      },
+      latex = function(x) {
+        format_units_by_context(
+          x,
+          is_chemical_formula = TRUE,
+          context = "latex"
+        )
+      },
+      rtf = function(x) {
+        format_units_by_context(
+          x,
+          is_chemical_formula = TRUE,
+          context = "rtf"
+        )
+      },
+      word = function(x) {
+        format_units_by_context(
+          x,
+          is_chemical_formula = TRUE,
+          context = "word"
+        )
+      },
+      default = function(x) {
+        format_units_by_context(
+          x,
+          is_chemical_formula = TRUE,
+          context = "plain"
+        )
+      }
+    )
+  )
+}
+
+format_units_by_context <- function(
+    x,
+    is_chemical_formula = FALSE,
+    context = "html"
+) {
 
   # Generate an vector of empty strings that will eventually
   # contain all of the ranged value text
@@ -8595,7 +8815,13 @@ format_units_by_context <- function(x, context = "html") {
       FUN.VALUE = character(1),
       USE.NAMES = FALSE,
       FUN = function(x) {
-        render_units(define_units(x_str_non_missing[x]), context = context)
+        render_units(
+          define_units(
+            x_str_non_missing[x],
+            is_chemical_formula = is_chemical_formula
+          ),
+        context = context
+        )
       }
     )
 
@@ -8891,7 +9117,7 @@ format_units_by_context <- function(x, context = "html") {
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-19
+#' 3-20
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
@@ -9511,7 +9737,7 @@ fmt_url <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-20
+#' 3-21
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
@@ -10112,7 +10338,7 @@ get_image_hw_ratio <- function(filepath) {
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-21
+#' 3-22
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
@@ -10652,7 +10878,7 @@ fmt_flag <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-22
+#' 3-23
 #'
 #' @section Function Introduced:
 #' `v0.10.0` (October 7, 2023)
@@ -11084,7 +11310,7 @@ fmt_icon <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-23
+#' 3-24
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -11301,7 +11527,7 @@ fmt_markdown <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-24
+#' 3-25
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -11563,7 +11789,7 @@ fmt_passthrough <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-25
+#' 3-26
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
@@ -11882,7 +12108,7 @@ fmt_auto <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-26
+#' 3-27
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
