@@ -87,7 +87,7 @@ is_nonempty_string <- function(x) {
 #'
 #' @noRd
 # Use rlang::caller_env() to inform user of the precise location of failure.
-stop_if_not_gt_tbl <- function(data, call = caller_env()) {
+stop_if_not_gt_tbl <- function(data, call = rlang::caller_env()) {
   if (!is_gt_tbl(data = data)) {
     cli::cli_abort(
       "`data` must be a `gt_tbl` object, not {.obj_type_friendly {data}}.",
@@ -101,7 +101,7 @@ stop_if_not_gt_tbl <- function(data, call = caller_env()) {
 #' @param data The input `data` object that is to be validated.
 #'
 #' @noRd
-stop_if_not_gt_group <- function(data, call = caller_env()) {
+stop_if_not_gt_group <- function(data, call = rlang::caller_env()) {
   if (!is_gt_group(data = data)) {
     cli::cli_abort(
       "`data` must be a `gt_group` object, not {.obj_type_friendly {data}}.",
@@ -115,7 +115,7 @@ stop_if_not_gt_group <- function(data, call = caller_env()) {
 #' @param data The input `data` object that is to be validated.
 #'
 #' @noRd
-stop_if_not_gt_tbl_or_group <- function(data, call = caller_env()) {
+stop_if_not_gt_tbl_or_group <- function(data, call = rlang::caller_env()) {
   if (!is_gt_tbl(data = data) && !is_gt_group(data = data)) {
     cli::cli_abort(
       "`data` must either be a `gt_tbl` or a `gt_group`, not {.obj_type_friendly {data}}.",
@@ -352,7 +352,7 @@ is_string_time <- function(x) {
 
 check_format_code <- function(format) {
 
-  if (!is.character(format) || length(format) != 1) {
+  if (!rlang::is_string(format)) {
     cli::cli_abort(
       "The `format` code must be a character string of length 1."
     )

@@ -825,7 +825,7 @@ data_color <- function(
       if (nrow(palettes_tbl) < 1) {
         cli::cli_abort(c(
           "The palette name (supplied with the `<package>::<palette>`
-          syntax) is not associated with the {palette_pkg} package as a
+          syntax) is not associated with the {.pkg {palette_pkg}} package as a
           discrete palette.",
           "*" = "Ensure that the combination of palette package and palette
           name exists as a record in the table accessed with

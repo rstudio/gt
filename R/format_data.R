@@ -9185,8 +9185,8 @@ fmt_url <- function(
             arg,
             nm,
             values = NULL,
-            error_arg = caller_arg(arg),
-            error_call = caller_env()
+            error_arg = rlang::caller_arg(arg),
+            error_call = rlang::caller_env()
         ) {
 
           if (!is.null(values)) {
@@ -9200,7 +9200,7 @@ fmt_url <- function(
               )
           }
 
-          if (!is_string(arg)) {
+          if (!rlang::is_string(arg)) {
             cli::cli_abort(
               "{.arg {nm}} must be a string, not {.obj_type_friendly {arg}}",
               call = error_call
