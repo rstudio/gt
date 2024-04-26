@@ -8712,10 +8712,10 @@ fmt_units <- function(
 #'
 #' Taking just a few rows from the [`photolysis`] dataset, let's and create a
 #' new **gt** table. The `cmpd_formula` and `products` columns both contain
-#' text in chemistry notation (the first has compounds, the second has the
-#' products of a photolysis reaction). These columns will be formatting by the
-#' `fmt_chem()` function. The compound formulas will be merged with the compound
-#' names via the [cols_merge()] function.
+#' text in chemistry notation (the first has compounds, and the second column
+#' has the products of photolysis reactions). These columns will be formatting
+#' by the `fmt_chem()` function. The compound formulas will be merged with the
+#' compound names via the [cols_merge()] function.
 #'
 #' ```r
 #' photolysis %>%
