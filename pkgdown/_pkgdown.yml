@@ -372,6 +372,7 @@ reference:
     - constants
     - illness
     - reactions
+    - photolysis
     - rx_adsl
     - rx_addv
 
