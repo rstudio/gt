@@ -8687,9 +8687,14 @@ fmt_units <- function(
 #'   dplyr::filter(grepl("^1-", cmpd_name)) |>
 #'   dplyr::select(cmpd_name, cmpd_formula, ends_with("k298")) |>
 #'   gt() |>
-#'   sub_missing() |>
+#'   tab_header(title = "Gas-phase reactions of selected terminal alkenes") |>
+#'   tab_spanner(
+#'     label = "Reaction Rate Constant at 298 K",
+#'     columns = ends_with("k298")
+#'   ) |>
 #'   fmt_chem(columns = cmpd_formula) |>
 #'   fmt_scientific() |>
+#'   sub_missing() |>
 #'   cols_label(
 #'     cmpd_name = "Alkene",
 #'     cmpd_formula = "Formula",
@@ -8698,16 +8703,58 @@ fmt_units <- function(
 #'     NO3_k298 = "{{%NO3%}}",
 #'     Cl_k298 = "Cl"
 #'   ) |>
-#'   tab_spanner(
-#'     label = "Reaction Rate Constant at 298 K",
-#'     columns = ends_with("k298")
-#'   ) |>
-#'   tab_header(title = "Gas-phase reactions of selected terminal alkenes") |>
 #'   opt_align_table_header(align = "left")
 #' ```
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_fmt_chem_1.png")`
+#' }}
+#'
+#' Taking just a few rows from the [`photolysis`] dataset, let's and create a
+#' new **gt** table. The `cmpd_formula` and `products` columns both contain
+#' text in chemistry notation (the first has compounds, the second has the
+#' products of a photolysis reaction). These columns will be formatting by the
+#' `fmt_chem()` function. The compound formulas will be merged with the compound
+#' names via the [cols_merge()] function.
+#'
+#' ```r
+#' photolysis %>%
+#'   dplyr::filter(cmpd_name %in% c(
+#'     "hydrogen peroxide", "nitrous acid",
+#'     "nitric acid", "acetaldehyde",
+#'     "methyl peroxide", "methyl nitrate",
+#'     "ethyl nitrate", "isopropyl nitrate"
+#'   )) |>
+#'   dplyr::select(-c(l, m, n, quantum_yield, type)) |>
+#'   gt() |>
+#'   tab_header(title = "Photolysis pathways of selected VOCs") |>
+#'   fmt_chem(columns = c(cmpd_formula, products)) |>
+#'   cols_nanoplot(
+#'     columns = sigma_298_cm2,
+#'     columns_x_vals = wavelength_nm,
+#'     expand_x = c(200, 400),
+#'     new_col_name = "cross_section",
+#'     new_col_label = "Absorption Cross Section",
+#'     options = nanoplot_options(
+#'       show_data_points = FALSE,
+#'       data_line_stroke_width = 4,
+#'       data_line_stroke_color = "black",
+#'       show_data_area = FALSE
+#'     )
+#'   ) |>
+#'   cols_merge(
+#'     columns = c(cmpd_name, cmpd_formula),
+#'     pattern = "{1}, {2}"
+#'   ) |>
+#'   cols_label(
+#'     cmpd_name = "Compound",
+#'     products = "Products"
+#'   ) |>
+#'   opt_align_table_header(align = "left")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_chem_2.png")`
 #' }}
 #'
 #' @family data formatting functions
