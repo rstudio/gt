@@ -8693,10 +8693,10 @@ fmt_units <- function(
 #'   cols_label(
 #'     cmpd_name = "Alkene",
 #'     cmpd_formula = "Formula",
-#'     oh_k298 = "OH",
-#'     o3_k298 = "{{%O3%}}",
-#'     no3_k298 = "{{%NO3%}}",
-#'     cl_k298 = "Cl"
+#'     OH_k298 = "OH",
+#'     O3_k298 = "{{%O3%}}",
+#'     NO3_k298 = "{{%NO3%}}",
+#'     Cl_k298 = "Cl"
 #'   ) |>
 #'   tab_spanner(
 #'     label = "Reaction Rate Constant at 298 K",
