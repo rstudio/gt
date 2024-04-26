@@ -707,7 +707,6 @@
 #'
 "illness"
 
-
 #' Reaction rates for gas-phase atmospheric reactions of organic compounds
 #'
 #' @description
@@ -723,18 +722,18 @@
 #' chlorine (Cl) atoms.
 #'
 #' This compilation of rate constant (*k*) data as contains the values for rate
-#' constants at 298 K (in units of cm^3 molecules^–1 s^–1) as well as parameters
-#' that allow for the calculation of rate constants at different temperatures
-#' (the temperature dependence parameters: `A`, `B`, and `n`). Uncertainty
-#' values/factors and temperature limits are also provided here where
-#' information is available.
+#' constants at 298 K (in units of `cm^3 molecules^–1 s^–1`) as well as
+#' parameters that allow for the calculation of rate constants at different
+#' temperatures (the temperature dependence parameters: `A`, `B`, and `n`).
+#' Uncertainty values/factors and temperature limits are also provided here
+#' where information is available.
 #'
 #' @format A tibble with 1,683 rows and 39 variables:
 #' \describe{
 #' \item{compd_name}{The name of the primary compound undergoing
 #' reaction with OH, ozone, NO3, or Cl.}
 #' \item{cmpd_mwt}{The molecular weight of the compound in units of g/mol.}
-#' \item{cmpd_formula}{The atomic formula of the compound.}
+#' \item{cmpd_formula}{The chemical formula of the compound.}
 #' \item{cmpd_type}{The category of compounds that the `compd_name` falls
 #' under.}
 #' \item{cmpd_smiles}{The SMILES (simplified molecular-input line-entry system)
@@ -744,51 +743,51 @@
 #' \item{cmpd_inchikey}{The InChIKey, which is a hashed InChI value, has a fixed
 #' length of 27 characters. These values can be used to more easily perform
 #' database searches of chemical compounds.}
-#' \item{oh_k298}{Rate constant at 298 K for OH reactions.}
-#' \item{oh_uncert}{Uncertainty as a percentage for certain OH reactions.}
-#' \item{oh_u_fac}{Uncertainty as a plus/minus difference for certain OH
+#' \item{OH_k298}{Rate constant at 298 K for OH reactions.}
+#' \item{OH_uncert}{Uncertainty as a percentage for certain OH reactions.}
+#' \item{OH_u_fac}{Uncertainty as a plus/minus difference for certain OH
 #' reactions.}
-#' \item{oh_a, oh_b, oh_n}{Extended temperature dependence parameters for
+#' \item{OH_a, OH_b, OH_n}{Extended temperature dependence parameters for
 #' bimolecular OH reactions, to be used in the Arrhenius expression:
 #' `k(T)=A exp(-B/T) (T/300)^n`. In that, `A` is expressed as
 #' cm^3 molecules^-1 s^-1, `B` is in units of K, and `n` is dimensionless. Any
 #' `NA` values indicate that data is not available.}
-#' \item{oh_t_low, oh_t_high}{The low and high temperature boundaries (in units
-#' of K) for which the `oh_a`, `oh_b`, and `oh_n` parameters are valid.}
-#' \item{o3_k298}{Rate constant at 298 K for ozone reactions.}
-#' \item{o3_uncert}{Uncertainty as a percentage for certain ozone reactions.}
-#' \item{o3_u_fac}{Uncertainty as a plus/minus difference for certain ozone
+#' \item{OH_t_low, OH_t_high}{The low and high temperature boundaries (in units
+#' of K) for which the `OH_a`, `OH_b`, and `OH_n` parameters are valid.}
+#' \item{O3_k298}{Rate constant at 298 K for ozone reactions.}
+#' \item{O3_uncert}{Uncertainty as a percentage for certain ozone reactions.}
+#' \item{O3_u_fac}{Uncertainty as a plus/minus difference for certain ozone
 #' reactions.}
-#' \item{o3_a, o3_b, o3_n}{Extended temperature dependence parameters for
+#' \item{O3_a, O3_b, O3_n}{Extended temperature dependence parameters for
 #' bimolecular ozone reactions, to be used in the Arrhenius expression:
 #' `k(T)=A exp(-B/T) (T/300)^n`. In that, `A` is expressed as
 #' cm^3 molecules^-1 s^-1, `B` is in units of K, and `n` is dimensionless. Any
 #' `NA` values indicate that data is not available.}
-#' \item{o3_t_low, o3_t_high}{The low and high temperature boundaries (in units
-#' of K) for which the `o3_a`, `o3_b`, and `o3_n` parameters are valid.}
-#' \item{no3_k298}{Rate constant at 298 K for NO3 reactions.}
-#' \item{no3_uncert}{Uncertainty as a percentage for certain NO3 reactions.}
-#' \item{no3_u_fac}{Uncertainty as a plus/minus difference for certain NO3
+#' \item{O3_t_low, O3_t_high}{The low and high temperature boundaries (in units
+#' of K) for which the `O3_a`, `O3_b`, and `O3_n` parameters are valid.}
+#' \item{NO3_k298}{Rate constant at 298 K for NO3 reactions.}
+#' \item{NO3_uncert}{Uncertainty as a percentage for certain NO3 reactions.}
+#' \item{NO3_u_fac}{Uncertainty as a plus/minus difference for certain NO3
 #' reactions.}
-#' \item{no3_a, no3_b, no3_n}{Extended temperature dependence parameters for
+#' \item{NO3_a, NO3_b, NO3_n}{Extended temperature dependence parameters for
 #' bimolecular NO3 reactions, to be used in the Arrhenius expression:
 #' `k(T)=A exp(-B/T) (T/300)^n`. In that, `A` is expressed as
 #' cm^3 molecules^-1 s^-1, `B` is in units of K, and `n` is dimensionless. Any
 #' `NA` values indicate that data is not available.}
-#' \item{no3_t_low, no3_t_high}{The low and high temperature boundaries (in
-#' units of K) for which the `no3_a`, `no3_b`, and `no3_n` parameters are
+#' \item{NO3_t_low, NO3_t_high}{The low and high temperature boundaries (in
+#' units of K) for which the `NO3_a`, `NO3_b`, and `NO3_n` parameters are
 #' valid.}
-#' \item{cl_k298}{Rate constant at 298 K for Cl reactions.}
-#' \item{cl_uncert}{Uncertainty as a percentage for certain Cl reactions.}
-#' \item{cl_u_fac}{Uncertainty as a plus/minus difference for certain Cl
+#' \item{Cl_k298}{Rate constant at 298 K for Cl reactions.}
+#' \item{Cl_uncert}{Uncertainty as a percentage for certain Cl reactions.}
+#' \item{Cl_u_fac}{Uncertainty as a plus/minus difference for certain Cl
 #' reactions.}
-#' \item{cl_a, cl_b, cl_n}{Extended temperature dependence parameters for
+#' \item{Cl_a, Cl_b, Cl_n}{Extended temperature dependence parameters for
 #' bimolecular Cl reactions, to be used in the Arrhenius expression:
 #' `k(T)=A exp(-B/T) (T/300)^n`. In that, `A` is expressed as
 #' cm^3 molecules^-1 s^-1, `B` is in units of K, and `n` is dimensionless. Any
 #' `NA` values indicate that data is not available.}
-#' \item{cl_t_low, cl_t_high}{The low and high temperature boundaries (in units
-#' of K) for which the `cl_a`, `cl_b`, and `cl_n` parameters are valid.}
+#' \item{Cl_t_low, Cl_t_high}{The low and high temperature boundaries (in units
+#' of K) for which the `Cl_a`, `Cl_b`, and `Cl_n` parameters are valid.}
 #' }
 #'
 #' @section Examples:
@@ -808,9 +807,44 @@
 #' }}
 #'
 #' @section Dataset Introduced:
-#' *in development*
+#' *In Development*
 #'
 "reactions"
+
+#' Data on photolysis rates for gas-phase organic compounds
+#'
+#' @description
+#'
+#' The `photolysis` dataset contains...
+#'
+#' @format A tibble with 34 rows and 10 variables:
+#' \describe{
+#' \item{compd_name}{The name of the primary compound undergoing photolysis.}
+#' \item{cmpd_formula}{The chemical formula of the compound.}
+#' \item{products}{A product pathway for the photolysis of the compound.}
+#' \item{type}{The type of organic compound undergoing photolysis.}
+#' \item{l, m, n}{The ...}
+#' \item{quantum_yield}{...}
+#' \item{wavelength_nm}{...}
+#' \item{sigma_298_cm2}{...}
+#' }
+#'
+#' @section Examples:
+#'
+#' Here is a glimpse at the data available in `photolysis`.
+#'
+#' ```{r}
+#' dplyr::glimpse(photolysis)
+#' ```
+#'
+#' @family datasets
+#' @section Dataset ID and Badge:
+#' DATA-12
+#'
+#' @section Dataset Introduced:
+#' *In Development*
+#'
+"photolysis"
 
 #' An ADSL-flavored clinical trial toy dataset
 #'
@@ -871,7 +905,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-12
+#' DATA-13
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_rx_adsl.png")`
@@ -944,7 +978,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-13
+#' DATA-14
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_rx_addv.png")`
