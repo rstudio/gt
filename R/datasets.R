@@ -826,8 +826,8 @@
 #' it evolves over time, we need accurate estimates of photolysis rates. The
 #' data provided here in `photolysis` allows for computations of photolysis
 #' rates (*J*, having units of `s^-1`) as a function of the solar zenith angle
-#' (SZA). Having such values is essential within modeling tools for atmospheric
-#' chemistry.
+#' (SZA). Having such values is essential when deploying atmospheric chemistry
+#' models.
 #'
 #' @format A tibble with 34 rows and 10 variables:
 #' \describe{
