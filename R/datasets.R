@@ -861,6 +861,10 @@
 #' @section Dataset ID and Badge:
 #' DATA-12
 #'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_photolysis.png")`
+#' }}
+#'
 #' @section Dataset Introduced:
 #' *In Development*
 #'
