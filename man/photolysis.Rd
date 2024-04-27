@@ -40,8 +40,8 @@ In order to realistically predict the composition of the atmosphere and how
 it evolves over time, we need accurate estimates of photolysis rates. The
 data provided here in \code{photolysis} allows for computations of photolysis
 rates (\emph{J}, having units of \code{s^-1}) as a function of the solar zenith angle
-(SZA). Having such values is essential within modeling tools for atmospheric
-chemistry.
+(SZA). Having such values is essential when deploying atmospheric chemistry
+models.
 }
 \section{Examples}{
 
