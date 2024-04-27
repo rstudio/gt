@@ -119,6 +119,7 @@ Other datasets:
 \code{\link{exibble}},
 \code{\link{gtcars}},
 \code{\link{metro}},
+\code{\link{photolysis}},
 \code{\link{pizzaplace}},
 \code{\link{reactions}},
 \code{\link{rx_addv}},

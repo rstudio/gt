@@ -116,6 +116,7 @@ Other datasets:
 \code{\link{gtcars}},
 \code{\link{illness}},
 \code{\link{metro}},
+\code{\link{photolysis}},
 \code{\link{pizzaplace}},
 \code{\link{reactions}},
 \code{\link{rx_addv}},

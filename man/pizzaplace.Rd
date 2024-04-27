@@ -161,6 +161,7 @@ Other datasets:
 \code{\link{gtcars}},
 \code{\link{illness}},
 \code{\link{metro}},
+\code{\link{photolysis}},
 \code{\link{reactions}},
 \code{\link{rx_addv}},
 \code{\link{rx_adsl}},
