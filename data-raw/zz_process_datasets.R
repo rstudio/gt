@@ -11,13 +11,14 @@ source("data-raw/08-metro.R")
 source("data-raw/09-constants.R")
 source("data-raw/10-illness.R")
 source("data-raw/11-reactions.R")
-source("data-raw/12-gt_clinical.R")
+source("data-raw/12-photolysis.R")
+source("data-raw/13-gt_clinical.R")
 
 # Create external datasets
 usethis::use_data(
   countrypops, sza, gtcars, sp500,
   pizzaplace, exibble, towny, metro,
   constants, illness, reactions,
-  rx_adsl, rx_addv,
+  photolysis, rx_adsl, rx_addv,
   internal = FALSE, overwrite = TRUE
 )

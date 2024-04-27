@@ -37,6 +37,7 @@ define_units <- function(units_notation, is_chemical_formula = FALSE) {
 
     chem_text <- gsub(".*(\\%.*\\%).*", "\\1", input)
     chem_input <- gsub("^%|%$", "", chem_text)
+    chem_input <- gsub("\\(\\^([^\\)])", "( ^\\1", chem_input)
 
     # Replace single bonds
     for (i in seq(1, 10)) {
