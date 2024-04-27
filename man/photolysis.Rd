@@ -67,6 +67,10 @@ Here is a glimpse at the data available in \code{photolysis}.
 \section{Dataset ID and Badge}{
 
 DATA-12
+
+\if{html}{\out{
+<div style="text-align:center;"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_photolysis.png" alt="This image of that of a dataset badge." style="width:50\%;padding-bottom:20px;"></div>
+}}
 }
 
 \section{Dataset Introduced}{
