@@ -54,7 +54,7 @@ render_as_ihtml <- function(data, id) {
   has_tab_spanners <- dt_spanners_exists(data = data)
 
   # Obtain the language from the `locale`, if provided
-  locale <- dt_locale_get_value(data = data)
+  locale <- normalize_locale(dt_locale_get_value(data = data))
 
   # Generate a `lang_defs` object to pass to the `language` argument
   if (is.null(locale) || locale == "en") {
