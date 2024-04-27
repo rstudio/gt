@@ -271,7 +271,8 @@ render_as_ihtml <- function(data, id) {
   default_col_def <-
     reactable::colDef(
       style = reactable::JS(body_style_js_str),
-      width = 125
+      minWidth = 125,
+      width = NULL
     )
 
   # Generate the table header if there are any heading components
