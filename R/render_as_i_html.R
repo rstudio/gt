@@ -451,7 +451,7 @@ render_as_ihtml <- function(data, id) {
       showPageSizeOptions = use_page_size_select,
       pageSizeOptions = page_size_values,
       paginationType = pagination_type,
-      showPagination = TRUE,
+      showPagination = use_pagination,
       showPageInfo = use_pagination_info,
       minRows = 1,
       paginateSubRows = FALSE,
