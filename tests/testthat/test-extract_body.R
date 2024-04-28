@@ -369,7 +369,7 @@ test_that("Extraction of the table body works well", {
     tbl_body_1_8[["labels"]],
     c(
       "A",
-      "B<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;\"><sup>1</sup></span>",
+      "B<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span>",
       "C", "D", "E", "F", "G"
     )
   )
@@ -383,14 +383,14 @@ test_that("Extraction of the table body works well", {
     tbl_body_1_8[["num_2"]],
     c(
       "2.0", "5.0",
-      "2.0<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;\"><sup>2</sup></span>",
+      "2.0<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>2</sup></span>",
       "6.0", "2.6", "923.0", "-23.0"
     )
   )
   expect_equal(
     tbl_body_1_8[["int_1"]],
     c(
-      "1.00<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;\"><sup>1</sup></span>",
+      "1.00<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span>",
       "−100,000.00", "800.00", "5", "NA", "1", "-3202334"
     )
   )
@@ -436,7 +436,7 @@ test_that("Extraction of the table body works well", {
     tbl_body_1_8_b[["labels"]],
     c(
       "A",
-      "B<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;\"><sup>1</sup></span>",
+      "B<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span>",
       "C", "D", "E", "F", "G"
     )
   )
@@ -450,14 +450,14 @@ test_that("Extraction of the table body works well", {
     tbl_body_1_8_b[["num_2"]],
     c(
       "2.0", "5.0",
-      "2.0<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;\"><sup>2</sup></span>",
+      "2.0<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>2</sup></span>",
       "6.0", "2.6", "923.0", "-23.0"
     )
   )
   expect_equal(
     tbl_body_1_8_b[["int_1"]],
     c(
-      "1.00<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;\"><sup>1</sup></span>",
+      "1.00<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span>",
       "−100,000.00", "800.00", "5", "NA", "1", "-3202334"
     )
   )
@@ -884,14 +884,14 @@ test_that("Extraction of the table body works well", {
     tbl_body_2_8[["num_2"]],
     c(
       "2.0", "5.0", "2.6", "-23.0",
-      "2.0<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;\"><sup>2</sup></span>",
+      "2.0<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>2</sup></span>",
       "6.0", "923.0"
     )
   )
   expect_equal(
     tbl_body_2_8[["int_1"]],
     c(
-      "1.00<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;\"><sup>1</sup></span>",
+      "1.00<span class=\"gt_footnote_marks\" style=\"white-space:nowrap;font-style:italic;font-weight:normal;line-height: 0;\"><sup>1</sup></span>",
       "−100,000.00", "NA", "-3202334", "800.00", "5", "1"
     )
   )

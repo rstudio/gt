@@ -82,6 +82,7 @@ footnote_mark_to_html <- function(
     "white-space:nowrap;",
     "font-style:", font_style, ";",
     "font-weight:", font_weight, ";",
+    "line-height: 0;",
     "\">",
     if (is_sup) {
       paste0("<sup>", mark, "</sup>")
