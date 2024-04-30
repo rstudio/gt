@@ -161,7 +161,7 @@ an \code{"s"} character.
 
 \section{Function ID}{
 
-3-25
+3-26
 }
 
 \section{Function Introduced}{
@@ -177,6 +177,7 @@ Other data formatting functions:
 \code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_chem}()},
+\code{\link{fmt_country}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_date}()},
 \code{\link{fmt_datetime}()},
