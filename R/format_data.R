@@ -11567,6 +11567,8 @@ fmt_icon <- function(
 
         x_str_non_missing <- x[!is.na(x)]
 
+        fill_color_named <- rlang::is_named(fill_color)
+
         x_str_non_missing <-
           vapply(
             seq_along(x_str_non_missing),
@@ -11593,11 +11595,22 @@ fmt_icon <- function(
 
               for (y in seq_along(icons)) {
 
+                icon_name_i <- icons[y]
+
+                if (
+                  fill_color_named &&
+                  rlang::has_name(fill_color, name = icon_name_i)
+                ) {
+                  fill_color_i <- fill_color[[icon_name_i]]
+                } else {
+                  fill_color_i <- fill_color
+                }
+
                 out_y <-
                   as.character(
                     fontawesome::fa(
                       name = icons[y],
-                      fill = fill_color,
+                      fill = fill_color_i,
                       fill_opacity = fill_alpha,
                       stroke = stroke_color,
                       stroke_width = stroke_width,
