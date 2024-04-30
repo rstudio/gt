@@ -11135,13 +11135,16 @@ fmt_country <- function(
 #'
 #' @param fill_color *Color of the icon fill*
 #'
-#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'   `scalar<character>|vector<character>` // *default:* `NULL` (`optional`)
 #'
 #'   The fill color of the icon can be set with `fill_color`; providing a single
 #'   color here will change the color of the fill but not of the icon's 'stroke'
-#'   or outline (use `stroke_color` to modify that). If not provided then the
-#'   default value of `"currentColor"` is applied so that the fill matches the
-#'   color of the parent HTML element's color attribute.
+#'   or outline (use `stroke_color` to modify that). A named vector or named
+#'   list comprising the icon names with corresponding fill colors can
+#'   alternatively be used here (e.g.,
+#'   `list("circle-check" = "green", "circle-xmark" = "red"`). If nothing is
+#'   provided then the default value of `"currentColor"` is applied so that the
+#'   fill matches the color of the parent HTML element's color attribute.
 #'
 #' @param fill_alpha *Transparency value for icon fill*
 #'
