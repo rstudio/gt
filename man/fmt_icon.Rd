@@ -391,6 +391,44 @@ scores.
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_icon_4.png" alt="This image of a table was generated from the fourth code example in the `fmt_icon()` help file." style="width:100\%;">
 }}
+
+A fairly common thing to do with icons in tables is to indicate whether
+a quantity is either higher or lower than another. Up and down arrow symbols
+can serve as good visual indicators for this purpose. We can make use of the
+\code{"up-arrow"} and \code{"down-arrow"} icons here. The \code{fmt_icon()} function has to
+find those text values in cells to generate the icons, so, lets generate the
+text within a new column via the \code{\link[=cols_add]{cols_add()}} function (an expression is used
+therein to generate the correct text given the \code{close} and \code{open} values).
+Following that, \code{fmt_icon()} is used and its \code{fill_color} argument is
+provided with a named vector that indicates which color should be used for
+each icon.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
+  dplyr::slice_head(n = 10) |>
+  dplyr::select(date, open, close) |>
+  dplyr::arrange(-dplyr::row_number()) |>
+  gt(rowname_col = "date") |>
+  cols_add(week = date, .after = date) |>
+  cols_add(dir = ifelse(close > open, "arrow-up", "arrow-down")) |>
+  cols_merge(columns = c(date, week), pattern = "\{1\} (\{2\})") |>
+  fmt_date(columns = date, date_style = "m_day_year") |>
+  fmt_datetime(columns = week, format = "w", pattern = "W\{x\}") |>
+  fmt_currency() |>
+  fmt_icon(
+    columns = dir,
+    fill_color = c("arrow-up" = "green", "arrow-down" = "red")
+  ) |>
+  cols_label(
+    open = "Opening Value",
+    close = "Closing Value",
+    dir = ""
+  ) |>
+  opt_stylize(style = 1, color = "gray")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_icon_5.png" alt="This image of a table was generated from the fifth code example in the `fmt_icon()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
