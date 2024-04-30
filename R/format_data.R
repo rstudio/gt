@@ -4880,6 +4880,50 @@ get_letters_from_div <- function(x, set) {
 #' `r man_get_image_tag(file = "man_fmt_spelled_num_2.png")`
 #' }}
 #'
+#' Let's make a table that compares how the numbers from `1` to `10` are spelled
+#' across a small selection of languages. Here we use `fmt_spelled_num()` with
+#' each column, ensuring that the `locale` value matches that of the column
+#' name.
+#'
+#' ```r
+#' dplyr::tibble(
+#'   num = 1:10,
+#'   en = num,
+#'   fr = num,
+#'   de = num,
+#'   es = num,
+#'   pl = num,
+#'   bg = num,
+#'   ko = num,
+#'   zh = num
+#' ) |>
+#'   gt(rowname_col = "num") |>
+#'   fmt_spelled_num(columns = en, locale = "en") |>
+#'   fmt_spelled_num(columns = fr, locale = "fr") |>
+#'   fmt_spelled_num(columns = de, locale = "de") |>
+#'   fmt_spelled_num(columns = es, locale = "es") |>
+#'   fmt_spelled_num(columns = pl, locale = "pl") |>
+#'   fmt_spelled_num(columns = bg, locale = "bg") |>
+#'   fmt_spelled_num(columns = ko, locale = "ko") |>
+#'   fmt_spelled_num(columns = zh, locale = "zh") |>
+#'   cols_label_with(fn = function(x) md(paste0("`", x, "`"))) |>
+#'   tab_spanner(
+#'     label = "Numbers in the specified locale",
+#'     columns = everything()
+#'   ) |>
+#'   cols_align(align = "left", columns = everything()) |>
+#'   cols_width(
+#'     c(en, fr, de, es, pl, bg) ~ px(100),
+#'     c(ko, zh) ~ px(50)
+#'   ) |>
+#'   opt_horizontal_padding(scale = 2) |>
+#'   opt_vertical_padding(scale = 0.5)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_spelled_num_3.png")`
+#' }}
+#'
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-11
@@ -8655,13 +8699,13 @@ fmt_units <- function(
 #'   automatically stylized to fit conventions; `"NO_x"` and `"x Na(NH4)HPO4"`
 #'   will have italicized 'x' characters and you can always italicize letters
 #'   by surrounding with `"*"` (as in `"*n* H2O"` or `"*n*-C5H12"`)
-#' - Chemical isotopes can be rendered using either of these two construction
+#' - Chemical isotopes can be rendered using either of these two constructions
 #'   preceding an element: `"^{227}_{90}Th"` or `"^227_90Th"`; nuclides can
 #'   be represented in a similar manner, here are two examples:
 #'   `"^{0}_{-1}n^{-}"`, `"^0_-1n-"`
 #' - Chemical reactions can use `"+"` signs and a variety of reaction arrows:
-#'   (1) "A -> B", (2) "A <- B", (3) "A <-> B", (4) "A <--> B", (5) "A <=> B",
-#'   (6) "A <=>> B", or (7) "A <<=> B"
+#'   (1) `"A -> B"`, (2) `"A <- B"`, (3) `"A <-> B"`, (4) `"A <--> B"`, (5)
+#'   `"A <=> B"`, (6) `"A <=>> B"`, or (7) `"A <<=> B"`
 #' - Center dots (useful in addition compounds) can be added by using a single
 #'   `"."` or `"*"` character, surrounded by spaces; here are two equivalent
 #'   examples `"KCr(SO4)2 . 12 H2O"` and `"KCr(SO4)2 * 12 H2O"`
