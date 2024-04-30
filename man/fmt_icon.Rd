@@ -91,13 +91,16 @@ decimal value between \code{0} and \code{1}.}
 
 \item{fill_color}{\emph{Color of the icon fill}
 
-\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>|vector<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 The fill color of the icon can be set with \code{fill_color}; providing a single
 color here will change the color of the fill but not of the icon's 'stroke'
-or outline (use \code{stroke_color} to modify that). If not provided then the
-default value of \code{"currentColor"} is applied so that the fill matches the
-color of the parent HTML element's color attribute.}
+or outline (use \code{stroke_color} to modify that). A named vector or named
+list comprising the icon names with corresponding fill colors can
+alternatively be used here (e.g.,
+\verb{list("circle-check" = "green", "circle-xmark" = "red"}). If nothing is
+provided then the default value of \code{"currentColor"} is applied so that the
+fill matches the color of the parent HTML element's color attribute.}
 
 \item{fill_alpha}{\emph{Transparency value for icon fill}
 
