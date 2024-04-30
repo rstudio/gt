@@ -10,7 +10,8 @@ fmt_flag(
   rows = everything(),
   height = "1em",
   sep = " ",
-  use_title = TRUE
+  use_title = TRUE,
+  locale = NULL
 )
 }
 \arguments{
@@ -62,8 +63,21 @@ separator between each icon. By default, this is a single space character
 
 \verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
-An option to display a tooltip for the country name (in English) when
+An option to display a tooltip for the country name (in the language
+according to the \code{locale} value, set either here or in \code{\link[=gt]{gt()}}) when
 hovering over the flag icon.}
+
+\item{locale}{\emph{Locale identifier}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+An optional locale identifier that can be used for formatting values
+according the locale's rules. Examples include \code{"en"} for English (United
+States) and \code{"fr"} for French (France). We can use the \code{\link[=info_locales]{info_locales()}}
+function as a useful reference for all of the locales that are supported. A
+locale ID can be also set in the initial \code{\link[=gt]{gt()}} function call (where it
+would be used automatically by any function with a \code{locale} argument) but a
+\code{locale} value provided here will override that global locale.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -75,13 +89,14 @@ specialized types of graphics within a table. One such group of graphics
 involves iconography representing different countries, and the \code{fmt_flag()}
 function helps with inserting a flag icon (or multiple) in body cells. To
 make this work seamlessly, the input cells need to contain some reference to
-a country, and this is in the form of a 2-letter ISO 3166-1 country code
-(e.g., Egypt has the \code{"EG"} country code). This function will parse the
+a country, and this can be in the form of a 2- or 3-letter ISO 3166-1 country
+code (e.g., Egypt has the \code{"EG"} country code). This function will parse the
 targeted body cells for those codes (and the \link{countrypops} dataset contains
-all of them) and insert the appropriate flag graphics. Multiple flags can be
-included per cell by separating country codes with commas (e.g., \code{"GB,TT"}).
-The \code{sep} argument allows for a common separator to be applied between flag
-icons.
+all of them) and insert the appropriate flag graphics.
+
+Multiple flags can be included per cell by separating country codes with
+commas (e.g., \code{"GB,TT"}). The \code{sep} argument allows for a common separator
+to be applied between flag icons.
 }
 \section{Compatibility of formatting function with data values}{
 
@@ -144,6 +159,7 @@ differently. These arguments provide support for \code{\link[=from_column]{from_
 \item \code{height}
 \item \code{sep}
 \item \code{use_title}
+\item \code{locale}
 }
 
 Please note that for each of the aforementioned arguments, a \code{\link[=from_column]{from_column()}}
@@ -156,13 +172,41 @@ that contain parameter data can also be hidden from final display with
 closed set.
 }
 
-\section{Flag icons that can be used}{
+\section{Supported regions}{
 
+
+The following 242 regions (most of which comprise countries) are supported
+with names across 574 locales: \code{"AD"}, \code{"AE"}, \code{"AF"}, \code{"AG"}, \code{"AI"},
+\code{"AL"}, \code{"AM"}, \code{"AO"}, \code{"AR"}, \code{"AS"}, \code{"AT"}, \code{"AU"}, \code{"AW"}, \code{"AX"},
+\code{"AZ"}, \code{"BA"}, \code{"BB"}, \code{"BD"}, \code{"BE"}, \code{"BF"}, \code{"BG"}, \code{"BH"}, \code{"BI"},
+\code{"BJ"}, \code{"BL"}, \code{"BM"}, \code{"BN"}, \code{"BO"}, \code{"BR"}, \code{"BS"}, \code{"BT"}, \code{"BW"},
+\code{"BY"}, \code{"BZ"}, \code{"CA"}, \code{"CC"}, \code{"CD"}, \code{"CF"}, \code{"CG"}, \code{"CH"}, \code{"CI"},
+\code{"CK"}, \code{"CL"}, \code{"CM"}, \code{"CN"}, \code{"CO"}, \code{"CR"}, \code{"CU"}, \code{"CV"}, \code{"CW"},
+\code{"CY"}, \code{"CZ"}, \code{"DE"}, \code{"DJ"}, \code{"DK"}, \code{"DM"}, \code{"DO"}, \code{"DZ"}, \code{"EC"},
+\code{"EE"}, \code{"EG"}, \code{"EH"}, \code{"ER"}, \code{"ES"}, \code{"ET"}, \code{"EU"}, \code{"FI"}, \code{"FJ"},
+\code{"FK"}, \code{"FM"}, \code{"FO"}, \code{"FR"}, \code{"GA"}, \code{"GB"}, \code{"GD"}, \code{"GE"}, \code{"GF"},
+\code{"GG"}, \code{"GH"}, \code{"GI"}, \code{"GL"}, \code{"GM"}, \code{"GN"}, \code{"GP"}, \code{"GQ"}, \code{"GR"},
+\code{"GS"}, \code{"GT"}, \code{"GU"}, \code{"GW"}, \code{"GY"}, \code{"HK"}, \code{"HN"}, \code{"HR"}, \code{"HT"},
+\code{"HU"}, \code{"ID"}, \code{"IE"}, \code{"IL"}, \code{"IM"}, \code{"IN"}, \code{"IO"}, \code{"IQ"}, \code{"IR"},
+\code{"IS"}, \code{"IT"}, \code{"JE"}, \code{"JM"}, \code{"JO"}, \code{"JP"}, \code{"KE"}, \code{"KG"}, \code{"KH"},
+\code{"KI"}, \code{"KM"}, \code{"KN"}, \code{"KP"}, \code{"KR"}, \code{"KW"}, \code{"KY"}, \code{"KZ"}, \code{"LA"},
+\code{"LB"}, \code{"LC"}, \code{"LI"}, \code{"LK"}, \code{"LR"}, \code{"LS"}, \code{"LT"}, \code{"LU"}, \code{"LV"},
+\code{"LY"}, \code{"MA"}, \code{"MC"}, \code{"MD"}, \code{"ME"}, \code{"MF"}, \code{"MG"}, \code{"MH"}, \code{"MK"},
+\code{"ML"}, \code{"MM"}, \code{"MN"}, \code{"MO"}, \code{"MP"}, \code{"MQ"}, \code{"MR"}, \code{"MS"}, \code{"MT"},
+\code{"MU"}, \code{"MV"}, \code{"MW"}, \code{"MX"}, \code{"MY"}, \code{"MZ"}, \code{"NA"}, \code{"NC"}, \code{"NE"},
+\code{"NF"}, \code{"NG"}, \code{"NI"}, \code{"NL"}, \code{"NO"}, \code{"NP"}, \code{"NR"}, \code{"NU"}, \code{"NZ"},
+\code{"OM"}, \code{"PA"}, \code{"PE"}, \code{"PF"}, \code{"PG"}, \code{"PH"}, \code{"PK"}, \code{"PL"}, \code{"PM"},
+\code{"PN"}, \code{"PR"}, \code{"PS"}, \code{"PT"}, \code{"PW"}, \code{"PY"}, \code{"QA"}, \code{"RE"}, \code{"RO"},
+\code{"RS"}, \code{"RU"}, \code{"RW"}, \code{"SA"}, \code{"SB"}, \code{"SC"}, \code{"SD"}, \code{"SE"}, \code{"SG"},
+\code{"SI"}, \code{"SK"}, \code{"SL"}, \code{"SM"}, \code{"SN"}, \code{"SO"}, \code{"SR"}, \code{"SS"}, \code{"ST"},
+\code{"SV"}, \code{"SX"}, \code{"SY"}, \code{"SZ"}, \code{"TC"}, \code{"TD"}, \code{"TF"}, \code{"TG"}, \code{"TH"},
+\code{"TJ"}, \code{"TK"}, \code{"TL"}, \code{"TM"}, \code{"TN"}, \code{"TO"}, \code{"TR"}, \code{"TT"}, \code{"TV"},
+\code{"TW"}, \code{"TZ"}, \code{"UA"}, \code{"UG"}, \code{"US"}, \code{"UY"}, \code{"UZ"}, \code{"VA"}, \code{"VC"},
+\code{"VE"}, \code{"VG"}, \code{"VI"}, \code{"VN"}, \code{"VU"}, \code{"WF"}, \code{"WS"}, \code{"YE"}, \code{"YT"},
+\code{"ZA"}, \code{"ZM"}, and \code{"ZW"}.
 
 You can view the entire set of supported flag icons as an informative table
-by using the \code{\link[=info_flags]{info_flags()}} function. In the information table that is
-provided, you'll see every flag icon and the associated identifier that can
-be used with \code{fmt_flag()}.
+by using the \code{\link[=info_flags]{info_flags()}} function.
 }
 
 \section{Examples}{
@@ -278,6 +322,7 @@ Other data formatting functions:
 \code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
 \code{\link{fmt_chem}()},
+\code{\link{fmt_country}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_date}()},
 \code{\link{fmt_datetime}()},
