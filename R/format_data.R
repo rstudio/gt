@@ -10180,13 +10180,14 @@ get_image_hw_ratio <- function(filepath) {
 #' involves iconography representing different countries, and the `fmt_flag()`
 #' function helps with inserting a flag icon (or multiple) in body cells. To
 #' make this work seamlessly, the input cells need to contain some reference to
-#' a country, and this is in the form of a 2-letter ISO 3166-1 country code
-#' (e.g., Egypt has the `"EG"` country code). This function will parse the
+#' a country, and this can be in the form of a 2- or 3-letter ISO 3166-1 country
+#' code (e.g., Egypt has the `"EG"` country code). This function will parse the
 #' targeted body cells for those codes (and the [countrypops] dataset contains
-#' all of them) and insert the appropriate flag graphics. Multiple flags can be
-#' included per cell by separating country codes with commas (e.g., `"GB,TT"`).
-#' The `sep` argument allows for a common separator to be applied between flag
-#' icons.
+#' all of them) and insert the appropriate flag graphics.
+#'
+#' Multiple flags can be included per cell by separating country codes with
+#' commas (e.g., `"GB,TT"`). The `sep` argument allows for a common separator
+#' to be applied between flag icons.
 #'
 #' @inheritParams fmt_number
 #'
@@ -10209,7 +10210,8 @@ get_image_hw_ratio <- function(filepath) {
 #'
 #'   `scalar<logical>` // *default:* `TRUE`
 #'
-#'   An option to display a tooltip for the country name (in English) when
+#'   An option to display a tooltip for the country name (in the language
+#'   according to the `locale` value, set either here or in [gt()]) when
 #'   hovering over the flag icon.
 #'
 #' @return An object of class `gt_tbl`.
@@ -10270,6 +10272,7 @@ get_image_hw_ratio <- function(filepath) {
 #' - `height`
 #' - `sep`
 #' - `use_title`
+#' - `locale`
 #'
 #' Please note that for each of the aforementioned arguments, a [from_column()]
 #' call needs to reference a column that has data of the correct type (this is
@@ -10280,34 +10283,62 @@ get_image_hw_ratio <- function(filepath) {
 #' [from_column()] helper is applied so long as the arguments belong to this
 #' closed set.
 #'
-#' @section Flag icons that can be used:
+#' @section Supported regions:
+#'
+#' The following 242 regions (most of which comprise countries) are supported
+#' with names across 574 locales: `"AD"`, `"AE"`, `"AF"`, `"AG"`, `"AI"`,
+#' `"AL"`, `"AM"`, `"AO"`, `"AR"`, `"AS"`, `"AT"`, `"AU"`, `"AW"`, `"AX"`,
+#' `"AZ"`, `"BA"`, `"BB"`, `"BD"`, `"BE"`, `"BF"`, `"BG"`, `"BH"`, `"BI"`,
+#' `"BJ"`, `"BL"`, `"BM"`, `"BN"`, `"BO"`, `"BR"`, `"BS"`, `"BT"`, `"BW"`,
+#' `"BY"`, `"BZ"`, `"CA"`, `"CC"`, `"CD"`, `"CF"`, `"CG"`, `"CH"`, `"CI"`,
+#' `"CK"`, `"CL"`, `"CM"`, `"CN"`, `"CO"`, `"CR"`, `"CU"`, `"CV"`, `"CW"`,
+#' `"CY"`, `"CZ"`, `"DE"`, `"DJ"`, `"DK"`, `"DM"`, `"DO"`, `"DZ"`, `"EC"`,
+#' `"EE"`, `"EG"`, `"EH"`, `"ER"`, `"ES"`, `"ET"`, `"EU"`, `"FI"`, `"FJ"`,
+#' `"FK"`, `"FM"`, `"FO"`, `"FR"`, `"GA"`, `"GB"`, `"GD"`, `"GE"`, `"GF"`,
+#' `"GG"`, `"GH"`, `"GI"`, `"GL"`, `"GM"`, `"GN"`, `"GP"`, `"GQ"`, `"GR"`,
+#' `"GS"`, `"GT"`, `"GU"`, `"GW"`, `"GY"`, `"HK"`, `"HN"`, `"HR"`, `"HT"`,
+#' `"HU"`, `"ID"`, `"IE"`, `"IL"`, `"IM"`, `"IN"`, `"IO"`, `"IQ"`, `"IR"`,
+#' `"IS"`, `"IT"`, `"JE"`, `"JM"`, `"JO"`, `"JP"`, `"KE"`, `"KG"`, `"KH"`,
+#' `"KI"`, `"KM"`, `"KN"`, `"KP"`, `"KR"`, `"KW"`, `"KY"`, `"KZ"`, `"LA"`,
+#' `"LB"`, `"LC"`, `"LI"`, `"LK"`, `"LR"`, `"LS"`, `"LT"`, `"LU"`, `"LV"`,
+#' `"LY"`, `"MA"`, `"MC"`, `"MD"`, `"ME"`, `"MF"`, `"MG"`, `"MH"`, `"MK"`,
+#' `"ML"`, `"MM"`, `"MN"`, `"MO"`, `"MP"`, `"MQ"`, `"MR"`, `"MS"`, `"MT"`,
+#' `"MU"`, `"MV"`, `"MW"`, `"MX"`, `"MY"`, `"MZ"`, `"NA"`, `"NC"`, `"NE"`,
+#' `"NF"`, `"NG"`, `"NI"`, `"NL"`, `"NO"`, `"NP"`, `"NR"`, `"NU"`, `"NZ"`,
+#' `"OM"`, `"PA"`, `"PE"`, `"PF"`, `"PG"`, `"PH"`, `"PK"`, `"PL"`, `"PM"`,
+#' `"PN"`, `"PR"`, `"PS"`, `"PT"`, `"PW"`, `"PY"`, `"QA"`, `"RE"`, `"RO"`,
+#' `"RS"`, `"RU"`, `"RW"`, `"SA"`, `"SB"`, `"SC"`, `"SD"`, `"SE"`, `"SG"`,
+#' `"SI"`, `"SK"`, `"SL"`, `"SM"`, `"SN"`, `"SO"`, `"SR"`, `"SS"`, `"ST"`,
+#' `"SV"`, `"SX"`, `"SY"`, `"SZ"`, `"TC"`, `"TD"`, `"TF"`, `"TG"`, `"TH"`,
+#' `"TJ"`, `"TK"`, `"TL"`, `"TM"`, `"TN"`, `"TO"`, `"TR"`, `"TT"`, `"TV"`,
+#' `"TW"`, `"TZ"`, `"UA"`, `"UG"`, `"US"`, `"UY"`, `"UZ"`, `"VA"`, `"VC"`,
+#' `"VE"`, `"VG"`, `"VI"`, `"VN"`, `"VU"`, `"WF"`, `"WS"`, `"YE"`, `"YT"`,
+#' `"ZA"`, `"ZM"`, and `"ZW"`.
 #'
 #' You can view the entire set of supported flag icons as an informative table
-#' by using the [info_flags()] function. In the information table that is
-#' provided, you'll see every flag icon and the associated identifier that can
-#' be used with `fmt_flag()`.
+#' by using the [info_flags()] function.
 #'
 #' @section Examples:
 #'
 #' Use the [`countrypops`] dataset to create a **gt** table. We will only
 #' include a few columns and rows from that table. The `country_code_2` column
 #' has 2-letter country codes in the format required for `fmt_flag()` and using
-#' that function transforms the codes in circular flag icons.
+#' that function transforms the codes to circular flag icons.
 #'
 #' ```r
 #' countrypops |>
 #'   dplyr::filter(year == 2021) |>
 #'   dplyr::filter(grepl("^S", country_name)) |>
 #'   dplyr::arrange(country_name) |>
-#'   dplyr::select(-country_code_3, -year) |>
+#'   dplyr::select(-country_name, -year) |>
 #'   dplyr::slice_head(n = 10) |>
 #'   gt() |>
-#'   cols_move_to_start(columns = country_code_2) |>
 #'   fmt_integer() |>
 #'   fmt_flag(columns = country_code_2) |>
+#'   fmt_country(columns = country_code_3) |>
 #'   cols_label(
 #'     country_code_2 = "",
-#'     country_name = "Country",
+#'     country_code_3 = "Country",
 #'     population = "Population (2021)"
 #'   )
 #' ```
@@ -10398,7 +10429,8 @@ fmt_flag <- function(
     rows = everything(),
     height = "1em",
     sep = " ",
-    use_title = TRUE
+    use_title = TRUE,
+    locale = NULL
 ) {
 
   # Perform input object validation
@@ -10413,6 +10445,7 @@ fmt_flag <- function(
   # - height
   # - sep
   # - use_title
+  # - locale
 
   arg_vals <-
     mget(
@@ -10449,7 +10482,8 @@ fmt_flag <- function(
           rows = resolved_rows_idx[i],
           height = p_i$height %||% height,
           sep = p_i$sep %||% sep,
-          use_title = p_i$use_title %||% use_title
+          use_title = p_i$use_title %||% use_title,
+          locale = p_i$locale %||% locale
         )
     }
 
@@ -10462,6 +10496,17 @@ fmt_flag <- function(
 
   # Declare formatting function compatibility
   compat <- c("character", "factor")
+
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
+  locale <- resolve_locale(data = data, locale = locale)
+
+  # If `locale` is NULL then use the 'en' locale
+  if (is.null(locale)) {
+    locale <- "en"
+  }
 
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
@@ -10479,6 +10524,13 @@ fmt_flag <- function(
       )
     }
   }
+
+  # Create a vector of valid 2- and 3-letter country codes
+  valid_country_codes <-
+    c(
+      country_names[, ][["country_code_2"]],
+      country_names[, ][["country_code_3"]]
+    )
 
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
@@ -10515,22 +10567,36 @@ fmt_flag <- function(
                 height <- paste0(height, "px")
               }
 
-              # TODO: Parse to ensure that `country_code` values are valid
-
               out <- c()
 
               for (y in seq_along(countries)) {
 
+                country_i <- toupper(countries[y])
+                country_i_len <- nchar(country_i)
+
+                # Check whether the country code is valid
+                if (!(country_i %in% valid_country_codes))  {
+                  cli::cli_abort(
+                    "The country code provided (\"{country_i}\") is invalid."
+                  )
+                }
+
                 flag_svg <-
                   flag_tbl[
-                    flag_tbl[["country_code_2"]] == countries[y],
+                    flag_tbl[[
+                      paste0("country_code_", country_i_len)]] == country_i,
                   ][["country_flag"]]
 
+                # If displaying a title, obtain that from `country_names`
                 if (use_title) {
-                  flag_title <-
-                    flag_tbl[
-                      flag_tbl[["country_code_2"]] == countries[y],
-                    ][["country_name"]]
+
+                  country_index <-
+                    which(
+                      country_names[[
+                        paste0("country_code_", country_i_len)]] == country_i
+                    )
+
+                  flag_title <- country_names[country_index, ][[locale]]
                 }
 
                 out_y <-
@@ -10582,6 +10648,319 @@ fmt_flag <- function(
       },
       default = function(x) {
         x
+      }
+    )
+  )
+}
+
+#' Generate country names from their corresponding country codes
+#'
+#' @description
+#'
+#' Tables that have comparable data between countries often need to have the
+#' country name included. While this seems like a fairly simple task, being
+#' consistent with country names is surprisingly difficult. The `fmt_country()`
+#' function can help in this regard by supplying a country name based on a
+#' 2- or 3-letter ISO 3166-1 country code (e.g., Singapore has the `"SG"`
+#' country code). The resulting country names have been obtained from the
+#' Unicode *CLDR* (Common Locale Data Repository), which is a good source since
+#' all country names are agreed upon by consensus. Furthermore, the country
+#' names can be localized through the `locale` argument (either in this function
+#' or through the initial [gt()] call).
+#'
+#' Multiple country names can be included per cell by separating country codes
+#' with commas (e.g., `"RO,BM"`). And it is okay if the codes are set in either
+#' uppercase or lowercase letters. The `sep` argument allows for a common
+#' separator to be applied between country names.
+#'
+#' @inheritParams fmt_number
+#'
+#' @param sep *Separator between country names*
+#'
+#'   `scalar<character>` // *default:* `" "`
+#'
+#'   In the output of country names within a body cell, `sep` provides the
+#'   separator between each instance. By default, this is a single space
+#'   character (`" "`).
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Compatibility of formatting function with data values:
+#'
+#' The `fmt_country()` formatting function is compatible with body cells that
+#' are of the `"character"` or `"factor"` types. Any other types of body cells
+#' are ignored during formatting. This is to say that cells of incompatible data
+#' types may be targeted, but there will be no attempt to format them.
+#'
+#' @section Targeting cells with `columns` and `rows`:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to target a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given formatting function
+#' will be skipped over, like `character` values and numeric `fmt_*()`
+#' functions. So it's safe to select all columns with a particular formatting
+#' function (only those values that can be formatted will be formatted), but,
+#' you may not want that. One strategy is to format the bulk of cell values with
+#' one formatting function and then constrain the columns for later passes with
+#' other types of formatting (the last formatting done to a cell is what you get
+#' in the final output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
+#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
+#' the input data (the indices won't necessarily match those of rearranged rows
+#' if row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector. This is nice if you want to base
+#' formatting on values in the column or another column, or, you'd like to use a
+#' more complex predicate expression.
+#'
+#' @section Compatibility of arguments with the `from_column()` helper function:
+#'
+#' The [from_column()] helper function can be used with certain arguments of
+#' `fmt_country()` to obtain varying parameter values from a specified column
+#' within the table. This means that each row could be formatted a little bit
+#' differently. These arguments provide support for [from_column()]:
+#'
+#' - `pattern`
+#' - `sep`
+#' - `locale`
+#'
+#' Please note that for each of the aforementioned arguments, a [from_column()]
+#' call needs to reference a column that has data of the correct type (this is
+#' different for each argument). Additional columns for parameter values can be
+#' generated with the [cols_add()] function (if not already present). Columns
+#' that contain parameter data can also be hidden from final display with
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
+#' [from_column()] helper is applied so long as the arguments belong to this
+#' closed set.
+#'
+#' @section Supported regions:
+#'
+#' The following 242 regions (most of which comprise countries) are supported
+#' with names across 574 locales: `"AD"`, `"AE"`, `"AF"`, `"AG"`, `"AI"`,
+#' `"AL"`, `"AM"`, `"AO"`, `"AR"`, `"AS"`, `"AT"`, `"AU"`, `"AW"`, `"AX"`,
+#' `"AZ"`, `"BA"`, `"BB"`, `"BD"`, `"BE"`, `"BF"`, `"BG"`, `"BH"`, `"BI"`,
+#' `"BJ"`, `"BL"`, `"BM"`, `"BN"`, `"BO"`, `"BR"`, `"BS"`, `"BT"`, `"BW"`,
+#' `"BY"`, `"BZ"`, `"CA"`, `"CC"`, `"CD"`, `"CF"`, `"CG"`, `"CH"`, `"CI"`,
+#' `"CK"`, `"CL"`, `"CM"`, `"CN"`, `"CO"`, `"CR"`, `"CU"`, `"CV"`, `"CW"`,
+#' `"CY"`, `"CZ"`, `"DE"`, `"DJ"`, `"DK"`, `"DM"`, `"DO"`, `"DZ"`, `"EC"`,
+#' `"EE"`, `"EG"`, `"EH"`, `"ER"`, `"ES"`, `"ET"`, `"EU"`, `"FI"`, `"FJ"`,
+#' `"FK"`, `"FM"`, `"FO"`, `"FR"`, `"GA"`, `"GB"`, `"GD"`, `"GE"`, `"GF"`,
+#' `"GG"`, `"GH"`, `"GI"`, `"GL"`, `"GM"`, `"GN"`, `"GP"`, `"GQ"`, `"GR"`,
+#' `"GS"`, `"GT"`, `"GU"`, `"GW"`, `"GY"`, `"HK"`, `"HN"`, `"HR"`, `"HT"`,
+#' `"HU"`, `"ID"`, `"IE"`, `"IL"`, `"IM"`, `"IN"`, `"IO"`, `"IQ"`, `"IR"`,
+#' `"IS"`, `"IT"`, `"JE"`, `"JM"`, `"JO"`, `"JP"`, `"KE"`, `"KG"`, `"KH"`,
+#' `"KI"`, `"KM"`, `"KN"`, `"KP"`, `"KR"`, `"KW"`, `"KY"`, `"KZ"`, `"LA"`,
+#' `"LB"`, `"LC"`, `"LI"`, `"LK"`, `"LR"`, `"LS"`, `"LT"`, `"LU"`, `"LV"`,
+#' `"LY"`, `"MA"`, `"MC"`, `"MD"`, `"ME"`, `"MF"`, `"MG"`, `"MH"`, `"MK"`,
+#' `"ML"`, `"MM"`, `"MN"`, `"MO"`, `"MP"`, `"MQ"`, `"MR"`, `"MS"`, `"MT"`,
+#' `"MU"`, `"MV"`, `"MW"`, `"MX"`, `"MY"`, `"MZ"`, `"NA"`, `"NC"`, `"NE"`,
+#' `"NF"`, `"NG"`, `"NI"`, `"NL"`, `"NO"`, `"NP"`, `"NR"`, `"NU"`, `"NZ"`,
+#' `"OM"`, `"PA"`, `"PE"`, `"PF"`, `"PG"`, `"PH"`, `"PK"`, `"PL"`, `"PM"`,
+#' `"PN"`, `"PR"`, `"PS"`, `"PT"`, `"PW"`, `"PY"`, `"QA"`, `"RE"`, `"RO"`,
+#' `"RS"`, `"RU"`, `"RW"`, `"SA"`, `"SB"`, `"SC"`, `"SD"`, `"SE"`, `"SG"`,
+#' `"SI"`, `"SK"`, `"SL"`, `"SM"`, `"SN"`, `"SO"`, `"SR"`, `"SS"`, `"ST"`,
+#' `"SV"`, `"SX"`, `"SY"`, `"SZ"`, `"TC"`, `"TD"`, `"TF"`, `"TG"`, `"TH"`,
+#' `"TJ"`, `"TK"`, `"TL"`, `"TM"`, `"TN"`, `"TO"`, `"TR"`, `"TT"`, `"TV"`,
+#' `"TW"`, `"TZ"`, `"UA"`, `"UG"`, `"US"`, `"UY"`, `"UZ"`, `"VA"`, `"VC"`,
+#' `"VE"`, `"VG"`, `"VI"`, `"VN"`, `"VU"`, `"WF"`, `"WS"`, `"YE"`, `"YT"`,
+#' `"ZA"`, `"ZM"`, and `"ZW"`.
+#'
+#' @family data formatting functions
+#' @section Function ID:
+#' 3-23
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @import rlang
+#' @export
+fmt_country <- function(
+    data,
+    columns = everything(),
+    rows = everything(),
+    pattern = "{x}",
+    sep = " ",
+    locale = NULL
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - pattern
+  # - sep
+  # - locale
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = "fmt_country",
+        all_args_except = c("data", "columns", "rows")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using the `resolve_vars` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_country(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          pattern = p_i$pattern %||% pattern,
+          sep = p_i$sep %||% sep,
+          locale = p_i$locale %||% locale
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()` objects passed to compatible arguments
+  #
+
+  # Declare formatting function compatibility
+  compat <- c("character", "factor")
+
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
+  locale <- resolve_locale(data = data, locale = locale)
+
+  # If `locale` is NULL then use the 'en' locale
+  if (is.null(locale)) {
+    locale <- "en"
+  }
+
+  # In this case where strict mode is being used (with the option
+  # called "gt.strict_column_fmt"), stop the function if any of the
+  # resolved columns have data that is incompatible with this formatter
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = compat
+    )
+  ) {
+    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
+      cli::cli_abort(
+        "{.fn fmt_flag} must be used on `columns` with character or factor data."
+      )
+    }
+  }
+
+  # Create a vector of valid 2- and 3-letter country codes
+  valid_country_codes <-
+    c(
+      country_names[, ][["country_code_2"]],
+      country_names[, ][["country_code_3"]]
+    )
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    fns = num_fmt_factory_multi(
+      pattern = pattern,
+      use_latex_math_mode = FALSE,
+      format_fn = function(x, context) {
+
+        # Generate an vector of empty strings that will eventually
+        # contain all of the link text
+        x_str <- character(length(x))
+
+        x_str_non_missing <- x[!is.na(x)]
+
+        x_str_non_missing <-
+          vapply(
+            seq_along(x_str_non_missing),
+            FUN.VALUE = character(1),
+            USE.NAMES = FALSE,
+            FUN = function(x) {
+
+              if (grepl(",", x_str_non_missing[x])) {
+                countries <-
+                  toupper(unlist(strsplit(x_str_non_missing[x], ",\\s*")))
+              } else {
+                countries <- toupper(x_str_non_missing[x])
+              }
+
+              out <- c()
+
+              for (y in seq_along(countries)) {
+
+                country_i <- toupper(countries[y])
+                country_i_len <- nchar(country_i)
+
+                # Check whether the country code is valid
+                if (!(country_i %in% valid_country_codes))  {
+                  cli::cli_abort(
+                    "The country code provided (\"{country_i}\") is invalid."
+                  )
+                }
+
+                country_index <-
+                  which(
+                    country_names[[
+                      paste0("country_code_", country_i_len)]] == country_i
+                  )
+
+                out_y <- country_names[country_index, ][[locale]]
+
+                out <- c(out, out_y)
+              }
+
+              paste0(out, collapse = sep)
+            }
+          )
+
+        x_str[!is.na(x)] <- x_str_non_missing
+        x_str[is.na(x)] <- NA_character_
+        x_str
       }
     )
   )
@@ -10925,7 +11304,7 @@ fmt_flag <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-23
+#' 3-24
 #'
 #' @section Function Introduced:
 #' `v0.10.0` (October 7, 2023)
@@ -11357,7 +11736,7 @@ fmt_icon <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-24
+#' 3-25
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -11574,7 +11953,7 @@ fmt_markdown <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-25
+#' 3-26
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -11836,7 +12215,7 @@ fmt_passthrough <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-26
+#' 3-27
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
@@ -12155,7 +12534,7 @@ fmt_auto <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-27
+#' 3-28
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
