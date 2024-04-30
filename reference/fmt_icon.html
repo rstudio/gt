@@ -183,12 +183,15 @@ decimal value between <code>0</code> and <code>1</code>.</p></dd>
 
 <dt>fill_color</dt>
 <dd><p><em>Color of the icon fill</em></p>
-<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code>scalar&lt;character&gt;|vector&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>The fill color of the icon can be set with <code>fill_color</code>; providing a single
 color here will change the color of the fill but not of the icon's 'stroke'
-or outline (use <code>stroke_color</code> to modify that). If not provided then the
-default value of <code>"currentColor"</code> is applied so that the fill matches the
-color of the parent HTML element's color attribute.</p></dd>
+or outline (use <code>stroke_color</code> to modify that). A named vector or named
+list comprising the icon names with corresponding fill colors can
+alternatively be used here (e.g.,
+<code>list("circle-check" = "green", "circle-xmark" = "red"</code>). If nothing is
+provided then the default value of <code>"currentColor"</code> is applied so that the
+fill matches the color of the parent HTML element's color attribute.</p></dd>
 
 
 <dt>fill_alpha</dt>
@@ -448,6 +451,38 @@ scores.</p>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_icon_4.png" alt="This image of a table was generated from the fourth code example in the `fmt_icon()` help file." style="width:100%;"></p>
+<p>A fairly common thing to do with icons in tables is to indicate whether
+a quantity is either higher or lower than another. Up and down arrow symbols
+can serve as good visual indicators for this purpose. We can make use of the
+<code>"up-arrow"</code> and <code>"down-arrow"</code> icons here. The <code>fmt_icon()</code> function has to
+find those text values in cells to generate the icons, so, lets generate the
+text within a new column via the <code><a href="cols_add.html">cols_add()</a></code> function (an expression is used
+therein to generate the correct text given the <code>close</code> and <code>open</code> values).
+Following that, <code>fmt_icon()</code> is used and its <code>fill_color</code> argument is
+provided with a named vector that indicates which color should be used for
+each icon.</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">sp500</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">open</span>, <span class="va">close</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="op">-</span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/row_number.html" class="external-link">row_number</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"date"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_add.html">cols_add</a></span><span class="op">(</span>week <span class="op">=</span> <span class="va">date</span>, .after <span class="op">=</span> <span class="va">date</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_add.html">cols_add</a></span><span class="op">(</span>dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">close</span> <span class="op">&gt;</span> <span class="va">open</span>, <span class="st">"arrow-up"</span>, <span class="st">"arrow-down"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_merge.html">cols_merge</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">week</span><span class="op">)</span>, pattern <span class="op">=</span> <span class="st">"{1} ({2})"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_date.html">fmt_date</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">date</span>, date_style <span class="op">=</span> <span class="st">"m_day_year"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_datetime.html">fmt_datetime</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">week</span>, format <span class="op">=</span> <span class="st">"w"</span>, pattern <span class="op">=</span> <span class="st">"W{x}"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_currency.html">fmt_currency</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_icon.html">fmt_icon</a></span><span class="op">(</span></span>
+<span>    columns <span class="op">=</span> <span class="va">dir</span>,</span>
+<span>    fill_color <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"arrow-up"</span> <span class="op">=</span> <span class="st">"green"</span>, <span class="st">"arrow-down"</span> <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_label.html">cols_label</a></span><span class="op">(</span></span>
+<span>    open <span class="op">=</span> <span class="st">"Opening Value"</span>,</span>
+<span>    close <span class="op">=</span> <span class="st">"Closing Value"</span>,</span>
+<span>    dir <span class="op">=</span> <span class="st">""</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/opt_stylize.html">opt_stylize</a></span><span class="op">(</span>style <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">"gray"</span><span class="op">)</span></span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_icon_5.png" alt="This image of a table was generated from the fifth code example in the `fmt_icon()` help file." style="width:100%;"></p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
