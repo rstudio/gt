@@ -316,6 +316,43 @@ the word 'Number' in front of every spelled-out number.</p>
 <span>  <span class="fu"><a href="../reference/opt_table_font.html">opt_table_font</a></span><span class="op">(</span>stack <span class="op">=</span> <span class="st">"rounded-sans"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>table.font.size <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">14</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_spelled_num_2.png" alt="This image of a table was generated from the second code example in the `fmt_spelled_num()` help file." style="width:100%;"></p>
+<p>Let's make a table that compares how the numbers from <code>1</code> to <code>10</code> are spelled
+across a small selection of languages. Here we use <code>fmt_spelled_num()</code> with
+each column, ensuring that the <code>locale</code> value matches that of the column
+name.</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
+<span>  num <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,</span>
+<span>  en <span class="op">=</span> <span class="va">num</span>,</span>
+<span>  fr <span class="op">=</span> <span class="va">num</span>,</span>
+<span>  de <span class="op">=</span> <span class="va">num</span>,</span>
+<span>  es <span class="op">=</span> <span class="va">num</span>,</span>
+<span>  pl <span class="op">=</span> <span class="va">num</span>,</span>
+<span>  bg <span class="op">=</span> <span class="va">num</span>,</span>
+<span>  ko <span class="op">=</span> <span class="va">num</span>,</span>
+<span>  zh <span class="op">=</span> <span class="va">num</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"num"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_spelled_num.html">fmt_spelled_num</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">en</span>, locale <span class="op">=</span> <span class="st">"en"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_spelled_num.html">fmt_spelled_num</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">fr</span>, locale <span class="op">=</span> <span class="st">"fr"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_spelled_num.html">fmt_spelled_num</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">de</span>, locale <span class="op">=</span> <span class="st">"de"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_spelled_num.html">fmt_spelled_num</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">es</span>, locale <span class="op">=</span> <span class="st">"es"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_spelled_num.html">fmt_spelled_num</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">pl</span>, locale <span class="op">=</span> <span class="st">"pl"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_spelled_num.html">fmt_spelled_num</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">bg</span>, locale <span class="op">=</span> <span class="st">"bg"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_spelled_num.html">fmt_spelled_num</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">ko</span>, locale <span class="op">=</span> <span class="st">"ko"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_spelled_num.html">fmt_spelled_num</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">zh</span>, locale <span class="op">=</span> <span class="st">"zh"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_label_with.html">cols_label_with</a></span><span class="op">(</span>fn <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="../reference/md.html">md</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"`"</span>, <span class="va">x</span>, <span class="st">"`"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_spanner.html">tab_spanner</a></span><span class="op">(</span></span>
+<span>    label <span class="op">=</span> <span class="st">"Numbers in the specified locale"</span>,</span>
+<span>    columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_align.html">cols_align</a></span><span class="op">(</span>align <span class="op">=</span> <span class="st">"left"</span>, columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_width.html">cols_width</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">en</span>, <span class="va">fr</span>, <span class="va">de</span>, <span class="va">es</span>, <span class="va">pl</span>, <span class="va">bg</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">ko</span>, <span class="va">zh</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">50</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/opt_horizontal_padding.html">opt_horizontal_padding</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/opt_vertical_padding.html">opt_vertical_padding</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_spelled_num_3.png" alt="This image of a table was generated from the third code example in the `fmt_spelled_num()` help file." style="width:100%;"></p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>
