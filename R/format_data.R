@@ -11419,6 +11419,45 @@ fmt_country <- function(
 #' `r man_get_image_tag(file = "man_fmt_icon_4.png")`
 #' }}
 #'
+#' A fairly common thing to do with icons in tables is to indicate whether
+#' a quantity is either higher or lower than another. Up and down arrow symbols
+#' can serve as good visual indicators for this purpose. We can make use of the
+#' `"up-arrow"` and `"down-arrow"` icons here. The `fmt_icon()` function has to
+#' find those text values in cells to generate the icons, so, lets generate the
+#' text within a new column via the [cols_add()] function (an expression is used
+#' therein to generate the correct text given the `close` and `open` values).
+#' Following that, `fmt_icon()` is used and its `fill_color` argument is
+#' provided with a named vector that indicates which color should be used for
+#' each icon.
+#'
+#' ```r
+#' sp500 |>
+#'   dplyr::slice_head(n = 10) |>
+#'   dplyr::select(date, open, close) |>
+#'   dplyr::arrange(-dplyr::row_number()) |>
+#'   gt(rowname_col = "date") |>
+#'   cols_add(week = date, .after = date) |>
+#'   cols_add(dir = ifelse(close > open, "arrow-up", "arrow-down")) |>
+#'   cols_merge(columns = c(date, week), pattern = "{1} ({2})") |>
+#'   fmt_date(columns = date, date_style = "m_day_year") |>
+#'   fmt_datetime(columns = week, format = "w", pattern = "W{x}") |>
+#'   fmt_currency() |>
+#'   fmt_icon(
+#'     columns = dir,
+#'     fill_color = c("arrow-up" = "green", "arrow-down" = "red")
+#'   ) |>
+#'   cols_label(
+#'     open = "Opening Value",
+#'     close = "Closing Value",
+#'     dir = ""
+#'   ) |>
+#'   opt_stylize(style = 1, color = "gray")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_icon_5.png")`
+#' }}
+#'
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-24
