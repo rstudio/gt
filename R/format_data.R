@@ -10783,6 +10783,76 @@ fmt_flag <- function(
 #' `"VE"`, `"VG"`, `"VI"`, `"VN"`, `"VU"`, `"WF"`, `"WS"`, `"YE"`, `"YT"`,
 #' `"ZA"`, `"ZM"`, and `"ZW"`.
 #'
+#' @section Examples:
+#'
+#' Use the [`countrypops`] dataset to create a **gt** table. We will only
+#' include a few columns and rows from that table. The `country_code_3` column
+#' has 3-letter country codes in the format required for `fmt_country()` and
+#' using that function transforms the codes to country names.
+#'
+#' ```r
+#' countrypops |>
+#'   dplyr::filter(year == 2021) |>
+#'   dplyr::filter(grepl("^S", country_name)) |>
+#'   dplyr::arrange(country_name) |>
+#'   dplyr::select(-country_name, -year) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt() |>
+#'   fmt_integer() |>
+#'   fmt_flag(columns = country_code_2) |>
+#'   fmt_country(columns = country_code_3) |>
+#'   cols_label(
+#'     country_code_2 = "",
+#'     country_code_3 = "Country",
+#'     population = "Population (2021)"
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_country_1.png")`
+#' }}
+#'
+#' The country names derived from country codes can be localized. Let's
+#' translate some of those country names into three different languages using
+#' different `locale` values in separate calls of `fmt_country()`.
+#'
+#' ```r
+#' countrypops |>
+#'   dplyr::filter(year == 2021) |>
+#'   dplyr::arrange(desc(population)) |>
+#'   dplyr::filter(row_number() > max(row_number()) - 5 | row_number() <= 5) |>
+#'   dplyr::select(
+#'     country_code_fl = country_code_2,
+#'     country_code_2a = country_code_2,
+#'     country_code_2b = country_code_2,
+#'     country_code_2c = country_code_2,
+#'     population
+#'   ) |>
+#'   gt(rowname_col = "country_code_fl") |>
+#'   fmt_integer() |>
+#'   fmt_flag(columns = stub()) |>
+#'   fmt_country(columns = ends_with("a")) |>
+#'   fmt_country(columns = ends_with("b"), locale = "ja") |>
+#'   fmt_country(columns = ends_with("c"), locale = "ar") |>
+#'   cols_label(
+#'     ends_with("a") ~ "`en`",
+#'     ends_with("b") ~ "`ja`",
+#'     ends_with("c") ~ "`ar`",
+#'     population = "Population",
+#'     .fn = md
+#'   ) |>
+#'   tab_spanner(
+#'     label = "Country name in specified locale",
+#'     columns = matches("2a|2b|2c")
+#'   ) |>
+#'   cols_align(align = "center", columns = matches("2a|2b|2c")) |>
+#'   opt_horizontal_padding(scale = 2)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_country_2.png")`
+#' }}
+#'
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-23
