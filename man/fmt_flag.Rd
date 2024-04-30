@@ -215,21 +215,21 @@ by using the \code{\link[=info_flags]{info_flags()}} function.
 Use the \code{\link{countrypops}} dataset to create a \strong{gt} table. We will only
 include a few columns and rows from that table. The \code{country_code_2} column
 has 2-letter country codes in the format required for \code{fmt_flag()} and using
-that function transforms the codes in circular flag icons.
+that function transforms the codes to circular flag icons.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::filter(year == 2021) |>
   dplyr::filter(grepl("^S", country_name)) |>
   dplyr::arrange(country_name) |>
-  dplyr::select(-country_code_3, -year) |>
+  dplyr::select(-country_name, -year) |>
   dplyr::slice_head(n = 10) |>
   gt() |>
-  cols_move_to_start(columns = country_code_2) |>
   fmt_integer() |>
   fmt_flag(columns = country_code_2) |>
+  fmt_country(columns = country_code_3) |>
   cols_label(
     country_code_2 = "",
-    country_name = "Country",
+    country_code_3 = "Country",
     population = "Population (2021)"
   )
 }\if{html}{\out{</div>}}
