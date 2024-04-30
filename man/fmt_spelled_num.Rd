@@ -244,6 +244,49 @@ the word 'Number' in front of every spelled-out number.
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_spelled_num_2.png" alt="This image of a table was generated from the second code example in the `fmt_spelled_num()` help file." style="width:100\%;">
 }}
+
+Let's make a table that compares how the numbers from \code{1} to \code{10} are spelled
+across a small selection of languages. Here we use \code{fmt_spelled_num()} with
+each column, ensuring that the \code{locale} value matches that of the column
+name.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
+  num = 1:10,
+  en = num,
+  fr = num,
+  de = num,
+  es = num,
+  pl = num,
+  bg = num,
+  ko = num,
+  zh = num
+) |>
+  gt(rowname_col = "num") |>
+  fmt_spelled_num(columns = en, locale = "en") |>
+  fmt_spelled_num(columns = fr, locale = "fr") |>
+  fmt_spelled_num(columns = de, locale = "de") |>
+  fmt_spelled_num(columns = es, locale = "es") |>
+  fmt_spelled_num(columns = pl, locale = "pl") |>
+  fmt_spelled_num(columns = bg, locale = "bg") |>
+  fmt_spelled_num(columns = ko, locale = "ko") |>
+  fmt_spelled_num(columns = zh, locale = "zh") |>
+  cols_label_with(fn = function(x) md(paste0("`", x, "`"))) |>
+  tab_spanner(
+    label = "Numbers in the specified locale",
+    columns = everything()
+  ) |>
+  cols_align(align = "left", columns = everything()) |>
+  cols_width(
+    c(en, fr, de, es, pl, bg) ~ px(100),
+    c(ko, zh) ~ px(50)
+  ) |>
+  opt_horizontal_padding(scale = 2) |>
+  opt_vertical_padding(scale = 0.5)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_spelled_num_3.png" alt="This image of a table was generated from the third code example in the `fmt_spelled_num()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
