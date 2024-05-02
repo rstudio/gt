@@ -9672,22 +9672,23 @@ add_anchor_attr <- function(
 #' button-like (with a surrounding box that can be filled with a color of your
 #' choosing).
 #'
-#' Email addresses in data cells are trusted as email addresses. We can also use
-#' labels with the `label` argument. Supplying a value there will use the same
-#' label for all email addresses but label values from an adjacent column could
-#' be used via a [from_column()] call within `label`.
+#' Email addresses in data cells are trusted as email addresses. We can also
+#' provide more readable labels with the `display_name` argument. Supplying a
+#' single value there will show the same label for all email addresses but
+#' display names from an adjacent column could be used via a [from_column()]
+#' call within `display_name`.
 #'
 #' @inheritParams fmt_number
 #'
-#' @param label *Label for the email address*
+#' @param display_name *Display name for the email address*
 #'
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
-#'   The visible 'label' to use for the email address. If `NULL` (the default)
-#'   the address itself will serve as the label. There are two non-`NULL`
-#'   options: (1) a piece of static text can be used for the label by providing
-#'   a string, and (2) a function can be provided to fashion a label from every
-#'   email address.
+#'   The display name is the visible 'label' to use for the email address. If
+#'   `NULL` (the default) the address itself will serve as the display name.
+#'   There are two non-`NULL` options: (1) a piece of static text can be used
+#'   for the display name by providing a string, and (2) a function can be
+#'   provided to fashion a display name from every email address.
 #'
 #' @param as_button *Style email address as a button*
 #'
@@ -9787,7 +9788,7 @@ add_anchor_attr <- function(
 #' within the table. This means that each row could be formatted a little bit
 #' differently. These arguments provide support for [from_column()]:
 #'
-#' - `label`
+#' - `display_name`
 #' - `as_button`
 #' - `color`
 #' - `show_underline`
@@ -9817,7 +9818,7 @@ fmt_email <- function(
     data,
     columns = everything(),
     rows = everything(),
-    label = NULL,
+    display_name = NULL,
     as_button = FALSE,
     color = "auto",
     show_underline = "auto",
@@ -9836,7 +9837,7 @@ fmt_email <- function(
 
   # Supports parameters:
   #
-  # - label
+  # - display_name
   # - as_button
   # - color
   # - show_underline
@@ -9877,7 +9878,7 @@ fmt_email <- function(
           data = data,
           columns = {{ columns }},
           rows = resolved_rows_idx[i],
-          label = p_i$label %||% label,
+          display_name = p_i$display_name %||% display_name,
           as_button = p_i$as_button %||% as_button,
           color = p_i$color %||% color,
           show_underline = p_i$show_underline %||% show_underline,
@@ -10045,12 +10046,22 @@ fmt_email <- function(
 
         x_str_non_missing <- x[!is.na(x)]
 
-        if (!is.null(label)) {
+        if (length(x) == 1 && is.na(x)) {
+          return(x)
+        }
 
-          if (rlang::is_function(label)) {
-            label_str <- label(x_str_non_missing)
+        # Normalize all addresses with commas separating them
+        x_str_non_missing <- gsub(",\\s+", ",", x_str_non_missing)
+
+        # Trim leading and trailing space characters
+        x_str_non_missing <- gsub("^\\s+|\\s+$", "", x_str_non_missing)
+
+        if (!is.null(display_name)) {
+
+          if (rlang::is_function(display_name)) {
+            label_str <- display_name(x_str_non_missing)
           } else {
-            label_str <- label
+            label_str <- display_name
           }
 
         } else {
@@ -10111,15 +10122,80 @@ fmt_email <- function(
           )
 
         x_str_non_missing <-
-          paste0(
-            "<span style=\"white-space: pre;\">",
-            "<a",
-            " href=\"mailto:", x_str_non_missing, "\"",
-            anchor_attr,
-            ">",
+          mapply(
+            SIMPLIFY = TRUE,
+            USE.NAMES = FALSE,
+            x_str_non_missing,
             label_str,
-            "</a>",
-            "</span>"
+            FUN = function(x, label_str) {
+
+              if (grepl(" ", x)) {
+
+                email_separated <- unlist(strsplit(x, " "))
+
+                if (x == label_str) {
+
+                  label_separated <- unlist(strsplit(label_str, " "))
+
+                } else if (
+                  grepl("^<", label_str) &&
+                  grepl(">$", label_str) &&
+                  !grepl("^<svg", label_str)
+                ) {
+
+                  label_separated <- unlist(strsplit(label_str, ">\\s*<"))
+
+                  label_separated <-
+                    gsub("<", "", label_separated, fixed = TRUE)
+                  label_separated <-
+                    gsub(">", "", label_separated, fixed = TRUE)
+
+                  label_separated <- gsub("^\\s+|\\s+$", "", label_separated)
+
+                  if (length(label_separated) == 1) {
+                    label_separated <-
+                      rep_len(label_separated, length(email_separated))
+                  }
+
+                  if (length(label_separated) != length(email_separated)) {
+                    cli::cli_abort(
+                      "Labels supplied between `<`/`>` must match the length
+                      of email addresses"
+                    )
+                  }
+
+                } else {
+                  label_separated <- rep_len(label_str, length(email_separated))
+                }
+
+                email_str_separated <- c()
+
+                for (i in seq_along(email_separated)) {
+
+                  email_str_i <-
+                    generate_email_links(
+                      email_address = email_separated[i],
+                      anchor_attr = anchor_attr,
+                      label_str = label_separated[i]
+                    )
+
+                  email_str_separated <- c(email_str_separated, email_str_i)
+                }
+
+                email_str <- paste(email_str_separated, collapse = " ")
+
+              } else {
+
+                email_str <-
+                  generate_email_links(
+                    email_address = x,
+                    anchor_attr = anchor_attr,
+                    label_str = label_str
+                  )
+              }
+
+              email_str
+            }
           )
 
         x_str[!is.na(x)] <- x_str_non_missing
@@ -10142,11 +10218,19 @@ fmt_email <- function(
   )
 }
 
+generate_email_links <- function(email_address, anchor_attr, label_str) {
 
-
-
-
-
+  paste0(
+    "<span style=\"white-space: pre;\">",
+    "<a",
+    " href=\"mailto:", email_address, "\"",
+    anchor_attr,
+    ">",
+    label_str,
+    "</a>",
+    "</span>"
+  )
+}
 
 #' Format image paths to generate images in cells
 #'
