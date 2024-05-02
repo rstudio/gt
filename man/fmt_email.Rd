@@ -8,7 +8,7 @@ fmt_email(
   data,
   columns = everything(),
   rows = everything(),
-  label = NULL,
+  display_name = NULL,
   as_button = FALSE,
   color = "auto",
   show_underline = "auto",
@@ -48,15 +48,15 @@ function. Examples of select helper functions include \code{\link[=starts_with]{
 \code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
 need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
-\item{label}{\emph{Label for the email address}
+\item{display_name}{\emph{Display name for the email address}
 
 \verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
 
-The visible 'label' to use for the email address. If \code{NULL} (the default)
-the address itself will serve as the label. There are two non-\code{NULL}
-options: (1) a piece of static text can be used for the label by providing
-a string, and (2) a function can be provided to fashion a label from every
-email address.}
+The display name is the visible 'label' to use for the email address. If
+\code{NULL} (the default) the address itself will serve as the display name.
+There are two non-\code{NULL} options: (1) a piece of static text can be used
+for the display name by providing a string, and (2) a function can be
+provided to fashion a display name from every email address.}
 
 \item{as_button}{\emph{Style email address as a button}
 
@@ -114,10 +114,11 @@ coloring that sets it apart from other text), or, they can appear to be
 button-like (with a surrounding box that can be filled with a color of your
 choosing).
 
-Email addresses in data cells are trusted as email addresses. We can also use
-labels with the \code{label} argument. Supplying a value there will use the same
-label for all email addresses but label values from an adjacent column could
-be used via a \code{\link[=from_column]{from_column()}} call within \code{label}.
+Email addresses in data cells are trusted as email addresses. We can also
+provide more readable labels with the \code{display_name} argument. Supplying a
+single value there will show the same label for all email addresses but
+display names from an adjacent column could be used via a \code{\link[=from_column]{from_column()}}
+call within \code{display_name}.
 }
 \section{Compatibility of formatting function with data values}{
 
@@ -177,7 +178,7 @@ The \code{\link[=from_column]{from_column()}} helper function can be used with c
 within the table. This means that each row could be formatted a little bit
 differently. These arguments provide support for \code{\link[=from_column]{from_column()}}:
 \itemize{
-\item \code{label}
+\item \code{display_name}
 \item \code{as_button}
 \item \code{color}
 \item \code{show_underline}
