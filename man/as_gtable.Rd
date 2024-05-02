@@ -7,20 +7,31 @@
 as_gtable(data, plot = FALSE, text_grob = grid::textGrob)
 }
 \arguments{
-\item{data}{A table object that is created using the \code{\link[=gt]{gt()}} function.}
+\item{data}{\emph{The gt table data object}
 
-\item{plot}{A \code{logical(1)} whether the gtable should be rendered on the
-graphics device.}
+\verb{obj:<gt_tbl>} // \strong{required}
 
-\item{text_grob}{A \code{function} used to draw text. Defaults to
-\code{grid::textGrob()}, but can be swapped to \code{gridtext::richtext_grob()} to
-better render html content.}
+This is the \strong{gt} table object that is commonly created through use of the
+\code{\link[=gt]{gt()}} function.}
+
+\item{plot}{\emph{Render through the graphics device?}
+
+\verb{scalar<logical>} // \emph{default:} \code{FALSE}
+
+The \code{plot} option determines whether the \code{gtable} object should be rendered
+on the graphics device.}
+
+\item{text_grob}{\code{function} // \emph{default:} \code{grid::textGrob}
+
+A \code{function} used to draw text. Defaults to \code{grid::textGrob()} but can be
+swapped to \code{gridtext::richtext_grob()} to better render HTML content.}
 }
 \value{
 A \code{gtable} object.
 }
 \description{
-Take a \code{gt_tbl} table and transform it to a \code{gtable}.
+The \code{as_gtable()} function performs the transformation of a \code{gt_tbl} object
+to a \code{gtable} object.
 }
 \section{Function ID}{
 
