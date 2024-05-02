@@ -8947,8 +8947,8 @@ format_units_by_context <- function(
 #'
 #'   The visible 'label' to use for the link. If `NULL` (the default)
 #'   the URL will serve as the label. There are two non-`NULL` options: (1) a
-#'   static text can be used for the label by providing a string, and (2) a
-#'   function can be provided to fashion a label from every URL.
+#'   piece of static text can be used for the label by providing a string, and
+#'   (2) a function can be provided to fashion a label from every URL.
 #'
 #' @param as_button *Style link as a button*
 #'
@@ -9451,80 +9451,19 @@ fmt_url <- function(
         x_str_non_missing <- x[!is.na(x)]
 
         if (!is.null(label)) {
+
           if (rlang::is_function(label)) {
             label_str <- label(x_str_non_missing)
           } else {
             label_str <- label
           }
+
         } else {
 
-          if (any(grepl("\\[.*?\\]\\(.*?\\)", x_str_non_missing))) {
+          md_url_parsed <- parse_md_urls(text = x_str_non_missing)
 
-            # Generate labels
-            label_str <-
-              vapply(
-                x_str_non_missing,
-                FUN.VALUE = character(1),
-                USE.NAMES = FALSE,
-                FUN = function(x) {
-                  if (grepl("\\[.*?\\]\\(.*?\\)", x)) {
-                    out <- sub("\\[(.*?)\\]\\(.*?\\)", "\\1", x)
-                  } else {
-                    out <- x
-                  }
-                  out
-                }
-              )
-
-            # Generate href values
-            x_str_non_missing <-
-              vapply(
-                x_str_non_missing,
-                FUN.VALUE = character(1),
-                USE.NAMES = FALSE,
-                FUN = function(x) {
-                  if (grepl("\\[.*?\\]\\(.*?\\)", x)) {
-                    out <- sub("\\[.*?\\]\\((.*?)\\)", "\\1", x)
-                  } else {
-                    out <- x
-                  }
-                  out
-                }
-              )
-
-          } else {
-            label_str <- x_str_non_missing
-          }
-        }
-
-        add_anchor_attr <- function(
-            init = NULL,
-            arg,
-            nm,
-            values = NULL,
-            error_arg = rlang::caller_arg(arg),
-            error_call = rlang::caller_env()
-        ) {
-
-          if (!is.null(values)) {
-
-            arg <-
-              rlang::arg_match(
-                arg,
-                values = values,
-                error_arg = error_arg,
-                error_call = error_call
-              )
-          }
-
-          if (!rlang::is_string(arg)) {
-            cli::cli_abort(
-              "{.arg {nm}} must be a string, not {.obj_type_friendly {arg}}",
-              call = error_call
-            )
-          }
-
-          paste0(init, " ", nm, "=\"", arg, "\"")
+          x_str_non_missing <- md_url_parsed$href
+          label_str <- md_url_parsed$label
         }
 
         target <- target %||% "_blank"
@@ -9641,6 +9580,573 @@ fmt_url <- function(
     )
   )
 }
+
+parse_md_urls <- function(text) {
+
+  if (any(grepl("\\[.*?\\]\\(.*?\\)", text))) {
+
+    # Generate labels
+    label_str <-
+      vapply(
+        text,
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = function(x) {
+          if (grepl("\\[.*?\\]\\(.*?\\)", x)) {
+            out <- sub("\\[(.*?)\\]\\(.*?\\)", "\\1", x)
+          } else {
+            out <- x
+          }
+          out
+        }
+      )
+
+    # Generate href values
+    href_str <-
+      vapply(
+        text,
+        FUN.VALUE = character(1),
+        USE.NAMES = FALSE,
+        FUN = function(x) {
+          if (grepl("\\[.*?\\]\\(.*?\\)", x)) {
+            out <- sub("\\[.*?\\]\\((.*?)\\)", "\\1", x)
+          } else {
+            out <- x
+          }
+          out
+        }
+      )
+
+  } else {
+    href_str <- text
+    label_str <- text
+  }
+
+  list(
+    href = href_str,
+    label = label_str
+  )
+}
+
+add_anchor_attr <- function(
+    init = NULL,
+    arg,
+    nm,
+    values = NULL,
+    error_arg = rlang::caller_arg(arg),
+    error_call = rlang::caller_env()
+) {
+
+  if (!is.null(values)) {
+
+    arg <-
+      rlang::arg_match(
+        arg,
+        values = values,
+        error_arg = error_arg,
+        error_call = error_call
+      )
+  }
+
+  if (!rlang::is_string(arg)) {
+    cli::cli_abort(
+      "{.arg {nm}} must be a string, not {.obj_type_friendly {arg}}",
+      call = error_call
+    )
+  }
+
+  paste0(init, " ", nm, "=\"", arg, "\"")
+}
+
+#' Format email addresses to generate 'mailto:' links
+#'
+#' @description
+#'
+#' Should cells contain email addresses, the `fmt_email()` function can be used
+#' to make email addresses work well with email clients on the user system.
+#' This should be expressly used on columns that contain *only* email addresses
+#' (i.e., no email addresses as part of a larger block of text). Should you have
+#' such a column of data, there are options for how the email addresses should
+#' be styled. They can be of the conventional style (with underlines and text
+#' coloring that sets it apart from other text), or, they can appear to be
+#' button-like (with a surrounding box that can be filled with a color of your
+#' choosing).
+#'
+#' Email addresses in data cells are trusted as email addresses. We can also use
+#' labels with the `label` argument. Supplying a value there will use the same
+#' label for all email addresses but label values from an adjacent column could
+#' be used via a [from_column()] call within `label`.
+#'
+#' @inheritParams fmt_number
+#'
+#' @param label *Label for the email address*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   The visible 'label' to use for the email address. If `NULL` (the default)
+#'   the address itself will serve as the label. There are two non-`NULL`
+#'   options: (1) a piece of static text can be used for the label by providing
+#'   a string, and (2) a function can be provided to fashion a label from every
+#'   email address.
+#'
+#' @param as_button *Style email address as a button*
+#'
+#'   `scalar<logical>` // *default:* `FALSE`
+#'
+#'   An option to style the email address as a button. By default, this is
+#'   `FALSE`. If this option is chosen then the `button_fill` argument becomes
+#'   usable.
+#'
+#' @param color *Link color*
+#'
+#'   `scalar<character>` // *default:* `"auto"`
+#'
+#'   The color used for the resulting email address and its underline. This is
+#'   `"auto"` by default; this allows **gt** to choose an appropriate color
+#'   based on various factors (such as the background `button_fill` when
+#'   `as_button` is `TRUE`).
+#'
+#' @param show_underline *Show the link underline*
+#'
+#'   `scalar<character>|scalar<logical>` // *default:* `"auto"`
+#'
+#'   Should the email address be decorated with an underline? By default this is
+#'   `"auto"` which means that **gt** will choose `TRUE` when
+#'   `as_button = FALSE` and `FALSE` in the other case. The underline will be
+#'   the same color as that set in the `color` option.
+#'
+#' @param button_fill,button_width,button_outline *Button options*
+#'
+#'   `scalar<character>` // *default:* `"auto"`
+#'
+#'   Options for styling an email address as a button (and only applies if
+#'   `as_button = TRUE`). All of these options are by default set to `"auto"`,
+#'   allowing **gt** to choose appropriate fill, width, and outline values.
+#'
+#' @param target *The 'target' anchor element attribute*
+#'
+#'   `scalar<character>` // *default:* `NULL`
+#'
+#'   The anchor element 'target' attribute value. For a description of the
+#'   'target' attribute and its  allowed values, refer to the
+#'   [MDN Web Docs reference on the anchor HTML element](
+#'   https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#attributes).
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Compatibility of formatting function with data values:
+#'
+#' The `fmt_email()` formatting function is compatible with body cells that are
+#' of the `"character"` or `"factor"` types. Any other types of body cells are
+#' ignored during formatting. This is to say that cells of incompatible data
+#' types may be targeted, but there will be no attempt to format them.
+#'
+#' @section Targeting cells with `columns` and `rows`:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to target a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given formatting function
+#' will be skipped over, like `character` values and numeric `fmt_*()`
+#' functions. So it's safe to select all columns with a particular formatting
+#' function (only those values that can be formatted will be formatted), but,
+#' you may not want that. One strategy is to format the bulk of cell values with
+#' one formatting function and then constrain the columns for later passes with
+#' other types of formatting (the last formatting done to a cell is what you get
+#' in the final output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
+#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
+#' the input data (the indices won't necessarily match those of rearranged rows
+#' if row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector. This is nice if you want to base
+#' formatting on values in the column or another column, or, you'd like to use a
+#' more complex predicate expression.
+#'
+#' @section Compatibility of arguments with the `from_column()` helper function:
+#'
+#' The [from_column()] helper function can be used with certain arguments of
+#' `fmt_email()` to obtain varying parameter values from a specified column
+#' within the table. This means that each row could be formatted a little bit
+#' differently. These arguments provide support for [from_column()]:
+#'
+#' - `label`
+#' - `as_button`
+#' - `color`
+#' - `show_underline`
+#' - `button_fill`
+#' - `button_width`
+#' - `button_outline`
+#'
+#' Please note that for each of the aforementioned arguments, a [from_column()]
+#' call needs to reference a column that has data of the correct type (this is
+#' different for each argument). Additional columns for parameter values can be
+#' generated with the [cols_add()] function (if not already present). Columns
+#' that contain parameter data can also be hidden from final display with
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
+#' [from_column()] helper is applied so long as the arguments belong to this
+#' closed set.
+#'
+#' @family data formatting functions
+#' @section Function ID:
+#' 3-21
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @import rlang
+#' @export
+fmt_email <- function(
+    data,
+    columns = everything(),
+    rows = everything(),
+    label = NULL,
+    as_button = FALSE,
+    color = "auto",
+    show_underline = "auto",
+    button_fill = "auto",
+    button_width = "auto",
+    button_outline = "auto",
+    target = NULL
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - label
+  # - as_button
+  # - color
+  # - show_underline
+  # - button_fill
+  # - button_width
+  # - button_outline
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = "fmt_email",
+        all_args_except = c("data", "columns", "rows")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using the `resolve_vars` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_email(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          label = p_i$label %||% label,
+          as_button = p_i$as_button %||% as_button,
+          color = p_i$color %||% color,
+          show_underline = p_i$show_underline %||% show_underline,
+          button_fill = p_i$button_fill %||% button_fill,
+          button_width = p_i$button_width %||% button_width,
+          button_outline = p_i$button_outline %||% button_outline
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()` objects passed to compatible arguments
+  #
+
+  # Declare formatting function compatibility
+  compat <- c("character", "factor")
+
+  # In this case where strict mode is being used (with the option
+  # called "gt.strict_column_fmt"), stop the function if any of the
+  # resolved columns have data that is incompatible with this formatter
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = compat
+    )
+  ) {
+    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
+      cli::cli_abort(
+        "The `fmt_email()` function can only be used on `columns`
+      with character or factor data."
+      )
+    }
+  }
+
+  if (as_button) {
+
+    #
+    # All determinations of `color`, `show_underline`, `button_fill` and
+    # `button_width` for the case where `as_button = TRUE`; each of the
+    # above arguments are set to "auto" by default
+    #
+
+    # In the button case, we opt to never show an underline unless it's
+    # requested by the user (i.e., `show_underline = TRUE`)
+    if (show_underline == "auto") {
+      show_underline <- FALSE
+    }
+
+    if (button_width == "auto") {
+      button_width <- NULL
+    }
+
+    button_outline_color <- button_outline
+    button_outline_style <- "solid"
+    button_outline_width <- "2px"
+
+    # There are various combinations of "auto" or not with `button_fill` and
+    # `color` that need to be handled delicately so as to ensure contrast
+    # between foreground text and background fill is maximized
+    if (button_fill == "auto" && color == "auto") {
+
+      # Choose a fixed and standard color combination if both options are
+      # 'auto'; these will be 'steelblue' and 'white'
+      button_fill <- "#4682B4"
+      color <- "#FFFFFF"
+
+    } else if (button_fill == "auto" && color != "auto") {
+
+      # Case where text color is chosen but background is left to gt
+      # to determine; will either by light blue or dark blue based on the
+      # brightness of the text color (can be of poor contrast if user chooses
+      # a text color somewhere in the mid range of brightness, but nothing
+      # really can be done there to compensate)
+
+      # Ensure that the incoming `color` is transformed to hexadecimal form
+      color <- html_color(colors = color, alpha = NULL)
+
+      # Use `ideal_fgnd_color()` in a backwards manner only to see whether
+      # the proxy background color is light (#FFFFFF) or dark (#000000)
+      bgrnd_bw <-
+        ideal_fgnd_color(
+          bgnd_color = color,
+          algo = "apca"
+        )
+
+      if (bgrnd_bw == "#FFFFFF") {
+        # Background should be light so using 'lightblue'
+        button_fill <- "#ADD8E6"
+      } else {
+        # Background should be dark so using 'darkblue'
+        button_fill <- "#00008B"
+      }
+
+      if (button_outline == "auto") {
+        button_outline_color <- "#BEBEBE"
+        button_outline_style <- "none"
+      }
+
+    } else if (button_fill != "auto" && color == "auto") {
+
+      # Ensure that the incoming `button_fill` is transformed
+      # to hexadecimal form
+      button_fill <- html_color(colors = button_fill, alpha = NULL)
+
+      # Case where background color is chosen for foreground text color is
+      # not; this is the simple case where `ideal_fgnd_color()` is well suited
+      # to determine the text color (either black or white)
+      color <-
+        ideal_fgnd_color(
+          bgnd_color = button_fill,
+          algo = "apca"
+        )
+
+      if (button_outline == "auto") {
+
+        button_outline_color <- "#DFDFDF"
+
+        if (button_fill %in% c(
+          "#FFFFFF", "#FFFFFF", "#FAF5EF", "#FAFAFA",
+          "#FFFEFC", "#FBFCFA", "#FBFAF2"
+        )) {
+          button_outline_style <- "solid"
+        } else {
+          button_outline_style <- "none"
+        }
+      }
+    } else {
+
+      # Ensure that the incoming `color` is transformed to hexadecimal form
+      color <- html_color(colors = color, alpha = NULL)
+    }
+
+  } else {
+
+    if (show_underline == "auto") {
+      show_underline <- TRUE
+    }
+
+    if (color == "auto") {
+
+      color <- "#008B8B"
+
+    } else {
+
+      # Ensure that the incoming `color` is transformed to hexadecimal form
+      color <- html_color(colors = color, alpha = NULL)
+    }
+  }
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    fns = list(
+      html = function(x) {
+
+        # Generate an vector of empty strings that will eventually
+        # contain all of the link text
+        x_str <- character(length(x))
+
+        x_str_non_missing <- x[!is.na(x)]
+
+        if (!is.null(label)) {
+
+          if (rlang::is_function(label)) {
+            label_str <- label(x_str_non_missing)
+          } else {
+            label_str <- label
+          }
+
+        } else {
+          label_str <- x_str_non_missing
+        }
+
+        target <- target %||% "_blank"
+        target_values <- NULL
+
+        if (grepl("^_", target)) {
+          target_values <- c("_blank", "_self", "_parent", "_top")
+        }
+
+        anchor_attr <-
+          add_anchor_attr(
+            arg = target,
+            nm = "target",
+            values = target_values
+          )
+
+        if (target == "_blank") {
+
+          anchor_attr <-
+            add_anchor_attr(
+              anchor_attr,
+              arg = "noopener noreferrer",
+              nm = "rel"
+            )
+        }
+
+        anchor_attr <-
+          add_anchor_attr(
+            anchor_attr,
+            arg = paste0(
+              "color:", color[1], ";",
+              "text-decoration:",
+              if (show_underline) "underline" else "none", ";",
+              if (show_underline) "text-underline-position: under;" else NULL,
+              "display: inline-block;",
+              if (as_button) {
+                paste0(
+                  "background-color: ", button_fill, ";",
+                  "padding: 8px 12px;",
+                  if (!is.null(button_width)) {
+                    paste0("width: ", button_width, "; text-align: center;")
+                  } else {
+                    NULL
+                  },
+                  "outline-style: ", button_outline_style, "; ",
+                  "outline-color: ", button_outline_color, "; ",
+                  "outline-width: ", button_outline_width, ";"
+                )
+              } else {
+                NULL
+              }
+            ),
+            nm = "style"
+          )
+
+        x_str_non_missing <-
+          paste0(
+            "<span style=\"white-space: pre;\">",
+            "<a",
+            " href=\"mailto:", x_str_non_missing, "\"",
+            anchor_attr,
+            ">",
+            label_str,
+            "</a>",
+            "</span>"
+          )
+
+        x_str[!is.na(x)] <- x_str_non_missing
+        x_str[is.na(x)] <- NA_character_
+        x_str
+      },
+    latex = function(x) {
+      x
+    },
+    rtf = function(x) {
+      x
+    },
+    word = function(x) {
+      x
+    },
+    default = function(x) {
+      x
+    }
+    )
+  )
+}
+
+
+
+
+
+
 
 #' Format image paths to generate images in cells
 #'
@@ -9828,7 +10334,7 @@ fmt_url <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-21
+#' 3-22
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
@@ -10460,7 +10966,7 @@ get_image_hw_ratio <- function(filepath) {
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-22
+#' 3-23
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
@@ -10899,7 +11405,7 @@ fmt_flag <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-23
+#' 3-24
 #'
 #' @section Function Introduced:
 #' *In Development*
@@ -11460,7 +11966,7 @@ fmt_country <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-24
+#' 3-25
 #'
 #' @section Function Introduced:
 #' `v0.10.0` (October 7, 2023)
@@ -11905,7 +12411,7 @@ fmt_icon <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-25
+#' 3-26
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -12122,7 +12628,7 @@ fmt_markdown <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-26
+#' 3-27
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -12384,7 +12890,7 @@ fmt_passthrough <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-27
+#' 3-28
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
@@ -12703,7 +13209,7 @@ fmt_auto <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-28
+#' 3-29
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
