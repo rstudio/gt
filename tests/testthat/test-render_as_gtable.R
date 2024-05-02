@@ -42,7 +42,7 @@ test_that("gt_tbls can be rendered as a gtable", {
     tab_source_note("Source: the pizzaria") %>%
     tab_footnote("Pineapples not included")
 
-  gtable <- render_as_gtable(table)
+  gtable <- as_gtable(table)
 
   expect_snapshot(gtable$layout)
 
@@ -74,7 +74,7 @@ test_that("gtable widths are set appropriately", {
     )
 
   # Automatic width is width of the text + margins
-  test <- render_as_gtable(tbl, text_grob = dummy_text)
+  test <- as_gtable(tbl, text_grob = dummy_text)
 
   expect_equal(
     test$widths,
@@ -91,7 +91,7 @@ test_that("gtable widths are set appropriately", {
     tab_options(
       table.width = "80%"
     ) %>%
-    render_as_gtable(tbl, text_grob = dummy_text)
+    as_gtable(tbl, text_grob = dummy_text)
 
   cell_width <- grid::unit.pmax(
     grid::unit(100, "pt"),
@@ -114,7 +114,7 @@ test_that("gtable widths are set appropriately", {
       table.width = "80%",
       table.align = "left"
     ) %>%
-    render_as_gtable(tbl, text_grob = dummy_text)
+    as_gtable(tbl, text_grob = dummy_text)
 
   expect_equal(
     test$widths,
@@ -132,7 +132,7 @@ test_that("gtable widths are set appropriately", {
       table.margin.left = "5%",
       table.margin.right = "15%"
     ) %>%
-    render_as_gtable(tbl, text_grob = dummy_text)
+    as_gtable(tbl, text_grob = dummy_text)
 
   expect_equal(
     as.numeric(test$widths)[1] * 3,
