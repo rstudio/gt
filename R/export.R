@@ -1169,14 +1169,31 @@ as_word_tbl_body <- function(
 
 #' Transform a **gt** table to a `gtable` object
 #'
-#' Take a `gt_tbl` table and transform it to a `gtable`.
+#' @description
 #'
-#' @param data A table object that is created using the [gt()] function.
-#' @param plot A `logical(1)` whether the gtable should be rendered on the
-#'   graphics device.
-#' @param text_grob A `function` used to draw text. Defaults to
-#'   `grid::textGrob()`, but can be swapped to `gridtext::richtext_grob()` to
-#'   better render html content.
+#' The `as_gtable()` function performs the transformation of a `gt_tbl` object
+#' to a `gtable` object.
+#'
+#' @param data *The gt table data object*
+#'
+#'    `obj:<gt_tbl>` // **required**
+#'
+#'   This is the **gt** table object that is commonly created through use of the
+#'   [gt()] function.
+#'
+#' @param plot *Render through the graphics device?*
+#'
+#'   `scalar<logical>` // *default:* `FALSE`
+#'
+#'   The `plot` option determines whether the `gtable` object should be rendered
+#'   on the graphics device.
+#'
+#' @param text_grob
+#'
+#'   `function` // *default:* `grid::textGrob`
+#'
+#'   A `function` used to draw text. Defaults to `grid::textGrob()` but can be
+#'   swapped to `gridtext::richtext_grob()` to better render HTML content.
 #'
 #' @return A `gtable` object.
 #'
