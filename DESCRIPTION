@@ -124,7 +124,6 @@ Collate:
     'opts.R'
     'print.R'
     'reexports.R'
-    'render_as_gtable.R'
     'render_as_html.R'
     'render_as_i_html.R'
     'resolver.R'

@@ -308,6 +308,7 @@ reference:
     - as_latex
     - as_rtf
     - as_word
+    - as_gtable
     - extract_body
     - extract_summary
     - extract_cells
