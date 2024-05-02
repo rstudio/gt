@@ -98,7 +98,7 @@ extraction.
 
 \section{Function ID}{
 
-13-8
+13-9
 }
 
 \section{Function Introduced}{
@@ -108,6 +108,7 @@ extraction.
 
 \seealso{
 Other table export functions: 
+\code{\link{as_gtable}()},
 \code{\link{as_latex}()},
 \code{\link{as_raw_html}()},
 \code{\link{as_rtf}()},
