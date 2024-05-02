@@ -271,7 +271,7 @@ different \code{locale} values in separate calls of \code{fmt_country()}.
 
 \section{Function ID}{
 
-3-23
+3-24
 }
 
 \section{Function Introduced}{
@@ -291,6 +291,7 @@ Other data formatting functions:
 \code{\link{fmt_date}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_duration}()},
+\code{\link{fmt_email}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},
