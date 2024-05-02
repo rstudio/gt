@@ -30,7 +30,7 @@
 # A text label to display in the cell. Note that while the label can contain
 # html, it will not be rendered with markup unless the text grob function
 # supports it, for example when using gridtext as follows:
-# `render_as_gtable(..., text_grob = gridtext::richtext_grob)`
+# `as_gtable(..., text_grob = gridtext::richtext_grob)`
 #
 # classes <list of <character>>:
 # One or multiple class names equivalent to the html class attributes that will
