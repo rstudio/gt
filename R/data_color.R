@@ -678,7 +678,7 @@
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-34
+#' 3-35
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)

@@ -321,6 +321,7 @@ Other data formatting functions:
 \code{\link{fmt_currency}()},
 \code{\link{fmt_date}()},
 \code{\link{fmt_datetime}()},
+\code{\link{fmt_email}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},

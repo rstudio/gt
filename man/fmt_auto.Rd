@@ -164,7 +164,7 @@ scientific notation. This is done by using the \code{lg_num_pref = "suf"} option
 
 \section{Function ID}{
 
-3-27
+3-28
 }
 
 \section{Function Introduced}{
@@ -184,6 +184,7 @@ Other data formatting functions:
 \code{\link{fmt_date}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_duration}()},
+\code{\link{fmt_email}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},

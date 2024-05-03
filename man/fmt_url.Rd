@@ -57,8 +57,8 @@ need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 The visible 'label' to use for the link. If \code{NULL} (the default)
 the URL will serve as the label. There are two non-\code{NULL} options: (1) a
-static text can be used for the label by providing a string, and (2) a
-function can be provided to fashion a label from every URL.}
+piece of static text can be used for the label by providing a string, and
+(2) a function can be provided to fashion a label from every URL.}
 
 \item{as_button}{\emph{Style link as a button}
 
@@ -358,6 +358,7 @@ Other data formatting functions:
 \code{\link{fmt_date}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_duration}()},
+\code{\link{fmt_email}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},

@@ -433,7 +433,7 @@ each icon.
 
 \section{Function ID}{
 
-3-24
+3-25
 }
 
 \section{Function Introduced}{
@@ -454,6 +454,7 @@ Other data formatting functions:
 \code{\link{fmt_date}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_duration}()},
+\code{\link{fmt_email}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},

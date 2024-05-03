@@ -37,6 +37,7 @@ tests/testthat/test-fmt_bytes.R
 tests/testthat/test-fmt_currency.R
 tests/testthat/test-fmt_date_time.R
 tests/testthat/test-fmt_duration.R
+tests/testthat/test-fmt_email.R
 tests/testthat/test-fmt_engineering.R
 tests/testthat/test-fmt_flag.R
 tests/testthat/test-fmt_fraction.R
