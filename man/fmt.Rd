@@ -139,7 +139,7 @@ the column (\code{x}), multiply them by 1000, and exclose them in single quotes.
 
 \section{Function ID}{
 
-3-29
+3-30
 }
 
 \section{Function Introduced}{
@@ -175,6 +175,7 @@ Other data formatting functions:
 \code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
+\code{\link{fmt_tf}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt_units}()},
 \code{\link{fmt_url}()},

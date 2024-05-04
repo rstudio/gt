@@ -198,7 +198,7 @@ but rather \code{"<unit_1> <unit_2>^-1"}).
 
 \section{Function ID}{
 
-3-18
+3-19
 }
 
 \section{Function Introduced}{
@@ -235,6 +235,7 @@ Other data formatting functions:
 \code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
+\code{\link{fmt_tf}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt_url}()},
 \code{\link{sub_large_vals}()},
