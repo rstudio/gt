@@ -8399,6 +8399,121 @@ format_bins_by_context <- function(x, sep, fmt, context) {
   x_str
 }
 
+
+#' Format `TRUE` and `FALSE` values
+#'
+#' @description
+#'
+#' Format logical values in a **gt** table.
+#'
+#' @inheritParams fmt_number
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @family data formatting functions
+#' @section Function ID:
+#' 3-18
+#'
+#' @section Function Introduced:
+#' `v0.10.0` (October 7, 2023)
+#'
+#' @import rlang
+#' @export
+fmt_tf <- function(
+    data,
+    columns = everything(),
+    rows = everything(),
+    tf_style = "true-false",
+    use_na_neutral = TRUE,
+    pattern = "{x}",
+    true_val = NULL,
+    false_val = NULL,
+    na_val = NULL,
+    locale = NULL
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  # Declare formatting function compatibility
+  compat <- "logical"
+
+  # In this case where strict mode is being used (with the option
+  # called "gt.strict_column_fmt"), stop the function if any of the
+  # resolved columns have data that is incompatible with this formatter
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = compat
+    )
+  ) {
+    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
+      cli::cli_abort(
+        "The `fmt_tf()` function can only be used on `columns`
+      with logical data."
+      )
+    }
+  }
+
+  tf_vals_vec <- get_tf_format(tf_style = tf_style)
+
+  true_val <- true_val %||% tf_vals_vec[1]
+  false_val <- false_val %||% tf_vals_vec[2]
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    fns = list(
+      html = function(x) {
+        format_tf_by_context(
+          x,
+          true_val = true_val,
+          false_val = false_val,
+          na_val = na_val,
+          context = "html")
+      },
+      latex = function(x) {
+        format_tf_by_context(x, context = "latex")
+      },
+      rtf = function(x) {
+        format_tf_by_context(x, context = "rtf")
+      },
+      word = function(x) {
+        format_tf_by_context(x, context = "word")
+      },
+      default = function(x) {
+        format_tf_by_context(x, context = "plain")
+      }
+    )
+  )
+}
+
+format_tf_by_context <- function(
+    x,
+    true_val,
+    false_val,
+    na_val,
+    context
+) {
+
+  # Generate an vector of empty strings that will eventually
+  # contain all of the text values
+  x_str <- character(length(x))
+
+  x_str_non_missing <- x[!is.na(x)]
+
+  x_str_non_missing[x_str_non_missing == TRUE] <- true_val
+  x_str_non_missing[x_str_non_missing == FALSE] <- false_val
+
+  x_str[!is.na(x)] <- x_str_non_missing
+  x_str[is.na(x)] <- na_val %||% NA_character_
+  x_str
+}
+
 #' Format measurement units
 #'
 #' @description
@@ -8560,7 +8675,7 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-18
+#' 3-19
 #'
 #' @section Function Introduced:
 #' `v0.10.0` (October 7, 2023)
@@ -8803,7 +8918,7 @@ fmt_units <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-19
+#' 3-20
 #'
 #' @section Function Introduced:
 #' **In Development**
@@ -9208,7 +9323,7 @@ format_units_by_context <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-20
+#' 3-21
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
@@ -9807,7 +9922,7 @@ add_anchor_attr <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-21
+#' 3-22
 #'
 #' @section Function Introduced:
 #' *In Development*
@@ -10418,7 +10533,7 @@ generate_email_links <- function(email_address, anchor_attr, label_str) {
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-22
+#' 3-23
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
@@ -11050,7 +11165,7 @@ get_image_hw_ratio <- function(filepath) {
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-23
+#' 3-24
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
@@ -11489,7 +11604,7 @@ fmt_flag <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-24
+#' 3-25
 #'
 #' @section Function Introduced:
 #' *In Development*
@@ -12050,7 +12165,7 @@ fmt_country <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-25
+#' 3-26
 #'
 #' @section Function Introduced:
 #' `v0.10.0` (October 7, 2023)
@@ -12495,7 +12610,7 @@ fmt_icon <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-26
+#' 3-27
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -12712,7 +12827,7 @@ fmt_markdown <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-27
+#' 3-28
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -12974,7 +13089,7 @@ fmt_passthrough <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-28
+#' 3-29
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
@@ -13293,7 +13408,7 @@ fmt_auto <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-29
+#' 3-30
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
