@@ -8516,6 +8516,22 @@ format_tf_by_context <- function(
 
   x_str_non_missing <- x[!is.na(x)]
 
+  if (true_val %in% tf_formats_icons()) {
+
+    if (true_val == ":checkmark:") {
+      true_val <- "<span style=\"color:green;\">\U02714</span>"
+      false_val <- "<span style=\"color:red;\">\U02718</span>"
+    }
+    if (true_val == ":thumbs:") {
+      true_val <- "\U1F44D"
+      false_val <- "\U1F44E"
+    }
+    if (true_val == ":circles:") {
+      true_val <- "<span>\U0025CF</span>"
+      false_val <- "<span>\U002B58</span>"
+    }
+  }
+
   x_str_non_missing[x_str_non_missing == TRUE] <- true_val
   x_str_non_missing[x_str_non_missing == FALSE] <- false_val
 
