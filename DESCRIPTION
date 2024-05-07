@@ -65,6 +65,7 @@ Suggests:
     paletteer,
     RColorBrewer,
     rmarkdown (>= 2.20),
+    rsvg,
     rvest,
     shiny (>= 1.7.4),
     testthat (>= 3.1.9),
