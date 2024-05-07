@@ -8484,19 +8484,44 @@ fmt_tf <- function(
           true_val = true_val,
           false_val = false_val,
           na_val = na_val,
-          context = "html")
+          context = "html"
+        )
       },
       latex = function(x) {
-        format_tf_by_context(x, context = "latex")
+        format_tf_by_context(
+          x,
+          true_val = true_val,
+          false_val = false_val,
+          na_val = na_val,
+          context = "latex"
+        )
       },
       rtf = function(x) {
-        format_tf_by_context(x, context = "rtf")
+        format_tf_by_context(
+          x,
+          true_val = true_val,
+          false_val = false_val,
+          na_val = na_val,
+          context = "rtf"
+        )
       },
       word = function(x) {
-        format_tf_by_context(x, context = "word")
+        format_tf_by_context(
+          x,
+          true_val = true_val,
+          false_val = false_val,
+          na_val = na_val,
+          context = "word"
+        )
       },
       default = function(x) {
-        format_tf_by_context(x, context = "plain")
+        format_tf_by_context(
+          x,
+          true_val = true_val,
+          false_val = false_val,
+          na_val = na_val,
+          context = "plain"
+        )
       }
     )
   )
