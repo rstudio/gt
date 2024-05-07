@@ -1109,6 +1109,11 @@ parse_fontsize <- function(size, base) {
     new_size[pct] <- as.numeric(gsub("\\%$", "", size[pct])) / 100 * base
   }
 
+  em <- grep("em$", size)
+  if (length(em) > 0) {
+    new_size[em] <- as.numeric(gsub("rem$|em$", "", size[em])) * base
+  }
+
   # Parse pixels
   px <- grep("px$", size)
   if (length(px) > 0) {
