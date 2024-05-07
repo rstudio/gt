@@ -841,24 +841,13 @@ render_grid_cell <- function(
   height <- 0
 
   if (nzchar(label)) {
-    hjust <- style$hjust %||% 0
-    vjust <- style$vjust %||% 0
 
-    x <- (1 - hjust) * margin[4] - hjust * margin[2]
-    y <- (1 - vjust) * margin[3] - vjust * margin[1]
-    x <- grid::unit(hjust, "npc") + x
-    y <- grid::unit(vjust, "npc") + y
+      content <- render_grid_text(label, style, margin, text_grob)
 
-    text <- text_grob(
-      label, x = x, y = y,
-      hjust = hjust, vjust = vjust,
-      gp = style$text_gp
-    )
+    width  <- grid_width(content)  + sum(grid_width(margin[c(2, 4)]))
+    height <- grid_height(content) + sum(grid_height(margin[c(1, 3)]))
 
-    width  <- grid_width(text)  + sum(grid_width(margin[c(2, 4)]))
-    height <- grid_height(text) + sum(grid_height(margin[c(1, 3)]))
-
-    grobs <- c(grobs, list(text))
+    grobs <- c(grobs, list(content))
   }
 
   if (sum(lengths(style$cell_gp))) {
@@ -886,6 +875,21 @@ render_grid_cell <- function(
   )
 }
 
+render_grid_text <- function(label, style, margin, text_grob) {
+  hjust <- style$hjust %||% 0
+  vjust <- style$vjust %||% 0
+
+  x <- (1 - hjust) * margin[4] - hjust * margin[2]
+  y <- (1 - vjust) * margin[3] - vjust * margin[1]
+  x <- grid::unit(hjust, "npc") + x
+  y <- grid::unit(vjust, "npc") + y
+
+  text_grob(
+    label, x = x, y = y,
+    hjust = hjust, vjust = vjust,
+    gp = style$text_gp
+  )
+}
 # This is just a data.frame wrapper to set standard columns for the layout.
 grid_layout <- function(left, right = left, top, bottom = top, label,
                         classes, style, name) {
