@@ -399,8 +399,15 @@ get_tf_format <- function(tf_style, locale) {
 
   if (tf_format_tbl_i[["localized"]]) {
 
-    # TODO: use `locale` value to get localized strings
-    return(unlist(tf_format_tbl_i[["characters"]]))
+    # Obtain the row indices for the correct pair of complementary values
+    # from the `tf_words` table
+    tf_words_tbl_i <- tf_format_tbl_i[["idx"]][[1]]
+
+    # Use the `locale` value to get the two localized strings
+    true_str <- tf_words[tf_words_tbl_i[1], ][[locale]]
+    false_str <- tf_words[tf_words_tbl_i[2], ][[locale]]
+
+    return(c(true_str, false_str))
 
   } else {
     return(unlist(tf_format_tbl_i[["characters"]]))
