@@ -229,10 +229,14 @@ tf_formats <- function() {
     "1",	           "true-false",   NA,              TRUE,        c(1, 2),
     "2",	           "yes-no",       NA,              TRUE,        c(3, 4),
     "3",	           "up-down",      NA,              TRUE,        c(5, 6),
-    "4",             "checkboxes",   ":checkboxes:",  FALSE,       NA,
+    "4",             "check-mark",   ":checkmark:",   FALSE,       NA,
     "5",             "thumbs",       ":thumbs:",      FALSE,       NA,
     "6",             "circles",      ":circles:",     FALSE,       NA,
   )
+}
+
+tf_formats_icons <- function() {
+  as.character(na.omit(tf_formats()[, "characters"][[1]]))
 }
 
 #' Transform a `date_style` to a `date_format`
