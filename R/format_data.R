@@ -8438,6 +8438,17 @@ fmt_tf <- function(
   # Declare formatting function compatibility
   compat <- "logical"
 
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
+  locale <- resolve_locale(data = data, locale = locale)
+
+  # If `locale` is NULL then use the 'en' locale
+  if (is.null(locale)) {
+    locale <- "en"
+  }
+
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
@@ -8456,7 +8467,7 @@ fmt_tf <- function(
     }
   }
 
-  tf_vals_vec <- get_tf_format(tf_style = tf_style)
+  tf_vals_vec <- get_tf_format(tf_style = tf_style, locale = locale)
 
   true_val <- true_val %||% tf_vals_vec[1]
   false_val <- false_val %||% tf_vals_vec[2]

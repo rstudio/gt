@@ -225,13 +225,13 @@ time_formats <- function() {
 tf_formats <- function() {
 
   dplyr::tribble(
-    ~format_number,  ~format_name,      ~characters,         ~localized,
-    "1",	           "true-false",      c("true", "false"),  TRUE,
-    "2",	           "yes-no",          c("yes", "no"),      TRUE,
-    "3",             "arrow-icons",     c("up", "down"),     FALSE,
-    "4",             "triangle-icons",  c("up", "down"),     FALSE,
-    "5",             "checkbox-icons",  c("up", "down"),     FALSE,
-    "6",             "thumbs-icons",    c("up", "down"),     FALSE
+    ~format_number,  ~format_name,   ~characters,     ~localized,  ~idx,
+    "1",	           "true-false",   NA,              TRUE,        c(1, 2),
+    "2",	           "yes-no",       NA,              TRUE,        c(3, 4),
+    "3",	           "up-down",      NA,              TRUE,        c(5, 6),
+    "4",             "checkboxes",   ":checkboxes:",  FALSE,       NA,
+    "5",             "thumbs",       ":thumbs:",      FALSE,       NA,
+    "6",             "circles",      ":circles:",     FALSE,       NA,
   )
 }
 
