@@ -842,7 +842,11 @@ render_grid_cell <- function(
 
   if (nzchar(label)) {
 
+    if (grepl("<svg.*>.*</svg>", label)) {
+      content <- render_grid_svg(label, style, margin)
+    } else {
       content <- render_grid_text(label, style, margin, text_grob)
+    }
 
     width  <- grid_width(content)  + sum(grid_width(margin[c(2, 4)]))
     height <- grid_height(content) + sum(grid_height(margin[c(1, 3)]))
@@ -890,6 +894,91 @@ render_grid_text <- function(label, style, margin, text_grob) {
     gp = style$text_gp
   )
 }
+
+render_grid_svg <- function(label, style, margin) {
+
+  svg_string <- regexpr("<svg(.*?)>.*</svg>", label) %>%
+    regmatches(x = label) %>%
+    gsub(pattern = "\n", replacement = "") %>%
+    trimws()
+
+  svg_style <- regexpr("style=\"(.*?)\"", svg_string) %>%
+    regmatches(x = svg_string) %>%
+    gsub(pattern = "^style=\"|\"$", replacement = "") %>%
+    strsplit(";") %>%
+    unlist() %>%
+    trimws()
+
+  width <- height <- NULL
+
+  # Try if any height is declared in style attribute
+  if (any(grepl("^height:", svg_style))) {
+    height <- gsub("^height:", "", svg_style[grep("^height:", svg_style)]) %>%
+      parse_fontsize(style$text_gp$fontsize) %>%
+      unit(.grid_unit)
+  }
+
+  # Try if any width is declared in style attribute
+  if (any(grepl("^width:", svg_style))) {
+    width <- gsub("^width:", "", svg_style[grep("^width:", svg_style)]) %>%
+      parse_fontsize(style$text_gp$fontsize) %>%
+      unit(.grid_unit)
+  }
+
+  # If style attribute was incomplete; try to derive width/height from viewbox
+  if (is.null(width) || is.null(height)) {
+    viewbox <- regexpr("viewBox=\"(.*?)\"", svg_string) %>%
+      regmatches(x = svg_string) %>%
+      gsub(pattern = "^viewBox=\"|\"$", replacement = "") %>%
+      strsplit(" ") %>%
+      unlist() %>%
+      as.numeric()
+    dx <- abs(diff(range(viewbox[c(1, 3)])))
+    dy <- abs(diff(range(viewbox[c(2, 4)])))
+    asp <- dy / dx
+
+    # If one of height/width is known, set other based on aspect ratio
+    if (is.null(height) & !is.null(width)) {
+      height <- width * asp
+    } else if (!is.null(height)) {
+      width  <- height / asp
+    } else {
+      # Interpret view box as pixels
+      width  <- unit(dx * 0.75, "pt")
+      height <- unit(dy * 0.75, "pt")
+    }
+  }
+
+  hjust <- style$hjust %||% 0
+  vjust <- style$vjust %||% 0
+
+  x <- (1 - hjust) * margin[4] - hjust * margin[2]
+  y <- (1 - vjust) * margin[3] - vjust * margin[1]
+  x <- grid::unit(hjust, "npc") + x
+  y <- grid::unit(vjust, "npc") + y
+
+  w <- ceiling(convertUnit(width,  "in", valueOnly = TRUE) * 300)
+  h <- ceiling(convertUnit(height, "in", valueOnly = TRUE) * 300)
+
+  raster <- try_fetch(
+    {
+      svg_string %>%
+        charToRaw() %>%
+        rsvg::rsvg_nativeraster(width = w) %>%
+        grid::rasterGrob(
+          width = width, height = height,
+          x = x, y = y, hjust = hjust, vjust = vjust
+        )
+    },
+    error = function(...) grid::rasterGrob(
+      NA, width = unit(0, .grid_unit), height = unit(0, .grid_unit)
+    )
+  )
+
+  raster
+
+}
+
 # This is just a data.frame wrapper to set standard columns for the layout.
 grid_layout <- function(left, right = left, top, bottom = top, label,
                         classes, style, name) {
