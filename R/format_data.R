@@ -8587,7 +8587,7 @@ fmt_tf <- function(
   stop_if_not_gt_tbl(data = data)
 
   # Declare formatting function compatibility
-  compat <- "logical"
+  compat <- c("logical", "numeric")
 
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
