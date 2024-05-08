@@ -243,6 +243,10 @@ tf_formats_icons <- function() {
   as.character(na.omit(tf_formats()[, "characters"][[1]]))
 }
 
+tf_formats_text <- function() {
+  c("true-false", "yes-no", "up-down")
+}
+
 #' Transform a `date_style` to a `date_format`
 #'
 #' @noRd
