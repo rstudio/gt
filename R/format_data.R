@@ -8423,6 +8423,66 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #'
 #' @inheritParams fmt_number
 #'
+#' @param tf_style *Predefined style for `TRUE`/`FALSE` formatting*
+#'
+#'   `scalar<character>|scalar<numeric|integer>(1<=val<=10)` // *default:* `"true-false"`
+#'
+#'   The `TRUE`/`FALSE` mapping style to use. By default this is the short name
+#'   `"true-false"` which corresponds to the words 'true' and 'false'. Two other
+#'   `tf_style` values produce words: `"yes-no"` and `"up-down"`. All three of
+#'   these options for `tf_style` are locale-aware through the `locale` option,
+#'   so, a `"yes"` value will instead be `"ja"` when `locale = "de"`. Options
+#'   4 through to 10 involve pairs of symbols (e.g., `"check-mark"` displays
+#'   a check mark for `TRUE` and an X symbol for `FALSE`).
+#'
+#' @param auto_align *Automatic alignment of the formatted column*
+#'
+#'   `scalar<logical>` // *default:* `TRUE`
+#'
+#'   The input values may have resulted in an alignment that is not as suitable
+#'   once formatting has occurred. With `auto_align = TRUE`, the formatted
+#'   values will be inspected and this may result in a favorable change in
+#'   alignment. Typically, symbols will be center aligned whereas words will
+#'   receive a left alignment (for words in LTR languages).
+#'
+#' @param true_val *Text to use for `TRUE` values*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   While the choice of a `tf_style` will typically supply the `true_val` and
+#'   `false_val` text, we could override this and supply text for any `TRUE`
+#'   values.  This doesn't need to be used in conjunction with `false_val`.
+#'
+#' @param false_val *Text to use for `FALSE` values*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   While the choice of a `tf_style` will typically supply the `true_val` and
+#'   `false_val` text, we could override this and supply text for any `FALSE`
+#'   values. This doesn't need to be used in conjunction with `true_val`.
+#'
+#' @param na_val *Text to use for `NA` values*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   None of the `tf_style` presets will replace any missing values encountered
+#'   in the targeted cells. While we always have the option to use
+#'   [sub_missing()] for `NA` replacement, we have the opportunity to do that
+#'   here with the `na_val` option. This is useful because we also have the
+#'   means to add color to the `na_val` text or symbol and doing that requires
+#'   that a replacement value for `NA`s is specified here.
+#'
+#' @param colors *Colors to use for the resulting strings or symbols*
+#'
+#'   `vector<character>` // *default:* `NULL` (`optional`)
+#'
+#'   Providing a vector of color values to `colors` will progressively add color
+#'   to the formatted result depending on the number of colors provided. With a
+#'   single color, all formatted values will be in that color. Giving two colors
+#'   results in `TRUE` values being the first color, and `FALSE` values
+#'   receiving the second. With the three color option, the final color will be
+#'   given to any `NA` values replaced through `na_val`.
+#'
 #' @return An object of class `gt_tbl`.
 #'
 #' @family data formatting functions
