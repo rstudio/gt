@@ -8404,7 +8404,22 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #'
 #' @description
 #'
-#' Format logical values in a **gt** table.
+#' There can be times where logical values are useful in a **gt** table. You
+#' might want to express a 'yes' or 'no', a 'true' or 'false', or, perhaps use
+#' pairings of complementary symbols that make sense in a table. The `fmt_tf()`
+#' function has a set of `tf_style` presets that can be used to quickly map
+#' `TRUE`/`FALSE` values to strings (which are automatically translated
+#' according to a given `locale` value), or, symbols like up/down or left/right
+#' arrows and open/closed shapes.
+#'
+#' While the presets are nice, you can provide your own mappings through the
+#' `true_val` and `false_val` arguments. With those you could provide text
+#' (perhaps a Unicode symbol?) or even a **fontawesome** icon by using
+#' `fontawesome::fa("<icon name>")`. The function will automatically handle
+#' alignment when `auto_align = TRUE` and try to give you the best look
+#' depending on the options chosen. For extra customization, you can also apply
+#' color to the individual `TRUE`, `FALSE`, and `NA` mappings. Just supply
+#' a vector of colors (up to a length of 3) to the `colors` argument.
 #'
 #' @inheritParams fmt_number
 #'
