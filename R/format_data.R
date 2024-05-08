@@ -8618,7 +8618,8 @@ fmt_tf <- function(
     }
   }
 
-  tf_vals_vec <- get_tf_format(tf_style = tf_style, locale = locale)
+  # Obtain the vector of `TRUE`/`FALSE` text values
+  tf_vals_vec <- get_tf_vals(tf_style = tf_style, locale = locale)
 
   true_val <- true_val %||% tf_vals_vec[1]
   false_val <- false_val %||% tf_vals_vec[2]
