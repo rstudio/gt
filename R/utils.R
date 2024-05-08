@@ -409,7 +409,7 @@ get_tf_vals <- function(tf_style, locale) {
   # Obtain the correct tf format directive
   tf_format_tbl_i <- tf_format_tbl[tf_style, ]
 
-  if (tf_format_tbl_i[["localized"]]) {
+  if (tf_format_tbl_i[["format_name"]] %in% tf_formats_text()) {
 
     # Obtain the row indices for the correct pair of complementary values
     # from the `tf_words` table
