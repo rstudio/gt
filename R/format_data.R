@@ -8524,6 +8524,31 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #' formatting on values in the column or another column, or, you'd like to use a
 #' more complex predicate expression.
 #'
+#' @section Formatting with the `tf_style` argument:
+#'
+#' We can supply a preset `TRUE`/`FALSE` style to the `tf_style` argument to
+#' handle the formatting of logical values. There are several such styles and
+#' the first three of them can handle localization to any supported locale
+#' (i.e., the pairs of words for each style will be translated to the language
+#' of the `locale`) value.
+#'
+#' The following table provides a listing of all valid `tf_style` values and a
+#' description of their output values. The output from styles `4` to `10` are
+#' described in terms of the Unicode character names used for the `TRUE` and
+#' `FALSE` values.
+#'
+#' |    | TF Style      | Output (for `TRUE` and `FALSE`)                 |
+#' |----|---------------|-------------------------------------------------|
+#' | 1  | `"true-false"`| `"true"`, `"false"` (`locale`-aware)            |
+#' | 2  | `"yes-no"`    | `"yes"`, `"no"` (`locale`-aware)                |
+#' | 3  | `"up-down"`   | `"up"`, `"down"` (`locale`-aware)               |
+#' | 4  | `"check-mark"`| `<Heavy Check Mark>`, `<Heavy Ballot X>`        |
+#' | 5  | `"circles"`   | `<Black Circle>`, `<Heavy Circle>`              |
+#' | 6  | `"squares"`   | `<Black Square>`,  `<White Square>`             |
+#' | 7  | `"diamonds"`  | `<Black Diamond>`, `<White Diamond>`            |
+#' | 8  | `"arrows"`    | `<Upwards Arrow>`, `<Downwards Arrow>`          |
+#' | 9  | `"triangles"` | `<Black Up-Pointing Triangle>`, `<Black Down-Pointing Triangle>`|
+#' | 10 | `"triangles-lr"`| `<Heavy Check Mark>`, `<Heavy Ballot X>`      |
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-18
