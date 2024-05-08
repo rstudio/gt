@@ -897,6 +897,11 @@ render_grid_text <- function(label, style, margin, text_grob) {
 
 render_grid_svg <- function(label, style, margin) {
 
+  # Delete title
+  # Titles may contain contain html that cannot be interpreted by rsvg,
+  # and they cannot be displayed interactively in {grid} anyway.
+  label <- gsub("<title(.*?)</title>", "", label)
+
   svg_string <- regexpr("<svg(.*?)>.*</svg>", label) %>%
     regmatches(x = label) %>%
     gsub(pattern = "\n", replacement = "") %>%
@@ -942,18 +947,16 @@ render_grid_svg <- function(label, style, margin) {
         # Try extract width from tag
         w <- regexpr("width=(.*?) ", svg_tag) %>%
           regmatches(x = svg_tag)
-        w <- regexpr("\\d+", w) %>%
+        viewbox[3] <- regexpr("\\d+", w) %>%
           regmatches(x = w) %>%
           as.numeric()
-        viewbox[3] <- w
 
         # Try extract height from tag
         h <- regexpr("height=(.*?) ", svg_tag) %>%
           regmatches(x = svg_tag)
-        h <- regexpr("\\d+", h) %>%
+        viewbox[4] <- regexpr("\\d+", h) %>%
           regmatches(x = h) %>%
           as.numeric()
-        viewbox[4] <- h
 
       } else {
         viewbox <- c(0, 0, 20, 20)
