@@ -915,14 +915,14 @@ render_grid_svg <- function(label, style, margin) {
   if (any(grepl("^height:", svg_style))) {
     height <- gsub("^height:", "", svg_style[grep("^height:", svg_style)]) %>%
       parse_fontsize(style$text_gp$fontsize) %>%
-      unit(.grid_unit)
+      grid::unit(.grid_unit)
   }
 
   # Try if any width is declared in style attribute
   if (any(grepl("^width:", svg_style))) {
     width <- gsub("^width:", "", svg_style[grep("^width:", svg_style)]) %>%
       parse_fontsize(style$text_gp$fontsize) %>%
-      unit(.grid_unit)
+      grid::unit(.grid_unit)
   }
 
   # If style attribute was incomplete; try to derive width/height from viewbox
@@ -944,8 +944,8 @@ render_grid_svg <- function(label, style, margin) {
       width  <- height / asp
     } else {
       # Interpret view box as pixels
-      width  <- unit(dx * 0.75, "pt")
-      height <- unit(dy * 0.75, "pt")
+      width  <- grid::unit(dx * 0.75, "pt")
+      height <- grid::unit(dy * 0.75, "pt")
     }
   }
 
@@ -957,8 +957,7 @@ render_grid_svg <- function(label, style, margin) {
   x <- grid::unit(hjust, "npc") + x
   y <- grid::unit(vjust, "npc") + y
 
-  w <- ceiling(convertUnit(width,  "in", valueOnly = TRUE) * 300)
-  h <- ceiling(convertUnit(height, "in", valueOnly = TRUE) * 300)
+  w <- ceiling(grid::convertUnit(width,  "in", valueOnly = TRUE) * 300)
 
   raster <- try_fetch(
     {
@@ -970,9 +969,10 @@ render_grid_svg <- function(label, style, margin) {
           x = x, y = y, hjust = hjust, vjust = vjust
         )
     },
-    error = function(...) grid::rasterGrob(
-      NA, width = unit(0, .grid_unit), height = unit(0, .grid_unit)
-    )
+    error = function(...) {
+      zero <- grid::unit(0, .grid_unit)
+      grid::rasterGrob(NA, width = zero, height = zero)
+    }
   )
 
   raster
