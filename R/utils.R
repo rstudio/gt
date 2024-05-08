@@ -392,7 +392,7 @@ get_tf_vals <- function(tf_style, locale) {
     }
   }
 
-  # Stop function if a character-based `time_style` value is invalid
+  # Stop function if a character-based `tf_style` value is invalid
   if (is.character(tf_style)) {
 
     if (!(tf_style %in% tf_format_tbl$format_name)) {
