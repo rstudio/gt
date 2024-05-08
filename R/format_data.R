@@ -8560,6 +8560,43 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #' `locale` argument). As a useful reference on which locales are supported, we
 #' can use the [info_locales()] function to view an info table.
 #'
+#' @section Examples:
+#'
+#' Let's use a subset of the [`sp500`] dataset to create a small **gt** table
+#' containing opening and closing price data for a week in 2013. We can add
+#' a logical column (`dir`) with the [cols_add()] function; the expression used
+#' determines whether the `close` value is greater than the `open` value. That
+#' new column is inserted between `open` and `close`. Then, we use the
+#' `fmt_tf()` function to generate up and down arrows in the `dir` column. We
+#' elect to use green upward arrows and red downward arrows (through the
+#' `colors` option). With a little numeric formatting and changes to the column
+#' labels, the table becomes more presentable.
+#'
+#' ```r
+#' sp500 |>
+#'   dplyr::filter(date >= "2013-01-07" & date <= "2013-01-12") |>
+#'   dplyr::arrange(date) |>
+#'   dplyr::select(-c(adj_close, volume, high, low)) |>
+#'   gt(rowname_col = "date") |>
+#'   cols_add(dir = close > open, .after = open) |>
+#'   fmt_tf(
+#'     columns = dir,
+#'     tf_style = "arrows",
+#'     colors = c("green", "red")
+#'   ) |>
+#'   fmt_currency(columns = c(open, close)) |>
+#'   cols_label(
+#'     open = "Opening",
+#'     close = "Closing",
+#'     dir = ""
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_tf_1.png")`
+#' }}
+#'
+#'
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-18
