@@ -230,6 +230,43 @@ settable there as a value received by all other functions that have a
 can use the \code{\link[=info_locales]{info_locales()}} function to view an info table.
 }
 
+\section{Examples}{
+
+
+Let's use a subset of the \code{\link{sp500}} dataset to create a small \strong{gt} table
+containing opening and closing price data for a week in 2013. We can add
+a logical column (\code{dir}) with the \code{\link[=cols_add]{cols_add()}} function; the expression used
+determines whether the \code{close} value is greater than the \code{open} value. That
+new column is inserted between \code{open} and \code{close}. Then, we use the
+\code{fmt_tf()} function to generate up and down arrows in the \code{dir} column. We
+elect to use green upward arrows and red downward arrows (through the
+\code{colors} option). With a little numeric formatting and changes to the column
+labels, the table becomes more presentable.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
+  dplyr::filter(date >= "2013-01-07" & date <= "2013-01-12") |>
+  dplyr::arrange(date) |>
+  dplyr::select(-c(adj_close, volume, high, low)) |>
+  gt(rowname_col = "date") |>
+  cols_add(dir = close > open, .after = open) |>
+  fmt_tf(
+    columns = dir,
+    tf_style = "arrows",
+    colors = c("green", "red")
+  ) |>
+  fmt_currency(columns = c(open, close)) |>
+  cols_label(
+    open = "Opening",
+    close = "Closing",
+    dir = ""
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_tf_1.png" alt="This image of a table was generated from the first code example in the `fmt_tf()` help file." style="width:100\%;">
+}}
+}
+
 \section{Function ID}{
 
 3-18
