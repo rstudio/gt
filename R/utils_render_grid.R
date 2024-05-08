@@ -925,14 +925,41 @@ render_grid_svg <- function(label, style, margin) {
       grid::unit(.grid_unit)
   }
 
-  # If style attribute was incomplete; try to derive width/height from viewbox
   if (is.null(width) || is.null(height)) {
+    # If style attribute was incomplete; try to derive width/height from viewbox
     viewbox <- regexpr("viewBox=\"(.*?)\"", svg_string) %>%
       regmatches(x = svg_string) %>%
       gsub(pattern = "^viewBox=\"|\"$", replacement = "") %>%
       strsplit(" ") %>%
       unlist() %>%
       as.numeric()
+
+    if (length(viewbox) != 4) {
+      viewbox <- c(0, 0, 0, 0)
+      svg_tag <- regexpr("^<svg(.*?)>", svg_string) %>%
+        regmatches(x = svg_string)
+      if (grepl("width", svg_tag) & grepl("height", svg_tag)) {
+        # Try extract width from tag
+        w <- regexpr("width=(.*?) ", svg_tag) %>%
+          regmatches(x = svg_tag)
+        w <- regexpr("\\d+", w) %>%
+          regmatches(x = w) %>%
+          as.numeric()
+        viewbox[3] <- w
+
+        # Try extract height from tag
+        h <- regexpr("height=(.*?) ", svg_tag) %>%
+          regmatches(x = svg_tag)
+        h <- regexpr("\\d+", h) %>%
+          regmatches(x = h) %>%
+          as.numeric()
+        viewbox[4] <- h
+
+      } else {
+        viewbox <- c(0, 0, 20, 20)
+      }
+    }
+
     dx <- abs(diff(range(viewbox[c(1, 3)])))
     dy <- abs(diff(range(viewbox[c(2, 4)])))
     asp <- dy / dx
