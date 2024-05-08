@@ -366,7 +366,7 @@ get_time_format <- function(time_style) {
 #' Transform a `tf_style` to a vector of values
 #'
 #' @noRd
-get_tf_format <- function(tf_style, locale) {
+get_tf_vals <- function(tf_style, locale) {
 
   tf_format_tbl <- tf_formats()
   tf_format_num_range <- seq_len(nrow(tf_format_tbl))
