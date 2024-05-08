@@ -1324,6 +1324,9 @@ render_grobs <- function(
     text_grob = grid::textGrob,
     cell_grob = grid::segmentsGrob
 ) {
+  if (any(grepl("<svg.*>.*</svg>", layout$label))) {
+    rlang::check_installed("rsvg", "for rendering SVG cells.")
+  }
 
   style <- grid_resolve_style(layout = layout, data = data)
 
