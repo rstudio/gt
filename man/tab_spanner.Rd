@@ -57,7 +57,11 @@ argument works in tandem with the \code{columns} argument.}
 An explicit level to which the spanner should be placed. If not provided,
 \strong{gt} will choose the level based on the inputs provided within \code{columns}
 and \code{spanners}, placing the spanner label where it will fit. The first
-spanner level (right above the column labels) is \code{1}.}
+spanner level (right above the column labels) is \code{1}.
+
+In combination with \code{\link[=opt_interactive]{opt_interactive()}} or \code{ihtml.active = TRUE} in
+\code{\link[=tab_options]{tab_options()}} only level \code{1} is supported, additional levels would be
+discarded.}
 
 \item{id}{\emph{Spanner ID}
 
@@ -466,7 +470,7 @@ Other part creation/modification functions:
 \code{\link{tab_spanner_delim}()},
 \code{\link{tab_stub_indent}()},
 \code{\link{tab_stubhead}()},
-\code{\link{tab_style_body}()},
-\code{\link{tab_style}()}
+\code{\link{tab_style}()},
+\code{\link{tab_style_body}()}
 }
 \concept{part creation/modification functions}

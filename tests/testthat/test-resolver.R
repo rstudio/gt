@@ -4,12 +4,12 @@ test_that("The `resolve_cols_i()` and `resolve_cols_c()` fns both work", {
   no_cols <- setNames(integer(0), character(0))
 
   expect_resolve_cols <- function(expr, expected, data = exibble, wrap = identity, ...) {
-    wrap(expect_identical(resolve_cols_i({{expr}}, data, ...), expected))
-    wrap(expect_identical(resolve_cols_c({{expr}}, data, ...), names(expected)))
+    wrap(expect_identical(resolve_cols_i({{ expr }}, data, ...), expected))
+    wrap(expect_identical(resolve_cols_c({{ expr }}, data, ...), names(expected)))
   }
   expect_resolve_errors <- function(expr, regexp = NULL, data = exibble, ...) {
-    expect_error(resolve_cols_i({{expr}}, data, ...), regexp = regexp)
-    expect_error(resolve_cols_c({{expr}}, data, ...), regexp = regexp)
+    expect_error(resolve_cols_i({{ expr }}, data, ...), regexp = regexp)
+    expect_error(resolve_cols_c({{ expr }}, data, ...), regexp = regexp)
   }
 
   expect_resolve_cols(1, c(num = 1L))

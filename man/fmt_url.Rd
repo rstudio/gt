@@ -57,8 +57,8 @@ need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 The visible 'label' to use for the link. If \code{NULL} (the default)
 the URL will serve as the label. There are two non-\code{NULL} options: (1) a
-static text can be used for the label by providing a string, and (2) a
-function can be provided to fashion a label from every URL.}
+piece of static text can be used for the label by providing a string, and
+(2) a function can be provided to fashion a label from every URL.}
 
 \item{as_button}{\emph{Style link as a button}
 
@@ -337,7 +337,7 @@ you to handle them with \code{\link[=sub_missing]{sub_missing()}}. Here's an exa
 
 \section{Function ID}{
 
-3-19
+3-20
 }
 
 \section{Function Introduced}{
@@ -348,13 +348,17 @@ you to handle them with \code{\link[=sub_missing]{sub_missing()}}. Here's an exa
 \seealso{
 Other data formatting functions: 
 \code{\link{data_color}()},
+\code{\link{fmt}()},
 \code{\link{fmt_auto}()},
 \code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
+\code{\link{fmt_chem}()},
+\code{\link{fmt_country}()},
 \code{\link{fmt_currency}()},
-\code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_datetime}()},
 \code{\link{fmt_duration}()},
+\code{\link{fmt_email}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},
@@ -372,7 +376,6 @@ Other data formatting functions:
 \code{\link{fmt_spelled_num}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt_units}()},
-\code{\link{fmt}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},

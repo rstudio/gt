@@ -96,9 +96,12 @@ reference:
     - fmt_bins
     - fmt_markdown
     - fmt_units
+    - fmt_chem
     - fmt_url
+    - fmt_email
     - fmt_image
     - fmt_flag
+    - fmt_country
     - fmt_icon
     - fmt_passthrough
     - fmt_auto
@@ -197,7 +200,6 @@ reference:
     - currency
     - nanoplot_options
     - adjust_luminance
-    - define_units
     - stub
     - cells_title
     - cells_stubhead
@@ -307,6 +309,7 @@ reference:
     - as_latex
     - as_rtf
     - as_word
+    - as_gtable
     - extract_body
     - extract_summary
     - extract_cells
@@ -371,6 +374,8 @@ reference:
     - metro
     - constants
     - illness
+    - reactions
+    - photolysis
     - rx_adsl
     - rx_addv
 

@@ -140,12 +140,8 @@ test_that("A gt table can store the correct style statements", {
     expect_equal(1)
 
   # Expect a specific value inside the single `styles` list
-  dt_styles_get(data = tbl_html) %>%
-    .$styles %>%
-    .[[1]] %>%
-    .$cell_text %>%
-    .$align %>%
-    expect_equal("left")
+  result <- dt_styles_get(data = tbl_html)$styles[[1]]
+  expect_equal(result$cell_text$align, "left")
 
   # Apply left-alignment to the table subtitle
   tbl_html <-
@@ -157,16 +153,11 @@ test_that("A gt table can store the correct style statements", {
 
   # Expect certain values for inside the single `styles` list
   dt_styles_get(data = tbl_html) %>%
-    nrow() %>%
-    expect_equal(1)
+    expect_1_row()
 
   # Expect a specific value inside the single `styles` list
-  dt_styles_get(data = tbl_html) %>%
-    .$styles %>%
-    .[[1]] %>%
-    .$cell_text %>%
-    .$align %>%
-    expect_equal("left")
+  result <- dt_styles_get(data = tbl_html)$styles[[1]]
+  expect_equal(result$cell_text$align, "left")
 
   # Apply a green background with white text to a single cell in
   # a group summary section
@@ -187,9 +178,12 @@ test_that("A gt table can store the correct style statements", {
   dt_styles_get(data = tbl_html) %>%
     nrow() %>%
     expect_equal(1)
+})
 
+test_that("tab_style errors if problems occur", {
   # Expect an error if columns couldn't be resolved
-  expect_error(
+  expect_snapshot(
+    error = TRUE,
     data %>%
       tab_style(
         style = list(
@@ -205,7 +199,8 @@ test_that("A gt table can store the correct style statements", {
   )
 
   # Expect an error if rows couldn't be resolved
-  expect_error(
+  expect_snapshot(
+    error = TRUE,
     data %>%
       tab_style(
         style = list(
@@ -220,6 +215,37 @@ test_that("A gt table can store the correct style statements", {
       )
   )
 
+  # Expect an error if column spanner couldn't be resolved
+  expect_snapshot(
+    error = TRUE,
+    data %>%
+      tab_style(
+        style = list(
+          cell_fill(color = "green"),
+          cell_text(color = "white")
+        ),
+        locations = cells_column_labels(
+          `non existent`
+        )
+      )
+  )
+  # Expect an error if column spanner couldn't be resolved
+  expect_snapshot(
+    error = TRUE,
+    data %>%
+      tab_style(
+        style = list(
+          cell_fill(color = "green"),
+          cell_text(color = "white")
+        ),
+        locations = cells_column_spanners(
+          2
+        )
+      )
+  )
+})
+
+test_that("tab style works with grand_summary", {
   # Apply a red background with white text to a single cell in
   # the grand summary section
   tbl_html <-
@@ -241,7 +267,8 @@ test_that("A gt table can store the correct style statements", {
     expect_equal(1)
 
   # Expect an error if columns couldn't be resolved
-  expect_error(
+  expect_snapshot(
+    error = TRUE,
     data %>%
       tab_style(
         style = list(
@@ -254,7 +281,8 @@ test_that("A gt table can store the correct style statements", {
   )
 
   # Expect an error if rows couldn't be resolved
-  expect_error(
+  expect_snapshot(
+    error = TRUE,
     data %>%
       tab_style(
         style = list(
@@ -279,7 +307,9 @@ test_that("A gt table can store the correct style statements", {
   dt_styles_get(data = tbl_html) %>%
     nrow() %>%
     expect_equal(1)
+})
 
+test_that("tab_style() works with column spanners", {
   # Apply a `lightgreen` background to the `gear_carb_cyl`
   # column spanner cell
   tbl_html <-
@@ -292,9 +322,10 @@ test_that("A gt table can store the correct style statements", {
   # Expect that the internal `styles_df` data frame will have
   # a single row
   dt_styles_get(data = tbl_html) %>%
-    nrow() %>%
-    expect_equal(1)
+    expect_1_row()
+})
 
+test_that("tab_style() works with a single column label", {
   # Apply a `turquoise` background to a single column label
   tbl_html <-
     data %>%
@@ -306,8 +337,7 @@ test_that("A gt table can store the correct style statements", {
   # Expect that the internal `styles_df` data frame will have
   # a single row
   dt_styles_get(data = tbl_html) %>%
-    nrow() %>%
-    expect_equal(1)
+    expect_1_row()
 
   # Apply a `turquoise` background to a single column label
   tbl_html <-
@@ -320,8 +350,7 @@ test_that("A gt table can store the correct style statements", {
   # Expect that the internal `styles_df` data frame will have
   # a single row
   dt_styles_get(data = tbl_html) %>%
-    nrow() %>%
-    expect_equal(1)
+    expect_1_row()
 
   # Apply a `lightgray` background to five rows of a single column
   tbl_html <-
@@ -347,15 +376,15 @@ test_that("A gt table can store the correct style statements", {
   # Expect that the `location` in `styles_df` is 'data' for all five rows
   dt_styles_get(data = tbl_html) %>%
     dplyr::pull(locname) %>%
-    unique() %>%
-    expect_equal("data")
+    expect_setequal("data")
 
   # Expect that the `colname` in `styles_df` is 'hp' for all five rows
   dt_styles_get(data = tbl_html) %>%
     dplyr::pull(colname) %>%
-    unique() %>%
-    expect_equal("hp")
+    expect_setequal("hp")
+})
 
+test_that("tab_style() works with a single cell", {
   # Apply a `yellow` background a single data cell
   tbl_html <-
     data %>%
@@ -367,12 +396,12 @@ test_that("A gt table can store the correct style statements", {
   # Expect that the internal `styles_df` data frame will have
   # a single row
   dt_styles_get(data = tbl_html) %>%
-    nrow() %>%
-    expect_equal(1)
+    expect_1_row()
 
   # Expect an error in `tab_style` when a value for `rows` isn't
   # in the table
-  expect_error(
+  expect_snapshot(
+    error = TRUE,
     data %>%
       tab_style(
         style = cell_fill(color = "yellow"),
@@ -418,9 +447,14 @@ test_that("A gt table can store the correct style statements", {
       "data", NA_character_, "hp", "5", "1", NA_character_, "#FFFF00")
     )
 
+
+})
+
+test_that("tab_row_group warns when others_label is not empty", {
   # Check that `tab_row_group(others_label = ...)` still works but
   # issues a warning
-  expect_warning(data %>% tab_row_group(others_label = "Others1"))
+  expect_snapshot(a_gt <- data %>% tab_row_group(others_label = "Others1"))
+
 })
 
 test_that("Using fonts in `cell_text()` works", {

@@ -8,6 +8,12 @@
 
 * `gtsave()` saves correctly to .rtf if using `cols_label()` and `summary_rows()` or `grand_summary_rows()` (@olivroy, #1233)
 
+* interactive tables are now rendering the first level of column groups, added by `tab_spanner()` (@obsaditelnost, #1618)
+
+* `cols_hide()` no longer errors if no column was supplied. Error messages are also clearer when supplying a column that doesn't exist (@olivroy, #1631).
+
+`tab_footnote()` and `tab_style()` now give better error messages when `locations` is not correctly specified (@olivroy, #475, #1638 , #1640).
+
 # gt 0.10.1
 
 ## Improvements to nanoplots

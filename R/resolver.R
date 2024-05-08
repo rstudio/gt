@@ -29,7 +29,7 @@
 #'
 #' @import rlang
 #' @noRd
-resolve_cells_body <- function(data, object) {
+resolve_cells_body <- function(data, object, call = rlang::caller_env()) {
 
   #
   # Resolution of columns and rows as integer vectors
@@ -40,14 +40,16 @@ resolve_cells_body <- function(data, object) {
   resolved_columns_idx <-
     resolve_cols_i(
       expr = !!object$columns,
-      data = data
+      data = data,
+      call = call
     )
 
   # Resolve rows as index values
   resolved_rows_idx <-
     resolve_rows_i(
       expr = !!object$rows,
-      data = data
+      data = data,
+      call = call
     )
 
   # Get all possible combinations with `expand.grid()`
@@ -108,8 +110,11 @@ resolve_cells_stub <- function(data,
 #' @param object The list object created by the `cells_column_labels()`
 #'   function.
 #' @noRd
-resolve_cells_column_labels <- function(data,
-                                        object) {
+resolve_cells_column_labels <- function(
+    data,
+    object,
+    call = rlang::caller_env()
+) {
 
   #
   # Resolution of columns as integer vectors
@@ -118,7 +123,8 @@ resolve_cells_column_labels <- function(data,
   resolved_columns <-
     resolve_cols_i(
       expr = !!object$columns,
-      data = data
+      data = data,
+      call = call
     )
 
   # Create a list object
@@ -137,7 +143,11 @@ resolve_cells_column_labels <- function(data,
 #' @param object The list object created by the `cells_column_labels()`
 #'   function.
 #' @noRd
-resolve_cells_column_spanners <- function(data, object) {
+resolve_cells_column_spanners <- function(
+    data,
+    object,
+    call = rlang::caller_env()
+) {
 
   spanners <- dt_spanners_get(data = data)
 
@@ -154,7 +164,8 @@ resolve_cells_column_spanners <- function(data, object) {
     resolve_vector_i(
       expr = !!object$spanners,
       vector = spanner_ids,
-      item_label = "spanner"
+      item_label = "spanner",
+      call = call
     )
 
   resolved_spanners <- spanner_ids[resolved_spanners_idx]
@@ -207,19 +218,21 @@ resolve_cols_c <- function(
     strict = TRUE,
     excl_stub = TRUE,
     excl_group = TRUE,
-    null_means = c("everything", "nothing")
+    null_means = c("everything", "nothing"),
+    call = rlang::caller_env()
 ) {
 
   null_means <- rlang::arg_match(null_means)
 
   names(
     resolve_cols_i(
-      expr = {{expr}},
+      expr = {{ expr }},
       data = data,
       strict = strict,
       excl_stub = excl_stub,
       excl_group = excl_group,
-      null_means = null_means
+      null_means = null_means,
+      call = call
     )
   )
 }
@@ -239,7 +252,8 @@ resolve_cols_i <- function(
     strict = TRUE,
     excl_stub = TRUE,
     excl_group = TRUE,
-    null_means = c("everything", "nothing")
+    null_means = c("everything", "nothing"),
+    call = rlang::caller_env()
 ) {
   quo <- rlang::enquo(expr)
   cols_excl <- c()
@@ -309,7 +323,8 @@ resolve_cols_i <- function(
       tidyselect::eval_select(
         expr = quo,
         data = data,
-        strict = strict
+        strict = strict,
+        error_call = call # user-facing error message
       )
     )
 
@@ -377,11 +392,14 @@ translate_legacy_resolver_expr <- function(quo, null_means) {
 resolve_rows_l <- function(
     expr,
     data,
-    null_means
+    null_means,
+    call = rlang::caller_env()
 ) {
 
   if (is_gt_tbl(data = data)) {
-    row_names <- dt_stub_df_get(data = data)$row_id
+    # unlist because dt_stub_df_get might return a list instead of a vector
+    # (when helper functions such as md/html were used)
+    row_names <- unlist(dt_stub_df_get(data = data)$row_id)
     data <- dt_data_get(data = data)
   } else {
     row_names <- row.names(data)
@@ -419,7 +437,8 @@ resolve_rows_l <- function(
     normalize_resolved(
       resolved = resolved,
       item_names = row_names,
-      item_label = "row"
+      item_label = "row",
+      call = call
     )
 
   resolved
@@ -428,7 +447,8 @@ resolve_rows_l <- function(
 resolve_rows_i <- function(
     expr,
     data,
-    null_means = c("everything", "nothing")
+    null_means = c("everything", "nothing"),
+    call = rlang::caller_env()
 ) {
 
   null_means <- rlang::arg_match(null_means)
@@ -437,7 +457,8 @@ resolve_rows_i <- function(
     resolve_rows_l(
       expr = {{ expr }},
       data = data,
-      null_means = null_means
+      null_means = null_means,
+      call = call
     )
 
   if (!is.null(resolved_rows)) {
@@ -450,7 +471,8 @@ resolve_rows_i <- function(
 resolve_vector_l <- function(
     expr,
     vector,
-    item_label = "item"
+    item_label = "item",
+    call = rlang::caller_env()
   ) {
 
   quo <- rlang::enquo(expr)
@@ -465,14 +487,28 @@ resolve_vector_l <- function(
     normalize_resolved(
       resolved = resolved,
       item_names = vector,
-      item_label = item_label
+      item_label = item_label,
+      call = call
     )
 
   resolved
 }
 
-resolve_vector_i <- function(expr, vector, item_label = "item") {
-  which(resolve_vector_l(expr = {{ expr }}, vector = vector, item_label = item_label))
+resolve_vector_i <- function(
+    expr,
+    vector,
+    item_label = "item",
+    call = rlang::caller_env()
+) {
+
+  which(
+    resolve_vector_l(
+      expr = {{ expr }},
+      vector = vector,
+      item_label = item_label,
+      call = call
+    )
+  )
 }
 
 resolve_groups <- function(expr, vector) {
@@ -526,7 +562,8 @@ resolve_groups <- function(expr, vector) {
 normalize_resolved <- function(
     resolved,
     item_names,
-    item_label
+    item_label,
+    call = rlang::caller_env()
 ) {
 
   item_count <- length(item_names)
@@ -552,14 +589,14 @@ normalize_resolved <- function(
     } else if (length(resolved) == item_count) {
       # Do nothing
     } else {
-      resolver_stop_on_logical(item_label = item_label)
+      resolver_stop_on_logical(item_label = item_label, call = call)
     }
 
   } else if (is.numeric(resolved)) {
 
     unknown_resolved <- setdiff(resolved, item_sequence)
     if (length(unknown_resolved) != 0) {
-      resolver_stop_on_numeric(item_label = item_label, unknown_resolved = unknown_resolved)
+      resolver_stop_on_numeric(item_label = item_label, unknown_resolved = unknown_resolved, call = call)
     }
     resolved <- item_sequence %in% resolved
 
@@ -567,45 +604,64 @@ normalize_resolved <- function(
 
     unknown_resolved <- setdiff(resolved, item_names)
     if (length(unknown_resolved) != 0) {
-      resolver_stop_on_character(item_label = item_label, unknown_resolved = unknown_resolved)
+      resolver_stop_on_character(item_label = item_label, unknown_resolved = unknown_resolved, call = call)
     }
     resolved <- item_names %in% resolved
 
   } else {
-    resolver_stop_unknown(item_label = item_label, resolved = resolved)
+    resolver_stop_unknown(item_label = item_label, resolved = resolved, call = call)
   }
 
   resolved
 }
 
-resolver_stop_on_logical <- function(item_label) {
+resolver_stop_on_logical <- function(
+    item_label,
+    call = rlang::caller_env()
+) {
 
   cli::cli_abort(
     "The number of logical values must either be `1` or the number
-    of {item_label}s."
+    of {item_label}s.",
+    call = call
   )
 }
 
-resolver_stop_on_numeric <- function(item_label, unknown_resolved) {
+resolver_stop_on_numeric <- function(
+    item_label,
+    unknown_resolved,
+    call = rlang::caller_env()
+) {
 
   cli::cli_abort(
     "The following {item_label} indices do not exist in the data:
-    {paste0(unknown_resolved, collapse = ', ')}."
+    {paste0(unknown_resolved, collapse = ', ')}.",
+    call = call
   )
 }
 
-resolver_stop_on_character <- function(item_label, unknown_resolved) {
+resolver_stop_on_character <- function(
+    item_label,
+    unknown_resolved,
+    call = rlang::caller_env()
+) {
 
+  l <- length(unknown_resolved)
   cli::cli_abort(
-    "The following {item_label}(s) do not exist in the data:
-    {paste0(unknown_resolved, collapse = ', ')}."
+    "Can't find {item_label}{cli::qty(l)}{?s}
+    {.code {unknown_resolved}} in the data.",
+    call = call
   )
 }
 
-resolver_stop_unknown <- function(item_label, resolved) {
+resolver_stop_unknown <- function(
+    item_label,
+    resolved,
+    call = rlang::caller_env()
+) {
 
   cli::cli_abort(
-    "Don't know how to select {item_label}s using an object of class
-    {class(resolved)[1]}."
+    "Don't know how to select {item_label}s using {.obj_type_friendly {resolved}}.",
+    call = call
   )
 }

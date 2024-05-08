@@ -91,6 +91,7 @@ test_that("The `fmt_spelled_num()` function works correctly", {
   )
 
   # Expect that two columns being formatted (one entirely NA) will work
+  # FIXME creates many warning File not found (on windows)
   expect_equal(
     (na_col_tbl %>%
        fmt_spelled_num(columns = a) %>%

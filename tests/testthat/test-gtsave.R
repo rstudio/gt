@@ -133,7 +133,7 @@ test_that("HTML saving with `gtsave()` is successful with different path defs", 
   #
 
   # Form final path, check for non-existence
-  path_1 <- tempfile(fileext = ".html")
+  path_1 <- normalizePath(tempfile(fileext = ".html"), winslash = "/", mustWork = F)
   on.exit(unlink(path_1))
   expect_false(file.exists(path_1))
 
@@ -145,7 +145,7 @@ test_that("HTML saving with `gtsave()` is successful with different path defs", 
   path_n <- length(split_path)
 
   # Set working directory
-  setwd(file.path(paste0("/", paste(split_path[2:3], collapse = "/"))))
+  setwd(file.path(paste0(ifelse(.Platform$OS.type == "windows", split_path[1], ""), "/", paste(split_path[2:3], collapse = "/"))))
 
   # Write the file
   exibble %>%
@@ -167,7 +167,7 @@ test_that("HTML saving with `gtsave()` is successful with different path defs", 
   #
 
   # Form final path, check for non-existence
-  path_2 <- tempfile(fileext = ".html")
+  path_2 <- normalizePath(tempfile(fileext = ".html"), winslash = "/", mustWork = F)
   on.exit(unlink(path_2))
   expect_false(file.exists(path_2))
 
@@ -179,7 +179,7 @@ test_that("HTML saving with `gtsave()` is successful with different path defs", 
   path_n <- length(split_path)
 
   # Set working directory
-  setwd(file.path(paste0("/", paste(split_path[2:3], collapse = "/"))))
+  setwd(file.path(paste0(ifelse(.Platform$OS.type == "windows", split_path[1], ""), "/", paste(split_path[2:3], collapse = "/"))))
 
   # Write the file
   exibble %>%
@@ -220,6 +220,8 @@ test_that("HTML saving with `gtsave()` is successful with different path defs", 
     path_3 %>% readLines() %>% paste(collapse = "\n") %>%
       tidy_grepl("<!DOCTYPE html>")
   )
+
+  skip_on_os("windows")
 
   # [#4] Filename starting with ~/, absolute path (expect that path is ignored)
 
@@ -276,7 +278,7 @@ test_that("HTML saving with `gt_save_html()` with different path defs works", {
   #
 
   # Form final path, check for non-existence
-  path_1 <- tempfile(fileext = ".html")
+  path_1 <- normalizePath(tempfile(fileext = ".html"), winslash = "/", mustWork = F)
   on.exit(unlink(path_1))
   expect_false(file.exists(path_1))
 
@@ -288,7 +290,7 @@ test_that("HTML saving with `gt_save_html()` with different path defs works", {
   path_n <- length(split_path)
 
   # Set working directory
-  setwd(file.path(paste0("/", paste(split_path[2:3], collapse = "/"))))
+  setwd(file.path(paste0(ifelse(.Platform$OS.type == "windows", split_path[1], ""), "/", paste(split_path[2:3], collapse = "/"))))
 
   # Write the file
   exibble %>%
@@ -310,7 +312,7 @@ test_that("HTML saving with `gt_save_html()` with different path defs works", {
   #
 
   # Form final path, check for non-existence
-  path_2 <- tempfile(fileext = ".html")
+  path_2 <- normalizePath(tempfile(fileext = ".html"), winslash = "/", mustWork = F)
   on.exit(unlink(path_2))
   expect_false(file.exists(path_2))
 
@@ -322,7 +324,7 @@ test_that("HTML saving with `gt_save_html()` with different path defs works", {
   path_n <- length(split_path)
 
   # Set working directory
-  setwd(file.path(paste0("/", paste(split_path[2:3], collapse = "/"))))
+  setwd(file.path(paste0(ifelse(.Platform$OS.type == "windows", split_path[1], ""), "/", paste(split_path[2:3], collapse = "/"))))
 
   # Write the file
   exibble %>%
@@ -363,6 +365,8 @@ test_that("HTML saving with `gt_save_html()` with different path defs works", {
     path_3 %>% readLines() %>% paste(collapse = "\n") %>%
       tidy_grepl("<!DOCTYPE html>")
   )
+
+  skip_on_os("windows")
 
   # [#4] Filename starting with ~/, absolute path (expect that path is ignored)
 

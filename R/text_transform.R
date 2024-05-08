@@ -678,7 +678,8 @@ text_transform_at_location <- function(loc, data, fn = identity) {
   UseMethod("text_transform_at_location")
 }
 
-# Text transformation using `cells_body()`
+# Text transformation using `cells_body()` ---
+#' @export
 text_transform_at_location.cells_body <- function(
     loc,
     data,
@@ -704,7 +705,8 @@ text_transform_at_location.cells_body <- function(
   dt_body_set(data = data, body = body)
 }
 
-# Text transformation using `cells_stub()`
+# Text transformation using `cells_stub()` ---
+#' @export
 text_transform_at_location.cells_stub <- function(
     loc,
     data,
@@ -726,7 +728,8 @@ text_transform_at_location.cells_stub <- function(
   dt_body_set(data = data, body = body)
 }
 
-# Text transformation using `cells_column_labels()`
+# Text transformation using `cells_column_labels()` ---
+#' @export
 text_transform_at_location.cells_column_labels <- function(
     loc,
     data,
@@ -756,7 +759,8 @@ text_transform_at_location.cells_column_labels <- function(
   data
 }
 
-# Text transformation using `cells_column_spanners()`
+# Text transformation using `cells_column_spanners()` ---
+#' @export
 text_transform_at_location.cells_column_spanners <- function(
     loc,
     data,
@@ -784,6 +788,7 @@ text_transform_at_location.cells_column_spanners <- function(
 }
 
 # Text transformation using `cells_row_groups()`
+#' @export
 text_transform_at_location.cells_row_groups <- function(
     loc,
     data,

@@ -91,13 +91,16 @@ decimal value between \code{0} and \code{1}.}
 
 \item{fill_color}{\emph{Color of the icon fill}
 
-\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+\verb{scalar<character>|vector<character>} // \emph{default:} \code{NULL} (\code{optional})
 
 The fill color of the icon can be set with \code{fill_color}; providing a single
 color here will change the color of the fill but not of the icon's 'stroke'
-or outline (use \code{stroke_color} to modify that). If not provided then the
-default value of \code{"currentColor"} is applied so that the fill matches the
-color of the parent HTML element's color attribute.}
+or outline (use \code{stroke_color} to modify that). A named vector or named
+list comprising the icon names with corresponding fill colors can
+alternatively be used here (e.g.,
+\verb{list("circle-check" = "green", "circle-xmark" = "red"}). If nothing is
+provided then the default value of \code{"currentColor"} is applied so that the
+fill matches the color of the parent HTML element's color attribute.}
 
 \item{fill_alpha}{\emph{Transparency value for icon fill}
 
@@ -388,11 +391,49 @@ scores.
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_icon_4.png" alt="This image of a table was generated from the fourth code example in the `fmt_icon()` help file." style="width:100\%;">
 }}
+
+A fairly common thing to do with icons in tables is to indicate whether
+a quantity is either higher or lower than another. Up and down arrow symbols
+can serve as good visual indicators for this purpose. We can make use of the
+\code{"up-arrow"} and \code{"down-arrow"} icons here. The \code{fmt_icon()} function has to
+find those text values in cells to generate the icons, so, lets generate the
+text within a new column via the \code{\link[=cols_add]{cols_add()}} function (an expression is used
+therein to generate the correct text given the \code{close} and \code{open} values).
+Following that, \code{fmt_icon()} is used and its \code{fill_color} argument is
+provided with a named vector that indicates which color should be used for
+each icon.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
+  dplyr::slice_head(n = 10) |>
+  dplyr::select(date, open, close) |>
+  dplyr::arrange(-dplyr::row_number()) |>
+  gt(rowname_col = "date") |>
+  cols_add(week = date, .after = date) |>
+  cols_add(dir = ifelse(close > open, "arrow-up", "arrow-down")) |>
+  cols_merge(columns = c(date, week), pattern = "\{1\} (\{2\})") |>
+  fmt_date(columns = date, date_style = "m_day_year") |>
+  fmt_datetime(columns = week, format = "w", pattern = "W\{x\}") |>
+  fmt_currency() |>
+  fmt_icon(
+    columns = dir,
+    fill_color = c("arrow-up" = "green", "arrow-down" = "red")
+  ) |>
+  cols_label(
+    open = "Opening Value",
+    close = "Closing Value",
+    dir = ""
+  ) |>
+  opt_stylize(style = 1, color = "gray")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_icon_5.png" alt="This image of a table was generated from the fifth code example in the `fmt_icon()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
 
-3-22
+3-25
 }
 
 \section{Function Introduced}{
@@ -403,13 +444,17 @@ scores.
 \seealso{
 Other data formatting functions: 
 \code{\link{data_color}()},
+\code{\link{fmt}()},
 \code{\link{fmt_auto}()},
 \code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
+\code{\link{fmt_chem}()},
+\code{\link{fmt_country}()},
 \code{\link{fmt_currency}()},
-\code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_datetime}()},
 \code{\link{fmt_duration}()},
+\code{\link{fmt_email}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},
@@ -427,7 +472,6 @@ Other data formatting functions:
 \code{\link{fmt_time}()},
 \code{\link{fmt_units}()},
 \code{\link{fmt_url}()},
-\code{\link{fmt}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},

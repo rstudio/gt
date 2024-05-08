@@ -678,7 +678,7 @@
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-32
+#' 3-35
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -825,7 +825,7 @@ data_color <- function(
       if (nrow(palettes_tbl) < 1) {
         cli::cli_abort(c(
           "The palette name (supplied with the `<package>::<palette>`
-          syntax) is not associated with the {palette_pkg} package as a
+          syntax) is not associated with the {.pkg {palette_pkg}} package as a
           discrete palette.",
           "*" = "Ensure that the combination of palette package and palette
           name exists as a record in the table accessed with
