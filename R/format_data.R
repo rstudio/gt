@@ -8549,6 +8549,17 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #' | 8  | `"arrows"`    | `<Upwards Arrow>`, `<Downwards Arrow>`          |
 #' | 9  | `"triangles"` | `<Black Up-Pointing Triangle>`, `<Black Down-Pointing Triangle>`|
 #' | 10 | `"triangles-lr"`| `<Heavy Check Mark>`, `<Heavy Ballot X>`      |
+#'
+#' @section Adapting output to a specific `locale`:
+#'
+#' This formatting function can adapt outputs according to a provided `locale`
+#' value. Examples include `"en"` for English (United States) and `"fr"` for
+#' French (France). Note that a `locale` value provided here will override any
+#' global locale setting performed in [gt()]'s own `locale` argument (it is
+#' settable there as a value received by all other functions that have a
+#' `locale` argument). As a useful reference on which locales are supported, we
+#' can use the [info_locales()] function to view an info table.
+#'
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-18
