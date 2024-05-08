@@ -8472,6 +8472,45 @@ fmt_tf <- function(
   true_val <- true_val %||% tf_vals_vec[1]
   false_val <- false_val %||% tf_vals_vec[2]
 
+  if (auto_align) {
+
+    # As a first pass, assume that the `true_val` and `false_val` values that
+    # are returned from one of the styles that produce text should result in
+    # a left alignment of values
+    if (
+      is.character(tf_style) && !(tf_style %in% tf_formats_text()) ||
+      is.numeric(tf_style) && !(tf_style %in% seq_along(tf_formats_text()))
+    ) {
+      alignment <- "center"
+    } else {
+      alignment <- "left"
+    }
+
+    # If an HTML entity is detected, prefer center alignment
+    if (grepl("^&.*", true_val) || grepl("^&.*", false_val)) {
+      alignment <- "center"
+    }
+
+    if (nchar(true_val) <= 1 || nchar(false_val) <= 1) {
+      alignment <- "center"
+    }
+
+    # If using SVG graphics for either of `true_val` or `false_val` then
+    # we'd prefer to have center alignment of the icons
+    if (
+      grepl("^<svg ", true_val) || grepl("^<svg ", false_val)
+    ) {
+      alignment <- "center"
+    }
+
+    data <-
+      cols_align(
+        data = data,
+        align = alignment,
+        columns = {{ columns }}
+      )
+  }
+
   # Pass `data`, `columns`, `rows`, and the formatting
   # functions as a function list to `fmt()`
   fmt(
