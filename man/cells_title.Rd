@@ -75,7 +75,7 @@ header with a title, and then add a footnote to the title with
 \code{\link[=tab_footnote]{tab_footnote()}} and \code{cells_title()} (in \code{locations}).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
-  dplyr::filter(date >= "2015-01-05" & date <="2015-01-10") |>
+  dplyr::filter(date >= "2015-01-05" & date <= "2015-01-10") |>
   dplyr::select(-c(adj_close, volume, high, low)) |>
   gt() |>
   tab_header(title = "S&P 500") |>
