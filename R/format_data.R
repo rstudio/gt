@@ -8771,6 +8771,15 @@ format_tf_by_context <- function(
   x_str
 }
 
+make_span_with_color <- function(text, color = NULL) {
+
+  if (is.null(color) | is.null(text) | is.na(color)) {
+    return(text)
+  }
+
+  paste0("<span style=\"color:", color, ";\">", text, "</span>")
+}
+
 #' Format measurement units
 #'
 #' @description
