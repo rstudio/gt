@@ -8678,6 +8678,8 @@ fmt_tf <- function(
           true_val = true_val,
           false_val = false_val,
           na_val = na_val,
+          colors = colors,
+          pattern = pattern,
           context = "html"
         )
       },
@@ -8687,6 +8689,8 @@ fmt_tf <- function(
           true_val = true_val,
           false_val = false_val,
           na_val = na_val,
+          colors = colors,
+          pattern = pattern,
           context = "latex"
         )
       },
@@ -8696,6 +8700,8 @@ fmt_tf <- function(
           true_val = true_val,
           false_val = false_val,
           na_val = na_val,
+          colors = colors,
+          pattern = pattern,
           context = "rtf"
         )
       },
@@ -8705,6 +8711,8 @@ fmt_tf <- function(
           true_val = true_val,
           false_val = false_val,
           na_val = na_val,
+          colors = colors,
+          pattern = pattern,
           context = "word"
         )
       },
@@ -8714,6 +8722,8 @@ fmt_tf <- function(
           true_val = true_val,
           false_val = false_val,
           na_val = na_val,
+          colors = colors,
+          pattern = pattern,
           context = "plain"
         )
       }
@@ -8726,6 +8736,8 @@ format_tf_by_context <- function(
     true_val,
     false_val,
     na_val,
+    colors,
+    pattern,
     context
 ) {
 
