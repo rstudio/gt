@@ -9,11 +9,12 @@ fmt_tf(
   columns = everything(),
   rows = everything(),
   tf_style = "true-false",
-  use_na_neutral = TRUE,
   pattern = "{x}",
+  auto_align = TRUE,
   true_val = NULL,
   false_val = NULL,
   na_val = NULL,
+  colors = NULL,
   locale = NULL
 )
 }
@@ -47,6 +48,18 @@ function. Examples of select helper functions include \code{\link[=starts_with]{
 \code{\link[=everything]{everything()}}. We can also use expressions to filter down to the rows we
 need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
+\item{tf_style}{\emph{Predefined style for \code{TRUE}/\code{FALSE} formatting}
+
+\verb{scalar<character>|scalar<numeric|integer>(1<=val<=10)} // \emph{default:} \code{"true-false"}
+
+The \code{TRUE}/\code{FALSE} mapping style to use. By default this is the short name
+\code{"true-false"} which corresponds to the words 'true' and 'false'. Two other
+\code{tf_style} values produce words: \code{"yes-no"} and \code{"up-down"}. All three of
+these options for \code{tf_style} are locale-aware through the \code{locale} option,
+so, a \code{"yes"} value will instead be \code{"ja"} when \code{locale = "de"}. Options
+4 through to 10 involve pairs of symbols (e.g., \code{"check-mark"} displays
+a check mark for \code{TRUE} and an X symbol for \code{FALSE}).}
+
 \item{pattern}{\emph{Specification of the formatting pattern}
 
 \verb{scalar<character>} // \emph{default:} \code{"{x}"}
@@ -55,6 +68,54 @@ A formatting pattern that allows for decoration of the formatted value. The
 formatted value is represented by the \code{{x}} (which can be used multiple
 times, if needed) and all other characters will be interpreted as string
 literals.}
+
+\item{auto_align}{\emph{Automatic alignment of the formatted column}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+The input values may have resulted in an alignment that is not as suitable
+once formatting has occurred. With \code{auto_align = TRUE}, the formatted
+values will be inspected and this may result in a favorable change in
+alignment. Typically, symbols will be center aligned whereas words will
+receive a left alignment (for words in LTR languages).}
+
+\item{true_val}{\emph{Text to use for \code{TRUE} values}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+While the choice of a \code{tf_style} will typically supply the \code{true_val} and
+\code{false_val} text, we could override this and supply text for any \code{TRUE}
+values.  This doesn't need to be used in conjunction with \code{false_val}.}
+
+\item{false_val}{\emph{Text to use for \code{FALSE} values}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+While the choice of a \code{tf_style} will typically supply the \code{true_val} and
+\code{false_val} text, we could override this and supply text for any \code{FALSE}
+values. This doesn't need to be used in conjunction with \code{true_val}.}
+
+\item{na_val}{\emph{Text to use for \code{NA} values}
+
+\verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+None of the \code{tf_style} presets will replace any missing values encountered
+in the targeted cells. While we always have the option to use
+\code{\link[=sub_missing]{sub_missing()}} for \code{NA} replacement, we have the opportunity to do that
+here with the \code{na_val} option. This is useful because we also have the
+means to add color to the \code{na_val} text or symbol and doing that requires
+that a replacement value for \code{NA}s is specified here.}
+
+\item{colors}{\emph{Colors to use for the resulting strings or symbols}
+
+\verb{vector<character>} // \emph{default:} \code{NULL} (\code{optional})
+
+Providing a vector of color values to \code{colors} will progressively add color
+to the formatted result depending on the number of colors provided. With a
+single color, all formatted values will be in that color. Giving two colors
+results in \code{TRUE} values being the first color, and \code{FALSE} values
+receiving the second. With the three color option, the final color will be
+given to any \code{NA} values replaced through \code{na_val}.}
 
 \item{locale}{\emph{Locale identifier}
 
@@ -72,8 +133,103 @@ would be used automatically by any function with a \code{locale} argument) but a
 An object of class \code{gt_tbl}.
 }
 \description{
-Format logical values in a \strong{gt} table.
+There can be times where logical values are useful in a \strong{gt} table. You
+might want to express a 'yes' or 'no', a 'true' or 'false', or, perhaps use
+pairings of complementary symbols that make sense in a table. The \code{fmt_tf()}
+function has a set of \code{tf_style} presets that can be used to quickly map
+\code{TRUE}/\code{FALSE} values to strings (which are automatically translated
+according to a given \code{locale} value), or, symbols like up/down or left/right
+arrows and open/closed shapes.
+
+While the presets are nice, you can provide your own mappings through the
+\code{true_val} and \code{false_val} arguments. With those you could provide text
+(perhaps a Unicode symbol?) or even a \strong{fontawesome} icon by using
+\code{fontawesome::fa("<icon name>")}. The function will automatically handle
+alignment when \code{auto_align = TRUE} and try to give you the best look
+depending on the options chosen. For extra customization, you can also apply
+color to the individual \code{TRUE}, \code{FALSE}, and \code{NA} mappings. Just supply
+a vector of colors (up to a length of 3) to the \code{colors} argument.
 }
+\section{Targeting cells with \code{columns} and \code{rows}}{
+
+
+Targeting of values is done through \code{columns} and additionally by \code{rows} (if
+nothing is provided for \code{rows} then entire columns are selected). The
+\code{columns} argument allows us to target a subset of cells contained in the
+resolved columns. We say resolved because aside from declaring column names
+in \code{c()} (with bare column names or names in quotes) we can use
+\strong{tidyselect}-style expressions. This can be as basic as supplying a select
+helper like \code{starts_with()}, or, providing a more complex incantation like
+
+\code{where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)}
+
+which targets numeric columns that have a maximum value greater than
+1,000,000 (excluding any \code{NA}s from consideration).
+
+By default all columns and rows are selected (with the \code{everything()}
+defaults). Cell values that are incompatible with a given formatting function
+will be skipped over, like \code{character} values and numeric \verb{fmt_*()}
+functions. So it's safe to select all columns with a particular formatting
+function (only those values that can be formatted will be formatted), but,
+you may not want that. One strategy is to format the bulk of cell values with
+one formatting function and then constrain the columns for later passes with
+other types of formatting (the last formatting done to a cell is what you get
+in the final output).
+
+Once the columns are targeted, we may also target the \code{rows} within those
+columns. This can be done in a variety of ways. If a stub is present, then we
+potentially have row identifiers. Those can be used much like column names in
+the \code{columns}-targeting scenario. We can use simpler \strong{tidyselect}-style
+expressions (the select helpers should work well here) and we can use quoted
+row identifiers in \code{c()}. It's also possible to use row indices (e.g.,
+\code{c(3, 5, 6)}) though these index values must correspond to the row numbers of
+the input data (the indices won't necessarily match those of rearranged rows
+if row groups are present). One more type of expression is possible, an
+expression that takes column values (can involve any of the available columns
+in the table) and returns a logical vector. This is nice if you want to base
+formatting on values in the column or another column, or, you'd like to use a
+more complex predicate expression.
+}
+
+\section{Formatting with the \code{tf_style} argument}{
+
+
+We can supply a preset \code{TRUE}/\code{FALSE} style to the \code{tf_style} argument to
+handle the formatting of logical values. There are several such styles and
+the first three of them can handle localization to any supported locale
+(i.e., the pairs of words for each style will be translated to the language
+of the \code{locale}) value.
+
+The following table provides a listing of all valid \code{tf_style} values and a
+description of their output values. The output from styles \code{4} to \code{10} are
+described in terms of the Unicode character names used for the \code{TRUE} and
+\code{FALSE} values.\tabular{lll}{
+    \tab TF Style \tab Output (for \code{TRUE} and \code{FALSE}) \cr
+   1 \tab \code{"true-false"} \tab \code{"true"}, \code{"false"} (\code{locale}-aware) \cr
+   2 \tab \code{"yes-no"} \tab \code{"yes"}, \code{"no"} (\code{locale}-aware) \cr
+   3 \tab \code{"up-down"} \tab \code{"up"}, \code{"down"} (\code{locale}-aware) \cr
+   4 \tab \code{"check-mark"} \tab \verb{<Heavy Check Mark>}, \verb{<Heavy Ballot X>} \cr
+   5 \tab \code{"circles"} \tab \verb{<Black Circle>}, \verb{<Heavy Circle>} \cr
+   6 \tab \code{"squares"} \tab \verb{<Black Square>},  \verb{<White Square>} \cr
+   7 \tab \code{"diamonds"} \tab \verb{<Black Diamond>}, \verb{<White Diamond>} \cr
+   8 \tab \code{"arrows"} \tab \verb{<Upwards Arrow>}, \verb{<Downwards Arrow>} \cr
+   9 \tab \code{"triangles"} \tab \verb{<Black Up-Pointing Triangle>}, \verb{<Black Down-Pointing Triangle>} \cr
+   10 \tab \code{"triangles-lr"} \tab \verb{<Heavy Check Mark>}, \verb{<Heavy Ballot X>} \cr
+}
+}
+
+\section{Adapting output to a specific \code{locale}}{
+
+
+This formatting function can adapt outputs according to a provided \code{locale}
+value. Examples include \code{"en"} for English (United States) and \code{"fr"} for
+French (France). Note that a \code{locale} value provided here will override any
+global locale setting performed in \code{\link[=gt]{gt()}}'s own \code{locale} argument (it is
+settable there as a value received by all other functions that have a
+\code{locale} argument). As a useful reference on which locales are supported, we
+can use the \code{\link[=info_locales]{info_locales()}} function to view an info table.
+}
+
 \section{Function ID}{
 
 3-18
@@ -81,7 +237,7 @@ Format logical values in a \strong{gt} table.
 
 \section{Function Introduced}{
 
-\code{v0.10.0} (October 7, 2023)
+\emph{In Development}
 }
 
 \seealso{
