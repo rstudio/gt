@@ -8747,24 +8747,53 @@ format_tf_by_context <- function(
 
   x_str_non_missing <- x[!is.na(x)]
 
-  if (true_val %in% tf_formats_icons()) {
+  if (!is.null(colors)) {
+    true_val_color <- colors[1]
 
-    if (true_val == ":checkmark:") {
-      true_val <- "<span style=\"color:green;\">\U02714</span>"
-      false_val <- "<span style=\"color:red;\">\U02718</span>"
+    if (is.na(colors[2])) {
+      false_val_color <- colors[1]
+    } else {
+      false_val_color <- colors[2]
     }
-    if (true_val == ":thumbs:") {
-      true_val <- "\U1F44D"
-      false_val <- "\U1F44E"
-    }
-    if (true_val == ":circles:") {
-      true_val <- "<span>\U0025CF</span>"
-      false_val <- "<span>\U002B58</span>"
-    }
+
+    na_val_color <- colors[3]
+
+  } else {
+    true_val_color <- false_val_color <- na_val_color <- NULL
   }
 
-  x_str_non_missing[x_str_non_missing == TRUE] <- true_val
-  x_str_non_missing[x_str_non_missing == FALSE] <- false_val
+  if (context == "html" && !is.null(colors)) {
+
+    # Ensure that any empty strings are replaced with a '<br />'
+    # when in an HTML context; this avoids the potential collapse of
+    # rows with only empty strings
+    if (!is.null(true_val) && true_val == "") {
+      true_val <- "<br />"
+    }
+    if (!is.null(false_val) && false_val == "") {
+      false_val <- "<br />"
+    }
+    if (!is.null(na_val) && na_val == "") {
+      na_val <- "<br />"
+    }
+
+    true_val <- make_span_with_color(text = true_val, color = true_val_color)
+    false_val <- make_span_with_color(text = false_val, color = false_val_color)
+    na_val <- make_span_with_color(text = na_val, color = na_val_color)
+  }
+
+  # Replace any `TRUE` values, or, numbers that are exactly `1`
+  x_str_non_missing[
+    x_str_non_missing == TRUE | x_str_non_missing == 1
+  ] <- true_val
+
+  # Replace any `FALSE` values, or, numbers that are exactly `0`
+  x_str_non_missing[
+    x_str_non_missing == FALSE | x_str_non_missing == 0
+  ] <- false_val
+
+  # Handle formatting of pattern
+  x_str_non_missing <- apply_pattern_fmt_x(x_str_non_missing, pattern = pattern)
 
   x_str[!is.na(x)] <- x_str_non_missing
   x_str[is.na(x)] <- na_val %||% NA_character_
