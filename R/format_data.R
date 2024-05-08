@@ -8613,7 +8613,7 @@ fmt_tf <- function(
     if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
       cli::cli_abort(
         "The `fmt_tf()` function can only be used on `columns`
-      with logical data."
+      with logical or numerical data."
       )
     }
   }
