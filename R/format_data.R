@@ -8425,6 +8425,7 @@ fmt_tf <- function(
     rows = everything(),
     tf_style = "true-false",
     pattern = "{x}",
+    auto_align = TRUE,
     true_val = NULL,
     false_val = NULL,
     na_val = NULL,
