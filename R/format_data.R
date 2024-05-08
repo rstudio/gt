@@ -8579,6 +8579,7 @@ fmt_tf <- function(
     true_val = NULL,
     false_val = NULL,
     na_val = NULL,
+    colors = NULL,
     locale = NULL
 ) {
 
