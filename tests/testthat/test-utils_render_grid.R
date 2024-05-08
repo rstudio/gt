@@ -533,3 +533,23 @@ test_that("Classes and styles are parsed correctly", {
 
 
 })
+
+# Feature tests -----------------------------------------------------------
+
+test_that("as_gtable renders svg entries", {
+
+  df <- data.frame(
+    x = 1,
+    y = I("<svg width=\"100\" height=\"100\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"50\" cy=\"50\" r=\"50\"/></svg> ")
+  )
+
+  test <- as_gtable(gt(df))
+  test <- test$grobs[test$layout$t == 2 & test$layout$l == 3][[1]]
+
+  raster <- test$children[[2]]
+  expect_equal(dim(raster$raster), c(312, 312))
+  expect_equal(as.numeric(raster$width),  75)
+  expect_equal(as.numeric(raster$height), 75)
+
+})
+
