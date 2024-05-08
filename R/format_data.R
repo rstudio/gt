@@ -8415,7 +8415,7 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #' 3-18
 #'
 #' @section Function Introduced:
-#' `v0.10.0` (October 7, 2023)
+#' *In Development*
 #'
 #' @import rlang
 #' @export
