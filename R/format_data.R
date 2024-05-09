@@ -8633,6 +8633,146 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #' `r man_get_image_tag(file = "man_fmt_tf_1.png")`
 #' }}
 #'
+#' The [`reactions`] dataset contains chemical kinetic information on a wide
+#' variety of atmospherically-relevant compounds. It might be interesting to get
+#' a summary (for a small subset of compounds) for which rate constants are
+#' available for the selected compounds. We first start by selecting the
+#' relevant rows and columns. Then we generate logical columns for each of the
+#' reaction types (i.e., if a value is `NA` then there's no measurement, so
+#' that's `FALSE`). Once the **gt** table has been created, we can use
+#' `fmt_tf()` to provide open and filled circles to indicate whether a
+#' particular reaction has been measured and presented in the literature.
+#'
+#' ```r
+#' reactions |>
+#'   dplyr::filter(cmpd_type %in% c("carboxylic acid", "alkyne", "allene")) |>
+#'   dplyr::select(cmpd_name, cmpd_type, ends_with("k298")) |>
+#'   dplyr::mutate(across(ends_with("k298"), is.na)) |>
+#'   gt(rowname_col = "cmpd_name", groupname_col = "cmpd_type") |>
+#'   tab_spanner(
+#'     label = "Has a measured rate constant",
+#'     columns = ends_with("k298")
+#'   ) |>
+#'   tab_stub_indent(
+#'     rows = everything(),
+#'     indent = 2
+#'   ) |>
+#'   fmt_tf(
+#'     columns = ends_with("k298"),
+#'     tf_style = "circles"
+#'   ) |>
+#'   cols_label(
+#'     OH_k298 = "OH",
+#'     O3_k298 = "Ozone",
+#'     NO3_k298 = "Nitrate",
+#'     Cl_k298 = "Chlorine"
+#'   ) |>
+#'   cols_width(
+#'     stub() ~ px(200),
+#'     ends_with("k298") ~ px(80)
+#'   ) |>
+#'   opt_vertical_padding(scale = 0.35)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_tf_2.png")`
+#' }}
+#'
+#' There are census-based population values in the [`towny`] dataset and quite a
+#' few small towns within it. Let's look at the ten smallest towns (according
+#' to the 2021 figures) and work out whether their populations have increased or
+#' declined since 1996. Also, let's determine which of these towns even have a
+#' website. After that data preparation, the data is made into a **gt** table
+#' and `fmt_tf()` can be used in the `website` and `pop_dir` columns (which both
+#' have `TRUE`/`FALSE` values). Each of these `fmt_tf()` calls will either
+#' produce `"yes"`/`"no"` or `"up"`/`"down"` strings (set via the `tf_style`
+#' option).
+#'
+#' ```r
+#' towny |>
+#'   dplyr::arrange(population_2021) |>
+#'   dplyr::mutate(website = !is.na(website))  |>
+#'   dplyr::mutate(pop_dir = population_2021 > population_1996) |>
+#'   dplyr::select(name, website, population_1996, population_2021, pop_dir) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt(rowname_col = "name") |>
+#'   tab_spanner(
+#'     label = "Population",
+#'     columns = starts_with("pop")
+#'   ) |>
+#'   tab_stubhead(label = "Town") |>
+#'   fmt_tf(
+#'     columns = website,
+#'     tf_style = "yes-no",
+#'     auto_align = FALSE
+#'   ) |>
+#'   fmt_tf(
+#'     columns = pop_dir,
+#'     tf_style = "up-down",
+#'     pattern = "It's {x}."
+#'   ) |>
+#'   cols_label_with(
+#'     columns = starts_with("population"),
+#'     fn = function(x) sub("population_", "", x)
+#'   ) |>
+#'   cols_label(
+#'     website = md("Has a  \n website?"),
+#'     pop_dir = "Pop. direction?"
+#'   ) |>
+#'   opt_horizontal_padding(scale = 2)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_tf_3.png")`
+#' }}
+#'
+#' If formatting to words instead of symbols (with the hyphenated `tf_style`
+#' keywords), the words themselves can be translated to different languages
+#' if providing a `locale` value. In this next example, we're manually creating
+#' a tibble with locale codes and their associated languages. The `yes` and `up`
+#' columns all receive `TRUE` whereas `no` and `down` will all be `FALSE`.
+#' With two calls of `fmt_tf()` for each of these pairings, we get the columns'
+#' namesake words. To have these words translated, the `locale` argument is
+#' pointed toward values in the `code` column by using the [from_column()]
+#' helper function.
+#'
+#' ```r
+#' dplyr::tibble(
+#'   code = c("de", "fr", "is", "tr", "ka", "lt", "ca", "bg", "lv"),
+#'   lang = c(
+#'     "German", "French", "Icelandic", "Turkish", "Georgian",
+#'     "Lithuanian", "Catalan", "Bulgarian", "Latvian"
+#'   ),
+#'   yes = TRUE,
+#'   no = FALSE,
+#'   up = TRUE,
+#'   down = FALSE
+#' ) |>
+#'   gt(rowname_col = "lang") |>
+#'   tab_header(title = "Common words in a few languages") |>
+#'   fmt_tf(
+#'     columns = c(yes, no),
+#'     tf_style = "yes-no",
+#'     locale = from_column("code")
+#'   ) |>
+#'   fmt_tf(
+#'     columns = c(up, down),
+#'     tf_style = "up-down",
+#'     locale = from_column("code")
+#'   ) |>
+#'   cols_merge(
+#'     columns = c(lang, code),
+#'     pattern = "{1} ({2})"
+#'   ) |>
+#'   cols_width(
+#'     stub() ~ px(150),
+#'     everything() ~ px(80)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_tf_4.png")`
+#' }}
 #'
 #' @family data formatting functions
 #' @section Function ID:
@@ -8659,6 +8799,68 @@ fmt_tf <- function(
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
+
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - tf_style
+  # - pattern
+  # - true_val
+  # - false_val
+  # - na_val
+  # - locale
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = "fmt_tf",
+        all_args_except = c("data", "columns", "rows", "colors", "auto_align")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using the `resolve_vars` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_tf(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          tf_style = p_i$tf_style %||% tf_style,
+          pattern = p_i$pattern %||% pattern,
+          true_val = p_i$true_val %||% true_val,
+          false_val = p_i$false_val %||% false_val,
+          na_val = p_i$na_val %||% na_val,
+          locale = p_i$locale %||% locale
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()` objects passed to compatible arguments
+  #
 
   # Declare formatting function compatibility
   compat <- c("logical", "numeric")
