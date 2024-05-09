@@ -1157,7 +1157,7 @@ stub <- function() {
 #'
 #' ```r
 #' sp500 |>
-#'   dplyr::filter(date >= "2015-01-05" & date <="2015-01-10") |>
+#'   dplyr::filter(date >= "2015-01-05" & date <= "2015-01-10") |>
 #'   dplyr::select(-c(adj_close, volume, high, low)) |>
 #'   gt() |>
 #'   tab_header(title = "S&P 500") |>

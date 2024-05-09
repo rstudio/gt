@@ -192,7 +192,7 @@ omitted.
 
 \section{Function ID}{
 
-3-32
+3-33
 }
 
 \section{Function Introduced}{
@@ -229,6 +229,7 @@ Other data formatting functions:
 \code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
+\code{\link{fmt_tf}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt_units}()},
 \code{\link{fmt_url}()},

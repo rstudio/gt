@@ -222,13 +222,38 @@ time_formats <- function() {
   )
 }
 
+tf_formats <- function() {
+
+  dplyr::tribble(
+    ~format_number,  ~format_name,    ~characters,              ~idx,
+    "1",	           "true-false",    NA,                       1:2,
+    "2",	           "yes-no",        NA,                       3:4,
+    "3",	           "up-down",       NA,                       5:6,
+    "4",             "check-mark",    c("\U02714", "\U02718"),  NA,
+    "5",             "circles",       c("\U025CF", "\U02B58"),  NA,
+    "6",             "squares",       c("\U025A0", "\U025A1"),  NA,
+    "7",             "diamonds",      c("\U025C6", "\U025C7"),  NA,
+    "8",             "arrows",        c("\U02191", "\U02193"),  NA,
+    "9",             "triangles",     c("\U025B2", "\U025BC"),  NA,
+    "10",            "triangles-lr",  c("\U025B6", "\U025C0"),  NA,
+  )
+}
+
+tf_formats_icons <- function() {
+  as.character(na.omit(tf_formats()[, "characters"][[1]]))
+}
+
+tf_formats_text <- function() {
+  c("true-false", "yes-no", "up-down")
+}
+
 #' Transform a `date_style` to a `date_format`
 #'
 #' @noRd
 get_date_format <- function(date_style) {
 
   date_format_tbl <- date_formats()
-  date_format_num_range <- seq_len(nrow((date_format_tbl)))
+  date_format_num_range <- seq_len(nrow(date_format_tbl))
 
   # In the rare instance that `date_style` consists of a character-based
   # number in the valid range of numbers, cast the value as a number
@@ -282,7 +307,7 @@ get_date_format <- function(date_style) {
 get_time_format <- function(time_style) {
 
   time_format_tbl <- time_formats()
-  time_format_num_range <- seq_len(nrow((time_format_tbl)))
+  time_format_num_range <- seq_len(nrow(time_format_tbl))
 
   # In the rare instance that `time_style` consists of a character-based
   # number in the valid range of numbers, cast the value as a number
@@ -335,6 +360,69 @@ get_time_format <- function(time_style) {
 
   } else {
     return(time_format_tbl_i[["format_code"]])
+  }
+}
+
+#' Transform a `tf_style` to a vector of values
+#'
+#' @noRd
+get_tf_vals <- function(tf_style, locale) {
+
+  tf_format_tbl <- tf_formats()
+  tf_format_num_range <- seq_len(nrow(tf_format_tbl))
+
+  # In the rare instance that `tf_style` consists of a character-based
+  # number in the valid range of numbers, cast the value as a number
+  if (
+    is.character(tf_style) &&
+    tf_style %in% as.character(tf_format_num_range)
+  ) {
+    tf_style <- as.numeric(tf_style)
+  }
+
+  # Stop function if a numeric `tf_style` value is invalid
+  if (is.numeric(tf_style)) {
+
+    if (!(tf_style %in% tf_format_num_range)) {
+      cli::cli_abort(c(
+        "If using a numeric value for a `tf_style`, it must be
+        between `1` and `{nrow((tf_format_tbl))}`.",
+        "*" = "Use `info_tf_style()` for a useful visual reference."
+      ))
+    }
+  }
+
+  # Stop function if a character-based `tf_style` value is invalid
+  if (is.character(tf_style)) {
+
+    if (!(tf_style %in% tf_format_tbl$format_name)) {
+      cli::cli_abort(c(
+        "If using a `tf_style` name, it must be in the valid set.",
+        "*" = "Use `info_tf_style()` for a useful visual reference."
+      ))
+    }
+
+    # Normalize `tf_style` to be a numeric index value
+    tf_style <- which(tf_format_tbl$format_name == tf_style)
+  }
+
+  # Obtain the correct tf format directive
+  tf_format_tbl_i <- tf_format_tbl[tf_style, ]
+
+  if (tf_format_tbl_i[["format_name"]] %in% tf_formats_text()) {
+
+    # Obtain the row indices for the correct pair of complementary values
+    # from the `tf_words` table
+    tf_words_tbl_i <- tf_format_tbl_i[["idx"]][[1]]
+
+    # Use the `locale` value to get the two localized strings
+    true_str <- tf_words[tf_words_tbl_i[1], ][[locale]]
+    false_str <- tf_words[tf_words_tbl_i[2], ][[locale]]
+
+    return(c(true_str, false_str))
+
+  } else {
+    return(unlist(tf_format_tbl_i[["characters"]]))
   }
 }
 
