@@ -8435,16 +8435,6 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #'   4 through to 10 involve pairs of symbols (e.g., `"check-mark"` displays
 #'   a check mark for `TRUE` and an X symbol for `FALSE`).
 #'
-#' @param auto_align *Automatic alignment of the formatted column*
-#'
-#'   `scalar<logical>` // *default:* `TRUE`
-#'
-#'   The input values may have resulted in an alignment that is not as suitable
-#'   once formatting has occurred. With `auto_align = TRUE`, the formatted
-#'   values will be inspected and this may result in a favorable change in
-#'   alignment. Typically, symbols will be center aligned whereas words will
-#'   receive a left alignment (for words in LTR languages).
-#'
 #' @param true_val *Text to use for `TRUE` values*
 #'
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
@@ -8482,6 +8472,16 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #'   results in `TRUE` values being the first color, and `FALSE` values
 #'   receiving the second. With the three color option, the final color will be
 #'   given to any `NA` values replaced through `na_val`.
+#'
+#' @param auto_align *Automatic alignment of the formatted column*
+#'
+#'   `scalar<logical>` // *default:* `TRUE`
+#'
+#'   The input values may have resulted in an alignment that is not as suitable
+#'   once formatting has occurred. With `auto_align = TRUE`, the formatted
+#'   values will be inspected and this may result in a favorable change in
+#'   alignment. Typically, symbols will be center aligned whereas words will
+#'   receive a left alignment (for words in LTR languages).
 #'
 #' @return An object of class `gt_tbl`.
 #'
