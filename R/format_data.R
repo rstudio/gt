@@ -8485,6 +8485,20 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #'
 #' @return An object of class `gt_tbl`.
 #'
+#' @section Compatibility of formatting function with data values:
+#'
+#' The `fmt_tf()` formatting function is compatible with body cells that are
+#' of the `"logical"` (preferred) or `"numeric"` types. Any other types of body
+#' cells are ignored during formatting. This is to say that cells of
+#' incompatible data types may be targeted, but there will be no attempt to
+#' format them.
+#'
+#' There is a special caveat when attempting to format numerical values: the
+#' values must either be exactly `1` (the analogue for `TRUE`) or exactly `0`
+#' (the analogue for `FALSE`). Any other numerical values will be disregarded
+#' and left as is. Because of these restrictions, it is recommended that only
+#' logical values undergo formatting.
+#'
 #' @section Targeting cells with `columns` and `rows`:
 #'
 #' Targeting of values is done through `columns` and additionally by `rows` (if
