@@ -8399,6 +8399,692 @@ format_bins_by_context <- function(x, sep, fmt, context) {
   x_str
 }
 
+
+#' Format `TRUE` and `FALSE` values
+#'
+#' @description
+#'
+#' There can be times where logical values are useful in a **gt** table. You
+#' might want to express a 'yes' or 'no', a 'true' or 'false', or, perhaps use
+#' pairings of complementary symbols that make sense in a table. The `fmt_tf()`
+#' function has a set of `tf_style` presets that can be used to quickly map
+#' `TRUE`/`FALSE` values to strings (which are automatically translated
+#' according to a given `locale` value), or, symbols like up/down or left/right
+#' arrows and open/closed shapes.
+#'
+#' While the presets are nice, you can provide your own mappings through the
+#' `true_val` and `false_val` arguments. With those you could provide text
+#' (perhaps a Unicode symbol?) or even a **fontawesome** icon by using
+#' `fontawesome::fa("<icon name>")`. The function will automatically handle
+#' alignment when `auto_align = TRUE` and try to give you the best look
+#' depending on the options chosen. For extra customization, you can also apply
+#' color to the individual `TRUE`, `FALSE`, and `NA` mappings. Just supply
+#' a vector of colors (up to a length of 3) to the `colors` argument.
+#'
+#' @inheritParams fmt_number
+#'
+#' @param tf_style *Predefined style for `TRUE`/`FALSE` formatting*
+#'
+#'   `scalar<character>|scalar<numeric|integer>(1<=val<=10)` // *default:* `"true-false"`
+#'
+#'   The `TRUE`/`FALSE` mapping style to use. By default this is the short name
+#'   `"true-false"` which corresponds to the words 'true' and 'false'. Two other
+#'   `tf_style` values produce words: `"yes-no"` and `"up-down"`. All three of
+#'   these options for `tf_style` are locale-aware through the `locale` option,
+#'   so, a `"yes"` value will instead be `"ja"` when `locale = "de"`. Options
+#'   4 through to 10 involve pairs of symbols (e.g., `"check-mark"` displays
+#'   a check mark for `TRUE` and an X symbol for `FALSE`).
+#'
+#' @param true_val *Text to use for `TRUE` values*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   While the choice of a `tf_style` will typically supply the `true_val` and
+#'   `false_val` text, we could override this and supply text for any `TRUE`
+#'   values.  This doesn't need to be used in conjunction with `false_val`.
+#'
+#' @param false_val *Text to use for `FALSE` values*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   While the choice of a `tf_style` will typically supply the `true_val` and
+#'   `false_val` text, we could override this and supply text for any `FALSE`
+#'   values. This doesn't need to be used in conjunction with `true_val`.
+#'
+#' @param na_val *Text to use for `NA` values*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   None of the `tf_style` presets will replace any missing values encountered
+#'   in the targeted cells. While we always have the option to use
+#'   [sub_missing()] for `NA` replacement, we have the opportunity to do that
+#'   here with the `na_val` option. This is useful because we also have the
+#'   means to add color to the `na_val` text or symbol and doing that requires
+#'   that a replacement value for `NA`s is specified here.
+#'
+#' @param colors *Colors to use for the resulting strings or symbols*
+#'
+#'   `vector<character>` // *default:* `NULL` (`optional`)
+#'
+#'   Providing a vector of color values to `colors` will progressively add color
+#'   to the formatted result depending on the number of colors provided. With a
+#'   single color, all formatted values will be in that color. Giving two colors
+#'   results in `TRUE` values being the first color, and `FALSE` values
+#'   receiving the second. With the three color option, the final color will be
+#'   given to any `NA` values replaced through `na_val`.
+#'
+#' @param auto_align *Automatic alignment of the formatted column*
+#'
+#'   `scalar<logical>` // *default:* `TRUE`
+#'
+#'   The input values may have resulted in an alignment that is not as suitable
+#'   once formatting has occurred. With `auto_align = TRUE`, the formatted
+#'   values will be inspected and this may result in a favorable change in
+#'   alignment. Typically, symbols will be center aligned whereas words will
+#'   receive a left alignment (for words in LTR languages).
+#'
+#' @return An object of class `gt_tbl`.
+#'
+#' @section Compatibility of formatting function with data values:
+#'
+#' The `fmt_tf()` formatting function is compatible with body cells that are
+#' of the `"logical"` (preferred) or `"numeric"` types. Any other types of body
+#' cells are ignored during formatting. This is to say that cells of
+#' incompatible data types may be targeted, but there will be no attempt to
+#' format them.
+#'
+#' There is a special caveat when attempting to format numerical values: the
+#' values must either be exactly `1` (the analogue for `TRUE`) or exactly `0`
+#' (the analogue for `FALSE`). Any other numerical values will be disregarded
+#' and left as is. Because of these restrictions, it is recommended that only
+#' logical values undergo formatting.
+#'
+#' @section Targeting cells with `columns` and `rows`:
+#'
+#' Targeting of values is done through `columns` and additionally by `rows` (if
+#' nothing is provided for `rows` then entire columns are selected). The
+#' `columns` argument allows us to target a subset of cells contained in the
+#' resolved columns. We say resolved because aside from declaring column names
+#' in `c()` (with bare column names or names in quotes) we can use
+#' **tidyselect**-style expressions. This can be as basic as supplying a select
+#' helper like `starts_with()`, or, providing a more complex incantation like
+#'
+#' `where(~ is.numeric(.x) && max(.x, na.rm = TRUE) > 1E6)`
+#'
+#' which targets numeric columns that have a maximum value greater than
+#' 1,000,000 (excluding any `NA`s from consideration).
+#'
+#' By default all columns and rows are selected (with the `everything()`
+#' defaults). Cell values that are incompatible with a given formatting function
+#' will be skipped over, like `character` values and numeric `fmt_*()`
+#' functions. So it's safe to select all columns with a particular formatting
+#' function (only those values that can be formatted will be formatted), but,
+#' you may not want that. One strategy is to format the bulk of cell values with
+#' one formatting function and then constrain the columns for later passes with
+#' other types of formatting (the last formatting done to a cell is what you get
+#' in the final output).
+#'
+#' Once the columns are targeted, we may also target the `rows` within those
+#' columns. This can be done in a variety of ways. If a stub is present, then we
+#' potentially have row identifiers. Those can be used much like column names in
+#' the `columns`-targeting scenario. We can use simpler **tidyselect**-style
+#' expressions (the select helpers should work well here) and we can use quoted
+#' row identifiers in `c()`. It's also possible to use row indices (e.g.,
+#' `c(3, 5, 6)`) though these index values must correspond to the row numbers of
+#' the input data (the indices won't necessarily match those of rearranged rows
+#' if row groups are present). One more type of expression is possible, an
+#' expression that takes column values (can involve any of the available columns
+#' in the table) and returns a logical vector. This is nice if you want to base
+#' formatting on values in the column or another column, or, you'd like to use a
+#' more complex predicate expression.
+#'
+#' @section Compatibility of arguments with the `from_column()` helper function:
+#'
+#' The [from_column()] helper function can be used with certain arguments of
+#' `fmt_tf()` to obtain varying parameter values from a specified column within
+#' the table. This means that each row could be formatted a little bit
+#' differently. These arguments provide support for [from_column()]:
+#'
+#' - `tf_style`
+#' - `pattern`
+#' - `true_val`
+#' - `false_val`
+#' - `na_val`
+#' - `locale`
+#'
+#' Please note that for each of the aforementioned arguments, a [from_column()]
+#' call needs to reference a column that has data of the correct type (this is
+#' different for each argument). Additional columns for parameter values can be
+#' generated with the [cols_add()] function (if not already present). Columns
+#' that contain parameter data can also be hidden from final display with
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
+#' [from_column()] helper is applied so long as the arguments belong to this
+#' closed set.
+#'
+#' @section Formatting with the `tf_style` argument:
+#'
+#' We can supply a preset `TRUE`/`FALSE` style to the `tf_style` argument to
+#' handle the formatting of logical values. There are several such styles and
+#' the first three of them can handle localization to any supported locale
+#' (i.e., the pairs of words for each style will be translated to the language
+#' of the `locale`) value.
+#'
+#' The following table provides a listing of all valid `tf_style` values and a
+#' description of their output values. The output from styles `4` to `10` are
+#' described in terms of the Unicode character names used for the `TRUE` and
+#' `FALSE` values.
+#'
+#' |    | TF Style      | Output (for `TRUE` and `FALSE`)                 |
+#' |----|---------------|-------------------------------------------------|
+#' | 1  | `"true-false"`| `"true"`, `"false"` (`locale`-aware)            |
+#' | 2  | `"yes-no"`    | `"yes"`, `"no"` (`locale`-aware)                |
+#' | 3  | `"up-down"`   | `"up"`, `"down"` (`locale`-aware)               |
+#' | 4  | `"check-mark"`| `<Heavy Check Mark>`, `<Heavy Ballot X>`        |
+#' | 5  | `"circles"`   | `<Black Circle>`, `<Heavy Circle>`              |
+#' | 6  | `"squares"`   | `<Black Square>`,  `<White Square>`             |
+#' | 7  | `"diamonds"`  | `<Black Diamond>`, `<White Diamond>`            |
+#' | 8  | `"arrows"`    | `<Upwards Arrow>`, `<Downwards Arrow>`          |
+#' | 9  | `"triangles"` | `<Black Up-Pointing Triangle>`, `<Black Down-Pointing Triangle>`|
+#' | 10 | `"triangles-lr"`| `<Heavy Check Mark>`, `<Heavy Ballot X>`      |
+#'
+#' @section Adapting output to a specific `locale`:
+#'
+#' This formatting function can adapt outputs according to a provided `locale`
+#' value. Examples include `"en"` for English (United States) and `"fr"` for
+#' French (France). Note that a `locale` value provided here will override any
+#' global locale setting performed in [gt()]'s own `locale` argument (it is
+#' settable there as a value received by all other functions that have a
+#' `locale` argument). As a useful reference on which locales are supported, we
+#' can use the [info_locales()] function to view an info table.
+#'
+#' @section Examples:
+#'
+#' Let's use a subset of the [`sp500`] dataset to create a small **gt** table
+#' containing opening and closing price data for a week in 2013. We can add
+#' a logical column (`dir`) with the [cols_add()] function; the expression used
+#' determines whether the `close` value is greater than the `open` value. That
+#' new column is inserted between `open` and `close`. Then, we use the
+#' `fmt_tf()` function to generate up and down arrows in the `dir` column. We
+#' elect to use green upward arrows and red downward arrows (through the
+#' `colors` option). With a little numeric formatting and changes to the column
+#' labels, the table becomes more presentable.
+#'
+#' ```r
+#' sp500 |>
+#'   dplyr::filter(date >= "2013-01-07" & date <= "2013-01-12") |>
+#'   dplyr::arrange(date) |>
+#'   dplyr::select(-c(adj_close, volume, high, low)) |>
+#'   gt(rowname_col = "date") |>
+#'   cols_add(dir = close > open, .after = open) |>
+#'   fmt_tf(
+#'     columns = dir,
+#'     tf_style = "arrows",
+#'     colors = c("green", "red")
+#'   ) |>
+#'   fmt_currency(columns = c(open, close)) |>
+#'   cols_label(
+#'     open = "Opening",
+#'     close = "Closing",
+#'     dir = ""
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_tf_1.png")`
+#' }}
+#'
+#' The [`reactions`] dataset contains chemical kinetic information on a wide
+#' variety of atmospherically-relevant compounds. It might be interesting to get
+#' a summary (for a small subset of compounds) for which rate constants are
+#' available for the selected compounds. We first start by selecting the
+#' relevant rows and columns. Then we generate logical columns for each of the
+#' reaction types (i.e., if a value is `NA` then there's no measurement, so
+#' that's `FALSE`). Once the **gt** table has been created, we can use
+#' `fmt_tf()` to provide open and filled circles to indicate whether a
+#' particular reaction has been measured and presented in the literature.
+#'
+#' ```r
+#' reactions |>
+#'   dplyr::filter(cmpd_type %in% c("carboxylic acid", "alkyne", "allene")) |>
+#'   dplyr::select(cmpd_name, cmpd_type, ends_with("k298")) |>
+#'   dplyr::mutate(across(ends_with("k298"), is.na)) |>
+#'   gt(rowname_col = "cmpd_name", groupname_col = "cmpd_type") |>
+#'   tab_spanner(
+#'     label = "Has a measured rate constant",
+#'     columns = ends_with("k298")
+#'   ) |>
+#'   tab_stub_indent(
+#'     rows = everything(),
+#'     indent = 2
+#'   ) |>
+#'   fmt_tf(
+#'     columns = ends_with("k298"),
+#'     tf_style = "circles"
+#'   ) |>
+#'   cols_label(
+#'     OH_k298 = "OH",
+#'     O3_k298 = "Ozone",
+#'     NO3_k298 = "Nitrate",
+#'     Cl_k298 = "Chlorine"
+#'   ) |>
+#'   cols_width(
+#'     stub() ~ px(200),
+#'     ends_with("k298") ~ px(80)
+#'   ) |>
+#'   opt_vertical_padding(scale = 0.35)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_tf_2.png")`
+#' }}
+#'
+#' There are census-based population values in the [`towny`] dataset and quite a
+#' few small towns within it. Let's look at the ten smallest towns (according
+#' to the 2021 figures) and work out whether their populations have increased or
+#' declined since 1996. Also, let's determine which of these towns even have a
+#' website. After that data preparation, the data is made into a **gt** table
+#' and `fmt_tf()` can be used in the `website` and `pop_dir` columns (which both
+#' have `TRUE`/`FALSE` values). Each of these `fmt_tf()` calls will either
+#' produce `"yes"`/`"no"` or `"up"`/`"down"` strings (set via the `tf_style`
+#' option).
+#'
+#' ```r
+#' towny |>
+#'   dplyr::arrange(population_2021) |>
+#'   dplyr::mutate(website = !is.na(website))  |>
+#'   dplyr::mutate(pop_dir = population_2021 > population_1996) |>
+#'   dplyr::select(name, website, population_1996, population_2021, pop_dir) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt(rowname_col = "name") |>
+#'   tab_spanner(
+#'     label = "Population",
+#'     columns = starts_with("pop")
+#'   ) |>
+#'   tab_stubhead(label = "Town") |>
+#'   fmt_tf(
+#'     columns = website,
+#'     tf_style = "yes-no",
+#'     auto_align = FALSE
+#'   ) |>
+#'   fmt_tf(
+#'     columns = pop_dir,
+#'     tf_style = "up-down",
+#'     pattern = "It's {x}."
+#'   ) |>
+#'   cols_label_with(
+#'     columns = starts_with("population"),
+#'     fn = function(x) sub("population_", "", x)
+#'   ) |>
+#'   cols_label(
+#'     website = md("Has a  \n website?"),
+#'     pop_dir = "Pop. direction?"
+#'   ) |>
+#'   opt_horizontal_padding(scale = 2)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_tf_3.png")`
+#' }}
+#'
+#' If formatting to words instead of symbols (with the hyphenated `tf_style`
+#' keywords), the words themselves can be translated to different languages
+#' if providing a `locale` value. In this next example, we're manually creating
+#' a tibble with locale codes and their associated languages. The `yes` and `up`
+#' columns all receive `TRUE` whereas `no` and `down` will all be `FALSE`.
+#' With two calls of `fmt_tf()` for each of these pairings, we get the columns'
+#' namesake words. To have these words translated, the `locale` argument is
+#' pointed toward values in the `code` column by using the [from_column()]
+#' helper function.
+#'
+#' ```r
+#' dplyr::tibble(
+#'   code = c("de", "fr", "is", "tr", "ka", "lt", "ca", "bg", "lv"),
+#'   lang = c(
+#'     "German", "French", "Icelandic", "Turkish", "Georgian",
+#'     "Lithuanian", "Catalan", "Bulgarian", "Latvian"
+#'   ),
+#'   yes = TRUE,
+#'   no = FALSE,
+#'   up = TRUE,
+#'   down = FALSE
+#' ) |>
+#'   gt(rowname_col = "lang") |>
+#'   tab_header(title = "Common words in a few languages") |>
+#'   fmt_tf(
+#'     columns = c(yes, no),
+#'     tf_style = "yes-no",
+#'     locale = from_column("code")
+#'   ) |>
+#'   fmt_tf(
+#'     columns = c(up, down),
+#'     tf_style = "up-down",
+#'     locale = from_column("code")
+#'   ) |>
+#'   cols_merge(
+#'     columns = c(lang, code),
+#'     pattern = "{1} ({2})"
+#'   ) |>
+#'   cols_width(
+#'     stub() ~ px(150),
+#'     everything() ~ px(80)
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_tf_4.png")`
+#' }}
+#'
+#' @family data formatting functions
+#' @section Function ID:
+#' 3-18
+#'
+#' @section Function Introduced:
+#' *In Development*
+#'
+#' @import rlang
+#' @export
+fmt_tf <- function(
+    data,
+    columns = everything(),
+    rows = everything(),
+    tf_style = "true-false",
+    pattern = "{x}",
+    true_val = NULL,
+    false_val = NULL,
+    na_val = NULL,
+    colors = NULL,
+    auto_align = TRUE,
+    locale = NULL
+) {
+
+  # Perform input object validation
+  stop_if_not_gt_tbl(data = data)
+
+  #
+  # Begin support for `from_column()` objects passed to compatible arguments
+  #
+
+  # Supports parameters:
+  #
+  # - tf_style
+  # - pattern
+  # - true_val
+  # - false_val
+  # - na_val
+  # - locale
+
+  arg_vals <-
+    mget(
+      get_arg_names(
+        function_name = "fmt_tf",
+        all_args_except = c("data", "columns", "rows", "colors", "auto_align")
+      )
+    )
+
+  if (args_have_gt_column_obj(arg_vals = arg_vals)) {
+
+    # Resolve the row numbers using the `resolve_vars` function
+    resolved_rows_idx <-
+      resolve_rows_i(
+        expr = {{ rows }},
+        data = data
+      )
+
+    param_tbl <-
+      generate_param_tbl(
+        data = data,
+        arg_vals = arg_vals,
+        resolved_rows_idx = resolved_rows_idx
+      )
+
+    for (i in seq_len(nrow(param_tbl))) {
+
+      p_i <- as.list(param_tbl[i, ])
+
+      data <-
+        fmt_tf(
+          data = data,
+          columns = {{ columns }},
+          rows = resolved_rows_idx[i],
+          tf_style = p_i$tf_style %||% tf_style,
+          pattern = p_i$pattern %||% pattern,
+          true_val = p_i$true_val %||% true_val,
+          false_val = p_i$false_val %||% false_val,
+          na_val = p_i$na_val %||% na_val,
+          locale = p_i$locale %||% locale
+        )
+    }
+
+    return(data)
+  }
+
+  #
+  # End support for `gt_column()` objects passed to compatible arguments
+  #
+
+  # Declare formatting function compatibility
+  compat <- c("logical", "numeric")
+
+  # Stop function if `locale` does not have a valid value; normalize locale
+  # and resolve one that might be set globally
+  validate_locale(locale = locale)
+  locale <- normalize_locale(locale = locale)
+  locale <- resolve_locale(data = data, locale = locale)
+
+  # If `locale` is NULL then use the 'en' locale
+  if (is.null(locale)) {
+    locale <- "en"
+  }
+
+  # In this case where strict mode is being used (with the option
+  # called "gt.strict_column_fmt"), stop the function if any of the
+  # resolved columns have data that is incompatible with this formatter
+  if (
+    !column_classes_are_valid(
+      data = data,
+      columns = {{ columns }},
+      valid_classes = compat
+    )
+  ) {
+    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
+      cli::cli_abort(
+        "The `fmt_tf()` function can only be used on `columns`
+      with logical or numerical data."
+      )
+    }
+  }
+
+  # Obtain the vector of `TRUE`/`FALSE` text values
+  tf_vals_vec <- get_tf_vals(tf_style = tf_style, locale = locale)
+
+  # If there are any values provided to `true_val` or `false_val`, use
+  # those in preference to the values obtained from `get_tf_vals()`
+  true_val <- true_val %||% tf_vals_vec[1]
+  false_val <- false_val %||% tf_vals_vec[2]
+
+  if (auto_align) {
+
+    # As a first pass, assume that the `true_val` and `false_val` values that
+    # are returned from one of the styles that produce text should result in
+    # a left alignment of values
+    if (
+      is.character(tf_style) && !(tf_style %in% tf_formats_text()) ||
+      is.numeric(tf_style) && !(tf_style %in% seq_along(tf_formats_text()))
+    ) {
+      alignment <- "center"
+    } else {
+      alignment <- "left"
+    }
+
+    # If an HTML entity is detected, prefer center alignment
+    if (grepl("^&.*", true_val) || grepl("^&.*", false_val)) {
+      alignment <- "center"
+    }
+
+    if (nchar(true_val) <= 1 || nchar(false_val) <= 1) {
+      alignment <- "center"
+    }
+
+    # If using SVG graphics for either of `true_val` or `false_val` then
+    # we'd prefer to have center alignment of the icons
+    if (
+      grepl("^<svg ", true_val) || grepl("^<svg ", false_val)
+    ) {
+      alignment <- "center"
+    }
+
+    data <-
+      cols_align(
+        data = data,
+        align = alignment,
+        columns = {{ columns }}
+      )
+  }
+
+  # Pass `data`, `columns`, `rows`, and the formatting
+  # functions as a function list to `fmt()`
+  fmt(
+    data = data,
+    columns = {{ columns }},
+    rows = {{ rows }},
+    fns = list(
+      html = function(x) {
+        format_tf_by_context(
+          x,
+          true_val = true_val,
+          false_val = false_val,
+          na_val = na_val,
+          colors = colors,
+          pattern = pattern,
+          context = "html"
+        )
+      },
+      latex = function(x) {
+        format_tf_by_context(
+          x,
+          true_val = true_val,
+          false_val = false_val,
+          na_val = na_val,
+          colors = colors,
+          pattern = pattern,
+          context = "latex"
+        )
+      },
+      rtf = function(x) {
+        format_tf_by_context(
+          x,
+          true_val = true_val,
+          false_val = false_val,
+          na_val = na_val,
+          colors = colors,
+          pattern = pattern,
+          context = "rtf"
+        )
+      },
+      word = function(x) {
+        format_tf_by_context(
+          x,
+          true_val = true_val,
+          false_val = false_val,
+          na_val = na_val,
+          colors = colors,
+          pattern = pattern,
+          context = "word"
+        )
+      },
+      default = function(x) {
+        format_tf_by_context(
+          x,
+          true_val = true_val,
+          false_val = false_val,
+          na_val = na_val,
+          colors = colors,
+          pattern = pattern,
+          context = "plain"
+        )
+      }
+    )
+  )
+}
+
+format_tf_by_context <- function(
+    x,
+    true_val,
+    false_val,
+    na_val,
+    colors,
+    pattern,
+    context
+) {
+
+  # Generate an vector of empty strings that will eventually
+  # contain all of the text values
+  x_str <- character(length(x))
+
+  x_str_non_missing <- x[!is.na(x)]
+
+  if (!is.null(colors)) {
+    true_val_color <- colors[1]
+
+    if (is.na(colors[2])) {
+      false_val_color <- colors[1]
+    } else {
+      false_val_color <- colors[2]
+    }
+
+    na_val_color <- colors[3]
+
+  } else {
+    true_val_color <- false_val_color <- na_val_color <- NULL
+  }
+
+  if (context == "html" && !is.null(colors)) {
+
+    # Ensure that any empty strings are replaced with a '<br />'
+    # when in an HTML context; this avoids the potential collapse of
+    # rows with only empty strings
+    if (!is.null(true_val) && true_val == "") {
+      true_val <- "<br />"
+    }
+    if (!is.null(false_val) && false_val == "") {
+      false_val <- "<br />"
+    }
+    if (!is.null(na_val) && na_val == "") {
+      na_val <- "<br />"
+    }
+
+    true_val <- make_span_with_color(text = true_val, color = true_val_color)
+    false_val <- make_span_with_color(text = false_val, color = false_val_color)
+    na_val <- make_span_with_color(text = na_val, color = na_val_color)
+  }
+
+  # Replace any `TRUE` values, or, numbers that are exactly `1`
+  x_str_non_missing[
+    x_str_non_missing == TRUE | x_str_non_missing == 1
+  ] <- true_val
+
+  # Replace any `FALSE` values, or, numbers that are exactly `0`
+  x_str_non_missing[
+    x_str_non_missing == FALSE | x_str_non_missing == 0
+  ] <- false_val
+
+  # Handle formatting of pattern
+  x_str_non_missing <- apply_pattern_fmt_x(x_str_non_missing, pattern = pattern)
+
+  x_str[!is.na(x)] <- x_str_non_missing
+  x_str[is.na(x)] <- na_val %||% NA_character_
+  x_str
+}
+
+make_span_with_color <- function(text, color = NULL) {
+
+  if (is.null(color) | is.null(text) | is.na(color)) {
+    return(text)
+  }
+
+  paste0("<span style=\"color:", color, ";\">", text, "</span>")
+}
+
 #' Format measurement units
 #'
 #' @description
@@ -8560,7 +9246,7 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-18
+#' 3-19
 #'
 #' @section Function Introduced:
 #' `v0.10.0` (October 7, 2023)
@@ -8803,7 +9489,7 @@ fmt_units <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-19
+#' 3-20
 #'
 #' @section Function Introduced:
 #' **In Development**
@@ -9208,7 +9894,7 @@ format_units_by_context <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-20
+#' 3-21
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
@@ -9807,7 +10493,7 @@ add_anchor_attr <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-21
+#' 3-22
 #'
 #' @section Function Introduced:
 #' *In Development*
@@ -10418,7 +11104,7 @@ generate_email_links <- function(email_address, anchor_attr, label_str) {
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-22
+#' 3-23
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
@@ -11050,7 +11736,7 @@ get_image_hw_ratio <- function(filepath) {
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-23
+#' 3-24
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
@@ -11489,7 +12175,7 @@ fmt_flag <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-24
+#' 3-25
 #'
 #' @section Function Introduced:
 #' *In Development*
@@ -12050,7 +12736,7 @@ fmt_country <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-25
+#' 3-26
 #'
 #' @section Function Introduced:
 #' `v0.10.0` (October 7, 2023)
@@ -12495,7 +13181,7 @@ fmt_icon <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-26
+#' 3-27
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -12712,7 +13398,7 @@ fmt_markdown <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-27
+#' 3-28
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)
@@ -12974,7 +13660,7 @@ fmt_passthrough <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-28
+#' 3-29
 #'
 #' @section Function Introduced:
 #' `v0.9.0` (Mar 31, 2023)
@@ -13293,7 +13979,7 @@ fmt_auto <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-29
+#' 3-30
 #'
 #' @section Function Introduced:
 #' `v0.2.0.5` (March 31, 2020)

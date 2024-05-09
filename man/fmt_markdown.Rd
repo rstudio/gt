@@ -246,7 +246,7 @@ table (e.g., with \code{\link[=cols_label]{cols_label()}}, \code{\link[=tab_head
 
 \section{Function ID}{
 
-3-26
+3-27
 }
 
 \section{Function Introduced}{
@@ -285,6 +285,7 @@ Other data formatting functions:
 \code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
+\code{\link{fmt_tf}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt_units}()},
 \code{\link{fmt_url}()},

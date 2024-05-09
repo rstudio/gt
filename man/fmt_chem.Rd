@@ -216,7 +216,7 @@ compound names via the \code{\link[=cols_merge]{cols_merge()}} function.
 
 \section{Function ID}{
 
-3-19
+3-20
 }
 
 \section{Function Introduced}{
@@ -252,6 +252,7 @@ Other data formatting functions:
 \code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
+\code{\link{fmt_tf}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt_units}()},
 \code{\link{fmt_url}()},

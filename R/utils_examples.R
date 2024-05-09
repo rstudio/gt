@@ -192,6 +192,8 @@ write_gt_examples_qmd_files <- function(
           "metro",
           "constants",
           "illness",
+          "reactions",
+          "photolysis",
           "rx_adsl",
           "rx_addv",
           "render_gt",
