@@ -10,11 +10,11 @@ fmt_tf(
   rows = everything(),
   tf_style = "true-false",
   pattern = "{x}",
-  auto_align = TRUE,
   true_val = NULL,
   false_val = NULL,
   na_val = NULL,
   colors = NULL,
+  auto_align = TRUE,
   locale = NULL
 )
 }
@@ -69,16 +69,6 @@ formatted value is represented by the \code{{x}} (which can be used multiple
 times, if needed) and all other characters will be interpreted as string
 literals.}
 
-\item{auto_align}{\emph{Automatic alignment of the formatted column}
-
-\verb{scalar<logical>} // \emph{default:} \code{TRUE}
-
-The input values may have resulted in an alignment that is not as suitable
-once formatting has occurred. With \code{auto_align = TRUE}, the formatted
-values will be inspected and this may result in a favorable change in
-alignment. Typically, symbols will be center aligned whereas words will
-receive a left alignment (for words in LTR languages).}
-
 \item{true_val}{\emph{Text to use for \code{TRUE} values}
 
 \verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
@@ -117,6 +107,16 @@ results in \code{TRUE} values being the first color, and \code{FALSE} values
 receiving the second. With the three color option, the final color will be
 given to any \code{NA} values replaced through \code{na_val}.}
 
+\item{auto_align}{\emph{Automatic alignment of the formatted column}
+
+\verb{scalar<logical>} // \emph{default:} \code{TRUE}
+
+The input values may have resulted in an alignment that is not as suitable
+once formatting has occurred. With \code{auto_align = TRUE}, the formatted
+values will be inspected and this may result in a favorable change in
+alignment. Typically, symbols will be center aligned whereas words will
+receive a left alignment (for words in LTR languages).}
+
 \item{locale}{\emph{Locale identifier}
 
 \verb{scalar<character>} // \emph{default:} \code{NULL} (\code{optional})
@@ -150,6 +150,22 @@ depending on the options chosen. For extra customization, you can also apply
 color to the individual \code{TRUE}, \code{FALSE}, and \code{NA} mappings. Just supply
 a vector of colors (up to a length of 3) to the \code{colors} argument.
 }
+\section{Compatibility of formatting function with data values}{
+
+
+The \code{fmt_tf()} formatting function is compatible with body cells that are
+of the \code{"logical"} (preferred) or \code{"numeric"} types. Any other types of body
+cells are ignored during formatting. This is to say that cells of
+incompatible data types may be targeted, but there will be no attempt to
+format them.
+
+There is a special caveat when attempting to format numerical values: the
+values must either be exactly \code{1} (the analogue for \code{TRUE}) or exactly \code{0}
+(the analogue for \code{FALSE}). Any other numerical values will be disregarded
+and left as is. Because of these restrictions, it is recommended that only
+logical values undergo formatting.
+}
+
 \section{Targeting cells with \code{columns} and \code{rows}}{
 
 
@@ -189,6 +205,32 @@ expression that takes column values (can involve any of the available columns
 in the table) and returns a logical vector. This is nice if you want to base
 formatting on values in the column or another column, or, you'd like to use a
 more complex predicate expression.
+}
+
+\section{Compatibility of arguments with the \code{from_column()} helper function}{
+
+
+The \code{\link[=from_column]{from_column()}} helper function can be used with certain arguments of
+\code{fmt_tf()} to obtain varying parameter values from a specified column within
+the table. This means that each row could be formatted a little bit
+differently. These arguments provide support for \code{\link[=from_column]{from_column()}}:
+\itemize{
+\item \code{tf_style}
+\item \code{pattern}
+\item \code{true_val}
+\item \code{false_val}
+\item \code{na_val}
+\item \code{locale}
+}
+
+Please note that for each of the aforementioned arguments, a \code{\link[=from_column]{from_column()}}
+call needs to reference a column that has data of the correct type (this is
+different for each argument). Additional columns for parameter values can be
+generated with the \code{\link[=cols_add]{cols_add()}} function (if not already present). Columns
+that contain parameter data can also be hidden from final display with
+\code{\link[=cols_hide]{cols_hide()}}. Finally, there is no limitation to how many arguments the
+\code{\link[=from_column]{from_column()}} helper is applied so long as the arguments belong to this
+closed set.
 }
 
 \section{Formatting with the \code{tf_style} argument}{
@@ -264,6 +306,144 @@ labels, the table becomes more presentable.
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_tf_1.png" alt="This image of a table was generated from the first code example in the `fmt_tf()` help file." style="width:100\%;">
+}}
+
+The \code{\link{reactions}} dataset contains chemical kinetic information on a wide
+variety of atmospherically-relevant compounds. It might be interesting to get
+a summary (for a small subset of compounds) for which rate constants are
+available for the selected compounds. We first start by selecting the
+relevant rows and columns. Then we generate logical columns for each of the
+reaction types (i.e., if a value is \code{NA} then there's no measurement, so
+that's \code{FALSE}). Once the \strong{gt} table has been created, we can use
+\code{fmt_tf()} to provide open and filled circles to indicate whether a
+particular reaction has been measured and presented in the literature.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{reactions |>
+  dplyr::filter(cmpd_type \%in\% c("carboxylic acid", "alkyne", "allene")) |>
+  dplyr::select(cmpd_name, cmpd_type, ends_with("k298")) |>
+  dplyr::mutate(across(ends_with("k298"), is.na)) |>
+  gt(rowname_col = "cmpd_name", groupname_col = "cmpd_type") |>
+  tab_spanner(
+    label = "Has a measured rate constant",
+    columns = ends_with("k298")
+  ) |>
+  tab_stub_indent(
+    rows = everything(),
+    indent = 2
+  ) |>
+  fmt_tf(
+    columns = ends_with("k298"),
+    tf_style = "circles"
+  ) |>
+  cols_label(
+    OH_k298 = "OH",
+    O3_k298 = "Ozone",
+    NO3_k298 = "Nitrate",
+    Cl_k298 = "Chlorine"
+  ) |>
+  cols_width(
+    stub() ~ px(200),
+    ends_with("k298") ~ px(80)
+  ) |>
+  opt_vertical_padding(scale = 0.35)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_tf_2.png" alt="This image of a table was generated from the second code example in the `fmt_tf()` help file." style="width:100\%;">
+}}
+
+There are census-based population values in the \code{\link{towny}} dataset and quite a
+few small towns within it. Let's look at the ten smallest towns (according
+to the 2021 figures) and work out whether their populations have increased or
+declined since 1996. Also, let's determine which of these towns even have a
+website. After that data preparation, the data is made into a \strong{gt} table
+and \code{fmt_tf()} can be used in the \code{website} and \code{pop_dir} columns (which both
+have \code{TRUE}/\code{FALSE} values). Each of these \code{fmt_tf()} calls will either
+produce \code{"yes"}/\code{"no"} or \code{"up"}/\code{"down"} strings (set via the \code{tf_style}
+option).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
+  dplyr::arrange(population_2021) |>
+  dplyr::mutate(website = !is.na(website))  |>
+  dplyr::mutate(pop_dir = population_2021 > population_1996) |>
+  dplyr::select(name, website, population_1996, population_2021, pop_dir) |>
+  dplyr::slice_head(n = 10) |>
+  gt(rowname_col = "name") |>
+  tab_spanner(
+    label = "Population",
+    columns = starts_with("pop")
+  ) |>
+  tab_stubhead(label = "Town") |>
+  fmt_tf(
+    columns = website,
+    tf_style = "yes-no",
+    auto_align = FALSE
+  ) |>
+  fmt_tf(
+    columns = pop_dir,
+    tf_style = "up-down",
+    pattern = "It's \{x\}."
+  ) |>
+  cols_label_with(
+    columns = starts_with("population"),
+    fn = function(x) sub("population_", "", x)
+  ) |>
+  cols_label(
+    website = md("Has a  \\n website?"),
+    pop_dir = "Pop. direction?"
+  ) |>
+  opt_horizontal_padding(scale = 2)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_tf_3.png" alt="This image of a table was generated from the third code example in the `fmt_tf()` help file." style="width:100\%;">
+}}
+
+If formatting to words instead of symbols (with the hyphenated \code{tf_style}
+keywords), the words themselves can be translated to different languages
+if providing a \code{locale} value. In this next example, we're manually creating
+a tibble with locale codes and their associated languages. The \code{yes} and \code{up}
+columns all receive \code{TRUE} whereas \code{no} and \code{down} will all be \code{FALSE}.
+With two calls of \code{fmt_tf()} for each of these pairings, we get the columns'
+namesake words. To have these words translated, the \code{locale} argument is
+pointed toward values in the \code{code} column by using the \code{\link[=from_column]{from_column()}}
+helper function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
+  code = c("de", "fr", "is", "tr", "ka", "lt", "ca", "bg", "lv"),
+  lang = c(
+    "German", "French", "Icelandic", "Turkish", "Georgian",
+    "Lithuanian", "Catalan", "Bulgarian", "Latvian"
+  ),
+  yes = TRUE,
+  no = FALSE,
+  up = TRUE,
+  down = FALSE
+) |>
+  gt(rowname_col = "lang") |>
+  tab_header(title = "Common words in a few languages") |>
+  fmt_tf(
+    columns = c(yes, no),
+    tf_style = "yes-no",
+    locale = from_column("code")
+  ) |>
+  fmt_tf(
+    columns = c(up, down),
+    tf_style = "up-down",
+    locale = from_column("code")
+  ) |>
+  cols_merge(
+    columns = c(lang, code),
+    pattern = "\{1\} (\{2\})"
+  ) |>
+  cols_width(
+    stub() ~ px(150),
+    everything() ~ px(80)
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_tf_4.png" alt="This image of a table was generated from the fourth code example in the `fmt_tf()` help file." style="width:100\%;">
 }}
 }
 
