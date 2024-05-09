@@ -8538,6 +8538,29 @@ format_bins_by_context <- function(x, sep, fmt, context) {
 #' formatting on values in the column or another column, or, you'd like to use a
 #' more complex predicate expression.
 #'
+#' @section Compatibility of arguments with the `from_column()` helper function:
+#'
+#' The [from_column()] helper function can be used with certain arguments of
+#' `fmt_tf()` to obtain varying parameter values from a specified column within
+#' the table. This means that each row could be formatted a little bit
+#' differently. These arguments provide support for [from_column()]:
+#'
+#' - `tf_style`
+#' - `pattern`
+#' - `true_val`
+#' - `false_val`
+#' - `na_val`
+#' - `locale`
+#'
+#' Please note that for each of the aforementioned arguments, a [from_column()]
+#' call needs to reference a column that has data of the correct type (this is
+#' different for each argument). Additional columns for parameter values can be
+#' generated with the [cols_add()] function (if not already present). Columns
+#' that contain parameter data can also be hidden from final display with
+#' [cols_hide()]. Finally, there is no limitation to how many arguments the
+#' [from_column()] helper is applied so long as the arguments belong to this
+#' closed set.
+#'
 #' @section Formatting with the `tf_style` argument:
 #'
 #' We can supply a preset `TRUE`/`FALSE` style to the `tf_style` argument to
