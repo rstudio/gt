@@ -1029,7 +1029,7 @@ test_that("Columns can indirectly apply coloring to other columns", {
 test_that("Certain errors can be expected (and some things don't error)", {
 
   # Expect an error when using an invalid color name in `palette`
-  expect_error(
+  expect_snapshot(error = TRUE,
     test_tbl %>%
       gt() %>%
       data_color(
@@ -1051,7 +1051,7 @@ test_that("Certain errors can be expected (and some things don't error)", {
   )
 
   # Expect an error when providing an `NA` to `palette`
-  expect_error(
+  expect_snapshot(error = TRUE,
     test_tbl %>%
       gt() %>%
       data_color(
@@ -1062,7 +1062,7 @@ test_that("Certain errors can be expected (and some things don't error)", {
   )
 
   # Expect an error when providing a numeric vector to `palette`
-  expect_error(
+  expect_snapshot(error = TRUE,
     test_tbl %>%
       gt() %>%
       data_color(
@@ -1074,7 +1074,7 @@ test_that("Certain errors can be expected (and some things don't error)", {
 
   # Expect an error if there is a malformed
   # hexadecimal color value given to `palette`
-  expect_error(
+  expect_snapshot(error = TRUE,
     test_tbl %>%
       gt() %>%
       data_color(
@@ -1086,7 +1086,7 @@ test_that("Certain errors can be expected (and some things don't error)", {
 
   # Expect an error if using `direction = "row"` with a numeric method
   # when there are non-numeric cells
-  expect_error(
+  expect_snapshot(error = TRUE,
     exibble %>%
       gt() %>%
       data_color(
@@ -1097,7 +1097,7 @@ test_that("Certain errors can be expected (and some things don't error)", {
 
   # Expect an error if using `direction = "row"` when specifying
   # `target_columns`
-  expect_error(
+  expect_snapshot(error = TRUE,
     exibble %>%
       gt() %>%
       data_color(
@@ -1109,7 +1109,7 @@ test_that("Certain errors can be expected (and some things don't error)", {
 
   # Expect an error with length of `target_columns` doesn't match that
   # of `columns` (when length of `columns` is greater than one)
-  expect_error(
+  expect_snapshot(error = TRUE,
     exibble %>%
       gt() %>%
       data_color(
@@ -1650,23 +1650,23 @@ test_that("The various color utility functions work correctly", {
   )
 
   # Expect an error if an NA value is provided anywhere as input
-  expect_error(
+  expect_snapshot(error = TRUE,
     html_color(colors = c(c_name, c_hex, c_hex_a, NA_character_))
   )
 
   # Expect an error if an invalid color name is provided
-  expect_error(
+  expect_snapshot(error = TRUE,
     html_color(colors = c(c_name, "blau", c_hex, c_hex_a))
   )
 
   # Expect an error if an invalid color format is provided
-  expect_error(
+  expect_snapshot(error = TRUE,
     html_color(colors = c(c_name, c_hex, "#FF04JJ", c_hex_a))
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     html_color(colors = c(c_name, c_hex, c_hex_a, "#FF0033100"))
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     html_color(colors = c(c_name, c_hex, "FF04E2", c_hex_a))
   )
 
@@ -1714,7 +1714,7 @@ test_that("The various color utility functions work correctly", {
   )
 
   # Expect an error if 'rgba()'-format colors are passed to `normalize_colors()`
-  expect_error(
+  expect_snapshot(error = TRUE,
     normalize_colors(
       colors = c(c_name, c_hex, c_hex_a, "rgba(210,215,33,0.5)"),
       alpha = 1.0
@@ -1762,10 +1762,10 @@ test_that("The various color utility functions work correctly", {
   )
 
   # Expect an error if an invalid color format is provided
-  expect_error(
+  expect_snapshot(error = TRUE,
     ideal_fgnd_color(bgnd_color = c(c_hex, "#FF04JJ", c_hex_a))
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     ideal_fgnd_color(bgnd_color = c(c_hex, c_hex_a, "#FF0033100"))
   )
 
@@ -1894,8 +1894,8 @@ test_that("The various color utility functions work correctly", {
 
   # Expect an error if step values are greater than 2 or
   # less than -2
-  expect_error(adjust_luminance(colors = c_hex, steps = -2.1))
-  expect_error(adjust_luminance(colors = c_hex, steps = +2.1))
+  expect_snapshot(error = TRUE,adjust_luminance(colors = c_hex, steps = -2.1))
+  expect_snapshot(error = TRUE,adjust_luminance(colors = c_hex, steps = +2.1))
 })
 
 test_that("The `cell_fill()` function accepts colors of various types", {

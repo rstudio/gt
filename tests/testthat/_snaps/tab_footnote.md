@@ -1,3 +1,62 @@
+# The `tab_footnote()` function works correctly
+
+    Code
+      data %>% tab_footnote(footnote = "Summary cell footnote.", locations = cells_summary(
+        groups = "Mercs", columns = starts_with("x"), rows = 2))
+    Condition
+      Error in `tab_footnote()`:
+      ! Can't add footnote "Summary cell footnote.".
+      Caused by error in `add_summary_location_row()`:
+      ! The location requested could not be resolved.
+      * Review the expression provided as `columns`.
+
+---
+
+    Code
+      data %>% tab_footnote(footnote = "Summary cell footnote.", locations = cells_summary(
+        groups = "Mercs", columns = starts_with("m"), rows = starts_with("x")))
+    Condition
+      Error in `tab_footnote()`:
+      ! Can't add footnote "Summary cell footnote.".
+      Caused by error in `add_summary_location_row()`:
+      ! The location requested could not be resolved.
+      * Review the expression provided as `rows`.
+
+---
+
+    Code
+      data %>% tab_footnote(footnote = "Grand summary cell footnote.", locations = cells_grand_summary(
+        columns = starts_with("x"), rows = 2))
+    Condition
+      Error in `tab_footnote()`:
+      ! Can't add footnote "Grand summary cell footnote.".
+      Caused by error in `add_grand_summary_location_row()`:
+      ! The location requested could not be resolved.
+      * Review the expression provided as `columns`.
+
+---
+
+    Code
+      data %>% tab_footnote(footnote = "Grand summary cell footnote.", locations = cells_grand_summary(
+        columns = starts_with("m"), rows = starts_with("x")))
+    Condition
+      Error in `tab_footnote()`:
+      ! Can't add footnote "Grand summary cell footnote.".
+      Caused by error in `add_grand_summary_location_row()`:
+      ! The location requested could not be resolved.
+      * Review the expression provided as `rows`.
+
+---
+
+    Code
+      data %>% tab_footnote(footnote = "Footnote error.", locations = cells_body(
+        columns = "disp", rows = "Mazda RX7"))
+    Condition
+      Error in `tab_footnote()`:
+      ! Can't add footnote "Footnote error.".
+      Caused by error in `resolve_rows_i()`:
+      ! Can't find row `Mazda RX7` in the data.
+
 # Footnotes with no location are rendered correctly
 
     Code

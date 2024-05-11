@@ -335,7 +335,7 @@ test_that("The `tab_footnote()` function works correctly", {
     )
 
   # Expect an error if columns couldn't be resolved
-  expect_error(
+  expect_snapshot(error = TRUE,
     data %>%
       tab_footnote(
         footnote = "Summary cell footnote.",
@@ -345,7 +345,7 @@ test_that("The `tab_footnote()` function works correctly", {
   )
 
   # Expect an error if rows couldn't be resolved
-  expect_error(
+  expect_snapshot(error = TRUE,
     data %>%
       tab_footnote(
         footnote = "Summary cell footnote.",
@@ -385,7 +385,7 @@ test_that("The `tab_footnote()` function works correctly", {
     )
 
   # Expect an error if columns couldn't be resolved
-  expect_error(
+  expect_snapshot(error = TRUE,
     data %>%
       tab_footnote(
         footnote = "Grand summary cell footnote.",
@@ -395,7 +395,7 @@ test_that("The `tab_footnote()` function works correctly", {
   )
 
   # Expect an error if rows couldn't be resolved
-  expect_error(
+  expect_snapshot(error = TRUE,
     data %>%
       tab_footnote(
         footnote = "Grand summary cell footnote.",
@@ -560,7 +560,7 @@ test_that("The `tab_footnote()` function works correctly", {
 
   # Expect an error in `tab_footnote` when a value for `rows` isn't
   # in the table
-  expect_error(
+  expect_snapshot(error = TRUE,
     data %>%
       tab_footnote(
         footnote = "Footnote error.",

@@ -428,10 +428,10 @@ test_that("The `vec_fmt_number()` function works", {
       )
     )
 
-  expect_error(vec_fmt_number(letters))
-  expect_error(vec_fmt_number(TRUE))
-  expect_error(vec_fmt_number(list(1, 2, 3)))
-  expect_error(vec_fmt_number(dplyr::tibble(a = c(1, 2, 3))))
+  expect_snapshot(error = TRUE,vec_fmt_number(letters))
+  expect_snapshot(error = TRUE,vec_fmt_number(TRUE))
+  expect_snapshot(error = TRUE,vec_fmt_number(list(1, 2, 3)))
+  expect_snapshot(error = TRUE,vec_fmt_number(dplyr::tibble(a = c(1, 2, 3))))
 })
 
 test_that("The `vec_fmt_integer()` function works", {
@@ -606,10 +606,10 @@ test_that("The `vec_fmt_integer()` function works", {
       )
     )
 
-  expect_error(vec_fmt_integer(letters))
-  expect_error(vec_fmt_integer(TRUE))
-  expect_error(vec_fmt_integer(list(1, 2, 3)))
-  expect_error(vec_fmt_integer(dplyr::tibble(a = c(1, 2, 3))))
+  expect_snapshot(error = TRUE,vec_fmt_integer(letters))
+  expect_snapshot(error = TRUE,vec_fmt_integer(TRUE))
+  expect_snapshot(error = TRUE,vec_fmt_integer(list(1, 2, 3)))
+  expect_snapshot(error = TRUE,vec_fmt_integer(dplyr::tibble(a = c(1, 2, 3))))
 })
 
 test_that("The `vec_fmt_scientific()` function works", {
@@ -912,10 +912,10 @@ test_that("The `vec_fmt_scientific()` function works", {
       )
     )
 
-  expect_error(vec_fmt_scientific(letters))
-  expect_error(vec_fmt_scientific(TRUE))
-  expect_error(vec_fmt_scientific(list(1, 2, 3)))
-  expect_error(vec_fmt_scientific(dplyr::tibble(a = c(1, 2, 3))))
+  expect_snapshot(error = TRUE,vec_fmt_scientific(letters))
+  expect_snapshot(error = TRUE,vec_fmt_scientific(TRUE))
+  expect_snapshot(error = TRUE,vec_fmt_scientific(list(1, 2, 3)))
+  expect_snapshot(error = TRUE,vec_fmt_scientific(dplyr::tibble(a = c(1, 2, 3))))
 })
 
 test_that("The `vec_fmt_engineering()` function works", {
@@ -1343,10 +1343,10 @@ test_that("The `vec_fmt_engineering()` function works", {
       )
     )
 
-  expect_error(vec_fmt_engineering(letters))
-  expect_error(vec_fmt_engineering(TRUE))
-  expect_error(vec_fmt_engineering(list(1, 2, 3)))
-  expect_error(vec_fmt_engineering(dplyr::tibble(a = c(1, 2, 3))))
+  expect_snapshot(error = TRUE,vec_fmt_engineering(letters))
+  expect_snapshot(error = TRUE,vec_fmt_engineering(TRUE))
+  expect_snapshot(error = TRUE,vec_fmt_engineering(list(1, 2, 3)))
+  expect_snapshot(error = TRUE,vec_fmt_engineering(dplyr::tibble(a = c(1, 2, 3))))
 })
 
 test_that("The `vec_fmt_percent()` function works", {
@@ -1822,10 +1822,10 @@ test_that("The `vec_fmt_percent()` function works", {
       )
     )
 
-  expect_error(vec_fmt_percent(letters))
-  expect_error(vec_fmt_percent(TRUE))
-  expect_error(vec_fmt_percent(list(1, 2, 3)))
-  expect_error(vec_fmt_percent(dplyr::tibble(a = c(1, 2, 3))))
+  expect_snapshot(error = TRUE,vec_fmt_percent(letters))
+  expect_snapshot(error = TRUE,vec_fmt_percent(TRUE))
+  expect_snapshot(error = TRUE,vec_fmt_percent(list(1, 2, 3)))
+  expect_snapshot(error = TRUE,vec_fmt_percent(dplyr::tibble(a = c(1, 2, 3))))
 })
 
 test_that("The `vec_fmt_partsper()` function works", {
@@ -2030,10 +2030,10 @@ test_that("The `vec_fmt_partsper()` function works", {
       )
     )
 
-  expect_error(vec_fmt_partsper(letters))
-  expect_error(vec_fmt_partsper(TRUE))
-  expect_error(vec_fmt_partsper(list(1, 2, 3)))
-  expect_error(vec_fmt_partsper(dplyr::tibble(a = c(1, 2, 3))))
+  expect_snapshot(error = TRUE,vec_fmt_partsper(letters))
+  expect_snapshot(error = TRUE,vec_fmt_partsper(TRUE))
+  expect_snapshot(error = TRUE,vec_fmt_partsper(list(1, 2, 3)))
+  expect_snapshot(error = TRUE,vec_fmt_partsper(dplyr::tibble(a = c(1, 2, 3))))
 })
 
 test_that("The `vec_fmt_fraction()` function works", {
@@ -2739,12 +2739,12 @@ test_that("The `vec_fmt_fraction()` function works", {
   vec_fmt_fraction(not_numbers, layout = "inline", output = "rtf") %>%
     expect_equal(c("NA", "NaN", "Inf", "-Inf"))
 
-  expect_error(vec_fmt_fraction(letters))
-  expect_error(vec_fmt_fraction(c(1, 2, 3), accuracy = 0))
-  expect_error(vec_fmt_fraction(c(1, 2, 3), accuracy = -1))
-  expect_error(vec_fmt_fraction(TRUE))
-  expect_error(vec_fmt_fraction(list(1, 2, 3)))
-  expect_error(vec_fmt_fraction(dplyr::tibble(a = c(1, 2, 3))))
+  expect_snapshot(error = TRUE,vec_fmt_fraction(letters))
+  expect_snapshot(error = TRUE,vec_fmt_fraction(c(1, 2, 3), accuracy = 0))
+  expect_snapshot(error = TRUE,vec_fmt_fraction(c(1, 2, 3), accuracy = -1))
+  expect_snapshot(error = TRUE,vec_fmt_fraction(TRUE))
+  expect_snapshot(error = TRUE,vec_fmt_fraction(list(1, 2, 3)))
+  expect_snapshot(error = TRUE,vec_fmt_fraction(dplyr::tibble(a = c(1, 2, 3))))
 })
 
 test_that("The `vec_fmt_currency()` function works", {
@@ -3382,11 +3382,11 @@ test_that("The `vec_fmt_currency()` function works", {
       )
     )
 
-  expect_error(vec_fmt_currency(c(1, 2), currency = "NOTREAL"))
-  expect_error(vec_fmt_currency(letters))
-  expect_error(vec_fmt_currency(TRUE))
-  expect_error(vec_fmt_currency(list(1, 2, 3)))
-  expect_error(vec_fmt_currency(dplyr::tibble(a = c(1, 2, 3))))
+  expect_snapshot(error = TRUE,vec_fmt_currency(c(1, 2), currency = "NOTREAL"))
+  expect_snapshot(error = TRUE,vec_fmt_currency(letters))
+  expect_snapshot(error = TRUE,vec_fmt_currency(TRUE))
+  expect_snapshot(error = TRUE,vec_fmt_currency(list(1, 2, 3)))
+  expect_snapshot(error = TRUE,vec_fmt_currency(dplyr::tibble(a = c(1, 2, 3))))
 })
 
 test_that("The `vec_fmt_roman()` function works", {
@@ -3443,11 +3443,11 @@ test_that("The `vec_fmt_roman()` function works", {
     vec_fmt_roman(vec_roman, case = "lower", output = "word")
   )
 
-  expect_error(vec_fmt_roman(c(1, 2), case = "middle"))
-  expect_error(vec_fmt_roman(letters))
-  expect_error(vec_fmt_roman(TRUE))
-  expect_error(vec_fmt_roman(list(1, 2, 3)))
-  expect_error(vec_fmt_roman(dplyr::tibble(a = c(1, 2, 3))))
+  expect_snapshot(error = TRUE,vec_fmt_roman(c(1, 2), case = "middle"))
+  expect_snapshot(error = TRUE,vec_fmt_roman(letters))
+  expect_snapshot(error = TRUE,vec_fmt_roman(TRUE))
+  expect_snapshot(error = TRUE,vec_fmt_roman(list(1, 2, 3)))
+  expect_snapshot(error = TRUE,vec_fmt_roman(dplyr::tibble(a = c(1, 2, 3))))
 })
 
 test_that("The `vec_fmt_index()` function works", {
@@ -3508,11 +3508,11 @@ test_that("The `vec_fmt_index()` function works", {
       c("a", "d", "e", "h", "l", "t", "", "e", "a", "NA", "t", "cb")
     )
 
-  expect_error(vec_fmt_index(c(1, 2), case = "middle"))
-  expect_error(vec_fmt_index(letters))
-  expect_error(vec_fmt_index(TRUE))
-  expect_error(vec_fmt_index(list(1, 2, 3)))
-  expect_error(vec_fmt_index(dplyr::tibble(a = c(1, 2, 3))))
+  expect_snapshot(error = TRUE,vec_fmt_index(c(1, 2), case = "middle"))
+  expect_snapshot(error = TRUE,vec_fmt_index(letters))
+  expect_snapshot(error = TRUE,vec_fmt_index(TRUE))
+  expect_snapshot(error = TRUE,vec_fmt_index(list(1, 2, 3)))
+  expect_snapshot(error = TRUE,vec_fmt_index(dplyr::tibble(a = c(1, 2, 3))))
 })
 
 test_that("The `vec_fmt_spelled_num()` function works", {
@@ -3552,10 +3552,10 @@ test_that("The `vec_fmt_spelled_num()` function works", {
       )
     )
 
-  expect_error(vec_fmt_spelled_num(letters))
-  expect_error(vec_fmt_spelled_num(TRUE))
-  expect_error(vec_fmt_spelled_num(list(1, 2, 3)))
-  expect_error(vec_fmt_spelled_num(dplyr::tibble(a = c(1, 2, 3))))
+  expect_snapshot(error = TRUE,vec_fmt_spelled_num(letters))
+  expect_snapshot(error = TRUE,vec_fmt_spelled_num(TRUE))
+  expect_snapshot(error = TRUE,vec_fmt_spelled_num(list(1, 2, 3)))
+  expect_snapshot(error = TRUE,vec_fmt_spelled_num(dplyr::tibble(a = c(1, 2, 3))))
 })
 
 test_that("The `vec_fmt_bytes()` function works", {
@@ -4355,11 +4355,11 @@ test_that("The `vec_fmt_bytes()` function works", {
       )
     )
 
-  expect_error(vec_fmt_bytes(c(1, 2), standard = "NONE"))
-  expect_error(vec_fmt_bytes(letters))
-  expect_error(vec_fmt_bytes(TRUE))
-  expect_error(vec_fmt_bytes(list(1, 2, 3)))
-  expect_error(vec_fmt_bytes(dplyr::tibble(a = c(1, 2, 3))))
+  expect_snapshot(error = TRUE,vec_fmt_bytes(c(1, 2), standard = "NONE"))
+  expect_snapshot(error = TRUE,vec_fmt_bytes(letters))
+  expect_snapshot(error = TRUE,vec_fmt_bytes(TRUE))
+  expect_snapshot(error = TRUE,vec_fmt_bytes(list(1, 2, 3)))
+  expect_snapshot(error = TRUE,vec_fmt_bytes(dplyr::tibble(a = c(1, 2, 3))))
 })
 
 test_that("The `vec_fmt_date()` function works", {

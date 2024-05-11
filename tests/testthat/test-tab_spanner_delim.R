@@ -245,15 +245,15 @@ test_that("The `tab_spanner_delim()` function works correctly", {
   # Expect an error if an invalid delimiter specification is used; here
   # we use strings that aren't at least a single character (and, in some cases,
   # vectors with lengths not equal to one)
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt(iris_short) %>%
       tab_spanner_delim(delim = "")
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt(iris_short) %>%
       tab_spanner_delim(delim = c(".", "."))
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt(iris_short) %>%
       tab_spanner_delim(delim = character(0))
   )
@@ -263,11 +263,11 @@ test_that("The `tab_spanner_delim()` function works correctly", {
   )
 
   # Expect an error if the `split` value isn't one of two keywords
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt(iris_short) %>%
       tab_spanner_delim(delim = "_", split = "yes")
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt(iris_short) %>%
       tab_spanner_delim(delim = "_", split = NULL)
   )
@@ -286,23 +286,23 @@ test_that("The `tab_spanner_delim()` function works correctly", {
 
   # Expect an error if an invalid limit specification is used; here
   # we use values that aren't a single integer in the acceptable range
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt(iris_short) %>%
       tab_spanner_delim(delim = ".", limit = TRUE)
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt(iris_short) %>%
       tab_spanner_delim(delim = ".", limit = "1")
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt(iris_short) %>%
       tab_spanner_delim(delim = ".", limit = -1)
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt(iris_short) %>%
       tab_spanner_delim(delim = ".", limit = 0)
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt(iris_short) %>%
       tab_spanner_delim(delim = ".", limit = 1.5)
   )
@@ -315,7 +315,7 @@ test_that("The `tab_spanner_delim()` function works correctly", {
       tab_spanner_delim(delim = ".", limit = 2)
   )
   # Expect that `limit = Inf` causes a downstream error
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt(iris_short) %>%
       tab_spanner_delim(delim = ".", limit = Inf)
   )
@@ -903,7 +903,7 @@ test_that("`tab_spanner_delim()` works on higher-order spanning", {
 
   # Expect that a replacement of a spanner won't work
   # because `replace = FALSE` by default
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt_tbl_spanner_3 %>%
       tab_spanner(
         label = md("**REPLACED**"),
@@ -966,7 +966,7 @@ test_that("`tab_spanner_delim()` works on higher-order spanning", {
   #
 
   # These won't work because `replace = FALSE` by default
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt_tbl_spanner_A_1 %>%
       tab_spanner(
         label = "Cut In",
@@ -974,7 +974,7 @@ test_that("`tab_spanner_delim()` works on higher-order spanning", {
         level = 3
       )
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt_tbl_spanner_A_1 %>%
       tab_spanner(
         label = "Cut In",
@@ -982,7 +982,7 @@ test_that("`tab_spanner_delim()` works on higher-order spanning", {
         level = 3
       )
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt_tbl_spanner_A_1 %>%
       tab_spanner(
         label = "Cut In",
@@ -990,7 +990,7 @@ test_that("`tab_spanner_delim()` works on higher-order spanning", {
         level = 3
       )
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt_tbl_spanner_A_1 %>%
       tab_spanner(
         label = "Cut In",
@@ -1097,7 +1097,7 @@ test_that("`tab_spanner_delim()` works on higher-order spanning", {
 
   # Expect an error should a `id` value be reused (here,
   # it's `"**Z**"` that's used twice)
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt_tbl_6_last %>%
       tab_spanner(label = md("**Z**"), columns = 5, level = 4) %>%
       tab_spanner(label = md("**Z**"), columns = 5, level = 3)
@@ -1115,7 +1115,7 @@ test_that("`tab_spanner_delim()` works on higher-order spanning", {
 
   # A replacement of an spanner with the same `id` doesn't work (even
   # though the duplicated ID does not result in duplicate IDs afterward)
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt_tbl_6_z %>%
       tab_spanner(
         label = md("**Y**"),

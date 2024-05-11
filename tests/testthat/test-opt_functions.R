@@ -24,10 +24,10 @@ test_that("The `opt_footnote_marks()` function sets the correct options", {
     dt_options_get_value("footnotes_marks") %>%
     expect_equal(LETTERS)
 
-  expect_error(exibble %>% gt() %>% opt_footnote_marks(NULL))
-  expect_error(exibble %>% gt() %>% opt_footnote_marks("set_1"))
-  expect_error(exibble %>% gt() %>% opt_footnote_marks(1:5))
-  expect_error(exibble %>% gt() %>% opt_footnote_marks(character(0)))
+  expect_snapshot(error = TRUE,exibble %>% gt() %>% opt_footnote_marks(NULL))
+  expect_snapshot(error = TRUE,exibble %>% gt() %>% opt_footnote_marks("set_1"))
+  expect_snapshot(error = TRUE,exibble %>% gt() %>% opt_footnote_marks(1:5))
+  expect_snapshot(error = TRUE,exibble %>% gt() %>% opt_footnote_marks(character(0)))
 })
 
 test_that("The `opt_row_striping()` function sets the correct options", {
@@ -82,9 +82,9 @@ test_that("The `opt_align_table_header()` function sets the correct options", {
     dt_options_get_value("heading_align") %>%
     expect_equal("right")
 
-  expect_error(exibble %>% gt() %>% opt_align_table_header(1))
-  expect_error(exibble %>% gt() %>% opt_align_table_header(c("left", "right")))
-  expect_error(exibble %>% gt() %>% opt_align_table_header(c("justify")))
+  expect_snapshot(error = TRUE,exibble %>% gt() %>% opt_align_table_header(1))
+  expect_snapshot(error = TRUE,exibble %>% gt() %>% opt_align_table_header(c("left", "right")))
+  expect_snapshot(error = TRUE,exibble %>% gt() %>% opt_align_table_header(c("justify")))
 })
 
 test_that("The `opt_all_caps()` function sets the correct options", {
@@ -137,7 +137,7 @@ test_that("The `opt_all_caps()` function sets the correct options", {
   tbl %>% dt_options_get_value("row_group_font_size") %>% expect_equal("100%")
   tbl %>% dt_options_get_value("row_group_font_weight") %>% expect_equal("initial")
 
-  expect_error(exibble %>% gt() %>% opt_all_caps(locations = c("column_labels", "footer")))
+  expect_snapshot(error = TRUE,exibble %>% gt() %>% opt_all_caps(locations = c("column_labels", "footer")))
 })
 
 test_that("The `opt_table_lines()` function sets the correct options", {
@@ -437,8 +437,8 @@ test_that("The `opt_table_font()` function sets the correct options", {
 
   # Expect an error if input to `font` is not a character vector
   # or a list (but no errors otherwise)
-  expect_error(tbl %>% opt_table_font(font = c(TRUE, FALSE)))
-  expect_error(tbl %>% opt_table_font(font = 1:3))
+  expect_snapshot(error = TRUE,tbl %>% opt_table_font(font = c(TRUE, FALSE)))
+  expect_snapshot(error = TRUE,tbl %>% opt_table_font(font = 1:3))
   expect_no_error(tbl %>% opt_table_font(font = c("Courier", "Comic Sans MS")))
   expect_no_error(tbl %>% opt_table_font(font = list("Courier", "Comic Sans MS")))
   expect_no_error(tbl %>% opt_table_font(font = LETTERS))

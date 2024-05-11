@@ -734,8 +734,8 @@ test_that("rows can be added to a table with name-value pairs", {
   gt_tbl_c_08 %>% render_as_html() %>% expect_snapshot()
 
   # Expect an error if non-valid values given to `.n_empty`
-  expect_error(gt_tbl_c %>% rows_add(.n_empty = -1))
-  expect_error(gt_tbl_c %>% rows_add(.n_empty = 3.2))
+  expect_snapshot(error = TRUE,gt_tbl_c %>% rows_add(.n_empty = -1))
+  expect_snapshot(error = TRUE,gt_tbl_c %>% rows_add(.n_empty = 3.2))
   expect_no_error(gt_tbl_c %>% rows_add(.n_empty = 3.0))
 
   gt_tbl_d <-
@@ -1042,53 +1042,34 @@ test_that("rows can be added to a table with name-value pairs", {
   gt_tbl_g_add2_a8 %>% render_as_html() %>% expect_snapshot()
   expect_error(gt_tbl_g %>% rows_add(.n_empty = 2, .after = 9))
 
-  # Expect an error if using both `.before` and `.after`
-  expect_error(
-    gt_tbl_e %>%
-      rows_add(.before = 2, .after = 5, .n_empty = 2)
-  )
-  expect_error(
-    gt_tbl_e %>%
-      rows_add(.before = 3, .after = 2, .n_empty = 2)
-  )
 
   # Expect that targeting rows should only resolve to a single row
-  expect_error(
-    gt_tbl_e %>%
-      rows_add(.before = c(2, 5), .n_empty = 2)
-  )
-  expect_error(
-    gt_tbl_e %>%
-      rows_add(.after = c(2, 5), .n_empty = 2)
-  )
-  expect_error(
-    gt_tbl_e %>%
-      rows_add(.before = c("row_2", "row_5"), .n_empty = 2)
-  )
-  expect_error(
-    gt_tbl_e %>%
-      rows_add(.after = c("row_2", "row_5"), .n_empty = 2)
-  )
-  expect_error(
-    gt_tbl_e %>%
-      rows_add(.before = matches("5|6"), .n_empty = 2)
-  )
-  expect_error(
-    gt_tbl_e %>%
-      rows_add(.after = matches("5|6"), .n_empty = 2)
-  )
-  expect_error(
-    gt_tbl_e %>%
-      rows_add(.after = matches("5|6"), .before = 3, .n_empty = 2)
-  )
-  expect_error(
-    gt_tbl_e %>%
-      rows_add(.before = matches("5|6"), .after = 3, .n_empty = 2)
-  )
-  expect_error(
-    gt_tbl_e %>%
-      rows_add(.before = matches("5"), .after = matches("6"), .n_empty = 2)
-  )
+
+})
+
+test_that("rows_add() errors if using both `.before` and `.after`", {
+  simp_gt <-  gt(exibble)
+
+  expect_snapshot(error = TRUE, {
+    simp_gt %>% rows_add(.before = 2, .after = 5, .n_empty = 2)
+    simp_gt %>% rows_add(.before = 3, .after = 2, .n_empty = 2)
+  })
+})
+
+test_that("rows_add() errors if targeting rows do not resolve to a single row ", {
+  gt_tbl_e <- gt(exibble, rowname_col = "row")
+
+  expect_snapshot(error = TRUE, {
+    gt_tbl_e %>% rows_add(.before = c(2, 5), .n_empty = 2)
+    gt_tbl_e %>% rows_add(.after = c(2, 5), .n_empty = 2)
+    gt_tbl_e %>% rows_add(.before = c("row_2", "row_5"), .n_empty = 2)
+    gt_tbl_e %>% rows_add(.after = c("row_2", "row_5"), .n_empty = 2)
+    gt_tbl_e %>% rows_add(.before = matches("5|6"), .n_empty = 2)
+    gt_tbl_e %>% rows_add(.after = matches("5|6"), .n_empty = 2)
+    gt_tbl_e %>% rows_add(.after = matches("5|6"), .before = 3, .n_empty = 2)
+    gt_tbl_e %>% rows_add(.before = matches("5|6"), .after = 3, .n_empty = 2)
+    gt_tbl_e %>% rows_add(.before = matches("5"), .after = matches("6"), .n_empty = 2)
+  })
 })
 
 test_that("adding rows can be done using formula-based expressions", {
@@ -1385,7 +1366,7 @@ test_that("adding rows can be done using formula-based expressions", {
   gt_tbl_h_11 %>% render_as_html() %>% expect_snapshot()
 
   # Expect an error if using a one-sided formula
-  expect_error(
+  expect_snapshot(error = TRUE,
     dplyr::tibble(
       a = 1:10,
       b = 21:30
@@ -1719,29 +1700,29 @@ test_that("adding rows can only involve columns already present in the table", {
 
   expect_no_error(gt_tbl %>% rows_add())
   expect_no_error(gt_tbl %>% rows_add(char = "elderberry"))
-  expect_error(gt_tbl %>% rows_add(char_none = "elderberry"))
-  expect_error(gt_tbl %>% rows_add(char = "elderberry", char_none = "watermelon"))
+  expect_snapshot(error = TRUE,gt_tbl %>% rows_add(char_none = "elderberry"))
+  expect_snapshot(error = TRUE,gt_tbl %>% rows_add(char = "elderberry", char_none = "watermelon"))
 
   gt_tbl_2 <- gt(exibble, rowname_col = "row")
 
   expect_no_error(gt_tbl_2 %>% rows_add())
   expect_no_error(gt_tbl_2 %>% rows_add(char = "elderberry"))
-  expect_error(gt_tbl_2 %>% rows_add(char_none = "elderberry"))
-  expect_error(gt_tbl_2 %>% rows_add(char = "elderberry", char_none = "watermelon"))
+  expect_snapshot(error = TRUE,gt_tbl_2 %>% rows_add(char_none = "elderberry"))
+  expect_snapshot(error = TRUE,gt_tbl_2 %>% rows_add(char = "elderberry", char_none = "watermelon"))
 
   gt_tbl_3 <- gt(exibble, rowname_col = "row", groupname_col = "group")
 
   expect_no_error(gt_tbl_3 %>% rows_add())
   expect_no_error(gt_tbl_3 %>% rows_add(char = "elderberry"))
-  expect_error(gt_tbl_3 %>% rows_add(char_none = "elderberry"))
-  expect_error(gt_tbl_3 %>% rows_add(char = "elderberry", char_none = "watermelon"))
+  expect_snapshot(error = TRUE,gt_tbl_3 %>% rows_add(char_none = "elderberry"))
+  expect_snapshot(error = TRUE,gt_tbl_3 %>% rows_add(char = "elderberry", char_none = "watermelon"))
 
   gt_tbl_4 <- gt(exibble, groupname_col = "group")
 
   expect_no_error(gt_tbl_4 %>% rows_add())
   expect_no_error(gt_tbl_4 %>% rows_add(char = "elderberry"))
-  expect_error(gt_tbl_4 %>% rows_add(char_none = "elderberry"))
-  expect_error(gt_tbl_4 %>% rows_add(char = "elderberry", char_none = "watermelon"))
+  expect_snapshot(error = TRUE,gt_tbl_4 %>% rows_add(char_none = "elderberry"))
+  expect_snapshot(error = TRUE,gt_tbl_4 %>% rows_add(char = "elderberry", char_none = "watermelon"))
 })
 
 test_that("adding rows can only be done with compatible data", {
@@ -1749,9 +1730,9 @@ test_that("adding rows can only be done with compatible data", {
   gt_tbl <- gt(exibble)
 
   expect_no_error(gt_tbl %>% rows_add(char = "elderberry"))
-  expect_error(gt_tbl %>% rows_add(char = 2))
-  expect_error(gt_tbl %>% rows_add(char = list("two")))
-  expect_error(gt_tbl %>% rows_add(char = "elderberry", time = 600))
+  expect_snapshot(error = TRUE,gt_tbl %>% rows_add(char = 2))
+  expect_snapshot(error = TRUE,gt_tbl %>% rows_add(char = list("two")))
+  expect_snapshot(error = TRUE,gt_tbl %>% rows_add(char = "elderberry", time = 600))
   expect_no_error(gt_tbl %>% rows_add(fctr = "nine"))
   expect_no_error(gt_tbl %>% rows_add(fctr = factor("nine")))
 })
@@ -1958,7 +1939,7 @@ test_that("adding rows and styling the table has the intended behavior", {
 
   # Expect an error when trying to resolve indices that don't yet exist
   # (i.e., the order of `rows_add()` and `tab_style()` matters)
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt_tbl %>%
       tab_style(
         style = cell_fill(),
@@ -1967,7 +1948,7 @@ test_that("adding rows and styling the table has the intended behavior", {
       rows_add(row = "row_3.5", .after = "row_3")
   )
 
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt_tbl %>%
       tab_style(
         style = cell_fill(),

@@ -502,7 +502,7 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
   )
 
   # Do expect an error if the `levels` vector isn't a numeric one
-  expect_error(
+  expect_snapshot(error = TRUE,
     gtcars %>%
       dplyr::select(
         -mfr, -trim, bdy_style, drivetrain,
@@ -526,7 +526,7 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
 
   # Expect an error if the `spanners` vector contains ID values that
   # don't exist for any spanner column labels
-  expect_error(
+  expect_snapshot(error = TRUE,
     gtcars %>%
       dplyr::select(
         -mfr, -trim, bdy_style, drivetrain,
@@ -605,21 +605,21 @@ test_that("Table footnotes can be removed using `rm_footnotes()`", {
 
   # Expect an error when providing any integer values that don't correspond
   # with the available footnotes ([1, 2])
-  expect_error(
+  expect_snapshot(error = TRUE,
     exibble %>%
       gt() %>%
       tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
       tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
       rm_footnotes(footnotes = 0:1)
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     exibble %>%
       gt() %>%
       tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
       tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
       rm_footnotes(footnotes = 2:3)
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     exibble %>%
       gt() %>%
       tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
@@ -731,21 +731,21 @@ test_that("Table source notes can be removed using `rm_source_notes()`", {
 
   # Expect an error when providing any integer values that don't correspond
   # with the available source notes ([1, 2])
-  expect_error(
+  expect_snapshot(error = TRUE,
     exibble %>%
       gt() %>%
       tab_source_note(source_note = "Source Note 1") %>%
       tab_source_note(source_note = "Source Note 2") %>%
       rm_source_notes(source_notes = 0:1)
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     exibble %>%
       gt() %>%
       tab_source_note(source_note = "Source Note 1") %>%
       tab_source_note(source_note = "Source Note 2") %>%
       rm_source_notes(source_notes = 2:3)
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     exibble %>%
       gt() %>%
       tab_source_note(source_note = "Source Note 1") %>%

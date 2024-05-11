@@ -35,7 +35,7 @@ test_that("The `fmt_passthrough()` function works correctly", {
 
   # Expect an error when attempting to format a column
   # that does not exist
-  expect_error(
+  expect_snapshot(error = TRUE,
     tab %>% fmt_passthrough(columns = "num_3"))
 
   #

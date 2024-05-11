@@ -118,10 +118,10 @@ test_that("The function `cols_label()` works correctly", {
     expect_equal(c("col_a", "col_b", "col_c", "col_d"))
 
   # Expect an error if any names are missing
-  expect_error(gt(tbl) %>% cols_label("col_a"))
+  expect_snapshot(error = TRUE,gt(tbl) %>% cols_label("col_a"))
 
   # Expect an error if any columns are not part of the original dataset
-  expect_error(gt(tbl) %>% cols_label(col_a = "col_1"))
+  expect_snapshot(error = TRUE,gt(tbl) %>% cols_label(col_a = "col_1"))
 
   # Expect no partial matching issues with column names and arguments
   expect_no_error(
@@ -151,7 +151,7 @@ test_that("The function `cols_label()` works correctly", {
 
   # Do expect an error in the unlikely case that a column
   # name is close enough to `.data`
-  expect_error(
+  expect_snapshot(error = TRUE,
     dplyr::tribble(
       ~a , ~.dat,
       1, 4,

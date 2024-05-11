@@ -163,7 +163,7 @@ test_that("We can start from empty tables and sometimes add rows", {
     )
 
   # New empty rows cannot be added to a zero-row, multicolumn table
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt(empty_w_cols_tbl) %>%
       rows_add(a = double(0), b = character(0))
   )

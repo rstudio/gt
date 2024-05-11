@@ -250,8 +250,8 @@ test_that("The function `cols_label_with()` works correctly", {
   )
 
   # Expect an error if `fn` is missing
-  expect_error(gt(tbl) %>% cols_label_with(fn = NULL))
+  expect_snapshot(error = TRUE,gt(tbl) %>% cols_label_with(fn = NULL))
 
   # Expect an error if any columns declared are not present
-  expect_error(gt(tbl) %>% cols_label_with(columns = col_a, fn = function(x) "col_1"))
+  expect_snapshot(error = TRUE,gt(tbl) %>% cols_label_with(columns = col_a, fn = function(x) "col_1"))
 })

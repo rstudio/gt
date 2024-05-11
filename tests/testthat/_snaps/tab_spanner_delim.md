@@ -1,3 +1,91 @@
+# The `tab_spanner_delim()` function works correctly
+
+    Code
+      gt(iris_short) %>% tab_spanner_delim(delim = "")
+    Condition
+      Error in `tab_spanner_delim()`:
+      ! The value supplied for `delim` must be at least a single character.
+
+---
+
+    Code
+      gt(iris_short) %>% tab_spanner_delim(delim = c(".", "."))
+    Condition
+      Error in `tab_spanner_delim()`:
+      ! `delim` must be a single value.
+
+---
+
+    Code
+      gt(iris_short) %>% tab_spanner_delim(delim = character(0))
+    Condition
+      Error in `tab_spanner_delim()`:
+      ! `delim` must be a single value.
+
+---
+
+    Code
+      gt(iris_short) %>% tab_spanner_delim(delim = "_", split = "yes")
+    Condition
+      Error in `tab_spanner_delim()`:
+      ! `split` must be one of "last" or "first", not "yes".
+
+---
+
+    Code
+      gt(iris_short) %>% tab_spanner_delim(delim = "_", split = NULL)
+    Condition
+      Error in `tab_spanner_delim()`:
+      ! `split` must be a character vector, not `NULL`.
+
+---
+
+    Code
+      gt(iris_short) %>% tab_spanner_delim(delim = ".", limit = TRUE)
+    Condition
+      Error in `tab_spanner_delim()`:
+      ! An integer value should be supplied for `limit`.
+
+---
+
+    Code
+      gt(iris_short) %>% tab_spanner_delim(delim = ".", limit = "1")
+    Condition
+      Error in `tab_spanner_delim()`:
+      ! An integer value should be supplied for `limit`.
+
+---
+
+    Code
+      gt(iris_short) %>% tab_spanner_delim(delim = ".", limit = -1)
+    Condition
+      Error in `tab_spanner_delim()`:
+      ! The value supplied for `limit` should be `1` or greater.
+
+---
+
+    Code
+      gt(iris_short) %>% tab_spanner_delim(delim = ".", limit = 0)
+    Condition
+      Error in `tab_spanner_delim()`:
+      ! The value supplied for `limit` should be `1` or greater.
+
+---
+
+    Code
+      gt(iris_short) %>% tab_spanner_delim(delim = ".", limit = 1.5)
+    Condition
+      Error in `tab_spanner_delim()`:
+      ! An integer value should be supplied for `limit`.
+
+---
+
+    Code
+      gt(iris_short) %>% tab_spanner_delim(delim = ".", limit = Inf)
+    Condition
+      Error in `seq_len()`:
+      ! argument must be coercible to non-negative integer
+
 # `tab_spanner_delim()` works on higher-order spanning
 
     Code
@@ -141,6 +229,15 @@
 ---
 
     Code
+      gt_tbl_spanner_3 %>% tab_spanner(label = md("**REPLACED**"), spanners = everything(),
+      level = 3)
+    Condition
+      Error in `dt_spanners_add()`:
+      ! The column(s) used (`all.W.A, all.Z.B, all.X.B, all.Y.A`) for the new spanner `**REPLACED**` belong to an existing spanner.
+
+---
+
+    Code
       .
     Output
       [1] "<table class=\"gt_table\" data-quarto-disable-processing=\"false\" data-quarto-bootstrap=\"false\">\n  <thead>\n    <tr class=\"gt_col_headings gt_spanner_row\">\n      <th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" rowspan=\"1\" colspan=\"4\" scope=\"colgroup\" id=\"&lt;span class='gt_from_md'&gt;&lt;strong&gt;REPLACED&lt;/strong&gt;&lt;/span&gt;\">\n        <span class=\"gt_column_spanner\"><span class='gt_from_md'><strong>REPLACED</strong></span></span>\n      </th>\n    </tr>\n    <tr class=\"gt_col_headings gt_spanner_row\">\n      <th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"all\">\n        <span class=\"gt_column_spanner\">all</span>\n      </th>\n      <th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" rowspan=\"1\" colspan=\"2\" scope=\"colgroup\" id=\"SUSPENDED\">\n        <span class=\"gt_column_spanner\">SUSPENDED</span>\n      </th>\n      <th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"all\">\n        <span class=\"gt_column_spanner\">all</span>\n      </th>\n    </tr>\n    <tr class=\"gt_col_headings gt_spanner_row\">\n      <th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"W\">\n        <span class=\"gt_column_spanner\">W</span>\n      </th>\n      <th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" rowspan=\"1\" colspan=\"2\" scope=\"colgroup\" id=\"INFILL\">\n        <span class=\"gt_column_spanner\">INFILL</span>\n      </th>\n      <th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"Z\">\n        <span class=\"gt_column_spanner\">Z</span>\n      </th>\n    </tr>\n    <tr class=\"gt_col_headings\">\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"A\">A</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"all.X.B\">all.X.B</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"all.Y.A\">all.Y.A</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"B\">B</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td headers=\"all.W.A\" class=\"gt_row gt_right\">1</td>\n<td headers=\"all.X.B\" class=\"gt_row gt_right\">2</td>\n<td headers=\"all.Y.A\" class=\"gt_row gt_right\">3</td>\n<td headers=\"all.Z.B\" class=\"gt_row gt_right\">4</td></tr>\n  </tbody>\n  \n  \n</table>"
@@ -165,6 +262,40 @@
       .
     Output
       [1] "<table class=\"gt_table\" data-quarto-disable-processing=\"false\" data-quarto-bootstrap=\"false\">\n  <thead>\n    <tr class=\"gt_col_headings gt_spanner_row\">\n      <th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" rowspan=\"1\" colspan=\"4\" scope=\"colgroup\" id=\"Data\">\n        <span class=\"gt_column_spanner\">Data</span>\n      </th>\n    </tr>\n    <tr class=\"gt_col_headings gt_spanner_row\">\n      <th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" rowspan=\"1\" colspan=\"2\" scope=\"colgroup\" id=\"span_1\">\n        <span class=\"gt_column_spanner\">span_1</span>\n      </th>\n      <th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" rowspan=\"1\" colspan=\"2\" scope=\"colgroup\" id=\"span_2\">\n        <span class=\"gt_column_spanner\">span_2</span>\n      </th>\n    </tr>\n    <tr class=\"gt_col_headings gt_spanner_row\">\n      <th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"A\">\n        <span class=\"gt_column_spanner\">A</span>\n      </th>\n      <th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"B\">\n        <span class=\"gt_column_spanner\">B</span>\n      </th>\n      <th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"A\">\n        <span class=\"gt_column_spanner\">A</span>\n      </th>\n      <th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"B\">\n        <span class=\"gt_column_spanner\">B</span>\n      </th>\n    </tr>\n    <tr class=\"gt_col_headings\">\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"X\">X</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"X\">X</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"Y\">Y</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"Y\">Y</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td headers=\"span_1.A.X\" class=\"gt_row gt_right\">1</td>\n<td headers=\"span_1.B.X\" class=\"gt_row gt_right\">2</td>\n<td headers=\"span_2.A.Y\" class=\"gt_row gt_right\">3</td>\n<td headers=\"span_2.B.Y\" class=\"gt_row gt_right\">4</td></tr>\n  </tbody>\n  \n  \n</table>"
+
+---
+
+    Code
+      gt_tbl_spanner_A_1 %>% tab_spanner(label = "Cut In", columns = 1, level = 3)
+    Condition
+      Error in `dt_spanners_add()`:
+      ! The column(s) used (`span_1.A.X`) for the new spanner `Cut In` belong to an existing spanner.
+
+---
+
+    Code
+      gt_tbl_spanner_A_1 %>% tab_spanner(label = "Cut In", columns = c(1, 2), level = 3)
+    Condition
+      Error in `dt_spanners_add()`:
+      ! The column(s) used (`span_1.A.X, span_1.B.X`) for the new spanner `Cut In` belong to an existing spanner.
+
+---
+
+    Code
+      gt_tbl_spanner_A_1 %>% tab_spanner(label = "Cut In", columns = c(1, 2, 3),
+      level = 3)
+    Condition
+      Error in `dt_spanners_add()`:
+      ! The column(s) used (`span_1.A.X, span_1.B.X, span_2.A.Y`) for the new spanner `Cut In` belong to an existing spanner.
+
+---
+
+    Code
+      gt_tbl_spanner_A_1 %>% tab_spanner(label = "Cut In", columns = c(1, 2, 3, 4),
+      level = 3)
+    Condition
+      Error in `dt_spanners_add()`:
+      ! The column(s) used (`span_1.A.X, span_1.B.X, span_2.A.Y, span_2.B.Y`) for the new spanner `Cut In` belong to an existing spanner.
 
 ---
 
@@ -225,9 +356,31 @@
 ---
 
     Code
+      gt_tbl_6_last %>% tab_spanner(label = md("**Z**"), columns = 5, level = 4) %>%
+        tab_spanner(label = md("**Z**"), columns = 5, level = 3)
+    Condition
+      Error in `check_spanner_id_unique()`:
+      ! The spanner `id` provided (**Z**) is not unique.
+      * The `id` must be unique across existing spanner and column IDs.
+      * Provide a unique ID value for this spanner.
+
+---
+
+    Code
       .
     Output
       [1] "<table class=\"gt_table\" data-quarto-disable-processing=\"false\" data-quarto-bootstrap=\"false\">\n  <thead>\n    <tr class=\"gt_col_headings gt_spanner_row\">\n      <th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"A\">\n        <span class=\"gt_column_spanner\">A</span>\n      </th>\n      <th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" rowspan=\"1\" colspan=\"3\" scope=\"colgroup\" id></th>\n      <th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"&lt;span class='gt_from_md'&gt;&lt;strong&gt;Z&lt;/strong&gt;&lt;/span&gt;\">\n        <span class=\"gt_column_spanner\"><span class='gt_from_md'><strong>Z</strong></span></span>\n      </th>\n    </tr>\n    <tr class=\"gt_col_headings gt_spanner_row\">\n      <th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"B\">\n        <span class=\"gt_column_spanner\">B</span>\n      </th>\n      <th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"A\">\n        <span class=\"gt_column_spanner\">A</span>\n      </th>\n      <th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" rowspan=\"1\" colspan=\"2\" scope=\"colgroup\" id></th>\n      <th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"&lt;span class='gt_from_md'&gt;&lt;strong&gt;Z&lt;/strong&gt;&lt;/span&gt;\">\n        <span class=\"gt_column_spanner\"><span class='gt_from_md'><strong>Z</strong></span></span>\n      </th>\n    </tr>\n    <tr class=\"gt_col_headings gt_spanner_row\">\n      <th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"C\">\n        <span class=\"gt_column_spanner\">C</span>\n      </th>\n      <th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"B\">\n        <span class=\"gt_column_spanner\">B</span>\n      </th>\n      <th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"A\">\n        <span class=\"gt_column_spanner\">A</span>\n      </th>\n      <th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id></th>\n      <th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"&lt;span class='gt_from_md'&gt;&lt;strong&gt;Z&lt;/strong&gt;&lt;/span&gt;\">\n        <span class=\"gt_column_spanner\"><span class='gt_from_md'><strong>Z</strong></span></span>\n      </th>\n    </tr>\n    <tr class=\"gt_col_headings gt_spanner_row\">\n      <th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"D\">\n        <span class=\"gt_column_spanner\">D</span>\n      </th>\n      <th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"C\">\n        <span class=\"gt_column_spanner\">C</span>\n      </th>\n      <th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"B\">\n        <span class=\"gt_column_spanner\">B</span>\n      </th>\n      <th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"A\">\n        <span class=\"gt_column_spanner\">A</span>\n      </th>\n      <th class=\"gt_center gt_columns_top_border gt_column_spanner_outer\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"&lt;span class='gt_from_md'&gt;&lt;strong&gt;Z&lt;/strong&gt;&lt;/span&gt;\">\n        <span class=\"gt_column_spanner\"><span class='gt_from_md'><strong>Z</strong></span></span>\n      </th>\n    </tr>\n    <tr class=\"gt_col_headings\">\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"E\">E</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"D\">D</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"C\">C</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"B\">B</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"A\">A</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><td headers=\"A.B.C.D.E\" class=\"gt_row gt_right\">1</td>\n<td headers=\"A.B.C.D\" class=\"gt_row gt_right\">2</td>\n<td headers=\"A.B.C\" class=\"gt_row gt_right\">3</td>\n<td headers=\"A.B\" class=\"gt_row gt_right\">4</td>\n<td headers=\"A\" class=\"gt_row gt_right\">5</td></tr>\n  </tbody>\n  \n  \n</table>"
+
+---
+
+    Code
+      gt_tbl_6_z %>% tab_spanner(label = md("**Y**"), columns = 5, level = 4, id = "Z4",
+      replace = TRUE)
+    Condition
+      Error in `check_spanner_id_unique()`:
+      ! The spanner `id` provided ("Z4") is not unique.
+      * The `id` must be unique across existing spanner and column IDs.
+      * Provide a unique ID value for this spanner.
 
 ---
 

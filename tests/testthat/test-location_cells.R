@@ -85,18 +85,18 @@ test_that("The `cells_title()` function works correctly", {
     expect_equal("subtitle")
 
   # Expect an error if the input to `cells_title()` is invalid
-  expect_error(cells_title(groups = NULL))
-  expect_error(cells_title(groups = 1:2))
-  expect_error(cells_title(groups = vars(title)))
-  expect_error(cells_title(groups = "titles"))
-  expect_error(cells_title(groups = c("title", "stubtitle")))
-  expect_error(cells_title(groups = c("title", "subtitle", "title")))
-  expect_error(cells_title(groups = c("title", "subtitle", "subtitle")))
-  expect_error(cells_title(groups = c("title", "title")))
-  expect_error(cells_title(groups = c("subtitle", "subtitle")))
-  expect_error(cells_title(groups = rep("title", 3)))
-  expect_error(cells_title(groups = ""))
-  expect_error(cells_title(groups = character(0)))
+  expect_snapshot(error = TRUE,cells_title(groups = NULL))
+  expect_snapshot(error = TRUE,cells_title(groups = 1:2))
+  expect_snapshot(error = TRUE,cells_title(groups = vars(title)))
+  expect_snapshot(error = TRUE,cells_title(groups = "titles"))
+  expect_snapshot(error = TRUE,cells_title(groups = c("title", "stubtitle")))
+  expect_snapshot(error = TRUE,cells_title(groups = c("title", "subtitle", "title")))
+  expect_snapshot(error = TRUE,cells_title(groups = c("title", "subtitle", "subtitle")))
+  expect_snapshot(error = TRUE,cells_title(groups = c("title", "title")))
+  expect_snapshot(error = TRUE,cells_title(groups = c("subtitle", "subtitle")))
+  expect_snapshot(error = TRUE,cells_title(groups = rep("title", 3)))
+  expect_snapshot(error = TRUE,cells_title(groups = ""))
+  expect_snapshot(error = TRUE,cells_title(groups = character(0)))
 })
 
 test_that("The `cells_column_labels()` function works correctly", {
@@ -915,7 +915,7 @@ test_that("Styles are correctly applied to HTML output with location functions",
     expect_true()
 
   # Expect an error if applying footnotes to the footnotes location
-  expect_error(
+  expect_snapshot(error = TRUE,
     tbl %>%
       gt() %>%
       tab_footnote(
@@ -949,7 +949,7 @@ test_that("Styles are correctly applied to HTML output with location functions",
     expect_true()
 
   # Expect an error if applying footnotes to the source notes location
-  expect_error(
+  expect_snapshot(error = TRUE,
     tbl %>%
       gt() %>%
       tab_source_note(source_note = "This is a source note") %>%

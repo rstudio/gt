@@ -43,6 +43,15 @@
 ---
 
     Code
+      gt(rock) %>% tab_spanner(label = "perimeter", columns = c(peris, shapes))
+    Condition
+      Error in `tab_spanner()`:
+      ! Can't select columns that don't exist.
+      x Column `peris` doesn't exist.
+
+---
+
+    Code
       .
     Output
       [1] "\\begingroup\n\\fontsize{12.0pt}{14.4pt}\\selectfont\n\\begin{longtable}{rrrrr}\n\\toprule\n & \\multicolumn{2}{c}{v\\_1\\_2} & \\multicolumn{2}{c}{v\\_4\\_5} \\\\ \n\\cmidrule(lr){2-3} \\cmidrule(lr){4-5}\nv\\_3 & v\\_1 & v\\_2 & v\\_4 & v\\_5 \\\\ \n\\midrule\\addlinespace[2.5pt]\n34.2 & 20.4 & 36.1 & 21.6 & 23.1 \\\\ \n13.7 & 25.8 & 14.3 & 12.9 & 75.9 \\\\ \n15.1 & 16.3 & 34.3 & 93.2 & 12.1 \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"

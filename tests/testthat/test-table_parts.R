@@ -106,7 +106,7 @@ test_that("A gt table contains the expected heading components", {
     expect_snapshot()
 
   # Expect an error if only a subtitle is provided to `tab_header()`
-  expect_error(
+  expect_snapshot(error = TRUE,
     mtcars_short %>%
       gt() %>%
       tab_header(subtitle = "test subtitle")
@@ -308,7 +308,7 @@ test_that("Row groups can be successfully generated with `tab_row_group()", {
 
   # Expect an error if not providing a `label` for `tab_row_group()`
   # but there is a specification of rows
-  expect_error(
+  expect_snapshot(error = TRUE,
     exibble %>%
       gt() %>%
       tab_row_group(
@@ -372,7 +372,7 @@ test_that("Row groups can be successfully generated with `tab_row_group()", {
   )
 
   # Expect an error upon repeat use of a row group `id` value
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt(exibble, rowname_col = "row") %>%
       tab_row_group(label = "a", rows = 1:2, id = "one") %>%
       tab_row_group(label = "b", rows = 3:4, id = "one")

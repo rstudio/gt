@@ -48,10 +48,10 @@ test_that("The `fmt_bytes()` function works correctly", {
 
   # Expect an error when attempting to format a column
   # that does not exist
-  expect_error(tab %>% fmt_bytes(columns = num_2, decimals = 2))
+  expect_snapshot(error = TRUE,tab %>% fmt_bytes(columns = num_2, decimals = 2))
 
   # Expect an error when using a locale that does not exist
-  expect_error(tab %>% fmt_bytes(columns = num_2, decimals = 2, locale = "aa_bb"))
+  expect_snapshot(error = TRUE,tab %>% fmt_bytes(columns = num_2, decimals = 2, locale = "aa_bb"))
 
   # Format the `num` column to 1 decimal place, use all
   # other defaults; extract `output_df` and compare to expected values
@@ -468,25 +468,23 @@ test_that("The `fmt_bytes()` function format to specified significant figures", 
     )
   )
 
-  # Expect an error if the length of `n_sigfig` is not 1
-  expect_error(tab %>% fmt_bytes(columns = num, n_sigfig = c(1, 2)))
-
-  # Expect an error if `n_sigfig` is NA
-  expect_error(tab %>% fmt_bytes(columns = num, n_sigfig = NA))
-  expect_error(tab %>% fmt_bytes(columns = num, n_sigfig = NA_integer_))
-  expect_error(tab %>% fmt_bytes(columns = num, n_sigfig = NA_real_))
-  expect_error(tab %>% fmt_bytes(columns = num, n_sigfig = NA_integer_))
-
-  # Expect an error if `n_sigfig` is not numeric
-  expect_error(tab %>% fmt_bytes(columns = num, n_sigfig = "3"))
-  expect_error(tab %>% fmt_bytes(columns = num, n_sigfig = TRUE))
-  expect_error(tab %>% fmt_bytes(columns = num, n_sigfig = factor(3)))
-
   # Don't expect errors when using integers or doubles
   expect_no_error(tab %>% fmt_bytes(columns = num, n_sigfig = 2L))
   expect_no_error(tab %>% fmt_bytes(columns = num, n_sigfig = 2))
 
-  # Expect an error if `n_sigfig` is less than 1
-  expect_error(tab %>% fmt_bytes(columns = num, n_sigfig = 0L))
-  expect_error(tab %>% fmt_bytes(columns = num, n_sigfig = -1L))
+})
+
+test_that("fmt_bytes checks for n_sigfig input", {
+  # Expect an error if `n_sigfig` is not a number larger or equal to 1
+  tab <- exibble %>% gt()
+  expect_snapshot(error = TRUE, {
+    tab %>% fmt_bytes(columns = num, n_sigfig = c(1, 2))
+    tab %>% fmt_bytes(columns = num, n_sigfig = NA)
+    tab %>% fmt_bytes(columns = num, n_sigfig = TRUE)
+    tab %>% fmt_bytes(columns = num, n_sigfig = "3")
+    tab %>% fmt_bytes(columns = num, n_sigfig = factor(3))
+    tab %>% fmt_bytes(columns = num, n_sigfig = 0L)
+    tab %>% fmt_bytes(columns = num, n_sigfig = -1L)
+    tab %>% fmt_bytes(columns = num, n_sigfig = 1.5)
+  })
 })

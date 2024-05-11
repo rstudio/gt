@@ -51,7 +51,7 @@ test_that("The `fmt_index()` function works correctly", {
 
   # Expect an error when attempting to format a column
   # that does not exist
-  expect_error(tab %>% fmt_index(columns = num_2))
+  expect_snapshot(error = TRUE,tab %>% fmt_index(columns = num_2))
 
   # Format the `num` column to uppercase letters
   expect_equal(

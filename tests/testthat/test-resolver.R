@@ -89,11 +89,11 @@ test_that("The `resolve_rows_l()` and `resolve_rows_i()` fns both work", {
   expect_identical(resolve_rows_l(TRUE, exibble_gt_1), rep_len(TRUE, length(row_names_1)))
   expect_identical(resolve_rows_l(rep(TRUE, 8), exibble_gt_1), rep_len(TRUE, length(row_names_1)))
 
-  expect_error(resolve_rows_l(rep(TRUE, 6), exibble_gt_1))
-  expect_error(resolve_rows_l("not a row", exibble_gt_1))
-  expect_error(resolve_rows_l(c(10, 10, 1), exibble_gt_1))
-  expect_error(resolve_rows_l(c("not", "present"), exibble_gt_1))
-  expect_error(resolve_rows_l(dplyr::tibble(a = 2), exibble_gt_1))
+  expect_snapshot(error = TRUE,resolve_rows_l(rep(TRUE, 6), exibble_gt_1))
+  expect_snapshot(error = TRUE,resolve_rows_l("not a row", exibble_gt_1))
+  expect_snapshot(error = TRUE,resolve_rows_l(c(10, 10, 1), exibble_gt_1))
+  expect_snapshot(error = TRUE,resolve_rows_l(c("not", "present"), exibble_gt_1))
+  expect_snapshot(error = TRUE,resolve_rows_l(dplyr::tibble(a = 2), exibble_gt_1))
 
   expect_identical(resolve_rows_l(1, exibble_gt_2), c(TRUE, rep_len(FALSE, length(row_names_2) - 1)))
   expect_identical(resolve_rows_l("apricot", exibble_gt_2), c(TRUE, rep(FALSE, length(row_names_2) - 1)))
@@ -144,11 +144,11 @@ test_that("The `resolve_rows_l()` and `resolve_rows_i()` fns both work", {
   expect_identical(resolve_rows_i(TRUE, exibble_gt_1), 1:8)
   expect_identical(resolve_rows_i(rep(TRUE, 8), exibble_gt_1), 1:8)
 
-  expect_error(resolve_rows_i(rep(TRUE, 6), exibble_gt_1))
-  expect_error(resolve_rows_i("not a row", exibble_gt_1))
-  expect_error(resolve_rows_i(c(10, 10, 1), exibble_gt_1))
-  expect_error(resolve_rows_i(c("not", "present"), exibble_gt_1))
-  expect_error(resolve_rows_i(dplyr::tibble(a = 2), exibble_gt_1))
+  expect_snapshot(error = TRUE,resolve_rows_i(rep(TRUE, 6), exibble_gt_1))
+  expect_snapshot(error = TRUE,resolve_rows_i("not a row", exibble_gt_1))
+  expect_snapshot(error = TRUE,resolve_rows_i(c(10, 10, 1), exibble_gt_1))
+  expect_snapshot(error = TRUE,resolve_rows_i(c("not", "present"), exibble_gt_1))
+  expect_snapshot(error = TRUE,resolve_rows_i(dplyr::tibble(a = 2), exibble_gt_1))
 
   expect_identical(resolve_rows_i(1, exibble_gt_2), 1L)
   expect_identical(resolve_rows_i("apricot", exibble_gt_2), 1L)
@@ -185,11 +185,11 @@ test_that("The `resolve_vector_l()` and `resolve_vector_i()` fns both work", {
   expect_identical(resolve_vector_l(matches("im"), vector_x), c(rep(FALSE, 4), TRUE, TRUE, rep(FALSE, 7)))
   expect_identical(resolve_vector_l(contains("o"), vector_x), c(rep(FALSE, 7), TRUE, TRUE,  rep(FALSE, 4)))
 
-  expect_error(resolve_vector_l(rep(TRUE, 6), vector_x))
-  expect_error(resolve_vector_l("not valid", vector_x))
-  expect_error(resolve_vector_l(c(90, 90, 1), vector_x))
-  expect_error(resolve_vector_l(c("not", "present"), vector_x))
-  expect_error(resolve_vector_l(dplyr::tibble(a = 2), vector_x))
+  expect_snapshot(error = TRUE,resolve_vector_l(rep(TRUE, 6), vector_x))
+  expect_snapshot(error = TRUE,resolve_vector_l("not valid", vector_x))
+  expect_snapshot(error = TRUE,resolve_vector_l(c(90, 90, 1), vector_x))
+  expect_snapshot(error = TRUE,resolve_vector_l(c("not", "present"), vector_x))
+  expect_snapshot(error = TRUE,resolve_vector_l(dplyr::tibble(a = 2), vector_x))
 
   #
   # `resolve_vector_i()`
@@ -209,9 +209,9 @@ test_that("The `resolve_vector_l()` and `resolve_vector_i()` fns both work", {
   expect_identical(resolve_vector_i(matches("im"), vector_x), 5:6)
   expect_identical(resolve_vector_i(contains("o"), vector_x), 8:9)
 
-  expect_error(resolve_vector_i(rep(TRUE, 6), vector_x))
-  expect_error(resolve_vector_i("not valid", vector_x))
-  expect_error(resolve_vector_i(c(90, 90, 1), vector_x))
-  expect_error(resolve_vector_i(c("not", "present"), vector_x))
-  expect_error(resolve_vector_i(dplyr::tibble(a = 2), vector_x))
+  expect_snapshot(error = TRUE,resolve_vector_i(rep(TRUE, 6), vector_x))
+  expect_snapshot(error = TRUE,resolve_vector_i("not valid", vector_x))
+  expect_snapshot(error = TRUE,resolve_vector_i(c(90, 90, 1), vector_x))
+  expect_snapshot(error = TRUE,resolve_vector_i(c("not", "present"), vector_x))
+  expect_snapshot(error = TRUE,resolve_vector_i(dplyr::tibble(a = 2), vector_x))
 })

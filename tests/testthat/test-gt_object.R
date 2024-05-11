@@ -528,9 +528,9 @@ test_that("The `gt()` `id` arg will only accept specific inputs", {
   expect_no_error(exibble %>% gt(id = "23947294"))
 
   # Expect errors when `id` isn't a length 1 character vector or is NA
-  expect_error(exibble %>% gt(id = 23))
-  expect_error(exibble %>% gt(id = c("one", "two")))
-  expect_error(exibble %>% gt(id = NA))
+  expect_snapshot(error = TRUE,exibble %>% gt(id = 23))
+  expect_snapshot(error = TRUE,exibble %>% gt(id = c("one", "two")))
+  expect_snapshot(error = TRUE,exibble %>% gt(id = NA))
 })
 
 test_that("The `gt()` `rowname_col` arg will be overridden by `rownames_to_stub = TRUE`", {
@@ -682,24 +682,24 @@ test_that("Any shared names in `rowname_col` and `groupname_col` will be disallo
 
   # Expect an error if there are any shared names across `rowname_col`
   # and `groupname_col`
-  expect_error(
+  expect_snapshot(error = TRUE,
     exibble %>%
       gt(rowname_col = "row", groupname_col = "row")
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     exibble %>%
       gt(rowname_col = "group", groupname_col = "group")
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     exibble %>%
       gt(rowname_col = "rowname", groupname_col = "rowname")
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     exibble %>%
       dplyr::group_by(group) %>%
       gt(rowname_col = "group")
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     exibble %>%
       dplyr::group_by(date, row) %>%
       gt(rowname_col = "row")

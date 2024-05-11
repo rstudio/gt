@@ -23,7 +23,7 @@ test_that("The `fmt_url()` function works correctly", {
   expect_equal(data_tbl$a, a)
 
   # Expect an error when attempting to format a column that does not exist
-  expect_error(tab %>% fmt_url(columns = b))
+  expect_snapshot(error = TRUE,tab %>% fmt_url(columns = b))
 
   # Format the `a` column to have links
   expect_equal(

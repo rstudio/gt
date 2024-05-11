@@ -48,16 +48,16 @@ test_that("The `fmt_fraction()` function works correctly", {
 
   # Expect an error when attempting to format a column
   # that does not exist
-  expect_error(tab %>% fmt_fraction(columns = num_2))
+  expect_snapshot(error = TRUE,tab %>% fmt_fraction(columns = num_2))
 
   # Expect an error when using a locale that does not exist
-  expect_error(tab %>% fmt_fraction(columns = num, locale = "aa_bb"))
+  expect_snapshot(error = TRUE,tab %>% fmt_fraction(columns = num, locale = "aa_bb"))
 
   # Expect an error when using an invalid accuracy value
-  expect_error(tab %>% fmt_fraction(columns = num, accuracy = "invalid"))
-  expect_error(tab %>% fmt_fraction(columns = num, accuracy = 0))
+  expect_snapshot(error = TRUE,tab %>% fmt_fraction(columns = num, accuracy = "invalid"))
+  expect_snapshot(error = TRUE,tab %>% fmt_fraction(columns = num, accuracy = 0))
   expect_no_error(tab %>% fmt_fraction(columns = num, accuracy = 1))
-  expect_error(tab %>% fmt_fraction(columns = num, accuracy = FALSE))
+  expect_snapshot(error = TRUE,tab %>% fmt_fraction(columns = num, accuracy = FALSE))
 
   # Format the `num` column to fractions with the 'low' accuracy
   # level and have the layout be 'inline'

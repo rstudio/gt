@@ -223,7 +223,7 @@ test_that("The `cols_width()` function stores values correctly", {
 
   # Expect an error if a column provided is not
   # in the dataset
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt(tbl) %>%
       cols_width(
         col_10 ~ px(150),
@@ -232,11 +232,11 @@ test_that("The `cols_width()` function stores values correctly", {
   )
 
   # Expect an error if no expressions given to `...`
-  expect_error(gt(tbl) %>% cols_width())
+  expect_snapshot(error = TRUE,gt(tbl) %>% cols_width())
 
   # Expect an error if an incorrect unit is present
   # in any vector element of CSS length values
-  expect_error(
+  expect_snapshot(error = TRUE,
     validate_css_lengths(c("", "3", "3em", "3rem", "3dem"))
   )
 })

@@ -99,7 +99,7 @@ test_that("A gt table contains the expected spanner column labels", {
 
   # Expect an error when using column labels
   # that don't exist
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt(rock) %>%
       tab_spanner(
         label = "perimeter",
@@ -107,7 +107,7 @@ test_that("A gt table contains the expected spanner column labels", {
   )
 
   # Expect an error when using an ID twice
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt(exibble) %>%
       tab_spanner(label = "a", columns = num) %>%
       tab_spanner(label = "b", id = "a", columns = char)

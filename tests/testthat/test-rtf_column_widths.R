@@ -6,7 +6,7 @@ test_that("The `col_width_resolver_rtf()` function works correctly", {
 
   page_body_width_portrait <- 12240L - 1440L - 1440L
 
-  expect_error(
+  expect_snapshot(error = TRUE,
     col_width_resolver_rtf(
       page_body_width = page_body_width_portrait,
       table_width = "-1tw",
@@ -15,7 +15,7 @@ test_that("The `col_width_resolver_rtf()` function works correctly", {
     )
   )
 
-  expect_error(
+  expect_snapshot(error = TRUE,
     col_width_resolver_rtf(
       page_body_width = page_body_width_portrait,
       table_width = "1tw",
@@ -197,7 +197,7 @@ test_that("The `parse_length_str()` function works correctly", {
     expect_equal(lengths_tbl[["unit"]], unit_vec_list[[i]])
   }
 
-  expect_error(
+  expect_snapshot(error = TRUE,
     parse_length_str(
       lengths_vec = "-6px",
       allow_negative = FALSE
@@ -234,7 +234,7 @@ test_that("The `parse_length_str()` function works correctly", {
     }
 
   # NA values cannot be used
-  expect_error(
+  expect_snapshot(error = TRUE,
     parse_length_str(
       lengths_vec = NA_character_,
       allow_negative = TRUE

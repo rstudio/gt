@@ -18,13 +18,13 @@ test_that("The `fmt_percent()` function works correctly in the HTML context", {
 
   # Expect an error when attempting to format a column
   # that does not exist
-  expect_error(
+  expect_snapshot(error = TRUE,
     tab %>%
       fmt_percent(columns = num_3, decimals = 2)
   )
 
   # Expect an error when using a locale that does not exist
-  expect_error(
+  expect_snapshot(error = TRUE,
     tab %>%
       fmt_percent(columns = num_2, decimals = 2, locale = "aa_bb")
   )

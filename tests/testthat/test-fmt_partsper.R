@@ -24,10 +24,10 @@ test_that("The `fmt_partsper()` function works correctly", {
 
   # Expect an error when attempting to format a column
   # that does not exist
-  expect_error(tab %>% fmt_partsper(columns = num_2))
+  expect_snapshot(error = TRUE,tab %>% fmt_partsper(columns = num_2))
 
   # Expect an error when using a locale that does not exist
-  expect_error(tab %>% fmt_partsper(columns = num_2, locale = "aa_bb"))
+  expect_snapshot(error = TRUE,tab %>% fmt_partsper(columns = num_2, locale = "aa_bb"))
 
   # Format the `num` column to per mille values in the "html" context
   expect_equal(

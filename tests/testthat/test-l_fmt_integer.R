@@ -35,13 +35,13 @@ test_that("The `fmt_integer()` function works correctly in the LaTeX context", {
 
   # Expect an error when attempting to format a column
   # that does not exist
-  expect_error(
+  expect_snapshot(error = TRUE,
     tab %>%
       fmt_integer(columns = num_3)
   )
 
   # Expect an error when using a locale that does not exist
-  expect_error(
+  expect_snapshot(error = TRUE,
     tab %>%
       fmt_integer(columns = num_2, locale = "aa_bb")
   )

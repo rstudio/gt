@@ -228,17 +228,17 @@ test_that("Extraction of table cells works well", {
   )
 
   # Expect an error when attempting to obtain cells that don't exist
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt_tbl_3 %>%
       fmt_number(columns = num, decimals = 5) %>%
       extract_cells(columns = num, rows = "row_50", output = "plain")
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt_tbl_3 %>%
       fmt_number(columns = num, decimals = 5) %>%
       extract_cells(columns = num, rows = c("row_2", "row_50"), output = "plain")
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt_tbl_3 %>%
       fmt_number(columns = num, decimals = 5) %>%
       extract_cells(columns = 10, output = "plain")

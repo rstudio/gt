@@ -101,7 +101,7 @@ test_that("the `validate_currency()` function works correctly", {
 
   # Expect that invalid currency names supplied to
   # `validate_currency()` will result in an error
-  expect_error(lapply(c("thaler", "tetarteron"), validate_currency))
+  expect_snapshot(error = TRUE,lapply(c("thaler", "tetarteron"), validate_currency))
 
 
   # Expect that specific currency codes supplied to
@@ -113,7 +113,7 @@ test_that("the `validate_currency()` function works correctly", {
 
   # Expect that invalid currency codes supplied to
   # `validate_currency()` will result in an error
-  expect_error(lapply(c("AAA", "ZZZ"), validate_currency))
+  expect_snapshot(error = TRUE,lapply(c("AAA", "ZZZ"), validate_currency))
 
   # Expect that specific currency codes (3-number)
   # supplied to `validate_currency()` will return NULL
@@ -129,7 +129,7 @@ test_that("the `validate_currency()` function works correctly", {
 
   # Expect that invalid currency codes supplied to
   # `validate_currency()` will return an error
-  expect_error(lapply(c(999, 998), validate_currency))
+  expect_snapshot(error = TRUE,lapply(c(999, 998), validate_currency))
 })
 
 test_that("the `get_currency_str()` function works correctly", {
@@ -391,7 +391,7 @@ test_that("the `as_locations()` function works correctly", {
       rows = c("Datsun 710", "Valiant"))
 
   # Expect an error with `locations` object structured in this way
-  expect_error(
+  expect_snapshot(error = TRUE,
     as_locations(locations))
 })
 
@@ -470,10 +470,10 @@ test_that("the `glue_gt()` function works in a safe manner", {
   )
 
   # Treats expressions as symbols
-  expect_error(glue_gt(lst, "{a + b}"))
-  expect_error(glue_gt(lst, "{print(a)}"))
-  expect_error(glue_gt(lst, "{ a }"))
-  expect_error(glue_gt(lst, "{`a`}"))
+  expect_snapshot(error = TRUE,glue_gt(lst, "{a + b}"))
+  expect_snapshot(error = TRUE,glue_gt(lst, "{print(a)}"))
+  expect_snapshot(error = TRUE,glue_gt(lst, "{ a }"))
+  expect_snapshot(error = TRUE,glue_gt(lst, "{`a`}"))
 
   expect_identical(
     glue_gt(list("a+b" = "foo"), "test {a+b} test") %>% as.character(),
@@ -482,9 +482,9 @@ test_that("the `glue_gt()` function works in a safe manner", {
 
   # Objects should not be sought in the environment
   z <- "hello"
-  expect_error(glue_gt(list(), "{z}"))
-  expect_error(glue_gt(list(), "{.Random.seed}"))
-  expect_error(glue_gt(list(), "{letters}"))
+  expect_snapshot(error = TRUE,glue_gt(list(), "{z}"))
+  expect_snapshot(error = TRUE,glue_gt(list(), "{.Random.seed}"))
+  expect_snapshot(error = TRUE,glue_gt(list(), "{letters}"))
 
   expect_identical(glue_gt(list(), "a", "b") %>% as.character(), "ab")
 })
@@ -509,25 +509,25 @@ test_that("The `check_spanner_id_unique()` function works properly", {
 
   # Expect an error when reusing a spanner ID value (the `label` value
   # is used as the `id` value)
-  expect_error(
+  expect_snapshot(error = TRUE,
     check_spanner_id_unique(data = gt_tbl_2, spanner_id = "a")
   )
 
   # Expect an error if creating a spanner ID that is the same as
   # a column name
-  expect_error(
+  expect_snapshot(error = TRUE,
     check_spanner_id_unique(data = gt_tbl_1, spanner_id = "num")
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     check_spanner_id_unique(data = gt_tbl_2, spanner_id = "num")
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     check_spanner_id_unique(data = gt_tbl_2, spanner_id = "num")
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     check_spanner_id_unique(data = gt_tbl_3, spanner_id = "row")
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     check_spanner_id_unique(data = gt_tbl_3, spanner_id = "group")
   )
 })

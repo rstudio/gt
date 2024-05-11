@@ -47,7 +47,7 @@ There's a quick reference [here](https://commonmark.org/help/).
 
   # Expect an error when attempting to format a column
   # that does not exist
-  expect_error(tab %>% fmt_markdown(columns = "column_3"))
+  expect_snapshot(error = TRUE,tab %>% fmt_markdown(columns = "column_3"))
 
   #
   # Compare output of each table cell to the expected

@@ -42,7 +42,7 @@ test_that("The `row_group_order()` function works correctly", {
     expect_equal(c("2018-02-11", "2018-02-10"))
 
   # Expect an error if input for `groups` is not a character vector
-  expect_error(
+  expect_snapshot(error = TRUE,
     tbl %>%
       gt(rowname_col = "rows", groupname_col = "dates") %>%
       row_group_order(groups = c(TRUE, FALSE))
@@ -50,7 +50,7 @@ test_that("The `row_group_order()` function works correctly", {
 
   # Expect that any value in `groups` that doesn't correspond
   # to a group name will result in an error
-  expect_error(
+  expect_snapshot(error = TRUE,
     tbl %>%
       gt(rowname_col = "rows", groupname_col = "dates") %>%
       row_group_order(groups = c("2018-02-13", "2018-02-10"))

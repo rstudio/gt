@@ -198,23 +198,23 @@ test_that("The various color utility functions work correctly", {
   )
 
   # Expect an error if an NA value is provided anywhere as input
-  expect_error(
+  expect_snapshot(error = TRUE,
     html_color(colors = c(c_name, c_hex, c_hex_a, c_s_hex, c_s_hex_a, NA_character_))
   )
 
   # Expect an error if an invalid color name is provided
-  expect_error(
+  expect_snapshot(error = TRUE,
     html_color(colors = c(c_name, c_hex, c_hex_a, c_s_hex, c_s_hex_a, "blau"))
   )
 
   # Expect an error if an invalid color format is provided
-  expect_error(
+  expect_snapshot(error = TRUE,
     html_color(colors = c(c_name, c_hex, c_hex_a, c_s_hex, "#FF04JJ"))
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     html_color(colors = c(c_name, c_hex, c_hex_a, c_s_hex, "#FF0033100"))
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     html_color(colors = c(c_name, c_hex, c_hex_a, c_s_hex, "FF04E2"))
   )
 
@@ -265,7 +265,7 @@ test_that("The various color utility functions work correctly", {
   )
 
   # Expect an error if 'rgba()'-format colors are passed to `normalize_colors()`
-  expect_error(
+  expect_snapshot(error = TRUE,
     normalize_colors(
       colors = c(c_name, c_hex, c_hex_a, "rgba(210,215,33,0.5)"),
       alpha = NULL
@@ -348,10 +348,10 @@ test_that("The various color utility functions work correctly", {
   )
 
   # Expect an error if an invalid color format is provided
-  expect_error(
+  expect_snapshot(error = TRUE,
     ideal_fgnd_color(bgnd_color = c(c_hex, c_hex_a, c_s_hex, "#FF04JJ"))
   )
-  expect_error(
+  expect_snapshot(error = TRUE,
     ideal_fgnd_color(bgnd_color = c(c_hex, c_hex_a, c_s_hex, "#FF0033100"))
   )
 
@@ -480,8 +480,8 @@ test_that("The various color utility functions work correctly", {
 
   # Expect an error if step values are greater than 2 or
   # less than -2
-  expect_error(adjust_luminance(colors = c_hex, steps = -2.1))
-  expect_error(adjust_luminance(colors = c_hex, steps = +2.1))
+  expect_snapshot(error = TRUE,adjust_luminance(colors = c_hex, steps = -2.1))
+  expect_snapshot(error = TRUE,adjust_luminance(colors = c_hex, steps = +2.1))
 })
 
 test_that("The `cell_fill()` function accepts colors of various types", {

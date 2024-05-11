@@ -28,7 +28,7 @@ test_that("The `fmt_date()` function works correctly", {
 
   # Expect an error when attempting to format a column
   # that does not exist
-  expect_error(tab %>% fmt_date(columns = "num_1", date_style = 1))
+  expect_snapshot(error = TRUE,tab %>% fmt_date(columns = "num_1", date_style = 1))
 
   # Create three gt objects with a `date` column having different types
   tab_1 <-
@@ -221,11 +221,11 @@ test_that("The `fmt_date()` function works correctly", {
   }
 
   # Expect errors if invalid input is provided to `fmt_date()`
-  expect_error(tab_1 %>% fmt_date(columns = "date", date_style = "none"))
-  expect_error(tab_1 %>% fmt_date(columns = "date", date_style = 50))
+  expect_snapshot(error = TRUE,tab_1 %>% fmt_date(columns = "date", date_style = "none"))
+  expect_snapshot(error = TRUE,tab_1 %>% fmt_date(columns = "date", date_style = 50))
 
   # Expect an error if providing a time as input for `fmt_date()`
-  expect_error(
+  expect_snapshot(error = TRUE,
     dplyr::tibble(time = c(
       "23:01", "15:30", "08:22"
     )) %>%
@@ -235,7 +235,7 @@ test_that("The `fmt_date()` function works correctly", {
   )
 
   # Expect an error if any string-based dates are invalid
-  expect_error(
+  expect_snapshot(error = TRUE,
     dplyr::tibble(date = c("2013-12-30", "2017-30-15")) %>%
       gt() %>%
       fmt_date(columns = "date") %>%
@@ -269,7 +269,7 @@ test_that("The `fmt_time()` function works correctly", {
 
   # Expect an error when attempting to format a column
   # that does not exist
-  expect_error(tab %>% fmt_time(columns = "num_1", time_style = 1))
+  expect_snapshot(error = TRUE,tab %>% fmt_time(columns = "num_1", time_style = 1))
 
   # Create three gt objects with a `time` column having different types
   tab_1 <-
@@ -411,8 +411,8 @@ test_that("The `fmt_time()` function works correctly", {
   )
 
   # Expect errors if invalid input is provided to `fmt_time()`
-  expect_error(tab_1 %>% fmt_time(columns = "time", time_style = "none"))
-  expect_error(tab_1 %>% fmt_time(columns = "time", time_style = 50))
+  expect_snapshot(error = TRUE,tab_1 %>% fmt_time(columns = "time", time_style = "none"))
+  expect_snapshot(error = TRUE,tab_1 %>% fmt_time(columns = "time", time_style = 50))
 
   # Expect that mixed, string-based dates and date-times
   # will result in the time value always being "00:00"
@@ -441,7 +441,7 @@ test_that("The `fmt_time()` function works correctly", {
 
   # Expect an error if any string-based date-times have invalid
   # date components
-  expect_error(
+  expect_snapshot(error = TRUE,
     dplyr::tibble(date = c("2013-14-30 22:30", "2017-03-15 02:32")) %>%
       gt() %>%
       fmt_time(columns = "date") %>%
@@ -479,7 +479,7 @@ test_that("The `fmt_datetime()` function works correctly", {
 
   # Expect an error when attempting to format a column
   # that does not exist
-  expect_error(
+  expect_snapshot(error = TRUE,
     tab %>%
       fmt_datetime(
         columns = "num_1",
@@ -558,8 +558,8 @@ test_that("The `fmt_datetime()` function works correctly", {
   }
 
   # Expect errors if invalid input is provided to `fmt_datetime()`
-  expect_error(tab_1 %>% fmt_datetime(columns = "datetime", date_style = "none"))
-  expect_error(tab_1 %>% fmt_datetime(columns = "datetime", date_style = 50))
+  expect_snapshot(error = TRUE,tab_1 %>% fmt_datetime(columns = "datetime", date_style = "none"))
+  expect_snapshot(error = TRUE,tab_1 %>% fmt_datetime(columns = "datetime", date_style = 50))
 
   #
   # Format `datetime` using a custom `format` and verify the output

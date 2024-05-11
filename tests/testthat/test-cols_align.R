@@ -63,19 +63,19 @@ test_that("The `cols_align()` function works correctly", {
 
   # Expect that supplying an `align` value that is not `left`, `center`,
   # or `right` will result in an error
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt(mtcars_short) %>%
       cols_align(align = "righter", columns = c(mpg, cyl, drat)))
 
   # Expect that supplying a column name that doesn't exist in the
   # table columns will result in an error
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt(mtcars_short) %>%
       cols_align(align = "right", columns = car))
 
   # Expect that supplying any column index that doesn't exist in the
   # table will result in an error
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt(mtcars_short) %>%
       cols_align(align = "right", columns = c(1, 20)))
 
@@ -215,7 +215,7 @@ test_that("The stub gets its alignment set properly with `cols_align()`", {
     expect_equal(c("stub", "vals"))
 
   # Expect an error if using `stub()` when there is no stub
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt(tbl) %>%
     cols_align(align = "center", columns = stub())
   )

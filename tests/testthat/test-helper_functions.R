@@ -7,7 +7,7 @@ test_that("The `pct()` helper function works correctly", {
   percentage %>% expect_equal("50%")
 
   # Expect an error if the value supplied is not numeric
-  expect_error(
+  expect_snapshot(error = TRUE,
     pct(x = "50"))
 })
 
@@ -20,7 +20,7 @@ test_that("The `px()` helper function works correctly", {
   pixels %>% expect_equal("50px")
 
   # Expect an error if the value supplied is not numeric
-  expect_error(
+  expect_snapshot(error = TRUE,
     px(x = "50"))
 })
 
@@ -98,7 +98,7 @@ test_that("The `from_column()` helper works correctly", {
   )
 
   # Expect that the above won't work if `cols_add()` is invoked later
-  expect_error(
+  expect_snapshot(error = TRUE,
     tab %>%
       fmt_number(
         columns = num,

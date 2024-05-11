@@ -71,24 +71,24 @@ test_that("Various `is_*()` utility functions work properly", {
   # Expect that `stop_if_not_gt_tbl()` yields an error for non-`gt_tbl` objects
   expect_no_error(stop_if_not_gt_tbl(gt(exibble)))
   expect_no_error(stop_if_not_gt_tbl(gt_preview(gtcars)))
-  expect_error(stop_if_not_gt_tbl(exibble))
-  expect_error(stop_if_not_gt_tbl(gt_group(gt(exibble), gt(exibble))))
-  expect_error(stop_if_not_gt_tbl(gt(exibble) %>% as_raw_html()))
+  expect_snapshot(error = TRUE,stop_if_not_gt_tbl(exibble))
+  expect_snapshot(error = TRUE,stop_if_not_gt_tbl(gt_group(gt(exibble), gt(exibble))))
+  expect_snapshot(error = TRUE,stop_if_not_gt_tbl(gt(exibble) %>% as_raw_html()))
 
   # Expect that `stop_if_not_gt_group()` yields an error for non-`gt_group` objects
   expect_no_error(stop_if_not_gt_group(gt_group(gt(exibble), gt(exibble))))
-  expect_error(stop_if_not_gt_group(gt(exibble)))
-  expect_error(stop_if_not_gt_group(gt_preview(gtcars)))
-  expect_error(stop_if_not_gt_group(exibble))
-  expect_error(stop_if_not_gt_group(gt(exibble) %>% as_raw_html()))
+  expect_snapshot(error = TRUE,stop_if_not_gt_group(gt(exibble)))
+  expect_snapshot(error = TRUE,stop_if_not_gt_group(gt_preview(gtcars)))
+  expect_snapshot(error = TRUE,stop_if_not_gt_group(exibble))
+  expect_snapshot(error = TRUE,stop_if_not_gt_group(gt(exibble) %>% as_raw_html()))
 
   # Expect that `stop_if_not_gt_tbl_or_group()` yields an error if a `gt_tbl` or
   # `gt_group` object isn't provided to it
   expect_no_error(stop_if_not_gt_tbl_or_group(gt(exibble)))
   expect_no_error(stop_if_not_gt_tbl_or_group(gt_preview(gtcars)))
   expect_no_error(stop_if_not_gt_tbl_or_group(gt_group(gt(exibble), gt(exibble))))
-  expect_error(stop_if_not_gt_tbl_or_group(exibble))
-  expect_error(stop_if_not_gt_tbl_or_group(gt(exibble) %>% as_raw_html()))
+  expect_snapshot(error = TRUE,stop_if_not_gt_tbl_or_group(exibble))
+  expect_snapshot(error = TRUE,stop_if_not_gt_tbl_or_group(gt(exibble) %>% as_raw_html()))
 
   # Expect that the `is_html()` function returns TRUE only for objects with the
   # `html` class
@@ -115,15 +115,15 @@ test_that("The `get_date_format()` function works properly", {
   }
 
   # Expect an error if going out of range or providing improper values
-  expect_error(get_date_format(date_style = 42))
-  expect_error(get_date_format(date_style = "42"))
-  expect_error(get_date_format(date_style = 0))
-  expect_error(get_date_format(date_style = "0"))
-  expect_error(get_date_format(date_style = -5))
-  expect_error(get_date_format(date_style = "-5"))
-  expect_error(get_date_format(date_style = NA))
-  expect_error(get_date_format(date_style = NULL))
-  expect_error(get_date_format(date_style = c(1, 2)))
+  expect_snapshot(error = TRUE,get_date_format(date_style = 42))
+  expect_snapshot(error = TRUE,get_date_format(date_style = "42"))
+  expect_snapshot(error = TRUE,get_date_format(date_style = 0))
+  expect_snapshot(error = TRUE,get_date_format(date_style = "0"))
+  expect_snapshot(error = TRUE,get_date_format(date_style = -5))
+  expect_snapshot(error = TRUE,get_date_format(date_style = "-5"))
+  expect_snapshot(error = TRUE,get_date_format(date_style = NA))
+  expect_snapshot(error = TRUE,get_date_format(date_style = NULL))
+  expect_snapshot(error = TRUE,get_date_format(date_style = c(1, 2)))
 
   # Expect that character-based keywords work with `get_date_format()` so long
   # as the values are from the defined set
@@ -132,7 +132,7 @@ test_that("The `get_date_format()` function works properly", {
   }
 
   # Expect an error if providing an improper value
-  expect_error(get_date_format(date_style = "daym"))
+  expect_snapshot(error = TRUE,get_date_format(date_style = "daym"))
 
   # Expect that date formats 1-17 are not flexible
   for (i in 1:17) {
@@ -159,15 +159,15 @@ test_that("The `get_time_format()` function works properly", {
   }
 
   # Expect an error if going out of range or providing improper values
-  expect_error(get_time_format(time_style = 26))
-  expect_error(get_time_format(time_style = "26"))
-  expect_error(get_time_format(time_style = 0))
-  expect_error(get_time_format(time_style = "0"))
-  expect_error(get_time_format(time_style = -5))
-  expect_error(get_time_format(time_style = "-5"))
-  expect_error(get_time_format(time_style = NA))
-  expect_error(get_time_format(time_style = NULL))
-  expect_error(get_time_format(time_style = c(1, 2)))
+  expect_snapshot(error = TRUE,get_time_format(time_style = 26))
+  expect_snapshot(error = TRUE,get_time_format(time_style = "26"))
+  expect_snapshot(error = TRUE,get_time_format(time_style = 0))
+  expect_snapshot(error = TRUE,get_time_format(time_style = "0"))
+  expect_snapshot(error = TRUE,get_time_format(time_style = -5))
+  expect_snapshot(error = TRUE,get_time_format(time_style = "-5"))
+  expect_snapshot(error = TRUE,get_time_format(time_style = NA))
+  expect_snapshot(error = TRUE,get_time_format(time_style = NULL))
+  expect_snapshot(error = TRUE,get_time_format(time_style = c(1, 2)))
 
   # Expect that character-based keywords work with `get_time_format()` so long
   # as the values are from the defined set
@@ -176,7 +176,7 @@ test_that("The `get_time_format()` function works properly", {
   }
 
   # Expect an error if providing an improper value
-  expect_error(get_time_format(time_style = "Hmsa"))
+  expect_snapshot(error = TRUE,get_time_format(time_style = "Hmsa"))
 
   # Expect that time formats 1-5 are not flexible
   for (i in 1:5) {
@@ -198,18 +198,13 @@ test_that("The `get_time_format()` function works properly", {
   expect_true(inherits(get_time_format(time_style = 25), "date_time_pattern"))
 })
 
-test_that("The `check_format_code()` function works for date and time formats", {
+test_that("time_format() and date_formats are strings.", {
 
   # Ensure that all format codes work with `check_format_code()`
   for (format_name in c(date_formats()[["format_name"]], time_formats()[["format_name"]])) {
-    expect_no_error(check_format_code(format_name))
-  }
+    expect_no_error(check_string(format_name)) # if this ever changes, see 7098 in R/format_data.R
 
-  # Expect an error if providing an improper inputs
-  expect_error(check_format_code(1))
-  expect_error(check_format_code(c("yM", "Md")))
-  expect_error(check_format_code(c()))
-  expect_error(check_format_code(NULL))
+  }
 })
 
 test_that("The `unescape_html()` function works properly", {
@@ -280,9 +275,9 @@ test_that("The `process_footnote_marks()` function works properly", {
   expect_equal(process_footnote_marks(numeric(0), marks = "letters"), list())
 
   # Expect an error if providing an improper inputs
-  expect_error(process_footnote_marks(as.character(1:12), marks = "extended"))
-  expect_error(process_footnote_marks(list(1, 2), marks = "letters"))
-  expect_error(process_footnote_marks(Inf, marks = "letters"))
+  expect_snapshot(error = TRUE,process_footnote_marks(as.character(1:12), marks = "extended"))
+  expect_snapshot(error = TRUE,process_footnote_marks(list(1, 2), marks = "letters"))
+  expect_snapshot(error = TRUE,process_footnote_marks(Inf, marks = "letters"))
 })
 
 test_that("The `resolve_border_side()` function works properly", {
@@ -305,9 +300,9 @@ test_that("The `validate_length_one()` function works for vectors", {
   expect_no_error(validate_length_one("1", "vector"))
   expect_no_error(validate_length_one(1, "vector"))
   expect_no_error(validate_length_one(list(1), "vector"))
-  expect_error(validate_length_one(c(), "vector"))
-  expect_error(validate_length_one(c(1, 2), "vector"))
-  expect_error(validate_length_one(list(), "vector"))
+  expect_snapshot(error = TRUE,validate_length_one(c(), "vector"))
+  expect_snapshot(error = TRUE,validate_length_one(c(1, 2), "vector"))
+  expect_snapshot(error = TRUE,validate_length_one(list(), "vector"))
 })
 
 test_that("Tables with labeled columns work with certail utility functions", {

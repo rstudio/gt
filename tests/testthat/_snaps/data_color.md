@@ -250,6 +250,169 @@
     Output
       [1] "<table class=\"gt_table\" data-quarto-disable-processing=\"false\" data-quarto-bootstrap=\"false\">\n  <thead>\n    <tr class=\"gt_col_headings\">\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"\"></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"2013\">2013</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"2014\">2014</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"2015\">2015</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"2016\">2016</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"2017\">2017</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"2018\">2018</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"2019\">2019</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"2020\">2020</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"2021\">2021</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"2022\">2022</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><th id=\"stub_1_1\" scope=\"row\" class=\"gt_row gt_left gt_stub\">Mongolia</th>\n<td headers=\"stub_1_1 2013\" class=\"gt_row gt_right\">2845153</td>\n<td headers=\"stub_1_1 2014\" class=\"gt_row gt_right\">2902823</td>\n<td headers=\"stub_1_1 2015\" class=\"gt_row gt_right\">2964749</td>\n<td headers=\"stub_1_1 2016\" class=\"gt_row gt_right\">3029555</td>\n<td headers=\"stub_1_1 2017\" class=\"gt_row gt_right\">3096030</td>\n<td headers=\"stub_1_1 2018\" class=\"gt_row gt_right\">3163991</td>\n<td headers=\"stub_1_1 2019\" class=\"gt_row gt_right\">3232430</td>\n<td headers=\"stub_1_1 2020\" class=\"gt_row gt_right\" style=\"background-color: #183212; color: #FFFFFF;\">3294335</td>\n<td headers=\"stub_1_1 2021\" class=\"gt_row gt_right\" style=\"background-color: #1D4515; color: #FFFFFF;\">3347782</td>\n<td headers=\"stub_1_1 2022\" class=\"gt_row gt_right\" style=\"background-color: #205A17; color: #FFFFFF;\">3398366</td></tr>\n  </tbody>\n  \n  \n</table>"
 
+# Certain errors can be expected (and some things don't error)
+
+    Code
+      test_tbl %>% gt() %>% data_color(columns = min_sza, palette = c("red", "blau"),
+      autocolor_text = TRUE)
+    Condition
+      Error in `data_color()`:
+      ! Failed to compute colors for column `min_sza`.
+      i Did the column include infinite values?
+      Caused by error:
+      ! Unknown colour name: blau
+
+---
+
+    Code
+      test_tbl %>% gt() %>% data_color(columns = min_sza, palette = NA,
+        autocolor_text = TRUE)
+    Condition
+      Error in `data_color()`:
+      ! Failed to compute colors for column `min_sza`.
+      i Did the column include infinite values?
+      Caused by error in `UseMethod()`:
+      ! no applicable method for 'toPaletteFunc' applied to an object of class "logical"
+
+---
+
+    Code
+      test_tbl %>% gt() %>% data_color(columns = min_sza, palette = 1:6,
+      autocolor_text = TRUE)
+    Condition
+      Error in `data_color()`:
+      ! Failed to compute colors for column `min_sza`.
+      i Did the column include infinite values?
+      Caused by error in `UseMethod()`:
+      ! no applicable method for 'toPaletteFunc' applied to an object of class "c('integer', 'numeric')"
+
+---
+
+    Code
+      test_tbl %>% gt() %>% data_color(columns = min_sza, palette = c("#EEFFAA",
+        "##45AA22"), autocolor_text = TRUE)
+    Condition
+      Error in `data_color()`:
+      ! Failed to compute colors for column `min_sza`.
+      i Did the column include infinite values?
+      Caused by error:
+      ! Malformed colour string `##45aa22`. Must contain either 6 or 8 hex values
+
+---
+
+    Code
+      exibble %>% gt() %>% data_color(direction = "row", method = "numeric")
+    Condition
+      Error in `data_color()`:
+      ! The "numeric" method with `direction == "row"` cannot be used when non-numeric columns are included.
+      * Either specify a collection of numeric columns or use the "factor" method.
+
+---
+
+    Code
+      exibble %>% gt() %>% data_color(columns = num, target_columns = row, direction = "row")
+    Condition
+      Error in `data_color()`:
+      ! Specification of `target_columns` can only be done with the `direction = "column"` option.
+      * Please modify the `direction` option or remove any values in `target_columns`.
+
+---
+
+    Code
+      exibble %>% gt() %>% data_color(columns = c(num, currency), target_columns = row,
+      )
+    Condition
+      Error in `data_color()`:
+      ! If the length of resolved `columns` is greater than one it must match the length of the resolved `target_columns`.
+      * Please ensure these greater-than-one lengths are the same.
+
+# The various color utility functions work correctly
+
+    Code
+      html_color(colors = c(c_name, c_hex, c_hex_a, NA_character_))
+    Condition
+      Error in `html_color()`:
+      ! `colors` should not contain any `NA` values.
+
+---
+
+    Code
+      html_color(colors = c(c_name, "blau", c_hex, c_hex_a))
+    Condition
+      Error in `check_named_colors()`:
+      ! An invalid color name was used (`"blau"`).
+      * Only R/X11 color names and CSS 3.0 color names can be used.
+
+---
+
+    Code
+      html_color(colors = c(c_name, c_hex, "#FF04JJ", c_hex_a))
+    Condition
+      Error in `check_named_colors()`:
+      ! An invalid color name was used (`"#ff04jj"`).
+      * Only R/X11 color names and CSS 3.0 color names can be used.
+
+---
+
+    Code
+      html_color(colors = c(c_name, c_hex, c_hex_a, "#FF0033100"))
+    Condition
+      Error in `check_named_colors()`:
+      ! An invalid color name was used (`"#ff0033100"`).
+      * Only R/X11 color names and CSS 3.0 color names can be used.
+
+---
+
+    Code
+      html_color(colors = c(c_name, c_hex, "FF04E2", c_hex_a))
+    Condition
+      Error in `check_named_colors()`:
+      ! An invalid color name was used (`"ff04e2"`).
+      * Only R/X11 color names and CSS 3.0 color names can be used.
+
+---
+
+    Code
+      normalize_colors(colors = c(c_name, c_hex, c_hex_a, "rgba(210,215,33,0.5)"),
+      alpha = 1)
+    Condition
+      Error in `grDevices::col2rgb()`:
+      ! invalid color name 'rgba(210,215,33,0.5)'
+
+---
+
+    Code
+      ideal_fgnd_color(bgnd_color = c(c_hex, "#FF04JJ", c_hex_a))
+    Condition
+      Error in `check_named_colors()`:
+      ! An invalid color name was used (`"#ff04jj"`).
+      * Only R/X11 color names and CSS 3.0 color names can be used.
+
+---
+
+    Code
+      ideal_fgnd_color(bgnd_color = c(c_hex, c_hex_a, "#FF0033100"))
+    Condition
+      Error in `check_named_colors()`:
+      ! An invalid color name was used (`"#ff0033100"`).
+      * Only R/X11 color names and CSS 3.0 color names can be used.
+
+---
+
+    Code
+      adjust_luminance(colors = c_hex, steps = -2.1)
+    Condition
+      Error in `adjust_luminance()`:
+      ! The value provided for `steps` (`-2.1`) must be between `-2.0` and `+2.0`.
+
+---
+
+    Code
+      adjust_luminance(colors = c_hex, steps = +2.1)
+    Condition
+      Error in `adjust_luminance()`:
+      ! The value provided for `steps` (`2.1`) must be between `-2.0` and `+2.0`.
+
 # data_color errors gracefully when infinite values (#1373)
 
     Code

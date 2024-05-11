@@ -1,3 +1,48 @@
+# The `fmt_fraction()` function works correctly
+
+    Code
+      tab %>% fmt_fraction(columns = num_2)
+    Condition
+      Error in `column_classes_are_valid()`:
+      ! Can't select columns that don't exist.
+      x Column `num_2` doesn't exist.
+
+---
+
+    Code
+      tab %>% fmt_fraction(columns = num, locale = "aa_bb")
+    Condition
+      Error in `validate_locale()`:
+      ! The supplied `locale` is not available in the list of supported locales.
+      * Use `info_locales()` (`?gt::info_locales()`) to see which locales can be used.
+
+---
+
+    Code
+      tab %>% fmt_fraction(columns = num, accuracy = "invalid")
+    Condition
+      Error in `fmt_fraction()`:
+      ! `accuracy` must be one of "low", "med", or "high", not "invalid".
+
+---
+
+    Code
+      tab %>% fmt_fraction(columns = num, accuracy = 0)
+    Condition
+      Error in `fmt_fraction()`:
+      ! The numeric value supplied for `accuracy` is invalid.
+      * Must be an integer value greater than zero.
+
+---
+
+    Code
+      tab %>% fmt_fraction(columns = num, accuracy = FALSE)
+    Condition
+      Error in `fmt_fraction()`:
+      ! The input for `accuracy` is invalid.
+      * Must be a keyword "low", "med", or "high", or
+      * Must be an integer value greater than zero.
+
 # The `fmt_fraction()` function produces reproducible results for HTML output
 
     Code

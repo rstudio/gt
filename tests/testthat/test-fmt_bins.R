@@ -21,7 +21,7 @@ test_that("The `fmt_bins()` function works correctly", {
   expect_equal(data_tbl$a, a)
 
   # Expect an error when attempting to format a column that does not exist
-  expect_error(tab %>% fmt_bins(columns = b))
+  expect_snapshot(error = TRUE,tab %>% fmt_bins(columns = b))
 
   # Format the `a` column to intervals
   expect_equal(

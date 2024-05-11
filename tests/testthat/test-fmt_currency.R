@@ -36,13 +36,13 @@ test_that("The `fmt_currency()` function works correctly", {
 
   # Expect an error when attempting to format a column
   # that does not exist
-  expect_error(
+  expect_snapshot(error = TRUE,
     tab %>%
       fmt_currency(columns = "num_3", currency = "USD")
   )
 
   # Expect an error when using a locale that does not exist
-  expect_error(
+  expect_snapshot(error = TRUE,
     tab %>%
       fmt_currency(columns = "num_2", decimals = 2, locale = "aa_bb")
   )
@@ -560,20 +560,20 @@ test_that("The `currency()` helper function works correctly", {
   single_default_currency[[1]] %>% expect_equal("BTC")
 
   # Expect an error if nothing is provided
-  expect_error(currency())
+  expect_snapshot(error = TRUE,currency())
 
   # Expect an error if any argument names don't correspond
   # to the available contexts
-  expect_error(currency(html = "&#8383;", none = "BTC"))
+  expect_snapshot(error = TRUE,currency(html = "&#8383;", none = "BTC"))
 
   # Expect an error there are no names and there are multiple items
-  expect_error(currency("&#8383;", "BTC"))
+  expect_snapshot(error = TRUE,currency("&#8383;", "BTC"))
 
   # Expect an error if there is partial naming
-  expect_error(currency(html = "&#8383;", "BTC"))
+  expect_snapshot(error = TRUE,currency(html = "&#8383;", "BTC"))
 
   # Expect an error if there are duplicate names
-  expect_error(currency(html = "&#8383;", default = "BTC", default = "BT"))
+  expect_snapshot(error = TRUE,currency(html = "&#8383;", default = "BTC", default = "BT"))
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric

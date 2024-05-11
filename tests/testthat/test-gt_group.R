@@ -202,28 +202,28 @@ test_that("The `grp_add()` function can be used to add a table to a group", {
 
   # Expect the `grp_add()` to stop if both the `.before`
   # and `.after` arguments contain an index
-  expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 2, .before = 3))
+  expect_snapshot(error = TRUE,gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 2, .before = 3))
 
   # Expect the `grp_add()` to stop if either the `.before`
   # or `.after` values are not valid indices
-  expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 0))
+  expect_snapshot(error = TRUE,gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 0))
   expect_no_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 1))
   expect_no_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 2))
   expect_no_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 3))
-  expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 4))
-  expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = -1))
+  expect_snapshot(error = TRUE,gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 4))
+  expect_snapshot(error = TRUE,gt_tbls_3 %>% grp_add(gt_tbl_4, .after = -1))
 
-  expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 0))
+  expect_snapshot(error = TRUE,gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 0))
   expect_no_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 1))
   expect_no_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 2))
   expect_no_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 3))
-  expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 4))
-  expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = -1))
+  expect_snapshot(error = TRUE,gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 4))
+  expect_snapshot(error = TRUE,gt_tbls_3 %>% grp_add(gt_tbl_4, .before = -1))
 
   # Expect the `grp_add()` to stop if either the `.before`
   # or `.after` values are not integer-like
-  expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 2.01))
-  expect_error(gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 2.99))
+  expect_snapshot(error = TRUE,gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 2.01))
+  expect_snapshot(error = TRUE,gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 2.99))
 })
 
 test_that("The `grp_replace()` function can be used to add a table to a group", {
@@ -304,17 +304,17 @@ test_that("The `grp_replace()` function can be used to add a table to a group", 
   expect_equal(gt_tbl_1, gt_tbl_3_pulled)
 
   # Expect function to stop if no data is supplied
-  expect_error(gt_tbls_5 %>% grp_replace())
+  expect_snapshot(error = TRUE,gt_tbls_5 %>% grp_replace())
 
   # Expect function to stop if an invalid index is supplied
-  expect_error(gt_tbls_5 %>% grp_replace(gt_tbl_1, .which = 4))
+  expect_snapshot(error = TRUE,gt_tbls_5 %>% grp_replace(gt_tbl_1, .which = 4))
 
   # Expect function to stop if number of indices doesn't match the
   # number of tables to replace
-  expect_error(gt_tbls_5 %>% grp_replace(gt_tbl_2, .which = 1:2))
-  expect_error(gt_tbls_5 %>% grp_replace(gt_tbl_3, .which = 2:3))
-  expect_error(gt_tbls_5 %>% grp_replace(gt_tbl_1, gt_tbl_2, .which = 1))
-  expect_error(gt_tbls_5 %>% grp_replace(gt_tbl_1, gt_tbl_1, .which = 1:3))
+  expect_snapshot(error = TRUE,gt_tbls_5 %>% grp_replace(gt_tbl_2, .which = 1:2))
+  expect_snapshot(error = TRUE,gt_tbls_5 %>% grp_replace(gt_tbl_3, .which = 2:3))
+  expect_snapshot(error = TRUE,gt_tbls_5 %>% grp_replace(gt_tbl_1, gt_tbl_2, .which = 1))
+  expect_snapshot(error = TRUE,gt_tbls_5 %>% grp_replace(gt_tbl_1, gt_tbl_1, .which = 1:3))
 })
 
 test_that("The `grp_rm()` function can be used to remove a table from a group", {

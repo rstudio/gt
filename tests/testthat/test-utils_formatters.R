@@ -11,7 +11,7 @@ test_that("the `filter_table_to_value()` function works correctly", {
   # Expect an error with `filter_table_to_value()` if the
   # chosen filtering expressions result in a number of
   # returned rows not equal to 1
-  expect_error(
+  expect_snapshot(error = TRUE,
     locales %>% filter_table_to_value(lang_desc, lang_name == "en")
   )
 })
@@ -31,7 +31,7 @@ test_that("the `get_locale_sep_mark()` function works correctly", {
 
   # Expect that an invalid `locale` will result in
   # an error
-  expect_error(
+  expect_snapshot(error = TRUE,
     get_locale_sep_mark(locale = "do_IT", default = ",", use_seps = TRUE)
   )
 
@@ -76,7 +76,7 @@ test_that("the `get_locale_dec_mark()` function works correctly", {
 
   # Expect that an invalid `locale` will result in
   # an error
-  expect_error(
+  expect_snapshot(error = TRUE,
     get_locale_dec_mark(locale = "do_IT", default = ".")
   )
 
@@ -188,19 +188,19 @@ test_that("the `split_string_2()` function works correctly", {
   expect_equal(split_string_2(x = test_str, after = 9),  c("-HK$4,299", ""))
 
   # Expect an error if `x` is not of class character
-  expect_error(split_string_2(x = 23432, before = "34"))
+  expect_snapshot(error = TRUE,split_string_2(x = 23432, before = "34"))
 
   # Expect an error if the length of `x` is not 1
-  expect_error(split_string_2(x = c("345", "234"), before = "34"))
+  expect_snapshot(error = TRUE,split_string_2(x = c("345", "234"), before = "34"))
 
   # Expect an error if neither of `before` or `after` has a value
-  expect_error(split_string_2(x = "23432"))
+  expect_snapshot(error = TRUE,split_string_2(x = "23432"))
 
   # Expect an error if both `before` and `after` have values
-  expect_error(split_string_2(x = "23432", before = "3", after = "2"))
+  expect_snapshot(error = TRUE,split_string_2(x = "23432", before = "3", after = "2"))
 
   # Expect an error if the index position is not valid
-  expect_error(split_string_2(x = "23432", before = 10))
+  expect_snapshot(error = TRUE,split_string_2(x = "23432", before = 10))
 })
 
 test_that("the `paste_between()` function works correctly", {
@@ -218,13 +218,13 @@ test_that("the `paste_between()` function works correctly", {
   )
 
   # Expect an error if the class of `x_2` is not `character`
-  expect_error(paste_between(x_2 = 1:2, "-between-"))
+  expect_snapshot(error = TRUE,paste_between(x_2 = 1:2, "-between-"))
 
   # Expect an error if the class of `x_between` is not `character`
-  expect_error(paste_between(x_2 = c("left", "right"), 1))
+  expect_snapshot(error = TRUE,paste_between(x_2 = c("left", "right"), 1))
 
   # Expect an error if the length of `x_2` is not 2
-  expect_error(paste_between(x_2 = "left", "between"))
+  expect_snapshot(error = TRUE,paste_between(x_2 = "left", "between"))
 })
 
 test_that("the `paste_on_side()` function works correctly", {
@@ -244,7 +244,7 @@ test_that("the `paste_on_side()` function works correctly", {
   )
 
   # Expect an error if `direction` is not valid
-  expect_error(paste_on_side(x = "center", x_side = "c", direction = "center"))
+  expect_snapshot(error = TRUE,paste_on_side(x = "center", x_side = "c", direction = "center"))
 })
 
 test_that("the `paste_left()` function works correctly", {
@@ -264,14 +264,14 @@ test_that("the `paste_left()` function works correctly", {
   )
 
   # Expect an error if the class of `x` is not `character`
-  expect_error(paste_left(x = 1, x_left = "left"))
+  expect_snapshot(error = TRUE,paste_left(x = 1, x_left = "left"))
 
   # Expect an error if the class of `x_left` is not `character`
-  expect_error(paste_left(x = "center", x_left = 1))
+  expect_snapshot(error = TRUE,paste_left(x = "center", x_left = 1))
 
   # Expect an error if the length of `x_left` is not 1 of the length of `x`
-  expect_error(paste_left(x = "center", x_left = c("l1", "l2", "l3")))
-  expect_error(paste_left(x = c("c1", "c2", "c3"), x_left = c("l1", "l2")))
+  expect_snapshot(error = TRUE,paste_left(x = "center", x_left = c("l1", "l2", "l3")))
+  expect_snapshot(error = TRUE,paste_left(x = c("c1", "c2", "c3"), x_left = c("l1", "l2")))
 })
 
 test_that("the `paste_right()` function works correctly", {
@@ -291,12 +291,12 @@ test_that("the `paste_right()` function works correctly", {
   )
 
   # Expect an error if the class of `x` is not `character`
-  expect_error(paste_right(x = 1, x_right = "right"))
+  expect_snapshot(error = TRUE,paste_right(x = 1, x_right = "right"))
 
   # Expect an error if the class of `x_right` is not `character`
-  expect_error(paste_right(x = "center", x_right = 1))
+  expect_snapshot(error = TRUE,paste_right(x = "center", x_right = 1))
 
   # Expect an error if the length of `x_right` is not 1 of the length of `x`
-  expect_error(paste_left(x = "center", x_right = c("r1", "r2", "r3")))
-  expect_error(paste_left(x = c("c1", "c2", "c3"), x_right = c("r1", "r2")))
+  expect_snapshot(error = TRUE,paste_left(x = "center", x_right = c("r1", "r2", "r3")))
+  expect_snapshot(error = TRUE,paste_left(x = c("c1", "c2", "c3"), x_right = c("r1", "r2")))
 })

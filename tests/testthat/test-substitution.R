@@ -26,7 +26,7 @@ test_that("The `sub_missing()` function works correctly", {
 
   # Expect an error when attempting to format a column
   # that does not exist
-  expect_error(tab %>% sub_missing(columns = "num_3"))
+  expect_snapshot(error = TRUE,tab %>% sub_missing(columns = "num_3"))
 
   expect_equal(
     (tab %>%
@@ -289,7 +289,7 @@ test_that("The `sub_zero()` function works correctly", {
 
   # Expect an error when attempting to format a column
   # that does not exist
-  expect_error(tab %>% sub_zero(columns = "num_3"))
+  expect_snapshot(error = TRUE,tab %>% sub_zero(columns = "num_3"))
 
   expect_equal(
     (tab %>%
@@ -393,7 +393,7 @@ test_that("The `sub_small_vals()` function works correctly", {
 
   # Expect an error when attempting to format a column
   # that does not exist
-  expect_error(tab %>% sub_small_vals(columns = "num_3"))
+  expect_snapshot(error = TRUE,tab %>% sub_small_vals(columns = "num_3"))
 
   expect_equal(
     (tab %>%
@@ -579,7 +579,7 @@ test_that("The `sub_small_vals()` function works correctly", {
   )
 
   # Expect an error if an invalid `sign` is used
-  expect_error(tab %>% sub_small_vals(columns = "num_1", sign = "?"))
+  expect_snapshot(error = TRUE,tab %>% sub_small_vals(columns = "num_1", sign = "?"))
 })
 
 test_that("The `sub_large_vals()` function works correctly", {
@@ -598,7 +598,7 @@ test_that("The `sub_large_vals()` function works correctly", {
 
   # Expect an error when attempting to format a column
   # that does not exist
-  expect_error(tab %>% sub_large_vals(columns = "num_3"))
+  expect_snapshot(error = TRUE,tab %>% sub_large_vals(columns = "num_3"))
 
   expect_equal(
     (tab %>%
@@ -766,7 +766,7 @@ test_that("The `sub_large_vals()` function works correctly", {
   )
 
   # Expect an error if an invalid `sign` is used
-  expect_error(tab %>% sub_large_vals(columns = "num_1", sign = "?"))
+  expect_snapshot(error = TRUE,tab %>% sub_large_vals(columns = "num_1", sign = "?"))
 })
 
 test_that("The `sub_values()` function works correctly", {
@@ -1206,18 +1206,18 @@ test_that("The `sub_values()` function works correctly", {
   )
 
   # Expect an error if no `values`, `pattern`, or `fn` given
-  expect_error(gt(data_tbl) %>% sub_values(replacement = "hey"))
+  expect_snapshot(error = TRUE,gt(data_tbl) %>% sub_values(replacement = "hey"))
 
   # Expect an error if no `replacement` given
-  expect_error(gt(data_tbl) %>% sub_values(values = "A"))
+  expect_snapshot(error = TRUE,gt(data_tbl) %>% sub_values(values = "A"))
 
   # Expect an error if the `replacement` isn't of the right type
-  expect_error(gt(data_tbl) %>% sub_values(values = "A", replacement = TRUE))
+  expect_snapshot(error = TRUE,gt(data_tbl) %>% sub_values(values = "A", replacement = TRUE))
 
   # Expect an error if the `replacement` isn't of the right length
-  expect_error(gt(data_tbl) %>% sub_values(values = "A", replacement = character(0)))
-  expect_error(gt(data_tbl) %>% sub_values(values = "A", replacement = c("A", "B")))
+  expect_snapshot(error = TRUE,gt(data_tbl) %>% sub_values(values = "A", replacement = character(0)))
+  expect_snapshot(error = TRUE,gt(data_tbl) %>% sub_values(values = "A", replacement = c("A", "B")))
 
   # Expect an error if the `fn` is not a function
-  expect_error(gt(data_tbl) %>% sub_values(fn = "A", replacement = "error"))
+  expect_snapshot(error = TRUE,gt(data_tbl) %>% sub_values(fn = "A", replacement = "error"))
 })

@@ -103,19 +103,19 @@ test_that("The `cols_move()` function works correctly", {
     )
 
   # Expect an error if more than one column provided in `after`
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt(mtcars_short) %>%
       cols_move(columns = c(mpg, cyl, disp), after = c(am, wt))
   )
 
   # Expect an error if the column provided in `after` doesn't exist
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt(mtcars_short) %>%
       cols_move(columns = c(mpg, cyl, disp), after = wts)
   )
 
   # Expect an error if any of the `columns` doesn't exist in `data_df`
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt(mtcars_short) %>%
       cols_move(columns = c(mpg, cyls, disp), after = wt)
   )
@@ -187,7 +187,7 @@ test_that("The `cols_move_to_start()` function works correctly", {
     )
 
   # Expect an error if any of the `columns` doesn't exist in `data_df`
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt(mtcars_short) %>%
       cols_move_to_start(columns = c(mpg, cyls, disp))
   )
@@ -259,7 +259,7 @@ test_that("The `cols_move_to_end()` function works correctly", {
     )
 
   # Expect an error if any of the `columns` doesn't exist in `data_df`
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt(mtcars_short) %>%
       cols_move_to_end(columns = c(mpg, cyls, disp))
   )

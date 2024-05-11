@@ -36,13 +36,13 @@ test_that("The `fmt_scientific()` function works correctly", {
 
   # Expect an error when attempting to format a column
   # that does not exist
-  expect_error(
+  expect_snapshot(error = TRUE,
     tab %>%
       fmt_scientific(columns = "num_3", decimals = 2)
   )
 
   # Expect an error when using a locale that does not exist
-  expect_error(
+  expect_snapshot(error = TRUE,
     tab %>%
       fmt_scientific(columns = "num_2", decimals = 2, locale = "aa_bb")
   )

@@ -122,7 +122,7 @@ test_that("A gt table contains the expected column spanner labels", {
     expect_snapshot()
 
   # Expect an error when using column labels that don't exist
-  expect_error(
+  expect_snapshot(error = TRUE,
     gt(rock) %>%
       tab_spanner(
         label = "perimeter",
