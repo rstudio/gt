@@ -136,6 +136,7 @@ Collate:
     'tab_remove.R'
     'tab_style_body.R'
     'text_transform.R'
+    'topics.R'
     'utils.R'
     'utils_color_contrast.R'
     'utils_environments.R'
