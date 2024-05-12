@@ -10,16 +10,16 @@
 #' - [cells_stubhead()]: targets the stubhead location, a cell of which is only
 #' available when there is a stub; a label in that location can be created by
 #' using the [tab_stubhead()] function.
-#' - [cells_column_spanners()]: targets the spanner column labels with the
-#' `spanners` argument; spanner column labels appear above the column labels.*
-#' - [cells_column_labels()]: targets the column labels with its `columns`
-#' argument.*
-#' - [cells_row_groups()]: targets the row group labels in any available row
-#' groups using the `groups` argument.*
-#' - [cells_stub()]: targets row labels in the table stub using the `rows`
-#' argument.*
-#' - [cells_body()]: targets data cells in the table body using intersections of
-#' `columns` and `rows`.*
+#' - [cells_column_spanners()]*: targets the spanner column labels with the
+#' `spanners` argument; spanner column labels appear above the column labels.
+#' - [cells_column_labels()]*: targets the column labels with its `columns`
+#' argument.
+#' - [cells_row_groups()]*: targets the row group labels in any available row
+#' groups using the `groups` argument.
+#' - [cells_stub()]*: targets row labels in the table stub using the `rows`
+#' argument.
+#' - [cells_body()]*: targets data cells in the table body using intersections of
+#' `columns` and `rows`.
 #' - [cells_summary()]: targets summary cells in the table body using the
 #' `groups` argument and intersections of `columns` and `rows`.
 #' - [cells_grand_summary()]: targets cells of the table's grand summary using
@@ -45,7 +45,7 @@
 #' @family location helper functions
 #'
 #' @seealso
-#' Functions that use these helper function with `locations`:
+#' Functions with `locations` argument:
 #'
 #' * [tab_footnote()]
 #' * [tab_style()]
@@ -53,4 +53,6 @@
 #' * [text_replace()]
 #' * [text_case_when()]
 #' * [text_case_match()]
+#'
+#' These functions contain more example of usage.
 NULL

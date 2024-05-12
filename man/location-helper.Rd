@@ -12,16 +12,16 @@ the value given to the \code{groups} argument (\code{"title"} or \code{"subtitle
 \item \code{\link[=cells_stubhead]{cells_stubhead()}}: targets the stubhead location, a cell of which is only
 available when there is a stub; a label in that location can be created by
 using the \code{\link[=tab_stubhead]{tab_stubhead()}} function.
-\item \code{\link[=cells_column_spanners]{cells_column_spanners()}}: targets the spanner column labels with the
-\code{spanners} argument; spanner column labels appear above the column labels.*
-\item \code{\link[=cells_column_labels]{cells_column_labels()}}: targets the column labels with its \code{columns}
-argument.*
-\item \code{\link[=cells_row_groups]{cells_row_groups()}}: targets the row group labels in any available row
-groups using the \code{groups} argument.*
-\item \code{\link[=cells_stub]{cells_stub()}}: targets row labels in the table stub using the \code{rows}
-argument.*
-\item \code{\link[=cells_body]{cells_body()}}: targets data cells in the table body using intersections of
-\code{columns} and \code{rows}.*
+\item \code{\link[=cells_column_spanners]{cells_column_spanners()}}*: targets the spanner column labels with the
+\code{spanners} argument; spanner column labels appear above the column labels.
+\item \code{\link[=cells_column_labels]{cells_column_labels()}}*: targets the column labels with its \code{columns}
+argument.
+\item \code{\link[=cells_row_groups]{cells_row_groups()}}*: targets the row group labels in any available row
+groups using the \code{groups} argument.
+\item \code{\link[=cells_stub]{cells_stub()}}*: targets row labels in the table stub using the \code{rows}
+argument.
+\item \code{\link[=cells_body]{cells_body()}}*: targets data cells in the table body using intersections of
+\code{columns} and \code{rows}.
 \item \code{\link[=cells_summary]{cells_summary()}}: targets summary cells in the table body using the
 \code{groups} argument and intersections of \code{columns} and \code{rows}.
 \item \code{\link[=cells_grand_summary]{cells_grand_summary()}}: targets cells of the table's grand summary using
@@ -46,7 +46,7 @@ can be targeted by enclosing several \verb{cells_*()} helper functions in a
 }
 
 \seealso{
-Functions that use these helper function with \code{locations}:
+Functions with \code{locations} argument:
 \itemize{
 \item \code{\link[=tab_footnote]{tab_footnote()}}
 \item \code{\link[=tab_style]{tab_style()}}
@@ -55,6 +55,8 @@ Functions that use these helper function with \code{locations}:
 \item \code{\link[=text_case_when]{text_case_when()}}
 \item \code{\link[=text_case_match]{text_case_match()}}
 }
+
+These functions contain more example of usage.
 
 Other location helper functions: 
 \code{\link{cells_body}()},

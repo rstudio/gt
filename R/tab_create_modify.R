@@ -2063,7 +2063,7 @@ tab_stub_indent <- function(
 #'
 #' Each call of `tab_footnote()` will either add a different footnote to the
 #' footer or reuse existing footnote text therein. One or more cells outside of
-#' the footer are targeted using the [`cells_*()` helper functions][location-helper]
+#' the footer are targeted using the [`cells_*()`][location-helper] helper functions
 #' (e.g., [cells_body()], [cells_column_labels()], etc.). You can choose to *not*
 #' attach a footnote mark by simply not specifying anything in the `locations`
 #' argument.
