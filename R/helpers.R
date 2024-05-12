@@ -1171,7 +1171,7 @@ stub <- function() {
 #' `r man_get_image_tag(file = "man_cells_title_1.png")`
 #' }}
 #'
-#' @family helper functions
+#' @family location helper functions
 #' @section Function ID:
 #' 8-11
 #'
@@ -1284,7 +1284,7 @@ cells_title <- function(groups = c("title", "subtitle")) {
 #' `r man_get_image_tag(file = "man_cells_stubhead_1.png")`
 #' }}
 #'
-#' @family helper functions
+#' @family location helper functions
 #' @section Function ID:
 #' 8-12
 #'
@@ -1353,7 +1353,7 @@ cells_stubhead <- function() {
 #' `r man_get_image_tag(file = "man_cells_column_spanners_1.png")`
 #' }}
 #'
-#' @family helper functions
+#' @family location helper functions
 #' @section Function ID:
 #' 8-13
 #'
@@ -1484,7 +1484,7 @@ cells_column_spanners <- function(spanners = everything()) {
 #' `r man_get_image_tag(file = "man_cells_column_labels_1.png")`
 #' }}
 #'
-#' @family helper functions
+#' @family location helper functions
 #' @section Function ID:
 #' 8-14
 #'
@@ -1607,7 +1607,7 @@ cells_column_labels <- function(columns = everything()) {
 #' `r man_get_image_tag(file = "man_cells_row_groups_1.png")`
 #' }}
 #'
-#' @family helper functions
+#' @family location helper functions
 #' @section Function ID:
 #' 8-15
 #'
@@ -1748,7 +1748,7 @@ cells_group <- function(groups = everything()) {
 #' `r man_get_image_tag(file = "man_cells_stub_1.png")`
 #' }}
 #'
-#' @family helper functions
+#' @family location helper functions
 #' @section Function ID:
 #' 8-16
 #'
@@ -1901,7 +1901,7 @@ cells_stub <- function(rows = everything()) {
 #' `r man_get_image_tag(file = "man_cells_body_1.png")`
 #' }}
 #'
-#' @family helper functions
+#' @family location helper functions
 #' @section Function ID:
 #' 8-17
 #'
@@ -2099,7 +2099,7 @@ cells_body <- function(
 #' `r man_get_image_tag(file = "man_cells_summary_1.png")`
 #' }}
 #'
-#' @family helper functions
+#' @family location helper functions
 #' @section Function ID:
 #' 8-18
 #'
@@ -2269,7 +2269,7 @@ cells_summary <- function(
 #' `r man_get_image_tag(file = "man_cells_grand_summary_1.png")`
 #' }}
 #'
-#' @family helper functions
+#' @family location helper functions
 #' @section Function ID:
 #' 8-19
 #'
@@ -2435,7 +2435,7 @@ cells_grand_summary <- function(
 #' `r man_get_image_tag(file = "man_cells_stub_summary_1.png")`
 #' }}
 #'
-#' @family helper functions
+#' @family location helper functions
 #' @section Function ID:
 #' 8-20
 #'
@@ -2572,7 +2572,7 @@ cells_stub_summary <- function(
 #' `r man_get_image_tag(file = "man_cells_stub_grand_summary_1.png")`
 #' }}
 #'
-#' @family helper functions
+#' @family location helper functions
 #' @section Function ID:
 #' 8-21
 #'
@@ -2691,7 +2691,7 @@ cells_stub_grand_summary <- function(rows = everything()) {
 #' `r man_get_image_tag(file = "man_cells_footnotes_1.png")`
 #' }}
 #'
-#' @family helper functions
+#' @family location helper functions
 #' @section Function ID:
 #' 8-22
 #'
@@ -2792,7 +2792,7 @@ cells_footnotes <- function() {
 #' `r man_get_image_tag(file = "man_cells_source_notes_1.png")`
 #' }}
 #'
-#' @family helper functions
+#' @family location helper functions
 #' @section Function ID:
 #' 8-23
 #'

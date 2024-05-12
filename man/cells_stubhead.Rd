@@ -96,11 +96,7 @@ with \code{\link[=tab_style]{tab_style()}} in conjunction with the use of \code{
 }
 
 \seealso{
-Other helper functions: 
-\code{\link{adjust_luminance}()},
-\code{\link{cell_borders}()},
-\code{\link{cell_fill}()},
-\code{\link{cell_text}()},
+Other location helper functions: 
 \code{\link{cells_body}()},
 \code{\link{cells_column_labels}()},
 \code{\link{cells_column_spanners}()},
@@ -113,19 +109,6 @@ Other helper functions:
 \code{\link{cells_stub_summary}()},
 \code{\link{cells_summary}()},
 \code{\link{cells_title}()},
-\code{\link{currency}()},
-\code{\link{default_fonts}()},
-\code{\link{escape_latex}()},
-\code{\link{from_column}()},
-\code{\link{google_font}()},
-\code{\link{gt_latex_dependencies}()},
-\code{\link{html}()},
-\code{\link{md}()},
-\code{\link{nanoplot_options}()},
-\code{\link{pct}()},
-\code{\link{px}()},
-\code{\link{random_id}()},
-\code{\link{stub}()},
-\code{\link{system_fonts}()}
+\code{\link{location-helper}}
 }
-\concept{helper functions}
+\concept{location helper functions}
