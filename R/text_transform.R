@@ -52,15 +52,7 @@
 #'
 #'   The replacement text for any matched text fragments.
 #'
-#' @param locations *Locations to target*
-#'
-#'   `<locations expressions>` // *default:* `cells_body()`
-#'
-#'   The cell or set of cells to be associated with the text transformation.
-#'   Only the [cells_body()], [cells_stub()], [cells_row_groups()],
-#'   [cells_column_labels()], and [cells_column_spanners()] helper functions can
-#'   be used here. We can enclose several of these calls within a `list()` if we
-#'   wish to make the transformation happen at different locations.
+#' @inheritParams text_transform
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -162,16 +154,7 @@ text_replace <- function(
 #'   The replacement text to use when cell values aren't matched by any of the
 #'   LHS inputs. If `NULL`, the default, no replacement text will be used.
 #'
-#' @param .locations *Locations to target*
-#'
-#'   `<locations expressions>` // *default:* `cells_body()`
-#'
-#'   The cell or set of cells to be associated with the text transformation.
-#'   Only the [cells_body()], [cells_stub()], [cells_row_groups()],
-#'   [cells_column_labels()], and [cells_column_spanners()] helper functions can
-#'   be used here. We can enclose several of these calls within a `list()` if we
-#'   wish to make the transformation happen at different locations.
-#'
+#' @inheritParams text_transform
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
@@ -324,15 +307,7 @@ text_case_when <- function(
 #'   substrings of `old_text`. In this way, the replacements will act on those
 #'   matched substrings.
 #'
-#' @param .locations *Locations to target*
-#'
-#'   `<locations expressions>` // *default:* `cells_body()`
-#'
-#'   The cell or set of cells to be associated with the text transformation.
-#'   Only the [cells_body()], [cells_stub()], [cells_row_groups()],
-#'   [cells_column_labels()], and [cells_column_spanners()] helper functions can
-#'   be used here. We can enclose several of these calls within a `list()` if we
-#'   wish to make the transformation happen at different locations.
+#' @inheritParams text_transform
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -518,11 +493,11 @@ text_case_match <- function(
 #'
 #' @param locations *Locations to target*
 #'
-#'   `<locations expressions>` // *default:* `cells_body()`
+#'   [`<locations expressions>`][location-helper] // *default:* `cells_body()`
 #'
 #'   The cell or set of cells to be associated with the text transformation.
-#'   Only the [cells_body()], [cells_stub()], [cells_row_groups()],
-#'   [cells_column_labels()], and [cells_column_spanners()] helper functions can
+#'   Only the [cells_column_spanners()], [cells_column_labels()],
+#'    [cells_row_groups()], [cells_stub()], and [cells_body()] helper functions can
 #'   be used here. We can enclose several of these calls within a `list()` if we
 #'   wish to make the transformation happen at different locations.
 #'

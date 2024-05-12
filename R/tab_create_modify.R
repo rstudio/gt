@@ -2063,8 +2063,8 @@ tab_stub_indent <- function(
 #'
 #' Each call of `tab_footnote()` will either add a different footnote to the
 #' footer or reuse existing footnote text therein. One or more cells outside of
-#' the footer are targeted using the `cells_*()` helper functions (e.g.,
-#' [cells_body()], [cells_column_labels()], etc.). You can choose to *not*
+#' the footer are targeted using the [`cells_*()` helper functions][location-helper]
+#' (e.g., [cells_body()], [cells_column_labels()], etc.). You can choose to *not*
 #' attach a footnote mark by simply not specifying anything in the `locations`
 #' argument.
 #'
@@ -2085,7 +2085,7 @@ tab_stub_indent <- function(
 #'
 #' @param locations *Locations to target*
 #'
-#'   `<locations expressions>` // *default:* `NULL` (`optional`)
+#'   [`<locations expressions>`][location-helper] // *default:* `NULL` (`optional`)
 #'
 #'   The cell or set of cells to be associated with the footnote. Supplying any
 #'   of the `cells_*()` helper functions is a useful way to target the location
@@ -2873,12 +2873,12 @@ tab_caption <- function(
 #'
 #' @description
 #'
-#' With the `tab_style()` function we can target specific cells and apply styles
-#' to them. This is best done in conjunction with the helper functions
-#' [cell_text()], [cell_fill()], and [cell_borders()]. At present this function
-#' is focused on the application of styles for HTML output only (as such, other
-#' output formats will ignore all `tab_style()` calls). Using the aforementioned
-#' helper functions, here are some of the styles we can apply:
+#' With the `tab_style()` function we can [target specific cells][location-helper]
+#' and apply styles to them. This is best done in conjunction with the helper
+#' functions [cell_text()], [cell_fill()], and [cell_borders()]. Currently, this
+#' function is focused on the application of styles for HTML output only
+#' (as such, other output formats will ignore all `tab_style()` calls).
+#' Using the aforementioned helper functions, here are some of the styles we can apply:
 #'
 #' - the background color of the cell ([cell_fill()]: `color`)
 #' - the cell's text color, font, and size ([cell_text()]: `color`, `font`,
@@ -2906,7 +2906,7 @@ tab_caption <- function(
 #'
 #' @param locations *Locations to target*
 #'
-#'   `<locations expressions>` // **required**
+#'   [`<locations expressions>`][location-helper] // **required**
 #'
 #'   The cell or set of cells to be associated with the style. Supplying any of
 #'   the `cells_*()` helper functions is a useful way to target the location
@@ -3232,7 +3232,7 @@ tab_caption <- function(
 #'
 #' @seealso [cell_text()], [cell_fill()], and [cell_borders()] as helpers for
 #'   defining custom styles and [cells_body()] as one of many useful helper
-#'   functions for targeting the locations to be styled.
+#'   functions for targeting the [locations][location-helper] to be styled.
 #'
 #' @export
 tab_style <- function(
