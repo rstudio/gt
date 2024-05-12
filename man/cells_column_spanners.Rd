@@ -21,7 +21,7 @@ A list object with the classes \code{cells_column_spanners} and
 \code{location_cells}.
 }
 \description{
-The \code{cells_column_spanners()} function is used to target the cells that
+\code{cells_column_spanners()} is used to target the cells that
 contain the table column spanners. This is useful when applying a footnote
 with \code{\link[=tab_footnote]{tab_footnote()}} or adding custom style with \code{\link[=tab_style]{tab_style()}}. The function
 is expressly used in each of those functions' \code{locations} argument. The
