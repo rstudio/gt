@@ -18,8 +18,8 @@ to right, top to bottom)
 
 Each call of tab_footnote() will either add a different footnote to the
 footer or reuse existing footnote text therein. One or more cells outside of
-the footer are targeted using the cells_*() helper functions (e.g.,
-cells_body(), cells_column_labels(), etc.). You can choose to not
+the footer are targeted using the cells_*() helper functions
+(e.g., cells_body(), cells_column_labels(), etc.). You can choose to not
 attach a footnote mark by simply not specifying anything in the locations
 argument.
 By default, gt will choose which side of the text to place the footnote
@@ -44,8 +44,8 @@ to right, top to bottom)
 
 Each call of tab_footnote() will either add a different footnote to the
 footer or reuse existing footnote text therein. One or more cells outside of
-the footer are targeted using the cells_*() helper functions (e.g.,
-cells_body(), cells_column_labels(), etc.). You can choose to not
+the footer are targeted using the cells_*() helper functions
+(e.g., cells_body(), cells_column_labels(), etc.). You can choose to not
 attach a footnote mark by simply not specifying anything in the locations
 argument.
 By default, gt will choose which side of the text to place the footnote
@@ -136,8 +136,8 @@ footnote marks where needed throughout the table</p></li>
 to right, top to bottom)</p></li>
 </ol><p>Each call of <code>tab_footnote()</code> will either add a different footnote to the
 footer or reuse existing footnote text therein. One or more cells outside of
-the footer are targeted using the <code>cells_*()</code> helper functions (e.g.,
-<code><a href="cells_body.html">cells_body()</a></code>, <code><a href="cells_column_labels.html">cells_column_labels()</a></code>, etc.). You can choose to <em>not</em>
+the footer are targeted using the <code><a href="location-helper.html">cells_*()</a></code> helper functions
+(e.g., <code><a href="cells_body.html">cells_body()</a></code>, <code><a href="cells_column_labels.html">cells_column_labels()</a></code>, etc.). You can choose to <em>not</em>
 attach a footnote mark by simply not specifying anything in the <code>locations</code>
 argument.</p>
 <p>By default, <strong>gt</strong> will choose which side of the text to place the footnote
@@ -175,7 +175,7 @@ in the footnote text.</p></dd>
 
 <dt>locations</dt>
 <dd><p><em>Locations to target</em></p>
-<p><code>&lt;locations expressions&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
+<p><code><a href="location-helper.html">&lt;locations expressions&gt;</a></code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>The cell or set of cells to be associated with the footnote. Supplying any
 of the <code>cells_*()</code> helper functions is a useful way to target the location
 cells that are associated with the footnote text. These helper functions

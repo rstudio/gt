@@ -124,10 +124,10 @@ LHS inputs. If <code>NULL</code>, the default, no replacement text will be used.
 
 <dt>.locations</dt>
 <dd><p><em>Locations to target</em></p>
-<p><code>&lt;locations expressions&gt;</code> // <em>default:</em> <code><a href="cells_body.html">cells_body()</a></code></p>
+<p><code><a href="location-helper.html">&lt;locations expressions&gt;</a></code> // <em>default:</em> <code><a href="cells_body.html">cells_body()</a></code></p>
 <p>The cell or set of cells to be associated with the text transformation.
-Only the <code><a href="cells_body.html">cells_body()</a></code>, <code><a href="cells_stub.html">cells_stub()</a></code>, <code><a href="cells_row_groups.html">cells_row_groups()</a></code>,
-<code><a href="cells_column_labels.html">cells_column_labels()</a></code>, and <code><a href="cells_column_spanners.html">cells_column_spanners()</a></code> helper functions can
+Only the <code><a href="cells_column_spanners.html">cells_column_spanners()</a></code>, <code><a href="cells_column_labels.html">cells_column_labels()</a></code>,
+<code><a href="cells_row_groups.html">cells_row_groups()</a></code>, <code><a href="cells_stub.html">cells_stub()</a></code>, and <code><a href="cells_body.html">cells_body()</a></code> helper functions can
 be used here. We can enclose several of these calls within a <code><a href="https://rdrr.io/r/base/list.html" class="external-link">list()</a></code> if we
 wish to make the transformation happen at different locations.</p></dd>
 
