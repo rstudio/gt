@@ -155,6 +155,7 @@ text_replace <- function(
 #'   LHS inputs. If `NULL`, the default, no replacement text will be used.
 #'
 #' @inheritParams text_transform
+#'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
