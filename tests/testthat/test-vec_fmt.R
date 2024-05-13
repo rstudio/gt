@@ -6168,3 +6168,14 @@ test_that("vec_fmt_*() error when bad input are supplied.", {
   expect_error(vec_fmt_duration(list(1, 2, 3)))
   expect_error(vec_fmt_duration(dplyr::tibble(a = c(1, 2, 3))))
 })
+
+test_that("check_vector_valid() works correctly", {
+  expect_null(check_vector_valid(1))
+  expect_null(check_vector_valid(list()))
+
+  expect_snapshot(error = TRUE, {
+    check_vector_valid(1, "integer")
+    check_vector_valid(TRUE, c("numeric", "integer"))
+    check_vector_valid(data.frame(x = 1), c("numeric", "integer"))
+  })
+})

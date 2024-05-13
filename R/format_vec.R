@@ -299,15 +299,8 @@ vec_fmt_number <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
-
-  # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
-    cli::cli_abort(
-      "The `vec_fmt_number()` function can only be used with numeric vectors."
-    )
-  }
+  # Stop function if `x` is not a vector or is incompatible with the formatting
+  check_vector_valid(x, valid_classes = c("numeric", "integer"))
 
   # Ensure that `output` is matched correctly to one option
   output <- rlang::arg_match(output)
@@ -462,11 +455,7 @@ vec_fmt_integer <- function(
 ) {
 
   # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
-    cli::cli_abort(
-      "The `vec_fmt_integer()` function can only be used with numeric vectors."
-    )
-  }
+  check_vector_valid(x, valid_classes = c("numeric", "integer"))
 
   vec_fmt_number(
     x,
@@ -632,15 +621,8 @@ vec_fmt_scientific <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
-
   # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
-    cli::cli_abort(
-      "The `vec_fmt_scientific()` function can only be used with numeric vectors."
-    )
-  }
+  check_vector_valid(x, valid_classes = c("numeric", "integer"))
 
   # Ensure that `output` is matched correctly to one option
   output <- rlang::arg_match(output)
@@ -813,15 +795,8 @@ vec_fmt_engineering <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
-
   # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
-    cli::cli_abort(
-      "The `vec_fmt_engineering()` function can only be used with numeric vectors."
-    )
-  }
+  check_vector_valid(x, valid_classes = c("numeric", "integer"))
 
   # Ensure that `output` is matched correctly to one option
   output <- rlang::arg_match(output)
@@ -1002,15 +977,8 @@ vec_fmt_percent <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
-
   # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
-    cli::cli_abort(
-      "The `vec_fmt_percent()` function can only be used with numeric vectors."
-    )
-  }
+  check_vector_valid(x, valid_classes = c("numeric", "integer"))
 
   # Ensure that `output` is matched correctly to one option
   output <- rlang::arg_match(output)
@@ -1212,18 +1180,11 @@ vec_fmt_partsper <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
+  # Stop function if class of `x` is incompatible with the formatting
+  check_vector_valid(x, valid_classes = c("numeric", "integer"))
 
   # Ensure that `to_units` is matched correctly to one option
   to_units <- rlang::arg_match(to_units)
-
-  # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
-    cli::cli_abort(
-      "The `vec_fmt_partsper()` function can only be used with numeric vectors."
-    )
-  }
 
   # Ensure that `output` is matched correctly to one option
   output <- rlang::arg_match(output)
@@ -1376,18 +1337,11 @@ vec_fmt_fraction <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
+  # Stop function if class of `x` is incompatible with the formatting
+  check_vector_valid(x, valid_classes = c("numeric", "integer"))
 
   # Ensure that `layout` is matched correctly to one option
   layout <- rlang::arg_match(layout)
-
-  # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
-    cli::cli_abort(
-      "The `vec_fmt_fraction()` function can only be used with numeric vectors."
-    )
-  }
 
   # Ensure that `output` is matched correctly to one option
   output <- rlang::arg_match(output)
@@ -1596,15 +1550,8 @@ vec_fmt_currency <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
-
   # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
-    cli::cli_abort(
-      "The `vec_fmt_currency()` function can only be used with numeric vectors."
-    )
-  }
+  check_vector_valid(x, valid_classes = c("numeric", "integer"))
 
   # Ensure that `output` is matched correctly to one option
   output <- rlang::arg_match(output)
@@ -1720,20 +1667,11 @@ vec_fmt_roman <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
-
-  # Ensure that `case` is matched correctly to one option
-  case <- rlang::arg_match(case)
-
   # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
-    cli::cli_abort(
-      "The `vec_fmt_roman()` function can only be used with numeric vectors."
-    )
-  }
+  check_vector_valid(x, valid_classes = c("numeric", "integer"))
 
-  # Ensure that `output` is matched correctly to one option
+  # Ensure that `case` and `output` are matched correctly to one option
+  case <- rlang::arg_match(case)
   output <- rlang::arg_match(output)
 
   if (output == "auto") {
@@ -1857,21 +1795,12 @@ vec_fmt_index <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
-
   # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
-    cli::cli_abort(
-      "The `vec_fmt_index()` function can only be used with numeric vectors."
-    )
-  }
+  check_vector_valid(x, valid_classes = c("numeric", "integer"))
 
-  # Ensure that `case` and `index_algo` are matched correctly to one option
+  # Ensure that `case`, `index_algo` and `output` are matched correctly to one option
   case <- rlang::arg_match(case)
   index_algo <- rlang::arg_match(index_algo)
-
-  # Ensure that `output` is matched correctly to one option
   output <- rlang::arg_match(output)
 
   if (output == "auto") {
@@ -1996,15 +1925,8 @@ vec_fmt_spelled_num <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
-
   # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
-    cli::cli_abort(
-      "The `vec_fmt_spelled_num()` function can only be used with numeric vectors."
-    )
-  }
+  check_vector_valid(x, valid_classes = c("numeric", "integer"))
 
   # Ensure that `output` is matched correctly to one option
   output <- rlang::arg_match(output)
@@ -2174,20 +2096,11 @@ vec_fmt_bytes <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
-
   # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
-    cli::cli_abort(
-      "The `vec_fmt_bytes()` function can only be used with numeric vectors."
-    )
-  }
+  check_vector_valid(x, valid_classes = c("numeric", "integer"))
 
-  # Ensure that `standard` is matched correctly to one option
+  # Ensure that `standard` and `output` are matched correctly to one option
   standard <- rlang::arg_match(standard)
-
-  # Ensure that `output` is matched correctly to one option
   output <- rlang::arg_match(output)
 
   if (output == "auto") {
@@ -2372,15 +2285,8 @@ vec_fmt_date <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
-
   # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("Date", "POSIXt", "character"))) {
-    cli::cli_abort(
-      "The `vec_fmt_date()` function can only be used with Date, POSIXt, or character vectors."
-    )
-  }
+  check_vector_valid(x, valid_classes = c("Date", "POSIXt", "character"))
 
   # Ensure that `output` is matched correctly to one option
   output <- rlang::arg_match(output)
@@ -2548,15 +2454,8 @@ vec_fmt_time <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
-
   # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("Date", "POSIXt", "character"))) {
-    cli::cli_abort(
-      "The `vec_fmt_time()` function can only be used with Date, POSIXt, or character vectors."
-    )
-  }
+  check_vector_valid(x, valid_classes = c("Date", "POSIXt", "character"))
 
   # Ensure that `output` is matched correctly to one option
   output <- rlang::arg_match(output)
@@ -3395,15 +3294,9 @@ vec_fmt_datetime <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
-
   # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("Date", "POSIXct", "character"))) {
-    cli::cli_abort(
-      "The `vec_fmt_datetime()` function can only be used with Date, POSIXct, or character vectors."
-    )
-  }
+  check_vector_valid(x, valid_classes = c("Date", "POSIXct", "character"))
+
   # Ensure that `output` is matched correctly to one option
   output <- rlang::arg_match(output)
 
@@ -3654,20 +3547,13 @@ vec_fmt_duration <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
 
-  # Ensure that `duration_style` is matched correctly to one option
-  duration_style <- rlang::arg_match(duration_style)
 
   # Stop function if class of `x` is incompatible with the formatting
-  if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer", "difftime"))) {
-    cli::cli_abort(
-      "The `vec_fmt_duration()` function can only be used with numeric, integer, or difftime vectors."
-    )
-  }
+  check_vector_valid(x, valid_classes = c("numeric", "integer", "difftime"))
 
-  # Ensure that `output` is matched correctly to one option
+  # Ensure that `duration_style` and `ouput` are matched correctly to one option
+  duration_style <- rlang::arg_match(duration_style)
   output <- rlang::arg_match(output)
 
   if (output == "auto") {
@@ -3766,11 +3652,8 @@ vec_fmt_markdown <- function(
 
   # Ensure that arguments are matched
   md_engine <- rlang::arg_match(md_engine)
-
-  # Ensure that `x` is strictly a vector with `rlang::is_vector()`
-  stop_if_not_vector(x)
-
   output <- rlang::arg_match(output)
+
   if (output == "auto") {
     output <- determine_output_format()
   }
@@ -3798,17 +3681,16 @@ gt_one_col <- function(x) {
   gt(dplyr::tibble(x = x), auto_align = FALSE, process_md = FALSE)
 }
 
-stop_if_not_vector <- function(x, call = rlang::caller_env()) {
-  if (!rlang::is_vector(x)) {
+# Similar as `stop_if_not_vector()` if `valid_classes` is not supplied.
+check_vector_valid <- function(x, valid_classes = NULL, call = rlang::caller_env()) {
+  cls <- valid_classes
+  if (!rlang::is_vector(x) || !(is.null(cls) || inherits(x, cls))) {
     cli::cli_abort(
-      "`x` must be a vector, not {.obj_type_friendly {x}}.",
+      "{.arg x} must be {.or {cls}} vectors, not {.object_type_friendly {x}}.",
       call = call
     )
   }
-}
-
-vector_class_is_valid <- function(x, valid_classes) {
-  inherits(x, valid_classes)
+  invisible()
 }
 
 render_as_vector <- function(data, output) {
