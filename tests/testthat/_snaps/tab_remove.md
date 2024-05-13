@@ -110,12 +110,12 @@
       rm_spanners(t_sp, "span2")
     Condition
       Error in `rm_spanners()`:
-      ! Can't find item `span2` in the data.
+      ! Can't find spanner `span2` in the data.
     Code
       rm_spanners(t_sp, c("span1", "span2", "span3"))
     Condition
       Error in `rm_spanners()`:
-      ! Can't find items `span2` and `span3` in the data.
+      ! Can't find spanners `span2` and `span3` in the data.
 
 # Table footnotes can be removed using `rm_footnotes()`
 
@@ -153,17 +153,17 @@
       t_ft %>% rm_footnotes(footnotes = 0:1)
     Condition
       Error in `rm_footnotes()`:
-      ! The following item indices do not exist in the data: 0.
+      ! The following footnote indices do not exist in the data: 0.
     Code
       t_ft %>% rm_footnotes(footnotes = 2:3)
     Condition
       Error in `rm_footnotes()`:
-      ! The following item indices do not exist in the data: 3.
+      ! The following footnote indices do not exist in the data: 3.
     Code
       t_ft %>% rm_footnotes(footnotes = 3)
     Condition
       Error in `rm_footnotes()`:
-      ! The following item indices do not exist in the data: 3.
+      ! The following footnote indices do not exist in the data: 3.
 
 # Table source notes can be removed using `rm_source_notes()`
 
@@ -201,15 +201,15 @@
       t_sn %>% rm_source_notes(source_notes = 0:1)
     Condition
       Error in `rm_source_notes()`:
-      ! The following item indices do not exist in the data: 0.
+      ! The following source note indices do not exist in the data: 0.
     Code
       t_sn %>% rm_source_notes(2:3)
     Condition
       Error in `rm_source_notes()`:
-      ! The following item indices do not exist in the data: 3.
+      ! The following source note indices do not exist in the data: 3.
     Code
       t_sn %>% rm_source_notes(3)
     Condition
       Error in `rm_source_notes()`:
-      ! The following item indices do not exist in the data: 3.
+      ! The following source note indices do not exist in the data: 3.
 
