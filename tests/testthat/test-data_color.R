@@ -1128,6 +1128,15 @@ test_that("Certain errors can be expected (and some things don't error)", {
         target_columns = c(row, group),
       )
   )
+  # Don't expect an error if rows don't resolve to any.
+  # data will not be colored.
+  expect_no_error(
+    exibble %>%
+      gt() %>%
+      data_color(
+        rows = num == 1000 # not contained in data.
+      )
+  )
 })
 
 test_that("Certain warnings can be expected when using deprecated arguments", {
