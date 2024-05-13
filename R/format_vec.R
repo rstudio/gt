@@ -299,13 +299,6 @@ vec_fmt_number <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `output` is matched correctly to one option
-  output <- rlang::arg_match(output)
-
-  if (output == "auto") {
-    output <- determine_output_format()
-  }
-
   # Ensure that `x` is strictly a vector with `rlang::is_vector()`
   stop_if_not_vector(x)
 
@@ -314,6 +307,13 @@ vec_fmt_number <- function(
     cli::cli_abort(
       "The `vec_fmt_number()` function can only be used with numeric vectors."
     )
+  }
+
+  # Ensure that `output` is matched correctly to one option
+  output <- rlang::arg_match(output)
+
+  if (output == "auto") {
+    output <- determine_output_format()
   }
 
   render_as_vector(
@@ -632,13 +632,6 @@ vec_fmt_scientific <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `output` is matched correctly to one option
-  output <- rlang::arg_match(output)
-
-  if (output == "auto") {
-    output <- determine_output_format()
-  }
-
   # Ensure that `x` is strictly a vector with `rlang::is_vector()`
   stop_if_not_vector(x)
 
@@ -647,6 +640,13 @@ vec_fmt_scientific <- function(
     cli::cli_abort(
       "The `vec_fmt_scientific()` function can only be used with numeric vectors."
     )
+  }
+
+  # Ensure that `output` is matched correctly to one option
+  output <- rlang::arg_match(output)
+
+  if (output == "auto") {
+    output <- determine_output_format()
   }
 
   render_as_vector(
@@ -813,13 +813,6 @@ vec_fmt_engineering <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `output` is matched correctly to one option
-  output <- rlang::arg_match(output)
-
-  if (output == "auto") {
-    output <- determine_output_format()
-  }
-
   # Ensure that `x` is strictly a vector with `rlang::is_vector()`
   stop_if_not_vector(x)
 
@@ -828,6 +821,13 @@ vec_fmt_engineering <- function(
     cli::cli_abort(
       "The `vec_fmt_engineering()` function can only be used with numeric vectors."
     )
+  }
+
+  # Ensure that `output` is matched correctly to one option
+  output <- rlang::arg_match(output)
+
+  if (output == "auto") {
+    output <- determine_output_format()
   }
 
   render_as_vector(
@@ -1002,13 +1002,6 @@ vec_fmt_percent <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `output` is matched correctly to one option
-  output <- rlang::arg_match(output)
-
-  if (output == "auto") {
-    output <- determine_output_format()
-  }
-
   # Ensure that `x` is strictly a vector with `rlang::is_vector()`
   stop_if_not_vector(x)
 
@@ -1017,6 +1010,13 @@ vec_fmt_percent <- function(
     cli::cli_abort(
       "The `vec_fmt_percent()` function can only be used with numeric vectors."
     )
+  }
+
+  # Ensure that `output` is matched correctly to one option
+  output <- rlang::arg_match(output)
+
+  if (output == "auto") {
+    output <- determine_output_format()
   }
 
   render_as_vector(
@@ -1212,13 +1212,6 @@ vec_fmt_partsper <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `output` is matched correctly to one option
-  output <- rlang::arg_match(output)
-
-  if (output == "auto") {
-    output <- determine_output_format()
-  }
-
   # Ensure that `x` is strictly a vector with `rlang::is_vector()`
   stop_if_not_vector(x)
 
@@ -1230,6 +1223,13 @@ vec_fmt_partsper <- function(
     cli::cli_abort(
       "The `vec_fmt_partsper()` function can only be used with numeric vectors."
     )
+  }
+
+  # Ensure that `output` is matched correctly to one option
+  output <- rlang::arg_match(output)
+
+  if (output == "auto") {
+    output <- determine_output_format()
   }
 
   render_as_vector(
@@ -1376,13 +1376,6 @@ vec_fmt_fraction <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `output` is matched correctly to one option
-  output <- rlang::arg_match(output)
-
-  if (output == "auto") {
-    output <- determine_output_format()
-  }
-
   # Ensure that `x` is strictly a vector with `rlang::is_vector()`
   stop_if_not_vector(x)
 
@@ -1394,6 +1387,13 @@ vec_fmt_fraction <- function(
     cli::cli_abort(
       "The `vec_fmt_fraction()` function can only be used with numeric vectors."
     )
+  }
+
+  # Ensure that `output` is matched correctly to one option
+  output <- rlang::arg_match(output)
+
+  if (output == "auto") {
+    output <- determine_output_format()
   }
 
   render_as_vector(
@@ -1596,13 +1596,6 @@ vec_fmt_currency <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `output` is matched correctly to one option
-  output <- rlang::arg_match(output)
-
-  if (output == "auto") {
-    output <- determine_output_format()
-  }
-
   # Ensure that `x` is strictly a vector with `rlang::is_vector()`
   stop_if_not_vector(x)
 
@@ -1611,6 +1604,13 @@ vec_fmt_currency <- function(
     cli::cli_abort(
       "The `vec_fmt_currency()` function can only be used with numeric vectors."
     )
+  }
+
+  # Ensure that `output` is matched correctly to one option
+  output <- rlang::arg_match(output)
+
+  if (output == "auto") {
+    output <- determine_output_format()
   }
 
   render_as_vector(
@@ -1720,13 +1720,6 @@ vec_fmt_roman <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `output` is matched correctly to one option
-  output <- rlang::arg_match(output)
-
-  if (output == "auto") {
-    output <- determine_output_format()
-  }
-
   # Ensure that `x` is strictly a vector with `rlang::is_vector()`
   stop_if_not_vector(x)
 
@@ -1738,6 +1731,13 @@ vec_fmt_roman <- function(
     cli::cli_abort(
       "The `vec_fmt_roman()` function can only be used with numeric vectors."
     )
+  }
+
+  # Ensure that `output` is matched correctly to one option
+  output <- rlang::arg_match(output)
+
+  if (output == "auto") {
+    output <- determine_output_format()
   }
 
   render_as_vector(
@@ -1857,25 +1857,25 @@ vec_fmt_index <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `output` is matched correctly to one option
-  output <- rlang::arg_match(output)
-
-  if (output == "auto") {
-    output <- determine_output_format()
-  }
-
   # Ensure that `x` is strictly a vector with `rlang::is_vector()`
   stop_if_not_vector(x)
-
-  # Ensure that `case` and `index_algo` are matched correctly to one option
-  case <- rlang::arg_match(case)
-  index_algo <- rlang::arg_match(index_algo)
 
   # Stop function if class of `x` is incompatible with the formatting
   if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
     cli::cli_abort(
       "The `vec_fmt_index()` function can only be used with numeric vectors."
     )
+  }
+
+  # Ensure that `case` and `index_algo` are matched correctly to one option
+  case <- rlang::arg_match(case)
+  index_algo <- rlang::arg_match(index_algo)
+
+  # Ensure that `output` is matched correctly to one option
+  output <- rlang::arg_match(output)
+
+  if (output == "auto") {
+    output <- determine_output_format()
   }
 
   render_as_vector(
@@ -1996,13 +1996,6 @@ vec_fmt_spelled_num <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `output` is matched correctly to one option
-  output <- rlang::arg_match(output)
-
-  if (output == "auto") {
-    output <- determine_output_format()
-  }
-
   # Ensure that `x` is strictly a vector with `rlang::is_vector()`
   stop_if_not_vector(x)
 
@@ -2011,6 +2004,13 @@ vec_fmt_spelled_num <- function(
     cli::cli_abort(
       "The `vec_fmt_spelled_num()` function can only be used with numeric vectors."
     )
+  }
+
+  # Ensure that `output` is matched correctly to one option
+  output <- rlang::arg_match(output)
+
+  if (output == "auto") {
+    output <- determine_output_format()
   }
 
   render_as_vector(
@@ -2174,24 +2174,24 @@ vec_fmt_bytes <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `output` is matched correctly to one option
-  output <- rlang::arg_match(output)
-
-  if (output == "auto") {
-    output <- determine_output_format()
-  }
-
   # Ensure that `x` is strictly a vector with `rlang::is_vector()`
   stop_if_not_vector(x)
-
-  # Ensure that `standard` is matched correctly to one option
-  standard <- rlang::arg_match(standard)
 
   # Stop function if class of `x` is incompatible with the formatting
   if (!vector_class_is_valid(x, valid_classes = c("numeric", "integer"))) {
     cli::cli_abort(
       "The `vec_fmt_bytes()` function can only be used with numeric vectors."
     )
+  }
+
+  # Ensure that `standard` is matched correctly to one option
+  standard <- rlang::arg_match(standard)
+
+  # Ensure that `output` is matched correctly to one option
+  output <- rlang::arg_match(output)
+
+  if (output == "auto") {
+    output <- determine_output_format()
   }
 
   render_as_vector(
@@ -2372,13 +2372,6 @@ vec_fmt_date <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `output` is matched correctly to one option
-  output <- rlang::arg_match(output)
-
-  if (output == "auto") {
-    output <- determine_output_format()
-  }
-
   # Ensure that `x` is strictly a vector with `rlang::is_vector()`
   stop_if_not_vector(x)
 
@@ -2387,6 +2380,13 @@ vec_fmt_date <- function(
     cli::cli_abort(
       "The `vec_fmt_date()` function can only be used with Date, POSIXt, or character vectors."
     )
+  }
+
+  # Ensure that `output` is matched correctly to one option
+  output <- rlang::arg_match(output)
+
+  if (output == "auto") {
+    output <- determine_output_format()
   }
 
   render_as_vector(
@@ -2548,13 +2548,6 @@ vec_fmt_time <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `output` is matched correctly to one option
-  output <- rlang::arg_match(output)
-
-  if (output == "auto") {
-    output <- determine_output_format()
-  }
-
   # Ensure that `x` is strictly a vector with `rlang::is_vector()`
   stop_if_not_vector(x)
 
@@ -2563,6 +2556,13 @@ vec_fmt_time <- function(
     cli::cli_abort(
       "The `vec_fmt_time()` function can only be used with Date, POSIXt, or character vectors."
     )
+  }
+
+  # Ensure that `output` is matched correctly to one option
+  output <- rlang::arg_match(output)
+
+  if (output == "auto") {
+    output <- determine_output_format()
   }
 
   render_as_vector(
@@ -3395,13 +3395,6 @@ vec_fmt_datetime <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `output` is matched correctly to one option
-  output <- rlang::arg_match(output)
-
-  if (output == "auto") {
-    output <- determine_output_format()
-  }
-
   # Ensure that `x` is strictly a vector with `rlang::is_vector()`
   stop_if_not_vector(x)
 
@@ -3410,6 +3403,12 @@ vec_fmt_datetime <- function(
     cli::cli_abort(
       "The `vec_fmt_datetime()` function can only be used with Date, POSIXct, or character vectors."
     )
+  }
+  # Ensure that `output` is matched correctly to one option
+  output <- rlang::arg_match(output)
+
+  if (output == "auto") {
+    output <- determine_output_format()
   }
 
   render_as_vector(
@@ -3655,13 +3654,6 @@ vec_fmt_duration <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
-  # Ensure that `output` is matched correctly to one option
-  output <- rlang::arg_match(output)
-
-  if (output == "auto") {
-    output <- determine_output_format()
-  }
-
   # Ensure that `x` is strictly a vector with `rlang::is_vector()`
   stop_if_not_vector(x)
 
@@ -3673,6 +3665,13 @@ vec_fmt_duration <- function(
     cli::cli_abort(
       "The `vec_fmt_duration()` function can only be used with numeric, integer, or difftime vectors."
     )
+  }
+
+  # Ensure that `output` is matched correctly to one option
+  output <- rlang::arg_match(output)
+
+  if (output == "auto") {
+    output <- determine_output_format()
   }
 
   render_as_vector(
@@ -3766,15 +3765,15 @@ vec_fmt_markdown <- function(
 ) {
 
   # Ensure that arguments are matched
-  output <- rlang::arg_match(output)
   md_engine <- rlang::arg_match(md_engine)
-
-  if (output == "auto") {
-    output <- determine_output_format()
-  }
 
   # Ensure that `x` is strictly a vector with `rlang::is_vector()`
   stop_if_not_vector(x)
+
+  output <- rlang::arg_match(output)
+  if (output == "auto") {
+    output <- determine_output_format()
+  }
 
   vec_fmt_out <-
     render_as_vector(
