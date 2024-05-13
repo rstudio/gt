@@ -3650,6 +3650,9 @@ vec_fmt_markdown <- function(
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
 
+  # Check that `x` is a vector with rlang::is_vector
+  check_vector_valid(x)
+
   # Ensure that arguments are matched
   md_engine <- rlang::arg_match(md_engine)
   output <- rlang::arg_match(output)
@@ -3683,13 +3686,15 @@ gt_one_col <- function(x) {
 
 # Similar as `stop_if_not_vector()` if `valid_classes` is not supplied.
 check_vector_valid <- function(x, valid_classes = NULL, call = rlang::caller_env()) {
-  cls <- valid_classes
-  if (!rlang::is_vector(x) || !(is.null(cls) || inherits(x, cls))) {
+  is_vec <- rlang::is_vector(x)
+
+  if (!is_vec || !(is.null(valid_classes) || inherits(x, valid_classes))) {
     cli::cli_abort(
-      "{.arg x} must be {.or {cls}} vectors, not {.obj_type_friendly {x}}.",
+      "{.arg x} must be {.or {valid_classes}} vectors, not {.obj_type_friendly {x}}.",
       call = call
     )
   }
+
   invisible()
 }
 
