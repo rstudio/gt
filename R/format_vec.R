@@ -3686,7 +3686,7 @@ check_vector_valid <- function(x, valid_classes = NULL, call = rlang::caller_env
   cls <- valid_classes
   if (!rlang::is_vector(x) || !(is.null(cls) || inherits(x, cls))) {
     cli::cli_abort(
-      "{.arg x} must be {.or {cls}} vectors, not {.object_type_friendly {x}}.",
+      "{.arg x} must be {.or {cls}} vectors, not {.obj_type_friendly {x}}.",
       call = call
     )
   }
