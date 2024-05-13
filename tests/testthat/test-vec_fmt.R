@@ -6147,3 +6147,12 @@ test_that("The `vec_fmt_datetime()` function works", {
       )
     )
 })
+
+test_that("The `vec_fmt_duration()` function works", {
+  tm <- as.difftime(c("0:3:20"))
+  # tests are mostly duplicates of `fmt_duration()`
+  expect_equal(
+    vec_fmt_duration(tm),
+    "3m 20s"
+  )
+})
