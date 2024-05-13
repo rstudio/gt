@@ -527,8 +527,8 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
   # Expect an error if the `spanners` vector contains ID values that
   # don't exist for any spanner column labels
   expect_snapshot(error = TRUE, {
-    t_sp <- exibble |>
-      gt() |>
+    t_sp <- exibble %>%
+      gt() %>%
       tab_spanner("span1", columns = c(char, fctr))
 
     rm_spanners(t_sp, "span2")
