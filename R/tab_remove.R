@@ -301,7 +301,8 @@ rm_spanners <- function(
       as.integer(
         resolve_vector_i(
           expr = {{ spanners }},
-          vector = spanners_tbl[["spanner_id"]]
+          vector = spanners_tbl[["spanner_id"]],
+          "spanner"
         )
       )
 
@@ -498,7 +499,8 @@ rm_footnotes <- function(
     as.integer(
       resolve_vector_i(
         expr = {{ footnotes }},
-        vector = as.character(seq_len(footnotes_count))
+        vector = as.character(seq_len(footnotes_count)),
+        "footnote"
       )
     )
 
@@ -649,7 +651,8 @@ rm_source_notes <- function(
     as.integer(
       resolve_vector_i(
         expr = {{ source_notes }},
-        vector = as.character(seq_len(source_notes_length))
+        vector = as.character(seq_len(source_notes_length)),
+        "source note"
       )
     )
 
