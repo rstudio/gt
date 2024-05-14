@@ -7580,8 +7580,8 @@ fmt_duration <- function(
     is.null(input_units)
   ) {
     cli::cli_abort(c(
-      "When there are numeric columns to format, `input_units` must not be `NULL`.",
-      "*" = "Use one of \"seconds\", \"minutes\", \"hours\", \"days\", or \"weeks\"."
+      "{.arg input_units} must be supplied when there are numeric columns to format.",
+      "i" = "Use one of \"seconds\", \"minutes\", \"hours\", \"days\", or \"weeks\"."
     ))
   }
 
