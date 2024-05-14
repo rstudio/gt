@@ -106,7 +106,7 @@
 ---
 
     Code
-      t_sp <- tab_spanner(gt(exibble), "span1", columns = c(char, fctr))
+      t_sp <- exibble %>% gt() %>% tab_spanner("span1", columns = c(char, fctr))
       rm_spanners(t_sp, "span2")
     Condition
       Error in `rm_spanners()`:
