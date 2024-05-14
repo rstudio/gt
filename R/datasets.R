@@ -490,14 +490,17 @@
 #'
 "towny"
 
-
 #' A table of personal information for people all over the world
 #'
 #' @description
 #'
-#' This dataset containing records for one hundred people residing in ten
-#' different countries.
-#'
+#' The `peeps` dataset contains records for one hundred people residing in ten
+#' different countries. This data has been synthesized, and so the names within
+#' the table have not been taken or based on real individuals. The street
+#' addresses were generated from actual street names within real geographic
+#' localities, however, the street numbers were assigned randomly from a
+#' constrained number set. While these records do not relate to real people,
+#' efforts were made to make the data as realistic as possible.
 #'
 #' @format A tibble with 100 rows and 14 variables:
 #' \describe{
