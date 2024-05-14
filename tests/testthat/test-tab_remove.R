@@ -526,27 +526,14 @@ test_that("Spanner column labels can be removed using `rm_spanners()`", {
 
   # Expect an error if the `spanners` vector contains ID values that
   # don't exist for any spanner column labels
-  expect_error(
-    gtcars %>%
-      dplyr::select(
-        -mfr, -trim, bdy_style, drivetrain,
-        -drivetrain, -trsmn, -ctry_origin
-      ) %>%
-      dplyr::slice(1:8) %>%
-      gt(rowname_col = "model") %>%
-      tab_spanner(label = "HP", columns = c(hp, hp_rpm)) %>%
-      tab_spanner(label = "Torque", columns = c(trq, trq_rpm)) %>%
-      tab_spanner(label = "MPG", columns = c(mpg_c, mpg_h)) %>%
-      tab_spanner(
-        label = "Performance",
-        columns = c(
-          hp, hp_rpm, trq, trq_rpm,
-          mpg_c, mpg_h
-        )
-      ) %>%
-      rm_spanners(spanners = c("HP", "perf")) %>%
-      render_as_html()
-  )
+  expect_snapshot(error = TRUE, {
+    t_sp <- exibble %>%
+      gt() %>%
+      tab_spanner("span1", columns = c(char, fctr))
+
+    rm_spanners(t_sp, "span2")
+    rm_spanners(t_sp, c("span1", "span2", "span3"))
+  })
 })
 
 test_that("Table footnotes can be removed using `rm_footnotes()`", {
@@ -605,26 +592,16 @@ test_that("Table footnotes can be removed using `rm_footnotes()`", {
 
   # Expect an error when providing any integer values that don't correspond
   # with the available footnotes ([1, 2])
-  expect_error(
-    exibble %>%
+  expect_snapshot(error = TRUE, {
+    t_ft <- exibble %>%
       gt() %>%
       tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
-      tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
-      rm_footnotes(footnotes = 0:1)
-  )
-  expect_error(
-    exibble %>%
-      gt() %>%
-      tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
-      tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2)) %>%
-      rm_footnotes(footnotes = 2:3)
-  )
-  expect_error(
-    exibble %>%
-      gt() %>%
-      tab_footnote(footnote = "Footnote 1", locations = cells_body(1, 1)) %>%
-      rm_footnotes(footnotes = 2)
-  )
+      tab_footnote(footnote = "Footnote 2", locations = cells_body(1, 2))
+    t_ft %>% rm_footnotes(footnotes = 0:1)
+    t_ft %>% rm_footnotes(footnotes = 2:3)
+    t_ft %>% rm_footnotes(footnotes = 3)
+  })
+
   expect_no_error(
     exibble %>%
       gt() %>%
@@ -731,26 +708,17 @@ test_that("Table source notes can be removed using `rm_source_notes()`", {
 
   # Expect an error when providing any integer values that don't correspond
   # with the available source notes ([1, 2])
-  expect_error(
-    exibble %>%
+  expect_snapshot(error = TRUE, {
+    t_sn <- exibble %>%
       gt() %>%
       tab_source_note(source_note = "Source Note 1") %>%
-      tab_source_note(source_note = "Source Note 2") %>%
-      rm_source_notes(source_notes = 0:1)
-  )
-  expect_error(
-    exibble %>%
-      gt() %>%
-      tab_source_note(source_note = "Source Note 1") %>%
-      tab_source_note(source_note = "Source Note 2") %>%
-      rm_source_notes(source_notes = 2:3)
-  )
-  expect_error(
-    exibble %>%
-      gt() %>%
-      tab_source_note(source_note = "Source Note 1") %>%
-      rm_source_notes(source_notes = 2)
-  )
+      tab_source_note(source_note = "Source Note 2")
+
+    t_sn %>% rm_source_notes(source_notes = 0:1)
+    t_sn %>% rm_source_notes(2:3)
+    t_sn %>% rm_source_notes(3)
+  })
+
   expect_no_error(
     exibble %>%
       gt() %>%
