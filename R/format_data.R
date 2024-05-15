@@ -10491,6 +10491,151 @@ add_anchor_attr <- function(
 #' [from_column()] helper is applied so long as the arguments belong to this
 #' closed set.
 #'
+#' @section Examples:
+#'
+#' Let's take ten rows from the [`peeps`] dataset and create a table of contact
+#' information with mailing addresses and email addresses. With the column that
+#' contains email addresses (`email_addr`), we can use `fmt_email()` to generate
+#' 'mailto:' links. Clicking any of these formatted email addresses should
+#' result in new message creation (depending on the OS integration with an email
+#' client).
+#'
+#' ```r
+#' peeps |>
+#'   dplyr::filter(country == "AUS") |>
+#'   dplyr::select(
+#'     starts_with("name"),
+#'     address, city, state_prov, postcode, country, email_addr
+#'   ) |>
+#'   dplyr::mutate(city = toupper(city)) |>
+#'   gt(rowname_col = "name_family") |>
+#'   tab_header(title = "Our Contacts in Australia") |>
+#'   tab_stubhead(label = "Name") |>
+#'   fmt_email(columns = email_addr) |>
+#'   fmt_country(columns = country) |>
+#'   cols_merge(
+#'     columns = c(address, city, state_prov, postcode, country),
+#'     pattern = "{1}<br>{2} {3} {4}<br>{5}"
+#'   ) |>
+#'   cols_merge(
+#'     columns = c(name_family, name_given),
+#'     pattern = "{1},<br>{2}"
+#'   ) |>
+#'   cols_label(
+#'     address = "Mailing Address",
+#'     email_addr = "Email"
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(size = "x-small"),
+#'     locations = cells_body(columns = address)
+#'   ) |>
+#'   opt_align_table_header(align = "left")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_email_1.png")`
+#' }}
+#'
+#' We can further condense the table by reducing the email link to an icon. The
+#' approach we take here is the use of a **fontawesome** icon within the
+#' `display_name` argument. The icon used is `"envelope"` and each icon produced
+#' serves as a clickable 'mailto:' link. By adjusting one of the [cols_merge()]
+#' calls, we can place the icon/link next to the name of the person.
+#'
+#' ```r
+#' peeps |>
+#'   dplyr::filter(country == "AUS") |>
+#'   dplyr::select(
+#'     starts_with("name"),
+#'     address, city, state_prov, postcode, country, email_addr
+#'   ) |>
+#'   dplyr::mutate(city = toupper(city)) |>
+#'   gt(rowname_col = "name_family") |>
+#'   tab_header(title = "Our Contacts in Australia") |>
+#'   fmt_email(
+#'     columns = email_addr,
+#'     display_name = fontawesome::fa(
+#'       name = "envelope",
+#'       height = "0.75em",
+#'       fill = "gray"
+#'     )
+#'   ) |>
+#'   fmt_country(columns = country) |>
+#'   cols_merge(
+#'     columns = c(address, city, state_prov, postcode, country),
+#'     pattern = "{1}<br>{2} {3} {4}<br>{5}"
+#'   ) |>
+#'   cols_merge(
+#'     columns = c(name_family, name_given, email_addr),
+#'     pattern = "{1}, {2} {3}"
+#'   ) |>
+#'   cols_width(everything() ~ px(200)) |>
+#'   tab_style(
+#'     style = cell_text(size = px(11)),
+#'     locations = cells_body(columns = address)
+#'   ) |>
+#'   tab_options(column_labels.hidden = TRUE) |>
+#'   opt_align_table_header(align = "left")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_email_2.png")`
+#' }}
+#'
+#' Another option is to display the names of the email recipients instead of the
+#' email addresses, making the display names serve as 'mailto:' links. We can do
+#' this by using the [from_column()] function in the `display_name` argument.
+#' The display names in this case are the combined given and family names,
+#' handled earlier through a `dplyr::mutate()` call. With some space conserved,
+#' we take the opportunity here to add in phone information for each person.
+#'
+#' ```r
+#' peeps |>
+#'   dplyr::filter(country == "AUS") |>
+#'   dplyr::mutate(name = paste(name_given, name_family)) |>
+#'   dplyr::mutate(city = toupper(city)) |>
+#'   dplyr::mutate(phone_number = gsub("^\\(0|\\)", "", phone_number)) |>
+#'   dplyr::select(
+#'     name, address, city, state_prov, postcode, country,
+#'     email_addr, phone_number, country_code
+#'   ) |>
+#'   gt(rowname_col = "email_addr") |>
+#'   tab_header(title = "Our Contacts in Australia") |>
+#'   tab_stubhead(label = "Name") |>
+#'   fmt_email(
+#'     columns = email_addr,
+#'     display_name = from_column("name"),
+#'     color = "gray25"
+#'   ) |>
+#'   cols_hide(columns = name) |>
+#'   fmt_country(columns = country) |>
+#'   cols_merge(
+#'     columns = c(address, city, state_prov, postcode, country),
+#'     pattern = "{1}<br>{2} {3} {4}<br>{5}"
+#'   ) |>
+#'   cols_merge(
+#'     columns = c(phone_number, country_code),
+#'     pattern = "+{2} {1}"
+#'   ) |>
+#'   cols_label(
+#'     address = "Mailing Address",
+#'     email_addr = "Email",
+#'     phone_number = "Phone"
+#'   ) |>
+#'   cols_move_to_start(columns = phone_number) |>
+#'   cols_width(everything() ~ px(170)) |>
+#'   tab_style(
+#'     style = cell_text(size = px(11)),
+#'     locations = cells_body(columns = address)
+#'   ) |>
+#'   cols_align(align = "left") |>
+#'   opt_align_table_header(align = "left")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_email_3.png")`
+#' }}
+#'
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-22
