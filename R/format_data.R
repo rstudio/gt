@@ -12140,7 +12140,10 @@ fmt_flag <- function(
 #' countrypops |>
 #'   dplyr::filter(year == 2021) |>
 #'   dplyr::arrange(desc(population)) |>
-#'   dplyr::filter(row_number() > max(row_number()) - 5 | row_number() <= 5) |>
+#'   dplyr::filter(
+#'     dplyr::row_number() > max(dplyr::row_number()) - 5 |
+#'     dplyr::row_number() <= 5
+#'   ) |>
 #'   dplyr::select(
 #'     country_code_fl = country_code_2,
 #'     country_code_2a = country_code_2,
