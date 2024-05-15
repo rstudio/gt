@@ -523,7 +523,7 @@
 #' \item{gender}{The gender of the individual.}
 #' \item{dob}{The individual's date of birth (DOB) in the ISO 8601 form of
 #' `YYYY-MM-DD`.}
-#' \item(height_cm, weight_kg){The height and weight of the individual in
+#' \item{height_cm, weight_kg}{The height and weight of the individual in
 #' centimeters (cm) and kilograms (kg), respectively.}
 #' }
 #'
