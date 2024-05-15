@@ -189,6 +189,7 @@ write_gt_examples_qmd_files <- function(
           "pizzaplace",
           "exibble",
           "towny",
+          "peeps",
           "metro",
           "constants",
           "illness",
