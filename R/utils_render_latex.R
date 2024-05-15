@@ -203,11 +203,11 @@ create_table_start_l <- function(data) {
         # '14.7%' becomes '0.147\\linewidth')
         if (grepl('^[[:digit:].]+%$', col_widths[i])) {
 
-          table_width <- dt_options_get_value(data = data, option = 'table_width')
+          table_width <- dt_options_get_value(data = data, option = "table_width")
 
           col_pct <- as.numeric(gsub('%$', '', col_widths[i])) / 100
 
-          if (table_width == 'auto') {
+          if (table_width == "auto") {
 
             # Table width not specified, use all available space
             col_scalar <- col_pct
@@ -223,7 +223,7 @@ create_table_start_l <- function(data) {
 
             # When table width is expressed in units, convert to points
             col_scalar <- col_pct * convert_to_px(table_width) * 0.75 # 0.75 converts pixels to points
-            tab_unit <- 'pt'
+            tab_unit <- "pt"
 
           }
 
@@ -625,7 +625,7 @@ create_body_component_l <- function(data) {
       )
   }
 
-  current_group_id <- character(0)
+  current_group_id <- character(0L)
 
   body_rows <-
     lapply(
@@ -856,12 +856,12 @@ summary_rows_for_group_l <- function(
                               "::rowname::", colname)) %>%
       dplyr::filter(colname == col_name)
 
-    if (dim(styles_summary)[1L] > 0) {
+    if (dim(styles_summary)[1L] > 0L) {
 
       for (row_num in sort(unique(styles_summary$rownum))) {
         # The value of colnum in styles_summary differs for
         # group and grand summaries
-        if (summary_row_type == 'group') {
+        if (summary_row_type == "group") {
           row_pos <- (row_num - floor(row_num)) * 100L
         } else {
           row_pos <- row_num
@@ -896,7 +896,7 @@ summary_rows_for_group_l <- function(
     paste0(
       vapply(
         row_splits_summary,
-        FUN.VALUE = character(1),
+        FUN.VALUE = character(1L),
         latex_body_row,
         type = "row"
       ),
@@ -980,7 +980,7 @@ create_footer_component_l <- function(data) {
         ),
         vapply(
           footnotes_tbl[["footnotes"]],
-          FUN.VALUE = character(1),
+          FUN.VALUE = character(1L),
           #FUN = process_text,
           FUN = function(x, context, styles_obj) apply_cell_styles_l(process_text(x, context = context), styles_obj),
           context = "latex",
@@ -1001,7 +1001,7 @@ create_footer_component_l <- function(data) {
   }
 
   # Create a formatted source notes string
-  if (length(source_notes_vec) > 0) {
+  if (length(source_notes_vec) > 0L) {
 
     if (source_notes_multiline) {
       source_notes <- paste_right(paste(source_notes_vec, collapse = "\\\\\n"), "\\\\\n")
@@ -1011,7 +1011,7 @@ create_footer_component_l <- function(data) {
 
     styles_source <-
       consolidate_cell_styles_l(
-        dplyr::filter(dt_styles_get(data), locname == 'source_notes')
+        dplyr::filter(dt_styles_get(data), locname == "source_notes")
       )
 
     source_notes <- apply_cell_styles_l(source_notes, styles_source)
@@ -1044,7 +1044,7 @@ create_body_rows_l <- function(
 
   stub_layout <- get_stub_layout(data = data)
 
-  stub_is_2 <- length(stub_layout) > 1
+  stub_is_2 <- length(stub_layout) > 1L
 
   if (is.null(stub_layout)) {
     vars <- default_vars
@@ -1072,7 +1072,7 @@ create_body_rows_l <- function(
 
             styles_tbl_i <- dplyr::filter(styles_tbl, rownum == x)
 
-            if (nrow(styles_tbl_i) < 1) {
+            if (nrow(styles_tbl_i) < 1L) {
               # Remove any latex footnote encoding
               content <- remove_footnote_encoding(content)
               return(paste(paste(content, collapse = " & "), "\\\\ \n"))
@@ -1145,14 +1145,14 @@ remove_footnote_encoding <- function(x) {
 convert_font_size_l <- function(x) {
 
   size_map <- c(
-    `xx-small` = '\\tiny',
-    `x-small` = '\\scriptsize',
-    small = '\\small',
-    medium = '\\normalsize',
-    large = '\\large',
-    `x-large` = '\\Large',
-    `xx-large` = '\\LARGE',
-    `xxx-large` = '\\huge'
+    `xx-small` = "\\tiny",
+    `x-small` = "\\scriptsize",
+    small = "\\small",
+    medium = "\\normalsize",
+    large = "\\large",
+    `x-large` = "\\Large",
+    `xx-large` = "\\LARGE",
+    `xxx-large` = "\\huge"
   )
 
   if (as.character(x) %in% names(size_map))
@@ -1170,7 +1170,7 @@ create_summary_rows_l <- function(
 
   list_of_summaries <- dt_summary_df_get(data = data)
 
-  if (length(list_of_summaries) < 1) {
+  if (length(list_of_summaries) < 1L) {
     return(rep_len("", n_rows))
   }
 
@@ -1237,7 +1237,7 @@ create_summary_rows_l <- function(
             paste0(
               vapply(
                 row_splits_summary,
-                FUN.VALUE = character(1),
+                FUN.VALUE = character(1L),
                 latex_body_row,
                 type = "row"
               ),
@@ -1338,7 +1338,7 @@ derive_table_width_statement_l <- function(data) {
 #' @noRd
 consolidate_cell_styles_l <- function(styles_df) {
 
-  styles_col <- styles_df[['styles']]
+  styles_col <- styles_df[["styles"]]
 
   # If only one set of styles is supplied the function isn't necessary
   if (length(styles_col) == 1L) return(styles_col[[1L]])
@@ -1516,7 +1516,7 @@ apply_cell_styles_l <- function(content, style_obj) {
 
 .apply_style_indentation_l <- function(style_obj) {
 
-  use_indent <- style_obj[['cell_text']][['indent']]
+  use_indent <- style_obj[["cell_text"]][["indent"]]
 
   if (is.null(use_indent)) return(NULL)
 

@@ -216,7 +216,7 @@ for (i in seq_along(regional_currencies)) {
 
   regional_currencies_i <- regional_currencies[[i]]
 
-  not_tender_j <- integer(0)
+  not_tender_j <- integer(0L)
 
   for (j in seq_along(regional_currencies_i)) {
 

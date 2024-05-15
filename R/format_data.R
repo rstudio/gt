@@ -570,18 +570,17 @@ fmt_number <- function(
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
   if (
+    isTRUE(getOption("gt.strict_column_fmt", TRUE)) &&
     !column_classes_are_valid(
       data = data,
       columns = {{ columns }},
       valid_classes = compat
     )
   ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_number()` and `fmt_integer()` functions can only be
+    cli::cli_abort(
+      "The `fmt_number()` and `fmt_integer()` functions can only be
       used on `columns` with numeric data."
-      )
-    }
+    )
   }
 
   # Set the `formatC_format` option according to whether number
@@ -1326,18 +1325,17 @@ fmt_scientific <- function(
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
   if (
+    isTRUE(getOption("gt.strict_column_fmt", TRUE)) &&
     !column_classes_are_valid(
       data = data,
       columns = {{ columns }},
       valid_classes = compat
     )
   ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_scientific()` function can only be used on `columns`
-      with numeric data."
-      )
-    }
+    cli::cli_abort(
+      "The `fmt_scientific()` function can only be used on `columns`
+    with numeric data."
+    )
   }
 
   # If `n_sigfig` is defined (and not `NA`) modify the number of
@@ -1483,7 +1481,7 @@ fmt_scientific <- function(
           x_str_left <-
             vapply(
               x_str,
-              FUN.VALUE = character(1),
+              FUN.VALUE = character(1L),
               USE.NAMES = FALSE,
               FUN = function(x) {
                 if (!grepl("e(\\+|-)[0-9]{2,}", x)) return("")
@@ -1819,18 +1817,17 @@ fmt_engineering <- function(
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
   if (
+    isTRUE(getOption("gt.strict_column_fmt", TRUE)) &&
     !column_classes_are_valid(
       data = data,
       columns = {{ columns }},
       valid_classes = compat
     )
   ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_engineering()` function can only be used on `columns`
-      with numeric data."
-      )
-    }
+    cli::cli_abort(
+      "The `fmt_engineering()` function can only be used on `columns`
+    with numeric data."
+    )
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -1946,7 +1943,7 @@ fmt_engineering <- function(
           n_part <-
             vapply(
               power_3,
-              FUN.VALUE = character(1),
+              FUN.VALUE = character(1L),
               USE.NAMES = FALSE,
               FUN = function(x) {
                 if (grepl("-", x)) {
@@ -4634,7 +4631,7 @@ fmt_index <- function(
         x_str[x_is_a_number] <-
           vapply(
             x[x_is_a_number],
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(x) index_fn(x, set = idx_set)
           )
@@ -4675,7 +4672,7 @@ index_excel <- function(num, set) {
   result <-
     vapply(
       num,
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(x) {
         get_letters_from_div(x, set = set)

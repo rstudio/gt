@@ -375,7 +375,7 @@ gt_save_rtf <- function(
 
   } else if (is_gt_group(data = data)) {
 
-    rtf_lines <- c()
+    rtf_lines <- NULL # same as c()
 
     rtf_open <-
       as_rtf(
@@ -452,7 +452,7 @@ gt_save_docx <- function(
 
   } else if (is_gt_group(data = data)) {
 
-    word_tbls <- c()
+    word_tbls <- NULL
 
     seq_tbls <- seq_len(nrow(data$gt_tbls))
 
@@ -989,7 +989,7 @@ as_word <- function(
   # Build all table data objects through a common pipeline
   value <- build_data(data = data, context = "word")
 
-  gt_xml <- c()
+  gt_xml <- NULL # same as c()
 
   #
   # Composition of Word table OOXML
@@ -1464,7 +1464,7 @@ grid_layout_widths <- function(layout, data) {
 
   # Enlarge columns if fixed column widths have been set
   column_width <- unlist(dt_boxhead_get(data)$column_width)
-  fixed <- integer(0)
+  fixed <- integer(0L)
 
   if (any(nzchar(column_width)) && length(column_width) == length(widths)) {
 

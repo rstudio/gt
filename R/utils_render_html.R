@@ -183,7 +183,7 @@ styles_to_html <- function(styles) {
   styles_out <-
     vapply(
       styles,
-      FUN.VALUE = character(1), USE.NAMES = FALSE,
+      FUN.VALUE = character(1L), USE.NAMES = FALSE,
       FUN = function(x) {
         if (any(is.null(names(x)))) {
           style <- as.character(x)
@@ -219,7 +219,7 @@ add_css_styles <- function(data) {
 
   styles_tbl <- dt_styles_get(data = data)
 
-  styles_tbl$html_style <- vapply(styles_tbl$styles, styles_to_html, character(1))
+  styles_tbl$html_style <- vapply(styles_tbl$styles, styles_to_html, character(1L))
 
   dt_styles_set(data = data, styles = styles_tbl)
 }
@@ -968,7 +968,7 @@ create_columns_component_h <- function(data) {
     table_col_headings <-
       htmltools::tagList(
         higher_spanner_rows,
-        table_col_headings,
+        table_col_headings
       )
   }
 
@@ -1067,7 +1067,7 @@ create_body_component_h <- function(data) {
   # Create a default vector of row span values for group labels as a column
   row_span_vals <- rep_len(NA_integer_, n_cols_total)
 
-  current_group_id <- character(0)
+  current_group_id <- character(0L)
 
   n_groups <- nrow(groups_rows_df)
 
@@ -1545,7 +1545,7 @@ render_row_data <- function(
     function(extra_class) {
       paste0(" ", extra_class, collapse = " ")
     },
-    character(1)
+    character(1L)
   )
 
   sprintf(

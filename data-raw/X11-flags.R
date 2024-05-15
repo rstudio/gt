@@ -32,10 +32,10 @@ flag_files <- list.files(flags_dir, full.names = TRUE)
 
 flag_tbl <-
   dplyr::tibble(
-    country_code_2 = character(0),
-    country_code_3 = character(0),
-    country_name = character(0),
-    country_flag = character(0)
+    country_code_2 = character(0L),
+    country_code_3 = character(0L),
+    country_name = character(0L),
+    country_flag = character(0L)
   )
 
 countrypops_country_lookup <-

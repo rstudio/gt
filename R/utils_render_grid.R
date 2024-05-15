@@ -786,7 +786,7 @@ create_footnotes_component_g <- function(data) {
   marks <- vapply(
     footnote_ids,
     FUN = footnote_mark_to_html,
-    FUN.VALUE = character(1),
+    FUN.VALUE = character(1L),
     USE.NAMES = FALSE,
     data = data,
     location = "ftr"
@@ -795,7 +795,7 @@ create_footnotes_component_g <- function(data) {
   text <- vapply(
     footnote_text,
     FUN = process_text,
-    FUN.VALUE = character(1),
+    FUN.VALUE = character(1L),
     USE.NAMES = FALSE,
     context = "html"
   )
@@ -968,7 +968,7 @@ render_grid_svg <- function(label, style, margin) {
     asp <- dy / dx
 
     # If one of height/width is known, set other based on aspect ratio
-    if (is.null(height) & !is.null(width)) {
+    if (is.null(height) && !is.null(width)) {
       height <- width * asp
     } else if (!is.null(height)) {
       width  <- height / asp
@@ -1203,8 +1203,8 @@ parse_style <- function(style) {
   style <- trimws(strsplit(style, ";")[[1]])
   style <- strsplit(style, ":", fixed = TRUE)
   valid <- lengths(style) == 2
-  keys   <- trimws(vapply(style[valid], `[[`, character(1), i = 1))
-  values <- trimws(vapply(style[valid], `[[`, character(1), i = 2))
+  keys   <- trimws(vapply(style[valid], `[[`, character(1L), i = 1))
+  values <- trimws(vapply(style[valid], `[[`, character(1L), i = 2))
   names(values) <- keys
   values
 }

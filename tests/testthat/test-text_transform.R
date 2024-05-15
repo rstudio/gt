@@ -413,7 +413,7 @@ test_that("`text_transform()` works on row group labels", {
     render_as_html() %>%
     xml2::read_html() %>%
     selection_text("[class='gt_group_heading']") %>%
-    expect_equal(character(0))
+    expect_equal(character(0L))
 
   # Modify all group labels with the `text_transform()` function
   tbl_html <-

@@ -1860,13 +1860,13 @@ test_that("The `fmt_duration()` function will error in specific cases", {
   # Expect an error if `input_units` is invalid
   expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "Stunden"))
   expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = c("hours", "minutes")))
-  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = character(0)))
+  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = character(0L)))
   expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = 1))
 
   # Expect an error if `output_units` is invalid
   expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", output_units = "Stunden"))
   expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", output_units = c("days", "weeks", "years")))
-  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", output_units = character(0)))
+  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", output_units = character(0L)))
   expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", output_units = 1))
 
   # Expect an error if `duration_style` is invalid

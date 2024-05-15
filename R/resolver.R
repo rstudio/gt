@@ -256,7 +256,7 @@ resolve_cols_i <- function(
     call = rlang::caller_env()
 ) {
   quo <- rlang::enquo(expr)
-  cols_excl <- c()
+  cols_excl <- NULL # c()
   null_means <- rlang::arg_match(null_means)
 
   if (is_gt_tbl(data = data)) {

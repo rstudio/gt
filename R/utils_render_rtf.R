@@ -82,7 +82,7 @@ rtf_fonttbl <- function(
   fontinfo_values <-
     vapply(
       seq_along(fonts),
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(x) {
         gsub("{x}", font_sequence[x], unlist(fonts[x]), fixed = TRUE)
@@ -206,7 +206,7 @@ rtf_header <- function(
   ansi_code_page_key <- rtf_key("ansicpg", .ansi_code_page)
 
   # Get a vector of the different object types
-  object_types <- vapply(dots_list, class, FUN.VALUE = character(1), USE.NAMES = FALSE)
+  object_types <- vapply(dots_list, class, FUN.VALUE = character(1L), USE.NAMES = FALSE)
 
   # TODO: Validate the `object_types` vector
 
@@ -380,7 +380,7 @@ parse_length_str <- function(
     } else {
       NA_character_
     }
-  }, character(1))
+  }, character(1L))
 
   # Check for negative values and stop of `allow_negative = FALSE`
   non_na_vals <- vals[!is.na(vals)]
@@ -669,7 +669,7 @@ rtf_tbl_cell <- function(
       paste(
         vapply(
           borders,
-          FUN.VALUE = character(1),
+          FUN.VALUE = character(1L),
           USE.NAMES = FALSE,
           FUN = function(x) {
 
@@ -839,7 +839,7 @@ escape_rtf <- function(text) {
   x <- gsub("{", "\\'7b", x, fixed = TRUE)
   x <- gsub("}", "\\'7d", x, fixed = TRUE)
 
-  x <- vapply(x, FUN.VALUE = character(1), FUN = escape_rtf_unicode, USE.NAMES = FALSE)
+  x <- vapply(x, FUN.VALUE = character(1L), FUN = escape_rtf_unicode, USE.NAMES = FALSE)
 
   text[!na_text] <- x
 
@@ -1960,7 +1960,7 @@ generate_notes_list <- function(
     footnote_text <-
       vapply(
         footnote_text,
-        FUN.VALUE = character(1),
+        FUN.VALUE = character(1L),
         USE.NAMES = FALSE,
         FUN = process_text,
         context = "rtf"

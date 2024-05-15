@@ -214,7 +214,7 @@ gt_split <- function(
 
       col_range_list <-
         split(
-          seq_len(length(visible_col_vars)),
+          seq_along(visible_col_vars),
           col_slice_vec
         )
 

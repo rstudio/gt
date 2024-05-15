@@ -60,7 +60,7 @@ define_units <- function(units_notation, is_chemical_formula = FALSE) {
     chem_tokens_vec <-
       vapply(
         chem_tokens_vec,
-        FUN.VALUE = character(1),
+        FUN.VALUE = character(1L),
         USE.NAMES = FALSE,
         FUN = function(x) {
 
@@ -186,7 +186,7 @@ define_units <- function(units_notation, is_chemical_formula = FALSE) {
     chem_tokens_vec <-
       vapply(
         chem_tokens_vec,
-        FUN.VALUE = character(1),
+        FUN.VALUE = character(1L),
         USE.NAMES = FALSE,
         FUN = function(x) {
           if (grepl("<|>", x) && nchar(x) > 1) {
@@ -226,7 +226,7 @@ define_units <- function(units_notation, is_chemical_formula = FALSE) {
   tokens_vec <-
     vapply(
       tokens_vec,
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(x) {
         if (grepl("^/", x) && nchar(x) > 1) {

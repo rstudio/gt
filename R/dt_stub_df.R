@@ -54,7 +54,7 @@ dt_stub_df_init <- function(
     )
 
   # Handle case where table has no columns
-  if (ncol(data_tbl) < 1) {
+  if (ncol(data_tbl) < 1L) {
 
     data <- dt_stub_df_set(data = data, stub_df = stub_df)
     return(data)
@@ -80,7 +80,7 @@ dt_stub_df_init <- function(
   #
   if (
     !is.null(groupname_col) &&
-    length(groupname_col) > 0 &&
+    length(groupname_col) > 0L &&
     all(groupname_col %in% colnames(data_tbl))
   ) {
 
@@ -106,6 +106,8 @@ dt_stub_df_init <- function(
         create_unique_id_vals(unique_row_group_labels, simplify = process_md)
       names(unique_row_group_ids) <- unique_row_group_labels
 
+      # dplyr::recode is superseded, and is slower now.
+      # TODO consider using vctrs::vec_case_match when available r-lib/vctrs#1622
       row_group_ids <- dplyr::recode(row_group_labels, !!!unique_row_group_ids)
 
     } else {
@@ -131,7 +133,7 @@ dt_stub_df_init <- function(
   }
 
   # Stop if input `data` has no columns (after modifying `data` for groups)
-  if (ncol(data_tbl) == 0) {
+  if (ncol(data_tbl) == 0L) {
     cli::cli_abort(
       "The `data` must have at least one column that isn't a 'group' column."
     )
@@ -154,7 +156,7 @@ dt_stub_df_build <- function(data, context) {
   stub_df$built_group_label <-
     vapply(
       stub_df$group_label,
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       FUN = function(label) {
         if (!is.null(label)) {
           process_text(text = label, context = context)
@@ -196,13 +198,13 @@ dt_stub_components <- function(data) {
 
   stub_df <- dt_stub_df_get(data = data)
 
-  stub_components <- c()
+  stub_components <- NULL # same as c()
 
-  if (any(!is.na(stub_df[["group_id"]]))) {
+  if (!all(is.na(stub_df[["group_id"]]))) {
     stub_components <- c(stub_components, "group_id")
   }
 
-  if (any(!is.na(stub_df[["row_id"]])) && !all(stub_df[["row_id"]] == "")) {
+  if (!all(is.na(stub_df[["row_id"]])) && !all(stub_df[["row_id"]] == "")) {
     stub_components <- c(stub_components, "row_id")
   }
 

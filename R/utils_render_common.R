@@ -475,7 +475,7 @@ perform_col_merge <- function(data, context) {
         glued_cols <-
           vapply(
             glued_cols,
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = resolve_secondary_pattern
           )

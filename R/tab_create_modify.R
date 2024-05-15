@@ -1724,7 +1724,7 @@ tab_row_group <- function(
   }
 
   if (length(arrange_groups_vars) == 1 && is.na(arrange_groups_vars)) {
-    arrange_groups_vars <- character(0)
+    arrange_groups_vars <- character(0L)
   }
 
   dt_row_groups_set(
@@ -3259,7 +3259,7 @@ tab_style <- function(
   cell_helpers <-
     vapply(
       style,
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(x) {
         x <- names(x)

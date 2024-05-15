@@ -240,7 +240,7 @@ dt_spanners_print_matrix <- function(
 
   # If `spanners_tbl` is immediately empty then return a single-row
   # matrix of column vars/IDs (or not, if `omit_columns_row = TRUE`)
-  if (nrow(spanners_tbl) < 1) {
+  if (nrow(spanners_tbl) < 1L) {
     return(
       empty_spanner_matrix(vars = vars, omit_columns_row = omit_columns_row)
     )
@@ -265,7 +265,7 @@ dt_spanners_print_matrix <- function(
 
   # If `spanners_tbl` is immediately empty then return a single-row
   # matrix of column vars/IDs (or not, if `omit_columns_row = TRUE`)
-  if (nrow(spanners_tbl) < 1) {
+  if (nrow(spanners_tbl) < 1L) {
     return(
       empty_spanner_matrix(vars = vars, omit_columns_row = omit_columns_row)
     )

@@ -331,11 +331,11 @@ info_currencies <- function(
     tab_1 <-
       curr %>%
       dplyr::select(-symbol) %>%
-      dplyr::select(curr_name, dplyr::everything()) %>%
+      dplyr::relocate(curr_name) %>%
       dplyr::mutate(value = 49.95) %>%
       gt()
 
-    for (i in seq(nrow(curr))) {
+    for (i in seq_len(nrow(curr))) {
 
       tab_1 <-
         tab_1 %>%
@@ -380,11 +380,11 @@ info_currencies <- function(
 
     tab_1 <-
       currency_symbols %>%
-      dplyr::select(-symbol) %>%
+      dplyr::select(-"symbol") %>%
       dplyr::mutate(value = 49.95) %>%
       gt()
 
-    for (i in seq(nrow(curr))) {
+    for (i in seq_len(nrow(curr))) {
 
       tab_1 <-
         tab_1 %>%

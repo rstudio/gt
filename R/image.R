@@ -370,12 +370,12 @@ ggplot_image <- function(
 
   vapply(
     seq_along(plot_object),
-    FUN.VALUE = character(1),
+    FUN.VALUE = character(1L),
     USE.NAMES = FALSE,
     FUN = function(x) {
 
       filename <-
-        paste0("temp_ggplot_", formatC(x, width = 4, flag = "0") , ".png")
+        paste0("temp_ggplot_", formatC(x, width = 4, flag = "0"), ".png")
 
       # Save PNG file to disk
       ggplot2::ggsave(
@@ -436,7 +436,7 @@ get_mime_type <- function(file) {
     extension,
     svg = "image/svg+xml",
     jpg = "image/jpeg",
-    paste("image", extension, sep = "/")
+    file.path("image", extension, fsep = "/")
   )
 }
 
@@ -458,7 +458,7 @@ get_image_uri <- function(file) {
 
   vapply(
     seq_along(image_raw),
-    FUN.VALUE = character(1),
+    FUN.VALUE = character(1L),
     USE.NAMES = FALSE, FUN = function(x) {
       paste0(
         "data:", get_mime_type(file[x]),

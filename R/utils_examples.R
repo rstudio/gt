@@ -215,11 +215,11 @@ write_gt_examples_qmd_files <- function(
 
     index_tbl <-
       dplyr::tibble(
-        name = character(0),
-        title = character(0),
-        type = character(0),
-        family = integer(0),
-        number = integer(0)
+        name = character(0L),
+        title = character(0L),
+        type = character(0L),
+        family = integer(0L),
+        number = integer(0L)
       )
 
     pkg_docs <- get_package_docs()
