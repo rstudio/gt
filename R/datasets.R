@@ -495,12 +495,15 @@
 #' @description
 #'
 #' The `peeps` dataset contains records for one hundred people residing in ten
-#' different countries. This data has been synthesized, and so the names within
-#' the table have not been taken or based on real individuals. The street
-#' addresses were generated from actual street names within real geographic
-#' localities, however, the street numbers were assigned randomly from a
-#' constrained number set. While these records do not relate to real people,
-#' efforts were made to make the data as realistic as possible.
+#' different countries. Each person in the table has address information along
+#' with their email address and phone number. There are also personal
+#' characteristics like date of birth, height, and weight. This data has been
+#' synthesized, and so the names within the table have not been taken or based
+#' on individuals in real life. The street addresses were generated from actual
+#' street names within real geographic localities, however, the street numbers
+#' were assigned randomly from a constrained number set. While these records do
+#' not relate to real people, efforts were made to make the data as realistic as
+#' possible.
 #'
 #' @format A tibble with 100 rows and 14 variables:
 #' \describe{
@@ -509,16 +512,17 @@
 #' \item{city}{The name of the city or locality in which the individual
 #' resides.}
 #' \item{state_prov}{The state or province associated with the `city` and
-#' `address`. This is `NA` where data is not needed when generating an
-#' acceptable mailing address.}
-#' \item{postcode}{The post code for the `address`.}
-#' \item{country}{The 3-letter country code representative of the resident's
-#' country.}
+#' `address`. This is `NA` for individuals residing in countries where
+#' subdivision data is not needed for generating a valid mailing address.}
+#' \item{postcode}{The post code associated with the `city` and `address`.}
+#' \item{country}{The 3-letter ISO 3166-1 country code representative of the
+#' individual's country.}
 #' \item{email_addr}{The individual's email address.}
 #' \item{phone_number, country_code}{The individual's phone number and the
 #' country code associated with the phone number.}
 #' \item{gender}{The gender of the individual.}
-#' \item{dob}{The individual's date of birth (DOB) in the 'YYYY-MM-DD' format.}
+#' \item{dob}{The individual's date of birth (DOB) in the ISO 8601 form of
+#' `YYYY-MM-DD`.}
 #' \item(height_cm, weight_kg){The height and weight of the individual in
 #' centimeters (cm) and kilograms (kg), respectively.}
 #' }
