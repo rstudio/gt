@@ -890,7 +890,7 @@ data_color <- function(
   # Resolution of `rows` as row indices in the table
   resolved_rows <- resolve_rows_i(expr = {{ rows }}, data = data)
   if (length(resolved_rows) == 0) {
-    return(data)
+    cli::cli_abort("{.arg rows} resulted in an empty selection.")
   }
   # Generate a table to accumulate all of the styles to be applied to the
   # body cells; in the end, this (along with all previously set styles) will
