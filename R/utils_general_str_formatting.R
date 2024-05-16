@@ -562,7 +562,7 @@ glue_gt <- function(.x, ...) {
 
 regexec_gt <- function(pattern, text, perl = FALSE) {
 
-  if (is.factor(text) && length(levels(text)) < length(text)) {
+  if (is.factor(text) && nlevels(text) < length(text)) {
 
     out <- regexec_gt(pattern, c(levels(text), NA_character_), perl)
     outna <- out[length(out)]

@@ -645,10 +645,7 @@ tab_spanner <- function(
     ) {
 
       error_vars <-
-        paste(
-          base::setdiff(spanner_id_idx, present_spanner_ids),
-          collapse = ", "
-        )
+        base::setdiff(spanner_id_idx, present_spanner_ids)
 
       cli::cli_abort(
         "One or more spanner ID(s) supplied in `spanners` ({error_vars}),

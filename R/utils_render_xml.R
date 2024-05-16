@@ -917,7 +917,7 @@ xml_wp_cNvGraphicFramePr <- function(...) {
 xml_a_graphic_frame_locks <- function(noChangeAspect = TRUE, noCrop = FALSE, noRot = FALSE, noSelect = FALSE) {
 
   locks <- c(noChangeAspect = noChangeAspect, noCrop = noCrop, noRot = noRot, noSelect = noSelect)
-  locks <- locks[locks == TRUE]
+  locks <- locks[locks] # only keep TRUE
 
   locks_list <- lapply(locks, as.numeric)
 
@@ -1927,15 +1927,17 @@ create_body_component_xml <- function(
 
   # Get the sequence of column numbers in the table body (these
   # are the visible columns in the table exclusive of the stub)
-  column_series <- seq(n_cols)
+  column_series <- seq_len(n_cols)
 
-  # Replace an NA group with an empty string
-  if (any(is.na(groups_rows_df$group_label))) {
-
-    groups_rows_df <-
-      groups_rows_df %>%
-      dplyr::mutate(group_label = ifelse(is.na(group_label), "", group_label)) %>%
-      dplyr::mutate(group_label = gsub("^NA", "\u2014", group_label))
+  if (anyNA(groups_rows_df$group_label)) {
+    # Replace an NA group with an empty string
+    groups_rows_df$group_label[is.na(groups_rows_df$group_label)] <- ""
+    # Change NA at beginning into unicode?
+    group_rows_df$group_label <-
+      gsub(
+        "^NA", "\u2014",
+        group_rows_df$group_label
+    )
   }
 
   body_rows <-
@@ -2272,8 +2274,7 @@ create_footnotes_component_xml <- function(
 
   footnotes_tbl <-
     footnotes_tbl %>%
-    dplyr::select(fs_id, footnotes) %>%
-    dplyr::distinct()
+    dplyr::distinct(fs_id, footnotes)
 
   # Get the footnote separator option
   separator <- dt_options_get_value(data = data, option = "footnotes_sep")
@@ -2367,8 +2368,10 @@ summary_rows_xml <- function(
     summary_df <-
       dplyr::select(
         list_of_summaries$summary_df_display_list[[group_id]],
-        dplyr::all_of(rowname_col_private),
-        dplyr::all_of(default_vars)
+        dplyr::all_of(c(
+          rowname_col_private,
+          default_vars
+        ))
       )
 
     summary_df_row <- function(j) {
@@ -2925,9 +2928,7 @@ parse_to_xml <- function(x, ...) {
       )
 
     x <-
-      x %>%
-      as.character() %>%
-      paste0("<md_container>", ., "</md_container>")
+      paste0("<md_container>", as.character(x), "</md_container>")
   }
 
   if (length(x) > 1) {

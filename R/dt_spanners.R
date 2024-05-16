@@ -79,10 +79,7 @@ dt_spanners_add <- function(
   ) {
 
     error_vars <-
-      paste(
-        vars[vars %in% unlist(spanners_at_level[["vars"]])],
-        collapse = ", "
-      )
+      vars[vars %in% unlist(spanners_at_level[["vars"]])]
 
     cli::cli_abort(
       "The column(s) used (`{error_vars}`) for the new spanner `{spanner_id}`
@@ -232,10 +229,10 @@ dt_spanners_print_matrix <- function(
 
   spanners_tbl <- dt_spanners_get(data = data)
 
-  if (!include_hidden) {
-    vars <- dt_boxhead_get_vars_default(data = data)
-  } else {
+  if (include_hidden) {
     vars <- dt_boxhead_get_vars(data = data)
+  } else {
+    vars <- dt_boxhead_get_vars_default(data = data)
   }
 
   # If `spanners_tbl` is immediately empty then return a single-row

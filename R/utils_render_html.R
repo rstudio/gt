@@ -1024,13 +1024,8 @@ create_body_component_h <- function(data) {
   alignment_classes <- paste0("gt_", col_alignment)
 
   # Replace an NA group with an empty string
-  if (any(is.na(groups_rows_df$group_label))) {
-
-    groups_rows_df <-
-      dplyr::mutate(
-        groups_rows_df,
-        group_label = ifelse(is.na(group_label), "", group_label)
-      )
+  if (anyNA(groups_rows_df$group_label)) {
+    groups_rows_df$group_label[is.na(groups_rows_df$group_label)] <- ""
   }
 
   # Is the stub to be striped?

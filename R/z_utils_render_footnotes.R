@@ -98,9 +98,7 @@ resolve_footnotes_styles <- function(data, tbl_type) {
     tbl <-
       dplyr::bind_rows(
         dplyr::filter(tbl, locname != "row_groups"),
-        tbl %>%
-          dplyr::filter(locname == "row_groups") %>%
-          dplyr::filter(grpname %in% groups_rows_df$group_id)
+        dplyr::filter(tbl, locname == "row_groups", grpname %in% groups_rows_df$group_id)
       )
   }
 
@@ -387,15 +385,10 @@ resolve_footnotes_styles <- function(data, tbl_type) {
     }
   }
 
-  if (tbl_type == "styles") {
-
-    if (nrow(tbl) > 0) {
-
-      tbl <-
-        dplyr::group_by(tbl, locname, grpname, colname, locnum, rownum, colnum) %>%
-        dplyr::summarize(styles = list(as_style(styles))) %>%
-        dplyr::ungroup()
-    }
+  if (tbl_type == "styles" && nrow(tbl) > 0L) {
+    tbl <-
+      dplyr::group_by(tbl, locname, grpname, colname, locnum, rownum, colnum) %>%
+      dplyr::summarize(styles = list(as_style(styles)), .groups = "drop")
   }
 
   if (tbl_type == "footnotes") {
@@ -433,8 +426,7 @@ set_footnote_marks_columns <- function(data, context = "html") {
         dplyr::group_by(grpname) %>%
         dplyr::mutate(fs_id_coalesced = paste(fs_id, collapse = ",")) %>%
         dplyr::ungroup() %>%
-        dplyr::select(grpname, fs_id_coalesced) %>%
-        dplyr::distinct()
+        dplyr::distinct(grpname, fs_id_coalesced)
 
       for (i in seq(nrow(footnotes_columns_group_marks))) {
 
@@ -492,7 +484,7 @@ set_footnote_marks_columns <- function(data, context = "html") {
         dplyr::ungroup() %>%
         dplyr::distinct(colname, fs_id_coalesced)
 
-      for (i in seq(nrow(footnotes_columns_column_marks))) {
+      for (i in seq_len(nrow(footnotes_columns_column_marks))) {
 
         text <-
           apply_footnotes_method[[context]](
@@ -594,7 +586,7 @@ apply_footnotes_to_output <- function(data, context = "html") {
       dplyr::ungroup() %>%
       dplyr::distinct(colname, rownum, locname, placement, fs_id_coalesced)
 
-    for (i in seq(nrow(footnotes_data_marks))) {
+    for (i in seq_len(nrow(footnotes_data_marks))) {
 
       text <-
         body[[footnotes_data_marks$rownum[i], footnotes_data_marks$colname[i]]]
@@ -722,13 +714,14 @@ apply_footnotes_to_summary <- function(data, context = "html") {
 
     footnotes_data_marks <-
       footnotes_tbl_data %>%
-      dplyr::mutate(row = as.integer(round((rownum - floor(rownum)) * 100, 0))) %>%
-      dplyr::mutate(colname = ifelse(is.na(colname), "rowname", colname)) %>%
+      dplyr::mutate(
+        row = as.integer(round((rownum - floor(rownum)) * 100, 0)),
+        colname = ifelse(is.na(colname), "rowname", colname)
+      ) %>%
       dplyr::group_by(grpname, row, colnum) %>%
       dplyr::mutate(fs_id_coalesced = paste(fs_id, collapse = ",")) %>%
       dplyr::ungroup() %>%
-      dplyr::select(grpname, colname, row, fs_id_coalesced) %>%
-      dplyr::distinct()
+      dplyr::distinct(grpname, colname, row, fs_id_coalesced)
 
     for (i in seq_len(nrow(footnotes_data_marks))) {
 
@@ -758,8 +751,7 @@ apply_footnotes_to_summary <- function(data, context = "html") {
       dplyr::group_by(rownum, colnum) %>%
       dplyr::mutate(fs_id_coalesced = paste(fs_id, collapse = ",")) %>%
       dplyr::ungroup() %>%
-      dplyr::select(colname, rownum, fs_id_coalesced) %>%
-      dplyr::distinct()
+      dplyr::distinct(colname, rownum, fs_id_coalesced)
 
     for (i in seq_len(nrow(footnotes_data_marks))) {
 

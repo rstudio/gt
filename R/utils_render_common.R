@@ -35,8 +35,8 @@ validate_contexts <- function(contexts) {
 
     cli::cli_abort(c(
       "All output contexts must be in the set of supported contexts.",
-      "*" = "Supported: {paste0(all_contexts, collapse = ', ')}",
-      "*" = "Invalid: {paste0(invalid_contexts, collapse = ', ')}"
+      "*" = "Supported: {all_contexts}",
+      "*" = "Invalid: {invalid_contexts}"
     ))
   }
 }
