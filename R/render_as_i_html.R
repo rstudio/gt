@@ -237,7 +237,7 @@ render_as_ihtml <- function(data, id) {
   # `rownum` in `body_styles_tbl`
   body_style_rules <-
     vapply(
-      seq_len(nrow(body_styles_tbl)), FUN.VALUE = character(1), USE.NAMES = FALSE,
+      seq_len(nrow(body_styles_tbl)), FUN.VALUE = character(1L), USE.NAMES = FALSE,
       FUN = function(x) {
 
         colname <- body_styles_tbl[x, ][["colname"]]

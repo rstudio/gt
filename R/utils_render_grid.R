@@ -943,7 +943,7 @@ render_grid_svg <- function(label, style, margin) {
       viewbox <- c(0, 0, 0, 0)
       svg_tag <- regexpr("^<svg(.*?)>", svg_string) %>%
         regmatches(x = svg_string)
-      if (grepl("width", svg_tag) & grepl("height", svg_tag)) {
+      if (grepl("width", svg_tag) && grepl("height", svg_tag)) {
         # Try extract width from tag
         w <- regexpr("width=(.*?) ", svg_tag) %>%
           regmatches(x = svg_tag)

@@ -590,7 +590,7 @@ create_body_component_l <- function(data) {
     )
 
   # Apply formatting to group labels
-  if (dim(groups_rows_df)[1L] > 0 && any(!is.na(groups_rows_df$group_label))) {
+  if (dim(groups_rows_df)[1L] > 0 && !all(is.na(groups_rows_df$group_label))) {
 
     styles_tbl <- dt_styles_get(data)
 
@@ -1064,7 +1064,7 @@ create_body_rows_l <- function(
     unname(
       unlist(
         lapply(
-          seq_len(length(row_splits_body)),
+          seq_along(row_splits_body),
           FUN = function(x) {
 
             content <- row_splits_body[[x]]

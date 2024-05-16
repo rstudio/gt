@@ -4697,11 +4697,11 @@ preprocess_tab_option <- function(option, var_name, type) {
   # Perform `stopifnot()` checks by `type`
   switch(
     type,
-    logical = stopifnot(rlang::is_scalar_logical(option), !any(is.na(option))),
+    logical = stopifnot(rlang::is_scalar_logical(option), !anyNA(option)),
     overflow = ,
     px = ,
-    value = stopifnot(rlang::is_scalar_character(option), !any(is.na(option))),
-    values = stopifnot(rlang::is_character(option), length(option) >= 1, !any(is.na(option)))
+    value = stopifnot(rlang::is_scalar_character(option), !anyNA(option)),
+    values = stopifnot(rlang::is_character(option), length(option) >= 1L, !anyNA(option))
   )
 
   option

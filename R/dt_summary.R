@@ -256,12 +256,13 @@ dt_summary_build <- function(data, context) {
               )
 
             select_data_tbl <-
-              dplyr::select(
+              dplyr::relocate(
                 select_data_tbl,
-                dplyr::all_of(group_id_col_private),
-                dplyr::all_of(row_id_col_private),
-                dplyr::all_of(rowname_col_private),
-                dplyr::everything()
+                dplyr::all_of(c(
+                  group_id_col_private,
+                  row_id_col_private,
+                  rowname_col_private
+                ))
               )
 
             select_data_tbl

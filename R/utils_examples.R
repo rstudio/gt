@@ -276,7 +276,7 @@ write_gt_examples_qmd_files <- function(
       dplyr::mutate(
         name = dplyr::case_when(
           type == "function" ~ paste0(
-            "[", name, "()](gt-", name , ".qmd)"
+            "[", name, "()](gt-", name, ".qmd)"
           ),
           .default = name
         )
