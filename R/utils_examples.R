@@ -106,12 +106,12 @@ get_example_text <- function(topic) {
     example_lines <- gsub("\\\\code\\{(.*?)\\}", "`\\1`", example_lines)
     example_lines <- gsub("\\\\verb\\{(.*?)\\}", "`\\1`", example_lines)
 
-    example_lines <- example_lines %>% paste(collapse = "\n")
+    example_lines <- paste(example_lines, collapse = "\n")
 
     # Remove leading and trailing whitespace
-    example_lines <- example_lines %>% gsub("^\n\n", "", .)
-    example_lines <- example_lines %>% gsub("\n\n$", "", .)
-    example_lines <- example_lines %>% gsub("\n\n\n", "\n\n", .)
+    example_lines <- gsub("^\n\n", "", example_lines)
+    example_lines <- gsub("\n\n$", "", example_lines)
+    example_lines <- gsub("\n\n\n", "\n\n", example_lines)
 
     examples_out <- c(examples_out, example_lines)
   }

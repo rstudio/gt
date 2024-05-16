@@ -1253,18 +1253,16 @@ create_table_caption_component_xml <- function(
       footnote_mark_to_xml(
         data = data,
         mark = footnote_title_marks$fs_id_c
-      ) %>%
-      as_xml_node() %>%
-      .[[1]]
+      )
+    footnote_title_marks <- as_xml_node(footnote_title_marks)[[1L]]
 
-    title_caption_string %>%
-      xml_add_child(
-        footnote_title_marks
+    xml_add_child(
+      title_caption_string,
+      footnote_title_marks
       )
   }
 
-  title_caption_string <- as.character(title_caption_string) %>%
-    paste0("<md_container>",.,"</md_container>")
+  title_caption_string <- paste0("<md_container>", as.character(title_caption_string), "</md_container>")
 
   title_caption_xml <-
     process_cell_content(
@@ -1276,35 +1274,26 @@ create_table_caption_component_xml <- function(
       color = header_title_style[["cell_text"]][["color"]] %||% table_font_color,
       align = header_title_style[["cell_text"]][["align"]] %||% align,
       keep_with_next = keep_with_next
-    ) %>%
-    as_xml_node()
+    )
+  title_caption_xml <- as_xml_node(title_caption_xml)
 
   autonum_node_xml <-
     xml_table_autonum(
       font = xml_r_font(header_title_style[["cell_text"]][["font"]] %||% "Calibri"),
       size = xml_sz(val = header_title_style[["cell_text"]][["size"]] %||% 24)
-    ) %>%
-    as_xml_node()
+    )
+  autonum_node_xml <- as_xml_node(autonum_node_xml)
 
   for (autonum_node in rev(autonum_node_xml)) {
-
-    title_caption_xml %>%
-      xml_add_child(
-        autonum_node,
-        .where = 1
-      )
+    xml_add_child(title_caption_xml, autonum_node, .where = 1)
   }
 
   title_caption <- as.character(title_caption_xml)
 
   if (subtitle_defined) {
 
-    header_subtitle_style <- styles_tbl %>%
-      dplyr::filter(
-        locname == "subtitle"
-      ) %>%
-      dplyr::pull("styles") %>%
-      .[1] %>% .[[1]]
+    header_subtitle_style <-
+      styles_tbl[styles_tbl$locname == "subtitle", ]$styles[1][[1]]
 
     subtitle_caption_string <- parse_to_xml(heading$subtitle)
 
@@ -1320,14 +1309,13 @@ create_table_caption_component_xml <- function(
       footnote_subtitle_marks <-
         footnote_mark_to_xml(
           data = data,
-          mark = footnote_subtitle_marks$fs_id_c) %>%
-        as_xml_node() %>%
-        .[[1]]
+          mark = footnote_subtitle_marks$fs_id_c)
+      footnote_subtitle_marks <- as_xml_node(footnote_subtitle_marks)[[1]]
 
-      subtitle_caption_string %>%
-        xml_add_child(
-          footnote_subtitle_marks
-        )
+      xml_add_child(
+        subtitle_caption_string,
+        footnote_subtitle_marks
+      )
     }
 
     subtitle_caption_string <-
@@ -1380,12 +1368,8 @@ create_heading_component_xml <- function(
   stub_components <- dt_stub_components(data = data)
   subtitle_defined <- dt_heading_has_subtitle(data = data)
 
-  header_title_style <- styles_tbl %>%
-    dplyr::filter(
-      locname == "title"
-    ) %>%
-    dplyr::pull("styles") %>%
-    .[1] %>% .[[1]]
+  header_title_style <-
+    styles_tbl[styles_tbl$locname == "title", ]$styles[1][[1]]
 
   # Obtain the number of visible columns in the built table
   n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
@@ -1421,14 +1405,13 @@ create_heading_component_xml <- function(
       footnote_mark_to_xml(
         data = data,
         mark = footnote_title_marks$fs_id_c
-      ) %>%
-      as_xml_node() %>%
-      .[[1]]
-
-    title_caption %>%
-      xml_add_child(
-        footnote_title_marks
       )
+    footnote_title_marks <- as_xml_node(footnote_title_marks)[[1L]]
+
+    xml_add_child(
+      title_caption,
+      footnote_title_marks
+    )
 
   }
 
@@ -1452,28 +1435,28 @@ create_heading_component_xml <- function(
         footnote_mark_to_xml(
           data = data,
           mark = footnote_subtitle_marks$fs_id_c
-        ) %>%
-        as_xml_node() %>%
-        .[[1]]
-
-      subtitle_caption_string %>%
-        xml_add_child(
-          footnote_subtitle_marks
         )
+      footnote_subtitle_marks <- as_xml_node(footnote_subtitle_marks)[[1L]]
+
+      xml_add_child(
+        subtitle_caption_string,
+        footnote_subtitle_marks
+      )
     }
 
     header_subtitle_style <-
-      styles_tbl %>%
-      dplyr::filter(
-        locname == "subtitle"
-      ) %>%
-      dplyr::pull("styles") %>%
-      .[1] %>% .[[1]]
+      styles_tbl[styles_tbl$locname == "subtitle", ]$styles[1][[1]]
 
     subtitle_caption_string <-
-      as.character(subtitle_caption_string) %>%
-      paste0("<md_container>",.,"</md_container>") %>%
+      paste0(
+        "<md_container>",
+        as.character(subtitle_caption_string),
+        "</md_container>"
+        )
+
+    subtitle_caption_string <-
       process_cell_content(
+        subtitle_caption_string,
         size = header_subtitle_style[["cell_text"]][["size"]] %||% 16,
         color = header_subtitle_style[["cell_text"]][["color"]] %||% table_font_color,
         align = header_subtitle_style[["cell_text"]][["align"]] %||% "center",
@@ -2398,13 +2381,13 @@ summary_rows_xml <- function(
 
       for (y in seq_along(summary_df_row(j))) {
 
-        cell_style <- styles %>%
+        cell_style <-
           dplyr::filter(
+            styles,
             rownum == j,
             colnum == y - 1
-          ) %>%
-          dplyr::pull("styles") %>%
-          .[1] %>% .[[1]]
+          )
+        cell_style <- cell_style$syles[1L][[1L]]
 
         summary_row_cells[[length(summary_row_cells) + 1]] <-
           xml_table_cell(
@@ -2647,7 +2630,7 @@ process_cell_content_ooxml_t <- function(
     whitespace = NULL
 ) {
 
-  text_tag <- x %>% xml_find_all("//w:t")
+  text_tag <- xml_find_all(x, "//w:t")
 
   for (txt in text_tag) {
 
@@ -2702,16 +2685,16 @@ process_cell_content_ooxml_r <- function(
   cell_styles_types <- sapply(cell_styles,xml_name)
 
   ## pull run styles from x
-  run_tags <- x %>% xml_find_all("//w:r")
+  run_tags <- xml_find_all(x, "//w:r")
 
   for (run in run_tags) {
 
-      run_image <- run %>% xml_find_first(".//w:drawing")
-      run_style <- run %>% xml_find_first(".//w:rPr")
+      run_image <- xml_find_first(run, ".//w:drawing")
+      run_style <- xml_find_first(run, ".//w:rPr")
 
       if (length(run_image) > 0) {
 
-        if (length(run %>% xml_find_first(".//w:noProof")) == 0) {
+        if (length(xml_find_first(run, ".//w:noProof")) == 0L) {
           xml_add_child(
             run_style,
             as_xml_node(xml_noProof())[[1]]
@@ -2720,7 +2703,7 @@ process_cell_content_ooxml_r <- function(
 
       } else {
 
-        run_style_children <- run_style %>% xml_children()
+        run_style_children <- xml_children(run_style)
         run_style_children_types <- sapply(run_style_children,xml_name, ns = xml_ns(x))
 
         ## which styles are new. Add those. Respect ones that already exist and do not update
@@ -2776,7 +2759,7 @@ process_cell_content_ooxml_p <- function(
   cell_styles_types <- sapply(cell_styles,xml_name)
 
   ## pull run styles from x
-  paragraph_tags <- x %>% xml_find_all("//w:p")
+  paragraph_tags <- xml_find_all(x, "//w:p")
 
   if (length(paragraph_tags) == 0) {
 
@@ -2785,20 +2768,20 @@ process_cell_content_ooxml_p <- function(
       as_xml_node() %>%
       xml_add_child(x)
 
-    paragraph_tags <- x %>% xml_find_all("//w:p")
+    paragraph_tags <- xml_find_all(x, "//w:p")
   }
 
   for (paragraph in paragraph_tags) {
 
-    paragraph_image <- paragraph %>% xml_find_first(".//w:drawing")
+    paragraph_image <- xml_find_first(paragraph, ".//w:drawing")
 
     if (length(paragraph_image) > 0) {
       next
     }
 
-    paragraph_style <- paragraph %>% xml_find_all(".//w:pPr")
+    paragraph_style <- xml_find_all(paragraph, ".//w:pPr")
 
-    paragraph_style_children <- paragraph_style %>% xml_children()
+    paragraph_style_children <- xml_children(paragraph_style)
     paragraph_style_children_types <- sapply(paragraph_style_children,xml_name, xml_ns(x))
 
     ## which styles are new?
@@ -2825,11 +2808,11 @@ process_white_space_br_in_xml <- function(x, ..., whitespace = NULL) {
   ## Remove newlines (br) unless preserving it
   if (!isTRUE(whitespace %in% c("pre", "pre-wrap", "pre-line", "break-spaces"))) {
 
-    paragraphs <- x %>% xml_find_all("//w:p")
+    paragraphs <- xml_find_all(x, "//w:p")
 
     for (p in paragraphs) {
 
-      paragraph_children <- p %>% xml_children()
+      paragraph_children <- xml_children(p)
 
       break_tags_locs <- which(xml_name(paragraph_children, ns = xml_ns(x)) == "w:br")
       run_tags_locs <-  which(xml_name(paragraph_children, ns = xml_ns(x)) == "w:r")
@@ -2870,20 +2853,20 @@ process_white_space_br_in_xml <- function(x, ..., whitespace = NULL) {
 #' @importFrom xml2 xml_find_all xml_children xml_child xml_add_sibling xml_remove xml_ns xml_name
 process_drop_empty_styling_nodes <- function(x) {
 
-  paragraph_styles <- x %>% xml_find_all(".//w:pPr")
+  paragraph_styles <- xml_find_all(x, ".//w:pPr")
 
   for (p_style in paragraph_styles) {
-    style_children <- p_style %>% xml_children()
+    style_children <- xml_children(p_style)
 
     if (length(style_children) == 0) {
       xml_remove(p_style)
     }
   }
 
-  run_styles <- x %>% xml_find_all(".//w:rPr")
+  run_styles <- xml_find_all(x, ".//w:rPr")
 
   for (r_style in run_styles) {
-    style_children <- r_style %>% xml_children()
+    style_children <- xml_children(r_style)
 
     if (length(style_children) == 0) {
       xml_remove(r_style)
@@ -2900,9 +2883,9 @@ add_text_style <- function(x, style) {
 #' @export
 add_text_style.character <- function(x, style) {
 
-  x <- x %>% as_xml_node(create_ns = TRUE)
-  style_to_add <- style %>% as_xml_node()
-  run_style_tag <- x %>% xml_find_all("./w:rPr")
+  x <- as_xml_node(x, create_ns = TRUE)
+  style_to_add <- as_xml_node(style)
+  run_style_tag <- xml_find_all(x, "./w:rPr")
 
   xml_add_child(
     run_style_tag,
@@ -2915,7 +2898,7 @@ add_text_style.character <- function(x, style) {
 #' @export
 add_text_style.shiny.tag <- function(x, style) {
 
-  x <- x %>% as.character()
+  x <- as.character(x)
 
   add_text_style.character(x, style = style)
 }
@@ -2957,7 +2940,7 @@ parse_to_xml <- function(x, ...) {
         paste0("<md_container>",.,"</md_container>")
 
     } else {
-      x <- x %>% paste0(collapse = "")
+      x <- paste0(x, collapse = "")
     }
   }
 
@@ -2975,15 +2958,12 @@ parse_to_xml <- function(x, ...) {
       )
 
     x <-
-      x %>%
-      as.character() %>%
-      paste0("<md_container>", ., "</md_container>")
+      paste0("<md_container>", as.character(x), "</md_container>")
   }
 
   ## add namespace for later processing
   parsed_xml_contents <-
-    x %>%
-    add_ns() %>%
+    add_ns(x) %>%
     read_xml() %>%
     suppressWarnings()
 
@@ -3004,17 +2984,14 @@ as_xml_node <- function(x, create_ns = FALSE) {
     x <- add_ns(x)
   }
 
-  x %>%
-    as_xml_document() %>%
+    as_xml_document(x) %>%
     xml_children() %>%
     suppressWarnings()
 }
 
 add_ns <- function(x) {
 
-  x <-
-    read_xml(x) %>%
-    suppressWarnings()
+  x <- suppressWarnings(read_xml(x))
 
   xml2::xml_set_attrs(
     x,
@@ -3040,9 +3017,7 @@ paste_footnote_xml <- function(
   position <- match.arg(position, c("left","right"))
 
   footmark_xml <-
-    footmark_xml %>%
-    as_xml_node() %>%
-    .[[1]]
+    as_xml_node(footmark_xml)[[1L]]
 
   if (position == "right") {
     xml_add_child(text_xml, footmark_xml)
@@ -3050,8 +3025,7 @@ paste_footnote_xml <- function(
     xml_add_child(text_xml, footmark_xml, .where = 1)
   }
 
-  as.character(text_xml) %>%
-    paste0("<md_container>",.,"</md_container>")
+  paste0("<md_container>", as.character(text_xml), "</md_container>")
 }
 
 paste_footnote_latex <- function(
