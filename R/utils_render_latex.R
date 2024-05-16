@@ -1383,13 +1383,12 @@ apply_cell_styles_l <- function(content, style_obj) {
     mark[ind] <- gsub(".*%%%(right|left):(.*)$", "\\2", content[ind])
   }
 
-  if (length(style_obj) > 0) {
+  if (length(style_obj) > 0L) {
     # Apply changes that have to be made to the content
-    x <- just_content %>%
-      .apply_style_color_l(style_obj) %>%
-      .apply_style_fill_l(style_obj) %>%
-      .apply_style_transform_l(style_obj) %>%
-      .apply_style_decorate_l(style_obj)
+    x <- .apply_style_color_l(just_content, style_obj)
+    x <- .apply_style_fill_l(x, style_obj)
+    x <- .apply_style_transform_l(x, style_obj)
+    x <- .apply_style_decorate_l(x, style_obj)
 
     # Apply changes that can be made to the bracketed environment
     out_text <- paste0(

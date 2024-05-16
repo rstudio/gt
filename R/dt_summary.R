@@ -279,10 +279,12 @@ dt_summary_build <- function(data, context) {
     summary_dfs_data <-
       dplyr::select(
         summary_dfs_data,
-        dplyr::all_of(group_id_col_private),
-        dplyr::all_of(row_id_col_private),
-        dplyr::all_of(rowname_col_private),
-        dplyr::all_of(colnames(body))
+        dplyr::all_of(c(
+          group_id_col_private,
+          row_id_col_private,
+          rowname_col_private,
+          colnames(body)
+        ))
       )
 
     #

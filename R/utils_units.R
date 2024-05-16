@@ -405,7 +405,7 @@ render_units <- function(units_object, context = "html") {
       grepl("x10", unit) &&
       !chemical_formula
     ) {
-      unit <- gsub("x", "&times;", unit)
+      unit <- gsub("x", "&times;", unit, fixed = TRUE)
     }
 
     unit <- units_symbol_replacements(text = unit, context = context)
@@ -536,13 +536,13 @@ render_units <- function(units_object, context = "html") {
 
   units_str <- gsub("^\\s+|\\s+$", "", units_str)
   units_str <- gsub("\\s*\\{nsp\\}\\s*", "", units_str)
-  units_str <- gsub(":rarr:", right_arrow_svg, units_str)
-  units_str <- gsub(":larr:", left_arrow_svg, units_str)
-  units_str <- gsub(":lrarr:", lr_arrow_svg, units_str)
-  units_str <- gsub(":lrseparr:", lr_sep_arrow_svg, units_str)
-  units_str <- gsub(":eqmarr:", eqm_arrows_svg, units_str)
-  units_str <- gsub(":eqmrarr:", eqm_arrows_right_svg, units_str)
-  units_str <- gsub(":eqmlarr:", eqm_arrows_left_svg, units_str)
+  units_str <- gsub(":rarr:", right_arrow_svg, units_str, fixed = TRUE)
+  units_str <- gsub(":larr:", left_arrow_svg, units_str, fixed = TRUE)
+  units_str <- gsub(":lrarr:", lr_arrow_svg, units_str, fixed = TRUE)
+  units_str <- gsub(":lrseparr:", lr_sep_arrow_svg, units_str, fixed = TRUE)
+  units_str <- gsub(":eqmarr:", eqm_arrows_svg, units_str, fixed = TRUE)
+  units_str <- gsub(":eqmrarr:", eqm_arrows_right_svg, units_str, fixed = TRUE)
+  units_str <- gsub(":eqmlarr:", eqm_arrows_left_svg, units_str, fixed = TRUE)
 
   units_str
 }

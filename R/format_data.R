@@ -8002,10 +8002,8 @@ values_to_durations <- function(
 
       # Assemble the remaining time parts
       hms_part <-
-        x_df_i %>%
-        dplyr::filter(time_part %in% c("hours", "minutes", "seconds")) %>%
-        dplyr::pull(formatted) %>%
-        paste(collapse = ":")
+        x_df_i[x_df_i$time_part %in% c("hours", "minutes", "seconds"), "formatted", drop = TRUE]
+      hms_part <- paste(hms_part, collapse = ":")
 
       d_part <-
         ifelse("days" %in% x_df_i$time_part, paste0(x_df_i$formatted[1], "/"), "")

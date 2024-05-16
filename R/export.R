@@ -1793,9 +1793,11 @@ extract_summary <- function(data) {
           y <-
             dplyr::rename(
               y,
-              group_id = dplyr::all_of(group_id_col_private),
-              row_id = dplyr::all_of(row_id_col_private),
-              rowname = dplyr::all_of(rowname_col_private)
+              group_id = dplyr::all_of(c(
+                group_id = group_id_col_private,
+                row_id = row_id_col_private,
+                rowname = rowname_col_private
+                ))
             )
 
           flattened_rowname <- unname(unlist(y$rowname))

@@ -2936,7 +2936,7 @@ parse_to_xml <- function(x, ...) {
     if (all(grepl("^<md_container>.*</md_container>$", x))) {
 
       x <-
-        gsub("^<md_container>(.*)</md_container>$", "\\1",x) %>%
+        gsub("^<md_container>(.*)</md_container>$", "\\1", x) %>%
         paste0(collapse = "") %>%
         paste0("<md_container>",.,"</md_container>")
 
@@ -3238,7 +3238,7 @@ ensure_sect_end <- function(docx) {
 
   if (!xml_name(last_body_node) %in% "sectPr") {
 
-    xml_add_child(body,new_last_node)
+    xml_add_child(body, new_last_node)
 
   } else {
 
@@ -3270,8 +3270,8 @@ copy_to_media <- function(path, media_dir) {
 basename_clean <- function(x) {
 
   basename(x) %>%
-    tidy_gsub("\\s+","") %>%
-    tidy_gsub("_","")
+    tidy_gsub("\\s+", "") %>%
+    tidy_gsub("_", "")
 }
 
 ## conveniently zip up word doc temp folder

@@ -330,7 +330,7 @@ info_currencies <- function(
     tab_1 <- curr
     tab_1$symbol <- NULL
     tab_1$value <- 49.95
-    tab_1 <- relocate(tab_1, "curr_name")
+    tab_1 <- dplyr::relocate(tab_1, "curr_name")
     tab_1 <- gt(tab_1)
 
     for (i in seq_len(nrow(curr))) {

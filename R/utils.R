@@ -576,7 +576,7 @@ get_alignment_at_body_cell <- function(
   cell_style <- cell_styles_list[[1L]]$cell_style
 
   # Return the value of the last `text-align` property, if present
-  if (!is.null(cell_style) && grepl("text-align", cell_style)) {
+  if (!is.null(cell_style) && grepl("text-align", cell_style, fixed = TRUE)) {
 
     m <- regexec_gt("(?:^|;)\\s*text-align\\s*:\\s*([\\w-]+)\\s*(!important)?", cell_style, perl = TRUE)
 
