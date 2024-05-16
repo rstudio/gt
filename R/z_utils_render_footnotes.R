@@ -350,10 +350,12 @@ resolve_footnotes_styles <- function(data, tbl_type) {
     lookup_tbl <- dplyr::distinct(lookup_tbl)
 
     # Create fs_id as rownames, delete row names and relocate at first position
-    lookup_tbl$fs_id <- rownames(lookup_tbl)
-    rownames(lookup_tbl) <- NULL
-    fs_id_pos <- ncol(lookup_tbl) # last column
-    lookup_tbl <- lookup_tbl[ , c(fs_id_pos, seq_len(fs_id_pos - 1L)), drop = FALSE]
+    if (!is.null(rownames(lookup_tbl))) {
+      lookup_tbl$fs_id <- rownames(lookup_tbl)
+      rownames(lookup_tbl) <- NULL
+      fs_id_pos <- ncol(lookup_tbl) # last column
+      lookup_tbl <- lookup_tbl[ , c(fs_id_pos, seq_len(fs_id_pos - 1L)), drop = FALSE]
+    }
 
     # Join the lookup table to `tbl`
     tbl <- dplyr::left_join(tbl, lookup_tbl, by = "footnotes")

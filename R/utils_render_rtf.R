@@ -420,7 +420,7 @@ abs_len_to_twips <- function(lengths_df) {
       twip_factors_df,
       by = c("unit" = "unit")
     )
-  res$value[!is.na(res$conv)] <- res$value * res$conv
+  res$value[!is.na(res$conv)] <- res$value[!is.na(res$conv)] * res$conv[!is.na(res$conv)]
   res$unit[!is.na(res$conv)] <- "tw"
 
   dplyr::select(res, "value", "unit")
@@ -489,12 +489,12 @@ col_width_resolver_rtf <- function(
   # Avoid divide-by-zero
   if (pct_used != 0) {
     # Normalize pct to add up to 100
-    col_widths$value[is_pct] <- col_widths$value[is_pct] * (100 / pct_used)
+    col_widths$value[which(is_pct)] <- col_widths$value[which(is_pct)] * (100 / pct_used)
   }
 
   # Convert % to tw
-  col_widths$value[is_pct] <- twips_remaining * col_widths$value[is_pct] / 100
-  col_widths$unit[is_pct] <- "tw"
+  col_widths$value[which(is_pct)] <- twips_remaining * col_widths$value[which(is_pct)] / 100
+  col_widths$unit[which(is_pct)] <- "tw"
   is_abs <- is_abs | TRUE
   is_pct <- is_pct & FALSE
 

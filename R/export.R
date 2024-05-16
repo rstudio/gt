@@ -1793,7 +1793,7 @@ extract_summary <- function(data) {
           y <-
             dplyr::rename(
               y,
-              group_id = dplyr::all_of(c(
+              dplyr::all_of(c(
                 group_id = group_id_col_private,
                 row_id = row_id_col_private,
                 rowname = rowname_col_private
