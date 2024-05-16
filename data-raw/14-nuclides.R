@@ -34,5 +34,6 @@ nuclides <-
         mass_excess = col_double(),
         mass_excess_uncert = col_double()
       )
-  )
+  ) %>%
+  dplyr::mutate(dplyr::across(dplyr::contains("pct"), ~ . / 100))
 
