@@ -50,7 +50,7 @@ get_example_text <- function(topic) {
 
   topic_names <- names(get_package_docs())
 
-  examples_out <- c()
+  examples_out <- NULL # same as c
 
   for (i in seq_along(topic)) {
 
@@ -73,7 +73,7 @@ get_example_text <- function(topic) {
     }
 
     examples_start_idx <-
-      grep("\\section{Examples}{", help_file_lines, fixed = TRUE) + 1
+      grep("\\section{Examples}{", help_file_lines, fixed = TRUE) + 1L
 
     examples_end_idx <-
       grep(

@@ -43,7 +43,7 @@ resolve_footnotes_styles <- function(data, tbl_type) {
   }
 
   # Return `data` unchanged if there are no rows in `tbl`
-  if (nrow(tbl) == 0) {
+  if (nrow(tbl) == 0L) {
     return(data)
   }
 
@@ -58,7 +58,7 @@ resolve_footnotes_styles <- function(data, tbl_type) {
   tbl <- tbl[cond, ]
 
   # Return `data` unchanged if there are no rows in `tbl`
-  if (nrow(tbl) == 0) {
+  if (nrow(tbl) == 0L) {
     return(data)
   }
 

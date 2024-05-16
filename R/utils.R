@@ -563,17 +563,17 @@ get_alignment_at_body_cell <- function(
   # Extract the list of styles from the table
   cell_styles_list <- styles_filtered_tbl$styles
 
-  if (length(cell_styles_list) < 1) {
+  if (length(cell_styles_list) < 1L) {
     return(column_alignment)
   }
 
   # Get the `align` property in `cell_styles_list` (element may not be present)
-  cell_text_align <- cell_styles_list[[1]]$cell_text$align
+  cell_text_align <- cell_styles_list[[1L]]$cell_text$align
 
   # Get the `cell_style` property in `cell_styles_list` (may not be present)
   # This is a user-defined string with CSS style rules that should look
   # something like this: "text-align: right; background: green;"
-  cell_style <- cell_styles_list[[1]]$cell_style
+  cell_style <- cell_styles_list[[1L]]$cell_style
 
   # Return the value of the last `text-align` property, if present
   if (!is.null(cell_style) && grepl("text-align", cell_style)) {
@@ -699,7 +699,7 @@ process_text <- function(text, context = "html") {
         non_na_text_processed <-
           vapply(
             as.character(text[!is.na(text)]),
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(text) {
               md_engine_fn[[1]](text = text)
@@ -748,7 +748,7 @@ process_text <- function(text, context = "html") {
           if (has_display_formula) {
 
             display_j <- 1
-            formula_text_display_i <- c()
+            formula_text_display_i <- NULL
 
             repeat {
 
@@ -782,8 +782,8 @@ process_text <- function(text, context = "html") {
 
           if (has_inline_formula) {
 
-            inline_j <- 1
-            formula_text_inline_i <- c()
+            inline_j <- 1L
+            formula_text_inline_i <- NULL # same as c()
 
             repeat {
 
@@ -1023,7 +1023,7 @@ md_to_html <- function(x, md_engine) {
     non_na_x <-
       vapply(
         as.character(x[!is.na(x)]),
-        FUN.VALUE = character(1),
+        FUN.VALUE = character(1L),
         USE.NAMES = FALSE,
         FUN = function(x) {
           md_engine_fn[[1]](text = x)
@@ -1042,7 +1042,7 @@ md_to_html <- function(x, md_engine) {
     non_na_x_processed <-
       vapply(
         as.character(x[!is.na(x)]),
-        FUN.VALUE = character(1),
+        FUN.VALUE = character(1L),
         USE.NAMES = FALSE,
         FUN = function(x) {
           md_engine_fn[[1]](text = x)
@@ -1122,12 +1122,12 @@ markdown_to_xml <- function(text) {
   text %>%
     as.character() %>%
     vapply(
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = commonmark::markdown_xml
     ) %>%
     vapply(
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(cmark) {
 
@@ -1175,7 +1175,7 @@ markdown_to_xml <- function(text) {
 
         lapply(children, apply_rules) %>%
           vapply(FUN = as.character,
-                 FUN.VALUE = character(1)) %>%
+                 FUN.VALUE = character(1L)) %>%
           paste0(collapse = "") %>%
           paste0("<md_container>", ., "</md_container>")
       }
@@ -1200,7 +1200,7 @@ cmark_rules_xml <- list(
       xml_pPr(),
       paste0(
         vapply(
-          runs, FUN = paste, FUN.VALUE = character(1)
+          runs, FUN = paste, FUN.VALUE = character(1L)
         ),
         collapse = ""
       )
@@ -1344,7 +1344,7 @@ cmark_rules_xml <- list(
                 paste0(
                   vapply(code_text,
                          FUN = paste,
-                         FUN.VALUE = character(1)),
+                         FUN.VALUE = character(1L)),
                   collapse = "<w:br/>"
                 ))) %>%
       as.character()
@@ -1480,7 +1480,7 @@ cmark_rules_rtf <- list(
         paste(
           vapply(
             seq_len(n_items),
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(n) {
 
@@ -1606,7 +1606,7 @@ markdown_to_rtf <- function(text) {
   text <-
     vapply(
       as.character(text),
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = commonmark::markdown_xml
     )
@@ -1614,7 +1614,7 @@ markdown_to_rtf <- function(text) {
   text <-
     vapply(
       text,
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(cmark) {
 
@@ -1757,7 +1757,7 @@ apply_pattern_fmt_x <- function(values, pattern) {
 
   vapply(
     values,
-    FUN.VALUE = character(1),
+    FUN.VALUE = character(1L),
     USE.NAMES = FALSE,
     FUN = function(x) tidy_gsub(x = pattern, "{x}", x, fixed = TRUE)
   )
@@ -1983,7 +1983,7 @@ num_suffix_ind <- function(
 #' versions of R.
 #' @param x The single value to test for whether it is `FALSE`.
 #' @noRd
-is_false = function(x) {
+is_false <- function(x) {
   is.logical(x) && length(x) == 1L && !is.na(x) && !x
 }
 
@@ -2222,7 +2222,8 @@ process_footnote_marks <- function(x, marks) {
     mapply(
       marks_val, marks_rep,
       FUN = function(val_i, rep_i) {
-        paste(rep(val_i, rep_i), collapse = "")}
+        paste(rep(val_i, rep_i), collapse = "")
+      }
     )
   )
 }
@@ -2421,7 +2422,7 @@ validate_css_lengths <- function(x) {
     vapply(
       x_units_non_empty,
       FUN = htmltools::validateCssUnit,
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE
     )
   )

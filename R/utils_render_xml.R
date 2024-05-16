@@ -870,7 +870,7 @@ convert_to_emu <- function(x, units = "in") {
   emu_conversion <- c(
     "in" = 914400, # https://startbigthinksmall.wordpress.com/2010/01/04/points-inches-and-emus-measuring-units-in-office-open-xml/
     "cm" = 360000,
-    "px"= 9525 # https://stackoverflow.com/questions/66541210/convert-google-slides-emu-units-to-pixels-api
+    "px" = 9525 # https://stackoverflow.com/questions/66541210/convert-google-slides-emu-units-to-pixels-api
     )[[units]]
 
   x * emu_conversion
@@ -1195,7 +1195,7 @@ create_table_props_component_xml <- function(data, align = c("center", "start", 
 
   # table_cols <- xml_tblGrid(
   #   lapply(widths,xml_gridcol) %>%
-  #     vapply(as.character, as.character(0))
+  #     vapply(as.character, as.character(0L))
   # )
 
   # htmltools::tagList(c(table_properties, table_cols))
@@ -1569,7 +1569,7 @@ create_columns_component_xml <- function(
 
   # If `stub_available` == TRUE, then replace with a set stubhead
   # label or nothing
-  if (isTRUE(stub_available) && length(stubh$label) > 0) {
+  if (isTRUE(stub_available) && length(stubh$label) > 0L) {
 
     headings_labels <- prepend_vec(headings_labels, stubh$label)
     headings_vars <- prepend_vec(headings_vars, "::stub")
@@ -1663,14 +1663,14 @@ create_columns_component_xml <- function(
         border = list(
           top = if (!spanners_present) { cell_border(size = 16, color = column_labels_border_top_color) },
           bottom = cell_border(size = 16, color = column_labels_border_bottom_color),
-          left = if (i == 1) { cell_border(color = column_labels_vlines_color) },
+          left = if (i == 1L) { cell_border(color = column_labels_vlines_color) },
           right = if (i == length(headings_vars) - stub_available) { cell_border(color = column_labels_vlines_color) }
         ),
         keep_with_next = keep_with_next
       )
   }
 
-  table_col_headings_list[[1]] <-
+  table_col_headings_list[[1L]] <-
     xml_tr(
       xml_trPr(
         if (!split) { xml_cantSplit() },
@@ -1679,7 +1679,7 @@ create_columns_component_xml <- function(
       paste(
         vapply(
           table_cell_vals,
-          FUN.VALUE = character(1),
+          FUN.VALUE = character(1L),
           FUN = paste
         ),
         collapse = ""
@@ -1780,7 +1780,7 @@ create_columns_component_xml <- function(
           spanner_cell_vals[[length(spanner_cell_vals) + 1]] <-
             xml_table_cell(
               border = list(
-                left = if (i == 1) { cell_border(color = column_labels_vlines_color) },
+                left = if (i == 1L) { cell_border(color = column_labels_vlines_color) },
                 right = if (i == length(spanner_row_values)) { cell_border(color = column_labels_vlines_color) },
                 top = if (span_row_idx == 1) { cell_border(size = 16, color = column_labels_border_top_color) }
               ),
@@ -1837,7 +1837,7 @@ create_columns_component_xml <- function(
           paste(
             vapply(
               spanner_cell_vals,
-              FUN.VALUE = character(1),
+              FUN.VALUE = character(1L),
               FUN = paste
             ),
             collapse = ""
@@ -2055,7 +2055,7 @@ create_body_component_xml <- function(
             paste(
               vapply(
                 row_cells,
-                FUN.VALUE = character(1),
+                FUN.VALUE = character(1L),
                 FUN = paste
               ), collapse = ""
             )
@@ -2244,7 +2244,7 @@ create_footnotes_component_xml <- function(
 
   # If the `footnotes_resolved` object has no
   # rows, then return an empty footnotes component
-  if (nrow(footnotes_tbl) == 0) {
+  if (nrow(footnotes_tbl) == 0L) {
     return("")
   }
 
@@ -2423,7 +2423,7 @@ summary_rows_xml <- function(
           paste(
             vapply(
               summary_row_cells,
-              FUN.VALUE = character(1),
+              FUN.VALUE = character(1L),
               FUN = paste
             ), collapse = ""
           )
@@ -2692,12 +2692,12 @@ process_cell_content_ooxml_r <- function(
       run_image <- xml_find_first(run, ".//w:drawing")
       run_style <- xml_find_first(run, ".//w:rPr")
 
-      if (length(run_image) > 0) {
+      if (length(run_image) > 0L) {
 
         if (length(xml_find_first(run, ".//w:noProof")) == 0L) {
           xml_add_child(
             run_style,
-            as_xml_node(xml_noProof())[[1]]
+            as_xml_node(xml_noProof())[[1L]]
           )
         }
 
@@ -2712,7 +2712,7 @@ process_cell_content_ooxml_r <- function(
         for (cell_style_idx in new_cell_styles) {
           xml_add_child(
             run_style,
-            cell_styles[[cell_style_idx]][[1]]
+            cell_styles[[cell_style_idx]][[1L]]
           )
         }
       }
@@ -2761,7 +2761,7 @@ process_cell_content_ooxml_p <- function(
   ## pull run styles from x
   paragraph_tags <- xml_find_all(x, "//w:p")
 
-  if (length(paragraph_tags) == 0) {
+  if (length(paragraph_tags) == 0L) {
 
     x <-
       xml_p(xml_pPr()) %>%
@@ -2775,7 +2775,7 @@ process_cell_content_ooxml_p <- function(
 
     paragraph_image <- xml_find_first(paragraph, ".//w:drawing")
 
-    if (length(paragraph_image) > 0) {
+    if (length(paragraph_image) > 0L) {
       next
     }
 
@@ -2790,7 +2790,7 @@ process_cell_content_ooxml_p <- function(
     for (cell_style_idx in new_cell_styles) {
         xml_add_child(
           paragraph_style,
-          cell_styles[[cell_style_idx]][[1]]
+          cell_styles[[cell_style_idx]][[1L]]
         )
     }
   }
@@ -2817,7 +2817,7 @@ process_white_space_br_in_xml <- function(x, ..., whitespace = NULL) {
       break_tags_locs <- which(xml_name(paragraph_children, ns = xml_ns(x)) == "w:br")
       run_tags_locs <-  which(xml_name(paragraph_children, ns = xml_ns(x)) == "w:r")
 
-      if (length(break_tags_locs) > 0) {
+      if (length(break_tags_locs) > 0L) {
 
 
         for (break_tag_loc in break_tags_locs) {
@@ -2858,7 +2858,7 @@ process_drop_empty_styling_nodes <- function(x) {
   for (p_style in paragraph_styles) {
     style_children <- xml_children(p_style)
 
-    if (length(style_children) == 0) {
+    if (length(style_children) == 0L) {
       xml_remove(p_style)
     }
   }
@@ -2868,7 +2868,7 @@ process_drop_empty_styling_nodes <- function(x) {
   for (r_style in run_styles) {
     style_children <- xml_children(r_style)
 
-    if (length(style_children) == 0) {
+    if (length(style_children) == 0L) {
       xml_remove(r_style)
     }
   }
@@ -3057,15 +3057,15 @@ gt_as_word_post_processing <- function(path) {
   utils::unzip(zipfile = path, exdir = tmp_word_dir)
 
   # Load docx
-  content_doc_path <- file.path(tmp_word_dir,"word/document.xml")
+  content_doc_path <- file.path(tmp_word_dir, "word/document.xml")
   docx <- read_xml(content_doc_path)
 
   ## load word/_rels
-  rels_doc_path <- file.path(tmp_word_dir,"word/_rels/document.xml.rels")
+  rels_doc_path <- file.path(tmp_word_dir, "word/_rels/document.xml.rels")
   rels <- read_xml(rels_doc_path)
 
   ## load content_types
-  content_type_doc_path <- file.path(tmp_word_dir,"[Content_Types].xml")
+  content_type_doc_path <- file.path(tmp_word_dir, "[Content_Types].xml")
   content_types <- create_xml_contents()
 
   ## update hyperlinks & blips
@@ -3076,7 +3076,7 @@ gt_as_word_post_processing <- function(path) {
   update_ref_id(docx)
 
   ## Update settings
-  settings_doc_path <- file.path(tmp_word_dir,"word/settings.xml")
+  settings_doc_path <- file.path(tmp_word_dir, "word/settings.xml")
   doc_settings <- create_doc_settings()
 
   ## end section
@@ -3097,7 +3097,7 @@ create_doc_settings <- function() {
   settings_xml <- as_xml_document("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>
     <w:settings xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\" xmlns:o=\"urn:schemas-microsoft-com:office:office\" xmlns:r=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships\" xmlns:m=\"http://schemas.openxmlformats.org/officeDocument/2006/math\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:w10=\"urn:schemas-microsoft-com:office:word\" xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\" xmlns:w14=\"http://schemas.microsoft.com/office/word/2010/wordml\" xmlns:w15=\"http://schemas.microsoft.com/office/word/2012/wordml\" xmlns:w16cex=\"http://schemas.microsoft.com/office/word/2018/wordml/cex\" xmlns:w16cid=\"http://schemas.microsoft.com/office/word/2016/wordml/cid\" xmlns:w16=\"http://schemas.microsoft.com/office/word/2018/wordml\" xmlns:w16sdtdh=\"http://schemas.microsoft.com/office/word/2020/wordml/sdtdatahash\" xmlns:w16se=\"http://schemas.microsoft.com/office/word/2015/wordml/symex\" xmlns:sl=\"http://schemas.openxmlformats.org/schemaLibrary/2006/main\" mc:Ignorable=\"w14 w15 w16se w16cid w16 w16cex w16sdtdh\">
     </w:settings>
-    " )
+    ")
 
   settings_to_add <- list(
     zoom = "<w:zoom w:percent=\"130\"/>",
@@ -3169,7 +3169,7 @@ update_blip_node_id <- function(docx, rels, content_types, tmp_word_dir) {
 
   if (length(blip_nodes) > 0) {
 
-    tmp_word_dir_media <- file.path(tmp_word_dir,"word","media")
+    tmp_word_dir_media <- file.path(tmp_word_dir, "word", "media")
 
     if (!dir.exists(tmp_word_dir_media)) {
       dir.create(tmp_word_dir_media, showWarnings = FALSE)
@@ -3181,7 +3181,7 @@ update_blip_node_id <- function(docx, rels, content_types, tmp_word_dir) {
 
       max_id <- max_id + 1
       src <- xml_attr(blip_node, "r:embed", ns = c(r = "http://schemas.openxmlformats.org/officeDocument/2006/relationships"))
-      src_rel <- file.path("media",basename_clean(src))
+      src_rel <- file.path("media", basename_clean(src))
 
       new_id <- paste0("rId", max_id)
 
@@ -3290,7 +3290,7 @@ zip_temp_word_doc <- function(path, temp_dir) {
   })
 }
 
-xml_relationship <- function(id, target, type = c("hyperlink","image"), target_mode = "External") {
+xml_relationship <- function(id, target, type = c("hyperlink", "image"), target_mode = "External") {
 
   type <- paste0("http://schemas.openxmlformats.org/officeDocument/2006/relationships/", match.arg(type))
 

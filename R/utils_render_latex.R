@@ -201,23 +201,23 @@ create_table_start_l <- function(data) {
         # Check if column width was set using gt::pct and
         # convert to Latex friendly terminology (i.e.,
         # '14.7%' becomes '0.147\\linewidth')
-        if (grepl('^[[:digit:].]+%$', col_widths[i])) {
+        if (grepl("^[[:digit:].]+%$", col_widths[i])) {
 
           table_width <- dt_options_get_value(data = data, option = "table_width")
 
-          col_pct <- as.numeric(gsub('%$', '', col_widths[i])) / 100
+          col_pct <- as.numeric(gsub("%$", "", col_widths[i])) / 100
 
           if (table_width == "auto") {
 
             # Table width not specified, use all available space
             col_scalar <- col_pct
-            tab_unit <- '\\linewidth'
+            tab_unit <- "\\linewidth"
 
           } else if (endsWith(table_width, suffix = '%')) {
 
             # If table width is expressed as a percentage, adjust the scaler
             col_scalar <- col_pct * as.numeric(gsub('%', '', table_width)) / 100
-            tab_unit <- '\\linewidth'
+            tab_unit <- "\\linewidth"
 
           } else {
 
@@ -272,8 +272,8 @@ create_table_start_l <- function(data) {
   # If a table width is specified, add an extra column
   # space to fill in enough space to match the width
   extra_sep <- ''
-  if (dt_options_get_value(data = data, option = 'table_width') != 'auto')
-    extra_sep <- '@{\\extracolsep{\\fill}}'
+  if (dt_options_get_value(data = data, option = "table_width") != "auto")
+    extra_sep <- "@{\\extracolsep{\\fill}}"
 
   # Generate setup statements for table including default left
   # alignments and vertical lines for any stub columns
@@ -847,7 +847,7 @@ summary_rows_for_group_l <- function(
 
   for (col_name in names(summary_df)) {
 
-    loc_type <- if(summary_row_type == 'grand') 'grand_summary_cells' else 'summary_cells'
+    loc_type <- if(summary_row_type == "grand") "grand_summary_cells" else "summary_cells"
 
     styles_summary <- dt_styles_get(data) %>%
       dplyr::filter(locname == loc_type,
@@ -1504,7 +1504,7 @@ apply_cell_styles_l <- function(content, style_obj) {
 
 .apply_style_fill_l <- function(x, style_obj) {
 
-  if (is.null(style_obj[['cell_fill']][['color']])) return(x)
+  if (is.null(style_obj[["cell_fill"]][["color"]])) return(x)
 
   paste0(
     "\\cellcolor[HTML]{",

@@ -41,13 +41,13 @@ dt_spanners_init <- function(data) {
       # The spanner label
       spanner_label = list(),
       # The spanner units
-      spanner_units = character(0),
+      spanner_units = character(0L),
       # The spanner pattern
-      spanner_pattern = character(0),
+      spanner_pattern = character(0L),
       # The spanner ID
-      spanner_id = character(0),
+      spanner_id = character(0L),
       # The spanner level
-      spanner_level = integer(0),
+      spanner_level = integer(0L),
       # Should be columns be gathered under a single spanner label?
       gather = logical(0),
       built = NA_character_
@@ -122,7 +122,7 @@ dt_spanners_build <- function(data, context) {
   spanners$built <-
     vapply(
       spanners$spanner_label,
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       FUN = function(label) process_text(label, context = context)
     )
 
@@ -254,8 +254,9 @@ dt_spanners_print_matrix <- function(
   spanners_tbl <-
     dplyr::mutate(spanners_tbl, vars = lapply(.data$vars, base::intersect, .env$vars))
 
+  # TODO Consider using lengths()
   spanners_tbl <-
-    dplyr::filter(spanners_tbl, vapply(vars, length, integer(1)) > 0)
+    dplyr::filter(spanners_tbl, vapply(vars, length, integer(1)) > 0L)
 
   spanners_tbl <-
     dplyr::mutate(
@@ -291,7 +292,7 @@ dt_spanners_print_matrix <- function(
   columns_mat <- columns_mat[rev(seq_len(nrow(columns_mat))), , drop = FALSE]
 
   if (!omit_columns_row) {
-    columns_mat <- rbind(columns_mat, matrix(vars, nrow = 1, ncol = length(vars)))
+    columns_mat <- rbind(columns_mat, matrix(vars, nrow = 1L, ncol = length(vars)))
   }
 
   columns_mat
@@ -299,11 +300,11 @@ dt_spanners_print_matrix <- function(
 
 empty_spanner_matrix <- function(vars, omit_columns_row) {
 
-  columns_mat <- matrix(vars, nrow = 1, ncol = length(vars))
+  columns_mat <- matrix(vars, nrow = 1L, ncol = length(vars))
   colnames(columns_mat) <- vars
 
   if (omit_columns_row) {
-    columns_mat <- columns_mat[-1, , drop = FALSE]
+    columns_mat <- columns_mat[-1L, , drop = FALSE]
   }
 
   columns_mat

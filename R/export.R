@@ -1453,7 +1453,7 @@ grid_layout_widths <- function(layout, data) {
   widths <- vapply(layout$grobs, `[[`, numeric(1), "width")
 
   columns <- vctrs::vec_group_loc(layout[, c("left", "right")])
-  columns$width <- vapply(columns$loc, function(i) max(widths[i]), numeric(1))
+  columns$width <- vapply(columns$loc, function(i) max(widths[i]), numeric(1L))
 
   is_single <- columns$key$left == columns$key$right
   singles <- columns[is_single, ]
@@ -1978,4 +1978,3 @@ extract_cells <- function(
 
   out_vec
 }
-

@@ -1440,7 +1440,7 @@ fmt_scientific <- function(
           n_part <- replace_minus(n_part)
 
           x_str[!small_pos] <-
-            paste0(m_part, exp_marks[1], n_part, exp_marks[2])
+            paste0(m_part, exp_marks[1L], n_part, exp_marks[2L])
 
         } else {
 
@@ -1457,13 +1457,13 @@ fmt_scientific <- function(
           n_part <-
             vapply(
               x_str,
-              FUN.VALUE = character(1),
+              FUN.VALUE = character(1L),
               USE.NAMES = FALSE,
               FUN = function(x) {
 
                 if (!grepl("e(\\+|-)[0-9]{2,}", x)) return("")
 
-                x <- unlist(strsplit(x, "e"))[2]
+                x <- unlist(strsplit(x, "e"))[2L]
 
                 if (grepl("-", x)) {
                   x <- gsub("-", "", x)
@@ -1494,7 +1494,7 @@ fmt_scientific <- function(
             n_part <-
               vapply(
                 seq_along(n_part),
-                FUN.VALUE = character(1),
+                FUN.VALUE = character(1L),
                 USE.NAMES = FALSE,
                 FUN = function(i) {
                   if (!grepl("-", n_part[i])) {
@@ -1900,7 +1900,7 @@ fmt_engineering <- function(
         n_part <-
           vapply(
             power_3,
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(x) {
               if (x > 0 && force_sign_n) {
@@ -1962,7 +1962,7 @@ fmt_engineering <- function(
             n_part <-
               vapply(
                 seq_along(n_part),
-                FUN.VALUE = character(1),
+                FUN.VALUE = character(1L),
                 USE.NAMES = FALSE,
                 FUN = function(i) {
                   if (power_3[i] >= 0) {
@@ -9586,7 +9586,7 @@ format_units_by_context <- function(
   x_str_non_missing <-
     vapply(
       seq_along(x_str_non_missing),
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(x) {
         render_units(
@@ -10272,7 +10272,7 @@ parse_md_urls <- function(text) {
     label_str <-
       vapply(
         text,
-        FUN.VALUE = character(1),
+        FUN.VALUE = character(1L),
         USE.NAMES = FALSE,
         FUN = function(x) {
           if (grepl("\\[.*?\\]\\(.*?\\)", x)) {
@@ -10288,7 +10288,7 @@ parse_md_urls <- function(text) {
     href_str <-
       vapply(
         text,
-        FUN.VALUE = character(1),
+        FUN.VALUE = character(1L),
         USE.NAMES = FALSE,
         FUN = function(x) {
           if (grepl("\\[.*?\\]\\(.*?\\)", x)) {
@@ -11208,7 +11208,7 @@ fmt_image <- function(
         x_str_non_missing <-
           vapply(
             seq_along(x_str_non_missing),
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(x) {
 
@@ -11334,7 +11334,7 @@ fmt_image <- function(
         x_str_non_missing <-
           vapply(
             seq_along(x_str_non_missing),
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(x) {
 
@@ -11867,7 +11867,7 @@ fmt_flag <- function(
         x_str_non_missing <-
           vapply(
             seq_along(x_str_non_missing),
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(x) {
 
@@ -12305,7 +12305,7 @@ fmt_country <- function(
         x_str_non_missing <-
           vapply(
             seq_along(x_str_non_missing),
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(x) {
 
@@ -12887,7 +12887,7 @@ fmt_icon <- function(
         x_str_non_missing <-
           vapply(
             seq_along(x_str_non_missing),
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(x) {
 
@@ -13277,7 +13277,7 @@ fmt_markdown <- function(
           "\n$", "",
           vapply(
             x,
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             commonmark::markdown_text
           )
@@ -13781,7 +13781,7 @@ fmt_auto <- function(
 
         # Set `row_suf_vec` as a zero-length vector because the
         # preference is to not have any suffixed numbers at all
-        rows_suf_vec <- integer(0)
+        rows_suf_vec <- integer(0L)
       }
 
       if (lg_num_pref == "suf") {

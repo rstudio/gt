@@ -139,7 +139,7 @@ render_as_ihtml <- function(data, id) {
     column_widths <-
       vapply(
         column_widths,
-        FUN.VALUE = integer(1),
+        FUN.VALUE = integer(1L),
         USE.NAMES = FALSE,
         FUN = function(x) {
           if (grepl("px", x)) {
