@@ -415,16 +415,15 @@ parse_length_str <- function(
 
 abs_len_to_twips <- function(lengths_df) {
 
-  lengths_df %>%
-    dplyr::left_join(
+  res <- dplyr::left_join(
+      lengths_df,
       twip_factors_df,
       by = c("unit" = "unit")
-    ) %>%
-    dplyr::mutate(
-      value = ifelse(!is.na(conv), value * conv, value),
-      unit = ifelse(!is.na(conv), "tw", unit)
-    ) %>%
-    dplyr::select(value, unit)
+    )
+  res$value[!is.na(res$conv)] <- res$value * res$conv
+  res$unit[!is.na(res$conv)] <- "tw"
+
+  dplyr::select(res, "value", "unit")
 }
 
 # The `col_width_resolver_rtf()` function returns a vector of

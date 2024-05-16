@@ -1174,11 +1174,9 @@ create_table_props_component_xml <- function(data, align = c("center", "start", 
       option = "table_width"
     )
 
-  widths <-
-    boxh %>%
-    dplyr::filter(type %in% c("default", "stub")) %>%
-    dplyr::arrange(dplyr::desc(type)) %>% # This ensures that the `stub` is first
-    .$column_width
+  widths <- boxh[boxh$type %in% c("default", "stub"), , drop = FALSE]
+  # returns vector of column widths where `stub` is first
+  widths <- dplyr::arrange(widths, dplyr::desc(type))$column_width
 
   table_properties <-
     xml_tblPr(
@@ -1228,12 +1226,11 @@ create_table_caption_component_xml <- function(
   styles_tbl <- dt_styles_get(data = data)
   subtitle_defined <- dt_heading_has_subtitle(data = data)
 
-  header_title_style <- styles_tbl %>%
-    dplyr::filter(
-      locname == "title"
-    ) %>%
-    dplyr::pull("styles") %>%
-    .[1] %>% .[[1]]
+  header_title_style <- styles_tbl[
+    styles_tbl$locname == "title",
+    "styles",
+    drop = TRUE
+  ][1][[1]]
 
   # Get table options
   table_font_color <- dt_options_get_value(data, option = "table_font_color")
@@ -1594,10 +1591,8 @@ create_columns_component_xml <- function(
     if (spanner_row_count < 1) {
 
       cell_style <-
-        styles_tbl %>%
-        dplyr::filter(locname %in% c("stubhead")) %>%
-        dplyr::pull("styles") %>%
-        .[1] %>% .[[1]]
+        styles_tbl[styles_tbl$locname %in% "stubhead", "styles", drop = TRUE]
+      cell_style <- cell_style[1][[1]]
 
       table_cell_vals[[length(table_cell_vals) + 1]] <-
         xml_table_cell(
@@ -1638,15 +1633,13 @@ create_columns_component_xml <- function(
   for (i in seq_len(length(headings_vars) - stub_available)) {
 
     cell_style <-
-      styles_tbl %>%
       dplyr::filter(
+        styles_tbl,
         locname %in% c("columns_columns"),
         rownum == -1,
         colnum == i
-      ) %>%
-      dplyr::pull("styles") %>%
-      .[1] %>%
-      .[[1]]
+      )
+    cell_style <- cell_style$styles[1][[1]]
 
     table_cell_vals[[length(table_cell_vals) + 1]] <-
       xml_table_cell(
@@ -1715,10 +1708,8 @@ create_columns_component_xml <- function(
         if (span_row_idx == 1) {
 
           cell_style <-
-            styles_tbl %>%
-            dplyr::filter(locname %in% c("stubhead")) %>%
-            dplyr::pull("styles") %>%
-            .[1] %>% .[[1]]
+            styles_tbl[styles_tbl$locname %in% "stubhead", "styles", drop = TRUE]
+          cell_style <- cell_style[1][[1]]
 
           spanner_cell_vals[[length(spanner_cell_vals) + 1]] <-
             xml_table_cell(
@@ -1792,13 +1783,13 @@ create_columns_component_xml <- function(
           # (merge cells horizontally and align text to bottom)
           if (colspans[i] > 0) {
 
-            cell_style <- styles_tbl %>%
+            cell_style <-
               dplyr::filter(
+                styles_tbl,
                 locname %in% c("columns_groups"),
                 grpname %in% spanner_row_ids[i]
-              ) %>%
-              dplyr::pull("styles") %>%
-              .[1] %>% .[[1]]
+              )
+            cell_style <- cell_style$styles[1][[1]]
 
             ## check if there are any open cells above to determine
             spanner_cell_vals[[length(spanner_cell_vals) + 1]] <-
@@ -1960,14 +1951,12 @@ create_body_component_xml <- function(
             ][[1]]
 
           cell_style <-
-            styles_tbl %>%
             dplyr::filter(
+              styles_tbl,
               locname == "row_groups",
               rownum == (i - 0.1)
-            ) %>%
-            dplyr::pull("styles") %>%
-            .[1] %>% .[[1]]
-
+            )
+          cell_style <- cell_style$styles[1][[1]]
 
           group_heading_row <-
             xml_tr(
@@ -2016,15 +2005,13 @@ create_body_component_xml <- function(
           style_col_idx <- ifelse(stub_available, y - 1, y)
 
           cell_style <-
-            styles_tbl %>%
             dplyr::filter(
+              styles_tbl,
               locname %in% c("data","stub"),
               rownum == i,
               colnum == style_col_idx
-            ) %>%
-            dplyr::pull("styles") %>%
-            .[1] %>%
-            .[[1]]
+            )
+          cell_style <- cell_style$styles[1][[1]]
 
           row_cells[[length(row_cells) + 1]] <-
             xml_table_cell(
@@ -2178,11 +2165,9 @@ create_source_notes_component_xml <- function(
 
   stub_components <- dt_stub_components(data = data)
 
-  cell_style <-
-    dt_styles_get(data = data) %>%
-    dplyr::filter(locname == "source_notes") %>%
-    dplyr::pull("styles") %>%
-    .[1] %>% .[[1]]
+  cell_style <- dt_styles_get(data = data)
+  cell_style <- cell_style[cell_style$locname == "source_notes", "styles", drop = TRUE]
+  cell_style <- cell_style[1][[1]]
 
   n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
 
@@ -2202,8 +2187,11 @@ create_source_notes_component_xml <- function(
 
         source_note_xml <- parse_to_xml(x)
 
-        source_note_content <- as.character(source_note_xml) %>%
-          paste0("<md_container>", ., "</md_container>")
+        source_note_content <- paste0(
+            "<md_container>",
+            as.character(source_note_xml),
+            "</md_container>"
+          )
 
         as.character(
           xml_tr(
@@ -2252,14 +2240,9 @@ create_footnotes_component_xml <- function(
 
   stub_components <- dt_stub_components(data = data)
 
-  cell_style <-
-    dt_styles_get(data = data) %>%
-    dplyr::filter(
-      locname == "footnotes"
-    ) %>%
-    dplyr::pull("styles") %>%
-    .[1] %>%
-    .[[1]]
+  cell_style <- dt_styles_get(data = data)
+  cell_style <- cell_style[cell_style$locname == "footnotes", "styles", drop = TRUE]
+  cell_style <- cell_style[1][[1]]
 
   n_data_cols <- length(dt_boxhead_get_vars_default(data = data))
 
@@ -2390,7 +2373,7 @@ summary_rows_xml <- function(
             rownum == j,
             colnum == y - 1
           )
-        cell_style <- cell_style$syles[1L][[1L]]
+        cell_style <- cell_style$styles[1L][[1L]]
 
         summary_row_cells[[length(summary_row_cells) + 1]] <-
           xml_table_cell(
@@ -2831,11 +2814,10 @@ process_white_space_br_in_xml <- function(x, ..., whitespace = NULL) {
           if (any(run_tags_locs > break_tag_loc) & any(run_tags_locs < break_tag_loc)) {
 
             replacement_br <-
-              xml_r(xml_rPr(), xml_t(" ", xml_space = "preserve")) %>%
-              as_xml_node(create_ns = TRUE) %>%
-              process_cell_content_ooxml_t(...) %>%
-              process_cell_content_ooxml_r(...) %>%
-              .[[1]]
+              xml_r(xml_rPr(), xml_t(" ", xml_space = "preserve"))
+            replacement_br <- as_xml_node(replacement_br, create_ns = TRUE)
+            replacement_br <-  process_cell_content_ooxml_t(replacement_br, ...)
+            replacement_br <- process_cell_content_ooxml_r(replacement_br, ...)[[1]]
 
             xml_add_sibling(
               break_tag,
@@ -3045,8 +3027,8 @@ paste_footnote_latex <- function(
 
 ## if hyperlinks are in gt, postprocessing will be necessary
 needs_gt_as_word_post_processing <- function(x) {
-  any(grepl("<w:hyperlink", x)) |
-    any(grepl("<a:blip", x))
+  any(grepl("<w:hyperlink", x, fixed = TRUE)) |
+    any(grepl("<a:blip", x, fixed = TRUE))
 }
 
 ## apply postprocessing
@@ -3124,7 +3106,7 @@ update_hyperlink_node_id <- function(docx, rels) {
 
   rels_relationships <- rels %>% xml_children()
   rels_ids <- rels_relationships %>% xml_attr("Id")
-  max_id <- max(as.numeric(gsub("rId","",rels_ids)))
+  max_id <- max(as.numeric(gsub("rId", "", rels_ids, fixed = TRUE)))
 
   # Get all hyperlink nodes
   hyperlink_nodes <- docx %>% xml_find_all("//w:hyperlink[@r:id]")
@@ -3153,7 +3135,7 @@ update_blip_node_id <- function(docx, rels, content_types, tmp_word_dir) {
   ## get relationships
   rels_relationships <- rels %>% xml_children()
   rels_ids <- rels_relationships %>% xml_attr("Id")
-  max_id <- max(as.numeric(gsub("rId","",rels_ids)))
+  max_id <- max(as.numeric(gsub("rId", "", rels_ids, fixed = TRUE)))
 
   ## get all blip nodes (binary li)
   blip_nodes <-
@@ -3236,7 +3218,7 @@ ensure_sect_end <- function(docx) {
     ) %>%
     as_xml_document()
 
-  if (!xml_name(last_body_node) %in% "sectPr") {
+  if (xml_name(last_body_node) != "sectPr") {
 
     xml_add_child(body, new_last_node)
 

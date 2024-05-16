@@ -176,8 +176,8 @@ resolve_footnotes_styles <- function(data, tbl_type) {
     tbl_not_summary_cells <- tbl[cond,]
 
     tbl_summary_cells <-
-      tbl[!cond & tbl$locname == "summary_cells", ] %>%
       dplyr::inner_join(
+        tbl[!cond & tbl$locname == "summary_cells", , drop = FALSE],
         groups_rows_df,
         by = c("grpname" = "group_id")
       )
@@ -233,15 +233,12 @@ resolve_footnotes_styles <- function(data, tbl_type) {
     tmp$colnum <- NULL
     tmp$rownum <- NULL
 
-    tbl_column_cells <- tmp %>%
-      dplyr::inner_join(
-        dplyr::tibble(
-          colnum = seq(default_vars),
-          colname = default_vars,
-          rownum = -1L
-        ),
-        by = "colname"
-      )
+    default_variables <- dplyr::tibble(
+      colnum = seq(default_vars),
+      colname = default_vars,
+      rownum = -1L
+    )
+    tbl_column_cells <- dplyr::inner_join(tmp, default_variables, by = "colname")
 
     # Re-combine `tbl_not_column_cells`
     # with `tbl_column_cells`
@@ -348,14 +345,15 @@ resolve_footnotes_styles <- function(data, tbl_type) {
     # text elements (that are distinct)
     # tmp <- unique(tbl$footnotes[tbl$locname != "none"])
     # lookup_tbl <- dplyr::tibble(footnotes = tmp, fs_id = rownames(tmp))
+    lookup_tbl <- tbl[tbl$locname != "none", "footnotes", drop = FALSE]
+    # Make lookup_tbl be a table with a single column "footnotes" with distinct values
+    lookup_tbl <- dplyr::distinct(lookup_tbl)
 
-    lookup_tbl <-
-      dplyr::filter(tbl, locname != "none") %>%
-      dplyr::select(footnotes) %>%
-      dplyr::distinct()
-
-    lookup_tbl <- dplyr::mutate(lookup_tbl, fs_id = rownames(lookup_tbl), .before = 1)
+    # Create fs_id as rownames, delete row names and relocate at first position
+    lookup_tbl$fs_id <- rownames(lookup_tbl)
     rownames(lookup_tbl) <- NULL
+    fs_id_pos <- ncol(lookup_tbl) # last column
+    lookup_tbl <- lookup_tbl[ , c(fs_id_pos, seq_len(fs_id_pos - 1L)), drop = FALSE]
 
     # Join the lookup table to `tbl`
     tbl <- dplyr::left_join(tbl, lookup_tbl, by = "footnotes")
@@ -371,14 +369,8 @@ resolve_footnotes_styles <- function(data, tbl_type) {
 
       if (nrow(tbl) > 0) {
 
-        tbl <-
-          dplyr::mutate(
-            tbl,
-            fs_id = process_footnote_marks(
-              x = as.integer(fs_id),
-              marks = footnote_marks
-            )
-          )
+        tbl$fs_id <- as.integer(tbl$fs_id)
+        tbl$fs_id <- process_footnote_marks(tbl$fs_id, marks = footnote_marks)
       }
 
       tbl <- dplyr::bind_rows(tbl_no_loc, tbl)
