@@ -490,6 +490,64 @@
 #'
 "towny"
 
+#' A table of personal information for people all over the world
+#'
+#' @description
+#'
+#' The `peeps` dataset contains records for one hundred people residing in ten
+#' different countries. Each person in the table has address information along
+#' with their email address and phone number. There are also personal
+#' characteristics like date of birth, height, and weight. This data has been
+#' synthesized, and so the names within the table have not been taken or based
+#' on individuals in real life. The street addresses were generated from actual
+#' street names within real geographic localities, however, the street numbers
+#' were assigned randomly from a constrained number set. While these records do
+#' not relate to real people, efforts were made to make the data as realistic as
+#' possible.
+#'
+#' @format A tibble with 100 rows and 14 variables:
+#' \describe{
+#' \item{name_given, name_family}{The given and family name of individual.}
+#' \item{address}{The street address of the individual.}
+#' \item{city}{The name of the city or locality in which the individual
+#' resides.}
+#' \item{state_prov}{The state or province associated with the `city` and
+#' `address`. This is `NA` for individuals residing in countries where
+#' subdivision data is not needed for generating a valid mailing address.}
+#' \item{postcode}{The post code associated with the `city` and `address`.}
+#' \item{country}{The 3-letter ISO 3166-1 country code representative of the
+#' individual's country.}
+#' \item{email_addr}{The individual's email address.}
+#' \item{phone_number, country_code}{The individual's phone number and the
+#' country code associated with the phone number.}
+#' \item{gender}{The gender of the individual.}
+#' \item{dob}{The individual's date of birth (DOB) in the ISO 8601 form of
+#' `YYYY-MM-DD`.}
+#' \item{height_cm, weight_kg}{The height and weight of the individual in
+#' centimeters (cm) and kilograms (kg), respectively.}
+#' }
+#'
+#' @section Examples:
+#'
+#' Here is a glimpse at the data available in `peeps`.
+#'
+#' ```{r}
+#' dplyr::glimpse(peeps)
+#' ```
+#'
+#' @family datasets
+#' @section Dataset ID and Badge:
+#' DATA-8
+#'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_peeps.png")`
+#' }}
+#'
+#' @section Dataset Introduced:
+#' *In Development*
+#'
+"peeps"
+
 #' The stations of the Paris Metro
 #'
 #' @description
@@ -554,7 +612,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-8
+#' DATA-9
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_metro.png")`
@@ -603,7 +661,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-9
+#' DATA-10
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_constants.png")`
@@ -696,7 +754,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-10
+#' DATA-11
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_illness.png")`
@@ -800,7 +858,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-11
+#' DATA-12
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_reactions.png")`
@@ -859,7 +917,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-12
+#' DATA-13
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_photolysis.png")`
@@ -929,7 +987,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-13
+#' DATA-14
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_rx_adsl.png")`
@@ -1002,7 +1060,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-14
+#' DATA-15
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_rx_addv.png")`

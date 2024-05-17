@@ -240,7 +240,7 @@ tf_formats <- function() {
 }
 
 tf_formats_icons <- function() {
-  as.character(na.omit(tf_formats()[, "characters"][[1]]))
+  as.character(stats::na.omit(tf_formats()[, "characters"][[1]]))
 }
 
 tf_formats_text <- function() {
