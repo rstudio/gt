@@ -978,7 +978,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-13
+#' DATA-14
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_nuclides.png")`
@@ -1048,7 +1048,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-14
+#' DATA-15
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_rx_adsl.png")`
@@ -1121,7 +1121,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-15
+#' DATA-16
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_rx_addv.png")`
