@@ -235,7 +235,7 @@ tf_formats <- function() {
     "7",             "diamonds",      c("\U025C6", "\U025C7"),  NA,
     "8",             "arrows",        c("\U02191", "\U02193"),  NA,
     "9",             "triangles",     c("\U025B2", "\U025BC"),  NA,
-    "10",            "triangles-lr",  c("\U025B6", "\U025C0"),  NA,
+    "10",            "triangles-lr",  c("\U025B6", "\U025C0"),  NA
   )
 }
 
@@ -556,27 +556,27 @@ get_alignment_at_body_cell <- function(
       locname == "data" & colname == .env$colname & rownum == .env$rownum
     )
 
-  if (nrow(styles_tbl) < 1) {
+  if (nrow(styles_tbl) < 1L) {
     return(column_alignment)
   }
 
   # Extract the list of styles from the table
   cell_styles_list <- styles_filtered_tbl$styles
 
-  if (length(cell_styles_list) < 1) {
+  if (length(cell_styles_list) < 1L) {
     return(column_alignment)
   }
 
   # Get the `align` property in `cell_styles_list` (element may not be present)
-  cell_text_align <- cell_styles_list[[1]]$cell_text$align
+  cell_text_align <- cell_styles_list[[1L]]$cell_text$align
 
   # Get the `cell_style` property in `cell_styles_list` (may not be present)
   # This is a user-defined string with CSS style rules that should look
   # something like this: "text-align: right; background: green;"
-  cell_style <- cell_styles_list[[1]]$cell_style
+  cell_style <- cell_styles_list[[1L]]$cell_style
 
   # Return the value of the last `text-align` property, if present
-  if (!is.null(cell_style) && grepl("text-align", cell_style)) {
+  if (!is.null(cell_style) && grepl("text-align", cell_style, fixed = TRUE)) {
 
     m <- regexec_gt("(?:^|;)\\s*text-align\\s*:\\s*([\\w-]+)\\s*(!important)?", cell_style, perl = TRUE)
 
@@ -699,7 +699,7 @@ process_text <- function(text, context = "html") {
         non_na_text_processed <-
           vapply(
             as.character(text[!is.na(text)]),
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(text) {
               md_engine_fn[[1]](text = text)
@@ -748,7 +748,7 @@ process_text <- function(text, context = "html") {
           if (has_display_formula) {
 
             display_j <- 1
-            formula_text_display_i <- c()
+            formula_text_display_i <- NULL
 
             repeat {
 
@@ -782,8 +782,8 @@ process_text <- function(text, context = "html") {
 
           if (has_inline_formula) {
 
-            inline_j <- 1
-            formula_text_inline_i <- c()
+            inline_j <- 1L
+            formula_text_inline_i <- NULL # same as c()
 
             repeat {
 
@@ -1023,7 +1023,7 @@ md_to_html <- function(x, md_engine) {
     non_na_x <-
       vapply(
         as.character(x[!is.na(x)]),
-        FUN.VALUE = character(1),
+        FUN.VALUE = character(1L),
         USE.NAMES = FALSE,
         FUN = function(x) {
           md_engine_fn[[1]](text = x)
@@ -1042,7 +1042,7 @@ md_to_html <- function(x, md_engine) {
     non_na_x_processed <-
       vapply(
         as.character(x[!is.na(x)]),
-        FUN.VALUE = character(1),
+        FUN.VALUE = character(1L),
         USE.NAMES = FALSE,
         FUN = function(x) {
           md_engine_fn[[1]](text = x)
@@ -1119,15 +1119,14 @@ markdown_to_latex <- function(text, md_engine) {
 #' @importFrom xml2 read_xml xml_name xml_children xml_type xml_contents
 markdown_to_xml <- function(text) {
 
-  text %>%
-    as.character() %>%
     vapply(
-      FUN.VALUE = character(1),
+      as.character(text),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = commonmark::markdown_xml
     ) %>%
     vapply(
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(cmark) {
 
@@ -1143,8 +1142,8 @@ markdown_to_xml <- function(text) {
 
           if (inherits(x, "xml_nodeset")) {
 
-            results <- lapply( x, apply_rules)
-            do.call( 'paste0',c(results,collapse = "\n"))
+            results <- lapply(x, apply_rules)
+            do.call("paste0", c(results, collapse = "\n"))
 
           } else {
 
@@ -1173,11 +1172,10 @@ markdown_to_xml <- function(text) {
          }
         }
 
-        lapply(children, apply_rules) %>%
-          vapply(FUN = as.character,
-                 FUN.VALUE = character(1)) %>%
-          paste0(collapse = "") %>%
-          paste0("<md_container>", ., "</md_container>")
+        res <- lapply(children, apply_rules)
+        res <- vapply(res, FUN = as.character, FUN.VALUE = character(1L))
+        res <-  paste0(res, collapse = "")
+        paste0("<md_container>", res, "</md_container>")
       }
     )
 
@@ -1188,34 +1186,36 @@ cmark_rules_xml <- list(
 
   ## default ordering
   text = function(x, process, ...) {
-    xml_r(xml_rPr(),
+    res <- xml_r(xml_rPr(),
           xml_t(
             enc2utf8(as.character(htmltools::htmlEscape(xml2::xml_text(x)))),
             xml_space = "preserve")
-    ) %>% as.character()
+    )
+    as.character(res)
   },
   paragraph = function(x, process, ...) {
     runs <- lapply(xml2::xml_children(x), process)
-    xml_p(
+    res <- xml_p(
       xml_pPr(),
       paste0(
         vapply(
-          runs, FUN = paste, FUN.VALUE = character(1)
+          runs, FUN = paste, FUN.VALUE = character(1L)
         ),
         collapse = ""
       )
-    ) %>% as.character()
+    )
+    as.character(res)
   },
 
   image = function(x, process, ...) {
-    xml_r(
+    res <- xml_r(
       xml_rPr(),
       xml_image(
         src = xml_attr(x, "destination"),
         alt_text = xml2::xml_text(x)
         )
-    ) %>% as.character()
-
+    )
+    as.character(res)
   },
 
   ## basic styling
@@ -1233,12 +1233,11 @@ cmark_rules_xml <- list(
     heading_sizes <- c(36, 32, 28, 24, 20, 16)
     fs <- heading_sizes[as.numeric(xml2::xml_attr(x, attr = "level"))]
     x <- process(xml2::xml_children(x))
-    add_text_style(x, style = xml_sz(val = fs)) %>%
-      xml_p(xml_pPr(),.) %>%
-      as.character()
+    res <- add_text_style(x, style = xml_sz(val = fs))
+    as.character(xml_p(xml_pPr(), res))
   },
   thematic_break = function(x, process, ...) {
-    xml_p(
+    res <- xml_p(
       xml_pPr(
         xml_keepNext(),
         xml_pBdr(
@@ -1246,7 +1245,8 @@ cmark_rules_xml <- list(
         ),
         xml_spacing(after = 60)
       )
-    ) %>% as.character()
+    )
+    as.character(res)
   },
   list = function(x, process, ..., indent_level = 0, type = "bullet") {
 
@@ -1263,48 +1263,45 @@ cmark_rules_xml <- list(
 
             child <- children[[child_idx]]
 
-            li_content <- process(child, indent_level = indent_level + 1, type = type) %>%
-              as_xml_node(create_ns = TRUE)
+            li_content <- process(child, indent_level = indent_level + 1, type = type)
+            li_content <- as_xml_node(li_content, create_ns = TRUE)
 
             ## get first pPr tag
-            paragraph_style <- li_content %>% xml_find_first(".//w:pPr") %>% .[[1]]
+            paragraph_style <- xml_find_first(li_content, ".//w:pPr")[[1]]
 
             ## check
-            list_style_format <- xml_pStyle(val = "ListParagraph") %>%
-              as_xml_node() %>%
-              .[[1]]
+            list_style_format <- xml_pStyle(val = "ListParagraph")
+            list_style_format <- as_xml_node(list_style_format)[[1]]
 
-            paragraph_style %>%
-              xml_add_child(
-                list_style_format
-              )
+            xml_add_child(
+              paragraph_style,
+              list_style_format
+            )
 
             list_bullet_style <- xml_numPr(
               xml_ilvl(val = indent_level)#,
               # ifelse(type == "ordered", xml_numId(val = 2), xml_numId(val = 1))
-            ) %>%
-              as_xml_node() %>%
-              .[[1]]
+            )
+            list_bullet_style <- as_xml_node(list_bullet_style)[[1]]
 
-            paragraph_style %>%
-              xml_add_child(
-                list_bullet_style
-              )
+            xml_add_child(
+              paragraph_style,
+              list_bullet_style
+            )
 
 
-            list_symbol <- ifelse(type == "bullet", "-", paste0( child_idx, "."))
+            list_symbol <- ifelse(type == "bullet", "-", paste0(child_idx, "."))
 
               bullet_insert <- xml_r(
-                  xml_t(xml_space = "preserve", paste(c(rep("\t", times = indent_level),list_symbol,"\t"), collapse = ""))
-                ) %>%
-                as_xml_node() %>%
-                .[[1]]
+                  xml_t(xml_space = "preserve", paste(c(rep("\t", times = indent_level), list_symbol, "\t"), collapse = ""))
+                )
+              bullet_insert <- as_xml_node(bullet_insert)[[1]]
 
               ## must be nodes not nodesets
-              paragraph_style %>%
-                xml_add_sibling(
-                  bullet_insert,
-                  .where = "after"
+              xml_add_sibling(
+                paragraph_style,
+                bullet_insert,
+                .where = "after"
               )
 
             paste0(li_content, collapse = "")
@@ -1328,26 +1325,27 @@ cmark_rules_xml <- list(
 
   ## code sections
   code = function(x, process, ...) {
-    xml_r(xml_rPr(xml_rStyle(val = "Macro Text")),
-          xml_t(xml2::xml_text(x), xml_space = "preserve")) %>%
-      as.character()
+    res <- xml_r(xml_rPr(xml_rStyle(val = "Macro Text")),
+          xml_t(xml2::xml_text(x), xml_space = "preserve"))
+    as.character(res)
 
   },
+
   code_block = function(x, process, ...) {
     ##split text up by new line
-    text <- strsplit(xml2::xml_text(x),split = "\n")[[1]]
+    text <- strsplit(xml2::xml_text(x), split = "\n")[[1]]
     code_text <- lapply(text, function(line) {
       xml_t(line, xml_space = "preserve")
     })
-    xml_p(xml_pPr(xml_pStyle(val = "Macro Text")),
+    res <- xml_p(xml_pPr(xml_pStyle(val = "Macro Text")),
           xml_r(xml_rPr(),
                 paste0(
                   vapply(code_text,
                          FUN = paste,
-                         FUN.VALUE = character(1)),
+                         FUN.VALUE = character(1L)),
                   collapse = "<w:br/>"
-                ))) %>%
-      as.character()
+                )))
+    as.character(res)
   },
 
   ## line breaks
@@ -1411,21 +1409,21 @@ cmark_rules_xml <- list(
   },
 
   html_block = function(x, process, ...) {
-    xml_p(
+    res <- xml_p(
       xml_pPr(),
       xml_r(xml_rPr(),
             xml_t(
               enc2utf8(as.character(xml2::xml_text(x))),
               xml_space = "preserve")
       )
-    ) %>%
-      as.character()
+    )
+    as.character(res)
   },
 
   link = function(x, process, ...) {
     # NOTE: Links are difficult to insert in OOXML documents because
     # a relationship must be provided in the 'document.xml.rels' file
-    xml_hyperlink(
+    res <- xml_hyperlink(
       url = xml_attr(x, "destination"),
       xml_r(xml_rPr(
         xml_rStyle(val = "Hyperlink"),
@@ -1433,7 +1431,8 @@ cmark_rules_xml <- list(
         ),
         xml_t(xml2::xml_text(x))
       )
-    ) %>% as.character()
+    )
+    as.character(res)
   },
 
   block_quote = function(x, process, ...) {
@@ -1480,7 +1479,7 @@ cmark_rules_rtf <- list(
         paste(
           vapply(
             seq_len(n_items),
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(n) {
 
@@ -1606,7 +1605,7 @@ markdown_to_rtf <- function(text) {
   text <-
     vapply(
       as.character(text),
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = commonmark::markdown_xml
     )
@@ -1614,7 +1613,7 @@ markdown_to_rtf <- function(text) {
   text <-
     vapply(
       text,
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(cmark) {
 
@@ -1757,7 +1756,7 @@ apply_pattern_fmt_x <- function(values, pattern) {
 
   vapply(
     values,
-    FUN.VALUE = character(1),
+    FUN.VALUE = character(1L),
     USE.NAMES = FALSE,
     FUN = function(x) tidy_gsub(x = pattern, "{x}", x, fixed = TRUE)
   )
@@ -1983,7 +1982,7 @@ num_suffix_ind <- function(
 #' versions of R.
 #' @param x The single value to test for whether it is `FALSE`.
 #' @noRd
-is_false = function(x) {
+is_false <- function(x) {
   is.logical(x) && length(x) == 1L && !is.na(x) && !x
 }
 
@@ -2128,8 +2127,8 @@ get_columns_labels_from_attrs <- function(data) {
 split_scientific_notn <- function(x_str) {
 
   exp_parts <- strsplit(x_str, "e|E")
-  num_part <- vapply(exp_parts, FUN.VALUE = character(1), `[[`, 1)
-  exp_part <- as.numeric(vapply(exp_parts, FUN.VALUE = character(1), `[[`, 2))
+  num_part <- vapply(exp_parts, FUN.VALUE = character(1L), `[[`, 1)
+  exp_part <- as.numeric(vapply(exp_parts, FUN.VALUE = character(1L), `[[`, 2))
 
   list(num = num_part, exp = exp_part)
 }
@@ -2222,7 +2221,8 @@ process_footnote_marks <- function(x, marks) {
     mapply(
       marks_val, marks_rep,
       FUN = function(val_i, rep_i) {
-        paste(rep(val_i, rep_i), collapse = "")}
+        paste(rep(val_i, rep_i), collapse = "")
+      }
     )
   )
 }
@@ -2421,7 +2421,7 @@ validate_css_lengths <- function(x) {
     vapply(
       x_units_non_empty,
       FUN = htmltools::validateCssUnit,
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE
     )
   )

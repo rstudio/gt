@@ -110,7 +110,7 @@ dt_groups_rows_build <- function(data, context) {
   } else {
 
     # The resulting data frame must always have the same columns
-    groups_rows <- cbind(groups_rows, group_label = character(0))
+    groups_rows <- cbind(groups_rows, group_label = character(0L))
   }
 
   if (nrow(groups_rows) > 0) {

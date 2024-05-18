@@ -139,7 +139,7 @@ render_as_ihtml <- function(data, id) {
     column_widths <-
       vapply(
         column_widths,
-        FUN.VALUE = integer(1),
+        FUN.VALUE = integer(1L),
         USE.NAMES = FALSE,
         FUN = function(x) {
           if (grepl("px", x)) {
@@ -237,7 +237,7 @@ render_as_ihtml <- function(data, id) {
   # `rownum` in `body_styles_tbl`
   body_style_rules <-
     vapply(
-      seq_len(nrow(body_styles_tbl)), FUN.VALUE = character(1), USE.NAMES = FALSE,
+      seq_len(nrow(body_styles_tbl)), FUN.VALUE = character(1L), USE.NAMES = FALSE,
       FUN = function(x) {
 
         colname <- body_styles_tbl[x, ][["colname"]]

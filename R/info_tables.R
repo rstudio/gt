@@ -60,7 +60,7 @@ info_date_style <- function() {
     dplyr::mutate(date = "2000-02-29") %>%
     dplyr::mutate(flexible = dplyr::case_when(
       flexible ~ "FLEXIBLE",
-      TRUE ~ ""
+      .default = ""
     )) %>%
     gt(rowname_col = "format_number") %>%
     cols_hide(columns = format_code) %>%
@@ -327,19 +327,17 @@ info_currencies <- function(
     } else {
       curr <- currencies
     }
+    tab_1 <- curr
+    tab_1$symbol <- NULL
+    tab_1$value <- 49.95
+    tab_1 <- dplyr::relocate(tab_1, "curr_name")
+    tab_1 <- gt(tab_1)
 
-    tab_1 <-
-      curr %>%
-      dplyr::select(-symbol) %>%
-      dplyr::select(curr_name, dplyr::everything()) %>%
-      dplyr::mutate(value = 49.95) %>%
-      gt()
-
-    for (i in seq(nrow(curr))) {
+    for (i in seq_len(nrow(curr))) {
 
       tab_1 <-
-        tab_1 %>%
         fmt_currency(
+          tab_1,
           columns = "value",
           rows = i,
           currency = curr[[i, "curr_code"]]
@@ -347,23 +345,29 @@ info_currencies <- function(
     }
 
     tab_1 <-
-      tab_1 %>%
       tab_spanner(
+        tab_1,
         label = "Identifiers",
         columns = c("curr_name", "curr_code", "curr_number")
-      ) %>%
+      )
+    tab_1 <-
       cols_label(
+        tab_1,
         curr_name = html("Currency\nName"),
         curr_code = html("Currency\nCode"),
         curr_number = html("Currency\nNumber"),
         exponent = "Exp",
         value = html("Formatted\nCurrency"),
-      ) %>%
+      )
+    tab_1 <-
       tab_header(
+        tab_1,
         title = md("Currencies Supported in **gt**"),
         subtitle = md("Currency codes are used in the `fmt_currency()` function")
-      ) %>%
+      )
+    tab_1 <-
       tab_style(
+        tab_1,
         style = cell_text(align = "left"),
         locations = list(
           cells_title(groups = "title"),
@@ -378,17 +382,17 @@ info_currencies <- function(
 
     curr <- currency_symbols
 
-    tab_1 <-
-      currency_symbols %>%
-      dplyr::select(-symbol) %>%
-      dplyr::mutate(value = 49.95) %>%
-      gt()
+    # Prepare gt for example.
+    tab_1 <- currency_symbols
+    tab_1$symbol <- NULL
+    tab_1$value <- 49.95
+    tab_1 <- gt(tab_1)
 
-    for (i in seq(nrow(curr))) {
+    for (i in seq_len(nrow(curr))) {
 
       tab_1 <-
-        tab_1 %>%
         fmt_currency(
+          tab_1,
           columns = "value",
           rows = i,
           currency = curr[[i, "curr_symbol"]]
@@ -396,16 +400,20 @@ info_currencies <- function(
     }
 
     tab_1 <-
-      tab_1 %>%
       cols_label(
+        tab_1,
         curr_symbol = html("Currency\nSymbol"),
         value = html("Formatted\nCurrency"),
-      ) %>%
+      )
+    tab_1 <-
       tab_header(
+        tab_1,
         title = md("Currencies Supported in **gt**"),
         subtitle = md("Currency symbols are used in the `fmt_currency()` function")
-      ) %>%
+      )
+    tab_1 <-
       tab_style(
+        tab_1,
         style = cell_text(align = "left"),
         locations = list(
           cells_title(groups = "title"),
@@ -500,12 +508,12 @@ info_locales <- function(begins_with = NULL) {
           )
       )
     )
-  tab_1 <- dplyr::select(tab_1, locale, display_name, group, decimal)
-  tab_1 <- dplyr::mutate(tab_1, display_name = gsub(" (NA, NA, NA)", "", display_name, fixed = TRUE))
-  tab_1 <- dplyr::mutate(tab_1, display_name = gsub(", NA, NA", "", display_name, fixed = TRUE))
-  tab_1 <- dplyr::mutate(tab_1, display_name = gsub("NA, ", "", display_name, fixed = TRUE))
-  tab_1 <- dplyr::mutate(tab_1, display_name = gsub(", NA)", ")", display_name, fixed = TRUE))
-  tab_1 <- dplyr::mutate(tab_1, value = 11027)
+  tab_1 <- dplyr::select(tab_1, "locale", "display_name", "group", "decimal")
+  tab_1$display_name <- gsub(" (NA, NA, NA)", "", tab_1$display_name, fixed = TRUE)
+  tab_1$display_name <- gsub(", NA, NA", "", tab_1$display_name, fixed = TRUE)
+  tab_1$display_name <- gsub("NA, ", "", tab_1$display_name, fixed = TRUE)
+  tab_1$display_name <- gsub(", NA)", ")", tab_1$display_name, fixed = TRUE)
+  tab_1$value <- 11027
   tab_1 <- gt(tab_1)
 
   for (i in seq_len(nrow(loc))) {

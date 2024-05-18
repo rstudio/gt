@@ -45,28 +45,28 @@ all_files <- fs::dir_ls(work_dir, glob = "*.pb")
 # Initialize tibbles
 google_font_tbl <-
   dplyr::tibble(
-    name = character(0),
-    designer = character(0),
-    license = character(0),
-    category = character(0),
-    date_added = character(0)
+    name = character(0L),
+    designer = character(0L),
+    license = character(0L),
+    category = character(0L),
+    date_added = character(0L)
   )
 google_styles_tbl <-
   dplyr::tibble(
-    name = character(0),
-    style = character(0),
-    weight = character(0),
-    filename = character(0),
-    post_script_name = character(0),
-    full_name = character(0),
-    copyright = character(0)
+    name = character(0L),
+    style = character(0L),
+    weight = character(0L),
+    filename = character(0L),
+    post_script_name = character(0L),
+    full_name = character(0L),
+    copyright = character(0L)
   )
 google_axes_tbl <-
   dplyr::tibble(
-    name = character(0),
-    tag = character(0),
-    min_value = character(0),
-    max_value = character(0)
+    name = character(0L),
+    tag = character(0L),
+    min_value = character(0L),
+    max_value = character(0L)
   )
 
 # For every font file, read the `.pb` metadata file and extract

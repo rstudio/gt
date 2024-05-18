@@ -645,10 +645,7 @@ tab_spanner <- function(
     ) {
 
       error_vars <-
-        paste(
-          base::setdiff(spanner_id_idx, present_spanner_ids),
-          collapse = ", "
-        )
+        base::setdiff(spanner_id_idx, present_spanner_ids)
 
       cli::cli_abort(
         "One or more spanner ID(s) supplied in `spanners` ({error_vars}),
@@ -1724,7 +1721,7 @@ tab_row_group <- function(
   }
 
   if (length(arrange_groups_vars) == 1 && is.na(arrange_groups_vars)) {
-    arrange_groups_vars <- character(0)
+    arrange_groups_vars <- character(0L)
   }
 
   dt_row_groups_set(
@@ -3259,7 +3256,7 @@ tab_style <- function(
   cell_helpers <-
     vapply(
       style,
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(x) {
         x <- names(x)
@@ -4700,11 +4697,11 @@ preprocess_tab_option <- function(option, var_name, type) {
   # Perform `stopifnot()` checks by `type`
   switch(
     type,
-    logical = stopifnot(rlang::is_scalar_logical(option), !any(is.na(option))),
+    logical = stopifnot(rlang::is_scalar_logical(option), !anyNA(option)),
     overflow = ,
     px = ,
-    value = stopifnot(rlang::is_scalar_character(option), !any(is.na(option))),
-    values = stopifnot(rlang::is_character(option), length(option) >= 1, !any(is.na(option)))
+    value = stopifnot(rlang::is_scalar_character(option), !anyNA(option)),
+    values = stopifnot(rlang::is_character(option), length(option) >= 1L, !anyNA(option))
   )
 
   option

@@ -232,13 +232,13 @@ styles_summary <-
 source_notes <-
   gt:::google_styles_tbl %>%
   dplyr::filter(name %in% recommended) %>%
-  dplyr::select(name, copyright) %>%
-  dplyr::distinct() %>%
+  dplyr::distinct(name, copyright) %>%
   dplyr::mutate(name = paste0("**", name, "** ")) %>%
   dplyr::mutate(name_copy = paste0(name, copyright)) %>%
   dplyr::pull(name_copy) %>%
-  paste(collapse = ". ") %>%
-  gsub("..", ".", ., fixed = TRUE) %>%
+  paste(collapse = ". ")
+source_notes <-
+  gsub("..", ".", source_notes, fixed = TRUE) %>%
   gt:::paste_right(".")
 
 google_font_tbl_int <-

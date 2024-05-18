@@ -999,7 +999,7 @@ adjust_luminance <- function(
 ) {
 
   # Stop if steps is beyond an acceptable range
-  if (steps > 2.0 | steps < -2.0) {
+  if (steps > 2.0 || steps < -2.0) {
     cli::cli_abort(
       "The value provided for `steps` (`{steps}`) must be between `-2.0` and `+2.0`."
     )
@@ -2875,7 +2875,7 @@ cell_borders <- function(
     unique(
       vapply(
         sides,
-        FUN.VALUE = character(1),
+        FUN.VALUE = character(1L),
         USE.NAMES = FALSE,
         FUN = resolve_border_side
       )

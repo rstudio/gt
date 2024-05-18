@@ -375,7 +375,7 @@ gt_save_rtf <- function(
 
   } else if (is_gt_group(data = data)) {
 
-    rtf_lines <- c()
+    rtf_lines <- NULL # same as c()
 
     rtf_open <-
       as_rtf(
@@ -452,7 +452,7 @@ gt_save_docx <- function(
 
   } else if (is_gt_group(data = data)) {
 
-    word_tbls <- c()
+    word_tbls <- NULL
 
     seq_tbls <- seq_len(nrow(data$gt_tbls))
 
@@ -989,7 +989,7 @@ as_word <- function(
   # Build all table data objects through a common pipeline
   value <- build_data(data = data, context = "word")
 
-  gt_xml <- c()
+  gt_xml <- NULL # same as c()
 
   #
   # Composition of Word table OOXML
@@ -1453,7 +1453,7 @@ grid_layout_widths <- function(layout, data) {
   widths <- vapply(layout$grobs, `[[`, numeric(1), "width")
 
   columns <- vctrs::vec_group_loc(layout[, c("left", "right")])
-  columns$width <- vapply(columns$loc, function(i) max(widths[i]), numeric(1))
+  columns$width <- vapply(columns$loc, function(i) max(widths[i]), numeric(1L))
 
   is_single <- columns$key$left == columns$key$right
   singles <- columns[is_single, ]
@@ -1464,7 +1464,7 @@ grid_layout_widths <- function(layout, data) {
 
   # Enlarge columns if fixed column widths have been set
   column_width <- unlist(dt_boxhead_get(data)$column_width)
-  fixed <- integer(0)
+  fixed <- integer(0L)
 
   if (any(nzchar(column_width)) && length(column_width) == length(widths)) {
 
@@ -1793,9 +1793,11 @@ extract_summary <- function(data) {
           y <-
             dplyr::rename(
               y,
-              group_id = dplyr::all_of(group_id_col_private),
-              row_id = dplyr::all_of(row_id_col_private),
-              rowname = dplyr::all_of(rowname_col_private)
+              dplyr::all_of(c(
+                group_id = group_id_col_private,
+                row_id = row_id_col_private,
+                rowname = rowname_col_private
+                ))
             )
 
           flattened_rowname <- unname(unlist(y$rowname))
@@ -1978,4 +1980,3 @@ extract_cells <- function(
 
   out_vec
 }
-

@@ -221,7 +221,7 @@
 #' ```r
 #' dplyr::tibble(
 #'   time = lubridate::POSIXct(),
-#'   event = character(0)
+#'   event = character(0L)
 #' ) |>
 #'   gt() |>
 #'   rows_add(
@@ -313,9 +313,9 @@
 #'
 #' ```r
 #' dplyr::tibble(
-#'   msrp = numeric(0),
-#'   item = character(0),
-#'   type = character(0)
+#'   msrp = numeric(0L),
+#'   item = character(0L),
+#'   type = character(0L)
 #' ) |>
 #'   gt() |>
 #'   rows_add(
@@ -411,7 +411,7 @@ rows_add <- function(
     #
 
     normalized_row_data_items <- list()
-    row_data_items_to_remove <- c()
+    row_data_items_to_remove <- NULL # c()
 
     for (i in seq_along(row_data_list)) {
 
@@ -470,7 +470,7 @@ rows_add <- function(
 
     # Ensure that the column names resolved belong to the internal
     # data table of `data_tbl`
-    if (any(!(names(row_data_list) %in% colnames(data_tbl)))) {
+    if (!all(names(row_data_list) %in% colnames(data_tbl))) {
       cli::cli_abort("All column names referenced must be present in the data.")
     }
   }

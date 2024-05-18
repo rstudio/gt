@@ -4,9 +4,9 @@ library(tidyverse)
 flags_dir <- "data-raw/flags_svg"
 
 flag_file_countries <-
-  list.files(flags_dir) %>%
-  sub(".svg", "", ., fixed = TRUE) %>%
-  toupper()
+  toupper(
+    sub(".svg", "", list.files(flags_dir), fixed = TRUE)
+  )
 
 flag_file_two_lett <-
   flag_file_countries[grepl("^[A-Z]{2}$", flag_file_countries)]
@@ -32,10 +32,10 @@ flag_files <- list.files(flags_dir, full.names = TRUE)
 
 flag_tbl <-
   dplyr::tibble(
-    country_code_2 = character(0),
-    country_code_3 = character(0),
-    country_name = character(0),
-    country_flag = character(0)
+    country_code_2 = character(0L),
+    country_code_3 = character(0L),
+    country_name = character(0L),
+    country_flag = character(0L)
   )
 
 countrypops_country_lookup <-
@@ -45,11 +45,10 @@ countrypops_country_lookup <-
 
 for (i in seq_along(flag_files)) {
 
-  country_code_2_i <-
-    flag_files[i] %>%
-    sub(".*/", "", .) %>%
-    sub(".svg", "", ., fixed = TRUE) %>%
-    toupper()
+  country_code_2_i <- sub(".*/", "", flag_files[i])
+  country_code_2_i <- toupper(
+    sub(".svg", "", country_code_2_i, fixed = TRUE)
+  )
 
   country_name_i <-
     countrypops_country_lookup[["country_name"]][
