@@ -1,7 +1,4 @@
-z,n,symbol,radius,radius_uncert,abundance,abundance_uncert,is_stable,half_life_sec,half_life_uncert,isospin,decay_1,decay_1_pct,decay_1_pct_uncert,decay_2,decay_2_pct,decay_2_pct_uncert,decay_3,decay_3_pct,decay_3_pct_uncert,magnetic_dipole,magnetic_dipole_uncert,electric_quadrupole,electric_quadrupole_uncert,atomic_mass,atomic_mass_uncert,mass_excess,mass_excess_uncert
-0,1,n,-0.1149,0.0027,,,FALSE,613.9,0.6,,B-,100,,,,,,,,-1.9130427,0.0000005,,,1008664.9159,0.00047,8071.31806,0.00044
-0,4,n,,,,,FALSE,1.75476044258225E-22,0,,,,,,,,,,,,,,,,,,
-0,6,n,,,,,FALSE,,,,,,,,,,,,,,,,,,,,
+z,n,element,radius,radius_uncert,abundance,abundance_uncert,is_stable,half_life,half_life_uncert,isospin,decay_1,decay_1_pct,decay_1_pct_uncert,decay_2,decay_2_pct,decay_2_pct_uncert,decay_3,decay_3_pct,decay_3_pct_uncert,magnetic_dipole,magnetic_dipole_uncert,electric_quadrupole,electric_quadrupole_uncert,atomic_mass,atomic_mass_uncert,mass_excess,mass_excess_uncert
 1,0,H,0.8783,0.0086,99.9855,0.0078,TRUE,,,,,,,,,,,,,2.792847351,0.000000009,,,1007825.031898,0.000014,7288.971064,0.000013
 1,1,H,2.1421,0.0088,0.0145,0.0078,TRUE,,,,,,,,,,,,,0.857438231,0.000000005,0.0028578,0.0000003,2014101.777844,0.000015,13135.722895,0.000015
 1,2,H,1.7591,0.0363,,,FALSE,388781328.00697300,631138.51949184,,B-,100,,,,,,,,2.97896246,0.000000014,,,3016049.28132,0.00008,14949.81090,0.00008
