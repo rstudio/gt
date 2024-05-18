@@ -366,6 +366,7 @@ reference:
     - illness
     - reactions
     - photolysis
+    - nuclides
     - rx_adsl
     - rx_addv
 
