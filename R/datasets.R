@@ -984,7 +984,7 @@
 #' `r data_get_image_tag(file = "dataset_nuclides.png")`
 #' }}
 #'
-#' @section Dataset Introduced:ı
+#' @section Dataset Introduced:
 #' *In Development*
 #'
 "nuclides"
