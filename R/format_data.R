@@ -570,18 +570,17 @@ fmt_number <- function(
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
   if (
+    isTRUE(getOption("gt.strict_column_fmt", TRUE)) &&
     !column_classes_are_valid(
       data = data,
       columns = {{ columns }},
       valid_classes = compat
     )
   ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_number()` and `fmt_integer()` functions can only be
+    cli::cli_abort(
+      "The `fmt_number()` and `fmt_integer()` functions can only be
       used on `columns` with numeric data."
-      )
-    }
+    )
   }
 
   # Set the `formatC_format` option according to whether number
@@ -1326,18 +1325,17 @@ fmt_scientific <- function(
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
   if (
+    isTRUE(getOption("gt.strict_column_fmt", TRUE)) &&
     !column_classes_are_valid(
       data = data,
       columns = {{ columns }},
       valid_classes = compat
     )
   ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_scientific()` function can only be used on `columns`
-      with numeric data."
-      )
-    }
+    cli::cli_abort(
+      "The `fmt_scientific()` function can only be used on `columns`
+    with numeric data."
+    )
   }
 
   # If `n_sigfig` is defined (and not `NA`) modify the number of
@@ -1442,7 +1440,7 @@ fmt_scientific <- function(
           n_part <- replace_minus(n_part)
 
           x_str[!small_pos] <-
-            paste0(m_part, exp_marks[1], n_part, exp_marks[2])
+            paste0(m_part, exp_marks[1L], n_part, exp_marks[2L])
 
         } else {
 
@@ -1459,13 +1457,13 @@ fmt_scientific <- function(
           n_part <-
             vapply(
               x_str,
-              FUN.VALUE = character(1),
+              FUN.VALUE = character(1L),
               USE.NAMES = FALSE,
               FUN = function(x) {
 
                 if (!grepl("e(\\+|-)[0-9]{2,}", x)) return("")
 
-                x <- unlist(strsplit(x, "e"))[2]
+                x <- unlist(strsplit(x, "e"))[2L]
 
                 if (grepl("-", x)) {
                   x <- gsub("-", "", x)
@@ -1483,7 +1481,7 @@ fmt_scientific <- function(
           x_str_left <-
             vapply(
               x_str,
-              FUN.VALUE = character(1),
+              FUN.VALUE = character(1L),
               USE.NAMES = FALSE,
               FUN = function(x) {
                 if (!grepl("e(\\+|-)[0-9]{2,}", x)) return("")
@@ -1496,7 +1494,7 @@ fmt_scientific <- function(
             n_part <-
               vapply(
                 seq_along(n_part),
-                FUN.VALUE = character(1),
+                FUN.VALUE = character(1L),
                 USE.NAMES = FALSE,
                 FUN = function(i) {
                   if (!grepl("-", n_part[i])) {
@@ -1819,18 +1817,17 @@ fmt_engineering <- function(
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
   if (
+    isTRUE(getOption("gt.strict_column_fmt", TRUE)) &&
     !column_classes_are_valid(
       data = data,
       columns = {{ columns }},
       valid_classes = compat
     )
   ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_engineering()` function can only be used on `columns`
-      with numeric data."
-      )
-    }
+    cli::cli_abort(
+      "The `fmt_engineering()` function can only be used on `columns`
+    with numeric data."
+    )
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -1903,7 +1900,7 @@ fmt_engineering <- function(
         n_part <-
           vapply(
             power_3,
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(x) {
               if (x > 0 && force_sign_n) {
@@ -1946,7 +1943,7 @@ fmt_engineering <- function(
           n_part <-
             vapply(
               power_3,
-              FUN.VALUE = character(1),
+              FUN.VALUE = character(1L),
               USE.NAMES = FALSE,
               FUN = function(x) {
                 if (grepl("-", x)) {
@@ -1965,7 +1962,7 @@ fmt_engineering <- function(
             n_part <-
               vapply(
                 seq_along(n_part),
-                FUN.VALUE = character(1),
+                FUN.VALUE = character(1L),
                 USE.NAMES = FALSE,
                 FUN = function(i) {
                   if (power_3[i] >= 0) {
@@ -4634,7 +4631,7 @@ fmt_index <- function(
         x_str[x_is_a_number] <-
           vapply(
             x[x_is_a_number],
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(x) index_fn(x, set = idx_set)
           )
@@ -4675,7 +4672,7 @@ index_excel <- function(num, set) {
   result <-
     vapply(
       num,
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(x) {
         get_letters_from_div(x, set = set)
@@ -8005,10 +8002,8 @@ values_to_durations <- function(
 
       # Assemble the remaining time parts
       hms_part <-
-        x_df_i %>%
-        dplyr::filter(time_part %in% c("hours", "minutes", "seconds")) %>%
-        dplyr::pull(formatted) %>%
-        paste(collapse = ":")
+        x_df_i[x_df_i$time_part %in% c("hours", "minutes", "seconds"), "formatted", drop = TRUE]
+      hms_part <- paste(hms_part, collapse = ":")
 
       d_part <-
         ifelse("days" %in% x_df_i$time_part, paste0(x_df_i$formatted[1], "/"), "")
@@ -9589,7 +9584,7 @@ format_units_by_context <- function(
   x_str_non_missing <-
     vapply(
       seq_along(x_str_non_missing),
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(x) {
         render_units(
@@ -10275,7 +10270,7 @@ parse_md_urls <- function(text) {
     label_str <-
       vapply(
         text,
-        FUN.VALUE = character(1),
+        FUN.VALUE = character(1L),
         USE.NAMES = FALSE,
         FUN = function(x) {
           if (grepl("\\[.*?\\]\\(.*?\\)", x)) {
@@ -10291,7 +10286,7 @@ parse_md_urls <- function(text) {
     href_str <-
       vapply(
         text,
-        FUN.VALUE = character(1),
+        FUN.VALUE = character(1L),
         USE.NAMES = FALSE,
         FUN = function(x) {
           if (grepl("\\[.*?\\]\\(.*?\\)", x)) {
@@ -11356,7 +11351,7 @@ fmt_image <- function(
         x_str_non_missing <-
           vapply(
             seq_along(x_str_non_missing),
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(x) {
 
@@ -11482,7 +11477,7 @@ fmt_image <- function(
         x_str_non_missing <-
           vapply(
             seq_along(x_str_non_missing),
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(x) {
 
@@ -12015,7 +12010,7 @@ fmt_flag <- function(
         x_str_non_missing <-
           vapply(
             seq_along(x_str_non_missing),
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(x) {
 
@@ -12456,7 +12451,7 @@ fmt_country <- function(
         x_str_non_missing <-
           vapply(
             seq_along(x_str_non_missing),
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(x) {
 
@@ -13038,7 +13033,7 @@ fmt_icon <- function(
         x_str_non_missing <-
           vapply(
             seq_along(x_str_non_missing),
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(x) {
 
@@ -13428,7 +13423,7 @@ fmt_markdown <- function(
           "\n$", "",
           vapply(
             x,
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             commonmark::markdown_text
           )
@@ -13932,7 +13927,7 @@ fmt_auto <- function(
 
         # Set `row_suf_vec` as a zero-length vector because the
         # preference is to not have any suffixed numbers at all
-        rows_suf_vec <- integer(0)
+        rows_suf_vec <- integer(0L)
       }
 
       if (lg_num_pref == "suf") {

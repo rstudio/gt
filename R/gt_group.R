@@ -87,7 +87,7 @@ gt_group <- function(
   # Process gt tables and add records to the `gt_tbl_tbl` object
   #
 
-  for (i in seq_len(length(gt_tbl_list))) {
+  for (i in seq_along(gt_tbl_list)) {
 
     gt_tbl_tbl_i <- generate_gt_tbl_tbl_i(i = i, gt_tbl = gt_tbl_list[[i]])
     gt_tbl_tbl <- dplyr::bind_rows(gt_tbl_tbl, gt_tbl_tbl_i)
@@ -281,7 +281,7 @@ grp_add <- function(
   # Process gt tables and add records to the `gt_tbl_tbl` object
   #
 
-  for (i in seq_len(length(gt_tbl_list))) {
+  for (i in seq_along(gt_tbl_list)) {
 
     gt_tbl_tbl_i <- generate_gt_tbl_tbl_i(i = i, gt_tbl = gt_tbl_list[[i]])
     gt_tbl_tbl <- dplyr::bind_rows(gt_tbl_tbl, gt_tbl_tbl_i)
@@ -511,7 +511,7 @@ grp_replace <- function(
   gt_tbl_list <- .list
 
   # Stop function if no data is provided
-  if (length(gt_tbl_list) < 1) {
+  if (length(gt_tbl_list) < 1L) {
     cli::cli_abort("At least one gt table must be provided.")
   }
 
@@ -533,7 +533,7 @@ grp_replace <- function(
   # Process gt tables and add records to the `gt_tbl_tbl` object
   #
 
-  for (i in seq_len(length(.which))) {
+  for (i in seq_along(.which)) {
     gt_tbl_tbl_i <- generate_gt_tbl_tbl_i(i = i, gt_tbl = gt_tbl_list[[i]])
     gt_group[["gt_tbls"]][.which[i], ] <- gt_tbl_tbl_i
   }
@@ -965,7 +965,7 @@ generate_gt_tbl_info_list <- function(gt_tbl) {
       sum(
         vapply(
           summary_list,
-          FUN.VALUE = integer(1),
+          FUN.VALUE = integer(1L),
           FUN = function(x) nrow(x))
       )
 

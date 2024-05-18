@@ -125,7 +125,7 @@ gt_preview <- function(
   }
 
   # Determine whether an ellipsis row is to be included
-  has_ellipsis_row <- ifelse(nrow(data) > (top_n + bottom_n), TRUE, FALSE)
+  has_ellipsis_row <- nrow(data) > (top_n + bottom_n) # TRUE or FALSE
 
   # If a preview table (head and tail) is requested,
   # then modify `data_tbl` to only include the head

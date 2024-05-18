@@ -60,11 +60,11 @@ tab_info <- function(data) {
 
   empty_tbl <-
     dplyr::tibble(
-      id = character(0),
-      i = integer(0),
-      label = character(0),
-      type = character(0),
-      location = character(0)
+      id = character(0L),
+      i = integer(0L),
+      label = character(0L),
+      type = character(0L),
+      location = character(0L)
     )
 
   built_data <- build_data(data, context = "html")
@@ -216,7 +216,7 @@ tab_info <- function(data) {
               ),
               dplyr::tibble(
                 id = group_summary_row_id,
-                i = seq_len(length(group_summary_row_id)),
+                i = seq_along(group_summary_row_id),
                 label = group_summary_row_id,
                 type = group_id,
                 location = "Group Summary"
@@ -244,7 +244,7 @@ tab_info <- function(data) {
       grand_summary <-
         dplyr::tibble(
           id = grand_summary_row_id,
-          i = seq_len(length(grand_summary_row_id)),
+          i = seq_along(grand_summary_row_id),
           label = grand_summary_row_id,
           type = NA_character_,
           location = "Grand Summary"

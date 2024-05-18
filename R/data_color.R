@@ -897,12 +897,12 @@ data_color <- function(
   # be used in a concluding `dt_styles_set()` call
   data_color_styles_tbl <-
     dplyr::tibble(
-      locname = character(0),
-      grpname = character(0),
-      colname = character(0),
-      locnum = numeric(0),
-      rownum = integer(0),
-      colnum = integer(0),
+      locname = character(0L),
+      grpname = character(0L),
+      colname = character(0L),
+      locnum = numeric(0L),
+      rownum = integer(0L),
+      colnum = integer(0L),
       styles = list()
     )
 
@@ -1345,7 +1345,7 @@ rgba_to_hex <- function(colors) {
   color_matrix <-
     matrix(
       rgba_vec,
-      ncol = 4,
+      ncol = 4L,
       dimnames = list(c(), c("r", "g", "b", "alpha")),
       byrow = TRUE
     )
@@ -1512,7 +1512,7 @@ check_named_colors <- function(named_colors) {
 
     one_several_invalid <-
       ifelse(
-        length(invalid_colors) > 1,
+        length(invalid_colors) > 1L,
         "Several invalid color names were ",
         "An invalid color name was "
       )

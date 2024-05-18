@@ -190,7 +190,7 @@ gt_split <- function(
       visible_col_vars <- dt_boxhead_get_vars_default(data = data)
 
       # Stop function if any of the columns to split at aren't visible columns
-      if (any(!(col_slice_at %in% visible_col_vars))) {
+      if (!all(col_slice_at %in% visible_col_vars)) {
         cli::cli_abort(
           "All values provided in `col_slice_at` must correspond to visible columns."
         )
@@ -214,7 +214,7 @@ gt_split <- function(
 
       col_range_list <-
         split(
-          seq_len(length(visible_col_vars)),
+          seq_along(visible_col_vars),
           col_slice_vec
         )
 

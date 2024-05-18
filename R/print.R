@@ -137,7 +137,7 @@ knit_print.gt_group <- function(x, ...) {
 
   } else if (knitr_is_word_output()) {
 
-    word_tbls <- c()
+    word_tbls <- NULL
 
     seq_tbls <- seq_len(nrow(x$gt_tbls))
 

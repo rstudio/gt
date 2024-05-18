@@ -149,13 +149,10 @@ dt_summary_build <- function(data, context) {
       # Get the names of row groups available in the gt object
       groups_available <- unique(stub_df$group_id)
 
-      if (any(!(groups %in% groups_available))) {
+      if (!all(groups %in% groups_available)) {
 
         not_present_groups <-
-          paste0(
-            base::setdiff(groups, groups_available),
-            collapse = ", "
-          )
+          base::setdiff(groups, groups_available)
 
         # Stop function if one or more `groups`
         # are not present in the gt table
@@ -259,12 +256,13 @@ dt_summary_build <- function(data, context) {
               )
 
             select_data_tbl <-
-              dplyr::select(
+              dplyr::relocate(
                 select_data_tbl,
-                dplyr::all_of(group_id_col_private),
-                dplyr::all_of(row_id_col_private),
-                dplyr::all_of(rowname_col_private),
-                dplyr::everything()
+                dplyr::all_of(c(
+                  group_id_col_private,
+                  row_id_col_private,
+                  rowname_col_private
+                ))
               )
 
             select_data_tbl
@@ -281,10 +279,12 @@ dt_summary_build <- function(data, context) {
     summary_dfs_data <-
       dplyr::select(
         summary_dfs_data,
-        dplyr::all_of(group_id_col_private),
-        dplyr::all_of(row_id_col_private),
-        dplyr::all_of(rowname_col_private),
-        dplyr::all_of(colnames(body))
+        dplyr::all_of(c(
+          group_id_col_private,
+          row_id_col_private,
+          rowname_col_private,
+          colnames(body)
+        ))
       )
 
     #

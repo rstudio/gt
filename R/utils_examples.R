@@ -50,7 +50,7 @@ get_example_text <- function(topic) {
 
   topic_names <- names(get_package_docs())
 
-  examples_out <- c()
+  examples_out <- NULL # same as c
 
   for (i in seq_along(topic)) {
 
@@ -73,7 +73,7 @@ get_example_text <- function(topic) {
     }
 
     examples_start_idx <-
-      grep("\\section{Examples}{", help_file_lines, fixed = TRUE) + 1
+      grep("\\section{Examples}{", help_file_lines, fixed = TRUE) + 1L
 
     examples_end_idx <-
       grep(
@@ -106,12 +106,12 @@ get_example_text <- function(topic) {
     example_lines <- gsub("\\\\code\\{(.*?)\\}", "`\\1`", example_lines)
     example_lines <- gsub("\\\\verb\\{(.*?)\\}", "`\\1`", example_lines)
 
-    example_lines <- example_lines %>% paste(collapse = "\n")
+    example_lines <- paste(example_lines, collapse = "\n")
 
     # Remove leading and trailing whitespace
-    example_lines <- example_lines %>% gsub("^\n\n", "", .)
-    example_lines <- example_lines %>% gsub("\n\n$", "", .)
-    example_lines <- example_lines %>% gsub("\n\n\n", "\n\n", .)
+    example_lines <- gsub("^\n\n", "", example_lines)
+    example_lines <- gsub("\n\n$", "", example_lines)
+    example_lines <- gsub("\n\n\n", "\n\n", example_lines)
 
     examples_out <- c(examples_out, example_lines)
   }
@@ -216,11 +216,11 @@ write_gt_examples_qmd_files <- function(
 
     index_tbl <-
       dplyr::tibble(
-        name = character(0),
-        title = character(0),
-        type = character(0),
-        family = integer(0),
-        number = integer(0)
+        name = character(0L),
+        title = character(0L),
+        type = character(0L),
+        family = integer(0L),
+        number = integer(0L)
       )
 
     pkg_docs <- get_package_docs()
@@ -277,7 +277,7 @@ write_gt_examples_qmd_files <- function(
       dplyr::mutate(
         name = dplyr::case_when(
           type == "function" ~ paste0(
-            "[", name, "()](gt-", name , ".qmd)"
+            "[", name, "()](gt-", name, ".qmd)"
           ),
           .default = name
         )

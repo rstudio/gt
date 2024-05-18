@@ -482,7 +482,7 @@ summary_rows <- function(
     fmt_args <-
       vapply(
         seq_along(formatter_options),
-        FUN.VALUE = character(1),
+        FUN.VALUE = character(1L),
         USE.NAMES = FALSE,
         FUN = function(x) {
           paste0(names(formatter_options[x]), " = ", formatter_options[x])
