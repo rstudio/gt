@@ -436,7 +436,7 @@ get_mime_type <- function(file) {
     extension,
     svg = "image/svg+xml",
     jpg = "image/jpeg",
-    file.path("image", extension, fsep = "/")
+    paste("image", extension, sep = "/")
   )
 }
 
