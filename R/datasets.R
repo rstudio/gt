@@ -928,6 +928,67 @@
 #'
 "photolysis"
 
+#' Nuclide data
+#'
+#' @description
+#'
+#' The `nuclides` dataset contains information on all known nuclides, providing
+#' data on nuclear structure and decay modes across 118 elements. There is data
+#' here on natural abundances, atomic mass, spin, half-life, and more. The
+#' typical users for such a dataset include researchers in fields such as
+#' nuclear physics, radiochemistry, and nuclear medicine.
+#'
+#' @format A tibble with 3,383 rows and 29 variables:
+#' \describe{
+#' \item{nuclide}{The symbol for the nuclide.}
+#' \item{z, n}{The number of protons and neutrons.}
+#' \item{element}{The element symbol.}
+#' \item{radius, radius_uncert}{The charge radius and its associated
+#' uncertainty. In units of fm.}
+#' \item{abundance, abundance_uncert}{The abundance of the stable isotope as
+#' a mole fraction (in relation to other stable isotopes of the same element).
+#' Values are provided for the nuclide only if `is_stable` is `TRUE`.}
+#' \item{is_stable}{Is the nuclide a stable isotope?}
+#' \item{half_life, half_life_uncert}{The nuclide's half life represented as
+#' seconds.}
+#' \item{isospin}{The isospin, or the quantum number related to the up and down
+#' quark content of the particle.}
+#' \item{decay_1, decay_2, decay_3}{The 1st, 2nd, and 3rd decay modes.}
+#' \item{decay_1_pct, decay_1_pct_uncert, decay_2_pct, decay_2_pct_uncert,
+#' decay_3_pct, decay_3_pct_uncert}{The branching proportions for the 1st, 2nd,
+#' and 3rd decays (along with uncertainty values).}
+#' \item{magnetic_dipole, magnetic_dipole_uncert}{The magnetic dipole and its
+#' associated uncertainty. Expressed in units of micro N, or nuclear
+#' magneton values.}
+#' \item{electric_quadrupole, electric_quadrupole_uncert}{The electric
+#' quadrupole and its associated uncertainty. In units of barn (b).}
+#' \item{atomic_mass, atomic_mass_uncert}{The atomic mass and its associated
+#' uncertainty. In units of micro AMU.}
+#' \item{mass_excess, mass_excess_uncert}{The mass excess and its associated
+#' uncertainty. In units of keV.}
+#' }
+#'
+#' @section Examples:
+#'
+#' Here is a glimpse at the data available in `nuclides`.
+#'
+#' ```{r}
+#' dplyr::glimpse(nuclides)
+#' ```
+#'
+#' @family datasets
+#' @section Dataset ID and Badge:
+#' DATA-14
+#'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_nuclides.png")`
+#' }}
+#'
+#' @section Dataset Introduced:ı
+#' *In Development*
+#'
+"nuclides"
+
 #' An ADSL-flavored clinical trial toy dataset
 #'
 #' @description
@@ -987,7 +1048,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-14
+#' DATA-15
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_rx_adsl.png")`
@@ -1060,7 +1121,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-15
+#' DATA-16
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_rx_addv.png")`

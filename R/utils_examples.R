@@ -195,6 +195,7 @@ write_gt_examples_qmd_files <- function(
           "illness",
           "reactions",
           "photolysis",
+          "nuclides",
           "rx_adsl",
           "rx_addv",
           "render_gt",

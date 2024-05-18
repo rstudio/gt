@@ -9487,7 +9487,7 @@ fmt_units <- function(
 #' 3-20
 #'
 #' @section Function Introduced:
-#' **In Development**
+#' *In Development*
 #'
 #' @import rlang
 #' @export

@@ -221,7 +221,7 @@ compound names via the \code{\link[=cols_merge]{cols_merge()}} function.
 
 \section{Function Introduced}{
 
-\strong{In Development}
+\emph{In Development}
 }
 
 \seealso{
