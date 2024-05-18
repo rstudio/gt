@@ -160,6 +160,7 @@ Other datasets:
 \code{\link{gtcars}},
 \code{\link{illness}},
 \code{\link{metro}},
+\code{\link{nuclides}},
 \code{\link{peeps}},
 \code{\link{photolysis}},
 \code{\link{pizzaplace}},

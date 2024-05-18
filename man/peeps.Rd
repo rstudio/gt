@@ -89,6 +89,7 @@ Other datasets:
 \code{\link{gtcars}},
 \code{\link{illness}},
 \code{\link{metro}},
+\code{\link{nuclides}},
 \code{\link{photolysis}},
 \code{\link{pizzaplace}},
 \code{\link{reactions}},
