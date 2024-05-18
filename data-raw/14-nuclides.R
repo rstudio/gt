@@ -7,13 +7,13 @@ nuclides <-
       cols(
         z = col_integer(),
         n = col_integer(),
-        symbol = col_character(),
+        element = col_character(),
         radius = col_double(),
         radius_uncert = col_double(),
         abundance = col_double(),
         abundance_uncert = col_double(),
         is_stable = col_logical(),
-        half_life_sec = col_double(),
+        half_life = col_double(),
         half_life_uncert = col_double(),
         isospin = col_character(),
         decay_1 = col_character(),
@@ -35,5 +35,6 @@ nuclides <-
         mass_excess_uncert = col_double()
       )
   ) %>%
-  dplyr::mutate(dplyr::across(dplyr::contains("pct"), ~ . / 100))
-
+  dplyr::mutate(dplyr::across(dplyr::contains("pct"), ~ . / 100)) %>%
+  dplyr::mutate(symbol = paste0("^{", z + n, "}_{", z, "}", element, n)) %>%
+  dplyr::relocate(symbol, .after = element)
