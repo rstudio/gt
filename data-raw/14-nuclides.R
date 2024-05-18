@@ -36,5 +36,5 @@ nuclides <-
       )
   ) %>%
   dplyr::mutate(dplyr::across(dplyr::contains("pct"), ~ . / 100)) %>%
-  dplyr::mutate(symbol = paste0("^{", z + n, "}_{", z, "}", element, n)) %>%
-  dplyr::relocate(symbol, .after = element)
+  dplyr::mutate(nuclide = paste0("^{", z + n, "}_{", z, "}", element, n)) %>%
+  dplyr::relocate(nuclide, .before = z)
