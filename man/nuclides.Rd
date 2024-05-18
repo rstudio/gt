@@ -87,7 +87,7 @@ Here is a glimpse at the data available in \code{nuclides}.
 
 \section{Dataset ID and Badge}{
 
-DATA-13
+DATA-14
 
 \if{html}{\out{
 <div style="text-align:center;"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_nuclides.png" alt="This image of that of a dataset badge." style="width:50\%;padding-bottom:20px;"></div>
