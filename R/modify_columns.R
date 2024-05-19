@@ -3501,10 +3501,11 @@ cols_move_to_end <- function(
 #'   `<column-targeting expression>` // **required**
 #'
 #'   The columns to hide in the output display table. Can either be a series of
-#'   column names provided in [c()], a vector of column indices, or a select
-#'   helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()].
+#'   column names provided in `c()`, a vector of column indices, or a select
+#'   helper function (e.g [starts_with()], [ends_with()], [contains()], [matches()],
+#'   [num_range()], and [everything()]). Can also be an expression. For example,
+#'   to hide columns that contain all missing value, you can provide the following:
+#'    `where(~ all(is.na(.x))`.
 #'
 #' @return An object of class `gt_tbl`. `data` will be unaltered if `columns` is
 #'   not supplied.
