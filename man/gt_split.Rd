@@ -34,10 +34,9 @@ vector of index values or a function that evaluates to a numeric vector.}
 
 Any columns where vertical splitting across should occur. The splits occur
 to the right of the resolved column names. Can either be a series of column
-names provided in \code{\link[=c]{c()}}, a vector of column indices, or a select helper
-function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}.}
+names provided in \code{c()}, a vector of column indices, or a select helper
+function. Select helper functions include \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}},
+\code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
 }
 \value{
 An object of class \code{gt_group}.

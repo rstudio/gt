@@ -1817,34 +1817,7 @@ extract_summary <- function(data) {
 #' Get a vector of cell data from a `gt_tbl` object. The output vector will have
 #' cell data formatted in the same way as the table.
 #'
-#' @param data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
-#'
-#' @param columns *Columns to target*
-#'
-#'   `<column-targeting expression>` // *default:* `everything()`
-#'
-#'   Can either be a series of column names provided in [c()], a vector of
-#'   column indices, or a select helper function. Examples of select helper
-#'   functions include [starts_with()], [ends_with()], [contains()],
-#'   [matches()], [one_of()], [num_range()], and [everything()].
-#'
-#' @param rows *Rows to target*
-#'
-#'   `<row-targeting expression>` // *default:* `everything()`
-#'
-#'   In conjunction with `columns`, we can specify which of their rows should
-#'   form a constraint for extraction. The default [everything()] results in all
-#'   rows in `columns` being formatted. Alternatively, we can supply a vector of
-#'   row IDs within [c()], a vector of row indices, or a select helper function.
-#'   Examples of select helper functions include [starts_with()], [ends_with()],
-#'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
-#'   We can also use expressions to filter down to the rows we need (e.g.,
-#'   `[colname_1] > 100 & [colname_2] < 50`).
+#' @inheritParams fmt_number
 #'
 #' @param output *Output format*
 #'

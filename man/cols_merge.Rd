@@ -21,17 +21,15 @@ This is the \strong{gt} table object that is commonly created through use of the
 \code{\link[=gt]{gt()}} function.}
 
 \item{columns}{\emph{Columns to target}
-
-\verb{<column-targeting expression>} // \strong{required}
+\verb{<1-column-targeting expression>} // \strong{required}
 
 The columns for which the merging operations should be applied. The first
 column resolved will be the target column (i.e., undergo mutation) and the
 other columns will serve to provide input. Can either be a series of column
-names provided in \code{\link[=c]{c()}}, a vector of column indices, or a select helper
-function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}. A vector is recommended because in that case we are
-absolutely certain about the order of columns, and, that order information
+names provided in \code{c()}, a vector of column indices, or a select helper
+function (e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}},
+\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}). A vector is recommended because in that
+case we are absolutely certain about the order of columns, and, that order information
 is needed for this and other arguments.}
 
 \item{hide_columns}{\emph{Subset of \code{columns} to hide}
@@ -42,20 +40,18 @@ Any column names provided here will have their state changed to \code{hidden}
 (via internal use of \code{\link[=cols_hide]{cols_hide()}}) if they aren't already hidden. This is
 convenient if the shared purpose of these specified columns is only to
 provide string input to the target column. To suppress any hiding of
-columns, \code{FALSE} can be used here.}
+columns, \code{hide_columns = FALSE} can be used here.}
 
 \item{rows}{\emph{Rows to target}
 
 \verb{<row-targeting expression>} // \emph{default:} \code{everything()}
 
 In conjunction with \code{columns}, we can specify which of their rows should
-participate in the merging process. The default \code{\link[=everything]{everything()}} results in
-all rows in \code{columns} being formatted. Alternatively, we can supply a
-vector of row IDs within \code{\link[=c]{c()}}, a vector of row indices, or a select
-helper function. Examples of select helper functions include
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
-\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions to filter
-down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+participate in the merging process (\link[=everything]{All rows} of
+\code{columns} are being formatted by default). Alternatively, we can supply a
+vector of row IDs within \code{c()}, a vector of row indices, or a select
+helper function (e.g.\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}).
+We can also use expressions to filter down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{pattern}{\emph{Formatting pattern}
 

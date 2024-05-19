@@ -19,28 +19,26 @@ This is the \strong{gt} table object that is commonly created through use of the
 \verb{<column-targeting expression>} // \emph{default:} \code{everything()}
 
 The columns to unhide in the output display table. Can either be a series
-of column names provided in \code{\link[=c]{c()}}, a vector of column indices, or a select
-helper function. Examples of select helper functions include
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
-\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
+of column names provided in \code{c()}, a vector of column indices, or a select
+helper function (e.g \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}},
+\code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}).}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
 The \code{cols_unhide()} function allows us to take one or more hidden columns
-(usually made so via the \code{\link[=cols_hide]{cols_hide()}} function) and make them visible
+(usually done with \code{\link[=cols_hide]{cols_hide()}}) and make them visible
 in the final output table. This may be important in cases where the user
 obtains a \code{gt_tbl} object with hidden columns and there is motivation to
 reveal one or more of those.
 }
 \details{
 The hiding and unhiding of columns is internally a rendering directive, so,
-all columns that are 'hidden' are still accessible and useful in any
-expression provided to a \code{rows} argument. The \code{cols_unhide()} function
-quietly changes the visible state of a column (much like the \code{\link[=cols_hide]{cols_hide()}}
-function) and doesn't yield warnings or messages when changing the state of
-already-visible columns.
+all columns that are 'hidden' are still accessible and useful in any expression
+provided to a \code{rows} argument. The \code{cols_unhide()} function quietly changes the
+visible state of a column (much like the \code{\link[=cols_hide]{cols_hide()}} function) and doesn't
+warn or inform when changing the state of already-visible columns.
 }
 \section{Examples}{
 

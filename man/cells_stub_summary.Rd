@@ -12,23 +12,20 @@ cells_stub_summary(groups = everything(), rows = everything())
 \verb{<row-group-targeting expression>} // \emph{default:} \code{everything()}
 
 The row groups to which targeting operations are constrained. Can either be
-a series of row group ID values provided in \code{\link[=c]{c()}} or a select helper
-function. Examples of select helper functions include \code{\link[=starts_with]{starts_with()}},
-\code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}}, \code{\link[=num_range]{num_range()}}, and
-\code{\link[=everything]{everything()}}.}
+a series of row group ID values provided in \code{c()} or a select helper
+(e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}).}
 
 \item{rows}{\emph{Rows to target}
 
 \verb{<row-targeting expression>} // \emph{default:} \code{everything()}
 
 In conjunction with \code{groups}, we can specify which of their rows should
-form a constraint for targeting operations. The default \code{\link[=everything]{everything()}}
-results in all rows in \code{columns} being formatted. Alternatively, we can
-supply a vector of row IDs within \code{\link[=c]{c()}}, a vector of row indices, or a
-select helper function. Examples of select helper functions include
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
-\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions to filter
-down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+form a constraint for targeting operations. The default select  all rows in
+\code{columns} being formatted. Alternatively, we can supply a vector of row IDs
+within \code{c()}, a vector of row indices, or a select helper (e.g.
+\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}).
+We can also use expressions to filter down to the rows we need
+(e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 }
 \value{
 A list object with the classes \code{cells_stub_summary} and

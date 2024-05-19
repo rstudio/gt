@@ -52,12 +52,11 @@
 #'
 #'   `<column-targeting expression>` // *default:* `everything()`
 #'
-#'   The columns for which the alignment should be applied. Can either be a
-#'   series of column names provided in [c()], a vector of column indices, or a
-#'   select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()]. By default this is set to [everything()]
-#'   which means that the chosen alignment affects all columns.
+#'   The columns for which the alignment should be applied.
+#'   ([All columns](everything()) by default).
+#'   Can either be a series of column names provided in `c()`, a vector of column indices,
+#'   or a select helper function (e.g. [starts_with()], [ends_with()], [contains()],
+#'   [matches()], [num_range()]).
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -212,12 +211,10 @@ determine_which_character_number <- function(
 #'
 #'   `<column-targeting expression>` // *default:* `everything()`
 #'
-#'   The columns for which decimal alignment should be applied. Can either be a
-#'   series of column names provided in [c()], a vector of column indices, or a
-#'   select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()]. By default this is set to [everything()]
-#'   which means that decimal alignment will be attempted on all columns.
+#'   The columns for which decimal alignment should be applied ([all columns][everything()]
+#'   by default). Can either be a series of column names provided in `c()`,
+#'   a vector of column indices, or a select helper function
+#'   (e.g [starts_with()], [ends_with()], [contains()], [matches()], [num_range()]).
 #'
 #' @param dec_mark *Decimal mark*
 #'
@@ -458,13 +455,13 @@ align_to_char <- function(x, align_at = ".") {
 #'   left-hand side corresponds to selections of columns and the right-hand side
 #'   evaluates to single-length character values in the form `{##}px` (i.e.,
 #'   pixel dimensions); the [px()] helper function is best used for this
-#'   purpose. Column names should be enclosed in [c()]. The column-based select
+#'   purpose. Column names should be enclosed in `c()`. The column-based select
 #'   helpers [starts_with()], [ends_with()], [contains()], [matches()],
-#'   [one_of()], and [everything()] can be used in the LHS. Subsequent
-#'   expressions that operate on the columns assigned previously will result in
-#'   overwriting column width values (both in the same `cols_width()` call and
-#'   across separate calls). All other columns can be assigned a default width
-#'   value by using `everything()` on the left-hand side.
+#'   and [everything()] can be used in the LHS. Subsequent expressions that
+#'   operate on the columns assigned previously will result in overwriting column
+#'   width values (both in the same `cols_width()` call and across separate calls).
+#'   All other columns can be assigned a default width value by using `everything()`
+#'   on the left-hand side.
 #'
 #' @param .list *Alternative to `...`*
 #'
@@ -640,12 +637,12 @@ cols_width <- function(
 #'   `.data`. Two-sided formulas (e.g., `<LHS> ~ <RHS>`) can be used, where the
 #'   left-hand side corresponds to selections of columns and the right-hand side
 #'   evaluates to single-length values for the label to apply. Column names
-#'   should be enclosed in [c()]. Select helpers like [starts_with()],
-#'   [ends_with()], [contains()], [matches()], [one_of()], and [everything()]
-#'   can be used in the LHS. Named arguments are also valid as input for simple
-#'   mappings of column name to label text; they should be of the form `<column
-#'   name> = <label>`. Subsequent expressions that operate on the columns
-#'   assigned previously will result in overwriting column label values.
+#'   should be enclosed in `c()`. Select helpers like [starts_with()],
+#'   [ends_with()], [contains()], [matches()], and [everything()] can be used in the LHS.
+#'   Named arguments are also valid as input for simple mappings of column name
+#'   to label text; they should be of the form `<column name> = <label>`.
+#'   Subsequent expressions that operate on the columns assigned previously
+#'   will result in overwriting column label values.
 #'
 #' @param .list *Alternative to `...`*
 #'
@@ -1088,10 +1085,10 @@ cols_label <- function(
 #'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns for which the column-labeling operations should be applied. Can
-#'   either be a series of column names provided in [c()], a vector of column
+#'   either be a series of column names provided in `c()`, a vector of column
 #'   indices, or a select helper function. Examples of select helper functions
 #'   include [starts_with()], [ends_with()], [contains()], [matches()],
-#'   [one_of()], [num_range()], and [everything()].
+#'  [num_range()], and [everything()].
 #'
 #' @param fn *Function to apply*
 #'
@@ -1312,8 +1309,8 @@ cols_label_with <- function(
 #'   `.data`. Two-sided formulas (e.g., `<LHS> ~ <RHS>`) can be used, where the
 #'   left-hand side corresponds to selections of columns and the right-hand side
 #'   evaluates to single-length values for the units to apply. Column names
-#'   should be enclosed in [c()]. Select helpers like [starts_with()],
-#'   [ends_with()], [contains()], [matches()], [one_of()], and [everything()]
+#'   should be enclosed in `c()`. Select helpers like [starts_with()],
+#'   [ends_with()], [contains()], [matches()], and [everything()]
 #'   can be used in the LHS. Named arguments are also valid as input for simple
 #'   mappings of column name to the **gt** units syntax; they should be of the
 #'   form `<column name> = <units text>`. Subsequent expressions that operate on
@@ -2191,11 +2188,10 @@ cols_add <- function(
 #'   `<column-targeting expression>` // **required**
 #'
 #'   The columns which contain the numeric data to be plotted as nanoplots. Can
-#'   either be a series of column names provided in [c()], a vector of column
-#'   indices, or a select helper function. Examples of select helper functions
-#'   include [starts_with()], [ends_with()], [contains()], [matches()],
-#'   [one_of()], [num_range()], and [everything()]. Data collected from the
-#'   columns will be concatenated together in the order of resolution.
+#'   either be a series of column names provided in `c()`, a vector of column
+#'   indices, or a select helper function (e.g. [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [num_range()], and [everything()]). Data collected
+#'   from the columns will be concatenated together in the order of resolution.
 #'
 #' @param rows *Rows that should contain nanoplots*
 #'
@@ -2203,12 +2199,10 @@ cols_add <- function(
 #'
 #'   With `rows` we can specify which rows should contain nanoplots in the new
 #'   column. The default [everything()] results in all rows in `columns` being
-#'   formatted. Alternatively, we can supply a vector of row IDs within [c()], a
-#'   vector of row indices, or a select helper function. Examples of select
-#'   helper functions include [starts_with()], [ends_with()], [contains()],
-#'   [matches()], [one_of()], [num_range()], and [everything()]. We can also use
-#'   expressions to filter down to the rows we need (e.g.,
-#'   `[colname_1] > 100 & [colname_2] < 50`).
+#'   formatted. Alternatively, we can supply a vector of row IDs within `c()`,
+#'   a vector of row indices, or a select helper function (e.g. [starts_with()],
+#'   [ends_with()], [contains()], [matches()]) We can also us expressions to
+#'   filter down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @param plot_type *The type of nanoplot to display*
 #'
@@ -2271,11 +2265,10 @@ cols_add <- function(
 #'   We can optionally obtain data for the independent variable (i.e., the
 #'   *x*-axis data) if specifying columns in `columns_x_vals`. This is only for
 #'   the `"line"` type of plot (set via the `plot_type` argument). We can supply
-#'   either be a series of column names provided in [c()], a vector of column
-#'   indices, or a select helper function. Examples of select helper functions
-#'   include [starts_with()], [ends_with()], [contains()], [matches()],
-#'   [one_of()], [num_range()], and [everything()]. Data collected from the
-#'   columns will be concatenated together in the order of resolution.
+#'   either be a series of column names provided in `c()`, a vector of column
+#'   indices, or a select helper function (e.g. [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [num_range()], and [everything()]. Data collected
+#'   from the columns will be concatenated together in the order of resolution.
 #'
 #' @param reference_line *Add a reference line*
 #'
@@ -3103,10 +3096,9 @@ generate_data_vals_list <- function(
 #'   `<column-targeting expression>` // **required**
 #'
 #'   The columns for which the moving operations should be applied. Can either
-#'   be a series of column names provided in [c()], a vector of column indices,
-#'   or a select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()]. The columns move as a group to a
+#'   be a series of column names provided in `c()`, a vector of column indices,
+#'   or a select helper function (e.g. [starts_with()], [ends_with()], [contains()],
+#'   [matches()], [num_range()], and [everything()]). The columns move as a group to a
 #'   different position. The order of the remaining columns will be preserved.
 #'
 #' @param after *Column used as anchor*
@@ -3250,12 +3242,11 @@ cols_move <- function(
 #'   `<column-targeting expression>` // **required**
 #'
 #'   The columns for which the moving operations should be applied. Can either
-#'   be a series of column names provided in [c()], a vector of column indices,
-#'   or a select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()]. The columns move as a group to the
-#'   left-most side of the table. The order of the remaining columns will be
-#'   preserved.
+#'   be a series of column names provided in `c()`, a vector of column indices,
+#'   or a select helper function (e.g. [starts_with()], [ends_with()],
+#'   [contains()], [matches()], [num_range()], and [everything()]).
+#'   The columns move as a group to the left-most side of the table. The order
+#'   of the remaining columns will be preserved.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -3375,12 +3366,10 @@ cols_move_to_start <- function(
 #'   `<column-targeting expression>` // **required**
 #'
 #'   The columns for which the moving operations should be applied. Can either
-#'   be a series of column names provided in [c()], a vector of column indices,
-#'   or a select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()]. The columns move as a group to the
-#'   right-most side of the table. The order of the remaining columns will be
-#'   preserved.
+#'   be a series of column names provided in `c()`, a vector of column indices,
+#'   or a select helper function (e.g. [starts_with()], [ends_with()], [contains()],
+#'   [matches()], [num_range()]. The columns move as a group to the right-most
+#'   side of the table. The order of the remaining columns will be preserved.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -3616,7 +3605,8 @@ cols_hide <- function(
 #' @description
 #'
 #' The `cols_unhide()` function allows us to take one or more hidden columns
-#' (usually made so via the [cols_hide()] function) and make them visible
+# Q Are there other way to hide columns than with `cols_hide()`?
+#' (usually done with [cols_hide()]) and make them visible
 #' in the final output table. This may be important in cases where the user
 #' obtains a `gt_tbl` object with hidden columns and there is motivation to
 #' reveal one or more of those.
@@ -3628,21 +3618,19 @@ cols_hide <- function(
 #'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns to unhide in the output display table. Can either be a series
-#'   of column names provided in [c()], a vector of column indices, or a select
-#'   helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()].
+#'   of column names provided in `c()`, a vector of column indices, or a select
+#'   helper function (e.g [starts_with()], [ends_with()], [contains()],
+#'   [matches()], [num_range()]).
 #'
 #' @return An object of class `gt_tbl`.
 #'
 #' @details
 #'
 #' The hiding and unhiding of columns is internally a rendering directive, so,
-#' all columns that are 'hidden' are still accessible and useful in any
-#' expression provided to a `rows` argument. The `cols_unhide()` function
-#' quietly changes the visible state of a column (much like the [cols_hide()]
-#' function) and doesn't yield warnings or messages when changing the state of
-#' already-visible columns.
+#' all columns that are 'hidden' are still accessible and useful in any expression
+#' provided to a `rows` argument. The `cols_unhide()` function quietly changes the
+#' visible state of a column (much like the [cols_hide()] function) and doesn't
+#' warn or inform when changing the state of already-visible columns.
 #'
 #' @section Examples:
 #'
@@ -3739,17 +3727,16 @@ cols_unhide <- function(
 #' @inheritParams cols_align
 #'
 #' @param columns *Columns to target*
-#'
-#'   `<column-targeting expression>` // **required**
+# TODO when we want one- change column-targeting-expression to 1-column-targeting-expression.
+#'   `<1-column-targeting expression>` // **required**
 #'
 #'   The columns for which the merging operations should be applied. The first
 #'   column resolved will be the target column (i.e., undergo mutation) and the
 #'   other columns will serve to provide input. Can either be a series of column
-#'   names provided in [c()], a vector of column indices, or a select helper
-#'   function. Examples of select helper functions include [starts_with()],
-#'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
-#'   [everything()]. A vector is recommended because in that case we are
-#'   absolutely certain about the order of columns, and, that order information
+#'   names provided in `c()`, a vector of column indices, or a select helper
+#'   function (e.g. [starts_with()], [ends_with()], [contains()], [matches()],
+#'   [num_range()], and [everything()]). A vector is recommended because in that
+#'   case we are absolutely certain about the order of columns, and, that order information
 #'   is needed for this and other arguments.
 #'
 #' @param hide_columns *Subset of `columns` to hide*
@@ -3760,20 +3747,18 @@ cols_unhide <- function(
 #'   (via internal use of [cols_hide()]) if they aren't already hidden. This is
 #'   convenient if the shared purpose of these specified columns is only to
 #'   provide string input to the target column. To suppress any hiding of
-#'   columns, `FALSE` can be used here.
+#'   columns, `hide_columns = FALSE` can be used here.
 #'
 #' @param rows *Rows to target*
 #'
 #'   `<row-targeting expression>` // *default:* `everything()`
 #'
 #'   In conjunction with `columns`, we can specify which of their rows should
-#'   participate in the merging process. The default [everything()] results in
-#'   all rows in `columns` being formatted. Alternatively, we can supply a
-#'   vector of row IDs within [c()], a vector of row indices, or a select
-#'   helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()]. We can also use expressions to filter
-#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'   participate in the merging process ([All rows][everything()] of
+#'   `columns` are being formatted by default). Alternatively, we can supply a
+#'   vector of row IDs within `c()`, a vector of row indices, or a select
+#'   helper function (e.g.[starts_with()], [ends_with()], [contains()], [matches()]).
+#'   We can also use expressions to filter down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @param pattern *Formatting pattern*
 #'
@@ -3992,7 +3977,7 @@ cols_merge <- function(
 #' in a single column (that of `col_val`). What results is a column with values
 #' and associated uncertainties (e.g., `12.0 ± 0.1`), and any columns specified
 #' in `col_uncert` are hidden from appearing the output table.
-#'
+#' @inheritParams cols_merge
 #' @inheritParams cols_align
 #'
 #' @param col_val *Column to target for base values*
@@ -4016,19 +4001,6 @@ cols_merge <- function(
 #'   such as [starts_with()] and [ends_with()] can be used for column targeting,
 #'   it's recommended that one or two column names be explicitly provided in a
 #'   vector.
-#'
-#' @param rows *Rows to target*
-#'
-#'   `<row-targeting expression>` // *default:* `everything()`
-#'
-#'   In conjunction with `columns`, we can specify which of their rows should
-#'   participate in the merging process. The default [everything()] results in
-#'   all rows in `columns` being formatted. Alternatively, we can supply a
-#'   vector of row IDs within [c()], a vector of row indices, or a select
-#'   helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()]. We can also use expressions to filter
-#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @param sep *Separator text for uncertainties*
 #'
@@ -4077,7 +4049,7 @@ cols_merge <- function(
 #'
 #' Let's use the [`exibble`] dataset to create a simple, two-column **gt** table
 #' (keeping only the `num` and `currency` columns). We'll format the `num`
-#' column with the [fmt_number()] function. Next we merge the `currency` and
+#' column with [fmt_number()]. Next we merge the `currency` and
 #' `num` columns into the `currency` column; this will contain a base value and
 #' an uncertainty and it's all done using the `cols_merge_uncert()` function.
 #' After the merging process, the column label for the `currency` column is
@@ -4206,13 +4178,11 @@ cols_merge_uncert <- function(
 #'   `<row-targeting expression>` // *default:* `everything()`
 #'
 #'   In conjunction with `columns`, we can specify which of their rows should
-#'   participate in the merging process. The default [everything()] results in
-#'   all rows in `columns` being formatted. Alternatively, we can supply a
-#'   vector of row IDs within [c()], a vector of row indices, or a select
-#'   helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()]. We can also use expressions to filter
-#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'   participate in the merging process. [All rows][everything()] in `columns`
+#'   are being formatted by default. Alternatively, we can supply a vector of row
+#'   IDs within `c()`, a vector of row indices, or a select helper function
+#'   (e.g. [starts_with()], [ends_with()], [contains()], [matches()], [num_range()]).
+#'   We can also use expressions to filter down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @param autohide *Automatic hiding of the `col_end` column*
 #'
@@ -4451,13 +4421,12 @@ cols_merge_resolver <- function(
 #'   `<row-targeting expression>` // *default:* `everything()`
 #'
 #'   In conjunction with `columns`, we can specify which of their rows should
-#'   participate in the merging process. The default [everything()] results in
-#'   all rows in `columns` being formatted. Alternatively, we can supply a
-#'   vector of row IDs within [c()], a vector of row indices, or a select
-#'   helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()]. We can also use expressions to filter
-#'   down to the rows we need (e.g., `[colname_1] > 100 & [colname_2] < 50`).
+#'   participate in the merging process. [All rows][everything()] in `columns`
+#'   are being formatted by default. Alternatively, we can supply a vector of
+#'   row IDs within `c()`, a vector of row indices, or a select helper function
+#'   (e.g. [starts_with()], [ends_with()], [contains()], [matches()], [num_range()]).
+#'   We can also use expressions to filter down to the rows we need
+#'   (e.g., `[colname_1] > 100 & [colname_2] < 50`).
 #'
 #' @param autohide *Automatic hiding of the `col_pct` column*
 #'

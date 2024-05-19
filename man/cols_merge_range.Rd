@@ -45,13 +45,11 @@ is to ensure that exactly one column is provided here.}
 \verb{<row-targeting expression>} // \emph{default:} \code{everything()}
 
 In conjunction with \code{columns}, we can specify which of their rows should
-participate in the merging process. The default \code{\link[=everything]{everything()}} results in
-all rows in \code{columns} being formatted. Alternatively, we can supply a
-vector of row IDs within \code{\link[=c]{c()}}, a vector of row indices, or a select
-helper function. Examples of select helper functions include
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
-\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions to filter
-down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+participate in the merging process. \link[=everything]{All rows} in \code{columns}
+are being formatted by default. Alternatively, we can supply a vector of row
+IDs within \code{c()}, a vector of row indices, or a select helper function
+(e.g. \code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=num_range]{num_range()}}).
+We can also use expressions to filter down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{autohide}{\emph{Automatic hiding of the \code{col_end} column}
 

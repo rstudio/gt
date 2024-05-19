@@ -39,9 +39,9 @@
 #'   `<row-group-targeting expression>` // *default:* `everything()`
 #'
 #'   The row groups to which targeting operations are constrained. Can either be
-#'   a series of row group ID values provided in [c()] or a select helper
+#'   a series of row group ID values provided in `c()` or a select helper
 #'   function. Examples of select helper functions include [starts_with()],
-#'   [ends_with()], [contains()], [matches()], [one_of()], [num_range()], and
+#'   [ends_with()], [contains()], [matches()], [num_range()], and
 #'   [everything()]. By default this is set to [everything()], which means that
 #'   all available groups will obtain summary rows.
 #'
@@ -50,10 +50,9 @@
 #'   `<column-targeting expression>` // *default:* `everything()`
 #'
 #'   The columns for which the summaries should be calculated. Can either
-#'   be a series of column names provided in [c()], a vector of column indices,
+#'   be a series of column names provided in `c()`, a vector of column indices,
 #'   or a select helper function. Examples of select helper functions include
-#'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
-#'   [num_range()], and [everything()].
+#'   [starts_with()], [ends_with()], [contains()], [matches()], and [num_range()].
 #'
 #' @param fns *Aggregation Expressions*
 #'

@@ -48,13 +48,11 @@ vector.}
 \verb{<row-targeting expression>} // \emph{default:} \code{everything()}
 
 In conjunction with \code{columns}, we can specify which of their rows should
-participate in the merging process. The default \code{\link[=everything]{everything()}} results in
-all rows in \code{columns} being formatted. Alternatively, we can supply a
-vector of row IDs within \code{\link[=c]{c()}}, a vector of row indices, or a select
-helper function. Examples of select helper functions include
-\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}, \code{\link[=one_of]{one_of()}},
-\code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}. We can also use expressions to filter
-down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
+participate in the merging process (\link[=everything]{All rows} of
+\code{columns} are being formatted by default). Alternatively, we can supply a
+vector of row IDs within \code{c()}, a vector of row indices, or a select
+helper function (e.g.\code{\link[=starts_with]{starts_with()}}, \code{\link[=ends_with]{ends_with()}}, \code{\link[=contains]{contains()}}, \code{\link[=matches]{matches()}}).
+We can also use expressions to filter down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 
 \item{sep}{\emph{Separator text for uncertainties}
 
@@ -117,7 +115,7 @@ the output table through the \code{hide_columns} or \code{autohide} options.
 
 Let's use the \code{\link{exibble}} dataset to create a simple, two-column \strong{gt} table
 (keeping only the \code{num} and \code{currency} columns). We'll format the \code{num}
-column with the \code{\link[=fmt_number]{fmt_number()}} function. Next we merge the \code{currency} and
+column with \code{\link[=fmt_number]{fmt_number()}}. Next we merge the \code{currency} and
 \code{num} columns into the \code{currency} column; this will contain a base value and
 an uncertainty and it's all done using the \code{cols_merge_uncert()} function.
 After the merging process, the column label for the \code{currency} column is
