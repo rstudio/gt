@@ -117,7 +117,12 @@ or the range will inherit a previous suffix (e.g., with
 will be in terms of millions).
 
 Any use of \code{suffixing} (where it is not set expressly as \code{FALSE}) means
-that any value provided to \code{scale_by} will be ignored.}
+that any value provided to \code{scale_by} will be ignored.
+
+If using \code{system = "ind"} then the default suffix set provided by
+\code{suffixing = TRUE} will be the equivalent of \code{c(NA, "L", "Cr")}. This
+doesn't apply suffixes to the thousands range, but does express values in
+\emph{lakhs} and \emph{crores}.}
 
 \item{pattern}{\emph{Specification of the formatting pattern}
 

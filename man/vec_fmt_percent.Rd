@@ -127,10 +127,10 @@ sign. The default is to not introduce a space character.}
 
 \item{placement}{\emph{Percent sign placement}
 
-\verb{scalar<character>} // \emph{default:} \code{"right"}
+\verb{singl-kw:[right|left]} // \emph{default:} \code{"right"}
 
 This option governs the placement of the percent sign. This can be either
-be \code{right} (the default) or \code{left}.}
+be \code{"right"} (the default) or \code{"left"}.}
 
 \item{locale}{\emph{Locale identifier}
 

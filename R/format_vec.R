@@ -49,143 +49,7 @@
 #'   This is the input vector that will undergo transformation to a character
 #'   vector of the same length. Values within the vector will be formatted.
 #'
-#' @param decimals *Number of decimal places*
-#'
-#'   `scalar<numeric|integer>(val>=0)` // *default:* `2`
-#'
-#'   This corresponds to the exact number of decimal places to use. A value
-#'   such as `2.34` can, for example, be formatted with `0` decimal places and
-#'   it would result in `"2"`. With `4` decimal places, the formatted value
-#'   becomes `"2.3400"`. The trailing zeros can be removed with
-#'   `drop_trailing_zeros = TRUE`. If you always need `decimals = 0`, the
-#'   [fmt_integer()] function should be considered.
-#'
-#' @param n_sigfig *Number of significant figures*
-#'
-#'   `scalar<numeric|integer>(val>=1)` // *default:* `NULL` (`optional`)
-#'
-#'   A option to format numbers to *n* significant figures. By default, this is
-#'   `NULL` and thus number values will be formatted according to the number of
-#'   decimal places set via `decimals`. If opting to format according to the
-#'   rules of significant figures, `n_sigfig` must be a number greater than or
-#'   equal to `1`. Any values passed to the `decimals` and `drop_trailing_zeros`
-#'   arguments will be ignored.
-#'
-#' @param drop_trailing_zeros *Drop any trailing zeros*
-#'
-#'   `scalar<logical>` // *default:* `FALSE`
-#'
-#'   A logical value that allows for removal of trailing zeros (those redundant
-#'   zeros after the decimal mark).
-#'
-#' @param drop_trailing_dec_mark *Drop the trailing decimal mark*
-#'
-#'   `scalar<logical>` // *default:* `TRUE`
-#'
-#'   A logical value that determines whether decimal marks should always appear
-#'   even if there are no decimal digits to display after formatting (e.g., `23`
-#'   becomes `23.` if `FALSE`). By default trailing decimal marks are not shown.
-#'
-#' @param use_seps *Use digit group separators*
-#'
-#'   `scalar<logical>` // *default:* `TRUE`
-#'
-#'   An option to use digit group separators. The type of digit group separator
-#'   is set by `sep_mark` and overridden if a locale ID is provided to `locale`.
-#'   This setting is `TRUE` by default.
-#'
-#' @param accounting *Use accounting style*
-#'
-#'   `scalar<logical>` // *default:* `FALSE`
-#'
-#'   An option to use accounting style for values. Normally, negative values
-#'   will be shown with a minus sign but using accounting style will instead put
-#'   any negative values in parentheses.
-#'
-#' @param scale_by *Scale values by a fixed multiplier*
-#'
-#'   `scalar<numeric|integer>` // *default:* `1`
-#'
-#'   All numeric values will be multiplied by the `scale_by` value before
-#'   undergoing formatting. Since the `default` value is `1`, no values will be
-#'   changed unless a different multiplier value is supplied. This value will be
-#'   ignored if using any of the `suffixing` options (i.e., where `suffixing` is
-#'   not set to `FALSE`).
-#'
-#' @param suffixing *Specification for large-number suffixing*
-#'
-#'   `scalar<logical>|vector<character>` // *default:* `FALSE`
-#'
-#'   The `suffixing` option allows us to scale and apply suffixes to larger
-#'   numbers (e.g., `1924000` can be transformed to `1.92M`). This option can
-#'   accept a logical value, where `FALSE` (the default) will not perform this
-#'   transformation and `TRUE` will apply thousands (`"K"`), millions (`"M"`),
-#'   billions (`"B"`), and trillions (`"T"`) suffixes after automatic value
-#'   scaling.
-#'
-#'   We can alternatively provide a character vector that serves as a
-#'   specification for which symbols are to used for each of the value ranges.
-#'   These preferred symbols will replace the defaults (e.g.,
-#'   `c("k", "Ml", "Bn", "Tr")` replaces `"K"`, `"M"`, `"B"`, and `"T"`).
-#'
-#'   Including `NA` values in the vector will ensure that the particular range
-#'   will either not be included in the transformation (e.g.,
-#'   `c(NA, "M", "B", "T")` won't modify numbers at all in the thousands range)
-#'   or the range will inherit a previous suffix (e.g., with
-#'   `c("K", "M", NA, "T")`, all numbers in the range of millions and billions
-#'   will be in terms of millions).
-#'
-#'   Any use of `suffixing` (where it is not set expressly as `FALSE`) means
-#'   that any value provided to `scale_by` will be ignored.
-#'
-#' @param pattern *Specification of the formatting pattern*
-#'
-#'   `scalar<character>` // *default:* `"{x}"`
-#'
-#'   A formatting pattern that allows for decoration of the formatted value. The
-#'   formatted value is represented by the `{x}` (which can be used multiple
-#'   times, if needed) and all other characters will be interpreted as string
-#'   literals.
-#'
-#' @param sep_mark *Separator mark for digit grouping*
-#'
-#'   `scalar<character>` // *default:* `","`
-#'
-#'   The string to use as a separator between groups of digits. For example,
-#'   using `sep_mark = ","` with a value of `1000` would result in a formatted
-#'   value of `"1,000"`. This argument is ignored if a `locale` is supplied
-#'   (i.e., is not `NULL`).
-#'
-#' @param dec_mark *Decimal mark*
-#'
-#'   `scalar<character>` // *default:* `"."`
-#'
-#'   The string to be used as the decimal mark. For example, using
-#'   `dec_mark = ","` with the value `0.152` would result in a formatted value
-#'   of `"0,152"`). This argument is ignored if a `locale` is supplied (i.e., is
-#'   not `NULL`).
-#'
-#' @param force_sign *Forcing the display of a positive sign*
-#'
-#'   `scalar<logical>` // *default:* `FALSE`
-#'
-#'   Should the positive sign be shown for positive values (effectively showing
-#'   a sign for all values except zero)? If so, use `TRUE` for this option. The
-#'   default is `FALSE`, where only negative numbers will display a minus sign.
-#'   This option is disregarded when using accounting notation with
-#'   `accounting = TRUE`.
-#'
-#' @param locale *Locale identifier*
-#'
-#'   `scalar<character>` // *default:* `NULL` (`optional`)
-#'
-#'   An optional locale identifier that can be used for formatting values
-#'   according the locale's rules. Examples include `"en"` for English (United
-#'   States) and `"fr"` for French (France). We can use the [info_locales()]
-#'   function as a useful reference for all of the locales that are supported. A
-#'   locale ID can be also set in the initial [gt()] function call (where it
-#'   would be used automatically by any function with a `locale` argument) but a
-#'   `locale` value provided here will override that global locale.
+#' @inheritParams fmt_number
 #'
 #' @param output *Output format*
 #'
@@ -195,6 +59,7 @@
 #'   `"auto"` (the default), `"plain"`, `"html"`, `"latex"`, `"rtf"`, or
 #'   `"word"`. In **knitr** rendering (i.e., Quarto or R Markdown), the `"auto"`
 #'   option will choose the correct `output` value
+#'
 #'
 #' @return A character vector.
 #'
@@ -851,28 +716,7 @@ vec_fmt_engineering <- function(
 #'
 #' @inheritParams vec_fmt_number
 #'
-#' @param scale_values *Multiply input values by 100*
-#'
-#'   `scalar<logical>` // *default:* `TRUE`
-#'
-#'   Should the values be scaled through multiplication by 100? By default this
-#'   scaling is performed since the expectation is that incoming values are
-#'   usually proportional. Setting to `FALSE` signifies that the values are
-#'   already scaled and require only the percent sign when formatted.
-#'
-#' @param incl_space *Include a space between the value and the % sign*
-#'
-#'   `scalar<logical>` // *default:* `FALSE`
-#'
-#'   An option for whether to include a space between the value and the percent
-#'   sign. The default is to not introduce a space character.
-#'
-#' @param placement *Percent sign placement*
-#'
-#'   `scalar<character>` // *default:* `"right"`
-#'
-#'   This option governs the placement of the percent sign. This can be either
-#'   be `right` (the default) or `left`.
+#' @inheritParams fmt_percent
 #'
 #' @return A character vector.
 #'
@@ -1046,41 +890,7 @@ vec_fmt_percent <- function(
 #'
 #' @inheritParams vec_fmt_number
 #'
-#' @param to_units *Output Quantity*
-#'
-#'   `singl-kw:[per-mille|per-myriad|pcm|ppm|ppb|ppt|ppq]` // *default:* `"per-mille"`
-#'
-#'   A keyword that signifies the desired output quantity. This can be any from
-#'   the following set: `"per-mille"`, `"per-myriad"`, `"pcm"`, `"ppm"`,
-#'   `"ppb"`, `"ppt"`, or `"ppq"`.
-#'
-#' @param symbol *Symbol or units to use in output display*
-#'
-#'   `scalar<character>` // *default:* `"auto"`
-#'
-#'   The symbol/units to use for the quantity. By default, this is set to
-#'   `"auto"` and **gt** will choose the appropriate symbol based on the
-#'   `to_units` keyword and the output context. However, this can be changed by
-#'   supplying a string (e.g, using `symbol = "ppbV"` when `to_units = "ppb"`).
-#'
-#' @param scale_values *Scale input values accordingly*
-#'
-#'   `scalar<logical>` // *default:* `TRUE`
-#'
-#'   Should the values be scaled through multiplication according to the keyword
-#'   set in `to_units`? By default this is `TRUE` since the expectation is that
-#'   normally values are proportions. Setting to `FALSE` signifies that the
-#'   values are already scaled and require only the appropriate symbol/units
-#'   when formatted.
-#'
-#' @param incl_space *Include a space between the value and the symbol/units*
-#'
-#'   `scalar<character>|scalar<logical>` // *default:* `"auto"`
-#'
-#'   An option for whether to include a space between the value and the
-#'   symbol/units. The default is `"auto"` which provides spacing dependent on
-#'   the mark itself. This can be directly controlled by using either `TRUE` or
-#'   `FALSE`.
+#' @inheritParams fmt_partsper
 #'
 #' @return A character vector.
 #'
@@ -1241,35 +1051,8 @@ vec_fmt_partsper <- function(
 #'
 #' @inheritParams vec_fmt_number
 #'
-#' @param accuracy *Accuracy of fractions*
+#' @inheritParams fmt_fraction
 #'
-#'   `singl-kw:[low|med|high]|scalar<numeric|integer>(val>=1)` // *default:* `"low"`
-#'
-#'   The type of fractions to generate. This can either be one of the keywords
-#'   `"low"`, `"med"`, or `"high"` (to generate fractions with denominators of
-#'   up to 1, 2, or 3 digits, respectively) or an integer value greater than
-#'   zero to obtain fractions with a fixed denominator (`2` yields halves, `3`
-#'   is for thirds, `4` is quarters, etc.). For the latter option, using
-#'   `simplify = TRUE` will simplify fractions where possible (e.g., `2/4` will
-#'   be simplified as `1/2`). By default, the `"low"` option is used.
-#'
-#' @param simplify *Simplify the fraction*
-#'
-#'   `scalar<logical>` // *default:* `TRUE`
-#'
-#'   If choosing to provide a numeric value for `accuracy`, the option to
-#'   simplify the fraction (where possible) can be taken with `TRUE` (the
-#'   default). With `FALSE`, denominators in fractions will be fixed to the
-#'   value provided in `accuracy`.
-#'
-#' @param layout *Layout of fractions in HTML output*
-#'
-#'   `singl-kw:[inline|diagonal]` // *default:* `"inline"`
-#'
-#'   For HTML output, the `"inline"` layout is the default. This layout places
-#'   the numerals of the fraction on the baseline and uses a standard slash
-#'   character. The `"diagonal"` layout will generate fractions that are typeset
-#'   with raised/lowered numerals and a virgule.
 #'
 #' @return A character vector.
 #'
