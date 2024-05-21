@@ -272,12 +272,7 @@ text_case_when <- function(
 #' those strings. This can be changed to a partial matching and replacement
 #' strategy with the alternate option.
 #'
-#' @param .data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
+#' @inheritParams text_transform
 #'
 #' @param ... *Matching expressions*
 #'
@@ -308,7 +303,6 @@ text_case_when <- function(
 #'   substrings of `old_text`. In this way, the replacements will act on those
 #'   matched substrings.
 #'
-#' @inheritParams text_transform
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -478,12 +472,7 @@ text_case_match <- function(
 #' character vector of the same length as the input. Using the construction
 #' `function(x) { .. }` for the function is recommended.
 #'
-#' @param data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
+#' @inheritParams fmt_number
 #'
 #' @param fn *Function for text transformation*
 #'

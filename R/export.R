@@ -533,12 +533,7 @@ gtsave_filename <- function(path, filename) {
 #' tags. This option is preferable when using the output HTML table in an
 #' emailing context.
 #'
-#' @param data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
+#' @inheritParams gtsave
 #'
 #' @param inline_css *Use inline CSS*
 #'
@@ -627,13 +622,7 @@ as_raw_html <- function(
 #' `as.character()` on the created object will result in a single-element vector
 #' containing the LaTeX code.
 #'
-#' @param data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
-#'
+#' @inheritParams gtsave
 #' @details
 #'
 #' LaTeX packages required to generate tables are:
@@ -758,12 +747,7 @@ as_latex <- function(data) {
 #' vector. This object can be used with `writeLines()` to generate a valid .rtf
 #' file that can be opened by RTF readers.
 #'
-#' @param data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
+#' @inheritParams gtsave
 #'
 #' @param incl_open,incl_close *Include opening/closing braces*
 #'
@@ -904,12 +888,7 @@ as_rtf <- function(
 #' Get the Open Office XML table tag content from a `gt_tbl` object as a
 #' single-element character vector.
 #'
-#' @param data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
+#' @inheritParams gtsave
 #'
 #' @param align *Table alignment*
 #'
@@ -1174,12 +1153,7 @@ as_word_tbl_body <- function(
 #' The `as_gtable()` function performs the transformation of a `gt_tbl` object
 #' to a `gtable` object.
 #'
-#' @param data *The gt table data object*
-#'
-#'    `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
+#' @inheritParams gtsave
 #'
 #' @param plot *Render through the graphics device?*
 #'
@@ -1574,12 +1548,7 @@ grid_layout_widths <- function(layout, data) {
 #' (either on the left or right of the content). This stage performs said
 #' attachment.
 #'
-#' @param data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
+#' @inheritParams extract_cells
 #'
 #' @param build_stage *The build stage of the formatted R data frame*
 #'
@@ -1697,12 +1666,7 @@ extract_body <- function(
 #' contain the `group_id` and `rowname` columns, whereby `rowname` contains
 #' descriptive stub labels for the summary rows.
 #'
-#' @param data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
+#' @inheritParams extract_cells
 #'
 #' @return A list of data frames containing summary data.
 #'
@@ -1819,21 +1783,7 @@ extract_summary <- function(data) {
 #' Get a vector of cell data from a `gt_tbl` object. The output vector will have
 #' cell data formatted in the same way as the table.
 #'
-#' @param data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
-#'
-#' @param columns *Columns to target*
-#'
-#'   `<column-targeting expression>` // *default:* `everything()`
-#'
-#'   Can either be a series of column names provided in [c()], a vector of
-#'   column indices, or a select helper function. Examples of select helper
-#'   functions include [starts_with()], [ends_with()], [contains()],
-#'   [matches()], [one_of()], [num_range()], and [everything()].
+#' @inheritParams fmt_number
 #'
 #' @param rows *Rows to target*
 #'
