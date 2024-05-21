@@ -17,7 +17,7 @@ or, made by splitting a \strong{gt} table with \code{\link[=gt_split]{gt_split()
 
 \item{...}{\emph{One or more gt table objects}
 
-\verb{obj:<gt_tbl>} // \strong{required} (or, use \code{...})
+\verb{obj:<gt_tbl>} // \strong{required} (or, use \code{.list})
 
 One or more \strong{gt} table (\code{gt_tbl}) objects, typically generated via the
 \code{\link[=gt]{gt()}} function.}

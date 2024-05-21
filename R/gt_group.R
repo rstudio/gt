@@ -172,9 +172,8 @@ grp_pull <- function(
 #' @inheritParams gt_group
 #'
 #' @param ... *One or more gt table objects*
-# FIXME mention `.list` instead.
 #'
-#'   `obj:<gt_tbl>` // **required** (or, use `...`)
+#'   `obj:<gt_tbl>` // **required** (or, use `.list`)
 #'
 #'   One or more **gt** table (`gt_tbl`) objects, typically generated via the
 #'   [gt()] function.
