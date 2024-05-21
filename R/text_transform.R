@@ -285,12 +285,7 @@ text_case_when <- function(
 #'   replacement text (it must resolve to a single value of the `character`
 #'   class).
 #'
-#' @param .default *Default replacement text*
-#'
-#'   `scalar<character>` // *default:* `NULL` (`optional`)
-#'
-#'   The replacement text to use when cell values aren't matched by any of the
-#'   LHS inputs. If `NULL`, the default, no replacement text will be used.
+#' @inheritParams text_case_when
 #'
 #' @param .replace *Method for text replacement*
 #'
