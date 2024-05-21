@@ -215,32 +215,9 @@ vec_fmt_number <- function(
 #' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
 #'
+#' @inheritParams fmt_integer
+#'
 #' @inheritParams vec_fmt_number
-#'
-#' @param suffixing *Specification for large-number suffixing*
-#'
-#'   `scalar<logical>|vector<character>` // *default:* `FALSE`
-#'
-#'   The `suffixing` option allows us to scale and apply suffixes to larger
-#'   numbers (e.g., `1924000` can be transformed to `2M`). This option can
-#'   accept a logical value, where `FALSE` (the default) will not perform this
-#'   transformation and `TRUE` will apply thousands (`K`), millions (`M`),
-#'   billions (`B`), and trillions (`T`) suffixes after automatic value scaling.
-#'
-#'   We can alternatively provide a character vector that serves as a
-#'   specification for which symbols are to used for each of the value ranges.
-#'   These preferred symbols will replace the defaults (e.g.,
-#'   `c("k", "Ml", "Bn", "Tr")` replaces `"K"`, `"M"`, `"B"`, and `"T"`).
-#'
-#'   Including `NA` values in the vector will ensure that the particular range
-#'   will either not be included in the transformation (e.g.,
-#'   `c(NA, "M", "B", "T")` won't modify numbers at all in the thousands range)
-#'   or the range will inherit a previous suffix (e.g., with
-#'   `c("K", "M", NA, "T")`, all numbers in the range of millions and billions
-#'   will be in terms of millions).
-#'
-#'   Any use of `suffixing` (where it is not set expressly as `FALSE`) means
-#'   that any value provided to `scale_by` will be ignored.
 #'
 #' @return A character vector.
 #'
@@ -368,34 +345,7 @@ vec_fmt_integer <- function(
 #'
 #' @inheritParams vec_fmt_number
 #'
-#' @param scale_by *Scale values by a fixed multiplier*
-#'
-#'   `scalar<numeric|integer>` // *default:* `1`
-#'
-#'   All numeric values will be multiplied by the `scale_by` value before
-#'   undergoing formatting. Since the `default` value is `1`, no values will be
-#'   changed unless a different multiplier value is supplied.
-#'
-#' @param exp_style *Style declaration for exponent formatting*
-#'
-#'   `scalar<character>` // *default:* `"x10n"`
-#'
-#'   Style of formatting to use for the scientific notation formatting. By
-#'   default this is `"x10n"` but other options include using a single letter
-#'   (e.g., `"e"`, `"E"`, etc.), a letter followed by a `"1"` to signal a
-#'   minimum digit width of one, or `"low-ten"` for using a stylized `"10"`
-#'   marker.
-#'
-#' @param force_sign_m,force_sign_n *Forcing the display of a positive sign*
-#'
-#'   `scalar<logical>` // *default:* `FALSE`
-#'
-#'   Should the plus sign be shown for positive values of the mantissa (first
-#'   component, `force_sign_m`) or the exponent (`force_sign_n`)? This would
-#'   effectively show a sign for all values except zero on either of those
-#'   numeric components of the notation. If so, use `TRUE` for either one of
-#'   these options. The default for both is `FALSE`, where only negative numbers
-#'   will display a sign.
+#' @inheritParams fmt_scientific
 #'
 #' @return A character vector.
 #'
@@ -543,34 +493,7 @@ vec_fmt_scientific <- function(
 #'
 #' @inheritParams vec_fmt_number
 #'
-#' @param scale_by *Scale values by a fixed multiplier*
-#'
-#'   `scalar<numeric|integer>` // *default:* `1`
-#'
-#'   All numeric values will be multiplied by the `scale_by` value before
-#'   undergoing formatting. Since the `default` value is `1`, no values will be
-#'   changed unless a different multiplier value is supplied.
-#'
-#' @param exp_style *Style declaration for exponent formatting*
-#'
-#'   `scalar<character>` // *default:* `"x10n"`
-#'
-#'   Style of formatting to use for the scientific notation formatting. By
-#'   default this is `"x10n"` but other options include using a single letter
-#'   (e.g., `"e"`, `"E"`, etc.), a letter followed by a `"1"` to signal a
-#'   minimum digit width of one, or `"low-ten"` for using a stylized `"10"`
-#'   marker.
-#'
-#' @param force_sign_m,force_sign_n *Forcing the display of a positive sign*
-#'
-#'   `scalar<logical>` // *default:* `FALSE`
-#'
-#'   Should the plus sign be shown for positive values of the mantissa (first
-#'   component, `force_sign_m`) or the exponent (`force_sign_n`)? This would
-#'   effectively show a sign for all values except zero on either of those
-#'   numeric components of the notation. If so, use `TRUE` for either one of
-#'   these options. The default for both is `FALSE`, where only negative numbers
-#'   will display a sign.
+#' @inheritParams fmt_engineering
 #'
 #' @return A character vector.
 #'
@@ -1049,9 +972,10 @@ vec_fmt_partsper <- function(
 #' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
 #'
-#' @inheritParams vec_fmt_number
 #'
 #' @inheritParams fmt_fraction
+#'
+#' @inheritParams vec_fmt_number
 #'
 #'
 #' @return A character vector.
@@ -1185,59 +1109,9 @@ vec_fmt_fraction <- function(
 #' We can use the [info_currencies()] function for a useful reference on all of
 #' the possible inputs to the `currency` argument.
 #'
+#' @inheritParams fmt_currency
+#'
 #' @inheritParams vec_fmt_number
-#'
-#' @param currency *Currency to use*
-#'
-#'   `scalar<character>|obj:<gt_currency>` // *default:* `NULL` (`optional`)
-#'
-#'   The currency to use for the numeric value. This input can be
-#'   supplied as a 3-letter currency code (e.g., `"USD"` for U.S. Dollars,
-#'   `"EUR"` for the Euro currency). Use [info_currencies()] to get an
-#'   information table with all of the valid currency codes and examples of
-#'   each. Alternatively, we can provide a common currency name (e.g.,
-#'   `"dollar"`, `"pound"`, `"yen"`, etc.) to simplify the process. Use
-#'   [info_currencies()] with the `type == "symbol"` option to view an
-#'   information table with all of the supported currency symbol names along
-#'   with examples.
-#'
-#'   We can also use the [currency()] helper function to specify a custom
-#'   currency, where the string could vary across output contexts. For example,
-#'   using `currency(html = "&fnof;", default = "f")` would give us a suitable
-#'   glyph for the Dutch guilder in an HTML output table, and it would simply be
-#'   the letter "f" in all other output contexts). Please note that `decimals`
-#'   will default to `2` when using the [currency()] helper function.
-#'
-#'   If nothing is provided here but a `locale` value has been set (either in
-#'   this function call or as part of the initial [gt()] call), the currency
-#'   will be obtained from that locale. Virtually all locales are linked to a
-#'   territory that is a country (use [info_locales()] for details on all
-#'   locales used in this package), so, the in-use (or *de facto*) currency will
-#'   be obtained. As the default locale is `"en"`, the `"USD"` currency will be
-#'   used if neither a `locale` nor a `currency` value is given.
-#'
-#' @param use_subunits *Show or hide currency subunits*
-#'
-#'   `scalar<logical>` // *default:* `TRUE`
-#'
-#'   An option for whether the subunits portion of a currency value should be
-#'   displayed. For example, with an input value of `273.81`, the default
-#'   formatting will produce `"$273.81"`. Removing the subunits (with
-#'   `use_subunits = FALSE`) will give us `"$273"`.
-#'
-#' @param placement *Currency symbol placement*
-#'
-#'   `scalar<character>` // *default:* `"left"`
-#'
-#'   The placement of the currency symbol. This can be either be `left` (as
-#'   in `"$450"`) or `right` (which yields `"450$"`).
-#'
-#' @param incl_space *Include a space between the value and the currency symbol*
-#'
-#'   `scalar<logical>` // *default:* `FALSE`
-#'
-#'   An option for whether to include a space between the value and the currency
-#'   symbol. The default is to not introduce a space character.
 #'
 #' @return A character vector.
 #'
@@ -1375,14 +1249,10 @@ vec_fmt_currency <- function(
 #' With numeric values in a vector, we can transform those to Roman numerals,
 #' rounding values as necessary.
 #'
+#' @inheritParams fmt_roman
+#'
 #' @inheritParams vec_fmt_number
 #'
-#' @param case *Use uppercase or lowercase letters*
-#'
-#'   `singl-kw:[upper|lower]` // *default:* `"upper"`
-#'
-#'   Should Roman numerals should be rendered as uppercase (`"upper"`) or
-#'   lowercase (`"lower"`) letters? By default, this is set to `"upper"`.
 #'
 #' @return A character vector.
 #'
@@ -1482,24 +1352,10 @@ vec_fmt_roman <- function(
 #' locale and they are intended for ordering (often leaving out characters with
 #' diacritical marks).
 #'
+#' @inheritParams fmt_index
+#'
 #' @inheritParams vec_fmt_number
 #'
-#' @param case *Use uppercase or lowercase letters*
-#'
-#'   `singl-kw:[upper|lower]` // *default:* `"upper"`
-#'
-#'   Should the resulting index characters be rendered as uppercase (`"upper"`)
-#'   or lowercase (`"lower"`) letters? By default, this is set to `"upper"`.
-#'
-#' @param index_algo *Indexing algorithm*
-#'
-#'   `singl-kw:[repeat|excel]` // *default:* `"repeat"`
-#'
-#'   The indexing algorithm handles the recycling of the index character set. By
-#'   default, the `"repeat"` option is used where characters are doubled,
-#'   tripled, and so on, when moving past the character set limit. The
-#'   alternative is the `"excel"` option, where Excel-based column naming is
-#'   adapted and used here (e.g., `[..., Y, Z, AA, AB, ...]`).
 #'
 #' @return A character vector.
 #'
@@ -1615,6 +1471,10 @@ vec_fmt_index <- function(
 #' at all); should a Swedish locale be provided (e.g., `"sv"`), the output will
 #' instead be `"tjugotre"`.
 #'
+#'
+#' @inheritParams vec_fmt_number
+#'
+#' @return A character vector.
 #' @section Supported locales:
 #'
 #' The following 80 locales are supported in the `locale` argument of
@@ -1640,10 +1500,6 @@ vec_fmt_index <- function(
 #' (Swedish), `"sw"` (Swahili), `"ta"` (Tamil), `"th"` (Thai), `"tr"` (Turkish),
 #' `"uk"` (Ukrainian), `"vi"` (Vietnamese), `"yue"` (Cantonese), and `"zh"`
 #' (Chinese).
-#'
-#' @inheritParams vec_fmt_number
-#'
-#' @return A character vector.
 #'
 #' @section Examples:
 #'
@@ -1755,40 +1611,10 @@ vec_fmt_spelled_num <- function(
 #' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
 #'
+#'
+#' @inheritParams fmt_bytes
+#'
 #' @inheritParams vec_fmt_number
-#'
-#' @param standard *Standard used to express byte sizes*
-#'
-#'   `singl-kw:[decimal|binary]` // *default:* `"decimal"`
-#'
-#'   The form of expressing large byte sizes is divided between: (1) decimal
-#'   units (powers of 1000; e.g., `"kB"` and `"MB"`), and (2) binary units
-#'   (powers of 1024; e.g., `"KiB"` and `"MiB"`).
-#'
-#' @param decimals *Number of decimal places*
-#'
-#'   `scalar<numeric|integer>(val>=0)` // *default:* `1`
-#'
-#'   This corresponds to the exact number of decimal places to use. A value
-#'   such as `2.34` can, for example, be formatted with `0` decimal places and
-#'   it would result in `"2"`. With `4` decimal places, the formatted value
-#'   becomes `"2.3400"`. The trailing zeros can be removed with
-#'   `drop_trailing_zeros = TRUE`.
-#'
-#' @param force_sign *Forcing the display of a positive sign*
-#'
-#'   `scalar<logical>` // *default:* `FALSE`
-#'
-#'   Should the positive sign be shown for positive numbers (effectively showing
-#'   a sign for all numbers except zero)? If so, use `TRUE` for this option. The
-#'   default is `FALSE`, where only negative numbers will display a minus sign.
-#'
-#' @param incl_space *Include a space between the value and the units*
-#'
-#'   `scalar<logical>` // *default:* `TRUE`
-#'
-#'   An option for whether to include a space between the value and the units.
-#'   The default is to use a space character for separation.
 #'
 #' @return A character vector.
 #'
@@ -1921,15 +1747,9 @@ vec_fmt_bytes <- function(
 #' `character` (must be in the ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or
 #' `YYYY-MM-DD`).
 #'
+#' @inheritParams fmt_date
+#'
 #' @inheritParams vec_fmt_number
-#'
-#' @param date_style *Predefined style for dates*
-#'
-#'   `scalar<character>|scalar<numeric|integer>(1<=val<=41)` // *default:* `"iso"`
-#'
-#'   The date style to use. By default this is the short name `"iso"` which
-#'   corresponds to ISO 8601 date formatting. There are 41 date styles in total
-#'   and their short names can be viewed using [info_date_style()].
 #'
 #' @return A character vector.
 #'
@@ -2100,16 +1920,9 @@ vec_fmt_date <- function(
 #' ISO 8601 forms of `HH:MM:SS` or `YYYY-MM-DD HH:MM:SS`), or `Date` (which
 #' always results in the formatting of `00:00:00`).
 #'
+#' @inheritParams fmt_time
+#'
 #' @inheritParams vec_fmt_number
-#'
-#' @param time_style *Predefined style for times*
-#'
-#'   `scalar<character>|scalar<numeric|integer>(1<=val<=25)` // *default:* `"iso"`
-#'
-#'   The time style to use. By default this is the short name `"iso"` which
-#'   corresponds to how times are formatted within ISO 8601 datetime values.
-#'   There are 25 time styles in total and their short names can be viewed using
-#'   [info_time_style()].
 #'
 #' @return A character vector.
 #'
@@ -2270,38 +2083,10 @@ vec_fmt_time <- function(
 #' of `POSIXct` (i.e., datetimes), the `Date` type, or `character` (must be in
 #' the ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or `YYYY-MM-DD`).
 #'
+#'
+#' @inheritParams fmt_datetime
+#'
 #' @inheritParams vec_fmt_number
-#'
-#' @inheritParams vec_fmt_date
-#'
-#' @inheritParams vec_fmt_time
-#'
-#' @param sep *Separator between date and time components*
-#'
-#'   `scalar<character>` // *default:* `" "`
-#'
-#'   The separator string to use between the date and time components. By
-#'   default, this is a single space character (`" "`). Only used when not
-#'   specifying a `format` code.
-#'
-#' @param format *Date/time formatting string*
-#'
-#'   `scalar<character>` // *default:* `NULL` (`optional`)
-#'
-#'   An optional formatting string used for generating custom dates/times. If
-#'   used then the arguments governing preset styles (`date_style` and
-#'   `time_style`) will be ignored in favor of formatting via the `format`
-#'   string.
-#'
-#' @param tz *Time zone*
-#'
-#'   `scalar<character>` // *default:* `NULL` (`optional`)
-#'
-#'   The time zone for printing dates/times (i.e., the output). The
-#'   default of `NULL` will preserve the time zone of the input data in the
-#'   output. If providing a time zone, it must be one that is recognized by the
-#'   user's operating system (a vector of all valid `tz` values can be produced
-#'   with [OlsonNames()]).
 #'
 #' @return A character vector.
 #'
@@ -3134,75 +2919,9 @@ vec_fmt_datetime <- function(
 #' Any other specialized combinations will result in the default set being used,
 #' which is `c("days", "hours", "minutes", "seconds")`
 #'
+#' @inheritParams fmt_duration
+#'
 #' @inheritParams vec_fmt_number
-#'
-#' @param input_units *Declaration of duration units for numerical values*
-#'
-#'   `scalar<character>` // *default:* `NULL` (`optional`)
-#'
-#'   If one or more selected columns contains numeric values (not `difftime`
-#'   values, which contain the duration units), a keyword must be provided for
-#'   `input_units` for **gt** to determine how those values are to be
-#'   interpreted in terms of duration. The accepted units are: `"seconds"`,
-#'   `"minutes"`, `"hours"`, `"days"`, and `"weeks"`.
-#'
-#' @param output_units *Choice of output units*
-#'
-#'   `mult-kw:[weeks|days|hours|minutes|seconds]` // *default:* `NULL` (`optional`)
-#'
-#'   Controls the output time units. The default, `NULL`, means that **gt** will
-#'   automatically choose time units based on the input duration value. To
-#'   control which time units are to be considered for output (before trimming
-#'   with `trim_zero_units`) we can specify a vector of one or more of the
-#'   following keywords: `"weeks"`, `"days"`, `"hours"`, `"minutes"`, or
-#'   `"seconds"`.
-#'
-#' @param duration_style *Style for representing duration values*
-#'
-#'   `singl-kw:[narrow|wide|colon-sep|iso]` // *default:* `"narrow"`
-#'
-#'   A choice of four formatting styles for the output duration values. With
-#'   `"narrow"` (the default style), duration values will be formatted with
-#'   single letter time-part units (e.g., 1.35 days will be styled as
-#'   `"1d 8h 24m"`). With `"wide"`, this example value will be expanded to
-#'   `"1 day 8 hours 24 minutes"` after formatting. The `"colon-sep"` style will
-#'   put days, hours, minutes, and seconds in the `"([D]/)[HH]:[MM]:[SS]"`
-#'   format. The `"iso"` style will produce a value that conforms to the ISO
-#'   8601 rules for duration values (e.g., 1.35 days will become `"P1DT8H24M"`).
-#'
-#' @param trim_zero_units *Trimming of zero values*
-#'
-#'   `scalar<logical>|mult-kw:[leading|trailing|internal]` // *default:* `TRUE`
-#'
-#'   Provides methods to remove output time units that have zero values. By
-#'   default this is `TRUE` and duration values that might otherwise be
-#'   formatted as `"0w 1d 0h 4m 19s"` with `trim_zero_units = FALSE` are instead
-#'   displayed as `"1d 4m 19s"`. Aside from using `TRUE`/`FALSE` we could
-#'   provide a vector of keywords for more precise control. These keywords are:
-#'   (1) `"leading"`, to omit all leading zero-value time units (e.g., `"0w 1d"`
-#'   -> `"1d"`), (2) `"trailing"`, to omit all trailing zero-value time units
-#'   (e.g., `"3d 5h 0s"` -> `"3d 5h"`), and `"internal"`, which removes all
-#'   internal zero-value time units (e.g., `"5d 0h 33m"` -> `"5d 33m"`).
-#'
-#' @param max_output_units *Maximum number of time units to display*
-#'
-#'   `scalar<numeric|integer>(val>=1)` // *default:* `NULL` (`optional`)
-#'
-#'   If `output_units` is `NULL`, where the output time units are unspecified
-#'   and left to **gt** to handle, a numeric value provided for
-#'   `max_output_units` will be taken as the maximum number of time units to
-#'   display in all output time duration values. By default, this is `NULL` and
-#'   all possible time units will be displayed. This option has no effect when
-#'   `duration_style = "colon-sep"` (only `output_units` can be used to
-#'   customize that type of duration output).
-#'
-#' @param force_sign *Forcing the display of a positive sign*
-#'
-#'   `scalar<logical>` // *default:* `FALSE`
-#'
-#'   Should the positive sign be shown for positive values (effectively showing
-#'   a sign for all values except zero)? If so, use `TRUE` for this option. By
-#'   default only negative values will display a minus sign.
 #'
 #' @return A character vector.
 #'
@@ -3370,16 +3089,9 @@ vec_fmt_duration <- function(
 #' Any Markdown-formatted text in the input vector will be transformed to the
 #' appropriate output type.
 #'
+#' @inheritParams fmt_markdown
+#'
 #' @inheritParams vec_fmt_number
-#'
-#' @param md_engine *Choice of Markdown engine*
-#'
-#'   `singl-kw:[markdown|commonmark]` // *default:* `"markdown"`
-#'
-#'   The engine preference for Markdown rendering. By default, this is set to
-#'   `"markdown"` where **gt** will use the **markdown** package for Markdown
-#'   conversion to HTML and LaTeX. The other option is `"commonmark"` and with
-#'   that the **commonmark** package will be used.
 #'
 #' @return A character vector.
 #'
