@@ -60,7 +60,6 @@
 #'   `"word"`. In **knitr** rendering (i.e., Quarto or R Markdown), the `"auto"`
 #'   option will choose the correct `output` value
 #'
-#'
 #' @return A character vector.
 #'
 #' @section Examples:
@@ -343,9 +342,9 @@ vec_fmt_integer <- function(
 #' - locale-based formatting: providing a locale ID will result in
 #' formatting specific to the chosen locale
 #'
-#' @inheritParams vec_fmt_number
-#'
 #' @inheritParams fmt_scientific
+#'
+#' @inheritParams vec_fmt_number
 #'
 #' @return A character vector.
 #'
@@ -491,9 +490,9 @@ vec_fmt_scientific <- function(
 #' - locale-based formatting: providing a locale ID will result in
 #' formatting specific to the chosen locale
 #'
-#' @inheritParams vec_fmt_number
-#'
 #' @inheritParams fmt_engineering
+#'
+#' @inheritParams vec_fmt_number
 #'
 #' @return A character vector.
 #'
@@ -637,9 +636,9 @@ vec_fmt_engineering <- function(
 #' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
 #'
-#' @inheritParams vec_fmt_number
-#'
 #' @inheritParams fmt_percent
+#'
+#' @inheritParams vec_fmt_number
 #'
 #' @return A character vector.
 #'
@@ -811,9 +810,9 @@ vec_fmt_percent <- function(
 #' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
 #'
-#' @inheritParams vec_fmt_number
-#'
 #' @inheritParams fmt_partsper
+#'
+#' @inheritParams vec_fmt_number
 #'
 #' @return A character vector.
 #'
@@ -972,11 +971,9 @@ vec_fmt_partsper <- function(
 #' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
 #'
-#'
 #' @inheritParams fmt_fraction
 #'
 #' @inheritParams vec_fmt_number
-#'
 #'
 #' @return A character vector.
 #'
@@ -1253,7 +1250,6 @@ vec_fmt_currency <- function(
 #'
 #' @inheritParams vec_fmt_number
 #'
-#'
 #' @return A character vector.
 #'
 #' @section Examples:
@@ -1355,7 +1351,6 @@ vec_fmt_roman <- function(
 #' @inheritParams fmt_index
 #'
 #' @inheritParams vec_fmt_number
-#'
 #'
 #' @return A character vector.
 #'
@@ -1471,10 +1466,10 @@ vec_fmt_index <- function(
 #' at all); should a Swedish locale be provided (e.g., `"sv"`), the output will
 #' instead be `"tjugotre"`.
 #'
-#'
 #' @inheritParams vec_fmt_number
 #'
 #' @return A character vector.
+#'
 #' @section Supported locales:
 #'
 #' The following 80 locales are supported in the `locale` argument of
@@ -1610,7 +1605,6 @@ vec_fmt_spelled_num <- function(
 #' values
 #' - locale-based formatting: providing a locale ID will result in number
 #' formatting specific to the chosen locale
-#'
 #'
 #' @inheritParams fmt_bytes
 #'
@@ -2082,7 +2076,6 @@ vec_fmt_time <- function(
 #' *CLDR* datetime pattern or `strptime` formatting). Input can be in the form
 #' of `POSIXct` (i.e., datetimes), the `Date` type, or `character` (must be in
 #' the ISO 8601 form of `YYYY-MM-DD HH:MM:SS` or `YYYY-MM-DD`).
-#'
 #'
 #' @inheritParams fmt_datetime
 #'

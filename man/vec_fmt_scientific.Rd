@@ -72,9 +72,7 @@ becomes \code{23.} if \code{FALSE}). By default trailing decimal marks are not s
 
 All numeric values will be multiplied by the \code{scale_by} value before
 undergoing formatting. Since the \code{default} value is \code{1}, no values will be
-changed unless a different multiplier value is supplied. This value will be
-ignored if using any of the \code{suffixing} options (i.e., where \code{suffixing} is
-not set to \code{FALSE}).}
+changed unless a different multiplier value is supplied.}
 
 \item{exp_style}{\emph{Style declaration for exponent formatting}
 

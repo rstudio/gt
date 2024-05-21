@@ -110,13 +110,7 @@ gt_group <- function(
 #' The only thing you need to provide is the index value for the **gt** table
 #' within the `gt_group` object.
 #'
-#' @param data *The gt table group object*
-#'
-#'   `obj:<gt_group>` // **required**
-#'
-#'   This is a `gt_group` container object. It is typically generated through
-#'   use of the [gt_group()] function along with one or more `gt_tbl` objects,
-#'   or, made by splitting a **gt** table with [gt_split()].
+#' @inheritParams grp_add
 #'
 #' @param which *The table to pull from the group*
 #'
@@ -167,7 +161,13 @@ grp_pull <- function(
 #' workflow might be, the `grp_add()` function makes it possible to flexibly
 #' add one or more new **gt** tables, returning a refreshed `gt_group` object.
 #'
-#' @inheritParams grp_pull
+#' @param .data *The gt table group object*
+#'
+#'   `obj:<gt_group>` // **required**
+#'
+#'   This is a `gt_group` container object. It is typically generated through
+#'   use of the [gt_group()] function along with one or more `gt_tbl` objects,
+#'   or, made by splitting a **gt** table with [gt_split()].
 #'
 #' @inheritParams gt_group
 #'

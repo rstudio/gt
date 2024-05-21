@@ -45,7 +45,7 @@ We can also use expressions to filter down to the rows we need (e.g.,
 
 \verb{singl-kw:[auto|plain|html|latex|rtf|word]} // \emph{default:} \code{"auto"}
 
-The output format of the resulting character vector. This can either be
+The output style of the resulting character vector. This can either be
 \code{"auto"} (the default), \code{"plain"}, \code{"html"}, \code{"latex"}, \code{"rtf"}, or
 \code{"word"}. In \strong{knitr} rendering (i.e., Quarto or R Markdown), the \code{"auto"}
 option will choose the correct \code{output} value}

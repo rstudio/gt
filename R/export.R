@@ -69,12 +69,7 @@
 #' package needs to be installed before attempting to save any table as a
 #' `.docx` document.
 #'
-#' @param data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
+#' @inheritParams fmt_number
 #'
 #' @param filename *Output filename*
 #'
@@ -623,6 +618,7 @@ as_raw_html <- function(
 #' containing the LaTeX code.
 #'
 #' @inheritParams gtsave
+#'
 #' @details
 #'
 #' LaTeX packages required to generate tables are:
@@ -1548,7 +1544,7 @@ grid_layout_widths <- function(layout, data) {
 #' (either on the left or right of the content). This stage performs said
 #' attachment.
 #'
-#' @inheritParams extract_cells
+#' @inheritParams fmt_number
 #'
 #' @param build_stage *The build stage of the formatted R data frame*
 #'
@@ -1783,6 +1779,8 @@ extract_summary <- function(data) {
 #' Get a vector of cell data from a `gt_tbl` object. The output vector will have
 #' cell data formatted in the same way as the table.
 #'
+#' @inheritParams vec_fmt_number
+#'
 #' @inheritParams fmt_number
 #'
 #' @param rows *Rows to target*
@@ -1797,15 +1795,6 @@ extract_summary <- function(data) {
 #'   [contains()], [matches()], [one_of()], [num_range()], and [everything()].
 #'   We can also use expressions to filter down to the rows we need (e.g.,
 #'   `[colname_1] > 100 & [colname_2] < 50`).
-#'
-#' @param output *Output format*
-#'
-#'   `singl-kw:[auto|plain|html|latex|rtf|word]` // *default:* `"auto"`
-#'
-#'   The output format of the resulting character vector. This can either be
-#'   `"auto"` (the default), `"plain"`, `"html"`, `"latex"`, `"rtf"`, or
-#'   `"word"`. In **knitr** rendering (i.e., Quarto or R Markdown), the `"auto"`
-#'   option will choose the correct `output` value
 #'
 #' @return A vector of cell data extracted from a **gt** table.
 #'
