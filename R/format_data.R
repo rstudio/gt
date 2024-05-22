@@ -9482,6 +9482,57 @@ fmt_units <- function(
 #' `r man_get_image_tag(file = "man_fmt_chem_2.png")`
 #' }}
 #'
+#' The `fmt_chem()` function can handle the typesetting of nuclide notation.
+#' Let's take a subset of columns and rows from the [`nuclides`] dataset and
+#' make a new **gt** table. The contents of the `nuclide` column contains
+#' isotopes of hydrogen and carbon and this is placed in the table stub. Using
+#' `fmt_chem()` makes it so that the subscripted and superscripted values are
+#' properly formatted to the convention of formatting nuclides.
+#'
+#' ```r
+#' nuclides |>
+#'   dplyr::filter(element %in% c("H", "C")) |>
+#'   dplyr::mutate(nuclide = gsub("\\d+$", "", nuclide)) |>
+#'   dplyr::select(nuclide, atomic_mass, half_life, decay_1, is_stable) |>
+#'   gt(rowname_col = "nuclide") |>
+#'   tab_header(title = "Isotopes of Hydrogen and Carbon") |>
+#'   tab_stubhead(label = "Isotope") |>
+#'   fmt_chem(columns = nuclide) |>
+#'   fmt_scientific(columns = half_life) |>
+#'   fmt_number(
+#'     columns = atomic_mass,
+#'     decimals = 4,
+#'     scale_by = 1 / 1e6
+#'   ) |>
+#'   sub_missing(
+#'     columns = half_life,
+#'     rows = is_stable,
+#'     missing_text = md("**STABLE**")
+#'   ) |>
+#'   sub_missing(columns = half_life, rows = !is_stable) |>
+#'   sub_missing(columns = decay_1) |>
+#'   data_color(
+#'     columns = decay_1,
+#'     target_columns = c(atomic_mass, half_life, decay_1),
+#'     palette = "LaCroixColoR::PassionFruit",
+#'     na_color = "white"
+#'   ) |>
+#'   cols_label_with(fn = function(x) tools::toTitleCase(gsub("_", " ", x))) |>
+#'   cols_label(decay_1 = "Decay Mode") |>
+#'   cols_width(
+#'     stub() ~ px(70),
+#'     c(atomic_mass, half_life, decay_1) ~ px(120)
+#'   ) |>
+#'   cols_hide(columns = c(is_stable)) |>
+#'   cols_align(align = "center", columns = decay_1) |>
+#'   opt_align_table_header(align = "left") |>
+#'   opt_vertical_padding(scale = 0.5)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_chem_3.png")`
+#' }}
+#'
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-20
