@@ -424,9 +424,9 @@ tab_header <- function(
 #' calls of `tab_spanner()`. It's a bit like playing Tetris: putting a spanner
 #' down anywhere there is another spanner (i.e., there are one or more shared
 #' columns) means that second spanner will reside a level above the prior. Let's
-#' look at a few examples at how this works, and we'll also explore a few
-#' lesser-known placement tricks. Let's use a cut down version of [`exibble`]
-#' for this, set up a few level-one spanners, and then place a level two spanner
+#' look at a few examples to see how this works, and we'll also explore a few
+#' lesser-known placement tricks. We'll use a cut down version of [`exibble`]
+#' for this, set up a few level-`1` spanners, and then place a level-`2` spanner
 #' over two other spanners.
 #'
 #' ```r
@@ -540,8 +540,8 @@ tab_header <- function(
 #' cannot be used for the new spanner (this can be circumvented, if necessary,
 #' with the `replace = TRUE` option). If you choose a level higher than the
 #' maximum occupied, then the spanner will be dropped down. Again, these
-#' behaviors are indicative of Tetris-like rules though they tend to work well
-#' for the application of spanners.
+#' behaviors are indicative of Tetris-like rules which tend to work well for the
+#' application of spanners.
 #'
 #' Using a subset of the [`towny`] dataset, we can create an interesting **gt**
 #' table. First, only certain columns are selected from the dataset, some
