@@ -1966,10 +1966,35 @@ tab_stubhead <- function(
 #'
 #' @section Examples:
 #'
+#' Using a subset of the [`photolysis`] dataset within a **gt** table, we can
+#' provide some indentation to all of the row labels in the stub via
+#' `tab_stub_indent()`. Here we provide an `indent` value of `3` for a very
+#' prominent indentation that clearly shows that the row labels are subordinate
+#' to the two row group labels in this table (`"inorganic reactions"` and
+#' `"carbonyls"`).
+#'
+#' ```r
+#' photolysis |>
+#'   dplyr::select(cmpd_name, products, type, l, m, n) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt(groupname_col = "type", rowname_col = "cmpd_name") |>
+#'   fmt_chem(columns = products) |>
+#'   fmt_scientific(columns = l) |>
+#'   tab_stub_indent(
+#'     rows = everything(),
+#'     indent = 3
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_stub_indent_1.png")`
+#' }}
+#'
 #' Let's use a summarized version of the [`pizzaplace`] dataset to create a
-#' **gt** table with row groups and row labels. With the [summary_rows()]
-#' function, we'll generate summary rows at the top of each row group. With
-#' `tab_stub_indent()` we can add indentation to the row labels in the stub.
+#' another **gt** table with row groups and row labels. With the
+#' [summary_rows()] function, we'll generate summary rows at the top of each row
+#' group. Using `tab_stub_indent()` we can add indentation to the row labels in
+#' the stub.
 #'
 #' ```r
 #' pizzaplace |>
@@ -2003,7 +2028,60 @@ tab_stubhead <- function(
 #' ```
 #'
 #' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_tab_stub_indent_1.png")`
+#' `r man_get_image_tag(file = "man_tab_stub_indent_2.png")`
+#' }}
+#'
+#' Indentation of entries in the stub can be controlled by values within a
+#' column. Here's an example of that using the [`constants`] dataset, where
+#' variations of a row label are mutated to eliminate the common leading text
+#' (replacing it with `"..."`). At the same time, the indentation for those rows
+#' is set to `4` in the `indent` column (value is `0` otherwise). The
+#' `tab_stub_indent()` statement uses the [from_column()] helper function, which
+#' passes values from the `indent` column to the namesake argument. We hide the
+#' `indent` column from view by use of the [cols_hide()] function.
+#'
+#' ```r
+#' constants |>
+#'   dplyr::select(name, value, uncert, units) |>
+#'   dplyr::filter(
+#'     grepl("^atomic mass constant", name) |
+#'       grepl("^Rydberg constant", name) |
+#'       grepl("^Bohr magneton", name)
+#'   ) |>
+#'   dplyr::mutate(
+#'     indent = ifelse(grepl("constant |magneton ", name), 4, 0),
+#'     name = gsub(".*constant |.*magneton ", "...", name)
+#'   ) |>
+#'   gt(rowname_col = "name") |>
+#'   tab_stubhead(label = "Physical Constant") |>
+#'   tab_stub_indent(
+#'     rows = everything(),
+#'     indent = from_column(column = "indent")
+#'   ) |>
+#'   fmt_scientific(columns = c(value, uncert)) |>
+#'   fmt_units(columns = units) |>
+#'   cols_hide(columns = indent) |>
+#'   cols_label(
+#'     value = "Value",
+#'     uncert = "Uncertainty",
+#'     units = "Units"
+#'   ) |>
+#'   cols_width(
+#'     stub() ~ px(250),
+#'     c(value, uncert) ~ px(150),
+#'     units ~ px(80)
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(indent = px(10)),
+#'     locations = list(
+#'       cells_column_labels(columns = units),
+#'       cells_body(columns = units)
+#'     )
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_stub_indent_3.png")`
 #' }}
 #'
 #' @family part creation/modification functions
