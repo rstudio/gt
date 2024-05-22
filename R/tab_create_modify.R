@@ -1010,19 +1010,11 @@ resolve_spanned_column_names <- function(
 #' From this informational table, we see that the ID for the spanner is
 #' `"spanner-population_1996"`. Also, the columns are still accessible by the
 #' original column names (`tab_spanner_delim()` did change their labels though).
-#' Let's use [tab_style()] to add some styles to the `towny_subset_gt` table.
+#' Let's use [tab_style()] along with [cells_column_spanners()] to add some
+#' styling to the spanner label of the `towny_subset_gt` table.
 #'
 #' ```r
-#' towny |>
-#'   dplyr::select(name, starts_with("population")) |>
-#'   dplyr::filter(grepl("^F", name)) |>
-#'   gt() |>
-#'   tab_spanner_delim(delim = "_") |>
-#'   fmt_integer() |>
-#'   tab_style(
-#'     style = cell_fill(color = "aquamarine"),
-#'     locations = cells_body(columns = population_2021)
-#'   ) |>
+#' towny_subset_gt |>
 #'   tab_style(
 #'     style = cell_text(weight = "bold", transform = "capitalize"),
 #'     locations = cells_column_spanners(spanners = "spanner-population_1996")
