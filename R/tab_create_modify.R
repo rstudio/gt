@@ -1836,6 +1836,66 @@ tab_row_group <- function(
 #' `r man_get_image_tag(file = "man_tab_stubhead_2.png")`
 #' }}
 #'
+#' If the stub is two columns wide (made possible by using
+#' `row_group_as_column = TRUE` in the [gt()] statement), the stubhead will be a
+#' merged cell atop those two stub columns representing the row group and the
+#' row label. Here's an example of that type of situation in a table that uses
+#' the [`peeps`] dataset.
+#'
+#' ```r
+#' peeps |>
+#'   dplyr::filter(country %in% c("POL", "DEU")) |>
+#'   dplyr::group_by(country) |>
+#'   dplyr::filter(dplyr::row_number() %in% 1:5) |>
+#'   dplyr::ungroup() |>
+#'   dplyr::mutate(name = paste0(toupper(name_family), ", ", name_given)) |>
+#'   dplyr::select(name, address, city, postcode, country) |>
+#'   gt(
+#'     rowname_col = "name",
+#'     groupname_col = "country",
+#'     row_group_as_column = TRUE
+#'   ) |>
+#'   tab_stubhead(label = "Country Code / Person") |>
+#'   tab_style(
+#'     style = cell_text(transform = "capitalize"),
+#'     locations = cells_column_labels()
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_stubhead_3.png")`
+#' }}
+#'
+#' The stubhead cell and its text can be styled using [tab_style()] along with
+#' the [cells_stubhead()] function. In this example, using the [`reactions`]
+#' dataset, we style the stubhead label so that it is vertically centered with
+#' text that is highly emboldened.
+#'
+#' ```r
+#' reactions |>
+#'   dplyr::filter(cmpd_type == "nitrophenol") |>
+#'   dplyr::select(cmpd_name, OH_k298, Cl_k298) |>
+#'   dplyr::filter(!(is.na(OH_k298) & is.na(Cl_k298))) |>
+#'   gt(rowname_col = "cmpd_name") |>
+#'   tab_spanner(
+#'     label = "Rate constant at 298 K, in {{cm^3 molecules^–1 s^–1⁠}}",
+#'     columns = ends_with("k298")
+#'   ) |>
+#'   tab_stubhead(label = "Nitrophenol Compound") |>
+#'   fmt_scientific() |>
+#'   sub_missing() |>
+#'   cols_label_with(fn = function(x) sub("_k298", "", x)) |>
+#'   cols_width(everything() ~ px(200)) |>
+#'   tab_style(
+#'     style = cell_text(v_align = "middle", weight = "800"),
+#'     locations = cells_stubhead()
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_stubhead_4.png")`
+#' }}
+#'
 #' @family part creation/modification functions
 #' @section Function ID:
 #' 2-5
