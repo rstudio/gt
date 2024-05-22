@@ -291,9 +291,9 @@ It's possible to stack multiple spanners atop each other with consecutive
 calls of \code{tab_spanner()}. It's a bit like playing Tetris: putting a spanner
 down anywhere there is another spanner (i.e., there are one or more shared
 columns) means that second spanner will reside a level above the prior. Let's
-look at a few examples at how this works, and we'll also explore a few
-lesser-known placement tricks. Let's use a cut down version of \code{\link{exibble}}
-for this, set up a few level-one spanners, and then place a level two spanner
+look at a few examples to see how this works, and we'll also explore a few
+lesser-known placement tricks. We'll use a cut down version of \code{\link{exibble}}
+for this, set up a few level-\code{1} spanners, and then place a level-\code{2} spanner
 over two other spanners.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble_narrow <- exibble |> dplyr::slice_head(n = 3)
@@ -403,8 +403,8 @@ available in the \code{level} specified you'll get an error stating which column
 cannot be used for the new spanner (this can be circumvented, if necessary,
 with the \code{replace = TRUE} option). If you choose a level higher than the
 maximum occupied, then the spanner will be dropped down. Again, these
-behaviors are indicative of Tetris-like rules though they tend to work well
-for the application of spanners.
+behaviors are indicative of Tetris-like rules which tend to work well for the
+application of spanners.
 
 Using a subset of the \code{\link{towny}} dataset, we can create an interesting \strong{gt}
 table. First, only certain columns are selected from the dataset, some
