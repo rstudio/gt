@@ -145,10 +145,28 @@ parameter data can also be hidden from final display with <code><a href="cols_hi
     
 
 
+<p>Using a subset of the <code><a href="photolysis.html">photolysis</a></code> dataset within a <strong>gt</strong> table, we can
+provide some indentation to all of the row labels in the stub via
+<code>tab_stub_indent()</code>. Here we provide an <code>indent</code> value of <code>3</code> for a very
+prominent indentation that clearly shows that the row labels are subordinate
+to the two row group labels in this table (<code>"inorganic reactions"</code> and
+<code>"carbonyls"</code>).</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">photolysis</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">cmpd_name</span>, <span class="va">products</span>, <span class="va">type</span>, <span class="va">l</span>, <span class="va">m</span>, <span class="va">n</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>groupname_col <span class="op">=</span> <span class="st">"type"</span>, rowname_col <span class="op">=</span> <span class="st">"cmpd_name"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_chem.html">fmt_chem</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">products</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_scientific.html">fmt_scientific</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">l</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_stub_indent.html">tab_stub_indent</a></span><span class="op">(</span></span>
+<span>    rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    indent <span class="op">=</span> <span class="fl">3</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_stub_indent_1.png" alt="This image of a table was generated from the first code example in the `tab_stub_indent()` help file." style="width:100%;"></p>
 <p>Let's use a summarized version of the <code><a href="pizzaplace.html">pizzaplace</a></code> dataset to create a
-<strong>gt</strong> table with row groups and row labels. With the <code><a href="summary_rows.html">summary_rows()</a></code>
-function, we'll generate summary rows at the top of each row group. With
-<code>tab_stub_indent()</code> we can add indentation to the row labels in the stub.</p>
+another <strong>gt</strong> table with row groups and row labels. With the
+<code><a href="summary_rows.html">summary_rows()</a></code> function, we'll generate summary rows at the top of each row
+group. Using <code>tab_stub_indent()</code> we can add indentation to the row labels in
+the stub.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">pizzaplace</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">type</span>, <span class="va">size</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span></span>
@@ -177,7 +195,53 @@ function, we'll generate summary rows at the top of each row group. With
 <span>    rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>    indent <span class="op">=</span> <span class="fl">2</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
-<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_stub_indent_1.png" alt="This image of a table was generated from the first code example in the `tab_stub_indent()` help file." style="width:100%;"></p>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_stub_indent_2.png" alt="This image of a table was generated from the second code example in the `tab_stub_indent()` help file." style="width:100%;"></p>
+<p>Indentation of entries in the stub can be controlled by values within a
+column. Here's an example of that using the <code><a href="constants.html">constants</a></code> dataset, where
+variations of a row label are mutated to eliminate the common leading text
+(replacing it with <code>"..."</code>). At the same time, the indentation for those rows
+is set to <code>4</code> in the <code>indent</code> column (value is <code>0</code> otherwise). The
+<code>tab_stub_indent()</code> statement uses the <code><a href="from_column.html">from_column()</a></code> helper function, which
+passes values from the <code>indent</code> column to the namesake argument. We hide the
+<code>indent</code> column from view by use of the <code><a href="cols_hide.html">cols_hide()</a></code> function.</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">constants</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">value</span>, <span class="va">uncert</span>, <span class="va">units</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"^atomic mass constant"</span>, <span class="va">name</span><span class="op">)</span> <span class="op">|</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"^Rydberg constant"</span>, <span class="va">name</span><span class="op">)</span> <span class="op">|</span></span>
+<span>      <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"^Bohr magneton"</span>, <span class="va">name</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span></span>
+<span>    indent <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"constant |magneton "</span>, <span class="va">name</span><span class="op">)</span>, <span class="fl">4</span>, <span class="fl">0</span><span class="op">)</span>,</span>
+<span>    name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">".*constant |.*magneton "</span>, <span class="st">"..."</span>, <span class="va">name</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"name"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_stubhead.html">tab_stubhead</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"Physical Constant"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_stub_indent.html">tab_stub_indent</a></span><span class="op">(</span></span>
+<span>    rows <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    indent <span class="op">=</span> <span class="fu"><a href="../reference/from_column.html">from_column</a></span><span class="op">(</span>column <span class="op">=</span> <span class="st">"indent"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_scientific.html">fmt_scientific</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">value</span>, <span class="va">uncert</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fmt_units.html">fmt_units</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">units</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_hide.html">cols_hide</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">indent</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_label.html">cols_label</a></span><span class="op">(</span></span>
+<span>    value <span class="op">=</span> <span class="st">"Value"</span>,</span>
+<span>    uncert <span class="op">=</span> <span class="st">"Uncertainty"</span>,</span>
+<span>    units <span class="op">=</span> <span class="st">"Units"</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/cols_width.html">cols_width</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="../reference/stub.html">stub</a></span><span class="op">(</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">250</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">value</span>, <span class="va">uncert</span><span class="op">)</span> <span class="op">~</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">150</span><span class="op">)</span>,</span>
+<span>    <span class="va">units</span> <span class="op">~</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">80</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>
+<span>    style <span class="op">=</span> <span class="fu"><a href="../reference/cell_text.html">cell_text</a></span><span class="op">(</span>indent <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    locations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      <span class="fu"><a href="../reference/cells_column_labels.html">cells_column_labels</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">units</span><span class="op">)</span>,</span>
+<span>      <span class="fu"><a href="../reference/cells_body.html">cells_body</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="va">units</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre><p></p></div>
+<p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_stub_indent_3.png" alt="This image of a table was generated from the third code example in the `tab_stub_indent()` help file." style="width:100%;"></p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>

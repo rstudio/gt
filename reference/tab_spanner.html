@@ -360,9 +360,9 @@ later (e.g., for styling with <code><a href="tab_style.html">tab_style()</a></co
 calls of <code>tab_spanner()</code>. It's a bit like playing Tetris: putting a spanner
 down anywhere there is another spanner (i.e., there are one or more shared
 columns) means that second spanner will reside a level above the prior. Let's
-look at a few examples at how this works, and we'll also explore a few
-lesser-known placement tricks. Let's use a cut down version of <code><a href="exibble.html">exibble</a></code>
-for this, set up a few level-one spanners, and then place a level two spanner
+look at a few examples to see how this works, and we'll also explore a few
+lesser-known placement tricks. We'll use a cut down version of <code><a href="exibble.html">exibble</a></code>
+for this, set up a few level-<code>1</code> spanners, and then place a level-<code>2</code> spanner
 over two other spanners.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble_narrow</span> <span class="op">&lt;-</span> <span class="va">exibble</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span></span>
@@ -447,8 +447,8 @@ available in the <code>level</code> specified you'll get an error stating which 
 cannot be used for the new spanner (this can be circumvented, if necessary,
 with the <code>replace = TRUE</code> option). If you choose a level higher than the
 maximum occupied, then the spanner will be dropped down. Again, these
-behaviors are indicative of Tetris-like rules though they tend to work well
-for the application of spanners.</p>
+behaviors are indicative of Tetris-like rules which tend to work well for the
+application of spanners.</p>
 <p>Using a subset of the <code><a href="towny.html">towny</a></code> dataset, we can create an interesting <strong>gt</strong>
 table. First, only certain columns are selected from the dataset, some
 filtering of rows is done, rows are sorted, and then only the first 10 rows
