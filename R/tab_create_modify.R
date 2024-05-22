@@ -96,16 +96,13 @@
 #'     title =
 #'       htmltools::tagList(
 #'         htmltools::tags$div(
-#'           style = htmltools::css(
-#'             `text-align` = "center"
-#'           ),
 #'           htmltools::HTML(
 #'             web_image("https://www.r-project.org/logo/Rlogo.png")
-#'           )
+#'           ),
+#'           style = htmltools::css(`text-align` = "center")
 #'         ),
 #'         htmltools::tags$div(
-#'           "Data listing from ",
-#'           htmltools::tags$strong("gtcars")
+#'           "Data listing from ", htmltools::tags$strong("gtcars")
 #'         )
 #'       )
 #'   )
