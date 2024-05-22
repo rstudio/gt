@@ -193,7 +193,7 @@ Let's use \code{\link[=tab_style]{tab_style()}} to add some styles to the \code{
     locations = cells_body(columns = population_2021)
   ) |>
   tab_style(
-    style = cell_text(transform = "capitalize"),
+    style = cell_text(weight = "bold", transform = "capitalize"),
     locations = cells_column_spanners(spanners = "spanner-population_1996")
   )
 }\if{html}{\out{</div>}}
