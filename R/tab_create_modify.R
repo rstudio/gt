@@ -130,6 +130,62 @@
 #' `r man_get_image_tag(file = "man_tab_header_3.png")`
 #' }}
 #'
+#' Sometimes, aligning the heading elements to the left can improve the
+#' presentation of a table. Here, we use the [`nuclides`] dataset to generate a
+#' display of natural abundance values for several stable isotopes. The
+#' [opt_align_table_header()] function is used with `align = "left"` to make it
+#' so the title and subtitle are left aligned in the header area.
+#'
+#' ```r
+#' nuclides |>
+#'   dplyr::filter(!is.na(abundance)) |>
+#'   dplyr::filter(abundance != 1) |>
+#'   dplyr::filter(z >= 1 & z <= 8) |>
+#'   dplyr::mutate(element = paste0(element, ", **z = ", z, "**")) |>
+#'   dplyr::mutate(nuclide = gsub("\\d+$", "", nuclide)) |>
+#'   dplyr::select(nuclide, element, atomic_mass, abundance, abundance_uncert) |>
+#'   gt(
+#'     rowname_col = "nuclide",
+#'     groupname_col = "element",
+#'     process_md = TRUE
+#'   ) |>
+#'   tab_header(
+#'     title = "Natural Abundance Values",
+#'     subtitle = md("For elements having atomic numbers from `1` to `8`.")
+#'   ) |>
+#'   tab_stubhead(label = "Isotope") |>
+#'   tab_stub_indent(
+#'     rows = everything(),
+#'     indent = 1
+#'   ) |>
+#'   fmt_chem(columns = stub()) |>
+#'   fmt_number(
+#'     columns = atomic_mass,
+#'     decimals = 4,
+#'     scale_by = 1 / 1e6
+#'   ) |>
+#'   fmt_percent(
+#'     columns = contains("abundance"),
+#'     decimals = 4
+#'   ) |>
+#'   cols_merge_uncert(
+#'     col_val = abundance,
+#'     col_uncert = abundance_uncert
+#'   ) |>
+#'   cols_label_with(fn = function(x) tools::toTitleCase(gsub("_", " ", x))) |>
+#'   cols_width(
+#'     stub() ~ px(70),
+#'     atomic_mass ~ px(120),
+#'     abundance ~ px(200)
+#'   ) |>
+#'   opt_align_table_header(align = "left") |>
+#'   opt_vertical_padding(scale = 0.5)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_header_4.png")`
+#' }}
+#'
 #' @family part creation/modification functions
 #' @section Function ID:
 #' 2-1
