@@ -290,6 +290,31 @@ get_date_format <- function(date_style) {
   }
 }
 
+# workaround before r-lib/rlang#1618 is fixed (check_character() will refuse character(0))
+check_character2 <- function(x, ..., allow_0 = FALSE, allow_null = FALSE, arg = caller_arg(x), call = caller_env()) {
+  if (!missing(x)) {
+    if (allow_null && is_null(x)) {
+      return(invisible(NULL))
+    }
+    if (length(x) == 0 && !allow_0) {
+      # bad
+    } else if (is_character(x)) {
+      return(invisible(NULL))
+    }
+
+  }
+
+  stop_input_type(
+    x,
+    "a character vector",
+    ...,
+    allow_na = FALSE,
+    allow_null = allow_null,
+    arg = arg,
+    call = call
+  )
+}
+
 #' Transform a `time_style` to a `time_format`
 #'
 #' @noRd

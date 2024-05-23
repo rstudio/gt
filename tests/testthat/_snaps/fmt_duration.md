@@ -18,7 +18,8 @@
       tab_6 %>% fmt_duration(columns = "num_1")
     Condition
       Error in `fmt_duration()`:
-      ! When there are numeric columns to format, `input_units` must be in "seconds", "minutes", "hours", "days", or "weeks", not `NULL`.
+      ! `input_units` must be supplied when there are numeric columns to format.
+      i Use one of "seconds", "minutes", "hours", "days", or "weeks".
 
 ---
 
@@ -26,78 +27,8 @@
       tab_6 %>% fmt_duration(columns = c("num_1", "dur_1"))
     Condition
       Error in `fmt_duration()`:
-      ! When there are numeric columns to format, `input_units` must be in "seconds", "minutes", "hours", "days", or "weeks", not `NULL`.
-
----
-
-    Code
-      tab_6 %>% fmt_duration(columns = "num_1", input_units = "Stunden")
-    Condition
-      Error in `fmt_duration()`:
-      ! The value of `input_units` for `fmt_duration()` is invalid.
-      * Only one of the "weeks", "days", "hours", "minutes", or "seconds" time parts should be present.
-
----
-
-    Code
-      tab_6 %>% fmt_duration(columns = "num_1", input_units = c("hours", "minutes"))
-    Condition
-      Error in `fmt_duration()`:
-      ! The value of `input_units` for `fmt_duration()` is invalid.
-      * Only one of the "weeks", "days", "hours", "minutes", or "seconds" time parts should be present.
-
----
-
-    Code
-      tab_6 %>% fmt_duration(columns = "num_1", input_units = character(0))
-    Condition
-      Error in `fmt_duration()`:
-      ! The value of `input_units` for `fmt_duration()` is invalid.
-      * Only one of the "weeks", "days", "hours", "minutes", or "seconds" time parts should be present.
-
----
-
-    Code
-      tab_6 %>% fmt_duration(columns = "num_1", input_units = 1)
-    Condition
-      Error in `fmt_duration()`:
-      ! `input_units` must be a character vector or `NULL`, not the number 1.
-
----
-
-    Code
-      tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", output_units = "Stunden")
-    Condition
-      Error in `fmt_duration()`:
-      ! `output_units` must be one of "weeks", "days", "hours", "mins", "minutes", "secs", or "seconds", not "Stunden".
-
----
-
-    Code
-      tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", output_units = c(
-        "days", "weeks", "years"))
-    Condition
-      Error in `fmt_duration()`:
-      ! `output_units` must be one of "weeks", "days", "hours", "mins", "minutes", "secs", or "seconds", not "years".
-
----
-
-    Code
-      tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", output_units = character(
-        0))
-    Condition
-      Error in `[<-`:
-      ! Can't assign rows with `nrow(x_df_i)`.
-      x Subscript `nrow(x_df_i)` can't contain `0` values.
-      i It has a `0` value at location 1.
-
----
-
-    Code
-      tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", output_units = 1)
-    Condition
-      Error in `fmt_duration()`:
-      ! `output_units` must be a character vector or `NULL`, not the number 1.
+      ! `input_units` must be supplied when there are numeric columns to format.
+      i Use one of "seconds", "minutes", "hours", "days", or "weeks".
 
 ---
 
@@ -114,10 +45,9 @@
       tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours",
         trim_zero_units = "infernal")
     Condition
-      Error in `validate_trim_zero_units()`:
-      ! The character vector provided for `trim_zero_units` is invalid.
-      * It should only contain any of the keywords "leading", "trailing", or
-      "internal".
+      Error in `fmt_duration()`:
+      ! `trim_zero_units` must be one of "leading", "trailing", or "internal", not "infernal".
+      i Did you mean "internal"?
 
 ---
 
