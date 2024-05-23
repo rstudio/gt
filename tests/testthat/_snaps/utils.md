@@ -123,8 +123,8 @@
     Code
       get_date_format(date_style = NA)
     Condition
-      Error in `if (date_format_tbl_i[["flexible"]]) ...`:
-      ! the condition has length > 1
+      Error:
+      ! `date_style` must be numeric or character.
 
 ---
 
@@ -132,7 +132,7 @@
       get_date_format(date_style = NULL)
     Condition
       Error:
-      ! `date_style` must be a whole number, not `NULL`.
+      ! `date_style` must be numeric or character.
 
 ---
 
@@ -204,8 +204,8 @@
     Code
       get_time_format(time_style = NA)
     Condition
-      Error in `if (time_format_tbl_i[["flexible"]]) ...`:
-      ! the condition has length > 1
+      Error:
+      ! `time_style` must be numeric or character.
 
 ---
 
@@ -213,7 +213,7 @@
       get_time_format(time_style = NULL)
     Condition
       Error:
-      ! `time_style` must be a whole number, not `NULL`.
+      ! `time_style` must be numeric or character.
 
 ---
 
