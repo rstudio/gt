@@ -20,7 +20,7 @@
       stop_if_not_gt_tbl(gt(exibble) %>% as_raw_html())
     Condition
       Error:
-      ! `data` must be a `gt_tbl` object, not a <html> object.
+      ! `data` must be a `gt_tbl` object, not a <html/character> object.
 
 ---
 
@@ -28,7 +28,7 @@
       stop_if_not_gt_group(gt(exibble))
     Condition
       Error:
-      ! `data` must be a `gt_group` object, not a <gt_tbl> object.
+      ! `data` must be a `gt_group` object, not a <gt_tbl/list> object.
 
 ---
 
@@ -36,7 +36,7 @@
       stop_if_not_gt_group(gt_preview(gtcars))
     Condition
       Error:
-      ! `data` must be a `gt_group` object, not a <gt_tbl> object.
+      ! `data` must be a `gt_group` object, not a <gt_tbl/list> object.
 
 ---
 
@@ -52,7 +52,7 @@
       stop_if_not_gt_group(gt(exibble) %>% as_raw_html())
     Condition
       Error:
-      ! `data` must be a `gt_group` object, not a <html> object.
+      ! `data` must be a `gt_group` object, not a <html/character> object.
 
 ---
 
@@ -68,7 +68,7 @@
       stop_if_not_gt_tbl_or_group(gt(exibble) %>% as_raw_html())
     Condition
       Error:
-      ! `data` must either be a `gt_tbl` or a `gt_group`, not a <html> object.
+      ! `data` must either be a `gt_tbl` or a `gt_group`, not a <html/character> object.
 
 # The `get_date_format()` function works properly
 
