@@ -32,12 +32,7 @@
 #' smaller tables across multiple pages (in RTF and Word outputs, primarily via
 #' [gtsave()]), or, with breaks between them when the output context is HTML.
 #'
-#' @param data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
+#' @inheritParams fmt_number
 #'
 #' @param row_every_n *Split at every n rows*
 #'

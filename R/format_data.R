@@ -79,9 +79,7 @@
 #'   This corresponds to the exact number of decimal places to use. A value
 #'   such as `2.34` can, for example, be formatted with `0` decimal places and
 #'   it would result in `"2"`. With `4` decimal places, the formatted value
-#'   becomes `"2.3400"`. The trailing zeros can be removed with
-#'   `drop_trailing_zeros = TRUE`. If you always need `decimals = 0`, the
-#'   [fmt_integer()] function should be considered.
+#'   becomes `"2.3400"`.
 #'
 #' @param n_sigfig *Number of significant figures*
 #'

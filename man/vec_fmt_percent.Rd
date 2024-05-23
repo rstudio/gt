@@ -37,9 +37,7 @@ vector of the same length. Values within the vector will be formatted.}
 This corresponds to the exact number of decimal places to use. A value
 such as \code{2.34} can, for example, be formatted with \code{0} decimal places and
 it would result in \code{"2"}. With \code{4} decimal places, the formatted value
-becomes \code{"2.3400"}. The trailing zeros can be removed with
-\code{drop_trailing_zeros = TRUE}. If you always need \code{decimals = 0}, the
-\code{\link[=fmt_integer]{fmt_integer()}} function should be considered.}
+becomes \code{"2.3400"}.}
 
 \item{drop_trailing_zeros}{\emph{Drop any trailing zeros}
 
@@ -127,10 +125,10 @@ sign. The default is to not introduce a space character.}
 
 \item{placement}{\emph{Percent sign placement}
 
-\verb{scalar<character>} // \emph{default:} \code{"right"}
+\verb{singl-kw:[right|left]} // \emph{default:} \code{"right"}
 
 This option governs the placement of the percent sign. This can be either
-be \code{right} (the default) or \code{left}.}
+be \code{"right"} (the default) or \code{"left"}.}
 
 \item{locale}{\emph{Locale identifier}
 
