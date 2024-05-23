@@ -767,6 +767,9 @@ test_that("The `sub_large_vals()` function works correctly", {
 
   # Expect an error if an invalid `sign` is used
   expect_snapshot(error = TRUE,tab %>% sub_large_vals(columns = "num_1", sign = "?"))
+  expect_snapshot(error = TRUE,tab %>% sub_large_vals(rows  = "num_1"))
+  expect_snapshot(error = TRUE,tab %>% sub_large_vals(rows  = "num_1", threshold = c(10, 100)))
+
 })
 
 test_that("The `sub_values()` function works correctly", {
