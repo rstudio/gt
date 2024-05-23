@@ -59,8 +59,8 @@ Here is a glimpse at the data available in \code{nuclides}.
 #> $ element                    <chr> "H", "H", "H", "H", "H", "H", "H", "He", "H~
 #> $ radius                     <dbl> 0.8783, 2.1421, 1.7591, NA, NA, NA, NA, 1.9~
 #> $ radius_uncert              <dbl> 0.0086, 0.0088, 0.0363, NA, NA, NA, NA, 0.0~
-#> $ abundance                  <dbl> 99.9855, 0.0145, NA, NA, NA, NA, NA, 0.0002~
-#> $ abundance_uncert           <dbl> 0.0078, 0.0078, NA, NA, NA, NA, NA, 0.0002,~
+#> $ abundance                  <dbl> 0.999855, 0.000145, NA, NA, NA, NA, NA, 0.0~
+#> $ abundance_uncert           <dbl> 0.000078, 0.000078, NA, NA, NA, NA, NA, 0.0~
 #> $ is_stable                  <lgl> TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FAL~
 #> $ half_life                  <dbl> NA, NA, 3.887813e+08, NA, 8.608259e-23, 2.9~
 #> $ half_life_uncert           <dbl> NA, NA, 6.311385e+05, NA, 6.496799e-24, 8.3~

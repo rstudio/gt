@@ -96,16 +96,13 @@
 #'     title =
 #'       htmltools::tagList(
 #'         htmltools::tags$div(
-#'           style = htmltools::css(
-#'             `text-align` = "center"
-#'           ),
 #'           htmltools::HTML(
 #'             web_image("https://www.r-project.org/logo/Rlogo.png")
-#'           )
+#'           ),
+#'           style = htmltools::css(`text-align` = "center")
 #'         ),
 #'         htmltools::tags$div(
-#'           "Data listing from ",
-#'           htmltools::tags$strong("gtcars")
+#'           "Data listing from ", htmltools::tags$strong("gtcars")
 #'         )
 #'       )
 #'   )
@@ -131,6 +128,62 @@
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_tab_header_3.png")`
+#' }}
+#'
+#' Sometimes, aligning the heading elements to the left can improve the
+#' presentation of a table. Here, we use the [`nuclides`] dataset to generate a
+#' display of natural abundance values for several stable isotopes. The
+#' [opt_align_table_header()] function is used with `align = "left"` to make it
+#' so the title and subtitle are left aligned in the header area.
+#'
+#' ```r
+#' nuclides |>
+#'   dplyr::filter(!is.na(abundance)) |>
+#'   dplyr::filter(abundance != 1) |>
+#'   dplyr::filter(z >= 1 & z <= 8) |>
+#'   dplyr::mutate(element = paste0(element, ", **z = ", z, "**")) |>
+#'   dplyr::mutate(nuclide = gsub("\\d+$", "", nuclide)) |>
+#'   dplyr::select(nuclide, element, atomic_mass, abundance, abundance_uncert) |>
+#'   gt(
+#'     rowname_col = "nuclide",
+#'     groupname_col = "element",
+#'     process_md = TRUE
+#'   ) |>
+#'   tab_header(
+#'     title = "Natural Abundance Values",
+#'     subtitle = md("For elements having atomic numbers from `1` to `8`.")
+#'   ) |>
+#'   tab_stubhead(label = "Isotope") |>
+#'   tab_stub_indent(
+#'     rows = everything(),
+#'     indent = 1
+#'   ) |>
+#'   fmt_chem(columns = stub()) |>
+#'   fmt_number(
+#'     columns = atomic_mass,
+#'     decimals = 4,
+#'     scale_by = 1 / 1e6
+#'   ) |>
+#'   fmt_percent(
+#'     columns = contains("abundance"),
+#'     decimals = 4
+#'   ) |>
+#'   cols_merge_uncert(
+#'     col_val = abundance,
+#'     col_uncert = abundance_uncert
+#'   ) |>
+#'   cols_label_with(fn = function(x) tools::toTitleCase(gsub("_", " ", x))) |>
+#'   cols_width(
+#'     stub() ~ px(70),
+#'     atomic_mass ~ px(120),
+#'     abundance ~ px(200)
+#'   ) |>
+#'   opt_align_table_header(align = "left") |>
+#'   opt_vertical_padding(scale = 0.5)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_header_4.png")`
 #' }}
 #'
 #' @family part creation/modification functions
@@ -424,9 +477,9 @@ tab_header <- function(
 #' calls of `tab_spanner()`. It's a bit like playing Tetris: putting a spanner
 #' down anywhere there is another spanner (i.e., there are one or more shared
 #' columns) means that second spanner will reside a level above the prior. Let's
-#' look at a few examples at how this works, and we'll also explore a few
-#' lesser-known placement tricks. Let's use a cut down version of [`exibble`]
-#' for this, set up a few level-one spanners, and then place a level two spanner
+#' look at a few examples to see how this works, and we'll also explore a few
+#' lesser-known placement tricks. We'll use a cut down version of [`exibble`]
+#' for this, set up a few level-`1` spanners, and then place a level-`2` spanner
 #' over two other spanners.
 #'
 #' ```r
@@ -540,8 +593,8 @@ tab_header <- function(
 #' cannot be used for the new spanner (this can be circumvented, if necessary,
 #' with the `replace = TRUE` option). If you choose a level higher than the
 #' maximum occupied, then the spanner will be dropped down. Again, these
-#' behaviors are indicative of Tetris-like rules though they tend to work well
-#' for the application of spanners.
+#' behaviors are indicative of Tetris-like rules which tend to work well for the
+#' application of spanners.
 #'
 #' Using a subset of the [`towny`] dataset, we can create an interesting **gt**
 #' table. First, only certain columns are selected from the dataset, some
@@ -957,21 +1010,13 @@ resolve_spanned_column_names <- function(
 #' From this informational table, we see that the ID for the spanner is
 #' `"spanner-population_1996"`. Also, the columns are still accessible by the
 #' original column names (`tab_spanner_delim()` did change their labels though).
-#' Let's use [tab_style()] to add some styles to the `towny_subset_gt` table.
+#' Let's use [tab_style()] along with [cells_column_spanners()] to add some
+#' styling to the spanner label of the `towny_subset_gt` table.
 #'
 #' ```r
-#' towny |>
-#'   dplyr::select(name, starts_with("population")) |>
-#'   dplyr::filter(grepl("^F", name)) |>
-#'   gt() |>
-#'   tab_spanner_delim(delim = "_") |>
-#'   fmt_integer() |>
+#' towny_subset_gt |>
 #'   tab_style(
-#'     style = cell_fill(color = "aquamarine"),
-#'     locations = cells_body(columns = population_2021)
-#'   ) |>
-#'   tab_style(
-#'     style = cell_text(transform = "capitalize"),
+#'     style = cell_text(weight = "bold", transform = "capitalize"),
 #'     locations = cells_column_spanners(spanners = "spanner-population_1996")
 #'   )
 #' ```
@@ -1791,6 +1836,66 @@ tab_row_group <- function(
 #' `r man_get_image_tag(file = "man_tab_stubhead_2.png")`
 #' }}
 #'
+#' If the stub is two columns wide (made possible by using
+#' `row_group_as_column = TRUE` in the [gt()] statement), the stubhead will be a
+#' merged cell atop those two stub columns representing the row group and the
+#' row label. Here's an example of that type of situation in a table that uses
+#' the [`peeps`] dataset.
+#'
+#' ```r
+#' peeps |>
+#'   dplyr::filter(country %in% c("POL", "DEU")) |>
+#'   dplyr::group_by(country) |>
+#'   dplyr::filter(dplyr::row_number() %in% 1:5) |>
+#'   dplyr::ungroup() |>
+#'   dplyr::mutate(name = paste0(toupper(name_family), ", ", name_given)) |>
+#'   dplyr::select(name, address, city, postcode, country) |>
+#'   gt(
+#'     rowname_col = "name",
+#'     groupname_col = "country",
+#'     row_group_as_column = TRUE
+#'   ) |>
+#'   tab_stubhead(label = "Country Code / Person") |>
+#'   tab_style(
+#'     style = cell_text(transform = "capitalize"),
+#'     locations = cells_column_labels()
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_stubhead_3.png")`
+#' }}
+#'
+#' The stubhead cell and its text can be styled using [tab_style()] along with
+#' the [cells_stubhead()] function. In this example, using the [`reactions`]
+#' dataset, we style the stubhead label so that it is vertically centered with
+#' text that is highly emboldened.
+#'
+#' ```r
+#' reactions |>
+#'   dplyr::filter(cmpd_type == "nitrophenol") |>
+#'   dplyr::select(cmpd_name, OH_k298, Cl_k298) |>
+#'   dplyr::filter(!(is.na(OH_k298) & is.na(Cl_k298))) |>
+#'   gt(rowname_col = "cmpd_name") |>
+#'   tab_spanner(
+#'     label = "Rate constant at 298 K, in {{cm^3 molecules^–1 s^–1⁠}}",
+#'     columns = ends_with("k298")
+#'   ) |>
+#'   tab_stubhead(label = "Nitrophenol Compound") |>
+#'   fmt_scientific() |>
+#'   sub_missing() |>
+#'   cols_label_with(fn = function(x) sub("_k298", "", x)) |>
+#'   cols_width(everything() ~ px(200)) |>
+#'   tab_style(
+#'     style = cell_text(v_align = "middle", weight = "800"),
+#'     locations = cells_stubhead()
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_stubhead_4.png")`
+#' }}
+#'
 #' @family part creation/modification functions
 #' @section Function ID:
 #' 2-5
@@ -1861,10 +1966,35 @@ tab_stubhead <- function(
 #'
 #' @section Examples:
 #'
+#' Using a subset of the [`photolysis`] dataset within a **gt** table, we can
+#' provide some indentation to all of the row labels in the stub via
+#' `tab_stub_indent()`. Here we provide an `indent` value of `3` for a very
+#' prominent indentation that clearly shows that the row labels are subordinate
+#' to the two row group labels in this table (`"inorganic reactions"` and
+#' `"carbonyls"`).
+#'
+#' ```r
+#' photolysis |>
+#'   dplyr::select(cmpd_name, products, type, l, m, n) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt(groupname_col = "type", rowname_col = "cmpd_name") |>
+#'   fmt_chem(columns = products) |>
+#'   fmt_scientific(columns = l) |>
+#'   tab_stub_indent(
+#'     rows = everything(),
+#'     indent = 3
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_stub_indent_1.png")`
+#' }}
+#'
 #' Let's use a summarized version of the [`pizzaplace`] dataset to create a
-#' **gt** table with row groups and row labels. With the [summary_rows()]
-#' function, we'll generate summary rows at the top of each row group. With
-#' `tab_stub_indent()` we can add indentation to the row labels in the stub.
+#' another **gt** table with row groups and row labels. With the
+#' [summary_rows()] function, we'll generate summary rows at the top of each row
+#' group. Using `tab_stub_indent()` we can add indentation to the row labels in
+#' the stub.
 #'
 #' ```r
 #' pizzaplace |>
@@ -1898,7 +2028,60 @@ tab_stubhead <- function(
 #' ```
 #'
 #' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_tab_stub_indent_1.png")`
+#' `r man_get_image_tag(file = "man_tab_stub_indent_2.png")`
+#' }}
+#'
+#' Indentation of entries in the stub can be controlled by values within a
+#' column. Here's an example of that using the [`constants`] dataset, where
+#' variations of a row label are mutated to eliminate the common leading text
+#' (replacing it with `"..."`). At the same time, the indentation for those rows
+#' is set to `4` in the `indent` column (value is `0` otherwise). The
+#' `tab_stub_indent()` statement uses the [from_column()] helper function, which
+#' passes values from the `indent` column to the namesake argument. We hide the
+#' `indent` column from view by use of the [cols_hide()] function.
+#'
+#' ```r
+#' constants |>
+#'   dplyr::select(name, value, uncert, units) |>
+#'   dplyr::filter(
+#'     grepl("^atomic mass constant", name) |
+#'       grepl("^Rydberg constant", name) |
+#'       grepl("^Bohr magneton", name)
+#'   ) |>
+#'   dplyr::mutate(
+#'     indent = ifelse(grepl("constant |magneton ", name), 4, 0),
+#'     name = gsub(".*constant |.*magneton ", "...", name)
+#'   ) |>
+#'   gt(rowname_col = "name") |>
+#'   tab_stubhead(label = "Physical Constant") |>
+#'   tab_stub_indent(
+#'     rows = everything(),
+#'     indent = from_column(column = "indent")
+#'   ) |>
+#'   fmt_scientific(columns = c(value, uncert)) |>
+#'   fmt_units(columns = units) |>
+#'   cols_hide(columns = indent) |>
+#'   cols_label(
+#'     value = "Value",
+#'     uncert = "Uncertainty",
+#'     units = "Units"
+#'   ) |>
+#'   cols_width(
+#'     stub() ~ px(250),
+#'     c(value, uncert) ~ px(150),
+#'     units ~ px(80)
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(indent = px(10)),
+#'     locations = list(
+#'       cells_column_labels(columns = units),
+#'       cells_body(columns = units)
+#'     )
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_stub_indent_3.png")`
 #' }}
 #'
 #' @family part creation/modification functions

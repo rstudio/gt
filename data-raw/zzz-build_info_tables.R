@@ -97,10 +97,20 @@ for (i in seq_len(nrow(fontawesome:::fa_tbl))) {
   fa_icons_vec <- c(fa_icons_vec, icon_svg_i)
 }
 
+rm(i, icon_svg_i)
+
+readr::write_rds(
+  fa_icons_vec,
+  file = "inst/gt_tables/fa_icons_vec.rds",
+  compress = "xz"
+)
+
+rm(fa_icons_vec)
+
 icons_tbl_gt <-
   fontawesome:::fa_tbl %>%
   dplyr::select(icon = name, label, icon_name = name, full_name) %>%
-  dplyr::mutate(icon = fa_icons_vec) %>%
+  dplyr::mutate(icon = readRDS(file = "inst/gt_tables/fa_icons_vec.rds")) %>%
   gt() %>%
   fmt_markdown(columns = icon) %>%
   cols_label(icon = "") %>%
@@ -161,9 +171,7 @@ readr::write_rds(
   compress = "xz"
 )
 
-rm(
-  icon_svg_i, fa_icons_vec, icons_tbl_gt, i
-)
+rm(icons_tbl_gt)
 
 #
 # Build table for `info_google_fonts()` -> `info_google_fonts.rds`
@@ -335,28 +343,24 @@ rm(
 # Build table for `info_paletteer()` -> `info_paletteer.rds`
 #
 
-color_pkgs <-
-  c(
-    "awtools", "dichromat", "dutchmasters", "ggsci", "ggpomological",
-    "ggthemes", "ghibli", "grDevices", "jcolors", "LaCroixColoR",
-    "NineteenEightyR", "nord", "ochRe", "palettetown", "pals",
-    "Polychrome", "quickpalette", "rcartocolor", "RColorBrewer",
-    "Redmonder", "tidyquant", "wesanderson", "yarrr"
-  )
-
-palettes_strips_df <- gt:::palettes_strips
-
-palettes_strips_vec <- palettes_strips_df %>% dplyr::pull(colors)
+#color_pkgs <-
+#  c(
+#    "awtools", "dichromat", "dutchmasters", "ggsci", "ggpomological",
+#    "ggthemes", "ghibli", "grDevices", "jcolors", "LaCroixColoR",
+#    "NineteenEightyR", "nord", "ochRe", "palettetown", "pals",
+#    "Polychrome", "quickpalette", "rcartocolor", "RColorBrewer",
+#    "Redmonder", "tidyquant", "wesanderson", "yarrr"
+#  )
 
 palettes_tbl_gt <-
-  palettes_strips_df %>%
+  gt:::palettes_strips %>%
   dplyr::select(package, palette, length) %>%
   dplyr::mutate(`Color Count and Palette` = NA) %>%
   gt(groupname_col = "package", rowname_col = "palette") %>%
   text_transform(
     locations = cells_body("Color Count and Palette"),
     fn = function(x) {
-      palettes_strips_vec
+      dplyr::pull(gt:::palettes_strips, colors)
     }
   ) %>%
   cols_label(length = "") %>%
@@ -407,4 +411,4 @@ readr::write_rds(
   compress = "xz"
 )
 
-rm(palettes_tbl_gt, color_pkgs, palettes_strips_df, palettes_strips)
+rm(palettes_tbl_gt, color_pkgs, palettes_strips_df)
