@@ -1756,15 +1756,12 @@ opt_css <- function(
   )
 }
 
-normalize_font_input <- function(font_input) {
+normalize_font_input <- function(font_input, call = rlang::caller_env()) {
 
-  if (
-    !inherits(font_input, "character") &&
-    !inherits(font_input, "list") &&
-    !inherits(font_input, "font_css")
-  ) {
+  if (!inherits(font_input, c("character", "list", "font_css"))) {
     cli::cli_abort(
-      "Values provided to `font` must either be a list or a character vector."
+      "{.arg font} must be a list or a character vector, not {.obj_type_friendly {font_input}}.",
+      call = call
     )
   }
 

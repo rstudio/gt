@@ -40,19 +40,10 @@ split_string_2 <- function(
   # a `dir` option (for "before" or "after" splitting)
 
   # Stop function if `x` is not of class character
-  if (!inherits(x, "character")) {
+  if (!rlang::is_string(x)) {
     cli::cli_abort(c(
-      "Internal error in `gt:::paste_within()`.",
-      "*" = "The `x` object must be of class `character`."
-    ))
-  }
-
-  # Stop function if the length of `x` is not 1
-  if (length(x) != 1) {
-    cli::cli_abort(c(
-      "Internal error in `gt:::paste_within()`.",
-      "*" = "The length of the `x` must be exactly 1."
-    ))
+      "*" = "The `x` object must be a single string, not {.obj_type_friendly {x}}."
+    ), .internal = TRUE)
   }
 
   # Get the length of the string `x`
@@ -62,18 +53,16 @@ split_string_2 <- function(
   # stop the function
   if (is.null(before) && is.null(after)) {
     cli::cli_abort(c(
-      "Internal error in `gt:::split_string_2()`.",
       "*" = "Both `before` and `after` cannot be `NULL`."
-    ))
+    ), .internal = TRUE)
   }
 
   # If both `before` and `after` have values, stop
   # the function
   if (!is.null(before) && !is.null(after)) {
     cli::cli_abort(c(
-      "Internal error in `gt:::split_string_2()`.",
       "*" = "A value must be provided to either `before` or `after`, not both."
-    ))
+    ), .internal = TRUE)
   }
 
   # Collapse value for either `before` or `after`;
@@ -111,9 +100,8 @@ split_string_2 <- function(
     # Stop function if the index position is not valid
     if (input > x_length) {
       cli::cli_abort(c(
-        "Internal error in `gt:::split_string_2()`.",
         "*" = "The numeric value provided cannot be greater than {x_length}."
-      ))
+      ), .internal = TRUE)
     }
 
     # Define the start and stop positions as
@@ -142,28 +130,18 @@ split_string_2 <- function(
 #' @noRd
 paste_between <- function(x, x_2) {
 
-  # Stop function if `x_2` is not of class character
-  if (!inherits(x_2, "character")) {
+  # Stop function if `x_2` is not of class character length 2
+  if (!inherits(x_2, "character") || length(x_2) != 2) {
     cli::cli_abort(c(
-      "Internal error in `gt:::paste_between()`.",
-      "*" = "The `x_2` object must be of class `character`."
-    ))
-  }
-
-  # Stop function if the length of `x_2` is not 2
-  if (length(x_2) != 2) {
-    cli::cli_abort(c(
-      "Internal error in `gt:::paste_between()`.",
-      "*" = "The length of the `x_2` must be exactly 2."
-    ))
+      "*" = "The `x_2` object must be of class `character` of length 2, not {.obj_type_friendly {x_2}}."
+    ), .internal = TRUE)
   }
 
   # Stop function if `x` is not of class character
-  if (!inherits(x, "character")) {
+  if (!is.character(x)) {
     cli::cli_abort(c(
-      "Internal error in `gt:::paste_between()`.",
       "*" = "The `x` object must be of class `character`."
-    ))
+    ), .internal = TRUE)
   }
 
   paste0(x_2[1], x, x_2[2])
@@ -187,17 +165,15 @@ paste_on_side <- function(
   # Stop function if `direction` is not valid
   if (!(direction %in% c("left", "right"))) {
     cli::cli_abort(c(
-      "Internal error in `gt:::paste_on_side()`.",
       "*" = "The `direction` must be either `left` or `right`."
-    ))
+    ), .internal = TRUE)
   }
 
   # Stop function if `x` and `x_side` are not both of class character
   if (any(!inherits(x, "character"), !inherits(x_side, "character"))) {
     cli::cli_abort(c(
-      "Internal error in `gt:::paste_on_side()`.",
       "*" = "The `x` and `x_side` objects must be of class `character`."
-    ))
+    ), .internal = TRUE)
   }
 
   len <- length(x_side)
@@ -255,9 +231,8 @@ swap_adjacent_text_groups <- function(
   # Stop function if `x` is not of class character
   if (!inherits(x, "character")) {
     cli::cli_abort(c(
-      "Internal error in `gt:::paste_within()`.",
       "*" = "The `x` object must be of class `character`."
-    ))
+    ), .internal = TRUE)
   }
 
   vapply(
