@@ -289,7 +289,7 @@ get_date_format <- function(date_style) {
   }
 
   # Stop function if a numeric `date_style` value is invalid
-  if (is.null(date_style) || is.numeric(date_style)) {
+  if (is.numeric(date_style)) {
     check_number_whole(date_style, min = 1, max = as.numeric(nrow(date_format_tbl)), call = NULL)
   }
 
@@ -302,6 +302,13 @@ get_date_format <- function(date_style) {
     )
     # Normalize `date_style` to be a numeric index value
     date_style <- which(date_format_tbl$format_name == date_style)
+  }
+
+  if (!is.numeric(date_style) && !is.character(date_style)) {
+    cli::cli_abort(
+      "{.arg date_style} must be numeric or character.",
+      call = NULL
+    )
   }
 
   # Obtain the correct date format directive
@@ -332,7 +339,7 @@ get_time_format <- function(time_style) {
   }
 
   # Stop function if a numeric `time_style` value is invalid
-  if (is.null(time_style) || is.numeric(time_style)) {
+  if (is.numeric(time_style)) {
     check_number_whole(
       time_style,
       min = 1,
@@ -349,9 +356,15 @@ get_time_format <- function(time_style) {
       time_format_tbl$format_name,
       error_call = NULL
     )
-
     # Normalize `time_style` to be a numeric index value
     time_style <- which(time_format_tbl$format_name == time_style)
+  }
+
+  if (!is.numeric(time_style) && !is.character(time_style)) {
+    cli::cli_abort(
+      "{.arg time_style} must be numeric or character.",
+      call = NULL
+    )
   }
 
   # Obtain the correct time format directive
