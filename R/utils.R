@@ -246,6 +246,30 @@ tf_formats_icons <- function() {
 tf_formats_text <- function() {
   c("true-false", "yes-no", "up-down")
 }
+# workaround before r-lib/rlang#1618 is fixed (check_character() will refuse character(0))
+check_character2 <- function(x, ..., allow_0 = FALSE, allow_null = FALSE, arg = caller_arg(x), call = caller_env()) {
+  if (!missing(x)) {
+    if (allow_null && is_null(x)) {
+      return(invisible(NULL))
+    }
+    if (length(x) == 0 && !allow_0) {
+      # bad
+    } else if (is_character(x)) {
+      return(invisible(NULL))
+    }
+
+  }
+
+  stop_input_type(
+    x,
+    "a character vector",
+    ...,
+    allow_na = FALSE,
+    allow_null = allow_null,
+    arg = arg,
+    call = call
+  )
+}
 
 #' Transform a `date_style` to a `date_format`
 #'
@@ -280,6 +304,13 @@ get_date_format <- function(date_style) {
     date_style <- which(date_format_tbl$format_name == date_style)
   }
 
+  if (!is.numeric(date_style) && !is.character(date_style)) {
+    cli::cli_abort(
+      "{.arg date_style} must be numeric or character.",
+      call = NULL
+    )
+  }
+
   # Obtain the correct date format directive
   date_format_tbl_i <- date_format_tbl[date_style, ]
 
@@ -288,31 +319,6 @@ get_date_format <- function(date_style) {
   } else {
     return(date_format_tbl_i[["format_code"]])
   }
-}
-
-# workaround before r-lib/rlang#1618 is fixed (check_character() will refuse character(0))
-check_character2 <- function(x, ..., allow_0 = FALSE, allow_null = FALSE, arg = caller_arg(x), call = caller_env()) {
-  if (!missing(x)) {
-    if (allow_null && is_null(x)) {
-      return(invisible(NULL))
-    }
-    if (length(x) == 0 && !allow_0) {
-      # bad
-    } else if (is_character(x)) {
-      return(invisible(NULL))
-    }
-
-  }
-
-  stop_input_type(
-    x,
-    "a character vector",
-    ...,
-    allow_na = FALSE,
-    allow_null = allow_null,
-    arg = arg,
-    call = call
-  )
 }
 
 #' Transform a `time_style` to a `time_format`
@@ -338,6 +344,7 @@ get_time_format <- function(time_style) {
       time_style,
       min = 1,
       max = as.numeric(nrow(time_format_tbl)),
+      allow_null = FALSE,
       call = NULL
     )
   }
@@ -349,9 +356,15 @@ get_time_format <- function(time_style) {
       time_format_tbl$format_name,
       error_call = NULL
     )
-
     # Normalize `time_style` to be a numeric index value
     time_style <- which(time_format_tbl$format_name == time_style)
+  }
+
+  if (!is.numeric(time_style) && !is.character(time_style)) {
+    cli::cli_abort(
+      "{.arg time_style} must be numeric or character.",
+      call = NULL
+    )
   }
 
   # Obtain the correct time format directive
