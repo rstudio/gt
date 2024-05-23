@@ -1110,6 +1110,27 @@ vec_fmt_fraction <- function(
 #'
 #' @inheritParams vec_fmt_number
 #'
+#' @param currency *Currency to use*
+#'
+#'   `scalar<character>|obj:<gt_currency>` // *default:* `NULL` (`optional`)
+#'
+#'   The currency to use for the numeric value. This input can be
+#'   supplied as a 3-letter currency code (e.g., `"USD"` for U.S. Dollars,
+#'   `"EUR"` for the Euro currency). Use [info_currencies()] to get an
+#'   information table with all of the valid currency codes and examples of
+#'   each. Alternatively, we can provide a common currency name (e.g.,
+#'   `"dollar"`, `"pound"`, `"yen"`, etc.) to simplify the process. Use
+#'   [info_currencies()] with the `type == "symbol"` option to view an
+#'   information table with all of the supported currency symbol names along
+#'   with examples.
+#'
+#'   We can also use the [currency()] helper function to specify a custom
+#'   currency, where the string could vary across output contexts. For example,
+#'   using `currency(html = "&fnof;", default = "f")` would give us a suitable
+#'   glyph for the Dutch guilder in an HTML output table, and it would simply be
+#'   the letter "f" in all other output contexts). Please note that `decimals`
+#'   will default to `2` when using the [currency()] helper function.
+#'
 #' @return A character vector.
 #'
 #' @section Examples:
