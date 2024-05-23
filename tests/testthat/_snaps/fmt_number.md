@@ -3,7 +3,7 @@
     Code
       tab %>% fmt_number(columns = num_3, decimals = 2)
     Condition
-      Error in `fmt_number()`:
+      Error in `fmt()`:
       ! Can't select columns that don't exist.
       x Column `num_3` doesn't exist.
 

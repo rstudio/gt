@@ -7549,7 +7549,7 @@ fmt_duration <- function(
     trim_zero_units <- NULL
   } else if (is.character(trim_zero_units) && length(trim_zero_units) > 0) {
     # Validate that `trim_zero_units` contains only the allowed keywords
-    validate_trim_zero_units(trim_zero_units = trim_zero_units)
+    rlang::arg_match(trim_zero_units, c("leading", "trailing", "internal"), multiple = TRUE)
   } else {
     cli::cli_abort(c(
       "The value provided for `trim_zero_units` is invalid. Either use:",
@@ -7736,24 +7736,11 @@ fmt_duration <- function(
   )
 }
 
-validate_trim_zero_units <- function(trim_zero_units) {
-
-  if (!all(trim_zero_units %in% c("leading", "trailing", "internal"))) {
-
-    cli::cli_abort(c(
-      "The character vector provided for `trim_zero_units` is invalid.",
-      "*" = "It should only contain any of the keywords \"leading\", \"trailing\",
-      or ", "\"internal\"."
-    ))
-  }
-}
-
 validate_duration_input_units <- function(input_units, call = rlang::caller_env()) {
 
   if (is.null(input_units)) {
     return(NULL)
   }
-
   time_parts_vec <- c("weeks", "days", "hours", "mins", "minutes", "secs", "seconds")
 
   if (!all(input_units %in% time_parts_vec) || length(input_units) != 1) {
