@@ -1,4 +1,4 @@
-test_that("rows can be added to a table with name-value pairs", {
+test_that("rows_add() allows rows can be added to a table with name-value pairs", {
 
   gt_tbl_a <-
     exibble %>%
@@ -1738,9 +1738,7 @@ test_that("adding rows can only be done with compatible data", {
 })
 
 test_that("adding rows and styling the table has the intended behavior", {
-
   gt_tbl <- gt(exibble, rowname_col = "row")
-
   gt_tbl_style_01 <-
     gt_tbl %>%
     rows_add(row = "row_9") %>%
@@ -1937,23 +1935,29 @@ test_that("adding rows and styling the table has the intended behavior", {
   gt_tbl_style_21 %>% render_as_html() %>% expect_snapshot()
   gt_tbl_style_22 %>% render_as_html() %>% expect_snapshot()
 
+})
+
+test_that("`rows_add() and `tab_style()` are sensitive of the order", {
+  gt_tbl <- gt(exibble, rowname_col = "row")
   # Expect an error when trying to resolve indices that don't yet exist
   # (i.e., the order of `rows_add()` and `tab_style()` matters)
-  expect_snapshot(error = TRUE,
+  expect_snapshot(error = TRUE, {
     gt_tbl %>%
       tab_style(
         style = cell_fill(),
         locations = cells_body(rows = 9)
       ) %>%
       rows_add(row = "row_3.5", .after = "row_3")
+
+    gt_tbl %>%
+      rows_add(row = "row_0", .before = 1) %>%
+      tab_style(
+        style = list(cell_fill(color = "blue"), cell_borders(style =
+                                                               "dotted")),
+        locations = list(cells_column_labels(num2), cells_body(rows = "row_0"))
+      )
+
+  }
   )
 
-  expect_snapshot(error = TRUE,
-    gt_tbl %>%
-      tab_style(
-        style = cell_fill(),
-        locations = cells_body(rows = "row_0")
-      ) %>%
-      rows_add(row = "row_0", .before = 1)
-  )
 })

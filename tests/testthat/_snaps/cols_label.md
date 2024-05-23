@@ -1,4 +1,4 @@
-# The function `cols_label()` works correctly
+# The `cols_label()` function works correctly
 
     Code
       gt(tbl) %>% cols_label("col_a")

@@ -1,4 +1,4 @@
-# The function `cols_label_with()` works correctly
+# The `cols_label_with()` function works correctly
 
     Code
       gt(tbl) %>% cols_label_with(fn = NULL)

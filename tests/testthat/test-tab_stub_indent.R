@@ -61,6 +61,17 @@ test_that("A gt table can contain indentation in the stub", {
   tbl_5 %>% as_latex() %>% as.character() %>% expect_snapshot()
 })
 
+test_that("tab_stub_indent() errors gracefully if indent or rows is incorrect", {
+  tbl_stub <- exibble %>%
+    gt()
+  # Other cases don't error
+  expect_snapshot(error = TRUE, {
+    tbl_stub %>% tab_stub_indent()
+    tbl_stub %>% tab_stub_indent(rows = c(1, 2), indent = 6)
+    tbl_stub %>% tab_stub_indent(rows = c(19))
+  })
+})
+
 test_that("Indentation values can be obtained from a table column", {
 
   # Indent via `from_column()`, using values from the `rank` column

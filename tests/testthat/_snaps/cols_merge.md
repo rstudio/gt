@@ -1,4 +1,4 @@
-# The function `cols_merge()` works correctly
+# The `cols_merge()` function works correctly
 
     Code
       .
