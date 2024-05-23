@@ -246,50 +246,6 @@ tf_formats_icons <- function() {
 tf_formats_text <- function() {
   c("true-false", "yes-no", "up-down")
 }
-
-#' Transform a `date_style` to a `date_format`
-#'
-#' @noRd
-get_date_format <- function(date_style) {
-
-  date_format_tbl <- date_formats()
-  date_format_num_range <- seq_len(nrow(date_format_tbl))
-
-  # In the rare instance that `date_style` consists of a character-based
-  # number in the valid range of numbers, cast the value as a number
-  if (
-    is.character(date_style) &&
-    date_style %in% as.character(date_format_num_range)
-  ) {
-    date_style <- as.numeric(date_style)
-  }
-
-  # Stop function if a numeric `date_style` value is invalid
-  if (is.numeric(date_style)) {
-    check_number_whole(date_style, min = 1, max = as.numeric(nrow(date_format_tbl)), call = NULL)
-  }
-
-  # Stop function if a character-based `date_style` value is invalid
-  if (is.character(date_style)) {
-    arg_match0(
-      date_style,
-      date_format_tbl$format_name,
-      error_call = NULL
-    )
-    # Normalize `date_style` to be a numeric index value
-    date_style <- which(date_format_tbl$format_name == date_style)
-  }
-
-  # Obtain the correct date format directive
-  date_format_tbl_i <- date_format_tbl[date_style, ]
-
-  if (date_format_tbl_i[["flexible"]]) {
-    return(bigD::flex_d_lst[[date_format_tbl_i[["format_name"]]]])
-  } else {
-    return(date_format_tbl_i[["format_code"]])
-  }
-}
-
 # workaround before r-lib/rlang#1618 is fixed (check_character() will refuse character(0))
 check_character2 <- function(x, ..., allow_0 = FALSE, allow_null = FALSE, arg = caller_arg(x), call = caller_env()) {
   if (!missing(x)) {
@@ -315,6 +271,49 @@ check_character2 <- function(x, ..., allow_0 = FALSE, allow_null = FALSE, arg = 
   )
 }
 
+#' Transform a `date_style` to a `date_format`
+#'
+#' @noRd
+get_date_format <- function(date_style) {
+
+  date_format_tbl <- date_formats()
+  date_format_num_range <- seq_len(nrow(date_format_tbl))
+
+  # In the rare instance that `date_style` consists of a character-based
+  # number in the valid range of numbers, cast the value as a number
+  if (
+    is.character(date_style) &&
+    date_style %in% as.character(date_format_num_range)
+  ) {
+    date_style <- as.numeric(date_style)
+  }
+
+  # Stop function if a numeric `date_style` value is invalid
+  if (is.null(date_style) || is.numeric(date_style)) {
+    check_number_whole(date_style, min = 1, max = as.numeric(nrow(date_format_tbl)), call = NULL)
+  }
+
+  # Stop function if a character-based `date_style` value is invalid
+  if (is.character(date_style)) {
+    arg_match0(
+      date_style,
+      date_format_tbl$format_name,
+      error_call = NULL
+    )
+    # Normalize `date_style` to be a numeric index value
+    date_style <- which(date_format_tbl$format_name == date_style)
+  }
+
+  # Obtain the correct date format directive
+  date_format_tbl_i <- date_format_tbl[date_style, ]
+
+  if (date_format_tbl_i[["flexible"]]) {
+    return(bigD::flex_d_lst[[date_format_tbl_i[["format_name"]]]])
+  } else {
+    return(date_format_tbl_i[["format_code"]])
+  }
+}
+
 #' Transform a `time_style` to a `time_format`
 #'
 #' @noRd
@@ -333,11 +332,12 @@ get_time_format <- function(time_style) {
   }
 
   # Stop function if a numeric `time_style` value is invalid
-  if (is.numeric(time_style)) {
+  if (is.null(time_style) || is.numeric(time_style)) {
     check_number_whole(
       time_style,
       min = 1,
       max = as.numeric(nrow(time_format_tbl)),
+      allow_null = FALSE,
       call = NULL
     )
   }
