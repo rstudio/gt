@@ -49,7 +49,7 @@ Imports:
     magrittr (>= 2.0.2),
     markdown (>= 1.5),
     reactable (>= 0.4.3),
-    rlang (>= 1.0.2),
+    rlang (>= 1.1.0),
     sass (>= 0.4.5),
     scales (>= 1.2.1),
     tidyselect (>= 1.2.0),
@@ -113,6 +113,8 @@ Collate:
     'gt_split.R'
     'helpers.R'
     'image.R'
+    'import-standalone-obj-type.R'
+    'import-standalone-types-check.R'
     'info_tables.R'
     'knitr-utils.R'
     'location_methods.R'
