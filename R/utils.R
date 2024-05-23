@@ -266,27 +266,16 @@ get_date_format <- function(date_style) {
 
   # Stop function if a numeric `date_style` value is invalid
   if (is.numeric(date_style)) {
-
-    if (!(date_style %in% date_format_num_range)) {
-
-      cli::cli_abort(c(
-        "If using a numeric value for a `date_style`, it must be ",
-        "between `1` and `{nrow(date_format_tbl)}`.",
-        "*" = "Use `info_date_style()` for a useful visual reference."
-      ))
-    }
+    check_number_whole(date_style, min = 1, max = as.numeric(nrow(date_format_tbl)), call = NULL)
   }
 
   # Stop function if a character-based `date_style` value is invalid
   if (is.character(date_style)) {
-
-    if (!(date_style %in% date_format_tbl$format_name)) {
-      cli::cli_abort(c(
-        "If using a `date_style` name, it must be in the valid set.",
-        "*" = "Use `info_date_style()` for a useful visual reference."
-      ))
-    }
-
+    arg_match0(
+      date_style,
+      date_format_tbl$format_name,
+      error_call = NULL
+    )
     # Normalize `date_style` to be a numeric index value
     date_style <- which(date_format_tbl$format_name == date_style)
   }
@@ -320,25 +309,21 @@ get_time_format <- function(time_style) {
 
   # Stop function if a numeric `time_style` value is invalid
   if (is.numeric(time_style)) {
-
-    if (!(time_style %in% time_format_num_range)) {
-      cli::cli_abort(c(
-        "If using a numeric value for a `time_style`, it must be
-        between `1` and `{nrow((time_format_tbl))}`.",
-        "*" = "Use `info_time_style()` for a useful visual reference."
-      ))
-    }
+    check_number_whole(
+      time_style,
+      min = 1,
+      max = as.numeric(nrow(time_format_tbl)),
+      call = NULL
+    )
   }
 
   # Stop function if a character-based `time_style` value is invalid
   if (is.character(time_style)) {
-
-    if (!(time_style %in% time_format_tbl$format_name)) {
-      cli::cli_abort(c(
-        "If using a `time_style` name, it must be in the valid set.",
-        "*" = "Use `info_time_style()` for a useful visual reference."
-      ))
-    }
+    rlang::arg_match0(
+      time_style,
+      time_format_tbl$format_name,
+      error_call = NULL
+    )
 
     # Normalize `time_style` to be a numeric index value
     time_style <- which(time_format_tbl$format_name == time_style)

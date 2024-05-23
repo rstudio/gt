@@ -12,19 +12,20 @@
     Code
       tab_1 %>% fmt_date(columns = "date", date_style = "none")
     Condition
-      Error in `get_date_format()`:
-      ! If using a `date_style` name, it must be in the valid set.
-      * Use `info_date_style()` for a useful visual reference.
+      Error in `fmt_date()`:
+      ! Invalid date style. See `gt::info_date_style()`.
+      Caused by error:
+      ! `date_style` must be one of "iso", "wday_month_day_year", "wd_m_day_year", "wday_day_month_year", "month_day_year", "m_day_year", "day_m_year", "day_month_year", "day_month", "day_m", "year", "month", "day", "year.mn.day", "y.mn.day", "year_week", "year_quarter", "yMd", "yMEd", "yMMM", "yMMMM", "yMMMd", "yMMMEd", "GyMd", "GyMMMd", "GyMMMEd", "yM", "Md", "MEd", "MMMd", "MMMEd", "MMMMd", "GyMMM", "yQQQ", "yQQQQ", "Gy", "y", "M", "MMM", "d", or "Ed", not "none".
 
 ---
 
     Code
       tab_1 %>% fmt_date(columns = "date", date_style = 50)
     Condition
-      Error in `get_date_format()`:
-      ! If using a numeric value for a `date_style`, it must be
-      between `1` and `41`.
-      * Use `info_date_style()` for a useful visual reference.
+      Error in `fmt_date()`:
+      ! Invalid date style. See `gt::info_date_style()`.
+      Caused by error:
+      ! `date_style` must be a whole number between 1 and 41, not the number 50.
 
 ---
 

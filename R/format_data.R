@@ -5780,7 +5780,12 @@ fmt_date <- function(
   locale <- resolve_locale(data = data, locale = locale)
 
   # Transform `date_style` to `date_format_str`
-  date_format_str <- get_date_format(date_style = date_style)
+  date_format_str <- withCallingHandlers(
+    get_date_format(date_style = date_style),
+    error = function(e) {
+      cli::cli_abort("Invalid date style. See {.run gt::info_date_style()}.",
+                     parent = e)
+    })
 
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
@@ -6138,7 +6143,12 @@ fmt_time <- function(
   locale <- resolve_locale(data = data, locale = locale)
 
   # Transform `time_style` to `time_format_str`
-  time_format_str <- get_time_format(time_style = time_style)
+  time_format_str <- withCallingHandlers(
+    get_time_format(time_style = time_style),
+    error = function(e) {
+      cli::cli_abort("Invalid time style. See {.run gt::info_time_style()}.",
+                     parent = e)
+    })
 
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
@@ -7137,11 +7147,21 @@ fmt_datetime <- function(
 
   } else {
 
-    # Transform `date_style` to `date_format`
-    date_format_str <- get_date_format(date_style = date_style)
+    # Transform `date_style` to `date_format_str`
+    date_format_str <- withCallingHandlers(
+      get_date_format(date_style = date_style),
+      error = function(e) {
+        cli::cli_abort("Invalid date style. See {.run gt::info_date_style()} for valid inputs.",
+                       parent = e)
+      })
 
-    # Transform `time_style` to `time_format`
-    time_format_str <- get_time_format(time_style = time_style)
+    # Transform `time_style` to `time_format_str`
+    time_format_str <- withCallingHandlers(
+      get_time_format(time_style = time_style),
+      error = function(e) {
+        cli::cli_abort("Invalid time style. See {.run gt::info_time_style()} for valid inputs.",
+                       parent = e)
+      })
   }
 
   # In this case where strict mode is being used (with the option
