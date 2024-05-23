@@ -381,19 +381,12 @@ rows_add <- function(
 
   if (!is.null(.n_empty)) {
 
-    # Ensure that `.n_empty` is an integer if anything is provided
-    if (!rlang::is_integerish(.n_empty)) {
-      cli::cli_abort("An integer value should be supplied for `.n_empty`.")
-    }
+    # Ensure that `.n_empty` is an integer if anything is provided `.n_empty` is not negative
+    check_number_whole(.n_empty, min = 0)
 
     # If the `.n_empty` should evaluate to `0` return the data unchanged
-    if (as.integer(.n_empty) == 0) {
+    if (as.integer(.n_empty) == 0L) {
       return(.data)
-    }
-
-    # Ensure that `.n_empty` is not negative
-    if (as.integer(.n_empty) < 0) {
-      cli::cli_abort("The value for `.n_empty` cannot be negative.")
     }
 
     # Generate empty rows with `NA` values
@@ -470,8 +463,11 @@ rows_add <- function(
 
     # Ensure that the column names resolved belong to the internal
     # data table of `data_tbl`
-    if (any(!(names(row_data_list) %in% colnames(data_tbl)))) {
-      cli::cli_abort("All column names referenced must be present in the data.")
+    if (!all(names(row_data_list) %in% colnames(data_tbl))) {
+      cols_not_found <- setdiff(names(row_data_list), colnames(data_tbl))
+      cli::cli_abort(c(
+        "All column names referenced must be present in the data.",
+        "x" = "Can't find columns {.val {cols_not_found}}."))
     }
   }
 
@@ -519,7 +515,7 @@ rows_add <- function(
 
   # Stop function if expressions are given to both `.before` and `.after`
   if (!is.null(resolved_rows_before_idx) && !is.null(resolved_rows_after_idx)) {
-    cli::cli_abort("Expressions cannot be given to both `.before` and `.after`.")
+    cli::cli_abort("Only one of `.before` and `.after` can be supplied.")
   }
 
   #

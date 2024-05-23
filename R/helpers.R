@@ -999,11 +999,7 @@ adjust_luminance <- function(
 ) {
 
   # Stop if steps is beyond an acceptable range
-  if (steps > 2.0 | steps < -2.0) {
-    cli::cli_abort(
-      "The value provided for `steps` (`{steps}`) must be between `-2.0` and `+2.0`."
-    )
-  }
+  check_number_decimal(steps, min = -2, max = 2)
 
   # Get a matrix of values in the RGB color space
   rgb_matrix <- t(grDevices::col2rgb(colors, alpha = TRUE)) / 255
@@ -3210,18 +3206,14 @@ cell_fill <- function(
     alpha = NULL
 ) {
 
-  if (!inherits(color, "gt_column") && length(color) != 1) {
-    cli::cli_abort("The length of the `color` vector must be `1`.")
-  }
-
-  if (!is.null(alpha) && !inherits(color, "gt_column") && length(alpha) != 1) {
-    cli::cli_abort("If provided, `alpha` must be a single value.")
-  }
-
-  # Transform the `color` value, if present, so that X11 color names
-  # can be used in all output contexts
-
   if (!inherits(color, "gt_column")) {
+    validate_length_one(color, "color")
+
+    # normally, alpha should be between 0 and 1, but to avoid breaking changes, let's be permissive for now.
+    check_number_decimal(alpha, allow_null = TRUE, allow_infinite = TRUE, allow_na = TRUE)
+
+    # Transform the `color` value, if present, so that X11 color names
+    # can be used in all output contexts
     color <- html_color(colors = color, alpha = alpha)
   }
 
@@ -3422,7 +3414,8 @@ cell_borders <- function(
 
         validate_style_in(
           style_vals, names(style_vals), "style",
-          c("solid", "dashed", "dotted", "hidden", "double")
+          c("solid", "dashed", "dotted", "hidden", "double"),
+          call = rlang::caller_env(n = 2)
         )
 
         cell_style_structure(

@@ -3227,14 +3227,7 @@ fmt_fraction <- function(
 
   } else if (is.numeric(accuracy)) {
 
-    if (accuracy < 1) {
-
-      cli::cli_abort(c(
-        "The numeric value supplied for `accuracy` is invalid.",
-        "*" = "Must be an integer value greater than zero."
-      ))
-    }
-
+    check_number_whole(accuracy, min = 1, allow_infinite = FALSE)
   } else {
 
     cli::cli_abort(c(
@@ -5782,11 +5775,13 @@ fmt_date <- function(
         # Convert incoming values to POSIXlt but provide a friendly error
         # if the values cannot be parsed by `as.POSIXlt()`
         date <-
-          tryCatch(
+          withCallingHandlers(
             as.POSIXlt(x, tz = "GMT"),
-            error = function(cond) {
+            error = function(e) {
               cli::cli_abort(
-                "One or more of the provided date/datetime values are invalid."
+                "One or more of the provided date/datetime values are invalid.",
+                call = call("fmt_date"),
+                parent = e
               )
             }
           )
@@ -6145,11 +6140,13 @@ fmt_time <- function(
         # Convert incoming values to POSIXlt but provide a friendly error
         # if the values cannot be parsed by `as.POSIXlt()`
         time <-
-          tryCatch(
+          withCallingHandlers(
             as.POSIXlt(x, tz = "GMT"),
-            error = function(cond) {
+            error = function(e) {
               cli::cli_abort(
-                "One or more of the provided date/time/datetime values are invalid."
+                "One or more of the provided date/time/datetime values are invalid.",
+                call = call("fmt_time"),
+                parent = e
               )
             }
           )
@@ -7095,7 +7092,7 @@ fmt_datetime <- function(
   if (!is.null(format)) {
 
     # Ensure that the format code meets some basic validation requirements
-    check_format_code(format = format)
+    check_string(format)
 
   } else {
 
@@ -7155,11 +7152,13 @@ fmt_datetime <- function(
               tz <- tz %||% "GMT"
 
               datetime <-
-                tryCatch(
+                withCallingHandlers(
                   as.POSIXlt(x),
-                  error = function(cond) {
+                  error = function(e) {
                     cli::cli_abort(
-                      "One or more of the provided date/datetime values are invalid."
+                      "One or more of the provided date/datetime values are invalid.",
+                      call = call("fmt_datetime"),
+                      parent = e
                     )
                   }
                 )
@@ -7204,11 +7203,14 @@ fmt_datetime <- function(
         # Convert incoming values to POSIXlt but provide a friendly error
         # if the values cannot be parsed by `as.POSIXlt()`
         datetime <-
-          tryCatch(
+          withCallingHandlers(
             as.POSIXlt(x),
-            error = function(cond) {
+            error = function(e) {
               cli::cli_abort(
-                "One or more of the provided date/datetime values are invalid."
+                # possibly Error in `fmt()` caused by error in `as.POSIXlt`
+                "One or more of the provided date/datetime values are invalid.",
+                call = call("fmt_datetime"),
+                parent = e
               )
             }
           )
@@ -7467,6 +7469,8 @@ fmt_duration <- function(
   # Declare formatting function compatibility
   compat <- c("numeric", "integer", "difftime")
 
+  check_character(output_units, allow_null = TRUE)
+  check_character(input_units, allow_null = TRUE)
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
   validate_locale(locale = locale)
@@ -7528,16 +7532,16 @@ fmt_duration <- function(
 
   # Stop function if any columns have numeric data and `input_units` is NULL
   if (
+    is.null(input_units) &&
     !column_classes_are_valid(
       data = data,
       columns = {{ columns }},
       valid_classes = "difftime"
-    ) &&
-    is.null(input_units)
+    )
   ) {
     cli::cli_abort(c(
-      "When there are numeric columns to format, `input_units` must not be `NULL`.",
-      "*" = "Use one of \"seconds\", \"minutes\", \"hours\", \"days\", or \"weeks\"."
+      "When there are numeric columns to format, `input_units` must be in \\
+      \"seconds\", \"minutes\", \"hours\", \"days\", or \"weeks\", not {.code NULL}."
     ))
   }
 
@@ -7556,19 +7560,17 @@ fmt_duration <- function(
   }
 
   # Resolve output units
-  if (is.null(output_units)) {
+  output_units <- output_units %||% c("weeks", "days", "hours", "minutes", "seconds")
+  # Stop function if `output_units` isn't a character vector, isn't of
+  # the right length (1 or greater), and does not contain valid values
+  output_units <- rlang::arg_match(
+    output_units,
+    values = c("weeks", "days", "hours", "mins", "minutes", "secs", "seconds"),
+    multiple = TRUE
+  )
 
-    output_units <- c("weeks", "days", "hours", "minutes", "seconds")
-
-  } else {
-
-    # Stop function if `output_units` isn't a character vector, isn't of
-    # the right length (1 or greater), and does not contain valid values
-    validate_duration_output_units(output_units = output_units)
-
-    # Normalize the valid set of provided `output_units`
-    output_units <- normalize_duration_output_units(output_units = output_units)
-  }
+  # Normalize the valid set of provided `output_units`
+  output_units <- normalize_duration_output_units(output_units = output_units)
 
   # If `duration_style` is of the "iso" or "colon-sep" types, then
   # some options need to be overridden
@@ -7686,17 +7688,10 @@ validate_trim_zero_units <- function(trim_zero_units) {
   }
 }
 
-validate_duration_input_units <- function(input_units) {
+validate_duration_input_units <- function(input_units, call = rlang::caller_env()) {
 
   if (is.null(input_units)) {
     return(NULL)
-  }
-
-  if (!is.character(input_units)) {
-
-    cli::cli_abort(
-      "The `input_units` input to `fmt_duration()` must be a character vector."
-    )
   }
 
   time_parts_vec <- c("weeks", "days", "hours", "mins", "minutes", "secs", "seconds")
@@ -7707,7 +7702,9 @@ validate_duration_input_units <- function(input_units) {
       "The value of `input_units` for `fmt_duration()` is invalid.",
       "*" = "Only one of the \"weeks\", \"days\", \"hours\", \"minutes\", or
       \"seconds\" time parts should be present."
-    ))
+      ),
+    call = call
+    )
   }
 }
 
@@ -7717,35 +7714,6 @@ normalize_duration_input_units <- function(input_units) {
   input_units <- tidy_sub(input_units, "secs", "seconds")
   input_units <- tidy_sub(input_units, "mins", "minutes")
   input_units
-}
-
-validate_duration_output_units <- function(output_units) {
-
-  if (!is.character(output_units)) {
-
-    cli::cli_abort(
-      "The `output_units` input to `fmt_duration()` must be a character vector."
-    )
-  }
-
-  if (length(output_units) < 1) {
-
-    cli::cli_abort(
-      "The `output_units` input to `fmt_duration()` must be a vector with at
-      least one element."
-    )
-  }
-
-  time_parts_vec <- c("weeks", "days", "hours", "mins", "minutes", "secs", "seconds")
-
-  if (!all(output_units %in% time_parts_vec)) {
-
-    cli::cli_abort(c(
-      "There are invalid components in the `output_units` input to `fmt_duration()`.",
-      "*" = "Only the \"weeks\", \"days\", \"hours\", \"minutes\", and \"seconds\`
-      time parts should be present."
-    ))
-  }
 }
 
 normalize_duration_output_units <- function(output_units) {

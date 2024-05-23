@@ -726,6 +726,17 @@ data_color <- function(
   # If no color is provided to `na_color`, use gray as a default
   na_color <- na_color %||% "#808080"
 
+  # Error early if `palette = NA`, or is a numeric vector.
+  if (length(palette) > 0 && (is.numeric(palette) || anyNA(palette))) {
+    cli::cli_abort(c(
+      "`palette` must {.help [a valid palette](gt::data_color)}, not a numeric vector."
+    ))
+  }
+  # "#FA9DFE"
+  # if (is.character(palette) && length(palette) > 1) {
+  #   check_named_colors(palette[!grepl("#", palette, fixed = TRUE)])
+  # }
+
   # Defuse any function supplied to `fn`; if a function is supplied to `colors`
   # (previous argument for this purpose) then let that take precedent and
   # provide a deprecation warning
@@ -953,9 +964,8 @@ data_color <- function(
               reverse = reverse
             ),
             error = function(e) {
-              cli::cli_abort(c(
+              cli::cli_abort(
                 "Failed to compute colors for column {.code {resolved_columns[i]}}.",
-                i = "Did the column include infinite values?"),
                 parent = e
               )
             }
@@ -993,7 +1003,7 @@ data_color <- function(
       if (!is.numeric(data_vals) && direction == "row") {
 
         cli::cli_abort(c(
-          "The {.val numeric} method with {.code direction == {.val row}} cannot be used
+          "The {.val numeric} method with {.code direction = {.val row}} cannot be used
           when non-numeric columns are included.",
           "*" = "Either specify a collection of numeric columns or use the
           {.val factor} method."
@@ -1374,11 +1384,11 @@ rgba_to_hex <- function(colors) {
 #' alpha value for a color is not 1).
 #'
 #' @noRd
-html_color <- function(colors, alpha = NULL) {
+html_color <- function(colors, alpha = NULL, call = rlang::caller_env()) {
 
   # Stop function if there are any NA values in `colors`
   if (anyNA(colors)) {
-    cli::cli_abort("`colors` should not contain any `NA` values.")
+    cli::cli_abort("`colors` should not contain any `NA` values.", call = call)
   }
 
   is_rgba <- is_rgba_col(colors = colors)
@@ -1401,7 +1411,7 @@ html_color <- function(colors, alpha = NULL) {
 
     # Ensure that all color names are in the set of X11/R color
     # names or CSS color names
-    check_named_colors(named_colors)
+    check_named_colors(named_colors, call = call)
 
     # Translate the `transparent` color to #FFFFFF00 (white, transparent)
     named_colors[named_colors == "transparent"] <- "#FFFFFF00"
@@ -1500,7 +1510,7 @@ valid_color_names <- function() {
   c(tolower(grDevices::colors()), names(css_exclusive_colors()), "transparent")
 }
 
-check_named_colors <- function(named_colors) {
+check_named_colors <- function(named_colors, call = rlang::caller_env()) {
 
   named_colors <- tolower(named_colors)
 
@@ -1518,6 +1528,8 @@ check_named_colors <- function(named_colors) {
     cli::cli_abort(c(
       "{one_several_invalid} used ({str_catalog(invalid_colors, conj = 'and')}).",
       "*" = "Only R/X11 color names and CSS 3.0 color names can be used."
-    ))
+     ),
+     call = call
+     )
   }
 }

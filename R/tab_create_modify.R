@@ -1098,33 +1098,10 @@ tab_spanner_delim <- function(
   split <- rlang::arg_match(split)
 
   # Perform various input checks for `limit` if it is provided
-  if (!is.null(limit)) {
-
-    if (length(limit) != 1) {
-      cli::cli_abort("If provided, `limit` must be a single value.")
-    }
-
-    if (!rlang::is_integerish(limit)) {
-      cli::cli_abort("An integer value should be supplied for `limit`.")
-    }
-
-    if (limit < 1) {
-      cli::cli_abort("The value supplied for `limit` should be `1` or greater.")
-    }
-  }
+  check_number_whole(limit, min = 1, allow_null = TRUE, allow_infinite = FALSE)
 
   # Perform checks on `delim`
-  if (!rlang::is_character(delim)) {
-    cli::cli_abort("The value supplied for `delim` must be of type `character`.")
-  }
-
-  if (length(delim) != 1) {
-    cli::cli_abort("`delim` must be a single value.")
-  }
-
-  if (nchar(delim) < 1) {
-    cli::cli_abort("The value supplied for `delim` must be at least a single character.")
-  }
+  check_string(delim, allow_empty = FALSE)
 
   # Get all of the columns in the dataset
   all_cols <- dt_boxhead_get_vars(data = data)
@@ -1921,7 +1898,7 @@ tab_stub_indent <- function(
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
-
+  rlang::check_required(rows)
   # Capture the `rows` expression
   row_expr <- rlang::enquo(rows)
 
@@ -2018,12 +1995,12 @@ tab_stub_indent <- function(
       ) {
 
         # Stop function if `indent` value doesn't fall into the acceptable range
-        if (indent < 0 | indent > 5) {
-          cli::cli_abort(c(
-            "If given as a numeric value, `indent` should be one of the following:",
-            "*" = "0, 1, 2, 3, 4, or 5"
-          ))
-        }
+        check_number_whole(
+          indent,
+          min = 0,
+          max = 5,
+          allow_infinite = FALSE
+        )
 
         # Coerce `indent` to an integer value
         indent_val_i <- as.integer(indent)
@@ -3246,7 +3223,8 @@ tab_style <- function(
 
   # Resolve into a list of locations
   locations <- as_locations(locations)
-
+  # Keep original value for future error message.
+  style0 <- style
   # Upgrade `style` to be within a list if not provided as such
   if (inherits(style, "cell_styles")) {
     style <- list(style)
@@ -3469,11 +3447,30 @@ tab_style <- function(
   for (loc in locations) {
 
     data <-
-      set_style(
-        loc = loc,
-        data = data,
-        style = style
+      withCallingHandlers(
+        set_style(
+          loc = loc,
+          data = data,
+          style = style
+        ),
+        error = function(e) {
+
+          style_label <- lapply(style0, function(x) attr(x, "names"))
+          style_label <- unlist(style_label)
+          cell_border_components <- c("cell_border_top", "cell_border_left", "cell_border_right", "cell_border_bottom")
+
+          if (all(cell_border_components %in% style_label)) {
+            style_label[style_label == "cell_border_top"] <- "cell_borders"
+            style_label[style_label %in% cell_border_components] <- ""
+            style_label <- style_label[nzchar(style_label)]
+          }
+          cli::cli_abort(
+            "Could not style the table with {.fn {style_label}}.",
+            parent = e
+          )
+        }
       )
+
   }
 
   data
@@ -3576,8 +3573,8 @@ set_style.cells_stubhead <- function(loc, data, style) {
 
 #' @export
 set_style.cells_column_labels <- function(loc, data, style) {
-
-  resolved <- resolve_cells_column_labels(data = data, object = loc)
+  call <- call("cells_column_labels")
+  resolved <- resolve_cells_column_labels(data = data, object = loc, call = call)
 
   cols <- resolved$columns
 
@@ -3599,8 +3596,8 @@ set_style.cells_column_labels <- function(loc, data, style) {
 
 #' @export
 set_style.cells_column_spanners <- function(loc, data, style) {
-
-  resolved <- resolve_cells_column_spanners(data = data, object = loc)
+  call <- call("cells_column_spanners")
+  resolved <- resolve_cells_column_spanners(data = data, object = loc, call = call)
 
   groups <- resolved$spanners
 
@@ -3620,7 +3617,7 @@ set_style.cells_column_spanners <- function(loc, data, style) {
 
 #' @export
 set_style.cells_row_groups <- function(loc, data, style) {
-
+  call <- call("cells_row_groups")
   row_groups <- dt_row_groups_get(data = data)
 
   # Resolve row groups
@@ -3628,7 +3625,8 @@ set_style.cells_row_groups <- function(loc, data, style) {
     resolve_vector_i(
       expr = !!loc$groups,
       vector = row_groups,
-      item_label = "row group"
+      item_label = "row group",
+      call = call
     )
 
   groups <- row_groups[resolved_row_groups_idx]
@@ -3649,8 +3647,8 @@ set_style.cells_row_groups <- function(loc, data, style) {
 
 #' @export
 set_style.cells_body <- function(loc, data, style) {
-
-  resolved <- resolve_cells_body(data = data, object = loc)
+  call <- call("cells_body")
+  resolved <- resolve_cells_body(data = data, object = loc, call = call)
 
   rows <- resolved$rows
 
@@ -3672,8 +3670,8 @@ set_style.cells_body <- function(loc, data, style) {
 
 #' @export
 set_style.cells_stub <- function(loc, data, style) {
-
-  resolved <- resolve_cells_stub(data = data, object = loc)
+  call <- call("cells_stub")
+  resolved <- resolve_cells_stub(data = data, object = loc, call = call)
 
   rows <- resolved$rows
 

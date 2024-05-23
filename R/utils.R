@@ -350,15 +350,6 @@ is_string_time <- function(x) {
   is.character(x) & grepl("^\\d{1,2}:\\d{2}(:\\d{2}(\\.\\d+)?)?$", x)
 }
 
-check_format_code <- function(format) {
-
-  if (!rlang::is_string(format)) {
-    cli::cli_abort(
-      "The `format` code must be a character string of length 1."
-    )
-  }
-}
-
 #' Transform a `currency` code to a currency string
 #'
 #' @noRd
@@ -1055,8 +1046,8 @@ markdown_to_xml <- function(text) {
 
           if (inherits(x, "xml_nodeset")) {
 
-            results <- lapply( x, apply_rules)
-            do.call( 'paste0',c(results,collapse = "\n"))
+            results <- lapply(x, apply_rules)
+            do.call("paste0", c(results, collapse = "\n"))
 
           } else {
 
@@ -2178,31 +2169,21 @@ get_file_ext <- function(file) {
   ifelse(pos > -1L, substring(file, pos + 1L), "")
 }
 
-validate_marks <- function(marks) {
+validate_marks <- function(marks, call = rlang::caller_env()) {
 
-  if (is.null(marks)) {
-    cli::cli_abort("The value for `marks` must not be `NULL`.")
-  }
-  if (!is.character(marks)) {
-    cli::cli_abort("The value for `marks` must be a character vector.")
-  }
-  if (length(marks) == 0) {
-    cli::cli_abort("The length of `marks` must not be zero.")
-  }
-
-  marks_keywords <- c("numbers", "letters", "LETTERS", "standard", "extended")
-
-  if (length(marks) == 1 && !any(marks_keywords %in% marks)) {
-
-    #nocov start
+  if (length(marks) <= 1) {
+    check_string(marks, allow_empty = FALSE, allow_null = FALSE, call = call)
+    marks_keywords <- c("numbers", "letters", "LETTERS", "standard", "extended")
 
     cli::cli_abort(c(
       "The `marks` keyword provided (\"{marks}\") is not valid.",
       "*" = "Either of \"numbers\", \"letters\", \"LETTERS\", \"standard\",
       or \"extended\" can be used."
-    ))
+    ), call = call)
 
-    #nocov end
+  }
+  if (!is.character(marks)) {
+    cli::cli_abort("The value for `marks` must be a character vector.", call = call)
   }
 }
 
@@ -2211,7 +2192,8 @@ validate_style_in <- function(
     style_names,
     arg_name,
     in_vector,
-    with_pattern = NULL
+    with_pattern = NULL,
+    call = caller_env()
 ) {
 
   if (arg_name %in% style_names) {
@@ -2225,17 +2207,17 @@ validate_style_in <- function(
     }
 
     if (!(arg_value %in% in_vector)) {
-
-      cli::cli_abort(c(
-        "The provided `{arg_name}` value cannot be `{arg_value}`.",
-        "*" = "It can only be either of the following:
-        {str_catalog(in_vector, conj = 'or')}."
-      ))
+      rlang::arg_match0(
+        arg_value,
+        in_vector,
+        arg_nm = arg_name,
+        error_call = call
+      )
     }
   }
 }
 
-check_spanner_id_unique <- function(data, spanner_id) {
+check_spanner_id_unique <- function(data, spanner_id, call = rlang::caller_env()) {
 
   existing_column_ids <- dt_boxhead_get_vars(data = data)
   existing_spanner_ids <- dt_spanners_get_ids(data = data)
@@ -2248,11 +2230,12 @@ check_spanner_id_unique <- function(data, spanner_id) {
       "The spanner {.arg id} provided ({.val {spanner_id}}) is not unique.",
       "*" = "The `id` must be unique across existing spanner and column IDs.",
       "*" = "Provide a unique ID value for this spanner."
-    ))
+    ),
+    call = call)
   }
 }
 
-check_row_group_id_unique <- function(data, row_group_id) {
+check_row_group_id_unique <- function(data, row_group_id, call = rlang::caller_env()) {
 
   stub_df <- dt_stub_df_get(data = data)
 
@@ -2263,7 +2246,9 @@ check_row_group_id_unique <- function(data, row_group_id) {
     cli::cli_abort(c(
       "The row group {.arg id} provided ({.val {row_group_id}}) is not unique.",
       "*" = "Provide a unique ID value for this row group"
-    ))
+      ),
+      call = call
+    )
   }
 }
 
@@ -2279,43 +2264,22 @@ prepend_vec <- function(x, values, after = 0) {
   append(x, values, after = after)
 }
 
-validate_length_one <- function(x, name) {
+validate_length_one <- function(x, name, call = rlang::caller_env()) {
   if (length(x) != 1) {
-    cli::cli_abort("The value for `{name}` should have a length of one.")
+    cli::cli_abort(
+      "{.arg {name}} must have a length one, not {length(x)}.",
+      call = call
+    )
   }
 }
 
-validate_table_id <- function(id) {
+validate_table_id <- function(id, call = caller_env()) {
 
-  if (is.null(id)) {
-    return()
-  }
-
-  if (length(id) != 1) {
-    cli::cli_abort("The length of `id` must be `1`.")
-  }
-  if (is.na(id)) {
-    cli::cli_abort("The value for `id` must not be `NA`.")
-  }
-  if (!is.character(id)) {
-    cli::cli_abort("Any input for `id` must be of the `character` class.")
-  }
+  check_string(id, allow_na = FALSE, allow_null = TRUE, call = call)
 }
 
-validate_n_sigfig <- function(n_sigfig) {
-
-  if (length(n_sigfig) != 1) {
-    cli::cli_abort("The length of `n_sigfig` must be 1.")
-  }
-  if (is.na(n_sigfig)) {
-    cli::cli_abort("The value for `n_sigfig` must not be `NA`.")
-  }
-  if (!is.numeric(n_sigfig)) {
-    cli::cli_abort("Any input for `n_sigfig` must be numeric.")
-  }
-  if (n_sigfig < 1) {
-    cli::cli_abort("The value for `n_sigfig` must be greater than or equal to `1`.")
-  }
+validate_n_sigfig <- function(n_sigfig, call = rlang::caller_env()) {
+  check_number_whole(n_sigfig, allow_na = FALSE, min = 1, call  = call)
 }
 
 validate_css_lengths <- function(x) {
@@ -2323,7 +2287,7 @@ validate_css_lengths <- function(x) {
   # Don't include empty strings in the validation; these lengths
   # should be handled downstream (i.e., using `htmltools::css()`,
   # where empty strings and NULL values don't create rules at all)
-  x_units_non_empty <- x[!(x == "")]
+  x_units_non_empty <- x[nzchar(x)]
 
   # While this returns a vector of corrected CSS units, we
   # primarily want to verify that the vector of provided values
@@ -2339,12 +2303,13 @@ validate_css_lengths <- function(x) {
   )
 }
 
-column_classes_are_valid <- function(data, columns, valid_classes) {
+column_classes_are_valid <- function(data, columns, valid_classes, call = rlang::caller_env()) {
 
   resolved <-
     resolve_cols_c(
       expr = {{ columns }},
-      data = data
+      data = data,
+      call = call
     )
 
   table_data <- dt_data_get(data = data)
@@ -2355,7 +2320,8 @@ column_classes_are_valid <- function(data, columns, valid_classes) {
       table_data,
       FUN.VALUE = logical(1),
       USE.NAMES = FALSE,
-      FUN = function(x) any(class(x) %in% valid_classes)
+      # TRUE if inherits any of the valid classes
+      FUN = function(x) inherits(x, valid_classes)
     )
   )
 }

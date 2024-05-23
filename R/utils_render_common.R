@@ -424,9 +424,10 @@ perform_col_merge <- function(data, context) {
 
     type <- col_merge[[i]]$type
 
-    if (!(type %in% c("merge", "merge_range", "merge_uncert", "merge_n_pct"))) {
-      cli::cli_abort("Unknown `type` supplied.")
-    }
+    type <- rlang::arg_match0(
+      type,
+      c("merge", "merge_range", "merge_uncert", "merge_n_pct")
+    )
 
     if (type == "merge") {
 
