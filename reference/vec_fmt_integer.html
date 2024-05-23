@@ -177,7 +177,11 @@ or the range will inherit a previous suffix (e.g., with
 <code>c("K", "M", NA, "T")</code>, all numbers in the range of millions and billions
 will be in terms of millions).</p>
 <p>Any use of <code>suffixing</code> (where it is not set expressly as <code>FALSE</code>) means
-that any value provided to <code>scale_by</code> will be ignored.</p></dd>
+that any value provided to <code>scale_by</code> will be ignored.</p>
+<p>If using <code>system = "ind"</code> then the default suffix set provided by
+<code>suffixing = TRUE</code> will be the equivalent of <code>c(NA, "L", "Cr")</code>. This
+doesn't apply suffixes to the thousands range, but does express values in
+<em>lakhs</em> and <em>crores</em>.</p></dd>
 
 
 <dt>pattern</dt>

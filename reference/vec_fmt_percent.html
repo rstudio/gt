@@ -158,9 +158,7 @@ vector of the same length. Values within the vector will be formatted.</p></dd>
 <p>This corresponds to the exact number of decimal places to use. A value
 such as <code>2.34</code> can, for example, be formatted with <code>0</code> decimal places and
 it would result in <code>"2"</code>. With <code>4</code> decimal places, the formatted value
-becomes <code>"2.3400"</code>. The trailing zeros can be removed with
-<code>drop_trailing_zeros = TRUE</code>. If you always need <code>decimals = 0</code>, the
-<code><a href="fmt_integer.html">fmt_integer()</a></code> function should be considered.</p></dd>
+becomes <code>"2.3400"</code>.</p></dd>
 
 
 <dt>drop_trailing_zeros</dt>
@@ -249,9 +247,9 @@ sign. The default is to not introduce a space character.</p></dd>
 
 <dt>placement</dt>
 <dd><p><em>Percent sign placement</em></p>
-<p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>"right"</code></p>
+<p><code>singl-kw:[right|left]</code> // <em>default:</em> <code>"right"</code></p>
 <p>This option governs the placement of the percent sign. This can be either
-be <code>right</code> (the default) or <code>left</code>.</p></dd>
+be <code>"right"</code> (the default) or <code>"left"</code>.</p></dd>
 
 
 <dt>locale</dt>
