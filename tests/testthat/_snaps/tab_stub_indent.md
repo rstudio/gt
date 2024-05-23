@@ -26,6 +26,24 @@
     Output
       [1] "\\begingroup\n\\fontsize{12.0pt}{14.4pt}\\selectfont\n\\begin{longtable}{l|rlcrrrrl}\n\\toprule\n\\multicolumn{1}{l}{} & num & char & fctr & date & time & datetime & currency & group \\\\ \n\\midrule\\addlinespace[2.5pt]\nrow\\_1 & 1.111e-01 & apricot & one & 2015-01-15 & 13:35 & 2018-01-01 02:22 & 49.950 & grp\\_a \\\\ \nrow\\_2 & 2.222e+00 & banana & two & 2015-02-15 & 14:40 & 2018-02-02 14:33 & 17.950 & grp\\_a \\\\ \n\\hspace*{7.5pt} row\\_3 & 3.333e+01 & coconut & three & 2015-03-15 & 15:45 & 2018-03-03 03:44 & 1.390 & grp\\_a \\\\ \n\\hspace*{7.5pt} row\\_4 & 4.444e+02 & durian & four & 2015-04-15 & 16:50 & 2018-04-04 15:55 & 65100.000 & grp\\_a \\\\ \n\\hspace*{7.5pt} row\\_5 & 5.550e+03 & NA & five & 2015-05-15 & 17:55 & 2018-05-05 04:00 & 1325.810 & grp\\_b \\\\ \nrow\\_6 & NA & fig & six & 2015-06-15 & NA & 2018-06-06 16:11 & 13.255 & grp\\_b \\\\ \nrow\\_7 & 7.770e+05 & grapefruit & seven & NA & 19:10 & 2018-07-07 05:22 & NA & grp\\_b \\\\ \nrow\\_8 & 8.880e+06 & honeydew & eight & 2015-08-15 & 20:20 & NA & 0.440 & grp\\_b \\\\ \n\\bottomrule\n\\end{longtable}\n\\endgroup\n"
 
+# tab_stub_indent() errors gracefully if indent or rows is incorrect
+
+    Code
+      tbl_stub %>% tab_stub_indent()
+    Condition
+      Error in `tab_stub_indent()`:
+      ! `rows` is absent but must be supplied.
+    Code
+      tbl_stub %>% tab_stub_indent(rows = c(1, 2), indent = 6)
+    Condition
+      Error in `tab_stub_indent()`:
+      ! `indent` must be a whole number between 0 and 5, not the number 6.
+    Code
+      tbl_stub %>% tab_stub_indent(rows = c(19))
+    Condition
+      Error in `tab_stub_indent()`:
+      ! The following row indices do not exist in the data: 19.
+
 # Indentation values can be obtained from a table column
 
     Code

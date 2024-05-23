@@ -3,7 +3,7 @@
     Code
       tab %>% sub_missing(columns = "num_3")
     Condition
-      Error in `subst()`:
+      Error in `sub_missing()`:
       ! Can't select columns that don't exist.
       x Column `num_3` doesn't exist.
 
@@ -12,7 +12,7 @@
     Code
       tab %>% sub_zero(columns = "num_3")
     Condition
-      Error in `subst()`:
+      Error in `sub_zero()`:
       ! Can't select columns that don't exist.
       x Column `num_3` doesn't exist.
 
@@ -21,7 +21,7 @@
     Code
       tab %>% sub_small_vals(columns = "num_3")
     Condition
-      Error in `subst()`:
+      Error in `sub_small_vals()`:
       ! Can't select columns that don't exist.
       x Column `num_3` doesn't exist.
 
@@ -30,7 +30,7 @@
     Code
       tab %>% sub_small_vals(columns = "num_1", sign = "?")
     Condition
-      Error in `check_sub_fn_sign()`:
+      Error in `sub_small_vals()`:
       ! The `sign` option should either be "+" or "-".
       * With "+", we consider only positive large values.
       * Using "-" means that the focus is on negative values.
@@ -40,7 +40,7 @@
     Code
       tab %>% sub_large_vals(columns = "num_3")
     Condition
-      Error in `subst()`:
+      Error in `sub_large_vals()`:
       ! Can't select columns that don't exist.
       x Column `num_3` doesn't exist.
 
@@ -49,10 +49,26 @@
     Code
       tab %>% sub_large_vals(columns = "num_1", sign = "?")
     Condition
-      Error in `check_sub_fn_sign()`:
+      Error in `sub_large_vals()`:
       ! The `sign` option should either be "+" or "-".
       * With "+", we consider only positive large values.
       * Using "-" means that the focus is on negative values.
+
+---
+
+    Code
+      tab %>% sub_large_vals(rows = "num_1")
+    Condition
+      Error in `sub_large_vals()`:
+      ! Row `num_1` does not exist in the data.
+
+---
+
+    Code
+      tab %>% sub_large_vals(rows = "num_1", threshold = c(10, 100))
+    Condition
+      Error in `sub_large_vals()`:
+      ! `threshold` must be a number, not a double vector.
 
 # The `sub_values()` function works correctly
 
@@ -68,7 +84,7 @@
       gt(data_tbl) %>% sub_values(values = "A")
     Condition
       Error in `sub_values()`:
-      ! A `replacement` needs to be provided for any `values` or `pattern`.
+      ! `replacement` must be a number, or a string, not NULL.
 
 ---
 
@@ -76,7 +92,7 @@
       gt(data_tbl) %>% sub_values(values = "A", replacement = TRUE)
     Condition
       Error in `sub_values()`:
-      ! The `replacement` must be a number or a string.
+      ! `replacement` must be a number, or a string, not `TRUE`.
 
 ---
 
@@ -84,7 +100,7 @@
       gt(data_tbl) %>% sub_values(values = "A", replacement = character(0))
     Condition
       Error in `sub_values()`:
-      ! The length of the `replacement` vector must 1.
+      ! `replacement` must be a single string, not an empty character vector.
 
 ---
 
@@ -92,7 +108,7 @@
       gt(data_tbl) %>% sub_values(values = "A", replacement = c("A", "B"))
     Condition
       Error in `sub_values()`:
-      ! The length of the `replacement` vector must 1.
+      ! `replacement` must be a single string, not a character vector.
 
 ---
 

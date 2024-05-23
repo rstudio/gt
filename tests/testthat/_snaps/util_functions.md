@@ -34,7 +34,7 @@
       as_locations(locations)
     Condition
       Error in `as_locations()`:
-      ! The `locations` object should be a list of `cells_*()` objects.
+      ! `locations` should be a list of `cells_*()` (`?location-helper`) calls.
 
 # the `glue_gt()` function works in a safe manner
 
@@ -97,7 +97,7 @@
     Code
       check_spanner_id_unique(data = gt_tbl_2, spanner_id = "a")
     Condition
-      Error in `check_spanner_id_unique()`:
+      Error:
       ! The spanner `id` provided ("a") is not unique.
       * The `id` must be unique across existing spanner and column IDs.
       * Provide a unique ID value for this spanner.
@@ -107,7 +107,7 @@
     Code
       check_spanner_id_unique(data = gt_tbl_1, spanner_id = "num")
     Condition
-      Error in `check_spanner_id_unique()`:
+      Error:
       ! The spanner `id` provided ("num") is not unique.
       * The `id` must be unique across existing spanner and column IDs.
       * Provide a unique ID value for this spanner.
@@ -117,7 +117,7 @@
     Code
       check_spanner_id_unique(data = gt_tbl_2, spanner_id = "num")
     Condition
-      Error in `check_spanner_id_unique()`:
+      Error:
       ! The spanner `id` provided ("num") is not unique.
       * The `id` must be unique across existing spanner and column IDs.
       * Provide a unique ID value for this spanner.
@@ -127,7 +127,7 @@
     Code
       check_spanner_id_unique(data = gt_tbl_2, spanner_id = "num")
     Condition
-      Error in `check_spanner_id_unique()`:
+      Error:
       ! The spanner `id` provided ("num") is not unique.
       * The `id` must be unique across existing spanner and column IDs.
       * Provide a unique ID value for this spanner.
@@ -137,7 +137,7 @@
     Code
       check_spanner_id_unique(data = gt_tbl_3, spanner_id = "row")
     Condition
-      Error in `check_spanner_id_unique()`:
+      Error:
       ! The spanner `id` provided ("row") is not unique.
       * The `id` must be unique across existing spanner and column IDs.
       * Provide a unique ID value for this spanner.
@@ -147,7 +147,7 @@
     Code
       check_spanner_id_unique(data = gt_tbl_3, spanner_id = "group")
     Condition
-      Error in `check_spanner_id_unique()`:
+      Error:
       ! The spanner `id` provided ("group") is not unique.
       * The `id` must be unique across existing spanner and column IDs.
       * Provide a unique ID value for this spanner.

@@ -4,7 +4,7 @@
       gt(iris_short) %>% tab_spanner_delim(delim = "")
     Condition
       Error in `tab_spanner_delim()`:
-      ! The value supplied for `delim` must be at least a single character.
+      ! `delim` must be a single string, not the empty string "".
 
 ---
 
@@ -12,7 +12,7 @@
       gt(iris_short) %>% tab_spanner_delim(delim = c(".", "."))
     Condition
       Error in `tab_spanner_delim()`:
-      ! `delim` must be a single value.
+      ! `delim` must be a single string, not a character vector.
 
 ---
 
@@ -20,7 +20,7 @@
       gt(iris_short) %>% tab_spanner_delim(delim = character(0))
     Condition
       Error in `tab_spanner_delim()`:
-      ! `delim` must be a single value.
+      ! `delim` must be a single string, not an empty character vector.
 
 ---
 
@@ -44,7 +44,7 @@
       gt(iris_short) %>% tab_spanner_delim(delim = ".", limit = TRUE)
     Condition
       Error in `tab_spanner_delim()`:
-      ! An integer value should be supplied for `limit`.
+      ! `limit` must be a whole number or `NULL`, not `TRUE`.
 
 ---
 
@@ -52,7 +52,7 @@
       gt(iris_short) %>% tab_spanner_delim(delim = ".", limit = "1")
     Condition
       Error in `tab_spanner_delim()`:
-      ! An integer value should be supplied for `limit`.
+      ! `limit` must be a whole number or `NULL`, not the string "1".
 
 ---
 
@@ -60,7 +60,7 @@
       gt(iris_short) %>% tab_spanner_delim(delim = ".", limit = -1)
     Condition
       Error in `tab_spanner_delim()`:
-      ! The value supplied for `limit` should be `1` or greater.
+      ! `limit` must be a whole number larger than or equal to 1 or `NULL`, not the number -1.
 
 ---
 
@@ -68,7 +68,7 @@
       gt(iris_short) %>% tab_spanner_delim(delim = ".", limit = 0)
     Condition
       Error in `tab_spanner_delim()`:
-      ! The value supplied for `limit` should be `1` or greater.
+      ! `limit` must be a whole number larger than or equal to 1 or `NULL`, not the number 0.
 
 ---
 
@@ -76,15 +76,15 @@
       gt(iris_short) %>% tab_spanner_delim(delim = ".", limit = 1.5)
     Condition
       Error in `tab_spanner_delim()`:
-      ! An integer value should be supplied for `limit`.
+      ! `limit` must be a whole number or `NULL`, not the number 1.5.
 
 ---
 
     Code
       gt(iris_short) %>% tab_spanner_delim(delim = ".", limit = Inf)
     Condition
-      Error in `seq_len()`:
-      ! argument must be coercible to non-negative integer
+      Error in `tab_spanner_delim()`:
+      ! `limit` must be a whole number or `NULL`, not `Inf`.
 
 # `tab_spanner_delim()` works on higher-order spanning
 
@@ -359,7 +359,7 @@
       gt_tbl_6_last %>% tab_spanner(label = md("**Z**"), columns = 5, level = 4) %>%
         tab_spanner(label = md("**Z**"), columns = 5, level = 3)
     Condition
-      Error in `check_spanner_id_unique()`:
+      Error in `tab_spanner()`:
       ! The spanner `id` provided (**Z**) is not unique.
       * The `id` must be unique across existing spanner and column IDs.
       * Provide a unique ID value for this spanner.
@@ -377,7 +377,7 @@
       gt_tbl_6_z %>% tab_spanner(label = md("**Y**"), columns = 5, level = 4, id = "Z4",
       replace = TRUE)
     Condition
-      Error in `check_spanner_id_unique()`:
+      Error in `tab_spanner()`:
       ! The spanner `id` provided ("Z4") is not unique.
       * The `id` must be unique across existing spanner and column IDs.
       * Provide a unique ID value for this spanner.

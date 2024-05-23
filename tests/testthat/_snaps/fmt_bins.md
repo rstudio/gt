@@ -3,7 +3,7 @@
     Code
       tab %>% fmt_bins(columns = b)
     Condition
-      Error in `column_classes_are_valid()`:
+      Error in `fmt_bins()`:
       ! Can't select columns that don't exist.
       x Column `b` doesn't exist.
 

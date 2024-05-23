@@ -4,8 +4,8 @@
       gt_tbl_3 %>% fmt_number(columns = num, decimals = 5) %>% extract_cells(columns = num,
         rows = "row_50", output = "plain")
     Condition
-      Error in `resolve_rows_i()`:
-      ! Can't find row `row_50` in the data.
+      Error in `extract_cells()`:
+      ! Row `row_50` does not exist in the data.
 
 ---
 
@@ -13,8 +13,8 @@
       gt_tbl_3 %>% fmt_number(columns = num, decimals = 5) %>% extract_cells(columns = num,
         rows = c("row_2", "row_50"), output = "plain")
     Condition
-      Error in `resolve_rows_i()`:
-      ! Can't find row `row_50` in the data.
+      Error in `extract_cells()`:
+      ! Row `row_50` does not exist in the data.
 
 ---
 

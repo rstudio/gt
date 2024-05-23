@@ -3,7 +3,7 @@
     Code
       tab %>% fmt_bytes(columns = num_2, decimals = 2)
     Condition
-      Error in `column_classes_are_valid()`:
+      Error in `fmt_bytes()`:
       ! Can't select columns that don't exist.
       x Column `num_2` doesn't exist.
 

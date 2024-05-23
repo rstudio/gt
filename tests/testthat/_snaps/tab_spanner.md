@@ -13,7 +13,7 @@
       gt(exibble) %>% tab_spanner(label = "a", columns = num) %>% tab_spanner(label = "b",
         id = "a", columns = char)
     Condition
-      Error in `check_spanner_id_unique()`:
+      Error in `tab_spanner()`:
       ! The spanner `id` provided ("a") is not unique.
       * The `id` must be unique across existing spanner and column IDs.
       * Provide a unique ID value for this spanner.

@@ -258,7 +258,6 @@
     Condition
       Error in `data_color()`:
       ! Failed to compute colors for column `min_sza`.
-      i Did the column include infinite values?
       Caused by error:
       ! Unknown colour name: blau
 
@@ -269,10 +268,7 @@
         autocolor_text = TRUE)
     Condition
       Error in `data_color()`:
-      ! Failed to compute colors for column `min_sza`.
-      i Did the column include infinite values?
-      Caused by error in `UseMethod()`:
-      ! no applicable method for 'toPaletteFunc' applied to an object of class "logical"
+      ! `palette` must a valid palette (`?gt::data_color()`), not a numeric vector.
 
 ---
 
@@ -281,10 +277,7 @@
       autocolor_text = TRUE)
     Condition
       Error in `data_color()`:
-      ! Failed to compute colors for column `min_sza`.
-      i Did the column include infinite values?
-      Caused by error in `UseMethod()`:
-      ! no applicable method for 'toPaletteFunc' applied to an object of class "c('integer', 'numeric')"
+      ! `palette` must a valid palette (`?gt::data_color()`), not a numeric vector.
 
 ---
 
@@ -294,9 +287,8 @@
     Condition
       Error in `data_color()`:
       ! Failed to compute colors for column `min_sza`.
-      i Did the column include infinite values?
       Caused by error:
-      ! Malformed colour string `##45aa22`. Must contain either 6 or 8 hex values
+      ! Malformed colour string `##45aa22`. Must contain either 3, 4, 6 or 8 hex values
 
 ---
 
@@ -304,7 +296,7 @@
       exibble %>% gt() %>% data_color(direction = "row", method = "numeric")
     Condition
       Error in `data_color()`:
-      ! The "numeric" method with `direction == "row"` cannot be used when non-numeric columns are included.
+      ! The "numeric" method with `direction = "row"` cannot be used when non-numeric columns are included.
       * Either specify a collection of numeric columns or use the "factor" method.
 
 ---
@@ -331,7 +323,7 @@
     Code
       html_color(colors = c(c_name, c_hex, c_hex_a, NA_character_))
     Condition
-      Error in `html_color()`:
+      Error:
       ! `colors` should not contain any `NA` values.
 
 ---
@@ -339,7 +331,7 @@
     Code
       html_color(colors = c(c_name, "blau", c_hex, c_hex_a))
     Condition
-      Error in `check_named_colors()`:
+      Error:
       ! An invalid color name was used (`"blau"`).
       * Only R/X11 color names and CSS 3.0 color names can be used.
 
@@ -348,7 +340,7 @@
     Code
       html_color(colors = c(c_name, c_hex, "#FF04JJ", c_hex_a))
     Condition
-      Error in `check_named_colors()`:
+      Error:
       ! An invalid color name was used (`"#ff04jj"`).
       * Only R/X11 color names and CSS 3.0 color names can be used.
 
@@ -357,7 +349,7 @@
     Code
       html_color(colors = c(c_name, c_hex, c_hex_a, "#FF0033100"))
     Condition
-      Error in `check_named_colors()`:
+      Error:
       ! An invalid color name was used (`"#ff0033100"`).
       * Only R/X11 color names and CSS 3.0 color names can be used.
 
@@ -366,7 +358,7 @@
     Code
       html_color(colors = c(c_name, c_hex, "FF04E2", c_hex_a))
     Condition
-      Error in `check_named_colors()`:
+      Error:
       ! An invalid color name was used (`"ff04e2"`).
       * Only R/X11 color names and CSS 3.0 color names can be used.
 
@@ -384,7 +376,7 @@
     Code
       ideal_fgnd_color(bgnd_color = c(c_hex, "#FF04JJ", c_hex_a))
     Condition
-      Error in `check_named_colors()`:
+      Error in `ideal_fgnd_color()`:
       ! An invalid color name was used (`"#ff04jj"`).
       * Only R/X11 color names and CSS 3.0 color names can be used.
 
@@ -393,7 +385,7 @@
     Code
       ideal_fgnd_color(bgnd_color = c(c_hex, c_hex_a, "#FF0033100"))
     Condition
-      Error in `check_named_colors()`:
+      Error in `ideal_fgnd_color()`:
       ! An invalid color name was used (`"#ff0033100"`).
       * Only R/X11 color names and CSS 3.0 color names can be used.
 
@@ -403,7 +395,7 @@
       adjust_luminance(colors = c_hex, steps = -2.1)
     Condition
       Error in `adjust_luminance()`:
-      ! The value provided for `steps` (`-2.1`) must be between `-2.0` and `+2.0`.
+      ! `steps` must be a number between -2 and 2, not the number -2.1.
 
 ---
 
@@ -411,7 +403,7 @@
       adjust_luminance(colors = c_hex, steps = +2.1)
     Condition
       Error in `adjust_luminance()`:
-      ! The value provided for `steps` (`2.1`) must be between `-2.0` and `+2.0`.
+      ! `steps` must be a number between -2 and 2, not the number 2.1.
 
 # data_color errors gracefully when infinite values (#1373)
 
@@ -420,7 +412,6 @@
     Condition
       Error in `data_color()`:
       ! Failed to compute colors for column `y`.
-      i Did the column include infinite values?
       Caused by error in `scales::col_numeric()`:
       ! Wasn't able to determine range of `domain`
 

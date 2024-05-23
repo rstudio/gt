@@ -4,9 +4,10 @@
       locales %>% filter_table_to_value(lang_desc, lang_name == "en")
     Condition
       Error in `filter_table_to_value()`:
-      ! Internal error in `gt:::filter_table_to_row()`.
       * The filtered table doesn't result in a table of exactly one row.
       * Found 106 rows.
+      i This is an internal error that was detected in the gt package.
+        Please report it at <https://github.com/rstudio/gt/issues> with a reprex (<https://tidyverse.org/help/>) and the full backtrace.
 
 # the `get_locale_sep_mark()` function works correctly
 
@@ -14,9 +15,10 @@
       get_locale_sep_mark(locale = "do_IT", default = ",", use_seps = TRUE)
     Condition
       Error in `filter_table_to_value()`:
-      ! Internal error in `gt:::filter_table_to_row()`.
       * The filtered table doesn't result in a table of exactly one row.
       * Found 0 rows.
+      i This is an internal error that was detected in the gt package.
+        Please report it at <https://github.com/rstudio/gt/issues> with a reprex (<https://tidyverse.org/help/>) and the full backtrace.
 
 # the `get_locale_dec_mark()` function works correctly
 
@@ -24,9 +26,10 @@
       get_locale_dec_mark(locale = "do_IT", default = ".")
     Condition
       Error in `filter_table_to_value()`:
-      ! Internal error in `gt:::filter_table_to_row()`.
       * The filtered table doesn't result in a table of exactly one row.
       * Found 0 rows.
+      i This is an internal error that was detected in the gt package.
+        Please report it at <https://github.com/rstudio/gt/issues> with a reprex (<https://tidyverse.org/help/>) and the full backtrace.
 
 # the `split_string_2()` function works correctly
 
@@ -34,8 +37,9 @@
       split_string_2(x = 23432, before = "34")
     Condition
       Error in `split_string_2()`:
-      ! Internal error in `gt:::paste_within()`.
-      * The `x` object must be of class `character`.
+      * The `x` object must be a single string, not a number.
+      i This is an internal error that was detected in the gt package.
+        Please report it at <https://github.com/rstudio/gt/issues> with a reprex (<https://tidyverse.org/help/>) and the full backtrace.
 
 ---
 
@@ -43,8 +47,9 @@
       split_string_2(x = c("345", "234"), before = "34")
     Condition
       Error in `split_string_2()`:
-      ! Internal error in `gt:::paste_within()`.
-      * The length of the `x` must be exactly 1.
+      * The `x` object must be a single string, not a character vector.
+      i This is an internal error that was detected in the gt package.
+        Please report it at <https://github.com/rstudio/gt/issues> with a reprex (<https://tidyverse.org/help/>) and the full backtrace.
 
 ---
 
@@ -52,8 +57,9 @@
       split_string_2(x = "23432")
     Condition
       Error in `split_string_2()`:
-      ! Internal error in `gt:::split_string_2()`.
       * Both `before` and `after` cannot be `NULL`.
+      i This is an internal error that was detected in the gt package.
+        Please report it at <https://github.com/rstudio/gt/issues> with a reprex (<https://tidyverse.org/help/>) and the full backtrace.
 
 ---
 
@@ -61,8 +67,9 @@
       split_string_2(x = "23432", before = "3", after = "2")
     Condition
       Error in `split_string_2()`:
-      ! Internal error in `gt:::split_string_2()`.
       * A value must be provided to either `before` or `after`, not both.
+      i This is an internal error that was detected in the gt package.
+        Please report it at <https://github.com/rstudio/gt/issues> with a reprex (<https://tidyverse.org/help/>) and the full backtrace.
 
 ---
 
@@ -70,8 +77,9 @@
       split_string_2(x = "23432", before = 10)
     Condition
       Error in `split_string_2()`:
-      ! Internal error in `gt:::split_string_2()`.
       * The numeric value provided cannot be greater than 5.
+      i This is an internal error that was detected in the gt package.
+        Please report it at <https://github.com/rstudio/gt/issues> with a reprex (<https://tidyverse.org/help/>) and the full backtrace.
 
 # the `paste_between()` function works correctly
 
@@ -79,8 +87,9 @@
       paste_between(x_2 = 1:2, "-between-")
     Condition
       Error in `paste_between()`:
-      ! Internal error in `gt:::paste_between()`.
-      * The `x_2` object must be of class `character`.
+      * The `x_2` object must be of class `character` of length 2, not an integer vector.
+      i This is an internal error that was detected in the gt package.
+        Please report it at <https://github.com/rstudio/gt/issues> with a reprex (<https://tidyverse.org/help/>) and the full backtrace.
 
 ---
 
@@ -88,8 +97,9 @@
       paste_between(x_2 = c("left", "right"), 1)
     Condition
       Error in `paste_between()`:
-      ! Internal error in `gt:::paste_between()`.
       * The `x` object must be of class `character`.
+      i This is an internal error that was detected in the gt package.
+        Please report it at <https://github.com/rstudio/gt/issues> with a reprex (<https://tidyverse.org/help/>) and the full backtrace.
 
 ---
 
@@ -97,8 +107,9 @@
       paste_between(x_2 = "left", "between")
     Condition
       Error in `paste_between()`:
-      ! Internal error in `gt:::paste_between()`.
-      * The length of the `x_2` must be exactly 2.
+      * The `x_2` object must be of class `character` of length 2, not a string.
+      i This is an internal error that was detected in the gt package.
+        Please report it at <https://github.com/rstudio/gt/issues> with a reprex (<https://tidyverse.org/help/>) and the full backtrace.
 
 # the `paste_on_side()` function works correctly
 
@@ -106,8 +117,9 @@
       paste_on_side(x = "center", x_side = "c", direction = "center")
     Condition
       Error in `paste_on_side()`:
-      ! Internal error in `gt:::paste_on_side()`.
       * The `direction` must be either `left` or `right`.
+      i This is an internal error that was detected in the gt package.
+        Please report it at <https://github.com/rstudio/gt/issues> with a reprex (<https://tidyverse.org/help/>) and the full backtrace.
 
 # the `paste_left()` function works correctly
 
@@ -115,8 +127,9 @@
       paste_left(x = 1, x_left = "left")
     Condition
       Error in `paste_on_side()`:
-      ! Internal error in `gt:::paste_on_side()`.
       * The `x` and `x_side` objects must be of class `character`.
+      i This is an internal error that was detected in the gt package.
+        Please report it at <https://github.com/rstudio/gt/issues> with a reprex (<https://tidyverse.org/help/>) and the full backtrace.
 
 ---
 
@@ -124,8 +137,9 @@
       paste_left(x = "center", x_left = 1)
     Condition
       Error in `paste_on_side()`:
-      ! Internal error in `gt:::paste_on_side()`.
       * The `x` and `x_side` objects must be of class `character`.
+      i This is an internal error that was detected in the gt package.
+        Please report it at <https://github.com/rstudio/gt/issues> with a reprex (<https://tidyverse.org/help/>) and the full backtrace.
 
 ---
 
@@ -149,8 +163,9 @@
       paste_right(x = 1, x_right = "right")
     Condition
       Error in `paste_on_side()`:
-      ! Internal error in `gt:::paste_on_side()`.
       * The `x` and `x_side` objects must be of class `character`.
+      i This is an internal error that was detected in the gt package.
+        Please report it at <https://github.com/rstudio/gt/issues> with a reprex (<https://tidyverse.org/help/>) and the full backtrace.
 
 ---
 
@@ -158,8 +173,9 @@
       paste_right(x = "center", x_right = 1)
     Condition
       Error in `paste_on_side()`:
-      ! Internal error in `gt:::paste_on_side()`.
       * The `x` and `x_side` objects must be of class `character`.
+      i This is an internal error that was detected in the gt package.
+        Please report it at <https://github.com/rstudio/gt/issues> with a reprex (<https://tidyverse.org/help/>) and the full backtrace.
 
 ---
 

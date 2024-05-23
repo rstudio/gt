@@ -3,7 +3,7 @@
     Code
       tab %>% fmt_fraction(columns = num_2)
     Condition
-      Error in `column_classes_are_valid()`:
+      Error in `fmt_fraction()`:
       ! Can't select columns that don't exist.
       x Column `num_2` doesn't exist.
 
@@ -30,8 +30,7 @@
       tab %>% fmt_fraction(columns = num, accuracy = 0)
     Condition
       Error in `fmt_fraction()`:
-      ! The numeric value supplied for `accuracy` is invalid.
-      * Must be an integer value greater than zero.
+      ! `accuracy` must be a whole number larger than or equal to 1, not the number 0.
 
 ---
 

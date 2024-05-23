@@ -54,8 +54,8 @@
     Condition
       Error in `tab_footnote()`:
       ! Can't add footnote "Footnote error.".
-      Caused by error in `resolve_rows_i()`:
-      ! Can't find row `Mazda RX7` in the data.
+      Caused by error in `cells_body()`:
+      ! Row `Mazda RX7` does not exist in the data.
 
 # Footnotes with no location are rendered correctly
 

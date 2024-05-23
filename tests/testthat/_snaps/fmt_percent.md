@@ -3,7 +3,7 @@
     Code
       tab %>% fmt_percent(columns = num_3, decimals = 2)
     Condition
-      Error in `column_classes_are_valid()`:
+      Error in `fmt_percent()`:
       ! Can't select columns that don't exist.
       x Column `num_3` doesn't exist.
 

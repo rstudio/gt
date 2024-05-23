@@ -1,4 +1,4 @@
-# rows can be added to a table with name-value pairs
+# rows_add() allows rows can be added to a table with name-value pairs
 
     Code
       .
@@ -193,7 +193,7 @@
       gt_tbl_c %>% rows_add(.n_empty = -1)
     Condition
       Error in `rows_add()`:
-      ! The value for `.n_empty` cannot be negative.
+      ! `.n_empty` must be a whole number larger than or equal to 0, not the number -1.
 
 ---
 
@@ -201,7 +201,7 @@
       gt_tbl_c %>% rows_add(.n_empty = 3.2)
     Condition
       Error in `rows_add()`:
-      ! An integer value should be supplied for `.n_empty`.
+      ! `.n_empty` must be a whole number, not the number 3.2.
 
 ---
 
@@ -1105,12 +1105,12 @@
       simp_gt %>% rows_add(.before = 2, .after = 5, .n_empty = 2)
     Condition
       Error in `rows_add()`:
-      ! Expressions cannot be given to both `.before` and `.after`.
+      ! Only one of `.before` and `.after` can be supplied.
     Code
       simp_gt %>% rows_add(.before = 3, .after = 2, .n_empty = 2)
     Condition
       Error in `rows_add()`:
-      ! Expressions cannot be given to both `.before` and `.after`.
+      ! Only one of `.before` and `.after` can be supplied.
 
 # rows_add() errors if targeting rows do not resolve to a single row 
 
@@ -1158,7 +1158,7 @@
       gt_tbl_e %>% rows_add(.before = matches("5"), .after = matches("6"), .n_empty = 2)
     Condition
       Error in `rows_add()`:
-      ! Expressions cannot be given to both `.before` and `.after`.
+      ! Only one of `.before` and `.after` can be supplied.
 
 # adding rows can be done using formula-based expressions
 
@@ -1329,6 +1329,7 @@
     Condition
       Error in `rows_add()`:
       ! All column names referenced must be present in the data.
+      x Can't find columns "char_none".
 
 ---
 
@@ -1337,6 +1338,7 @@
     Condition
       Error in `rows_add()`:
       ! All column names referenced must be present in the data.
+      x Can't find columns "char_none".
 
 ---
 
@@ -1345,6 +1347,7 @@
     Condition
       Error in `rows_add()`:
       ! All column names referenced must be present in the data.
+      x Can't find columns "char_none".
 
 ---
 
@@ -1353,6 +1356,7 @@
     Condition
       Error in `rows_add()`:
       ! All column names referenced must be present in the data.
+      x Can't find columns "char_none".
 
 ---
 
@@ -1361,6 +1365,7 @@
     Condition
       Error in `rows_add()`:
       ! All column names referenced must be present in the data.
+      x Can't find columns "char_none".
 
 ---
 
@@ -1369,6 +1374,7 @@
     Condition
       Error in `rows_add()`:
       ! All column names referenced must be present in the data.
+      x Can't find columns "char_none".
 
 ---
 
@@ -1377,6 +1383,7 @@
     Condition
       Error in `rows_add()`:
       ! All column names referenced must be present in the data.
+      x Can't find columns "char_none".
 
 ---
 
@@ -1385,6 +1392,7 @@
     Condition
       Error in `rows_add()`:
       ! All column names referenced must be present in the data.
+      x Can't find columns "char_none".
 
 # adding rows can only be done with compatible data
 
@@ -1564,21 +1572,24 @@
     Output
       [1] "<table class=\"gt_table\" data-quarto-disable-processing=\"false\" data-quarto-bootstrap=\"false\">\n  <thead>\n    <tr class=\"gt_col_headings\">\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"\"></th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"num\">num</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"char\">char</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_center\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"fctr\">fctr</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"date\">date</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"time\">time</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"datetime\">datetime</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_right\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"currency\">currency</th>\n      <th class=\"gt_col_heading gt_columns_bottom_border gt_left\" rowspan=\"1\" colspan=\"1\" scope=\"col\" id=\"group\">group</th>\n    </tr>\n  </thead>\n  <tbody class=\"gt_table_body\">\n    <tr><th id=\"stub_1_1\" scope=\"row\" class=\"gt_row gt_left gt_stub\">row_1</th>\n<td headers=\"stub_1_1 num\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">1.111e-01</td>\n<td headers=\"stub_1_1 char\" class=\"gt_row gt_left\" style=\"background-color: #D3D3D3;\">apricot</td>\n<td headers=\"stub_1_1 fctr\" class=\"gt_row gt_center\" style=\"background-color: #D3D3D3;\">one</td>\n<td headers=\"stub_1_1 date\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">2015-01-15</td>\n<td headers=\"stub_1_1 time\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">13:35</td>\n<td headers=\"stub_1_1 datetime\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">2018-01-01 02:22</td>\n<td headers=\"stub_1_1 currency\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">49.950</td>\n<td headers=\"stub_1_1 group\" class=\"gt_row gt_left\" style=\"background-color: #D3D3D3;\">grp_a</td></tr>\n    <tr><th id=\"stub_1_2\" scope=\"row\" class=\"gt_row gt_left gt_stub\">row_2</th>\n<td headers=\"stub_1_2 num\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">2.222e+00</td>\n<td headers=\"stub_1_2 char\" class=\"gt_row gt_left\" style=\"background-color: #D3D3D3;\">banana</td>\n<td headers=\"stub_1_2 fctr\" class=\"gt_row gt_center\" style=\"background-color: #D3D3D3;\">two</td>\n<td headers=\"stub_1_2 date\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">2015-02-15</td>\n<td headers=\"stub_1_2 time\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">14:40</td>\n<td headers=\"stub_1_2 datetime\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">2018-02-02 14:33</td>\n<td headers=\"stub_1_2 currency\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">17.950</td>\n<td headers=\"stub_1_2 group\" class=\"gt_row gt_left\" style=\"background-color: #D3D3D3;\">grp_a</td></tr>\n    <tr><th id=\"stub_1_3\" scope=\"row\" class=\"gt_row gt_left gt_stub\">row_3</th>\n<td headers=\"stub_1_3 num\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">3.333e+01</td>\n<td headers=\"stub_1_3 char\" class=\"gt_row gt_left\" style=\"background-color: #D3D3D3;\">coconut</td>\n<td headers=\"stub_1_3 fctr\" class=\"gt_row gt_center\" style=\"background-color: #D3D3D3;\">three</td>\n<td headers=\"stub_1_3 date\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">2015-03-15</td>\n<td headers=\"stub_1_3 time\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">15:45</td>\n<td headers=\"stub_1_3 datetime\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">2018-03-03 03:44</td>\n<td headers=\"stub_1_3 currency\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">1.390</td>\n<td headers=\"stub_1_3 group\" class=\"gt_row gt_left\" style=\"background-color: #D3D3D3;\">grp_a</td></tr>\n    <tr><th id=\"stub_1_4\" scope=\"row\" class=\"gt_row gt_left gt_stub\">NA</th>\n<td headers=\"stub_1_4 num\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">2.343e+03</td>\n<td headers=\"stub_1_4 char\" class=\"gt_row gt_left\" style=\"background-color: #D3D3D3;\">NA</td>\n<td headers=\"stub_1_4 fctr\" class=\"gt_row gt_center\" style=\"background-color: #D3D3D3;\">NA</td>\n<td headers=\"stub_1_4 date\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">NA</td>\n<td headers=\"stub_1_4 time\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">NA</td>\n<td headers=\"stub_1_4 datetime\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">NA</td>\n<td headers=\"stub_1_4 currency\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">NA</td>\n<td headers=\"stub_1_4 group\" class=\"gt_row gt_left\" style=\"background-color: #D3D3D3;\">NA</td></tr>\n    <tr><th id=\"stub_1_5\" scope=\"row\" class=\"gt_row gt_left gt_stub\">row_4</th>\n<td headers=\"stub_1_5 num\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">4.444e+02</td>\n<td headers=\"stub_1_5 char\" class=\"gt_row gt_left\" style=\"background-color: #D3D3D3;\">durian</td>\n<td headers=\"stub_1_5 fctr\" class=\"gt_row gt_center\" style=\"background-color: #D3D3D3;\">four</td>\n<td headers=\"stub_1_5 date\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">2015-04-15</td>\n<td headers=\"stub_1_5 time\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">16:50</td>\n<td headers=\"stub_1_5 datetime\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">2018-04-04 15:55</td>\n<td headers=\"stub_1_5 currency\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">65100.000</td>\n<td headers=\"stub_1_5 group\" class=\"gt_row gt_left\" style=\"background-color: #D3D3D3;\">grp_a</td></tr>\n    <tr><th id=\"stub_1_6\" scope=\"row\" class=\"gt_row gt_left gt_stub\">row_5</th>\n<td headers=\"stub_1_6 num\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">5.550e+03</td>\n<td headers=\"stub_1_6 char\" class=\"gt_row gt_left\" style=\"background-color: #D3D3D3;\">NA</td>\n<td headers=\"stub_1_6 fctr\" class=\"gt_row gt_center\" style=\"background-color: #D3D3D3;\">five</td>\n<td headers=\"stub_1_6 date\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">2015-05-15</td>\n<td headers=\"stub_1_6 time\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">17:55</td>\n<td headers=\"stub_1_6 datetime\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">2018-05-05 04:00</td>\n<td headers=\"stub_1_6 currency\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">1325.810</td>\n<td headers=\"stub_1_6 group\" class=\"gt_row gt_left\" style=\"background-color: #D3D3D3;\">grp_b</td></tr>\n    <tr><th id=\"stub_1_7\" scope=\"row\" class=\"gt_row gt_left gt_stub\">row_6</th>\n<td headers=\"stub_1_7 num\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">NA</td>\n<td headers=\"stub_1_7 char\" class=\"gt_row gt_left\" style=\"background-color: #D3D3D3;\">fig</td>\n<td headers=\"stub_1_7 fctr\" class=\"gt_row gt_center\" style=\"background-color: #D3D3D3;\">six</td>\n<td headers=\"stub_1_7 date\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">2015-06-15</td>\n<td headers=\"stub_1_7 time\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">NA</td>\n<td headers=\"stub_1_7 datetime\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">2018-06-06 16:11</td>\n<td headers=\"stub_1_7 currency\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">13.255</td>\n<td headers=\"stub_1_7 group\" class=\"gt_row gt_left\" style=\"background-color: #D3D3D3;\">grp_b</td></tr>\n    <tr><th id=\"stub_1_8\" scope=\"row\" class=\"gt_row gt_left gt_stub\">row_7</th>\n<td headers=\"stub_1_8 num\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">7.770e+05</td>\n<td headers=\"stub_1_8 char\" class=\"gt_row gt_left\" style=\"background-color: #D3D3D3;\">grapefruit</td>\n<td headers=\"stub_1_8 fctr\" class=\"gt_row gt_center\" style=\"background-color: #D3D3D3;\">seven</td>\n<td headers=\"stub_1_8 date\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">NA</td>\n<td headers=\"stub_1_8 time\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">19:10</td>\n<td headers=\"stub_1_8 datetime\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">2018-07-07 05:22</td>\n<td headers=\"stub_1_8 currency\" class=\"gt_row gt_right\" style=\"background-color: #D3D3D3;\">NA</td>\n<td headers=\"stub_1_8 group\" class=\"gt_row gt_left\" style=\"background-color: #D3D3D3;\">grp_b</td></tr>\n    <tr><th id=\"stub_1_9\" scope=\"row\" class=\"gt_row gt_left gt_stub\">row_8</th>\n<td headers=\"stub_1_9 num\" class=\"gt_row gt_right\">8.880e+06</td>\n<td headers=\"stub_1_9 char\" class=\"gt_row gt_left\">honeydew</td>\n<td headers=\"stub_1_9 fctr\" class=\"gt_row gt_center\">eight</td>\n<td headers=\"stub_1_9 date\" class=\"gt_row gt_right\">2015-08-15</td>\n<td headers=\"stub_1_9 time\" class=\"gt_row gt_right\">20:20</td>\n<td headers=\"stub_1_9 datetime\" class=\"gt_row gt_right\">NA</td>\n<td headers=\"stub_1_9 currency\" class=\"gt_row gt_right\">0.440</td>\n<td headers=\"stub_1_9 group\" class=\"gt_row gt_left\">grp_b</td></tr>\n  </tbody>\n  \n  \n</table>"
 
----
+# `rows_add() and `tab_style()` are sensitive of the order
 
     Code
       gt_tbl %>% tab_style(style = cell_fill(), locations = cells_body(rows = 9)) %>%
         rows_add(row = "row_3.5", .after = "row_3")
     Condition
-      Error in `resolve_rows_i()`:
+      Error in `tab_style()`:
+      ! Could not style the table with `color()`.
+      Caused by error in `cells_body()`:
       ! The following row indices do not exist in the data: 9.
-
----
-
     Code
-      gt_tbl %>% tab_style(style = cell_fill(), locations = cells_body(rows = "row_0")) %>%
-        rows_add(row = "row_0", .before = 1)
+      gt_tbl %>% rows_add(row = "row_0", .before = 1) %>% tab_style(style = list(
+        cell_fill(color = "blue"), cell_borders(style = "dotted")), locations = list(
+        cells_column_labels(num2), cells_body(rows = "row_0")))
     Condition
-      Error in `resolve_rows_i()`:
-      ! Can't find row `row_0` in the data.
+      Error in `tab_style()`:
+      ! Could not style the table with `cell_fill()` and `cell_borders()`.
+      Caused by error in `cells_column_labels()`:
+      ! Can't select columns that don't exist.
+      x Column `num2` doesn't exist.
 

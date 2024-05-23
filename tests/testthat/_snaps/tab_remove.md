@@ -128,7 +128,7 @@
         render_as_html()
     Condition
       Error in `rm_spanners()`:
-      ! Can't find item `perf` in the data.
+      ! Item `perf` does not exist in the data.
 
 # Table footnotes can be removed using `rm_footnotes()`
 

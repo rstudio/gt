@@ -5,4 +5,5 @@
     Condition
       Error in `rows_add()`:
       ! All column names referenced must be present in the data.
+      x Can't find columns "a" and "b".
 

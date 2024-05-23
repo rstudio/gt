@@ -3,7 +3,7 @@
     Code
       tab %>% fmt_integer(columns = num_3)
     Condition
-      Error in `column_classes_are_valid()`:
+      Error in `fmt_number()`:
       ! Can't select columns that don't exist.
       x Column `num_3` doesn't exist.
 

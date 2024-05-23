@@ -60,7 +60,7 @@
       gt_tbls_3 %>% grp_add(gt_tbl_4, .after = 2.01)
     Condition
       Error in `grp_add()`:
-      ! An integer value should be supplied for `.after`.
+      ! `.after` must be a whole number, not the number 2.01.
 
 ---
 
@@ -68,7 +68,7 @@
       gt_tbls_3 %>% grp_add(gt_tbl_4, .before = 2.99)
     Condition
       Error in `grp_add()`:
-      ! An integer value should be supplied for `.before`.
+      ! `.before` must be a whole number, not the number 2.99.
 
 # The `grp_replace()` function can be used to add a table to a group
 
