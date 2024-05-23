@@ -75,57 +75,48 @@
     Code
       get_date_format(date_style = 42)
     Condition
-      Error in `get_date_format()`:
-      ! If using a numeric value for a `date_style`, it must be
-      between `1` and `41`.
-      * Use `info_date_style()` for a useful visual reference.
+      Error:
+      ! `date_style` must be a whole number between 1 and 41, not the number 42.
 
 ---
 
     Code
       get_date_format(date_style = "42")
     Condition
-      Error in `get_date_format()`:
-      ! If using a `date_style` name, it must be in the valid set.
-      * Use `info_date_style()` for a useful visual reference.
+      Error:
+      ! `date_style` must be one of "iso", "wday_month_day_year", "wd_m_day_year", "wday_day_month_year", "month_day_year", "m_day_year", "day_m_year", "day_month_year", "day_month", "day_m", "year", "month", "day", "year.mn.day", "y.mn.day", "year_week", "year_quarter", "yMd", "yMEd", "yMMM", "yMMMM", "yMMMd", "yMMMEd", "GyMd", "GyMMMd", "GyMMMEd", "yM", "Md", "MEd", "MMMd", "MMMEd", "MMMMd", "GyMMM", "yQQQ", "yQQQQ", "Gy", "y", "M", "MMM", "d", or "Ed", not "42".
 
 ---
 
     Code
       get_date_format(date_style = 0)
     Condition
-      Error in `get_date_format()`:
-      ! If using a numeric value for a `date_style`, it must be
-      between `1` and `41`.
-      * Use `info_date_style()` for a useful visual reference.
+      Error:
+      ! `date_style` must be a whole number between 1 and 41, not the number 0.
 
 ---
 
     Code
       get_date_format(date_style = "0")
     Condition
-      Error in `get_date_format()`:
-      ! If using a `date_style` name, it must be in the valid set.
-      * Use `info_date_style()` for a useful visual reference.
+      Error:
+      ! `date_style` must be one of "iso", "wday_month_day_year", "wd_m_day_year", "wday_day_month_year", "month_day_year", "m_day_year", "day_m_year", "day_month_year", "day_month", "day_m", "year", "month", "day", "year.mn.day", "y.mn.day", "year_week", "year_quarter", "yMd", "yMEd", "yMMM", "yMMMM", "yMMMd", "yMMMEd", "GyMd", "GyMMMd", "GyMMMEd", "yM", "Md", "MEd", "MMMd", "MMMEd", "MMMMd", "GyMMM", "yQQQ", "yQQQQ", "Gy", "y", "M", "MMM", "d", or "Ed", not "0".
 
 ---
 
     Code
       get_date_format(date_style = -5)
     Condition
-      Error in `get_date_format()`:
-      ! If using a numeric value for a `date_style`, it must be
-      between `1` and `41`.
-      * Use `info_date_style()` for a useful visual reference.
+      Error:
+      ! `date_style` must be a whole number between 1 and 41, not the number -5.
 
 ---
 
     Code
       get_date_format(date_style = "-5")
     Condition
-      Error in `get_date_format()`:
-      ! If using a `date_style` name, it must be in the valid set.
-      * Use `info_date_style()` for a useful visual reference.
+      Error:
+      ! `date_style` must be one of "iso", "wday_month_day_year", "wd_m_day_year", "wday_day_month_year", "month_day_year", "m_day_year", "day_m_year", "day_month_year", "day_month", "day_m", "year", "month", "day", "year.mn.day", "y.mn.day", "year_week", "year_quarter", "yMd", "yMEd", "yMMM", "yMMMM", "yMMMd", "yMMMEd", "GyMd", "GyMMMd", "GyMMMEd", "yM", "Md", "MEd", "MMMd", "MMMEd", "MMMMd", "GyMMM", "yQQQ", "yQQQQ", "Gy", "y", "M", "MMM", "d", or "Ed", not "-5".
 
 ---
 
@@ -148,71 +139,65 @@
     Code
       get_date_format(date_style = c(1, 2))
     Condition
-      Error in `if (!(date_style %in% date_format_num_range)) ...`:
-      ! the condition has length > 1
+      Error:
+      ! `date_style` must be a whole number, not a double vector.
 
 ---
 
     Code
       get_date_format(date_style = "daym")
     Condition
-      Error in `get_date_format()`:
-      ! If using a `date_style` name, it must be in the valid set.
-      * Use `info_date_style()` for a useful visual reference.
+      Error:
+      ! `date_style` must be one of "iso", "wday_month_day_year", "wd_m_day_year", "wday_day_month_year", "month_day_year", "m_day_year", "day_m_year", "day_month_year", "day_month", "day_m", "year", "month", "day", "year.mn.day", "y.mn.day", "year_week", "year_quarter", "yMd", "yMEd", "yMMM", "yMMMM", "yMMMd", "yMMMEd", "GyMd", "GyMMMd", "GyMMMEd", "yM", "Md", "MEd", "MMMd", "MMMEd", "MMMMd", "GyMMM", "yQQQ", "yQQQQ", "Gy", "y", "M", "MMM", "d", or "Ed", not "daym".
+      i Did you mean "day_m"?
 
 # The `get_time_format()` function works properly
 
     Code
       get_time_format(time_style = 26)
     Condition
-      Error in `get_time_format()`:
-      ! If using a numeric value for a `time_style`, it must be between `1` and `25`.
-      * Use `info_time_style()` for a useful visual reference.
+      Error:
+      ! `time_style` must be a whole number between 1 and 25, not the number 26.
 
 ---
 
     Code
       get_time_format(time_style = "26")
     Condition
-      Error in `get_time_format()`:
-      ! If using a `time_style` name, it must be in the valid set.
-      * Use `info_time_style()` for a useful visual reference.
+      Error:
+      ! `time_style` must be one of "iso", "iso-short", "h_m_s_p", "h_m_p", "h_p", "Hms", "Hm", "H", "EHm", "EHms", "Hmsv", "Hmv", "hms", "hm", "h", "Ehm", "Ehms", "EBhms", "Bhms", "EBhm", "Bhm", "Bh", "hmsv", "hmv", or "ms", not "26".
 
 ---
 
     Code
       get_time_format(time_style = 0)
     Condition
-      Error in `get_time_format()`:
-      ! If using a numeric value for a `time_style`, it must be between `1` and `25`.
-      * Use `info_time_style()` for a useful visual reference.
+      Error:
+      ! `time_style` must be a whole number between 1 and 25, not the number 0.
 
 ---
 
     Code
       get_time_format(time_style = "0")
     Condition
-      Error in `get_time_format()`:
-      ! If using a `time_style` name, it must be in the valid set.
-      * Use `info_time_style()` for a useful visual reference.
+      Error:
+      ! `time_style` must be one of "iso", "iso-short", "h_m_s_p", "h_m_p", "h_p", "Hms", "Hm", "H", "EHm", "EHms", "Hmsv", "Hmv", "hms", "hm", "h", "Ehm", "Ehms", "EBhms", "Bhms", "EBhm", "Bhm", "Bh", "hmsv", "hmv", or "ms", not "0".
 
 ---
 
     Code
       get_time_format(time_style = -5)
     Condition
-      Error in `get_time_format()`:
-      ! If using a numeric value for a `time_style`, it must be between `1` and `25`.
-      * Use `info_time_style()` for a useful visual reference.
+      Error:
+      ! `time_style` must be a whole number between 1 and 25, not the number -5.
 
 ---
 
     Code
       get_time_format(time_style = "-5")
     Condition
-      Error in `get_time_format()`:
-      ! If using a `time_style` name, it must be in the valid set.
-      * Use `info_time_style()` for a useful visual reference.
+      Error:
+      ! `time_style` must be one of "iso", "iso-short", "h_m_s_p", "h_m_p", "h_p", "Hms", "Hm", "H", "EHm", "EHms", "Hmsv", "Hmv", "hms", "hm", "h", "Ehm", "Ehms", "EBhms", "Bhms", "EBhm", "Bhm", "Bh", "hmsv", "hmv", or "ms", not "-5".
 
 ---
 
@@ -235,17 +220,17 @@
     Code
       get_time_format(time_style = c(1, 2))
     Condition
-      Error in `if (!(time_style %in% time_format_num_range)) ...`:
-      ! the condition has length > 1
+      Error:
+      ! `time_style` must be a whole number, not a double vector.
 
 ---
 
     Code
       get_time_format(time_style = "Hmsa")
     Condition
-      Error in `get_time_format()`:
-      ! If using a `time_style` name, it must be in the valid set.
-      * Use `info_time_style()` for a useful visual reference.
+      Error:
+      ! `time_style` must be one of "iso", "iso-short", "h_m_s_p", "h_m_p", "h_p", "Hms", "Hm", "H", "EHm", "EHms", "Hmsv", "Hmv", "hms", "hm", "h", "Ehm", "Ehms", "EBhms", "Bhms", "EBhm", "Bhm", "Bh", "hmsv", "hmv", or "ms", not "Hmsa".
+      i Did you mean "Hmsv"?
 
 # The `process_footnote_marks()` function works properly
 
