@@ -7740,17 +7740,11 @@ validate_duration_input_units <- function(input_units, call = rlang::caller_env(
     return(NULL)
   }
   time_parts_vec <- c("weeks", "days", "hours", "mins", "minutes", "secs", "seconds")
-
-  if (!all(input_units %in% time_parts_vec) || length(input_units) != 1) {
-
-    cli::cli_abort(c(
-      "The value of `input_units` for `fmt_duration()` is invalid.",
-      "*" = "Only one of the \"weeks\", \"days\", \"hours\", \"minutes\", or
-      \"seconds\" time parts should be present."
-      ),
-    call = call
-    )
-  }
+  rlang::arg_match0(
+    input_units,
+    time_parts_vec,
+    error_call = call
+  )
 }
 
 normalize_duration_input_units <- function(input_units) {

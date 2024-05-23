@@ -2270,15 +2270,16 @@ get_file_ext <- function(file) {
 validate_marks <- function(marks, call = rlang::caller_env()) {
 
   if (length(marks) <= 1) {
+    # make sure not length 0.
     check_string(marks, allow_empty = FALSE, allow_null = FALSE, call = call)
+    # only check keywords for length 1
     marks_keywords <- c("numbers", "letters", "LETTERS", "standard", "extended")
 
-    cli::cli_abort(c(
-      "The `marks` keyword provided (\"{marks}\") is not valid.",
-      "*" = "Either of \"numbers\", \"letters\", \"LETTERS\", \"standard\",
-      or \"extended\" can be used."
-    ), call = call)
-
+    rlang::arg_match0(
+      marks,
+      marks_keywords,
+      error_call = call
+    )
   }
   if (!is.character(marks)) {
     cli::cli_abort("The value for `marks` must be a character vector.", call = call)
@@ -2291,7 +2292,7 @@ validate_style_in <- function(
     arg_name,
     in_vector,
     with_pattern = NULL,
-    call = caller_env()
+    call = rlang::caller_env()
 ) {
 
   if (arg_name %in% style_names) {

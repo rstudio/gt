@@ -3403,6 +3403,7 @@ tab_style <- function(
 
   # Resolve into a list of locations
   locations <- as_locations(locations)
+
   # Keep original value for future error message.
   style0 <- style
   # Upgrade `style` to be within a list if not provided as such
@@ -3748,6 +3749,7 @@ set_style.cells_stubhead <- function(loc, data, style) {
 
 #' @export
 set_style.cells_column_labels <- function(loc, data, style) {
+
   call <- call("cells_column_labels")
   resolved <- resolve_cells_column_labels(data = data, object = loc, call = call)
 
@@ -3792,10 +3794,10 @@ set_style.cells_column_spanners <- function(loc, data, style) {
 
 #' @export
 set_style.cells_row_groups <- function(loc, data, style) {
+
   call <- call("cells_row_groups")
   row_groups <- dt_row_groups_get(data = data)
 
-  call <- call("cells_row_group")
   # Resolve row groups
   resolved_row_groups_idx <-
     resolve_vector_i(
@@ -3823,6 +3825,7 @@ set_style.cells_row_groups <- function(loc, data, style) {
 
 #' @export
 set_style.cells_body <- function(loc, data, style) {
+
   call <- call("cells_body")
   resolved <- resolve_cells_body(data = data, object = loc, call = call)
 
@@ -3846,6 +3849,7 @@ set_style.cells_body <- function(loc, data, style) {
 
 #' @export
 set_style.cells_stub <- function(loc, data, style) {
+
   call <- call("cells_stub")
   resolved <- resolve_cells_stub(data = data, object = loc, call = call)
 

@@ -944,9 +944,9 @@ check_sub_fn_sign <- function(sign, call = rlang::caller_env()) {
       "The `sign` option should either be \"+\" or \"-\".",
       "*" = "With \"+\", we consider only positive large values.",
       "*" = "Using \"-\" means that the focus is on negative values."
-    ),
-    call = call
-  )
+      ),
+      call = call
+    )
   }
 }
 
