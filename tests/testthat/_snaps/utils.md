@@ -131,8 +131,8 @@
     Code
       get_date_format(date_style = NULL)
     Condition
-      Error in `if (date_format_tbl_i[["flexible"]]) ...`:
-      ! argument is of length zero
+      Error:
+      ! `date_style` must be a whole number, not `NULL`.
 
 ---
 
@@ -212,8 +212,8 @@
     Code
       get_time_format(time_style = NULL)
     Condition
-      Error in `if (time_format_tbl_i[["flexible"]]) ...`:
-      ! argument is of length zero
+      Error:
+      ! `time_style` must be a whole number, not `NULL`.
 
 ---
 
