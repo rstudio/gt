@@ -17,7 +17,7 @@
 ---
 
     Code
-      gt(iris_short) %>% tab_spanner_delim(delim = character(0))
+      gt(iris_short) %>% tab_spanner_delim(delim = character(0L))
     Condition
       Error in `tab_spanner_delim()`:
       ! `delim` must be a single string, not an empty character vector.
@@ -232,8 +232,10 @@
       gt_tbl_spanner_3 %>% tab_spanner(label = md("**REPLACED**"), spanners = everything(),
       level = 3)
     Condition
-      Error in `dt_spanners_add()`:
-      ! The column(s) used (`all.W.A, all.Z.B, all.X.B, all.Y.A`) for the new spanner `**REPLACED**` belong to an existing spanner.
+      Error in `tab_spanner()`:
+      x Can't create the **REPLACED** spanner.
+      ! Columns `all.W.A`, `all.Z.B`, `all.X.B`, and `all.Y.A` belong to an existing spanner.
+      i Specify `columns` appropriately by using other variable names.
 
 ---
 
@@ -268,16 +270,20 @@
     Code
       gt_tbl_spanner_A_1 %>% tab_spanner(label = "Cut In", columns = 1, level = 3)
     Condition
-      Error in `dt_spanners_add()`:
-      ! The column(s) used (`span_1.A.X`) for the new spanner `Cut In` belong to an existing spanner.
+      Error in `tab_spanner()`:
+      x Can't create the "Cut In" spanner.
+      ! Column `span_1.A.X` belongs to an existing spanner.
+      i Specify `columns` appropriately by using other variable names.
 
 ---
 
     Code
       gt_tbl_spanner_A_1 %>% tab_spanner(label = "Cut In", columns = c(1, 2), level = 3)
     Condition
-      Error in `dt_spanners_add()`:
-      ! The column(s) used (`span_1.A.X, span_1.B.X`) for the new spanner `Cut In` belong to an existing spanner.
+      Error in `tab_spanner()`:
+      x Can't create the "Cut In" spanner.
+      ! Columns `span_1.A.X` and `span_1.B.X` belong to an existing spanner.
+      i Specify `columns` appropriately by using other variable names.
 
 ---
 
@@ -285,8 +291,10 @@
       gt_tbl_spanner_A_1 %>% tab_spanner(label = "Cut In", columns = c(1, 2, 3),
       level = 3)
     Condition
-      Error in `dt_spanners_add()`:
-      ! The column(s) used (`span_1.A.X, span_1.B.X, span_2.A.Y`) for the new spanner `Cut In` belong to an existing spanner.
+      Error in `tab_spanner()`:
+      x Can't create the "Cut In" spanner.
+      ! Columns `span_1.A.X`, `span_1.B.X`, and `span_2.A.Y` belong to an existing spanner.
+      i Specify `columns` appropriately by using other variable names.
 
 ---
 
@@ -294,8 +302,10 @@
       gt_tbl_spanner_A_1 %>% tab_spanner(label = "Cut In", columns = c(1, 2, 3, 4),
       level = 3)
     Condition
-      Error in `dt_spanners_add()`:
-      ! The column(s) used (`span_1.A.X, span_1.B.X, span_2.A.Y, span_2.B.Y`) for the new spanner `Cut In` belong to an existing spanner.
+      Error in `tab_spanner()`:
+      x Can't create the "Cut In" spanner.
+      ! Columns `span_1.A.X`, `span_1.B.X`, `span_2.A.Y`, and `span_2.B.Y` belong to an existing spanner.
+      i Specify `columns` appropriately by using other variable names.
 
 ---
 
