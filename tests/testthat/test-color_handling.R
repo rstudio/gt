@@ -291,7 +291,7 @@ test_that("The various color utility functions work correctly", {
   s_hex_colors <-
     vapply(
       c(as.character(0:9), LETTERS[1:6]),
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(x) {
         paste0("#", paste(rep(x, 3), collapse = ""))
@@ -301,7 +301,7 @@ test_that("The various color utility functions work correctly", {
   hex_colors <-
     vapply(
       c(as.character(0:9), LETTERS[1:6]),
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(x) {
         paste0("#", paste(rep(x, 6), collapse = ""))

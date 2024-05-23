@@ -24,10 +24,10 @@ test_that("The `opt_footnote_marks()` function sets the correct options", {
     dt_options_get_value("footnotes_marks") %>%
     expect_equal(LETTERS)
 
-  expect_snapshot(error = TRUE,exibble %>% gt() %>% opt_footnote_marks(NULL))
-  expect_snapshot(error = TRUE,exibble %>% gt() %>% opt_footnote_marks("set_1"))
-  expect_snapshot(error = TRUE,exibble %>% gt() %>% opt_footnote_marks(1:5))
-  expect_snapshot(error = TRUE,exibble %>% gt() %>% opt_footnote_marks(character(0)))
+  expect_error(exibble %>% gt() %>% opt_footnote_marks(NULL))
+  expect_error(exibble %>% gt() %>% opt_footnote_marks("set_1"))
+  expect_error(exibble %>% gt() %>% opt_footnote_marks(1:5))
+  expect_error(exibble %>% gt() %>% opt_footnote_marks(character(0L)))
 })
 
 test_that("The `opt_row_striping()` function sets the correct options", {

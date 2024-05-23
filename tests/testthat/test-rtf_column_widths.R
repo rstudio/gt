@@ -214,7 +214,7 @@ test_that("The `parse_length_str()` function works correctly", {
     }
 
   parse_length_str(
-    lengths_vec = character(0),
+    lengths_vec = character(0L),
     allow_negative = TRUE
   ) %>%
     {

@@ -110,13 +110,13 @@ incantations could be used: \code{"CrO4^2-"}, \code{"Fe^n+"}, \code{"Y^99+"}, \c
 automatically stylized to fit conventions; \code{"NO_x"} and \code{"x Na(NH4)HPO4"}
 will have italicized 'x' characters and you can always italicize letters
 by surrounding with \code{"*"} (as in \code{"*n* H2O"} or \code{"*n*-C5H12"})
-\item Chemical isotopes can be rendered using either of these two construction
+\item Chemical isotopes can be rendered using either of these two constructions
 preceding an element: \code{"^{227}_{90}Th"} or \code{"^227_90Th"}; nuclides can
 be represented in a similar manner, here are two examples:
 \code{"^{0}_{-1}n^{-}"}, \code{"^0_-1n-"}
 \item Chemical reactions can use \code{"+"} signs and a variety of reaction arrows:
-(1) "A -> B", (2) "A <- B", (3) "A <-> B", (4) "A <--> B", (5) "A <=> B",
-(6) "A <=>> B", or (7) "A <<=> B"
+(1) \code{"A -> B"}, (2) \code{"A <- B"}, (3) \code{"A <-> B"}, (4) \code{"A <--> B"}, (5)
+\code{"A <=> B"}, (6) \code{"A <=>> B"}, or (7) \code{"A <<=> B"}
 \item Center dots (useful in addition compounds) can be added by using a single
 \code{"."} or \code{"*"} character, surrounded by spaces; here are two equivalent
 examples \code{"KCr(SO4)2 . 12 H2O"} and \code{"KCr(SO4)2 * 12 H2O"}
@@ -144,38 +144,134 @@ surrounding the text with \code{"{{\%"}/\code{"\%}}"}.
   dplyr::filter(grepl("^1-", cmpd_name)) |>
   dplyr::select(cmpd_name, cmpd_formula, ends_with("k298")) |>
   gt() |>
-  sub_missing() |>
-  fmt_chem(columns = cmpd_formula) |>
-  fmt_scientific() |>
-  cols_label(
-    cmpd_name = "Alkene",
-    cmpd_formula = "Formula",
-    oh_k298 = "OH",
-    o3_k298 = "\{\{\%O3\%\}\}",
-    no3_k298 = "\{\{\%NO3\%\}\}",
-    cl_k298 = "Cl"
-  ) |>
+  tab_header(title = "Gas-phase reactions of selected terminal alkenes") |>
   tab_spanner(
     label = "Reaction Rate Constant at 298 K",
     columns = ends_with("k298")
   ) |>
-  tab_header(title = "Gas-phase reactions of selected terminal alkenes") |>
+  fmt_chem(columns = cmpd_formula) |>
+  fmt_scientific() |>
+  sub_missing() |>
+  cols_label(
+    cmpd_name = "Alkene",
+    cmpd_formula = "Formula",
+    OH_k298 = "OH",
+    O3_k298 = "\{\{\%O3\%\}\}",
+    NO3_k298 = "\{\{\%NO3\%\}\}",
+    Cl_k298 = "Cl"
+  ) |>
   opt_align_table_header(align = "left")
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_chem_1.png" alt="This image of a table was generated from the first code example in the `fmt_chem()` help file." style="width:100\%;">
 }}
+
+Taking just a few rows from the \code{\link{photolysis}} dataset, let's and create a
+new \strong{gt} table. The \code{cmpd_formula} and \code{products} columns both contain
+text in chemistry notation (the first has compounds, and the second column
+has the products of photolysis reactions). These columns will be formatting
+by the \code{fmt_chem()} function. The compound formulas will be merged with the
+compound names via the \code{\link[=cols_merge]{cols_merge()}} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{photolysis \%>\%
+  dplyr::filter(cmpd_name \%in\% c(
+    "hydrogen peroxide", "nitrous acid",
+    "nitric acid", "acetaldehyde",
+    "methyl peroxide", "methyl nitrate",
+    "ethyl nitrate", "isopropyl nitrate"
+  )) |>
+  dplyr::select(-c(l, m, n, quantum_yield, type)) |>
+  gt() |>
+  tab_header(title = "Photolysis pathways of selected VOCs") |>
+  fmt_chem(columns = c(cmpd_formula, products)) |>
+  cols_nanoplot(
+    columns = sigma_298_cm2,
+    columns_x_vals = wavelength_nm,
+    expand_x = c(200, 400),
+    new_col_name = "cross_section",
+    new_col_label = "Absorption Cross Section",
+    options = nanoplot_options(
+      show_data_points = FALSE,
+      data_line_stroke_width = 4,
+      data_line_stroke_color = "black",
+      show_data_area = FALSE
+    )
+  ) |>
+  cols_merge(
+    columns = c(cmpd_name, cmpd_formula),
+    pattern = "\{1\}, \{2\}"
+  ) |>
+  cols_label(
+    cmpd_name = "Compound",
+    products = "Products"
+  ) |>
+  opt_align_table_header(align = "left")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_chem_2.png" alt="This image of a table was generated from the second code example in the `fmt_chem()` help file." style="width:100\%;">
+}}
+
+The \code{fmt_chem()} function can handle the typesetting of nuclide notation.
+Let's take a subset of columns and rows from the \code{\link{nuclides}} dataset and
+make a new \strong{gt} table. The contents of the \code{nuclide} column contains
+isotopes of hydrogen and carbon and this is placed in the table stub. Using
+\code{fmt_chem()} makes it so that the subscripted and superscripted values are
+properly formatted to the convention of formatting nuclides.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{nuclides |>
+  dplyr::filter(element \%in\% c("H", "C")) |>
+  dplyr::mutate(nuclide = gsub("\\\\d+$", "", nuclide)) |>
+  dplyr::select(nuclide, atomic_mass, half_life, decay_1, is_stable) |>
+  gt(rowname_col = "nuclide") |>
+  tab_header(title = "Isotopes of Hydrogen and Carbon") |>
+  tab_stubhead(label = "Isotope") |>
+  fmt_chem(columns = nuclide) |>
+  fmt_scientific(columns = half_life) |>
+  fmt_number(
+    columns = atomic_mass,
+    decimals = 4,
+    scale_by = 1 / 1e6
+  ) |>
+  sub_missing(
+    columns = half_life,
+    rows = is_stable,
+    missing_text = md("**STABLE**")
+  ) |>
+  sub_missing(columns = half_life, rows = !is_stable) |>
+  sub_missing(columns = decay_1) |>
+  data_color(
+    columns = decay_1,
+    target_columns = c(atomic_mass, half_life, decay_1),
+    palette = "LaCroixColoR::PassionFruit",
+    na_color = "white"
+  ) |>
+  cols_label_with(fn = function(x) tools::toTitleCase(gsub("_", " ", x))) |>
+  cols_label(decay_1 = "Decay Mode") |>
+  cols_width(
+    stub() ~ px(70),
+    c(atomic_mass, half_life, decay_1) ~ px(120)
+  ) |>
+  cols_hide(columns = c(is_stable)) |>
+  cols_align(align = "center", columns = decay_1) |>
+  opt_align_table_header(align = "left") |>
+  opt_vertical_padding(scale = 0.5)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_chem_3.png" alt="This image of a table was generated from the third code example in the `fmt_chem()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
 
-3-19
+3-20
 }
 
 \section{Function Introduced}{
 
-\strong{In Development}
+\emph{In Development}
 }
 
 \seealso{
@@ -185,10 +281,12 @@ Other data formatting functions:
 \code{\link{fmt_auto}()},
 \code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
+\code{\link{fmt_country}()},
 \code{\link{fmt_currency}()},
 \code{\link{fmt_date}()},
 \code{\link{fmt_datetime}()},
 \code{\link{fmt_duration}()},
+\code{\link{fmt_email}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},
@@ -204,6 +302,7 @@ Other data formatting functions:
 \code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
+\code{\link{fmt_tf}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt_units}()},
 \code{\link{fmt_url}()},

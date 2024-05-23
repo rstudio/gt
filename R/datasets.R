@@ -490,6 +490,64 @@
 #'
 "towny"
 
+#' A table of personal information for people all over the world
+#'
+#' @description
+#'
+#' The `peeps` dataset contains records for one hundred people residing in ten
+#' different countries. Each person in the table has address information along
+#' with their email address and phone number. There are also personal
+#' characteristics like date of birth, height, and weight. This data has been
+#' synthesized, and so the names within the table have not been taken or based
+#' on individuals in real life. The street addresses were generated from actual
+#' street names within real geographic localities, however, the street numbers
+#' were assigned randomly from a constrained number set. While these records do
+#' not relate to real people, efforts were made to make the data as realistic as
+#' possible.
+#'
+#' @format A tibble with 100 rows and 14 variables:
+#' \describe{
+#' \item{name_given, name_family}{The given and family name of individual.}
+#' \item{address}{The street address of the individual.}
+#' \item{city}{The name of the city or locality in which the individual
+#' resides.}
+#' \item{state_prov}{The state or province associated with the `city` and
+#' `address`. This is `NA` for individuals residing in countries where
+#' subdivision data is not needed for generating a valid mailing address.}
+#' \item{postcode}{The post code associated with the `city` and `address`.}
+#' \item{country}{The 3-letter ISO 3166-1 country code representative of the
+#' individual's country.}
+#' \item{email_addr}{The individual's email address.}
+#' \item{phone_number, country_code}{The individual's phone number and the
+#' country code associated with the phone number.}
+#' \item{gender}{The gender of the individual.}
+#' \item{dob}{The individual's date of birth (DOB) in the ISO 8601 form of
+#' `YYYY-MM-DD`.}
+#' \item{height_cm, weight_kg}{The height and weight of the individual in
+#' centimeters (cm) and kilograms (kg), respectively.}
+#' }
+#'
+#' @section Examples:
+#'
+#' Here is a glimpse at the data available in `peeps`.
+#'
+#' ```{r}
+#' dplyr::glimpse(peeps)
+#' ```
+#'
+#' @family datasets
+#' @section Dataset ID and Badge:
+#' DATA-8
+#'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_peeps.png")`
+#' }}
+#'
+#' @section Dataset Introduced:
+#' *In Development*
+#'
+"peeps"
+
 #' The stations of the Paris Metro
 #'
 #' @description
@@ -554,7 +612,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-8
+#' DATA-9
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_metro.png")`
@@ -603,7 +661,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-9
+#' DATA-10
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_constants.png")`
@@ -696,7 +754,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-10
+#' DATA-11
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_illness.png")`
@@ -706,7 +764,6 @@
 #' `v0.10.0` (October 7, 2023)
 #'
 "illness"
-
 
 #' Reaction rates for gas-phase atmospheric reactions of organic compounds
 #'
@@ -723,18 +780,18 @@
 #' chlorine (Cl) atoms.
 #'
 #' This compilation of rate constant (*k*) data as contains the values for rate
-#' constants at 298 K (in units of cm^3 molecules^–1 s^–1) as well as parameters
-#' that allow for the calculation of rate constants at different temperatures
-#' (the temperature dependence parameters: `A`, `B`, and `n`). Uncertainty
-#' values/factors and temperature limits are also provided here where
-#' information is available.
+#' constants at 298 K (in units of `cm^3 molecules^–1 s^–1`) as well as
+#' parameters that allow for the calculation of rate constants at different
+#' temperatures (the temperature dependence parameters: `A`, `B`, and `n`).
+#' Uncertainty values/factors and temperature limits are also provided here
+#' where information is available.
 #'
 #' @format A tibble with 1,683 rows and 39 variables:
 #' \describe{
 #' \item{compd_name}{The name of the primary compound undergoing
 #' reaction with OH, ozone, NO3, or Cl.}
 #' \item{cmpd_mwt}{The molecular weight of the compound in units of g/mol.}
-#' \item{cmpd_formula}{The atomic formula of the compound.}
+#' \item{cmpd_formula}{The chemical formula of the compound.}
 #' \item{cmpd_type}{The category of compounds that the `compd_name` falls
 #' under.}
 #' \item{cmpd_smiles}{The SMILES (simplified molecular-input line-entry system)
@@ -744,51 +801,51 @@
 #' \item{cmpd_inchikey}{The InChIKey, which is a hashed InChI value, has a fixed
 #' length of 27 characters. These values can be used to more easily perform
 #' database searches of chemical compounds.}
-#' \item{oh_k298}{Rate constant at 298 K for OH reactions.}
-#' \item{oh_uncert}{Uncertainty as a percentage for certain OH reactions.}
-#' \item{oh_u_fac}{Uncertainty as a plus/minus difference for certain OH
+#' \item{OH_k298}{Rate constant at 298 K for OH reactions.}
+#' \item{OH_uncert}{Uncertainty as a percentage for certain OH reactions.}
+#' \item{OH_u_fac}{Uncertainty as a plus/minus difference for certain OH
 #' reactions.}
-#' \item{oh_a, oh_b, oh_n}{Extended temperature dependence parameters for
+#' \item{OH_a, OH_b, OH_n}{Extended temperature dependence parameters for
 #' bimolecular OH reactions, to be used in the Arrhenius expression:
 #' `k(T)=A exp(-B/T) (T/300)^n`. In that, `A` is expressed as
 #' cm^3 molecules^-1 s^-1, `B` is in units of K, and `n` is dimensionless. Any
 #' `NA` values indicate that data is not available.}
-#' \item{oh_t_low, oh_t_high}{The low and high temperature boundaries (in units
-#' of K) for which the `oh_a`, `oh_b`, and `oh_n` parameters are valid.}
-#' \item{o3_k298}{Rate constant at 298 K for ozone reactions.}
-#' \item{o3_uncert}{Uncertainty as a percentage for certain ozone reactions.}
-#' \item{o3_u_fac}{Uncertainty as a plus/minus difference for certain ozone
+#' \item{OH_t_low, OH_t_high}{The low and high temperature boundaries (in units
+#' of K) for which the `OH_a`, `OH_b`, and `OH_n` parameters are valid.}
+#' \item{O3_k298}{Rate constant at 298 K for ozone reactions.}
+#' \item{O3_uncert}{Uncertainty as a percentage for certain ozone reactions.}
+#' \item{O3_u_fac}{Uncertainty as a plus/minus difference for certain ozone
 #' reactions.}
-#' \item{o3_a, o3_b, o3_n}{Extended temperature dependence parameters for
+#' \item{O3_a, O3_b, O3_n}{Extended temperature dependence parameters for
 #' bimolecular ozone reactions, to be used in the Arrhenius expression:
 #' `k(T)=A exp(-B/T) (T/300)^n`. In that, `A` is expressed as
 #' cm^3 molecules^-1 s^-1, `B` is in units of K, and `n` is dimensionless. Any
 #' `NA` values indicate that data is not available.}
-#' \item{o3_t_low, o3_t_high}{The low and high temperature boundaries (in units
-#' of K) for which the `o3_a`, `o3_b`, and `o3_n` parameters are valid.}
-#' \item{no3_k298}{Rate constant at 298 K for NO3 reactions.}
-#' \item{no3_uncert}{Uncertainty as a percentage for certain NO3 reactions.}
-#' \item{no3_u_fac}{Uncertainty as a plus/minus difference for certain NO3
+#' \item{O3_t_low, O3_t_high}{The low and high temperature boundaries (in units
+#' of K) for which the `O3_a`, `O3_b`, and `O3_n` parameters are valid.}
+#' \item{NO3_k298}{Rate constant at 298 K for NO3 reactions.}
+#' \item{NO3_uncert}{Uncertainty as a percentage for certain NO3 reactions.}
+#' \item{NO3_u_fac}{Uncertainty as a plus/minus difference for certain NO3
 #' reactions.}
-#' \item{no3_a, no3_b, no3_n}{Extended temperature dependence parameters for
+#' \item{NO3_a, NO3_b, NO3_n}{Extended temperature dependence parameters for
 #' bimolecular NO3 reactions, to be used in the Arrhenius expression:
 #' `k(T)=A exp(-B/T) (T/300)^n`. In that, `A` is expressed as
 #' cm^3 molecules^-1 s^-1, `B` is in units of K, and `n` is dimensionless. Any
 #' `NA` values indicate that data is not available.}
-#' \item{no3_t_low, no3_t_high}{The low and high temperature boundaries (in
-#' units of K) for which the `no3_a`, `no3_b`, and `no3_n` parameters are
+#' \item{NO3_t_low, NO3_t_high}{The low and high temperature boundaries (in
+#' units of K) for which the `NO3_a`, `NO3_b`, and `NO3_n` parameters are
 #' valid.}
-#' \item{cl_k298}{Rate constant at 298 K for Cl reactions.}
-#' \item{cl_uncert}{Uncertainty as a percentage for certain Cl reactions.}
-#' \item{cl_u_fac}{Uncertainty as a plus/minus difference for certain Cl
+#' \item{Cl_k298}{Rate constant at 298 K for Cl reactions.}
+#' \item{Cl_uncert}{Uncertainty as a percentage for certain Cl reactions.}
+#' \item{Cl_u_fac}{Uncertainty as a plus/minus difference for certain Cl
 #' reactions.}
-#' \item{cl_a, cl_b, cl_n}{Extended temperature dependence parameters for
+#' \item{Cl_a, Cl_b, Cl_n}{Extended temperature dependence parameters for
 #' bimolecular Cl reactions, to be used in the Arrhenius expression:
 #' `k(T)=A exp(-B/T) (T/300)^n`. In that, `A` is expressed as
 #' cm^3 molecules^-1 s^-1, `B` is in units of K, and `n` is dimensionless. Any
 #' `NA` values indicate that data is not available.}
-#' \item{cl_t_low, cl_t_high}{The low and high temperature boundaries (in units
-#' of K) for which the `cl_a`, `cl_b`, and `cl_n` parameters are valid.}
+#' \item{Cl_t_low, Cl_t_high}{The low and high temperature boundaries (in units
+#' of K) for which the `Cl_a`, `Cl_b`, and `Cl_n` parameters are valid.}
 #' }
 #'
 #' @section Examples:
@@ -801,16 +858,136 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-11
+#' DATA-12
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_reactions.png")`
 #' }}
 #'
 #' @section Dataset Introduced:
-#' *in development*
+#' *In Development*
 #'
 "reactions"
+
+#' Data on photolysis rates for gas-phase organic compounds
+#'
+#' @description
+#'
+#' The `photolysis` dataset contains numerical values for describing the
+#' photolytic degradation pathways of 25 compounds of relevance in atmospheric
+#' chemistry. Many volatile organic compounds (VOCs) are emitted in substantial
+#' quantities from both biogenic and anthropogenic sources, and they can have a
+#' major influence on the chemistry of the lower atmosphere. A portion of these
+#' can be transformed into other VOCs via the energy provided from light.
+#'
+#' In order to realistically predict the composition of the atmosphere and how
+#' it evolves over time, we need accurate estimates of photolysis rates. The
+#' data provided here in `photolysis` allows for computations of photolysis
+#' rates (*J*, having units of `s^-1`) as a function of the solar zenith angle
+#' (SZA). Having such values is essential when deploying atmospheric chemistry
+#' models.
+#'
+#' @format A tibble with 34 rows and 10 variables:
+#' \describe{
+#' \item{compd_name}{The name of the primary compound undergoing photolysis.}
+#' \item{cmpd_formula}{The chemical formula of the compound.}
+#' \item{products}{A product pathway for the photolysis of the compound.}
+#' \item{type}{The type of organic compound undergoing photolysis.}
+#' \item{l, m, n}{The parameter values given in the `l`, `m`, and `n` columns
+#' can be used to calculate the photolysis rate (*J*) as a function of the
+#' solar zenith angle (*X*, in radians) through the expression:
+#' `J = l * cos(X)^m * exp(-n * sec(X))`.}
+#' \item{quantum_yield}{In the context of photolysis reactions, this is the
+#' efficiency of a given photolytic reaction. In other words, it's the number of
+#' product molecules formed over the number of photons absorbed.}
+#' \item{wavelength_nm, sigma_298_cm2}{The `wavelength_nm` and `sigma_298_cm2`
+#' columns provide photoabsorption data for the compound undergoing photolysis.
+#' The values in `wavelength_nm` provide the wavelength of light in nanometer
+#' units; the `sigma_298_cm2` values are paired with the `wavelength_nm` values
+#' and they are in units of `cm^2 molecule^-1`.}
+#' }
+#'
+#' @section Examples:
+#'
+#' Here is a glimpse at the data available in `photolysis`.
+#'
+#' ```{r}
+#' dplyr::glimpse(photolysis)
+#' ```
+#'
+#' @family datasets
+#' @section Dataset ID and Badge:
+#' DATA-13
+#'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_photolysis.png")`
+#' }}
+#'
+#' @section Dataset Introduced:
+#' *In Development*
+#'
+"photolysis"
+
+#' Nuclide data
+#'
+#' @description
+#'
+#' The `nuclides` dataset contains information on all known nuclides, providing
+#' data on nuclear structure and decay modes across 118 elements. There is data
+#' here on natural abundances, atomic mass, spin, half-life, and more. The
+#' typical users for such a dataset include researchers in fields such as
+#' nuclear physics, radiochemistry, and nuclear medicine.
+#'
+#' @format A tibble with 3,383 rows and 29 variables:
+#' \describe{
+#' \item{nuclide}{The symbol for the nuclide.}
+#' \item{z, n}{The number of protons and neutrons.}
+#' \item{element}{The element symbol.}
+#' \item{radius, radius_uncert}{The charge radius and its associated
+#' uncertainty. In units of fm.}
+#' \item{abundance, abundance_uncert}{The abundance of the stable isotope as
+#' a mole fraction (in relation to other stable isotopes of the same element).
+#' Values are provided for the nuclide only if `is_stable` is `TRUE`.}
+#' \item{is_stable}{Is the nuclide a stable isotope?}
+#' \item{half_life, half_life_uncert}{The nuclide's half life represented as
+#' seconds.}
+#' \item{isospin}{The isospin, or the quantum number related to the up and down
+#' quark content of the particle.}
+#' \item{decay_1, decay_2, decay_3}{The 1st, 2nd, and 3rd decay modes.}
+#' \item{decay_1_pct, decay_1_pct_uncert, decay_2_pct, decay_2_pct_uncert,
+#' decay_3_pct, decay_3_pct_uncert}{The branching proportions for the 1st, 2nd,
+#' and 3rd decays (along with uncertainty values).}
+#' \item{magnetic_dipole, magnetic_dipole_uncert}{The magnetic dipole and its
+#' associated uncertainty. Expressed in units of micro N, or nuclear
+#' magneton values.}
+#' \item{electric_quadrupole, electric_quadrupole_uncert}{The electric
+#' quadrupole and its associated uncertainty. In units of barn (b).}
+#' \item{atomic_mass, atomic_mass_uncert}{The atomic mass and its associated
+#' uncertainty. In units of micro AMU.}
+#' \item{mass_excess, mass_excess_uncert}{The mass excess and its associated
+#' uncertainty. In units of keV.}
+#' }
+#'
+#' @section Examples:
+#'
+#' Here is a glimpse at the data available in `nuclides`.
+#'
+#' ```{r}
+#' dplyr::glimpse(nuclides)
+#' ```
+#'
+#' @family datasets
+#' @section Dataset ID and Badge:
+#' DATA-14
+#'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_nuclides.png")`
+#' }}
+#'
+#' @section Dataset Introduced:
+#' *In Development*
+#'
+"nuclides"
 
 #' An ADSL-flavored clinical trial toy dataset
 #'
@@ -871,7 +1048,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-12
+#' DATA-15
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_rx_adsl.png")`
@@ -944,7 +1121,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-13
+#' DATA-16
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_rx_addv.png")`

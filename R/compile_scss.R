@@ -31,11 +31,11 @@ compile_scss <- function(data, id = NULL) {
   gt_options_tbl <-
     gt_options_tbl[gt_options_tbl$scss & !is.na(gt_options_tbl$value), ]
 
-  color_rows <- grepl("_color", gt_options_tbl$parameter)
+  color_rows <- grepl("_color", gt_options_tbl$parameter, fixed = TRUE)
 
   gt_options_tbl <-
     within(
-      gt_options_tbl,{
+      gt_options_tbl, {
         value[color_rows] = value[color_rows] <-
           lapply(value[color_rows], html_color)
       }

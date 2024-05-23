@@ -80,24 +80,22 @@ reactions <-
   ) %>%
   dplyr::mutate(across(starts_with("feat"), ~ tidyr::replace_na(.x, 0)))
 
-colnames(reactions) <- tolower(colnames(reactions))
-
 reactions <-
   reactions %>%
-  dplyr::mutate(oh_uncert = case_when(
-    !is.na(oh_unc) ~ as.numeric(sub("%", "", oh_unc)) / 100,
+  dplyr::mutate(OH_uncert = case_when(
+    !is.na(OH_unc) ~ as.numeric(sub("%", "", OH_unc)) / 100,
     TRUE ~ NA_real_
   )) %>%
-  dplyr::mutate(o3_uncert = case_when(
-    !is.na(o3_unc) ~ as.numeric(sub("%", "", o3_unc)) / 100,
+  dplyr::mutate(O3_uncert = case_when(
+    !is.na(O3_unc) ~ as.numeric(sub("%", "", O3_unc)) / 100,
     TRUE ~ NA_real_
   )) %>%
-  dplyr::mutate(no3_uncert = case_when(
-    !is.na(no3_unc) ~ as.numeric(sub("%", "", no3_unc)) / 100,
+  dplyr::mutate(NO3_uncert = case_when(
+    !is.na(NO3_unc) ~ as.numeric(sub("%", "", NO3_unc)) / 100,
     TRUE ~ NA_real_
   )) %>%
-  dplyr::mutate(cl_uncert = case_when(
-    !is.na(cl_unc) ~ as.numeric(sub("%", "", cl_unc)) / 100,
+  dplyr::mutate(Cl_uncert = case_when(
+    !is.na(Cl_unc) ~ as.numeric(sub("%", "", Cl_unc)) / 100,
     TRUE ~ NA_real_
   )) %>%
   dplyr::select(-ends_with("unc"))
@@ -195,12 +193,12 @@ compound_types <-
 
 reactions <-
   reactions %>%
-  dplyr::inner_join(compound_types) %>%
+  dplyr::inner_join(compound_types, by = c("cmpd_type" = "cmpd_type")) %>%
   dplyr::relocate(cmpd_desc, .after = cmpd_struct_fml) %>%
-  dplyr::relocate(oh_uncert, .before = oh_u_fac) %>%
-  dplyr::relocate(o3_uncert, .before = o3_u_fac) %>%
-  dplyr::relocate(no3_uncert, .before = no3_u_fac) %>%
-  dplyr::relocate(cl_uncert, .before = cl_u_fac) %>%
+  dplyr::relocate(OH_uncert, .before = OH_u_fac) %>%
+  dplyr::relocate(O3_uncert, .before = O3_u_fac) %>%
+  dplyr::relocate(NO3_uncert, .before = NO3_u_fac) %>%
+  dplyr::relocate(Cl_uncert, .before = Cl_u_fac) %>%
   dplyr::select(-cmpd_type, -cmpd_no, -cmpd_struct_fml, -starts_with("feat")) %>%
   dplyr::rename(cmpd_name = cmpd_primary_name) %>%
   dplyr::rename(cmpd_formula = cmpd_atomic_fml) %>%

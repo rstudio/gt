@@ -255,7 +255,7 @@ test_that("The `tab_spanner_delim()` function works correctly", {
   )
   expect_snapshot(error = TRUE,
     gt(iris_short) %>%
-      tab_spanner_delim(delim = character(0))
+      tab_spanner_delim(delim = character(0L))
   )
   expect_no_error(
     gt(iris_short) %>%

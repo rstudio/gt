@@ -163,7 +163,7 @@ gt_tbl <-
     )
   ) |>
   tab_footnote(
-    footnote = "The lowest by population.",
+    footnote = "The lowest by area.",
     locations = cells_body(
       columns = size,
       rows = size == min(size)

@@ -149,13 +149,10 @@ dt_summary_build <- function(data, context) {
       # Get the names of row groups available in the gt object
       groups_available <- unique(stub_df$group_id)
 
-      if (any(!(groups %in% groups_available))) {
+      if (!all(groups %in% groups_available)) {
 
         not_present_groups <-
-          paste0(
-            base::setdiff(groups, groups_available),
-            collapse = ", "
-          )
+          base::setdiff(groups, groups_available)
 
         # Stop function if one or more `groups`
         # are not present in the gt table

@@ -11,8 +11,8 @@ test_that("Various `is_*()` utility functions work properly", {
   empty_tbl <- dplyr::tibble()
   empty_df <- data.frame()
 
-  empty_w_cols_tbl <- dplyr::tibble(a = character(0), b = numeric(0))
-  empty_w_cols_df <- data.frame(a = character(0), b = numeric(0))
+  empty_w_cols_tbl <- dplyr::tibble(a = character(0L), b = numeric(0L))
+  empty_w_cols_df <- data.frame(a = character(0L), b = numeric(0L))
 
   empty_w_rows_tbl <- dplyr::tibble(.rows = 5)
   empty_w_rows_df <- as.data.frame(empty_w_rows_tbl)
@@ -144,8 +144,8 @@ test_that("The `get_date_format()` function works properly", {
   # Expect that date formats 18-41 are flexible
   for (i in 18:41) {
     date_fmt_i <- get_date_format(date_style = i)
-    expect_true(inherits(date_fmt_i, "flex_d"))
-    expect_true(inherits(date_fmt_i, "date_time_pattern"))
+    expect_s3_class(date_fmt_i, "flex_d")
+    expect_s3_class(date_fmt_i, "date_time_pattern")
   }
 })
 
@@ -187,15 +187,15 @@ test_that("The `get_time_format()` function works properly", {
   # Expect that time formats 6-12 are flexible 24-hour times
   for (i in 6:12) {
     time_fmt_i <- get_time_format(time_style = i)
-    expect_true(inherits(time_fmt_i, "flex_t24"))
-    expect_true(inherits(time_fmt_i, "date_time_pattern"))
+    expect_s3_class(time_fmt_i, "flex_t24")
+    expect_s3_class(time_fmt_i, "date_time_pattern")
   }
 
   # Expect that although time format 25 is not really 12- or 24-hour time (but
   # floating, with no hours in format), it is still classed as `flex_t24`
   expect_equal(as.character(get_time_format(time_style = 25)), "ms")
-  expect_true(inherits(get_time_format(time_style = 25), "flex_t24"))
-  expect_true(inherits(get_time_format(time_style = 25), "date_time_pattern"))
+  expect_s3_class(get_time_format(time_style = 25), "flex_t24")
+  expect_s3_class(get_time_format(time_style = 25), "date_time_pattern")
 })
 
 test_that("time_format() and date_formats are strings.", {
@@ -203,7 +203,6 @@ test_that("time_format() and date_formats are strings.", {
   # Ensure that all format codes work with `check_format_code()`
   for (format_name in c(date_formats()[["format_name"]], time_formats()[["format_name"]])) {
     expect_no_error(check_string(format_name)) # if this ever changes, see 7098 in R/format_data.R
-
   }
 })
 
@@ -272,7 +271,7 @@ test_that("The `process_footnote_marks()` function works properly", {
   # Expect spurious outputs for improper values of `x`
   expect_equal(process_footnote_marks(c(0, -1), marks = "letters"), c("", ""))
   expect_equal(process_footnote_marks(c(1.6, 2.9), marks = "letters"), c("a", "b"))
-  expect_equal(process_footnote_marks(numeric(0), marks = "letters"), list())
+  expect_equal(process_footnote_marks(numeric(0L), marks = "letters"), list())
 
   # Expect an error if providing an improper inputs
   expect_snapshot(error = TRUE,process_footnote_marks(as.character(1:12), marks = "extended"))
@@ -330,7 +329,7 @@ test_that("Tables with labeled columns work with certail utility functions", {
   )
   expect_equal(
     gt(dplyr::tibble()) %>% get_columns_labels_from_attrs(),
-    character(0)
+    character(0L)
   )
   expect_equal(
     gt(exibble) %>% get_columns_labels_from_attrs(),

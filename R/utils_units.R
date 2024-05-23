@@ -37,6 +37,7 @@ define_units <- function(units_notation, is_chemical_formula = FALSE) {
 
     chem_text <- gsub(".*(\\%.*\\%).*", "\\1", input)
     chem_input <- gsub("^%|%$", "", chem_text)
+    chem_input <- gsub("\\(\\^([^\\)])", "( ^\\1", chem_input)
 
     # Replace single bonds
     for (i in seq(1, 10)) {
@@ -59,7 +60,7 @@ define_units <- function(units_notation, is_chemical_formula = FALSE) {
     chem_tokens_vec <-
       vapply(
         chem_tokens_vec,
-        FUN.VALUE = character(1),
+        FUN.VALUE = character(1L),
         USE.NAMES = FALSE,
         FUN = function(x) {
 
@@ -185,7 +186,7 @@ define_units <- function(units_notation, is_chemical_formula = FALSE) {
     chem_tokens_vec <-
       vapply(
         chem_tokens_vec,
-        FUN.VALUE = character(1),
+        FUN.VALUE = character(1L),
         USE.NAMES = FALSE,
         FUN = function(x) {
           if (grepl("<|>", x) && nchar(x) > 1) {
@@ -225,7 +226,7 @@ define_units <- function(units_notation, is_chemical_formula = FALSE) {
   tokens_vec <-
     vapply(
       tokens_vec,
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(x) {
         if (grepl("^/", x) && nchar(x) > 1) {
@@ -404,7 +405,7 @@ render_units <- function(units_object, context = "html") {
       grepl("x10", unit) &&
       !chemical_formula
     ) {
-      unit <- gsub("x", "&times;", unit)
+      unit <- gsub("x", "&times;", unit, fixed = TRUE)
     }
 
     unit <- units_symbol_replacements(text = unit, context = context)

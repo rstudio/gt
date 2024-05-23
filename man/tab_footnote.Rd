@@ -29,7 +29,7 @@ in the footnote text.}
 
 \item{locations}{\emph{Locations to target}
 
-\verb{<locations expressions>} // \emph{default:} \code{NULL} (\code{optional})
+\code{\link[=location-helper]{<locations expressions>}} // \emph{default:} \code{NULL} (\code{optional})
 
 The cell or set of cells to be associated with the footnote. Supplying any
 of the \verb{cells_*()} helper functions is a useful way to target the location
@@ -76,8 +76,8 @@ to right, top to bottom)
 
 Each call of \code{tab_footnote()} will either add a different footnote to the
 footer or reuse existing footnote text therein. One or more cells outside of
-the footer are targeted using the \verb{cells_*()} helper functions (e.g.,
-\code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_column_labels]{cells_column_labels()}}, etc.). You can choose to \emph{not}
+the footer are targeted using the \code{\link[=location-helper]{cells_*()}} helper functions
+(e.g., \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_column_labels]{cells_column_labels()}}, etc.). You can choose to \emph{not}
 attach a footnote mark by simply not specifying anything in the \code{locations}
 argument.
 

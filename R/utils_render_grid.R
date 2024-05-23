@@ -30,7 +30,7 @@
 # A text label to display in the cell. Note that while the label can contain
 # html, it will not be rendered with markup unless the text grob function
 # supports it, for example when using gridtext as follows:
-# `render_as_gtable(..., text_grob = gridtext::richtext_grob)`
+# `as_gtable(..., text_grob = gridtext::richtext_grob)`
 #
 # classes <list of <character>>:
 # One or multiple class names equivalent to the html class attributes that will
@@ -786,7 +786,7 @@ create_footnotes_component_g <- function(data) {
   marks <- vapply(
     footnote_ids,
     FUN = footnote_mark_to_html,
-    FUN.VALUE = character(1),
+    FUN.VALUE = character(1L),
     USE.NAMES = FALSE,
     data = data,
     location = "ftr"
@@ -795,7 +795,7 @@ create_footnotes_component_g <- function(data) {
   text <- vapply(
     footnote_text,
     FUN = process_text,
-    FUN.VALUE = character(1),
+    FUN.VALUE = character(1L),
     USE.NAMES = FALSE,
     context = "html"
   )
@@ -841,24 +841,17 @@ render_grid_cell <- function(
   height <- 0
 
   if (nzchar(label)) {
-    hjust <- style$hjust %||% 0
-    vjust <- style$vjust %||% 0
 
-    x <- (1 - hjust) * margin[4] - hjust * margin[2]
-    y <- (1 - vjust) * margin[3] - vjust * margin[1]
-    x <- grid::unit(hjust, "npc") + x
-    y <- grid::unit(vjust, "npc") + y
+    if (grepl("<svg.*>.*</svg>", label)) {
+      content <- render_grid_svg(label, style, margin)
+    } else {
+      content <- render_grid_text(label, style, margin, text_grob)
+    }
 
-    text <- text_grob(
-      label, x = x, y = y,
-      hjust = hjust, vjust = vjust,
-      gp = style$text_gp
-    )
+    width  <- grid_width(content)  + sum(grid_width(margin[c(2, 4)]))
+    height <- grid_height(content) + sum(grid_height(margin[c(1, 3)]))
 
-    width  <- grid_width(text)  + sum(grid_width(margin[c(2, 4)]))
-    height <- grid_height(text) + sum(grid_height(margin[c(1, 3)]))
-
-    grobs <- c(grobs, list(text))
+    grobs <- c(grobs, list(content))
   }
 
   if (sum(lengths(style$cell_gp))) {
@@ -884,6 +877,136 @@ render_grid_cell <- function(
     height = height,
     cl = "gt_grid_cell"
   )
+}
+
+render_grid_text <- function(label, style, margin, text_grob) {
+  hjust <- style$hjust %||% 0
+  vjust <- style$vjust %||% 0
+
+  x <- (1 - hjust) * margin[4] - hjust * margin[2]
+  y <- (1 - vjust) * margin[3] - vjust * margin[1]
+  x <- grid::unit(hjust, "npc") + x
+  y <- grid::unit(vjust, "npc") + y
+
+  text_grob(
+    label, x = x, y = y,
+    hjust = hjust, vjust = vjust,
+    gp = style$text_gp
+  )
+}
+
+render_grid_svg <- function(label, style, margin) {
+
+  # Delete title
+  # Titles may contain contain html that cannot be interpreted by rsvg,
+  # and they cannot be displayed interactively in {grid} anyway.
+  label <- gsub("<title(.*?)</title>", "", label)
+
+  svg_string <- regexpr("<svg(.*?)>.*</svg>", label) %>%
+    regmatches(x = label) %>%
+    gsub(pattern = "\n", replacement = "") %>%
+    trimws()
+
+  svg_style <- regexpr("style=\"(.*?)\"", svg_string) %>%
+    regmatches(x = svg_string) %>%
+    gsub(pattern = "^style=\"|\"$", replacement = "") %>%
+    strsplit(";") %>%
+    unlist() %>%
+    trimws()
+
+  width <- height <- NULL
+
+  # Try if any height is declared in style attribute
+  if (any(grepl("^height:", svg_style))) {
+    height <- gsub("^height:", "", svg_style[grep("^height:", svg_style)]) %>%
+      parse_fontsize(style$text_gp$fontsize) %>%
+      grid::unit(.grid_unit)
+  }
+
+  # Try if any width is declared in style attribute
+  if (any(grepl("^width:", svg_style))) {
+    width <- gsub("^width:", "", svg_style[grep("^width:", svg_style)]) %>%
+      parse_fontsize(style$text_gp$fontsize) %>%
+      grid::unit(.grid_unit)
+  }
+
+  if (is.null(width) || is.null(height)) {
+    # If style attribute was incomplete; try to derive width/height from viewbox
+    viewbox <- regexpr("viewBox=\"(.*?)\"", svg_string) %>%
+      regmatches(x = svg_string) %>%
+      gsub(pattern = "^viewBox=\"|\"$", replacement = "") %>%
+      strsplit(" ") %>%
+      unlist() %>%
+      as.numeric()
+
+    if (length(viewbox) != 4) {
+      viewbox <- c(0, 0, 0, 0)
+      svg_tag <- regexpr("^<svg(.*?)>", svg_string) %>%
+        regmatches(x = svg_string)
+      if (grepl("width", svg_tag) && grepl("height", svg_tag)) {
+        # Try extract width from tag
+        w <- regexpr("width=(.*?) ", svg_tag) %>%
+          regmatches(x = svg_tag)
+        viewbox[3] <- regexpr("\\d+", w) %>%
+          regmatches(x = w) %>%
+          as.numeric()
+
+        # Try extract height from tag
+        h <- regexpr("height=(.*?) ", svg_tag) %>%
+          regmatches(x = svg_tag)
+        viewbox[4] <- regexpr("\\d+", h) %>%
+          regmatches(x = h) %>%
+          as.numeric()
+
+      } else {
+        viewbox <- c(0, 0, 20, 20)
+      }
+    }
+
+    dx <- abs(diff(range(viewbox[c(1, 3)])))
+    dy <- abs(diff(range(viewbox[c(2, 4)])))
+    asp <- dy / dx
+
+    # If one of height/width is known, set other based on aspect ratio
+    if (is.null(height) && !is.null(width)) {
+      height <- width * asp
+    } else if (!is.null(height)) {
+      width  <- height / asp
+    } else {
+      # Interpret view box as pixels
+      width  <- grid::unit(dx * 0.75, "pt")
+      height <- grid::unit(dy * 0.75, "pt")
+    }
+  }
+
+  hjust <- style$hjust %||% 0
+  vjust <- style$vjust %||% 0
+
+  x <- (1 - hjust) * margin[4] - hjust * margin[2]
+  y <- (1 - vjust) * margin[3] - vjust * margin[1]
+  x <- grid::unit(hjust, "npc") + x
+  y <- grid::unit(vjust, "npc") + y
+
+  w <- ceiling(grid::convertUnit(width,  "in", valueOnly = TRUE) * 300)
+
+  raster <- try_fetch(
+    {
+      svg_string %>%
+        charToRaw() %>%
+        rsvg::rsvg_nativeraster(width = w) %>%
+        grid::rasterGrob(
+          width = width, height = height,
+          x = x, y = y, hjust = hjust, vjust = vjust
+        )
+    },
+    error = function(...) {
+      zero <- grid::unit(0, .grid_unit)
+      grid::rasterGrob(NA, width = zero, height = zero)
+    }
+  )
+
+  raster
+
 }
 
 # This is just a data.frame wrapper to set standard columns for the layout.
@@ -1016,6 +1139,11 @@ parse_fontsize <- function(size, base) {
     new_size[pct] <- as.numeric(gsub("\\%$", "", size[pct])) / 100 * base
   }
 
+  em <- grep("em$", size)
+  if (length(em) > 0) {
+    new_size[em] <- as.numeric(gsub("rem$|em$", "", size[em])) * base
+  }
+
   # Parse pixels
   px <- grep("px$", size)
   if (length(px) > 0) {
@@ -1075,8 +1203,8 @@ parse_style <- function(style) {
   style <- trimws(strsplit(style, ";")[[1]])
   style <- strsplit(style, ":", fixed = TRUE)
   valid <- lengths(style) == 2
-  keys   <- trimws(vapply(style[valid], `[[`, character(1), i = 1))
-  values <- trimws(vapply(style[valid], `[[`, character(1), i = 2))
+  keys   <- trimws(vapply(style[valid], `[[`, character(1L), i = 1))
+  values <- trimws(vapply(style[valid], `[[`, character(1L), i = 2))
   names(values) <- keys
   values
 }

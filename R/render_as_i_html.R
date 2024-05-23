@@ -54,7 +54,7 @@ render_as_ihtml <- function(data, id) {
   has_tab_spanners <- dt_spanners_exists(data = data)
 
   # Obtain the language from the `locale`, if provided
-  locale <- dt_locale_get_value(data = data)
+  locale <- normalize_locale(dt_locale_get_value(data = data))
 
   # Generate a `lang_defs` object to pass to the `language` argument
   if (is.null(locale) || locale == "en") {
@@ -139,7 +139,7 @@ render_as_ihtml <- function(data, id) {
     column_widths <-
       vapply(
         column_widths,
-        FUN.VALUE = integer(1),
+        FUN.VALUE = integer(1L),
         USE.NAMES = FALSE,
         FUN = function(x) {
           if (grepl("px", x)) {
@@ -237,7 +237,7 @@ render_as_ihtml <- function(data, id) {
   # `rownum` in `body_styles_tbl`
   body_style_rules <-
     vapply(
-      seq_len(nrow(body_styles_tbl)), FUN.VALUE = character(1), USE.NAMES = FALSE,
+      seq_len(nrow(body_styles_tbl)), FUN.VALUE = character(1L), USE.NAMES = FALSE,
       FUN = function(x) {
 
         colname <- body_styles_tbl[x, ][["colname"]]
@@ -270,7 +270,9 @@ render_as_ihtml <- function(data, id) {
 
   default_col_def <-
     reactable::colDef(
-      style = reactable::JS(body_style_js_str)
+      style = reactable::JS(body_style_js_str),
+      minWidth = 125,
+      width = NULL
     )
 
   # Generate the table header if there are any heading components
@@ -347,7 +349,18 @@ render_as_ihtml <- function(data, id) {
   colgroups_def <- NULL
 
   if (has_tab_spanners) {
-    col_groups <- (dt_spanners_get(data = data) %>% dplyr::filter(spanner_level == 1))
+
+    hidden_columns <- dt_boxhead_get_var_by_type(data = data, type = "hidden")
+    col_groups <- dplyr::filter(dt_spanners_get(data = data), spanner_level == 1)
+
+    for (i in seq_len(nrow(col_groups))) {
+
+      columns_group_i <- unlist(col_groups[i, ][["vars"]])
+
+      columns_group_i_diff <- base::setdiff(columns_group_i, hidden_columns)
+
+      col_groups[i, ][["vars"]][[1]] <- columns_group_i_diff
+    }
 
     if (max(dt_spanners_get(data = data)$spanner_level) > 1) {
       first_colgroups <- base::paste0(col_groups$built, collapse = "|")
@@ -377,8 +390,12 @@ render_as_ihtml <- function(data, id) {
               borderBottomStyle = column_labels_border_bottom_style,
               borderBottomWidth = column_labels_border_bottom_width,
               borderBottomColor = column_labels_border_bottom_color,
-              marginLeft = "4px",
-              marginRight = "4px"
+              borderLeftStyle =  column_labels_border_bottom_style,
+              borderLeftWidth =  "4px",
+              borderLeftColor =  "transparent",
+              borderRightStyle = column_labels_border_bottom_style,
+              borderRightWidth = "4px",
+              borderRightColor = "transparent"
             )
           )
         }
@@ -451,7 +468,7 @@ render_as_ihtml <- function(data, id) {
       showPageSizeOptions = use_page_size_select,
       pageSizeOptions = page_size_values,
       paginationType = pagination_type,
-      showPagination = TRUE,
+      showPagination = use_pagination,
       showPageInfo = use_pagination_info,
       minRows = 1,
       paginateSubRows = FALSE,
@@ -469,7 +486,7 @@ render_as_ihtml <- function(data, id) {
       compact = use_compact_mode,
       wrap = use_text_wrapping,
       showSortIcon = TRUE,
-      showSortable = TRUE,
+      showSortable = FALSE,
       class = NULL,
       style = NULL,
       rowClass = NULL,

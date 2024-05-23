@@ -1218,8 +1218,8 @@ test_that("The `sub_values()` function works correctly", {
   expect_snapshot(error = TRUE,gt(data_tbl) %>% sub_values(values = "A", replacement = TRUE))
 
   # Expect an error if the `replacement` isn't of the right length
-  expect_snapshot(error = TRUE,gt(data_tbl) %>% sub_values(values = "A", replacement = character(0)))
-  expect_snapshot(error = TRUE,gt(data_tbl) %>% sub_values(values = "A", replacement = c("A", "B")))
+  expect_error(gt(data_tbl) %>% sub_values(values = "A", replacement = character(0L)))
+  expect_error(gt(data_tbl) %>% sub_values(values = "A", replacement = c("A", "B")))
 
   # Expect an error if the `fn` is not a function
   expect_snapshot(error = TRUE,gt(data_tbl) %>% sub_values(fn = "A", replacement = "error"))

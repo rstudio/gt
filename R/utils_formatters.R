@@ -226,7 +226,7 @@ get_locale_idx_set <- function(locale = NULL) {
     return(LETTERS)
   }
 
-  locales[locales$locale == locale, ][["chr_index"]][[1]]
+  locales[locales$locale == locale, ][["chr_index"]][[1L]]
 }
 
 #' Get the `idx_num_spellout` vector based on a locale
@@ -518,7 +518,7 @@ format_num_to_str <- function(
     integer_parts <-
       vapply(
         gsub("(,|-)", "", integer_parts),
-        FUN.VALUE = character(1),
+        FUN.VALUE = character(1L),
         USE.NAMES = FALSE,
         FUN = insert_seps_ind
       )
@@ -951,7 +951,7 @@ format_symbol_str <- function(
   x_out <-
     vapply(
       seq_along(x),
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(i) {
 

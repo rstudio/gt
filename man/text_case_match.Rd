@@ -51,11 +51,11 @@ matched substrings.}
 
 \item{.locations}{\emph{Locations to target}
 
-\verb{<locations expressions>} // \emph{default:} \code{cells_body()}
+\code{\link[=location-helper]{<locations expressions>}} // \emph{default:} \code{cells_body()}
 
 The cell or set of cells to be associated with the text transformation.
-Only the \code{\link[=cells_body]{cells_body()}}, \code{\link[=cells_stub]{cells_stub()}}, \code{\link[=cells_row_groups]{cells_row_groups()}},
-\code{\link[=cells_column_labels]{cells_column_labels()}}, and \code{\link[=cells_column_spanners]{cells_column_spanners()}} helper functions can
+Only the \code{\link[=cells_column_spanners]{cells_column_spanners()}}, \code{\link[=cells_column_labels]{cells_column_labels()}},
+\code{\link[=cells_row_groups]{cells_row_groups()}}, \code{\link[=cells_stub]{cells_stub()}}, and \code{\link[=cells_body]{cells_body()}} helper functions can
 be used here. We can enclose several of these calls within a \code{list()} if we
 wish to make the transformation happen at different locations.}
 }

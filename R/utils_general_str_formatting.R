@@ -237,7 +237,7 @@ swap_adjacent_text_groups <- function(
 
   vapply(
     x,
-    FUN.VALUE = character(1),
+    FUN.VALUE = character(1L),
     USE.NAMES = FALSE,
     function(x) {
 
@@ -378,20 +378,20 @@ str_title_case <- function(x) {
     s <- strsplit(y, " ")[[1]]
 
     paste(
-      toupper(substring(s, 1,1)),
+      toupper(substring(s, 1, 1)),
       substring(s, 2),
       sep = "", collapse = " "
     )
   }
 
-  vapply(x, FUN.VALUE = character(1), USE.NAMES = FALSE, FUN = title_case_i)
+  vapply(x, FUN.VALUE = character(1L), USE.NAMES = FALSE, FUN = title_case_i)
 }
 
 str_substitute <- function(string, start = 1L, end = -1L) {
 
   if (is.matrix(start)) {
-    end <- start[, 2]
-    start <- start[, 1]
+    end <- start[, 2L]
+    start <- start[, 1L]
   }
 
   start <- recycler(start, string)
@@ -537,7 +537,7 @@ glue_gt <- function(.x, ...) {
 
 regexec_gt <- function(pattern, text, perl = FALSE) {
 
-  if (is.factor(text) && length(levels(text)) < length(text)) {
+  if (is.factor(text) && nlevels(text) < length(text)) {
 
     out <- regexec_gt(pattern, c(levels(text), NA_character_), perl)
     outna <- out[length(out)]
@@ -550,7 +550,7 @@ regexec_gt <- function(pattern, text, perl = FALSE) {
 
   if (perl) {
 
-    capt.attr <- c('capture.start', 'capture.length', 'capture.names')
+    capt.attr <- c("capture.start", "capture.length", "capture.names")
     process <- function(x) {
 
       if (anyNA(x) || any(x < 0)) {
@@ -562,7 +562,7 @@ regexec_gt <- function(pattern, text, perl = FALSE) {
         y <- t(cbind(x, attr(x, "capture.start")))
         attributes(y)[names(attributes(x))] <- attributes(x)
         ml <- t(cbind(attr(x, "match.length"), attr(x, "capture.length")))
-        nm <- attr(x, 'capture.names')
+        nm <- attr(x, "capture.names")
         dimnames(ml) <- dimnames(y) <- if (any(nzchar(nm))) list(c("", nm), NULL)
         attr(y, "match.length") <- ml
         y
@@ -584,10 +584,10 @@ regexec_gt <- function(pattern, text, perl = FALSE) {
         function(outer, inner) {
           tmp <- do.call(cbind, inner)
           attributes(tmp)[names(attributes(inner))] <- attributes(inner)
-          attr(tmp, 'match.length') <- do.call(cbind, lapply(inner, `attr`, 'match.length'))
-          attr(tmp, 'useBytes') <- attr(outer, 'useBytes')
-          attr(tmp, 'index.type') <- attr(outer, 'index.type')
-          tmp + rep(outer - 1L, each <- nrow(tmp))
+          attr(tmp, "match.length") <- do.call(cbind, lapply(inner, `attr`, "match.length"))
+          attr(tmp, "useBytes") <- attr(outer, "useBytes")
+          attr(tmp, "index.type") <- attr(outer, "index.type")
+          tmp + rep(outer - 1L, xeach <- nrow(tmp))
         },
         dat[im],
         m1[im]

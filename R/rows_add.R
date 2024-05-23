@@ -221,7 +221,7 @@
 #' ```r
 #' dplyr::tibble(
 #'   time = lubridate::POSIXct(),
-#'   event = character(0)
+#'   event = character(0L)
 #' ) |>
 #'   gt() |>
 #'   rows_add(
@@ -313,9 +313,9 @@
 #'
 #' ```r
 #' dplyr::tibble(
-#'   msrp = numeric(0),
-#'   item = character(0),
-#'   type = character(0)
+#'   msrp = numeric(0L),
+#'   item = character(0L),
+#'   type = character(0L)
 #' ) |>
 #'   gt() |>
 #'   rows_add(
@@ -404,7 +404,7 @@ rows_add <- function(
     #
 
     normalized_row_data_items <- list()
-    row_data_items_to_remove <- c()
+    row_data_items_to_remove <- NULL # c()
 
     for (i in seq_along(row_data_list)) {
 

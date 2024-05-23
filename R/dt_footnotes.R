@@ -36,14 +36,14 @@ dt_footnotes_init <- function(data) {
 
   footnotes_df <-
     dplyr::tibble(
-      locname = character(0),
-      grpname = character(0),
-      colname = character(0),
-      locnum = numeric(0),
-      rownum = integer(0),
-      colnum = integer(0),
-      footnotes = list(character(0)),
-      placement = character(0)
+      locname = character(0L),
+      grpname = character(0L),
+      colname = character(0L),
+      locnum = numeric(0L),
+      rownum = integer(0L),
+      colnum = integer(0L),
+      footnotes = list(character(0L)),
+      placement = character(0L)
     )
 
   dt_footnotes_set(data = data, footnotes = footnotes_df)

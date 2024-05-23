@@ -1858,16 +1858,16 @@ test_that("The `fmt_duration()` function will error in specific cases", {
   expect_no_error(tab_6 %>% fmt_duration(columns = "dur_1"))
 
   # Expect an error if `input_units` is invalid
-  expect_snapshot(error = TRUE,tab_6 %>% fmt_duration(columns = "num_1", input_units = "Stunden"))
-  expect_snapshot(error = TRUE,tab_6 %>% fmt_duration(columns = "num_1", input_units = c("hours", "minutes")))
-  expect_snapshot(error = TRUE,tab_6 %>% fmt_duration(columns = "num_1", input_units = character(0)))
-  expect_snapshot(error = TRUE,tab_6 %>% fmt_duration(columns = "num_1", input_units = 1))
+  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "Stunden"))
+  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = c("hours", "minutes")))
+  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = character(0L)))
+  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = 1))
 
   # Expect an error if `output_units` is invalid
-  expect_snapshot(error = TRUE,tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", output_units = "Stunden"))
-  expect_snapshot(error = TRUE,tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", output_units = c("days", "weeks", "years")))
-  expect_snapshot(error = TRUE,tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", output_units = character(0)))
-  expect_snapshot(error = TRUE,tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", output_units = 1))
+  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", output_units = "Stunden"))
+  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", output_units = c("days", "weeks", "years")))
+  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", output_units = character(0L)))
+  expect_error(tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", output_units = 1))
 
   # Expect an error if `duration_style` is invalid
   expect_snapshot(error = TRUE,tab_6 %>% fmt_duration(columns = "num_1", input_units = "hours", duration_style = "style"))

@@ -545,7 +545,7 @@ test_that("The `gt()` `rowname_col` arg will be overridden by `rownames_to_stub 
     build_data(context = "html")
 
   # Expect that no groups are available in the gt object
-  built_tbl$`_row_groups` %>% expect_equal(character(0))
+  built_tbl$`_row_groups` %>% expect_equal(character(0L))
 
   # Expect no rows in `_groups_rows`
   built_tbl$`_groups_rows` %>%
@@ -590,7 +590,7 @@ test_that("The `gt()` `rowname_col` arg will be overridden by `rownames_to_stub 
   html_tbl %>%
     rvest::html_nodes("[class='gt_group_heading']") %>%
     rvest::html_text() %>%
-    expect_equal(character(0))
+    expect_equal(character(0L))
 
   # Expect the first row of data to match that which is expected
   html_tbl %>%
@@ -617,7 +617,7 @@ test_that("The `rowname` column will be safely included when `rownames_to_stub =
     build_data(context = "html")
 
   # Expect that no groups are available in the gt object
-  built_tbl$`_row_groups` %>% expect_equal(character(0))
+  built_tbl$`_row_groups` %>% expect_equal(character(0L))
 
   # Expect no rows in `_groups_rows`
   built_tbl$`_groups_rows` %>%
@@ -663,7 +663,7 @@ test_that("The `rowname` column will be safely included when `rownames_to_stub =
   html_tbl %>%
     rvest::html_nodes("[class='gt_group_heading']") %>%
     rvest::html_text() %>%
-    expect_equal(character(0))
+    expect_equal(character(0L))
 
   # Expect the first row of data to match that which is expected
   html_tbl %>%
