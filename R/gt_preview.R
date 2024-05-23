@@ -33,11 +33,7 @@
 #' modify the output of `gt_preview()`. Furthermore, you cannot pass a **gt**
 #' object to `gt_preview()`.
 #'
-#' @param data *Input data table*
-#'
-#'   `obj:<data.frame>|obj:<tbl_df>` // **required**
-#'
-#'   A `data.frame` object or a tibble (`tbl_df`).
+#' @inheritParams gt
 #'
 #' @param top_n *Top n rows to display*
 #'

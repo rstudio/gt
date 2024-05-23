@@ -201,12 +201,7 @@ determine_which_character_number <- function(
 #' number of columns (the function will skip over columns that don't require
 #' this type of alignment).
 #'
-#' @param data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
+#' @inheritParams cols_align
 #'
 #' @param columns *Columns to target*
 #'
@@ -442,12 +437,7 @@ align_to_char <- function(x, align_at = ".") {
 #' left-hand side defines the target columns and the right-hand side is a single
 #' dimension.
 #'
-#' @param .data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
+#' @inheritParams fmt_number
 #'
 #' @param ... *Column width assignments*
 #'
@@ -625,12 +615,7 @@ cols_width <- function(
 #' columns and we even have the option to use the [md()] or [html()] helper
 #' functions for rendering column labels from Markdown or using HTML.
 #'
-#' @param .data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
+#' @inheritParams cols_width
 #'
 #' @param ... *Column label assignments*
 #'
@@ -1297,12 +1282,7 @@ cols_label_with <- function(
 #' pertaining to the units notation can be found in the section entitled
 #' *How to use **gt**'s units notation*.
 #'
-#' @param .data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
+#' @inheritParams fmt_number
 #'
 #' @param ... *Column units definitions*
 #'
@@ -1646,12 +1626,7 @@ cols_units <- function(
 #' can use any of the `NA` types (e.g., `NA`, `NA_character_`, `NA_real_`, etc.)
 #' for such columns.
 #'
-#' @param .data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
+#' @inheritParams fmt_number
 #'
 #' @param ... *Cell data assignments*
 #'

@@ -185,12 +185,7 @@ web_image <- function(
 #'
 #'   A local path to an image file on disk.
 #'
-#' @param height *Height of image*
-#'
-#'   `scalar<numeric|integer>` // *default:* `30`
-#'
-#'   The absolute height of the image in the table cell (in `"px"` units). By
-#'   default, this is set to `"30px"`.
+#' @inheritParams web_image
 #'
 #' @return A character object with an HTML fragment that can be placed inside of
 #'   a cell.
