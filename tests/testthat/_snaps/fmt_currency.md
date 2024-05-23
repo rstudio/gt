@@ -31,7 +31,7 @@
     Condition
       Error in `validate_contexts()`:
       ! All output contexts must be in the set of supported contexts.
-      * Supported: html, latex, rtf, word, default
+      * Supported: html, latex, rtf, word, and default
       * Invalid: none
 
 ---

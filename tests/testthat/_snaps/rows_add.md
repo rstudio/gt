@@ -1579,7 +1579,7 @@
         rows_add(row = "row_3.5", .after = "row_3")
     Condition
       Error in `tab_style()`:
-      ! Could not style the table with `color()`.
+      ! Failed to style the body of the table.
       Caused by error in `cells_body()`:
       ! The following row indices do not exist in the data: 9.
     Code
@@ -1588,7 +1588,7 @@
         cells_column_labels(num2), cells_body(rows = "row_0")))
     Condition
       Error in `tab_style()`:
-      ! Could not style the table with `cell_fill()` and `cell_borders()`.
+      ! Failed to style the column labels of the table.
       Caused by error in `cells_column_labels()`:
       ! Can't select columns that don't exist.
       x Column `num2` doesn't exist.

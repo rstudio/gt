@@ -97,22 +97,6 @@
 ---
 
     Code
-      gt(data_tbl) %>% sub_values(values = "A", replacement = character(0))
-    Condition
-      Error in `sub_values()`:
-      ! `replacement` must be a single string, not an empty character vector.
-
----
-
-    Code
-      gt(data_tbl) %>% sub_values(values = "A", replacement = c("A", "B"))
-    Condition
-      Error in `sub_values()`:
-      ! `replacement` must be a single string, not a character vector.
-
----
-
-    Code
       gt(data_tbl) %>% sub_values(fn = "A", replacement = "error")
     Condition
       Error in `sub_values()`:

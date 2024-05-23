@@ -6,7 +6,7 @@
     Condition
       Error in `tab_footnote()`:
       ! Can't add footnote "Summary cell footnote.".
-      Caused by error in `add_summary_location_row()`:
+      Caused by error in `cells_summary()`:
       ! The location requested could not be resolved.
       * Review the expression provided as `columns`.
 
@@ -18,7 +18,7 @@
     Condition
       Error in `tab_footnote()`:
       ! Can't add footnote "Summary cell footnote.".
-      Caused by error in `add_summary_location_row()`:
+      Caused by error in `cells_summary()`:
       ! The location requested could not be resolved.
       * Review the expression provided as `rows`.
 
@@ -30,7 +30,7 @@
     Condition
       Error in `tab_footnote()`:
       ! Can't add footnote "Grand summary cell footnote.".
-      Caused by error in `add_grand_summary_location_row()`:
+      Caused by error in `cells_grand_summary()`:
       ! The location requested could not be resolved.
       * Review the expression provided as `columns`.
 
@@ -42,7 +42,7 @@
     Condition
       Error in `tab_footnote()`:
       ! Can't add footnote "Grand summary cell footnote.".
-      Caused by error in `add_grand_summary_location_row()`:
+      Caused by error in `cells_grand_summary()`:
       ! The location requested could not be resolved.
       * Review the expression provided as `rows`.
 
