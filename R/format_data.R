@@ -9367,7 +9367,7 @@ fmt_units <- function(
 #' It's always best to show examples on usage:
 #'
 #' - `"CH3O2"` and `"(NH4)2S"` will render with subscripted numerals
-#' - Charges can be expressed terminating `"+"` or `"-"` as in `"H+"` and
+#' - Charges can be expressed with terminating `"+"` or `"-"`, as in `"H+"` and
 #'   `"[AgCl2]-"`; if any charges involve the use of a number, the following
 #'   incantations could be used: `"CrO4^2-"`, `"Fe^n+"`, `"Y^99+"`, `"Y^{99+}"`
 #'   (the final two forms produce equivalent output)
@@ -9392,7 +9392,7 @@ fmt_units <- function(
 #'   adjacent characters (i.e., these shouldn't be at the beginning or end of
 #'   the markup); two examples: `"C6H5-CHO"`, `"CH3CH=CH2"`
 #' - as with units notation, Greek letters can be inserted by surrounding the
-#'   letter name with `":"`; here's an example that denotes the delta value
+#'   letter name with `":"`; here's an example that describes the delta value
 #'   of carbon-13: `":delta: ^13C"`
 #'
 #' @section Examples:
