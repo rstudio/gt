@@ -185,12 +185,7 @@ web_image <- function(
 #'
 #'   A local path to an image file on disk.
 #'
-#' @param height *Height of image*
-#'
-#'   `scalar<numeric|integer>` // *default:* `30`
-#'
-#'   The absolute height of the image in the table cell (in `"px"` units). By
-#'   default, this is set to `"30px"`.
+#' @inheritParams web_image
 #'
 #' @return A character object with an HTML fragment that can be placed inside of
 #'   a cell.
@@ -370,12 +365,12 @@ ggplot_image <- function(
 
   vapply(
     seq_along(plot_object),
-    FUN.VALUE = character(1),
+    FUN.VALUE = character(1L),
     USE.NAMES = FALSE,
     FUN = function(x) {
 
       filename <-
-        paste0("temp_ggplot_", formatC(x, width = 4, flag = "0") , ".png")
+        paste0("temp_ggplot_", formatC(x, width = 4, flag = "0"), ".png")
 
       # Save PNG file to disk
       ggplot2::ggsave(
@@ -458,7 +453,7 @@ get_image_uri <- function(file) {
 
   vapply(
     seq_along(image_raw),
-    FUN.VALUE = character(1),
+    FUN.VALUE = character(1L),
     USE.NAMES = FALSE, FUN = function(x) {
       paste0(
         "data:", get_mime_type(file[x]),

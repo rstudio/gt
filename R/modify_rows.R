@@ -94,7 +94,7 @@ row_group_order <- function(
   arrange_groups <- dt_row_groups_get(data = data)
 
   # Stop function if any value in `groups` doesn't match a group name
-  if (any(!groups %in% arrange_groups)) {
+  if (!all(groups %in% arrange_groups)) {
 
     cli::cli_abort(c(
       "All values given as `groups` must correspond to `group_id` values.",

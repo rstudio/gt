@@ -34,10 +34,10 @@ as_locations <- function(locations) {
   if (!inherits(locations, "location_cells")) {
 
     if (!is.list(locations) &&
-        any(!vapply(locations, inherits, logical(1), "location_cells"))) {
+        !all(vapply(locations, inherits, logical(1L), "location_cells"))) {
 
       cli::cli_abort(
-        "The `locations` object should be a list of `cells_*()` objects."
+        "{.arg locations} should be a list of {.topic [`cells_*()`](location-helper)} calls."
       )
     }
   } else {
@@ -112,7 +112,7 @@ add_summary_location_row <- function(
           call = call
         )
 
-      if (length(columns) == 0) {
+      if (length(columns) == 0L) {
         cli::cli_abort(c(
           "The location requested could not be resolved.",
           "*" = "Review the expression provided as `columns`."
@@ -132,7 +132,7 @@ add_summary_location_row <- function(
         call = call
       )
 
-    if (length(rows) == 0) {
+    if (length(rows) == 0L) {
       cli::cli_abort(c(
         "The location requested could not be resolved.",
         "*" = "Review the expression provided as `rows`."
@@ -180,7 +180,7 @@ add_grand_summary_location_row <- function(
     placement = NULL,
     df_type = "styles_df"
 ) {
-  call <- call(class(loc)[[1]])
+  call <- call(class(loc)[[1L]])
   summary_data <- dt_summary_get(data = data)
 
   id_vals <-

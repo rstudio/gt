@@ -69,6 +69,64 @@ package.
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_stubhead_2.png" alt="This image of a table was generated from the second code example in the `tab_stubhead()` help file." style="width:100\%;">
 }}
+
+If the stub is two columns wide (made possible by using
+\code{row_group_as_column = TRUE} in the \code{\link[=gt]{gt()}} statement), the stubhead will be a
+merged cell atop those two stub columns representing the row group and the
+row label. Here's an example of that type of situation in a table that uses
+the \code{\link{peeps}} dataset.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{peeps |>
+  dplyr::filter(country \%in\% c("POL", "DEU")) |>
+  dplyr::group_by(country) |>
+  dplyr::filter(dplyr::row_number() \%in\% 1:5) |>
+  dplyr::ungroup() |>
+  dplyr::mutate(name = paste0(toupper(name_family), ", ", name_given)) |>
+  dplyr::select(name, address, city, postcode, country) |>
+  gt(
+    rowname_col = "name",
+    groupname_col = "country",
+    row_group_as_column = TRUE
+  ) |>
+  tab_stubhead(label = "Country Code / Person") |>
+  tab_style(
+    style = cell_text(transform = "capitalize"),
+    locations = cells_column_labels()
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_stubhead_3.png" alt="This image of a table was generated from the third code example in the `tab_stubhead()` help file." style="width:100\%;">
+}}
+
+The stubhead cell and its text can be styled using \code{\link[=tab_style]{tab_style()}} along with
+the \code{\link[=cells_stubhead]{cells_stubhead()}} function. In this example, using the \code{\link{reactions}}
+dataset, we style the stubhead label so that it is vertically centered with
+text that is highly emboldened.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{reactions |>
+  dplyr::filter(cmpd_type == "nitrophenol") |>
+  dplyr::select(cmpd_name, OH_k298, Cl_k298) |>
+  dplyr::filter(!(is.na(OH_k298) & is.na(Cl_k298))) |>
+  gt(rowname_col = "cmpd_name") |>
+  tab_spanner(
+    label = "Rate constant at 298 K, in \{\{cm^3 molecules^–1 s^–1⁠\}\}",
+    columns = ends_with("k298")
+  ) |>
+  tab_stubhead(label = "Nitrophenol Compound") |>
+  fmt_scientific() |>
+  sub_missing() |>
+  cols_label_with(fn = function(x) sub("_k298", "", x)) |>
+  cols_width(everything() ~ px(200)) |>
+  tab_style(
+    style = cell_text(v_align = "middle", weight = "800"),
+    locations = cells_stubhead()
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_stubhead_4.png" alt="This image of a table was generated from the fourth code example in the `tab_stubhead()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{

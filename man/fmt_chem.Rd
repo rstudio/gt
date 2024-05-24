@@ -99,7 +99,7 @@ the more advanced typesetting tries to limit the amount of syntax needed.
 It's always best to show examples on usage:
 \itemize{
 \item \code{"CH3O2"} and \code{"(NH4)2S"} will render with subscripted numerals
-\item Charges can be expressed terminating \code{"+"} or \code{"-"} as in \code{"H+"} and
+\item Charges can be expressed with terminating \code{"+"} or \code{"-"}, as in \code{"H+"} and
 \code{"[AgCl2]-"}; if any charges involve the use of a number, the following
 incantations could be used: \code{"CrO4^2-"}, \code{"Fe^n+"}, \code{"Y^99+"}, \code{"Y^{99+}"}
 (the final two forms produce equivalent output)
@@ -124,7 +124,7 @@ examples \code{"KCr(SO4)2 . 12 H2O"} and \code{"KCr(SO4)2 * 12 H2O"}
 adjacent characters (i.e., these shouldn't be at the beginning or end of
 the markup); two examples: \code{"C6H5-CHO"}, \code{"CH3CH=CH2"}
 \item as with units notation, Greek letters can be inserted by surrounding the
-letter name with \code{":"}; here's an example that denotes the delta value
+letter name with \code{":"}; here's an example that describes the delta value
 of carbon-13: \code{":delta: ^13C"}
 }
 }
@@ -167,12 +167,12 @@ surrounding the text with \code{"{{\%"}/\code{"\%}}"}.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_chem_1.png" alt="This image of a table was generated from the first code example in the `fmt_chem()` help file." style="width:100\%;">
 }}
 
-Taking just a few rows from the \code{\link{photolysis}} dataset, let's and create a
-new \strong{gt} table. The \code{cmpd_formula} and \code{products} columns both contain
-text in chemistry notation (the first has compounds, and the second column
-has the products of photolysis reactions). These columns will be formatting
-by the \code{fmt_chem()} function. The compound formulas will be merged with the
-compound names via the \code{\link[=cols_merge]{cols_merge()}} function.
+Taking just a few rows from the \code{\link{photolysis}} dataset, let's create a new
+\strong{gt} table. The \code{cmpd_formula} and \code{products} columns both contain text in
+chemistry notation (the first has compounds, and the second column has the
+products of photolysis reactions). These columns will be formatted by the
+\code{fmt_chem()} function. The compound formulas will be merged with the compound
+names via the \code{\link[=cols_merge]{cols_merge()}} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{photolysis \%>\%
   dplyr::filter(cmpd_name \%in\% c(
@@ -212,6 +212,56 @@ compound names via the \code{\link[=cols_merge]{cols_merge()}} function.
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_chem_2.png" alt="This image of a table was generated from the second code example in the `fmt_chem()` help file." style="width:100\%;">
 }}
+
+The \code{fmt_chem()} function can handle the typesetting of nuclide notation.
+Let's take a subset of columns and rows from the \code{\link{nuclides}} dataset and
+make a new \strong{gt} table. The contents of the \code{nuclide} column contains
+isotopes of hydrogen and carbon and this is placed in the table stub. Using
+\code{fmt_chem()} makes it so that the subscripted and superscripted values are
+properly formatted to the convention of formatting nuclides.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{nuclides |>
+  dplyr::filter(element \%in\% c("H", "C")) |>
+  dplyr::mutate(nuclide = gsub("\\\\d+$", "", nuclide)) |>
+  dplyr::select(nuclide, atomic_mass, half_life, decay_1, is_stable) |>
+  gt(rowname_col = "nuclide") |>
+  tab_header(title = "Isotopes of Hydrogen and Carbon") |>
+  tab_stubhead(label = "Isotope") |>
+  fmt_chem(columns = nuclide) |>
+  fmt_scientific(columns = half_life) |>
+  fmt_number(
+    columns = atomic_mass,
+    decimals = 4,
+    scale_by = 1 / 1e6
+  ) |>
+  sub_missing(
+    columns = half_life,
+    rows = is_stable,
+    missing_text = md("**STABLE**")
+  ) |>
+  sub_missing(columns = half_life, rows = !is_stable) |>
+  sub_missing(columns = decay_1) |>
+  data_color(
+    columns = decay_1,
+    target_columns = c(atomic_mass, half_life, decay_1),
+    palette = "LaCroixColoR::PassionFruit",
+    na_color = "white"
+  ) |>
+  cols_label_with(fn = function(x) tools::toTitleCase(gsub("_", " ", x))) |>
+  cols_label(decay_1 = "Decay Mode") |>
+  cols_width(
+    stub() ~ px(70),
+    c(atomic_mass, half_life, decay_1) ~ px(120)
+  ) |>
+  cols_hide(columns = c(is_stable)) |>
+  cols_align(align = "center", columns = decay_1) |>
+  opt_align_table_header(align = "left") |>
+  opt_vertical_padding(scale = 0.5)
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_chem_3.png" alt="This image of a table was generated from the third code example in the `fmt_chem()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
@@ -221,7 +271,7 @@ compound names via the \code{\link[=cols_merge]{cols_merge()}} function.
 
 \section{Function Introduced}{
 
-\strong{In Development}
+\emph{In Development}
 }
 
 \seealso{

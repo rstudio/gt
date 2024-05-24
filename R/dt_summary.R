@@ -116,8 +116,8 @@ dt_summary_build <- function(data, context) {
 
         cli::cli_abort(c(
           "There are no row groups in the gt object.",
-          "*" = "Use `grand_summary_rows()` to create a grand summary, or",
-          "*" = "Define row groups using `gt(groupname_col = ...)` or `tab_row_group()`."
+          "*" = "Use {.fn grand_summary_rows} to create a grand summary, or",
+          "*" = "Define row groups using `gt(groupname_col = ...)` or {.fn tab_row_group}."
         ))
       }
     }
@@ -149,19 +149,16 @@ dt_summary_build <- function(data, context) {
       # Get the names of row groups available in the gt object
       groups_available <- unique(stub_df$group_id)
 
-      if (any(!(groups %in% groups_available))) {
+      if (!all(groups %in% groups_available)) {
 
         not_present_groups <-
-          paste0(
-            base::setdiff(groups, groups_available),
-            collapse = ", "
-          )
+          base::setdiff(groups, groups_available)
 
         # Stop function if one or more `groups`
         # are not present in the gt table
         cli::cli_abort(c(
           "All `groups` should be available in the gt object.",
-          "*" = "The following groups are not present: {not_present_groups}."
+          "*" = "The following groups are absent: {not_present_groups}."
         ))
       }
     }
@@ -259,12 +256,13 @@ dt_summary_build <- function(data, context) {
               )
 
             select_data_tbl <-
-              dplyr::select(
+              dplyr::relocate(
                 select_data_tbl,
-                dplyr::all_of(group_id_col_private),
-                dplyr::all_of(row_id_col_private),
-                dplyr::all_of(rowname_col_private),
-                dplyr::everything()
+                dplyr::all_of(c(
+                  group_id_col_private,
+                  row_id_col_private,
+                  rowname_col_private
+                ))
               )
 
             select_data_tbl
@@ -281,10 +279,12 @@ dt_summary_build <- function(data, context) {
     summary_dfs_data <-
       dplyr::select(
         summary_dfs_data,
-        dplyr::all_of(group_id_col_private),
-        dplyr::all_of(row_id_col_private),
-        dplyr::all_of(rowname_col_private),
-        dplyr::all_of(colnames(body))
+        dplyr::all_of(c(
+          group_id_col_private,
+          row_id_col_private,
+          rowname_col_private,
+          colnames(body)
+        ))
       )
 
     #
@@ -426,11 +426,7 @@ dt_summary_build <- function(data, context) {
         }
       )
 
-    summary_dfs_display <-
-      dplyr::mutate(
-        summary_dfs_display,
-        `::rowname::` = NA_character_
-      )
+    summary_dfs_display$`::rowname::` <- NA_character_
 
     labels_processed <- unlist(lapply(labels, FUN = process_text, context = context))
 

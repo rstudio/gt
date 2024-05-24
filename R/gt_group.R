@@ -87,7 +87,7 @@ gt_group <- function(
   # Process gt tables and add records to the `gt_tbl_tbl` object
   #
 
-  for (i in seq_len(length(gt_tbl_list))) {
+  for (i in seq_along(gt_tbl_list)) {
 
     gt_tbl_tbl_i <- generate_gt_tbl_tbl_i(i = i, gt_tbl = gt_tbl_list[[i]])
     gt_tbl_tbl <- dplyr::bind_rows(gt_tbl_tbl, gt_tbl_tbl_i)
@@ -110,13 +110,7 @@ gt_group <- function(
 #' The only thing you need to provide is the index value for the **gt** table
 #' within the `gt_group` object.
 #'
-#' @param data *The gt table group object*
-#'
-#'   `obj:<gt_group>` // **required**
-#'
-#'   This is a `gt_group` container object. It is typically generated through
-#'   use of the [gt_group()] function along with one or more `gt_tbl` objects,
-#'   or, made by splitting a **gt** table with [gt_split()].
+#' @inheritParams grp_add
 #'
 #' @param which *The table to pull from the group*
 #'
@@ -175,18 +169,15 @@ grp_pull <- function(
 #'   use of the [gt_group()] function along with one or more `gt_tbl` objects,
 #'   or, made by splitting a **gt** table with [gt_split()].
 #'
+#' @inheritParams gt_group
+#'
 #' @param ... *One or more gt table objects*
 #'
-#'   `obj:<gt_tbl>` // **required** (or, use `...`)
+#'   `obj:<gt_tbl>` // **required** (or, use `.list`)
 #'
 #'   One or more **gt** table (`gt_tbl`) objects, typically generated via the
 #'   [gt()] function.
 #'
-#' @param .list *Alternative to `...`*
-#'
-#'   `<list of multiple expressions>` // (or, use `...`)
-#'
-#'   Allows for the use of a list as an input alternative to `...`.
 #'
 #' @param .before,.after *Table used as anchor*
 #'
@@ -242,9 +233,7 @@ grp_add <- function(
 
   } else if (!is.null(.after)) {
 
-    if (!rlang::is_integerish(.after)) {
-      cli::cli_abort("An integer value should be supplied for `.after`.")
-    }
+    check_number_whole(.after)
 
     if (!(.after %in% valid_idx)) {
       cli::cli_abort("The value supplied for `.after` should be a valid index.")
@@ -258,9 +247,7 @@ grp_add <- function(
 
   } else if (!is.null(.before)) {
 
-    if (!rlang::is_integerish(.before)) {
-      cli::cli_abort("An integer value should be supplied for `.before`.")
-    }
+    check_number_whole(.before)
 
     if (!(.before %in% valid_idx)) {
       cli::cli_abort("The value supplied for `.before` should be a valid index.")
@@ -281,7 +268,7 @@ grp_add <- function(
   # Process gt tables and add records to the `gt_tbl_tbl` object
   #
 
-  for (i in seq_len(length(gt_tbl_list))) {
+  for (i in seq_along(gt_tbl_list)) {
 
     gt_tbl_tbl_i <- generate_gt_tbl_tbl_i(i = i, gt_tbl = gt_tbl_list[[i]])
     gt_tbl_tbl <- dplyr::bind_rows(gt_tbl_tbl, gt_tbl_tbl_i)
@@ -324,13 +311,7 @@ grp_add <- function(
 #' function and the placement of the cloned **gt** tables can be controlled with
 #' either the `before` or `after` arguments.
 #'
-#' @param data *The gt table group object*
-#'
-#'   `obj:<gt_group>` // **required**
-#'
-#'   This is a `gt_group` container object. It is typically generated through
-#'   use of the [gt_group()] function along with one or more `gt_tbl` objects,
-#'   or, made by splitting a **gt** table with [gt_split()].
+#' @inheritParams grp_add
 #'
 #' @param which *The tables to clone*
 #'
@@ -462,26 +443,7 @@ grp_clone <- function(
 #' tables provided must equal the number of indices for tables present in the
 #' `gt_group` object.
 #'
-#' @param .data *The gt table group object*
-#'
-#'   `obj:<gt_group>` // **required**
-#'
-#'   This is a `gt_group` container object. It is typically generated through
-#'   use of the [gt_group()] function along with one or more `gt_tbl` objects,
-#'   or, made by splitting a **gt** table with [gt_split()].
-#'
-#' @param ... *One or more gt table objects*
-#'
-#'   `obj:<gt_tbl>` // **required** (or, use `...`)
-#'
-#'   One or more **gt** table (`gt_tbl`) objects, typically generated via the
-#'   [gt()] function.
-#'
-#' @param .list *Alternative to `...`*
-#'
-#'   `<list of multiple expressions>` // (or, use `...`)
-#'
-#'   Allows for the use of a list as an input alternative to `...`.
+#' @inheritParams grp_add
 #'
 #' @param .which *The tables to replace*
 #'
@@ -511,7 +473,7 @@ grp_replace <- function(
   gt_tbl_list <- .list
 
   # Stop function if no data is provided
-  if (length(gt_tbl_list) < 1) {
+  if (length(gt_tbl_list) < 1L) {
     cli::cli_abort("At least one gt table must be provided.")
   }
 
@@ -533,7 +495,7 @@ grp_replace <- function(
   # Process gt tables and add records to the `gt_tbl_tbl` object
   #
 
-  for (i in seq_len(length(.which))) {
+  for (i in seq_along(.which)) {
     gt_tbl_tbl_i <- generate_gt_tbl_tbl_i(i = i, gt_tbl = gt_tbl_list[[i]])
     gt_group[["gt_tbls"]][.which[i], ] <- gt_tbl_tbl_i
   }
@@ -554,13 +516,7 @@ grp_replace <- function(
 #' specified `gt_tbl` objects gone. The only thing you need to provide is the
 #' index value for the **gt** table within the `gt_group` object.
 #'
-#' @param data *The gt table group object*
-#'
-#'   `obj:<gt_group>` // **required**
-#'
-#'   This is a `gt_group` container object. It is typically generated through
-#'   use of the [gt_group()] function along with one or more `gt_tbl` objects,
-#'   or, made by splitting a **gt** table with [gt_split()].
+#' @inheritParams grp_pull
 #'
 #' @param which *The table to remove from the group*
 #'
@@ -595,15 +551,9 @@ grp_rm <- function(
 #' These options are named by the components, the subcomponents, and the
 #' element that can adjusted.
 #'
+#' @inheritParams grp_pull
+#'
 #' @inheritParams tab_options
-#'
-#' @param data *The gt table group object*
-#'
-#'   `obj:<gt_group>` // **required**
-#'
-#'   This is `gt_group` container object. It is typically generated through use
-#'   of the [gt_group()] function along with one or more `gt_tbl` objects, or,
-#'   made by splitting a **gt** table with [gt_split()].
 #'
 #' @return An object of class `gt_group`.
 #'
@@ -965,7 +915,7 @@ generate_gt_tbl_info_list <- function(gt_tbl) {
       sum(
         vapply(
           summary_list,
-          FUN.VALUE = integer(1),
+          FUN.VALUE = integer(1L),
           FUN = function(x) nrow(x))
       )
 

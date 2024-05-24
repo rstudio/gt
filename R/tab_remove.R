@@ -85,12 +85,7 @@ rm_header <- function(data) {
 #' the table not contain any content in the stubhead. This function is safe to
 #' use even if there is no stubhead label in the input `gt_tbl` object.
 #'
-#' @param data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
+#' @inheritParams rm_header
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -160,12 +155,7 @@ rm_stubhead <- function(data) {
 #' so long as select helpers (such as the default `everything()`) are used
 #' instead of explicit ID values.
 #'
-#' @param data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
+#' @inheritParams rm_header
 #'
 #' @param spanners *Spanners to remove*
 #'
@@ -301,7 +291,8 @@ rm_spanners <- function(
       as.integer(
         resolve_vector_i(
           expr = {{ spanners }},
-          vector = spanners_tbl[["spanner_id"]]
+          vector = spanners_tbl[["spanner_id"]],
+          "spanner"
         )
       )
 
@@ -372,12 +363,7 @@ rm_spanners <- function(
 #' (such as the default `everything()`) are used instead of explicit integer
 #' values.
 #'
-#' @param data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
+#' @inheritParams rm_header
 #'
 #' @param footnotes *Footnotes to remove*
 #'
@@ -498,7 +484,8 @@ rm_footnotes <- function(
     as.integer(
       resolve_vector_i(
         expr = {{ footnotes }},
-        vector = as.character(seq_len(footnotes_count))
+        vector = as.character(seq_len(footnotes_count)),
+        "footnote"
       )
     )
 
@@ -544,12 +531,7 @@ rm_footnotes <- function(
 #' helpers (such as the default `everything()`) are used instead of explicit
 #' integer values.
 #'
-#' @param data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
+#' @inheritParams rm_header
 #'
 #' @param source_notes *Source notes to remove*
 #'
@@ -649,7 +631,8 @@ rm_source_notes <- function(
     as.integer(
       resolve_vector_i(
         expr = {{ source_notes }},
-        vector = as.character(seq_len(source_notes_length))
+        vector = as.character(seq_len(source_notes_length)),
+        "source note"
       )
     )
 
@@ -692,12 +675,7 @@ rm_source_notes <- function(
 #' the table not have a caption at all. This function is safe to use even if
 #' there is no table caption set in the input `gt_tbl` object.
 #'
-#' @param data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
+#' @inheritParams rm_header
 #'
 #' @return An object of class `gt_tbl`.
 #'

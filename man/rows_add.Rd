@@ -209,7 +209,7 @@ separate rows are added.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
   time = lubridate::POSIXct(),
-  event = character(0)
+  event = character(0L)
 ) |>
   gt() |>
   rows_add(
@@ -298,9 +298,9 @@ actual rows. With this type of multi-column, zero-row table, one needs to use
 a subset of the columns when generating new rows through \code{rows_add()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
-  msrp = numeric(0),
-  item = character(0),
-  type = character(0)
+  msrp = numeric(0L),
+  item = character(0L),
+  type = character(0L)
 ) |>
   gt() |>
   rows_add(

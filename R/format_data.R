@@ -79,9 +79,7 @@
 #'   This corresponds to the exact number of decimal places to use. A value
 #'   such as `2.34` can, for example, be formatted with `0` decimal places and
 #'   it would result in `"2"`. With `4` decimal places, the formatted value
-#'   becomes `"2.3400"`. The trailing zeros can be removed with
-#'   `drop_trailing_zeros = TRUE`. If you always need `decimals = 0`, the
-#'   [fmt_integer()] function should be considered.
+#'   becomes `"2.3400"`.
 #'
 #' @param n_sigfig *Number of significant figures*
 #'
@@ -570,18 +568,17 @@ fmt_number <- function(
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
   if (
+    isTRUE(getOption("gt.strict_column_fmt", TRUE)) &&
     !column_classes_are_valid(
       data = data,
       columns = {{ columns }},
       valid_classes = compat
     )
   ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_number()` and `fmt_integer()` functions can only be
+    cli::cli_abort(
+      "The `fmt_number()` and `fmt_integer()` functions can only be
       used on `columns` with numeric data."
-      )
-    }
+    )
   }
 
   # Set the `formatC_format` option according to whether number
@@ -1326,18 +1323,17 @@ fmt_scientific <- function(
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
   if (
+    isTRUE(getOption("gt.strict_column_fmt", TRUE)) &&
     !column_classes_are_valid(
       data = data,
       columns = {{ columns }},
       valid_classes = compat
     )
   ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_scientific()` function can only be used on `columns`
-      with numeric data."
-      )
-    }
+    cli::cli_abort(
+      "The `fmt_scientific()` function can only be used on `columns`
+    with numeric data."
+    )
   }
 
   # If `n_sigfig` is defined (and not `NA`) modify the number of
@@ -1442,7 +1438,7 @@ fmt_scientific <- function(
           n_part <- replace_minus(n_part)
 
           x_str[!small_pos] <-
-            paste0(m_part, exp_marks[1], n_part, exp_marks[2])
+            paste0(m_part, exp_marks[1L], n_part, exp_marks[2L])
 
         } else {
 
@@ -1459,13 +1455,13 @@ fmt_scientific <- function(
           n_part <-
             vapply(
               x_str,
-              FUN.VALUE = character(1),
+              FUN.VALUE = character(1L),
               USE.NAMES = FALSE,
               FUN = function(x) {
 
                 if (!grepl("e(\\+|-)[0-9]{2,}", x)) return("")
 
-                x <- unlist(strsplit(x, "e"))[2]
+                x <- unlist(strsplit(x, "e"))[2L]
 
                 if (grepl("-", x)) {
                   x <- gsub("-", "", x)
@@ -1483,7 +1479,7 @@ fmt_scientific <- function(
           x_str_left <-
             vapply(
               x_str,
-              FUN.VALUE = character(1),
+              FUN.VALUE = character(1L),
               USE.NAMES = FALSE,
               FUN = function(x) {
                 if (!grepl("e(\\+|-)[0-9]{2,}", x)) return("")
@@ -1496,7 +1492,7 @@ fmt_scientific <- function(
             n_part <-
               vapply(
                 seq_along(n_part),
-                FUN.VALUE = character(1),
+                FUN.VALUE = character(1L),
                 USE.NAMES = FALSE,
                 FUN = function(i) {
                   if (!grepl("-", n_part[i])) {
@@ -1819,18 +1815,17 @@ fmt_engineering <- function(
   # called "gt.strict_column_fmt"), stop the function if any of the
   # resolved columns have data that is incompatible with this formatter
   if (
+    isTRUE(getOption("gt.strict_column_fmt", TRUE)) &&
     !column_classes_are_valid(
       data = data,
       columns = {{ columns }},
       valid_classes = compat
     )
   ) {
-    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
-      cli::cli_abort(
-        "The `fmt_engineering()` function can only be used on `columns`
-      with numeric data."
-      )
-    }
+    cli::cli_abort(
+      "The `fmt_engineering()` function can only be used on `columns`
+    with numeric data."
+    )
   }
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -1903,7 +1898,7 @@ fmt_engineering <- function(
         n_part <-
           vapply(
             power_3,
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(x) {
               if (x > 0 && force_sign_n) {
@@ -1946,7 +1941,7 @@ fmt_engineering <- function(
           n_part <-
             vapply(
               power_3,
-              FUN.VALUE = character(1),
+              FUN.VALUE = character(1L),
               USE.NAMES = FALSE,
               FUN = function(x) {
                 if (grepl("-", x)) {
@@ -1965,7 +1960,7 @@ fmt_engineering <- function(
             n_part <-
               vapply(
                 seq_along(n_part),
-                FUN.VALUE = character(1),
+                FUN.VALUE = character(1L),
                 USE.NAMES = FALSE,
                 FUN = function(i) {
                   if (power_3[i] >= 0) {
@@ -3227,14 +3222,7 @@ fmt_fraction <- function(
 
   } else if (is.numeric(accuracy)) {
 
-    if (accuracy < 1) {
-
-      cli::cli_abort(c(
-        "The numeric value supplied for `accuracy` is invalid.",
-        "*" = "Must be an integer value greater than zero."
-      ))
-    }
-
+    check_number_whole(accuracy, min = 1, allow_infinite = FALSE)
   } else {
 
     cli::cli_abort(c(
@@ -4634,7 +4622,7 @@ fmt_index <- function(
         x_str[x_is_a_number] <-
           vapply(
             x[x_is_a_number],
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(x) index_fn(x, set = idx_set)
           )
@@ -4675,7 +4663,7 @@ index_excel <- function(num, set) {
   result <-
     vapply(
       num,
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(x) {
         get_letters_from_div(x, set = set)
@@ -5790,7 +5778,12 @@ fmt_date <- function(
   locale <- resolve_locale(data = data, locale = locale)
 
   # Transform `date_style` to `date_format_str`
-  date_format_str <- get_date_format(date_style = date_style)
+  date_format_str <- withCallingHandlers(
+    get_date_format(date_style = date_style),
+    error = function(e) {
+      cli::cli_abort("Invalid date style. See {.run gt::info_date_style()}.",
+                     parent = e)
+    })
 
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
@@ -5826,11 +5819,13 @@ fmt_date <- function(
         # Convert incoming values to POSIXlt but provide a friendly error
         # if the values cannot be parsed by `as.POSIXlt()`
         date <-
-          tryCatch(
+          withCallingHandlers(
             as.POSIXlt(x, tz = "GMT"),
-            error = function(cond) {
+            error = function(e) {
               cli::cli_abort(
-                "One or more of the provided date/datetime values are invalid."
+                "One or more of the provided date/datetime values are invalid.",
+                call = call("fmt_date"),
+                parent = e
               )
             }
           )
@@ -6146,7 +6141,12 @@ fmt_time <- function(
   locale <- resolve_locale(data = data, locale = locale)
 
   # Transform `time_style` to `time_format_str`
-  time_format_str <- get_time_format(time_style = time_style)
+  time_format_str <- withCallingHandlers(
+    get_time_format(time_style = time_style),
+    error = function(e) {
+      cli::cli_abort("Invalid time style. See {.run gt::info_time_style()}.",
+                     parent = e)
+    })
 
   # In this case where strict mode is being used (with the option
   # called "gt.strict_column_fmt"), stop the function if any of the
@@ -6189,11 +6189,13 @@ fmt_time <- function(
         # Convert incoming values to POSIXlt but provide a friendly error
         # if the values cannot be parsed by `as.POSIXlt()`
         time <-
-          tryCatch(
+          withCallingHandlers(
             as.POSIXlt(x, tz = "GMT"),
-            error = function(cond) {
+            error = function(e) {
               cli::cli_abort(
-                "One or more of the provided date/time/datetime values are invalid."
+                "One or more of the provided date/time/datetime values are invalid.",
+                call = call("fmt_time"),
+                parent = e
               )
             }
           )
@@ -7139,15 +7141,25 @@ fmt_datetime <- function(
   if (!is.null(format)) {
 
     # Ensure that the format code meets some basic validation requirements
-    check_format_code(format = format)
+    check_string(format)
 
   } else {
 
-    # Transform `date_style` to `date_format`
-    date_format_str <- get_date_format(date_style = date_style)
+    # Transform `date_style` to `date_format_str`
+    date_format_str <- withCallingHandlers(
+      get_date_format(date_style = date_style),
+      error = function(e) {
+        cli::cli_abort("Invalid date style. See {.run gt::info_date_style()} for valid inputs.",
+                       parent = e)
+      })
 
-    # Transform `time_style` to `time_format`
-    time_format_str <- get_time_format(time_style = time_style)
+    # Transform `time_style` to `time_format_str`
+    time_format_str <- withCallingHandlers(
+      get_time_format(time_style = time_style),
+      error = function(e) {
+        cli::cli_abort("Invalid time style. See {.run gt::info_time_style()} for valid inputs.",
+                       parent = e)
+      })
   }
 
   # In this case where strict mode is being used (with the option
@@ -7199,11 +7211,13 @@ fmt_datetime <- function(
               tz <- tz %||% "GMT"
 
               datetime <-
-                tryCatch(
+                withCallingHandlers(
                   as.POSIXlt(x),
-                  error = function(cond) {
+                  error = function(e) {
                     cli::cli_abort(
-                      "One or more of the provided date/datetime values are invalid."
+                      "One or more of the provided date/datetime values are invalid.",
+                      call = call("fmt_datetime"),
+                      parent = e
                     )
                   }
                 )
@@ -7248,11 +7262,14 @@ fmt_datetime <- function(
         # Convert incoming values to POSIXlt but provide a friendly error
         # if the values cannot be parsed by `as.POSIXlt()`
         datetime <-
-          tryCatch(
+          withCallingHandlers(
             as.POSIXlt(x),
-            error = function(cond) {
+            error = function(e) {
               cli::cli_abort(
-                "One or more of the provided date/datetime values are invalid."
+                # possibly Error in `fmt()` caused by error in `as.POSIXlt`
+                "One or more of the provided date/datetime values are invalid.",
+                call = call("fmt_datetime"),
+                parent = e
               )
             }
           )
@@ -7510,7 +7527,8 @@ fmt_duration <- function(
 
   # Declare formatting function compatibility
   compat <- c("numeric", "integer", "difftime")
-
+  check_character2(output_units, allow_null = TRUE, allow_0 = FALSE)
+  check_character2(input_units, allow_null = TRUE, allow_0 = FALSE)
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
   validate_locale(locale = locale)
@@ -7529,7 +7547,7 @@ fmt_duration <- function(
     trim_zero_units <- NULL
   } else if (is.character(trim_zero_units) && length(trim_zero_units) > 0) {
     # Validate that `trim_zero_units` contains only the allowed keywords
-    validate_trim_zero_units(trim_zero_units = trim_zero_units)
+    rlang::arg_match(trim_zero_units, c("leading", "trailing", "internal"), multiple = TRUE)
   } else {
     cli::cli_abort(c(
       "The value provided for `trim_zero_units` is invalid. Either use:",
@@ -7572,16 +7590,16 @@ fmt_duration <- function(
 
   # Stop function if any columns have numeric data and `input_units` is NULL
   if (
+    is.null(input_units) &&
     !column_classes_are_valid(
       data = data,
       columns = {{ columns }},
       valid_classes = "difftime"
-    ) &&
-    is.null(input_units)
+    )
   ) {
     cli::cli_abort(c(
-      "When there are numeric columns to format, `input_units` must not be `NULL`.",
-      "*" = "Use one of \"seconds\", \"minutes\", \"hours\", \"days\", or \"weeks\"."
+      "{.arg input_units} must be supplied when there are numeric columns to format.",
+      "i" = "Use one of \"seconds\", \"minutes\", \"hours\", \"days\", or \"weeks\"."
     ))
   }
 
@@ -7600,19 +7618,17 @@ fmt_duration <- function(
   }
 
   # Resolve output units
-  if (is.null(output_units)) {
+  output_units <- output_units %||% c("weeks", "days", "hours", "minutes", "seconds")
+  # Stop function if `output_units` isn't a character vector, isn't of
+  # the right length (1 or greater), and does not contain valid values
+  output_units <- rlang::arg_match(
+    output_units,
+    values = c("weeks", "days", "hours", "mins", "minutes", "secs", "seconds"),
+    multiple = TRUE
+  )
 
-    output_units <- c("weeks", "days", "hours", "minutes", "seconds")
-
-  } else {
-
-    # Stop function if `output_units` isn't a character vector, isn't of
-    # the right length (1 or greater), and does not contain valid values
-    validate_duration_output_units(output_units = output_units)
-
-    # Normalize the valid set of provided `output_units`
-    output_units <- normalize_duration_output_units(output_units = output_units)
-  }
+  # Normalize the valid set of provided `output_units`
+  output_units <- normalize_duration_output_units(output_units = output_units)
 
   # If `duration_style` is of the "iso" or "colon-sep" types, then
   # some options need to be overridden
@@ -7718,41 +7734,17 @@ fmt_duration <- function(
   )
 }
 
-validate_trim_zero_units <- function(trim_zero_units) {
-
-  if (!all(trim_zero_units %in% c("leading", "trailing", "internal"))) {
-
-    cli::cli_abort(c(
-      "The character vector provided for `trim_zero_units` is invalid.",
-      "*" = "It should only contain any of the keywords \"leading\", \"trailing\",
-      or ", "\"internal\"."
-    ))
-  }
-}
-
-validate_duration_input_units <- function(input_units) {
+validate_duration_input_units <- function(input_units, call = rlang::caller_env()) {
 
   if (is.null(input_units)) {
     return(NULL)
   }
-
-  if (!is.character(input_units)) {
-
-    cli::cli_abort(
-      "The `input_units` input to `fmt_duration()` must be a character vector."
-    )
-  }
-
   time_parts_vec <- c("weeks", "days", "hours", "mins", "minutes", "secs", "seconds")
-
-  if (!all(input_units %in% time_parts_vec) || length(input_units) != 1) {
-
-    cli::cli_abort(c(
-      "The value of `input_units` for `fmt_duration()` is invalid.",
-      "*" = "Only one of the \"weeks\", \"days\", \"hours\", \"minutes\", or
-      \"seconds\" time parts should be present."
-    ))
-  }
+  rlang::arg_match0(
+    input_units,
+    time_parts_vec,
+    error_call = call
+  )
 }
 
 normalize_duration_input_units <- function(input_units) {
@@ -7761,35 +7753,6 @@ normalize_duration_input_units <- function(input_units) {
   input_units <- tidy_sub(input_units, "secs", "seconds")
   input_units <- tidy_sub(input_units, "mins", "minutes")
   input_units
-}
-
-validate_duration_output_units <- function(output_units) {
-
-  if (!is.character(output_units)) {
-
-    cli::cli_abort(
-      "The `output_units` input to `fmt_duration()` must be a character vector."
-    )
-  }
-
-  if (length(output_units) < 1) {
-
-    cli::cli_abort(
-      "The `output_units` input to `fmt_duration()` must be a vector with at
-      least one element."
-    )
-  }
-
-  time_parts_vec <- c("weeks", "days", "hours", "mins", "minutes", "secs", "seconds")
-
-  if (!all(output_units %in% time_parts_vec)) {
-
-    cli::cli_abort(c(
-      "There are invalid components in the `output_units` input to `fmt_duration()`.",
-      "*" = "Only the \"weeks\", \"days\", \"hours\", \"minutes\", and \"seconds\`
-      time parts should be present."
-    ))
-  }
 }
 
 normalize_duration_output_units <- function(output_units) {
@@ -8005,10 +7968,8 @@ values_to_durations <- function(
 
       # Assemble the remaining time parts
       hms_part <-
-        x_df_i %>%
-        dplyr::filter(time_part %in% c("hours", "minutes", "seconds")) %>%
-        dplyr::pull(formatted) %>%
-        paste(collapse = ":")
+        x_df_i[x_df_i$time_part %in% c("hours", "minutes", "seconds"), "formatted", drop = TRUE]
+      hms_part <- paste(hms_part, collapse = ":")
 
       d_part <-
         ifelse("days" %in% x_df_i$time_part, paste0(x_df_i$formatted[1], "/"), "")
@@ -9374,7 +9335,7 @@ fmt_units <- function(
 #' It's always best to show examples on usage:
 #'
 #' - `"CH3O2"` and `"(NH4)2S"` will render with subscripted numerals
-#' - Charges can be expressed terminating `"+"` or `"-"` as in `"H+"` and
+#' - Charges can be expressed with terminating `"+"` or `"-"`, as in `"H+"` and
 #'   `"[AgCl2]-"`; if any charges involve the use of a number, the following
 #'   incantations could be used: `"CrO4^2-"`, `"Fe^n+"`, `"Y^99+"`, `"Y^{99+}"`
 #'   (the final two forms produce equivalent output)
@@ -9399,7 +9360,7 @@ fmt_units <- function(
 #'   adjacent characters (i.e., these shouldn't be at the beginning or end of
 #'   the markup); two examples: `"C6H5-CHO"`, `"CH3CH=CH2"`
 #' - as with units notation, Greek letters can be inserted by surrounding the
-#'   letter name with `":"`; here's an example that denotes the delta value
+#'   letter name with `":"`; here's an example that describes the delta value
 #'   of carbon-13: `":delta: ^13C"`
 #'
 #' @section Examples:
@@ -9440,12 +9401,12 @@ fmt_units <- function(
 #' `r man_get_image_tag(file = "man_fmt_chem_1.png")`
 #' }}
 #'
-#' Taking just a few rows from the [`photolysis`] dataset, let's and create a
-#' new **gt** table. The `cmpd_formula` and `products` columns both contain
-#' text in chemistry notation (the first has compounds, and the second column
-#' has the products of photolysis reactions). These columns will be formatting
-#' by the `fmt_chem()` function. The compound formulas will be merged with the
-#' compound names via the [cols_merge()] function.
+#' Taking just a few rows from the [`photolysis`] dataset, let's create a new
+#' **gt** table. The `cmpd_formula` and `products` columns both contain text in
+#' chemistry notation (the first has compounds, and the second column has the
+#' products of photolysis reactions). These columns will be formatted by the
+#' `fmt_chem()` function. The compound formulas will be merged with the compound
+#' names via the [cols_merge()] function.
 #'
 #' ```r
 #' photolysis %>%
@@ -9487,12 +9448,63 @@ fmt_units <- function(
 #' `r man_get_image_tag(file = "man_fmt_chem_2.png")`
 #' }}
 #'
+#' The `fmt_chem()` function can handle the typesetting of nuclide notation.
+#' Let's take a subset of columns and rows from the [`nuclides`] dataset and
+#' make a new **gt** table. The contents of the `nuclide` column contains
+#' isotopes of hydrogen and carbon and this is placed in the table stub. Using
+#' `fmt_chem()` makes it so that the subscripted and superscripted values are
+#' properly formatted to the convention of formatting nuclides.
+#'
+#' ```r
+#' nuclides |>
+#'   dplyr::filter(element %in% c("H", "C")) |>
+#'   dplyr::mutate(nuclide = gsub("\\d+$", "", nuclide)) |>
+#'   dplyr::select(nuclide, atomic_mass, half_life, decay_1, is_stable) |>
+#'   gt(rowname_col = "nuclide") |>
+#'   tab_header(title = "Isotopes of Hydrogen and Carbon") |>
+#'   tab_stubhead(label = "Isotope") |>
+#'   fmt_chem(columns = nuclide) |>
+#'   fmt_scientific(columns = half_life) |>
+#'   fmt_number(
+#'     columns = atomic_mass,
+#'     decimals = 4,
+#'     scale_by = 1 / 1e6
+#'   ) |>
+#'   sub_missing(
+#'     columns = half_life,
+#'     rows = is_stable,
+#'     missing_text = md("**STABLE**")
+#'   ) |>
+#'   sub_missing(columns = half_life, rows = !is_stable) |>
+#'   sub_missing(columns = decay_1) |>
+#'   data_color(
+#'     columns = decay_1,
+#'     target_columns = c(atomic_mass, half_life, decay_1),
+#'     palette = "LaCroixColoR::PassionFruit",
+#'     na_color = "white"
+#'   ) |>
+#'   cols_label_with(fn = function(x) tools::toTitleCase(gsub("_", " ", x))) |>
+#'   cols_label(decay_1 = "Decay Mode") |>
+#'   cols_width(
+#'     stub() ~ px(70),
+#'     c(atomic_mass, half_life, decay_1) ~ px(120)
+#'   ) |>
+#'   cols_hide(columns = c(is_stable)) |>
+#'   cols_align(align = "center", columns = decay_1) |>
+#'   opt_align_table_header(align = "left") |>
+#'   opt_vertical_padding(scale = 0.5)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_chem_3.png")`
+#' }}
+#'
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-20
 #'
 #' @section Function Introduced:
-#' **In Development**
+#' *In Development*
 #'
 #' @import rlang
 #' @export
@@ -9589,7 +9601,7 @@ format_units_by_context <- function(
   x_str_non_missing <-
     vapply(
       seq_along(x_str_non_missing),
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(x) {
         render_units(
@@ -10275,7 +10287,7 @@ parse_md_urls <- function(text) {
     label_str <-
       vapply(
         text,
-        FUN.VALUE = character(1),
+        FUN.VALUE = character(1L),
         USE.NAMES = FALSE,
         FUN = function(x) {
           if (grepl("\\[.*?\\]\\(.*?\\)", x)) {
@@ -10291,7 +10303,7 @@ parse_md_urls <- function(text) {
     href_str <-
       vapply(
         text,
-        FUN.VALUE = character(1),
+        FUN.VALUE = character(1L),
         USE.NAMES = FALSE,
         FUN = function(x) {
           if (grepl("\\[.*?\\]\\(.*?\\)", x)) {
@@ -10490,6 +10502,151 @@ add_anchor_attr <- function(
 #' [cols_hide()]. Finally, there is no limitation to how many arguments the
 #' [from_column()] helper is applied so long as the arguments belong to this
 #' closed set.
+#'
+#' @section Examples:
+#'
+#' Let's take ten rows from the [`peeps`] dataset and create a table of contact
+#' information with mailing addresses and email addresses. With the column that
+#' contains email addresses (`email_addr`), we can use `fmt_email()` to generate
+#' 'mailto:' links. Clicking any of these formatted email addresses should
+#' result in new message creation (depending on the OS integration with an email
+#' client).
+#'
+#' ```r
+#' peeps |>
+#'   dplyr::filter(country == "AUS") |>
+#'   dplyr::select(
+#'     starts_with("name"),
+#'     address, city, state_prov, postcode, country, email_addr
+#'   ) |>
+#'   dplyr::mutate(city = toupper(city)) |>
+#'   gt(rowname_col = "name_family") |>
+#'   tab_header(title = "Our Contacts in Australia") |>
+#'   tab_stubhead(label = "Name") |>
+#'   fmt_email(columns = email_addr) |>
+#'   fmt_country(columns = country) |>
+#'   cols_merge(
+#'     columns = c(address, city, state_prov, postcode, country),
+#'     pattern = "{1}<br>{2} {3} {4}<br>{5}"
+#'   ) |>
+#'   cols_merge(
+#'     columns = c(name_family, name_given),
+#'     pattern = "{1},<br>{2}"
+#'   ) |>
+#'   cols_label(
+#'     address = "Mailing Address",
+#'     email_addr = "Email"
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(size = "x-small"),
+#'     locations = cells_body(columns = address)
+#'   ) |>
+#'   opt_align_table_header(align = "left")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_email_1.png")`
+#' }}
+#'
+#' We can further condense the table by reducing the email link to an icon. The
+#' approach we take here is the use of a **fontawesome** icon within the
+#' `display_name` argument. The icon used is `"envelope"` and each icon produced
+#' serves as a clickable 'mailto:' link. By adjusting one of the [cols_merge()]
+#' calls, we can place the icon/link next to the name of the person.
+#'
+#' ```r
+#' peeps |>
+#'   dplyr::filter(country == "AUS") |>
+#'   dplyr::select(
+#'     starts_with("name"),
+#'     address, city, state_prov, postcode, country, email_addr
+#'   ) |>
+#'   dplyr::mutate(city = toupper(city)) |>
+#'   gt(rowname_col = "name_family") |>
+#'   tab_header(title = "Our Contacts in Australia") |>
+#'   fmt_email(
+#'     columns = email_addr,
+#'     display_name = fontawesome::fa(
+#'       name = "envelope",
+#'       height = "0.75em",
+#'       fill = "gray"
+#'     )
+#'   ) |>
+#'   fmt_country(columns = country) |>
+#'   cols_merge(
+#'     columns = c(address, city, state_prov, postcode, country),
+#'     pattern = "{1}<br>{2} {3} {4}<br>{5}"
+#'   ) |>
+#'   cols_merge(
+#'     columns = c(name_family, name_given, email_addr),
+#'     pattern = "{1}, {2} {3}"
+#'   ) |>
+#'   cols_width(everything() ~ px(200)) |>
+#'   tab_style(
+#'     style = cell_text(size = px(11)),
+#'     locations = cells_body(columns = address)
+#'   ) |>
+#'   tab_options(column_labels.hidden = TRUE) |>
+#'   opt_align_table_header(align = "left")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_email_2.png")`
+#' }}
+#'
+#' Another option is to display the names of the email recipients instead of the
+#' email addresses, making the display names serve as 'mailto:' links. We can do
+#' this by using the [from_column()] function in the `display_name` argument.
+#' The display names in this case are the combined given and family names,
+#' handled earlier through a `dplyr::mutate()` call. With some space conserved,
+#' we take the opportunity here to add in phone information for each person.
+#'
+#' ```r
+#' peeps |>
+#'   dplyr::filter(country == "AUS") |>
+#'   dplyr::mutate(name = paste(name_given, name_family)) |>
+#'   dplyr::mutate(city = toupper(city)) |>
+#'   dplyr::mutate(phone_number = gsub("^\\(0|\\)", "", phone_number)) |>
+#'   dplyr::select(
+#'     name, address, city, state_prov, postcode, country,
+#'     email_addr, phone_number, country_code
+#'   ) |>
+#'   gt(rowname_col = "email_addr") |>
+#'   tab_header(title = "Our Contacts in Australia") |>
+#'   tab_stubhead(label = "Name") |>
+#'   fmt_email(
+#'     columns = email_addr,
+#'     display_name = from_column("name"),
+#'     color = "gray25"
+#'   ) |>
+#'   cols_hide(columns = name) |>
+#'   fmt_country(columns = country) |>
+#'   cols_merge(
+#'     columns = c(address, city, state_prov, postcode, country),
+#'     pattern = "{1}<br>{2} {3} {4}<br>{5}"
+#'   ) |>
+#'   cols_merge(
+#'     columns = c(phone_number, country_code),
+#'     pattern = "+{2} {1}"
+#'   ) |>
+#'   cols_label(
+#'     address = "Mailing Address",
+#'     email_addr = "Email",
+#'     phone_number = "Phone"
+#'   ) |>
+#'   cols_move_to_start(columns = phone_number) |>
+#'   cols_width(everything() ~ px(170)) |>
+#'   tab_style(
+#'     style = cell_text(size = px(11)),
+#'     locations = cells_body(columns = address)
+#'   ) |>
+#'   cols_align(align = "left") |>
+#'   opt_align_table_header(align = "left")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_email_3.png")`
+#' }}
 #'
 #' @family data formatting functions
 #' @section Function ID:
@@ -11211,7 +11368,7 @@ fmt_image <- function(
         x_str_non_missing <-
           vapply(
             seq_along(x_str_non_missing),
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(x) {
 
@@ -11337,7 +11494,7 @@ fmt_image <- function(
         x_str_non_missing <-
           vapply(
             seq_along(x_str_non_missing),
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(x) {
 
@@ -11870,7 +12027,7 @@ fmt_flag <- function(
         x_str_non_missing <-
           vapply(
             seq_along(x_str_non_missing),
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(x) {
 
@@ -12140,7 +12297,10 @@ fmt_flag <- function(
 #' countrypops |>
 #'   dplyr::filter(year == 2021) |>
 #'   dplyr::arrange(desc(population)) |>
-#'   dplyr::filter(row_number() > max(row_number()) - 5 | row_number() <= 5) |>
+#'   dplyr::filter(
+#'     dplyr::row_number() > max(dplyr::row_number()) - 5 |
+#'     dplyr::row_number() <= 5
+#'   ) |>
 #'   dplyr::select(
 #'     country_code_fl = country_code_2,
 #'     country_code_2a = country_code_2,
@@ -12308,7 +12468,7 @@ fmt_country <- function(
         x_str_non_missing <-
           vapply(
             seq_along(x_str_non_missing),
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(x) {
 
@@ -12890,7 +13050,7 @@ fmt_icon <- function(
         x_str_non_missing <-
           vapply(
             seq_along(x_str_non_missing),
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(x) {
 
@@ -13280,7 +13440,7 @@ fmt_markdown <- function(
           "\n$", "",
           vapply(
             x,
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             commonmark::markdown_text
           )
@@ -13784,7 +13944,7 @@ fmt_auto <- function(
 
         # Set `row_suf_vec` as a zero-length vector because the
         # preference is to not have any suffixed numbers at all
-        rows_suf_vec <- integer(0)
+        rows_suf_vec <- integer(0L)
       }
 
       if (lg_num_pref == "suf") {

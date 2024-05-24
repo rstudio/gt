@@ -88,7 +88,7 @@ test_that("A gt table can store the correct style statements", {
   # its `cell_fill:color` property entirely populated with `lightgray`
   dt_styles_get(data = tbl_html) %>%
     .$styles %>%
-    vapply(function(x) x[1]$cell_fill$color, character(1)) %>%
+    vapply(function(x) x[1]$cell_fill$color, character(1L)) %>%
     unique() %>%
     expect_equal("#D3D3D3")
 

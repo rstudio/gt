@@ -202,19 +202,7 @@ reference:
     - nanoplot_options
     - adjust_luminance
     - stub
-    - cells_title
-    - cells_stubhead
-    - cells_column_spanners
-    - cells_column_labels
-    - cells_row_groups
-    - cells_stub
-    - cells_body
-    - cells_summary
-    - cells_grand_summary
-    - cells_stub_summary
-    - cells_stub_grand_summary
-    - cells_footnotes
-    - cells_source_notes
+    - has_concept("location helper functions")
     - cell_text
     - cell_fill
     - cell_borders
@@ -372,11 +360,13 @@ reference:
     - pizzaplace
     - exibble
     - towny
+    - peeps
     - metro
     - constants
     - illness
     - reactions
     - photolysis
+    - nuclides
     - rx_adsl
     - rx_addv
 

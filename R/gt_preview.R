@@ -33,11 +33,7 @@
 #' modify the output of `gt_preview()`. Furthermore, you cannot pass a **gt**
 #' object to `gt_preview()`.
 #'
-#' @param data *Input data table*
-#'
-#'   `obj:<data.frame>|obj:<tbl_df>` // **required**
-#'
-#'   A `data.frame` object or a tibble (`tbl_df`).
+#' @inheritParams gt
 #'
 #' @param top_n *Top n rows to display*
 #'
@@ -125,7 +121,7 @@ gt_preview <- function(
   }
 
   # Determine whether an ellipsis row is to be included
-  has_ellipsis_row <- ifelse(nrow(data) > (top_n + bottom_n), TRUE, FALSE)
+  has_ellipsis_row <- nrow(data) > (top_n + bottom_n) # TRUE or FALSE
 
   # If a preview table (head and tail) is requested,
   # then modify `data_tbl` to only include the head
