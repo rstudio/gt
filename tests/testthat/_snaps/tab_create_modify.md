@@ -25,7 +25,7 @@
       Error in `tab_footnote()`:
       ! Can't add footnote "First data cell.".
       Caused by error in `cells_column_spanners()`:
-      ! Can't find spanner `valuer` in the data.
+      ! Spanner `valuer` does not exist in the data.
     Code
       start_gt %>% tab_footnote(footnote = "First data cell.", locations = cells_column_spanners(
         3))

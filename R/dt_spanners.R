@@ -65,7 +65,8 @@ dt_spanners_add <- function(
     spanner_id,
     spanner_level,
     gather,
-    replace
+    replace,
+    call = rlang::caller_env()
 ) {
 
   spanners <- dt_spanners_get(data = data)
@@ -80,10 +81,12 @@ dt_spanners_add <- function(
 
     error_vars <-
       vars[vars %in% unlist(spanners_at_level[["vars"]])]
-
-    cli::cli_abort(
-      "The column(s) used (`{error_vars}`) for the new spanner `{spanner_id}`
-      belong to an existing spanner."
+    cli::cli_abort(c(
+      "x" ="Can't create the {.val {spanner_id}} spanner.",
+      "!" = "Column{?s} {.code {error_vars}} belong{?s/} to an existing spanner.",
+      "i" = "Specify {.arg columns} appropriately by using other variable names."
+      ),
+      call = call
     )
   }
 
