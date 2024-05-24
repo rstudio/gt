@@ -99,7 +99,7 @@ the more advanced typesetting tries to limit the amount of syntax needed.
 It's always best to show examples on usage:
 \itemize{
 \item \code{"CH3O2"} and \code{"(NH4)2S"} will render with subscripted numerals
-\item Charges can be expressed terminating \code{"+"} or \code{"-"} as in \code{"H+"} and
+\item Charges can be expressed with terminating \code{"+"} or \code{"-"}, as in \code{"H+"} and
 \code{"[AgCl2]-"}; if any charges involve the use of a number, the following
 incantations could be used: \code{"CrO4^2-"}, \code{"Fe^n+"}, \code{"Y^99+"}, \code{"Y^{99+}"}
 (the final two forms produce equivalent output)
@@ -124,7 +124,7 @@ examples \code{"KCr(SO4)2 . 12 H2O"} and \code{"KCr(SO4)2 * 12 H2O"}
 adjacent characters (i.e., these shouldn't be at the beginning or end of
 the markup); two examples: \code{"C6H5-CHO"}, \code{"CH3CH=CH2"}
 \item as with units notation, Greek letters can be inserted by surrounding the
-letter name with \code{":"}; here's an example that denotes the delta value
+letter name with \code{":"}; here's an example that describes the delta value
 of carbon-13: \code{":delta: ^13C"}
 }
 }
@@ -167,12 +167,12 @@ surrounding the text with \code{"{{\%"}/\code{"\%}}"}.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_chem_1.png" alt="This image of a table was generated from the first code example in the `fmt_chem()` help file." style="width:100\%;">
 }}
 
-Taking just a few rows from the \code{\link{photolysis}} dataset, let's and create a
-new \strong{gt} table. The \code{cmpd_formula} and \code{products} columns both contain
-text in chemistry notation (the first has compounds, and the second column
-has the products of photolysis reactions). These columns will be formatting
-by the \code{fmt_chem()} function. The compound formulas will be merged with the
-compound names via the \code{\link[=cols_merge]{cols_merge()}} function.
+Taking just a few rows from the \code{\link{photolysis}} dataset, let's create a new
+\strong{gt} table. The \code{cmpd_formula} and \code{products} columns both contain text in
+chemistry notation (the first has compounds, and the second column has the
+products of photolysis reactions). These columns will be formatted by the
+\code{fmt_chem()} function. The compound formulas will be merged with the compound
+names via the \code{\link[=cols_merge]{cols_merge()}} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{photolysis \%>\%
   dplyr::filter(cmpd_name \%in\% c(

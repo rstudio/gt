@@ -9335,7 +9335,7 @@ fmt_units <- function(
 #' It's always best to show examples on usage:
 #'
 #' - `"CH3O2"` and `"(NH4)2S"` will render with subscripted numerals
-#' - Charges can be expressed terminating `"+"` or `"-"` as in `"H+"` and
+#' - Charges can be expressed with terminating `"+"` or `"-"`, as in `"H+"` and
 #'   `"[AgCl2]-"`; if any charges involve the use of a number, the following
 #'   incantations could be used: `"CrO4^2-"`, `"Fe^n+"`, `"Y^99+"`, `"Y^{99+}"`
 #'   (the final two forms produce equivalent output)
@@ -9360,7 +9360,7 @@ fmt_units <- function(
 #'   adjacent characters (i.e., these shouldn't be at the beginning or end of
 #'   the markup); two examples: `"C6H5-CHO"`, `"CH3CH=CH2"`
 #' - as with units notation, Greek letters can be inserted by surrounding the
-#'   letter name with `":"`; here's an example that denotes the delta value
+#'   letter name with `":"`; here's an example that describes the delta value
 #'   of carbon-13: `":delta: ^13C"`
 #'
 #' @section Examples:
@@ -9401,12 +9401,12 @@ fmt_units <- function(
 #' `r man_get_image_tag(file = "man_fmt_chem_1.png")`
 #' }}
 #'
-#' Taking just a few rows from the [`photolysis`] dataset, let's and create a
-#' new **gt** table. The `cmpd_formula` and `products` columns both contain
-#' text in chemistry notation (the first has compounds, and the second column
-#' has the products of photolysis reactions). These columns will be formatting
-#' by the `fmt_chem()` function. The compound formulas will be merged with the
-#' compound names via the [cols_merge()] function.
+#' Taking just a few rows from the [`photolysis`] dataset, let's create a new
+#' **gt** table. The `cmpd_formula` and `products` columns both contain text in
+#' chemistry notation (the first has compounds, and the second column has the
+#' products of photolysis reactions). These columns will be formatted by the
+#' `fmt_chem()` function. The compound formulas will be merged with the compound
+#' names via the [cols_merge()] function.
 #'
 #' ```r
 #' photolysis %>%

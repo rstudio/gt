@@ -60,6 +60,15 @@
 #'   `"word"`. In **knitr** rendering (i.e., Quarto or R Markdown), the `"auto"`
 #'   option will choose the correct `output` value
 #'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can use the [info_locales()]
+#'   function as a useful reference for all of the locales that are supported.
+#'
 #' @return A character vector.
 #'
 #' @section Examples:
@@ -218,6 +227,15 @@ vec_fmt_number <- function(
 #'
 #' @inheritParams vec_fmt_number
 #'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can use the [info_locales()]
+#'   function as a useful reference for all of the locales that are supported.
+#'
 #' @return A character vector.
 #'
 #' @section Examples:
@@ -345,6 +363,15 @@ vec_fmt_integer <- function(
 #' @inheritParams fmt_scientific
 #'
 #' @inheritParams vec_fmt_number
+#'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can use the [info_locales()]
+#'   function as a useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -494,6 +521,15 @@ vec_fmt_scientific <- function(
 #'
 #' @inheritParams vec_fmt_number
 #'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can use the [info_locales()]
+#'   function as a useful reference for all of the locales that are supported.
+#'
 #' @return A character vector.
 #'
 #' @section Examples:
@@ -639,6 +675,15 @@ vec_fmt_engineering <- function(
 #' @inheritParams fmt_percent
 #'
 #' @inheritParams vec_fmt_number
+#'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can use the [info_locales()]
+#'   function as a useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -814,6 +859,15 @@ vec_fmt_percent <- function(
 #'
 #' @inheritParams vec_fmt_number
 #'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can use the [info_locales()]
+#'   function as a useful reference for all of the locales that are supported.
+#'
 #' @return A character vector.
 #'
 #' @section Examples:
@@ -975,6 +1029,15 @@ vec_fmt_partsper <- function(
 #'
 #' @inheritParams vec_fmt_number
 #'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can use the [info_locales()]
+#'   function as a useful reference for all of the locales that are supported.
+#'
 #' @return A character vector.
 #'
 #' @section Examples:
@@ -1130,6 +1193,15 @@ vec_fmt_fraction <- function(
 #'   glyph for the Dutch guilder in an HTML output table, and it would simply be
 #'   the letter "f" in all other output contexts). Please note that `decimals`
 #'   will default to `2` when using the [currency()] helper function.
+#'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can use the [info_locales()]
+#'   function as a useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -1373,6 +1445,15 @@ vec_fmt_roman <- function(
 #'
 #' @inheritParams vec_fmt_number
 #'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can use the [info_locales()]
+#'   function as a useful reference for all of the locales that are supported.
+#'
 #' @return A character vector.
 #'
 #' @section Examples:
@@ -1488,6 +1569,15 @@ vec_fmt_index <- function(
 #' instead be `"tjugotre"`.
 #'
 #' @inheritParams vec_fmt_number
+#'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can use the [info_locales()]
+#'   function as a useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -1631,6 +1721,15 @@ vec_fmt_spelled_num <- function(
 #'
 #' @inheritParams vec_fmt_number
 #'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can use the [info_locales()]
+#'   function as a useful reference for all of the locales that are supported.
+#'
 #' @return A character vector.
 #'
 #' @section Examples:
@@ -1765,6 +1864,15 @@ vec_fmt_bytes <- function(
 #' @inheritParams fmt_date
 #'
 #' @inheritParams vec_fmt_number
+#'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can use the [info_locales()]
+#'   function as a useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -1939,6 +2047,15 @@ vec_fmt_date <- function(
 #'
 #' @inheritParams vec_fmt_number
 #'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can use the [info_locales()]
+#'   function as a useful reference for all of the locales that are supported.
+#'
 #' @return A character vector.
 #'
 #' @section Formatting with the `time_style` argument:
@@ -2101,6 +2218,15 @@ vec_fmt_time <- function(
 #' @inheritParams fmt_datetime
 #'
 #' @inheritParams vec_fmt_number
+#'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can use the [info_locales()]
+#'   function as a useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -2937,6 +3063,15 @@ vec_fmt_datetime <- function(
 #'
 #' @inheritParams vec_fmt_number
 #'
+#' @param locale *Locale identifier*
+#'
+#'   `scalar<character>` // *default:* `NULL` (`optional`)
+#'
+#'   An optional locale identifier that can be used for formatting values
+#'   according the locale's rules. Examples include `"en"` for English (United
+#'   States) and `"fr"` for French (France). We can use the [info_locales()]
+#'   function as a useful reference for all of the locales that are supported.
+#'
 #' @return A character vector.
 #'
 #' @section Examples:
@@ -3062,8 +3197,6 @@ vec_fmt_duration <- function(
     locale = NULL,
     output = c("auto", "plain", "html", "latex", "rtf", "word")
 ) {
-
-
 
   # Stop function if class of `x` is incompatible with the formatting
   check_vector_valid(x, valid_classes = c("numeric", "integer", "difftime"))
