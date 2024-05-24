@@ -257,7 +257,6 @@
     Condition
       Error in `data_color()`:
       ! Failed to compute colors for column `y`.
-      i Did the column include infinite values?
       Caused by error in `scales::col_numeric()`:
       ! Wasn't able to determine range of `domain`
 

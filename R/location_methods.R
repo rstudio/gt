@@ -37,7 +37,7 @@ as_locations <- function(locations) {
         !all(vapply(locations, inherits, logical(1L), "location_cells"))) {
 
       cli::cli_abort(
-        "The `locations` object should be a list of `cells_*()` objects."
+        "{.arg locations} should be a list of {.topic [`cells_*()`](location-helper)} calls."
       )
     }
   } else {

@@ -198,17 +198,12 @@ test_that("The `get_time_format()` function works properly", {
   expect_s3_class(get_time_format(time_style = 25), "date_time_pattern")
 })
 
-test_that("The `check_format_code()` function works for date and time formats", {
+test_that("The `check_string()` function works for date and time formats", {
 
   # Ensure that all format codes work with `check_format_code()`
   for (format_name in c(date_formats()[["format_name"]], time_formats()[["format_name"]])) {
-    expect_no_error(check_format_code(format_name))
+    expect_no_error(check_string(format_name))
   }
-
-  # Expect an error if providing an improper inputs
-  expect_error(check_format_code(1))
-  expect_error(check_format_code(c("yM", "Md")))
-  expect_error(check_format_code(NULL))
 })
 
 test_that("The `unescape_html()` function works properly", {

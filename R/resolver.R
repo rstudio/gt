@@ -82,7 +82,8 @@ resolve_cells_body <- function(data, object, call = rlang::caller_env()) {
 #' @param object The list object created by the `cells_stub()` function.
 #' @noRd
 resolve_cells_stub <- function(data,
-                               object) {
+                               object,
+                               call = rlang::caller_env()) {
 
   #
   # Resolution of rows as integer vectors
@@ -91,7 +92,8 @@ resolve_cells_stub <- function(data,
   resolved_rows_idx <-
     resolve_rows_i(
       expr = !!object$rows,
-      data = data
+      data = data,
+      call = call
     )
 
   # Create a list object
@@ -186,7 +188,7 @@ resolve_cells_column_spanners <- function(
 #' @param object The list object created by the `cells_row_groups()`
 #'   function.
 #' @noRd
-resolve_cells_row_groups <- function(data, object) {
+resolve_cells_row_groups <- function(data, object, call = rlang::caller_env()) {
 
   row_groups <- dt_row_groups_get(data = data)
 
@@ -194,7 +196,8 @@ resolve_cells_row_groups <- function(data, object) {
     resolve_vector_i(
       expr = !!object$groups,
       vector = row_groups,
-      item_label = "group"
+      item_label = "group",
+      call = call
     )
 
   resolved_row_groups <- row_groups[resolved_row_groups_idx]
@@ -645,11 +648,11 @@ resolver_stop_on_character <- function(
     unknown_resolved,
     call = rlang::caller_env()
 ) {
-
+  item_label <- tools::toTitleCase(item_label)
   l <- length(unknown_resolved)
   cli::cli_abort(
-    "Can't find {item_label}{cli::qty(l)}{?s}
-    {.code {unknown_resolved}} in the data.",
+    "{item_label}{cli::qty(l)}{?s} {.code {unknown_resolved}}
+    do{?es/} not exist in the data.",
     call = call
   )
 }

@@ -233,9 +233,7 @@ grp_add <- function(
 
   } else if (!is.null(.after)) {
 
-    if (!rlang::is_integerish(.after)) {
-      cli::cli_abort("An integer value should be supplied for `.after`.")
-    }
+    check_number_whole(.after)
 
     if (!(.after %in% valid_idx)) {
       cli::cli_abort("The value supplied for `.after` should be a valid index.")
@@ -249,9 +247,7 @@ grp_add <- function(
 
   } else if (!is.null(.before)) {
 
-    if (!rlang::is_integerish(.before)) {
-      cli::cli_abort("An integer value should be supplied for `.before`.")
-    }
+    check_number_whole(.before)
 
     if (!(.before %in% valid_idx)) {
       cli::cli_abort("The value supplied for `.before` should be a valid index.")

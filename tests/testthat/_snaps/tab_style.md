@@ -80,7 +80,7 @@
       Error in `tab_style()`:
       ! Failed to style the body of the table.
       Caused by error in `cells_body()`:
-      ! Can't find row `Mazda RX7` in the data.
+      ! Row `Mazda RX7` does not exist in the data.
 
 # tab_row_group warns when others_label is not empty
 

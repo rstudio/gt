@@ -43,10 +43,9 @@ filter_table_to_value <- function(
   if (nrow(filtered_tbl) != 1) {
 
     cli::cli_abort(c(
-      "Internal error in `gt:::filter_table_to_row()`.",
       "*" = "The filtered table doesn't result in a table of exactly one row.",
       "*" = "Found {nrow(filtered_tbl)} rows."
-    ))
+    ), .internal = TRUE)
   }
 
   dplyr::pull(filtered_tbl, !!column_enquo)
@@ -453,6 +452,8 @@ format_num_to_str <- function(
     dec_mark <- "."
   }
 
+  # match format to a recognized value
+  rlang::arg_match0(format, c("fg", "f", "e"))
   if (format == "fg") {
 
     x <- signif(x, digits = n_sigfig)
@@ -476,8 +477,7 @@ format_num_to_str <- function(
     drop0trailing <- FALSE
 
   } else {
-
-    cli::cli_abort("The format provided isn't recognized.")
+    cli::cli_abort("validation for format should be in arg_match0", .internal = TRUE)
   }
 
   x_str <-

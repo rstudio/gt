@@ -116,8 +116,8 @@ dt_summary_build <- function(data, context) {
 
         cli::cli_abort(c(
           "There are no row groups in the gt object.",
-          "*" = "Use `grand_summary_rows()` to create a grand summary, or",
-          "*" = "Define row groups using `gt(groupname_col = ...)` or `tab_row_group()`."
+          "*" = "Use {.fn grand_summary_rows} to create a grand summary, or",
+          "*" = "Define row groups using `gt(groupname_col = ...)` or {.fn tab_row_group}."
         ))
       }
     }
@@ -158,7 +158,7 @@ dt_summary_build <- function(data, context) {
         # are not present in the gt table
         cli::cli_abort(c(
           "All `groups` should be available in the gt object.",
-          "*" = "The following groups are not present: {not_present_groups}."
+          "*" = "The following groups are absent: {not_present_groups}."
         ))
       }
     }
@@ -426,11 +426,7 @@ dt_summary_build <- function(data, context) {
         }
       )
 
-    summary_dfs_display <-
-      dplyr::mutate(
-        summary_dfs_display,
-        `::rowname::` = NA_character_
-      )
+    summary_dfs_display$`::rowname::` <- NA_character_
 
     labels_processed <- unlist(lapply(labels, FUN = process_text, context = context))
 
