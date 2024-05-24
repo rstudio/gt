@@ -170,8 +170,8 @@ surrounding the text with \code{"{{\%"}/\code{"\%}}"}.
 Taking just a few rows from the \code{\link{photolysis}} dataset, let's and create a
 new \strong{gt} table. The \code{cmpd_formula} and \code{products} columns both contain
 text in chemistry notation (the first has compounds, and the second column
-has the products of photolysis reactions). These columns will be formatting
-by the \code{fmt_chem()} function. The compound formulas will be merged with the
+has the products of photolysis reactions). These columns will be formatted by
+the \code{fmt_chem()} function. The compound formulas will be merged with the
 compound names via the \code{\link[=cols_merge]{cols_merge()}} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{photolysis \%>\%
