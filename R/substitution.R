@@ -131,7 +131,7 @@
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-27
+#' 3-31
 #'
 #' @section Function Introduced:
 #' `v0.6.0` (May 24, 2022)
@@ -336,7 +336,7 @@ fmt_missing <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-28
+#' 3-32
 #'
 #' @section Function Introduced:
 #' `v0.6.0` (May 24, 2022)
@@ -546,7 +546,7 @@ sub_zero <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-29
+#' 3-33
 #'
 #' @section Function Introduced:
 #' `v0.6.0` (May 24, 2022)
@@ -576,7 +576,8 @@ sub_small_vals <- function(
     op_fn_zero_away <- `<`
   }
 
-  # Get the absolute value of the supplied `threshold`
+  # Ensure threshold is a single number and get its absolute value
+  check_number_decimal(threshold)
   threshold <- abs(threshold)
 
   sub_replace_small_vals <- function(
@@ -822,7 +823,7 @@ sub_small_vals <- function(
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-30
+#' 3-34
 #'
 #' @section Function Introduced:
 #' `v0.6.0` (May 24, 2022)
@@ -850,7 +851,8 @@ sub_large_vals <- function(
     op_fn <- `<=`
   }
 
-  # Get the absolute value of the supplied `threshold`
+  # Ensure threshold is a single number and get its absolute value
+  check_number_decimal(threshold)
   threshold <- abs(threshold)
 
   sub_replace_large_vals <- function(
@@ -935,14 +937,16 @@ sub_large_vals <- function(
   )
 }
 
-check_sub_fn_sign <- function(sign) {
+check_sub_fn_sign <- function(sign, call = rlang::caller_env()) {
 
   if (!(sign %in% c("+", "-"))) {
     cli::cli_abort(c(
       "The `sign` option should either be \"+\" or \"-\".",
       "*" = "With \"+\", we consider only positive large values.",
       "*" = "Using \"-\" means that the focus is on negative values."
-    ))
+      ),
+      call = call
+    )
   }
 }
 
@@ -1127,7 +1131,7 @@ check_sub_fn_sign <- function(sign) {
 #'
 #' @family data formatting functions
 #' @section Function ID:
-#' 3-31
+#' 3-35
 #'
 #' @section Function Introduced:
 #' `v0.8.0` (November 16, 2022)
@@ -1161,22 +1165,13 @@ sub_values <- function(
     )
   }
 
-  if (is.null(replacement)) {
-    cli::cli_abort(
-      "A `replacement` needs to be provided for any `values` or `pattern`."
-    )
-  }
-
-  if (!is.numeric(replacement) && !is.character(replacement)) {
-    cli::cli_abort(
-      "The `replacement` must be a number or a string."
-    )
-  }
-
-  if (length(replacement) != 1) {
-    cli::cli_abort(
-      "The length of the `replacement` vector must 1."
-    )
+  if (is.numeric(replacement)) {
+    check_number_decimal(replacement)
+  } else if (is.character(replacement)) {
+    check_string(replacement)
+  } else {
+    cli::cli_abort("{.arg replacement} must be a number, or a string,
+                   not {.obj_type_friendly {replacement}}.")
   }
 
   sub_replace_value <- function(
@@ -1295,7 +1290,8 @@ subst <- function(
     data,
     columns = everything(),
     rows = everything(),
-    fns
+    fns,
+    call = rlang::caller_env()
 ) {
 
   # Perform input object validation
@@ -1309,13 +1305,15 @@ subst <- function(
     resolve_cols_c(
       expr = {{ columns }},
       data = data,
-      excl_stub = FALSE
+      excl_stub = FALSE,
+      call = call
     )
 
   resolved_rows_idx <-
     resolve_rows_i(
       expr = {{ rows }},
-      data = data
+      data = data,
+      call = call
     )
 
   # If a single function is supplied to `fns` then

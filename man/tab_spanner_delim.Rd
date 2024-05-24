@@ -180,20 +180,12 @@ values.
 From this informational table, we see that the ID for the spanner is
 \code{"spanner-population_1996"}. Also, the columns are still accessible by the
 original column names (\code{tab_spanner_delim()} did change their labels though).
-Let's use \code{\link[=tab_style]{tab_style()}} to add some styles to the \code{towny_subset_gt} table.
+Let's use \code{\link[=tab_style]{tab_style()}} along with \code{\link[=cells_column_spanners]{cells_column_spanners()}} to add some
+styling to the spanner label of the \code{towny_subset_gt} table.
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
-  dplyr::select(name, starts_with("population")) |>
-  dplyr::filter(grepl("^F", name)) |>
-  gt() |>
-  tab_spanner_delim(delim = "_") |>
-  fmt_integer() |>
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{towny_subset_gt |>
   tab_style(
-    style = cell_fill(color = "aquamarine"),
-    locations = cells_body(columns = population_2021)
-  ) |>
-  tab_style(
-    style = cell_text(transform = "capitalize"),
+    style = cell_text(weight = "bold", transform = "capitalize"),
     locations = cells_column_spanners(spanners = "spanner-population_1996")
   )
 }\if{html}{\out{</div>}}
@@ -313,7 +305,7 @@ Other part creation/modification functions:
 \code{\link{tab_spanner}()},
 \code{\link{tab_stub_indent}()},
 \code{\link{tab_stubhead}()},
-\code{\link{tab_style_body}()},
-\code{\link{tab_style}()}
+\code{\link{tab_style}()},
+\code{\link{tab_style_body}()}
 }
 \concept{part creation/modification functions}

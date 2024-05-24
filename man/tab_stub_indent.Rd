@@ -64,10 +64,34 @@ parameter data can also be hidden from final display with \code{\link[=cols_hide
 \section{Examples}{
 
 
+Using a subset of the \code{\link{photolysis}} dataset within a \strong{gt} table, we can
+provide some indentation to all of the row labels in the stub via
+\code{tab_stub_indent()}. Here we provide an \code{indent} value of \code{3} for a very
+prominent indentation that clearly shows that the row labels are subordinate
+to the two row group labels in this table (\code{"inorganic reactions"} and
+\code{"carbonyls"}).
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{photolysis |>
+  dplyr::select(cmpd_name, products, type, l, m, n) |>
+  dplyr::slice_head(n = 10) |>
+  gt(groupname_col = "type", rowname_col = "cmpd_name") |>
+  fmt_chem(columns = products) |>
+  fmt_scientific(columns = l) |>
+  tab_stub_indent(
+    rows = everything(),
+    indent = 3
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_stub_indent_1.png" alt="This image of a table was generated from the first code example in the `tab_stub_indent()` help file." style="width:100\%;">
+}}
+
 Let's use a summarized version of the \code{\link{pizzaplace}} dataset to create a
-\strong{gt} table with row groups and row labels. With the \code{\link[=summary_rows]{summary_rows()}}
-function, we'll generate summary rows at the top of each row group. With
-\code{tab_stub_indent()} we can add indentation to the row labels in the stub.
+another \strong{gt} table with row groups and row labels. With the
+\code{\link[=summary_rows]{summary_rows()}} function, we'll generate summary rows at the top of each row
+group. Using \code{tab_stub_indent()} we can add indentation to the row labels in
+the stub.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
   dplyr::group_by(type, size) |>
@@ -100,7 +124,59 @@ function, we'll generate summary rows at the top of each row group. With
 }\if{html}{\out{</div>}}
 
 \if{html}{\out{
-<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_stub_indent_1.png" alt="This image of a table was generated from the first code example in the `tab_stub_indent()` help file." style="width:100\%;">
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_stub_indent_2.png" alt="This image of a table was generated from the second code example in the `tab_stub_indent()` help file." style="width:100\%;">
+}}
+
+Indentation of entries in the stub can be controlled by values within a
+column. Here's an example of that using the \code{\link{constants}} dataset, where
+variations of a row label are mutated to eliminate the common leading text
+(replacing it with \code{"..."}). At the same time, the indentation for those rows
+is set to \code{4} in the \code{indent} column (value is \code{0} otherwise). The
+\code{tab_stub_indent()} statement uses the \code{\link[=from_column]{from_column()}} helper function, which
+passes values from the \code{indent} column to the namesake argument. We hide the
+\code{indent} column from view by use of the \code{\link[=cols_hide]{cols_hide()}} function.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{constants |>
+  dplyr::select(name, value, uncert, units) |>
+  dplyr::filter(
+    grepl("^atomic mass constant", name) |
+      grepl("^Rydberg constant", name) |
+      grepl("^Bohr magneton", name)
+  ) |>
+  dplyr::mutate(
+    indent = ifelse(grepl("constant |magneton ", name), 4, 0),
+    name = gsub(".*constant |.*magneton ", "...", name)
+  ) |>
+  gt(rowname_col = "name") |>
+  tab_stubhead(label = "Physical Constant") |>
+  tab_stub_indent(
+    rows = everything(),
+    indent = from_column(column = "indent")
+  ) |>
+  fmt_scientific(columns = c(value, uncert)) |>
+  fmt_units(columns = units) |>
+  cols_hide(columns = indent) |>
+  cols_label(
+    value = "Value",
+    uncert = "Uncertainty",
+    units = "Units"
+  ) |>
+  cols_width(
+    stub() ~ px(250),
+    c(value, uncert) ~ px(150),
+    units ~ px(80)
+  ) |>
+  tab_style(
+    style = cell_text(indent = px(10)),
+    locations = list(
+      cells_column_labels(columns = units),
+      cells_body(columns = units)
+    )
+  )
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_stub_indent_3.png" alt="This image of a table was generated from the third code example in the `tab_stub_indent()` help file." style="width:100\%;">
 }}
 }
 
@@ -123,10 +199,10 @@ Other part creation/modification functions:
 \code{\link{tab_options}()},
 \code{\link{tab_row_group}()},
 \code{\link{tab_source_note}()},
-\code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
+\code{\link{tab_spanner_delim}()},
 \code{\link{tab_stubhead}()},
-\code{\link{tab_style_body}()},
-\code{\link{tab_style}()}
+\code{\link{tab_style}()},
+\code{\link{tab_style_body}()}
 }
 \concept{part creation/modification functions}

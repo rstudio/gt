@@ -2,11 +2,19 @@
 
 * PDF output now defaults to a full-width floating environment using `tabular*` (@AronGullickson, #1588). Float position can be controlled by the `latex.tbl.pos` argument in `tab_options`. Quarto users can alternatively use the `tbl-pos` argument to control positioning. To use a `longtable` environment instead, use `tab_option(latex.use.longtable = TRUE)`.
 
+* `data_color()` throws a more informative error message if `rows` didn't resolve to anything (@olivroy, #1659).
+
 * PDF output now allows the font size of a table to be set using the table.font.size parameter in the tab_options function (#1472).  The font sizes of individual table cells (including those in the body, stubs, column headings, etc.) can be set using tab_style function. Several other options specified in tab_style are now reflected in PDF output.
 
 * `data_color()` throws a more informative error if a calculation failed (@olivroy, #1373).
 
 * `gtsave()` saves correctly to .rtf if using `cols_label()` and `summary_rows()` or `grand_summary_rows()` (@olivroy, #1233)
+
+* interactive tables are now rendering the first level of column groups, added by `tab_spanner()` (@obsaditelnost, #1618)
+
+* `cols_hide()` no longer errors if no column was supplied. Error messages are also clearer when supplying a column that doesn't exist (@olivroy, #1631).
+
+`tab_footnote()` and `tab_style()` now give better error messages when `locations` is not correctly specified (@olivroy, #475, #1638 , #1640).
 
 # gt 0.10.1
 

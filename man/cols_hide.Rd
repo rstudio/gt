@@ -16,7 +16,7 @@ This is the \strong{gt} table object that is commonly created through use of the
 
 \item{columns}{\emph{Columns to target}
 
-\verb{<column-targeting expression>} // \emph{default:} \code{everything()}
+\verb{<column-targeting expression>} // \strong{required}
 
 The columns to hide in the output display table. Can either be a series of
 column names provided in \code{\link[=c]{c()}}, a vector of column indices, or a select
@@ -25,7 +25,8 @@ helper function. Examples of select helper functions include
 \code{\link[=num_range]{num_range()}}, and \code{\link[=everything]{everything()}}.}
 }
 \value{
-An object of class \code{gt_tbl}.
+An object of class \code{gt_tbl}. \code{data} will be unaltered if \code{columns} is
+not supplied.
 }
 \description{
 The \code{cols_hide()} function allows us to hide one or more columns from
@@ -104,17 +105,17 @@ display of the table.
 
 Other column modification functions: 
 \code{\link{cols_add}()},
-\code{\link{cols_align_decimal}()},
 \code{\link{cols_align}()},
-\code{\link{cols_label_with}()},
+\code{\link{cols_align_decimal}()},
 \code{\link{cols_label}()},
+\code{\link{cols_label_with}()},
+\code{\link{cols_merge}()},
 \code{\link{cols_merge_n_pct}()},
 \code{\link{cols_merge_range}()},
 \code{\link{cols_merge_uncert}()},
-\code{\link{cols_merge}()},
+\code{\link{cols_move}()},
 \code{\link{cols_move_to_end}()},
 \code{\link{cols_move_to_start}()},
-\code{\link{cols_move}()},
 \code{\link{cols_nanoplot}()},
 \code{\link{cols_unhide}()},
 \code{\link{cols_units}()},

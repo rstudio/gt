@@ -1,7 +1,7 @@
 empty_tbl <- dplyr::tibble()
 
 empty_w_cols_tbl <-
-  dplyr::tibble(char = character(0), num = double(0))
+  dplyr::tibble(char = character(0L), num = double(0L))
 
 empty_w_rows_tbl <- dplyr::tibble(.rows = 5)
 
@@ -71,7 +71,7 @@ test_that("We can start from empty tables and sometimes add columns", {
   empty_2_col_no_row <-
     expect_no_error(
       gt(empty_tbl) %>%
-        cols_add(a = double(0), b = character(0))
+        cols_add(a = double(0L), b = character(0L))
     )
 
   # Columns of arbitrary size can be added to a zero-row, multicolumn table
@@ -91,7 +91,7 @@ test_that("We can start from empty tables and sometimes add columns", {
   empty_2_col_no_row_add_cols <-
     expect_no_error(
       gt(empty_w_cols_tbl) %>%
-        cols_add(a = double(0), b = character(0))
+        cols_add(a = double(0L), b = character(0L))
     )
 
   # Columns of arbitrary size can be added to a multirow, zero-column table
@@ -112,7 +112,7 @@ test_that("We can start from empty tables and sometimes add columns", {
   empty_w_rows_2_col_no_row <-
     expect_no_error(
       gt(empty_w_rows_tbl) %>%
-        cols_add(a = double(0), b = character(0))
+        cols_add(a = double(0L), b = character(0L))
     )
 })
 
@@ -134,7 +134,7 @@ test_that("We can start from empty tables and sometimes add rows", {
   empty_0_row <-
     expect_no_error(
       gt(empty_tbl) %>%
-        rows_add(a = double(0), b = character(0))
+        rows_add(a = double(0L), b = character(0L))
     )
 
   empty_2_empty_rows <-
@@ -165,7 +165,7 @@ test_that("We can start from empty tables and sometimes add rows", {
   # New empty rows cannot be added to a zero-row, multicolumn table
   expect_error(
     gt(empty_w_cols_tbl) %>%
-      rows_add(a = double(0), b = character(0))
+      rows_add(a = double(0L), b = character(0L))
   )
 
   # Rows of arbitrary size can be added to a multirow, zero-column table
@@ -186,7 +186,7 @@ test_that("We can start from empty tables and sometimes add rows", {
   empty_w_rows_2_col_no_row <-
     expect_no_error(
       gt(empty_w_rows_tbl) %>%
-        rows_add(a = double(0), b = character(0))
+        rows_add(a = double(0L), b = character(0L))
     )
 
   empty_w_rows_2_empty_rows <-
@@ -217,8 +217,8 @@ test_that("We can use a combination of row/column adding on empty tables", {
 
   empty_c <-
     gt(empty_tbl) %>%
-    rows_add(a = double(0), b = character(0)) %>%
-    cols_add(char = character(0)) %>%
+    rows_add(a = double(0L), b = character(0L)) %>%
+    cols_add(char = character(0L)) %>%
     rows_add(char = "a") %>%
     rows_add(a = 8) %>%
     rows_add(b = "c")
@@ -240,7 +240,7 @@ test_that("We can use a combination of row/column adding on empty tables", {
       cols_add(char = letters[1:5], num = 1:5),
     gt(empty_tbl) %>%
       cols_add(char = letters[1:5], num = 1:5) %>%
-      rows_add(char = character(0), num = integer(0))
+      rows_add(char = character(0L), num = integer(0L))
   )
 
   empty_f <-
@@ -267,8 +267,8 @@ test_that("We can use a combination of row/column adding on empty tables", {
 
   empty_w_cols_c <-
     gt(empty_w_cols_tbl) %>%
-    rows_add(num = double(0), char = character(0)) %>%
-    cols_add(char_2 = character(0)) %>%
+    rows_add(num = double(0L), char = character(0L)) %>%
+    cols_add(char_2 = character(0L)) %>%
     rows_add(num = 1, char = "a", char_2 = "b") %>%
     cols_add(char_3 = paste0(num, "Q")) %>%
     cols_add(d = num)
@@ -290,7 +290,7 @@ test_that("We can use a combination of row/column adding on empty tables", {
       cols_add(char = letters[1:5], num = 1:5),
     gt(empty_w_cols_tbl) %>%
       cols_add(char = letters[1:5], num = 1:5) %>%
-      rows_add(char = character(0), num = integer(0))
+      rows_add(char = character(0L), num = integer(0L))
   )
 
   empty_w_cols_f <-

@@ -32,7 +32,7 @@ kable_caption <- function(label, caption, format) {
 
     caption <-
       paste0(
-        create_label('tab:', label, latex = (format == "latex")), caption
+        create_label("tab:", label, latex = (format == "latex")), caption
       )
   }
 
@@ -41,7 +41,7 @@ kable_caption <- function(label, caption, format) {
 
 create_label <- function(..., latex = FALSE) {
 
-  if (isTRUE(knitr::opts_knit$get('bookdown.internal.label'))) {
+  if (isTRUE(knitr::opts_knit$get("bookdown.internal.label"))) {
 
     lab1 <- "(#"
     lab2 <- ")"

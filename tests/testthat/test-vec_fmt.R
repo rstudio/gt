@@ -427,11 +427,6 @@ test_that("The `vec_fmt_number()` function works", {
         "+1.00", "+1.50", "+2.00", "+2.50", "NA", "+Inf"
       )
     )
-
-  expect_error(vec_fmt_number(letters))
-  expect_error(vec_fmt_number(TRUE))
-  expect_error(vec_fmt_number(list(1, 2, 3)))
-  expect_error(vec_fmt_number(dplyr::tibble(a = c(1, 2, 3))))
 })
 
 test_that("The `vec_fmt_integer()` function works", {
@@ -605,11 +600,6 @@ test_that("The `vec_fmt_integer()` function works", {
         "NA", "+Inf"
       )
     )
-
-  expect_error(vec_fmt_integer(letters))
-  expect_error(vec_fmt_integer(TRUE))
-  expect_error(vec_fmt_integer(list(1, 2, 3)))
-  expect_error(vec_fmt_integer(dplyr::tibble(a = c(1, 2, 3))))
 })
 
 test_that("The `vec_fmt_scientific()` function works", {
@@ -635,9 +625,9 @@ test_that("The `vec_fmt_scientific()` function works", {
       c(
         paste0("\U02212", "2.50"), paste0("\U02212", "2.00"),
         paste0("\U02212", "1.50"), paste0("\U02212", "1.00"),
-        paste0("\U02212", "5.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>", "\U02212", "1</sup>"),
+        paste0("\U02212", "5.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "1</sup>"),
         "0.00",
-        paste0("5.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>", "\U02212", "1</sup>"),
+        paste0("5.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "1</sup>"),
         "1.00", "1.50", "2.00", "2.50", "NA"
       )
     )
@@ -674,17 +664,17 @@ test_that("The `vec_fmt_scientific()` function works", {
   vec_fmt_scientific(vec_num_4_m, output = "html") %>%
     expect_equal(
       c(
-        paste0("\U02212", "2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "5.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>"),
+        paste0("\U02212", "2.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "2.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "5.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>5</sup>"),
         "0.00",
-        paste0("5.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>"),
-        paste0("1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("5.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>5</sup>"),
+        paste0("1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("1.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
         "NA"
       )
     )
@@ -723,17 +713,17 @@ test_that("The `vec_fmt_scientific()` function works", {
   vec_fmt_scientific(vec_num_4_m, drop_trailing_zeros = TRUE, output = "html") %>%
     expect_equal(
       c(
-        paste0("\U02212", "2.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "2 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "5 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>"),
+        paste0("\U02212", "2.5&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "2&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.5&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "5&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>5</sup>"),
         "0",
-        paste0("5 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>"),
-        paste0("1 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("1.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("2 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("2.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("5&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>5</sup>"),
+        paste0("1&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("1.5&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2.5&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
         "NA"
       )
     )
@@ -773,17 +763,17 @@ test_that("The `vec_fmt_scientific()` function works", {
   vec_fmt_scientific(vec_num_4_m, locale = "de", output = "html") %>%
     expect_equal(
       c(
-        paste0("\U02212", "2,50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "2,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1,50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "5,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>"),
+        paste0("\U02212", "2,50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "2,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1,50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "5,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>5</sup>"),
         "0,00",
-        paste0("5,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>"),
-        paste0("1,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("1,50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("2,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("2,50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("5,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>5</sup>"),
+        paste0("1,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("1,50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2,50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
         "NA"
       )
     )
@@ -823,17 +813,17 @@ test_that("The `vec_fmt_scientific()` function works", {
   vec_fmt_scientific(vec_num_4_m, pattern = "a{x}b", output = "html") %>%
     expect_equal(
       c(
-        paste0("a\U02212", "2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
-        paste0("a\U02212", "2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
-        paste0("a\U02212", "1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
-        paste0("a\U02212", "1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
-        paste0("a\U02212", "5.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>b"),
+        paste0("a\U02212", "2.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a\U02212", "2.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a\U02212", "1.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a\U02212", "1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a\U02212", "5.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>5</sup>b"),
         "a0.00b",
-        paste0("a5.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>b"),
-        paste0("a1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
-        paste0("a1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
-        paste0("a2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
-        paste0("a2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a5.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>5</sup>b"),
+        paste0("a1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a1.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a2.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a2.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
         "NA"
       )
     )
@@ -877,17 +867,17 @@ test_that("The `vec_fmt_scientific()` function works", {
   vec_fmt_scientific(vec_num_4_m, force_sign_m = TRUE, output = "html") %>%
     expect_equal(
       c(
-        paste0("\U02212", "2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "5.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>"),
+        paste0("\U02212", "2.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "2.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "5.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>5</sup>"),
         "0.00",
-        paste0("+5.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>5</sup>"),
-        paste0("+1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("+1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("+2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("+2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("+5.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>5</sup>"),
+        paste0("+1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("+1.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("+2.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("+2.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
         "NA"
       )
     )
@@ -911,11 +901,6 @@ test_that("The `vec_fmt_scientific()` function works", {
         "+2.00 \\'d7 10{\\super 6}", "+2.50 \\'d7 10{\\super 6}", "NA"
       )
     )
-
-  expect_error(vec_fmt_scientific(letters))
-  expect_error(vec_fmt_scientific(TRUE))
-  expect_error(vec_fmt_scientific(list(1, 2, 3)))
-  expect_error(vec_fmt_scientific(dplyr::tibble(a = c(1, 2, 3))))
 })
 
 test_that("The `vec_fmt_engineering()` function works", {
@@ -934,9 +919,9 @@ test_that("The `vec_fmt_engineering()` function works", {
       c(
         paste0("\U02212", "2.50"), paste0("\U02212", "2.00"),
         paste0("\U02212", "1.50"), paste0("\U02212", "1.00"),
-        paste0("\U02212", "500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
+        paste0("\U02212", "500.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
         "0.00",
-        paste0("500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
+        paste0("500.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>", "\U02212", "3</sup>"),
         "1.00", "1.50", "2.00", "2.50", "NA", "Inf"
       )
     )
@@ -974,17 +959,17 @@ test_that("The `vec_fmt_engineering()` function works", {
   vec_fmt_engineering(vec_num_4, output = "html") %>%
     expect_equal(
       c(
-        paste0("\U02212", "2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
+        paste0("\U02212", "2.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "2.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "500.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
         "0.00",
-        paste0("500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
-        paste0("1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("500.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+        paste0("1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("1.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
         "NA", "Inf"
       )
     )
@@ -1025,17 +1010,17 @@ test_that("The `vec_fmt_engineering()` function works", {
   vec_fmt_engineering(vec_num_5, output = "html") %>%
     expect_equal(
       c(
-        paste0("\U02212", "2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>12</sup>"),
-        paste0("\U02212", "2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>12</sup>"),
-        paste0("\U02212", "1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>12</sup>"),
-        paste0("\U02212", "1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>12</sup>"),
-        paste0("\U02212", "500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>9</sup>"),
+        paste0("\U02212", "2.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>12</sup>"),
+        paste0("\U02212", "2.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>12</sup>"),
+        paste0("\U02212", "1.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>12</sup>"),
+        paste0("\U02212", "1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>12</sup>"),
+        paste0("\U02212", "500.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>9</sup>"),
         "0.00",
-        paste0("500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>9</sup>"),
-        paste0("1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>12</sup>"),
-        paste0("1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>12</sup>"),
-        paste0("2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>12</sup>"),
-        paste0("2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>12</sup>"),
+        paste0("500.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>9</sup>"),
+        paste0("1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>12</sup>"),
+        paste0("1.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>12</sup>"),
+        paste0("2.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>12</sup>"),
+        paste0("2.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>12</sup>"),
         "NA", "Inf"
       )
     )
@@ -1078,17 +1063,17 @@ test_that("The `vec_fmt_engineering()` function works", {
   vec_fmt_engineering(vec_num_4, drop_trailing_zeros = TRUE, output = "html") %>%
     expect_equal(
       c(
-        paste0("\U02212", "2.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "2 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "500 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
+        paste0("\U02212", "2.5&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "2&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.5&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "500&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
         "0",
-        paste0("500 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
-        paste0("1 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("1.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("2 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("2.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("500&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+        paste0("1&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("1.5&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2.5&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
         "NA", "Inf"
       )
     )
@@ -1137,17 +1122,17 @@ test_that("The `vec_fmt_engineering()` function works", {
   ) %>%
     expect_equal(
       c(
-        paste0("\U02212", "2.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "2. ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1. ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "500. ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
+        paste0("\U02212", "2.5&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "2.&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.5&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "500.&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
         "0.",
-        paste0("500. ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
-        paste0("1. ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("1.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("2. ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("2.5 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("500.&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+        paste0("1.&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("1.5&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2.&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2.5&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
         "NA", "Inf."
       )
     )
@@ -1197,17 +1182,17 @@ test_that("The `vec_fmt_engineering()` function works", {
   vec_fmt_engineering(vec_num_4, locale = "de", output = "html") %>%
     expect_equal(
       c(
-        paste0("\U02212", "2,50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "2,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1,50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "500,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
+        paste0("\U02212", "2,50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "2,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1,50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "500,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
         "0,00",
-        paste0("500,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
-        paste0("1,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("1,50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("2,00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("2,50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("500,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+        paste0("1,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("1,50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2,00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("2,50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
         "NA", "Inf"
       )
     )
@@ -1251,17 +1236,17 @@ test_that("The `vec_fmt_engineering()` function works", {
   vec_fmt_engineering(vec_num_4, pattern = "a{x}b", output = "html") %>%
     expect_equal(
       c(
-        paste0("a\U02212", "2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
-        paste0("a\U02212", "2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
-        paste0("a\U02212", "1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
-        paste0("a\U02212", "1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
-        paste0("a\U02212", "500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>b"),
+        paste0("a\U02212", "2.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a\U02212", "2.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a\U02212", "1.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a\U02212", "1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a\U02212", "500.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>b"),
         "a0.00b",
-        paste0("a500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>b"),
-        paste0("a1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
-        paste0("a1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
-        paste0("a2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
-        paste0("a2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a500.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>b"),
+        paste0("a1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a1.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a2.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
+        paste0("a2.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>b"),
         "NA", "aInfb"
       )
     )
@@ -1305,17 +1290,17 @@ test_that("The `vec_fmt_engineering()` function works", {
   vec_fmt_engineering(vec_num_4, force_sign_m = TRUE, output = "html") %>%
     expect_equal(
       c(
-        paste0("\U02212", "2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("\U02212", "500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
+        paste0("\U02212", "2.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "2.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("\U02212", "500.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
         "0.00",
-        paste0("+500.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>3</sup>"),
-        paste0("+1.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("+1.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("+2.00 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
-        paste0("+2.50 ", "\U000D7", " 10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("+500.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>3</sup>"),
+        paste0("+1.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("+1.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("+2.00&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
+        paste0("+2.50&nbsp;", "\U000D7", "&nbsp;10<sup style='font-size: 65%;'>6</sup>"),
         "NA", "+Inf"
       )
     )
@@ -1342,11 +1327,6 @@ test_that("The `vec_fmt_engineering()` function works", {
         "+2.50 \\'d7 10{\\super 6}", "NA", "+Inf"
       )
     )
-
-  expect_error(vec_fmt_engineering(letters))
-  expect_error(vec_fmt_engineering(TRUE))
-  expect_error(vec_fmt_engineering(list(1, 2, 3)))
-  expect_error(vec_fmt_engineering(dplyr::tibble(a = c(1, 2, 3))))
 })
 
 test_that("The `vec_fmt_percent()` function works", {
@@ -1821,11 +1801,6 @@ test_that("The `vec_fmt_percent()` function works", {
         "NA", "% Inf"
       )
     )
-
-  expect_error(vec_fmt_percent(letters))
-  expect_error(vec_fmt_percent(TRUE))
-  expect_error(vec_fmt_percent(list(1, 2, 3)))
-  expect_error(vec_fmt_percent(dplyr::tibble(a = c(1, 2, 3))))
 })
 
 test_that("The `vec_fmt_partsper()` function works", {
@@ -2029,11 +2004,6 @@ test_that("The `vec_fmt_partsper()` function works", {
         "NA", "Infppm"
       )
     )
-
-  expect_error(vec_fmt_partsper(letters))
-  expect_error(vec_fmt_partsper(TRUE))
-  expect_error(vec_fmt_partsper(list(1, 2, 3)))
-  expect_error(vec_fmt_partsper(dplyr::tibble(a = c(1, 2, 3))))
 })
 
 test_that("The `vec_fmt_fraction()` function works", {
@@ -2739,12 +2709,8 @@ test_that("The `vec_fmt_fraction()` function works", {
   vec_fmt_fraction(not_numbers, layout = "inline", output = "rtf") %>%
     expect_equal(c("NA", "NaN", "Inf", "-Inf"))
 
-  expect_error(vec_fmt_fraction(letters))
   expect_error(vec_fmt_fraction(c(1, 2, 3), accuracy = 0))
   expect_error(vec_fmt_fraction(c(1, 2, 3), accuracy = -1))
-  expect_error(vec_fmt_fraction(TRUE))
-  expect_error(vec_fmt_fraction(list(1, 2, 3)))
-  expect_error(vec_fmt_fraction(dplyr::tibble(a = c(1, 2, 3))))
 })
 
 test_that("The `vec_fmt_currency()` function works", {
@@ -3383,10 +3349,6 @@ test_that("The `vec_fmt_currency()` function works", {
     )
 
   expect_error(vec_fmt_currency(c(1, 2), currency = "NOTREAL"))
-  expect_error(vec_fmt_currency(letters))
-  expect_error(vec_fmt_currency(TRUE))
-  expect_error(vec_fmt_currency(list(1, 2, 3)))
-  expect_error(vec_fmt_currency(dplyr::tibble(a = c(1, 2, 3))))
 })
 
 test_that("The `vec_fmt_roman()` function works", {
@@ -3444,10 +3406,6 @@ test_that("The `vec_fmt_roman()` function works", {
   )
 
   expect_error(vec_fmt_roman(c(1, 2), case = "middle"))
-  expect_error(vec_fmt_roman(letters))
-  expect_error(vec_fmt_roman(TRUE))
-  expect_error(vec_fmt_roman(list(1, 2, 3)))
-  expect_error(vec_fmt_roman(dplyr::tibble(a = c(1, 2, 3))))
 })
 
 test_that("The `vec_fmt_index()` function works", {
@@ -3509,10 +3467,6 @@ test_that("The `vec_fmt_index()` function works", {
     )
 
   expect_error(vec_fmt_index(c(1, 2), case = "middle"))
-  expect_error(vec_fmt_index(letters))
-  expect_error(vec_fmt_index(TRUE))
-  expect_error(vec_fmt_index(list(1, 2, 3)))
-  expect_error(vec_fmt_index(dplyr::tibble(a = c(1, 2, 3))))
 })
 
 test_that("The `vec_fmt_spelled_num()` function works", {
@@ -3551,11 +3505,6 @@ test_that("The `vec_fmt_spelled_num()` function works", {
         "een", "NA", "twintig", "tagtig", "honderd", "200"
       )
     )
-
-  expect_error(vec_fmt_spelled_num(letters))
-  expect_error(vec_fmt_spelled_num(TRUE))
-  expect_error(vec_fmt_spelled_num(list(1, 2, 3)))
-  expect_error(vec_fmt_spelled_num(dplyr::tibble(a = c(1, 2, 3))))
 })
 
 test_that("The `vec_fmt_bytes()` function works", {
@@ -4356,10 +4305,6 @@ test_that("The `vec_fmt_bytes()` function works", {
     )
 
   expect_error(vec_fmt_bytes(c(1, 2), standard = "NONE"))
-  expect_error(vec_fmt_bytes(letters))
-  expect_error(vec_fmt_bytes(TRUE))
-  expect_error(vec_fmt_bytes(list(1, 2, 3)))
-  expect_error(vec_fmt_bytes(dplyr::tibble(a = c(1, 2, 3))))
 })
 
 test_that("The `vec_fmt_date()` function works", {
@@ -6146,4 +6091,91 @@ test_that("The `vec_fmt_datetime()` function works", {
         NA
       )
     )
+})
+
+test_that("The `vec_fmt_duration()` function works", {
+  tm <- as.difftime(c("0:3:20"))
+  # tests are mostly duplicates of `fmt_duration()`
+  expect_equal(
+    vec_fmt_duration(tm),
+    "3m 20s"
+  )
+})
+
+test_that("vec_fmt_*() error when bad input are supplied.", {
+  expect_error(vec_fmt_number(letters))
+  expect_error(vec_fmt_number(TRUE))
+  expect_error(vec_fmt_number(list(1, 2, 3)))
+  expect_error(vec_fmt_number(dplyr::tibble(a = c(1, 2, 3))))
+
+  expect_error(vec_fmt_integer(letters))
+  expect_error(vec_fmt_integer(TRUE))
+  expect_error(vec_fmt_integer(list(1, 2, 3)))
+  expect_error(vec_fmt_integer(dplyr::tibble(a = c(1, 2, 3))))
+
+  expect_error(vec_fmt_scientific(letters))
+  expect_error(vec_fmt_scientific(TRUE))
+  expect_error(vec_fmt_scientific(list(1, 2, 3)))
+  expect_error(vec_fmt_scientific(dplyr::tibble(a = c(1, 2, 3))))
+
+  expect_error(vec_fmt_engineering(letters))
+  expect_error(vec_fmt_engineering(TRUE))
+  expect_error(vec_fmt_engineering(list(1, 2, 3)))
+  expect_error(vec_fmt_engineering(dplyr::tibble(a = c(1, 2, 3))))
+
+  expect_error(vec_fmt_percent(letters))
+  expect_error(vec_fmt_percent(TRUE))
+  expect_error(vec_fmt_percent(list(1, 2, 3)))
+  expect_error(vec_fmt_percent(dplyr::tibble(a = c(1, 2, 3))))
+
+  expect_error(vec_fmt_partsper(letters))
+  expect_error(vec_fmt_partsper(TRUE))
+  expect_error(vec_fmt_partsper(list(1, 2, 3)))
+  expect_error(vec_fmt_partsper(dplyr::tibble(a = c(1, 2, 3))))
+
+  expect_error(vec_fmt_fraction(letters))
+  expect_error(vec_fmt_fraction(TRUE))
+  expect_error(vec_fmt_fraction(list(1, 2, 3)))
+  expect_error(vec_fmt_fraction(dplyr::tibble(a = c(1, 2, 3))))
+
+  expect_error(vec_fmt_currency(letters))
+  expect_error(vec_fmt_currency(TRUE))
+  expect_error(vec_fmt_currency(list(1, 2, 3)))
+  expect_error(vec_fmt_currency(dplyr::tibble(a = c(1, 2, 3))))
+
+  expect_error(vec_fmt_roman(letters))
+  expect_error(vec_fmt_roman(TRUE))
+  expect_error(vec_fmt_roman(list(1, 2, 3)))
+  expect_error(vec_fmt_roman(dplyr::tibble(a = c(1, 2, 3))))
+
+  expect_error(vec_fmt_index(letters))
+  expect_error(vec_fmt_index(TRUE))
+  expect_error(vec_fmt_index(list(1, 2, 3)))
+  expect_error(vec_fmt_index(dplyr::tibble(a = c(1, 2, 3))))
+
+  expect_error(vec_fmt_spelled_num(letters))
+  expect_error(vec_fmt_spelled_num(TRUE))
+  expect_error(vec_fmt_spelled_num(list(1, 2, 3)))
+  expect_error(vec_fmt_spelled_num(dplyr::tibble(a = c(1, 2, 3))))
+
+  expect_error(vec_fmt_bytes(letters))
+  expect_error(vec_fmt_bytes(TRUE))
+  expect_error(vec_fmt_bytes(list(1, 2, 3)))
+  expect_error(vec_fmt_bytes(dplyr::tibble(a = c(1, 2, 3))))
+
+  expect_error(vec_fmt_duration(letters))
+  expect_error(vec_fmt_duration(TRUE))
+  expect_error(vec_fmt_duration(list(1, 2, 3)))
+  expect_error(vec_fmt_duration(dplyr::tibble(a = c(1, 2, 3))))
+})
+
+test_that("check_vector_valid() works correctly", {
+  expect_null(check_vector_valid(1))
+  expect_null(check_vector_valid(list()))
+
+  expect_snapshot(error = TRUE, {
+    check_vector_valid(1, "integer")
+    check_vector_valid(TRUE, c("numeric", "integer"))
+    check_vector_valid(data.frame(x = 1), c("numeric", "integer"))
+  })
 })

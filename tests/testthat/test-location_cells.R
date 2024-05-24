@@ -96,7 +96,7 @@ test_that("The `cells_title()` function works correctly", {
   expect_error(cells_title(groups = c("subtitle", "subtitle")))
   expect_error(cells_title(groups = rep("title", 3)))
   expect_error(cells_title(groups = ""))
-  expect_error(cells_title(groups = character(0)))
+  expect_error(cells_title(groups = character(0L)))
 })
 
 test_that("The `cells_column_labels()` function works correctly", {

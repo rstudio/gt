@@ -412,3 +412,34 @@ test_that("The `fmt_percent()` fn can render in the Indian numbering system", {
     )
   )
 })
+
+test_that("The `fmt_percent()` function works correctly with stubs", {
+  tbl <- tibble::tibble(
+    raw = c("[shiny](https://shiny.posit.co/)", "<a href='https://gt.rstudio.com/'>gt</a>"),
+    markdown = purrr::map(c("[shiny](https://shiny.posit.co/)", "[gt](https://gt.rstudio.com/)"), gt::md),
+    html = purrr::map(c("<a href='https://shiny.posit.co/'>shiny</a>", "<a href='https://gt.rstudio.com/'>gt</a>"), gt::html),
+    str_col = c("shiny", "gt"),
+    pct_col = c(0.75, 0.25)
+  )
+
+  # nothing special (raw)
+  # stub as html
+  # stub as markdown
+
+  for (test_case in c("raw", "markdown", "html")) {
+    tab <- tbl |>
+      gt(rowname_col = test_case) |>
+      fmt_percent(columns = pct_col, decimals = 2, dec_mark = ".") |>
+      render_formats_test(context = "html")
+
+    expect_equal(tab[["pct_col"]], c("75.00%", "25.00%"))
+
+    # with row filter
+    tab <- tbl |>
+      gt(rowname_col = test_case) |>
+      fmt_percent(columns = pct_col, decimals = 2, dec_mark = ".", rows = contains("gt")) |>
+      render_formats_test(context = "html")
+
+    expect_equal(tab[["pct_col"]], c("0.75", "25.00%"))
+  }
+})

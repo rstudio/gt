@@ -35,8 +35,8 @@ validate_contexts <- function(contexts) {
 
     cli::cli_abort(c(
       "All output contexts must be in the set of supported contexts.",
-      "*" = "Supported: {paste0(all_contexts, collapse = ', ')}",
-      "*" = "Invalid: {paste0(invalid_contexts, collapse = ', ')}"
+      "*" = "Supported: {all_contexts}",
+      "*" = "Invalid: {invalid_contexts}"
     ))
   }
 }
@@ -424,9 +424,10 @@ perform_col_merge <- function(data, context) {
 
     type <- col_merge[[i]]$type
 
-    if (!(type %in% c("merge", "merge_range", "merge_uncert", "merge_n_pct"))) {
-      cli::cli_abort("Unknown `type` supplied.")
-    }
+    type <- rlang::arg_match0(
+      type,
+      c("merge", "merge_range", "merge_uncert", "merge_n_pct")
+    )
 
     if (type == "merge") {
 
@@ -475,7 +476,7 @@ perform_col_merge <- function(data, context) {
         glued_cols <-
           vapply(
             glued_cols,
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = resolve_secondary_pattern
           )

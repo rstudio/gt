@@ -201,12 +201,7 @@ determine_which_character_number <- function(
 #' number of columns (the function will skip over columns that don't require
 #' this type of alignment).
 #'
-#' @param data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
+#' @inheritParams cols_align
 #'
 #' @param columns *Columns to target*
 #'
@@ -442,12 +437,7 @@ align_to_char <- function(x, align_at = ".") {
 #' left-hand side defines the target columns and the right-hand side is a single
 #' dimension.
 #'
-#' @param .data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
+#' @inheritParams fmt_number
 #'
 #' @param ... *Column width assignments*
 #'
@@ -543,7 +533,7 @@ cols_width <- function(
       vapply(
         widths_list,
         FUN = function(width) rlang::is_formula(width),
-        FUN.VALUE = logical(1)
+        FUN.VALUE = logical(1L)
       )
     )
 
@@ -625,12 +615,7 @@ cols_width <- function(
 #' columns and we even have the option to use the [md()] or [html()] helper
 #' functions for rendering column labels from Markdown or using HTML.
 #'
-#' @param .data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
+#' @inheritParams cols_width
 #'
 #' @param ... *Column label assignments*
 #'
@@ -1297,12 +1282,7 @@ cols_label_with <- function(
 #' pertaining to the units notation can be found in the section entitled
 #' *How to use **gt**'s units notation*.
 #'
-#' @param .data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
+#' @inheritParams fmt_number
 #'
 #' @param ... *Column units definitions*
 #'
@@ -1646,12 +1626,7 @@ cols_units <- function(
 #' can use any of the `NA` types (e.g., `NA`, `NA_character_`, `NA_real_`, etc.)
 #' for such columns.
 #'
-#' @param .data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
+#' @inheritParams fmt_number
 #'
 #' @param ... *Cell data assignments*
 #'
@@ -3100,7 +3075,7 @@ generate_data_vals_list <- function(
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` // *default:* `everything()`
+#'   `<column-targeting expression>` // **required**
 #'
 #'   The columns for which the moving operations should be applied. Can either
 #'   be a series of column names provided in [c()], a vector of column indices,
@@ -3170,6 +3145,11 @@ cols_move <- function(
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
+
+  # if no `columns` are provided, return data unaltered
+  if (rlang::quo_is_missing(rlang::enquo(columns))) {
+    return(data)
+  }
 
   # Get the columns supplied in `columns` as a character vector
   columns <-
@@ -3242,7 +3222,7 @@ cols_move <- function(
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` // *default:* `everything()`
+#'   `<column-targeting expression>` // **required**
 #'
 #'   The columns for which the moving operations should be applied. Can either
 #'   be a series of column names provided in [c()], a vector of column indices,
@@ -3316,6 +3296,11 @@ cols_move_to_start <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
+  # if no `columns` are provided, return data unaltered
+  if (rlang::quo_is_missing(rlang::enquo(columns))) {
+    return(data)
+  }
+
   vars <- dt_boxhead_get_vars(data = data)
 
   # Get the columns supplied in `columns` as a character vector
@@ -3362,7 +3347,7 @@ cols_move_to_start <- function(
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` // *default:* `everything()`
+#'   `<column-targeting expression>` // **required**
 #'
 #'   The columns for which the moving operations should be applied. Can either
 #'   be a series of column names provided in [c()], a vector of column indices,
@@ -3436,6 +3421,11 @@ cols_move_to_end <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
+  # if no `columns` are provided, return data unaltered
+  if (rlang::quo_is_missing(rlang::enquo(columns))) {
+    return(data)
+  }
+
   vars <- dt_boxhead_get_vars(data = data)
 
   # Get the columns supplied in `columns` as a character vector
@@ -3483,7 +3473,7 @@ cols_move_to_end <- function(
 #'
 #' @param columns *Columns to target*
 #'
-#'   `<column-targeting expression>` // *default:* `everything()`
+#'   `<column-targeting expression>` // **required**
 #'
 #'   The columns to hide in the output display table. Can either be a series of
 #'   column names provided in [c()], a vector of column indices, or a select
@@ -3491,7 +3481,8 @@ cols_move_to_end <- function(
 #'   [starts_with()], [ends_with()], [contains()], [matches()], [one_of()],
 #'   [num_range()], and [everything()].
 #'
-#' @return An object of class `gt_tbl`.
+#' @return An object of class `gt_tbl`. `data` will be unaltered if `columns` is
+#'   not supplied.
 #'
 #' @details
 #'
@@ -3567,6 +3558,11 @@ cols_hide <- function(
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
 
+  # if no `columns` are provided, return data unaltered
+  if (rlang::quo_is_missing(rlang::enquo(columns))) {
+    return(data)
+  }
+
   # Get the columns supplied in `columns` as a character vector
   columns <-
     resolve_cols_c(
@@ -3576,11 +3572,6 @@ cols_hide <- function(
     )
 
   vars <- dt_boxhead_get_vars(data = data)
-
-  # if no `columns` are provided, return data unaltered
-  if (length(columns) == 0) {
-    return(data)
-  }
 
   # Stop function if any of the `columns` don't exist in `vars`
   if (!all(columns %in% vars)) {

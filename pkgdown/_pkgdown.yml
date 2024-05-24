@@ -94,11 +94,15 @@ reference:
     - fmt_datetime
     - fmt_duration
     - fmt_bins
+    - fmt_tf
     - fmt_markdown
     - fmt_units
+    - fmt_chem
     - fmt_url
+    - fmt_email
     - fmt_image
     - fmt_flag
+    - fmt_country
     - fmt_icon
     - fmt_passthrough
     - fmt_auto
@@ -197,21 +201,8 @@ reference:
     - currency
     - nanoplot_options
     - adjust_luminance
-    - define_units
     - stub
-    - cells_title
-    - cells_stubhead
-    - cells_column_spanners
-    - cells_column_labels
-    - cells_row_groups
-    - cells_stub
-    - cells_body
-    - cells_summary
-    - cells_grand_summary
-    - cells_stub_summary
-    - cells_stub_grand_summary
-    - cells_footnotes
-    - cells_source_notes
+    - has_concept("location helper functions")
     - cell_text
     - cell_fill
     - cell_borders
@@ -307,6 +298,7 @@ reference:
     - as_latex
     - as_rtf
     - as_word
+    - as_gtable
     - extract_body
     - extract_summary
     - extract_cells
@@ -368,9 +360,13 @@ reference:
     - pizzaplace
     - exibble
     - towny
+    - peeps
     - metro
     - constants
     - illness
+    - reactions
+    - photolysis
+    - nuclides
     - rx_adsl
     - rx_addv
 

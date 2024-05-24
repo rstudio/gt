@@ -27,7 +27,7 @@ Custom CSS declarations can be used for HTML output by including a
 
 \item{locations}{\emph{Locations to target}
 
-\verb{<locations expressions>} // \strong{required}
+\code{\link[=location-helper]{<locations expressions>}} // \strong{required}
 
 The cell or set of cells to be associated with the style. Supplying any of
 the \verb{cells_*()} helper functions is a useful way to target the location
@@ -45,12 +45,12 @@ title, etc.).}
 An object of class \code{gt_tbl}.
 }
 \description{
-With the \code{tab_style()} function we can target specific cells and apply styles
-to them. This is best done in conjunction with the helper functions
-\code{\link[=cell_text]{cell_text()}}, \code{\link[=cell_fill]{cell_fill()}}, and \code{\link[=cell_borders]{cell_borders()}}. At present this function
-is focused on the application of styles for HTML output only (as such, other
-output formats will ignore all \code{tab_style()} calls). Using the aforementioned
-helper functions, here are some of the styles we can apply:
+With the \code{tab_style()} function we can \link[=location-helper]{target specific cells}
+and apply styles to them. This is best done in conjunction with the helper
+functions \code{\link[=cell_text]{cell_text()}}, \code{\link[=cell_fill]{cell_fill()}}, and \code{\link[=cell_borders]{cell_borders()}}. Currently, this
+function is focused on the application of styles for HTML output only
+(as such, other output formats will ignore all \code{tab_style()} calls).
+Using the aforementioned helper functions, here are some of the styles we can apply:
 \itemize{
 \item the background color of the cell (\code{\link[=cell_fill]{cell_fill()}}: \code{color})
 \item the cell's text color, font, and size (\code{\link[=cell_text]{cell_text()}}: \code{color}, \code{font},
@@ -377,7 +377,7 @@ to use the text in the cells of the \code{dir} column as \code{color} input valu
 \seealso{
 \code{\link[=cell_text]{cell_text()}}, \code{\link[=cell_fill]{cell_fill()}}, and \code{\link[=cell_borders]{cell_borders()}} as helpers for
 defining custom styles and \code{\link[=cells_body]{cells_body()}} as one of many useful helper
-functions for targeting the locations to be styled.
+functions for targeting the \link[=location-helper]{locations} to be styled.
 
 Other part creation/modification functions: 
 \code{\link{tab_caption}()},
@@ -387,8 +387,8 @@ Other part creation/modification functions:
 \code{\link{tab_options}()},
 \code{\link{tab_row_group}()},
 \code{\link{tab_source_note}()},
-\code{\link{tab_spanner_delim}()},
 \code{\link{tab_spanner}()},
+\code{\link{tab_spanner_delim}()},
 \code{\link{tab_stub_indent}()},
 \code{\link{tab_stubhead}()},
 \code{\link{tab_style_body}()}

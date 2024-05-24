@@ -43,10 +43,9 @@ filter_table_to_value <- function(
   if (nrow(filtered_tbl) != 1) {
 
     cli::cli_abort(c(
-      "Internal error in `gt:::filter_table_to_row()`.",
       "*" = "The filtered table doesn't result in a table of exactly one row.",
       "*" = "Found {nrow(filtered_tbl)} rows."
-    ))
+    ), .internal = TRUE)
   }
 
   dplyr::pull(filtered_tbl, !!column_enquo)
@@ -227,7 +226,7 @@ get_locale_idx_set <- function(locale = NULL) {
     return(LETTERS)
   }
 
-  locales[locales$locale == locale, ][["chr_index"]][[1]]
+  locales[locales$locale == locale, ][["chr_index"]][[1L]]
 }
 
 #' Get the `idx_num_spellout` vector based on a locale
@@ -453,6 +452,8 @@ format_num_to_str <- function(
     dec_mark <- "."
   }
 
+  # match format to a recognized value
+  rlang::arg_match0(format, c("fg", "f", "e"))
   if (format == "fg") {
 
     x <- signif(x, digits = n_sigfig)
@@ -476,8 +477,7 @@ format_num_to_str <- function(
     drop0trailing <- FALSE
 
   } else {
-
-    cli::cli_abort("The format provided isn't recognized.")
+    cli::cli_abort("validation for format should be in arg_match0", .internal = TRUE)
   }
 
   x_str <-
@@ -518,7 +518,7 @@ format_num_to_str <- function(
     integer_parts <-
       vapply(
         gsub("(,|-)", "", integer_parts),
-        FUN.VALUE = character(1),
+        FUN.VALUE = character(1L),
         USE.NAMES = FALSE,
         FUN = insert_seps_ind
       )
@@ -824,7 +824,7 @@ context_exp_marks <- function(context) {
 
   switch(
     context,
-    html = c(" \U000D7 10<sup style='font-size: 65%;'>", "</sup>"),
+    html = c("&nbsp;\U000D7&nbsp;10<sup style='font-size: 65%;'>", "</sup>"),
     latex = c(" $\\times$ 10\\textsuperscript{", "}"),
     rtf = c(" \\'d7 10{\\super ", "}"),
     word = c(" \U000D7 10^", ""),
@@ -951,7 +951,7 @@ format_symbol_str <- function(
   x_out <-
     vapply(
       seq_along(x),
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(i) {
 

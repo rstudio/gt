@@ -96,16 +96,13 @@
 #'     title =
 #'       htmltools::tagList(
 #'         htmltools::tags$div(
-#'           style = htmltools::css(
-#'             `text-align` = "center"
-#'           ),
 #'           htmltools::HTML(
 #'             web_image("https://www.r-project.org/logo/Rlogo.png")
-#'           )
+#'           ),
+#'           style = htmltools::css(`text-align` = "center")
 #'         ),
 #'         htmltools::tags$div(
-#'           "Data listing from ",
-#'           htmltools::tags$strong("gtcars")
+#'           "Data listing from ", htmltools::tags$strong("gtcars")
 #'         )
 #'       )
 #'   )
@@ -131,6 +128,62 @@
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_tab_header_3.png")`
+#' }}
+#'
+#' Sometimes, aligning the heading elements to the left can improve the
+#' presentation of a table. Here, we use the [`nuclides`] dataset to generate a
+#' display of natural abundance values for several stable isotopes. The
+#' [opt_align_table_header()] function is used with `align = "left"` to make it
+#' so the title and subtitle are left aligned in the header area.
+#'
+#' ```r
+#' nuclides |>
+#'   dplyr::filter(!is.na(abundance)) |>
+#'   dplyr::filter(abundance != 1) |>
+#'   dplyr::filter(z >= 1 & z <= 8) |>
+#'   dplyr::mutate(element = paste0(element, ", **z = ", z, "**")) |>
+#'   dplyr::mutate(nuclide = gsub("\\d+$", "", nuclide)) |>
+#'   dplyr::select(nuclide, element, atomic_mass, abundance, abundance_uncert) |>
+#'   gt(
+#'     rowname_col = "nuclide",
+#'     groupname_col = "element",
+#'     process_md = TRUE
+#'   ) |>
+#'   tab_header(
+#'     title = "Natural Abundance Values",
+#'     subtitle = md("For elements having atomic numbers from `1` to `8`.")
+#'   ) |>
+#'   tab_stubhead(label = "Isotope") |>
+#'   tab_stub_indent(
+#'     rows = everything(),
+#'     indent = 1
+#'   ) |>
+#'   fmt_chem(columns = stub()) |>
+#'   fmt_number(
+#'     columns = atomic_mass,
+#'     decimals = 4,
+#'     scale_by = 1 / 1e6
+#'   ) |>
+#'   fmt_percent(
+#'     columns = contains("abundance"),
+#'     decimals = 4
+#'   ) |>
+#'   cols_merge_uncert(
+#'     col_val = abundance,
+#'     col_uncert = abundance_uncert
+#'   ) |>
+#'   cols_label_with(fn = function(x) tools::toTitleCase(gsub("_", " ", x))) |>
+#'   cols_width(
+#'     stub() ~ px(70),
+#'     atomic_mass ~ px(120),
+#'     abundance ~ px(200)
+#'   ) |>
+#'   opt_align_table_header(align = "left") |>
+#'   opt_vertical_padding(scale = 0.5)
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_header_4.png")`
 #' }}
 #'
 #' @family part creation/modification functions
@@ -213,6 +266,10 @@ tab_header <- function(
 #'   **gt** will choose the level based on the inputs provided within `columns`
 #'   and `spanners`, placing the spanner label where it will fit. The first
 #'   spanner level (right above the column labels) is `1`.
+#'
+#'   In combination with [opt_interactive()] or `ihtml.active = TRUE` in
+#'   [tab_options()] only level `1` is supported, additional levels would be
+#'   discarded.
 #'
 #' @param id *Spanner ID*
 #'
@@ -420,9 +477,9 @@ tab_header <- function(
 #' calls of `tab_spanner()`. It's a bit like playing Tetris: putting a spanner
 #' down anywhere there is another spanner (i.e., there are one or more shared
 #' columns) means that second spanner will reside a level above the prior. Let's
-#' look at a few examples at how this works, and we'll also explore a few
-#' lesser-known placement tricks. Let's use a cut down version of [`exibble`]
-#' for this, set up a few level-one spanners, and then place a level two spanner
+#' look at a few examples to see how this works, and we'll also explore a few
+#' lesser-known placement tricks. We'll use a cut down version of [`exibble`]
+#' for this, set up a few level-`1` spanners, and then place a level-`2` spanner
 #' over two other spanners.
 #'
 #' ```r
@@ -536,8 +593,8 @@ tab_header <- function(
 #' cannot be used for the new spanner (this can be circumvented, if necessary,
 #' with the `replace = TRUE` option). If you choose a level higher than the
 #' maximum occupied, then the spanner will be dropped down. Again, these
-#' behaviors are indicative of Tetris-like rules though they tend to work well
-#' for the application of spanners.
+#' behaviors are indicative of Tetris-like rules which tend to work well for the
+#' application of spanners.
 #'
 #' Using a subset of the [`towny`] dataset, we can create an interesting **gt**
 #' table. First, only certain columns are selected from the dataset, some
@@ -641,10 +698,7 @@ tab_spanner <- function(
     ) {
 
       error_vars <-
-        paste(
-          base::setdiff(spanner_id_idx, present_spanner_ids),
-          collapse = ", "
-        )
+        base::setdiff(spanner_id_idx, present_spanner_ids)
 
       cli::cli_abort(
         "One or more spanner ID(s) supplied in `spanners` ({error_vars}),
@@ -956,21 +1010,13 @@ resolve_spanned_column_names <- function(
 #' From this informational table, we see that the ID for the spanner is
 #' `"spanner-population_1996"`. Also, the columns are still accessible by the
 #' original column names (`tab_spanner_delim()` did change their labels though).
-#' Let's use [tab_style()] to add some styles to the `towny_subset_gt` table.
+#' Let's use [tab_style()] along with [cells_column_spanners()] to add some
+#' styling to the spanner label of the `towny_subset_gt` table.
 #'
 #' ```r
-#' towny |>
-#'   dplyr::select(name, starts_with("population")) |>
-#'   dplyr::filter(grepl("^F", name)) |>
-#'   gt() |>
-#'   tab_spanner_delim(delim = "_") |>
-#'   fmt_integer() |>
+#' towny_subset_gt |>
 #'   tab_style(
-#'     style = cell_fill(color = "aquamarine"),
-#'     locations = cells_body(columns = population_2021)
-#'   ) |>
-#'   tab_style(
-#'     style = cell_text(transform = "capitalize"),
+#'     style = cell_text(weight = "bold", transform = "capitalize"),
 #'     locations = cells_column_spanners(spanners = "spanner-population_1996")
 #'   )
 #' ```
@@ -1094,33 +1140,10 @@ tab_spanner_delim <- function(
   split <- rlang::arg_match(split)
 
   # Perform various input checks for `limit` if it is provided
-  if (!is.null(limit)) {
-
-    if (length(limit) != 1) {
-      cli::cli_abort("If provided, `limit` must be a single value.")
-    }
-
-    if (!rlang::is_integerish(limit)) {
-      cli::cli_abort("An integer value should be supplied for `limit`.")
-    }
-
-    if (limit < 1) {
-      cli::cli_abort("The value supplied for `limit` should be `1` or greater.")
-    }
-  }
+  check_number_whole(limit, min = 1, allow_null = TRUE, allow_infinite = FALSE)
 
   # Perform checks on `delim`
-  if (!rlang::is_character(delim)) {
-    cli::cli_abort("The value supplied for `delim` must be of type `character`.")
-  }
-
-  if (length(delim) != 1) {
-    cli::cli_abort("`delim` must be a single value.")
-  }
-
-  if (nchar(delim) < 1) {
-    cli::cli_abort("The value supplied for `delim` must be at least a single character.")
-  }
+  check_string(delim, allow_empty = FALSE)
 
   # Get all of the columns in the dataset
   all_cols <- dt_boxhead_get_vars(data = data)
@@ -1720,7 +1743,7 @@ tab_row_group <- function(
   }
 
   if (length(arrange_groups_vars) == 1 && is.na(arrange_groups_vars)) {
-    arrange_groups_vars <- character(0)
+    arrange_groups_vars <- character(0L)
   }
 
   dt_row_groups_set(
@@ -1788,6 +1811,66 @@ tab_row_group <- function(
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_tab_stubhead_2.png")`
+#' }}
+#'
+#' If the stub is two columns wide (made possible by using
+#' `row_group_as_column = TRUE` in the [gt()] statement), the stubhead will be a
+#' merged cell atop those two stub columns representing the row group and the
+#' row label. Here's an example of that type of situation in a table that uses
+#' the [`peeps`] dataset.
+#'
+#' ```r
+#' peeps |>
+#'   dplyr::filter(country %in% c("POL", "DEU")) |>
+#'   dplyr::group_by(country) |>
+#'   dplyr::filter(dplyr::row_number() %in% 1:5) |>
+#'   dplyr::ungroup() |>
+#'   dplyr::mutate(name = paste0(toupper(name_family), ", ", name_given)) |>
+#'   dplyr::select(name, address, city, postcode, country) |>
+#'   gt(
+#'     rowname_col = "name",
+#'     groupname_col = "country",
+#'     row_group_as_column = TRUE
+#'   ) |>
+#'   tab_stubhead(label = "Country Code / Person") |>
+#'   tab_style(
+#'     style = cell_text(transform = "capitalize"),
+#'     locations = cells_column_labels()
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_stubhead_3.png")`
+#' }}
+#'
+#' The stubhead cell and its text can be styled using [tab_style()] along with
+#' the [cells_stubhead()] function. In this example, using the [`reactions`]
+#' dataset, we style the stubhead label so that it is vertically centered with
+#' text that is highly emboldened.
+#'
+#' ```r
+#' reactions |>
+#'   dplyr::filter(cmpd_type == "nitrophenol") |>
+#'   dplyr::select(cmpd_name, OH_k298, Cl_k298) |>
+#'   dplyr::filter(!(is.na(OH_k298) & is.na(Cl_k298))) |>
+#'   gt(rowname_col = "cmpd_name") |>
+#'   tab_spanner(
+#'     label = "Rate constant at 298 K, in {{cm^3 molecules^–1 s^–1⁠}}",
+#'     columns = ends_with("k298")
+#'   ) |>
+#'   tab_stubhead(label = "Nitrophenol Compound") |>
+#'   fmt_scientific() |>
+#'   sub_missing() |>
+#'   cols_label_with(fn = function(x) sub("_k298", "", x)) |>
+#'   cols_width(everything() ~ px(200)) |>
+#'   tab_style(
+#'     style = cell_text(v_align = "middle", weight = "800"),
+#'     locations = cells_stubhead()
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_stubhead_4.png")`
 #' }}
 #'
 #' @family part creation/modification functions
@@ -1860,10 +1943,35 @@ tab_stubhead <- function(
 #'
 #' @section Examples:
 #'
+#' Using a subset of the [`photolysis`] dataset within a **gt** table, we can
+#' provide some indentation to all of the row labels in the stub via
+#' `tab_stub_indent()`. Here we provide an `indent` value of `3` for a very
+#' prominent indentation that clearly shows that the row labels are subordinate
+#' to the two row group labels in this table (`"inorganic reactions"` and
+#' `"carbonyls"`).
+#'
+#' ```r
+#' photolysis |>
+#'   dplyr::select(cmpd_name, products, type, l, m, n) |>
+#'   dplyr::slice_head(n = 10) |>
+#'   gt(groupname_col = "type", rowname_col = "cmpd_name") |>
+#'   fmt_chem(columns = products) |>
+#'   fmt_scientific(columns = l) |>
+#'   tab_stub_indent(
+#'     rows = everything(),
+#'     indent = 3
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_stub_indent_1.png")`
+#' }}
+#'
 #' Let's use a summarized version of the [`pizzaplace`] dataset to create a
-#' **gt** table with row groups and row labels. With the [summary_rows()]
-#' function, we'll generate summary rows at the top of each row group. With
-#' `tab_stub_indent()` we can add indentation to the row labels in the stub.
+#' another **gt** table with row groups and row labels. With the
+#' [summary_rows()] function, we'll generate summary rows at the top of each row
+#' group. Using `tab_stub_indent()` we can add indentation to the row labels in
+#' the stub.
 #'
 #' ```r
 #' pizzaplace |>
@@ -1897,7 +2005,60 @@ tab_stubhead <- function(
 #' ```
 #'
 #' \if{html}{\out{
-#' `r man_get_image_tag(file = "man_tab_stub_indent_1.png")`
+#' `r man_get_image_tag(file = "man_tab_stub_indent_2.png")`
+#' }}
+#'
+#' Indentation of entries in the stub can be controlled by values within a
+#' column. Here's an example of that using the [`constants`] dataset, where
+#' variations of a row label are mutated to eliminate the common leading text
+#' (replacing it with `"..."`). At the same time, the indentation for those rows
+#' is set to `4` in the `indent` column (value is `0` otherwise). The
+#' `tab_stub_indent()` statement uses the [from_column()] helper function, which
+#' passes values from the `indent` column to the namesake argument. We hide the
+#' `indent` column from view by use of the [cols_hide()] function.
+#'
+#' ```r
+#' constants |>
+#'   dplyr::select(name, value, uncert, units) |>
+#'   dplyr::filter(
+#'     grepl("^atomic mass constant", name) |
+#'       grepl("^Rydberg constant", name) |
+#'       grepl("^Bohr magneton", name)
+#'   ) |>
+#'   dplyr::mutate(
+#'     indent = ifelse(grepl("constant |magneton ", name), 4, 0),
+#'     name = gsub(".*constant |.*magneton ", "...", name)
+#'   ) |>
+#'   gt(rowname_col = "name") |>
+#'   tab_stubhead(label = "Physical Constant") |>
+#'   tab_stub_indent(
+#'     rows = everything(),
+#'     indent = from_column(column = "indent")
+#'   ) |>
+#'   fmt_scientific(columns = c(value, uncert)) |>
+#'   fmt_units(columns = units) |>
+#'   cols_hide(columns = indent) |>
+#'   cols_label(
+#'     value = "Value",
+#'     uncert = "Uncertainty",
+#'     units = "Units"
+#'   ) |>
+#'   cols_width(
+#'     stub() ~ px(250),
+#'     c(value, uncert) ~ px(150),
+#'     units ~ px(80)
+#'   ) |>
+#'   tab_style(
+#'     style = cell_text(indent = px(10)),
+#'     locations = list(
+#'       cells_column_labels(columns = units),
+#'       cells_body(columns = units)
+#'     )
+#'   )
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_tab_stub_indent_3.png")`
 #' }}
 #'
 #' @family part creation/modification functions
@@ -1917,7 +2078,7 @@ tab_stub_indent <- function(
 
   # Perform input object validation
   stop_if_not_gt_tbl(data = data)
-
+  rlang::check_required(rows)
   # Capture the `rows` expression
   row_expr <- rlang::enquo(rows)
 
@@ -2014,12 +2175,12 @@ tab_stub_indent <- function(
       ) {
 
         # Stop function if `indent` value doesn't fall into the acceptable range
-        if (indent < 0 | indent > 5) {
-          cli::cli_abort(c(
-            "If given as a numeric value, `indent` should be one of the following:",
-            "*" = "0, 1, 2, 3, 4, or 5"
-          ))
-        }
+        check_number_whole(
+          indent,
+          min = 0,
+          max = 5,
+          allow_infinite = FALSE
+        )
 
         # Coerce `indent` to an integer value
         indent_val_i <- as.integer(indent)
@@ -2059,8 +2220,8 @@ tab_stub_indent <- function(
 #'
 #' Each call of `tab_footnote()` will either add a different footnote to the
 #' footer or reuse existing footnote text therein. One or more cells outside of
-#' the footer are targeted using the `cells_*()` helper functions (e.g.,
-#' [cells_body()], [cells_column_labels()], etc.). You can choose to *not*
+#' the footer are targeted using the [`cells_*()`][location-helper] helper functions
+#' (e.g., [cells_body()], [cells_column_labels()], etc.). You can choose to *not*
 #' attach a footnote mark by simply not specifying anything in the `locations`
 #' argument.
 #'
@@ -2081,7 +2242,7 @@ tab_stub_indent <- function(
 #'
 #' @param locations *Locations to target*
 #'
-#'   `<locations expressions>` // *default:* `NULL` (`optional`)
+#'   [`<locations expressions>`][location-helper] // *default:* `NULL` (`optional`)
 #'
 #'   The cell or set of cells to be associated with the footnote. Supplying any
 #'   of the `cells_*()` helper functions is a useful way to target the location
@@ -2414,12 +2575,19 @@ tab_footnote <- function(
   for (loc in locations) {
 
     data <-
-      set_footnote(
-        loc = loc,
-        data = data,
-        footnote = footnote,
-        placement = placement
-      )
+      withCallingHandlers(
+        set_footnote(
+          loc = loc,
+          data = data,
+          footnote = footnote,
+          placement = placement
+      ),
+      error = function(e) {
+        cli::cli_abort(
+          "Can't add footnote {.val {footnote}}.",
+          parent = e
+        )
+      })
   }
 
   data
@@ -2429,6 +2597,7 @@ set_footnote <- function(loc, data, footnote, placement) {
   UseMethod("set_footnote")
 }
 
+#' @export
 set_footnote.cells_title <- function(
     loc,
     data,
@@ -2471,6 +2640,7 @@ set_footnote.cells_title <- function(
   data
 }
 
+#' @export
 set_footnote.cells_stubhead <- function(
     loc,
     data,
@@ -2493,6 +2663,7 @@ set_footnote.cells_stubhead <- function(
   data
 }
 
+#' @export
 set_footnote.cells_column_labels <- function(
     loc,
     data,
@@ -2500,7 +2671,7 @@ set_footnote.cells_column_labels <- function(
     placement
 ) {
 
-  resolved <- resolve_cells_column_labels(data = data, object = loc)
+  resolved <- resolve_cells_column_labels(data = data, object = loc, call = call("cells_column_labels"))
 
   cols <- resolved$columns
 
@@ -2521,6 +2692,7 @@ set_footnote.cells_column_labels <- function(
   data
 }
 
+#' @export
 set_footnote.cells_column_spanners <- function(
     loc,
     data,
@@ -2528,7 +2700,7 @@ set_footnote.cells_column_spanners <- function(
     placement
 ) {
 
-  resolved <- resolve_cells_column_spanners(data = data, object = loc)
+  resolved <- resolve_cells_column_spanners(data = data, object = loc, call = call("cells_column_spanners"))
 
   groups <- resolved$spanners
 
@@ -2547,6 +2719,7 @@ set_footnote.cells_column_spanners <- function(
   data
 }
 
+#' @export
 set_footnote.cells_row_groups <- function(
     loc,
     data,
@@ -2581,6 +2754,7 @@ set_footnote.cells_row_groups <- function(
   data
 }
 
+#' @export
 set_footnote.cells_body <- function(
     loc,
     data,
@@ -2588,7 +2762,7 @@ set_footnote.cells_body <- function(
     placement
 ) {
 
-  resolved <- resolve_cells_body(data = data, object = loc)
+  resolved <- resolve_cells_body(data = data, object = loc, call = call("cells_body"))
 
   rows <- resolved$rows
 
@@ -2609,6 +2783,7 @@ set_footnote.cells_body <- function(
   data
 }
 
+#' @export
 set_footnote.cells_stub <- function(
     loc,
     data,
@@ -2635,6 +2810,7 @@ set_footnote.cells_stub <- function(
   data
 }
 
+#' @export
 set_footnote.cells_summary <- function(
     loc,
     data,
@@ -2651,6 +2827,7 @@ set_footnote.cells_summary <- function(
   )
 }
 
+#' @export
 set_footnote.cells_grand_summary <- function(
     loc,
     data,
@@ -2667,6 +2844,7 @@ set_footnote.cells_grand_summary <- function(
   )
 }
 
+#' @export
 set_footnote.cells_stub_summary <- function(
     loc,
     data,
@@ -2699,6 +2877,7 @@ set_footnote.cells_stub_grand_summary <- function(
   )
 }
 
+#' @export
 set_footnote.cells_source_notes <- function(
     loc,
     data,
@@ -2708,6 +2887,7 @@ set_footnote.cells_source_notes <- function(
   cli::cli_abort("Footnotes cannot be applied to source notes.")
 }
 
+#' @export
 set_footnote.cells_footnotes <- function(
     loc,
     data,
@@ -2850,12 +3030,12 @@ tab_caption <- function(
 #'
 #' @description
 #'
-#' With the `tab_style()` function we can target specific cells and apply styles
-#' to them. This is best done in conjunction with the helper functions
-#' [cell_text()], [cell_fill()], and [cell_borders()]. At present this function
-#' is focused on the application of styles for HTML output only (as such, other
-#' output formats will ignore all `tab_style()` calls). Using the aforementioned
-#' helper functions, here are some of the styles we can apply:
+#' With the `tab_style()` function we can [target specific cells][location-helper]
+#' and apply styles to them. This is best done in conjunction with the helper
+#' functions [cell_text()], [cell_fill()], and [cell_borders()]. Currently, this
+#' function is focused on the application of styles for HTML output only
+#' (as such, other output formats will ignore all `tab_style()` calls).
+#' Using the aforementioned helper functions, here are some of the styles we can apply:
 #'
 #' - the background color of the cell ([cell_fill()]: `color`)
 #' - the cell's text color, font, and size ([cell_text()]: `color`, `font`,
@@ -2883,7 +3063,7 @@ tab_caption <- function(
 #'
 #' @param locations *Locations to target*
 #'
-#'   `<locations expressions>` // **required**
+#'   [`<locations expressions>`][location-helper] // **required**
 #'
 #'   The cell or set of cells to be associated with the style. Supplying any of
 #'   the `cells_*()` helper functions is a useful way to target the location
@@ -3209,7 +3389,7 @@ tab_caption <- function(
 #'
 #' @seealso [cell_text()], [cell_fill()], and [cell_borders()] as helpers for
 #'   defining custom styles and [cells_body()] as one of many useful helper
-#'   functions for targeting the locations to be styled.
+#'   functions for targeting the [locations][location-helper] to be styled.
 #'
 #' @export
 tab_style <- function(
@@ -3224,6 +3404,8 @@ tab_style <- function(
   # Resolve into a list of locations
   locations <- as_locations(locations)
 
+  # Keep original value for future error message.
+  style0 <- style
   # Upgrade `style` to be within a list if not provided as such
   if (inherits(style, "cell_styles")) {
     style <- list(style)
@@ -3236,7 +3418,7 @@ tab_style <- function(
   cell_helpers <-
     vapply(
       style,
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(x) {
         x <- names(x)
@@ -3446,11 +3628,25 @@ tab_style <- function(
   for (loc in locations) {
 
     data <-
-      set_style(
-        loc = loc,
-        data = data,
-        style = style
-      )
+      withCallingHandlers(
+        set_style(
+          loc = loc,
+          data = data,
+          style = style
+      ),
+      error = function(e) {
+        # remove the cell_ prefix and convert snake case
+        # to sentence case
+        # cell_grand_summary_row -> grand summary row
+        readable_table_part <- attr(loc, "class")[[1]]
+        readable_table_part <- sub("cells_", "", readable_table_part)
+        readable_table_part <- gsub("_", " ", readable_table_part)
+
+        cli::cli_abort(
+          "Failed to style the {readable_table_part} of the table.",
+          parent = e
+        )
+      })
   }
 
   data
@@ -3498,6 +3694,7 @@ set_style <- function(loc, data, style) {
   UseMethod("set_style")
 }
 
+#' @export
 set_style.cells_title <- function(loc, data, style) {
 
   title_components <- rlang::eval_tidy(loc$groups)
@@ -3533,6 +3730,7 @@ set_style.cells_title <- function(loc, data, style) {
   data
 }
 
+#' @export
 set_style.cells_stubhead <- function(loc, data, style) {
 
   data <-
@@ -3549,9 +3747,11 @@ set_style.cells_stubhead <- function(loc, data, style) {
   data
 }
 
+#' @export
 set_style.cells_column_labels <- function(loc, data, style) {
 
-  resolved <- resolve_cells_column_labels(data = data, object = loc)
+  call <- call("cells_column_labels")
+  resolved <- resolve_cells_column_labels(data = data, object = loc, call = call)
 
   cols <- resolved$columns
 
@@ -3571,9 +3771,10 @@ set_style.cells_column_labels <- function(loc, data, style) {
   data
 }
 
+#' @export
 set_style.cells_column_spanners <- function(loc, data, style) {
-
-  resolved <- resolve_cells_column_spanners(data = data, object = loc)
+  call <- call("cells_column_spanners")
+  resolved <- resolve_cells_column_spanners(data = data, object = loc, call = call)
 
   groups <- resolved$spanners
 
@@ -3591,8 +3792,10 @@ set_style.cells_column_spanners <- function(loc, data, style) {
   data
 }
 
+#' @export
 set_style.cells_row_groups <- function(loc, data, style) {
 
+  call <- call("cells_row_groups")
   row_groups <- dt_row_groups_get(data = data)
 
   # Resolve row groups
@@ -3600,7 +3803,8 @@ set_style.cells_row_groups <- function(loc, data, style) {
     resolve_vector_i(
       expr = !!loc$groups,
       vector = row_groups,
-      item_label = "row group"
+      item_label = "row group",
+      call = call
     )
 
   groups <- row_groups[resolved_row_groups_idx]
@@ -3619,9 +3823,11 @@ set_style.cells_row_groups <- function(loc, data, style) {
   data
 }
 
+#' @export
 set_style.cells_body <- function(loc, data, style) {
 
-  resolved <- resolve_cells_body(data = data, object = loc)
+  call <- call("cells_body")
+  resolved <- resolve_cells_body(data = data, object = loc, call = call)
 
   rows <- resolved$rows
 
@@ -3641,9 +3847,11 @@ set_style.cells_body <- function(loc, data, style) {
   data
 }
 
+#' @export
 set_style.cells_stub <- function(loc, data, style) {
 
-  resolved <- resolve_cells_stub(data = data, object = loc)
+  call <- call("cells_stub")
+  resolved <- resolve_cells_stub(data = data, object = loc, call = call)
 
   rows <- resolved$rows
 
@@ -3661,6 +3869,7 @@ set_style.cells_stub <- function(loc, data, style) {
   data
 }
 
+#' @export
 set_style.cells_summary <- function(loc, data, style) {
 
   add_summary_location_row(
@@ -3671,6 +3880,7 @@ set_style.cells_summary <- function(loc, data, style) {
   )
 }
 
+#' @export
 set_style.cells_grand_summary <- function(loc, data, style) {
 
   add_grand_summary_location_row(
@@ -3681,6 +3891,7 @@ set_style.cells_grand_summary <- function(loc, data, style) {
   )
 }
 
+#' @export
 set_style.cells_stub_summary <- function(loc, data, style) {
 
   add_summary_location_row(
@@ -3691,6 +3902,7 @@ set_style.cells_stub_summary <- function(loc, data, style) {
   )
 }
 
+#' @export
 set_style.cells_stub_grand_summary <- function(loc, data, style) {
 
   add_grand_summary_location_row(
@@ -3701,6 +3913,7 @@ set_style.cells_stub_grand_summary <- function(loc, data, style) {
   )
 }
 
+#' @export
 set_style.cells_footnotes <- function(loc, data, style) {
 
   data <-
@@ -3715,6 +3928,7 @@ set_style.cells_footnotes <- function(loc, data, style) {
     )
 }
 
+#' @export
 set_style.cells_source_notes <- function(loc, data, style) {
 
   data <-
@@ -4666,11 +4880,11 @@ preprocess_tab_option <- function(option, var_name, type) {
   # Perform `stopifnot()` checks by `type`
   switch(
     type,
-    logical = stopifnot(rlang::is_scalar_logical(option), !any(is.na(option))),
+    logical = stopifnot(rlang::is_scalar_logical(option), !anyNA(option)),
     overflow = ,
     px = ,
-    value = stopifnot(rlang::is_scalar_character(option), !any(is.na(option))),
-    values = stopifnot(rlang::is_character(option), length(option) >= 1, !any(is.na(option)))
+    value = stopifnot(rlang::is_scalar_character(option), !anyNA(option)),
+    values = stopifnot(rlang::is_character(option), length(option) >= 1L, !anyNA(option))
   )
 
   option

@@ -3,7 +3,6 @@
 \docType{package}
 \name{gt-package}
 \alias{gt-package}
-\alias{_PACKAGE}
 \title{gt: Easily Create Presentation-Ready Display Tables}
 \description{
 Build display tables from tabular data with an easy-to-use set of functions. With its progressive approach, we can construct display tables with a cohesive set of table parts. Table values can be formatted using any of the included formatting functions. Footnotes and cell styles can be precisely added through a location targeting system. The way in which 'gt' handles things for you means that you don't often have to worry about the fine details.
@@ -28,6 +27,7 @@ Authors:
   \item Alexandra Lauer \email{alexandralauer1@gmail.com} (\href{https://orcid.org/0000-0002-4191-6301}{ORCID})
   \item JooYoung Seo \email{jseo1005@illinois.edu} (\href{https://orcid.org/0000-0002-4064-6012}{ORCID})
   \item Ken Brevoort \email{ken@brevoort.com} (\href{https://orcid.org/0000-0002-4001-8358}{ORCID})
+  \item Olivier Roy
 }
 
 Other contributors:

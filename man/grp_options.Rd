@@ -196,9 +196,9 @@ grp_options(
 
 \verb{obj:<gt_group>} // \strong{required}
 
-This is \code{gt_group} container object. It is typically generated through use
-of the \code{\link[=gt_group]{gt_group()}} function along with one or more \code{gt_tbl} objects, or,
-made by splitting a \strong{gt} table with \code{\link[=gt_split]{gt_split()}}.}
+This is a \code{gt_group} container object. It is typically generated through
+use of the \code{\link[=gt_group]{gt_group()}} function along with one or more \code{gt_tbl} objects,
+or, made by splitting a \strong{gt} table with \code{\link[=gt_split]{gt_split()}}.}
 
 \item{table.width}{\emph{Table width}
 

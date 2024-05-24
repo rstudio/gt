@@ -51,15 +51,7 @@ currency, where the string could vary across output contexts. For example,
 using \code{currency(html = "&fnof;", default = "f")} would give us a suitable
 glyph for the Dutch guilder in an HTML output table, and it would simply be
 the letter "f" in all other output contexts). Please note that \code{decimals}
-will default to \code{2} when using the \code{\link[=currency]{currency()}} helper function.
-
-If nothing is provided here but a \code{locale} value has been set (either in
-this function call or as part of the initial \code{\link[=gt]{gt()}} call), the currency
-will be obtained from that locale. Virtually all locales are linked to a
-territory that is a country (use \code{\link[=info_locales]{info_locales()}} for details on all
-locales used in this package), so, the in-use (or \emph{de facto}) currency will
-be obtained. As the default locale is \code{"en"}, the \code{"USD"} currency will be
-used if neither a \code{locale} nor a \code{currency} value is given.}
+will default to \code{2} when using the \code{\link[=currency]{currency()}} helper function.}
 
 \item{use_subunits}{\emph{Show or hide currency subunits}
 
@@ -72,22 +64,24 @@ formatting will produce \code{"$273.81"}. Removing the subunits (with
 
 \item{decimals}{\emph{Number of decimal places}
 
-\code{scalar<numeric|integer>(val>=0)} // \emph{default:} \code{2}
+\code{scalar<numeric|integer>(val>=0)} // \emph{default:} \code{NULL} (\code{optional})
 
-This corresponds to the exact number of decimal places to use. A value
-such as \code{2.34} can, for example, be formatted with \code{0} decimal places and
-it would result in \code{"2"}. With \code{4} decimal places, the formatted value
-becomes \code{"2.3400"}. The trailing zeros can be removed with
-\code{drop_trailing_zeros = TRUE}. If you always need \code{decimals = 0}, the
-\code{\link[=fmt_integer]{fmt_integer()}} function should be considered.}
+The \code{decimals} values corresponds to the exact number of decimal places to
+use. This value is optional as a currency has an intrinsic number of
+decimal places (i.e., the subunits). A value such as \code{2.34} can, for
+example, be formatted with \code{0} decimal places and if the currency used is
+\code{"USD"} it would result in \code{"$2"}. With \code{4} decimal places, the formatted
+value becomes \code{"$2.3400"}.}
 
 \item{drop_trailing_dec_mark}{\emph{Drop the trailing decimal mark}
 
 \verb{scalar<logical>} // \emph{default:} \code{TRUE}
 
 A logical value that determines whether decimal marks should always appear
-even if there are no decimal digits to display after formatting (e.g., \code{23}
-becomes \code{23.} if \code{FALSE}). By default trailing decimal marks are not shown.}
+even if there are no decimal digits to display after formatting. For
+example, when \code{use_subunits = FALSE} or \code{decimals = 0} a formatted value
+such as \code{"$23"} can be fashioned as \code{"$23."} by setting
+\code{drop_trailing_dec_mark = FALSE}.}
 
 \item{use_seps}{\emph{Use digit group separators}
 
@@ -139,7 +133,12 @@ or the range will inherit a previous suffix (e.g., with
 will be in terms of millions).
 
 Any use of \code{suffixing} (where it is not set expressly as \code{FALSE}) means
-that any value provided to \code{scale_by} will be ignored.}
+that any value provided to \code{scale_by} will be ignored.
+
+If using \code{system = "ind"} then the default suffix set provided by
+\code{suffixing = TRUE} will be the equivalent of \code{c(NA, "L", "Cr")}. This
+doesn't apply suffixes to the thousands range, but does express values in
+\emph{lakhs} and \emph{crores}.}
 
 \item{pattern}{\emph{Specification of the formatting pattern}
 
@@ -180,10 +179,10 @@ This option is disregarded when using accounting notation with
 
 \item{placement}{\emph{Currency symbol placement}
 
-\verb{scalar<character>} // \emph{default:} \code{"left"}
+\verb{singl-kw:[left|right]} // \emph{default:} \code{"left"}
 
-The placement of the currency symbol. This can be either be \code{left} (as
-in \code{"$450"}) or \code{right} (which yields \code{"450$"}).}
+The placement of the currency symbol. This can be either be \code{"left"} (as
+in \code{"$450"}) or \code{"right"} (which yields \code{"450$"}).}
 
 \item{incl_space}{\emph{Include a space between the value and the currency symbol}
 
@@ -199,10 +198,7 @@ symbol. The default is to not introduce a space character.}
 An optional locale identifier that can be used for formatting values
 according the locale's rules. Examples include \code{"en"} for English (United
 States) and \code{"fr"} for French (France). We can use the \code{\link[=info_locales]{info_locales()}}
-function as a useful reference for all of the locales that are supported. A
-locale ID can be also set in the initial \code{\link[=gt]{gt()}} function call (where it
-would be used automatically by any function with a \code{locale} argument) but a
-\code{locale} value provided here will override that global locale.}
+function as a useful reference for all of the locales that are supported.}
 
 \item{output}{\emph{Output format}
 
@@ -322,8 +318,8 @@ The variant function intended for formatting \strong{gt} table data:
 
 Other vector formatting functions: 
 \code{\link{vec_fmt_bytes}()},
-\code{\link{vec_fmt_datetime}()},
 \code{\link{vec_fmt_date}()},
+\code{\link{vec_fmt_datetime}()},
 \code{\link{vec_fmt_duration}()},
 \code{\link{vec_fmt_engineering}()},
 \code{\link{vec_fmt_fraction}()},

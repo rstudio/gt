@@ -52,15 +52,7 @@
 #'
 #'   The replacement text for any matched text fragments.
 #'
-#' @param locations *Locations to target*
-#'
-#'   `<locations expressions>` // *default:* `cells_body()`
-#'
-#'   The cell or set of cells to be associated with the text transformation.
-#'   Only the [cells_body()], [cells_stub()], [cells_row_groups()],
-#'   [cells_column_labels()], and [cells_column_spanners()] helper functions can
-#'   be used here. We can enclose several of these calls within a `list()` if we
-#'   wish to make the transformation happen at different locations.
+#' @inheritParams text_transform
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -162,15 +154,7 @@ text_replace <- function(
 #'   The replacement text to use when cell values aren't matched by any of the
 #'   LHS inputs. If `NULL`, the default, no replacement text will be used.
 #'
-#' @param .locations *Locations to target*
-#'
-#'   `<locations expressions>` // *default:* `cells_body()`
-#'
-#'   The cell or set of cells to be associated with the text transformation.
-#'   Only the [cells_body()], [cells_stub()], [cells_row_groups()],
-#'   [cells_column_labels()], and [cells_column_spanners()] helper functions can
-#'   be used here. We can enclose several of these calls within a `list()` if we
-#'   wish to make the transformation happen at different locations.
+#' @inheritParams text_transform
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -288,12 +272,7 @@ text_case_when <- function(
 #' those strings. This can be changed to a partial matching and replacement
 #' strategy with the alternate option.
 #'
-#' @param .data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
+#' @inheritParams text_transform
 #'
 #' @param ... *Matching expressions*
 #'
@@ -306,12 +285,7 @@ text_case_when <- function(
 #'   replacement text (it must resolve to a single value of the `character`
 #'   class).
 #'
-#' @param .default *Default replacement text*
-#'
-#'   `scalar<character>` // *default:* `NULL` (`optional`)
-#'
-#'   The replacement text to use when cell values aren't matched by any of the
-#'   LHS inputs. If `NULL`, the default, no replacement text will be used.
+#' @inheritParams text_case_when
 #'
 #' @param .replace *Method for text replacement*
 #'
@@ -324,15 +298,6 @@ text_case_when <- function(
 #'   substrings of `old_text`. In this way, the replacements will act on those
 #'   matched substrings.
 #'
-#' @param .locations *Locations to target*
-#'
-#'   `<locations expressions>` // *default:* `cells_body()`
-#'
-#'   The cell or set of cells to be associated with the text transformation.
-#'   Only the [cells_body()], [cells_stub()], [cells_row_groups()],
-#'   [cells_column_labels()], and [cells_column_spanners()] helper functions can
-#'   be used here. We can enclose several of these calls within a `list()` if we
-#'   wish to make the transformation happen at different locations.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -502,12 +467,7 @@ text_case_match <- function(
 #' character vector of the same length as the input. Using the construction
 #' `function(x) { .. }` for the function is recommended.
 #'
-#' @param data *The gt table data object*
-#'
-#'   `obj:<gt_tbl>` // **required**
-#'
-#'   This is the **gt** table object that is commonly created through use of the
-#'   [gt()] function.
+#' @inheritParams fmt_number
 #'
 #' @param fn *Function for text transformation*
 #'
@@ -518,11 +478,11 @@ text_case_match <- function(
 #'
 #' @param locations *Locations to target*
 #'
-#'   `<locations expressions>` // *default:* `cells_body()`
+#'   [`<locations expressions>`][location-helper] // *default:* `cells_body()`
 #'
 #'   The cell or set of cells to be associated with the text transformation.
-#'   Only the [cells_body()], [cells_stub()], [cells_row_groups()],
-#'   [cells_column_labels()], and [cells_column_spanners()] helper functions can
+#'   Only the [cells_column_spanners()], [cells_column_labels()],
+#'    [cells_row_groups()], [cells_stub()], and [cells_body()] helper functions can
 #'   be used here. We can enclose several of these calls within a `list()` if we
 #'   wish to make the transformation happen at different locations.
 #'
@@ -678,7 +638,8 @@ text_transform_at_location <- function(loc, data, fn = identity) {
   UseMethod("text_transform_at_location")
 }
 
-# Text transformation using `cells_body()`
+# Text transformation using `cells_body()` ---
+#' @export
 text_transform_at_location.cells_body <- function(
     loc,
     data,
@@ -704,7 +665,8 @@ text_transform_at_location.cells_body <- function(
   dt_body_set(data = data, body = body)
 }
 
-# Text transformation using `cells_stub()`
+# Text transformation using `cells_stub()` ---
+#' @export
 text_transform_at_location.cells_stub <- function(
     loc,
     data,
@@ -726,7 +688,8 @@ text_transform_at_location.cells_stub <- function(
   dt_body_set(data = data, body = body)
 }
 
-# Text transformation using `cells_column_labels()`
+# Text transformation using `cells_column_labels()` ---
+#' @export
 text_transform_at_location.cells_column_labels <- function(
     loc,
     data,
@@ -756,7 +719,8 @@ text_transform_at_location.cells_column_labels <- function(
   data
 }
 
-# Text transformation using `cells_column_spanners()`
+# Text transformation using `cells_column_spanners()` ---
+#' @export
 text_transform_at_location.cells_column_spanners <- function(
     loc,
     data,
@@ -784,6 +748,7 @@ text_transform_at_location.cells_column_spanners <- function(
 }
 
 # Text transformation using `cells_row_groups()`
+#' @export
 text_transform_at_location.cells_row_groups <- function(
     loc,
     data,

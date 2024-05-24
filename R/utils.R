@@ -87,7 +87,7 @@ is_nonempty_string <- function(x) {
 #'
 #' @noRd
 # Use rlang::caller_env() to inform user of the precise location of failure.
-stop_if_not_gt_tbl <- function(data, call = caller_env()) {
+stop_if_not_gt_tbl <- function(data, call = rlang::caller_env()) {
   if (!is_gt_tbl(data = data)) {
     cli::cli_abort(
       "`data` must be a `gt_tbl` object, not {.obj_type_friendly {data}}.",
@@ -101,7 +101,7 @@ stop_if_not_gt_tbl <- function(data, call = caller_env()) {
 #' @param data The input `data` object that is to be validated.
 #'
 #' @noRd
-stop_if_not_gt_group <- function(data, call = caller_env()) {
+stop_if_not_gt_group <- function(data, call = rlang::caller_env()) {
   if (!is_gt_group(data = data)) {
     cli::cli_abort(
       "`data` must be a `gt_group` object, not {.obj_type_friendly {data}}.",
@@ -115,11 +115,11 @@ stop_if_not_gt_group <- function(data, call = caller_env()) {
 #' @param data The input `data` object that is to be validated.
 #'
 #' @noRd
-stop_if_not_gt_tbl_or_group <- function(data, call = caller_env()) {
+stop_if_not_gt_tbl_or_group <- function(data, call = rlang::caller_env()) {
   if (!is_gt_tbl(data = data) && !is_gt_group(data = data)) {
     cli::cli_abort(
       "`data` must either be a `gt_tbl` or a `gt_group`, not {.obj_type_friendly {data}}.",
-      call = error_call
+      call = call
     )
   }
 }
@@ -222,13 +222,62 @@ time_formats <- function() {
   )
 }
 
+tf_formats <- function() {
+
+  dplyr::tribble(
+    ~format_number,  ~format_name,    ~characters,              ~idx,
+    "1",	           "true-false",    NA,                       1:2,
+    "2",	           "yes-no",        NA,                       3:4,
+    "3",	           "up-down",       NA,                       5:6,
+    "4",             "check-mark",    c("\U02714", "\U02718"),  NA,
+    "5",             "circles",       c("\U025CF", "\U02B58"),  NA,
+    "6",             "squares",       c("\U025A0", "\U025A1"),  NA,
+    "7",             "diamonds",      c("\U025C6", "\U025C7"),  NA,
+    "8",             "arrows",        c("\U02191", "\U02193"),  NA,
+    "9",             "triangles",     c("\U025B2", "\U025BC"),  NA,
+    "10",            "triangles-lr",  c("\U025B6", "\U025C0"),  NA
+  )
+}
+
+tf_formats_icons <- function() {
+  as.character(stats::na.omit(tf_formats()[, "characters"][[1]]))
+}
+
+tf_formats_text <- function() {
+  c("true-false", "yes-no", "up-down")
+}
+# workaround before r-lib/rlang#1618 is fixed (check_character() will refuse character(0))
+check_character2 <- function(x, ..., allow_0 = FALSE, allow_null = FALSE, arg = caller_arg(x), call = caller_env()) {
+  if (!missing(x)) {
+    if (allow_null && is_null(x)) {
+      return(invisible(NULL))
+    }
+    if (length(x) == 0 && !allow_0) {
+      # bad
+    } else if (is_character(x)) {
+      return(invisible(NULL))
+    }
+
+  }
+
+  stop_input_type(
+    x,
+    "a character vector",
+    ...,
+    allow_na = FALSE,
+    allow_null = allow_null,
+    arg = arg,
+    call = call
+  )
+}
+
 #' Transform a `date_style` to a `date_format`
 #'
 #' @noRd
 get_date_format <- function(date_style) {
 
   date_format_tbl <- date_formats()
-  date_format_num_range <- seq_len(nrow((date_format_tbl)))
+  date_format_num_range <- seq_len(nrow(date_format_tbl))
 
   # In the rare instance that `date_style` consists of a character-based
   # number in the valid range of numbers, cast the value as a number
@@ -241,29 +290,25 @@ get_date_format <- function(date_style) {
 
   # Stop function if a numeric `date_style` value is invalid
   if (is.numeric(date_style)) {
-
-    if (!(date_style %in% date_format_num_range)) {
-
-      cli::cli_abort(c(
-        "If using a numeric value for a `date_style`, it must be ",
-        "between `1` and `{nrow(date_format_tbl)}`.",
-        "*" = "Use `info_date_style()` for a useful visual reference."
-      ))
-    }
+    check_number_whole(date_style, min = 1, max = as.numeric(nrow(date_format_tbl)), call = NULL)
   }
 
   # Stop function if a character-based `date_style` value is invalid
   if (is.character(date_style)) {
-
-    if (!(date_style %in% date_format_tbl$format_name)) {
-      cli::cli_abort(c(
-        "If using a `date_style` name, it must be in the valid set.",
-        "*" = "Use `info_date_style()` for a useful visual reference."
-      ))
-    }
-
+    arg_match0(
+      date_style,
+      date_format_tbl$format_name,
+      error_call = NULL
+    )
     # Normalize `date_style` to be a numeric index value
     date_style <- which(date_format_tbl$format_name == date_style)
+  }
+
+  if (!is.numeric(date_style) && !is.character(date_style)) {
+    cli::cli_abort(
+      "{.arg date_style} must be numeric or character.",
+      call = NULL
+    )
   }
 
   # Obtain the correct date format directive
@@ -282,7 +327,7 @@ get_date_format <- function(date_style) {
 get_time_format <- function(time_style) {
 
   time_format_tbl <- time_formats()
-  time_format_num_range <- seq_len(nrow((time_format_tbl)))
+  time_format_num_range <- seq_len(nrow(time_format_tbl))
 
   # In the rare instance that `time_style` consists of a character-based
   # number in the valid range of numbers, cast the value as a number
@@ -295,28 +340,31 @@ get_time_format <- function(time_style) {
 
   # Stop function if a numeric `time_style` value is invalid
   if (is.numeric(time_style)) {
-
-    if (!(time_style %in% time_format_num_range)) {
-      cli::cli_abort(c(
-        "If using a numeric value for a `time_style`, it must be
-        between `1` and `{nrow((time_format_tbl))}`.",
-        "*" = "Use `info_time_style()` for a useful visual reference."
-      ))
-    }
+    check_number_whole(
+      time_style,
+      min = 1,
+      max = as.numeric(nrow(time_format_tbl)),
+      allow_null = FALSE,
+      call = NULL
+    )
   }
 
   # Stop function if a character-based `time_style` value is invalid
   if (is.character(time_style)) {
-
-    if (!(time_style %in% time_format_tbl$format_name)) {
-      cli::cli_abort(c(
-        "If using a `time_style` name, it must be in the valid set.",
-        "*" = "Use `info_time_style()` for a useful visual reference."
-      ))
-    }
-
+    rlang::arg_match0(
+      time_style,
+      time_format_tbl$format_name,
+      error_call = NULL
+    )
     # Normalize `time_style` to be a numeric index value
     time_style <- which(time_format_tbl$format_name == time_style)
+  }
+
+  if (!is.numeric(time_style) && !is.character(time_style)) {
+    cli::cli_abort(
+      "{.arg time_style} must be numeric or character.",
+      call = NULL
+    )
   }
 
   # Obtain the correct time format directive
@@ -338,6 +386,69 @@ get_time_format <- function(time_style) {
   }
 }
 
+#' Transform a `tf_style` to a vector of values
+#'
+#' @noRd
+get_tf_vals <- function(tf_style, locale) {
+
+  tf_format_tbl <- tf_formats()
+  tf_format_num_range <- seq_len(nrow(tf_format_tbl))
+
+  # In the rare instance that `tf_style` consists of a character-based
+  # number in the valid range of numbers, cast the value as a number
+  if (
+    is.character(tf_style) &&
+    tf_style %in% as.character(tf_format_num_range)
+  ) {
+    tf_style <- as.numeric(tf_style)
+  }
+
+  # Stop function if a numeric `tf_style` value is invalid
+  if (is.numeric(tf_style)) {
+
+    if (!(tf_style %in% tf_format_num_range)) {
+      cli::cli_abort(c(
+        "If using a numeric value for a `tf_style`, it must be
+        between `1` and `{nrow((tf_format_tbl))}`.",
+        "*" = "Use `info_tf_style()` for a useful visual reference."
+      ))
+    }
+  }
+
+  # Stop function if a character-based `tf_style` value is invalid
+  if (is.character(tf_style)) {
+
+    if (!(tf_style %in% tf_format_tbl$format_name)) {
+      cli::cli_abort(c(
+        "If using a `tf_style` name, it must be in the valid set.",
+        "*" = "Use `info_tf_style()` for a useful visual reference."
+      ))
+    }
+
+    # Normalize `tf_style` to be a numeric index value
+    tf_style <- which(tf_format_tbl$format_name == tf_style)
+  }
+
+  # Obtain the correct tf format directive
+  tf_format_tbl_i <- tf_format_tbl[tf_style, ]
+
+  if (tf_format_tbl_i[["format_name"]] %in% tf_formats_text()) {
+
+    # Obtain the row indices for the correct pair of complementary values
+    # from the `tf_words` table
+    tf_words_tbl_i <- tf_format_tbl_i[["idx"]][[1]]
+
+    # Use the `locale` value to get the two localized strings
+    true_str <- tf_words[tf_words_tbl_i[1], ][[locale]]
+    false_str <- tf_words[tf_words_tbl_i[2], ][[locale]]
+
+    return(c(true_str, false_str))
+
+  } else {
+    return(unlist(tf_format_tbl_i[["characters"]]))
+  }
+}
+
 #' Are string values 24 hour times?
 #'
 #' Determine whether string values are representative of ISO 8601 time parts
@@ -348,15 +459,6 @@ get_time_format <- function(time_style) {
 is_string_time <- function(x) {
 
   is.character(x) & grepl("^\\d{1,2}:\\d{2}(:\\d{2}(\\.\\d+)?)?$", x)
-}
-
-check_format_code <- function(format) {
-
-  if (!is.character(format) || length(format) != 1) {
-    cli::cli_abort(
-      "The `format` code must be a character string of length 1."
-    )
-  }
 }
 
 #' Transform a `currency` code to a currency string
@@ -468,27 +570,27 @@ get_alignment_at_body_cell <- function(
       locname == "data" & colname == .env$colname & rownum == .env$rownum
     )
 
-  if (nrow(styles_tbl) < 1) {
+  if (nrow(styles_tbl) < 1L) {
     return(column_alignment)
   }
 
   # Extract the list of styles from the table
   cell_styles_list <- styles_filtered_tbl$styles
 
-  if (length(cell_styles_list) < 1) {
+  if (length(cell_styles_list) < 1L) {
     return(column_alignment)
   }
 
   # Get the `align` property in `cell_styles_list` (element may not be present)
-  cell_text_align <- cell_styles_list[[1]]$cell_text$align
+  cell_text_align <- cell_styles_list[[1L]]$cell_text$align
 
   # Get the `cell_style` property in `cell_styles_list` (may not be present)
   # This is a user-defined string with CSS style rules that should look
   # something like this: "text-align: right; background: green;"
-  cell_style <- cell_styles_list[[1]]$cell_style
+  cell_style <- cell_styles_list[[1L]]$cell_style
 
   # Return the value of the last `text-align` property, if present
-  if (!is.null(cell_style) && grepl("text-align", cell_style)) {
+  if (!is.null(cell_style) && grepl("text-align", cell_style, fixed = TRUE)) {
 
     m <- regexec_gt("(?:^|;)\\s*text-align\\s*:\\s*([\\w-]+)\\s*(!important)?", cell_style, perl = TRUE)
 
@@ -611,7 +713,7 @@ process_text <- function(text, context = "html") {
         non_na_text_processed <-
           vapply(
             as.character(text[!is.na(text)]),
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(text) {
               md_engine_fn[[1]](text = text)
@@ -660,7 +762,7 @@ process_text <- function(text, context = "html") {
           if (has_display_formula) {
 
             display_j <- 1
-            formula_text_display_i <- c()
+            formula_text_display_i <- NULL
 
             repeat {
 
@@ -694,8 +796,8 @@ process_text <- function(text, context = "html") {
 
           if (has_inline_formula) {
 
-            inline_j <- 1
-            formula_text_inline_i <- c()
+            inline_j <- 1L
+            formula_text_inline_i <- NULL # same as c()
 
             repeat {
 
@@ -935,7 +1037,7 @@ md_to_html <- function(x, md_engine) {
     non_na_x <-
       vapply(
         as.character(x[!is.na(x)]),
-        FUN.VALUE = character(1),
+        FUN.VALUE = character(1L),
         USE.NAMES = FALSE,
         FUN = function(x) {
           md_engine_fn[[1]](text = x)
@@ -954,7 +1056,7 @@ md_to_html <- function(x, md_engine) {
     non_na_x_processed <-
       vapply(
         as.character(x[!is.na(x)]),
-        FUN.VALUE = character(1),
+        FUN.VALUE = character(1L),
         USE.NAMES = FALSE,
         FUN = function(x) {
           md_engine_fn[[1]](text = x)
@@ -1031,15 +1133,14 @@ markdown_to_latex <- function(text, md_engine) {
 #' @importFrom xml2 read_xml xml_name xml_children xml_type xml_contents
 markdown_to_xml <- function(text) {
 
-  text %>%
-    as.character() %>%
     vapply(
-      FUN.VALUE = character(1),
+      as.character(text),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = commonmark::markdown_xml
     ) %>%
     vapply(
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(cmark) {
 
@@ -1055,8 +1156,8 @@ markdown_to_xml <- function(text) {
 
           if (inherits(x, "xml_nodeset")) {
 
-            results <- lapply( x, apply_rules)
-            do.call( 'paste0',c(results,collapse = "\n"))
+            results <- lapply(x, apply_rules)
+            do.call("paste0", c(results, collapse = "\n"))
 
           } else {
 
@@ -1085,11 +1186,10 @@ markdown_to_xml <- function(text) {
          }
         }
 
-        lapply(children, apply_rules) %>%
-          vapply(FUN = as.character,
-                 FUN.VALUE = character(1)) %>%
-          paste0(collapse = "") %>%
-          paste0("<md_container>", ., "</md_container>")
+        res <- lapply(children, apply_rules)
+        res <- vapply(res, FUN = as.character, FUN.VALUE = character(1L))
+        res <-  paste0(res, collapse = "")
+        paste0("<md_container>", res, "</md_container>")
       }
     )
 
@@ -1100,34 +1200,36 @@ cmark_rules_xml <- list(
 
   ## default ordering
   text = function(x, process, ...) {
-    xml_r(xml_rPr(),
+    res <- xml_r(xml_rPr(),
           xml_t(
             enc2utf8(as.character(htmltools::htmlEscape(xml2::xml_text(x)))),
             xml_space = "preserve")
-    ) %>% as.character()
+    )
+    as.character(res)
   },
   paragraph = function(x, process, ...) {
     runs <- lapply(xml2::xml_children(x), process)
-    xml_p(
+    res <- xml_p(
       xml_pPr(),
       paste0(
         vapply(
-          runs, FUN = paste, FUN.VALUE = character(1)
+          runs, FUN = paste, FUN.VALUE = character(1L)
         ),
         collapse = ""
       )
-    ) %>% as.character()
+    )
+    as.character(res)
   },
 
   image = function(x, process, ...) {
-    xml_r(
+    res <- xml_r(
       xml_rPr(),
       xml_image(
         src = xml_attr(x, "destination"),
         alt_text = xml2::xml_text(x)
         )
-    ) %>% as.character()
-
+    )
+    as.character(res)
   },
 
   ## basic styling
@@ -1145,12 +1247,11 @@ cmark_rules_xml <- list(
     heading_sizes <- c(36, 32, 28, 24, 20, 16)
     fs <- heading_sizes[as.numeric(xml2::xml_attr(x, attr = "level"))]
     x <- process(xml2::xml_children(x))
-    add_text_style(x, style = xml_sz(val = fs)) %>%
-      xml_p(xml_pPr(),.) %>%
-      as.character()
+    res <- add_text_style(x, style = xml_sz(val = fs))
+    as.character(xml_p(xml_pPr(), res))
   },
   thematic_break = function(x, process, ...) {
-    xml_p(
+    res <- xml_p(
       xml_pPr(
         xml_keepNext(),
         xml_pBdr(
@@ -1158,7 +1259,8 @@ cmark_rules_xml <- list(
         ),
         xml_spacing(after = 60)
       )
-    ) %>% as.character()
+    )
+    as.character(res)
   },
   list = function(x, process, ..., indent_level = 0, type = "bullet") {
 
@@ -1175,48 +1277,45 @@ cmark_rules_xml <- list(
 
             child <- children[[child_idx]]
 
-            li_content <- process(child, indent_level = indent_level + 1, type = type) %>%
-              as_xml_node(create_ns = TRUE)
+            li_content <- process(child, indent_level = indent_level + 1, type = type)
+            li_content <- as_xml_node(li_content, create_ns = TRUE)
 
             ## get first pPr tag
-            paragraph_style <- li_content %>% xml_find_first(".//w:pPr") %>% .[[1]]
+            paragraph_style <- xml_find_first(li_content, ".//w:pPr")[[1]]
 
             ## check
-            list_style_format <- xml_pStyle(val = "ListParagraph") %>%
-              as_xml_node() %>%
-              .[[1]]
+            list_style_format <- xml_pStyle(val = "ListParagraph")
+            list_style_format <- as_xml_node(list_style_format)[[1]]
 
-            paragraph_style %>%
-              xml_add_child(
-                list_style_format
-              )
+            xml_add_child(
+              paragraph_style,
+              list_style_format
+            )
 
             list_bullet_style <- xml_numPr(
               xml_ilvl(val = indent_level)#,
               # ifelse(type == "ordered", xml_numId(val = 2), xml_numId(val = 1))
-            ) %>%
-              as_xml_node() %>%
-              .[[1]]
+            )
+            list_bullet_style <- as_xml_node(list_bullet_style)[[1]]
 
-            paragraph_style %>%
-              xml_add_child(
-                list_bullet_style
-              )
+            xml_add_child(
+              paragraph_style,
+              list_bullet_style
+            )
 
 
-            list_symbol <- ifelse(type == "bullet", "-", paste0( child_idx, "."))
+            list_symbol <- ifelse(type == "bullet", "-", paste0(child_idx, "."))
 
               bullet_insert <- xml_r(
-                  xml_t(xml_space = "preserve", paste(c(rep("\t", times = indent_level),list_symbol,"\t"), collapse = ""))
-                ) %>%
-                as_xml_node() %>%
-                .[[1]]
+                  xml_t(xml_space = "preserve", paste(c(rep("\t", times = indent_level), list_symbol, "\t"), collapse = ""))
+                )
+              bullet_insert <- as_xml_node(bullet_insert)[[1]]
 
               ## must be nodes not nodesets
-              paragraph_style %>%
-                xml_add_sibling(
-                  bullet_insert,
-                  .where = "after"
+              xml_add_sibling(
+                paragraph_style,
+                bullet_insert,
+                .where = "after"
               )
 
             paste0(li_content, collapse = "")
@@ -1240,26 +1339,27 @@ cmark_rules_xml <- list(
 
   ## code sections
   code = function(x, process, ...) {
-    xml_r(xml_rPr(xml_rStyle(val = "Macro Text")),
-          xml_t(xml2::xml_text(x), xml_space = "preserve")) %>%
-      as.character()
+    res <- xml_r(xml_rPr(xml_rStyle(val = "Macro Text")),
+          xml_t(xml2::xml_text(x), xml_space = "preserve"))
+    as.character(res)
 
   },
+
   code_block = function(x, process, ...) {
     ##split text up by new line
-    text <- strsplit(xml2::xml_text(x),split = "\n")[[1]]
+    text <- strsplit(xml2::xml_text(x), split = "\n")[[1]]
     code_text <- lapply(text, function(line) {
       xml_t(line, xml_space = "preserve")
     })
-    xml_p(xml_pPr(xml_pStyle(val = "Macro Text")),
+    res <- xml_p(xml_pPr(xml_pStyle(val = "Macro Text")),
           xml_r(xml_rPr(),
                 paste0(
                   vapply(code_text,
                          FUN = paste,
-                         FUN.VALUE = character(1)),
+                         FUN.VALUE = character(1L)),
                   collapse = "<w:br/>"
-                ))) %>%
-      as.character()
+                )))
+    as.character(res)
   },
 
   ## line breaks
@@ -1323,21 +1423,21 @@ cmark_rules_xml <- list(
   },
 
   html_block = function(x, process, ...) {
-    xml_p(
+    res <- xml_p(
       xml_pPr(),
       xml_r(xml_rPr(),
             xml_t(
               enc2utf8(as.character(xml2::xml_text(x))),
               xml_space = "preserve")
       )
-    ) %>%
-      as.character()
+    )
+    as.character(res)
   },
 
   link = function(x, process, ...) {
     # NOTE: Links are difficult to insert in OOXML documents because
     # a relationship must be provided in the 'document.xml.rels' file
-    xml_hyperlink(
+    res <- xml_hyperlink(
       url = xml_attr(x, "destination"),
       xml_r(xml_rPr(
         xml_rStyle(val = "Hyperlink"),
@@ -1345,7 +1445,8 @@ cmark_rules_xml <- list(
         ),
         xml_t(xml2::xml_text(x))
       )
-    ) %>% as.character()
+    )
+    as.character(res)
   },
 
   block_quote = function(x, process, ...) {
@@ -1392,7 +1493,7 @@ cmark_rules_rtf <- list(
         paste(
           vapply(
             seq_len(n_items),
-            FUN.VALUE = character(1),
+            FUN.VALUE = character(1L),
             USE.NAMES = FALSE,
             FUN = function(n) {
 
@@ -1518,7 +1619,7 @@ markdown_to_rtf <- function(text) {
   text <-
     vapply(
       as.character(text),
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = commonmark::markdown_xml
     )
@@ -1526,7 +1627,7 @@ markdown_to_rtf <- function(text) {
   text <-
     vapply(
       text,
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE,
       FUN = function(cmark) {
 
@@ -1669,7 +1770,7 @@ apply_pattern_fmt_x <- function(values, pattern) {
 
   vapply(
     values,
-    FUN.VALUE = character(1),
+    FUN.VALUE = character(1L),
     USE.NAMES = FALSE,
     FUN = function(x) tidy_gsub(x = pattern, "{x}", x, fixed = TRUE)
   )
@@ -1895,7 +1996,7 @@ num_suffix_ind <- function(
 #' versions of R.
 #' @param x The single value to test for whether it is `FALSE`.
 #' @noRd
-is_false = function(x) {
+is_false <- function(x) {
   is.logical(x) && length(x) == 1L && !is.na(x) && !x
 }
 
@@ -2040,8 +2141,8 @@ get_columns_labels_from_attrs <- function(data) {
 split_scientific_notn <- function(x_str) {
 
   exp_parts <- strsplit(x_str, "e|E")
-  num_part <- vapply(exp_parts, FUN.VALUE = character(1), `[[`, 1)
-  exp_part <- as.numeric(vapply(exp_parts, FUN.VALUE = character(1), `[[`, 2))
+  num_part <- vapply(exp_parts, FUN.VALUE = character(1L), `[[`, 1)
+  exp_part <- as.numeric(vapply(exp_parts, FUN.VALUE = character(1L), `[[`, 2))
 
   list(num = num_part, exp = exp_part)
 }
@@ -2134,7 +2235,8 @@ process_footnote_marks <- function(x, marks) {
     mapply(
       marks_val, marks_rep,
       FUN = function(val_i, rep_i) {
-        paste(rep(val_i, rep_i), collapse = "")}
+        paste(rep(val_i, rep_i), collapse = "")
+      }
     )
   )
 }
@@ -2178,31 +2280,22 @@ get_file_ext <- function(file) {
   ifelse(pos > -1L, substring(file, pos + 1L), "")
 }
 
-validate_marks <- function(marks) {
+validate_marks <- function(marks, call = rlang::caller_env()) {
 
-  if (is.null(marks)) {
-    cli::cli_abort("The value for `marks` must not be `NULL`.")
+  if (length(marks) <= 1) {
+    # make sure not length 0.
+    check_string(marks, allow_empty = FALSE, allow_null = FALSE, call = call)
+    # only check keywords for length 1
+    marks_keywords <- c("numbers", "letters", "LETTERS", "standard", "extended")
+
+    rlang::arg_match0(
+      marks,
+      marks_keywords,
+      error_call = call
+    )
   }
   if (!is.character(marks)) {
-    cli::cli_abort("The value for `marks` must be a character vector.")
-  }
-  if (length(marks) == 0) {
-    cli::cli_abort("The length of `marks` must not be zero.")
-  }
-
-  marks_keywords <- c("numbers", "letters", "LETTERS", "standard", "extended")
-
-  if (length(marks) == 1 && !any(marks_keywords %in% marks)) {
-
-    #nocov start
-
-    cli::cli_abort(c(
-      "The `marks` keyword provided (\"{marks}\") is not valid.",
-      "*" = "Either of \"numbers\", \"letters\", \"LETTERS\", \"standard\",
-      or \"extended\" can be used."
-    ))
-
-    #nocov end
+    cli::cli_abort("The value for `marks` must be a character vector.", call = call)
   }
 }
 
@@ -2211,7 +2304,8 @@ validate_style_in <- function(
     style_names,
     arg_name,
     in_vector,
-    with_pattern = NULL
+    with_pattern = NULL,
+    call = rlang::caller_env()
 ) {
 
   if (arg_name %in% style_names) {
@@ -2225,17 +2319,17 @@ validate_style_in <- function(
     }
 
     if (!(arg_value %in% in_vector)) {
-
-      cli::cli_abort(c(
-        "The provided `{arg_name}` value cannot be `{arg_value}`.",
-        "*" = "It can only be either of the following:
-        {str_catalog(in_vector, conj = 'or')}."
-      ))
+      rlang::arg_match0(
+        arg_value,
+        in_vector,
+        arg_nm = arg_name,
+        error_call = call
+      )
     }
   }
 }
 
-check_spanner_id_unique <- function(data, spanner_id) {
+check_spanner_id_unique <- function(data, spanner_id, call = rlang::caller_env()) {
 
   existing_column_ids <- dt_boxhead_get_vars(data = data)
   existing_spanner_ids <- dt_spanners_get_ids(data = data)
@@ -2248,11 +2342,12 @@ check_spanner_id_unique <- function(data, spanner_id) {
       "The spanner {.arg id} provided ({.val {spanner_id}}) is not unique.",
       "*" = "The `id` must be unique across existing spanner and column IDs.",
       "*" = "Provide a unique ID value for this spanner."
-    ))
+    ),
+    call = call)
   }
 }
 
-check_row_group_id_unique <- function(data, row_group_id) {
+check_row_group_id_unique <- function(data, row_group_id, call = rlang::caller_env()) {
 
   stub_df <- dt_stub_df_get(data = data)
 
@@ -2263,7 +2358,9 @@ check_row_group_id_unique <- function(data, row_group_id) {
     cli::cli_abort(c(
       "The row group {.arg id} provided ({.val {row_group_id}}) is not unique.",
       "*" = "Provide a unique ID value for this row group"
-    ))
+      ),
+      call = call
+    )
   }
 }
 
@@ -2279,43 +2376,22 @@ prepend_vec <- function(x, values, after = 0) {
   append(x, values, after = after)
 }
 
-validate_length_one <- function(x, name) {
+validate_length_one <- function(x, name, call = rlang::caller_env()) {
   if (length(x) != 1) {
-    cli::cli_abort("The value for `{name}` should have a length of one.")
+    cli::cli_abort(
+      "{.arg {name}} must have a length one, not {length(x)}.",
+      call = call
+    )
   }
 }
 
-validate_table_id <- function(id) {
+validate_table_id <- function(id, call = caller_env()) {
 
-  if (is.null(id)) {
-    return()
-  }
-
-  if (length(id) != 1) {
-    cli::cli_abort("The length of `id` must be `1`.")
-  }
-  if (is.na(id)) {
-    cli::cli_abort("The value for `id` must not be `NA`.")
-  }
-  if (!is.character(id)) {
-    cli::cli_abort("Any input for `id` must be of the `character` class.")
-  }
+  check_string(id, allow_na = FALSE, allow_null = TRUE, call = call)
 }
 
-validate_n_sigfig <- function(n_sigfig) {
-
-  if (length(n_sigfig) != 1) {
-    cli::cli_abort("The length of `n_sigfig` must be 1.")
-  }
-  if (is.na(n_sigfig)) {
-    cli::cli_abort("The value for `n_sigfig` must not be `NA`.")
-  }
-  if (!is.numeric(n_sigfig)) {
-    cli::cli_abort("Any input for `n_sigfig` must be numeric.")
-  }
-  if (n_sigfig < 1) {
-    cli::cli_abort("The value for `n_sigfig` must be greater than or equal to `1`.")
-  }
+validate_n_sigfig <- function(n_sigfig, call = rlang::caller_env()) {
+  check_number_whole(n_sigfig, allow_na = FALSE, min = 1, call  = call)
 }
 
 validate_css_lengths <- function(x) {
@@ -2323,7 +2399,7 @@ validate_css_lengths <- function(x) {
   # Don't include empty strings in the validation; these lengths
   # should be handled downstream (i.e., using `htmltools::css()`,
   # where empty strings and NULL values don't create rules at all)
-  x_units_non_empty <- x[!(x == "")]
+  x_units_non_empty <- x[nzchar(x)]
 
   # While this returns a vector of corrected CSS units, we
   # primarily want to verify that the vector of provided values
@@ -2333,18 +2409,19 @@ validate_css_lengths <- function(x) {
     vapply(
       x_units_non_empty,
       FUN = htmltools::validateCssUnit,
-      FUN.VALUE = character(1),
+      FUN.VALUE = character(1L),
       USE.NAMES = FALSE
     )
   )
 }
 
-column_classes_are_valid <- function(data, columns, valid_classes) {
+column_classes_are_valid <- function(data, columns, valid_classes, call = rlang::caller_env()) {
 
   resolved <-
     resolve_cols_c(
       expr = {{ columns }},
-      data = data
+      data = data,
+      call = call
     )
 
   table_data <- dt_data_get(data = data)
@@ -2355,7 +2432,8 @@ column_classes_are_valid <- function(data, columns, valid_classes) {
       table_data,
       FUN.VALUE = logical(1),
       USE.NAMES = FALSE,
-      FUN = function(x) any(class(x) %in% valid_classes)
+      # TRUE if inherits any of the valid classes
+      FUN = function(x) inherits(x, valid_classes)
     )
   )
 }

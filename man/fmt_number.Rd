@@ -61,9 +61,7 @@ need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 This corresponds to the exact number of decimal places to use. A value
 such as \code{2.34} can, for example, be formatted with \code{0} decimal places and
 it would result in \code{"2"}. With \code{4} decimal places, the formatted value
-becomes \code{"2.3400"}. The trailing zeros can be removed with
-\code{drop_trailing_zeros = TRUE}. If you always need \code{decimals = 0}, the
-\code{\link[=fmt_integer]{fmt_integer()}} function should be considered.}
+becomes \code{"2.3400"}.}
 
 \item{n_sigfig}{\emph{Number of significant figures}
 
@@ -457,13 +455,17 @@ this function: \code{\link[=vec_fmt_number]{vec_fmt_number()}}.
 
 Other data formatting functions: 
 \code{\link{data_color}()},
+\code{\link{fmt}()},
 \code{\link{fmt_auto}()},
 \code{\link{fmt_bins}()},
 \code{\link{fmt_bytes}()},
+\code{\link{fmt_chem}()},
+\code{\link{fmt_country}()},
 \code{\link{fmt_currency}()},
-\code{\link{fmt_datetime}()},
 \code{\link{fmt_date}()},
+\code{\link{fmt_datetime}()},
 \code{\link{fmt_duration}()},
+\code{\link{fmt_email}()},
 \code{\link{fmt_engineering}()},
 \code{\link{fmt_flag}()},
 \code{\link{fmt_fraction}()},
@@ -478,10 +480,10 @@ Other data formatting functions:
 \code{\link{fmt_roman}()},
 \code{\link{fmt_scientific}()},
 \code{\link{fmt_spelled_num}()},
+\code{\link{fmt_tf}()},
 \code{\link{fmt_time}()},
 \code{\link{fmt_units}()},
 \code{\link{fmt_url}()},
-\code{\link{fmt}()},
 \code{\link{sub_large_vals}()},
 \code{\link{sub_missing}()},
 \code{\link{sub_small_vals}()},
