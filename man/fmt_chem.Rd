@@ -167,12 +167,12 @@ surrounding the text with \code{"{{\%"}/\code{"\%}}"}.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_chem_1.png" alt="This image of a table was generated from the first code example in the `fmt_chem()` help file." style="width:100\%;">
 }}
 
-Taking just a few rows from the \code{\link{photolysis}} dataset, let's and create a
-new \strong{gt} table. The \code{cmpd_formula} and \code{products} columns both contain
-text in chemistry notation (the first has compounds, and the second column
-has the products of photolysis reactions). These columns will be formatted by
-the \code{fmt_chem()} function. The compound formulas will be merged with the
-compound names via the \code{\link[=cols_merge]{cols_merge()}} function.
+Taking just a few rows from the \code{\link{photolysis}} dataset, let's create a new
+\strong{gt} table. The \code{cmpd_formula} and \code{products} columns both contain text in
+chemistry notation (the first has compounds, and the second column has the
+products of photolysis reactions). These columns will be formatted by the
+\code{fmt_chem()} function. The compound formulas will be merged with the compound
+names via the \code{\link[=cols_merge]{cols_merge()}} function.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{photolysis \%>\%
   dplyr::filter(cmpd_name \%in\% c(
