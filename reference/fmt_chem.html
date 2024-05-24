@@ -181,7 +181,7 @@ more complex predicate expression.</p>
 chemical reactions, if needed. It should feel familiar in its basic usage and
 the more advanced typesetting tries to limit the amount of syntax needed.
 It's always best to show examples on usage:</p><ul><li><p><code>"CH3O2"</code> and <code>"(NH4)2S"</code> will render with subscripted numerals</p></li>
-<li><p>Charges can be expressed terminating <code>"+"</code> or <code>"-"</code> as in <code>"H+"</code> and
+<li><p>Charges can be expressed with terminating <code>"+"</code> or <code>"-"</code>, as in <code>"H+"</code> and
 <code>"[AgCl2]-"</code>; if any charges involve the use of a number, the following
 incantations could be used: <code>"CrO4^2-"</code>, <code>"Fe^n+"</code>, <code>"Y^99+"</code>, <code>"Y^{99+}"</code>
 (the final two forms produce equivalent output)</p></li>
@@ -206,7 +206,7 @@ examples <code>"KCr(SO4)2 . 12 H2O"</code> and <code>"KCr(SO4)2 * 12 H2O"</code>
 adjacent characters (i.e., these shouldn't be at the beginning or end of
 the markup); two examples: <code>"C6H5-CHO"</code>, <code>"CH3CH=CH2"</code></p></li>
 <li><p>as with units notation, Greek letters can be inserted by surrounding the
-letter name with <code>":"</code>; here's an example that denotes the delta value
+letter name with <code>":"</code>; here's an example that describes the delta value
 of carbon-13: <code>":delta: ^13C"</code></p></li>
 </ul></div>
     <div class="section level2">
@@ -243,12 +243,12 @@ surrounding the text with <code>"{{%"</code>/<code>"%}}"</code>.</p>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/opt_align_table_header.html">opt_align_table_header</a></span><span class="op">(</span>align <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_chem_1.png" alt="This image of a table was generated from the first code example in the `fmt_chem()` help file." style="width:100%;"></p>
-<p>Taking just a few rows from the <code><a href="photolysis.html">photolysis</a></code> dataset, let's and create a
-new <strong>gt</strong> table. The <code>cmpd_formula</code> and <code>products</code> columns both contain
-text in chemistry notation (the first has compounds, and the second column
-has the products of photolysis reactions). These columns will be formatting
-by the <code>fmt_chem()</code> function. The compound formulas will be merged with the
-compound names via the <code><a href="cols_merge.html">cols_merge()</a></code> function.</p>
+<p>Taking just a few rows from the <code><a href="photolysis.html">photolysis</a></code> dataset, let's create a new
+<strong>gt</strong> table. The <code>cmpd_formula</code> and <code>products</code> columns both contain text in
+chemistry notation (the first has compounds, and the second column has the
+products of photolysis reactions). These columns will be formatted by the
+<code>fmt_chem()</code> function. The compound formulas will be merged with the compound
+names via the <code><a href="cols_merge.html">cols_merge()</a></code> function.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">photolysis</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">cmpd_name</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    <span class="st">"hydrogen peroxide"</span>, <span class="st">"nitrous acid"</span>,</span>
