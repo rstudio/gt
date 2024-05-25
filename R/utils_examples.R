@@ -191,6 +191,7 @@ write_gt_examples_qmd_files <- function(
           "towny",
           "peeps",
           "metro",
+          "gibraltar",
           "constants",
           "illness",
           "reactions",

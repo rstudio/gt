@@ -623,6 +623,52 @@
 #'
 "metro"
 
+#' Weather conditions in Gibraltar, May 2023
+#'
+#' @description
+#'
+#' The `gibraltar` dataset has meteorological data for the Gibraltar Airport
+#' Station from May 1 to May 31, 2023. Gibraltar is a British Overseas Territory
+#' and city located at the southern end of the Iberian Peninsula, on the Bay of
+#' Gibraltar. This weather station is located at the airport (GIB), where it's
+#' at an elevation of 5 meters above mean sea level (AMSL).
+#'
+#' @format A tibble with 1,431 rows and 10 variables:
+#' \describe{
+#' \item{date, time}{The date and time of the observation.}
+#' \item{temp, dew_point}{The air temperature and dew point values, both in
+#' degrees Celsius.}
+#' \item{humidity}{The relative humidity as a value between `0` and `1`}
+#' \item{wind_dir, wind_speed, wind_gust}{Observations related to wind. The wind
+#' direction is given as the typical 'blowing from' value, simplified to one of
+#' 16 compass directions. The wind speed is provided in units of meters per
+#' second. If there was a measurable wind gust, the maximum gust speed is
+#' recorded as m/s values (otherwise the value is `0`).}
+#' \item{pressure}{The atmospheric pressure in hectopascals (hPa).}
+#' \item{condition}{The weather condition.}
+#' }
+#'
+#' @section Examples:
+#'
+#' Here is a glimpse at the data available in `gibraltar`.
+#'
+#' ```{r}
+#' dplyr::glimpse(gibraltar)
+#' ```
+#'
+#' @family datasets
+#' @section Dataset ID and Badge:
+#' DATA-10
+#'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_gibraltar.png")`
+#' }}
+#'
+#' @section Dataset Introduced:
+#' *In Development*
+#'
+"gibraltar"
+
 #' The fundamental physical constants
 #'
 #' @description
@@ -661,7 +707,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-10
+#' DATA-11
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_constants.png")`
@@ -754,7 +800,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-11
+#' DATA-12
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_illness.png")`
@@ -858,7 +904,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-12
+#' DATA-13
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_reactions.png")`
@@ -917,7 +963,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-13
+#' DATA-14
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_photolysis.png")`
@@ -978,7 +1024,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-14
+#' DATA-15
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_nuclides.png")`
@@ -1048,7 +1094,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-15
+#' DATA-16
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_rx_adsl.png")`
@@ -1121,7 +1167,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-16
+#' DATA-17
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_rx_addv.png")`

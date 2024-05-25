@@ -60,6 +60,7 @@ Other datasets:
 \code{\link{constants}},
 \code{\link{countrypops}},
 \code{\link{exibble}},
+\code{\link{gibraltar}},
 \code{\link{gtcars}},
 \code{\link{illness}},
 \code{\link{metro}},
