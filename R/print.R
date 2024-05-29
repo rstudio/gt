@@ -84,7 +84,7 @@ print.gt_group <- function(x, ..., view = interactive()) {
 #'
 #' @keywords internal
 #' @noRd
-knit_print.gt_tbl <- function(x, ...) {
+knit_print.gt_tbl <- function(x, ..., inline = FALSE) {
 
   # TODO: Add print method for interactive HTML table
 
@@ -110,7 +110,7 @@ knit_print.gt_tbl <- function(x, ...) {
   }
 
   # Use `knit_print()` to print in a code chunk
-  knitr::knit_print(x, ...)
+  knitr::knit_print(x, ..., inline = FALSE)
 }
 
 #' Knit print a collection of **gt** tables
