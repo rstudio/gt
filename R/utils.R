@@ -721,9 +721,17 @@ process_text <- function(text, context = "html") {
           )
 
         # Use base64 encoding to avoid issues with escaping internal double
-        # quotes; used in conjunction with the  'data-qmd-base64' attribute
+        # quotes; used in conjunction with the 'data-qmd-base64' attribute
         # that is recognized by Quarto
-        non_na_text <- base64enc::base64encode(charToRaw(non_na_text))
+        non_na_text <-
+          vapply(
+            non_na_text,
+            FUN.VALUE = character(1L),
+            USE.NAMES = FALSE,
+            FUN = function(text) {
+              base64enc::base64encode(charToRaw(text))
+            }
+          )
 
         non_na_text <- tidy_gsub(non_na_text, "^", "<div data-qmd-base64=\"")
         non_na_text <- tidy_gsub(non_na_text, "$", "\">")
