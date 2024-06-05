@@ -62,6 +62,7 @@ DATA-1
 Other datasets: 
 \code{\link{constants}},
 \code{\link{exibble}},
+\code{\link{films}},
 \code{\link{gibraltar}},
 \code{\link{gtcars}},
 \code{\link{illness}},
