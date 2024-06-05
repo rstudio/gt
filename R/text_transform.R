@@ -341,10 +341,8 @@ text_case_when <- function(
 #' towny |>
 #'   dplyr::select(name, csd_type, population_2021) |>
 #'   dplyr::filter(csd_type %in% c("city", "town")) |>
-#'   dplyr::group_by(csd_type) |>
-#'   dplyr::arrange(desc(population_2021)) |>
-#'   dplyr::slice_head(n = 5) |>
-#'   dplyr::ungroup() |>
+#'   dplyr::slice_max(population_2021, n = 5, by = csd_type) |>
+#'   dplyr::arrange(csd_type) |>
 #'   gt() |>
 #'   fmt_integer() |>
 #'   text_case_match(
@@ -537,12 +535,9 @@ text_case_match <- function(
 #'
 #' ```r
 #' gtcars |>
-#'   dplyr::select(mfr, ctry_origin) |>
 #'   dplyr::filter(ctry_origin %in% c("Germany", "Italy", "Japan")) |>
-#'   dplyr::group_by(mfr, ctry_origin) |>
-#'   dplyr::count() |>
-#'   dplyr::ungroup() |>
-#'   dplyr::arrange(ctry_origin, desc(n)) |>
+#'   dplyr::count(mfr, ctry_origin, sort = TRUE) |>
+#'   dplyr::arrange(ctry_origin) |>
 #'   gt(rowname_col = "mfr", groupname_col = "ctry_origin") |>
 #'   cols_label(n = "No. of Entries") |>
 #'   tab_stub_indent(rows = everything(), indent = 2) |>

@@ -212,9 +212,9 @@ fmt_missing <- function(
 ) {
 
   cli::cli_warn(c(
-    "Since gt v0.6.0 the `fmt_missing()` function is deprecated and will
+    "Since gt v0.6.0  {.fn fmt_missing} is deprecated and will
     soon be removed.",
-    "*" = "Use the `sub_missing()` function instead."
+    "i" = "Use {.fn sub_missing} instead."
   ),
   .frequency = "regularly",
   .frequency_id = "fmt_missing_fn_deprecation"

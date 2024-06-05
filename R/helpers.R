@@ -358,10 +358,7 @@ pct <- function(x) {
 #'
 #' ```r
 #' gtcars |>
-#'   dplyr::select(mfr, ctry_origin) |>
-#'   dplyr::group_by(mfr, ctry_origin) |>
-#'   dplyr::count() |>
-#'   dplyr::ungroup() |>
+#'   dplyr::count(mfr, ctry_origin) |>
 #'   dplyr::arrange(ctry_origin) |>
 #'   gt(groupname_col = "ctry_origin") |>
 #'   tab_style(

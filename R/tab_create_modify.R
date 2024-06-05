@@ -605,11 +605,10 @@ tab_header <- function(
 #' ```r
 #' towny |>
 #'   dplyr::select(
-#'     name, ends_with("2001"), ends_with("2006"), matches("2001_2006")
+#'     name, ends_with(c("2001", "2006)), matches("2001_2006")
 #'   ) |>
 #'   dplyr::filter(population_2001 > 100000) |>
-#'   dplyr::arrange(desc(pop_change_2001_2006_pct)) |>
-#'   dplyr::slice_head(n = 10) |>
+#'   dplyr::slice_max(pop_change_2001_2006_pct, n = 10) |>
 #'   gt() |>
 #'   fmt_integer() |>
 #'   fmt_percent(columns = matches("change"), decimals = 1) |>
@@ -1031,8 +1030,7 @@ resolve_spanned_column_names <- function(
 #'
 #' ```r
 #' towny |>
-#'   dplyr::arrange(desc(population_2021)) |>
-#'   dplyr::slice_head(n = 5) |>
+#'   dplyr::slice_max(population_2021, n = 5) |>
 #'   dplyr::select(name, ends_with("pct")) |>
 #'   dplyr::rename_with(
 #'     .fn = function(x) {

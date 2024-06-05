@@ -452,9 +452,10 @@ summary_rows <- function(
         !!rowname_col_private := rep("", nrow(data$`_data`))
       )
     data$`_data` <-
-      dplyr::select(
+      dplyr::relocate(
         data$`_data`,
-        dplyr::everything(), dplyr::all_of(rowname_col_private)
+        dplyr::all_of(rowname_col_private),
+        .after = dplyr::last_col()
       )
 
     # Get the `stub_df` object from `data`
