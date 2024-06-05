@@ -1,4 +1,4 @@
-test_that("The `fmt_date()` function works correctly with character input for all date formats", {
+test_that("fmt_date() works correctly with character input for all date formats", {
 
   # Create an input tibble frame with a single column
   # that contains dates as character values
@@ -107,7 +107,7 @@ test_that("The `fmt_date()` function works correctly with character input for al
   )
 })
 
-test_that("The `fmt_date()` function works correctly with Date input.", {
+test_that("fmt_date() works correctly with Date input.", {
   # Create an input tibble frame with a single column
   # that contains dates as `Date` values
   data_tbl <-
@@ -211,7 +211,7 @@ test_that("The `fmt_date()` function works correctly with Date input.", {
   )
 })
 
-test_that("The `fmt_time()` function works correctly", {
+test_that("fmt_time() works correctly", {
 
   # Create an input tibble frame with a single column
   # that contains times as character values
@@ -257,7 +257,7 @@ test_that("The `fmt_time()` function works correctly", {
   )
 })
 
-test_that("The `fmt_datetime()` function works correctly", {
+test_that("fmt_datetime() works correctly", {
 
   # Create an input tibble frame with a single column
   # that contains date-times as character values

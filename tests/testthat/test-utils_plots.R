@@ -137,7 +137,7 @@ test_that("Value stream processing produces the correct numeric vectors", {
     )
 })
 
-test_that("The `format_number_compactly()` function works well", {
+test_that("format_number_compactly() works well", {
 
   values <-
     c(

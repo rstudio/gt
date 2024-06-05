@@ -22,7 +22,7 @@ sp500_tbl <-
 
 tbl_v_large <- dplyr::tibble(num = 10^(1:18))
 
-test_that("The `fmt_auto()` function works correctly", {
+test_that("fmt_auto() works correctly", {
 
   # Use `fmt_auto()` on a table having a variety of column types
   gt_tbl_1 <-

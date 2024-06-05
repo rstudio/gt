@@ -53,7 +53,7 @@ html_fragment_within <- function(raw_html, ...) {
   grepl(paste0("\\Q", c(...), "\\E", "[\\n\\s]*?", collapse = ""), raw_html, perl = TRUE)
 }
 
-test_that("The `cols_width()` function stores values correctly", {
+test_that("cols_width() stores values correctly", {
 
   #
   # Using `tbl_1` which is a simple table (no stub or row groups)
@@ -241,7 +241,7 @@ test_that("The `cols_width()` function stores values correctly", {
   )
 })
 
-test_that("The function `cols_width()` works correctly with a simple table", {
+test_that("cols_width() works correctly with a simple table", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -593,7 +593,7 @@ test_that("The function `cols_width()` works correctly with a simple table", {
   )
 })
 
-test_that("The function `cols_width()` works correctly with a complex table", {
+test_that("cols_width() works correctly with a complex table", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -898,7 +898,7 @@ test_that("The function `cols_width()` works correctly with a complex table", {
     expect_true()
 })
 
-test_that("The function `cols_width()` correctly specifies LaTeX table when column widths are specified by user as percentages", {
+test_that("cols_width() correctly specifies LaTeX table when column widths are specified by user as percentages", {
 
   # Check that specific suggested packages are available
   check_suggests()

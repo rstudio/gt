@@ -2,7 +2,7 @@ skip_on_os("linux")
 
 library(lubridate)
 
-test_that("The `fmt_date()` function works correctly", {
+test_that("fmt_date() works correctly", {
 
   # Create an input tibble frame with a single column
   # that contains dates as character values
@@ -243,7 +243,7 @@ test_that("The `fmt_date()` function works correctly", {
   )
 })
 
-test_that("The `fmt_time()` function works correctly", {
+test_that("fmt_time() works correctly", {
 
   # Create an input tibble frame with a single column
   # that contains times as character values
@@ -449,7 +449,7 @@ test_that("The `fmt_time()` function works correctly", {
   )
 })
 
-test_that("The `fmt_datetime()` function works correctly", {
+test_that("fmt_datetime() works correctly", {
 
   # Create an input tibble frame with a single column
   # that contains date-times as character values

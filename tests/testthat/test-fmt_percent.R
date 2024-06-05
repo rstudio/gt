@@ -1,4 +1,4 @@
-test_that("The `fmt_percent()` function works correctly in the HTML context", {
+test_that("fmt_percent() works correctly in the HTML context", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
@@ -326,7 +326,7 @@ test_that("The `fmt_percent()` function works correctly in the HTML context", {
   )
 })
 
-test_that("The `fmt_percent()` fn can render in the Indian numbering system", {
+test_that("fmt_percent() can render in the Indian numbering system", {
 
   # These numbers will be used in tests of formatting
   # values to the Indian numbering system
@@ -413,7 +413,7 @@ test_that("The `fmt_percent()` fn can render in the Indian numbering system", {
   )
 })
 
-test_that("The `fmt_percent()` function works correctly with stubs", {
+test_that("fmt_percent() works correctly with stubs", {
   tbl <- tibble::tibble(
     raw = c("[shiny](https://shiny.posit.co/)", "<a href='https://gt.rstudio.com/'>gt</a>"),
     markdown = purrr::map(c("[shiny](https://shiny.posit.co/)", "[gt](https://gt.rstudio.com/)"), gt::md),

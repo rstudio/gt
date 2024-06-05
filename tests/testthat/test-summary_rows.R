@@ -22,7 +22,7 @@ selection_text <- function(html, selection) {
   rvest::html_text(rvest::html_nodes(html, selection))
 }
 
-test_that("The `summary_rows()` function can make group-wise summaries", {
+test_that("summary_rows() can make group-wise summaries", {
 
   # Create a table with summary rows for the `W02` group;
   # the 3 summary rows for this group represent the mean, sum,
@@ -2293,7 +2293,7 @@ test_that("Summary rows can use other columns' data", {
   gt_tbl %>% render_as_html() %>% expect_snapshot()
 })
 
-test_that("The `normalize_summary_fns()` function works with a variety of inputs", {
+test_that("normalize_summary_fns() works with a variety of inputs", {
 
   check_summary_fn_output <- function(fns, id, label, formula) {
 
@@ -2509,7 +2509,7 @@ test_that("The deprecated `formatter` arg and `...` still function properly", {
     expect_equal(c("2,035.2", "2,048.6", "2,016.9", "2,031.2"))
 })
 
-test_that("The `normalize_fmt_fns()` function works with a variety of inputs", {
+test_that("normalize_fmt_fns() works with a variety of inputs", {
 
   check_fmt_fns_output <- function(fmt, formula) {
 

@@ -7,7 +7,7 @@ check_suggests <- function() {
   skip_if_not_installed("xml2")
 }
 
-test_that("The `tab_spanner_delim()` function works correctly", {
+test_that("tab_spanner_delim() works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()
@@ -321,7 +321,7 @@ test_that("The `tab_spanner_delim()` function works correctly", {
   )
 })
 
-test_that("`tab_spanner_delim()` works with different `limit` values", {
+test_that("tab_spanner_delim() works with different `limit` values", {
 
   # Create a `tbl_html` object with `gt()`; split the column
   # names into spanner headings and column labels, ensure that
@@ -685,7 +685,7 @@ test_that("`tab_spanner_delim()` works with different `limit` values", {
   )
 })
 
-test_that("`tab_spanner_delim()` works on higher-order spanning", {
+test_that("tab_spanner_delim() works on higher-order spanning", {
 
   tbl_1 <-
     dplyr::tibble(
@@ -1270,7 +1270,7 @@ test_that("`tab_spanner_delim()` works on higher-order spanning", {
   )
 })
 
-test_that("`tab_spanner_delim()` works with complex splits", {
+test_that("tab_spanner_delim() works with complex splits", {
 
   # Create a gt table with two levels of spanners that repeat
   gt_tbl <-
@@ -1363,7 +1363,7 @@ test_that("`tab_spanner_delim()` works with complex splits", {
   )
 })
 
-test_that("`tab_spanner_delim()` won't overwrite any set column labels", {
+test_that("tab_spanner_delim() won't overwrite any set column labels", {
 
   tbl_1 <-
     iris[1:5,] %>%

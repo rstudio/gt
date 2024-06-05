@@ -1,4 +1,4 @@
-test_that("the `filter_table_to_value()` function works correctly", {
+test_that("filter_table_to_value() works correctly", {
 
   # Expect that filtering the `locales` table with
   # `filter_table_to_value()` will return a single value
@@ -16,7 +16,7 @@ test_that("the `filter_table_to_value()` function works correctly", {
   )
 })
 
-test_that("the `get_locale_sep_mark()` function works correctly", {
+test_that("get_locale_sep_mark() works correctly", {
 
   # Expect that a `locale` which is `NULL` will return the
   # default value
@@ -61,7 +61,7 @@ test_that("the `get_locale_sep_mark()` function works correctly", {
   )
 })
 
-test_that("the `get_locale_dec_mark()` function works correctly", {
+test_that("get_locale_dec_mark() works correctly", {
 
   # Expect that a `locale` which is `NULL` will return the
   # default value
@@ -97,7 +97,7 @@ test_that("the `get_locale_dec_mark()` function works correctly", {
   )
 })
 
-test_that("the `has_order_zero()` function works correctly", {
+test_that("has_order_zero() works correctly", {
 
   # Create numeric vectors, with and without
   # NA values
@@ -140,7 +140,7 @@ test_that("the `has_order_zero()` function works correctly", {
   )
 })
 
-test_that("the `split_string_2()` function works correctly", {
+test_that("split_string_2() works correctly", {
 
   test_str <- "-HK$4,299"
 
@@ -203,7 +203,7 @@ test_that("the `split_string_2()` function works correctly", {
   expect_error(split_string_2(x = "23432", before = 10))
 })
 
-test_that("the `paste_between()` function works correctly", {
+test_that("paste_between() works correctly", {
 
   # Expect a correctly formed string with `paste_between()`
   expect_equal(
@@ -227,7 +227,7 @@ test_that("the `paste_between()` function works correctly", {
   expect_error(paste_between(x_2 = "left", "between"))
 })
 
-test_that("the `paste_on_side()` function works correctly", {
+test_that("paste_on_side() works correctly", {
 
   # Expect a correctly formed string with `paste_on_side()`,
   # pasting to the left
@@ -247,7 +247,7 @@ test_that("the `paste_on_side()` function works correctly", {
   expect_error(paste_on_side(x = "center", x_side = "c", direction = "center"))
 })
 
-test_that("the `paste_left()` function works correctly", {
+test_that("paste_left() works correctly", {
 
   # Expect correctly formed strings with `paste_left()`
   expect_equal(
@@ -274,7 +274,7 @@ test_that("the `paste_left()` function works correctly", {
   expect_error(paste_left(x = c("c1", "c2", "c3"), x_left = c("l1", "l2")))
 })
 
-test_that("the `paste_right()` function works correctly", {
+test_that("paste_right() works correctly", {
 
   # Expect correctly formed strings with `paste_right()`
   expect_equal(

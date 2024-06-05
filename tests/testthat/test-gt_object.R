@@ -408,7 +408,7 @@ test_that("A gt table can be made with grouped data - two groups", {
     )
 })
 
-test_that("The `gt()` groupname_col arg will override any grouped data", {
+test_that("`groupname_col` in gt() will override any grouped data", {
 
   # Use `dplyr::group_by()` to add a group to an
   # incoming table; create the gt object and provide
@@ -519,7 +519,7 @@ test_that("The `gt()` groupname_col arg will override any grouped data", {
     )
 })
 
-test_that("The `gt()` `id` arg will only accept specific inputs", {
+test_that("gt() validates `id` correctly", {
 
   # Expect no errors with valid inputs to `id`
   expect_no_error(exibble %>% gt())
@@ -533,7 +533,7 @@ test_that("The `gt()` `id` arg will only accept specific inputs", {
   expect_error(exibble %>% gt(id = NA))
 })
 
-test_that("The `gt()` `rowname_col` arg will be overridden by `rownames_to_stub = TRUE`", {
+test_that("rowname_col in gt() will be overridden by `rownames_to_stub = TRUE`", {
 
   # Create a gt object where rownames will be used as
   # stub labels, and, provide a value for the `rowname_col`

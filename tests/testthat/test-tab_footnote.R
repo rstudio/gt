@@ -171,7 +171,7 @@ selection_text <- function(html, selection) {
   rvest::html_text(rvest::html_nodes(html, selection))
 }
 
-test_that("The `tab_footnote()` function works correctly", {
+test_that("tab_footnote() works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()

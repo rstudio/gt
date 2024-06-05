@@ -1128,7 +1128,7 @@ test_that("Certain errors can be expected (and some things don't error)", {
         target_columns = c(row, group),
       )
   )
-  # Expect an error if rows resolve to an empty selection. 
+  # Expect an error if rows resolve to an empty selection.
   expect_error(
     exibble %>%
       gt() %>%

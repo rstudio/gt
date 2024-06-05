@@ -1,4 +1,4 @@
-test_that("The `fmt_image()` function works correctly", {
+test_that("fmt_image() works correctly", {
 
   # Create an input data frame with numbers corresponding to image files
   data_tbl <-

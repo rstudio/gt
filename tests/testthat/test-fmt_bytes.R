@@ -1,4 +1,4 @@
-test_that("The `fmt_bytes()` function works correctly", {
+test_that("fmt_bytes() works correctly", {
 
   # Create an input data frame two columns: one
   # character-based and one that is numeric
@@ -340,7 +340,7 @@ test_that("The `fmt_bytes()` function works correctly", {
   )
 })
 
-test_that("The `fmt_bytes()` function format to specified significant figures", {
+test_that("fmt_bytes() format to specified significant figures", {
 
   # These numbers will be used in tests of formatting
   # correctly to n significant figures

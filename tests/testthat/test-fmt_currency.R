@@ -1,4 +1,4 @@
-test_that("The `fmt_currency()` function works correctly", {
+test_that("fmt_currency() works correctly", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
@@ -300,7 +300,7 @@ test_that("The `fmt_currency()` function works correctly", {
   )
 })
 
-test_that("The `fmt_currency()` function can scale/suffix larger numbers", {
+test_that("fmt_currency() can scale/suffix larger numbers", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
@@ -530,7 +530,7 @@ test_that("The `fmt_currency()` function can scale/suffix larger numbers", {
     "$999.99990")
 })
 
-test_that("The `currency()` helper function works correctly", {
+test_that("The currency() helper works correctly", {
 
   # Expect that the object produced by `currency()` is a
   # list with `gt_currency` class
@@ -682,7 +682,7 @@ test_that("The `currency()` helper function works correctly", {
   )
 })
 
-test_that("The `fmt_currency()` fn can render in the Indian numbering system", {
+test_that("fmt_currency() can render in the Indian numbering system", {
 
   # These numbers will be used in tests of formatting
   # values to the Indian numbering system

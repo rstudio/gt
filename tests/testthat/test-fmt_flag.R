@@ -1,4 +1,4 @@
-test_that("The `fmt_flag()` function works correctly", {
+test_that("fmt_flag() works correctly", {
 
   # Create an input data frame with a single column of 2-letter country code
   data_tbl <-

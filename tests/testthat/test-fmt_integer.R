@@ -1,4 +1,4 @@
-test_that("The `fmt_integer()` function works correctly in the HTML context", {
+test_that("fmt_integer() works correctly in the HTML context", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
@@ -220,7 +220,7 @@ test_that("The `fmt_integer()` function works correctly in the HTML context", {
   )
 })
 
-test_that("The `fmt_integer()` function can scale/suffix larger numbers", {
+test_that("fmt_integer() function can scale/suffix larger numbers", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric
@@ -343,7 +343,7 @@ test_that("Rownames and groupnames aren't included in `columns = TRUE`", {
   )
 })
 
-test_that("The `fmt_integer()` fn can render in the Indian numbering system", {
+test_that("fmt_integer() can render in the Indian numbering system", {
 
   # These numbers will be used in tests of formatting
   # values to the Indian numbering system

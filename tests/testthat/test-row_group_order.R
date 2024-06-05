@@ -27,7 +27,7 @@ selection_value <- function(html, key) {
   rvest::html_attr(rvest::html_nodes(html, selection), key)
 }
 
-test_that("The `row_group_order()` function works correctly", {
+test_that("row_group_order() works correctly", {
 
   # Create a `tbl_html` that arranges the groups by the
   # latter calendar date first

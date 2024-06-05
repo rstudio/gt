@@ -1,4 +1,4 @@
-# The `tab_style_body()` function works correctly
+# tab_style_body() works correctly
 
     Code
       .

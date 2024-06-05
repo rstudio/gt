@@ -14,7 +14,7 @@ check_suggests <- function() {
   skip_if_not_installed("xml2")
 }
 
-test_that("The `cols_align()` function works correctly", {
+test_that("cols_align() works correctly", {
 
   # Check that specific suggested packages are available
   check_suggests()

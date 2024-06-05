@@ -1,4 +1,4 @@
-test_that("The `col_width_resolver_rtf()` function works correctly", {
+test_that("col_width_resolver_rtf() works correctly", {
 
   tw <- function(x) {
     paste0(x, "tw")
@@ -145,7 +145,7 @@ test_that("The `col_width_resolver_rtf()` function works correctly", {
   )
 })
 
-test_that("The `parse_length_str()` function works correctly", {
+test_that("parse_length_str() works correctly", {
 
   lengths_vec_list <-
     list(
@@ -242,7 +242,7 @@ test_that("The `parse_length_str()` function works correctly", {
   )
 })
 
-test_that("The `abs_len_to_twips()` function works correctly", {
+test_that("abs_len_to_twips() works correctly", {
 
   lengths_vec_list <-
     list(

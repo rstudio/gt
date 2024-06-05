@@ -1,4 +1,4 @@
-test_that("The `tab_style_body()` function works correctly", {
+test_that("tab_style_body() works correctly", {
 
   # Generate a table that will be used in checks of body styling
   gt_tbl <-

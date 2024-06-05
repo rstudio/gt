@@ -28,7 +28,7 @@ time_tbl <-
 # Create a `tbl_latex_time` object with `gt()` and the `data_tbl` dataset
 tbl_latex_time <- gt(time_tbl)
 
-test_that("The `fmt_number()` function works with conditional `rows`", {
+test_that("fmt_number() works with conditional `rows`", {
 
   expect_equal(
     (tbl_latex %>%
@@ -54,7 +54,7 @@ test_that("The `fmt_number()` function works with conditional `rows`", {
   )
 })
 
-test_that("The `fmt_scientific()` function works with conditional `rows`", {
+test_that("fmt_scientific() works with conditional `rows`", {
 
   expect_equal(
     (tbl_latex %>%
@@ -81,7 +81,7 @@ test_that("The `fmt_scientific()` function works with conditional `rows`", {
   )
 })
 
-test_that("The `fmt_percent()` function works with conditional `rows`", {
+test_that("fmt_percent() works with conditional `rows`", {
 
   expect_equal(
     (tbl_latex %>%
@@ -107,7 +107,7 @@ test_that("The `fmt_percent()` function works with conditional `rows`", {
   )
 })
 
-test_that("The `fmt_currency()` function works with conditional `rows`", {
+test_that("fmt_currency() works with conditional `rows`", {
 
   expect_equal(
     (tbl_latex %>%
@@ -133,7 +133,7 @@ test_that("The `fmt_currency()` function works with conditional `rows`", {
   )
 })
 
-test_that("The `fmt_date()` function works with conditional `rows`", {
+test_that("fmt_date() works with conditional `rows`", {
 
   expect_equal(
     (tbl_latex_time %>%
@@ -156,7 +156,7 @@ test_that("The `fmt_date()` function works with conditional `rows`", {
   )
 })
 
-test_that("The `fmt_time()` function works with conditional `rows`", {
+test_that("fmt_time() works with conditional `rows`", {
 
   expect_equal(
     (tbl_latex_time %>%
@@ -179,7 +179,7 @@ test_that("The `fmt_time()` function works with conditional `rows`", {
   )
 })
 
-test_that("The `fmt_datetime()` function works with conditional `rows`", {
+test_that("fmt_datetime() works with conditional `rows`", {
 
   expect_equal(
     (tbl_latex_time %>%
@@ -210,7 +210,7 @@ test_that("The `fmt_datetime()` function works with conditional `rows`", {
   )
 })
 
-test_that("The `fmt_passthrough()` function works with conditional `rows`", {
+test_that("fmt_passthrough() works with conditional `rows`", {
 
   expect_equal(
     (tbl_latex_time %>%
@@ -231,7 +231,7 @@ test_that("The `fmt_passthrough()` function works with conditional `rows`", {
   )
 })
 
-test_that("The `sub_missing()` function works with conditional `rows`", {
+test_that("sub_missing() works with conditional `rows`", {
 
   expect_equal(
     (tbl_latex %>%
@@ -244,7 +244,7 @@ test_that("The `sub_missing()` function works with conditional `rows`", {
   )
 })
 
-test_that("The `fmt()` function works with conditional `rows`", {
+test_that("fmt() works with conditional `rows`", {
 
   expect_equal(
     (tbl_latex %>%

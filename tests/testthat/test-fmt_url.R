@@ -1,4 +1,4 @@
-test_that("The `fmt_url()` function works correctly", {
+test_that("fmt_url() works correctly", {
 
   # Create an input data frame with URLs
   data_tbl <-

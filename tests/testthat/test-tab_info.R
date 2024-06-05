@@ -60,7 +60,7 @@ exibble_minitest <- function(
   tbl
 }
 
-test_that("The `tab_info()` function generates a gt table from a gt table", {
+test_that("tab_info() generates a gt table from a gt table", {
 
   expect_s3_class(
     exibble_minitest() %>% tab_info(),

@@ -1,4 +1,4 @@
-test_that("The `fmt_spelled_num()` function works correctly", {
+test_that("fmt_spelled_num() works correctly", {
 
   # Create an input data frame two columns: one
   # character-based and one that is numeric

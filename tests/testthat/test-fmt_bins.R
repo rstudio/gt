@@ -1,4 +1,4 @@
-test_that("The `fmt_bins()` function works correctly", {
+test_that("fmt_bins() works correctly", {
 
   # Create an input data frame with a single column of
   # character-based intervals

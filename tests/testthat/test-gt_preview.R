@@ -1,4 +1,4 @@
-test_that("The `gt_preview()` function works correctly", {
+test_that("gt_preview() works correctly", {
 
   # Ensure that gt objects still work with `gt_preview()`
   expect_equal(

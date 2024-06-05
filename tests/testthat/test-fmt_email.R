@@ -1,4 +1,4 @@
-test_that("The `fmt_email()` function works correctly", {
+test_that("fmt_email() works correctly", {
 
   # Create an input data frame with email addresses
   data_tbl <-

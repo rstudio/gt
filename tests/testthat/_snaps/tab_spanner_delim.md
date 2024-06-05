@@ -1,4 +1,4 @@
-# `tab_spanner_delim()` works on higher-order spanning
+# tab_spanner_delim() works on higher-order spanning
 
     Code
       .

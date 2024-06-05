@@ -1,4 +1,4 @@
-test_that("The `pct()` helper function works correctly", {
+test_that("pct() works correctly", {
 
   # Create a CSS percentage value string
   percentage <- pct(x = 50)
@@ -11,7 +11,7 @@ test_that("The `pct()` helper function works correctly", {
     pct(x = "50"))
 })
 
-test_that("The `px()` helper function works correctly", {
+test_that("px() works correctly", {
 
   # Create a CSS pixel value string
   pixels <- px(x = 50)
@@ -24,7 +24,7 @@ test_that("The `px()` helper function works correctly", {
     px(x = "50"))
 })
 
-test_that("The `cells_group()` emits a warning but works correctly", {
+test_that("cells_group() emits a deprecation warning but works correctly", {
 
   # Expect a warning from the deprecated `cells_group()` function; it
   # still does return a useful list object
@@ -36,7 +36,7 @@ test_that("The `cells_group()` emits a warning but works correctly", {
   expect_type(out, "list")
 })
 
-test_that("The `from_column()` helper works correctly", {
+test_that(" from_column() works correctly", {
 
   # Create a gt table based on `exibble` (with a few extra columns)
   tab <-
