@@ -548,6 +548,60 @@
 #'
 "peeps"
 
+
+#' Feature films in competition at the Cannes Film Festival
+#'
+#' @description
+#'
+#' Each entry in the `films` is a feature film that appeared in the official
+#' selection during a festival year (starting in 1946 and active to the present
+#' day). The `year` column refers to the year of the festival and this figure
+#' doesn't always coincide with the release year of the film. The film's title
+#' reflects the most common title of the film in English, where the
+#' `original_title` column provides the title of the film in its spoken language
+#' (transliterated to Roman letters where necessary).
+#'
+#' @format A tibble with 100 rows and 14 variables:
+#' \describe{
+#' \item{year}{The year of the festival in which the film was in competition.}
+#' \item{title,original_title}{The `title` field provides the film title used
+#' for English-speaking audiences. The `original_title` field is populated when
+#' `title` differs greatly from the non-English original.}
+#' \item{director}{The director or set of co-directors for the film. Multiple
+#' directors are separated by a comma.}
+#' \item{languages}{The languages spoken in the film in the order of appearance.
+#' This consists of a ISO 639 language codes (primarily as two-letter codes,
+#' but using three-letter codes where necessary).}
+#' \item{countries_of_origin}{The country or countries of origin for the
+#' production. Here, 2-letter ISO 3166-1 country codes (set in uppercase) are
+#' used.}
+#' \item{run_time}{The run time of the film in hours and minutes. This is given
+#' as a string in the format '<x>h <y>m'.}
+#' \item{imdb_url}{The URL of the film's information page in the Internet Movie
+#' Database (IMDB).}
+#' }
+#'
+#' @section Examples:
+#'
+#' Here is a glimpse at the data available in `films`.
+#'
+#' ```{r}
+#' dplyr::glimpse(films)
+#' ```
+#'
+#' @family datasets
+#' @section Dataset ID and Badge:
+#' DATA-9
+#'
+#' \if{html}{\out{
+#' `r data_get_image_tag(file = "dataset_films.png")`
+#' }}
+#'
+#' @section Dataset Introduced:
+#' *In Development*
+#'
+"films"
+
 #' The stations of the Paris Metro
 #'
 #' @description
@@ -612,7 +666,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-9
+#' DATA-10
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_metro.png")`
@@ -658,7 +712,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-10
+#' DATA-11
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_gibraltar.png")`
@@ -707,7 +761,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-11
+#' DATA-12
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_constants.png")`
@@ -800,7 +854,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-12
+#' DATA-13
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_illness.png")`
@@ -904,7 +958,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-13
+#' DATA-14
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_reactions.png")`
@@ -963,7 +1017,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-14
+#' DATA-15
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_photolysis.png")`
@@ -1024,7 +1078,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-15
+#' DATA-16
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_nuclides.png")`
@@ -1094,7 +1148,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-16
+#' DATA-17
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_rx_adsl.png")`
@@ -1167,7 +1221,7 @@
 #'
 #' @family datasets
 #' @section Dataset ID and Badge:
-#' DATA-17
+#' DATA-18
 #'
 #' \if{html}{\out{
 #' `r data_get_image_tag(file = "dataset_rx_addv.png")`
