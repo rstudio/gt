@@ -74,7 +74,7 @@ dt_heading_has_subtitle <- function(data) {
 
   heading <- dt_heading_get(data = data)
 
-  length(heading) > 0 && is_nonempty_string(heading$subtitle)
+  length(heading) > 0 && is_nonempty_chr(heading$subtitle)
 }
 
 dt_heading_has_preheader <- function(data) {

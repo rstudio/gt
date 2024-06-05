@@ -77,7 +77,7 @@ adjust_gt_tbl_empty <- function(data) {
 #'
 #' @param x A character vector.
 #' @noRd
-is_nonempty_string <- function(x) {
+is_nonempty_chr <- function(x) {
   length(x) > 0 && any(grepl("\\S", x))
 }
 

@@ -57,17 +57,6 @@ test_that("Various `is_*()` utility functions work properly", {
   expect_false(is_gt_tbl_empty_w_cols(gt(empty_w_rows_tbl)))
   expect_false(is_gt_tbl_empty_w_cols(gt(empty_w_rows_df)))
 
-  # Expect that a vector is non-empty with `is_nonempty_string()`
-  expect_true(is_nonempty_string("asdf"))
-  expect_true(is_nonempty_string(c("1", "2")))
-  expect_false(is_nonempty_string(c("", "")))
-  expect_false(is_nonempty_string(c("")))
-  expect_false(is_nonempty_string(""))
-  expect_false(is_nonempty_string(c()))
-  expect_false(is_nonempty_string(NULL))
-  expect_true(is_nonempty_string(c(1, 2)))
-  expect_true(is_nonempty_string(1))
-
   # Expect that `stop_if_not_gt_tbl()` yields an error for non-`gt_tbl` objects
   expect_no_error(stop_if_not_gt_tbl(gt(exibble)))
   expect_no_error(stop_if_not_gt_tbl(gt_preview(gtcars)))
@@ -106,6 +95,17 @@ test_that("Various `is_*()` utility functions work properly", {
 })
 
 test_that("The `get_date_format()` function works properly", {
+test_that("is_nonempty_chr() works for detecting that a vector is non-empty", {
+  expect_true(is_nonempty_chr("asdf"))
+  expect_true(is_nonempty_chr(c("1", "2")))
+  expect_false(is_nonempty_chr(c("", "")))
+  expect_false(is_nonempty_chr(c("")))
+  expect_false(is_nonempty_chr(""))
+  expect_false(is_nonempty_chr(c()))
+  expect_false(is_nonempty_chr(NULL))
+  expect_true(is_nonempty_chr(c(1, 2)))
+  expect_true(is_nonempty_chr(1))
+})
 
   # Expect that integers (even in character form) work with `get_date_format()`
   # so long as the values are within range
