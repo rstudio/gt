@@ -561,7 +561,7 @@
 #' `original_title` column provides the title of the film in its spoken language
 #' (transliterated to Roman letters where necessary).
 #'
-#' @format A tibble with 100 rows and 14 variables:
+#' @format A tibble with 1,851 rows and 8 variables:
 #' \describe{
 #' \item{year}{The year of the festival in which the film was in competition.}
 #' \item{title,original_title}{The `title` field provides the film title used
