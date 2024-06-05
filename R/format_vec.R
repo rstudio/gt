@@ -66,8 +66,8 @@
 #'
 #'   An optional locale identifier that can be used for formatting values
 #'   according the locale's rules. Examples include `"en"` for English (United
-#'   States) and `"fr"` for French (France). We can use the [info_locales()]
-#'   function as a useful reference for all of the locales that are supported.
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -233,8 +233,8 @@ vec_fmt_number <- function(
 #'
 #'   An optional locale identifier that can be used for formatting values
 #'   according the locale's rules. Examples include `"en"` for English (United
-#'   States) and `"fr"` for French (France). We can use the [info_locales()]
-#'   function as a useful reference for all of the locales that are supported.
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -370,8 +370,8 @@ vec_fmt_integer <- function(
 #'
 #'   An optional locale identifier that can be used for formatting values
 #'   according the locale's rules. Examples include `"en"` for English (United
-#'   States) and `"fr"` for French (France). We can use the [info_locales()]
-#'   function as a useful reference for all of the locales that are supported.
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -527,8 +527,8 @@ vec_fmt_scientific <- function(
 #'
 #'   An optional locale identifier that can be used for formatting values
 #'   according the locale's rules. Examples include `"en"` for English (United
-#'   States) and `"fr"` for French (France). We can use the [info_locales()]
-#'   function as a useful reference for all of the locales that are supported.
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -682,8 +682,8 @@ vec_fmt_engineering <- function(
 #'
 #'   An optional locale identifier that can be used for formatting values
 #'   according the locale's rules. Examples include `"en"` for English (United
-#'   States) and `"fr"` for French (France). We can use the [info_locales()]
-#'   function as a useful reference for all of the locales that are supported.
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -865,8 +865,8 @@ vec_fmt_percent <- function(
 #'
 #'   An optional locale identifier that can be used for formatting values
 #'   according the locale's rules. Examples include `"en"` for English (United
-#'   States) and `"fr"` for French (France). We can use the [info_locales()]
-#'   function as a useful reference for all of the locales that are supported.
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -1035,8 +1035,8 @@ vec_fmt_partsper <- function(
 #'
 #'   An optional locale identifier that can be used for formatting values
 #'   according the locale's rules. Examples include `"en"` for English (United
-#'   States) and `"fr"` for French (France). We can use the [info_locales()]
-#'   function as a useful reference for all of the locales that are supported.
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -1166,8 +1166,8 @@ vec_fmt_fraction <- function(
 #' formatting specific to the chosen locale; it will also retrieve the locale's
 #' currency if none is explicitly given
 #'
-#' We can use the [info_currencies()] function for a useful reference on all of
-#' the possible inputs to the `currency` argument.
+#' We can call [info_currencies()] for a useful reference on all of the possible
+#' inputs to the `currency` argument.
 #'
 #' @inheritParams fmt_currency
 #'
@@ -1200,8 +1200,8 @@ vec_fmt_fraction <- function(
 #'
 #'   An optional locale identifier that can be used for formatting values
 #'   according the locale's rules. Examples include `"en"` for English (United
-#'   States) and `"fr"` for French (France). We can use the [info_locales()]
-#'   function as a useful reference for all of the locales that are supported.
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -1451,8 +1451,8 @@ vec_fmt_roman <- function(
 #'
 #'   An optional locale identifier that can be used for formatting values
 #'   according the locale's rules. Examples include `"en"` for English (United
-#'   States) and `"fr"` for French (France). We can use the [info_locales()]
-#'   function as a useful reference for all of the locales that are supported.
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for
+#'   a useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -1576,8 +1576,8 @@ vec_fmt_index <- function(
 #'
 #'   An optional locale identifier that can be used for formatting values
 #'   according the locale's rules. Examples include `"en"` for English (United
-#'   States) and `"fr"` for French (France). We can use the [info_locales()]
-#'   function as a useful reference for all of the locales that are supported.
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -1697,10 +1697,10 @@ vec_fmt_spelled_num <- function(
 #' @description
 #'
 #' With numeric values in a vector, we can transform each into byte values with
-#' human readable units. The `vec_fmt_bytes()` function allows for the
-#' formatting of byte sizes to either of two common representations: (1) with
-#' decimal units (powers of 1000, examples being `"kB"` and `"MB"`), and (2)
-#' with binary units (powers of 1024, examples being `"KiB"` and `"MiB"`).
+#' human readable units. `vec_fmt_bytes()` allows for the formatting of byte
+#' sizes to either of two common representations: (1) with decimal units
+#' (powers of 1000, examples being `"kB"` and `"MB"`), and (2) with binary units
+#' (powers of 1024, examples being `"KiB"` and `"MiB"`).
 #'
 #' It is assumed the input numeric values represent the number of bytes and
 #' automatic truncation of values will occur. The numeric values will be scaled
@@ -1727,8 +1727,8 @@ vec_fmt_spelled_num <- function(
 #'
 #'   An optional locale identifier that can be used for formatting values
 #'   according the locale's rules. Examples include `"en"` for English (United
-#'   States) and `"fr"` for French (France). We can use the [info_locales()]
-#'   function as a useful reference for all of the locales that are supported.
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -1871,8 +1871,8 @@ vec_fmt_bytes <- function(
 #'
 #'   An optional locale identifier that can be used for formatting values
 #'   according the locale's rules. Examples include `"en"` for English (United
-#'   States) and `"fr"` for French (France). We can use the [info_locales()]
-#'   function as a useful reference for all of the locales that are supported.
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -1932,8 +1932,8 @@ vec_fmt_bytes <- function(
 #' | 40 | `"d"`                 | `"29"`                  | flexible      |
 #' | 41 | `"Ed"`                | `"29 Tue"`              | flexible      |
 #'
-#' We can use the [info_date_style()] function within the console to view a
-#' similar table of date styles with example output.
+#' We can call [info_date_style()] within the console to view a similar table
+#' of date styles with example output.
 #'
 #' @section Examples:
 #'
@@ -2053,8 +2053,8 @@ vec_fmt_date <- function(
 #'
 #'   An optional locale identifier that can be used for formatting values
 #'   according the locale's rules. Examples include `"en"` for English (United
-#'   States) and `"fr"` for French (France). We can use the [info_locales()]
-#'   function as a useful reference for all of the locales that are supported.
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -2099,8 +2099,8 @@ vec_fmt_date <- function(
 #' | 24 | `"hmv"`       | `"2:35 PM GMT+00:00"`           | flexible, 12h |
 #' | 25 | `"ms"`        | `"35:00"`                       | flexible      |
 #'
-#' We can use the [info_time_style()] function within the console to view a
-#' similar table of time styles with example output.
+#' We can call [info_time_style()] in the console to view a similar table of
+#' time styles with example output.
 #'
 #' @section Examples:
 #'
@@ -2225,8 +2225,8 @@ vec_fmt_time <- function(
 #'
 #'   An optional locale identifier that can be used for formatting values
 #'   according the locale's rules. Examples include `"en"` for English (United
-#'   States) and `"fr"` for French (France). We can use the [info_locales()]
-#'   function as a useful reference for all of the locales that are supported.
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
@@ -2286,8 +2286,8 @@ vec_fmt_time <- function(
 #' | 40 | `"d"`                 | `"29"`                  | flexible      |
 #' | 41 | `"Ed"`                | `"29 Tue"`              | flexible      |
 #'
-#' We can use the [info_date_style()] function within the console to view a
-#' similar table of date styles with example output.
+#' We can call [info_date_style()] in the console to view a similar table of
+#' date styles with example output.
 #'
 #' @section Formatting with the `time_style` argument:
 #'
@@ -2301,7 +2301,7 @@ vec_fmt_time <- function(
 #' The following table provides a listing of all time styles and their output
 #' values (corresponding to an input time of `14:35:00`). It is noted which of
 #' these represent 12- or 24-hour time. Some of the flexible formats (those
-#' that begin with `"E"`) include the the day of the week. Keep this in mind
+#' that begin with `"E"`) include the day of the week. Keep this in mind
 #' when pairing such `time_style` values with a `date_style` so as to avoid
 #' redundant or repeating information.
 #'
@@ -2333,8 +2333,8 @@ vec_fmt_time <- function(
 #' | 24 | `"hmv"`       | `"2:35 PM GMT+00:00"`           | flexible, 12h |
 #' | 25 | `"ms"`        | `"35:00"`                       | flexible      |
 #'
-#' We can use the [info_time_style()] function within the console to view a
-#' similar table of time styles with example output.
+#' We can call [info_time_style()] within the console to view a similar table of
+#' time styles with example output.
 #'
 #' @section Formatting with a *CLDR* datetime pattern:
 #'
@@ -3069,8 +3069,8 @@ vec_fmt_datetime <- function(
 #'
 #'   An optional locale identifier that can be used for formatting values
 #'   according the locale's rules. Examples include `"en"` for English (United
-#'   States) and `"fr"` for French (France). We can use the [info_locales()]
-#'   function as a useful reference for all of the locales that are supported.
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported.
 #'
 #' @return A character vector.
 #'
