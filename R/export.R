@@ -923,8 +923,8 @@ as_rtf <- function(
 #' @section Examples:
 #'
 #' Use a subset of the [`gtcars`] dataset to create a **gt** table. Add a header
-#' with [tab_header()] and then export the table as OOXML code for Word using the
-#' `as_word()` function.
+#' with [tab_header()] and then export the table as OOXML code for Word using
+#' `as_word()`
 #'
 #' ```r
 #' tab_rtf <-
@@ -1501,10 +1501,10 @@ grid_layout_widths <- function(layout, data) {
 #' @description
 #'
 #' We can extract the body of a **gt** table, even at various stages of its
-#' rendering, from a `gt_tbl` object using the `extract_body()` function. By
-#' default, the data frame returned will have gone through all of the build
-#' stages but we can intercept the table body after a certain build stage.
-#' Here are the eight different build stages and some notes about each:
+#' rendering, from a `gt_tbl` object using `extract_body()`. By default, the
+#' data frame returned will have gone through all of the build stages but we
+#' can intercept the table body after a certain build stage. Here are the eight
+#' different build stages and some notes about each:
 #'
 #' 1. `"init"`: the body table is initialized here, entirely with `NA` values.
 #' It's important to note that all columns of the are of the `character` type in
@@ -1658,9 +1658,9 @@ extract_body <- function(
 #' @description
 #'
 #' Get a list of summary row data frames from a `gt_tbl` object where summary
-#' rows were added via the [summary_rows()] function. The output data frames
-#' contain the `group_id` and `rowname` columns, whereby `rowname` contains
-#' descriptive stub labels for the summary rows.
+#' rows were added via [summary_rows()]. The output data frames contain the
+#' `group_id` and `rowname` columns, whereby `rowname` contains descriptive stub
+#' labels for the summary rows.
 #'
 #' @inheritParams extract_cells
 #'

@@ -27,7 +27,7 @@
 #' @description
 #'
 #' We can add a table header to the **gt** table with a title and even a
-#' subtitle using the `tab_header()` function. A table header is an optional
+#' subtitle using `tab_header()`. A table header is an optional
 #' table part that is positioned just above the column labels table part. We
 #' have the flexibility to use Markdown or HTML formatting for the header's
 #' title and subtitle with the [md()] and [html()] helper functions.
@@ -46,8 +46,8 @@
 #'
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
-#'   Text to be used in the table subtitle. We can elect to use the [md()] and
-#'   [html()] helper functions to style the text as Markdown or to retain HTML
+#'   Text to be used in the table subtitle. We can elect to use [md()] or
+#'    [html()] helper functions to style the text as Markdown or to retain HTML
 #'   elements in the text.
 #'
 #' @param preheader *RTF preheader text*
@@ -63,9 +63,8 @@
 #'
 #' Let's use a small portion of the [`gtcars`] dataset to create a **gt** table.
 #' A header part can be added to the table with the `tab_header()` function.
-#' We'll add a title and the optional subtitle as well. With the [md()] helper
-#' function, we can make sure the Markdown formatting is interpreted and
-#' transformed.
+#' We'll add a title and the optional subtitle as well. With [md()], we can
+#' make sure the Markdown formatting is interpreted and transformed.
 #'
 #' ```r
 #' gtcars |>
@@ -132,9 +131,9 @@
 #'
 #' Sometimes, aligning the heading elements to the left can improve the
 #' presentation of a table. Here, we use the [`nuclides`] dataset to generate a
-#' display of natural abundance values for several stable isotopes. The
-#' [opt_align_table_header()] function is used with `align = "left"` to make it
-#' so the title and subtitle are left aligned in the header area.
+#' display of natural abundance values for several stable isotopes.
+#' [opt_align_table_header()] is used with `align = "left"` to make it so the
+#' title and subtitle are left aligned in the header area.
 #'
 #' ```r
 #' nuclides |>
@@ -216,18 +215,17 @@ tab_header <- function(
 #'
 #' @description
 #'
-#' With the `tab_spanner()` function, you can insert a spanner in the column
-#' labels part of a **gt** table. This part of the table contains, at a minimum,
-#' column labels and, optionally, an unlimited number of levels for spanners. A
-#' spanner will occupy space over any number of contiguous column labels and it
-#' will have an associated label and ID value. This function allows for mapping
-#' to be defined by column names, existing spanner ID values, or a mixture of
-#' both. The spanners are placed in the order of calling `tab_spanner()` so if a
-#' later call uses the same columns in its definition (or even a subset) as the
-#' first invocation, the second spanner will be overlaid atop the first. Options
-#' exist for forcibly inserting a spanner underneath other (with `level` as
-#' space permits) and with `replace`, which allows for full or partial spanner
-#' replacement.
+#' With `tab_spanner()`, you can insert a spanner in the column labels part of a
+#' **gt** table. This part of the table contains, at a minimum, column labels
+#' and, optionally, an unlimited number of levels for spanners. A spanner will
+#' occupy space over any number of contiguous column labels and it will have an
+#' associated label and ID value. This function allows for mapping to be defined
+#' by column names, existing spanner ID values, or a mixture of both. The
+#' spanners are placed in the order of calling `tab_spanner()` so if a later call
+#' uses the same columns in its definition (or even a subset) as the first
+#' invocation, the second spanner will be overlaid atop the first. Options exist
+#' for forcibly inserting a spanner underneath other (with `level` as space
+#' permits) and with `replace`, which allows for full or partial spanner replacement.
 #'
 #' @inheritParams fmt_number
 #'
@@ -235,8 +233,8 @@ tab_header <- function(
 #'
 #'   `scalar<character>` // **required**
 #'
-#'   The text to use for the spanner label. We can optionally use the [md()] and
-#'   [html()] functions to style the text as Markdown or to retain HTML elements
+#'   The text to use for the spanner label. We can optionally use [md()] or
+#'   [html()] to style the text as Markdown or to retain HTML elements
 #'   in the text.
 #'
 #' @param columns *Columns to target*
@@ -852,18 +850,17 @@ resolve_spanned_column_names <- function(
 #'
 #' @description
 #'
-#' The `tab_spanner_delim()` function can take specially-crafted column names
-#' and generate one or more spanners (and revise column labels at the same
-#' time). This is done by splitting the column name by the specified delimiter
-#' text (`delim`) and placing the fragments from top to bottom (i.e.,
-#' higher-level spanners to the column labels) or vice versa. Furthermore,
-#' neighboring text fragments on different spanner levels that have the same
-#' text will be coalesced together. For instance, having the three side-by-side
-#' column names `rating_1`, `rating_2`, and `rating_3` will (in the default case
-#' at least) result in a spanner with the label `"rating"` above columns with
-#' the labels `"1"`, `"2"`, and `"3"`. There are many options in
-#' `cols_spanner_delim()` to slice and dice delimited column names in different
-#' ways:
+#' `tab_spanner_delim()` can take specially-crafted column names and generate
+#' one or more spanners (and revise column labels at the same time). This is
+#' done by splitting the column name by the specified delimiter text (`delim`)
+#' and placing the fragments from top to bottom (i.e., higher-level spanners to
+#' the column labels) or vice versa. Furthermore, neighboring text fragments on
+#' different spanner levels that have the same text will be coalesced together.
+#' For instance, having the three side-by-side column names `rating_1`,
+#' `rating_2`, and `rating_3` will (in the default case at least) result in a
+#' spanner with the label `"rating"` above columns with the labels `"1"`, `"2"`,
+#' and `"3"`. There are many options in `cols_spanner_delim()` to slice and dice
+#' delimited column names in different ways:
 #'
 #' - delimiter text: choose the delimiter text to use for the fragmentation of
 #' column names into spanners with the `delim` argument
@@ -970,13 +967,13 @@ resolve_spanned_column_names <- function(
 #' @section Examples:
 #'
 #' With a subset of the [`towny`] dataset, we can create a **gt** table and then
-#' use the `tab_spanner_delim()` function to automatically generate column
-#' spanner labels. In this case we have some column names in the form
-#' `population_<year>`. The underscore character is the delimiter that separates
-#' a common word `"population"` and a year value. In this default way of
-#' splitting, fragments to the right are lowest (really they become new column
-#' labels) and moving left we get spanners. Let's have a look at how
-#' `tab_spanner_delim()` handles these column names:
+#' use `tab_spanner_delim()` to automatically generate column spanner labels.
+#' In this case we have some column names in the form `population_<year>`.
+#' The underscore character is the delimiter that separates a common word
+#' `"population"` and a year value. In this default way of splitting, fragments
+#' to the right are lowest (really they become new column labels) and moving
+#' left we get spanners. Let's have a look at how `tab_spanner_delim()` handles
+#' these column names:
 #'
 #' ```r
 #' towny_subset_gt <-
@@ -1441,11 +1438,11 @@ str_split_across <- function(
 #'
 #' @description
 #'
-#' We can create a row group from a collection of rows with the
-#' `tab_row_group()` function. This requires specification of the rows to be
-#' included, either by supplying row labels, row indices, or through use of a
-#' select helper function like [starts_with()]. To modify the order of row
-#' groups, we can use the [row_group_order()] function.
+#' We can create a row group from a collection of rows with `tab_row_group()`.
+#' This requires specification of the rows to be included, either by supplying
+#' row labels, row indices, or through use of a select helper function like
+#' [starts_with()]. To modify the order of row groups, we can use
+#' [row_group_order()].
 #'
 #' To set a default row group label for any rows not formally placed in a row
 #' group, we can use a separate call to `tab_options(row_group.default_label =
@@ -1459,9 +1456,8 @@ str_split_across <- function(
 #'
 #'   `scalar<character>` // **required**
 #'
-#'   The text to use for the row group label. We can optionally use the [md()]
-#'   and [html()] functions to style the text as Markdown or to retain HTML
-#'   elements in the text.
+#'   The text to use for the row group label. We can optionally use [md()] or
+#'   [html()] to style the text as Markdown or to retain HTML elements in the text.
 #'
 #' @param rows *Rows to target*
 #'
@@ -1507,9 +1503,9 @@ str_split_across <- function(
 #'
 #' Using a subset of the [`gtcars`] dataset, let's create a simple **gt** table
 #' with row labels (from the `model` column) inside of a stub. This eight-row
-#' table begins with no row groups at all but with a single use of the
-#' `tab_row_group()` function, we can specify a row group that will contain any
-#' rows where the car model begins with a number.
+#' table begins with no row groups at all but with a single use of
+#' `tab_row_group()`, we can specify a row group that will contain any rows
+#' where the car model begins with a number.
 #'
 #' ```r
 #' gtcars |>
@@ -1531,8 +1527,7 @@ str_split_across <- function(
 #' doesn't display a label at all. Rather, it is set off from the other group
 #' with a double line. This may be a preferable way to display the arrangement
 #' of one distinct group and an 'others' or default group. If that's the case
-#' but you'd like the order reversed, the [row_group_order()] function can be
-#' used for that.
+#' but you'd like the order reversed, you can use [row_group_order()].
 #'
 #' ```r
 #' gtcars |>
@@ -1717,7 +1712,7 @@ tab_row_group <- function(
   # Get the `stub_df` data frame from `data`
   stub_df <- dt_stub_df_get(data = data)
 
-  # Resolve the row numbers using the `resolve_vars` function
+  # Resolve the row numbers using `resolve_vars()`
   resolved_rows_idx <-
     resolve_rows_i(
       expr = !!row_expr,
@@ -1756,14 +1751,13 @@ tab_row_group <- function(
 #'
 #' @description
 #'
-#' We can add a label to the stubhead of a **gt** table with the
-#' `tab_stubhead()` function. The stubhead is the lone part of the table that is
-#' positioned left of the column labels, and above the stub. If a stub does not
-#' exist, then there is no stubhead (so no visible change will be made when
-#' using this function in that case). We have the flexibility to use Markdown
-#' formatting for the stubhead label via the [md()] helper function.
-#' Furthermore, if the table is intended for HTML output, we can use HTML inside
-#' of [html()] for the stubhead label.
+#' We can add a label to the stubhead of a **gt** table with `tab_stubhead()`.
+#' The stubhead is the lone part of the table that is positioned left of the
+#' column labels, and above the stub. If a stub does not exist, then there is no
+#' stubhead (so no visible change will be made when using this function in that
+#' case). We have the flexibility to use Markdown formatting for the stubhead
+#' label via the [md()] helper function. Furthermore, if the table is intended
+#' for HTML output, we can use HTML inside of [html()] for the stubhead label.
 #'
 #' @inheritParams fmt_number
 #'
@@ -1771,9 +1765,8 @@ tab_row_group <- function(
 #'
 #'   `scalar<character>` // **required**
 #'
-#'   The text to be used as the stubhead label. We can optionally use the [md()]
-#'   and [html()] functions to style the text as Markdown or to retain HTML
-#'   elements in the text.
+#'   The text to be used as the stubhead label. We can optionally use [md()] or
+#'   [html()] to style the text as Markdown or to retain HTML elements in the text.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -1782,7 +1775,7 @@ tab_row_group <- function(
 #' Using a small subset of the [`gtcars`] dataset, we can create a **gt** table
 #' with row labels. Since we have row labels in the stub (via use of
 #' `rowname_col = "model"` in the [gt()] function call) we have a stubhead, so,
-#' let's add a stubhead label (`"car"`) with the `tab_stubhead()` function to
+#' let's add a stubhead label (`"car"`) with `tab_stubhead()` to
 #' describe what's in the stub.
 #'
 #' ```r
@@ -1843,10 +1836,10 @@ tab_row_group <- function(
 #' `r man_get_image_tag(file = "man_tab_stubhead_3.png")`
 #' }}
 #'
-#' The stubhead cell and its text can be styled using [tab_style()] along with
-#' the [cells_stubhead()] function. In this example, using the [`reactions`]
-#' dataset, we style the stubhead label so that it is vertically centered with
-#' text that is highly emboldened.
+#' The stubhead cell and its text can be styled using [tab_style()] with
+#' [cells_stubhead()]. In this example, using the [`reactions`] dataset, we
+#' style the stubhead label so that it is vertically centered with text that is
+#' highly emboldened.
 #'
 #' ```r
 #' reactions |>
@@ -1897,7 +1890,7 @@ tab_stubhead <- function(
 #' @description
 #'
 #' Indentation of row labels is an effective way for establishing structure in a
-#' table stub. The `tab_stub_indent()` function allows for fine control over
+#' table stub. `tab_stub_indent()` allows for fine control over
 #' row label indentation in the stub. We can use an explicit definition of an
 #' indentation level (with a number between `0` and `5`), or, employ an
 #' indentation directive using keywords (`"increase"`/`"decrease"`).
@@ -1930,16 +1923,15 @@ tab_stubhead <- function(
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
-#' The [from_column()] helper function can be used with the `indent` argument
-#' of `tab_stub_indent()` to obtain varying parameter values from a specified
-#' column within the table. This means that each row label could be indented a
-#' little bit differently.
+#' [from_column()] can be used with the `indent` argument of `tab_stub_indent()`
+#' to obtain varying parameter values from a specified column within the table.
+#' This means that each row label could be indented a little bit differently.
 #'
 #' Please note that for this argument (`indent`), a [from_column()] call needs
 #' to reference a column that has data of the `numeric` or `integer` type.
-#' Additional columns for parameter values can be generated with the
-#' [cols_add()] function (if not already present). Columns that contain
-#' parameter data can also be hidden from final display with [cols_hide()].
+#' Additional columns for parameter values can be generated with [cols_add()]
+#' (if not already present). Columns that contain parameter data can also be
+#'  hidden from final display with [cols_hide()].
 #'
 #' @section Examples:
 #'
@@ -1968,10 +1960,9 @@ tab_stubhead <- function(
 #' }}
 #'
 #' Let's use a summarized version of the [`pizzaplace`] dataset to create a
-#' another **gt** table with row groups and row labels. With the
-#' [summary_rows()] function, we'll generate summary rows at the top of each row
-#' group. Using `tab_stub_indent()` we can add indentation to the row labels in
-#' the stub.
+#' another **gt** table with row groups and row labels. With [summary_rows()],
+#' we'll generate summary rows at the top of each row group. Using
+#' `tab_stub_indent()` we can add indentation to the row labels in the stub.
 #'
 #' ```r
 #' pizzaplace |>
@@ -2013,9 +2004,9 @@ tab_stubhead <- function(
 #' variations of a row label are mutated to eliminate the common leading text
 #' (replacing it with `"..."`). At the same time, the indentation for those rows
 #' is set to `4` in the `indent` column (value is `0` otherwise). The
-#' `tab_stub_indent()` statement uses the [from_column()] helper function, which
-#' passes values from the `indent` column to the namesake argument. We hide the
-#' `indent` column from view by use of the [cols_hide()] function.
+#' `tab_stub_indent()` statement uses [from_column()], which passes values from
+#' the `indent` column to the namesake argument. We hide the `indent` column
+#' from view by use of [cols_hide()].
 #'
 #' ```r
 #' constants |>
@@ -2085,7 +2076,7 @@ tab_stub_indent <- function(
   # Get the `stub_df` data frame from `data`
   stub_df <- dt_stub_df_get(data = data)
 
-  # Resolve the row numbers using the `resolve_vars` function
+  # Resolve the row numbers using `resolve_vars()`
   resolved_rows_idx <-
     resolve_rows_i(
       expr = !!row_expr,
@@ -2236,9 +2227,8 @@ tab_stub_indent <- function(
 #'
 #'   `scalar<character>` // **required**
 #'
-#'   The text to be used in the footnote. We can optionally use the [md()] and
-#'   [html()] functions to style the text as Markdown or to retain HTML elements
-#'   in the footnote text.
+#'   The text to be used in the footnote. We can optionally use [md()] or [html()]
+#'   to style the text as Markdown or to retain HTML elements in the footnote text.
 #'
 #' @param locations *Locations to target*
 #'
@@ -2271,8 +2261,8 @@ tab_stub_indent <- function(
 #'
 #' There are several options for controlling the formatting of the footnotes,
 #' their marks, and related typesetting in the footer. All of these options are
-#' available within the [tab_options()] function and a subset of these are
-#' exposed in their own `opt_*()` functions.
+#' available within [tab_options()] and a subset of these are exposed in their
+#' own `opt_*()` functions.
 #'
 #' ## Choosing the footnote marks
 #'
@@ -2341,9 +2331,9 @@ tab_stub_indent <- function(
 #'
 #' Using a subset of the [`sza`] dataset, let's create a new **gt** table. The
 #' body cells in the `sza` column will receive background color fills according
-#' to their data values (with the [data_color()] function). After that, the use
-#' of `tab_footnote()` lets us add a footnote to the `sza` column label
-#' (explaining what the color gradient signifies).
+#' to their data values (with [data_color()]). After that, the use of
+#' `tab_footnote()` lets us add a footnote to the `sza` column label (explaining
+#' what the color gradient signifies).
 #'
 #' ```r
 #' sza |>
@@ -2913,8 +2903,8 @@ set_footnote.cells_footnotes <- function(
 #'
 #'   `scalar<character>` // **required**
 #'
-#'   Text to be used in the source note. We can optionally use the [md()] and
-#'   [html()] functions to style the text as Markdown or to retain HTML elements
+#'   Text to be used in the source note. We can optionally use [md()] and
+#'   [html()] to style the text as Markdown or to retain HTML elements
 #'   in the text.
 #'
 #' @return An object of class `gt_tbl`.
@@ -2922,7 +2912,7 @@ set_footnote.cells_footnotes <- function(
 #' @section Examples:
 #'
 #' With three columns from the [`gtcars`] dataset, let's create a **gt** table.
-#' We can use the `tab_source_note()` function to add a source note to the table
+#' We can use `tab_source_note()` to add a source note to the table
 #' footer. Here we are citing the data source but this function can be used for
 #' any text you'd prefer to display in the footer section.
 #'
@@ -2984,8 +2974,8 @@ tab_source_note <- function(
 #' @section Examples:
 #'
 #' With three columns from the [`gtcars`] dataset, let's create a **gt** table.
-#' First, we'll add a header part with the [tab_header()] function. After that,
-#' a caption is added through use of `tab_caption()`.
+#' First, we'll add a header part with [tab_header()]. After that, a caption is
+#' added with `tab_caption()`.
 #'
 #' ```r
 #' gtcars |>
@@ -3030,7 +3020,7 @@ tab_caption <- function(
 #'
 #' @description
 #'
-#' With the `tab_style()` function we can [target specific cells][location-helper]
+#' With `tab_style()` we can [target specific cells][location-helper]
 #' and apply styles to them. This is best done in conjunction with the helper
 #' functions [cell_text()], [cell_fill()], and [cell_borders()]. Currently, this
 #' function is focused on the application of styles for HTML output only
@@ -3081,13 +3071,12 @@ tab_caption <- function(
 #'
 #' @section Using `from_column()` with `cell_*()` styling functions:
 #'
-#' The [from_column()] helper function can be used with certain arguments of
-#' [cell_fill()] and [cell_text()]; this allows you to get parameter values from
-#' a specified column within the table. This means that body cells targeted for
-#' styling could be formatted a little bit differently, using options taken from
-#' a column. For [cell_fill()], we can use [from_column()] for its `color`
-#' argument. The [cell_text()] function allows the use of [from_column()] in the
-#' following arguments:
+#' [from_column()] can be used with certain arguments of [cell_fill()] and
+#' [cell_text()]; this allows you to get parameter values from a specified
+#' column within the table. This means that body cells targeted for styling
+#' could be formatted a little bit differently, using options taken from a
+#' column. For [cell_fill()], we can use [from_column()] for its `color`
+#' argument. [cell_text()] allows the use of [from_column()] in the following arguments:
 #'
 #' - `color`
 #' - `size`
@@ -3104,11 +3093,10 @@ tab_caption <- function(
 #' Please note that for all of the aforementioned arguments, a [from_column()]
 #' call needs to reference a column that has data of the correct type (this is
 #' different for each argument). Additional columns for parameter values can be
-#' generated with the [cols_add()] function (if not already present). Columns
-#' that contain parameter data can also be hidden from final display with
-#' [cols_hide()].
+#' generated with [cols_add()] (if not already present). Columns that contain
+#' parameter data can also be hidden from final display with [cols_hide()].
 #'
-#' Importantly, a call of `tab_style()` with any use of [from_column()] within
+#' Importantly, a `tab_style()` call with any use of [from_column()] within
 #' styling expressions must only use [cells_body()] within `locations`. This is
 #' because we cannot map multiple options taken from a column onto other
 #' locations.
@@ -3116,13 +3104,13 @@ tab_caption <- function(
 #' @section Examples:
 #'
 #' Let's use the [`exibble`] dataset to create a simple, two-column **gt** table
-#' (keeping only the `num` and `currency` columns). With the [tab_style()]
-#' function (called twice), we'll selectively add style to the values formatted
-#' by [fmt_number()]. In the `style` argument of each `tab_style()` call, we
-#' can define multiple types of styling with the [cell_fill()] and [cell_text()]
-#' helper functions (enclosed in a list). The cells to be targeted for styling
-#' require the use of helper functions like [cells_body()], which is used here
-#' with different columns and rows being targeted.
+#' (keeping only the `num` and `currency` columns). With [tab_style()]
+#' (called twice), we'll selectively add style to the values formatted by
+#' [fmt_number()]. In the `style` argument of each `tab_style()` call, we can
+#' define multiple types of styling with [cell_fill()] and [cell_text()]
+#' (enclosed in a list). The cells to be targeted for styling require the use of
+#' helpers like [cells_body()], which is used here with different columns and
+#' rows being targeted.
 #'
 #' ```r
 #' exibble |>
@@ -3186,8 +3174,8 @@ tab_caption <- function(
 #' }}
 #'
 #' With another two-column table based on the [`exibble`] dataset, let's create
-#' a **gt** table. First, we'll replace missing values with the [sub_missing()]
-#' function. Next, we'll add styling to the `char` column. This styling will be
+#' a **gt** table. First, we'll replace missing values with [sub_missing()].
+#'  Next, we'll add styling to the `char` column. This styling will be
 #' HTML-specific and it will involve (all within a list): (1) a [cell_fill()]
 #' call (to set a `"lightcyan"` background), and (2) a string containing a CSS
 #' style declaration (`"font-variant: small-caps;"`).
@@ -3306,13 +3294,13 @@ tab_caption <- function(
 #' `r man_get_image_tag(file = "man_tab_style_4.png")`
 #' }}
 #'
-#' The [from_column()] helper function can be used to get values from a column.
-#' We'll use it in the next example, which begins with a table having a color
-#' name column and a column with the associated hexadecimal color code. To show
-#' the color in a separate column, we first create one with [cols_add()] (
-#' ensuring that missing values are replaced with `""` via [sub_missing()]).
-#' Then, `tab_style()` is used to style that column, calling [from_column()] in
-#' the `color` argument of the [cell_fill()] function.
+#' [from_column()] can be used to get values from a column. We'll use it in the
+#' next example, which begins with a table having a color name column and a
+#' column with the associated hexadecimal color code. To show the color in a
+#' separate column, we first create one with [cols_add()] (ensuring that missing
+#' values are replaced with `""` via [sub_missing()]). Then, `tab_style()` is
+#' used to style that column, using [color = from_column()][from_column()]
+#' within [cell_fill()].
 #'
 #' ```r
 #' dplyr::tibble(
@@ -3345,16 +3333,16 @@ tab_caption <- function(
 #' `r man_get_image_tag(file = "man_tab_style_5.png")`
 #' }}
 #'
-#' The [cell_text()] function also allows the use of [from_column()] for many of
-#' its arguments. Let's take a small portion of data from [`sp500`] and add an
-#' up or down arrow based on the values in the `open` and `close` columns.
-#' Within [cols_add()] we can create a new column (`dir`) with an expression to
-#' get either `"red"` or `"green"` text from a comparison of the `open` and
-#' `close` values. These values are transformed to up or down arrows with the
-#' [text_case_match()] function, using **fontawesome** icons in the end.
-#' However, the text values are still present and can be used by [cell_text()]
-#' within `tab_style()`. The [from_column()] helper function makes it possible
-#' to use the text in the cells of the `dir` column as `color` input values.
+#' [cell_text()] also allows the use of [from_column()] for many ofits arguments.
+#' Let's take a small portion of data from [`sp500`] and add an up or down arrow
+#' based on the values in the `open` and `close` columns. Within [cols_add()] we
+#' can create a new column (`dir`) with an expression to get either `"red"` or
+#' `"green"` text from a comparison of the `open` and `close` values. These
+#' values are transformed to up or down arrows with [text_case_match()], using
+#' **fontawesome** icons in the end. However, the text values are still present
+#' and can be used by [cell_text()] within `tab_style()`. [from_column()] makes
+#' it possible to use the text in the cells of the `dir` column as `color` input
+#'  values.
 #'
 #' ```r
 #' sp500 |>
@@ -4211,7 +4199,7 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' @param footnotes.marks *Sequence of footnote marks*
 #'
 #'   The set of sequential marks used to reference and identify each of the
-#'   footnotes (same input as the [opt_footnote_marks()] function). We can
+#'   footnotes (same input as [opt_footnote_marks()]). We can
 #'   supply a vector that represents the series of footnote marks. This vector
 #'   is recycled when its usage goes beyond the length of the set. At each
 #'   cycle, the marks are simply combined (e.g., `*` -> `**` -> `***`). The
@@ -4226,7 +4214,7 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'
 #'   Optional specifications for formatting of footnote references
 #'   (`footnotes.spec_ref`) and their associated marks the footer section
-#'   (`footnotes.spec_ftr`) (same input as the [opt_footnote_spec()] function).
+#'   (`footnotes.spec_ftr`) (same input as [opt_footnote_spec()]).
 #'   This is a string containing specification control characters. The default
 #'   is the spec string `"^i"`, which is superscript text set in italics. Other
 #'   control characters that can be used are: (1) `"b"` for bold text, and (2)

@@ -205,10 +205,10 @@
 #' }}
 #'
 #' All missing values were substituted with an empty string (`""`), and that was
-#' done by using the [sub_missing()] function. We removed the top border of the
+#' done by using [sub_missing()]. We removed the top border of the
 #' new rows with a call to [tab_style()], targeting those rows where the row
 #' labels end with `"end"`. Finally, we get rid of the row labels with the use
-#' of the [text_case_when()] function, using a similar strategy of targeting the
+#' of [text_case_when()], using a similar strategy of targeting the
 #' name of the row label.
 #'
 #' Another application is starting from nothing (really just the definition of

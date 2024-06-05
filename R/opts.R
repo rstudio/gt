@@ -64,8 +64,8 @@
 #' @section Examples:
 #'
 #' Use `exibble` to create a **gt** table with a number of table parts added.
-#' Then, use the `opt_stylize()` function to give the table some additional
-#' style (using the `"cyan"` color variation and style number `6`).
+#' Then, use `opt_stylize()` to give the table some additional style
+#' (using the `"cyan"` color variation and style number `6`).
 #'
 #' ```r
 #' exibble |>
@@ -871,7 +871,7 @@ opt_align_table_header <- function(
 #' parts added (using functions like [summary_rows()], [grand_summary_rows()],
 #' and more). Following that, we'll lessen the amount of vertical padding across
 #' the entire table with `opt_vertical_padding()`. Using a `scale` value of
-#' `0.25` (down from the default of `1`) means the the vertical space will be
+#' `0.25` (down from the default of `1`) means the vertical space will be
 #' greatly reduced, resulting in a more compact table.
 #'
 #'
@@ -963,7 +963,7 @@ opt_vertical_padding <- function(
 #' parts added (using functions like [summary_rows()], [grand_summary_rows()],
 #' and more). Following that, we'll increase the amount of horizontal padding
 #' across the entire table with `opt_horizontal_padding()`. Using a `scale`
-#' value of `3` (up from the default of `1`) means the the horizontal space will
+#' value of `3` (up from the default of `1`) means the horizontal space will
 #' be greatly increased, resulting in a more spacious table.
 #'
 #' ```r
@@ -1473,9 +1473,9 @@ opt_table_outline <- function(
 #'
 #' We have the option to supply one or more font names for the `font` argument.
 #' They can be enclosed in `c()` or a `list()`. You can generate this list or
-#' vector with a combination of font names, and you can freely use the
-#' [google_font()], [default_fonts()], and [system_fonts()] functions to help
-#' compose your font family.
+#' vector with a combination of font names, and you can freely use
+#'  [google_font()], [default_fonts()], and [system_fonts()] to help compose
+#'  your font family.
 #'
 #' @section Possibilities for the `stack` argument:
 #'
@@ -1483,7 +1483,7 @@ opt_table_outline <- function(
 #' helper function. That function can be used to generate all or a segment of a
 #' vector supplied to the `font` argument. However, using the `stack` argument
 #' with one of the 15 keywords for the font stacks available in
-#' [system_fonts()], we could be sure that the typeface class will work across
+#' `system_fonts()`, we could be sure that the typeface class will work across
 #' multiple computer systems. Any of the following keywords can be used:
 #'
 #' - `"system-ui"`
@@ -1505,10 +1505,10 @@ opt_table_outline <- function(
 #' @section Examples:
 #'
 #' Use a subset of the [`sp500`] dataset to create a small **gt** table. We'll
-#' use the [fmt_currency()] function to display a dollar sign for the first row
-#' of monetary values. Then, set a larger font size for the table and use the
-#' `"Merriweather"` font (from *Google Fonts*, via [google_font()]) with two
-#' system font fallbacks (`"Cochin"` and the generic `"serif"`).
+#' use [fmt_currency()] to display a dollar sign for the first row of monetary
+#' values. Then, set a larger font size for the table and use the `"Merriweather"`
+#' font (from *Google Fonts*, via [google_font()]) with two system font
+#' fallbacks (`"Cochin"` and the generic `"serif"`).
 #'
 #' ```r
 #' sp500 |>
@@ -1687,7 +1687,7 @@ opt_table_font <- function(
 #' Let's use the [`exibble`] dataset to create a simple, two-column **gt** table
 #' (keeping only the `num` and `currency` columns). Through use of the
 #' `opt_css()` function, we can insert CSS rulesets as as string. We need to
-#' ensure that the the table ID is set explicitly (we've done so here with the
+#' ensure that the table ID is set explicitly (we've done so here with the
 #' ID value of `"one"`, setting it in the [gt()] function).
 #'
 #' ```r

@@ -9,7 +9,7 @@
 #' the value given to the `groups` argument (`"title"` or `"subtitle"`).
 #' - [cells_stubhead()]: targets the stubhead location, a cell of which is only
 #' available when there is a stub; a label in that location can be created by
-#' using the [tab_stubhead()] function.
+#' using [tab_stubhead()].
 #' - [cells_column_spanners()]*: targets the spanner column labels with the
 #' `spanners` argument; spanner column labels appear above the column labels.
 #' - [cells_column_labels()]*: targets the column labels with its `columns`

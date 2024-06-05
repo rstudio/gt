@@ -110,7 +110,7 @@ test_that("The `fmt_percent()` function works with conditional `rows`", {
   )
 })
 
-test_that("The `fmt_currency()` function works with conditional `rows`", {
+test_that("fmt_currency() works with conditional `rows`", {
 
   expect_equal(
     (tab %>%
@@ -209,7 +209,7 @@ test_that("The `fmt_datetime()` function works with conditional `rows`", {
   )
 })
 
-test_that("The `fmt_passthrough()` function works with conditional `rows`", {
+test_that("fmt_passthrough() works with conditional `rows`", {
 
   expect_equal(
     (tab_time %>%

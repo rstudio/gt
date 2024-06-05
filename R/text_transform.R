@@ -58,18 +58,17 @@
 #'
 #' @section Examples:
 #'
-#' Use the [`metro`] dataset to create a **gt** table. With the [cols_merge()]
-#' function, we'll merge the `name` and `caption` columns together but only if
-#' `caption` doesn't have an `NA` value (the special `pattern` syntax of `"{1}<<
-#' ({2})>>"` takes care of this). This merged content is now part of the `name`
-#' column. We'd like to modify this further wherever there is text in
-#' parentheses: (1) make that text italicized, and (2) introduce a line break
-#' before the text in parentheses. We can do this with the `text_replace()`
-#' function. The `pattern` value of `"\\((.*?)\\)"` will match on text between
-#' parentheses, and the inner `"(.*?)"` is a capture group. The `replacement`
-#' value of `"<br>(<em>\\1</em>)"` puts the capture group text `"\\1"` within
-#' `<em>` tags, wraps literal parentheses around it, and prepends a line break
-#' tag.
+#' Use the [`metro`] dataset to create a **gt** table. With [cols_merge()],
+#' we'll merge the `name` and `caption` columns together but only if `caption`
+#' doesn't have an `NA` value (the special `pattern` syntax of `"{1}<<({2})>>"`
+#' takes care of this). This merged content is now part of the `name` column.
+#' We'd like to modify this further wherever there is text in parentheses:
+#' (1) make that text italicized, and (2) introduce a line break before the text
+#' in parentheses. We can do this with `text_replace()`. The `pattern` value of
+#' `"\\((.*?)\\)"` will match on text between parentheses, and the inner
+#' `"(.*?)"` is a capture group. The `replacement` value of `"<br>(<em>\\1</em>)"`
+#' puts the capture group text `"\\1"` within `<em>` tags, wraps literal
+#' parentheses around it, and prepends a line break tag.
 #'
 #' ```r
 #' metro |>
@@ -308,9 +307,9 @@ text_case_when <- function(
 #' transform the `NA` value to `"elderberry"` using the `text_case_match()`
 #' function. Over in the `fctr` column, some more sophisticated matches will be
 #' performed using `text_case_match()`. That column has spelled out numbers and
-#' we can produce these on the LHS with help from the [vec_fmt_spelled_num()]
-#' function. The replacements will contain descriptive text. In this last call
-#' of `text_case_match()`, we use a `.default` to replace text for any of those
+#' we can produce these on the LHS with help from [vec_fmt_spelled_num()].
+#' The replacements will contain descriptive text. In this last call of
+#' `text_case_match()`, we use a `.default` to replace text for any of those
 #' non-matched cases.
 #'
 #' ```r
@@ -458,7 +457,7 @@ text_case_match <- function(
 #' @description
 #'
 #' Text transforming in **gt** is the act of modifying formatted strings in
-#' targeted cells. The `text_transform()` function provides the most flexibility
+#' targeted cells. `text_transform()` provides the most flexibility
 #' of all the `text_*()` functions in their family of functions. With it, you
 #' target the cells to undergo modification in the `locations` argument while
 #' also supplying a function to the `fn` argument. The function given to `fn`
@@ -481,8 +480,8 @@ text_case_match <- function(
 #'   [`<locations expressions>`][location-helper] // *default:* `cells_body()`
 #'
 #'   The cell or set of cells to be associated with the text transformation.
-#'   Only the [cells_column_spanners()], [cells_column_labels()],
-#'    [cells_row_groups()], [cells_stub()], and [cells_body()] helper functions can
+#'   Only [cells_column_spanners()], [cells_column_labels()],
+#'    [cells_row_groups()], [cells_stub()], and [cells_body()] can
 #'   be used here. We can enclose several of these calls within a `list()` if we
 #'   wish to make the transformation happen at different locations.
 #'
@@ -494,7 +493,7 @@ text_case_match <- function(
 #' text in the `date` column using a function supplied to `text_transform()`
 #' (via the `fn` argument). Note that the `x` in the `fn = function (x)` part
 #' consists entirely of ISO 8601 date strings (which are acceptable as input to
-#' the [vec_fmt_date()] and [vec_fmt_datetime()] functions).
+#' [vec_fmt_date()] and [vec_fmt_datetime()]).
 #'
 #' ```r
 #' sp500 |>

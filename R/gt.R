@@ -43,7 +43,7 @@
 #' within the different row groups).
 #'
 #' Row groups can also be created by passing a `grouped_df` to `gt()` by using
-#' the [dplyr::group_by()] function on the table data. In this way, two or more
+#' [dplyr::group_by()] on the table data. In this way, two or more
 #' columns of categorical data can be used to make row groups. The
 #' `row_group.sep` argument allows for control in how the row group labels will
 #' appear in the display table.
@@ -68,8 +68,8 @@
 #'
 #'   The column name in the input `data` table to use as group labels for
 #'   generation of row groups. If the input `data` table has the `grouped_df`
-#'   class (through use of the [dplyr::group_by()] function or associated
-#'   `group_by*()` functions) then any input here is ignored.
+#'   class (through use of [dplyr::group_by()] or associated `group_by*()`
+#'   functions) then any input here is ignored.
 #'
 #' @param process_md *Process Markdown in `rowname_col` and `groupname_col`*
 #'
@@ -114,7 +114,7 @@
 #'   `scalar<character>` // *default:* `NULL` (`optional`)
 #'
 #'   By default (with `NULL`) this will be a random, ten-letter ID as generated
-#'   by using the [random_id()] function. A custom table ID can be used here by
+#'   by using [random_id()]. A custom table ID can be used here by
 #'   providing a character value.
 #'
 #' @param locale *Locale identifier*
@@ -123,9 +123,8 @@
 #'
 #'   An optional locale identifier that can be set as the default locale for all
 #'   functions that take a `locale` argument. Examples include `"en"` for
-#'   English (United States) and `"fr"` for French (France). We can use the
-#'   [info_locales()] function as a useful reference for all of the locales that
-#'   are supported.
+#'   English (United States) and `"fr"` for French (France). We can call
+#'   [info_locales()] as a useful reference for all of the locales that are supported.
 #'
 #' @param row_group.sep *Separator text for multiple row group labels*
 #'
@@ -188,8 +187,8 @@
 #' }}
 #'
 #' If you'd rather perform the set up of row groups later (i.e., not in the
-#' `gt()` call), this is possible with use of the [tab_row_group()] function
-#' (and [row_group_order()] can help with the arrangement of row groups).
+#' `gt()` call), this is possible with [tab_row_group()] (and [row_group_order()]
+#' can help with the arrangement of row groups).
 #'
 #' One more thing to consider with row groups is their layout. By default, row
 #' group labels reside in separate rows the appear above the group. However,
@@ -239,7 +238,7 @@
 #' }}
 #'
 #' What you'll get from that is center-alignment of all table body values and
-#' all column labels. Note that row labels in the the stub are still
+#' all column labels. Note that row labels in the stub are still
 #' left-aligned; and `auto_align` has no effect on alignment within the table
 #' stub.
 #'
@@ -277,13 +276,12 @@
 #' `r man_get_image_tag(file = "man_gt_7.png")`
 #' }}
 #'
-#' In this example, the [fmt_number()] and [fmt_date()] functions understand
-#' that the locale for this table is `"fr"` (French), so the appropriate
-#' formatting for that locale is apparent in the `num`, `currency`, and `date`
-#' columns. However in the [fmt_datetime()] call, we explicitly use the `"en"`
-#' (English) locale. This overrides the `"fr"` default set for this table and
-#' the end result is dates formatted with the English locale in the `datetime`
-#' column.
+#' In this example, [fmt_number()] and [fmt_date()] understand that the locale
+#' for this table is `"fr"` (French), so the appropriate formatting for that
+#' locale is apparent in the `num`, `currency`, and `date` columns. However in
+#' [fmt_datetime()], we explicitly use the `"en"` (English) locale. This
+#' overrides the `"fr"` default set for this table and the end result is
+#' dates formatted with the English locale in the `datetime` column.
 #'
 #' @family table creation functions
 #' @section Function ID:
