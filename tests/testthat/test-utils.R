@@ -198,7 +198,7 @@ test_that("The `get_time_format()` function works properly", {
   expect_s3_class(get_time_format(time_style = 25), "date_time_pattern")
 })
 
-test_that("The `check_string()` function works for date and time formats", {
+test_that("date_format and time_format are all single strings", {
 
   # Ensure that all format codes work with `check_format_code()`
   for (format_name in c(date_formats()[["format_name"]], time_formats()[["format_name"]])) {

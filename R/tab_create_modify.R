@@ -3404,8 +3404,6 @@ tab_style <- function(
   # Resolve into a list of locations
   locations <- as_locations(locations)
 
-  # Keep original value for future error message.
-  style0 <- style
   # Upgrade `style` to be within a list if not provided as such
   if (inherits(style, "cell_styles")) {
     style <- list(style)

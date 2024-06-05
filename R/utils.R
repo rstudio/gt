@@ -290,6 +290,7 @@ get_date_format <- function(date_style) {
 
   # Stop function if a numeric `date_style` value is invalid
   if (is.numeric(date_style)) {
+    # TODO remove as.numeric() when r-lib/rlang#1702 is fixed
     check_number_whole(date_style, min = 1, max = as.numeric(nrow(date_format_tbl)), call = NULL)
   }
 
@@ -343,6 +344,7 @@ get_time_format <- function(time_style) {
     check_number_whole(
       time_style,
       min = 1,
+      # TODO remove as.numeric() when r-lib/rlang#1702 is fixed
       max = as.numeric(nrow(time_format_tbl)),
       allow_null = FALSE,
       call = NULL

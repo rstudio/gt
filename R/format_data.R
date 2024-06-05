@@ -7624,6 +7624,7 @@ fmt_duration <- function(
   output_units <- rlang::arg_match(
     output_units,
     values = c("weeks", "days", "hours", "mins", "minutes", "secs", "seconds"),
+    # Error message will naturally improve as r-lib/rlang#1682 is fixed
     multiple = TRUE
   )
 

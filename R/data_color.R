@@ -727,15 +727,11 @@ data_color <- function(
   na_color <- na_color %||% "#808080"
 
   # Error early if `palette = NA`, or is a numeric vector.
-  if (length(palette) > 0 && (is.numeric(palette) || anyNA(palette))) {
+  if (length(palette) > 0L && (is.numeric(palette) || anyNA(palette))) {
     cli::cli_abort(c(
-      "`palette` must {.help [a valid palette](gt::data_color)}, not a numeric vector."
+      "`palette` must be a {.help [valid palette](gt::data_color)}, not a numeric vector."
     ))
   }
-  # "#FA9DFE"
-  # if (is.character(palette) && length(palette) > 1) {
-  #   check_named_colors(palette[!grepl("#", palette, fixed = TRUE)])
-  # }
 
   # Defuse any function supplied to `fn`; if a function is supplied to `colors`
   # (previous argument for this purpose) then let that take precedent and
