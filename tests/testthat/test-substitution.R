@@ -16,8 +16,8 @@ test_that("sub_missing() works correctly", {
 
   # Extract vectors from the table object for comparison
   # to the original dataset
-  num_1 <- (tab %>% dt_data_get())[["num_1"]]
-  num_2 <- (tab %>% dt_data_get())[["num_2"]]
+  num_1 <- dt_data_get(tab)[["num_1"]]
+  num_2 <- dt_data_get(tab)[["num_2"]]
 
   # Expect the extracted values to match those of the
   # original dataset

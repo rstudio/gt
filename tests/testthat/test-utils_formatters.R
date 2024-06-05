@@ -108,34 +108,20 @@ test_that("has_order_zero() works correctly", {
   # to `has_order_zero()` will result in a equal-
   # length logical vector (for vectors that have
   # and don't have NA values)
-  expect_length(
-    x %>% has_order_zero(),
-    length(x)
-  )
+  expect_length(has_order_zero(x), length(x))
+  expect_type(has_order_zero(x), "logical")
 
-  expect_length(
-    x_has_NA %>% has_order_zero(),
-    length(x_has_NA)
-  )
-
-  expect_type(
-    x %>% has_order_zero(),
-    "logical"
-  )
-
-  expect_type(
-    x_has_NA %>% has_order_zero(),
-    "logical"
-  )
+  expect_length(has_order_zero(x_has_NA), length(x_has_NA))
+  expect_type(has_order_zero(x_has_NA), "logical")
 
   # Expect the correct logical values for
   # vectors that have and don't have NA values
   expect_equal(
-    x %>% has_order_zero(),
+    has_order_zero(x),
     c(FALSE, FALSE, TRUE, FALSE, FALSE, TRUE, FALSE, FALSE, TRUE, FALSE, FALSE)
   )
   expect_equal(
-    x_has_NA %>% has_order_zero(),
+    has_order_zero(x_has_NA),
     c(FALSE, FALSE, TRUE, FALSE, FALSE, TRUE,FALSE, FALSE, TRUE, FALSE, FALSE)
   )
 })

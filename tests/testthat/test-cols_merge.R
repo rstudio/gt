@@ -1,6 +1,3 @@
-# Create a shortened version of `mtcars`
-mtcars_short <- mtcars[1:5, ]
-
 # Create a table with four columns of values
 tbl <-
   dplyr::tribble(
@@ -31,7 +28,6 @@ tbl_na <-
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
-  skip_if_not_installed("xml2")
 }
 
 test_that("cols_merge() works correctly", {

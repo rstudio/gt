@@ -2,7 +2,7 @@ test_that("fmt_duration() works correctly with numerical inputs", {
 
   # Create an input tibble with a numeric column
   data_tbl_1 <-
-    dplyr::tibble(
+    data.frame(
       num_1 = c(1.0030, 36323.005, 5.000003, -34.5, 31.6, 28.5, NA)
     )
 
@@ -1259,9 +1259,9 @@ test_that("fmt_duration() works correctly with numerical inputs", {
     )
   )
 
-  # Create another input tibble with a numeric column
+  # Create another input data frame with a numeric column
   data_tbl_2 <-
-    dplyr::tibble(
+    data.frame(
       num_1 = c(5500, -3500, 0.03, -0.03, 0, 0.005, NA)
     )
 
@@ -1354,11 +1354,8 @@ test_that("fmt_duration() works correctly with numerical inputs", {
 
 test_that("fmt_duration() works correctly with integer inputs", {
 
-  # Create an input tibble with an integer column
-  data_tbl_1 <-
-    dplyr::tibble(
-      int_1 = seq(90L, 93L)
-    )
+  # Create an input data frame with an integer column
+  data_tbl_1 <- data.frame(int_1 =  seq(90L, 93L))
 
   # Create a `gt_tbl` object with `gt()` and the
   # `data_tbl_1` dataset

@@ -1,7 +1,6 @@
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
-  skip_if_not_installed("xml2")
 }
 
 # Create a minimal `tbl` for testing HTML output
@@ -37,12 +36,6 @@ tbl_summary <-
     ),
     fmt = list(~ fmt_number(.))
   )
-
-# Gets the HTML attr value from a single key
-selection_value <- function(html, key) {
-  selection <- paste0("[", key, "]")
-  rvest::html_attr(rvest::html_nodes(html, selection), key)
-}
 
 test_that("cells_title() works correctly", {
 

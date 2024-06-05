@@ -43,7 +43,7 @@ test_that("fmt_engineering() works correctly in the LaTeX context", {
 
   # Expect the extracted values to match those of the
   # original dataset
-  expect_equal(data_tbl$num, (tab %>% dt_data_get())[["num"]])
+  expect_equal(dt_data_get(tab)[["num"]], data_tbl$num)
 
   # Expect an error when attempting to format a column
   # that does not exist

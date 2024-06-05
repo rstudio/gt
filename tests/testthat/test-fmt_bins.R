@@ -15,7 +15,7 @@ test_that("fmt_bins() works correctly", {
 
   # Extract vectors from the table object for comparison
   # to the original dataset
-  a <- (tab %>% dt_data_get())[["a"]]
+  a <- dt_data_get(tab)[["a"]]
 
   # Expect the extracted values to match those of the original dataset
   expect_equal(data_tbl$a, a)

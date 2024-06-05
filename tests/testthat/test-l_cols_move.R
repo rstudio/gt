@@ -1,6 +1,3 @@
-# Create a shortened version of `mtcars`
-mtcars_short <- mtcars[1:5, ]
-
 test_that("cols_move() works correctly", {
 
   # Create a `tbl_latex` object with `gt()`; the `mpg`,

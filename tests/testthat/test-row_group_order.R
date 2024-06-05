@@ -18,13 +18,6 @@ tbl <-
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
-  skip_if_not_installed("xml2")
-}
-
-# Gets the HTML attr value from a single key
-selection_value <- function(html, key) {
-  selection <- paste0("[", key, "]")
-  rvest::html_attr(rvest::html_nodes(html, selection), key)
 }
 
 test_that("row_group_order() works correctly", {

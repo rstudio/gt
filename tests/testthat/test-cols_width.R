@@ -34,23 +34,6 @@ tbl_2 <-
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
-  skip_if_not_installed("xml2")
-}
-
-# Gets the HTML attr value from a single key
-selection_value <- function(html, key) {
-  selection <- paste0("[", key, "]")
-  rvest::html_attr(rvest::html_nodes(html, selection), key)
-}
-
-# Gets the inner HTML text from a single value
-selection_text <- function(html, selection) {
-  rvest::html_text(rvest::html_nodes(html, selection))
-}
-
-# Helper function to compare a contiguous set of HTML fragments with raw html
-html_fragment_within <- function(raw_html, ...) {
-  grepl(paste0("\\Q", c(...), "\\E", "[\\n\\s]*?", collapse = ""), raw_html, perl = TRUE)
 }
 
 test_that("cols_width() stores values correctly", {

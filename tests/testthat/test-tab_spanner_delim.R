@@ -4,7 +4,6 @@ iris_short <- iris[1:5, ]
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
-  skip_if_not_installed("xml2")
 }
 
 test_that("tab_spanner_delim() works correctly", {

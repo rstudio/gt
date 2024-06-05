@@ -1,6 +1,3 @@
-# Create a shorter version of `mtcars`
-mtcars_short <- mtcars[1:5, ]
-
 test_that("A gt table contains the expected heading components", {
 
   # Create a `tbl_latex` object with `gt()`; this table contains a title

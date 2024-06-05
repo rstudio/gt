@@ -1,28 +1,28 @@
-tbl <-
-  dplyr::tibble(
-    integer = c(100L, 8000L, 4136323L, 345363363L),
-    amt.usd = c(23.23, 632.322, 236.34, 12),
-    sold_EUR = c(3465.2, 8743.3, 367.02, 23.74),
-    real = c(23.45, 0.23, 0.000001, 2332453.2),
-    real_small = c(23.45, 352.4, 0.013, 263.8)
-  )
-
-tbl_big_small <-
-  dplyr::tibble(
-    int = as.integer(10^(1:9)),
-    int_like = 10^(1:9),
-    real = 10^(1:9) + 0.5
-  )
-
-sp500_tbl <-
-  sp500 %>%
-  dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") %>%
-  dplyr::arrange(date) %>%
-  dplyr::mutate(week = paste0("W", strftime(date, format = "%V")))
-
-tbl_v_large <- dplyr::tibble(num = 10^(1:18))
-
 test_that("fmt_auto() works correctly", {
+
+  tbl <-
+    dplyr::tibble(
+      integer = c(100L, 8000L, 4136323L, 345363363L),
+      amt.usd = c(23.23, 632.322, 236.34, 12),
+      sold_EUR = c(3465.2, 8743.3, 367.02, 23.74),
+      real = c(23.45, 0.23, 0.000001, 2332453.2),
+      real_small = c(23.45, 352.4, 0.013, 263.8)
+    )
+
+  tbl_big_small <-
+    dplyr::tibble(
+      int = as.integer(10^(1:9)),
+      int_like = 10^(1:9),
+      real = 10^(1:9) + 0.5
+    )
+
+  sp500_tbl <-
+    sp500 %>%
+    dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") %>%
+    dplyr::arrange(date) %>%
+    dplyr::mutate(week = paste0("W", strftime(date, format = "%V")))
+
+  tbl_v_large <- dplyr::tibble(num = 10^(1:18))
 
   # Use `fmt_auto()` on a table having a variety of column types
   gt_tbl_1 <-

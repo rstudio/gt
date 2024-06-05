@@ -1,11 +1,3 @@
-md_rtf <- function(md, rtf) {
-  expect_equal(markdown_to_rtf(md), unclass(rtf_raw(rtf)))
-}
-
-rtf_with <- function(open, text, close = paste0(open, "0")) {
-  paste0("\\", open, " ", text, "\\", close, " ")
-}
-
 test_that("Various `is_*()` utility functions work properly", {
 
   empty_tbl <- dplyr::tibble()

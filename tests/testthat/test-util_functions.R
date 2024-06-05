@@ -7,24 +7,23 @@ test_that("date_formats() works correctly", {
   expect_equal(dim(date_formats()), c(41, 4))
 
   # Expect the tibble to have specific column names
-  expect_equal(
-    colnames(date_formats()),
+  expect_named(
+    date_formats(),
     c("format_number", "format_name", "format_code", "flexible")
   )
 })
 
 test_that("time_formats() works correctly", {
 
-  # Expect that the `info_date_style()` function produces an
-  # information table with certain classes
+  # Expect that `time_formats()` is a tibble
   expect_s3_class(time_formats(), c("tbl_df", "tbl", "data.frame"))
 
   # Expect the tibble to be of specific dimensions
   expect_equal(dim(time_formats()), c(25, 5))
 
   # Expect the tibble to have specific column names
-  expect_equal(
-    colnames(time_formats()),
+  expect_named(
+    time_formats(),
     c("format_number", "format_name", "format_code", "time_type", "flexible")
   )
 })

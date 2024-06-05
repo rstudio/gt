@@ -14,21 +14,21 @@ test_that("fmt_date() works correctly with character input for all date formats"
   # Format `date` in various date formats and verify the output
   #
 
-  expect_no_error(d01 <-  fmt_date(tbl_latex, columns = "date", date_style = 1))
-  expect_no_error(d02 <-  fmt_date(tbl_latex, columns = "date", date_style = 2))
-  expect_no_error(d03 <-  fmt_date(tbl_latex, columns = "date", date_style = 3))
-  expect_no_error(d04 <-  fmt_date(tbl_latex, columns = "date", date_style = 4))
-  expect_no_error(d05 <-  fmt_date(tbl_latex, columns = "date", date_style = 5))
-  expect_no_error(d06 <-  fmt_date(tbl_latex, columns = "date", date_style = 6))
-  expect_no_error(d07 <-  fmt_date(tbl_latex, columns = "date", date_style = 7))
-  expect_no_error(d08 <-  fmt_date(tbl_latex, columns = "date", date_style = 8))
-  expect_no_error(d09 <-  fmt_date(tbl_latex, columns = "date", date_style = 9))
-  expect_no_error(d10 <-  fmt_date(tbl_latex, columns = "date", date_style = 10))
-  expect_no_error(d11 <-  fmt_date(tbl_latex, columns = "date", date_style = 11))
-  expect_no_error(d12 <-  fmt_date(tbl_latex, columns = "date", date_style = 12))
-  expect_no_error(d13 <-  fmt_date(tbl_latex, columns = "date", date_style = 13))
-  expect_no_error(d14 <-  fmt_date(tbl_latex, columns = "date", date_style = 14))
-  expect_no_error(d15 <-  fmt_date(tbl_latex, columns = "date", date_style = 15))
+  expect_no_error(d01 <- fmt_date(tbl_latex, columns = "date", date_style = 1))
+  expect_no_error(d02 <- fmt_date(tbl_latex, columns = "date", date_style = 2))
+  expect_no_error(d03 <- fmt_date(tbl_latex, columns = "date", date_style = 3))
+  expect_no_error(d04 <- fmt_date(tbl_latex, columns = "date", date_style = 4))
+  expect_no_error(d05 <- fmt_date(tbl_latex, columns = "date", date_style = 5))
+  expect_no_error(d06 <- fmt_date(tbl_latex, columns = "date", date_style = 6))
+  expect_no_error(d07 <- fmt_date(tbl_latex, columns = "date", date_style = 7))
+  expect_no_error(d08 <- fmt_date(tbl_latex, columns = "date", date_style = 8))
+  expect_no_error(d09 <- fmt_date(tbl_latex, columns = "date", date_style = 9))
+  expect_no_error(d10 <- fmt_date(tbl_latex, columns = "date", date_style = 10))
+  expect_no_error(d11 <- fmt_date(tbl_latex, columns = "date", date_style = 11))
+  expect_no_error(d12 <- fmt_date(tbl_latex, columns = "date", date_style = 12))
+  expect_no_error(d13 <- fmt_date(tbl_latex, columns = "date", date_style = 13))
+  expect_no_error(d14 <- fmt_date(tbl_latex, columns = "date", date_style = 14))
+  expect_no_error(d15 <- fmt_date(tbl_latex, columns = "date", date_style = 15))
 
   expect_equal(
     render_formats_test(d01, context = "latex")[["date"]],
@@ -121,21 +121,21 @@ test_that("fmt_date() works correctly with Date input.", {
   #
   # Format `date` in various date formats and verify the output
   #
-  expect_no_error(d01 <-  fmt_date(tbl_latex, columns = "date", date_style = 1))
-  expect_no_error(d02 <-  fmt_date(tbl_latex, columns = "date", date_style = 2))
-  expect_no_error(d03 <-  fmt_date(tbl_latex, columns = "date", date_style = 3))
-  expect_no_error(d04 <-  fmt_date(tbl_latex, columns = "date", date_style = 4))
-  expect_no_error(d05 <-  fmt_date(tbl_latex, columns = "date", date_style = 5))
-  expect_no_error(d06 <-  fmt_date(tbl_latex, columns = "date", date_style = 6))
-  expect_no_error(d07 <-  fmt_date(tbl_latex, columns = "date", date_style = 7))
-  expect_no_error(d08 <-  fmt_date(tbl_latex, columns = "date", date_style = 8))
-  expect_no_error(d09 <-  fmt_date(tbl_latex, columns = "date", date_style = 9))
-  expect_no_error(d10 <-  fmt_date(tbl_latex, columns = "date", date_style = 10))
-  expect_no_error(d11 <-  fmt_date(tbl_latex, columns = "date", date_style = 11))
-  expect_no_error(d12 <-  fmt_date(tbl_latex, columns = "date", date_style = 12))
-  expect_no_error(d13 <-  fmt_date(tbl_latex, columns = "date", date_style = 13))
-  expect_no_error(d14 <-  fmt_date(tbl_latex, columns = "date", date_style = 14))
-  expect_no_error(d15 <-  fmt_date(tbl_latex, columns = "date", date_style = 15))
+  expect_no_error(d01 <- fmt_date(tbl_latex, columns = "date", date_style = 1))
+  expect_no_error(d02 <- fmt_date(tbl_latex, columns = "date", date_style = 2))
+  expect_no_error(d03 <- fmt_date(tbl_latex, columns = "date", date_style = 3))
+  expect_no_error(d04 <- fmt_date(tbl_latex, columns = "date", date_style = 4))
+  expect_no_error(d05 <- fmt_date(tbl_latex, columns = "date", date_style = 5))
+  expect_no_error(d06 <- fmt_date(tbl_latex, columns = "date", date_style = 6))
+  expect_no_error(d07 <- fmt_date(tbl_latex, columns = "date", date_style = 7))
+  expect_no_error(d08 <- fmt_date(tbl_latex, columns = "date", date_style = 8))
+  expect_no_error(d09 <- fmt_date(tbl_latex, columns = "date", date_style = 9))
+  expect_no_error(d10 <- fmt_date(tbl_latex, columns = "date", date_style = 10))
+  expect_no_error(d11 <- fmt_date(tbl_latex, columns = "date", date_style = 11))
+  expect_no_error(d12 <- fmt_date(tbl_latex, columns = "date", date_style = 12))
+  expect_no_error(d13 <- fmt_date(tbl_latex, columns = "date", date_style = 13))
+  expect_no_error(d14 <- fmt_date(tbl_latex, columns = "date", date_style = 14))
+  expect_no_error(d15 <- fmt_date(tbl_latex, columns = "date", date_style = 15))
 
   expect_equal(
     render_formats_test(d01, context = "latex")[["date"]],

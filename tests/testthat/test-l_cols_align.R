@@ -1,6 +1,3 @@
-# Create a shorter version of `mtcars`
-mtcars_short <- mtcars[1:5, ]
-
 # Create a data frame based on the internal `sp500.csv`
 sp500 <-
   read.csv(

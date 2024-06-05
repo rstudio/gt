@@ -85,7 +85,6 @@ body_add_gt <- function(
 # Function to skip tests if Suggested packages not available on system
 check_suggests_xml <- function() {
   skip_if_not_installed("officer")
-  skip_if_not_installed("xml2")
 }
 
 test_that("word ooxml can be generated from gt object", {

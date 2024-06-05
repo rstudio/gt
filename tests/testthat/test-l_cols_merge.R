@@ -1,6 +1,3 @@
-# Create a shortened version of `mtcars`
-mtcars_short <- mtcars[1:5, ]
-
 # Create a table with rownames and four columns of values
 tbl <-
   dplyr::tribble(

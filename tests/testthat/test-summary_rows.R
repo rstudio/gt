@@ -17,11 +17,6 @@ tbl <-
     groupname_col = "week"
   )
 
-# Gets the inner HTML text from a single value
-selection_text <- function(html, selection) {
-  rvest::html_text(rvest::html_nodes(html, selection))
-}
-
 test_that("summary_rows() can make group-wise summaries", {
 
   # Create a table with summary rows for the `W02` group;

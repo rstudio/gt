@@ -20,7 +20,7 @@ test_that("fmt_date() works correctly", {
 
   # Extract a vector from the table object for comparison
   # to the original dataset
-  date <- (tab %>% dt_data_get())[["date"]]
+  date <- dt_data_get(tab)[["date"]]
 
   # Expect the extracted values to match those of the
   # original dataset
@@ -261,7 +261,7 @@ test_that("fmt_time() works correctly", {
 
   # Extract a vector from the table object for comparison
   # to the original dataset
-  time <- (tab %>% dt_data_get())[["time"]]
+  time <- dt_data_get(tab)[["time"]]
 
   # Expect the extracted values to match those of the
   # original dataset
@@ -471,7 +471,7 @@ test_that("fmt_datetime() works correctly", {
 
   # Extract a vector from the table object for comparison
   # to the original dataset
-  datetime <- (tab %>% dt_data_get())[["datetime"]]
+  datetime <- dt_data_get(tab)[["datetime"]]
 
   # Expect the extracted values to match those of the
   # original dataset

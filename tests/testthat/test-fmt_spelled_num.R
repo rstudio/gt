@@ -31,8 +31,8 @@ test_that("fmt_spelled_num() works correctly", {
 
   # Extract vectors from the table object for comparison
   # to the original dataset
-  char <- (tab %>% dt_data_get())[["char"]]
-  num <- (tab %>% dt_data_get())[["num"]]
+  char <- dt_data_get(tab)[["char"]]
+  num <- dt_data_get(tab)[["num"]]
 
   # Expect the extracted values to match those of the original dataset
   expect_equal(data_tbl$char, char)
