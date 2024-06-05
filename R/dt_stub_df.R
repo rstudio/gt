@@ -97,7 +97,7 @@ dt_stub_df_init <- function(
       #
       # Ensure that the `row_group_ids` values are simplified to reduce
       # special characters; this requires use of the recoding so that the
-      # generated IDs map correctly to the the supplied labels
+      # generated IDs map correctly to the supplied labels
       #
 
       unique_row_group_labels <- unique(row_group_labels)

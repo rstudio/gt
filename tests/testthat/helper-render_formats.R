@@ -1,4 +1,4 @@
-# Testable version of the `render_formats()` function
+# Testable version of `render_formats()`
 # FIXME works with warning on Windows
 render_formats_test <- function(data,
                                 context) {

@@ -26,7 +26,7 @@
 #'
 #' @description
 #'
-#' The `gtsave()` function makes it easy to save a **gt** table to a file. The
+#' `gtsave()` makes it easy to save a **gt** table to a file. The
 #' function guesses the file type by the extension provided in the output
 #' filename, producing either an HTML, PDF, PNG, LaTeX, or RTF file.
 #'
@@ -543,13 +543,13 @@ gtsave_filename <- function(path, filename) {
 #'
 #' Use a subset of the [`gtcars`] dataset to create a **gt** table. Add a header
 #' with [tab_header()] and then export the table as HTML code with inlined CSS
-#' styles using the `as_raw_html()` function.
+#' styles using `as_raw_html()`.
 #'
 #' ```r
 #' tab_html <-
 #'   gtcars |>
 #'   dplyr::select(mfr, model, msrp) |>
-#'   dplyr::slice(1:5) |>
+#'   dplyr::slice_head(n = 5) |>
 #'   gt() |>
 #'   tab_header(
 #'     title = md("Data listing from **gtcars**"),
@@ -1146,8 +1146,8 @@ as_word_tbl_body <- function(
 #'
 #' @description
 #'
-#' The `as_gtable()` function performs the transformation of a `gt_tbl` object
-#' to a `gtable` object.
+#' `as_gtable()` performs the transformation of a `gt_tbl` object to a
+#' [`gtable`][gtable::gtable()] object.
 #'
 #' @inheritParams gtsave
 #'

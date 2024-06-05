@@ -194,7 +194,7 @@ gt_tbl <-
 gt_tbl
 ```
 
-Notice that the landmass names are off the the left in an unstriped area? That's the **stub**. We can apply what's known as a **stubhead label**. This label can be added with the `tab_stubhead()` function:
+Notice that the landmass names are off the left in an unstriped area? That's the **stub**. We can apply what's known as a **stubhead label**. This label can be added with the `tab_stubhead()` function:
 
 ```{r}
 # Generate a simple table with a stub

@@ -530,10 +530,10 @@ text_case_match <- function(
 #' spelled-out numbers with [fmt_spelled_num()]. The output values are indeed
 #' spelled out but exclusively with lowercase letters. We actually want these
 #' words to begin with a capital letter and end with a period. To make this
-#' possible, the `text_transform()` function will be used since it can modify
+#' possible, `text_transform()` will be used since it can modify
 #' already-formatted text. Through the `fn` argument, we provide a custom
 #' function that uses R's `toTitleCase()` operating on `x` (the numbers-as-text
-#' strings) within a `paste0()` so that a period can be properly placed.
+#' strings) within `paste0()` so that a period can be properly placed.
 #'
 #' ```r
 #' gtcars |>
