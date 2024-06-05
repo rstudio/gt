@@ -68,8 +68,8 @@ An object of class \code{gt_tbl}.
 }
 \description{
 With numeric values in a \strong{gt} table we can transform those to numbers that
-are spelled out with the \code{fmt_spelled_num()} function. Any values from \code{0} to
-\code{100} can be spelled out so, for example, the value \code{23} will be formatted as
+are spelled out with \code{fmt_spelled_num()}. Any values from \code{0} to \code{100} can be
+spelled out so, for example, the value \code{23} will be formatted as
 \code{"twenty-three"}. Providing a locale ID will result in the number spelled out
 in the locale's language rules. For example, should a Swedish locale (\code{"sv"})
 be provided, the input value \code{23} will yield \code{"tjugotre"}. In addition to
@@ -79,11 +79,10 @@ formatted values.
 \section{Compatibility of formatting function with data values}{
 
 
-The \code{fmt_spelled_num()} formatting function is compatible with body cells
-that are of the \code{"numeric"} or \code{"integer"} types. Any other types of body
-cells are ignored during formatting. This is to say that cells of
-incompatible data types may be targeted, but there will be no attempt to
-format them.
+\code{fmt_spelled_num()} is compatible with body cells that are of the \code{"numeric"}
+or \code{"integer"} types. Any other types of body cells are ignored during
+formatting. This is to say that cells of incompatible data types may be
+targeted, but there will be no attempt to format them.
 }
 
 \section{Targeting cells with \code{columns} and \code{rows}}{
@@ -130,10 +129,10 @@ more complex predicate expression.
 \section{Compatibility of arguments with the \code{from_column()} helper function}{
 
 
-The \code{\link[=from_column]{from_column()}} helper function can be used with certain arguments of
-\code{fmt_spelled_num()} to obtain varying parameter values from a specified
-column within the table. This means that each row could be formatted a little
-bit differently. These arguments provide support for \code{\link[=from_column]{from_column()}}:
+\code{\link[=from_column]{from_column()}} can be used with certain arguments of \code{fmt_spelled_num()} to
+obtain varying parameter values from a specified column within the table.
+This means that each row could be formatted a little bit differently.
+These arguments provide support for \code{\link[=from_column]{from_column()}}:
 \itemize{
 \item \code{pattern}
 \item \code{locale}
@@ -142,11 +141,10 @@ bit differently. These arguments provide support for \code{\link[=from_column]{f
 Please note that for both of the aforementioned arguments, a \code{\link[=from_column]{from_column()}}
 call needs to reference a column that has data of the correct type (this is
 different for each argument). Additional columns for parameter values can be
-generated with the \code{\link[=cols_add]{cols_add()}} function (if not already present). Columns
-that contain parameter data can also be hidden from final display with
-\code{\link[=cols_hide]{cols_hide()}}. Finally, there is no limitation to how many arguments the
-\code{\link[=from_column]{from_column()}} helper is applied so long as the arguments belong to this
-closed set.
+generated with \code{\link[=cols_add]{cols_add()}} (if not already present). Columns that contain
+parameter data can also be hidden from final display with \code{\link[=cols_hide]{cols_hide()}}.
+Finally, there is no limitation to how many arguments the \code{\link[=from_column]{from_column()}}
+helper is applied so long as the arguments belong to this closed set.
 }
 
 \section{Supported locales}{
@@ -181,16 +179,13 @@ Luri), \code{"lt"} (Lithuanian), \code{"lv"} (Latvian), \code{"mk"} (Macedonian)
 
 
 Let's use a summarized version of the \code{\link{gtcars}} dataset to create a
-\strong{gt} table. The \code{fmt_spelled_num()} function is used to transform
+\strong{gt} table. \code{fmt_spelled_num()} is used to transform
 integer values into spelled-out numbering (in the \code{n} column). That formatted
 column of numbers-as-words is given cell background colors via \code{\link[=data_color]{data_color()}}
 (the underlying numerical values are always available).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
-  dplyr::select(mfr, ctry_origin) |>
-  dplyr::group_by(mfr, ctry_origin) |>
-  dplyr::count() |>
-  dplyr::ungroup() |>
+  dplyr::count(mfr, ctry_origin) |>
   dplyr::arrange(ctry_origin) |>
   gt(rowname_col = "mfr", groupname_col = "ctry_origin") |>
   cols_label(n = "No. of Entries") |>
@@ -212,10 +207,10 @@ column of numbers-as-words is given cell background colors via \code{\link[=data
 }}
 
 With a considerable amount of \strong{dplyr} and \strong{tidyr} work done to the
-\code{\link{pizzaplace}} dataset, we can create a new \strong{gt} table. The
-\code{fmt_spelled_num()} function will be used here to transform the integer
-values in the \code{rank} column. We'll do so with a special \code{pattern} that puts
-the word 'Number' in front of every spelled-out number.
+\code{\link{pizzaplace}} dataset, we can create a new \strong{gt} table. \code{fmt_spelled_num()}
+will be used here to transform the integer values in the \code{rank} column.
+We'll do so with a special \code{pattern} that puts the word 'Number' in front of
+every spelled-out number.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
   dplyr::mutate(month = lubridate::month(date, label = TRUE)) |>

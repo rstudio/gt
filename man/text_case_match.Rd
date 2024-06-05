@@ -54,8 +54,8 @@ matched substrings.}
 \code{\link[=location-helper]{<locations expressions>}} // \emph{default:} \code{cells_body()}
 
 The cell or set of cells to be associated with the text transformation.
-Only the \code{\link[=cells_column_spanners]{cells_column_spanners()}}, \code{\link[=cells_column_labels]{cells_column_labels()}},
-\code{\link[=cells_row_groups]{cells_row_groups()}}, \code{\link[=cells_stub]{cells_stub()}}, and \code{\link[=cells_body]{cells_body()}} helper functions can
+Only \code{\link[=cells_column_spanners]{cells_column_spanners()}}, \code{\link[=cells_column_labels]{cells_column_labels()}},
+\code{\link[=cells_row_groups]{cells_row_groups()}}, \code{\link[=cells_stub]{cells_stub()}}, and \code{\link[=cells_body]{cells_body()}} can
 be used here. We can enclose several of these calls within a \code{list()} if we
 wish to make the transformation happen at different locations.}
 }
@@ -84,9 +84,9 @@ Let's use the \code{\link{exibble}} dataset to create a simple, two-column \stro
 transform the \code{NA} value to \code{"elderberry"} using the \code{text_case_match()}
 function. Over in the \code{fctr} column, some more sophisticated matches will be
 performed using \code{text_case_match()}. That column has spelled out numbers and
-we can produce these on the LHS with help from the \code{\link[=vec_fmt_spelled_num]{vec_fmt_spelled_num()}}
-function. The replacements will contain descriptive text. In this last call
-of \code{text_case_match()}, we use a \code{.default} to replace text for any of those
+we can produce these on the LHS with help from \code{\link[=vec_fmt_spelled_num]{vec_fmt_spelled_num()}}.
+The replacements will contain descriptive text. In this last call of
+\code{text_case_match()}, we use a \code{.default} to replace text for any of those
 non-matched cases.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
@@ -116,10 +116,8 @@ with Fontawesome icons furnished by the \strong{fontawesome} R package.
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
   dplyr::select(name, csd_type, population_2021) |>
   dplyr::filter(csd_type \%in\% c("city", "town")) |>
-  dplyr::group_by(csd_type) |>
-  dplyr::arrange(desc(population_2021)) |>
-  dplyr::slice_head(n = 5) |>
-  dplyr::ungroup() |>
+  dplyr::slice_max(population_2021, n = 5, by = csd_type) |>
+  dplyr::arrange(csd_type) |>
   gt() |>
   fmt_integer() |>
   text_case_match(

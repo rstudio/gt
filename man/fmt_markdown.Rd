@@ -101,16 +101,15 @@ more complex predicate expression.
 \section{Compatibility of arguments with the \code{from_column()} helper function}{
 
 
-The \code{\link[=from_column]{from_column()}} helper function can be used with the \code{md_engine} argument
-of \code{fmt_markdown()} to obtain varying parameter values from a specified
-column within the table. This means that each row could be formatted a little
-bit differently.
+\code{\link[=from_column]{from_column()}} can be used with the \code{md_engine} argument of \code{fmt_markdown()}
+to obtain varying parameter values from a specified column within the table.
+This means that each row could be formatted a little bit differently.
 
 Please note that for this argument (\code{md_engine}), a \code{\link[=from_column]{from_column()}} call
 needs to reference a column that has data of the \code{character} type. Additional
-columns for parameter values can be generated with the \code{\link[=cols_add]{cols_add()}} function
-(if not already present). Columns that contain parameter data can also be
-hidden from final display with \code{\link[=cols_hide]{cols_hide()}}.
+columns for parameter values can be generated with \code{\link[=cols_add]{cols_add()}} (if not
+already present). Columns that contain parameter data can also be hidden from
+final display with \code{\link[=cols_hide]{cols_hide()}}.
 }
 
 \section{Examples}{
@@ -149,8 +148,8 @@ There's a quick reference [here](https://commonmark.org/help/).
 "
 }\if{html}{\out{</div>}}
 
-Arrange the text snippets as a tibble using the \code{dplyr::tribble()} function.
-then, create a \strong{gt} table and format all columns with \code{fmt_markdown()}.
+Arrange the text snippets as a tibble using \code{dplyr::tribble()}, then, create
+a \strong{gt} table and format all columns with \code{fmt_markdown()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tribble(
   ~Markdown, ~md,
@@ -166,8 +165,8 @@ then, create a \strong{gt} table and format all columns with \code{fmt_markdown(
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_markdown_1.png" alt="This image of a table was generated from the first code example in the `fmt_markdown()` help file." style="width:100\%;">
 }}
 
-The \code{fmt_markdown()} function can also handle LaTeX math formulas enclosed
-in \code{"$..$"} (inline math) and also \code{"$$..$$"} (display math). The following
+\code{fmt_markdown()} can also handle LaTeX math formulas enclosed in
+\code{"$..$"} (inline math) and also \code{"$$..$$"} (display math). The following
 table has body cells that contain mathematical formulas in display mode
 (i.e., the formulas are surrounded by \code{"$$"}). Further to this, math can be
 used within \code{\link[=md]{md()}} wherever there is the possibility to insert text into the

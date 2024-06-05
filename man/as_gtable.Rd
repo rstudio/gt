@@ -30,8 +30,8 @@ swapped to \code{gridtext::richtext_grob()} to better render HTML content.}
 A \code{gtable} object.
 }
 \description{
-The \code{as_gtable()} function performs the transformation of a \code{gt_tbl} object
-to a \code{gtable} object.
+\code{as_gtable()} performs the transformation of a \code{gt_tbl} object to a
+\code{\link[gtable:gtable]{gtable}} object.
 }
 \section{Function ID}{
 

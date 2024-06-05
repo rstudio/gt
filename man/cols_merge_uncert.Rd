@@ -78,13 +78,13 @@ before, they just won't be displayed in the finalized table.}
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{cols_merge_uncert()} function is a specialized variant of the
-\code{\link[=cols_merge]{cols_merge()}} function. It takes as input a base value column (\code{col_val})
-and either: (1) a single uncertainty column, or (2) two columns representing
-lower and upper uncertainty bounds. These columns will be essentially merged
-in a single column (that of \code{col_val}). What results is a column with values
-and associated uncertainties (e.g., \verb{12.0 ± 0.1}), and any columns specified
-in \code{col_uncert} are hidden from appearing the output table.
+\code{cols_merge_uncert()} is a specialized variant of \code{\link[=cols_merge]{cols_merge()}}. It takes as
+input a base value column (\code{col_val}) and either: (1) a single uncertainty
+column, or (2) two columns representing lower and upper uncertainty bounds.
+These columns will be essentially merged in a single column (that of
+\code{col_val}). What results is a column with values and associated uncertainties
+(e.g., \verb{12.0 ± 0.1}), and any columns specified in \code{col_uncert} are hidden
+from appearing the output table.
 }
 \section{Comparison with other column-merging functions}{
 
@@ -103,7 +103,7 @@ merged column (e.g., \code{NA} + \code{NA} = \code{NA})
 }
 
 Any resulting \code{NA} values in the \code{col_val} column following the merge
-operation can be easily formatted using the \code{\link[=sub_missing]{sub_missing()}} function.
+operation can be easily formatted using \code{\link[=sub_missing]{sub_missing()}}.
 
 This function is part of a set of four column-merging functions. The other
 three are the general \code{\link[=cols_merge]{cols_merge()}} function and the specialized

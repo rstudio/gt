@@ -52,7 +52,7 @@ as a vector of lines or as a single string.
 Let's use the \code{\link{exibble}} dataset to create a simple, two-column \strong{gt} table
 (keeping only the \code{num} and \code{currency} columns). Through use of the
 \code{opt_css()} function, we can insert CSS rulesets as as string. We need to
-ensure that the the table ID is set explicitly (we've done so here with the
+ensure that the table ID is set explicitly (we've done so here with the
 ID value of \code{"one"}, setting it in the \code{\link[=gt]{gt()}} function).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>

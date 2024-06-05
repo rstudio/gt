@@ -197,8 +197,8 @@ symbol. The default is to not introduce a space character.}
 
 An optional locale identifier that can be used for formatting values
 according the locale's rules. Examples include \code{"en"} for English (United
-States) and \code{"fr"} for French (France). We can use the \code{\link[=info_locales]{info_locales()}}
-function as a useful reference for all of the locales that are supported.}
+States) and \code{"fr"} for French (France). We can call \code{\link[=info_locales]{info_locales()}} for a
+useful reference for all of the locales that are supported.}
 
 \item{output}{\emph{Output format}
 
@@ -242,8 +242,8 @@ formatting specific to the chosen locale; it will also retrieve the locale's
 currency if none is explicitly given
 }
 
-We can use the \code{\link[=info_currencies]{info_currencies()}} function for a useful reference on all of
-the possible inputs to the \code{currency} argument.
+We can call \code{\link[=info_currencies]{info_currencies()}} for a useful reference on all of the possible
+inputs to the \code{currency} argument.
 }
 \section{Examples}{
 

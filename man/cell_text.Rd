@@ -121,19 +121,19 @@ Alternatively, this can be given as a percentage (easily constructed with
 A list object of class \code{cell_styles}.
 }
 \description{
-This helper function is to be used with the \code{\link[=tab_style]{tab_style()}} function, which
-itself allows for the setting of custom styles to one or more cells. We can
-also define several styles within a single call of \code{cell_text()} and
-\code{\link[=tab_style]{tab_style()}} will reliably apply those styles to the targeted element.
+This helper function can be used with \code{\link[=tab_style]{tab_style()}}, which itself allows for
+the setting of custom styles to one or more cells. We can also define several
+styles within a single call of \code{cell_text()} and \code{\link[=tab_style]{tab_style()}} will reliably
+apply those styles to the targeted element.
 }
 \section{Examples}{
 
 
 Let's use the \code{\link{exibble}} dataset to create a simple, two-column \strong{gt} table
-(keeping only the \code{num} and \code{currency} columns). With the \code{\link[=tab_style]{tab_style()}}
-function (called twice), we'll selectively add style to the values formatted
-by \code{\link[=fmt_number]{fmt_number()}}. We do this by using the \code{cell_text()} helper function in
-the \code{style} argument of \code{\link[=tab_style]{tab_style()}}.
+(keeping only the \code{num} and \code{currency} columns). With \code{\link[=tab_style]{tab_style()}}
+(called twice), we'll selectively add style to the values formatted with
+\code{\link[=fmt_number]{fmt_number()}}. We do this by using \code{cell_text()} in the \code{style} argument of
+\code{tab_style()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(num, currency) |>

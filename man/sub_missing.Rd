@@ -47,17 +47,17 @@ down to the rows we need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 \verb{scalar<character>} // \emph{default:} \code{"---"}
 
 The text to be used in place of \code{NA} values in the rendered table. We can
-optionally use the \code{\link[=md]{md()}} and \code{\link[=html]{html()}} functions to style the text as
-Markdown or to retain HTML elements in the text.}
+optionally use \code{\link[=md]{md()}} or \code{\link[=html]{html()}} to style the text as Markdown or to
+retain HTML elements in the text.}
 }
 \value{
 An object of class \code{gt_tbl}.
 }
 \description{
 Wherever there is missing data (i.e., \code{NA} values) customizable content may
-present better than the standard \code{NA} text that would otherwise appear. The
-\code{sub_missing()} function allows for this replacement through its
-\code{missing_text} argument (where an em dash serves as the default).
+present better than the standard \code{NA} text that would otherwise appear.
+\code{sub_missing()} allows for this replacement through its \code{missing_text}
+argument (where an em dash serves as the default).
 }
 \section{Targeting cells with \code{columns} and \code{rows}}{
 

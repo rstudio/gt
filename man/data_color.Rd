@@ -174,10 +174,9 @@ direction.}
 
 A color-mapping function. The function should be able to take a vector of
 data values as input and return an equal-length vector of color values. The
-\verb{col_*()} functions provided in the \strong{scales} package (i.e.,
-\code{\link[scales:col_numeric]{scales::col_numeric()}}, \code{\link[scales:col_numeric]{scales::col_bin()}}, and \code{\link[scales:col_numeric]{scales::col_factor()}})
-can be invoked here with options, as those functions themselves return a
-color-mapping function.}
+\verb{scales::col_*()} functions (i.e.,\code{\link[scales:col_numeric]{scales::col_numeric()}},
+\code{\link[scales:col_numeric]{scales::col_bin()}}, and \code{\link[scales:col_numeric]{scales::col_factor()}}) can be invoked here with
+options, as those functions themselves return a color-mapping function.}
 
 \item{apply_to}{\emph{How to apply color}
 
@@ -215,8 +214,8 @@ This argument is deprecated. Use the \code{fn} argument instead to provide a
 An object of class \code{gt_tbl}.
 }
 \description{
-It's possible to add color to data cells according to their values with the
-\code{data_color()} function. There is a multitude of ways to perform data cell
+It's possible to add color to data cells according to their values with
+\code{data_color()} There is a multitude of ways to perform data cell
 colorizing here:
 \itemize{
 \item targeting: we can constrain which columns and rows should receive the
@@ -230,9 +229,8 @@ quantiles) and the function will generate colors accordingly; the \code{method}
 argument controls this through keywords and other arguments act as inputs to
 specific methods
 \item coloring function: a custom function can be supplied to the \code{fn} argument
-for finer control over color evaluation with data; the color mapping
-\verb{col_*()} functions in the \strong{scales} package can be used here or any
-function you might want to define
+for finer control over color evaluation with data; the  \verb{scales::col_*()}
+color mapping functions can be used here or any function you might want to define
 \item color palettes: with \code{palette} we could supply a vector of colors, a
 \strong{virdis} or \strong{RColorBrewer} palette name, or, a palette from the
 \strong{paletteer} package
@@ -250,7 +248,7 @@ automatically recolor the foreground text to provide the best contrast (can
 be deactivated with \code{autocolor_text = FALSE})
 }
 
-The \code{data_color()} function won't fail with the default options used, but
+\code{data_color()} won't fail with the default options used, but
 that won't typically provide you the type of colorization you really need.
 You can however safely iterate through a collection of different options
 without running into too many errors.
@@ -296,7 +294,7 @@ more complex predicate expression.
 \section{Color computation methods}{
 
 
-The \code{data_color()} function offers four distinct methods for computing color
+\code{data_color()} offers four distinct methods for computing color
 based on cell data values. They are set by the \code{method} argument and the
 options go by the keywords \code{"numeric"}, \code{"bin"}, \code{"quantile"}, and
 \code{"factor"}. There are other arguments in \code{data_color()} that variously
@@ -306,8 +304,8 @@ and which options are available.
 \subsection{\code{"numeric"}}{
 
 The \code{"numeric"} method provides a simple linear mapping from continuous
-numeric data to an interpolated \code{palette}. Internally, this uses the
-\code{\link[scales:col_numeric]{scales::col_numeric()}} function. This method is suited for numeric data cell
+numeric data to an interpolated \code{palette}. Internally, this uses
+\code{\link[scales:col_numeric]{scales::col_numeric()}}. This method is suited for numeric data cell
 values and can make use of a supplied \code{domain} value, in the form of a
 two-element numeric vector describing the range of values, if provided.
 }
@@ -315,30 +313,30 @@ two-element numeric vector describing the range of values, if provided.
 \subsection{\code{"bin"}}{
 
 The \code{"bin"} method provides a mapping of continuous numeric data to
-value-based bins. Internally, this uses the \code{\link[scales:col_numeric]{scales::col_bin()}} function
-which itself uses \code{\link[base:cut]{base::cut()}}. As with the \code{"numeric"} method, \code{"bin"} is
-meant for numeric data cell values. The use of a \code{domain} value is supported
-with this method. The \code{bins} argument in \code{data_color()} is specific to this
-method, offering the ability to: (1) specify the number of bins, or (2)
-provide a vector of cut points.
+value-based bins. Internally, this uses \code{\link[scales:col_numeric]{scales::col_bin()}} which itself
+uses \code{\link[base:cut]{base::cut()}}. As with the \code{"numeric"} method, \code{"bin"} is meant for
+numeric data cell values. The use of a \code{domain} value is supported with this
+method. The \code{bins} argument in \code{data_color()} is specific to this method,
+offering the ability to: (1) specify the number of bins, or (2) provide a
+vector of cut points.
 }
 
 \subsection{\code{"quantile"}}{
 
 The \code{"quantile"} method provides a mapping of continuous numeric data to
-quantiles. Internally, this uses the \code{\link[scales:col_numeric]{scales::col_quantile()}} function which
-itself uses \code{\link[stats:quantile]{stats::quantile()}}. Input data cell values should be numeric, as
-with the \code{"numeric"} and \code{"bin"} methods. A numeric \code{domain} value is
-supported with this method. The \code{quantiles} argument in \code{data_color()}
-controls the number of equal-size quantiles to use.
+quantiles. Internally, this uses \code{\link[scales:col_numeric]{scales::col_quantile()}} which itself uses
+\code{\link[stats:quantile]{stats::quantile()}}. Input data cell values should be numeric, as with the
+\code{"numeric"} and \code{"bin"} methods. A numeric \code{domain} value is supported with
+this method. The \code{quantiles} argument in \code{data_color()} controls the number
+of equal-size quantiles to use.
 }
 
 \subsection{\code{"factor"}}{
 
 The \code{"factor"} method provides a mapping of factors to colors. With discrete
 palettes, color interpolation is used when the number of factors does not
-match the number of colors in the palette. Internally, this uses the
-\code{\link[scales:col_numeric]{scales::col_factor()}} function. Input data cell values can be of any type
+match the number of colors in the palette. Internally, this uses
+\code{\link[scales:col_numeric]{scales::col_factor()}}. Input data cell values can be of any type
 (i.e., factor, character, numeric values, and more are supported). The
 optional input to \code{domain} should take the form of categorical data. The
 \code{levels} and \code{ordered} arguments in \code{data_color()} support this method.
@@ -429,7 +427,7 @@ Accessibility Guidelines}).
 \section{Examples}{
 
 
-The \code{data_color()} function can be used without any supplied arguments to
+\code{data_color()} can be used without any supplied arguments to
 colorize a \strong{gt} table. Let's do this with the \code{\link{exibble}} dataset:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
@@ -540,11 +538,11 @@ version of the code that returns the same table as in the previous example.
 }}
 
 Using your own function in \code{fn} can be very useful if you want to make use of
-specialized arguments in the \strong{scales} \verb{col_*()} functions. You could even
+specialized arguments in the \verb{scales::col_*()} functions. You could even
 supply your own specialized function for performing complex colorizing
 treatments!
 
-The \code{data_color()} function has a way to apply colorization indirectly to
+\code{data_color()} has a way to apply colorization indirectly to
 other columns. That is, you can apply colors to a column different from the
 one used to generate those specific colors. The trick is to use the
 \code{target_columns} argument. Let's do this with a more complete
@@ -618,7 +616,7 @@ in the table. This time, the \code{palette} used is \code{"inferno"} (also from 
 
 Now, it's time to use \code{\link{pizzaplace}} to create a \strong{gt} table. The color
 palette to be used is the \code{"ggsci::red_material"} one (it's in the \strong{ggsci}
-R package but also obtainable from the the \strong{paletteer} package).
+R package but also obtainable from the \strong{paletteer} package).
 Colorization will be applied to the to the \code{sold} and \code{income} columns. We
 don't have to specify those in \code{columns} because those are the only columns
 in the table. Also, the \code{domain} is not set here. We'll use the bounds of the

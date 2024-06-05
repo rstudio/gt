@@ -47,7 +47,7 @@ Use the \code{\link{exibble}} dataset to create a \strong{gt} table with a numbe
 parts added (using functions like \code{\link[=summary_rows]{summary_rows()}}, \code{\link[=grand_summary_rows]{grand_summary_rows()}},
 and more). Following that, we'll increase the amount of horizontal padding
 across the entire table with \code{opt_horizontal_padding()}. Using a \code{scale}
-value of \code{3} (up from the default of \code{1}) means the the horizontal space will
+value of \code{3} (up from the default of \code{1}) means the horizontal space will
 be greatly increased, resulting in a more spacious table.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>

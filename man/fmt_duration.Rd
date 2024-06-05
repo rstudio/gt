@@ -203,11 +203,10 @@ which is \code{c("days", "hours", "minutes", "seconds")}
 \section{Compatibility of formatting function with data values}{
 
 
-The \code{fmt_duration()} formatting function is compatible with body cells that
-are of the \code{"numeric"}, \code{"integer"}, or \code{"difftime"} types. Any other types
-of body cells are ignored during formatting. This is to say that cells of
-incompatible data types may be targeted, but there will be no attempt to
-format them.
+\code{fmt_duration()} is compatible with body cells that are of the \code{"numeric"},
+\code{"integer"}, or \code{"difftime"} types. Any other types of body cells are ignored
+during formatting. This is to say that cells of incompatible data types may
+be targeted, but there will be no attempt to format them.
 }
 
 \section{Targeting cells with \code{columns} and \code{rows}}{
@@ -264,8 +263,8 @@ values.
 Note that a \code{locale} value provided here will override any global locale
 setting performed in \code{\link[=gt]{gt()}}'s own \code{locale} argument (it is settable there as
 a value received by all other functions that have a \code{locale} argument). As a
-useful reference on which locales are supported, we can use the
-\code{\link[=info_locales]{info_locales()}} function to view an info table.
+useful reference on which locales are supported, we can call \code{\link[=info_locales]{info_locales()}}
+to view an info table.
 }
 
 \section{Examples}{

@@ -27,10 +27,9 @@ color value if it is supplied in the \verb{#RRGGBBAA} format.}
 A list object of class \code{cell_styles}.
 }
 \description{
-The \code{cell_fill()} helper function is to be used with the \code{\link[=tab_style]{tab_style()}}
-function, which itself allows for the setting of custom styles to one or more
-cells. Specifically, the call to \code{cell_fill()} should be bound to the
-\code{styles} argument of \code{\link[=tab_style]{tab_style()}}.
+\code{cell_fill()} is to be used with \code{\link[=tab_style]{tab_style()}}, which itself allows for the
+setting of custom styles to one or more cells. Specifically, the call to
+\code{cell_fill()} should be bound to the \code{styles} argument of \code{\link[=tab_style]{tab_style()}}.
 }
 \section{Examples}{
 

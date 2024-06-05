@@ -43,13 +43,12 @@ supplying \code{NULL} to any of \code{color}, \code{style}, or \code{weight}.}
 A list object of class \code{cell_styles}.
 }
 \description{
-The \code{cell_borders()} helper function is to be used with the \code{\link[=tab_style]{tab_style()}}
-function, which itself allows for the setting of custom styles to one or more
-cells. Specifically, the call to \code{cell_borders()} should be bound to the
-\code{styles} argument of \code{\link[=tab_style]{tab_style()}}. The \code{sides} argument is where we define
-which borders should be modified (e.g., \code{"left"}, \code{"right"}, etc.). With that
-selection, the \code{color}, \code{style}, and \code{weight} of the selected borders can
-then be modified.
+\code{cell_borders()} is to be used with \code{\link[=tab_style]{tab_style()}}, which itself allows for
+the setting of custom styles to one or more cells. Specifically, the call to
+\code{cell_borders()} should be bound to the \code{styles} argument of \code{\link[=tab_style]{tab_style()}}.
+The \code{sides} argument is where we define which borders should be modified
+(e.g., \code{"left"}, \code{"right"}, etc.). With that selection, the \code{color}, \code{style},
+and \code{weight} of the selected borders can then be modified.
 }
 \section{Examples}{
 

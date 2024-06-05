@@ -153,10 +153,10 @@ formatting specific to the chosen locale
 \section{Compatibility of formatting function with data values}{
 
 
-The \code{fmt_fraction()} formatting function is compatible with body cells that
-are of the \code{"numeric"} or \code{"integer"} types. Any other types of body cells
-are ignored during formatting. This is to say that cells of incompatible data
-types may be targeted, but there will be no attempt to format them.
+\code{fmt_fraction()} is compatible with body cells that are of the \code{"numeric"} or
+\code{"integer"} types. Any other types of body cells are ignored during
+formatting. This is to say that cells of incompatible data types may be
+targeted, but there will be no attempt to format them.
 }
 
 \section{Targeting cells with \code{columns} and \code{rows}}{
@@ -203,10 +203,10 @@ more complex predicate expression.
 \section{Compatibility of arguments with the \code{from_column()} helper function}{
 
 
-The \code{\link[=from_column]{from_column()}} helper function can be used with certain arguments of
-\code{fmt_fraction()} to obtain varying parameter values from a specified column
-within the table. This means that each row could be formatted a little bit
-differently. These arguments provide support for \code{\link[=from_column]{from_column()}}:
+\code{\link[=from_column]{from_column()}} can be used with certain arguments of \code{fmt_fraction()} to
+obtain varying parameter values from a specified column within the table.
+This means that each row could be formatted a little bit ifferently. These
+arguments provide support for \code{\link[=from_column]{from_column()}}:
 \itemize{
 \item \code{accuracy}
 \item \code{simplify}
@@ -221,11 +221,10 @@ differently. These arguments provide support for \code{\link[=from_column]{from_
 Please note that for all of the aforementioned arguments, a \code{\link[=from_column]{from_column()}}
 call needs to reference a column that has data of the correct type (this is
 different for each argument). Additional columns for parameter values can be
-generated with the \code{\link[=cols_add]{cols_add()}} function (if not already present). Columns
-that contain parameter data can also be hidden from final display with
-\code{\link[=cols_hide]{cols_hide()}}. Finally, there is no limitation to how many arguments the
-\code{\link[=from_column]{from_column()}} helper is applied so long as the arguments belong to this
-closed set.
+generated with \code{\link[=cols_add]{cols_add()}} (if not already present). Columns that contain
+parameter data can also be hidden from final display with \code{\link[=cols_hide]{cols_hide()}}.
+Finally, there is no limitation to how many arguments \code{\link[=from_column]{from_column()}} is
+applied so long as the arguments belong to this closed set.
 }
 
 \section{Adapting output to a specific \code{locale}}{
@@ -241,19 +240,20 @@ values.
 Note that a \code{locale} value provided here will override any global locale
 setting performed in \code{\link[=gt]{gt()}}'s own \code{locale} argument (it is settable there as
 a value received by all other functions that have a \code{locale} argument). As a
-useful reference on which locales are supported, we can use the
-\code{\link[=info_locales]{info_locales()}} function to view an info table.
+useful reference on which locales are supported, we can call \code{\link[=info_locales]{info_locales()}}
+to view an info table.
 }
 
 \section{Examples}{
 
 
 Using a summarized version of the \code{\link{pizzaplace}} dataset, let's create a
-\strong{gt} table. With the \code{fmt_fraction()} function we can format the \code{f_sold}
-and \code{f_income} columns to display fractions. As for how the fractions are
-represented, we are electing to use \code{accuracy = 10}. This gives all fractions
-as tenths. We won't simplify the fractions (by using \code{simplify = FALSE}) and
-this means that a fraction like \code{5/10} won't become \code{1/2}. With \code{layout = "diagonal"}, we get a diagonal display of all fractions.
+\strong{gt} table. With \code{fmt_fraction()} we can format the \code{f_sold} and \code{f_income}
+columns to display fractions. As for how the fractions are represented, we
+are electing to use \code{accuracy = 10}. This gives all fractions as tenths.
+We won't simplify the fractions (by using \code{simplify = FALSE}) and this means
+that a fraction like \code{5/10} won't become \code{1/2}. With \code{layout ="diagonal"},
+we get a diagonal display of all fractions.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
   dplyr::group_by(type, size) |>

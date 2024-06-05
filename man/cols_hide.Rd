@@ -29,23 +29,23 @@ An object of class \code{gt_tbl}. \code{data} will be unaltered if \code{columns
 not supplied.
 }
 \description{
-The \code{cols_hide()} function allows us to hide one or more columns from
+\code{cols_hide()} allows us to hide one or more columns from
 appearing in the final output table. While it's possible and often desirable
-to omit columns from the input table data before introduction to the \code{\link[=gt]{gt()}}
-function, there can be cases where the data in certain columns is useful (as
-a column reference during formatting of other columns) but the final display
-of those columns is not necessary.
+to omit columns from the input table data before introduction to \code{\link[=gt]{gt()}},
+there can be cases where the data in certain columns is useful (as a column
+reference during formatting of other columns) but the final display of those
+columns is not necessary.
 }
 \details{
 The hiding of columns is internally a rendering directive, so, all columns
 that are 'hidden' are still accessible and useful in any expression provided
-to a \code{rows} argument. Furthermore, the \code{cols_hide()} function (as with many
-\strong{gt} functions) can be placed anywhere in a pipeline of \strong{gt} function
-calls (acting as a promise to hide columns when the timing is right). However
+to a \code{rows} argument. Furthermore, \code{cols_hide()} (as with many \strong{gt}
+functions) can be placed anywhere in a pipeline of \strong{gt} function calls
+(acting as a promise to hide columns when the timing is right). However,
 there's perhaps greater readability when placing this call closer to the end
-of such a pipeline. The \code{cols_hide()} function quietly changes the visible
-state of a column (much like the \code{\link[=cols_unhide]{cols_unhide()}} function) and doesn't yield
-warnings or messages when changing the state of already-invisible columns.
+of such a pipeline. \code{cols_hide()} quietly changes the visible state of a
+column (much like \code{\link[=cols_unhide]{cols_unhide()}}) and doesn't yield warnings or messages
+when changing the state of already-invisible columns.
 }
 \section{Examples}{
 

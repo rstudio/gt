@@ -23,9 +23,8 @@ This is the \strong{gt} table object that is commonly created through use of the
 
 \verb{scalar<character>} // \strong{required}
 
-The text to be used in the footnote. We can optionally use the \code{\link[=md]{md()}} and
-\code{\link[=html]{html()}} functions to style the text as Markdown or to retain HTML elements
-in the footnote text.}
+The text to be used in the footnote. We can optionally use \code{\link[=md]{md()}} or \code{\link[=html]{html()}}
+to style the text as Markdown or to retain HTML elements in the footnote text.}
 
 \item{locations}{\emph{Locations to target}
 
@@ -91,8 +90,8 @@ of the targeted cell content).
 
 There are several options for controlling the formatting of the footnotes,
 their marks, and related typesetting in the footer. All of these options are
-available within the \code{\link[=tab_options]{tab_options()}} function and a subset of these are
-exposed in their own \verb{opt_*()} functions.
+available within \code{\link[=tab_options]{tab_options()}} and a subset of these are exposed in their
+own \verb{opt_*()} functions.
 \subsection{Choosing the footnote marks}{
 
 We can modify the set of footnote marks with
@@ -167,9 +166,9 @@ we can control the separator between consecutive footnotes with the
 
 Using a subset of the \code{\link{sza}} dataset, let's create a new \strong{gt} table. The
 body cells in the \code{sza} column will receive background color fills according
-to their data values (with the \code{\link[=data_color]{data_color()}} function). After that, the use
-of \code{tab_footnote()} lets us add a footnote to the \code{sza} column label
-(explaining what the color gradient signifies).
+to their data values (with \code{\link[=data_color]{data_color()}}). After that, the use of
+\code{tab_footnote()} lets us add a footnote to the \code{sza} column label (explaining
+what the color gradient signifies).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sza |>
   dplyr::filter(

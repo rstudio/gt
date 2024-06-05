@@ -230,10 +230,10 @@ formatting specific to the chosen locale
 \section{Compatibility of formatting function with data values}{
 
 
-The \code{fmt_number()} formatting function is compatible with body cells that are
-of the \code{"numeric"} or \code{"integer"} types. Any other types of body cells are
-ignored during formatting. This is to say that cells of incompatible data
-types may be targeted, but there will be no attempt to format them.
+\code{fmt_number()} is compatible with body cells that are of the
+\code{"numeric"} or \code{"integer"} types. Any other types of body cells are ignored
+during formatting. This is to say that cells of incompatible data types may
+be targeted, but there will be no attempt to format them.
 }
 
 \section{Targeting cells with \code{columns} and \code{rows}}{
@@ -280,10 +280,10 @@ more complex predicate expression.
 \section{Compatibility of arguments with the \code{from_column()} helper function}{
 
 
-The \code{\link[=from_column]{from_column()}} helper function can be used with certain arguments of
-\code{fmt_number()} to obtain varying parameter values from a specified column
-within the table. This means that each row could be formatted a little bit
-differently. These arguments provide support for \code{\link[=from_column]{from_column()}}:
+\code{\link[=from_column]{from_column()}} can be used with certain arguments of \code{fmt_number()} to
+obtain varying parameter values from a specified column within the table.
+This means that each row could be formatted a little bit differently.
+These arguments provide support for \code{\link[=from_column]{from_column()}}:
 \itemize{
 \item \code{decimals}
 \item \code{n_sigfig}
@@ -304,11 +304,10 @@ differently. These arguments provide support for \code{\link[=from_column]{from_
 Please note that for all of the aforementioned arguments, a \code{\link[=from_column]{from_column()}}
 call needs to reference a column that has data of the correct type (this is
 different for each argument). Additional columns for parameter values can be
-generated with the \code{\link[=cols_add]{cols_add()}} function (if not already present). Columns
-that contain parameter data can also be hidden from final display with
-\code{\link[=cols_hide]{cols_hide()}}. Finally, there is no limitation to how many arguments the
-\code{\link[=from_column]{from_column()}} helper is applied so long as the arguments belong to this
-closed set.
+generated with \code{\link[=cols_add]{cols_add()}} (if not already present). Columns that contain
+parameter data can also be hidden from final display with \code{\link[=cols_hide]{cols_hide()}}.
+Finally, there is no limitation to how many arguments \code{\link[=from_column]{from_column()}} is
+applied so long as the arguments belong to this closed set.
 }
 
 \section{Adapting output to a specific \code{locale}}{
@@ -324,15 +323,15 @@ preferred values.
 Note that a \code{locale} value provided here will override any global locale
 setting performed in \code{\link[=gt]{gt()}}'s own \code{locale} argument (it is settable there as
 a value received by all other functions that have a \code{locale} argument). As a
-useful reference on which locales are supported, we can use the
-\code{\link[=info_locales]{info_locales()}} function to view an info table.
+useful reference on which locales are supported, we can call \code{\link[=info_locales]{info_locales()}}
+to view an info table.
 }
 
 \section{Examples}{
 
 
-Let's use the \code{\link{exibble}} dataset to create a \strong{gt} table. With the
-\code{fmt_number()} function, we'll format the \code{num} column to have three decimal
+Let's use the \code{\link{exibble}} dataset to create a \strong{gt} table. With
+\code{fmt_number()}, we'll format the \code{num} column to have three decimal
 places (with \code{decimals = 3}) and omit the use of digit separators (with
 \code{use_seps = FALSE}).
 
@@ -413,9 +412,8 @@ Another strategy for dealing with precision of decimals is to have a separate
 column of values that specify how many decimal digits to retain. Such a
 column can be added via \code{\link[=cols_add]{cols_add()}} or it can be part of the input table for
 \code{\link[=gt]{gt()}}. With that column available, it can be referenced in the \code{decimals}
-argument with the \code{\link[=from_column]{from_column()}} helper function. This approach yields a
-display of coordinate values that reflects the measurement precision of each
-value.
+argument with \code{\link[=from_column]{from_column()}}. This approach yields a display of coordinate
+values that reflects the measurement precision of each value.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
   dplyr::select(name, latitude, longitude) |>
@@ -447,11 +445,12 @@ value.
 }
 
 \seealso{
-The \code{\link[=fmt_integer]{fmt_integer()}} function might be more useful if you really need
-to format numeric values to appear as integers (i.e., no decimals will be
-shown and input values are rounded as necessary). Need to do numeric
-formatting on a vector? Take a look at the vector-formatting version of
-this function: \code{\link[=vec_fmt_number]{vec_fmt_number()}}.
+\itemize{
+\item \code{\link[=fmt_integer]{fmt_integer()}} might be more useful if you really need  to format
+numeric values to appear as integers (i.e., no decimals will be shown and
+input values are rounded as necessary).
+\item \code{\link[=vec_fmt_number]{vec_fmt_number()}} can is the vectorized version.
+}
 
 Other data formatting functions: 
 \code{\link{data_color}()},

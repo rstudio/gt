@@ -71,14 +71,13 @@ An object of class \code{gt_tbl}.
 }
 \description{
 Wherever there is numerical data that are very small in value, replacement
-text may be better for explanatory purposes. The \code{sub_small_vals()} function
-allows for this replacement through specification of a \code{threshold}, a
-\code{small_pattern}, and the sign of the values to be considered. The
-substitution will occur for those values found to be between \code{0} and the
-threshold value. This is possible for small positive and small negative
-values (this can be explicitly set by the \code{sign} option). Note that the
-interval does not include the \code{0} or the \code{threshold} value. Should you need
-to include zero values, use the \code{\link[=sub_zero]{sub_zero()}} function.
+text may be better for explanatory purposes. \code{sub_small_vals()} allows for
+this replacement through specification of a \code{threshold}, a \code{small_pattern},
+and the sign of the values to be considered. The substitution will occur for
+those values found to be between \code{0} and the threshold value. This is
+possible for small positive and small negative values (this can be explicitly
+set by the \code{sign} option). Note that the interval does not include the \code{0} or
+the \code{threshold} value. Should you need to include zero values, use \code{\link[=sub_zero]{sub_zero()}}.
 }
 \section{Targeting cells with \code{columns} and \code{rows}}{
 

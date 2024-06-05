@@ -113,10 +113,7 @@ conjunction with the \code{fn} argument of \code{from_column()}, which helps to 
 the values in \code{n} to get a useful range of font sizes.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
-  dplyr::select(mfr, ctry_origin) |>
-  dplyr::group_by(mfr, ctry_origin) |>
-  dplyr::count() |>
-  dplyr::ungroup() |>
+  dplyr::count(mfr, ctry_origin) |>
   dplyr::arrange(ctry_origin) |>
   gt(groupname_col = "ctry_origin") |>
   tab_style(

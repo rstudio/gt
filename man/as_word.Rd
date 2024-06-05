@@ -63,8 +63,8 @@ single-element character vector.
 
 
 Use a subset of the \code{\link{gtcars}} dataset to create a \strong{gt} table. Add a header
-with \code{\link[=tab_header]{tab_header()}} and then export the table as OOXML code for Word using the
-\code{as_word()} function.
+with \code{\link[=tab_header]{tab_header()}} and then export the table as OOXML code for Word using
+\code{as_word()}
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_rtf <-
   gtcars |>

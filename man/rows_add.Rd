@@ -194,10 +194,10 @@ of each row group:
 }}
 
 All missing values were substituted with an empty string (\code{""}), and that was
-done by using the \code{\link[=sub_missing]{sub_missing()}} function. We removed the top border of the
+done by using \code{\link[=sub_missing]{sub_missing()}}. We removed the top border of the
 new rows with a call to \code{\link[=tab_style]{tab_style()}}, targeting those rows where the row
 labels end with \code{"end"}. Finally, we get rid of the row labels with the use
-of the \code{\link[=text_case_when]{text_case_when()}} function, using a similar strategy of targeting the
+of \code{\link[=text_case_when]{text_case_when()}}, using a similar strategy of targeting the
 name of the row label.
 
 Another application is starting from nothing (really just the definition of

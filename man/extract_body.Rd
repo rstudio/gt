@@ -44,10 +44,10 @@ A data frame or tibble object containing the table body.
 }
 \description{
 We can extract the body of a \strong{gt} table, even at various stages of its
-rendering, from a \code{gt_tbl} object using the \code{extract_body()} function. By
-default, the data frame returned will have gone through all of the build
-stages but we can intercept the table body after a certain build stage.
-Here are the eight different build stages and some notes about each:
+rendering, from a \code{gt_tbl} object using \code{extract_body()}. By default, the
+data frame returned will have gone through all of the build stages but we
+can intercept the table body after a certain build stage. Here are the eight
+different build stages and some notes about each:
 \enumerate{
 \item \code{"init"}: the body table is initialized here, entirely with \code{NA} values.
 It's important to note that all columns of the are of the \code{character} type in

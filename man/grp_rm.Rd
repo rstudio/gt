@@ -12,8 +12,8 @@ grp_rm(data, which)
 \verb{obj:<gt_group>} // \strong{required}
 
 This is a \code{gt_group} container object. It is typically generated through
-use of the \code{\link[=gt_group]{gt_group()}} function along with one or more \code{gt_tbl} objects,
-or, made by splitting a \strong{gt} table with \code{\link[=gt_split]{gt_split()}}.}
+use of \code{\link[=gt_group]{gt_group()}} along with one or more \code{gt_tbl} objects, or, made by
+splitting a \strong{gt} table with \code{\link[=gt_split]{gt_split()}}.}
 
 \item{which}{\emph{The table to remove from the group}
 

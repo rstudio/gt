@@ -35,8 +35,8 @@ LHS inputs. If \code{NULL}, the default, no replacement text will be used.}
 \code{\link[=location-helper]{<locations expressions>}} // \emph{default:} \code{cells_body()}
 
 The cell or set of cells to be associated with the text transformation.
-Only the \code{\link[=cells_column_spanners]{cells_column_spanners()}}, \code{\link[=cells_column_labels]{cells_column_labels()}},
-\code{\link[=cells_row_groups]{cells_row_groups()}}, \code{\link[=cells_stub]{cells_stub()}}, and \code{\link[=cells_body]{cells_body()}} helper functions can
+Only \code{\link[=cells_column_spanners]{cells_column_spanners()}}, \code{\link[=cells_column_labels]{cells_column_labels()}},
+\code{\link[=cells_row_groups]{cells_row_groups()}}, \code{\link[=cells_stub]{cells_stub()}}, and \code{\link[=cells_body]{cells_body()}} can
 be used here. We can enclose several of these calls within a \code{list()} if we
 wish to make the transformation happen at different locations.}
 }
