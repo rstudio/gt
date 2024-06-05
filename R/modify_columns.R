@@ -770,8 +770,7 @@ cols_width <- function(
 #' ```r
 #' metro |>
 #'   dplyr::select(name, lines, passengers, connect_other) |>
-#'   dplyr::arrange(desc(passengers)) |>
-#'   dplyr::slice_head(n = 10) |>
+#'   dplyr::slice_max(passengers, n = 10) |>
 #'   gt() |>
 #'   cols_hide(columns = passengers) |>
 #'   cols_label(
@@ -1450,8 +1449,7 @@ cols_label_with <- function(
 #'     name, land_area_km2,
 #'     ends_with("2016"), ends_with("2021")
 #'   ) |>
-#'   dplyr::arrange(desc(population_2021)) |>
-#'   dplyr::slice_head(n = 10) |>
+#'   dplyr::slice_max(population_2021, n = 10) |>
 #'   gt(rowname_col = "name") |>
 #'   tab_stubhead(label = "City") |>
 #'   fmt_integer() |>
@@ -1728,8 +1726,7 @@ cols_units <- function(
 #' towny |>
 #'   dplyr::select(name, population_2021, land_area_km2) |>
 #'   dplyr::filter(population_2021 > 100000) |>
-#'   dplyr::arrange(desc(population_2021)) |>
-#'   dplyr::slice_head(n = 10) |>
+#'   dplyr::slice_max(population_2021, n = 10) |>
 #'   gt() |>
 #'   cols_add(
 #'     land_area = land_area_km2 / 2.58998811,
