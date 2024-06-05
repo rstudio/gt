@@ -247,7 +247,7 @@ tf_formats_text <- function() {
   c("true-false", "yes-no", "up-down")
 }
 # workaround before r-lib/rlang#1618 is fixed (check_character() will refuse character(0))
-check_character2 <- function(x, ..., allow_0 = FALSE, allow_null = FALSE, arg = caller_arg(x), call = caller_env()) {
+check_chr_has_length <- function(x, ..., allow_0 = FALSE, allow_null = FALSE, arg = caller_arg(x), call = caller_env()) {
   if (!missing(x)) {
     if (allow_null && is_null(x)) {
       return(invisible(NULL))

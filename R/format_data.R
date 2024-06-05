@@ -7527,8 +7527,8 @@ fmt_duration <- function(
 
   # Declare formatting function compatibility
   compat <- c("numeric", "integer", "difftime")
-  check_character2(output_units, allow_null = TRUE, allow_0 = FALSE)
-  check_character2(input_units, allow_null = TRUE, allow_0 = FALSE)
+  check_chr_has_length(output_units, allow_null = TRUE, allow_0 = FALSE)
+  check_chr_has_length(input_units, allow_null = TRUE, allow_0 = FALSE)
   # Stop function if `locale` does not have a valid value; normalize locale
   # and resolve one that might be set globally
   validate_locale(locale = locale)
