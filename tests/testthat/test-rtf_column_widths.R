@@ -223,8 +223,8 @@ test_that("parse_length_str() works correctly", {
       expect_equal(nrow(.), 0)
     }
 
-  # The `parse_length_str()` function doesn't check for valid
-  # units so anything that fits the `(%|[a-z]+)` will work
+  # `parse_length_str()` doesn't check for valid units
+  # so anything that fits the `(%|[a-z]+)` will work
   parse_length_str(
     lengths_vec = "6.234points"
   ) %>%

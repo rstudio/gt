@@ -4681,12 +4681,11 @@ get_letters_from_div <- function(x, set) {
 #'
 #' With numeric values in a **gt** table we can transform those to numbers that
 #' are spelled out with `fmt_spelled_num()`. Any values from `0` to `100` can be
-#' spelled out so, for example, the value `23` will be formatted as
-#' `"twenty-three"`. Providing a locale ID will result in the number spelled out
-#' in the locale's language rules. For example, should a Swedish locale (`"sv"`)
-#' be provided, the input value `23` will yield `"tjugotre"`. In addition to
-#' this, we can optionally use the `pattern` argument for decoration of the
-#' formatted values.
+#' spelled out so, for example, the value `23` will be formatted as `"twenty-three"`.
+#' Providing a locale ID will result in the number spelled out in the locale's
+#' language rules. For example, should a Swedish locale (`"sv"`) be provided,
+#' the value `23` will yield `"tjugotre"`. In addition to this, we can
+#' optionally use the `pattern` argument for decoration of the formatted values.
 #'
 #' @inheritParams fmt_number
 #'
@@ -9017,8 +9016,8 @@ make_span_with_color <- function(text, color = NULL) {
 #'
 #' @description
 #'
-#' The `fmt_units()` function lets you better format measurement units in the
-#' table body. These must conform to **gt**'s specialized units notation (e.g.,
+#' `fmt_units()` lets you better format measurement units in the table body.
+#' These must conform to **gt**'s specialized units notation (e.g.,
 #' `"J Hz^-1 mol^-1"` can be used to generate units for the
 #' *molar Planck constant*) for the best conversion. The notation here provides
 #' several conveniences for defining units, so as long as the values to be
@@ -11817,10 +11816,10 @@ get_image_hw_ratio <- function(filepath) {
 #' `r man_get_image_tag(file = "man_fmt_flag_2.png")`
 #' }}
 #'
-#' The `fmt_flag()` function works well even when there are multiple country
-#' codes within the same cell. It can operate on comma-separated codes without
-#' issue. When rendered to HTML, hovering over each of the flag icons results in
-#' tooltip text showing the name of the country.
+#' `fmt_flag()` works well even when there are multiple country codes within the
+#' same cell. It can operate on comma-separated codes without issue. When
+#' rendered to HTML, hovering over each of the flag icons results in tooltip
+#' text showing the name of the country.
 #'
 #' ```r
 #' countrypops |>

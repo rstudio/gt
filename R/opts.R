@@ -703,7 +703,7 @@ opt_footnote_spec <- function(
 #' Use the [`exibble`] dataset to create a **gt** table with a number of table
 #' parts added (using functions like [summary_rows()], [grand_summary_rows()],
 #' and more). Following that, we'll add row striping to every second row with
-#' the `opt_row_striping()` function.
+#' `opt_row_striping()`.
 #'
 #' ```r
 #' exibble |>
@@ -1182,8 +1182,8 @@ opt_all_caps <- function(
 #'
 #' @description
 #'
-#' The `opt_table_lines()` function sets table lines in one of three possible
-#' ways: (1) all possible table lines drawn (`"all"`), (2) no table lines at all
+#' `opt_table_lines()` sets table lines in one of three possible ways:
+#' (1) all possible table lines drawn (`"all"`), (2) no table lines at all
 #' (`"none"`), and (3) resetting to the default line styles (`"default"`). This
 #' is great if you want to start off with lots of lines and subtract just a few
 #' of them with [tab_options()] or [tab_style()]. Or, use it to start with a
@@ -1412,8 +1412,8 @@ opt_table_outline <- function(
 #'
 #' @description
 #'
-#' The `opt_table_font()` function makes it possible to define fonts used for an
-#' entire **gt** table. Any font names supplied in `font` will (by default, with
+#' `opt_table_font()` makes it possible to define fonts used for an entire
+#' **gt** table. Any font names supplied in `font` will (by default, with
 #' `add = TRUE`) be placed before the names present in the existing font stack
 #' (i.e., they will take precedence). You can choose to base the font stack on
 #' those provided by [system_fonts()] by providing a valid keyword for a themed
@@ -1421,7 +1421,7 @@ opt_table_outline <- function(
 #'
 #' Take note that you could still have entirely different fonts in specific
 #' locations of the table. For that you would need to use [tab_style()] or
-#' [tab_style_body()] in conjunction with the [cell_text()] helper function.
+#' [tab_style_body()] in conjunction with [cell_text()].
 #'
 #' @inheritParams fmt_number
 #'
@@ -1650,10 +1650,10 @@ opt_table_font <- function(
 #'
 #' @description
 #'
-#' The `opt_css()` function makes it possible to add CSS to a **gt** table. This
-#' CSS will be added after the compiled CSS that **gt** generates automatically
-#' when the object is transformed to an HTML output table. You can supply `css`
-#' as a vector of lines or as a single string.
+#' `opt_css()` makes it possible to add CSS to a **gt** table. This  CSS will be
+#' added after the compiled CSS that **gt** generates automatically when the
+#' object is transformed to an HTML output table. You can supply `css` as a
+#' vector of lines or as a single string.
 #'
 #' @inheritParams fmt_number
 #'

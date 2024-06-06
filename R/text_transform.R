@@ -26,11 +26,11 @@
 #'
 #' @description
 #'
-#' The `text_replace()` function provides a specialized interface for replacing
-#' text fragments in table cells with literal text. You need to ensure that
-#' you're targeting the appropriate cells with the `locations` argument. Once
-#' that is done, the remaining two values to supply are for the regex pattern
-#' (`pattern`) and the replacement for all matched text (`replacement`).
+#' `text_replace()` provides a specialized interface for replacing text fragments
+#' in table cells with literal text. You need to ensure that you're targeting
+#' the appropriate cells with the `locations` argument. Once that is done, the
+#' remaining two values to supply are for the regex pattern (`pattern`) and the
+#' replacement for all matched text (`replacement`).
 #'
 #' @param data *The gt table data object*
 #'
@@ -121,14 +121,14 @@ text_replace <- function(
 #'
 #' @description
 #'
-#' The `text_case_when()` function provides a useful interface for a
-#' case-by-case approach to replacing entire table cells. First off, you have to
-#' make sure you're targeting the appropriate cells with the `.locations`
-#' argument. Following that, you supply a sequence of two-sided formulas
-#' matching of the general form: `<logical_stmt> ~ <new_text>`. In the left hand
-#' side (LHS) there should be a predicate statement that evaluates to a logical
-#' vector of length one (i.e., either `TRUE` or `FALSE`). To refer to the values
-#' undergoing transformation, you need to use the `x` variable.
+#' `text_case_when()` provides a useful interface for a case-by-case approach to
+#' replacing entire table cells. First off, you have to make sure you're
+#' targeting the appropriate cells with the `.locations` argument. Following
+#' that, you supply a sequence of two-sided formulas matching of the general
+#' form: `<logical_stmt> ~ <new_text>`. In the left hand side (LHS) there should
+#' be a predicate statement that evaluates to a logical vector of length one
+#' (i.e., either `TRUE` or `FALSE`). To refer to the values undergoing
+#' transformation, you need to use the `x` variable.
 #'
 #' @param .data *The gt table data object*
 #'
@@ -160,11 +160,11 @@ text_replace <- function(
 #' @section Examples:
 #'
 #' Use a portion of the [`metro`] dataset to create a **gt** table. We'll use
-#' the `text_case_when()` function to supply pairs of predicate statements and
-#' replacement text. For the `connect_rer` column, we will perform a count of
-#' pattern matches with `stringr::str_count()` and determine which cells have 1,
-#' 2, or 3 matched patterns. For each of these cases, descriptive replacement
-#' text is provided. Here, we use a `.default` value to replace the non-matched
+#' `text_case_when()` to supply pairs of predicate statements and replacement
+#' text. For the `connect_rer` column, we will perform a count of pattern
+#' matches with `stringr::str_count()` and determine which cells have 1, 2, or 3
+#' matched patterns. For each of these cases, descriptive replacement text is
+#' provided. Here, we use a `.default` value to replace the non-matched
 #' cases with an empty string (`""`). Finally, we use [cols_label()] to modify
 #' the labels of the three columns.
 #'
@@ -258,9 +258,8 @@ text_case_when <- function(
 #'
 #' @description
 #'
-#' The `text_case_match()` function provides a useful interface for a approach
-#' to replacing table cells that behaves much like a switch statement. The
-#' targeting of cells for transformation happens with the `.locations` argument.
+#' `text_case_match()` provides a useful interface for a approach to replacing
+#' table cells that behaves much like a switch statement. The targeting of cell for transformation happens with the `.locations` argument.
 #' Once overall targeting is handled, you need to supply a sequence of two-sided
 #' formulas matching of the general form: `<vector_old_text> ~ <new_text>`. In
 #' the left hand side (LHS) there should be a character vector containing

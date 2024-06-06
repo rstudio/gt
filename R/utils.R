@@ -1848,7 +1848,7 @@ non_na_index <- function(
 
 #' Get a tibble of scaling values and suffixes
 #'
-#' The `num_suffix()` function operates on a vector of numerical values and
+#' `num_suffix()` operates on a vector of numerical values and
 #' returns a tibble where each row represents a scaled value for `x` and the
 #' correct suffix to use during `x`'s character-based formatting.
 #' @noRd
@@ -1926,7 +1926,7 @@ num_suffix <- function(
 
 #' Get a tibble of scaling values and suffixes for the Indian numbering system
 #'
-#' The `num_suffix()` function operates on a vector of numerical values and
+#' `num_suffix_ind()` operates on a vector of numerical values and
 #' returns a tibble where each row represents a scaled value for `x` and the
 #' correct suffix to use during `x`'s character-based formatting.
 #' @noRd
@@ -2006,7 +2006,7 @@ num_suffix_ind <- function(
 
 #' An `isFALSE`-based helper function
 #'
-#' The `is_false()` function is similar to the `isFALSE()` function that was
+#' `is_false()` is similar to the `isFALSE()` function that was
 #' introduced in R 3.5.0 except that this implementation works with earlier
 #' versions of R.
 #' @param x The single value to test for whether it is `FALSE`.

@@ -111,8 +111,8 @@
 #' `r man_get_image_tag(file = "man_tab_header_2.png")`
 #' }}
 #'
-#' If using HTML but doing something far simpler, we can use the [html()] helper
-#' function to declare that the text provided is HTML.
+#' If using HTML but doing something far simpler, we can wrap our title or
+#' subtitle inside [html()] to declare that the text provided is HTML.
 #'
 #' ```r
 #' gtcars |>
@@ -2190,8 +2190,8 @@ tab_stub_indent <- function(
 #'
 #' @description
 #'
-#' The `tab_footnote()` function can make it a painless process to add a
-#' footnote to a **gt** table. There are commonly two components to a footnote:
+#' `tab_footnote()` can make it a painless process to add a footnote to a
+#' **gt** table. There are commonly two components to a footnote:
 #' (1) a footnote mark that is attached to the targeted cell content, and (2)
 #' the footnote text itself that is placed in the table's footer area. Each unit
 #' of footnote text in the footer is linked to an element of text or otherwise

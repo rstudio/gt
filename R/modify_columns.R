@@ -3633,7 +3633,7 @@ cols_hide <- function(
 #'
 #' If the `tab_1` object is provided without the code or source data to
 #' regenerate it, and, the user wants to reveal otherwise hidden columns then
-#' the `cols_unhide()` function becomes useful.
+#' `cols_unhide()` becomes useful.
 #'
 #' ```r
 #' tab_1 |> cols_unhide(columns = country_code_2)
@@ -4140,12 +4140,11 @@ cols_merge_uncert <- function(
 #'
 #' @description
 #'
-#' The `cols_merge_range()` function is a specialized variant of [cols_merge()].
-#' It operates by taking a two columns that constitute a range of values
-#' (`col_begin` and `col_end`) and merges them into a single column. What
-#' results is a column containing both values separated by a long dash
-#' (e.g., `12.0 — 20.0`). The column specified in `col_end` is dropped from the
-#' output table.
+#' `cols_merge_range()` is a specialized variant of [cols_merge()]. It operates
+#' by taking a two columns that constitute a range of values (`col_begin` and
+#' `col_end`) and merges them into a single column. What results is a column
+#' containing both values separated by a long dash (e.g., `12.0 — 20.0`). The
+#' column specified in `col_end` is dropped from the output table.
 #'
 #' @inheritParams cols_align
 #'
