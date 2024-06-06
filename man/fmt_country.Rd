@@ -269,6 +269,46 @@ different \code{locale} values in separate calls of \code{fmt_country()}.
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_country_2.png" alt="This image of a table was generated from the second code example in the `fmt_country()` help file." style="width:100\%;">
 }}
+
+Let's make another \strong{gt} table, this time using the \code{\link{films}} dataset. The
+\code{countries_of_origin} column contains 2-letter country codes and some cells
+contain multiple countries (separated by commas). We'll use \code{fmt_country()}
+on that column and also specify that the rendered country names should be
+separated by a comma and a space character. Also note that historical
+country codes like \code{"SU"} ('USSR'), \code{"CS"} ('Czechoslovakia'), and \code{"YU"}
+('Yugoslavia') are permitted as inputs for \code{fmt_country()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{films |>
+  dplyr::filter(year == 1959) |>
+  dplyr::select(
+    contains("title"), run_time, director, countries_of_origin, imdb_url
+  ) |>
+  gt() \%>\%
+  tab_header(title = "Feature Films in Competition at the 1959 Festival") |>
+  fmt_country(columns = countries_of_origin, sep = ", ") |>
+  fmt_url(
+    columns = imdb_url,
+    label = fontawesome::fa("imdb", fill = "black")
+  ) |>
+  cols_merge(
+    columns = c(title, original_title, imdb_url),
+    pattern = "\{1\}<< (\{2\})>> \{3\}"
+  ) |>
+  cols_label(
+    title = "Film",
+    run_time = "Length",
+    director = "Director",
+    countries_of_origin = "Country"
+  ) |>
+  opt_vertical_padding(scale = 0.5) |>
+  opt_table_font(stack = "classical-humanist", weight = "bold") |>
+  opt_stylize(style = 1, color = "gray") |>
+  tab_options(heading.title.font.size = px(26))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_country_3.png" alt="This image of a table was generated from the third code example in the `fmt_country()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{

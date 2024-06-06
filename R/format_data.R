@@ -9869,6 +9869,50 @@ format_units_by_context <- function(
 #' `r man_get_image_tag(file = "man_fmt_url_4.png")`
 #' }}
 #'
+#' Links can be presented as icons. Let's take a look at an example of this type
+#' of presentation with a table based on the [`films`] dataset. The `imdb_url`
+#' column contains the URL information and in the `fmt_url()` call, we can use
+#' `fontawesome::fa()` to specify a `label`. In this case we elect to use the
+#' `"link"` icon and we can make some sizing adjustments to the icon here to
+#' ensure the layout looks optimal. We also use [`cols_merge()`] to combine
+#' the film's title, its original title (if present), and the link icon.
+#'
+#' ```r
+#' films |>
+#'   dplyr::filter(year == 2021) |>
+#'   dplyr::select(
+#'     contains("title"), run_time, director, imdb_url
+#'   ) |>
+#'   gt() %>%
+#'   tab_header(title = "Feature Films in Competition at the 2021 Festival") |>
+#'   fmt_url(
+#'     columns = imdb_url,
+#'     label = fontawesome::fa(
+#'       name = "link",
+#'       height = "0.75em",
+#'       vertical_align = "0em"
+#'      ),
+#'     color = "gray65"
+#'   ) |>
+#'   cols_merge(
+#'     columns = c(title, original_title, imdb_url),
+#'     pattern = "{1}<< ({2})>> {3}"
+#'   ) |>
+#'   cols_label(
+#'     title = "Film",
+#'     run_time = "Length",
+#'     director = "Director(s)",
+#'   ) |>
+#'   tab_options(heading.title.font.size = px(26)) |>
+#'   opt_vertical_padding(scale = 0.4) |>
+#'   opt_horizontal_padding(scale = 2) |>
+#'   opt_align_table_header(align = "left")
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_url_5.png")`
+#' }}
+#'
 #' @family data formatting functions
 #' @section Function ID:
 #' 3-21
@@ -12292,6 +12336,47 @@ fmt_flag <- function(
 #'
 #' \if{html}{\out{
 #' `r man_get_image_tag(file = "man_fmt_country_2.png")`
+#' }}
+#'
+#' Let's make another **gt** table, this time using the [`films`] dataset. The
+#' `countries_of_origin` column contains 2-letter country codes and some cells
+#' contain multiple countries (separated by commas). We'll use `fmt_country()`
+#' on that column and also specify that the rendered country names should be
+#' separated by a comma and a space character. Also note that historical
+#' country codes like `"SU"` ('USSR'), `"CS"` ('Czechoslovakia'), and `"YU"`
+#' ('Yugoslavia') are permitted as inputs for `fmt_country()`.
+#'
+#' ```r
+#' films |>
+#'   dplyr::filter(year == 1959) |>
+#'   dplyr::select(
+#'     contains("title"), run_time, director, countries_of_origin, imdb_url
+#'   ) |>
+#'   gt() %>%
+#'   tab_header(title = "Feature Films in Competition at the 1959 Festival") |>
+#'   fmt_country(columns = countries_of_origin, sep = ", ") |>
+#'   fmt_url(
+#'     columns = imdb_url,
+#'     label = fontawesome::fa("imdb", fill = "black")
+#'   ) |>
+#'   cols_merge(
+#'     columns = c(title, original_title, imdb_url),
+#'     pattern = "{1}<< ({2})>> {3}"
+#'   ) |>
+#'   cols_label(
+#'     title = "Film",
+#'     run_time = "Length",
+#'     director = "Director",
+#'     countries_of_origin = "Country"
+#'   ) |>
+#'   opt_vertical_padding(scale = 0.5) |>
+#'   opt_table_font(stack = "classical-humanist", weight = "bold") |>
+#'   opt_stylize(style = 1, color = "gray") |>
+#'   tab_options(heading.title.font.size = px(26))
+#' ```
+#'
+#' \if{html}{\out{
+#' `r man_get_image_tag(file = "man_fmt_country_3.png")`
 #' }}
 #'
 #' @family data formatting functions

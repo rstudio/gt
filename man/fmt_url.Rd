@@ -332,6 +332,49 @@ them with \code{\link[=sub_missing]{sub_missing()}}. Here's an example of that.
 \if{html}{\out{
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_url_4.png" alt="This image of a table was generated from the fourth code example in the `fmt_url()` help file." style="width:100\%;">
 }}
+
+Links can be presented as icons. Let's take a look at an example of this type
+of presentation with a table based on the \code{\link{films}} dataset. The \code{imdb_url}
+column contains the URL information and in the \code{fmt_url()} call, we can use
+\code{fontawesome::fa()} to specify a \code{label}. In this case we elect to use the
+\code{"link"} icon and we can make some sizing adjustments to the icon here to
+ensure the layout looks optimal. We also use \code{\link[=cols_merge]{cols_merge()}} to combine
+the film's title, its original title (if present), and the link icon.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{films |>
+  dplyr::filter(year == 2021) |>
+  dplyr::select(
+    contains("title"), run_time, director, imdb_url
+  ) |>
+  gt() \%>\%
+  tab_header(title = "Feature Films in Competition at the 2021 Festival") |>
+  fmt_url(
+    columns = imdb_url,
+    label = fontawesome::fa(
+      name = "link",
+      height = "0.75em",
+      vertical_align = "0em"
+     ),
+    color = "gray65"
+  ) |>
+  cols_merge(
+    columns = c(title, original_title, imdb_url),
+    pattern = "\{1\}<< (\{2\})>> \{3\}"
+  ) |>
+  cols_label(
+    title = "Film",
+    run_time = "Length",
+    director = "Director(s)",
+  ) |>
+  tab_options(heading.title.font.size = px(26)) |>
+  opt_vertical_padding(scale = 0.4) |>
+  opt_horizontal_padding(scale = 2) |>
+  opt_align_table_header(align = "left")
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{
+<img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_url_5.png" alt="This image of a table was generated from the fifth code example in the `fmt_url()` help file." style="width:100\%;">
+}}
 }
 
 \section{Function ID}{
