@@ -190,6 +190,7 @@ write_gt_examples_qmd_files <- function(
           "exibble",
           "towny",
           "peeps",
+          "films",
           "metro",
           "gibraltar",
           "constants",
