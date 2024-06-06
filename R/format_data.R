@@ -217,20 +217,20 @@
 #'
 #'   An optional locale identifier that can be used for formatting values
 #'   according the locale's rules. Examples include `"en"` for English (United
-#'   States) and `"fr"` for French (France). We can use the [info_locales()]
-#'   function as a useful reference for all of the locales that are supported. A
-#'   locale ID can be also set in the initial [gt()] function call (where it
-#'   would be used automatically by any function with a `locale` argument) but a
-#'   `locale` value provided here will override that global locale.
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported. A locale ID can
+#'   be also set in the initial [gt()] function call (where it would be used
+#'   automatically by any function with a `locale` argument) but a `locale`
+#'   value provided here will override that global locale.
 #'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Compatibility of formatting function with data values:
 #'
-#' `fmt_number()` is compatible with body cells that are of the
-#' `"numeric"` or `"integer"` types. Any other types of body cells are ignored
-#' during formatting. This is to say that cells of incompatible data types may
-#' be targeted, but there will be no attempt to format them.
+#' `fmt_number()` is compatible with body cells that are of the `"numeric"` or
+#' `"integer"` types. Any other types of body cells are ignored during
+#' formatting. This is to say that cells of incompatible data types may be
+#' targeted, but there will be no attempt to format them.
 #'
 #' @section Targeting cells with `columns` and `rows`:
 #'
@@ -275,8 +275,8 @@
 #'
 #' [from_column()] can be used with certain arguments of `fmt_number()` to
 #' obtain varying parameter values from a specified column within the table.
-#' This means that each row could be formatted a little bit differently.
-#' These arguments provide support for [from_column()]:
+#' This means that each row could be formatted a little bit differently. These
+#' arguments provide support for [from_column()]:
 #'
 #' - `decimals`
 #' - `n_sigfig`
@@ -298,8 +298,8 @@
 #' different for each argument). Additional columns for parameter values can be
 #' generated with [cols_add()] (if not already present). Columns that contain
 #' parameter data can also be hidden from final display with [cols_hide()].
-#' Finally, there is no limitation to how many arguments [from_column()] is
-#' applied so long as the arguments belong to this closed set.
+#' Finally, there is no limitation to how many arguments the [from_column()]
+#' helper is applied so long as the arguments belong to this closed set.
 #'
 #' @section Adapting output to a specific `locale`:
 #'
@@ -434,10 +434,10 @@
 #' `v0.2.0.5` (March 31, 2020)
 #'
 #' @seealso
-#'  * [fmt_integer()] might be more useful if you really need  to format
-#'   numeric values to appear as integers (i.e., no decimals will be shown and
-#'   input values are rounded as necessary).
-#' * [vec_fmt_number()] can is the vectorized version.
+#' The integer-formatting function (format rounded values (i.e., no decimals shown and
+#'input values are rounded as necessary): [fmt_integer()].
+#'
+#' The vector-formatting version of this function: [vec_fmt_number()]
 #'
 #' @import rlang
 #' @export
@@ -755,10 +755,10 @@ fmt_number <- function(
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
-#' [from_column()] can be used with certain arguments of
-#' `fmt_integer()` to obtain varying parameter values from a specified column
-#' within the table. This means that each row could be formatted a little bit
-#' differently. These arguments provide support for [from_column()]:
+#' [from_column()] can be used with certain arguments of  `fmt_integer()` to
+#' obtain varying parameter values from a specified column within the table.
+#' This means that each row could be formatted a little bit differently. These
+#' arguments provide support for [from_column()]:
 #'
 #' - `use_seps`
 #' - `accounting`
@@ -789,7 +789,7 @@ fmt_number <- function(
 #' Note that a `locale` value provided here will override any global locale
 #' setting performed in [gt()]'s own `locale` argument (it is settable there as
 #' a value received by all other functions that have a `locale` argument). As a
-#' useful reference on which locales are supported, we can use [info_locales()]
+#' useful reference on which locales are supported, we can call [info_locales()]
 #' to view an info table.
 #'
 #' @section Examples:
@@ -867,9 +867,9 @@ fmt_number <- function(
 #' `v0.3.1` (August 9, 2021)
 #'
 #' @seealso
-#' * [fmt_number()] may be more appropriate if you need to showcase
-#'   decimal values in your outputs.
-#' * [vec_fmt_integer()] to format a vector.
+#' Format number with decimal values: [fmt_number()]
+#'
+#' The vector-formatting version of this function: [vec_fmt_integer()]
 #'
 #' @import rlang
 #' @export
@@ -1088,8 +1088,8 @@ fmt_integer <- function(
 #'
 #' [from_column()] can be used with certain arguments of `fmt_scientific()` to
 #' obtain varying parameter values from a specified column within the table.
-#' This means that each row could be formatted a little bit differently.
-#' These arguments provide support for [from_column()]:
+#' This means that each row could be formatted a little bit differently. These
+#' arguments provide support for [from_column()]:
 #'
 #' - `decimals`
 #' - `drop_trailing_zeros`
@@ -1106,11 +1106,10 @@ fmt_integer <- function(
 #' Please note that for all of the aforementioned arguments, a [from_column()]
 #' call needs to reference a column that has data of the correct type (this is
 #' different for each argument). Additional columns for parameter values can be
-#' generated with [cols_add()] (if not already present). Columns
-#' that contain parameter data can also be hidden from final display with
-#' [cols_hide()]. Finally, there is no limitation to how many arguments the
-#' [from_column()] helper is applied so long as the arguments belong to this
-#' closed set.
+#' generated with [cols_add()] (if not already present). Columns that contain
+#' parameter data can also be hidden from final display with [cols_hide()].
+#' Finally, there is no limitation to how many arguments the [from_column()]
+#' helper is applied so long as the arguments belong to this closed set.
 #'
 #' @section Adapting output to a specific `locale`:
 #'
@@ -1625,10 +1624,10 @@ fmt_scientific <- function(
 #'
 #' @section Compatibility of arguments with the `from_column()` helper function:
 #'
-#' [from_column()] can be used with certain arguments of
-#' `fmt_engineering()` to obtain varying parameter values from a specified
-#' column within the table. This means that each row could be formatted a little
-#' bit differently. These arguments provide support for [from_column()]:
+#' [from_column()] can be used with certain arguments of `fmt_engineering()` to
+#' obtain varying parameter values from a specified column within the table.
+#' This means that each row could be formatted a little bit differently. These
+#' arguments provide support for [from_column()]:
 #'
 #' - `decimals`
 #' - `drop_trailing_zeros`
@@ -1647,8 +1646,8 @@ fmt_scientific <- function(
 #' different for each argument). Additional columns for parameter values can be
 #' generated with [cols_add()] (if not already present). Columns that contain
 #' parameter data can also be hidden from final display with [cols_hide()].
-#' Finally, there is no limitation to how many arguments [from_column()]
-#' accepts so long as the arguments belong to this closed set.
+#' Finally, there is no limitation to how many arguments the [from_column()]
+#' helper is applied so long as the arguments belong to this closed set.
 #'
 #' @section Adapting output to a specific `locale`:
 #'
@@ -2604,8 +2603,8 @@ fmt_percent <- function(
 #'
 #' [from_column()] can be used with certain arguments of `fmt_partsper()` to
 #' obtain varying parameter values from a specified column within the table.
-#' This means that each row could be formatted a little bit differently.
-#' These arguments provide support for [from_column()]:
+#' This means that each row could be formatted a little bit differently. These
+#' arguments provide support for [from_column()]:
 #'
 #' - `to_units`
 #' - `symbol`
@@ -3006,8 +3005,8 @@ fmt_partsper <- function(
 #' different for each argument). Additional columns for parameter values can be
 #' generated with [cols_add()] (if not already present). Columns that contain
 #' parameter data can also be hidden from final display with [cols_hide()].
-#' Finally, there is no limitation to how many arguments [from_column()] is
-#' applied so long as the arguments belong to this closed set.
+#' Finally, there is no limitation to how many arguments the [from_column()]
+#' helper is applied so long as the arguments belong to this closed set.
 #'
 #' @section Adapting output to a specific `locale`:
 #'
@@ -3022,7 +3021,7 @@ fmt_partsper <- function(
 #' setting performed in [gt()]'s own `locale` argument (it is settable there as
 #' a value received by all other functions that have a `locale` argument). As a
 #' useful reference on which locales are supported, we can call [info_locales()]
-#'  to view an info table.
+#' to view an info table.
 #'
 #' @section Examples:
 #'
@@ -3683,8 +3682,8 @@ round_gt <- function(x, digits = 0) {
 #'
 #' [from_column()] can be used with certain arguments of `fmt_currency()` to
 #' obtain varying parameter values from a specified column within the table.
-#' This means that each row could be formatted a little bit differently.
-#' These arguments provide support for [from_column()]:
+#' This means that each row could be formatted a little bit differently. These
+#' arguments provide support for [from_column()]:
 #'
 #' - `currency`
 #' - `use_subunits`
@@ -3708,8 +3707,8 @@ round_gt <- function(x, digits = 0) {
 #' different for each argument). Additional columns for parameter values can be
 #' generated with [cols_add()] (if not already present). Columns that contain
 #' parameter data can also be hidden from final display with [cols_hide()].
-#' Finally, there is no limitation to how many arguments [from_column()] is
-#' applied so long as the arguments belong to this closed set.
+#' Finally, there is no limitation to how many arguments the [from_column()]
+#' helper is applied so long as the arguments belong to this closed set.
 #'
 #' @section Adapting output to a specific `locale`:
 #'
@@ -3809,8 +3808,8 @@ round_gt <- function(x, digits = 0) {
 #' locale's assumed currency and not have to supply a `currency` value (doing so
 #' would override the locale's default currency). With a column of locale
 #' values, we can format currency values on a row-by-row basis through the use
-#' of [from_column()]. Here, we'll reference the `locale`
-#' column in the argument of the same name.
+#' of [from_column()]. Here, we'll reference the `locale` column in the argument
+#' of the same name.
 #'
 #' ```r
 #' dplyr::tibble(
@@ -4124,8 +4123,8 @@ fmt_currency <- function(
 #'
 #' [from_column()] can be used with certain arguments of `fmt_roman()` to obtain
 #' varying parameter values from a specified column within the table. This means
-#' that each row could be formatted a little bit differently.
-#' These arguments provide support for [from_column()]:
+#' that each row could be formatted a little bit differently. These arguments
+#' provide support for [from_column()]:
 #'
 #' - `case`
 #' - `pattern`
@@ -4419,8 +4418,8 @@ fmt_roman <- function(
 #' different for each argument). Additional columns for parameter values can be
 #' generated with [cols_add()] (if not already present). Columns that contain
 #' parameter data can also be hidden from final display with [cols_hide()].
-#' Finally, there is no limitation to how many arguments [from_column()] is
-#' applied so long as the arguments belong to this closed set.
+#' Finally, there is no limitation to how many arguments the [from_column()]
+#' helper is applied so long as the arguments belong to this closed set.
 #'
 #' @section Examples:
 #'
@@ -4743,8 +4742,8 @@ get_letters_from_div <- function(x, set) {
 #'
 #' [from_column()] can be used with certain arguments of `fmt_spelled_num()` to
 #' obtain varying parameter values from a specified column within the table.
-#' This means that each row could be formatted a little bit differently.
-#' These arguments provide support for [from_column()]:
+#' This means that each row could be formatted a little bit differently. These
+#' arguments provide support for [from_column()]:
 #'
 #' - `pattern`
 #' - `locale`
@@ -5515,8 +5514,8 @@ fmt_bytes <- function(
 #'
 #' [from_column()] can be used with certain arguments of `fmt_date()` to obtain
 #' varying parameter values from a specified column within the table. This means
-#' that each row could be formatted a little bit differently.
-#' These arguments provide support for [from_column()]:
+#' that each row could be formatted a little bit differently. These arguments
+#' provide support for [from_column()]:
 #'
 #' - `date_style`
 #' - `pattern`
@@ -5586,7 +5585,7 @@ fmt_bytes <- function(
 #' | 40 | `"d"`                 | `"29"`                  | flexible      |
 #' | 41 | `"Ed"`                | `"29 Tue"`              | flexible      |
 #'
-#' We can call [info_date_style()]  within the console to view a similar table
+#' We can call [info_date_style()] in the console to view a similar table
 #' of date styles with example output.
 #'
 #' @section Adapting output to a specific `locale`:
@@ -5901,11 +5900,10 @@ fmt_date <- function(
 #' Please note that for each of the aforementioned arguments, a [from_column()]
 #' call needs to reference a column that has data of the correct type (this is
 #' different for each argument). Additional columns for parameter values can be
-#' generated with [cols_add()] (if not already present). Columns
-#' that contain parameter data can also be hidden from final display with
-#' [cols_hide()]. Finally, there is no limitation to how many arguments the
-#' [from_column()] helper is applied so long as the arguments belong to this
-#' closed set.
+#' generated with [cols_add()] (if not already present). Columns that contain
+#' parameter data can also be hidden from final display with [cols_hide()].
+#' Finally, there is no limitation to how many arguments the [from_column()]
+#' helper is applied so long as the arguments belong to this closed set.
 #'
 #' @section Formatting with the `time_style` argument:
 #'
@@ -5948,7 +5946,7 @@ fmt_date <- function(
 #' | 24 | `"hmv"`       | `"2:35 PM GMT+00:00"`           | flexible, 12h |
 #' | 25 | `"ms"`        | `"35:00"`                       | flexible      |
 #'
-#' We can use [info_time_style()] within the console to view a similar table of
+#' We can call [info_time_style()] in the console to view a similar table of
 #' time styles with example output.
 #'
 #' @section Adapting output to a specific `locale`:
@@ -6282,8 +6280,8 @@ fmt_time <- function(
 #'
 #' [from_column()] can be used with certain arguments of `fmt_datetime()` to
 #' obtain varying parameter values from a specified column within the table.
-#' This means that each row could be formatted a little bit differently.
-#' These arguments provide support for [from_column()]:
+#' This means that each row could be formatted a little bit differently. These
+#' arguments provide support for [from_column()]:
 #'
 #' - `date_style`
 #' - `time_style`
@@ -6357,7 +6355,7 @@ fmt_time <- function(
 #' | 40 | `"d"`                 | `"29"`                  | flexible      |
 #' | 41 | `"Ed"`                | `"29 Tue"`              | flexible      |
 #'
-#' We can call [info_date_style()] within the console to view a similar table of
+#' We can call [info_date_style()] in the console to view a similar table of
 #' date styles with example output.
 #'
 #' @section Formatting with the `time_style` argument:
@@ -6404,7 +6402,7 @@ fmt_time <- function(
 #' | 24 | `"hmv"`       | `"2:35 PM GMT+00:00"`           | flexible, 12h |
 #' | 25 | `"ms"`        | `"35:00"`                       | flexible      |
 #'
-#' We can call [info_time_style()] within the console to view a similar table of
+#' We can call [info_time_style()] in the console to view a similar table of
 #' time styles with example output.
 #'
 #' @section Formatting with a *CLDR* datetime pattern:
@@ -9726,11 +9724,10 @@ format_units_by_context <- function(
 #' Please note that for each of the aforementioned arguments, a [from_column()]
 #' call needs to reference a column that has data of the correct type (this is
 #' different for each argument). Additional columns for parameter values can be
-#' generated with [cols_add()] (if not already present). Columns
-#' that contain parameter data can also be hidden from final display with
-#' [cols_hide()]. Finally, there is no limitation to how many arguments the
-#' [from_column()] helper is applied so long as the arguments belong to this
-#' closed set.
+#' generated with [cols_add()] (if not already present). Columns that contain
+#' parameter data can also be hidden from final display with [cols_hide()].
+#' Finally, there is no limitation to how many arguments the [from_column()]
+#' helper is applied so long as the arguments belong to this closed set.
 #'
 #' @section Examples:
 #'
@@ -9978,10 +9975,14 @@ fmt_url <- function(
       data = data,
       columns = {{ columns }},
       valid_classes = compat
-    )) {
+    )
+  ) {
+    if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
       cli::cli_abort(
-        "`fmt_url()` can only be used on `columns` with character or factor data."
+        "The `fmt_url()` function can only be used on `columns`
+      with character or factor data."
       )
+    }
   }
 
   if (as_button) {
@@ -10560,10 +10561,10 @@ add_anchor_attr <- function(
 #'
 #' Another option is to display the names of the email recipients instead of the
 #' email addresses, making the display names serve as 'mailto:' links. We can do
-#' this by using [`display_name = from_column(<expr>)`][from_column()].
-#' The display names in this case are the combined given and family names,
-#' handled earlier through a `dplyr::mutate()` call. With some space conserved,
-#' we take the opportunity here to add in phone information for each person.
+#' this by using [from_column()] in the `display_name` argument. The display
+#' names in this case are the combined given and family names, handled earlier
+#' through a `dplyr::mutate()` call. With some space conserved, we take the
+#' opportunity here to add in phone information for each person.
 #'
 #' ```r
 #' peeps |>

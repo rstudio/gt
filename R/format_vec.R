@@ -1932,7 +1932,7 @@ vec_fmt_bytes <- function(
 #' | 40 | `"d"`                 | `"29"`                  | flexible      |
 #' | 41 | `"Ed"`                | `"29 Tue"`              | flexible      |
 #'
-#' We can call [info_date_style()] within the console to view a similar table
+#' We can call [info_date_style()] in the console to view a similar table
 #' of date styles with example output.
 #'
 #' @section Examples:
@@ -2333,7 +2333,7 @@ vec_fmt_time <- function(
 #' | 24 | `"hmv"`       | `"2:35 PM GMT+00:00"`           | flexible, 12h |
 #' | 25 | `"ms"`        | `"35:00"`                       | flexible      |
 #'
-#' We can call [info_time_style()] within the console to view a similar table of
+#' We can call [info_time_style()] in the console to view a similar table of
 #' time styles with example output.
 #'
 #' @section Formatting with a *CLDR* datetime pattern:

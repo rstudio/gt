@@ -46,8 +46,8 @@
 #' @section Examples:
 #'
 #' Use the [`exibble`] dataset to create a **gt** table. When adding a title
-#' through [tab_header()], we'll use the `md()` helper to signify
-#' to **gt** that we're using Markdown formatting.
+#' through [tab_header()], we'll use the `md()` helper to signify to **gt** that
+#' we're using Markdown formatting.
 #'
 #' ```r
 #' exibble |>
@@ -325,11 +325,11 @@ pct <- function(x) {
 #'
 #' @section Examples:
 #'
-#' The `from_column()` function can be used in a variety of formatting functions
-#' so that values for common options don't have to be static, they can change in
-#' every row (so long as you have a column of compatible option values). Here's
-#' an example where we have a table of repeating numeric values along with a
-#' column of currency codes. We can format the numbers to currencies with
+#' `from_column()` can be used in a variety of formatting functions so that
+#' values for common options don't have to be static, they can change in every
+#' row (so long as you have a column of compatible option values). Here's an
+#' example where we have a table of repeating numeric values along with a column
+#' of currency codes. We can format the numbers to currencies with
 #' [fmt_currency()] and use `from_column()` to reference the column of currency
 #' codes, giving us values that are each formatted as having a different
 #' currency.
@@ -3197,8 +3197,8 @@ default_fonts <- function() {
 #' in total) representing a themed set of fonts. These sets comprise a font
 #' family that has been tested to work across a wide range of computer systems.
 #' This is useful when specifying `font` values in [cell_text()]
-#' (itself used inside [tab_style()]).
-#' [`opt_tab_font(stack = <expr>)`][opt_table_font()] can alternatively be used.
+#' (itself used inside [tab_style()]). If using [opt_table_font()], we can
+#' invoke this function in its `stack` argument.
 #'
 #' @param name *Name of font stack*
 #'
@@ -3388,8 +3388,8 @@ default_fonts <- function() {
 #' For the `date` column and the column labels, let's use a different font stack
 #' (the `"industrial"` one). The system fonts used in this particular stack are
 #' `"Bahnschrift"`, `"DIN Alternate"`, `"Franklin Gothic Medium"`, and
-#' are used if the aforementioned fonts aren't available).
 #' `"Nimbus Sans Narrow"` (the generic `"sans-serif-condensed"` and `"sans-serif"`
+#' are used if the aforementioned fonts aren't available).
 #'
 #' ```r
 #' sp500 |>

@@ -229,10 +229,10 @@ determine_which_character_number <- function(
 #'   An optional locale identifier that can be used to obtain the type of
 #'   decimal mark used in the numeric values to be aligned (according to the
 #'   locale's formatting rules). Examples include `"en"` for English (United
-#'   States) and `"fr"` for French (France). We can use the [info_locales()]
-#'   function as a useful reference for all of the locales that are supported. A
-#'   locale ID can be also set in the initial [gt()] function call (where it
-#'   would be used automatically by any function with a `locale` argument) but a
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported. A locale ID can
+#'   be also set in the initial [gt()] function call (where it would be used
+#'   automatically by any function with a `locale` argument) but a
 #'   `locale` value provided here will override that global locale.
 #'
 #' @return An object of class `gt_tbl`.

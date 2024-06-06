@@ -41,7 +41,7 @@
 #' argument controls this through keywords and other arguments act as inputs to
 #' specific methods
 #' - coloring function: a custom function can be supplied to the `fn` argument
-#' for finer control over color evaluation with data; the  `scales::col_*()`
+#' for finer control over color evaluation with data; the `scales::col_*()`
 #' color mapping functions can be used here or any function you might want to define
 #' - color palettes: with `palette` we could supply a vector of colors, a
 #' **virdis** or **RColorBrewer** palette name, or, a palette from the

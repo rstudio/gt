@@ -192,8 +192,8 @@
 #'
 #' One more thing to consider with row groups is their layout. By default, row
 #' group labels reside in separate rows the appear above the group. However,
-#' we can use the `row_group_as_column = TRUE` option to put the row group
-#' labels within a secondary column within the table stub.
+#' we can use `row_group_as_column = TRUE` to put the row group labels within a
+#' secondary column within the table stub.
 #'
 #' ```r
 #' exibble |>
