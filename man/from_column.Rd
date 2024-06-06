@@ -82,11 +82,11 @@ and sections like these describe which arguments support the use of
 \section{Examples}{
 
 
-The \code{from_column()} function can be used in a variety of formatting functions
-so that values for common options don't have to be static, they can change in
-every row (so long as you have a column of compatible option values). Here's
-an example where we have a table of repeating numeric values along with a
-column of currency codes. We can format the numbers to currencies with
+\code{from_column()} can be used in a variety of formatting functions so that
+values for common options don't have to be static, they can change in every
+row (so long as you have a column of compatible option values). Here's an
+example where we have a table of repeating numeric values along with a column
+of currency codes. We can format the numbers to currencies with
 \code{\link[=fmt_currency]{fmt_currency()}} and use \code{from_column()} to reference the column of currency
 codes, giving us values that are each formatted as having a different
 currency.

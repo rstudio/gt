@@ -68,8 +68,8 @@ table. We can hide the \code{country_code_2} and \code{country_code_3} columns w
 Using another \code{\link{countrypops}}-based \strong{gt} table, we can use the \code{population}
 column to provide the conditional placement of footnotes. Then, we'll hide
 that column along with the \code{country_code_3} column. Note that the order of
-the \code{cols_hide()} and \code{\link[=tab_footnote]{tab_footnote()}} statements has no effect on the final
-display of the table.
+\code{cols_hide()} and \code{\link[=tab_footnote]{tab_footnote()}} has no effect on the final display of the
+table.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::filter(country_name == "Pakistan") |>

@@ -64,7 +64,7 @@ neither been formatted nor undergone substitution remain as \code{NA} values.
 any substitution operations applied are migrated to the body table. \code{NA}
 values now become the string \code{"NA"}, so, there aren't any true missing values
 in this body table.
-\item \code{"cols_merged"}: The result of column-merging operations (though
+\item \code{"cols_merged"}: The result of column-merging operations (through
 \code{\link[=cols_merge]{cols_merge()}} and related functions) is materialized here. Columns that were
 asked to be hidden will be present here (i.e., hiding columns doesn't remove
 them from the body table).

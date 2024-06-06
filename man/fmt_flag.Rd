@@ -73,11 +73,11 @@ hovering over the flag icon.}
 
 An optional locale identifier that can be used for formatting values
 according the locale's rules. Examples include \code{"en"} for English (United
-States) and \code{"fr"} for French (France). We can use the \code{\link[=info_locales]{info_locales()}}
-function as a useful reference for all of the locales that are supported. A
-locale ID can be also set in the initial \code{\link[=gt]{gt()}} function call (where it
-would be used automatically by any function with a \code{locale} argument) but a
-\code{locale} value provided here will override that global locale.}
+States) and \code{"fr"} for French (France). We can call \code{\link[=info_locales]{info_locales()}} for a
+useful reference for all of the locales that are supported. A locale ID can
+be also set in the initial \code{\link[=gt]{gt()}} function call (where it would be used
+automatically by any function with a \code{locale} argument) but a \code{locale}
+value provided here will override that global locale.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -266,10 +266,10 @@ text.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_flag_2.png" alt="This image of a table was generated from the second code example in the `fmt_flag()` help file." style="width:100\%;">
 }}
 
-The \code{fmt_flag()} function works well even when there are multiple country
-codes within the same cell. It can operate on comma-separated codes without
-issue. When rendered to HTML, hovering over each of the flag icons results in
-tooltip text showing the name of the country.
+\code{fmt_flag()} works well even when there are multiple country codes within the
+same cell. It can operate on comma-separated codes without issue. When
+rendered to HTML, hovering over each of the flag icons results in tooltip
+text showing the name of the country.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::filter(year == 2021, population < 100000) |>

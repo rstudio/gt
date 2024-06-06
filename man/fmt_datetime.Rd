@@ -106,11 +106,11 @@ literals.}
 
 An optional locale identifier that can be used for formatting values
 according the locale's rules. Examples include \code{"en"} for English (United
-States) and \code{"fr"} for French (France). We can use the \code{\link[=info_locales]{info_locales()}}
-function as a useful reference for all of the locales that are supported. A
-locale ID can be also set in the initial \code{\link[=gt]{gt()}} function call (where it
-would be used automatically by any function with a \code{locale} argument) but a
-\code{locale} value provided here will override that global locale.}
+States) and \code{"fr"} for French (France). We can call \code{\link[=info_locales]{info_locales()}} for a
+useful reference for all of the locales that are supported. A locale ID can
+be also set in the initial \code{\link[=gt]{gt()}} function call (where it would be used
+automatically by any function with a \code{locale} argument) but a \code{locale}
+value provided here will override that global locale.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -177,8 +177,8 @@ more complex predicate expression.
 
 \code{\link[=from_column]{from_column()}} can be used with certain arguments of \code{fmt_datetime()} to
 obtain varying parameter values from a specified column within the table.
-This means that each row could be formatted a little bit differently.
-These arguments provide support for \code{\link[=from_column]{from_column()}}:
+This means that each row could be formatted a little bit differently. These
+arguments provide support for \code{\link[=from_column]{from_column()}}:
 \itemize{
 \item \code{date_style}
 \item \code{time_style}
@@ -255,7 +255,7 @@ values (corresponding to an input date of \code{2000-02-29}).\tabular{llll}{
 }
 
 
-We can call \code{\link[=info_date_style]{info_date_style()}} within the console to view a similar table of
+We can call \code{\link[=info_date_style]{info_date_style()}} in the console to view a similar table of
 date styles with example output.
 }
 
@@ -304,7 +304,7 @@ redundant or repeating information.\tabular{llll}{
 }
 
 
-We can call \code{\link[=info_time_style]{info_time_style()}} within the console to view a similar table of
+We can call \code{\link[=info_time_style]{info_time_style()}} in the console to view a similar table of
 time styles with example output.
 }
 

@@ -229,7 +229,7 @@ quantiles) and the function will generate colors accordingly; the \code{method}
 argument controls this through keywords and other arguments act as inputs to
 specific methods
 \item coloring function: a custom function can be supplied to the \code{fn} argument
-for finer control over color evaluation with data; the  \verb{scales::col_*()}
+for finer control over color evaluation with data; the \verb{scales::col_*()}
 color mapping functions can be used here or any function you might want to define
 \item color palettes: with \code{palette} we could supply a vector of colors, a
 \strong{virdis} or \strong{RColorBrewer} palette name, or, a palette from the

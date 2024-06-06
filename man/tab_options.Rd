@@ -650,8 +650,7 @@ components, the subcomponents, and the element that can adjusted.
 Use select columns from the \code{\link{exibble}} dataset to create a \strong{gt} table with
 a number of table parts added (using functions like \code{\link[=summary_rows]{summary_rows()}},
 \code{\link[=grand_summary_rows]{grand_summary_rows()}}, and more). We can use this \strong{gt} object going
-forward to demo some of the features available in the \code{tab_options()}
-function.
+forward to demo some of \code{tab_options()} features.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
   exibble |>

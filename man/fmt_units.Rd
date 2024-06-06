@@ -40,8 +40,8 @@ need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{fmt_units()} function lets you better format measurement units in the
-table body. These must conform to \strong{gt}'s specialized units notation (e.g.,
+\code{fmt_units()} lets you better format measurement units in the table body.
+These must conform to \strong{gt}'s specialized units notation (e.g.,
 \code{"J Hz^-1 mol^-1"} can be used to generate units for the
 \emph{molar Planck constant}) for the best conversion. The notation here provides
 several conveniences for defining units, so as long as the values to be

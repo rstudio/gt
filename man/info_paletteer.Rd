@@ -31,11 +31,10 @@ quick reference for all of the discrete color palettes available in \strong{pale
 \details{
 The palettes displayed are organized by package and by palette name. These
 values are required when obtaining a palette (as a vector of hexadecimal
-colors), from \code{paletteer::paletteer_d()}. Once we are
-familiar with the names of the color palette packages (e.g.,
-\strong{RColorBrewer}, \strong{ggthemes}, \strong{wesanderson}), we can narrow down
-the content of this information table by supplying a vector of such package
-names to \code{color_pkgs}.
+colors), from \code{paletteer::paletteer_d()}. Once we are familiar with the names
+of the color palette packages (e.g., \strong{RColorBrewer}, \strong{ggthemes},
+\strong{wesanderson}), we can narrow down the content of this information table by
+supplying a vector of such package names to \code{color_pkgs}.
 
 Colors from the following color packages (all supported by \strong{paletteer})
 are shown by default with \code{info_paletteer()}:

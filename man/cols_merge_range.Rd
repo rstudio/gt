@@ -89,12 +89,11 @@ value provided here will override that global locale.}
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{cols_merge_range()} function is a specialized variant of \code{\link[=cols_merge]{cols_merge()}}.
-It operates by taking a two columns that constitute a range of values
-(\code{col_begin} and \code{col_end}) and merges them into a single column. What
-results is a column containing both values separated by a long dash
-(e.g., \verb{12.0 — 20.0}). The column specified in \code{col_end} is dropped from the
-output table.
+\code{cols_merge_range()} is a specialized variant of \code{\link[=cols_merge]{cols_merge()}}. It operates
+by taking a two columns that constitute a range of values (\code{col_begin} and
+\code{col_end}) and merges them into a single column. What results is a column
+containing both values separated by a long dash (e.g., \verb{12.0 — 20.0}). The
+column specified in \code{col_end} is dropped from the output table.
 }
 \section{Comparison with other column-merging functions}{
 

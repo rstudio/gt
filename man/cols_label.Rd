@@ -60,9 +60,9 @@ columns from the input table data). When you create a \strong{gt} table object
 using \code{\link[=gt]{gt()}}, column names effectively become the column labels. While this
 serves as a good first approximation, column names as label defaults aren't
 often as appealing in a \strong{gt} table as the option for custom column labels.
-\code{cols_label()}  provides the flexibility to relabel one or more
-columns and we even have the option to use the \code{\link[=md]{md()}} or \code{\link[=html]{html()}} helper
-functions for rendering column labels from Markdown or using HTML.
+\code{cols_label()} provides the flexibility to relabel one or more columns and
+we even have the option to use \code{\link[=md]{md()}} or \code{\link[=html]{html()}} for rendering column labels
+from Markdown or using HTML.
 }
 \section{A note on column names and column labels}{
 

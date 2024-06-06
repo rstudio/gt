@@ -121,7 +121,7 @@ values (corresponding to an input date of \code{2000-02-29}).\tabular{llll}{
 }
 
 
-We can call \code{\link[=info_date_style]{info_date_style()}} within the console to view a similar table
+We can call \code{\link[=info_date_style]{info_date_style()}} in the console to view a similar table
 of date styles with example output.
 }
 

@@ -44,24 +44,24 @@ wish to make the transformation happen at different locations.}
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{text_case_when()} function provides a useful interface for a
-case-by-case approach to replacing entire table cells. First off, you have to
-make sure you're targeting the appropriate cells with the \code{.locations}
-argument. Following that, you supply a sequence of two-sided formulas
-matching of the general form: \verb{<logical_stmt> ~ <new_text>}. In the left hand
-side (LHS) there should be a predicate statement that evaluates to a logical
-vector of length one (i.e., either \code{TRUE} or \code{FALSE}). To refer to the values
-undergoing transformation, you need to use the \code{x} variable.
+\code{text_case_when()} provides a useful interface for a case-by-case approach to
+replacing entire table cells. First off, you have to make sure you're
+targeting the appropriate cells with the \code{.locations} argument. Following
+that, you supply a sequence of two-sided formulas matching of the general
+form: \verb{<logical_stmt> ~ <new_text>}. In the left hand side (LHS) there should
+be a predicate statement that evaluates to a logical vector of length one
+(i.e., either \code{TRUE} or \code{FALSE}). To refer to the values undergoing
+transformation, you need to use the \code{x} variable.
 }
 \section{Examples}{
 
 
 Use a portion of the \code{\link{metro}} dataset to create a \strong{gt} table. We'll use
-the \code{text_case_when()} function to supply pairs of predicate statements and
-replacement text. For the \code{connect_rer} column, we will perform a count of
-pattern matches with \code{stringr::str_count()} and determine which cells have 1,
-2, or 3 matched patterns. For each of these cases, descriptive replacement
-text is provided. Here, we use a \code{.default} value to replace the non-matched
+\code{text_case_when()} to supply pairs of predicate statements and replacement
+text. For the \code{connect_rer} column, we will perform a count of pattern
+matches with \code{stringr::str_count()} and determine which cells have 1, 2, or 3
+matched patterns. For each of these cases, descriptive replacement text is
+provided. Here, we use a \code{.default} value to replace the non-matched
 cases with an empty string (\code{""}). Finally, we use \code{\link[=cols_label]{cols_label()}} to modify
 the labels of the three columns.
 

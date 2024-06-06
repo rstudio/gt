@@ -67,8 +67,8 @@ set to \code{FALSE}.}
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{opt_table_font()} function makes it possible to define fonts used for an
-entire \strong{gt} table. Any font names supplied in \code{font} will (by default, with
+\code{opt_table_font()} makes it possible to define fonts used for an entire
+\strong{gt} table. Any font names supplied in \code{font} will (by default, with
 \code{add = TRUE}) be placed before the names present in the existing font stack
 (i.e., they will take precedence). You can choose to base the font stack on
 those provided by \code{\link[=system_fonts]{system_fonts()}} by providing a valid keyword for a themed
@@ -76,7 +76,7 @@ set and optionally prepending \code{font} values to that.
 
 Take note that you could still have entirely different fonts in specific
 locations of the table. For that you would need to use \code{\link[=tab_style]{tab_style()}} or
-\code{\link[=tab_style_body]{tab_style_body()}} in conjunction with the \code{\link[=cell_text]{cell_text()}} helper function.
+\code{\link[=tab_style_body]{tab_style_body()}} in conjunction with \code{\link[=cell_text]{cell_text()}}.
 }
 \section{Possibilities for the \code{font} argument}{
 

@@ -41,10 +41,10 @@ When this is \code{FALSE} (the default), the CSS provided here won't be added
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{opt_css()} function makes it possible to add CSS to a \strong{gt} table. This
-CSS will be added after the compiled CSS that \strong{gt} generates automatically
-when the object is transformed to an HTML output table. You can supply \code{css}
-as a vector of lines or as a single string.
+\code{opt_css()} makes it possible to add CSS to a \strong{gt} table. This  CSS will be
+added after the compiled CSS that \strong{gt} generates automatically when the
+object is transformed to an HTML output table. You can supply \code{css} as a
+vector of lines or as a single string.
 }
 \section{Examples}{
 

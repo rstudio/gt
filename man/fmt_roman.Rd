@@ -120,8 +120,8 @@ more complex predicate expression.
 
 \code{\link[=from_column]{from_column()}} can be used with certain arguments of \code{fmt_roman()} to obtain
 varying parameter values from a specified column within the table. This means
-that each row could be formatted a little bit differently.
-These arguments provide support for \code{\link[=from_column]{from_column()}}:
+that each row could be formatted a little bit differently. These arguments
+provide support for \code{\link[=from_column]{from_column()}}:
 \itemize{
 \item \code{case}
 \item \code{pattern}

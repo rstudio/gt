@@ -63,9 +63,8 @@ wish to make the transformation happen at different locations.}
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{text_case_match()} function provides a useful interface for a approach
-to replacing table cells that behaves much like a switch statement. The
-targeting of cells for transformation happens with the \code{.locations} argument.
+\code{text_case_match()} provides a useful interface for a approach to replacing
+table cells that behaves much like a switch statement. The targeting of cell for transformation happens with the \code{.locations} argument.
 Once overall targeting is handled, you need to supply a sequence of two-sided
 formulas matching of the general form: \verb{<vector_old_text> ~ <new_text>}. In
 the left hand side (LHS) there should be a character vector containing

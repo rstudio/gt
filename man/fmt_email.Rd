@@ -287,10 +287,10 @@ calls, we can place the icon/link next to the name of the person.
 
 Another option is to display the names of the email recipients instead of the
 email addresses, making the display names serve as 'mailto:' links. We can do
-this by using \code{\link[=from_column]{display_name = from_column(<expr>)}}.
-The display names in this case are the combined given and family names,
-handled earlier through a \code{dplyr::mutate()} call. With some space conserved,
-we take the opportunity here to add in phone information for each person.
+this by using \code{\link[=from_column]{from_column()}} in the \code{display_name} argument. The display
+names in this case are the combined given and family names, handled earlier
+through a \code{dplyr::mutate()} call. With some space conserved, we take the
+opportunity here to add in phone information for each person.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{peeps |>
   dplyr::filter(country == "AUS") |>

@@ -64,7 +64,7 @@ tab_1
 
 If the \code{tab_1} object is provided without the code or source data to
 regenerate it, and, the user wants to reveal otherwise hidden columns then
-the \code{cols_unhide()} function becomes useful.
+\code{cols_unhide()} becomes useful.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |> cols_unhide(columns = country_code_2)
 }\if{html}{\out{</div>}}

@@ -55,8 +55,8 @@ depending on the alignment of the cell content.}
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{tab_footnote()} function can make it a painless process to add a
-footnote to a \strong{gt} table. There are commonly two components to a footnote:
+\code{tab_footnote()} can make it a painless process to add a footnote to a
+\strong{gt} table. There are commonly two components to a footnote:
 (1) a footnote mark that is attached to the targeted cell content, and (2)
 the footnote text itself that is placed in the table's footer area. Each unit
 of footnote text in the footer is linked to an element of text or otherwise

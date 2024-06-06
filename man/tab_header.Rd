@@ -98,8 +98,8 @@ to help arrange and generate the HTML. Here's an example of that, where two
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_header_2.png" alt="This image of a table was generated from the second code example in the `tab_header()` help file." style="width:100\%;">
 }}
 
-If using HTML but doing something far simpler, we can use the \code{\link[=html]{html()}} helper
-function to declare that the text provided is HTML.
+If using HTML but doing something far simpler, we can wrap our title or
+subtitle inside \code{\link[=html]{html()}} to declare that the text provided is HTML.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gtcars |>
   dplyr::select(mfr, model, msrp) |>

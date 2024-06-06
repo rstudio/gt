@@ -39,7 +39,7 @@ An object of class \code{gt_tbl}.
 \description{
 If you would like to remove column spanner labels then the \code{rm_spanners()}
 function can make this possible. Column spanner labels appear above the
-column labels and can occupy several levels via stacking either though
+column labels and can occupy several levels via stacking either through
 \code{\link[=tab_spanner]{tab_spanner()}} or \code{\link[=tab_spanner_delim]{tab_spanner_delim()}}. Spanner column labels are
 distinguishable and accessible by their ID values.
 

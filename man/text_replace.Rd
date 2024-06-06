@@ -41,11 +41,11 @@ wish to make the transformation happen at different locations.}
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{text_replace()} function provides a specialized interface for replacing
-text fragments in table cells with literal text. You need to ensure that
-you're targeting the appropriate cells with the \code{locations} argument. Once
-that is done, the remaining two values to supply are for the regex pattern
-(\code{pattern}) and the replacement for all matched text (\code{replacement}).
+\code{text_replace()} provides a specialized interface for replacing text fragments
+in table cells with literal text. You need to ensure that you're targeting
+the appropriate cells with the \code{locations} argument. Once that is done, the
+remaining two values to supply are for the regex pattern (\code{pattern}) and the
+replacement for all matched text (\code{replacement}).
 }
 \section{Examples}{
 

@@ -211,7 +211,7 @@ redundant or repeating information.\tabular{llll}{
 }
 
 
-We can call \code{\link[=info_time_style]{info_time_style()}} within the console to view a similar table of
+We can call \code{\link[=info_time_style]{info_time_style()}} in the console to view a similar table of
 time styles with example output.
 }
 
