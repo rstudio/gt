@@ -12446,7 +12446,9 @@ fmt_country <- function(
   valid_country_codes <-
     c(
       country_names[, ][["country_code_2"]],
-      country_names[, ][["country_code_3"]]
+      country_names[, ][["country_code_3"]],
+      country_names_additional[, ][["country_code_2"]],
+      country_names_additional[, ][["country_code_3"]]
     )
 
   # Pass `data`, `columns`, `rows`, and the formatting
@@ -12500,7 +12502,22 @@ fmt_country <- function(
                       paste0("country_code_", country_i_len)]] == country_i
                   )
 
-                out_y <- country_names[country_index, ][[locale]]
+                if (length(country_index) < 1) {
+
+                  country_additional_index <-
+                    which(
+                      country_names_additional[[
+                        paste0("country_code_", country_i_len)]] == country_i
+                    )
+
+                  out_y <-
+                    country_names_additional[
+                      country_additional_index, ][["name"]]
+
+                } else {
+
+                  out_y <- country_names[country_index, ][[locale]]
+                }
 
                 out <- c(out, out_y)
               }
