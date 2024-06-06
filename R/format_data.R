@@ -12436,7 +12436,8 @@ fmt_country <- function(
   ) {
     if (isTRUE(getOption("gt.strict_column_fmt", TRUE))) {
       cli::cli_abort(
-        "{.fn fmt_flag} must be used on `columns` with character or factor data."
+        "{.fn fmt_country} must be used on `columns` with character or
+        factor data."
       )
     }
   }
