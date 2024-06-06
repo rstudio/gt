@@ -66,7 +66,7 @@ Here is a glimpse at the data available in \code{photolysis}.
 
 \section{Dataset ID and Badge}{
 
-DATA-14
+DATA-15
 
 \if{html}{\out{
 <div style="text-align:center;"><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/dataset_photolysis.png" alt="This image of that of a dataset badge." style="width:50\%;padding-bottom:20px;"></div>
@@ -83,6 +83,7 @@ Other datasets:
 \code{\link{constants}},
 \code{\link{countrypops}},
 \code{\link{exibble}},
+\code{\link{films}},
 \code{\link{gibraltar}},
 \code{\link{gtcars}},
 \code{\link{illness}},
