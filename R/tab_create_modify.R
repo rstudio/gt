@@ -4423,8 +4423,7 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #' Use select columns from the [`exibble`] dataset to create a **gt** table with
 #' a number of table parts added (using functions like [summary_rows()],
 #' [grand_summary_rows()], and more). We can use this **gt** object going
-#' forward to demo some of the features available in the `tab_options()`
-#' function.
+#' forward to demo some of `tab_options()` features.
 #'
 #' ```r
 #' tab_1 <-

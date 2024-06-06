@@ -5200,8 +5200,8 @@ fmt_spelled_num <- function(
 #' @section Examples:
 #'
 #' Use a single column from the [`exibble`] dataset and create a simple **gt**
-#' table. We'll format the `num` column to display as byte sizes in the decimal
-#' standard through use of `fmt_bytes()`.
+#' table. We'll use `fmt_bytes()` to format the `num` column to display as byte
+#' sizes in the decimal standard.
 #'
 #' ```r
 #' exibble |>
@@ -12884,7 +12884,7 @@ fmt_icon <- function(
 
   # Determine if the fontawesome package is installed and stop the
   # function if it is not present
-  rlang::check_installed("fontawesome", "to insert icons with `fmt_icons()`.")
+  rlang::check_installed("fontawesome", "to insert icons with `fmt_icon()`.")
 
   #
   # Begin support for `from_column()` objects passed to compatible arguments

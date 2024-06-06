@@ -351,7 +351,7 @@ ggplot_image <- function(
     aspect_ratio = 1.0
 ) {
 
-  rlang::check_installed("ggplot2", "to use the `ggplot_image()` function.")
+  rlang::check_installed("ggplot2", "to use `ggplot_image()`.")
 
   if (is.numeric(height)) {
     height <- paste0(height, "px")

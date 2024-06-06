@@ -611,9 +611,9 @@ cols_width <- function(
 #' using [gt()], column names effectively become the column labels. While this
 #' serves as a good first approximation, column names as label defaults aren't
 #' often as appealing in a **gt** table as the option for custom column labels.
-#' `cols_label()`  provides the flexibility to relabel one or more
-#' columns and we even have the option to use the [md()] or [html()] helper
-#' functions for rendering column labels from Markdown or using HTML.
+#' `cols_label()` provides the flexibility to relabel one or more columns and
+#' we even have the option to use [md()] or [html()] for rendering column labels
+#' from Markdown or using HTML.
 #'
 #' @inheritParams cols_width
 #'
@@ -3510,8 +3510,8 @@ cols_move_to_end <- function(
 #' Using another [`countrypops`]-based **gt** table, we can use the `population`
 #' column to provide the conditional placement of footnotes. Then, we'll hide
 #' that column along with the `country_code_3` column. Note that the order of
-#' the `cols_hide()` and [tab_footnote()] statements has no effect on the final
-#' display of the table.
+#' `cols_hide()` and [tab_footnote()] has no effect on the final display of the
+#' table.
 #'
 #' ```r
 #' countrypops |>

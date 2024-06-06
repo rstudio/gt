@@ -144,7 +144,7 @@ rm_stubhead <- function(data) {
 #'
 #' If you would like to remove column spanner labels then the `rm_spanners()`
 #' function can make this possible. Column spanner labels appear above the
-#' column labels and can occupy several levels via stacking either though
+#' column labels and can occupy several levels via stacking either through
 #' [tab_spanner()] or [tab_spanner_delim()]. Spanner column labels are
 #' distinguishable and accessible by their ID values.
 #'
