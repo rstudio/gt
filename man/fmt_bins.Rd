@@ -2,7 +2,16 @@
 % Please edit documentation in R/format_data.R
 \name{fmt_bins}
 \alias{fmt_bins}
-\title{Format column data containing bin/interval information}
+\title{Format column data containing bin/interval information
+When using \code{cut()} (or other functions that use it in some way)
+you get bins that can look like this: \code{"(0,10]"}, \code{"(10,15]"}, \code{"(15,20]"},
+\code{"(20,40]"}. This interval notation expresses the lower and upper limits of
+each range. The square or round brackets define whether each of the endpoints
+are included in the range (\code{[}/\verb{]} for inclusion, \code{(}/\verb{)} for exclusion).
+Should bins of this sort be present in a table, the \code{fmt_bins()} function can
+be used to format that syntax to a form that presents better in a display
+table. It's possible to format the values of the intervals with the \code{fmt}
+argument, and, the separator can be modified with the \code{sep} argument.}
 \usage{
 fmt_bins(
   data,
@@ -50,7 +59,7 @@ The separator text that indicates the values are ranged. The default value
 of \code{"--"} indicates that an en dash will be used for the range separator.
 Using \code{"---"} will be taken to mean that an em dash should be used. Should
 you want these special symbols to be taken literally, they can be supplied
-within the base \code{\link[=I]{I()}} function.}
+within \code{\link[base:AsIs]{base::I()}}.}
 
 \item{fmt}{\emph{Formatting expressions}
 
@@ -64,7 +73,8 @@ should contain a formatting call (e.g.,
 An object of class \code{gt_tbl}.
 }
 \description{
-When using the \code{cut()} function (or other functions that use it in some way)
+Format column data containing bin/interval information
+When using \code{cut()} (or other functions that use it in some way)
 you get bins that can look like this: \code{"(0,10]"}, \code{"(10,15]"}, \code{"(15,20]"},
 \code{"(20,40]"}. This interval notation expresses the lower and upper limits of
 each range. The square or round brackets define whether each of the endpoints
@@ -77,10 +87,10 @@ argument, and, the separator can be modified with the \code{sep} argument.
 \section{Compatibility of formatting function with data values}{
 
 
-The \code{fmt_bins()} formatting function is compatible with body cells that are
-of the \code{"character"} or \code{"factor"} types. Any other types of body cells are
-ignored during formatting. This is to say that cells of incompatible data
-types may be targeted, but there will be no attempt to format them.
+\code{fmt_bins()} is compatible with body cells that are  of the \code{"character"} or
+\code{"factor"} types. Any other types of body cells are ignored during formatting.
+This is to say that cells of incompatible data types may be targeted, but
+there will be no attempt to format them.
 }
 
 \section{Targeting cells with \code{columns} and \code{rows}}{
@@ -140,14 +150,13 @@ look something like this:
 
 
 Use the \code{\link{countrypops}} dataset to create a \strong{gt} table. Before even getting
-to the \code{\link[=gt]{gt()}} call, we use the \code{cut()} function in conjunction with the
-\code{\link[scales:breaks_log]{scales::breaks_log()}} function to create some highly customized bins.
-Consequently each country's population in the 2021 year is assigned to a bin.
-These bins have a characteristic type of formatting that can be used as input
-to \code{fmt_bins()}, and using that formatting function allows us to customize
-the presentation of those ranges. For instance, here we are formatting the
-left and right values of the ranges with the \code{\link[=fmt_integer]{fmt_integer()}} function (using
-formula syntax).
+to the \code{\link[=gt]{gt()}} call, we use \code{cut()} in conjunction with \code{\link[scales:breaks_log]{scales::breaks_log()}}
+to create some highly customized bins. Consequently each country's population
+in the 2021 year is assigned to a bin. These bins have a characteristic type
+of formatting that can be used as input to \code{fmt_bins()}, and using that
+formatting function allows us to customize the presentation of those ranges.
+For instance, here we are formatting the left and right values of the ranges
+with \code{\link[=fmt_integer]{fmt_integer()}} (using formula syntax).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{countrypops |>
   dplyr::filter(year == 2021) |>

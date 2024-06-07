@@ -2,11 +2,11 @@
 #'
 #' @description
 #'
-#' With the `tab_style_body()` function we can target cells though value, regex,
-#' and custom matching rules and apply styles to them and their surrounding
-#' context (i.e., styling an entire row or column wherein the match is found).
-#' Just as with the general [tab_style()] function, this function is focused on
-#' the application of styles for HTML output only (as such, other output formats
+#' With `tab_style_body()` we can target cells through value, regex, and
+#' custom matching rules and apply styles to them and their surrounding context
+#' (i.e., styling an entire row or column wherein the match is found). Just as
+#' with the general [tab_style()] function, this function is focused on the
+#' application of styles for HTML output only (as such, other output formats
 #' will ignore all `tab_style()` calls).
 #'
 #' With the collection of `cell_*()` helper functions available in **gt**, we
@@ -29,12 +29,11 @@
 #'
 #'   `<style expressions>` // **required**
 #'
-#'   The styles to use for the targeted cells. The [cell_text()], [cell_fill()],
-#'   and [cell_borders()] helper functions can be used here to more easily
-#'   generate valid styles. If using more than one helper function to define
-#'   styles, all calls must be enclosed in a [list()]. Custom CSS declarations
-#'   can be used for HTML output by including a [css()]-based statement as a
-#'   list item.
+#'   The styles to use for the targeted cells. [cell_text()], [cell_fill()],
+#'   and [cell_borders()] can be used here to more easily generate valid styles.
+#'   If using more than one helper function to define styles, all calls must be
+#'   enclosed in a [list()]. Custom CSS declarations can be used for HTML output
+#'   by including a [css()]-based statement as a list item.
 #'
 #' @param columns *Columns to target*
 #'
@@ -281,7 +280,7 @@
 #' }}
 #'
 #' Styling every `NA` value in a table is also easily accomplished with the `fn`
-#' argument by way of the `is.na()` function.
+#' argument by way of `is.na()`.
 #'
 #' ```r
 #' gt_tbl |>

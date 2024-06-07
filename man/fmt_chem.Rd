@@ -40,7 +40,7 @@ need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{fmt_chem()} function lets you format chemical formulas or even chemical
+\code{fmt_chem()} lets you format chemical formulas or even chemical
 reactions in the table body. Often the input text will be in a common form
 representing single compounds (like \code{"C2H4O"}, for acetaldehyde) but chemical
 reactions can be used (e.g., \verb{2CH3OH -> CH3OCH3 + H2O"}). So long as the
@@ -170,9 +170,9 @@ surrounding the text with \code{"{{\%"}/\code{"\%}}"}.
 Taking just a few rows from the \code{\link{photolysis}} dataset, let's create a new
 \strong{gt} table. The \code{cmpd_formula} and \code{products} columns both contain text in
 chemistry notation (the first has compounds, and the second column has the
-products of photolysis reactions). These columns will be formatted by the
-\code{fmt_chem()} function. The compound formulas will be merged with the compound
-names via the \code{\link[=cols_merge]{cols_merge()}} function.
+products of photolysis reactions). These columns will be formatted by
+\code{fmt_chem()}. The compound formulas will be merged with the compound
+names with \code{\link[=cols_merge]{cols_merge()}}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{photolysis \%>\%
   dplyr::filter(cmpd_name \%in\% c(
@@ -213,7 +213,7 @@ names via the \code{\link[=cols_merge]{cols_merge()}} function.
 <img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_chem_2.png" alt="This image of a table was generated from the second code example in the `fmt_chem()` help file." style="width:100\%;">
 }}
 
-The \code{fmt_chem()} function can handle the typesetting of nuclide notation.
+\code{fmt_chem()} can handle the typesetting of nuclide notation.
 Let's take a subset of columns and rows from the \code{\link{nuclides}} dataset and
 make a new \strong{gt} table. The contents of the \code{nuclide} column contains
 isotopes of hydrogen and carbon and this is placed in the table stub. Using

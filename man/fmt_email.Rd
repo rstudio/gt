@@ -104,15 +104,14 @@ The anchor element 'target' attribute value. For a description of the
 An object of class \code{gt_tbl}.
 }
 \description{
-Should cells contain email addresses, the \code{fmt_email()} function can be used
-to make email addresses work well with email clients on the user system.
-This should be expressly used on columns that contain \emph{only} email addresses
-(i.e., no email addresses as part of a larger block of text). Should you have
-such a column of data, there are options for how the email addresses should
-be styled. They can be of the conventional style (with underlines and text
-coloring that sets it apart from other text), or, they can appear to be
-button-like (with a surrounding box that can be filled with a color of your
-choosing).
+Should cells contain email addresses, \code{fmt_email()} can be used to make email
+addresses work well with email clients on the user system. This should be
+expressly used on columns that contain \emph{only} email addresses (i.e., no email
+addresses as part of a larger block of text). Should you have such a column of
+data, there are options for how the email addresses should be styled. They can
+be of the conventional style (with underlines and text coloring that sets it
+apart from other text), or, they can appear to be button-like (with a
+surrounding box that can be filled with a color of your choosing).
 
 Email addresses in data cells are trusted as email addresses. We can also
 provide more readable labels with the \code{display_name} argument. Supplying a
@@ -123,10 +122,10 @@ call within \code{display_name}.
 \section{Compatibility of formatting function with data values}{
 
 
-The \code{fmt_email()} formatting function is compatible with body cells that are
-of the \code{"character"} or \code{"factor"} types. Any other types of body cells are
-ignored during formatting. This is to say that cells of incompatible data
-types may be targeted, but there will be no attempt to format them.
+\code{fmt_email()} is compatible with body cells that are of the \code{"character"} or
+\code{"factor"} types. Any other types of body cells are ignored during formatting.
+This is to say that cells of incompatible data types may be targeted, but
+there will be no attempt to format them.
 }
 
 \section{Targeting cells with \code{columns} and \code{rows}}{
@@ -173,10 +172,10 @@ more complex predicate expression.
 \section{Compatibility of arguments with the \code{from_column()} helper function}{
 
 
-The \code{\link[=from_column]{from_column()}} helper function can be used with certain arguments of
-\code{fmt_email()} to obtain varying parameter values from a specified column
-within the table. This means that each row could be formatted a little bit
-differently. These arguments provide support for \code{\link[=from_column]{from_column()}}:
+\code{\link[=from_column]{from_column()}} can be used with certain arguments of \code{fmt_email()} to obtain
+varying parameter values from a specified column within the table. This means
+that each row could be formatted a little bit differently. These arguments
+provide support for \code{\link[=from_column]{from_column()}}:
 \itemize{
 \item \code{display_name}
 \item \code{as_button}
@@ -190,11 +189,10 @@ differently. These arguments provide support for \code{\link[=from_column]{from_
 Please note that for each of the aforementioned arguments, a \code{\link[=from_column]{from_column()}}
 call needs to reference a column that has data of the correct type (this is
 different for each argument). Additional columns for parameter values can be
-generated with the \code{\link[=cols_add]{cols_add()}} function (if not already present). Columns
-that contain parameter data can also be hidden from final display with
-\code{\link[=cols_hide]{cols_hide()}}. Finally, there is no limitation to how many arguments the
-\code{\link[=from_column]{from_column()}} helper is applied so long as the arguments belong to this
-closed set.
+generated with \code{\link[=cols_add]{cols_add()}} (if not already present). Columns that contain
+parameter data can also be hidden from final display with \code{\link[=cols_hide]{cols_hide()}}.
+Finally, there is no limitation to how many arguments the \code{\link[=from_column]{from_column()}}
+helper is applied so long as the arguments belong to this closed set.
 }
 
 \section{Examples}{
@@ -289,10 +287,10 @@ calls, we can place the icon/link next to the name of the person.
 
 Another option is to display the names of the email recipients instead of the
 email addresses, making the display names serve as 'mailto:' links. We can do
-this by using the \code{\link[=from_column]{from_column()}} function in the \code{display_name} argument.
-The display names in this case are the combined given and family names,
-handled earlier through a \code{dplyr::mutate()} call. With some space conserved,
-we take the opportunity here to add in phone information for each person.
+this by using \code{\link[=from_column]{from_column()}} in the \code{display_name} argument. The display
+names in this case are the combined given and family names, handled earlier
+through a \code{dplyr::mutate()} call. With some space conserved, we take the
+opportunity here to add in phone information for each person.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{peeps |>
   dplyr::filter(country == "AUS") |>

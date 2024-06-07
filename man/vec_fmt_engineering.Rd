@@ -114,8 +114,8 @@ will display a sign.}
 
 An optional locale identifier that can be used for formatting values
 according the locale's rules. Examples include \code{"en"} for English (United
-States) and \code{"fr"} for French (France). We can use the \code{\link[=info_locales]{info_locales()}}
-function as a useful reference for all of the locales that are supported.}
+States) and \code{"fr"} for French (France). We can call \code{\link[=info_locales]{info_locales()}} for a
+useful reference for all of the locales that are supported.}
 
 \item{output}{\emph{Output format}
 

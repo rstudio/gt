@@ -272,16 +272,16 @@
 #'
 #' @section Extraction of summary rows:
 #'
-#' Should we need to obtain the summary data for external purposes, the
-#' [extract_summary()] function can be used with a `gt_tbl` object where summary
-#' rows were added via `summary_rows()` or [grand_summary_rows()].
+#' Should we need to obtain the summary data for external purposes,
+#' [extract_summary()] can be used with a `gt_tbl` object where summary rows
+#' were added via `summary_rows()` or [grand_summary_rows()].
 #'
 #' @section Examples:
 #'
 #' Use a modified version of [`sp500`] dataset to create a **gt** table with row
 #' groups and row labels. Create the summary rows labeled `min`, `max`, and
-#' `avg` by row group (where each each row group is a week number) with the
-#' `summary_rows()` function.
+#' `avg` by row group (where each each row group is a week number) with
+#' `summary_rows()`.
 #'
 #' ```r
 #' sp500 |>
@@ -452,9 +452,10 @@ summary_rows <- function(
         !!rowname_col_private := rep("", nrow(data$`_data`))
       )
     data$`_data` <-
-      dplyr::select(
+      dplyr::relocate(
         data$`_data`,
-        dplyr::everything(), dplyr::all_of(rowname_col_private)
+        dplyr::all_of(rowname_col_private),
+        .after = dplyr::last_col()
       )
 
     # Get the `stub_df` object from `data`
@@ -688,15 +689,15 @@ summary_rows <- function(
 #'
 #' @section Extraction of summary rows:
 #'
-#' Should we need to obtain the summary data for external purposes, the
-#' [extract_summary()] function can be used with a `gt_tbl` object where summary
-#' rows were added via `grand_summary_rows()` or [summary_rows()].
+#' Should we need to obtain the summary data for external purposes,
+#' [extract_summary()] can be used with a `gt_tbl` object where summary rows
+#' were added via `grand_summary_rows()` or [summary_rows()].
 #'
 #' @section Examples:
 #'
 #' Use a modified version of the [`sp500`] dataset to create a **gt** table with
 #' row groups and row labels. Create the grand summary rows `min`, `max`, and
-#' `avg` for the table with the `grand_summary_rows()` function.
+#' `avg` for the table with `grand_summary_rows()`.
 #'
 #' ```r
 #' sp500 |>

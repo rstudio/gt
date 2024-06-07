@@ -35,7 +35,7 @@ datetimes <-
 dates <- as.Date(datetimes)
 times <- paste0(hours, ":", minutes)
 
-test_that("The `vec_fmt_number()` function works", {
+test_that("vec_fmt_number() works", {
 
   vec_fmt_number(vec_num_1, output = "plain") %>%
     expect_equal(
@@ -429,7 +429,7 @@ test_that("The `vec_fmt_number()` function works", {
     )
 })
 
-test_that("The `vec_fmt_integer()` function works", {
+test_that("vec_fmt_integer() works", {
 
   vec_fmt_integer(vec_num_1, output = "plain") %>%
     expect_equal(
@@ -602,7 +602,7 @@ test_that("The `vec_fmt_integer()` function works", {
     )
 })
 
-test_that("The `vec_fmt_scientific()` function works", {
+test_that("vec_fmt_scientific() works", {
 
   # TODO: `vec_fmt_scientific()` and `fmt_scientific()` are incompatible with
   # Inf values so we will omit them from the test vectors until a fix is
@@ -903,7 +903,7 @@ test_that("The `vec_fmt_scientific()` function works", {
     )
 })
 
-test_that("The `vec_fmt_engineering()` function works", {
+test_that("vec_fmt_engineering() works", {
 
   vec_fmt_engineering(vec_num_1, output = "plain") %>%
     expect_equal(
@@ -1329,7 +1329,7 @@ test_that("The `vec_fmt_engineering()` function works", {
     )
 })
 
-test_that("The `vec_fmt_percent()` function works", {
+test_that("vec_fmt_percent() works", {
 
   vec_fmt_percent(vec_num_1, output = "plain") %>%
     expect_equal(
@@ -1803,7 +1803,7 @@ test_that("The `vec_fmt_percent()` function works", {
     )
 })
 
-test_that("The `vec_fmt_partsper()` function works", {
+test_that("vec_fmt_partsper() works", {
 
   vec_fmt_partsper(
     vec_num_1, to_units = "ppm", decimals = 3, output = "plain"
@@ -2006,7 +2006,7 @@ test_that("The `vec_fmt_partsper()` function works", {
     )
 })
 
-test_that("The `vec_fmt_fraction()` function works", {
+test_that("vec_fmt_fraction() works", {
 
   vec_fmt_fraction(range_0_1, layout = "diagonal", output = "plain") %>%
     expect_equal(
@@ -2713,7 +2713,7 @@ test_that("The `vec_fmt_fraction()` function works", {
   expect_error(vec_fmt_fraction(c(1, 2, 3), accuracy = -1))
 })
 
-test_that("The `vec_fmt_currency()` function works", {
+test_that("vec_fmt_currency() works", {
 
   vec_fmt_currency(vec_num_1, output = "plain") %>%
     expect_equal(
@@ -3351,7 +3351,7 @@ test_that("The `vec_fmt_currency()` function works", {
   expect_error(vec_fmt_currency(c(1, 2), currency = "NOTREAL"))
 })
 
-test_that("The `vec_fmt_roman()` function works", {
+test_that("vec_fmt_roman() works", {
 
   vec_roman <- c(1, 4, 5, 8, 12, 20, 0, -5, 1.3, NA, 3799, 3800, 1e6)
 
@@ -3408,7 +3408,7 @@ test_that("The `vec_fmt_roman()` function works", {
   expect_error(vec_fmt_roman(c(1, 2), case = "middle"))
 })
 
-test_that("The `vec_fmt_index()` function works", {
+test_that("vec_fmt_index() works", {
 
   vec_index <- c(1, 4, 5, 8, 12, 20, 0, -5, 1.3, NA, 20, 80)
 
@@ -3469,7 +3469,7 @@ test_that("The `vec_fmt_index()` function works", {
   expect_error(vec_fmt_index(c(1, 2), case = "middle"))
 })
 
-test_that("The `vec_fmt_spelled_num()` function works", {
+test_that("vec_fmt_spelled_num() works", {
 
   vec_index <- c(1, 4, 5, 8, 12, 20, 0, -5, 1.3, NA, 20, 80, 100, 200)
 
@@ -3507,7 +3507,7 @@ test_that("The `vec_fmt_spelled_num()` function works", {
     )
 })
 
-test_that("The `vec_fmt_bytes()` function works", {
+test_that("vec_fmt_bytes() works", {
 
   vec_fmt_bytes(vec_num_1, standard = "decimal", output = "plain") %>%
     expect_equal(
@@ -4307,7 +4307,7 @@ test_that("The `vec_fmt_bytes()` function works", {
   expect_error(vec_fmt_bytes(c(1, 2), standard = "NONE"))
 })
 
-test_that("The `vec_fmt_date()` function works", {
+test_that("vec_fmt_date() works", {
 
   vec_fmt_date(dates, date_style = 2, output = "html") %>%
     expect_equal(
@@ -5249,7 +5249,7 @@ test_that("The `vec_fmt_date()` function works", {
     )
 })
 
-test_that("The `vec_fmt_time()` function works", {
+test_that("vec_fmt_time() works", {
 
   vec_fmt_time(times, time_style = 1, output = "html") %>%
     expect_equal(c("15:35:00", "16:36:00", "17:37:00", "18:38:00", "19:39:00"))
@@ -5724,7 +5724,7 @@ test_that("The `vec_fmt_time()` function works", {
     )
 })
 
-test_that("The `vec_fmt_datetime()` function works", {
+test_that("vec_fmt_datetime() works", {
 
   vec_fmt_datetime(
     datetimes,
@@ -6093,7 +6093,7 @@ test_that("The `vec_fmt_datetime()` function works", {
     )
 })
 
-test_that("The `vec_fmt_duration()` function works", {
+test_that("vec_fmt_duration() function works", {
   tm <- as.difftime(c("0:3:20"))
   # tests are mostly duplicates of `fmt_duration()`
   expect_equal(

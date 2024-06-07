@@ -19,4 +19,4 @@ The `diamonds` table can be included in the same way:
 ```{r diamonds_table, echo=FALSE}
 ```
 
-Note that the `echo = FALSE` parameter was added to each of the the code chunks to prevent printing of the **R** code that generated the object.
+Note that the `echo = FALSE` parameter was added to each of the code chunks to prevent printing of the **R** code that generated the object.

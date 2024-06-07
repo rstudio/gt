@@ -1,4 +1,4 @@
-test_that("The `cols_hide()` and `cols_hide()` do not error when no columns selected", {
+test_that("cols_hide() and cols_unhide() do not error when no columns selected", {
   # when no columns selected, gt table return unaltered
   expect_no_error(gt(exibble) %>% cols_hide())
   expect_equal(

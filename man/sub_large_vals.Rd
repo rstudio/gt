@@ -71,10 +71,9 @@ An object of class \code{gt_tbl}.
 }
 \description{
 Wherever there are numerical data that are very large in value, replacement
-text may be better for explanatory purposes. The \code{sub_large_vals()} function
-allows for this replacement through specification of a \code{threshold}, a
-\code{large_pattern}, and the sign (positive or negative) of the values to be
-considered.
+text may be better for explanatory purposes. \code{sub_large_vals()} allows for
+this replacement through specification of a \code{threshold}, a \code{large_pattern},
+and the sign (positive or negative) of the values to be considered.
 }
 \section{Targeting cells with \code{columns} and \code{rows}}{
 

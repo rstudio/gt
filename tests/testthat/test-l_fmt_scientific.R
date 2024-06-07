@@ -1,4 +1,4 @@
-test_that("The `fmt_scientific()` function works correctly", {
+test_that("fmt_scientific() works correctly", {
 
   # Create an input data frame four columns: two
   # character-based and two that are numeric

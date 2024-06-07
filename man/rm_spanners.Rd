@@ -39,7 +39,7 @@ An object of class \code{gt_tbl}.
 \description{
 If you would like to remove column spanner labels then the \code{rm_spanners()}
 function can make this possible. Column spanner labels appear above the
-column labels and can occupy several levels via stacking either though
+column labels and can occupy several levels via stacking either through
 \code{\link[=tab_spanner]{tab_spanner()}} or \code{\link[=tab_spanner_delim]{tab_spanner_delim()}}. Spanner column labels are
 distinguishable and accessible by their ID values.
 
@@ -53,10 +53,10 @@ instead of explicit ID values.
 \section{Examples}{
 
 
-Use a portion of the \code{\link{gtcars}} dataset to create a \strong{gt} table. With the
-\code{\link[=tab_spanner]{tab_spanner()}} function, we can group several related columns together under
-a spanner column. In this example, that is done with several calls of
-\code{\link[=tab_spanner]{tab_spanner()}} in order to create two levels of spanner column labels.
+Use a portion of the \code{\link{gtcars}} dataset to create a \strong{gt} table. With
+\code{\link[=tab_spanner]{tab_spanner()}}, we can group several related columns together under a
+spanner column. In this example, that is done with several \code{\link[=tab_spanner]{tab_spanner()}}
+calls in order to create two levels of spanner column labels.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{gt_tbl <-
   gtcars |>
@@ -85,7 +85,7 @@ gt_tbl
 }}
 
 If you decide that you don't want any of the spanners in the \code{gt_tbl} object,
-they can all be removed with the \code{rm_spanners()} function.
+they can all be removed with \code{rm_spanners()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{rm_spanners(data = gt_tbl)
 }\if{html}{\out{</div>}}

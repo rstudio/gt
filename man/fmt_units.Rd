@@ -40,8 +40,8 @@ need (e.g., \verb{[colname_1] > 100 & [colname_2] < 50}).}
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{fmt_units()} function lets you better format measurement units in the
-table body. These must conform to \strong{gt}'s specialized units notation (e.g.,
+\code{fmt_units()} lets you better format measurement units in the table body.
+These must conform to \strong{gt}'s specialized units notation (e.g.,
 \code{"J Hz^-1 mol^-1"} can be used to generate units for the
 \emph{molar Planck constant}) for the best conversion. The notation here provides
 several conveniences for defining units, so as long as the values to be
@@ -102,7 +102,7 @@ best shown with examples:
 \itemize{
 \item \code{"m/s"} and \code{"m / s"} both render as \code{"m/s"}
 \item \code{"m s^-1"} will appear with the \code{"-1"} exponent intact
-\item \code{"m /s"} gives the the same result, as \code{"/<unit>"} is equivalent to
+\item \code{"m /s"} gives the same result, as \code{"/<unit>"} is equivalent to
 \code{"<unit>^-1"}
 \item \code{"E_h"} will render an \code{"E"} with the \code{"h"} subscript
 \item \code{"t_i^2.5"} provides a \code{t} with an \code{"i"} subscript and a \code{"2.5"} exponent

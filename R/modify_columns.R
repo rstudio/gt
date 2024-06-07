@@ -229,10 +229,10 @@ determine_which_character_number <- function(
 #'   An optional locale identifier that can be used to obtain the type of
 #'   decimal mark used in the numeric values to be aligned (according to the
 #'   locale's formatting rules). Examples include `"en"` for English (United
-#'   States) and `"fr"` for French (France). We can use the [info_locales()]
-#'   function as a useful reference for all of the locales that are supported. A
-#'   locale ID can be also set in the initial [gt()] function call (where it
-#'   would be used automatically by any function with a `locale` argument) but a
+#'   States) and `"fr"` for French (France). We can call [info_locales()] for a
+#'   useful reference for all of the locales that are supported. A locale ID can
+#'   be also set in the initial [gt()] function call (where it would be used
+#'   automatically by any function with a `locale` argument) but a
 #'   `locale` value provided here will override that global locale.
 #'
 #' @return An object of class `gt_tbl`.
@@ -611,9 +611,9 @@ cols_width <- function(
 #' using [gt()], column names effectively become the column labels. While this
 #' serves as a good first approximation, column names as label defaults aren't
 #' often as appealing in a **gt** table as the option for custom column labels.
-#' The `cols_label()` function provides the flexibility to relabel one or more
-#' columns and we even have the option to use the [md()] or [html()] helper
-#' functions for rendering column labels from Markdown or using HTML.
+#' `cols_label()` provides the flexibility to relabel one or more columns and
+#' we even have the option to use [md()] or [html()] for rendering column labels
+#' from Markdown or using HTML.
 #'
 #' @inheritParams cols_width
 #'
@@ -691,7 +691,7 @@ cols_width <- function(
 #'
 #' - `"m/s"` and `"m / s"` both render as `"m/s"`
 #' - `"m s^-1"` will appear with the `"-1"` exponent intact
-#' - `"m /s"` gives the the same result, as `"/<unit>"` is equivalent to
+#' - `"m /s"` gives the same result, as `"/<unit>"` is equivalent to
 #'   `"<unit>^-1"`
 #' - `"E_h"` will render an `"E"` with the `"h"` subscript
 #' - `"t_i^2.5"` provides a `t` with an `"i"` subscript and a `"2.5"` exponent
@@ -770,8 +770,7 @@ cols_width <- function(
 #' ```r
 #' metro |>
 #'   dplyr::select(name, lines, passengers, connect_other) |>
-#'   dplyr::arrange(desc(passengers)) |>
-#'   dplyr::slice_head(n = 10) |>
+#'   dplyr::slice_max(passengers, n = 10) |>
 #'   gt() |>
 #'   cols_hide(columns = passengers) |>
 #'   cols_label(
@@ -1330,7 +1329,7 @@ cols_label_with <- function(
 #'
 #' - `"m/s"` and `"m / s"` both render as `"m/s"`
 #' - `"m s^-1"` will appear with the `"-1"` exponent intact
-#' - `"m /s"` gives the the same result, as `"/<unit>"` is equivalent to
+#' - `"m /s"` gives the same result, as `"/<unit>"` is equivalent to
 #'   `"<unit>^-1"`
 #' - `"E_h"` will render an `"E"` with the `"h"` subscript
 #' - `"t_i^2.5"` provides a `t` with an `"i"` subscript and a `"2.5"` exponent
@@ -1450,8 +1449,7 @@ cols_label_with <- function(
 #'     name, land_area_km2,
 #'     ends_with("2016"), ends_with("2021")
 #'   ) |>
-#'   dplyr::arrange(desc(population_2021)) |>
-#'   dplyr::slice_head(n = 10) |>
+#'   dplyr::slice_max(population_2021, n = 10) |>
 #'   gt(rowname_col = "name") |>
 #'   tab_stubhead(label = "City") |>
 #'   fmt_integer() |>
@@ -1728,8 +1726,7 @@ cols_units <- function(
 #' towny |>
 #'   dplyr::select(name, population_2021, land_area_km2) |>
 #'   dplyr::filter(population_2021 > 100000) |>
-#'   dplyr::arrange(desc(population_2021)) |>
-#'   dplyr::slice_head(n = 10) |>
+#'   dplyr::slice_max(population_2021, n = 10) |>
 #'   gt() |>
 #'   cols_add(
 #'     land_area = land_area_km2 / 2.58998811,
@@ -3237,17 +3234,15 @@ cols_move <- function(
 #' @details
 #'
 #' The columns supplied in `columns` must all exist in the table. If you need to
-#' place one or columns at the end of the column series, the
-#' [cols_move_to_end()] function should be used. More control is offered with
-#' the [cols_move()] function, where columns could be placed after a specific
-#' column.
+#' place one or columns at the end of the column series, [cols_move_to_end()]
+#' should be used. More control is offered with [cols_move()], where columns
+#' could be placed after a specific column.
 #'
 #' @section Examples:
 #'
 #' For this example, we'll use a portion of the [`countrypops`] dataset to
 #' create a simple **gt** table. Let's move the `year` column, which is the
-#' middle column, to the start of the column series with the
-#' `cols_move_to_start()` function.
+#' middle column, to the start of the column series with `cols_move_to_start()`.
 #'
 #' ```r
 #' countrypops |>
@@ -3362,17 +3357,15 @@ cols_move_to_start <- function(
 #' @details
 #'
 #' The columns supplied in `columns` must all exist in the table. If you need to
-#' place one or columns at the start of the column series, the
-#' [cols_move_to_start()] function should be used. More control is offered with
-#' the [cols_move()] function, where columns could be placed after a specific
-#' column.
+#' place one or columns at the start of the column series, [cols_move_to_start()]
+#' should be used. More control is offered with [cols_move()], where columns
+#' could be placed after a specific column.
 #'
 #' @section Examples:
 #'
 #' For this example, we'll use a portion of the [`countrypops`] dataset to
 #' create a simple **gt** table. Let's move the `year` column, which is the
-#' middle column, to the end of the column series with the
-#' `cols_move_to_end()` function.
+#' middle column, to the end of the column series with `cols_move_to_end()`.
 #'
 #' ```r
 #' countrypops |>
@@ -3462,12 +3455,12 @@ cols_move_to_end <- function(
 #'
 #' @description
 #'
-#' The `cols_hide()` function allows us to hide one or more columns from
+#' `cols_hide()` allows us to hide one or more columns from
 #' appearing in the final output table. While it's possible and often desirable
-#' to omit columns from the input table data before introduction to the [gt()]
-#' function, there can be cases where the data in certain columns is useful (as
-#' a column reference during formatting of other columns) but the final display
-#' of those columns is not necessary.
+#' to omit columns from the input table data before introduction to [gt()],
+#' there can be cases where the data in certain columns is useful (as a column
+#' reference during formatting of other columns) but the final display of those
+#' columns is not necessary.
 #'
 #' @inheritParams cols_align
 #'
@@ -3488,13 +3481,13 @@ cols_move_to_end <- function(
 #'
 #' The hiding of columns is internally a rendering directive, so, all columns
 #' that are 'hidden' are still accessible and useful in any expression provided
-#' to a `rows` argument. Furthermore, the `cols_hide()` function (as with many
-#' **gt** functions) can be placed anywhere in a pipeline of **gt** function
-#' calls (acting as a promise to hide columns when the timing is right). However
+#' to a `rows` argument. Furthermore, `cols_hide()` (as with many **gt**
+#' functions) can be placed anywhere in a pipeline of **gt** function calls
+#' (acting as a promise to hide columns when the timing is right). However,
 #' there's perhaps greater readability when placing this call closer to the end
-#' of such a pipeline. The `cols_hide()` function quietly changes the visible
-#' state of a column (much like the [cols_unhide()] function) and doesn't yield
-#' warnings or messages when changing the state of already-invisible columns.
+#' of such a pipeline. `cols_hide()` quietly changes the visible state of a
+#' column (much like [cols_unhide()]) and doesn't yield warnings or messages
+#' when changing the state of already-invisible columns.
 #'
 #' @section Examples:
 #'
@@ -3517,8 +3510,8 @@ cols_move_to_end <- function(
 #' Using another [`countrypops`]-based **gt** table, we can use the `population`
 #' column to provide the conditional placement of footnotes. Then, we'll hide
 #' that column along with the `country_code_3` column. Note that the order of
-#' the `cols_hide()` and [tab_footnote()] statements has no effect on the final
-#' display of the table.
+#' `cols_hide()` and [tab_footnote()] has no effect on the final display of the
+#' table.
 #'
 #' ```r
 #' countrypops |>
@@ -3589,11 +3582,10 @@ cols_hide <- function(
 #'
 #' @description
 #'
-#' The `cols_unhide()` function allows us to take one or more hidden columns
-#' (usually made so via the [cols_hide()] function) and make them visible
-#' in the final output table. This may be important in cases where the user
-#' obtains a `gt_tbl` object with hidden columns and there is motivation to
-#' reveal one or more of those.
+#' `cols_unhide()` allows us to take one or more hidden columns (usually done
+#' via [cols_hide()]) and make them visible in the final output table. This may
+#' be important in cases where the user obtains a `gt_tbl` object with hidden
+#' columns and there is motivation to reveal one or more of those.
 #'
 #' @inheritParams cols_align
 #'
@@ -3621,8 +3613,8 @@ cols_hide <- function(
 #' @section Examples:
 #'
 #' Let's use a small portion of the [`countrypops`] dataset to create a **gt**
-#' table. We'll hide the `country_code_2` and `country_code_3` columns with the
-#' [cols_hide()] function.
+#' table. We'll hide the `country_code_2` and `country_code_3` columns with
+#' [cols_hide()].
 #'
 #' ```r
 #' tab_1 <-
@@ -3641,7 +3633,7 @@ cols_hide <- function(
 #'
 #' If the `tab_1` object is provided without the code or source data to
 #' regenerate it, and, the user wants to reveal otherwise hidden columns then
-#' the `cols_unhide()` function becomes useful.
+#' `cols_unhide()` becomes useful.
 #'
 #' ```r
 #' tab_1 |> cols_unhide(columns = country_code_2)
@@ -3959,13 +3951,13 @@ cols_merge <- function(
 #'
 #' @description
 #'
-#' The `cols_merge_uncert()` function is a specialized variant of the
-#' [cols_merge()] function. It takes as input a base value column (`col_val`)
-#' and either: (1) a single uncertainty column, or (2) two columns representing
-#' lower and upper uncertainty bounds. These columns will be essentially merged
-#' in a single column (that of `col_val`). What results is a column with values
-#' and associated uncertainties (e.g., `12.0 ± 0.1`), and any columns specified
-#' in `col_uncert` are hidden from appearing the output table.
+#' `cols_merge_uncert()` is a specialized variant of [cols_merge()]. It takes as
+#' input a base value column (`col_val`) and either: (1) a single uncertainty
+#' column, or (2) two columns representing lower and upper uncertainty bounds.
+#' These columns will be essentially merged in a single column (that of
+#' `col_val`). What results is a column with values and associated uncertainties
+#' (e.g., `12.0 ± 0.1`), and any columns specified in `col_uncert` are hidden
+#' from appearing the output table.
 #'
 #' @inheritParams cols_align
 #'
@@ -4039,7 +4031,7 @@ cols_merge <- function(
 #' merged column (e.g., `NA` + `NA` = `NA`)
 #'
 #' Any resulting `NA` values in the `col_val` column following the merge
-#' operation can be easily formatted using the [sub_missing()] function.
+#' operation can be easily formatted using [sub_missing()].
 #'
 #' This function is part of a set of four column-merging functions. The other
 #' three are the general [cols_merge()] function and the specialized
@@ -4148,12 +4140,11 @@ cols_merge_uncert <- function(
 #'
 #' @description
 #'
-#' The `cols_merge_range()` function is a specialized variant of the
-#' [cols_merge()] function. It operates by taking a two columns that constitute
-#' a range of values (`col_begin` and `col_end`) and merges them into a single
-#' column. What results is a column containing both values separated by a long
-#' dash (e.g., `12.0 — 20.0`). The column specified in `col_end` is dropped from
-#' the output table.
+#' `cols_merge_range()` is a specialized variant of [cols_merge()]. It operates
+#' by taking a two columns that constitute a range of values (`col_begin` and
+#' `col_end`) and merges them into a single column. What results is a column
+#' containing both values separated by a long dash (e.g., `12.0 — 20.0`). The
+#' column specified in `col_end` is dropped from the output table.
 #'
 #' @inheritParams cols_align
 #'
@@ -4214,11 +4205,11 @@ cols_merge_uncert <- function(
 #'
 #'   An optional locale identifier that can be used for applying a `sep` pattern
 #'   specific to a locale's rules. Examples include `"en"` for English (United
-#'   States) and `"fr"` for French (France). We can use the [info_locales()]
-#'   function as a useful reference for all of the locales that are supported. A
-#'   locale ID can be also set in the initial [gt()] function call (where it
-#'   would be used automatically by any function with a `locale` argument) but a
-#'   `locale` value provided here will override that global locale.
+#'   States) and `"fr"` for French (France). We can call [info_locales()] as a
+#'   useful reference for all of the locales that are supported. A locale ID can
+#'   be also set in the initial [gt()] function call (where it would be used
+#'   automatically by any function with a `locale` argument) but a `locale`
+#'   value provided here will override that global locale.
 #'
 #' @return An object of class `gt_tbl`.
 #'
@@ -4237,9 +4228,9 @@ cols_merge_uncert <- function(
 #' the merged column
 #'
 #' Any resulting `NA` values in the `col_begin` column following the merge
-#' operation can be easily formatted using the [sub_missing()] function.
-#' Separate calls of [sub_missing()] can be used for the `col_begin` and
-#' `col_end` columns for finer control of the replacement values.
+#' operation can be easily formatted using [sub_missing()]. Separate calls of
+#' [sub_missing()] can be used for the `col_begin` and `col_end` columns for
+#' finer control of the replacement values.
 #'
 #' This function is part of a set of four column-merging functions. The other
 #' three are the general [cols_merge()] function and the specialized
@@ -4391,12 +4382,12 @@ cols_merge_resolver <- function(
 #'
 #' @description
 #'
-#' The `cols_merge_n_pct()` function is a specialized variant of the
-#' [cols_merge()] function. It operates by taking two columns that constitute
-#' both a count (`col_n`) and a fraction of the total population (`col_pct`) and
-#' merges them into a single column. What results is a column containing both
-#' counts and their associated percentages (e.g., `12 (23.2%)`). The column
-#' specified in `col_pct` is dropped from the output table.
+#' `cols_merge_n_pct()` is a specialized variant of [cols_merge()],
+#' It operates by taking two columns that constitute both a count (`col_n`) and
+#' a fraction of the total population (`col_pct`) and merges them into a single
+#' column. What results is a column containing both counts and their associated
+#' percentages (e.g., `12 (23.2%)`). The column specified in `col_pct` is
+#' dropped from the output table.
 #'
 #' @inheritParams cols_align
 #'
@@ -4459,7 +4450,7 @@ cols_merge_resolver <- function(
 #' `"0"` (i.e., no percentage will be shown)
 #'
 #' Any resulting `NA` values in the `col_n` column following the merge
-#' operation can be easily formatted using the [sub_missing()] function.
+#' operation can be easily formatted using [sub_missing()].
 #' Separate calls of [sub_missing()] can be used for the `col_n` and
 #' `col_pct` columns for finer control of the replacement values. It is the
 #' responsibility of the user to ensure that values are correct in both the

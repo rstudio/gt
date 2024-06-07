@@ -3,7 +3,7 @@ html_fragment_within <- function(raw_html, ...) {
   grepl(paste0("\\Q", c(...), "\\E", "[\\n\\s]*?", collapse = ""), raw_html, perl = TRUE)
 }
 
-test_that("The `opt_footnote_marks()` function sets the correct options", {
+test_that("opt_footnote_marks() sets the correct options", {
 
   set_marks <- c("*", "+", "~", "<", ">")
 
@@ -30,7 +30,7 @@ test_that("The `opt_footnote_marks()` function sets the correct options", {
   expect_error(exibble %>% gt() %>% opt_footnote_marks(character(0L)))
 })
 
-test_that("The `opt_row_striping()` function sets the correct options", {
+test_that("opt_row_striping() sets the correct options", {
 
   exibble %>%
     gt() %>%
@@ -51,7 +51,7 @@ test_that("The `opt_row_striping()` function sets the correct options", {
     expect_false()
 })
 
-test_that("The `opt_align_table_header()` function sets the correct options", {
+test_that("opt_align_table_header() sets the correct options", {
 
   exibble %>%
     gt() %>%
@@ -87,7 +87,7 @@ test_that("The `opt_align_table_header()` function sets the correct options", {
   expect_error(exibble %>% gt() %>% opt_align_table_header(c("justify")))
 })
 
-test_that("The `opt_all_caps()` function sets the correct options", {
+test_that("opt_all_caps() sets the correct options", {
 
   tbl <- exibble %>% gt()
 
@@ -140,7 +140,7 @@ test_that("The `opt_all_caps()` function sets the correct options", {
   expect_error(exibble %>% gt() %>% opt_all_caps(locations = c("column_labels", "footer")))
 })
 
-test_that("The `opt_table_lines()` function sets the correct options", {
+test_that("opt_table_lines() sets the correct options", {
 
   tbl <- exibble %>% gt()
 
@@ -240,7 +240,7 @@ test_that("The `opt_table_lines()` function sets the correct options", {
   tbl %>% dt_options_get_value("table_border_bottom_style") %>% expect_equal("solid")
 })
 
-test_that("The `opt_table_outline()` function sets the correct options", {
+test_that("opt_table_outline() function sets the correct options", {
 
   tbl <- exibble %>% gt()
 
@@ -310,7 +310,7 @@ test_that("The `opt_table_outline()` function sets the correct options", {
   tbl %>% dt_options_get_value("table_border_right_color") %>% expect_equal("#D3D3D3")
 })
 
-test_that("The `opt_table_font()` function sets the correct options", {
+test_that("opt_table_font() sets the correct options", {
 
   # Prepare a common gt table for all tests
   tbl <- exibble %>% dplyr::select(char, time) %>% gt()

@@ -1,13 +1,10 @@
-# Create a shorter version of `mtcars`
-mtcars_short <- mtcars[1:5, ]
-
 # Create a data frame based on the internal `sp500.csv`
 sp500 <-
   read.csv(
     system.file("extdata", "sp500.csv", package = "gt"),
     stringsAsFactors = FALSE)
 
-test_that("The `cols_align()` function works correctly", {
+test_that("cols_align() works correctly", {
 
   # Create a `tbl_latex` object with `gt()`; the `mpg`,
   # `cyl`, and `drat` columns are aligned left

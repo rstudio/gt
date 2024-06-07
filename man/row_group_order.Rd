@@ -27,13 +27,12 @@ will be added to the end while preserving the original ordering.}
 An object of class \code{gt_tbl}.
 }
 \description{
-We can modify the display order of any row groups in a \strong{gt} object with the
-\code{row_group_order()} function. The \code{groups} argument takes a vector of row
-group ID values. After this function is invoked, the row groups will adhere
-to this revised ordering. It isn't necessary to provide all row ID values in
-\code{groups}, rather, what is provided will assume the specified ordering at the
-top of the table and the remaining row groups will follow in their original
-ordering.
+We can modify the display order of any row groups in a \strong{gt} object with
+\code{row_group_order()}. The \code{groups} argument takes a vector of row group ID values.
+After this function is invoked, the row groups will adhere to this revised
+ordering. It isn't necessary to provide all row ID values in \code{groups}, rather,
+what is provided will assume the specified ordering at the top of the table
+and the remaining row groups will follow in their original ordering.
 }
 \section{Examples}{
 

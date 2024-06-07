@@ -12,8 +12,8 @@ grp_pull(data, which)
 \verb{obj:<gt_group>} // \strong{required}
 
 This is a \code{gt_group} container object. It is typically generated through
-use of the \code{\link[=gt_group]{gt_group()}} function along with one or more \code{gt_tbl} objects,
-or, made by splitting a \strong{gt} table with \code{\link[=gt_split]{gt_split()}}.}
+use of \code{\link[=gt_group]{gt_group()}} along with one or more \code{gt_tbl} objects, or, made by
+splitting a \strong{gt} table with \code{\link[=gt_split]{gt_split()}}.}
 
 \item{which}{\emph{The table to pull from the group}
 
@@ -26,11 +26,11 @@ from the \code{gt_group} object.}
 An object of class \code{gt_tbl}.
 }
 \description{
-Should you have a \code{gt_group} object, created through use of the \code{\link[=gt_group]{gt_group()}}
-function, you may have a need to extract a \strong{gt} table from that container.
-The \code{grp_pull()} function makes this possible, returning a \code{gt_tbl} object.
-The only thing you need to provide is the index value for the \strong{gt} table
-within the \code{gt_group} object.
+Should you have a \code{gt_group} object, created through use of \code{\link[=gt_group]{gt_group()}},
+you may have a need to extract a \strong{gt} table from that container.
+\code{grp_pull()} makes this possible, returning a \code{gt_tbl} object. The only thing
+you need to provide is the index value for the \strong{gt} table within the
+\code{gt_group} object.
 }
 \section{Function ID}{
 

@@ -77,7 +77,7 @@ adjust_gt_tbl_empty <- function(data) {
 #'
 #' @param x A character vector.
 #' @noRd
-is_nonempty_string <- function(x) {
+is_nonempty_chr <- function(x) {
   length(x) > 0 && any(grepl("\\S", x))
 }
 
@@ -247,7 +247,7 @@ tf_formats_text <- function() {
   c("true-false", "yes-no", "up-down")
 }
 # workaround before r-lib/rlang#1618 is fixed (check_character() will refuse character(0))
-check_character2 <- function(x, ..., allow_0 = FALSE, allow_null = FALSE, arg = caller_arg(x), call = caller_env()) {
+check_chr_has_length <- function(x, ..., allow_0 = FALSE, allow_null = FALSE, arg = caller_arg(x), call = caller_env()) {
   if (!missing(x)) {
     if (allow_null && is_null(x)) {
       return(invisible(NULL))
@@ -290,6 +290,7 @@ get_date_format <- function(date_style) {
 
   # Stop function if a numeric `date_style` value is invalid
   if (is.numeric(date_style)) {
+    # TODO remove as.numeric() when r-lib/rlang#1702 is fixed
     check_number_whole(date_style, min = 1, max = as.numeric(nrow(date_format_tbl)), call = NULL)
   }
 
@@ -343,6 +344,7 @@ get_time_format <- function(time_style) {
     check_number_whole(
       time_style,
       min = 1,
+      # TODO remove as.numeric() when r-lib/rlang#1702 is fixed
       max = as.numeric(nrow(time_format_tbl)),
       allow_null = FALSE,
       call = NULL
@@ -1846,7 +1848,7 @@ non_na_index <- function(
 
 #' Get a tibble of scaling values and suffixes
 #'
-#' The `num_suffix()` function operates on a vector of numerical values and
+#' `num_suffix()` operates on a vector of numerical values and
 #' returns a tibble where each row represents a scaled value for `x` and the
 #' correct suffix to use during `x`'s character-based formatting.
 #' @noRd
@@ -1924,7 +1926,7 @@ num_suffix <- function(
 
 #' Get a tibble of scaling values and suffixes for the Indian numbering system
 #'
-#' The `num_suffix()` function operates on a vector of numerical values and
+#' `num_suffix_ind()` operates on a vector of numerical values and
 #' returns a tibble where each row represents a scaled value for `x` and the
 #' correct suffix to use during `x`'s character-based formatting.
 #' @noRd
@@ -2004,7 +2006,7 @@ num_suffix_ind <- function(
 
 #' An `isFALSE`-based helper function
 #'
-#' The `is_false()` function is similar to the `isFALSE()` function that was
+#' `is_false()` is similar to the `isFALSE()` function that was
 #' introduced in R 3.5.0 except that this implementation works with earlier
 #' versions of R.
 #' @param x The single value to test for whether it is `FALSE`.

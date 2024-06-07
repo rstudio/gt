@@ -18,8 +18,8 @@ This is the \strong{gt} table object that is commonly created through use of the
 
 \verb{scalar<character>} // \strong{required}
 
-Text to be used in the source note. We can optionally use the \code{\link[=md]{md()}} and
-\code{\link[=html]{html()}} functions to style the text as Markdown or to retain HTML elements
+Text to be used in the source note. We can optionally use \code{\link[=md]{md()}} and
+\code{\link[=html]{html()}} to style the text as Markdown or to retain HTML elements
 in the text.}
 }
 \value{
@@ -36,7 +36,7 @@ or, if the table is intended for HTML output, we can include HTML formatting.
 
 
 With three columns from the \code{\link{gtcars}} dataset, let's create a \strong{gt} table.
-We can use the \code{tab_source_note()} function to add a source note to the table
+We can use \code{tab_source_note()} to add a source note to the table
 footer. Here we are citing the data source but this function can be used for
 any text you'd prefer to display in the footer section.
 

@@ -20,7 +20,7 @@ library(tibble)
 
 <p align="center"><img src="../reference/figures/gtcars.svg" width=50%></p>
 
-Let's make a display table using the `gtcars` dataset. We all know `mtcars`... what is `gtcars`? It's basically a modernized `mtcars` for the **gt** age. It's part of the **gt** package, and here is a preview of the tibble using **dplyr**'s `glimpse()` function:
+Let's make a display table using the `gtcars` dataset. We all know `mtcars`... what is `gtcars`? It's basically a modernized `mtcars` for the **gt** age. It's part of the **gt** package, and here is a preview of the tibble using `dplyr::glimpse()`:
 
 ```{r gtcars_data_frame}
 # This is `gtcars`
@@ -67,7 +67,7 @@ gtcars_8 |>
   gt()
 ```
 
-Getting the row groups in the preferred order can be done easily with **dplyr**'s `arrange()` function. For example, we can have groups that are arranged alphabetically by manufacturer (`mfr`) and then sorted by highest sticker price (`msrp`) to lowest. 
+Getting the row groups in the preferred order can be done easily with `dplyr::arrange()`. For example, we can have groups that are arranged alphabetically by manufacturer (`mfr`) and then sorted by highest sticker price (`msrp`) to lowest. 
 
 ```{r group_by_arrange_gtcars}
 gtcars_8 |>
@@ -112,9 +112,9 @@ tab
 
 ### Hiding and Moving Some Columns
 
-Let's hide two columns that we don't need to the final table: `drivetrain` and `bdy_style`. We can use the `cols_hide()` function to hide columns. The same end result might also have been achieved by using `gtcars |> dplyr::select(-c(drivetrain, bdy_style))`, before introducing the table to `gt()`. Why this function then? Sometimes you'll need variables for conditional statements within **gt** but won't want to display them in the end.
+Let's hide two columns that we don't need to the final table: `drivetrain` and `bdy_style`. We can use `cols_hide()` to hide columns. The same end result might also have been achieved by using `gtcars |> dplyr::select(-c(drivetrain, bdy_style))`, before introducing the table to `gt()`. Why this function then? Sometimes you'll need variables for conditional statements within **gt** but won't want to display them in the end.
 
-Aside from hiding columns, let's *move* some of them. Again, this could be done with `dplyr::select()` but there are options here in **gt** via the `cols_move_to_start()`, `cols_move()`, and `cols_move_to_end()` functions.
+Aside from hiding columns, let's *move* some of them. Again, this could be done with `dplyr::select()` but there are options here in **gt** via `cols_move_to_start()`, `cols_move()`, and `cols_move_to_end()`.
 
 ```{r cols_hide_move}
 # Use a few `cols_*()` functions to hide and move columns 
@@ -132,7 +132,7 @@ tab
 
 ### Putting Columns Into Groups
 
-It's sometimes useful to arrange variables/columns into groups by using spanner column labels. This can be done in **gt** by using the `tab_spanner()` function. It takes the `label` and `columns` arguments; `label` is the spanner column label and the `columns` are those columns that belong in this group.
+It's sometimes useful to arrange variables/columns into groups by using spanner column labels. This can be done in **gt** with `tab_spanner()`. It takes the `label` and `columns` arguments; `label` is the spanner column label and the `columns` are those columns that belong in this group.
 
 Here, we'll put the `mpg_c`, `mpg_h`, `hp`, `hp_rpm`, `trq`, `trq_rpm` columns under the `Performance` spanner column, and the remaining columns won't be grouped together. This single spanner column label is styled with Markdown by using the `md()` helper.
 
@@ -152,17 +152,17 @@ tab
 
 ### Merging Columns Together and Labeling Them
 
-Sometimes we'd like to combine the data from two columns into a single column. The `cols_merge()` function allows us to do this, we just need to describe how the data should be combined. For our table, let's merge together the following pairs of columns:
+Sometimes we'd like to combine the data from two columns into a single column. `cols_merge()` allows us to do this, we just need to describe how the data should be combined. For our table, let's merge together the following pairs of columns:
 
 - `mpg_c` and `mpg_h` (miles per gallon in city and highway driving modes)
 - `hp` and `hp_rpm` (horsepower and associated RPM)
 - `trq` and `trq_rpm` (torque and associated RPM)
 
-The `cols_merge()` function uses a `col_1` column and a `col_2` column. Once combined, the `col_1` column will be retained and the `col_2` column will be dropped. The pattern argument uses `{1}` and `{2}` to represent the content of `col_1` and `col_2`. Here, we can use string literals to add text like `rpm` or the `@` sign. Furthermore, because we are targeting an HTML table, we can use the `<br>` tag to insert a linebreak.
+`cols_merge()` uses a `col_1` column and a `col_2` column. Once combined, the `col_1` column will be retained and the `col_2` column will be dropped. The pattern argument uses `{1}` and `{2}` to represent the content of `col_1` and `col_2`. Here, we can use string literals to add text like `rpm` or the `@` sign. Furthermore, because we are targeting an HTML table, we can use the `<br>` tag to insert a linebreak.
 
 We are going to do something a little special with the `pattern` for the `mpg_c` and `mpg_h` columns and wrap it all with `<<`/`>>`. This is special pattern syntax that tells **gt** to remove anything inside those double braces when there is an `NA` value. We find that is a single row that has `NA` in both columns (for the 'Tesla Model S') and rather than seeing `"NA"` appear in the table, it's better to remove that entry entirely with this specialized pattern syntax.  
 
-Labeling columns essentially means that we are choosing display-friendly labels that are no longer simply the column names (the default label). The `cols_label()` function makes this relabeling possible. It accepts a series of named arguments in the form of `<column_name> = <column_label>, ...`.
+Labeling columns essentially means that we are choosing display-friendly labels that are no longer simply the column names (the default label). `cols_label()` makes this relabeling possible. It accepts a series of named arguments in the form of `<column_name> = <column_label>, ...`.
 
 ```{r merge_columns_pattern}
 # Perform three column merges to better present
@@ -215,9 +215,9 @@ tab
 
 We can change the alignment of data in columns with `cols_align()`. For our table, let's center-align the `mpg_c`, `hp`, and `trq` columns. All other columns will maintain their default alignments.
 
-It's sometimes useful to modify the default styles of table cells. We can do this in a targeted way with the `tab_style()` function. That function require two key pieces of information: a `style` definition, and one or more `locations` (which cells should the styles be applied to?). The `style` argument commonly uses the `cell_*()` helper functions. There are three of these (`cell_text()`, `cell_fill()` and `cell_borders()`) and each contains different arguments for the different styles that are supported.
+It's sometimes useful to modify the default styles of table cells. We can do this in a targeted way with `tab_style()`. That function require two key pieces of information: a `style` definition, and one or more `locations` (which cells should the styles be applied to?). The `style` argument commonly uses the `cell_*()` helper functions. There are three of these (`cell_text()`, `cell_fill()` and `cell_borders()`) and each contains different arguments for the different styles that are supported.
 
-Here we will use the `cell_text()` helper function and specify a text `size` of `"12px"` for our targeted cells---both `px(12)` and `"12px"` work equally well here. We also use helper functions with the `locations` argument and these are the `cells_*()` functions. We would like to target the data cells in all columns except `year` and `msrp` so we need to use `cells_body` and then supply our target columns to its own `columns` argument.
+Here we will use `cell_text()` and specify a text `size` of `"12px"` for our targeted cells---both `px(12)` and `"12px"` work equally well here. We also use helper functions with the `locations` argument and these are the `cells_*()` functions. We would like to target the data cells in all columns except `year` and `msrp` so we need to use `cells_body` and then supply our target columns to its own `columns` argument.
 
 ```{r align_style}
 # Center-align three columns in the gt table and
@@ -241,7 +241,7 @@ tab
 
 ### Text Transforms
 
-A text transform via the `text_transform()` function is a great way to further manipulate text in data cells (even after they've been formatted with the `fmt*()` function). After targeting data cells with the `cells_body()` location helper function, we supply a function to the `fn` argument that processes a vector of text (the vector `x` will be the formatted text in each of the targeted cells). If we intend to render an HTML table, we can directly apply HTML tags in the transformation function. The function we provide here is a bit complicated but it will build strings in the `trsmn` column that read better in a display table.
+Transforming text with `text_transform()` is a great way to further manipulate text in data cells (even after they've been formatted with the `fmt*()` function). After targeting data cells with the `cells_body()` location helper function, we supply a function to the `fn` argument that processes a vector of text (the vector `x` will be the formatted text in each of the targeted cells). If we intend to render an HTML table, we can directly apply HTML tags in the transformation function. The function we provide here is a bit complicated but it will build strings in the `trsmn` column that read better in a display table.
 
 ```{r text_transform_html}
 # Transform the column of text in `trsmn` using
@@ -281,7 +281,7 @@ tab
 
 ### Table Header: Title and Subtitle 
 
-The `tab_header()` function allows us to place a table title and, optionally, a subtitle at the top of the display table. It's generally a good idea to have both in a table, where the subtitle provides additional information (though that isn't quite the case in our example below).
+`tab_header()` allows us to place a table title and, optionally, a subtitle at the top of the display table. It's generally a good idea to have both in a table, where the subtitle provides additional information (though that isn't quite the case in our example below).
 
 ```{r tab_header}
 # Add a table title and subtitle; we can use
@@ -299,7 +299,7 @@ tab
 
 ### Adding a Source Citation
 
-A *source note* can be added below the display table using the `tab_source_note()` function. We can even add multiple source notes with multiple calls of that function. Here, we supply a web URL and by using Markdown (with `md()`) it's easy to create a link to the source of the data.
+A *source note* can be added below the display table with `tab_source_note()`. We can even add multiple source notes with multiple calls of that function. Here, we supply a web URL and by using Markdown (with `md()`) it's easy to create a link to the source of the data.
 
 ```{r tab_source_note}
 # Add a source note to the bottom of the table; this
@@ -324,7 +324,7 @@ Let's bring it all together by putting together all the statements we developed 
     b. identifying the car with the highest horsepower
     c. stating the currency of the MSRP
 
-The `tab_footnote()` function expects note text for the `footnote` argument, and locations for where the footnote mark should be attached. It will handle the placement of the footnote mark and also place the footnote in the footnotes area. Here, we'll use the `cells_body()` *location helper* function. There are several location helper functions for targeting all parts of the table (e.g,. `cells_body()`, `cells_stub()`, etc.). Each *location helper* has its own interface for targeting cells so refer to the documentation for examples of how they work in practice (e.g., use `?cells_body`).
+`tab_footnote()` expects note text for the `footnote` argument, and locations for where the footnote mark should be attached. It will handle the placement of the footnote mark and also place the footnote in the footnotes area. Here, we'll use the `cells_body()` *location helper* function. There are several location helper functions for targeting all parts of the table (e.g,. `cells_body()`, `cells_stub()`, etc.). Each *location helper* has its own interface for targeting cells so refer to the documentation for examples of how they work in practice (e.g., use `?cells_body`).
 
 What `cells_body()` expects is `columns` (column names, which can be conveniently provided in `c()`) and `rows` (which can be a vector of row names or row indices). The `cells_stub()` location helper only expects a vector of `rows`. For `cells_column_labels()`, we provide column labels in its `columns` argument. Here, we are targeting a footnote to the `msrp` column label so we will use `columns = msrp`.
 

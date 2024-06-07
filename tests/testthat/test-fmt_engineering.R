@@ -1,4 +1,4 @@
-test_that("The `fmt_engineering()` function works correctly", {
+test_that("fmt_engineering() works correctly", {
 
   # Create an input data frame with a single numeric column
   data_tbl <-
@@ -43,7 +43,7 @@ test_that("The `fmt_engineering()` function works correctly", {
 
   # Expect the extracted values to match those of the
   # original dataset
-  expect_equal(data_tbl$num, (tab %>% dt_data_get())[["num"]])
+  expect_equal(dt_data_get(tab)[["num"]], data_tbl$num)
 
   # Expect an error when attempting to format a column
   # that does not exist
@@ -616,7 +616,7 @@ test_that("The `fmt_engineering()` function works correctly", {
   )
 })
 
-test_that("The `fmt_engineering() fn can handle extremely large and small values", {
+test_that("fmt_engineering() can handle extremely large and small values", {
 
   # Create an input data frame with very large and very small numbers
   # (both positive and negative)

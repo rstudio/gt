@@ -26,11 +26,11 @@
 #'
 #' @description
 #'
-#' The `text_replace()` function provides a specialized interface for replacing
-#' text fragments in table cells with literal text. You need to ensure that
-#' you're targeting the appropriate cells with the `locations` argument. Once
-#' that is done, the remaining two values to supply are for the regex pattern
-#' (`pattern`) and the replacement for all matched text (`replacement`).
+#' `text_replace()` provides a specialized interface for replacing text fragments
+#' in table cells with literal text. You need to ensure that you're targeting
+#' the appropriate cells with the `locations` argument. Once that is done, the
+#' remaining two values to supply are for the regex pattern (`pattern`) and the
+#' replacement for all matched text (`replacement`).
 #'
 #' @param data *The gt table data object*
 #'
@@ -58,18 +58,17 @@
 #'
 #' @section Examples:
 #'
-#' Use the [`metro`] dataset to create a **gt** table. With the [cols_merge()]
-#' function, we'll merge the `name` and `caption` columns together but only if
-#' `caption` doesn't have an `NA` value (the special `pattern` syntax of `"{1}<<
-#' ({2})>>"` takes care of this). This merged content is now part of the `name`
-#' column. We'd like to modify this further wherever there is text in
-#' parentheses: (1) make that text italicized, and (2) introduce a line break
-#' before the text in parentheses. We can do this with the `text_replace()`
-#' function. The `pattern` value of `"\\((.*?)\\)"` will match on text between
-#' parentheses, and the inner `"(.*?)"` is a capture group. The `replacement`
-#' value of `"<br>(<em>\\1</em>)"` puts the capture group text `"\\1"` within
-#' `<em>` tags, wraps literal parentheses around it, and prepends a line break
-#' tag.
+#' Use the [`metro`] dataset to create a **gt** table. With [cols_merge()],
+#' we'll merge the `name` and `caption` columns together but only if `caption`
+#' doesn't have an `NA` value (the special `pattern` syntax of `"{1}<<({2})>>"`
+#' takes care of this). This merged content is now part of the `name` column.
+#' We'd like to modify this further wherever there is text in parentheses:
+#' (1) make that text italicized, and (2) introduce a line break before the text
+#' in parentheses. We can do this with `text_replace()`. The `pattern` value of
+#' `"\\((.*?)\\)"` will match on text between parentheses, and the inner
+#' `"(.*?)"` is a capture group. The `replacement` value of `"<br>(<em>\\1</em>)"`
+#' puts the capture group text `"\\1"` within `<em>` tags, wraps literal
+#' parentheses around it, and prepends a line break tag.
 #'
 #' ```r
 #' metro |>
@@ -122,14 +121,14 @@ text_replace <- function(
 #'
 #' @description
 #'
-#' The `text_case_when()` function provides a useful interface for a
-#' case-by-case approach to replacing entire table cells. First off, you have to
-#' make sure you're targeting the appropriate cells with the `.locations`
-#' argument. Following that, you supply a sequence of two-sided formulas
-#' matching of the general form: `<logical_stmt> ~ <new_text>`. In the left hand
-#' side (LHS) there should be a predicate statement that evaluates to a logical
-#' vector of length one (i.e., either `TRUE` or `FALSE`). To refer to the values
-#' undergoing transformation, you need to use the `x` variable.
+#' `text_case_when()` provides a useful interface for a case-by-case approach to
+#' replacing entire table cells. First off, you have to make sure you're
+#' targeting the appropriate cells with the `.locations` argument. Following
+#' that, you supply a sequence of two-sided formulas matching of the general
+#' form: `<logical_stmt> ~ <new_text>`. In the left hand side (LHS) there should
+#' be a predicate statement that evaluates to a logical vector of length one
+#' (i.e., either `TRUE` or `FALSE`). To refer to the values undergoing
+#' transformation, you need to use the `x` variable.
 #'
 #' @param .data *The gt table data object*
 #'
@@ -161,11 +160,11 @@ text_replace <- function(
 #' @section Examples:
 #'
 #' Use a portion of the [`metro`] dataset to create a **gt** table. We'll use
-#' the `text_case_when()` function to supply pairs of predicate statements and
-#' replacement text. For the `connect_rer` column, we will perform a count of
-#' pattern matches with `stringr::str_count()` and determine which cells have 1,
-#' 2, or 3 matched patterns. For each of these cases, descriptive replacement
-#' text is provided. Here, we use a `.default` value to replace the non-matched
+#' `text_case_when()` to supply pairs of predicate statements and replacement
+#' text. For the `connect_rer` column, we will perform a count of pattern
+#' matches with `stringr::str_count()` and determine which cells have 1, 2, or 3
+#' matched patterns. For each of these cases, descriptive replacement text is
+#' provided. Here, we use a `.default` value to replace the non-matched
 #' cases with an empty string (`""`). Finally, we use [cols_label()] to modify
 #' the labels of the three columns.
 #'
@@ -259,9 +258,8 @@ text_case_when <- function(
 #'
 #' @description
 #'
-#' The `text_case_match()` function provides a useful interface for a approach
-#' to replacing table cells that behaves much like a switch statement. The
-#' targeting of cells for transformation happens with the `.locations` argument.
+#' `text_case_match()` provides a useful interface for a approach to replacing
+#' table cells that behaves much like a switch statement. The targeting of cell for transformation happens with the `.locations` argument.
 #' Once overall targeting is handled, you need to supply a sequence of two-sided
 #' formulas matching of the general form: `<vector_old_text> ~ <new_text>`. In
 #' the left hand side (LHS) there should be a character vector containing
@@ -308,9 +306,9 @@ text_case_when <- function(
 #' transform the `NA` value to `"elderberry"` using the `text_case_match()`
 #' function. Over in the `fctr` column, some more sophisticated matches will be
 #' performed using `text_case_match()`. That column has spelled out numbers and
-#' we can produce these on the LHS with help from the [vec_fmt_spelled_num()]
-#' function. The replacements will contain descriptive text. In this last call
-#' of `text_case_match()`, we use a `.default` to replace text for any of those
+#' we can produce these on the LHS with help from [vec_fmt_spelled_num()].
+#' The replacements will contain descriptive text. In this last call of
+#' `text_case_match()`, we use a `.default` to replace text for any of those
 #' non-matched cases.
 #'
 #' ```r
@@ -342,10 +340,8 @@ text_case_when <- function(
 #' towny |>
 #'   dplyr::select(name, csd_type, population_2021) |>
 #'   dplyr::filter(csd_type %in% c("city", "town")) |>
-#'   dplyr::group_by(csd_type) |>
-#'   dplyr::arrange(desc(population_2021)) |>
-#'   dplyr::slice_head(n = 5) |>
-#'   dplyr::ungroup() |>
+#'   dplyr::slice_max(population_2021, n = 5, by = csd_type) |>
+#'   dplyr::arrange(csd_type) |>
 #'   gt() |>
 #'   fmt_integer() |>
 #'   text_case_match(
@@ -458,7 +454,7 @@ text_case_match <- function(
 #' @description
 #'
 #' Text transforming in **gt** is the act of modifying formatted strings in
-#' targeted cells. The `text_transform()` function provides the most flexibility
+#' targeted cells. `text_transform()` provides the most flexibility
 #' of all the `text_*()` functions in their family of functions. With it, you
 #' target the cells to undergo modification in the `locations` argument while
 #' also supplying a function to the `fn` argument. The function given to `fn`
@@ -481,8 +477,8 @@ text_case_match <- function(
 #'   [`<locations expressions>`][location-helper] // *default:* `cells_body()`
 #'
 #'   The cell or set of cells to be associated with the text transformation.
-#'   Only the [cells_column_spanners()], [cells_column_labels()],
-#'    [cells_row_groups()], [cells_stub()], and [cells_body()] helper functions can
+#'   Only [cells_column_spanners()], [cells_column_labels()],
+#'    [cells_row_groups()], [cells_stub()], and [cells_body()] can
 #'   be used here. We can enclose several of these calls within a `list()` if we
 #'   wish to make the transformation happen at different locations.
 #'
@@ -494,7 +490,7 @@ text_case_match <- function(
 #' text in the `date` column using a function supplied to `text_transform()`
 #' (via the `fn` argument). Note that the `x` in the `fn = function (x)` part
 #' consists entirely of ISO 8601 date strings (which are acceptable as input to
-#' the [vec_fmt_date()] and [vec_fmt_datetime()] functions).
+#' [vec_fmt_date()] and [vec_fmt_datetime()]).
 #'
 #' ```r
 #' sp500 |>
@@ -531,19 +527,16 @@ text_case_match <- function(
 #' spelled-out numbers with [fmt_spelled_num()]. The output values are indeed
 #' spelled out but exclusively with lowercase letters. We actually want these
 #' words to begin with a capital letter and end with a period. To make this
-#' possible, the `text_transform()` function will be used since it can modify
+#' possible, `text_transform()` will be used since it can modify
 #' already-formatted text. Through the `fn` argument, we provide a custom
 #' function that uses R's `toTitleCase()` operating on `x` (the numbers-as-text
-#' strings) within a `paste0()` so that a period can be properly placed.
+#' strings) within `paste0()` so that a period can be properly placed.
 #'
 #' ```r
 #' gtcars |>
-#'   dplyr::select(mfr, ctry_origin) |>
 #'   dplyr::filter(ctry_origin %in% c("Germany", "Italy", "Japan")) |>
-#'   dplyr::group_by(mfr, ctry_origin) |>
-#'   dplyr::count() |>
-#'   dplyr::ungroup() |>
-#'   dplyr::arrange(ctry_origin, desc(n)) |>
+#'   dplyr::count(mfr, ctry_origin, sort = TRUE) |>
+#'   dplyr::arrange(ctry_origin) |>
 #'   gt(rowname_col = "mfr", groupname_col = "ctry_origin") |>
 #'   cols_label(n = "No. of Entries") |>
 #'   tab_stub_indent(rows = everything(), indent = 2) |>

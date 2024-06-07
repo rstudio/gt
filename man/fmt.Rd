@@ -53,9 +53,8 @@ Either a single formatting function or a named list of functions.}
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{fmt()} function provides a way to execute custom formatting
-functionality with raw data values in a way that can consider all output
-contexts.
+\code{fmt()} provides a way to execute custom formatting functionality with raw
+data values in a way that can consider all output contexts.
 
 Along with the \code{columns} and \code{rows} arguments that provide some precision in
 targeting data cells, the \code{fns} argument allows you to define one or more

@@ -1,4 +1,4 @@
-# The `fmt_currency()` fn can render in the Indian numbering system
+# fmt_currency() can render in the Indian numbering system
 
     Code
       expected_tab <- tab %>% fmt_currency(columns = num, suffixing = TRUE, scale_by = 200,

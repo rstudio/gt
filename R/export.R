@@ -26,7 +26,7 @@
 #'
 #' @description
 #'
-#' The `gtsave()` function makes it easy to save a **gt** table to a file. The
+#' `gtsave()` makes it easy to save a **gt** table to a file. The
 #' function guesses the file type by the extension provided in the output
 #' filename, producing either an HTML, PDF, PNG, LaTeX, or RTF file.
 #'
@@ -543,13 +543,13 @@ gtsave_filename <- function(path, filename) {
 #'
 #' Use a subset of the [`gtcars`] dataset to create a **gt** table. Add a header
 #' with [tab_header()] and then export the table as HTML code with inlined CSS
-#' styles using the `as_raw_html()` function.
+#' styles using `as_raw_html()`.
 #'
 #' ```r
 #' tab_html <-
 #'   gtcars |>
 #'   dplyr::select(mfr, model, msrp) |>
-#'   dplyr::slice(1:5) |>
+#'   dplyr::slice_head(n = 5) |>
 #'   gt() |>
 #'   tab_header(
 #'     title = md("Data listing from **gtcars**"),
@@ -923,8 +923,8 @@ as_rtf <- function(
 #' @section Examples:
 #'
 #' Use a subset of the [`gtcars`] dataset to create a **gt** table. Add a header
-#' with [tab_header()] and then export the table as OOXML code for Word using the
-#' `as_word()` function.
+#' with [tab_header()] and then export the table as OOXML code for Word using
+#' `as_word()`
 #'
 #' ```r
 #' tab_rtf <-
@@ -1146,8 +1146,8 @@ as_word_tbl_body <- function(
 #'
 #' @description
 #'
-#' The `as_gtable()` function performs the transformation of a `gt_tbl` object
-#' to a `gtable` object.
+#' `as_gtable()` performs the transformation of a `gt_tbl` object to a
+#' [`gtable`][gtable::gtable()] object.
 #'
 #' @inheritParams gtsave
 #'
@@ -1501,10 +1501,10 @@ grid_layout_widths <- function(layout, data) {
 #' @description
 #'
 #' We can extract the body of a **gt** table, even at various stages of its
-#' rendering, from a `gt_tbl` object using the `extract_body()` function. By
-#' default, the data frame returned will have gone through all of the build
-#' stages but we can intercept the table body after a certain build stage.
-#' Here are the eight different build stages and some notes about each:
+#' rendering, from a `gt_tbl` object using `extract_body()`. By default, the
+#' data frame returned will have gone through all of the build stages but we
+#' can intercept the table body after a certain build stage. Here are the eight
+#' different build stages and some notes about each:
 #'
 #' 1. `"init"`: the body table is initialized here, entirely with `NA` values.
 #' It's important to note that all columns of the are of the `character` type in
@@ -1525,7 +1525,7 @@ grid_layout_widths <- function(layout, data) {
 #' values now become the string `"NA"`, so, there aren't any true missing values
 #' in this body table.
 #'
-#' 5. `"cols_merged"`: The result of column-merging operations (though
+#' 5. `"cols_merged"`: The result of column-merging operations (through
 #' [cols_merge()] and related functions) is materialized here. Columns that were
 #' asked to be hidden will be present here (i.e., hiding columns doesn't remove
 #' them from the body table).
@@ -1658,9 +1658,9 @@ extract_body <- function(
 #' @description
 #'
 #' Get a list of summary row data frames from a `gt_tbl` object where summary
-#' rows were added via the [summary_rows()] function. The output data frames
-#' contain the `group_id` and `rowname` columns, whereby `rowname` contains
-#' descriptive stub labels for the summary rows.
+#' rows were added via [summary_rows()]. The output data frames contain the
+#' `group_id` and `rowname` columns, whereby `rowname` contains descriptive stub
+#' labels for the summary rows.
 #'
 #' @inheritParams extract_cells
 #'

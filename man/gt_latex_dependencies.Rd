@@ -13,15 +13,14 @@ An object of class \code{knit_asis}.
 When working with Rnw (Sweave) files or otherwise writing LaTeX code,
 including a \strong{gt} table can be problematic if we don't have knowledge
 of the LaTeX dependencies. For the most part, these dependencies are the
-LaTeX packages that are required for rendering a \strong{gt} table. The
-\code{gt_latex_dependencies()} function provides an object that can be
-used to provide the LaTeX in an Rnw file, allowing \strong{gt} tables to work
-and not yield errors due to missing packages.
+LaTeX packages that are required for rendering a \strong{gt} table.
+\code{gt_latex_dependencies()} provides an object that can be used to provide the
+LaTeX in an Rnw file, allowing \strong{gt} tables to work and not yield errors
+due to missing packages.
 }
 \details{
-Here is an example Rnw document that shows how the
-\code{gt_latex_dependencies()} can be used in conjunction with a \strong{gt}
-table:
+Here is an example Rnw document that shows how \code{gt_latex_dependencies()}
+can be used in conjunction with a \strong{gt} table:
 
 \preformatted{
 \%!sweave=knitr

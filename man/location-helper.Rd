@@ -11,7 +11,7 @@ bottom of a table:
 the value given to the \code{groups} argument (\code{"title"} or \code{"subtitle"}).
 \item \code{\link[=cells_stubhead]{cells_stubhead()}}: targets the stubhead location, a cell of which is only
 available when there is a stub; a label in that location can be created by
-using the \code{\link[=tab_stubhead]{tab_stubhead()}} function.
+using \code{\link[=tab_stubhead]{tab_stubhead()}}.
 \item \code{\link[=cells_column_spanners]{cells_column_spanners()}}*: targets the spanner column labels with the
 \code{spanners} argument; spanner column labels appear above the column labels.
 \item \code{\link[=cells_column_labels]{cells_column_labels()}}*: targets the column labels with its \code{columns}

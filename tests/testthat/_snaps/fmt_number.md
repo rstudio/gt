@@ -1,4 +1,4 @@
-# The `fmt_number()` fn can render values in the Indian numbering system
+# fmt_number() can render values in the Indian numbering system
 
     Code
       expected_tab <- tab %>% fmt_number(columns = num, suffixing = TRUE, scale_by = 200,

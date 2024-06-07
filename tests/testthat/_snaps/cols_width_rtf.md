@@ -1,4 +1,4 @@
-# The `cols_width()` function works in making RTF tables
+# cols_width() works in making RTF tables
 
     Code
       .

@@ -1,8 +1,8 @@
-test_that("The `fmt_duration()` function works correctly with numerical inputs", {
+test_that("fmt_duration() works correctly with numerical inputs", {
 
   # Create an input tibble with a numeric column
   data_tbl_1 <-
-    dplyr::tibble(
+    data.frame(
       num_1 = c(1.0030, 36323.005, 5.000003, -34.5, 31.6, 28.5, NA)
     )
 
@@ -1259,9 +1259,9 @@ test_that("The `fmt_duration()` function works correctly with numerical inputs",
     )
   )
 
-  # Create another input tibble with a numeric column
+  # Create another input data frame with a numeric column
   data_tbl_2 <-
-    dplyr::tibble(
+    data.frame(
       num_1 = c(5500, -3500, 0.03, -0.03, 0, 0.005, NA)
     )
 
@@ -1352,13 +1352,10 @@ test_that("The `fmt_duration()` function works correctly with numerical inputs",
   )
 })
 
-test_that("The `fmt_duration()` function works correctly with integer inputs", {
+test_that("fmt_duration() works correctly with integer inputs", {
 
-  # Create an input tibble with an integer column
-  data_tbl_1 <-
-    dplyr::tibble(
-      int_1 = seq(90L, 93L)
-    )
+  # Create an input data frame with an integer column
+  data_tbl_1 <- data.frame(int_1 =  seq(90L, 93L))
 
   # Create a `gt_tbl` object with `gt()` and the
   # `data_tbl_1` dataset
@@ -1649,7 +1646,7 @@ test_that("Specialized handling of the `colon-sep` format works correctly", {
   )
 })
 
-test_that("The `fmt_duration()` function works correctly with difftime inputs", {
+test_that("fmt_duration() works correctly with difftime inputs", {
 
   dt_1 <- ISOdatetime(year = 2015, month = 6, day = 3:5, hour = 3:5, min = 5:7, sec = 25:27, tz = "GMT")
   dt_2 <- ISOdatetime(year = 2015, month = 6, day = c(5, 8, 12), hour = 5:7, min = 30:32, sec = 0:2, tz = "GMT")
@@ -1718,7 +1715,7 @@ test_that("The `fmt_duration()` function works correctly with difftime inputs", 
   )
 })
 
-test_that("The `fmt_duration()` function works well with mixed numeric/difftime inputs", {
+test_that("fmt_duration() works well with mixed numeric/difftime inputs", {
 
   dt_1 <- ISOdatetime(year = 2015, month = 6, day = 3:5, hour = 3:5, min = 5:7, sec = 25:27, tz = "GMT")
   dt_2 <- ISOdatetime(year = 2015, month = 6, day = c(5, 8, 12), hour = 5:7, min = 30:32, sec = 0:2, tz = "GMT")
@@ -1761,7 +1758,7 @@ test_that("The `fmt_duration()` function works well with mixed numeric/difftime 
   )
 })
 
-test_that("The `fmt_duration()` function will produce localized outputs", {
+test_that("fmt_duration() can produce localized outputs", {
 
   # Create an input tibble with a numeric column
   data_tbl_5 <-
@@ -1838,7 +1835,7 @@ test_that("The `fmt_duration()` function will produce localized outputs", {
   tab_wide %>% render_as_html() %>% expect_snapshot()
 })
 
-test_that("The `fmt_duration()` function will error in specific cases", {
+test_that("fmt_duration() will error in specific cases", {
 
   dt_1 <- ISOdatetime(year = 2015, month = 6, day = 3:5, hour = 3:5, min = 5:7, sec = 25:27, tz = "GMT")
   dt_2 <- ISOdatetime(year = 2015, month = 6, day = c(5, 8, 12), hour = 5:7, min = 30:32, sec = 0:2, tz = "GMT")

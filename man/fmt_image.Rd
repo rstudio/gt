@@ -89,9 +89,9 @@ determined to be local. By default, this is \code{TRUE}.}
 An object of class \code{gt_tbl}.
 }
 \description{
-To more easily insert graphics into body cells, we can use the \code{fmt_image()}
-function. This allows for one or more images to be placed in the targeted
-cells. The cells need to contain some reference to an image file, either: (1)
+To more easily insert graphics into body cells, we can use \code{fmt_image()}.
+This allows for one or more images to be placed in the targeted cells.
+The cells need to contain some reference to an image file, either: (1)
 complete http/https or local paths to the files; (2) the file names, where a
 common path can be provided via \code{path}; or (3) a fragment of the file name,
 where the \code{file_pattern} helps to compose the entire file name and \code{path}
@@ -145,10 +145,10 @@ you'd like to use a more complex predicate expression.
 \section{Compatibility of arguments with the \code{from_column()} helper function}{
 
 
-The \code{\link[=from_column]{from_column()}} helper function can be used with certain arguments of
-\code{fmt_image()} to obtain varying parameter values from a specified column
-within the table. This means that each row could be formatted a little bit
-differently. These arguments provide support for \code{\link[=from_column]{from_column()}}:
+\code{\link[=from_column]{from_column()}} can be used with certain arguments of \code{fmt_image()} to obtain
+varying parameter values from a specified column within the table. This means
+that each row could be formatted a little bit differently. These arguments
+provide support for \code{\link[=from_column]{from_column()}}:
 \itemize{
 \item \code{height}
 \item \code{width}
@@ -161,11 +161,10 @@ differently. These arguments provide support for \code{\link[=from_column]{from_
 Please note that for each of the aforementioned arguments, a \code{\link[=from_column]{from_column()}}
 call needs to reference a column that has data of the correct type (this is
 different for each argument). Additional columns for parameter values can be
-generated with the \code{\link[=cols_add]{cols_add()}} function (if not already present). Columns
-that contain parameter data can also be hidden from final display with
-\code{\link[=cols_hide]{cols_hide()}}. Finally, there is no limitation to how many arguments the
-\code{\link[=from_column]{from_column()}} helper is applied so long as the arguments belong to this
-closed set.
+generated with \code{\link[=cols_add]{cols_add()}} (if not already present). Columns that contain
+parameter data can also be hidden from final display with \code{\link[=cols_hide]{cols_hide()}}.
+Finally, there is no limitation to how many arguments the \code{\link[=from_column]{from_column()}}
+helper is applied so long as the arguments belong to this closed set.
 }
 
 \section{Examples}{
@@ -178,11 +177,11 @@ will only include a few columns and rows from that table. The \code{lines} and
 graphics for all of these lines within the package (the path for the
 directory containing the images can be accessed via
 \code{system.file("metro_svg", package = "gt")}), and the filenames roughly
-correspond to the data in those two columns. The \code{fmt_image()} function can
-be used with these inputs since the \code{path} and \code{file_pattern} arguments allow
-us to compose complete and valid file locations. What you get from all of
-this are sequences of images in the table cells, taken from the referenced
-graphics files on disk.
+correspond to the data in those two columns. \code{fmt_image()} can be used with
+these inputs since the \code{path} and \code{file_pattern} arguments allow us to
+compose complete and valid file locations. What you get from all of this are
+sequences of images in the table cells, taken from the referenced graphics
+files on disk.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{metro |>
   dplyr::select(name, caption, lines, connect_rer) |>

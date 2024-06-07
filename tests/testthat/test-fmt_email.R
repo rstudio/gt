@@ -1,4 +1,4 @@
-test_that("The `fmt_email()` function works correctly", {
+test_that("fmt_email() works correctly", {
 
   # Create an input data frame with email addresses
   data_tbl <-
@@ -16,7 +16,7 @@ test_that("The `fmt_email()` function works correctly", {
 
   # Extract vectors from the table object for comparison
   # to the original dataset
-  a <- (tab %>% dt_data_get())[["a"]]
+  a <- dt_data_get(tab)[["a"]]
 
   # Expect the extracted values to match those of the original dataset
   expect_equal(data_tbl$a, a)

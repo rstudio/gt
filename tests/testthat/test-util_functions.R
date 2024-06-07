@@ -1,36 +1,34 @@
-test_that("the `date_formats()` function works correctly", {
+test_that("date_formats() works correctly", {
 
-  # Expect that the `info_date_style()` function produces an
-  # information table with certain classes
+  # Expect that `info_date_style()` is a tibble
   expect_s3_class(date_formats(), c("tbl_df", "tbl", "data.frame"))
 
   # Expect the tibble to be of specific dimensions
   expect_equal(dim(date_formats()), c(41, 4))
 
   # Expect the tibble to have specific column names
-  expect_equal(
-    colnames(date_formats()),
+  expect_named(
+    date_formats(),
     c("format_number", "format_name", "format_code", "flexible")
   )
 })
 
-test_that("the `time_formats()` util fcn works as expected", {
+test_that("time_formats() works correctly", {
 
-  # Expect that the `info_date_style()` function produces an
-  # information table with certain classes
+  # Expect that `time_formats()` is a tibble
   expect_s3_class(time_formats(), c("tbl_df", "tbl", "data.frame"))
 
   # Expect the tibble to be of specific dimensions
   expect_equal(dim(time_formats()), c(25, 5))
 
   # Expect the tibble to have specific column names
-  expect_equal(
-    colnames(time_formats()),
+  expect_named(
+    time_formats(),
     c("format_number", "format_name", "format_code", "time_type", "flexible")
   )
 })
 
-test_that("the `get_date_format()` function works correctly", {
+test_that("get_date_format() works correctly", {
 
   # Expect specific `format_code` values for each
   # numeric `date_style` value passed in
@@ -63,7 +61,7 @@ test_that("the `get_date_format()` function works correctly", {
     )
 })
 
-test_that("the `get_time_format()` function works correctly", {
+test_that("get_time_format() works correctly", {
 
   # Expect specific `format_code` values for each
   # numeric `date_style` value passed in
@@ -90,7 +88,7 @@ test_that("the `get_time_format()` function works correctly", {
     )
 })
 
-test_that("the `validate_currency()` function works correctly", {
+test_that("validate_currency() works correctly", {
 
   # Expect that specific currency names supplied to
   # `validate_currency()` will all return NULL
@@ -132,7 +130,7 @@ test_that("the `validate_currency()` function works correctly", {
   expect_error(lapply(c(999, 998), validate_currency))
 })
 
-test_that("the `get_currency_str()` function works correctly", {
+test_that("get_currency_str() works correctly", {
 
   # Expect that various currency codes (3-letter)
   # return a currency symbol
@@ -221,7 +219,7 @@ test_that("the `get_currency_str()` function works correctly", {
     expect_equal("thaler")
 })
 
-test_that("the `get_currency_exponent()` function works correctly", {
+test_that("get_currency_exponent() works correctly", {
 
   # Expect that various currency codes (3-letter)
   # return a currency exponent
@@ -260,7 +258,7 @@ test_that("the `get_currency_exponent()` function works correctly", {
     expect_equal(rep(0, 7))
 })
 
-test_that("the `process_text()` function works correctly", {
+test_that("process_text() works correctly", {
 
   # Create the `simple_text` variable, which is text
   # with the class `character`
@@ -301,7 +299,7 @@ test_that("the `process_text()` function works correctly", {
   process_text(text = html_text) %>% expect_type("character")
 })
 
-test_that("the `apply_pattern_fmt_x()` function works correctly", {
+test_that("apply_pattern_fmt_x() works correctly", {
 
   # Set formatted values in a character vector
   x <- c("23.4%", "32.6%", "9.15%")
@@ -327,7 +325,7 @@ test_that("the `apply_pattern_fmt_x()` function works correctly", {
     expect_equal(paste0(x, ", (", x, ")"))
 })
 
-test_that("the `remove_html()` function works correctly", {
+test_that("remove_html() works correctly", {
 
   # Create the `html_text_1` variable, which is HTML text
   # with the `character` class
@@ -346,7 +344,7 @@ test_that("the `remove_html()` function works correctly", {
   # `character` class after transformation
   remove_html(html_text_1) %>% expect_type("character")
 
-  # Call the `remove_html()` function on HTML text that's
+  # Call `remove_html()` on HTML text that's
   # classed as `html` and `character`
   html_text_2_removed <- remove_html(html_text_2)
 
@@ -361,7 +359,7 @@ test_that("the `remove_html()` function works correctly", {
     expect_equal(remove_html(html_text_1))
 })
 
-test_that("the `as_locations()` function works correctly", {
+test_that("as_locations() works correctly", {
 
   # Define `locations` as a `cells_body` object
   locations <-
@@ -395,7 +393,7 @@ test_that("the `as_locations()` function works correctly", {
     as_locations(locations))
 })
 
-test_that("the `process_footnote_marks()` function works correctly", {
+test_that("process_footnote_marks() works correctly", {
 
   process_footnote_marks(
     x = 1:10,
@@ -445,13 +443,13 @@ test_that("the `process_footnote_marks()` function works correctly", {
         "\u2055\u2055", "‖‖", "††", "§§", "¶¶"))
 })
 
-test_that("the `tidy_gsub()/tidy_gsub()` functions work with Unicode chars", {
+test_that("tidy_gsub()/tidy_sub() functions work with Unicode chars", {
 
   expect_true(identical(tidy_sub(".", ".", "\u00B1", fixed = TRUE), "\u00B1"))
   expect_true(identical(tidy_gsub(".", ".", "\u00B1", fixed = TRUE), "\u00B1"))
 })
 
-test_that("the `glue_gt()` function works in a safe manner", {
+test_that("glue_gt() works in a safe manner", {
 
   lst <- list(a = "foo", b = c("bar", "baz"))
 
@@ -489,7 +487,7 @@ test_that("the `glue_gt()` function works in a safe manner", {
   expect_identical(glue_gt(list(), "a", "b") %>% as.character(), "ab")
 })
 
-test_that("The `check_spanner_id_unique()` function works properly", {
+test_that("check_spanner_id_unique() works properly", {
 
   gt_tbl_1 <- gt(exibble)
 
@@ -532,7 +530,7 @@ test_that("The `check_spanner_id_unique()` function works properly", {
   )
 })
 
-test_that("the `get_file_ext()` function works correctly", {
+test_that("get_file_ext() works correctly", {
 
   # Expect that filenames with various extensions are
   # work with `get_file_ext()` to return the file extension
@@ -544,7 +542,7 @@ test_that("the `get_file_ext()` function works correctly", {
   get_file_ext(file = "file.gif") %>% expect_equal("gif")
 })
 
-test_that("The `resolve_secondary_pattern()` function works properly", {
+test_that("resolve_secondary_pattern() works properly", {
 
   # Define function to test input and output of the
   # `resolve_secondary_pattern()` util function

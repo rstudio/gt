@@ -28,11 +28,10 @@ helper function. Examples of select helper functions include
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{cols_unhide()} function allows us to take one or more hidden columns
-(usually made so via the \code{\link[=cols_hide]{cols_hide()}} function) and make them visible
-in the final output table. This may be important in cases where the user
-obtains a \code{gt_tbl} object with hidden columns and there is motivation to
-reveal one or more of those.
+\code{cols_unhide()} allows us to take one or more hidden columns (usually done
+via \code{\link[=cols_hide]{cols_hide()}}) and make them visible in the final output table. This may
+be important in cases where the user obtains a \code{gt_tbl} object with hidden
+columns and there is motivation to reveal one or more of those.
 }
 \details{
 The hiding and unhiding of columns is internally a rendering directive, so,
@@ -46,8 +45,8 @@ already-visible columns.
 
 
 Let's use a small portion of the \code{\link{countrypops}} dataset to create a \strong{gt}
-table. We'll hide the \code{country_code_2} and \code{country_code_3} columns with the
-\code{\link[=cols_hide]{cols_hide()}} function.
+table. We'll hide the \code{country_code_2} and \code{country_code_3} columns with
+\code{\link[=cols_hide]{cols_hide()}}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 <-
   countrypops |>
@@ -65,7 +64,7 @@ tab_1
 
 If the \code{tab_1} object is provided without the code or source data to
 regenerate it, and, the user wants to reveal otherwise hidden columns then
-the \code{cols_unhide()} function becomes useful.
+\code{cols_unhide()} becomes useful.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{tab_1 |> cols_unhide(columns = country_code_2)
 }\if{html}{\out{</div>}}

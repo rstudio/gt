@@ -129,8 +129,7 @@ labeling and adjustments to column widths with \code{\link[=cols_label]{cols_lab
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{towny |>
   dplyr::select(name, population_2021, land_area_km2) |>
   dplyr::filter(population_2021 > 100000) |>
-  dplyr::arrange(desc(population_2021)) |>
-  dplyr::slice_head(n = 10) |>
+  dplyr::slice_max(population_2021, n = 10) |>
   gt() |>
   cols_add(
     land_area = land_area_km2 / 2.58998811,

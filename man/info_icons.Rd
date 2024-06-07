@@ -10,7 +10,7 @@ info_icons()
 An object of class \code{gt_tbl}.
 }
 \description{
-The \code{\link[=fmt_icon]{fmt_icon()}} function can be used to render \emph{Font Awesome} icons within
+\code{\link[=fmt_icon]{fmt_icon()}} can be used to render \emph{Font Awesome} icons within
 body cells that reference the icon names. Further to this, the text
 transformation functions (e.g., \code{\link[=text_case_match]{text_case_match()}}) allow for the insertion
 of these icons as replacement text (so long as you use the \code{fa()} function

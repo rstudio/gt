@@ -2,7 +2,7 @@ skip_on_os("linux")
 
 library(lubridate)
 
-test_that("The `fmt_date()` function works correctly", {
+test_that("fmt_date() works correctly", {
 
   # Create an input tibble frame with a single column
   # that contains dates as character values
@@ -20,7 +20,7 @@ test_that("The `fmt_date()` function works correctly", {
 
   # Extract a vector from the table object for comparison
   # to the original dataset
-  date <- (tab %>% dt_data_get())[["date"]]
+  date <- dt_data_get(tab)[["date"]]
 
   # Expect the extracted values to match those of the
   # original dataset
@@ -243,7 +243,7 @@ test_that("The `fmt_date()` function works correctly", {
   )
 })
 
-test_that("The `fmt_time()` function works correctly", {
+test_that("fmt_time() works correctly", {
 
   # Create an input tibble frame with a single column
   # that contains times as character values
@@ -261,7 +261,7 @@ test_that("The `fmt_time()` function works correctly", {
 
   # Extract a vector from the table object for comparison
   # to the original dataset
-  time <- (tab %>% dt_data_get())[["time"]]
+  time <- dt_data_get(tab)[["time"]]
 
   # Expect the extracted values to match those of the
   # original dataset
@@ -449,7 +449,7 @@ test_that("The `fmt_time()` function works correctly", {
   )
 })
 
-test_that("The `fmt_datetime()` function works correctly", {
+test_that("fmt_datetime() works correctly", {
 
   # Create an input tibble frame with a single column
   # that contains date-times as character values
@@ -471,7 +471,7 @@ test_that("The `fmt_datetime()` function works correctly", {
 
   # Extract a vector from the table object for comparison
   # to the original dataset
-  datetime <- (tab %>% dt_data_get())[["datetime"]]
+  datetime <- dt_data_get(tab)[["datetime"]]
 
   # Expect the extracted values to match those of the
   # original dataset

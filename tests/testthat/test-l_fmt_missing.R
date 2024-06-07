@@ -1,4 +1,4 @@
-test_that("The `sub_missing()` function works correctly", {
+test_that("sub_missing() works correctly", {
 
   # Create an input data frame with two columns, both numeric
   data_tbl <-

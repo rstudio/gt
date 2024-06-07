@@ -47,7 +47,7 @@ Use the \code{\link{exibble}} dataset to create a \strong{gt} table with a numbe
 parts added (using functions like \code{\link[=summary_rows]{summary_rows()}}, \code{\link[=grand_summary_rows]{grand_summary_rows()}},
 and more). Following that, we'll lessen the amount of vertical padding across
 the entire table with \code{opt_vertical_padding()}. Using a \code{scale} value of
-\code{0.25} (down from the default of \code{1}) means the the vertical space will be
+\code{0.25} (down from the default of \code{1}) means the vertical space will be
 greatly reduced, resulting in a more compact table.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>

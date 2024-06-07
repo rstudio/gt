@@ -1,4 +1,4 @@
-test_that("The `pct()` helper function works correctly", {
+test_that("pct() works correctly", {
 
   # Create a CSS percentage value string
   percentage <- pct(x = 50)
@@ -11,20 +11,19 @@ test_that("The `pct()` helper function works correctly", {
     pct(x = "50"))
 })
 
-test_that("The `px()` helper function works correctly", {
+test_that("px() works correctly", {
 
   # Create a CSS pixel value string
   pixels <- px(x = 50)
 
   # Expect that the value is formatted correctly
-  pixels %>% expect_equal("50px")
+  expect_equal(pixels, "50px")
 
   # Expect an error if the value supplied is not numeric
-  expect_error(
-    px(x = "50"))
+  expect_error(px(x = "50"))
 })
 
-test_that("The `cells_group()` emits a warning but works correctly", {
+test_that("cells_group() emits a deprecation warning but works correctly", {
 
   # Expect a warning from the deprecated `cells_group()` function; it
   # still does return a useful list object
@@ -36,17 +35,19 @@ test_that("The `cells_group()` emits a warning but works correctly", {
   expect_type(out, "list")
 })
 
-test_that("The `from_column()` helper works correctly", {
+test_that(" from_column() works correctly", {
 
   # Create a gt table based on `exibble` (with a few extra columns)
   tab <-
     exibble %>%
-    dplyr::mutate(i_integer = as.integer(1:8)) %>%
-    dplyr::mutate(i_real = as.numeric(1:8)) %>%
-    dplyr::mutate(tf = c(rep(TRUE, 4), rep(FALSE, 4))) %>%
-    dplyr::mutate(locales = c("en", "de", "fr", "es", "it", "pt", "zh", "sv")) %>%
-    dplyr::mutate(punct = c(rep(",", 4), rep(".", 4))) %>%
-    dplyr::mutate(sys = c(rep("intl", 4), rep("ind", 4))) %>%
+    dplyr::mutate(
+      i_integer = as.integer(1:8),
+      i_real = as.numeric(1:8),
+      tf = c(rep(TRUE, 4), rep(FALSE, 4)),
+      locales = c("en", "de", "fr", "es", "it", "pt", "zh", "sv"),
+      punct = c(rep(",", 4), rep(".", 4)),
+      sys = c(rep("intl", 4), rep("ind", 4))
+    ) %>%
     gt(rowname_col = "row", groupname_col = "group")
 
   # Use `from_column()` on the `decimals` arg of `fmt_number()`

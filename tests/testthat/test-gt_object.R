@@ -1,12 +1,6 @@
 # Function to skip tests if Suggested packages not available on system
 check_suggests <- function() {
   skip_if_not_installed("rvest")
-  skip_if_not_installed("xml2")
-}
-
-# Gets the inner HTML text from a single value
-selection_text <- function(html, selection) {
-  rvest::html_text(rvest::html_nodes(html, selection))
 }
 
 test_that("A gt table object contains the correct components", {
@@ -209,7 +203,7 @@ test_that("A gt table can use UTF-8 chars in any system locale", {
     # Expect that UTF-8 characters are retained in the
     # gt object after rendering
     expect_identical(
-      expected_vec %>% sort(),
+       sort(expected_vec),
       (df %>% gt() %>% render_formats_test("html")) %>%
         unlist() %>% unname() %>% sort()
     )
@@ -408,7 +402,7 @@ test_that("A gt table can be made with grouped data - two groups", {
     )
 })
 
-test_that("The `gt()` groupname_col arg will override any grouped data", {
+test_that("`groupname_col` in gt() will override any grouped data", {
 
   # Use `dplyr::group_by()` to add a group to an
   # incoming table; create the gt object and provide
@@ -519,21 +513,21 @@ test_that("The `gt()` groupname_col arg will override any grouped data", {
     )
 })
 
-test_that("The `gt()` `id` arg will only accept specific inputs", {
+test_that("gt() validates `id` correctly", {
 
   # Expect no errors with valid inputs to `id`
-  expect_no_error(exibble %>% gt())
-  expect_no_error(exibble %>% gt(id = NULL))
-  expect_no_error(exibble %>% gt(id = "sldfjlds"))
-  expect_no_error(exibble %>% gt(id = "23947294"))
+  expect_no_error(gt(exibble))
+  expect_no_error(gt(exibble, id = NULL))
+  expect_no_error(gt(exibble, id = "sldfjlds"))
+  expect_no_error(gt(exibble, id = "23947294"))
 
   # Expect errors when `id` isn't a length 1 character vector or is NA
-  expect_error(exibble %>% gt(id = 23))
-  expect_error(exibble %>% gt(id = c("one", "two")))
-  expect_error(exibble %>% gt(id = NA))
+  expect_error(gt(exibble, id = 23))
+  expect_error(gt(exibble, id = c("one", "two")))
+  expect_error(gt(exibble, id = NA))
 })
 
-test_that("The `gt()` `rowname_col` arg will be overridden by `rownames_to_stub = TRUE`", {
+test_that("rowname_col in gt() will be overridden by `rownames_to_stub = TRUE`", {
 
   # Create a gt object where rownames will be used as
   # stub labels, and, provide a value for the `rowname_col`

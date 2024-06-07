@@ -26,16 +26,15 @@
 #'
 #' @description
 #'
-#' We can flexibly add a web image inside of a table with `web_image()`
-#' function. The function provides a convenient way to generate an HTML fragment
-#' with an image URL. Because this function is currently HTML-based, it is only
-#' useful for HTML table output. To use this function inside of data cells, it
-#' is recommended that the [text_transform()] function is used. With that
-#' function, we can specify which data cells to target and then include a
-#' `web_image()` call within the required user-defined function (for the `fn`
-#' argument). If we want to include an image in other places (e.g., in the
-#' header, within footnote text, etc.) we need to use `web_image()` within the
-#' [html()] helper function.
+#' We can flexibly add a web image inside of a table with `web_image()`.
+#' The function provides a convenient way to generate an HTML fragment with an
+#' image URL. Because this function is currently HTML-based, it is only useful
+#' for HTML table output. To use this function inside of data cells, it is
+#' recommended to use [text_transform()]. With that function, we can specify
+#' which data cells to target and then include a `web_image()` call within the
+#' required user-defined function (for the `fn` argument). If we want to include
+#' an image in other places (e.g., in the header, within footnote text, etc.)
+#' we need to wrap `web_image()` inside [html()].
 #'
 #' By itself, the function creates an HTML image tag, so, the call
 #' `web_image("http://example.com/image.png")` evaluates to:
@@ -70,8 +69,8 @@
 #' ```
 #'
 #' Create a tibble that contains heights of an image in pixels (one column as a
-#' string, the other as numerical values), then, create a **gt** table. Use the
-#' [text_transform()] function to insert the R logo PNG image with the various
+#' string, the other as numerical values), then, create a **gt** table. Use
+#' [text_transform()] to insert the R logo PNG image with the various
 #' sizes.
 #'
 #' ```r
@@ -102,9 +101,9 @@
 #' ```
 #'
 #' Create a tibble that contains heights of an image in pixels (one column as a
-#' string, the other as numerical values), then, create a **gt** table. Use the
-#' [tab_header()] function to insert the **R** logo SVG image once in the title
-#' and five times in the subtitle.
+#' string, the other as numerical values), then, create a **gt** table. Use
+#' [tab_header()] to insert the **R** logo SVG image once in the title and five
+#' times in the subtitle.
 #'
 #' ```r
 #' dplyr::tibble(
@@ -162,12 +161,12 @@ web_image <- function(
 #' a table with `local_image()` function. The function provides a convenient way
 #' to generate an HTML fragment using an on-disk PNG or SVG. Because this
 #' function is currently HTML-based, it is only useful for HTML table output. To
-#' use this function inside of data cells, it is recommended that the
-#' [text_transform()] function is used. With that function, we can specify which
-#' data cells to target and then include a `local_image()` call within the
-#' required user-defined function (for the `fn` argument). If we want to include
-#' an image in other places (e.g., in the header, within footnote text, etc.) we
-#' need to use `local_image()` within the [html()] helper function.
+#' use this function inside of data cells, it is recommended to use
+#' [text_transform()] first. With that function, we can specify which data cells
+#' to target and then include a `local_image()` call within the required
+#' user-defined function (for the `fn` argument). If we want to include an image
+#' in other places (e.g., in the header, within footnote text, etc.) we need to
+#' use `local_image()` within the [html()] helper function.
 #'
 #' By itself, the function creates an HTML image tag with an image URI embedded
 #' within. We can easily experiment with a local PNG or SVG image that's
@@ -193,9 +192,9 @@ web_image <- function(
 #' @section Examples:
 #'
 #' Create a tibble that contains heights of an image in pixels (one column as a
-#' string, the other as numerical values), then, create a **gt** table. Use the
-#' [text_transform()] function to insert a local test image (PNG) image with the
-#' various sizes.
+#' string, the other as numerical values), then, create a **gt** table. Use
+#' [text_transform()] to insert a local test image (PNG) image with the various
+#' sizes.
 #'
 #' ```r
 #' dplyr::tibble(
@@ -253,12 +252,12 @@ local_image <- function(
 #' `ggplot_image()` function. The function provides a convenient way to generate
 #' an HTML fragment with a `ggplot` object. Because this function is currently
 #' HTML-based, it is only useful for HTML table output. To use this function
-#' inside of data cells, it is recommended that the [text_transform()] function
-#' is used. With that function, we can specify which data cells to target and
-#' then include a call to `ggplot_image()` within the required user-defined
-#' function (for the `fn` argument). If we want to include a plot in other
-#' places (e.g., in the header, within footnote text, etc.) we need to use
-#' `ggplot_image()` within the [html()] helper function.
+#' inside of data cells, it is recommended that [text_transform()] is used.
+#' With that function, we can specify which data cells to target and then
+#' include a call to `ggplot_image()` within the required user-defined function
+#' (for the `fn` argument). If we want to include a plot in other places (e.g.,
+#' in the header, within footnote text, etc.) we need to use `ggplot_image()`
+#' within the [html()] helper function.
 #'
 #' By itself, the function creates an HTML image tag with an image URI embedded
 #' within (a 100 dpi PNG). We can easily experiment with any `ggplot2` plot
@@ -352,7 +351,7 @@ ggplot_image <- function(
     aspect_ratio = 1.0
 ) {
 
-  rlang::check_installed("ggplot2", "to use the `ggplot_image()` function.")
+  rlang::check_installed("ggplot2", "to use `ggplot_image()`.")
 
   if (is.numeric(height)) {
     height <- paste0(height, "px")

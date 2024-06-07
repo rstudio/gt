@@ -26,7 +26,7 @@
 #'
 #' @description
 #'
-#' The `gt_group()` function creates a container for storage of multiple **gt**
+#' `gt_group()` creates a container for storage of multiple **gt**
 #' tables. This type of object allows for flexibility in printing multiple
 #' tables in different output formats. For example, if printing multiple tables
 #' in a paginated output environment (e.g., RTF, Word, etc.), each **gt** table
@@ -104,11 +104,11 @@ gt_group <- function(
 #'
 #' @description
 #'
-#' Should you have a `gt_group` object, created through use of the [gt_group()]
-#' function, you may have a need to extract a **gt** table from that container.
-#' The `grp_pull()` function makes this possible, returning a `gt_tbl` object.
-#' The only thing you need to provide is the index value for the **gt** table
-#' within the `gt_group` object.
+#' Should you have a `gt_group` object, created through use of [gt_group()],
+#' you may have a need to extract a **gt** table from that container.
+#' `grp_pull()` makes this possible, returning a `gt_tbl` object. The only thing
+#' you need to provide is the index value for the **gt** table within the
+#' `gt_group` object.
 #'
 #' @inheritParams grp_add
 #'
@@ -166,8 +166,8 @@ grp_pull <- function(
 #'   `obj:<gt_group>` // **required**
 #'
 #'   This is a `gt_group` container object. It is typically generated through
-#'   use of the [gt_group()] function along with one or more `gt_tbl` objects,
-#'   or, made by splitting a **gt** table with [gt_split()].
+#'   use of [gt_group()] along with one or more `gt_tbl` objects, or, made by
+#'   splitting a **gt** table with [gt_split()].
 #'
 #' @inheritParams gt_group
 #'
@@ -436,12 +436,11 @@ grp_clone <- function(
 #'
 #' @description
 #'
-#' The [gt_group()] function can be used to create a container for multiple
-#' **gt** tables. In some circumstances, you might want to replace a specific
-#' `gt_tbl` object (or multiple) with a different one. This can be done with the
-#' `grp_replace()` function. The important thing is that the number of **gt**
-#' tables provided must equal the number of indices for tables present in the
-#' `gt_group` object.
+#' [gt_group()] can be used to create a container for multiple **gt** tables.
+#' In some circumstances, you might want to replace a specific `gt_tbl` object
+#' (or multiple) with a different one. This can be done with `grp_replace()`.
+#' The important thing is that the number of **gt** tables provided must equal
+#' the number of indices for tables present in the `gt_group` object.
 #'
 #' @inheritParams grp_add
 #'

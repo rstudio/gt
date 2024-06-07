@@ -91,9 +91,9 @@ mind.}
 An object of class \code{gt_tbl}.
 }
 \description{
-Should you need to replace specific cell values with custom text, the
-\code{sub_values()} function can be good choice. We can target cells for
-replacement though value, regex, and custom matching rules.
+Should you need to replace specific cell values with custom text,
+\code{sub_values()} can be good choice. We can target cells for replacement
+through value, regex, and custom matching rules.
 }
 \section{Targeting cells with \code{columns} and \code{rows}}{
 

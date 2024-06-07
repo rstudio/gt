@@ -25,9 +25,9 @@ A font stack can be obtained from \code{system_fonts()} using one of various
 keywords such as \code{"system-ui"}, \code{"old-style"}, and \code{"humanist"} (there are 15
 in total) representing a themed set of fonts. These sets comprise a font
 family that has been tested to work across a wide range of computer systems.
-This is useful when specifying \code{font} values in the \code{\link[=cell_text]{cell_text()}} function
-(itself used in the \code{\link[=tab_style]{tab_style()}} function). If using \code{\link[=opt_table_font]{opt_table_font()}} we
-can invoke this function in its \code{stack} argument.
+This is useful when specifying \code{font} values in \code{\link[=cell_text]{cell_text()}}
+(itself used inside \code{\link[=tab_style]{tab_style()}}). If using \code{\link[=opt_table_font]{opt_table_font()}}, we can
+invoke this function in its \code{stack} argument.
 }
 \section{The font stacks and the individual fonts used by platform}{
 
@@ -206,8 +206,9 @@ stack tends to use a more casual and commonplace style.
 Use a subset of the \code{\link{sp500}} dataset to create a \strong{gt} table with 10 rows.
 For the \code{date} column and the column labels, let's use a different font stack
 (the \code{"industrial"} one). The system fonts used in this particular stack are
-\code{"Bahnschrift"}, \code{"DIN Alternate"}, \code{"Franklin Gothic Medium"}, and \code{"Nimbus Sans Narrow"} (the generic \code{"sans-serif-condensed"} and \code{"sans-serif"} are
-used if the aforementioned fonts aren't available).
+\code{"Bahnschrift"}, \code{"DIN Alternate"}, \code{"Franklin Gothic Medium"}, and
+\code{"Nimbus Sans Narrow"} (the generic \code{"sans-serif-condensed"} and \code{"sans-serif"}
+are used if the aforementioned fonts aren't available).
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
   dplyr::slice(1:10) |>

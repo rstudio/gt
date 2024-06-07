@@ -21,7 +21,7 @@ Markdown text and it will undergo conversion to the desired output context.
 Markdown text can be used in certain places in a \strong{gt} table, and this is
 wherever new text is defined (e.g., footnotes, source notes, the table title,
 etc.). Using Markdown is advantageous for styling text since it will be
-rendered correctly to the the output format of the \strong{gt} table. There is
+rendered correctly to the output format of the \strong{gt} table. There is
 also the \code{\link[=html]{html()}} helper that allows you use HTML exclusively (for tables
 expressly meant for HTML output) but \code{md()} allows for both; you get to use
 Markdown plus any HTML fragments at the same time.
@@ -30,8 +30,8 @@ Markdown plus any HTML fragments at the same time.
 
 
 Use the \code{\link{exibble}} dataset to create a \strong{gt} table. When adding a title
-through the \code{\link[=tab_header]{tab_header()}} function, we'll use the \code{md()} helper to signify
-to \strong{gt} that we're using Markdown formatting.
+through \code{\link[=tab_header]{tab_header()}}, we'll use the \code{md()} helper to signify to \strong{gt} that
+we're using Markdown formatting.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{exibble |>
   dplyr::select(currency, char) |>

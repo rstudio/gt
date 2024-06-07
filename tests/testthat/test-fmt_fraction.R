@@ -1,4 +1,4 @@
-test_that("The `fmt_fraction()` function works correctly", {
+test_that("fmt_fraction() works correctly", {
 
   # Create an input data frame two columns: one
   # character-based and one that is numeric
@@ -39,8 +39,8 @@ test_that("The `fmt_fraction()` function works correctly", {
 
   # Extract vectors from the table object for comparison
   # to the original dataset
-  char <- (tab %>% dt_data_get())[["char"]]
-  num <- (tab %>% dt_data_get())[["num"]]
+  char <- dt_data_get(tab)[["char"]]
+  num <- dt_data_get(tab)[["num"]]
 
   # Expect the extracted values to match those of the original dataset
   expect_equal(data_tbl$char, char)
@@ -430,7 +430,7 @@ test_that("The `fmt_fraction()` function works correctly", {
   )
 })
 
-test_that("The `fmt_fraction()` function produces reproducible results for HTML output", {
+test_that("fmt_fraction() produces reproducible results for HTML output", {
 
   # Define values
   range_0_1 <- c(0.0001, 0.001, 0.01, 0.1, 0.25, 0.4, 0.5, 0.6, 0.75, 0.9, 0.99, 0.999, 0.9999)
@@ -531,7 +531,7 @@ test_that("The `fmt_fraction()` function produces reproducible results for HTML 
   fraction_tbl_simplified %>% as_rtf() %>% expect_snapshot()
 })
 
-test_that("The `fmt_fraction()` fn can render values in the Indian numbering system", {
+test_that("fmt_fraction() can render values in the Indian numbering system", {
 
   # These numbers will be used in tests of formatting
   # values to the Indian numbering system

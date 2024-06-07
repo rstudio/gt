@@ -29,12 +29,12 @@ We can flexibly add a local image (i.e., an image residing on disk) inside of
 a table with \code{local_image()} function. The function provides a convenient way
 to generate an HTML fragment using an on-disk PNG or SVG. Because this
 function is currently HTML-based, it is only useful for HTML table output. To
-use this function inside of data cells, it is recommended that the
-\code{\link[=text_transform]{text_transform()}} function is used. With that function, we can specify which
-data cells to target and then include a \code{local_image()} call within the
-required user-defined function (for the \code{fn} argument). If we want to include
-an image in other places (e.g., in the header, within footnote text, etc.) we
-need to use \code{local_image()} within the \code{\link[=html]{html()}} helper function.
+use this function inside of data cells, it is recommended to use
+\code{\link[=text_transform]{text_transform()}} first. With that function, we can specify which data cells
+to target and then include a \code{local_image()} call within the required
+user-defined function (for the \code{fn} argument). If we want to include an image
+in other places (e.g., in the header, within footnote text, etc.) we need to
+use \code{local_image()} within the \code{\link[=html]{html()}} helper function.
 
 By itself, the function creates an HTML image tag with an image URI embedded
 within. We can easily experiment with a local PNG or SVG image that's
@@ -50,9 +50,9 @@ heights of most table rows.
 
 
 Create a tibble that contains heights of an image in pixels (one column as a
-string, the other as numerical values), then, create a \strong{gt} table. Use the
-\code{\link[=text_transform]{text_transform()}} function to insert a local test image (PNG) image with the
-various sizes.
+string, the other as numerical values), then, create a \strong{gt} table. Use
+\code{\link[=text_transform]{text_transform()}} to insert a local test image (PNG) image with the various
+sizes.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{dplyr::tibble(
   pixels = px(seq(10, 35, 5)),

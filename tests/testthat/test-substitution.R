@@ -1,4 +1,4 @@
-test_that("The `sub_missing()` function works correctly", {
+test_that("sub_missing() works correctly", {
 
   # Create an input table with two columns, both numeric
   data_tbl <-
@@ -16,8 +16,8 @@ test_that("The `sub_missing()` function works correctly", {
 
   # Extract vectors from the table object for comparison
   # to the original dataset
-  num_1 <- (tab %>% dt_data_get())[["num_1"]]
-  num_2 <- (tab %>% dt_data_get())[["num_2"]]
+  num_1 <- dt_data_get(tab)[["num_1"]]
+  num_2 <- dt_data_get(tab)[["num_2"]]
 
   # Expect the extracted values to match those of the
   # original dataset
@@ -274,7 +274,7 @@ test_that("The `sub_missing()` function works correctly", {
   )
 })
 
-test_that("The `sub_zero()` function works correctly", {
+test_that("sub_zero() works correctly", {
 
   # Create an input data frame with two columns: one numeric, one character
   data_tbl <-
@@ -377,7 +377,7 @@ test_that("The `sub_zero()` function works correctly", {
   )
 })
 
-test_that("The `sub_small_vals()` function works correctly", {
+test_that("sub_small_vals() works correctly", {
 
   # Create an input table with three columns
   data_tbl <-
@@ -582,7 +582,7 @@ test_that("The `sub_small_vals()` function works correctly", {
   expect_error(tab %>% sub_small_vals(columns = "num_1", sign = "?"))
 })
 
-test_that("The `sub_large_vals()` function works correctly", {
+test_that("sub_large_vals() works correctly", {
 
   # Create an input table with three columns
   data_tbl <-
@@ -769,7 +769,7 @@ test_that("The `sub_large_vals()` function works correctly", {
   expect_error(tab %>% sub_large_vals(columns = "num_1", sign = "?"))
 })
 
-test_that("The `sub_values()` function works correctly", {
+test_that("sub_values() works correctly", {
 
   # Create an input table with three columns
   data_tbl <-

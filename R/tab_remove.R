@@ -4,7 +4,7 @@
 #'
 #' We can remove the table header from a **gt** table quite easily with
 #' `rm_header()`. The table header is an optional table part (positioned above
-#' the column labels) that can be added through the [tab_header()].
+#' the column labels) that can be added through [tab_header()].
 #'
 #' This function for removal is useful if you have received a **gt** table
 #' (perhaps through an API that returns **gt** objects) but would prefer that
@@ -23,7 +23,7 @@
 #' @section Examples:
 #'
 #' Let's use a subset of the [`gtcars`] dataset to create a **gt** table. A
-#' header part can be added with the [tab_header()] function; with that, we get
+#' header part can be added with [tab_header()]; with that, we get
 #' a title and a subtitle for the table.
 #'
 #' ```r
@@ -45,7 +45,7 @@
 #' }}
 #'
 #' If you decide that you don't want the header in the `gt_tbl` object, it can
-#' be removed with the `rm_header()` function.
+#' be removed with `rm_header()`.
 #'
 #' ```r
 #' rm_header(data = gt_tbl)
@@ -78,7 +78,7 @@ rm_header <- function(data) {
 #'
 #' We can easily remove the stubhead label from a **gt** table with
 #' `rm_stubhead()`. The stubhead location only exists if there is a table stub
-#' and the text in that cell is added through the [tab_stubhead()] function.
+#' and the text in that cell is added with [tab_stubhead()].
 #'
 #' This function for removal is useful if you have received a **gt** table
 #' (perhaps through an API that returns **gt** objects) but would prefer that
@@ -91,9 +91,9 @@ rm_header <- function(data) {
 #'
 #' @section Examples:
 #'
-#' Using the [`gtcars`] datset, we'll create a **gt** table. With the
-#' [tab_stubhead()] function, it's possible to add a stubhead label. This
-#' appears in the top-left and can be used to describe what is in the stub.
+#' Using the [`gtcars`] dataset, we'll create a **gt** table. With
+#' [tab_stubhead()], it's possible to add a stubhead label. This appears in the
+#' top-left and can be used to describe what is in the stub.
 #'
 #' ```r
 #' gt_tbl <-
@@ -111,7 +111,7 @@ rm_header <- function(data) {
 #' }}
 #'
 #' If you decide that you don't want the stubhead label in the `gt_tbl` object,
-#' it can be removed with the `rm_stubhead()` function.
+#' it can be removed with `rm_stubhead()`.
 #'
 #' ```r
 #' rm_stubhead(data = gt_tbl)
@@ -144,7 +144,7 @@ rm_stubhead <- function(data) {
 #'
 #' If you would like to remove column spanner labels then the `rm_spanners()`
 #' function can make this possible. Column spanner labels appear above the
-#' column labels and can occupy several levels via stacking either though
+#' column labels and can occupy several levels via stacking either through
 #' [tab_spanner()] or [tab_spanner_delim()]. Spanner column labels are
 #' distinguishable and accessible by their ID values.
 #'
@@ -180,10 +180,10 @@ rm_stubhead <- function(data) {
 #'
 #' @section Examples:
 #'
-#' Use a portion of the [`gtcars`] dataset to create a **gt** table. With the
-#' [tab_spanner()] function, we can group several related columns together under
-#' a spanner column. In this example, that is done with several calls of
-#' [tab_spanner()] in order to create two levels of spanner column labels.
+#' Use a portion of the [`gtcars`] dataset to create a **gt** table. With
+#' [tab_spanner()], we can group several related columns together under a
+#' spanner column. In this example, that is done with several [tab_spanner()]
+#' calls in order to create two levels of spanner column labels.
 #'
 #' ```r
 #' gt_tbl <-
@@ -213,7 +213,7 @@ rm_stubhead <- function(data) {
 #' }}
 #'
 #' If you decide that you don't want any of the spanners in the `gt_tbl` object,
-#' they can all be removed with the `rm_spanners()` function.
+#' they can all be removed with `rm_spanners()`.
 #'
 #' ```r
 #' rm_spanners(data = gt_tbl)
@@ -351,10 +351,10 @@ rm_spanners <- function(
 #'
 #' @description
 #'
-#' If you have one or more footnotes that ought to be removed, the
-#' `rm_footnotes()` function allows for such a selective removal. The table
-#' footer is an optional table part that is positioned below the table body,
-#' containing areas for both the footnotes and source notes.
+#' If you have one or more footnotes that ought to be removed, `rm_footnotes()`
+#' allows for such a selective removal. The table footer is an optional table
+#' part that is positioned below the table body, containing areas for both the
+#' footnotes and source notes.
 #'
 #' This function for removal is useful if you have received a **gt** table
 #' (perhaps through an API that returns **gt** objects) but would prefer that
@@ -380,7 +380,7 @@ rm_spanners <- function(
 #' @section Examples:
 #'
 #' Use a subset of the [`sza`] dataset to create a **gt** table. Color the `sza`
-#' column using the [data_color()] function, then, use [tab_footnote()] twice to
+#' column using [data_color()], then, use [tab_footnote()] twice to
 #' add two footnotes (each one targeting a different column label).
 #'
 #' ```r
@@ -424,7 +424,7 @@ rm_spanners <- function(
 #' }}
 #'
 #' If you decide that you don't want the footnotes in the `gt_tbl` object,
-#' they can be removed with the `rm_footnotes()` function.
+#' they can be removed with `rm_footnotes()`.
 #'
 #' ```r
 #' rm_footnotes(data = gt_tbl)
@@ -519,10 +519,10 @@ rm_footnotes <- function(
 #'
 #' @description
 #'
-#' If you have one or more source notes that ought to be removed, the
-#' `rm_source_notes()` function allows for such a selective removal. The table
-#' footer is an optional table part that is positioned below the table body,
-#' containing areas for both the source notes and footnotes.
+#' If you have one or more source notes that ought to be removed,
+#' `rm_source_notes()` allows for such a selective removal. The table footer is
+#' an optional table part that is positioned below the table body, containing
+#' areas for both the source notes and footnotes.
 #'
 #' This function for removal is useful if you have received a **gt** table
 #' (perhaps through an API that returns **gt** objects) but would prefer that
@@ -547,10 +547,10 @@ rm_footnotes <- function(
 #'
 #' @section Examples:
 #'
-#' Use a subset of the [`gtcars`] dataset to create a **gt** table. The
-#' [tab_source_note()] function is used to add a source note to the table footer
-#' that cites the data source (or, it could just be arbitrary text). We'll use
-#' the function twice, in effect adding two source notes to the footer.
+#' Use a subset of the [`gtcars`] dataset to create a **gt** table.
+#' [tab_source_note()] is used to add a source note to the table footer that
+#' cites the data source (or, it could just be arbitrary text). We'll use the
+#' function twice, in effect adding two source notes to the footer.
 #'
 #' ```r
 #' gt_tbl <-
@@ -570,7 +570,7 @@ rm_footnotes <- function(
 #' }}
 #'
 #' If you decide that you don't want the source notes in the `gt_tbl` object,
-#' they can be removed with the `rm_source_notes()` function.
+#' they can be removed with `rm_source_notes()`.
 #'
 #' ```r
 #' rm_source_notes(data = gt_tbl)
@@ -682,8 +682,8 @@ rm_source_notes <- function(
 #' @section Examples:
 #'
 #' Use a portion of the [`gtcars`] dataset to create a **gt** table. We'll add a
-#' header part with the [tab_header()] function, and, a caption will also be
-#' added via the [tab_caption()] function.
+#' header part with [tab_header()], and, a caption will also be added via
+#' [tab_caption()].
 #'
 #' ```r
 #' gt_tbl <-
@@ -704,8 +704,8 @@ rm_source_notes <- function(
 #' `r man_get_image_tag(file = "man_rm_caption_1.png")`
 #' }}
 #'
-#' If you decide that you don't want the caption in the `gt_tbl` object,
-#' it can be removed with the `rm_caption()` function.
+#' If you decide that you don't want the caption in the `gt_tbl` object, it can
+#' be removed with `rm_caption()`.
 #'
 #' ```r
 #' rm_caption(data = gt_tbl)

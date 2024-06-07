@@ -282,9 +282,9 @@ RHS formatting expression. Like this:
 \section{Extraction of summary rows}{
 
 
-Should we need to obtain the summary data for external purposes, the
-\code{\link[=extract_summary]{extract_summary()}} function can be used with a \code{gt_tbl} object where summary
-rows were added via \code{summary_rows()} or \code{\link[=grand_summary_rows]{grand_summary_rows()}}.
+Should we need to obtain the summary data for external purposes,
+\code{\link[=extract_summary]{extract_summary()}} can be used with a \code{gt_tbl} object where summary rows
+were added via \code{summary_rows()} or \code{\link[=grand_summary_rows]{grand_summary_rows()}}.
 }
 
 \section{Examples}{
@@ -292,8 +292,8 @@ rows were added via \code{summary_rows()} or \code{\link[=grand_summary_rows]{gr
 
 Use a modified version of \code{\link{sp500}} dataset to create a \strong{gt} table with row
 groups and row labels. Create the summary rows labeled \code{min}, \code{max}, and
-\code{avg} by row group (where each each row group is a week number) with the
-\code{summary_rows()} function.
+\code{avg} by row group (where each each row group is a week number) with
+\code{summary_rows()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{sp500 |>
   dplyr::filter(date >= "2015-01-05" & date <= "2015-01-16") |>
