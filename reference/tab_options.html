@@ -549,7 +549,7 @@ the <code>footnotes</code> location.</p></dd>
 <dt>footnotes.marks</dt>
 <dd><p><em>Sequence of footnote marks</em></p>
 <p>The set of sequential marks used to reference and identify each of the
-footnotes (same input as the <code><a href="opt_footnote_marks.html">opt_footnote_marks()</a></code> function). We can
+footnotes (same input as <code><a href="opt_footnote_marks.html">opt_footnote_marks()</a></code>). We can
 supply a vector that represents the series of footnote marks. This vector
 is recycled when its usage goes beyond the length of the set. At each
 cycle, the marks are simply combined (e.g., <code>*</code> -&gt; <code>**</code> -&gt; <code>***</code>). The
@@ -564,7 +564,7 @@ provides four symbols, and, <code>"extended"</code> adds two more symbols, makin
 <dd><p><em>Specifications for formatting of footnote marks</em></p>
 <p>Optional specifications for formatting of footnote references
 (<code>footnotes.spec_ref</code>) and their associated marks the footer section
-(<code>footnotes.spec_ftr</code>) (same input as the <code><a href="opt_footnote_spec.html">opt_footnote_spec()</a></code> function).
+(<code>footnotes.spec_ftr</code>) (same input as <code><a href="opt_footnote_spec.html">opt_footnote_spec()</a></code>).
 This is a string containing specification control characters. The default
 is the spec string <code>"^i"</code>, which is superscript text set in italics. Other
 control characters that can be used are: (1) <code>"b"</code> for bold text, and (2)
@@ -791,8 +791,7 @@ by default).</p></dd>
 <p>Use select columns from the <code><a href="exibble.html">exibble</a></code> dataset to create a <strong>gt</strong> table with
 a number of table parts added (using functions like <code><a href="summary_rows.html">summary_rows()</a></code>,
 <code><a href="grand_summary_rows.html">grand_summary_rows()</a></code>, and more). We can use this <strong>gt</strong> object going
-forward to demo some of the features available in the <code>tab_options()</code>
-function.</p>
+forward to demo some of <code>tab_options()</code> features.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">tab_1</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">exibble</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">fctr</span>, <span class="va">date</span>, <span class="va">time</span>, <span class="va">datetime</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>

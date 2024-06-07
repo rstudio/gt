@@ -116,8 +116,8 @@ in each of these system.</p>
 
 
 <p>With three columns from the <code><a href="gtcars.html">gtcars</a></code> dataset, let's create a <strong>gt</strong> table.
-First, we'll add a header part with the <code><a href="tab_header.html">tab_header()</a></code> function. After that,
-a caption is added through use of <code>tab_caption()</code>.</p>
+First, we'll add a header part with <code><a href="tab_header.html">tab_header()</a></code>. After that, a caption is
+added with <code>tab_caption()</code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">gtcars</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">mfr</span>, <span class="va">model</span>, <span class="va">msrp</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span> <span class="op">|&gt;</span></span>

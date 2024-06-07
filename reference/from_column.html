@@ -168,11 +168,11 @@ and sections like these describe which arguments support the use of
     
 
 
-<p>The <code>from_column()</code> function can be used in a variety of formatting functions
-so that values for common options don't have to be static, they can change in
-every row (so long as you have a column of compatible option values). Here's
-an example where we have a table of repeating numeric values along with a
-column of currency codes. We can format the numbers to currencies with
+<p><code>from_column()</code> can be used in a variety of formatting functions so that
+values for common options don't have to be static, they can change in every
+row (so long as you have a column of compatible option values). Here's an
+example where we have a table of repeating numeric values along with a column
+of currency codes. We can format the numbers to currencies with
 <code><a href="fmt_currency.html">fmt_currency()</a></code> and use <code>from_column()</code> to reference the column of currency
 codes, giving us values that are each formatted as having a different
 currency.</p>
@@ -192,10 +192,7 @@ fashion different font sizes from that <code>n</code> column. This is done in
 conjunction with the <code>fn</code> argument of <code>from_column()</code>, which helps to tweak
 the values in <code>n</code> to get a useful range of font sizes.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">gtcars</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">mfr</span>, <span class="va">ctry_origin</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">mfr</span>, <span class="va">ctry_origin</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">ungroup</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">mfr</span>, <span class="va">ctry_origin</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">ctry_origin</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>groupname_col <span class="op">=</span> <span class="st">"ctry_origin"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_style.html">tab_style</a></span><span class="op">(</span></span>

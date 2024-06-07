@@ -173,15 +173,14 @@ more complex predicate expression.</p>
     
 
 
-<p>The <code><a href="from_column.html">from_column()</a></code> helper function can be used with the <code>md_engine</code> argument
-of <code>fmt_markdown()</code> to obtain varying parameter values from a specified
-column within the table. This means that each row could be formatted a little
-bit differently.</p>
+<p><code><a href="from_column.html">from_column()</a></code> can be used with the <code>md_engine</code> argument of <code>fmt_markdown()</code>
+to obtain varying parameter values from a specified column within the table.
+This means that each row could be formatted a little bit differently.</p>
 <p>Please note that for this argument (<code>md_engine</code>), a <code><a href="from_column.html">from_column()</a></code> call
 needs to reference a column that has data of the <code>character</code> type. Additional
-columns for parameter values can be generated with the <code><a href="cols_add.html">cols_add()</a></code> function
-(if not already present). Columns that contain parameter data can also be
-hidden from final display with <code><a href="cols_hide.html">cols_hide()</a></code>.</p>
+columns for parameter values can be generated with <code><a href="cols_add.html">cols_add()</a></code> (if not
+already present). Columns that contain parameter data can also be hidden from
+final display with <code><a href="cols_hide.html">cols_hide()</a></code>.</p>
     </div>
     <div class="section level2">
     <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
@@ -218,8 +217,8 @@ hidden from final display with <code><a href="cols_hide.html">cols_hide()</a></c
 <span><span class="va">text_2b</span> <span class="op">&lt;-</span> <span class="st">"</span></span>
 <span><span class="st">There's a quick reference [here](https://commonmark.org/help/).</span></span>
 <span><span class="st">"</span></span></code></pre><p></p></div>
-<p>Arrange the text snippets as a tibble using the <code><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">dplyr::tribble()</a></code> function.
-then, create a <strong>gt</strong> table and format all columns with <code>fmt_markdown()</code>.</p>
+<p>Arrange the text snippets as a tibble using <code><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">dplyr::tribble()</a></code>, then, create
+a <strong>gt</strong> table and format all columns with <code>fmt_markdown()</code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
 <span>  <span class="op">~</span><span class="va">Markdown</span>, <span class="op">~</span><span class="va">md</span>,</span>
 <span>  <span class="va">text_1a</span>,   <span class="va">text_2a</span>,</span>
@@ -229,8 +228,8 @@ then, create a <strong>gt</strong> table and format all columns with <code>fmt_m
 <span>  <span class="fu"><a href="../reference/fmt_markdown.html">fmt_markdown</a></span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://tidyselect.r-lib.org/reference/everything.html" class="external-link">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_options.html">tab_options</a></span><span class="op">(</span>table.width <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fl">400</span><span class="op">)</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_fmt_markdown_1.png" alt="This image of a table was generated from the first code example in the `fmt_markdown()` help file." style="width:100%;"></p>
-<p>The <code>fmt_markdown()</code> function can also handle LaTeX math formulas enclosed
-in <code>"$..$"</code> (inline math) and also <code>"$$..$$"</code> (display math). The following
+<p><code>fmt_markdown()</code> can also handle LaTeX math formulas enclosed in
+<code>"$..$"</code> (inline math) and also <code>"$$..$$"</code> (display math). The following
 table has body cells that contain mathematical formulas in display mode
 (i.e., the formulas are surrounded by <code>"$$"</code>). Further to this, math can be
 used within <code><a href="md.html">md()</a></code> wherever there is the possibility to insert text into the

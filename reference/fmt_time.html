@@ -146,11 +146,11 @@ literals.</p></dd>
 <p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>An optional locale identifier that can be used for formatting values
 according the locale's rules. Examples include <code>"en"</code> for English (United
-States) and <code>"fr"</code> for French (France). We can use the <code><a href="info_locales.html">info_locales()</a></code>
-function as a useful reference for all of the locales that are supported. A
-locale ID can be also set in the initial <code><a href="gt.html">gt()</a></code> function call (where it
-would be used automatically by any function with a <code>locale</code> argument) but a
-<code>locale</code> value provided here will override that global locale.</p></dd>
+States) and <code>"fr"</code> for French (France). We can call <code><a href="info_locales.html">info_locales()</a></code> for a
+useful reference for all of the locales that are supported. A locale ID can
+be also set in the initial <code><a href="gt.html">gt()</a></code> function call (where it would be used
+automatically by any function with a <code>locale</code> argument) but a <code>locale</code>
+value provided here will override that global locale.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -164,11 +164,10 @@ would be used automatically by any function with a <code>locale</code> argument)
     
 
 
-<p>The <code>fmt_time()</code> formatting function is compatible with body cells that are
-of the <code>"Date"</code>, <code>"POSIXt"</code> or <code>"character"</code> types. Any other types of body
-cells are ignored during formatting. This is to say that cells of
-incompatible data types may be targeted, but there will be no attempt to
-format them.</p>
+<p><code>fmt_time()</code> is compatible with body cells that are of the <code>"Date"</code>,
+<code>"POSIXt"</code> or <code>"character"</code> types. Any other types of body cells are ignored
+during formatting. This is to say that cells of incompatible data types may
+be targeted, but there will be no attempt to format them.</p>
     </div>
     <div class="section level2">
     <h2 id="targeting-cells-with-columns-and-rows">Targeting cells with <code>columns</code> and <code>rows</code><a class="anchor" aria-label="anchor" href="#targeting-cells-with-columns-and-rows"></a></h2>
@@ -213,20 +212,19 @@ more complex predicate expression.</p>
     
 
 
-<p>The <code><a href="from_column.html">from_column()</a></code> helper function can be used with certain arguments of
-<code>fmt_time()</code> to obtain varying parameter values from a specified column
-within the table. This means that each row could be formatted a little bit
-differently. These arguments provide support for <code><a href="from_column.html">from_column()</a></code>:</p><ul><li><p><code>time_style</code></p></li>
+<p><code><a href="from_column.html">from_column()</a></code> can be used with certain arguments of <code>fmt_time()</code> to obtain
+varying parameter values from a specified column within the table. This means
+that each row could be formatted a little bit differently. These arguments
+provide support for <code><a href="from_column.html">from_column()</a></code>:</p><ul><li><p><code>time_style</code></p></li>
 <li><p><code>pattern</code></p></li>
 <li><p><code>locale</code></p></li>
 </ul><p>Please note that for each of the aforementioned arguments, a <code><a href="from_column.html">from_column()</a></code>
 call needs to reference a column that has data of the correct type (this is
 different for each argument). Additional columns for parameter values can be
-generated with the <code><a href="cols_add.html">cols_add()</a></code> function (if not already present). Columns
-that contain parameter data can also be hidden from final display with
-<code><a href="cols_hide.html">cols_hide()</a></code>. Finally, there is no limitation to how many arguments the
-<code><a href="from_column.html">from_column()</a></code> helper is applied so long as the arguments belong to this
-closed set.</p>
+generated with <code><a href="cols_add.html">cols_add()</a></code> (if not already present). Columns that contain
+parameter data can also be hidden from final display with <code><a href="cols_hide.html">cols_hide()</a></code>.
+Finally, there is no limitation to how many arguments the <code><a href="from_column.html">from_column()</a></code>
+helper is applied so long as the arguments belong to this closed set.</p>
     </div>
     <div class="section level2">
     <h2 id="formatting-with-the-time-style-argument">Formatting with the <code>time_style</code> argument<a class="anchor" aria-label="anchor" href="#formatting-with-the-time-style-argument"></a></h2>
@@ -241,8 +239,8 @@ makes the flexible time formats a better option for locales other than <code>"en
 (the default locale).</p>
 <p>The following table provides a listing of all time styles and their output
 values (corresponding to an input time of <code>14:35:00</code>). It is noted which of
-these represent 12- or 24-hour time.</p><table class="table table"><tr><td></td><td>Time Style</td><td>Output</td><td>Notes</td></tr><tr><td>1</td><td><code>"iso"</code></td><td><code>"14:35:00"</code></td><td>ISO 8601, 24h</td></tr><tr><td>2</td><td><code>"iso-short"</code></td><td><code>"14:35"</code></td><td>ISO 8601, 24h</td></tr><tr><td>3</td><td><code>"h_m_s_p"</code></td><td><code>"2:35:00 PM"</code></td><td>12h</td></tr><tr><td>4</td><td><code>"h_m_p"</code></td><td><code>"2:35 PM"</code></td><td>12h</td></tr><tr><td>5</td><td><code>"h_p"</code></td><td><code>"2 PM"</code></td><td>12h</td></tr><tr><td>6</td><td><code>"Hms"</code></td><td><code>"14:35:00"</code></td><td>flexible, 24h</td></tr><tr><td>7</td><td><code>"Hm"</code></td><td><code>"14:35"</code></td><td>flexible, 24h</td></tr><tr><td>8</td><td><code>"H"</code></td><td><code>"14"</code></td><td>flexible, 24h</td></tr><tr><td>9</td><td><code>"EHm"</code></td><td><code>"Thu 14:35"</code></td><td>flexible, 24h</td></tr><tr><td>10</td><td><code>"EHms"</code></td><td><code>"Thu 14:35:00"</code></td><td>flexible, 24h</td></tr><tr><td>11</td><td><code>"Hmsv"</code></td><td><code>"14:35:00 GMT+00:00"</code></td><td>flexible, 24h</td></tr><tr><td>12</td><td><code>"Hmv"</code></td><td><code>"14:35 GMT+00:00"</code></td><td>flexible, 24h</td></tr><tr><td>13</td><td><code>"hms"</code></td><td><code>"2:35:00 PM"</code></td><td>flexible, 12h</td></tr><tr><td>14</td><td><code>"hm"</code></td><td><code>"2:35 PM"</code></td><td>flexible, 12h</td></tr><tr><td>15</td><td><code>"h"</code></td><td><code>"2 PM"</code></td><td>flexible, 12h</td></tr><tr><td>16</td><td><code>"Ehm"</code></td><td><code>"Thu 2:35 PM"</code></td><td>flexible, 12h</td></tr><tr><td>17</td><td><code>"Ehms"</code></td><td><code>"Thu 2:35:00 PM"</code></td><td>flexible, 12h</td></tr><tr><td>18</td><td><code>"EBhms"</code></td><td><code>"Thu 2:35:00 in the afternoon"</code></td><td>flexible, 12h</td></tr><tr><td>19</td><td><code>"Bhms"</code></td><td><code>"2:35:00 in the afternoon"</code></td><td>flexible, 12h</td></tr><tr><td>20</td><td><code>"EBhm"</code></td><td><code>"Thu 2:35 in the afternoon"</code></td><td>flexible, 12h</td></tr><tr><td>21</td><td><code>"Bhm"</code></td><td><code>"2:35 in the afternoon"</code></td><td>flexible, 12h</td></tr><tr><td>22</td><td><code>"Bh"</code></td><td><code>"2 in the afternoon"</code></td><td>flexible, 12h</td></tr><tr><td>23</td><td><code>"hmsv"</code></td><td><code>"2:35:00 PM GMT+00:00"</code></td><td>flexible, 12h</td></tr><tr><td>24</td><td><code>"hmv"</code></td><td><code>"2:35 PM GMT+00:00"</code></td><td>flexible, 12h</td></tr><tr><td>25</td><td><code>"ms"</code></td><td><code>"35:00"</code></td><td>flexible</td></tr></table><p>We can use the <code><a href="info_time_style.html">info_time_style()</a></code> function within the console to view a
-similar table of time styles with example output.</p>
+these represent 12- or 24-hour time.</p><table class="table table"><tr><td></td><td>Time Style</td><td>Output</td><td>Notes</td></tr><tr><td>1</td><td><code>"iso"</code></td><td><code>"14:35:00"</code></td><td>ISO 8601, 24h</td></tr><tr><td>2</td><td><code>"iso-short"</code></td><td><code>"14:35"</code></td><td>ISO 8601, 24h</td></tr><tr><td>3</td><td><code>"h_m_s_p"</code></td><td><code>"2:35:00 PM"</code></td><td>12h</td></tr><tr><td>4</td><td><code>"h_m_p"</code></td><td><code>"2:35 PM"</code></td><td>12h</td></tr><tr><td>5</td><td><code>"h_p"</code></td><td><code>"2 PM"</code></td><td>12h</td></tr><tr><td>6</td><td><code>"Hms"</code></td><td><code>"14:35:00"</code></td><td>flexible, 24h</td></tr><tr><td>7</td><td><code>"Hm"</code></td><td><code>"14:35"</code></td><td>flexible, 24h</td></tr><tr><td>8</td><td><code>"H"</code></td><td><code>"14"</code></td><td>flexible, 24h</td></tr><tr><td>9</td><td><code>"EHm"</code></td><td><code>"Thu 14:35"</code></td><td>flexible, 24h</td></tr><tr><td>10</td><td><code>"EHms"</code></td><td><code>"Thu 14:35:00"</code></td><td>flexible, 24h</td></tr><tr><td>11</td><td><code>"Hmsv"</code></td><td><code>"14:35:00 GMT+00:00"</code></td><td>flexible, 24h</td></tr><tr><td>12</td><td><code>"Hmv"</code></td><td><code>"14:35 GMT+00:00"</code></td><td>flexible, 24h</td></tr><tr><td>13</td><td><code>"hms"</code></td><td><code>"2:35:00 PM"</code></td><td>flexible, 12h</td></tr><tr><td>14</td><td><code>"hm"</code></td><td><code>"2:35 PM"</code></td><td>flexible, 12h</td></tr><tr><td>15</td><td><code>"h"</code></td><td><code>"2 PM"</code></td><td>flexible, 12h</td></tr><tr><td>16</td><td><code>"Ehm"</code></td><td><code>"Thu 2:35 PM"</code></td><td>flexible, 12h</td></tr><tr><td>17</td><td><code>"Ehms"</code></td><td><code>"Thu 2:35:00 PM"</code></td><td>flexible, 12h</td></tr><tr><td>18</td><td><code>"EBhms"</code></td><td><code>"Thu 2:35:00 in the afternoon"</code></td><td>flexible, 12h</td></tr><tr><td>19</td><td><code>"Bhms"</code></td><td><code>"2:35:00 in the afternoon"</code></td><td>flexible, 12h</td></tr><tr><td>20</td><td><code>"EBhm"</code></td><td><code>"Thu 2:35 in the afternoon"</code></td><td>flexible, 12h</td></tr><tr><td>21</td><td><code>"Bhm"</code></td><td><code>"2:35 in the afternoon"</code></td><td>flexible, 12h</td></tr><tr><td>22</td><td><code>"Bh"</code></td><td><code>"2 in the afternoon"</code></td><td>flexible, 12h</td></tr><tr><td>23</td><td><code>"hmsv"</code></td><td><code>"2:35:00 PM GMT+00:00"</code></td><td>flexible, 12h</td></tr><tr><td>24</td><td><code>"hmv"</code></td><td><code>"2:35 PM GMT+00:00"</code></td><td>flexible, 12h</td></tr><tr><td>25</td><td><code>"ms"</code></td><td><code>"35:00"</code></td><td>flexible</td></tr></table><p>We can call <code><a href="info_time_style.html">info_time_style()</a></code> in the console to view a similar table of
+time styles with example output.</p>
     </div>
     <div class="section level2">
     <h2 id="adapting-output-to-a-specific-locale">Adapting output to a specific <code>locale</code><a class="anchor" aria-label="anchor" href="#adapting-output-to-a-specific-locale"></a></h2>
@@ -255,7 +253,7 @@ French (France). Note that a <code>locale</code> value provided here will overri
 global locale setting performed in <code><a href="gt.html">gt()</a></code>'s own <code>locale</code> argument (it is
 settable there as a value received by all other functions that have a
 <code>locale</code> argument). As a useful reference on which locales are supported, we
-can use the <code><a href="info_locales.html">info_locales()</a></code> function to view an info table.</p>
+can use <code><a href="info_locales.html">info_locales()</a></code> to view an info table.</p>
     </div>
     <div class="section level2">
     <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
@@ -264,8 +262,7 @@ can use the <code><a href="info_locales.html">info_locales()</a></code> function
 
 <p>Let's use the <code><a href="exibble.html">exibble</a></code> dataset to create a simple, two-column <strong>gt</strong> table
 (keeping only the <code>date</code> and <code>time</code> columns). Format the <code>time</code> column with
-the <code>fmt_time()</code> function to display times formatted with the <code>"h_m_s_p"</code>
-time style.</p>
+<code>fmt_time()</code> to display times formatted with the <code>"h_m_s_p"</code> time style.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">date</span>, <span class="va">time</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>

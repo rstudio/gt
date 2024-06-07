@@ -257,7 +257,7 @@
           
           <code><a href="fmt_bins.html">fmt_bins()</a></code> 
         </dt>
-        <dd>Format column data containing bin/interval information</dd>
+        <dd>Format column data containing bin/interval information When using <code><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut()</a></code> (or other functions that use it in some way) you get bins that can look like this: <code>"(0,10]"</code>, <code>"(10,15]"</code>, <code>"(15,20]"</code>, <code>"(20,40]"</code>. This interval notation expresses the lower and upper limits of each range. The square or round brackets define whether each of the endpoints are included in the range (<code>[</code>/<code>]</code> for inclusion, <code>(</code>/<code>)</code> for exclusion). Should bins of this sort be present in a table, the <code><a href="../reference/fmt_bins.html">fmt_bins()</a></code> function can be used to format that syntax to a form that presents better in a display table. It's possible to format the values of the intervals with the <code>fmt</code> argument, and, the separator can be modified with the <code>sep</code> argument.</dd>
       </dl><dl><dt>
           
           <code><a href="fmt_tf.html">fmt_tf()</a></code> 

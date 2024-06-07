@@ -169,7 +169,7 @@ entity (parentheses and other symbols included) and the addition of subscript
 text and exponents is flexible and relatively easy to formulate. This is all
 best shown with examples:</p><ul><li><p><code>"m/s"</code> and <code>"m / s"</code> both render as <code>"m/s"</code></p></li>
 <li><p><code>"m s^-1"</code> will appear with the <code>"-1"</code> exponent intact</p></li>
-<li><p><code>"m /s"</code> gives the the same result, as <code>"/&lt;unit&gt;"</code> is equivalent to
+<li><p><code>"m /s"</code> gives the same result, as <code>"/&lt;unit&gt;"</code> is equivalent to
 <code>"&lt;unit&gt;^-1"</code></p></li>
 <li><p><code>"E_h"</code> will render an <code>"E"</code> with the <code>"h"</code> subscript</p></li>
 <li><p><code>"t_i^2.5"</code> provides a <code>t</code> with an <code>"i"</code> subscript and a <code>"2.5"</code> exponent</p></li>
@@ -276,8 +276,7 @@ what the last four columns contain.</p>
 <span>    <span class="va">name</span>, <span class="va">land_area_km2</span>,</span>
 <span>    <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with</a></span><span class="op">(</span><span class="st">"2016"</span><span class="op">)</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">ends_with</a></span><span class="op">(</span><span class="st">"2021"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">population_2021</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_head</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_max</a></span><span class="op">(</span><span class="va">population_2021</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"name"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/tab_stubhead.html">tab_stubhead</a></span><span class="op">(</span>label <span class="op">=</span> <span class="st">"City"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fmt_integer.html">fmt_integer</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>

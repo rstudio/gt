@@ -1716,11 +1716,10 @@ truncated for brevity:</p>
 </table>
 </div>
 <p>A <strong>source note</strong> can be added to the table’s
-<strong>footer</strong> through use of the
-<code><a href="../reference/tab_source_note.html">tab_source_note()</a></code> function. It works in the same way as
-<code><a href="../reference/tab_header.html">tab_header()</a></code> (it also allows for Markdown inputs) except it
-can be called multiple times—each invocation results in the addition of
-a source note.</p>
+<strong>footer</strong> through use of <code><a href="../reference/tab_source_note.html">tab_source_note()</a></code>.
+It works in the same way as <code><a href="../reference/tab_header.html">tab_header()</a></code> (it also allows
+for Markdown inputs) except it can be called multiple times—each
+invocation results in the addition of a source note.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Display the `islands_tbl` data with a heading and</span></span>
 <span><span class="co"># two source notes</span></span>
@@ -2250,11 +2249,11 @@ a source note.</p>
 </table>
 </div>
 <p>Footnotes live inside the <strong>Footer</strong> part and their
-footnote marks are attached to cell data. Footnotes are added with the
-<code><a href="../reference/tab_footnote.html">tab_footnote()</a></code> function. The helper function
+footnote marks are attached to cell data. Footnotes are added with
+<code><a href="../reference/tab_footnote.html">tab_footnote()</a></code>. The helper function
 <code><a href="../reference/cells_body.html">cells_body()</a></code> can be used with the <code>location</code>
 argument to specify which data cells should be the target of the
-footnote. The <code><a href="../reference/cells_body.html">cells_body()</a></code> helper has the two arguments
+footnote. <code><a href="../reference/cells_body.html">cells_body()</a></code> has the two arguments
 <code>columns</code> and <code>rows</code>. For each of these, we can
 supply (1) a vector of colnames or rownames, (2) a vector of column/row
 indices, (3) bare column names wrapped in <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> or row labels
@@ -3906,10 +3905,10 @@ making <em>row labels</em>. Let’s add a stub with our
 </tbody>
 </table>
 </div>
-<p>Notice that the landmass names are off the the left in an unstriped
-area? That’s the <strong>stub</strong>. We can apply what’s known as a
-<strong>stubhead label</strong>. This label can be added with the
-<code><a href="../reference/tab_stubhead.html">tab_stubhead()</a></code> function:</p>
+<p>Notice that the landmass names are off the left in an unstriped area?
+That’s the <strong>stub</strong>. We can apply what’s known as a
+<strong>stubhead label</strong>. This label can be added with
+<code><a href="../reference/tab_stubhead.html">tab_stubhead()</a></code>:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Generate a simple table with a stub</span></span>
 <span><span class="co"># and add a stubhead label</span></span>
@@ -4985,11 +4984,11 @@ footnotes) we use the following statements:</p>
 rows into groups, creating <em>row groups</em>, and results in a display
 of a <em>row group labels</em> right above the each group. This can be
 easily done with a table containing row labels. We can make a new
-<em>row group</em> with each call of the <code><a href="../reference/tab_row_group.html">tab_row_group()</a></code>
-function. The inputs are row group names in the <code>label</code>
-argument, and row references in the <code>rows</code> argument. We can
-use any of the strategies to reference rows as we did we footnotes
-(e.g., vectors of names/indices, select helpers, etc.).</p>
+<em>row group</em> with each <code><a href="../reference/tab_row_group.html">tab_row_group()</a></code> call. The
+inputs are row group names in the <code>label</code> argument, and row
+references in the <code>rows</code> argument. We can use any of the
+strategies to reference rows as we did we footnotes (e.g., vectors of
+names/indices, select helpers, etc.).</p>
 <p>Here we will create three row groups (with row group labels
 <code>continent</code>, <code>country</code>, and
 <code>subregion</code>) to have a grouping of rows.</p>
@@ -5568,11 +5567,11 @@ the categories <code>continent</code>, <code>country</code>, and
 when using the <code><a href="../reference/gt.html">gt()</a></code> function’s <code>groupname_col</code>
 argument (e.g.,
 <code>gt(islands_tbl, rowname_col = "name", groupname_col = "groupname") |&gt; ...</code>).
-Then, there would be no need to use the <code><a href="../reference/tab_row_group.html">tab_row_group()</a></code>
-statements. This strategy of supplying group names in a column can
-sometimes be advantageous since we can rely on functions such as those
-available in <strong>dplyr</strong> to generate the categories (e.g.,
-using <code>case_when()</code> or <code>if_else()</code>).</p>
+Then, there would be no need to use <code><a href="../reference/tab_row_group.html">tab_row_group()</a></code>. This
+strategy of supplying group names in a column can sometimes be
+advantageous since we can rely on functions such as those available in
+<strong>dplyr</strong> to generate the categories (e.g., using
+<code>case_when()</code> or <code>if_else()</code>).</p>
 </div>
 <div class="section level3">
 <h3 id="the-column-labels">The Column Labels<a class="anchor" aria-label="anchor" href="#the-column-labels"></a>
@@ -5608,7 +5607,7 @@ passed to <code><a href="../reference/gt.html">gt()</a></code>.</p>
 <p>Let’s organize the time information under a <code>Time</code>
 <em>spanner column label</em>, and put the other columns under a
 <code>Measurement</code> <em>spanner column label</em>. We can do this
-with the <code><a href="../reference/tab_spanner.html">tab_spanner()</a></code> function.</p>
+with <code><a href="../reference/tab_spanner.html">tab_spanner()</a></code>.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Modify the `airquality` dataset by adding the year</span></span>
 <span><span class="co"># of the measurements (1973) and limiting to 10 rows</span></span>

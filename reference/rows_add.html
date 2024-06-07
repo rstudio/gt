@@ -256,10 +256,10 @@ of each row group:</p>
 <span>  <span class="fu"><a href="../reference/opt_vertical_padding.html">opt_vertical_padding</a></span><span class="op">(</span>scale <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rows_add_4.png" alt="This image of a table was generated from the fourth code example in the `rows_add()` help file." style="width:100%;"></p>
 <p>All missing values were substituted with an empty string (<code>""</code>), and that was
-done by using the <code><a href="sub_missing.html">sub_missing()</a></code> function. We removed the top border of the
+done by using <code><a href="sub_missing.html">sub_missing()</a></code>. We removed the top border of the
 new rows with a call to <code><a href="tab_style.html">tab_style()</a></code>, targeting those rows where the row
 labels end with <code>"end"</code>. Finally, we get rid of the row labels with the use
-of the <code><a href="text_case_when.html">text_case_when()</a></code> function, using a similar strategy of targeting the
+of <code><a href="text_case_when.html">text_case_when()</a></code>, using a similar strategy of targeting the
 name of the row label.</p>
 <p>Another application is starting from nothing (really just the definition of
 columns) and building up a table using several invocations of <code>rows_add()</code>.

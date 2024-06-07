@@ -118,8 +118,8 @@ column name provided to <code>rowname_col</code> will be ignored.</p></dd>
 <p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>The column name in the input <code>data</code> table to use as group labels for
 generation of row groups. If the input <code>data</code> table has the <code>grouped_df</code>
-class (through use of the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">dplyr::group_by()</a></code> function or associated
-<code>group_by*()</code> functions) then any input here is ignored.</p></dd>
+class (through use of <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">dplyr::group_by()</a></code> or associated <code>group_by*()</code>
+functions) then any input here is ignored.</p></dd>
 
 
 <dt>process_md</dt>
@@ -164,7 +164,7 @@ in each column of the input <code>data</code>. Internally, this calls
 <dd><p><em>The table ID</em></p>
 <p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>By default (with <code>NULL</code>) this will be a random, ten-letter ID as generated
-by using the <code><a href="random_id.html">random_id()</a></code> function. A custom table ID can be used here by
+by using <code><a href="random_id.html">random_id()</a></code>. A custom table ID can be used here by
 providing a character value.</p></dd>
 
 
@@ -173,9 +173,8 @@ providing a character value.</p></dd>
 <p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>An optional locale identifier that can be set as the default locale for all
 functions that take a <code>locale</code> argument. Examples include <code>"en"</code> for
-English (United States) and <code>"fr"</code> for French (France). We can use the
-<code><a href="info_locales.html">info_locales()</a></code> function as a useful reference for all of the locales that
-are supported.</p></dd>
+English (United States) and <code>"fr"</code> for French (France). We can call
+<code><a href="info_locales.html">info_locales()</a></code> as a useful reference for all of the locales that are supported.</p></dd>
 
 
 <dt>row_group.sep</dt>
@@ -203,7 +202,7 @@ consist of categorical text whereas the data in the <code>rowname_col</code> col
 contain unique labels (could be unique across the entire table or unique
 within the different row groups).</p>
 <p>Row groups can also be created by passing a <code>grouped_df</code> to <code>gt()</code> by using
-the <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">dplyr::group_by()</a></code> function on the table data. In this way, two or more
+<code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">dplyr::group_by()</a></code> on the table data. In this way, two or more
 columns of categorical data can be used to make row groups. The
 <code>row_group.sep</code> argument allows for control in how the row group labels will
 appear in the display table.</p>
@@ -240,12 +239,12 @@ upon creation of the table.</p>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_gt_3.png" alt="This image of a table was generated from the third code example in the `gt()` help file." style="width:100%;"></p>
 <p>If you'd rather perform the set up of row groups later (i.e., not in the
-<code>gt()</code> call), this is possible with use of the <code><a href="tab_row_group.html">tab_row_group()</a></code> function
-(and <code><a href="row_group_order.html">row_group_order()</a></code> can help with the arrangement of row groups).</p>
+<code>gt()</code> call), this is possible with <code><a href="tab_row_group.html">tab_row_group()</a></code> (and <code><a href="row_group_order.html">row_group_order()</a></code>
+can help with the arrangement of row groups).</p>
 <p>One more thing to consider with row groups is their layout. By default, row
 group labels reside in separate rows the appear above the group. However,
-we can use the <code>row_group_as_column = TRUE</code> option to put the row group
-labels within a secondary column within the table stub.</p>
+we can use <code>row_group_as_column = TRUE</code> to put the row group labels within a
+secondary column within the table stub.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span></span>
 <span>    rowname_col <span class="op">=</span> <span class="st">"row"</span>,</span>
@@ -268,7 +267,7 @@ in a column. If you'd like to disable this form of auto-alignment, the
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span>rowname_col <span class="op">=</span> <span class="st">"row"</span>, auto_align <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_gt_6.png" alt="This image of a table was generated from the sixth code example in the `gt()` help file." style="width:100%;"></p>
 <p>What you'll get from that is center-alignment of all table body values and
-all column labels. Note that row labels in the the stub are still
+all column labels. Note that row labels in the stub are still
 left-aligned; and <code>auto_align</code> has no effect on alignment within the table
 stub.</p>
 <p>However which way you generate the initial <strong>gt</strong> table object, you can use
@@ -298,13 +297,12 @@ using formatting functions:</p>
 <span>    locale <span class="op">=</span> <span class="st">"en"</span></span>
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_gt_7.png" alt="This image of a table was generated from the seventh code example in the `gt()` help file." style="width:100%;"></p>
-<p>In this example, the <code><a href="fmt_number.html">fmt_number()</a></code> and <code><a href="fmt_date.html">fmt_date()</a></code> functions understand
-that the locale for this table is <code>"fr"</code> (French), so the appropriate
-formatting for that locale is apparent in the <code>num</code>, <code>currency</code>, and <code>date</code>
-columns. However in the <code><a href="fmt_datetime.html">fmt_datetime()</a></code> call, we explicitly use the <code>"en"</code>
-(English) locale. This overrides the <code>"fr"</code> default set for this table and
-the end result is dates formatted with the English locale in the <code>datetime</code>
-column.</p>
+<p>In this example, <code><a href="fmt_number.html">fmt_number()</a></code> and <code><a href="fmt_date.html">fmt_date()</a></code> understand that the locale
+for this table is <code>"fr"</code> (French), so the appropriate formatting for that
+locale is apparent in the <code>num</code>, <code>currency</code>, and <code>date</code> columns. However in
+<code><a href="fmt_datetime.html">fmt_datetime()</a></code>, we explicitly use the <code>"en"</code> (English) locale. This
+overrides the <code>"fr"</code> default set for this table and the end result is
+dates formatted with the English locale in the <code>datetime</code> column.</p>
     </div>
     <div class="section level2">
     <h2 id="function-id">Function ID<a class="anchor" aria-label="anchor" href="#function-id"></a></h2>

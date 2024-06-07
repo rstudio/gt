@@ -133,11 +133,10 @@ retrieval of the necessary values.</p>
 
 
 <p>Let's use a portion of the <code><a href="gtcars.html">gtcars</a></code> dataset to create a <strong>gt</strong> table. We'll
-use the <code><a href="tab_spanner.html">tab_spanner()</a></code> function to group two columns together under a
-spanner column with the ID and label <code>"performance"</code>. Finally, we can use the
-<code>tab_info()</code> function in a separate, interactive statement so that we can
-inspect a table that summarizes the ID values any associated label text for
-all parts of the table.</p>
+use <code><a href="tab_spanner.html">tab_spanner()</a></code> to group two columns together under a spanner column with
+the ID and label <code>"performance"</code>. Finally, we can use<code>tab_info()</code> in a
+separate, interactive statement so that we can inspect a table that
+summarizes the ID values any associated label text for all parts of the table.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">gtcars</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">model</span>, <span class="va">year</span>, <span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">starts_with</a></span><span class="op">(</span><span class="st">"hp"</span><span class="op">)</span>, <span class="va">msrp</span><span class="op">)</span> <span class="op">|&gt;</span></span>

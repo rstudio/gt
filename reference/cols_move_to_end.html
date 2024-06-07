@@ -118,10 +118,9 @@ preserved.</p></dd>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>The columns supplied in <code>columns</code> must all exist in the table. If you need to
-place one or columns at the start of the column series, the
-<code><a href="cols_move_to_start.html">cols_move_to_start()</a></code> function should be used. More control is offered with
-the <code><a href="cols_move.html">cols_move()</a></code> function, where columns could be placed after a specific
-column.</p>
+place one or columns at the start of the column series, <code><a href="cols_move_to_start.html">cols_move_to_start()</a></code>
+should be used. More control is offered with <code><a href="cols_move.html">cols_move()</a></code>, where columns
+could be placed after a specific column.</p>
     </div>
     <div class="section level2">
     <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
@@ -130,8 +129,7 @@ column.</p>
 
 <p>For this example, we'll use a portion of the <code><a href="countrypops.html">countrypops</a></code> dataset to
 create a simple <strong>gt</strong> table. Let's move the <code>year</code> column, which is the
-middle column, to the end of the column series with the
-<code>cols_move_to_end()</code> function.</p>
+middle column, to the end of the column series with <code>cols_move_to_end()</code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">countrypops</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html" class="external-link">contains</a></span><span class="op">(</span><span class="st">"code"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">country_name</span> <span class="op">==</span> <span class="st">"Benin"</span><span class="op">)</span> <span class="op">|&gt;</span></span>

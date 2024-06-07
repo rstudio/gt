@@ -246,11 +246,11 @@ crore, and higher quantities.</p></dd>
 <p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>An optional locale identifier that can be used for formatting values
 according the locale's rules. Examples include <code>"en"</code> for English (United
-States) and <code>"fr"</code> for French (France). We can use the <code><a href="info_locales.html">info_locales()</a></code>
-function as a useful reference for all of the locales that are supported. A
-locale ID can be also set in the initial <code><a href="gt.html">gt()</a></code> function call (where it
-would be used automatically by any function with a <code>locale</code> argument) but a
-<code>locale</code> value provided here will override that global locale.</p></dd>
+States) and <code>"fr"</code> for French (France). We can call <code><a href="info_locales.html">info_locales()</a></code> for a
+useful reference for all of the locales that are supported. A locale ID can
+be also set in the initial <code><a href="gt.html">gt()</a></code> function call (where it would be used
+automatically by any function with a <code>locale</code> argument) but a <code>locale</code>
+value provided here will override that global locale.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -283,11 +283,10 @@ which is <code>c("days", "hours", "minutes", "seconds")</code></p>
     
 
 
-<p>The <code>fmt_duration()</code> formatting function is compatible with body cells that
-are of the <code>"numeric"</code>, <code>"integer"</code>, or <code>"difftime"</code> types. Any other types
-of body cells are ignored during formatting. This is to say that cells of
-incompatible data types may be targeted, but there will be no attempt to
-format them.</p>
+<p><code>fmt_duration()</code> is compatible with body cells that are of the <code>"numeric"</code>,
+<code>"integer"</code>, or <code>"difftime"</code> types. Any other types of body cells are ignored
+during formatting. This is to say that cells of incompatible data types may
+be targeted, but there will be no attempt to format them.</p>
     </div>
     <div class="section level2">
     <h2 id="targeting-cells-with-columns-and-rows">Targeting cells with <code>columns</code> and <code>rows</code><a class="anchor" aria-label="anchor" href="#targeting-cells-with-columns-and-rows"></a></h2>
@@ -341,8 +340,8 @@ values.</p>
 <p>Note that a <code>locale</code> value provided here will override any global locale
 setting performed in <code><a href="gt.html">gt()</a></code>'s own <code>locale</code> argument (it is settable there as
 a value received by all other functions that have a <code>locale</code> argument). As a
-useful reference on which locales are supported, we can use the
-<code><a href="info_locales.html">info_locales()</a></code> function to view an info table.</p>
+useful reference on which locales are supported, we can call <code><a href="info_locales.html">info_locales()</a></code>
+to view an info table.</p>
     </div>
     <div class="section level2">
     <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>

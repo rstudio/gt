@@ -238,11 +238,11 @@ crore, and higher quantities.</p></dd>
 <p><code>scalar&lt;character&gt;</code> // <em>default:</em> <code>NULL</code> (<code>optional</code>)</p>
 <p>An optional locale identifier that can be used for formatting values
 according the locale's rules. Examples include <code>"en"</code> for English (United
-States) and <code>"fr"</code> for French (France). We can use the <code><a href="info_locales.html">info_locales()</a></code>
-function as a useful reference for all of the locales that are supported. A
-locale ID can be also set in the initial <code><a href="gt.html">gt()</a></code> function call (where it
-would be used automatically by any function with a <code>locale</code> argument) but a
-<code>locale</code> value provided here will override that global locale.</p></dd>
+States) and <code>"fr"</code> for French (France). We can call <code><a href="info_locales.html">info_locales()</a></code> for a
+useful reference for all of the locales that are supported. A locale ID can
+be also set in the initial <code><a href="gt.html">gt()</a></code> function call (where it would be used
+automatically by any function with a <code>locale</code> argument) but a <code>locale</code>
+value provided here will override that global locale.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -256,10 +256,10 @@ would be used automatically by any function with a <code>locale</code> argument)
     
 
 
-<p>The <code>fmt_fraction()</code> formatting function is compatible with body cells that
-are of the <code>"numeric"</code> or <code>"integer"</code> types. Any other types of body cells
-are ignored during formatting. This is to say that cells of incompatible data
-types may be targeted, but there will be no attempt to format them.</p>
+<p><code>fmt_fraction()</code> is compatible with body cells that are of the <code>"numeric"</code> or
+<code>"integer"</code> types. Any other types of body cells are ignored during
+formatting. This is to say that cells of incompatible data types may be
+targeted, but there will be no attempt to format them.</p>
     </div>
     <div class="section level2">
     <h2 id="targeting-cells-with-columns-and-rows">Targeting cells with <code>columns</code> and <code>rows</code><a class="anchor" aria-label="anchor" href="#targeting-cells-with-columns-and-rows"></a></h2>
@@ -304,10 +304,10 @@ more complex predicate expression.</p>
     
 
 
-<p>The <code><a href="from_column.html">from_column()</a></code> helper function can be used with certain arguments of
-<code>fmt_fraction()</code> to obtain varying parameter values from a specified column
-within the table. This means that each row could be formatted a little bit
-differently. These arguments provide support for <code><a href="from_column.html">from_column()</a></code>:</p><ul><li><p><code>accuracy</code></p></li>
+<p><code><a href="from_column.html">from_column()</a></code> can be used with certain arguments of <code>fmt_fraction()</code> to
+obtain varying parameter values from a specified column within the table.
+This means that each row could be formatted a little bit ifferently. These
+arguments provide support for <code><a href="from_column.html">from_column()</a></code>:</p><ul><li><p><code>accuracy</code></p></li>
 <li><p><code>simplify</code></p></li>
 <li><p><code>layout</code></p></li>
 <li><p><code>use_seps</code></p></li>
@@ -318,11 +318,10 @@ differently. These arguments provide support for <code><a href="from_column.html
 </ul><p>Please note that for all of the aforementioned arguments, a <code><a href="from_column.html">from_column()</a></code>
 call needs to reference a column that has data of the correct type (this is
 different for each argument). Additional columns for parameter values can be
-generated with the <code><a href="cols_add.html">cols_add()</a></code> function (if not already present). Columns
-that contain parameter data can also be hidden from final display with
-<code><a href="cols_hide.html">cols_hide()</a></code>. Finally, there is no limitation to how many arguments the
-<code><a href="from_column.html">from_column()</a></code> helper is applied so long as the arguments belong to this
-closed set.</p>
+generated with <code><a href="cols_add.html">cols_add()</a></code> (if not already present). Columns that contain
+parameter data can also be hidden from final display with <code><a href="cols_hide.html">cols_hide()</a></code>.
+Finally, there is no limitation to how many arguments the <code><a href="from_column.html">from_column()</a></code>
+helper is applied so long as the arguments belong to this closed set.</p>
     </div>
     <div class="section level2">
     <h2 id="adapting-output-to-a-specific-locale">Adapting output to a specific <code>locale</code><a class="anchor" aria-label="anchor" href="#adapting-output-to-a-specific-locale"></a></h2>
@@ -338,8 +337,8 @@ values.</p>
 <p>Note that a <code>locale</code> value provided here will override any global locale
 setting performed in <code><a href="gt.html">gt()</a></code>'s own <code>locale</code> argument (it is settable there as
 a value received by all other functions that have a <code>locale</code> argument). As a
-useful reference on which locales are supported, we can use the
-<code><a href="info_locales.html">info_locales()</a></code> function to view an info table.</p>
+useful reference on which locales are supported, we can call <code><a href="info_locales.html">info_locales()</a></code>
+to view an info table.</p>
     </div>
     <div class="section level2">
     <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
@@ -347,11 +346,12 @@ useful reference on which locales are supported, we can use the
 
 
 <p>Using a summarized version of the <code><a href="pizzaplace.html">pizzaplace</a></code> dataset, let's create a
-<strong>gt</strong> table. With the <code>fmt_fraction()</code> function we can format the <code>f_sold</code>
-and <code>f_income</code> columns to display fractions. As for how the fractions are
-represented, we are electing to use <code>accuracy = 10</code>. This gives all fractions
-as tenths. We won't simplify the fractions (by using <code>simplify = FALSE</code>) and
-this means that a fraction like <code>5/10</code> won't become <code>1/2</code>. With <code>layout = "diagonal"</code>, we get a diagonal display of all fractions.</p>
+<strong>gt</strong> table. With <code>fmt_fraction()</code> we can format the <code>f_sold</code> and <code>f_income</code>
+columns to display fractions. As for how the fractions are represented, we
+are electing to use <code>accuracy = 10</code>. This gives all fractions as tenths.
+We won't simplify the fractions (by using <code>simplify = FALSE</code>) and this means
+that a fraction like <code>5/10</code> won't become <code>1/2</code>. With <code>layout ="diagonal"</code>,
+we get a diagonal display of all fractions.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">pizzaplace</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">type</span>, <span class="va">size</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html" class="external-link">summarize</a></span><span class="op">(</span></span>

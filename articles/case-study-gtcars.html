@@ -110,8 +110,7 @@
 all know <code>mtcars</code>… what is <code>gtcars</code>? It’s
 basically a modernized <code>mtcars</code> for the <strong>gt</strong>
 age. It’s part of the <strong>gt</strong> package, and here is a preview
-of the tibble using <strong>dplyr</strong>’s <code>glimpse()</code>
-function:</p>
+of the tibble using <code><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">dplyr::glimpse()</a></code>:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># This is `gtcars`</span></span>
 <span><span class="fu">glimpse</span><span class="op">(</span><span class="va">gtcars</span><span class="op">)</span></span>
@@ -811,10 +810,9 @@ prominently above.</p>
 </table>
 </div>
 <p>Getting the row groups in the preferred order can be done easily with
-<strong>dplyr</strong>’s <code>arrange()</code> function. For example,
-we can have groups that are arranged alphabetically by manufacturer
-(<code>mfr</code>) and then sorted by highest sticker price
-(<code>msrp</code>) to lowest.</p>
+<code><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">dplyr::arrange()</a></code>. For example, we can have groups that are
+arranged alphabetically by manufacturer (<code>mfr</code>) and then
+sorted by highest sticker price (<code>msrp</code>) to lowest.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gtcars_8</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">group_by</span><span class="op">(</span><span class="va">ctry_origin</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -2688,18 +2686,18 @@ row labels (which is the newly made <code>car</code> column).</p>
 <h3 id="hiding-and-moving-some-columns">Hiding and Moving Some Columns<a class="anchor" aria-label="anchor" href="#hiding-and-moving-some-columns"></a>
 </h3>
 <p>Let’s hide two columns that we don’t need to the final table:
-<code>drivetrain</code> and <code>bdy_style</code>. We can use the
-<code><a href="../reference/cols_hide.html">cols_hide()</a></code> function to hide columns. The same end result
-might also have been achieved by using
+<code>drivetrain</code> and <code>bdy_style</code>. We can use
+<code><a href="../reference/cols_hide.html">cols_hide()</a></code> to hide columns. The same end result might also
+have been achieved by using
 <code>gtcars |&gt; dplyr::select(-c(drivetrain, bdy_style))</code>,
 before introducing the table to <code><a href="../reference/gt.html">gt()</a></code>. Why this function
 then? Sometimes you’ll need variables for conditional statements within
 <strong>gt</strong> but won’t want to display them in the end.</p>
 <p>Aside from hiding columns, let’s <em>move</em> some of them. Again,
 this could be done with <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code> but there are
-options here in <strong>gt</strong> via the
+options here in <strong>gt</strong> via
 <code><a href="../reference/cols_move_to_start.html">cols_move_to_start()</a></code>, <code><a href="../reference/cols_move.html">cols_move()</a></code>, and
-<code><a href="../reference/cols_move_to_end.html">cols_move_to_end()</a></code> functions.</p>
+<code><a href="../reference/cols_move_to_end.html">cols_move_to_end()</a></code>.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Use a few `cols_*()` functions to hide and move columns </span></span>
 <span><span class="va">tab</span> <span class="op">&lt;-</span> </span>
@@ -3300,11 +3298,11 @@ options here in <strong>gt</strong> via the
 <h3 id="putting-columns-into-groups">Putting Columns Into Groups<a class="anchor" aria-label="anchor" href="#putting-columns-into-groups"></a>
 </h3>
 <p>It’s sometimes useful to arrange variables/columns into groups by
-using spanner column labels. This can be done in <strong>gt</strong> by
-using the <code><a href="../reference/tab_spanner.html">tab_spanner()</a></code> function. It takes the
-<code>label</code> and <code>columns</code> arguments;
-<code>label</code> is the spanner column label and the
-<code>columns</code> are those columns that belong in this group.</p>
+using spanner column labels. This can be done in <strong>gt</strong>
+with <code><a href="../reference/tab_spanner.html">tab_spanner()</a></code>. It takes the <code>label</code> and
+<code>columns</code> arguments; <code>label</code> is the spanner column
+label and the <code>columns</code> are those columns that belong in this
+group.</p>
 <p>Here, we’ll put the <code>mpg_c</code>, <code>mpg_h</code>,
 <code>hp</code>, <code>hp_rpm</code>, <code>trq</code>,
 <code>trq_rpm</code> columns under the <code>Performance</code> spanner
@@ -3918,9 +3916,9 @@ spanner column label is styled with Markdown by using the
 <h3 id="merging-columns-together-and-labeling-them">Merging Columns Together and Labeling Them<a class="anchor" aria-label="anchor" href="#merging-columns-together-and-labeling-them"></a>
 </h3>
 <p>Sometimes we’d like to combine the data from two columns into a
-single column. The <code><a href="../reference/cols_merge.html">cols_merge()</a></code> function allows us to do
-this, we just need to describe how the data should be combined. For our
-table, let’s merge together the following pairs of columns:</p>
+single column. <code><a href="../reference/cols_merge.html">cols_merge()</a></code> allows us to do this, we just
+need to describe how the data should be combined. For our table, let’s
+merge together the following pairs of columns:</p>
 <ul>
 <li>
 <code>mpg_c</code> and <code>mpg_h</code> (miles per gallon in city
@@ -3932,15 +3930,15 @@ RPM)</li>
 <code>trq</code> and <code>trq_rpm</code> (torque and associated
 RPM)</li>
 </ul>
-<p>The <code><a href="../reference/cols_merge.html">cols_merge()</a></code> function uses a <code>col_1</code>
-column and a <code>col_2</code> column. Once combined, the
-<code>col_1</code> column will be retained and the <code>col_2</code>
-column will be dropped. The pattern argument uses <code>{1}</code> and
-<code>{2}</code> to represent the content of <code>col_1</code> and
-<code>col_2</code>. Here, we can use string literals to add text like
-<code>rpm</code> or the <code>@</code> sign. Furthermore, because we are
-targeting an HTML table, we can use the <code>&lt;br&gt;</code> tag to
-insert a linebreak.</p>
+<p><code><a href="../reference/cols_merge.html">cols_merge()</a></code> uses a <code>col_1</code> column and a
+<code>col_2</code> column. Once combined, the <code>col_1</code> column
+will be retained and the <code>col_2</code> column will be dropped. The
+pattern argument uses <code>{1}</code> and <code>{2}</code> to represent
+the content of <code>col_1</code> and <code>col_2</code>. Here, we can
+use string literals to add text like <code>rpm</code> or the
+<code>@</code> sign. Furthermore, because we are targeting an HTML
+table, we can use the <code>&lt;br&gt;</code> tag to insert a
+linebreak.</p>
 <p>We are going to do something a little special with the
 <code>pattern</code> for the <code>mpg_c</code> and <code>mpg_h</code>
 columns and wrap it all with
@@ -3953,9 +3951,9 @@ it’s better to remove that entry entirely with this specialized pattern
 syntax.</p>
 <p>Labeling columns essentially means that we are choosing
 display-friendly labels that are no longer simply the column names (the
-default label). The <code><a href="../reference/cols_label.html">cols_label()</a></code> function makes this
-relabeling possible. It accepts a series of named arguments in the form
-of <code>&lt;column_name&gt; = &lt;column_label&gt;, ...</code>.</p>
+default label). <code><a href="../reference/cols_label.html">cols_label()</a></code> makes this relabeling
+possible. It accepts a series of named arguments in the form of
+<code>&lt;column_name&gt; = &lt;column_label&gt;, ...</code>.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Perform three column merges to better present</span></span>
 <span><span class="co"># MPG, HP, and torque; relabel all the remaining</span></span>
@@ -5142,21 +5140,21 @@ want to apply the formatting to the entire column of data.</p>
 <code>mpg_c</code>, <code>hp</code>, and <code>trq</code> columns. All
 other columns will maintain their default alignments.</p>
 <p>It’s sometimes useful to modify the default styles of table cells. We
-can do this in a targeted way with the <code><a href="../reference/tab_style.html">tab_style()</a></code>
-function. That function require two key pieces of information: a
-<code>style</code> definition, and one or more <code>locations</code>
-(which cells should the styles be applied to?). The <code>style</code>
-argument commonly uses the <code>cell_*()</code> helper functions. There
-are three of these (<code><a href="../reference/cell_text.html">cell_text()</a></code>, <code><a href="../reference/cell_fill.html">cell_fill()</a></code>
-and <code><a href="../reference/cell_borders.html">cell_borders()</a></code>) and each contains different arguments
-for the different styles that are supported.</p>
-<p>Here we will use the <code><a href="../reference/cell_text.html">cell_text()</a></code> helper function and
-specify a text <code>size</code> of <code>"12px"</code> for our targeted
-cells—both <code>px(12)</code> and <code>"12px"</code> work equally well
-here. We also use helper functions with the <code>locations</code>
-argument and these are the <code>cells_*()</code> functions. We would
-like to target the data cells in all columns except <code>year</code>
-and <code>msrp</code> so we need to use <code>cells_body</code> and then
+can do this in a targeted way with <code><a href="../reference/tab_style.html">tab_style()</a></code>. That
+function require two key pieces of information: a <code>style</code>
+definition, and one or more <code>locations</code> (which cells should
+the styles be applied to?). The <code>style</code> argument commonly
+uses the <code>cell_*()</code> helper functions. There are three of
+these (<code><a href="../reference/cell_text.html">cell_text()</a></code>, <code><a href="../reference/cell_fill.html">cell_fill()</a></code> and
+<code><a href="../reference/cell_borders.html">cell_borders()</a></code>) and each contains different arguments for
+the different styles that are supported.</p>
+<p>Here we will use <code><a href="../reference/cell_text.html">cell_text()</a></code> and specify a text
+<code>size</code> of <code>"12px"</code> for our targeted cells—both
+<code>px(12)</code> and <code>"12px"</code> work equally well here. We
+also use helper functions with the <code>locations</code> argument and
+these are the <code>cells_*()</code> functions. We would like to target
+the data cells in all columns except <code>year</code> and
+<code>msrp</code> so we need to use <code>cells_body</code> and then
 supply our target columns to its own <code>columns</code> argument.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Center-align three columns in the gt table and</span></span>
@@ -5743,11 +5741,11 @@ supply our target columns to its own <code>columns</code> argument.</p>
 <div class="section level3">
 <h3 id="text-transforms">Text Transforms<a class="anchor" aria-label="anchor" href="#text-transforms"></a>
 </h3>
-<p>A text transform via the <code><a href="../reference/text_transform.html">text_transform()</a></code> function is a
-great way to further manipulate text in data cells (even after they’ve
-been formatted with the <code>fmt*()</code> function). After targeting
-data cells with the <code><a href="../reference/cells_body.html">cells_body()</a></code> location helper function,
-we supply a function to the <code>fn</code> argument that processes a
+<p>Transforming text with <code><a href="../reference/text_transform.html">text_transform()</a></code> is a great way
+to further manipulate text in data cells (even after they’ve been
+formatted with the <code>fmt*()</code> function). After targeting data
+cells with the <code><a href="../reference/cells_body.html">cells_body()</a></code> location helper function, we
+supply a function to the <code>fn</code> argument that processes a
 vector of text (the vector <code>x</code> will be the formatted text in
 each of the targeted cells). If we intend to render an HTML table, we
 can directly apply HTML tags in the transformation function. The
@@ -6363,11 +6361,11 @@ table.</p>
 <div class="section level3">
 <h3 id="table-header-title-and-subtitle">Table Header: Title and Subtitle<a class="anchor" aria-label="anchor" href="#table-header-title-and-subtitle"></a>
 </h3>
-<p>The <code><a href="../reference/tab_header.html">tab_header()</a></code> function allows us to place a table
-title and, optionally, a subtitle at the top of the display table. It’s
-generally a good idea to have both in a table, where the subtitle
-provides additional information (though that isn’t quite the case in our
-example below).</p>
+<p><code><a href="../reference/tab_header.html">tab_header()</a></code> allows us to place a table title and,
+optionally, a subtitle at the top of the display table. It’s generally a
+good idea to have both in a table, where the subtitle provides
+additional information (though that isn’t quite the case in our example
+below).</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Add a table title and subtitle; we can use</span></span>
 <span><span class="co"># markdown with the `md()` helper function</span></span>
@@ -6961,11 +6959,11 @@ example below).</p>
 <div class="section level3">
 <h3 id="adding-a-source-citation">Adding a Source Citation<a class="anchor" aria-label="anchor" href="#adding-a-source-citation"></a>
 </h3>
-<p>A <em>source note</em> can be added below the display table using the
-<code><a href="../reference/tab_source_note.html">tab_source_note()</a></code> function. We can even add multiple source
-notes with multiple calls of that function. Here, we supply a web URL
-and by using Markdown (with <code><a href="../reference/md.html">md()</a></code>) it’s easy to create a
-link to the source of the data.</p>
+<p>A <em>source note</em> can be added below the display table with
+<code><a href="../reference/tab_source_note.html">tab_source_note()</a></code>. We can even add multiple source notes
+with multiple calls of that function. Here, we supply a web URL and by
+using Markdown (with <code><a href="../reference/md.html">md()</a></code>) it’s easy to create a link to
+the source of the data.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Add a source note to the bottom of the table; this</span></span>
 <span><span class="co"># appears below the footnotes</span></span>
@@ -7572,7 +7570,7 @@ are:</p>
 <pre><code>a. identifying the car with the best gas mileage (city)
 b. identifying the car with the highest horsepower
 c. stating the currency of the MSRP</code></pre>
-<p>The <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code> function expects note text for the
+<p><code><a href="../reference/tab_footnote.html">tab_footnote()</a></code> expects note text for the
 <code>footnote</code> argument, and locations for where the footnote
 mark should be attached. It will handle the placement of the footnote
 mark and also place the footnote in the footnotes area. Here, we’ll use

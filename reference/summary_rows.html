@@ -354,9 +354,9 @@ RHS formatting expression. Like this:</p>
     
 
 
-<p>Should we need to obtain the summary data for external purposes, the
-<code><a href="extract_summary.html">extract_summary()</a></code> function can be used with a <code>gt_tbl</code> object where summary
-rows were added via <code>summary_rows()</code> or <code><a href="grand_summary_rows.html">grand_summary_rows()</a></code>.</p>
+<p>Should we need to obtain the summary data for external purposes,
+<code><a href="extract_summary.html">extract_summary()</a></code> can be used with a <code>gt_tbl</code> object where summary rows
+were added via <code>summary_rows()</code> or <code><a href="grand_summary_rows.html">grand_summary_rows()</a></code>.</p>
     </div>
     <div class="section level2">
     <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h2>
@@ -365,8 +365,8 @@ rows were added via <code>summary_rows()</code> or <code><a href="grand_summary_
 
 <p>Use a modified version of <code><a href="sp500.html">sp500</a></code> dataset to create a <strong>gt</strong> table with row
 groups and row labels. Create the summary rows labeled <code>min</code>, <code>max</code>, and
-<code>avg</code> by row group (where each each row group is a week number) with the
-<code>summary_rows()</code> function.</p>
+<code>avg</code> by row group (where each each row group is a week number) with
+<code>summary_rows()</code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">sp500</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">date</span> <span class="op">&gt;=</span> <span class="st">"2015-01-05"</span> <span class="op">&amp;</span> <span class="va">date</span> <span class="op">&lt;=</span> <span class="st">"2015-01-16"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="va">date</span><span class="op">)</span> <span class="op">|&gt;</span></span>

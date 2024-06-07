@@ -115,8 +115,8 @@ there is no table caption set in the input <code>gt_tbl</code> object.</p>
 
 
 <p>Use a portion of the <code><a href="gtcars.html">gtcars</a></code> dataset to create a <strong>gt</strong> table. We'll add a
-header part with the <code><a href="tab_header.html">tab_header()</a></code> function, and, a caption will also be
-added via the <code><a href="tab_caption.html">tab_caption()</a></code> function.</p>
+header part with <code><a href="tab_header.html">tab_header()</a></code>, and, a caption will also be added via
+<code><a href="tab_caption.html">tab_caption()</a></code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">gt_tbl</span> <span class="op">&lt;-</span></span>
 <span>  <span class="va">gtcars</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">mfr</span>, <span class="va">model</span>, <span class="va">msrp</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -130,8 +130,8 @@ added via the <code><a href="tab_caption.html">tab_caption()</a></code> function
 <span></span>
 <span><span class="va">gt_tbl</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rm_caption_1.png" alt="This image of a table was generated from the first code example in the `rm_caption()` help file." style="width:100%;"></p>
-<p>If you decide that you don't want the caption in the <code>gt_tbl</code> object,
-it can be removed with the <code>rm_caption()</code> function.</p>
+<p>If you decide that you don't want the caption in the <code>gt_tbl</code> object, it can
+be removed with <code>rm_caption()</code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/rm_caption.html">rm_caption</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">gt_tbl</span><span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_rm_caption_2.png" alt="This image of a table was generated from the second code example in the `rm_caption()` help file." style="width:100%;"></p>
     </div>

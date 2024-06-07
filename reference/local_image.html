@@ -3,12 +3,12 @@
 a table with local_image() function. The function provides a convenient way
 to generate an HTML fragment using an on-disk PNG or SVG. Because this
 function is currently HTML-based, it is only useful for HTML table output. To
-use this function inside of data cells, it is recommended that the
-text_transform() function is used. With that function, we can specify which
-data cells to target and then include a local_image() call within the
-required user-defined function (for the fn argument). If we want to include
-an image in other places (e.g., in the header, within footnote text, etc.) we
-need to use local_image() within the html() helper function.
+use this function inside of data cells, it is recommended to use
+text_transform() first. With that function, we can specify which data cells
+to target and then include a local_image() call within the required
+user-defined function (for the fn argument). If we want to include an image
+in other places (e.g., in the header, within footnote text, etc.) we need to
+use local_image() within the html() helper function.
 By itself, the function creates an HTML image tag with an image URI embedded
 within. We can easily experiment with a local PNG or SVG image that's
 available in the gt package using the test_image() function. Using
@@ -19,12 +19,12 @@ heights of most table rows."><title>Helper function for adding a local image —
 a table with local_image() function. The function provides a convenient way
 to generate an HTML fragment using an on-disk PNG or SVG. Because this
 function is currently HTML-based, it is only useful for HTML table output. To
-use this function inside of data cells, it is recommended that the
-text_transform() function is used. With that function, we can specify which
-data cells to target and then include a local_image() call within the
-required user-defined function (for the fn argument). If we want to include
-an image in other places (e.g., in the header, within footnote text, etc.) we
-need to use local_image() within the html() helper function.
+use this function inside of data cells, it is recommended to use
+text_transform() first. With that function, we can specify which data cells
+to target and then include a local_image() call within the required
+user-defined function (for the fn argument). If we want to include an image
+in other places (e.g., in the header, within footnote text, etc.) we need to
+use local_image() within the html() helper function.
 By itself, the function creates an HTML image tag with an image URI embedded
 within. We can easily experiment with a local PNG or SVG image that's
 available in the gt package using the test_image() function. Using
@@ -104,12 +104,12 @@ heights of most table rows."><meta property="og:image" content="https://gt.rstud
 a table with <code>local_image()</code> function. The function provides a convenient way
 to generate an HTML fragment using an on-disk PNG or SVG. Because this
 function is currently HTML-based, it is only useful for HTML table output. To
-use this function inside of data cells, it is recommended that the
-<code><a href="text_transform.html">text_transform()</a></code> function is used. With that function, we can specify which
-data cells to target and then include a <code>local_image()</code> call within the
-required user-defined function (for the <code>fn</code> argument). If we want to include
-an image in other places (e.g., in the header, within footnote text, etc.) we
-need to use <code>local_image()</code> within the <code><a href="html.html">html()</a></code> helper function.</p>
+use this function inside of data cells, it is recommended to use
+<code><a href="text_transform.html">text_transform()</a></code> first. With that function, we can specify which data cells
+to target and then include a <code>local_image()</code> call within the required
+user-defined function (for the <code>fn</code> argument). If we want to include an image
+in other places (e.g., in the header, within footnote text, etc.) we need to
+use <code>local_image()</code> within the <code><a href="html.html">html()</a></code> helper function.</p>
 <p>By itself, the function creates an HTML image tag with an image URI embedded
 within. We can easily experiment with a local PNG or SVG image that's
 available in the <strong>gt</strong> package using the <code><a href="test_image.html">test_image()</a></code> function. Using
@@ -152,9 +152,9 @@ a cell.</p>
 
 
 <p>Create a tibble that contains heights of an image in pixels (one column as a
-string, the other as numerical values), then, create a <strong>gt</strong> table. Use the
-<code><a href="text_transform.html">text_transform()</a></code> function to insert a local test image (PNG) image with the
-various sizes.</p>
+string, the other as numerical values), then, create a <strong>gt</strong> table. Use
+<code><a href="text_transform.html">text_transform()</a></code> to insert a local test image (PNG) image with the various
+sizes.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
 <span>  pixels <span class="op">=</span> <span class="fu"><a href="../reference/px.html">px</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">35</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  image <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">35</span>, <span class="fl">5</span><span class="op">)</span></span>

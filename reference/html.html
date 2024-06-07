@@ -117,8 +117,8 @@ that is not to be sanitized.</p>
 
 
 <p>Use the <code><a href="exibble.html">exibble</a></code> dataset to create a <strong>gt</strong> table. When adding a title
-through the <code><a href="tab_header.html">tab_header()</a></code> function, we'll use the <code>html()</code> helper to signify
-to <strong>gt</strong> that we're using HTML formatting.</p>
+through <code><a href="tab_header.html">tab_header()</a></code>, we'll use the <code>html()</code> helper to signify to <strong>gt</strong>
+that we're using HTML formatting.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">exibble</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">currency</span>, <span class="va">char</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/gt.html">gt</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
