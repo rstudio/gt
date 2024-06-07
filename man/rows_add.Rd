@@ -203,7 +203,7 @@ name of the row label.
 Another application is starting from nothing (really just the definition of
 columns) and building up a table using several invocations of \code{rows_add()}.
 This might be useful in interactive or programmatic applications. Here's an
-example where two columns are defined with \strong{dplyr}'s \code{tibble()} function
+example where two columns are defined with \code{dplyr::tibble()}
 (and no rows are present initially); with two calls of \code{rows_add()}, two
 separate rows are added.
 

@@ -313,11 +313,10 @@ Let's use a portion of the \code{\link{metro}} dataset to create a \strong{gt} t
 Depending on which train services are offered at the subset of stations,
 \emph{Font Awesome} icon names will be applied to cells where the different
 services exist (the specific names are \code{"train-subway"}, \code{"train"}, and
-\code{"train-tram"}). With \strong{tidyr}'s \code{unite()} function, those icon names
-can be converged into a single column (\code{services}) with the \code{NA} values
-removed. Since the names correspond to icons and they are in the correct
-format (separated by commas), they can be formatted as \emph{Font Awesome} icons
-with \code{fmt_icon()}.
+\code{"train-tram"}). With \code{tidyr::unite()}, those icon names can be converged
+into a single column (\code{services}) with the \code{NA} values removed. Since the
+names correspond to icons and they are in the correct format (separated by
+commas), they can be formatted as \emph{Font Awesome} icons with \code{fmt_icon()}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{metro |>
   dplyr::select(name, lines, connect_rer, connect_tramway, location) |>
