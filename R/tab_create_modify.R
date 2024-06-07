@@ -1064,10 +1064,9 @@ resolve_spanned_column_names <- function(
 #' }}
 #'
 #' With a summarized, filtered, and pivoted version of the [`pizzaplace`]
-#' dataset, we can create another **gt** table and then use the
-#' `tab_spanner_delim()` function with the same delimiter/separator that was
-#' used in the **tidyr** `pivot_wider()` call. We can also process the generated
-#' column labels with [cols_label_with()].
+#' dataset, we can create another **gt** table and then use `tab_spanner_delim()`
+#' with the delimiter/separator also used in `tidyr::pivot_wider()`. We can also
+#' process the generated column labels with [cols_label_with()].
 #'
 #' ```r
 #' pizzaplace |>

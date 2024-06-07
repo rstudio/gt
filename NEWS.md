@@ -301,7 +301,7 @@
 
 * The `docx` output format is now better detected in R Markdown and Quarto (#1040). (#1084, thanks @cderv!)
 
-* Replaced all `match.arg()` calls with **rlang**'s `match_arg()` for better error output (#672). (#1099, thanks @mojister!)
+* Replaced all `match.arg()` calls with `rlang::arg_match()` for better error output (#672). (#1099, thanks @mojister!)
 
 * Project website improvements; we now have a doublet of sites: (1) https://gt.rstudio.com and (2) https://gt.rstudio.com/dev (#1074, thanks @ddsjoberg!)
 

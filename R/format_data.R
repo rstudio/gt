@@ -8050,7 +8050,9 @@ extract_duration_pattern <- function(
 }
 
 #' Format column data containing bin/interval information
-
+#'
+#' @description
+#'
 #' When using `cut()` (or other functions that use it in some way)
 #' you get bins that can look like this: `"(0,10]"`, `"(10,15]"`, `"(15,20]"`,
 #' `"(20,40]"`. This interval notation expresses the lower and upper limits of
@@ -12838,11 +12840,10 @@ fmt_country <- function(
 #' Depending on which train services are offered at the subset of stations,
 #' *Font Awesome* icon names will be applied to cells where the different
 #' services exist (the specific names are `"train-subway"`, `"train"`, and
-#' `"train-tram"`). With **tidyr**'s `unite()` function, those icon names
-#' can be converged into a single column (`services`) with the `NA` values
-#' removed. Since the names correspond to icons and they are in the correct
-#' format (separated by commas), they can be formatted as *Font Awesome* icons
-#' with `fmt_icon()`.
+#' `"train-tram"`). With `tidyr::unite()`, those icon names can be converged
+#' into a single column (`services`) with the `NA` values removed. Since the
+#' names correspond to icons and they are in the correct format (separated by
+#' commas), they can be formatted as *Font Awesome* icons with `fmt_icon()`.
 #'
 #' ```r
 #' metro |>

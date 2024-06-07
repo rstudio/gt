@@ -858,7 +858,7 @@ cols_width <- function(
 #' The [`illness`] dataset has units within the `units` column. They're
 #' formatted in just the right way for **gt** too. Let's do some text
 #' manipulation through `dplyr::mutate()` and some pivoting with
-#' **tidyr**'s `pivot_longer()` and `pivot_wider()` in order to include the
+#' `tidyr::pivot_longer()` and `tidyr::pivot_wider()` in order to include the
 #' units as part of the column names in the reworked table. These column names
 #' are in a format where the units are included within `"{{"`/`"}}"`, so, we can
 #' use `cols_label()` with the `.process_units = TRUE` option to register the
@@ -1611,18 +1611,17 @@ cols_units <- function(
 #'
 #' @description
 #'
-#' We can add new columns to a table with the `cols_add()` function and it works
-#' quite a bit like the **dplyr** `mutate()` function. The idea is that you
-#' supply name-value pairs where the name is the new column name and the value
-#' part describes the data that will go into the column. The latter can:
-#' (1) be a vector where the length of the number of rows in the data table,
-#' (2) be a single value (which will be repeated all the way down), or (3)
-#' involve other columns in the table (as they represent vectors of the correct
-#' length). The new columns are added to the end of the column series by default
-#' but can instead be added internally by using either the `.before` or `.after`
-#' arguments. If entirely empty (i.e., all `NA`) columns need to be added, you
-#' can use any of the `NA` types (e.g., `NA`, `NA_character_`, `NA_real_`, etc.)
-#' for such columns.
+#' We can add new columns to a table with `cols_add()` and it works quite a bit
+#' like `dplyr::mutate()` does. The idea is that you supply name-value pairs
+#' where the name is the new column name and the value part describes the data
+#' that will go into the column. The latter can: (1) be a vector where the
+#' length of the number of rows in the data table, (2) be a single value
+#' (which will be repeated all the way down), or (3) involve other columns in
+#' the table (as they represent vectors of the correct length). The new columns
+#' are added to the end of the column series by default but can instead be added
+#' internally by using either the `.before` or `.after` arguments. If entirely
+#' empty (i.e., all `NA`) columns need to be added, you can use any of the `NA`
+#' types (e.g., `NA`, `NA_character_`, `NA_real_`, etc.) for such columns.
 #'
 #' @inheritParams fmt_number
 #'
@@ -2604,7 +2603,7 @@ cols_add <- function(
 #' pizza analytics). We also have the sell price for a pizza, and that'll serve
 #' as the *y* values. The pizzas belong to four different groups (in the `type`
 #' column) and we'll group by that and create value streams with
-#' `paste(..., collapse = ",")` in the **dplyr** summarize call. With two value
+#' `paste(..., collapse = ",")` inside  the `dplyr::summarize()` call. With two value
 #' streams in each row (having the same number of values) we can now make a
 #' **gt** table with nanoplots.
 #'

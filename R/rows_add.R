@@ -214,7 +214,7 @@
 #' Another application is starting from nothing (really just the definition of
 #' columns) and building up a table using several invocations of `rows_add()`.
 #' This might be useful in interactive or programmatic applications. Here's an
-#' example where two columns are defined with **dplyr**'s `tibble()` function
+#' example where two columns are defined with `dplyr::tibble()`
 #' (and no rows are present initially); with two calls of `rows_add()`, two
 #' separate rows are added.
 #'
