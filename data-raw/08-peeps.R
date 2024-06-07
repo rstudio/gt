@@ -21,3 +21,6 @@ peeps <-
         weight_kg = col_double()
       )
   )
+
+# Drop spec attribute
+peeps <- peeps[]
