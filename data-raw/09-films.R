@@ -15,3 +15,6 @@ films <-
         imdb_url = col_character()
       )
   )
+
+# Drop spec() attribute
+films <- films[]

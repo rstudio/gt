@@ -18,3 +18,5 @@ photolysis <-
       )
   )
 
+# Drop spec attribute
+photolysis <- photolysis[]
