@@ -130,7 +130,9 @@ create_wrap_start_l <- function(data) {
 
   ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
          "\\begingroup\n",
-         paste0("\\begin{table}", tbl_pos, "\n"))
+         ifelse(dt_options_get_value(data = data, option = "latex_use_sidewaystable"),
+                paste0("\\begin{sidewaystable}", tbl_pos, "\n"),
+                paste0("\\begin{table}", tbl_pos, "\n")))
 }
 
 #' @noRd
@@ -331,6 +333,47 @@ create_table_start_l <- function(data) {
   )
 }
 
+#' Create the caption component of a table
+#'
+#' The table caption component contains the caption; if
+#' there are no caption components defined this function will return an empty
+#' string.
+#'
+#' @noRd
+create_caption_component_l <- function(data) {
+
+  # Create the table caption if available
+  table_caption <- dt_options_get_value(data = data, option = "table_caption")
+
+  if (!all(is.na(table_caption))) {
+
+    table_caption <- process_text(table_caption, context = "latex")
+
+    if (isTRUE(getOption("knitr.in.progress"))) {
+
+      table_caption <- kable_caption(label = NULL, table_caption, "latex")
+      paste0("\\caption{",
+             table_caption,
+             "}",
+            ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
+                    " \\\\ \n",
+                    " \n")
+             )
+    } else {
+      paste0("\\caption{",
+             latex_group("\\large ", table_caption),
+             "}",
+             ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
+                    " \\\\ \n",
+                    " \n")
+             )
+    }
+
+  } else {
+    NULL
+  }
+}
+
 #' Create the heading component of a table
 #'
 #' The table heading component contains the title and possibly a subtitle; if
@@ -387,23 +430,43 @@ create_heading_component_l <- function(data) {
     footnote_subtitle_marks <- ""
   }
 
-  title_row <- latex_group("\\large ", heading$title, footnote_title_marks)
+  title_size <- convert_font_size_l(dt_options_get_value(data = data, option = "heading_title_font_size"))
+
+  title_row <- latex_group(ifelse(!is.null(title_size),
+                                  title_size,
+                                  "\\large"),
+                           " ",
+                           heading$title,
+                           footnote_title_marks
+                           )
 
   if (subtitle_defined) {
+
+    subtitle_size <- convert_font_size_l(dt_options_get_value(data = data, option = "heading_subtitle_font_size"))
 
     subtitle_row <-
       paste0(
         " \\\\ \n",
-        latex_group("\\small ", heading$subtitle, footnote_subtitle_marks)
-      )
+        latex_group(ifelse(!is.null(subtitle_size), subtitle_size, "\\small"),
+                    " ",
+                    heading$subtitle,
+                    footnote_subtitle_marks)
+        )
 
   } else {
     subtitle_row <- ""
   }
-
-  paste_between(
-    paste0(title_row, subtitle_row),
-    x_2 = c("\\caption*{\n", "\n} \\\\ \n")
+  paste0(
+    ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
+           "",
+           "\\rule{\\linewidth}{1.0pt} \n\\vspace{0.25em} \n"),
+    paste_between(
+      paste0(title_row, subtitle_row),
+      x_2 = c("\\caption*{\n", "\n}")
+    ),
+    ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
+           " \\\\ \n",
+           " \n")
   )
 }
 
@@ -991,7 +1054,9 @@ create_table_end_l <- function(data) {
 create_wrap_end_l <- function(data) {
   ifelse(dt_options_get_value(data = data, option = "latex_use_longtable"),
          "\\endgroup\n",
-         "\\end{table}\n")
+         ifelse(dt_options_get_value(data = data, option = "latex_use_sidewaystable"),
+                "\\end{sidewaystable}\n",
+                "\\end{table}\n"))
 }
 
 #' @noRd
