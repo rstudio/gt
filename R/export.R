@@ -699,7 +699,7 @@ as_latex <- function(data) {
   footer_component <- create_footer_component_l(data = data)
 
   # Create a LaTeX fragment for the ending tabular statement
-  table_end <- create_table_end_l()
+  table_end <- create_table_end_l(data = data)
 
   # If the `rmarkdown` package is available, use the
   # `latex_dependency()` function to load latex packages
@@ -715,11 +715,15 @@ as_latex <- function(data) {
   # Allow user to set a font-size
   fontsize_statement <- create_fontsize_statement_l(data = data)
 
+  # create wrapping environment
+  wrap_start_statement <- create_wrap_start_l(data = data)
+  wrap_end_statement <- create_wrap_end_l(data = data)
+
 
   # Compose the LaTeX table
   knitr::asis_output(
     paste0(
-      "\\begingroup\n",
+      wrap_start_statement,
       table_width_statement,
       fontsize_statement,
       table_start,
@@ -728,7 +732,7 @@ as_latex <- function(data) {
       body_component,
       table_end,
       footer_component,
-      "\\endgroup\n",
+      wrap_end_statement,
       collapse = ""
     ),
     meta = latex_packages
