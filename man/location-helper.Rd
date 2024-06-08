@@ -74,3 +74,4 @@ Other location helper functions:
 \code{\link{cells_title}()}
 }
 \concept{location helper functions}
+\keyword{internal}

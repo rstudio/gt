@@ -266,7 +266,7 @@ incorporates unit notation text (within \code{"{{"}/\code{"}}"}).
 The \code{\link{illness}} dataset has units within the \code{units} column. They're
 formatted in just the right way for \strong{gt} too. Let's do some text
 manipulation through \code{dplyr::mutate()} and some pivoting with
-\strong{tidyr}'s \code{pivot_longer()} and \code{pivot_wider()} in order to include the
+\code{tidyr::pivot_longer()} and \code{tidyr::pivot_wider()} in order to include the
 units as part of the column names in the reworked table. These column names
 are in a format where the units are included within \code{"{{"}/\code{"}}"}, so, we can
 use \code{cols_label()} with the \code{.process_units = TRUE} option to register the

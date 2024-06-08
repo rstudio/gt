@@ -235,10 +235,9 @@ two levels of spanners. We can further touch up the labels after that with
 }}
 
 With a summarized, filtered, and pivoted version of the \code{\link{pizzaplace}}
-dataset, we can create another \strong{gt} table and then use the
-\code{tab_spanner_delim()} function with the same delimiter/separator that was
-used in the \strong{tidyr} \code{pivot_wider()} call. We can also process the generated
-column labels with \code{\link[=cols_label_with]{cols_label_with()}}.
+dataset, we can create another \strong{gt} table and then use \code{tab_spanner_delim()}
+with the delimiter/separator also used in \code{tidyr::pivot_wider()}. We can also
+process the generated column labels with \code{\link[=cols_label_with]{cols_label_with()}}.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{pizzaplace |>
   dplyr::select(name, date, type, price) |>

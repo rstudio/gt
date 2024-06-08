@@ -55,4 +55,5 @@
 #' * [text_case_match()]
 #'
 #' These functions contain more example of usage.
+#' @keywords internal
 NULL

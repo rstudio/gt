@@ -2,16 +2,7 @@
 % Please edit documentation in R/format_data.R
 \name{fmt_bins}
 \alias{fmt_bins}
-\title{Format column data containing bin/interval information
-When using \code{cut()} (or other functions that use it in some way)
-you get bins that can look like this: \code{"(0,10]"}, \code{"(10,15]"}, \code{"(15,20]"},
-\code{"(20,40]"}. This interval notation expresses the lower and upper limits of
-each range. The square or round brackets define whether each of the endpoints
-are included in the range (\code{[}/\verb{]} for inclusion, \code{(}/\verb{)} for exclusion).
-Should bins of this sort be present in a table, the \code{fmt_bins()} function can
-be used to format that syntax to a form that presents better in a display
-table. It's possible to format the values of the intervals with the \code{fmt}
-argument, and, the separator can be modified with the \code{sep} argument.}
+\title{Format column data containing bin/interval information}
 \usage{
 fmt_bins(
   data,
@@ -73,7 +64,6 @@ should contain a formatting call (e.g.,
 An object of class \code{gt_tbl}.
 }
 \description{
-Format column data containing bin/interval information
 When using \code{cut()} (or other functions that use it in some way)
 you get bins that can look like this: \code{"(0,10]"}, \code{"(10,15]"}, \code{"(15,20]"},
 \code{"(20,40]"}. This interval notation expresses the lower and upper limits of

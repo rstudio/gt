@@ -796,7 +796,8 @@ info_flags <- function() {
 #' from the **fontawesome** package). Because there is a very large number of
 #' icons available to use in *Font Awesome*, `info_icons()` can be used to
 #' provide us with a table that lists all the icons along with their short and
-#' full names (either can be used with [fmt_icon()]).
+#' full names (either can be used with [fmt_icon()]). It also contains
+#' acceptable codes for [fmt_country()]
 #'
 #' @return An object of class `gt_tbl`.
 #'
