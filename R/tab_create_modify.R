@@ -4450,6 +4450,13 @@ set_style.cells_source_notes <- function(loc, data, style) {
 #'   set the floating position within the code chunk argument `tbl-pos`. Table
 #'   will only float if longtable environment is set to `FALSE`.
 #'
+#' @param latex.use.sidewaystable
+#'
+#'   *Use sidewaystable latex environment*
+#'
+#'   Setting this parameter to `TRUE` will use the `sidewaystable` environment
+#'   which will rotate the table 90 degrees. This only works in a floating environment.
+#'
 #' @return An object of class `gt_tbl`.
 #'
 #' @section Examples:
@@ -4769,7 +4776,8 @@ tab_options <- function(
     quarto.use_bootstrap = NULL,
     quarto.disable_processing = NULL,
     latex.use.longtable = NULL,
-    latex.tbl.pos = NULL
+    latex.tbl.pos = NULL,
+    latex.use.sidewaystable = NULL
 ) {
 
   # Perform input object validation

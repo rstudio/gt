@@ -22,7 +22,7 @@ incompatible with the function. This is \code{FALSE} by default.
 \item \code{gt.latex_packages}: A vector of LaTeX package names to use when generating
 tables in the LaTeX output context. The set of packages loaded is controlled
 by this default vector:
-\code{c("booktabs", "caption", "longtable", "colortbl", "array")}.
+\code{c("booktabs", "caption", "longtable", "rotating", "colortbl", "array")}.
 }
 }
 

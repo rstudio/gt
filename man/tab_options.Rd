@@ -192,7 +192,8 @@ tab_options(
   quarto.use_bootstrap = NULL,
   quarto.disable_processing = NULL,
   latex.use.longtable = NULL,
-  latex.tbl.pos = NULL
+  latex.tbl.pos = NULL,
+  latex.use.sidewaystable = NULL
 )
 }
 \arguments{
@@ -652,6 +653,11 @@ The latex position indicator for a floating environment (e.g. "!t", "H"). It
 should be specified without square brackets. Quarto users should instead
 set the floating position within the code chunk argument \code{tbl-pos}. Table
 will only float if longtable environment is set to \code{FALSE}.}
+
+\item{latex.use.sidewaystable}{\emph{Use sidewaystable latex environment}
+
+Setting this parameter to \code{TRUE} will use the \code{sidewaystable} environment
+which will rotate the table 90 degrees. This only works in a floating environment.}
 }
 \value{
 An object of class \code{gt_tbl}.
@@ -789,7 +795,7 @@ options. Here, we'll use the \code{"small"} keyword as a value for both options.
 }
 
 \seealso{
-Other part creation/modification functions: 
+Other part creation/modification functions:
 \code{\link{tab_caption}()},
 \code{\link{tab_footnote}()},
 \code{\link{tab_header}()},
