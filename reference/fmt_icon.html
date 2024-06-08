@@ -384,11 +384,10 @@ categories of municipality for this subset of data.</p>
 Depending on which train services are offered at the subset of stations,
 <em>Font Awesome</em> icon names will be applied to cells where the different
 services exist (the specific names are <code>"train-subway"</code>, <code>"train"</code>, and
-<code>"train-tram"</code>). With <strong>tidyr</strong>'s <code>unite()</code> function, those icon names
-can be converged into a single column (<code>services</code>) with the <code>NA</code> values
-removed. Since the names correspond to icons and they are in the correct
-format (separated by commas), they can be formatted as <em>Font Awesome</em> icons
-with <code>fmt_icon()</code>.</p>
+<code>"train-tram"</code>). With <code><a href="https://tidyr.tidyverse.org/reference/unite.html" class="external-link">tidyr::unite()</a></code>, those icon names can be converged
+into a single column (<code>services</code>) with the <code>NA</code> values removed. Since the
+names correspond to icons and they are in the correct format (separated by
+commas), they can be formatted as <em>Font Awesome</em> icons with <code>fmt_icon()</code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">metro</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">lines</span>, <span class="va">connect_rer</span>, <span class="va">connect_tramway</span>, <span class="va">location</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html" class="external-link">slice_tail</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">|&gt;</span></span>

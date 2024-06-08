@@ -317,10 +317,9 @@ two levels of spanners. We can further touch up the labels after that with
 <span>  <span class="op">)</span></span></code></pre><p></p></div>
 <p><img src="https://raw.githubusercontent.com/rstudio/gt/master/images/man_tab_spanner_delim_4.png" alt="This image of a table was generated from the fourth code example in the `tab_spanner_delim()` help file." style="width:100%;"></p>
 <p>With a summarized, filtered, and pivoted version of the <code><a href="pizzaplace.html">pizzaplace</a></code>
-dataset, we can create another <strong>gt</strong> table and then use the
-<code>tab_spanner_delim()</code> function with the same delimiter/separator that was
-used in the <strong>tidyr</strong> <code>pivot_wider()</code> call. We can also process the generated
-column labels with <code><a href="cols_label_with.html">cols_label_with()</a></code>.</p>
+dataset, we can create another <strong>gt</strong> table and then use <code>tab_spanner_delim()</code>
+with the delimiter/separator also used in <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">tidyr::pivot_wider()</a></code>. We can also
+process the generated column labels with <code><a href="cols_label_with.html">cols_label_with()</a></code>.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">pizzaplace</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">date</span>, <span class="va">type</span>, <span class="va">price</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">date</span>, <span class="va">type</span><span class="op">)</span> <span class="op">|&gt;</span></span>

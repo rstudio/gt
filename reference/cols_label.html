@@ -321,7 +321,7 @@ incorporates unit notation text (within <code>"{{"</code>/<code>"}}"</code>).</p
 <p>The <code><a href="illness.html">illness</a></code> dataset has units within the <code>units</code> column. They're
 formatted in just the right way for <strong>gt</strong> too. Let's do some text
 manipulation through <code><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">dplyr::mutate()</a></code> and some pivoting with
-<strong>tidyr</strong>'s <code>pivot_longer()</code> and <code>pivot_wider()</code> in order to include the
+<code><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html" class="external-link">tidyr::pivot_longer()</a></code> and <code><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html" class="external-link">tidyr::pivot_wider()</a></code> in order to include the
 units as part of the column names in the reworked table. These column names
 are in a format where the units are included within <code>"{{"</code>/<code>"}}"</code>, so, we can
 use <code>cols_label()</code> with the <code>.process_units = TRUE</code> option to register the

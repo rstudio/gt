@@ -68,7 +68,7 @@
     <div class="section level2">
       <h2 id="table-creation">Table creation<a class="anchor" aria-label="anchor" href="#table-creation"></a></h2>
       
-      <div class="section-desc"><p>All <strong>gt</strong> tables begin with a call to <code><a href="../reference/gt.html">gt()</a></code>, where we would supply the input data table (data frame or tibble) and some basic options for creating a stub (<code>rowname_col</code>) and row groups (<code>groupname_col</code>). We can also introduce a grouped tibble (via <strong>dplyr</strong>’s <code>group_by()</code>) for more precise divisions of rows into row groups. The <code><a href="../reference/gt_preview.html">gt_preview()</a></code> function is great for getting a nicely-formatted preview of a data table (defaulting to the first 5 rows and the last row).</p></div>
+      <div class="section-desc"><p>All <strong>gt</strong> tables begin with a call to <code><a href="../reference/gt.html">gt()</a></code>, where we would supply the input data table (data frame or tibble) and some basic options for creating a stub (<code>rowname_col</code>) and row groups (<code>groupname_col</code>). We can also introduce a grouped tibble (via <code><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">dplyr::group_by()</a></code>) for more precise divisions of rows into row groups. <code><a href="../reference/gt_preview.html">gt_preview()</a></code> is great for getting a nicely-formatted preview of a data table (defaulting to the first 5 rows and the last row).</p></div>
 
       
     </div><div id="" class="section level2">
@@ -257,7 +257,7 @@
           
           <code><a href="fmt_bins.html">fmt_bins()</a></code> 
         </dt>
-        <dd>Format column data containing bin/interval information When using <code><a href="https://rdrr.io/r/base/cut.html" class="external-link">cut()</a></code> (or other functions that use it in some way) you get bins that can look like this: <code>"(0,10]"</code>, <code>"(10,15]"</code>, <code>"(15,20]"</code>, <code>"(20,40]"</code>. This interval notation expresses the lower and upper limits of each range. The square or round brackets define whether each of the endpoints are included in the range (<code>[</code>/<code>]</code> for inclusion, <code>(</code>/<code>)</code> for exclusion). Should bins of this sort be present in a table, the <code><a href="../reference/fmt_bins.html">fmt_bins()</a></code> function can be used to format that syntax to a form that presents better in a display table. It's possible to format the values of the intervals with the <code>fmt</code> argument, and, the separator can be modified with the <code>sep</code> argument.</dd>
+        <dd>Format column data containing bin/interval information</dd>
       </dl><dl><dt>
           
           <code><a href="fmt_tf.html">fmt_tf()</a></code> 
@@ -555,7 +555,7 @@
       </dl></div><div class="section level2">
       <h2 id="helper-functions">Helper functions<a class="anchor" aria-label="anchor" href="#helper-functions"></a></h2>
       
-      <div class="section-desc"><p>An assortment of helper functions is available in the <strong>gt</strong> package. The various <code>cells_*()</code> functions are used for targeting cells with the <code>locations</code> argument in the <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code>, <code><a href="../reference/tab_style.html">tab_style()</a></code>, and <code><a href="../reference/text_transform.html">text_transform()</a></code> functions. The <code>cell_*()</code> functions are used exclusively with <code><a href="../reference/tab_style.html">tab_style()</a></code>’s <code>style</code> argument. The <code><a href="../reference/px.html">px()</a></code> &amp; <code><a href="../reference/pct.html">pct()</a></code> functions are useful there for specifying units in pixels or percentages. The <code><a href="../reference/md.html">md()</a></code> and <code><a href="../reference/html.html">html()</a></code> helpers can used be during label creation with the <code><a href="../reference/tab_header.html">tab_header()</a></code>, <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code>, <code><a href="../reference/tab_spanner.html">tab_spanner()</a></code>, <code>tab_stubhead_label()</code>, and <code><a href="../reference/tab_source_note.html">tab_source_note()</a></code> functions.</p></div>
+      <div class="section-desc"><p>An assortment of helper functions is available in the <strong>gt</strong> package. The various <code>cells_*()</code> functions are used for targeting cells with the <code>locations</code> argument of <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code>, <code><a href="../reference/tab_style.html">tab_style()</a></code>, and <code><a href="../reference/text_transform.html">text_transform()</a></code>, <code><a href="../reference/text_case_match.html">text_case_match()</a></code>, and <code><a href="../reference/text_case_when.html">text_case_when()</a></code>. The <code>cell_*()</code> functions are used exclusively with <code><a href="../reference/tab_style.html">tab_style()</a></code>’s <code>style</code> argument. <code><a href="../reference/px.html">px()</a></code> &amp; <code><a href="../reference/pct.html">pct()</a></code> are useful there for specifying units in pixels or percentages. The <code><a href="../reference/md.html">md()</a></code> and <code><a href="../reference/html.html">html()</a></code> helpers can used be during label creation with <code><a href="../reference/tab_header.html">tab_header()</a></code>, <code><a href="../reference/tab_footnote.html">tab_footnote()</a></code>, <code><a href="../reference/tab_spanner.html">tab_spanner()</a></code>, <code><a href="../reference/tab_stubhead.html">tab_stubhead()</a></code>, and <code><a href="../reference/tab_source_note.html">tab_source_note()</a></code>.</p></div>
 
       
     </div><div id="" class="section level2">
@@ -673,11 +673,6 @@
           <code><a href="cells_title.html">cells_title()</a></code> 
         </dt>
         <dd>Location helper for targeting the table title and subtitle</dd>
-      </dl><dl><dt>
-          
-          <code><a href="location-helper.html">location-helper</a></code> 
-        </dt>
-        <dd>Helper to target cells at <code>locations</code></dd>
       </dl><dl><dt>
           
           <code><a href="cell_text.html">cell_text()</a></code> 
