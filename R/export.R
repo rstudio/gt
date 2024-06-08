@@ -639,7 +639,7 @@ as_raw_html <- function(
 #' The `gt_packages.sty` file would then contain the listed dependencies above:
 #'
 #' \preformatted{
-#'   \usepackage{booktabs, caption, longtable, colortbl, array}
+#'   \usepackage{booktabs, caption, longtable, rotating, colortbl, array}
 #' }
 #'
 #' @section Examples:
@@ -686,6 +686,9 @@ as_latex <- function(data) {
   # Create a LaTeX fragment for the start of the table
   table_start <- create_table_start_l(data = data)
 
+  # Create the caption component
+  caption_component <- create_caption_component_l(data = data)
+
   # Create the heading component
   heading_component <- create_heading_component_l(data = data)
 
@@ -721,23 +724,44 @@ as_latex <- function(data) {
 
 
   # Compose the LaTeX table
-  knitr::asis_output(
-    paste0(
-      wrap_start_statement,
-      table_width_statement,
-      fontsize_statement,
-      table_start,
-      heading_component,
-      columns_component,
-      body_component,
-      table_end,
-      footer_component,
-      wrap_end_statement,
-      collapse = ""
-    ),
-    meta = latex_packages
-  )
-}
+  if (dt_options_get_value(data = data, option = "latex_use_longtable")) {
+    knitr::asis_output(
+      paste0(
+        wrap_start_statement,
+        table_width_statement,
+        fontsize_statement,
+        table_start,
+        caption_component,
+        heading_component,
+        columns_component,
+        body_component,
+        table_end,
+        footer_component,
+        wrap_end_statement,
+        collapse = ""
+      ),
+      meta = latex_packages
+    )
+  } else {
+    knitr::asis_output(
+      paste0(
+        wrap_start_statement,
+        caption_component,
+        heading_component,
+        table_width_statement,
+        fontsize_statement,
+        table_start,
+        columns_component,
+        body_component,
+        table_end,
+        footer_component,
+        wrap_end_statement,
+        collapse = ""
+      ),
+      meta = latex_packages
+    )
+  }
+  }
 
 #' Output a **gt** object as RTF
 #'
