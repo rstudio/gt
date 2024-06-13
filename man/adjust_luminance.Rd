@@ -91,7 +91,7 @@ of increasingly darker palettes (with \code{\link[=data_color]{data_color()}}).
 
 \section{Function ID}{
 
-8-8
+8-9
 }
 
 \section{Function Introduced}{
@@ -117,6 +117,7 @@ Other helper functions:
 \code{\link{px}()},
 \code{\link{random_id}()},
 \code{\link{stub}()},
-\code{\link{system_fonts}()}
+\code{\link{system_fonts}()},
+\code{\link{unit_conversion}()}
 }
 \concept{helper functions}
